@@ -30,7 +30,6 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.LocalGitBranch;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
-import com.liferay.jenkins.results.parser.PortalGitRepositoryJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -255,6 +254,10 @@ public class SpiraResultImporter {
 		Build.BranchInformation branchInformation =
 			analyticsCloudBranchInformationBuild.getOSBFaroBranchInformation();
 
+		if (branchInformation == null) {
+			return;
+		}
+
 		String upstreamBranchName = branchInformation.getUpstreamBranchName();
 
 		String upstreamDirPath = JenkinsResultsParserUtil.getProperty(
@@ -281,6 +284,10 @@ public class SpiraResultImporter {
 
 		Build.BranchInformation branchInformation =
 			pluginsBranchInformationBuild.getPluginsBranchInformation();
+
+		if (branchInformation == null) {
+			return;
+		}
 
 		String upstreamBranchName = branchInformation.getUpstreamBranchName();
 
@@ -385,6 +392,10 @@ public class SpiraResultImporter {
 		Build.BranchInformation branchInformation =
 			qaWebsitesBranchInformationBuild.getQAWebsitesBranchInformation();
 
+		if (branchInformation == null) {
+			return;
+		}
+
 		String upstreamBranchName = branchInformation.getUpstreamBranchName();
 
 		String upstreamDirPath = JenkinsResultsParserUtil.getProperty(
@@ -412,17 +423,8 @@ public class SpiraResultImporter {
 	}
 
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
-		Job job = _topLevelBuild.getJob();
-
-		if (job instanceof PortalGitRepositoryJob) {
-			PortalGitRepositoryJob portalGitRepositoryJob =
-				(PortalGitRepositoryJob)job;
-
-			return portalGitRepositoryJob.getPortalGitWorkingDirectory();
-		}
-
 		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-			"master");
+			_topLevelBuild.getBranchName());
 	}
 
 	private SpiraAutomationHost _getSpiraAutomationHost(

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -50,16 +49,9 @@ public class RegionLocalServiceTest {
 
 	@Test
 	public void testAddRegion() throws Exception {
-		boolean active = RandomTestUtil.randomBoolean();
-		String name = RandomTestUtil.randomString();
-		double position = RandomTestUtil.randomDouble();
-		String regionCode = RandomTestUtil.randomString();
-
 		Country country = _addCountry();
 
-		Region region = _addRegion(
-			country.getCountryId(), active, name, position, regionCode,
-			ServiceContextTestUtil.getServiceContext());
+		Region region = _addRegion(country.getCountryId());
 
 		Assert.assertNotNull(
 			_regionLocalService.fetchRegion(region.getRegionId()));
@@ -90,11 +82,7 @@ public class RegionLocalServiceTest {
 	public void testUpdateRegion() throws Exception {
 		Country country = _addCountry();
 
-		Region region = _addRegion(
-			country.getCountryId(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext());
+		Region region = _addRegion(country.getCountryId());
 
 		boolean active = RandomTestUtil.randomBoolean();
 		String name = RandomTestUtil.randomString();
@@ -120,13 +108,12 @@ public class RegionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private Region _addRegion(
-			long countryId, boolean active, String name, double position,
-			String regionCode, ServiceContext serviceContext)
-		throws Exception {
-
+	private Region _addRegion(long countryId) throws Exception {
 		return _regionLocalService.addRegion(
-			countryId, active, name, position, regionCode, serviceContext);
+			countryId, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Inject

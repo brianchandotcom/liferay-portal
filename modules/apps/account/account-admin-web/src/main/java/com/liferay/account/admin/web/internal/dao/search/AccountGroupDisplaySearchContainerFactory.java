@@ -17,7 +17,6 @@ package com.liferay.account.admin.web.internal.dao.search;
 import com.liferay.account.admin.web.internal.display.AccountGroupDisplay;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalServiceUtil;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -55,7 +54,7 @@ public class AccountGroupDisplaySearchContainerFactory {
 		accountGroupDisplaySearchContainer.setOrderByType(orderByType);
 
 		accountGroupDisplaySearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
+			new SelectAccountGroupRowChecker(liferayPortletResponse));
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords");

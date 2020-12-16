@@ -419,7 +419,7 @@ public class OpenIdConnectServiceHandlerImpl
 
 		openIdConnectSessionImpl.setLoginUserId(userId);
 
-		openIdConnectSessionImpl.setUserInfo(userInfo);
+		openIdConnectSessionImpl.setUserInfoJSONObject(userInfo.toJSONObject());
 	}
 
 	protected boolean refreshAuthToken(

@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Javier Gamarra
  */
 @ExtendedObjectClassDefinition(
-	category = "third-party", generateUI = true,
+	category = "message-boards", generateUI = true,
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(

@@ -143,9 +143,6 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	public List<CommerceChannel> searchCommerceChannels(long companyId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), CPActionKeys.VIEW_COMMERCE_CHANNELS);
-
 		return commerceChannelLocalService.searchCommerceChannels(companyId);
 	}
 

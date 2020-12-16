@@ -26,6 +26,8 @@ definition {
 	@description = "This is a test case for LPS-120773. Check the initial stuffs included in the site initializer."
 	@priority = "5"
 	test ViewInitialStuffs {
+		property portal.acceptance = "true";
+
 		task ("Add a new site based on Raylife") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Sites",

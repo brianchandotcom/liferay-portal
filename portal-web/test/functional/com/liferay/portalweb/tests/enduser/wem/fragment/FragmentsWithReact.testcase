@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-122082 and LPS-122641. Can not edit and export react fragment. View react fragment has a visual marker in vertical card."
 	@priority = "5"
 	test CannotEditAndExportReactFragment {
+		property portal.acceptance = "true";
+
 		task ("Navigate to fragments admin") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}

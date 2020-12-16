@@ -22,8 +22,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -36,14 +39,32 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 	public UpgradeDiscussionSubscriptionClassName(
 		AssetEntryLocalService assetEntryLocalService,
 		ClassNameLocalService classNameLocalService,
+		GroupLocalService groupLocalService,
 		SubscriptionLocalService subscriptionLocalService,
 		String oldSubscriptionClassName, DeletionMode deletionMode) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_classNameLocalService = classNameLocalService;
+		_groupLocalService = groupLocalService;
 		_subscriptionLocalService = subscriptionLocalService;
 		_oldSubscriptionClassName = oldSubscriptionClassName;
 		_deletionMode = deletionMode;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	public UpgradeDiscussionSubscriptionClassName(
+		AssetEntryLocalService assetEntryLocalService,
+		ClassNameLocalService classNameLocalService,
+		SubscriptionLocalService subscriptionLocalService,
+		String oldSubscriptionClassName, DeletionMode deletionMode) {
+
+		this(
+			assetEntryLocalService, classNameLocalService,
+			GroupLocalServiceUtil.getService(), subscriptionLocalService,
+			oldSubscriptionClassName, deletionMode);
 	}
 
 	/**
@@ -133,6 +154,13 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 					newSubscriptionClassName, subscription.getClassPK());
 
 				if (assetEntry == null) {
+					Group group = _groupLocalService.fetchGroup(
+						subscription.getGroupId());
+
+					if (group == null) {
+						return;
+					}
+
 					_assetEntryLocalService.updateEntry(
 						subscription.getUserId(), subscription.getGroupId(),
 						subscription.getCreateDate(),
@@ -159,6 +187,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final DeletionMode _deletionMode;
+	private final GroupLocalService _groupLocalService;
 	private final String _oldSubscriptionClassName;
 	private final SubscriptionLocalService _subscriptionLocalService;
 

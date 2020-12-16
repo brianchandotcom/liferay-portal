@@ -17,16 +17,6 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Writer
 
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
-
-	dependencies {
-		classpath group: "org.apache.maven", name: "maven-model", version: "3.6.1"
-	}
-
-	repositories {
-		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
-		}
-	}
 }
 
 task generatePom

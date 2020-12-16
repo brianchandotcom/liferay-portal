@@ -1,5 +1,13 @@
 buildscript {
 	apply from: "build-buildscript.gradle", to: buildscript
+
+	File buildFile = gradle.startParameter.buildFile
+
+	if ((buildFile != null) && buildFile.name.startsWith("releng")) {
+		dependencies {
+			classpath group: "org.apache.maven", name: "maven-model", version: "3.0.4"
+		}
+	}
 }
 
 apply plugin: "com.liferay.settings.plugin"

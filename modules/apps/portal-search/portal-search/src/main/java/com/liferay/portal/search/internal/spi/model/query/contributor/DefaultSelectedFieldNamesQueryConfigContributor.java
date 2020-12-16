@@ -82,7 +82,7 @@ public class DefaultSelectedFieldNamesQueryConfigContributor
 				addSelectedLocalizedFieldNames(
 					queryConfigContributorHelper, selectedFieldNames,
 					LocaleUtil.toLanguageIds(
-						LanguageUtil.getSupportedLocales()));
+						LanguageUtil.getAvailableLocales()));
 			}
 			else {
 				addSelectedLocalizedFieldNames(

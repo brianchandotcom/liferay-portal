@@ -756,6 +756,10 @@ public interface CommerceOrderLocalService
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public CommerceOrder upsertCommerceOrder(
 			long userId, long groupId, long commerceAccountId,
 			long commerceCurrencyId, long billingAddressId,

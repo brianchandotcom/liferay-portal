@@ -1330,6 +1330,10 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrderSoap
 			upsertCommerceOrder(
 				long userId, long groupId, long commerceAccountId,

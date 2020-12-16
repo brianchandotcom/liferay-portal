@@ -538,6 +538,38 @@ definition {
 			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 	}
 
+	macro viewExternalVideoInDifferentViews {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		if (isSet(navTab)) {
+			AssertClick(
+				key_navTab = "${navTab}",
+				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+				value1 = "${navTab}");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		for (var videoShortcutTitle : list "${videoShortcutList}") {
+			LexiconCard.viewCardTitle(card = "${videoShortcutTitle}");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		for (var videoShortcutTitle : list "${videoShortcutList}") {
+			LexiconList.viewListEntryTitle(listEntry = "${videoShortcutTitle}");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		for (var videoShortcutTitle : list "${videoShortcutList}") {
+			AssertTextEquals.assertPartialText(
+				key_tableEntry = "${videoShortcutTitle}",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+				value1 = "${videoShortcutTitle}");
+		}
+	}
+
 	macro viewLocationInfoViaBlogs {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 

@@ -501,6 +501,7 @@ create index IX_6C051FA5 on SystemEvent (groupId, classNameId, classPK, type_, c
 create index IX_E9FA8197 on SystemEvent (groupId, ctCollectionId);
 create index IX_C009825D on SystemEvent (groupId, systemEventSetKey, ctCollectionId);
 
+create index IX_713531A3 on Team (companyId, ctCollectionId);
 create index IX_622C8165 on Team (groupId, ctCollectionId);
 create unique index IX_D424D1E4 on Team (groupId, name[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_14857E95 on Team (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);

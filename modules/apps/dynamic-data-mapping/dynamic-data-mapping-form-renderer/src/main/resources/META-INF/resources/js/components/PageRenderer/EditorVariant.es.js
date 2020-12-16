@@ -75,12 +75,12 @@ export const Column = ({
 
 	return (
 		<ActionsControls
+			actionsRef={actionsRef}
 			activePage={activePage}
 			columnRef={columnRef}
 			editable={editable}
 			expanded={isFieldSelected}
 			field={firstField}
-			ref={actionsRef}
 		>
 			<DefaultVariant.Column
 				className={classNames({
@@ -105,6 +105,7 @@ export const Column = ({
 						expanded={isFieldSelected}
 						field={firstField}
 						isFieldSet={isFieldSet}
+						ref={actionsRef}
 					/>
 				)}
 

@@ -63,70 +63,75 @@ export const useActions = () => {
 
 ActionsContext.displayName = 'ActionsContext';
 
-const ACTIONS_CONTAINER_OFFSET = [-2, 1];
+const ACTIONS_CONTAINER_OFFSET = [14, 1];
 
-export const ActionsControls = forwardRef(
-	({activePage, children, columnRef, editable, field}, actionsRef) => {
-		const {
-			activeField,
-			hoveredField,
-			setActiveField,
-			setHoveredField,
-		} = useActions();
+export const ActionsControls = ({
+	actionsRef,
+	activePage,
+	children,
+	columnRef,
+	editable,
+	field,
+}) => {
+	const {
+		activeField,
+		hoveredField,
+		setActiveField,
+		setHoveredField,
+	} = useActions();
 
-		const dispatch = useForm();
+	const dispatch = useForm();
 
-		const contentRect = useResizeObserver(columnRef);
+	const contentRect = useResizeObserver(columnRef);
 
-		useLayoutEffect(() => {
-			if (actionsRef.current && columnRef.current) {
-				domAlign(actionsRef.current, columnRef.current, {
-					offset: ACTIONS_CONTAINER_OFFSET,
-					points: ['bl', 'tl'],
+	useLayoutEffect(() => {
+		if (actionsRef.current && columnRef.current) {
+			domAlign(actionsRef.current, columnRef.current, {
+				offset: ACTIONS_CONTAINER_OFFSET,
+				points: ['bl', 'tl'],
+			});
+		}
+	}, [actionsRef, activeField, columnRef, contentRect, hoveredField]);
+
+	const handleFieldInteractions = (event) => {
+		event.stopPropagation();
+
+		if (actionsRef.current?.contains(event.target) && !editable) {
+			return;
+		}
+
+		switch (event.type) {
+			case 'click':
+				dispatch({
+					payload: {activePage, fieldName: field.fieldName},
+					type: EVENT_TYPES.FIELD_CLICKED,
 				});
-			}
-		}, [actionsRef, activeField, columnRef, contentRect, hoveredField]);
 
-		const handleFieldInteractions = (event) => {
-			event.stopPropagation();
+				setActiveField(field.fieldName);
 
-			if (actionsRef.current?.contains(event.target) && !editable) {
-				return;
-			}
+				break;
 
-			switch (event.type) {
-				case 'click':
-					dispatch({
-						payload: {activePage, fieldName: field.fieldName},
-						type: EVENT_TYPES.FIELD_CLICKED,
-					});
+			case 'mouseover':
+				setHoveredField(field.fieldName);
 
-					setActiveField(field.fieldName);
+				break;
 
-					break;
+			case 'mouseleave':
+				setHoveredField('');
 
-				case 'mouseover':
-					setHoveredField(field.fieldName);
+				break;
 
-					break;
+			default:
+				break;
+		}
+	};
 
-				case 'mouseleave':
-					setHoveredField('');
-
-					break;
-
-				default:
-					break;
-			}
-		};
-
-		return React.cloneElement(children, {
-			onClick: handleFieldInteractions,
-			onMouseLeave: handleFieldInteractions,
-			onMouseOver: handleFieldInteractions,
-		});
-	}
-);
+	return React.cloneElement(children, {
+		onClick: handleFieldInteractions,
+		onMouseLeave: handleFieldInteractions,
+		onMouseOver: handleFieldInteractions,
+	});
+};
 
 export const Actions = forwardRef(
 	({activePage, expanded, field, isFieldSet}, actionsRef) => {

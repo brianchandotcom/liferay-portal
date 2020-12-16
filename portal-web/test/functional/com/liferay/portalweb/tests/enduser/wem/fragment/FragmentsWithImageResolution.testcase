@@ -277,7 +277,7 @@ definition {
 		task ("Assert the Large Image Resolution is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "large-image-resolution",
-				element = "//img[contains(@alt,'Responsive Image') and contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
 		}
 	}
 

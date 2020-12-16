@@ -12,20 +12,13 @@
  * details.
  */
 
-import React, {createContext, useState} from 'react';
+import React, {createContext} from 'react';
 
-import * as DefaultVariant from './DefaultVariant.es';
-
-export const VariantsContext = createContext({
-	Components: DefaultVariant,
-	setComponents: () => {},
-});
+export const VariantsContext = createContext({});
 
 export const VariantsProvider = ({children, components}) => {
-	const [Components, setComponents] = useState(components);
-
 	return (
-		<VariantsContext.Provider value={{Components, setComponents}}>
+		<VariantsContext.Provider value={components}>
 			{children}
 		</VariantsContext.Provider>
 	);

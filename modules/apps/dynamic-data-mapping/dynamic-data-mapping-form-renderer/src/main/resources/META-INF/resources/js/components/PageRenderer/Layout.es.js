@@ -35,7 +35,7 @@ export const Layout = ({components, editable, rows}) => {
 	const createFieldChange = useEvaluate(fieldChange);
 	const dispatch = useForm();
 
-	const {Components: defaultComponents} = useContext(VariantsContext);
+	const defaultComponents = useContext(VariantsContext);
 
 	const Components = components ?? defaultComponents;
 

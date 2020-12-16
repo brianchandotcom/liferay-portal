@@ -73,6 +73,27 @@ public class SpiraResultFactory {
 			spiraBuildResult, axisTestClassGroup);
 	}
 
+	public static SpiraTestResultDetails newSpiraTestResultDetails(
+		SpiraTestResult spiraTestResult) {
+
+		if (spiraTestResult instanceof FunctionalAxisSpiraTestResult) {
+			return new FunctionalAxisSpiraTestResultDetails(
+				(FunctionalAxisSpiraTestResult)spiraTestResult);
+		}
+
+		if (spiraTestResult instanceof JUnitAxisSpiraTestResult) {
+			return new JUnitAxisSpiraTestResultDetails(
+				(JUnitAxisSpiraTestResult)spiraTestResult);
+		}
+
+		if (spiraTestResult instanceof AxisSpiraTestResult) {
+			return new DefaultAxisSpiraTestResultDetails(
+				(AxisSpiraTestResult)spiraTestResult);
+		}
+
+		return new DefaultSpiraTestResultDetails(spiraTestResult);
+	}
+
 	public static SpiraTestResultValues newSpiraTestResultValues(
 		SpiraTestResult spiraTestResult) {
 

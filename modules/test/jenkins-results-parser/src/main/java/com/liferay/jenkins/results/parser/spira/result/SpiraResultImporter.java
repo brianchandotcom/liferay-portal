@@ -103,9 +103,7 @@ public class SpiraResultImporter {
 		_checkoutPortalBaseBranch();
 
 		_checkoutOSBFaroBranch();
-
 		_checkoutPluginsBranch();
-
 		_checkoutQAWebsitesBranch();
 	}
 

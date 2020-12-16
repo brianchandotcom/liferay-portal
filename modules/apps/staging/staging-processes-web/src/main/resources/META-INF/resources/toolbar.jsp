@@ -21,7 +21,6 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 String tabs1 = ParamUtil.getString(request, "tabs1");
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
 String navigation = ParamUtil.getString(request, "navigation", "all");
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
@@ -33,7 +32,7 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("displayStyle", displayStyle);
+portletURL.setParameter("displayStyle", stagingProcessesWebToolbarDisplayContext.getDisplayStyle());
 portletURL.setParameter("navigation", navigation);
 portletURL.setParameter("orderByCol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);

@@ -26,9 +26,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import java.util.List;
 
@@ -150,6 +154,31 @@ public class StagingProcessesWebToolbarDisplayContext {
 		};
 	}
 
+	public String getDisplayStyle() {
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
+
+		String displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle");
+
+		String displayPreferences = portalPreferences.getValue(
+			StagingProcessesPortletKeys.STAGING_PROCESSES, "display-style",
+			"descriptive");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = displayPreferences;
+		}
+
+		if (displayStyle != displayPreferences) {
+			portalPreferences.setValue(
+				StagingProcessesPortletKeys.STAGING_PROCESSES, "display-style",
+				displayStyle);
+		}
+
+		return displayStyle;
+	}
+
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
@@ -194,10 +223,6 @@ public class StagingProcessesWebToolbarDisplayContext {
 				addTableViewTypeItem();
 			}
 		};
-	}
-
-	protected String getDisplayStyle() {
-		return ParamUtil.getString(_httpServletRequest, "displayStyle", "list");
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -273,10 +298,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 			"privateLayout",
 			String.valueOf(
 				ParamUtil.getBoolean(_httpServletRequest, "privateLayout")));
-		renderURL.setParameter(
-			"displayStyle",
-			ParamUtil.getString(
-				_httpServletRequest, "displayStyle", "descriptive"));
+		renderURL.setParameter("displayStyle", getDisplayStyle());
 		renderURL.setParameter(
 			"orderByCol",
 			ParamUtil.getString(_httpServletRequest, "orderByCol"));

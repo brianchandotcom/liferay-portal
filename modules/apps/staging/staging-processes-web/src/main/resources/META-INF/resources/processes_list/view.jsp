@@ -24,7 +24,7 @@
 	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="mvcRenderCommandName" value="/staging_processes/view_publish_layouts" />
 		<liferay-util:param name="tabs1" value='<%= ParamUtil.getString(request, "tabs1") %>' />
-		<liferay-util:param name="displayStyle" value='<%= ParamUtil.getString(request, "displayStyle", "descriptive") %>' />
+		<liferay-util:param name="displayStyle" value="<%= stagingProcessesWebToolbarDisplayContext.getDisplayStyle() %>" />
 		<liferay-util:param name="navigation" value='<%= ParamUtil.getString(request, "navigation", "all") %>' />
 		<liferay-util:param name="orderByCol" value='<%= ParamUtil.getString(request, "orderByCol") %>' />
 		<liferay-util:param name="orderByType" value='<%= ParamUtil.getString(request, "orderByType") %>' />

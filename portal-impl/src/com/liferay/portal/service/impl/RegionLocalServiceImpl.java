@@ -69,7 +69,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 	@Override
 	public Region deleteRegion(long regionId) throws PortalException {
-		Region region = regionPersistence.fetchByPrimaryKey(regionId);
+		Region region = regionPersistence.findByPrimaryKey(regionId);
 
 		return deleteRegion(region);
 	}

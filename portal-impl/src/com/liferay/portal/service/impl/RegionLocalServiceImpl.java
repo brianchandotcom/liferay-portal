@@ -148,7 +148,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		Country country = countryPersistence.findByC_A2(companyId, a2);
 
-		return regionPersistence.findByC_A(country.getCompanyId(), active);
+		return regionPersistence.findByC_A(country.getCountryId(), active);
 	}
 
 	@Override

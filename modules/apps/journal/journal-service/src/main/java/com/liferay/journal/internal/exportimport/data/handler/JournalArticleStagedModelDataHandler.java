@@ -1106,6 +1106,7 @@ public class JournalArticleStagedModelDataHandler
 		}
 	}
 
+	@Override
 	protected void exportAssetCategories(
 			PortletDataContext portletDataContext, JournalArticle stagedModel)
 		throws PortletDataException {
@@ -1122,6 +1123,7 @@ public class JournalArticleStagedModelDataHandler
 		}
 	}
 
+	@Override
 	protected void exportAssetTags(
 			PortletDataContext portletDataContext, JournalArticle stagedModel)
 		throws PortletDataException {

@@ -1,4 +1,4 @@
-# Checks for 
+# Checks for .txt
 
 Check | Category | Description
 ----- | -------- | -----------

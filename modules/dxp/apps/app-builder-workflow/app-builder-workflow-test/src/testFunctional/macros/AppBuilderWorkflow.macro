@@ -292,11 +292,25 @@ definition {
 	}
 
 	macro openFormView {
-		Click(locator1 = "AppBuilderWorkflow#OPEN_FORM_VIEW_DATA");
+		Click.javaScriptClick(
+			key_positionNumber = "${positionNumber}",
+			locator1 = "AppBuilderWorkflow#OPEN_FORM_VIEW");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_title = "Edit Form View",
+			locator1 = "IFrame#MODAL_ANY");
 	}
 
 	macro openTableView {
-		Click(locator1 = "AppBuilderWorkflow#OPEN_TABLE_VIEW_DATA");
+		Click.javaScriptClick(locator1 = "AppBuilderWorkflow#OPEN_TABLE_VIEW");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_title = "Edit Table View",
+			locator1 = "IFrame#MODAL_ANY");
 	}
 
 	macro removeFormView {

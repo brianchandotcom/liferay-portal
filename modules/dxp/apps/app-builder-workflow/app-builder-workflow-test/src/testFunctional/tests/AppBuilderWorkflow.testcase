@@ -792,11 +792,7 @@ definition {
 			objectName = "my custom object",
 			tableViewName = "My Table View");
 
-		AppBuilderWorkflow.openFormView();
-
-		SelectFrame(
-			key_title = "Edit Form View",
-			locator1 = "IFrame#MODAL_ANY");
+		AppBuilderWorkflow.openFormView(positionNumber = "1");
 
 		FormViewBuilder.setName(formViewName = "Form Edit");
 
@@ -808,10 +804,6 @@ definition {
 
 		AppBuilderWorkflow.openTableView();
 
-		SelectFrame(
-			key_title = "Edit Table View",
-			locator1 = "IFrame#MODAL_ANY");
-
 		TableViewBuilder.setName(tableViewName = "Table Edit");
 
 		TableViewBuilder.save();
@@ -820,11 +812,7 @@ definition {
 			positionNumber = "1",
 			tableViewName = "Table Edit");
 
-		AppBuilderWorkflow.openFormView();
-
-		SelectFrame(
-			key_title = "Edit Form View",
-			locator1 = "IFrame#MODAL_ANY");
+		AppBuilderWorkflow.openFormView(positionNumber = "1");
 
 		FormViewBuilder.setName(formViewName = "Form Edit Again");
 
@@ -835,10 +823,6 @@ definition {
 			positionNumber = "1");
 
 		AppBuilderWorkflow.openTableView();
-
-		SelectFrame(
-			key_title = "Edit Table View",
-			locator1 = "IFrame#MODAL_ANY");
 
 		TableViewBuilder.setName(tableViewName = "Table Edit Again");
 

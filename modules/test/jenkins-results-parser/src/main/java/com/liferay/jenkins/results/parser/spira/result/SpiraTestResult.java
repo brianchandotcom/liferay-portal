@@ -20,6 +20,8 @@ import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseType;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -30,6 +32,8 @@ public interface SpiraTestResult {
 	public Integer getDuration();
 
 	public String getPortalSHA();
+
+	public JSONObject getRequestJSONObject();
 
 	public SpiraAutomationHost getSpiraAutomationHost();
 

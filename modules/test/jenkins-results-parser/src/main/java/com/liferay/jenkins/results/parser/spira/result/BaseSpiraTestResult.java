@@ -23,9 +23,17 @@ import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.BaseSpiraArtifact;
 import com.liferay.jenkins.results.parser.spira.SpiraAutomationHost;
 import com.liferay.jenkins.results.parser.spira.SpiraCustomPropertyValue;
+import com.liferay.jenkins.results.parser.spira.SpiraRelease;
+import com.liferay.jenkins.results.parser.spira.SpiraReleaseBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseFolder;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
+import com.liferay.jenkins.results.parser.spira.SpiraTestSet;
+
+import java.util.Calendar;
+import java.util.List;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -64,6 +72,76 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 		}
 
 		return portalSHA;
+	}
+
+	@Override
+	public JSONObject getRequestJSONObject() {
+		JSONObject requestJSONObject = new JSONObject();
+
+		SpiraRelease spiraRelease = spiraBuildResult.getSpiraRelease();
+
+		if (spiraRelease != null) {
+			requestJSONObject.put(
+				spiraRelease.getKeyID(), spiraRelease.getID());
+		}
+
+		SpiraReleaseBuild spiraReleaseBuild =
+			spiraBuildResult.getSpiraReleaseBuild();
+
+		if (spiraReleaseBuild != null) {
+			requestJSONObject.put(
+				spiraReleaseBuild.getKeyID(), spiraReleaseBuild.getID());
+		}
+
+		SpiraTestSet spiraTestSet = spiraBuildResult.getSpiraTestSet();
+
+		if (spiraTestSet != null) {
+			requestJSONObject.put(
+				spiraTestSet.getKeyID(), spiraTestSet.getID());
+
+			SpiraTestSet.SpiraTestSetTestCase spiraTestSetTestCase =
+				spiraTestSet.assignSpiraTestCaseObject(
+					getSpiraTestCaseObject());
+
+			requestJSONObject.put(
+				spiraTestSetTestCase.getKeyID(), spiraTestSetTestCase.getID());
+		}
+
+		SpiraAutomationHost spiraAutomationHost = getSpiraAutomationHost();
+
+		if (spiraAutomationHost != null) {
+			requestJSONObject.put(
+				spiraAutomationHost.getKeyID(), spiraAutomationHost.getID());
+		}
+
+		SpiraTestCaseObject spiraTestCaseObject = getSpiraTestCaseObject();
+
+		requestJSONObject.put(
+			spiraTestCaseObject.getKeyID(), spiraTestCaseObject.getID());
+
+		requestJSONObject.put(
+			"CustomProperties",
+			_spiraTestResultValues.getCustomPropertyValuesJSONArray());
+
+		SpiraTestCaseRun.Status status = getSpiraTestCaseRunStatus();
+
+		requestJSONObject.put("ExecutionStatusId", status.getID());
+
+		requestJSONObject.put("RunnerMessage", spiraTestCaseObject.getName());
+		requestJSONObject.put("RunnerName", "Liferay CI");
+		requestJSONObject.put(
+			"RunnerStackTrace", _spiraTestResultDetails.getDetails());
+		requestJSONObject.put("RunnerTestName", getTestName());
+		requestJSONObject.put(
+			"StartDate",
+			BaseSpiraArtifact.toDateString(Calendar.getInstance()));
+
+		SpiraTestCaseRun.RunnerFormat runnerFormat =
+			getSpiraTestCaseRunRunnerFormat();
+
+		requestJSONObject.put("TestRunFormatId", runnerFormat.getID());
+
+		return requestJSONObject;
 	}
 
 	@Override
@@ -143,16 +221,31 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 
 	@Override
 	public void record() {
-		long start = System.currentTimeMillis();
+		long startTestCase = System.currentTimeMillis();
 
 		SpiraTestCaseObject spiraTestCaseObject = getSpiraTestCaseObject();
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				spiraTestCaseObject.getPath(), " ",
-				spiraTestCaseObject.getURL(), " in ",
+				getTestName(), " ", spiraTestCaseObject.getURL(), " in ",
 				JenkinsResultsParserUtil.toDurationString(
-					System.currentTimeMillis() - start)));
+					System.currentTimeMillis() - startTestCase)));
+
+		long startTestRun = System.currentTimeMillis();
+
+		List<SpiraTestCaseRun> spiraTestCaseRuns =
+			SpiraTestCaseRun.recordSpiraTestCaseRuns(
+				spiraBuildResult.getSpiraProject(), this);
+
+		SpiraTestCaseRun spiraTestCaseRun = spiraTestCaseRuns.get(0);
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				getTestName(), " ", spiraTestCaseRun.getURL(), " in ",
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - startTestRun)));
+
+		System.out.println();
 	}
 
 	protected BaseSpiraTestResult(SpiraBuildResult spiraBuildResult) {

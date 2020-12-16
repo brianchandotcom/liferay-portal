@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.spira;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 import com.liferay.jenkins.results.parser.ParallelExecutor;
+import com.liferay.jenkins.results.parser.spira.result.SpiraTestResult;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -272,6 +273,41 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		return spiraTestCaseRuns;
 	}
 
+	public static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
+		SpiraProject spiraProject, SpiraTestResult... spiraTestResults) {
+
+		Map<String, String> urlPathReplacements = new HashMap<>();
+
+		urlPathReplacements.put(
+			"project_id", String.valueOf(spiraProject.getID()));
+
+		try {
+			JSONArray requestJSONArray = new JSONArray();
+
+			for (SpiraTestResult spiraTestResult : spiraTestResults) {
+				requestJSONArray.put(spiraTestResult.getRequestJSONObject());
+			}
+
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				"projects/{project_id}/test-runs/record-multiple", null,
+				urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONArray.toString());
+
+			List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
+
+			for (int i = 0; i < responseJSONArray.length(); i++) {
+				spiraTestCaseRuns.add(
+					new SpiraTestCaseRun(
+						spiraProject, responseJSONArray.getJSONObject(i)));
+			}
+
+			return spiraTestCaseRuns;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public JSONObject getAutomatedJSONObject() {
 		if (_automatedJSONObject != null) {
 			return _automatedJSONObject;
@@ -296,6 +332,11 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	@Override
+	public String getName() {
+		return jsonObject.getString("RunnerTestName");
 	}
 
 	@Override

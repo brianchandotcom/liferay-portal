@@ -146,6 +146,46 @@ definition {
 			videoShortcutTitle = "Test YouTube Video Name");
 	}
 
+	@description = "This ensures that the video shortcut can be viewed with different views in the item selector."
+	@priority = "5"
+	test ChangeViewsInItemSelector {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Facebook Video",
+			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Vimeo Video",
+			videoURL = "https://vimeo.com/483035084");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Twitch Video",
+			videoURL = "https://www.twitch.tv/videos/806178790");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		for (var videoShortcutTitle : list "Test Facebook Video,Test Vimeo Video,Test YouTube Video,Test Facebook Video") {
+			LexiconList.viewListEntryTitle(listEntry = "${videoShortcutTitle}");
+		}
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
+
+		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
+
+		ItemSelector.viewExternalVideoInDifferentViews(
+			navTab = "Documents and Media",
+			videoShortcutList = "Test Facebook Video,Test Vimeo Video,Test YouTube Video,Test Facebook Video");
+	}
+
 	@description = "This ensures that a video shortcut associated with a category can be searched."
 	@priority = "5"
 	test SearchForCategory {

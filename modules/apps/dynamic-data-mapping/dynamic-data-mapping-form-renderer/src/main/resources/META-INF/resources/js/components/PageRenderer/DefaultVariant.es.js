@@ -85,7 +85,11 @@ export const Column = forwardRef(
 						)}
 						data-field-name={firstField.fieldName}
 					>
-						{children}
+						{column.fields.map((field, index) =>
+							typeof children === 'function'
+								? children({field, index})
+								: children
+						)}
 					</div>
 				)}
 			</ClayLayout.Col>

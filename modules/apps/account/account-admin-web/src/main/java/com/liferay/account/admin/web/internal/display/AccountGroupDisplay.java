@@ -37,8 +37,12 @@ public class AccountGroupDisplay {
 			AccountGroupLocalServiceUtil.fetchAccountGroup(accountGroupId));
 	}
 
-	public long getAccountEntriesCount() {
-		return _accountEntriesCount;
+	public String getAccountEntriesCount() {
+		if (_accountEntriesCount < 0) {
+			return StringPool.DOUBLE_DASH;
+		}
+
+		return String.valueOf(_accountEntriesCount);
 	}
 
 	public long getAccountGroupId() {
@@ -68,6 +72,10 @@ public class AccountGroupDisplay {
 	}
 
 	private long _getAccountEntriesCount(AccountGroup accountGroup) {
+		if (accountGroup.isDefaultAccountGroup()) {
+			return -1;
+		}
+
 		return AccountGroupAccountEntryRelLocalServiceUtil.
 			getAccountGroupAccountEntryRelsCountByAccountGroupId(
 				accountGroup.getAccountGroupId());

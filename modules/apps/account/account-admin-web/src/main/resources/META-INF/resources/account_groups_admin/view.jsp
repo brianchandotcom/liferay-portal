@@ -63,7 +63,7 @@ ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementTool
 					cssClass="table-cell-expand"
 					href="<%= rowURL %>"
 					name="accounts"
-					value="<%= String.valueOf(accountGroupDisplay.getAccountEntriesCount()) %>"
+					value="<%= accountGroupDisplay.getAccountEntriesCount() %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

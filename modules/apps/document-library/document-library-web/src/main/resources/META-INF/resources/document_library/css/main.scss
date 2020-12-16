@@ -263,6 +263,16 @@ $productMenuWidth: 320px;
 
 	.metadata-panel-container {
 		margin-top: 1em;
+
+		.sheet {
+			border: 0;
+			padding: 0;
+
+			.container-fluid {
+				padding-left: 0;
+				padding-right: 0;
+			}
+		}
 	}
 
 	.modal .edit-categories {

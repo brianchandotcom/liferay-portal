@@ -14,8 +14,8 @@
 
 package com.liferay.portal.bootstrap;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PropsValues;
@@ -67,7 +67,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 						_normalizePath(
 							PropsValues.MODULE_FRAMEWORK_BASE_DIR))) {
 
-					int index = location.indexOf(StringPool.QUESTION);
+					int index = location.indexOf(CharPool.QUESTION);
 
 					if (index != -1) {
 						location = location.substring(0, index);
@@ -103,7 +103,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 
 	private String _normalizePath(String location) {
 		try {
-			int index = location.indexOf(StringPool.QUESTION);
+			int index = location.indexOf(CharPool.QUESTION);
 
 			if (index != -1) {
 				location = location.substring(0, index);

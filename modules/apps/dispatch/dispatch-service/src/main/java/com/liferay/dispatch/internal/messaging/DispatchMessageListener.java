@@ -16,13 +16,12 @@ package com.liferay.dispatch.internal.messaging;
 
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 
 import java.util.Date;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -76,30 +72,17 @@ public class DispatchMessageListener extends BaseMessageListener {
 		}
 
 		DispatchTaskExecutor dispatchTaskExecutor =
-			_dispatchTaskExecutorServiceTrackerMap.getService(
+			_dispatchTaskExecutorHelper.getDispatchTaskExecutor(
 				dispatchTrigger.getTaskExecutorType());
 
 		dispatchTaskExecutor.execute(dispatchTriggerId);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_dispatchTaskExecutorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, DispatchTaskExecutor.class,
-				"dispatch.task.executor.type");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dispatchTaskExecutorServiceTrackerMap.close();
-	}
-
 	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;
 
-	private ServiceTrackerMap<String, DispatchTaskExecutor>
-		_dispatchTaskExecutorServiceTrackerMap;
+	@Reference
+	private DispatchTaskExecutorHelper _dispatchTaskExecutorHelper;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

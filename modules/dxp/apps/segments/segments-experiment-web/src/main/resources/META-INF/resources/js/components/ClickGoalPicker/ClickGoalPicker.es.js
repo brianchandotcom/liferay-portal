@@ -10,7 +10,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
@@ -62,10 +62,18 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 
 	const {errors} = useContext(GlobalStateContext);
 
-	const ref = useRef(state.selectedTarget);
+	const [inputValue, setInputValue] = useState(selectedTarget);
+
+	const [isValidClickTargetElement, setIsValidClickTargetElement] = useState(
+		true
+	);
+
+	const ref = useRef(selectedTarget);
 
 	useEffect(() => {
 		ref.current = selectedTarget;
+		setInputValue(selectedTarget);
+		setIsValidClickTargetElement(true);
 	}, [selectedTarget]);
 
 	const previousTarget = ref.current;
@@ -113,6 +121,28 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 		dispatch({type: 'activate'});
 	};
 
+	const handleInputBlur = (event) => {
+		const value = event.target.value;
+
+		const target = value && document.getElementById(value);
+
+		if (target) {
+			target.scrollIntoView();
+
+			// Make sure nothing slides under the top nav.
+
+			window.scrollBy(0, -100);
+
+			dispatch({
+				selector: value,
+				type: 'selectTarget',
+			});
+		}
+		else {
+			setIsValidClickTargetElement(false);
+		}
+	};
+
 	return (
 		<DispatchContext.Provider value={dispatch}>
 			<StateContext.Provider value={state}>
@@ -154,7 +184,11 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 					</ClayButton>
 				)}
 
-				<ClayInput.Group>
+				<ClayInput.Group
+					className={classNames({
+						'has-error': !isValidClickTargetElement,
+					})}
+				>
 					<ClayInput.GroupItem>
 						<label htmlFor="clickableElement">
 							{Liferay.Language.get('element-id')}
@@ -173,15 +207,30 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 						<ClayTooltipProvider>
 							<ClayInput
 								data-tooltip-align="top"
-								disabled
 								id="clickableElement"
-								title={state.selectedTarget}
+								onBlur={handleInputBlur}
+								onChange={(event) =>
+									setInputValue(event.target.value)
+								}
+								onFocus={() => dispatch({type: 'activate'})}
+								title={inputValue}
 								type="text"
-								value={state.selectedTarget}
+								value={inputValue}
 							/>
 						</ClayTooltipProvider>
+						{!isValidClickTargetElement && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+									{Liferay.Language.get('id-not-found')}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
 					</ClayInput.GroupItem>
-					<ClayInput.GroupItem className="align-self-end" shrink>
+					<ClayInput.GroupItem
+						className="form-group-item-label-spacer"
+						shrink
+					>
 						<ClayTooltipProvider>
 							<ClayButtonWithIcon
 								data-tooltip-align="bottom-right"
@@ -220,6 +269,7 @@ function OverlayContainer({allowEdit, root}) {
 	const cssId = 'segments-experiments-click-goal-css-overrides';
 
 	const dispatch = useContext(DispatchContext);
+	const {selectedTarget} = useContext(StateContext);
 
 	const targetableElements = useRef();
 
@@ -261,7 +311,10 @@ function OverlayContainer({allowEdit, root}) {
 
 		// This must happen after hiding the toppers.
 
-		targetableElements.current = getTargetableElements(root);
+		targetableElements.current = getTargetableElements(
+			root,
+			selectedTarget
+		);
 	}
 
 	// On unmount.
@@ -355,14 +408,16 @@ function Overlay({allowEdit, root, targetableElements}) {
 					return allowEdit || element.id === selectedTarget;
 				})
 				.map((element) => {
-					const selector = `#${element.id}`;
+					const elementId = element.id;
 
 					const mode =
-						editingTarget === selector && allowEdit
+						editingTarget === elementId && allowEdit
 							? 'editing'
-							: selectedTarget === selector
+							: selectedTarget === elementId
 							? 'selected'
 							: 'inactive';
+
+					const selector = `#${element.id}`;
 
 					return (
 						<ClickGoalPicker.Target
@@ -408,7 +463,7 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 
 	const handleClick = (event) => {
 		dispatch({
-			selector,
+			selector: selector.substring(1),
 			type: 'editTarget',
 		});
 

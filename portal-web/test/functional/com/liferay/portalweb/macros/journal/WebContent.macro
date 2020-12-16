@@ -31,6 +31,23 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
+		if (isSet(embedVideo)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click.pauseClickAt(locator1 = "CKEditor#CONTENT_VIDEO_IMAGE");
+
+			if ("${navTab}" == "Documents and Media") {
+				ItemSelector.addVideoFromDM(
+					navTab = "${navTab}",
+					videoShortcutTitle = "${videoShortcutTitle}");
+			}
+			else {
+				ItemSelector.addVideoFromURL(
+					navTab = "${navTab}",
+					videoSourceURL = "${embedVideo}");
+			}
+		}
+
 		if (isSet(viewableBy)) {
 			Panel.expandPanel(panel = "Permissions");
 

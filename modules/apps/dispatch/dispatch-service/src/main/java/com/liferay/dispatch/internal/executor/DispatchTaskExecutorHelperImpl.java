@@ -16,6 +16,10 @@ package com.liferay.dispatch.internal.executor;
 
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +64,10 @@ public class DispatchTaskExecutorHelperImpl
 		DispatchTaskExecutor dispatchTaskExecutor,
 		Map<String, Object> properties) {
 
+		_validateDispatchTaskExecutorProperties(
+			dispatchTaskExecutor, properties, _typeToNameMap,
+			_typeToDispatchTaskExecutorMap);
+
 		String type = (String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
 
 		_typeToNameMap.put(
@@ -79,11 +87,37 @@ public class DispatchTaskExecutorHelperImpl
 		_typeToDispatchTaskExecutorMap.remove(type);
 	}
 
+	private void _validateDispatchTaskExecutorProperties(
+		DispatchTaskExecutor dispatchTaskExecutor,
+		Map<String, Object> properties, Map<String, String> typeToNameMap,
+		Map<String, DispatchTaskExecutor> typeToDispatchTaskExecutorMap) {
+
+		String type = (String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
+
+		if (typeToNameMap.containsKey(type)) {
+			DispatchTaskExecutor curDispatchTaskExecutor =
+				typeToDispatchTaskExecutorMap.get(type);
+
+			Class<?> clazz1 = curDispatchTaskExecutor.getClass();
+
+			Class<?> clazz2 = dispatchTaskExecutor.getClass();
+
+			_log.error(
+				StringBundler.concat(
+					_KEY_DISPATCH_TASK_EXECUTOR_TYPE, " property must have ",
+					"unique value. The same value found in ", clazz1.getName(),
+					" and ", clazz2.getName(), StringPool.PERIOD));
+		}
+	}
+
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_NAME =
 		"dispatch.task.executor.name";
 
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_TYPE =
 		"dispatch.task.executor.type";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DispatchTaskExecutorHelperImpl.class);
 
 	private final Map<String, DispatchTaskExecutor>
 		_typeToDispatchTaskExecutorMap = new HashMap<>();

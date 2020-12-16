@@ -39,11 +39,11 @@ export function stopImmediatePropagation(event) {
 /**
  * Returns all targetable elements within `element`
  *
- * Currently, that means all visible "a" and "button" elements which
- * have an "id".
+ * Currently, that means all visible "a", "button" and "input[type=submit]"
+ * elements which have an "id".
  */
 export function getTargetableElements(element) {
-	const elements = element.querySelectorAll('a, button');
+	const elements = element.querySelectorAll('a, button, input[type=submit]');
 
 	// As first cut, only deal with items that have an id.
 

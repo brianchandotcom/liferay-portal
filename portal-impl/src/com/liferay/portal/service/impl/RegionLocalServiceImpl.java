@@ -14,10 +14,13 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -84,6 +87,20 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		// Address
 
 		addressLocalService.deleteRegionAddresses(region.getRegionId());
+
+		// Organizations
+
+		List<Organization> organizations = organizationLocalService.search(
+			region.getCompanyId(),
+			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null,
+			region.getRegionId(), region.getCountryId(), null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Organization organization : organizations) {
+			organization.setRegionId(0);
+
+			organizationLocalService.updateOrganization(organization);
+		}
 
 		return region;
 	}

@@ -2347,7 +2347,7 @@ definition {
 				var webContentMultipleSelectionFieldLabel = "Multiple Selection";
 			}
 
-			AssertChecked(
+			AssertChecked.assertCheckedNotVisible(
 				key_fieldFieldLabel = "${webContentMultipleSelectionFieldLabel}",
 				key_optionValue = "${webContentMultipleSelection}",
 				locator1 = "WCEditWebContent#SELECTION_OPTION");
@@ -2406,7 +2406,7 @@ definition {
 				var webContentSingleSelectionFieldLabel = "Single Selection";
 			}
 
-			AssertChecked(
+			AssertChecked.assertCheckedNotVisible(
 				key_fieldFieldLabel = "${webContentSingleSelectionFieldLabel}",
 				key_optionValue = "${webContentSingleSelection}",
 				locator1 = "WCEditWebContent#SELECTION_OPTION");

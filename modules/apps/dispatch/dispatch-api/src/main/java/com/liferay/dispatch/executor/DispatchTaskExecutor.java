@@ -34,8 +34,9 @@ public interface DispatchTaskExecutor {
 		throws IOException, PortalException;
 
 	/**
-	 * This method returns the name of the scheduled task
+	 * @deprecated As of Cavanaugh (7.4.x), (7.4.x), with no direct replacement
 	 */
+	@Deprecated
 	public String getName();
 
 }

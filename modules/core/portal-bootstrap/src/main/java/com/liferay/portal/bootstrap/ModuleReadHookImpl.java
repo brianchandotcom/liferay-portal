@@ -15,15 +15,14 @@
 package com.liferay.portal.bootstrap;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -62,12 +61,19 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 
 		try {
 			if (location.startsWith("file")) {
-				String jarLocation = _getSourceJarLocation(location);
+				String jarLocation = _normalizePath(location);
 
 				if (jarLocation.startsWith(
-						PropsValues.MODULE_FRAMEWORK_BASE_DIR)) {
+						_normalizePath(
+							PropsValues.MODULE_FRAMEWORK_BASE_DIR))) {
 
-					Files.copy(Paths.get(jarLocation), path);
+					int index = location.indexOf(StringPool.QUESTION);
+
+					if (index != -1) {
+						location = location.substring(0, index);
+					}
+
+					Files.copy(Paths.get(new URI(location)), path);
 				}
 			}
 			else {
@@ -75,7 +81,7 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 
 				if (matcher.find()) {
 					try (ZipFile zipFile = new ZipFile(
-							_getSourceJarLocation(matcher.group(2)));
+							_normalizePath(matcher.group(2)));
 						InputStream inputStream = zipFile.getInputStream(
 							zipFile.getEntry(matcher.group(1)))) {
 
@@ -87,25 +93,44 @@ public class ModuleReadHookImpl implements ModuleReadHook {
 				}
 			}
 		}
-		catch (IOException ioException) {
+		catch (Exception exception) {
 			_log.error(
 				StringBundler.concat(
 					"Unable to copy from ", location, " to ", path),
-				ioException);
+				exception);
 		}
 	}
 
-	private String _getSourceJarLocation(String location) {
+	private String _normalizePath(String location) {
 		try {
-			URI uri = new URI(location);
+			int index = location.indexOf(StringPool.QUESTION);
 
-			uri = uri.normalize();
+			if (index != -1) {
+				location = location.substring(0, index);
+			}
+
+			URI uri = null;
+
+			Path path = null;
+
+			try {
+				uri = new URI(location);
+
+				uri = uri.normalize();
+
+				path = Paths.get(uri);
+			}
+			catch (Exception exception) {
+				path = Paths.get(location);
+			}
+
+			uri = path.toUri();
 
 			return uri.getPath();
 		}
-		catch (URISyntaxException uriSyntaxException) {
+		catch (Exception exception) {
 			throw new IllegalArgumentException(
-				"Unable to parse location " + location, uriSyntaxException);
+				"Unable to parse location " + location, exception);
 		}
 	}
 

@@ -511,6 +511,132 @@ components:
                                 The resource's title.
                             type: string
                     type: object
+        ContentPage:
+            description:
+                Represents a content page that has fields and is rendered by a template backed by a `PageTemplate`. This
+                is modeled internally as a `Layout`.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                aggregateRating:
+                    $ref: "#/components/schemas/AggregateRating"
+                availableLanguages:
+                    description:
+                        The list of languages the content page has a translation for.
+                    items:
+                        description:
+                            The list of languages the content page has a translation for.
+                        type: string
+                    readOnly: true
+                    type: array
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
+                dateCreated:
+                    description:
+                        The content page's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time any field of the content page was changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                datePublished:
+                    description:
+                        The content page's most recent publication date.
+                    format: date-time
+                    type: string
+                defaultRenderedPage:
+                    $ref: "#/components/schemas/RenderedPage"
+                friendlyUrlPath:
+                    description:
+                        A relative URL to the content page's rendered content.
+                    type: string
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                id:
+                    description:
+                        The page's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                keywords:
+                    description:
+                        A list of keywords describing the structured content.
+                    items:
+                        description:
+                            A list of keywords describing the structured content.
+                        type: string
+                    type: array
+                pageDefinition:
+                    $ref: "#/components/schemas/PageDefinition"
+                pageSettings:
+                    $ref: "#/components/schemas/PageSettings"
+                privatePage:
+                    type: boolean
+                renderedPages:
+                    description:
+                        A list of rendered pages, which results from using the template and the appropriate viewport to
+                        process the page and return HTML.
+                    items:
+                        $ref: "#/components/schemas/RenderedPage"
+                    readOnly: true
+                    type: array
+                siteId:
+                    description:
+                        The ID of the site to which this content page is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                taxonomyCategoryBriefs:
+                    description:
+                        The categories associated with this structured content.
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                title:
+                    description:
+                        the title of the content page
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                uuid:
+                    description:
+                        A valid external identifier to reference this content page.
+                    readOnly: true
+                    type: string
+                viewableBy:
+                    enum:
+                        - Anyone
+                        - Members
+                        - Owner
+                    type: string
+                    writeOnly: true
+            required:
+                - title
+            type: object
         ContentSetElement:
             description:
                 Represents each member of a content set and can contain different types of assets.
@@ -894,6 +1020,19 @@ components:
                     description:
                         The field's internal name. This is valid for comparisons and unique in the structured content.
                     type: string
+        CustomMetaTag:
+            description:
+                ""
+            properties:
+                key:
+                    type: string
+                value:
+                    type: string
+                value_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+            type: object
         DisplayPageTemplate:
             description:
                 ""
@@ -2241,6 +2380,23 @@ components:
                     type: string
                 useCustomName:
                     type: boolean
+        OpenGraphSettings:
+            properties:
+                description:
+                    type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                image:
+                    $ref: "#/components/schemas/ContentDocument"
+                title:
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+            type: object
         PageCollectionDefinition:
             description:
                 ""
@@ -2327,20 +2483,7 @@ components:
                 pageElement:
                     $ref: "#/components/schemas/PageElement"
                 settings:
-                    properties:
-                        colorSchemeName:
-                            type: string
-                        css:
-                            type: string
-                        javascript:
-                            type: string
-                        masterPage:
-                            $ref: "#/components/schemas/MasterPage"
-                        themeName:
-                            type: string
-                        themeSettings:
-                            type: object
-                    type: object
+                    $ref: "#/components/schemas/Settings"
             type: object
         PageDropZoneDefinition:
             properties:
@@ -2548,6 +2691,21 @@ components:
                             type: string
                     type: object
             type: object
+        PageSettings:
+            description:
+                ""
+            properties:
+                customMetaTags:
+                    items:
+                        $ref: "#/components/schemas/CustomMetaTag"
+                    type: array
+                hiddenFromNavigation:
+                    type: boolean
+                openGraphSettings:
+                    $ref: "#/components/schemas/OpenGraphSettings"
+                seoSettings:
+                    $ref: "#/components/schemas/SEOSettings"
+            type: object
         PageTemplate:
             description:
                 ""
@@ -2715,6 +2873,34 @@ components:
                         The title of the content.
                     readOnly: true
                     type: string
+        RenderedPage:
+            description:
+                A list of rendered pages, which results from using a page template and the appropriate viewport to
+                process the page and return HTML.
+            properties:
+                masterPageId:
+                    readOnly: true
+                    type: string
+                masterPageName:
+                    description:
+                        The name of the master page used to render the content.
+                    type: string
+                pageTemplateId:
+                    readOnly: true
+                    type: string
+                pageTemplateName:
+                    description:
+                        The name of the template used to render the content.
+                    type: string
+                renderedPageURL:
+                    description:
+                        An absolute URL to the rendered page.
+                    type: string
+                viewPortType:
+                    description:
+                        The viewport for which this rendered page has been designed.
+                    type: string
+            type: object
         RowViewport:
             additionalProperties: false
             properties:
@@ -2733,6 +2919,58 @@ components:
             required:
                 - id
                 - rowViewportDefinition
+            type: object
+        SEOSettings:
+            properties:
+                customCanonicalURL:
+                    type: string
+                customCanonicalURL_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                description:
+                    type: string
+                    description:
+                        The page's description.
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                htmlTitle:
+                    description:
+                        The page's main title.
+                    type: string
+                htmlTitle_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                robots:
+                    type: string
+                robots_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                seoKeywords:
+                    type: string
+                seoKeywords_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+            type: object
+        Settings:
+            properties:
+                colorSchemeName:
+                    type: string
+                css:
+                    type: string
+                javascript:
+                    type: string
+                masterPage:
+                    $ref: "#/components/schemas/MasterPage"
+                themeName:
+                    type: string
+                themeSettings:
+                    type: object
             type: object
         StructuredContent:
             description:
@@ -7407,6 +7645,176 @@ paths:
                     description:
                         ""
             tags: ["ContentElement"]
+    "/sites/{siteId}/content-pages":
+        get:
+            # @review
+            description:
+                Retrieves the content pages of the site
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentPage"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentPage"
+                                type: array
+                    description:
+                        ""
+            tags: ["ContentPage"]
+    "/sites/{siteId}/content-pages/private/{friendlyUrlPath}":
+        get:
+            # @review
+            description:
+                Retrieves a specific private content page of a site
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ContentPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ContentPage"
+                    description:
+                        ""
+            tags: ["ContentPage"]
+    "/sites/{siteId}/content-pages/private/{friendlyUrlPath}/rendered-page":
+        get:
+            description:
+                Retrieves the rendered content of a given page.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: [ "ContentPage" ]
+    "/sites/{siteId}/content-pages/public/{friendlyUrlPath}":
+        get:
+            # @review
+            description:
+                Retrieves a specific public content page of a site
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ContentPage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ContentPage"
+                    description:
+                        ""
+            tags: ["ContentPage"]
+    "/sites/{siteId}/content-pages/public/{friendlyUrlPath}/rendered-page":
+        get:
+            description:
+                Retrieves the rendered content of a given page.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: [ "ContentPage" ]
     "/sites/{siteId}/content-sets/by-key/{key}/content-set-elements":
         get:
             description:

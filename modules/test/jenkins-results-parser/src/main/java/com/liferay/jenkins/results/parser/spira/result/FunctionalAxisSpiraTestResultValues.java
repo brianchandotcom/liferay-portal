@@ -51,6 +51,26 @@ public class FunctionalAxisSpiraTestResultValues
 		_functionalAxisSpiraTestResult = functionalAxisSpiraTestResult;
 	}
 
+	@Override
+	protected String getBatchPropertyValue(String batchPropertyType) {
+		String batchPropertyValue = super.getBatchPropertyValue(
+			batchPropertyType);
+
+		if ((batchPropertyValue != null) && !batchPropertyValue.isEmpty()) {
+			return batchPropertyValue;
+		}
+
+		batchPropertyValue =
+			_functionalAxisSpiraTestResult.getPoshiPropertyValue(
+				batchPropertyType);
+
+		if ((batchPropertyValue != null) && !batchPropertyValue.isEmpty()) {
+			return batchPropertyValue;
+		}
+
+		return null;
+	}
+
 	private SpiraCustomPropertyValue _getErrorMessageValue() {
 		TestResult testResult = _functionalAxisSpiraTestResult.getTestResult();
 

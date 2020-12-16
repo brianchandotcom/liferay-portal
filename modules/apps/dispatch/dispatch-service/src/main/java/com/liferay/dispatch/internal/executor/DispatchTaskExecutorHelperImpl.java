@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.dispatch.web.internal.display.context.util;
+package com.liferay.dispatch.internal.executor;
 
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,16 +31,22 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Matija Petanjek
  */
 @Component(service = DispatchTaskExecutorHelper.class)
-public class DispatchTaskExecutorHelper {
+public class DispatchTaskExecutorHelperImpl
+	implements DispatchTaskExecutorHelper {
 
-	public DispatchTaskExecutor getDispatchTaskExecutor(String type) {
-		return _typeToDispatchTaskExecutorMap.get(type);
+	@Override
+	public DispatchTaskExecutor getDispatchTaskExecutor(
+		String taskExecutorType) {
+
+		return _typeToDispatchTaskExecutorMap.get(taskExecutorType);
 	}
 
-	public String getDispatchTaskExecutorName(String type) {
-		return _typeToNameMap.get(type);
+	@Override
+	public String getDispatchTaskExecutorName(String taskExecutorType) {
+		return _typeToNameMap.get(taskExecutorType);
 	}
 
+	@Override
 	public Set<String> getDispatchTaskExecutorTypes() {
 		return _typeToNameMap.keySet();
 	}

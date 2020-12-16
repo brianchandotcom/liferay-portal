@@ -14,10 +14,10 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
+import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.web.internal.display.context.util.DispatchRequestHelper;
-import com.liferay.dispatch.web.internal.display.context.util.DispatchTaskExecutorHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -151,8 +151,9 @@ public class DispatchTriggerDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getTaskExecutorName(String type) {
-		return _dispatchTaskExecutorHelper.getDispatchTaskExecutorName(type);
+	public String getTaskExecutorName(String taskExecutorType) {
+		return _dispatchTaskExecutorHelper.getDispatchTaskExecutorName(
+			taskExecutorType);
 	}
 
 	public Set<String> getTaskExecutorTypes() {

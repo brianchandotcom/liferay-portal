@@ -2278,7 +2278,7 @@ definition {
 
 			AssertTextEquals.assertValue(
 				key_fieldFieldLabel = "${webContentColorFieldLabel}",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
+				locator1 = "TextInput#SELECTOR_INPUT",
 				value1 = "${webContentColor}");
 		}
 

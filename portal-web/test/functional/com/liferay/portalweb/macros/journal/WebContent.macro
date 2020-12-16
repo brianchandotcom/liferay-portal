@@ -2361,7 +2361,7 @@ definition {
 			AssertTextEquals.assertValue(
 				key_fieldFieldLabel = "${webContentNumericFieldLabel}",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "${webContentNumber}");
+				value1 = "${webContentNumeric}");
 		}
 
 		if (isSet(webContentRichText)) {

@@ -43,6 +43,10 @@ public interface SpiraTestResult {
 
 	public SpiraTestCaseType getSpiraTestCaseType();
 
+	public SpiraTestResultDetails getSpiraTestResultDetails();
+
+	public SpiraTestResultValues getSpiraTestResultValues();
+
 	public String getTestName();
 
 	public void record();

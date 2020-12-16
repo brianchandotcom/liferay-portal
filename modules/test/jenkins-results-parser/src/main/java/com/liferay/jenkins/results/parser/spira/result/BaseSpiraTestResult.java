@@ -27,11 +27,6 @@ import com.liferay.jenkins.results.parser.spira.SpiraTestCaseFolder;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
 
-import java.util.Calendar;
-import java.util.List;
-
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
@@ -137,6 +132,16 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 	}
 
 	@Override
+	public SpiraTestResultDetails getSpiraTestResultDetails() {
+		return _spiraTestResultDetails;
+	}
+
+	@Override
+	public SpiraTestResultValues getSpiraTestResultValues() {
+		return _spiraTestResultValues;
+	}
+
+	@Override
 	public void record() {
 		long start = System.currentTimeMillis();
 
@@ -152,10 +157,17 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 
 	protected BaseSpiraTestResult(SpiraBuildResult spiraBuildResult) {
 		this.spiraBuildResult = spiraBuildResult;
+
+		_spiraTestResultDetails = SpiraResultFactory.newSpiraTestResultDetails(
+			this);
+		_spiraTestResultValues = SpiraResultFactory.newSpiraTestResultValues(
+			this);
 	}
 
 	protected final SpiraBuildResult spiraBuildResult;
 
 	private SpiraTestCaseObject _spiraTestCaseObject;
+	private final SpiraTestResultDetails _spiraTestResultDetails;
+	private final SpiraTestResultValues _spiraTestResultValues;
 
 }

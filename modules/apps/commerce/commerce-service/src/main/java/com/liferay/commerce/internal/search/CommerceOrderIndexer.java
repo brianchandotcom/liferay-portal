@@ -81,6 +81,13 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
+		long[] groupIds = searchContext.getGroupIds();
+
+		if ((groupIds == null) || (groupIds.length == 0)) {
+			contextBooleanFilter.addTerm(
+				Field.GROUP_ID, "-1", BooleanClauseOccur.MUST);
+		}
+
 		long[] commerceAccountIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("commerceAccountIds"), null);
 

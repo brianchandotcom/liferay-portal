@@ -58,7 +58,7 @@ public class DispatchTalendScreenNavigationCategory
 
 	@Override
 	public String getCategoryKey() {
-		return TalendDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TALEND;
+		return TalendDispatchTaskExecutor.TALEND;
 	}
 
 	@Override
@@ -84,8 +84,7 @@ public class DispatchTalendScreenNavigationCategory
 		if ((dispatchTrigger == null) ||
 			!Objects.equals(
 				dispatchTrigger.getTaskExecutorType(),
-				TalendDispatchTaskExecutor.
-					DISPATCH_TASK_EXECUTOR_TYPE_TALEND) ||
+				TalendDispatchTaskExecutor.TALEND) ||
 			!_omniadmin.isOmniadmin(user)) {
 
 			return false;

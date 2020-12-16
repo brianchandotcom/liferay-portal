@@ -50,12 +50,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "dispatch.task.executor.type=" + TalendDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TALEND,
+	property = {
+		"dispatch.task.executor.name=" + TalendDispatchTaskExecutor.TALEND,
+		"dispatch.task.executor.type=" + TalendDispatchTaskExecutor.TALEND
+	},
 	service = DispatchTaskExecutor.class
 )
 public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
-	public static final String DISPATCH_TASK_EXECUTOR_TYPE_TALEND = "talend";
+	public static final String TALEND = "talend";
 
 	@Override
 	public void doExecute(
@@ -102,7 +105,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Override
 	public String getName() {
-		return DISPATCH_TASK_EXECUTOR_TYPE_TALEND;
+		return null;
 	}
 
 	protected TalendArchive fetchTalendArchive(long dispatchTriggerId)

@@ -17,6 +17,7 @@ package com.liferay.wiki.internal.upgrade;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -64,7 +65,8 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 			"1.1.0", "1.1.1",
 			new UpgradeDiscussionSubscriptionClassName(
 				_assetEntryLocalService, _classNameLocalService,
-				_subscriptionLocalService, WikiPage.class.getName(),
+				_groupLocalService, _subscriptionLocalService,
+				WikiPage.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 
 		registry.register(
@@ -93,6 +95,9 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

@@ -27,6 +27,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
@@ -76,7 +77,8 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 			"3.0.0", "3.0.1",
 			new UpgradeDiscussionSubscriptionClassName(
 				_assetEntryLocalService, _classNameLocalService,
-				_subscriptionLocalService, DLFileEntry.class.getName(),
+				_groupLocalService, _subscriptionLocalService,
+				DLFileEntry.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 
 		registry.register(
@@ -97,6 +99,9 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private PrefsPropsToConfigurationUpgradeHelper

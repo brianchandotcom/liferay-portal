@@ -33,6 +33,7 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -100,7 +101,8 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 			"3.0.0", "3.0.1",
 			new UpgradeDiscussionSubscriptionClassName(
 				_assetEntryLocalService, _classNameLocalService,
-				_subscriptionLocalService, CalendarBooking.class.getName(),
+				_groupLocalService, _subscriptionLocalService,
+				CalendarBooking.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 
 		registry.register(
@@ -116,7 +118,8 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 			"4.0.0", "4.0.1",
 			new UpgradeDiscussionSubscriptionClassName(
 				_assetEntryLocalService, _classNameLocalService,
-				_subscriptionLocalService, CalendarBooking.class.getName(),
+				_groupLocalService, _subscriptionLocalService,
+				CalendarBooking.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.
 					DELETE_OLD));
 
@@ -153,6 +156,9 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

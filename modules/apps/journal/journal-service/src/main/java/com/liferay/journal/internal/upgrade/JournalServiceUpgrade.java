@@ -207,7 +207,8 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"1.1.6", "1.1.7",
 			new UpgradeDiscussionSubscriptionClassName(
 				_assetEntryLocalService, _classNameLocalService,
-				_subscriptionLocalService, JournalArticle.class.getName(),
+				_groupLocalService, _subscriptionLocalService,
+				JournalArticle.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 
 		registry.register("1.1.7", "1.1.8", new UpgradeJournalArticle());

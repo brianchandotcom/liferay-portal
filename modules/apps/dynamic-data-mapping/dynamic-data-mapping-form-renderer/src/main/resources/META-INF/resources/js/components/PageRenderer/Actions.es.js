@@ -129,7 +129,7 @@ export const ActionsControls = forwardRef(
 );
 
 export const Actions = forwardRef(
-	({activePage, children, expanded, field, isFieldSet}, actionsRef) => {
+	({activePage, expanded, field, isFieldSet}, actionsRef) => {
 		const dispatch = useForm();
 
 		const DROPDOWN_ACTIONS = [
@@ -151,35 +151,33 @@ export const Actions = forwardRef(
 			},
 		];
 
-		return (
-			<>
-				{expanded && (
-					<div
-						className={classNames('ddm-field-actions-container', {
-							'ddm-fieldset': isFieldSet,
-						})}
-						ref={actionsRef}
-					>
-						<span className="actions-label">{field.label}</span>
+		if (expanded) {
+			return (
+				<div
+					className={classNames('ddm-field-actions-container', {
+						'ddm-fieldset': isFieldSet,
+					})}
+					ref={actionsRef}
+				>
+					<span className="actions-label">{field.label}</span>
 
-						<ClayDropDownWithItems
-							className="dropdown-action"
-							items={DROPDOWN_ACTIONS}
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('actions')}
-									data-title={Liferay.Language.get('actions')}
-									displayType="unstyled"
-									symbol="ellipsis-v"
-								/>
-							}
-						/>
-					</div>
-				)}
+					<ClayDropDownWithItems
+						className="dropdown-action"
+						items={DROPDOWN_ACTIONS}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('actions')}
+								data-title={Liferay.Language.get('actions')}
+								displayType="unstyled"
+								symbol="ellipsis-v"
+							/>
+						}
+					/>
+				</div>
+			);
+		}
 
-				{children}
-			</>
-		);
+		return null;
 	}
 );
 

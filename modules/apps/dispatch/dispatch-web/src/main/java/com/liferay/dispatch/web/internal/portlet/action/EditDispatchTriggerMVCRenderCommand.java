@@ -17,10 +17,9 @@ package com.liferay.dispatch.web.internal.portlet.action;
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext;
+import com.liferay.dispatch.web.internal.display.context.util.DispatchTaskExecutorHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Collections;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -48,14 +47,17 @@ public class EditDispatchTriggerMVCRenderCommand implements MVCRenderCommand {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
-				_dispatchTriggerLocalService, renderRequest,
-				Collections.emptySet());
+				_dispatchTaskExecutorHelper, _dispatchTriggerLocalService,
+				renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, dispatchTriggerDisplayContext);
 
 		return "/edit_dispatch_trigger.jsp";
 	}
+
+	@Reference
+	private DispatchTaskExecutorHelper _dispatchTaskExecutorHelper;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

@@ -926,6 +926,10 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			advanceStatus, commerceContext, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public CommerceOrder upsertCommerceOrder(
 			long userId, long groupId, long commerceAccountId,

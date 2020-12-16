@@ -2228,22 +2228,6 @@ definition {
 		task ("Assert the predefined value are shown in each field") {
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-			PortletEntry.inputTitle(title = "Web Content With Predefined Value");
-
-			WebContent.addWithStructureCP(
-				webContentColor = "FF0000",
-				webContentDate = "10/10/2020",
-				webContentMultipleSelection = "Boolean",
-				webContentNumeric = "9",
-				webContentRichText = "This is a Rich Text field",
-				webContentSelectFromList = "value 2",
-				webContentSingleSelection = "value 1",
-				webContentText = "This is a Text field",
-				webContentUpload = "Document_1.jpg",
-				webContentWebContent = "Web Content Title");
-
-			WebContentAdmin.gotoEntry(entry = "Web Content With Predefined Value");
-
 			WebContent.viewWithStructureCP(
 				predefinedValue = "true",
 				webContentColor = "FF0000",

@@ -21,9 +21,10 @@ import com.nimbusds.oauth2.sdk.id.State;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.token.RefreshToken;
 import com.nimbusds.openid.connect.sdk.Nonce;
-import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 
 import java.io.Serializable;
+
+import net.minidev.json.JSONObject;
 
 /**
  * @author Edward C. Han
@@ -95,8 +96,8 @@ public class OpenIdConnectSessionImpl
 		return _state.getValue();
 	}
 
-	public UserInfo getUserInfo() {
-		return _userInfo;
+	public JSONObject getUserInfoJSONObject() {
+		return _userInfoJSONObject;
 	}
 
 	public void setAccessToken(AccessToken accessToken) {
@@ -122,8 +123,8 @@ public class OpenIdConnectSessionImpl
 		_refreshToken = refreshToken;
 	}
 
-	public void setUserInfo(UserInfo userInfo) {
-		_userInfo = userInfo;
+	public void setUserInfoJSONObject(JSONObject userInfoJSONObject) {
+		_userInfoJSONObject = userInfoJSONObject;
 	}
 
 	private AccessToken _accessToken;
@@ -135,6 +136,6 @@ public class OpenIdConnectSessionImpl
 	private final String _openIdProviderName;
 	private RefreshToken _refreshToken;
 	private final State _state;
-	private UserInfo _userInfo;
+	private JSONObject _userInfoJSONObject;
 
 }

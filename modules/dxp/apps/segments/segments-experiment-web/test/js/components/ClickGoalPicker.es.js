@@ -40,7 +40,7 @@ describe('ClickGoalPicker', () => {
 		expect(getByText('element-id')).toBeInTheDocument();
 	});
 
-	it('User clicks in select clickable element button, the button turns from default to active mode', () => {
+	it('User clicks in "Select Clickable Element" button, the button turns from default to active mode', () => {
 		const experiment = {
 			...segmentsExperiment,
 			goal: {
@@ -62,7 +62,7 @@ describe('ClickGoalPicker', () => {
 		expect(clickGoalRoot).not.toBe(null);
 	});
 
-	it('The user can set a click target element in a draft experiment', () => {
+	it('The user can select a clickable element in a draft experiment', () => {
 		const experiment = {
 			...segmentsExperiment,
 			goal: {
@@ -85,7 +85,7 @@ describe('ClickGoalPicker', () => {
 		);
 	});
 
-	it('The user can edit a selected click target element in a draft experiment', () => {
+	it('The user can change a clickable element in a draft experiment', () => {
 		const experiment = {
 			...segmentsExperiment,
 			goal: {
@@ -104,7 +104,7 @@ describe('ClickGoalPicker', () => {
 		expect(editElement.attributes['disabled']).toBe(undefined);
 	});
 
-	it('When the user select element as click target, then the element is select as the click target and the id of the element displays inside the input', () => {
+	it('The user selects a clickable element target and the HTML id of the element displays inside the input', () => {
 		const experiment = {
 			...segmentsExperiment,
 			goal: {

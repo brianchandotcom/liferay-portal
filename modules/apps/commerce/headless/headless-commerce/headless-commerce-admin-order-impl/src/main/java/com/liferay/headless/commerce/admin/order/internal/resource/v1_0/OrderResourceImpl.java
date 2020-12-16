@@ -499,7 +499,8 @@ public class OrderResourceImpl
 		}
 
 		CommerceOrder commerceOrder = _commerceOrderService.upsertCommerceOrder(
-			contextUser.getUserId(), commerceChannel.getGroupId(),
+			order.getExternalReferenceCode(), contextUser.getUserId(),
+			commerceChannel.getGroupId(),
 			commerceAccount.getCommerceAccountId(),
 			commerceCurrency.getCommerceCurrencyId(),
 			GetterUtil.getLong(order.getBillingAddressId()),
@@ -515,7 +516,7 @@ public class OrderResourceImpl
 			GetterUtil.getInteger(
 				order.getOrderStatus(),
 				CommerceOrderConstants.ORDER_STATUS_PENDING),
-			order.getAdvanceStatus(), order.getExternalReferenceCode(),
+			order.getAdvanceStatus(),
 			_commerceContextFactory.create(
 				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
 				contextUser.getUserId(), 0,

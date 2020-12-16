@@ -190,8 +190,8 @@ public class DLVideoExternalShortcutResolverTest {
 		Assert.assertEquals(
 			expectedIframe,
 			_renderHTML(
-				"https://www.youtube.com/watch?ab_channel=CHANNEL_ID&v=" +
-					"VIDEO_ID"));
+				"https://www.youtube.com/watch?v=VIDEO_ID&ab_channel=" +
+					"CHANNEL_ID"));
 		Assert.assertEquals(
 			expectedIframe,
 			_renderHTML(
@@ -211,7 +211,7 @@ public class DLVideoExternalShortcutResolverTest {
 				"height=\"315\" frameborder=\"0\" ",
 				"src=\"https://www.youtube.com/embed",
 				"/VIDEO_ID?rel=0&start=61\" width=\"560\"></iframe>"),
-			_renderHTML("https://www.youtube.com/watch?t=61&v=VIDEO_ID"));
+			_renderHTML("https://www.youtube.com/watch?v=VIDEO_ID&t=61"));
 	}
 
 	private String _renderHTML(String url) {

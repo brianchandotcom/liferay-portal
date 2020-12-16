@@ -130,6 +130,11 @@ public class EditGroupMVCActionCommand extends BaseMVCActionCommand {
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Throwable throwable) {
+			if (throwable instanceof Exception) {
+				throw (Exception)throwable;
+			}
+
+			throw new Exception(throwable);
 		}
 	}
 

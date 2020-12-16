@@ -129,6 +129,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		if ((PropsValues.DATA_LIMIT_MAX_ROLE_COUNT > 0) &&
+			(rolePersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_ROLE_COUNT)) {
+
+			throw new PortalException("Exceed maximum allowed roles");
+		}
+
 		className = GetterUtil.getString(className);
 
 		long classNameId = classNameLocalService.getClassNameId(className);

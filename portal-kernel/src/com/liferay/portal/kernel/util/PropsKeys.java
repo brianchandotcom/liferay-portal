@@ -658,6 +658,21 @@ public interface PropsKeys {
 	public static final String CUSTOM_SQL_FUNCTION_ISNULL =
 		"custom.sql.function.isnull";
 
+	public static final String DATA_LIMIT_MAX_ORGANIZATION_COUNT =
+		"data.limit.max.organization.count";
+
+	public static final String DATA_LIMIT_MAX_ROLE_COUNT =
+		"data.limit.max.role.count";
+
+	public static final String DATA_LIMIT_MAX_SITE_COUNT =
+		"data.limit.max.site.count";
+
+	public static final String DATA_LIMIT_MAX_TEAM_COUNT =
+		"data.limit.max.team.count";
+
+	public static final String DATA_LIMIT_MAX_USER_COUNT =
+		"data.limit.max.user.count";
+
 	public static final String DATABASE_IN_MAX_PARAMETERS =
 		"database.in.max.parameters";
 

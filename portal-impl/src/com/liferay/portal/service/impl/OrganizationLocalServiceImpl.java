@@ -246,6 +246,13 @@ public class OrganizationLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		if ((PropsValues.DATA_LIMIT_MAX_ORGANIZATION_COUNT > 0) &&
+			(organizationPersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_ORGANIZATION_COUNT)) {
+
+			throw new PortalException("Exceed maximum allowed organizations");
+		}
+
 		parentOrganizationId = getParentOrganizationId(
 			user.getCompanyId(), parentOrganizationId);
 

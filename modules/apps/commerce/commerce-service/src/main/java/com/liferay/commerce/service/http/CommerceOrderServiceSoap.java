@@ -1287,6 +1287,10 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.model.CommerceOrderSoap
 			upsertCommerceOrder(
 				long userId, long groupId, long commerceAccountId,
@@ -1349,6 +1353,87 @@ public class CommerceOrderServiceSoap {
 					shippingOptionName, purchaseOrderNumber, subtotal,
 					shippingAmount, total, paymentStatus, orderStatus,
 					advanceStatus, externalReferenceCode, commerceContext,
+					serviceContext);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap
+			upsertCommerceOrder(
+				String externalReferenceCode, long userId, long groupId,
+				long commerceAccountId, long commerceCurrencyId,
+				long billingAddressId, long shippingAddressId,
+				String commercePaymentMethodKey, long commerceShippingMethodId,
+				String shippingOptionName, String purchaseOrderNumber,
+				java.math.BigDecimal subtotal,
+				java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
+				java.math.BigDecimal subtotalWithTaxAmount,
+				java.math.BigDecimal shippingWithTaxAmount,
+				java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
+				int orderDateMonth, int orderDateDay, int orderDateYear,
+				int orderDateHour, int orderDateMinute, int orderStatus,
+				String advanceStatus,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue =
+				CommerceOrderServiceUtil.upsertCommerceOrder(
+					externalReferenceCode, userId, groupId, commerceAccountId,
+					commerceCurrencyId, billingAddressId, shippingAddressId,
+					commercePaymentMethodKey, commerceShippingMethodId,
+					shippingOptionName, purchaseOrderNumber, subtotal,
+					shippingAmount, total, subtotalWithTaxAmount,
+					shippingWithTaxAmount, totalWithTaxAmount, paymentStatus,
+					orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
+					orderDateMinute, orderStatus, advanceStatus,
+					commerceContext, serviceContext);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap
+			upsertCommerceOrder(
+				String externalReferenceCode, long userId, long groupId,
+				long commerceAccountId, long commerceCurrencyId,
+				long billingAddressId, long shippingAddressId,
+				String commercePaymentMethodKey, long commerceShippingMethodId,
+				String shippingOptionName, String purchaseOrderNumber,
+				java.math.BigDecimal subtotal,
+				java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
+				java.math.BigDecimal subtotalWithTaxAmount,
+				java.math.BigDecimal shippingWithTaxAmount,
+				java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
+				int orderStatus, String advanceStatus,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue =
+				CommerceOrderServiceUtil.upsertCommerceOrder(
+					externalReferenceCode, userId, groupId, commerceAccountId,
+					commerceCurrencyId, billingAddressId, shippingAddressId,
+					commercePaymentMethodKey, commerceShippingMethodId,
+					shippingOptionName, purchaseOrderNumber, subtotal,
+					shippingAmount, total, subtotalWithTaxAmount,
+					shippingWithTaxAmount, totalWithTaxAmount, paymentStatus,
+					orderStatus, advanceStatus, commerceContext,
 					serviceContext);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(

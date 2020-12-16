@@ -2557,6 +2557,127 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder upsertCommerceOrder(
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, java.math.BigDecimal subtotal,
+			java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
+			java.math.BigDecimal subtotalWithTaxAmount,
+			java.math.BigDecimal shippingWithTaxAmount,
+			java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
+			int orderDateMonth, int orderDateDay, int orderDateYear,
+			int orderDateHour, int orderDateMinute, int orderStatus,
+			String advanceStatus,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderServiceUtil.class, "upsertCommerceOrder",
+				_upsertCommerceOrderParameterTypes56);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, userId, groupId,
+				commerceAccountId, commerceCurrencyId, billingAddressId,
+				shippingAddressId, commercePaymentMethodKey,
+				commerceShippingMethodId, shippingOptionName,
+				purchaseOrderNumber, subtotal, shippingAmount, total,
+				subtotalWithTaxAmount, shippingWithTaxAmount,
+				totalWithTaxAmount, paymentStatus, orderDateMonth, orderDateDay,
+				orderDateYear, orderDateHour, orderDateMinute, orderStatus,
+				advanceStatus, commerceContext, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.model.CommerceOrder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder upsertCommerceOrder(
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, java.math.BigDecimal subtotal,
+			java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
+			java.math.BigDecimal subtotalWithTaxAmount,
+			java.math.BigDecimal shippingWithTaxAmount,
+			java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
+			int orderStatus, String advanceStatus,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderServiceUtil.class, "upsertCommerceOrder",
+				_upsertCommerceOrderParameterTypes57);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, userId, groupId,
+				commerceAccountId, commerceCurrencyId, billingAddressId,
+				shippingAddressId, commercePaymentMethodKey,
+				commerceShippingMethodId, shippingOptionName,
+				purchaseOrderNumber, subtotal, shippingAmount, total,
+				subtotalWithTaxAmount, shippingWithTaxAmount,
+				totalWithTaxAmount, paymentStatus, orderStatus, advanceStatus,
+				commerceContext, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.model.CommerceOrder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CommerceOrderServiceHttp.class);
 
@@ -2799,6 +2920,29 @@ public class CommerceOrderServiceHttp {
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, int.class, int.class, String.class,
 			String.class, com.liferay.commerce.context.CommerceContext.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _upsertCommerceOrderParameterTypes56 =
+		new Class[] {
+			String.class, long.class, long.class, long.class, long.class,
+			long.class, long.class, String.class, long.class, String.class,
+			String.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, String.class,
+			com.liferay.commerce.context.CommerceContext.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _upsertCommerceOrderParameterTypes57 =
+		new Class[] {
+			String.class, long.class, long.class, long.class, long.class,
+			long.class, long.class, String.class, long.class, String.class,
+			String.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, int.class, int.class, String.class,
+			com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

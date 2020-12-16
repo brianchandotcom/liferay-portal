@@ -13,7 +13,6 @@
  */
 
 import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
@@ -21,14 +20,14 @@ class StateSyncronizer extends Component {
 	created() {
 		const {descriptionEditor, nameEditor, translationManager} = this.props;
 
-		this._eventHandler = new EventHandler();
+		descriptionEditor.addEventListener(
+			'input',
+			this._handleDescriptionEditorChanged.bind(this)
+		);
 
-		this._eventHandler.add(
-			descriptionEditor.on(
-				'change',
-				this._handleDescriptionEditorChanged.bind(this)
-			),
-			nameEditor.on('change', this._handleNameEditorChanged.bind(this))
+		nameEditor.addEventListener(
+			'input',
+			this._handleNameEditorChanged.bind(this)
 		);
 
 		if (translationManager) {
@@ -54,7 +53,16 @@ class StateSyncronizer extends Component {
 	}
 
 	disposed() {
-		this._eventHandler.removeAllListeners();
+		const {descriptionEditor, nameEditor} = this.props;
+
+		nameEditor.removeEventListener(
+			'input',
+			this._handleNameEditorChanged.bind(this)
+		);
+		descriptionEditor.removeEventListener(
+			'input',
+			this._handleDescriptionEditorChanged.bind(this)
+		);
 
 		if (this._translationManagerHandles) {
 			this._translationManagerHandles.forEach((handle) =>
@@ -151,7 +159,7 @@ class StateSyncronizer extends Component {
 			description = localizedDescription[this.getDefaultLanguageId()];
 		}
 
-		window[descriptionEditor.name].setHTML(description);
+		descriptionEditor.value = description;
 
 		let name = localizedName[editingLanguageId];
 
@@ -159,7 +167,7 @@ class StateSyncronizer extends Component {
 			name = localizedName[this.getDefaultLanguageId()];
 		}
 
-		window[nameEditor.name].setHTML(name);
+		nameEditor.value = name;
 	}
 
 	syncInputs() {
@@ -260,16 +268,15 @@ class StateSyncronizer extends Component {
 
 	_handleDescriptionEditorChanged() {
 		const {descriptionEditor, localizedDescription} = this.props;
-		const editor = window[descriptionEditor.name];
 
-		localizedDescription[this.getEditingLanguageId()] = editor.getHTML();
+		localizedDescription[this.getEditingLanguageId()] =
+			descriptionEditor.value;
 	}
 
 	_handleNameEditorChanged() {
 		const {localizedName, nameEditor} = this.props;
-		const editor = window[nameEditor.name];
 
-		localizedName[this.getEditingLanguageId()] = editor.getHTML();
+		localizedName[this.getEditingLanguageId()] = nameEditor.value;
 	}
 }
 

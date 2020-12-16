@@ -437,3 +437,49 @@ td.lfr-name-column {
 .modal {
 	max-width: none;
 }
+
+.portlet-forms {
+	.ddm-form-basic-info {
+		h1 > .form-group {
+			margin-bottom: 0;
+		}
+
+		.form-control {
+			background: transparent;
+			box-shadow: none;
+			font-weight: 600;
+			overflow: hidden;
+			resize: none;
+
+			&.ddm-form-name {
+				font-weight: 600;
+
+				&::placeholder {
+					color: #b0b4bb;
+					font-weight: 500;
+				}
+			}
+
+			&.ddm-form-description {
+				color: #000;
+				font-size: 14px;
+				font-weight: 400;
+				padding-top: 0;
+
+				&::placeholder {
+					color: #b0b4bb;
+				}
+			}
+		}
+
+		.ddm-placeholder {
+			&:focus::placeholder {
+				color: transparent;
+			}
+		}
+
+		.hidden {
+			display: none;
+		}
+	}
+}

@@ -90,29 +90,13 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		<div class="ddm-form-basic-info">
 			<clay:container-fluid>
 				<h1>
-					<liferay-editor:editor
-						autoCreate="<%= false %>"
-						contents="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormName()) %>"
-						cssClass="ddm-form-name"
-						editorName="alloyeditor"
-						name="nameEditor"
-						placeholder="untitled-element-set"
-						showSource="<%= false %>"
-					/>
+					<aui:input autoSize="<%= true %>" cssClass="ddm-form-name ddm-placeholder hidden" label="" name="nameEditor" placeholder='<%= LanguageUtil.get(request, "untitled-element-set") %>' type="textarea" value="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormName()) %>" />
 				</h1>
 
 				<aui:input name="name" type="hidden" />
 
 				<h5>
-					<liferay-editor:editor
-						autoCreate="<%= false %>"
-						contents="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormDescription()) %>"
-						cssClass="ddm-form-description h5"
-						editorName="alloyeditor"
-						name="descriptionEditor"
-						placeholder="add-a-short-description-for-this-element-set"
-						showSource="<%= false %>"
-					/>
+					<aui:input autoSize="<%= true %>" cssClass="ddm-form-description ddm-placeholder hidden" label="" name="descriptionEditor" placeholder='<%= LanguageUtil.get(request, "add-a-short-description-for-this-element-set") %>' type="textarea" value="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormDescription()) %>" />
 				</h5>
 
 				<aui:input name="description" type="hidden" />

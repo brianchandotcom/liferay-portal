@@ -63,7 +63,7 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class AssetPublisherUtilTest {
+public class AssetPublisherHelperTest {
 
 	@ClassRule
 	@Rule

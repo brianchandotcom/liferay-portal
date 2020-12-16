@@ -99,6 +99,10 @@ public class ComplexQueryBuilderImplTest {
 		Query query = _getQuery(complexQueryBuilderImpl, "nested", "path");
 
 		Assert.assertTrue(query instanceof NestedQuery);
+
+		NestedQuery nestedQuery = (NestedQuery)query;
+
+		Assert.assertTrue(nestedQuery.getQuery() instanceof BooleanQuery);
 	}
 
 	@Test

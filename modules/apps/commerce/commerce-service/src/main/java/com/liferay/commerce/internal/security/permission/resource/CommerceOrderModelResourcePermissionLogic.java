@@ -61,6 +61,15 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
+		if ((commerceAccount.getCommerceAccountId() ==
+				CommerceAccountConstants.ACCOUNT_ID_GUEST) &&
+			permissionChecker.isSignedIn()) {
+
+			return _hasPermission(
+				permissionChecker, 0,
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+		}
+
 		if (permissionChecker.isCompanyAdmin(commerceOrder.getCompanyId()) ||
 			permissionChecker.isGroupAdmin(commerceOrder.getGroupId()) ||
 			((commerceAccount.getCommerceAccountId() !=

@@ -2381,11 +2381,11 @@ definition {
 		}
 
 		if (isSet(webContentSelectFromList)) {
-			if (!(isSet(webContentSeparatorFieldLabel))) {
-				var webContentSeparatorFieldLabel = "Select from List";
+			if (!(isSet(webContentSelectFromListFieldLabel))) {
+				var webContentSelectFromListFieldLabel = "Select from List";
 			}
 
-			AssertSelectedLabel(
+			AssertTextEquals(
 				key_fieldFieldLabel = "${webContentSelectFromListFieldLabel}",
 				locator1 = "DDMField#SELECT_FROM_LIST",
 				value1 = "${webContentSelectFromList}");

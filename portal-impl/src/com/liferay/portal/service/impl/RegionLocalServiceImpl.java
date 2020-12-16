@@ -178,9 +178,9 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 			String regionCode)
 		throws PortalException {
 
-		validate(name, regionCode);
-
 		Region region = regionPersistence.findByPrimaryKey(regionId);
+
+		validate(name, regionCode);
 
 		region.setActive(active);
 		region.setName(name);

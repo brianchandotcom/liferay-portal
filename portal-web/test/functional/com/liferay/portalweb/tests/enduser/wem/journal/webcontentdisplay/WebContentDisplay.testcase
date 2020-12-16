@@ -706,7 +706,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			webContentContent = "世界您好 Content",
 			webContentTitle = "世界您好 Title");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",

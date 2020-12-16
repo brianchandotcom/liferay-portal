@@ -1251,7 +1251,7 @@ class ChangeTrackingChangesView extends React.Component {
 				return;
 			}
 
-			search = state.path.substring(index, state.path.length);
+			search = state.path.substring(index);
 		}
 
 		const params = new URLSearchParams(search);
@@ -1546,6 +1546,40 @@ class ChangeTrackingChangesView extends React.Component {
 
 		if (dropdownItems.length === 0) {
 			return '';
+		}
+
+		for (let i = 0; i < dropdownItems.length; i++) {
+			const dropdownItem = dropdownItems[i];
+
+			const href = dropdownItem.href;
+
+			if (typeof href !== 'string') {
+				continue;
+			}
+
+			const index = href.indexOf('?');
+
+			if (index > 0) {
+				let redirectKey = null;
+
+				const params = new URLSearchParams(href.substring(index + 1));
+
+				params.forEach((value, key) => {
+					if (key.endsWith('_redirect')) {
+						redirectKey = key;
+					}
+				});
+
+				if (redirectKey) {
+					params.set(
+						redirectKey,
+						window.location.pathname + window.location.search
+					);
+
+					dropdownItem.href =
+						href.substring(0, index) + '?' + params.toString();
+				}
+			}
 		}
 
 		return (

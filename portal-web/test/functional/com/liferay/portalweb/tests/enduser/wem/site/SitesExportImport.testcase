@@ -159,7 +159,7 @@ definition {
 			AssertVisible(
 				id = "image-square",
 				key_image = "Document_1.jpg",
-				key_imageDescription = "Document_1.jpg",
+				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 
 			PageEditor.clickPublish();
@@ -195,7 +195,7 @@ definition {
 			AssertVisible(
 				id = "image-square",
 				key_image = "Document_1.jpg",
-				key_imageDescription = "Document_1.jpg",
+				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 	}

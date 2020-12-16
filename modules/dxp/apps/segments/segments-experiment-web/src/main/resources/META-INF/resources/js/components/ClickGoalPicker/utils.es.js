@@ -42,12 +42,25 @@ export function stopImmediatePropagation(event) {
  * Currently, that means all visible "a", "button" and "input[type=submit]"
  * elements which have an "id".
  */
-export function getTargetableElements(element) {
-	const elements = element.querySelectorAll('a, button, input[type=submit]');
+export function getTargetableElements(element, selectedTarget) {
+
+	// Look for links or buttons
+
+	const elements = Array.from(element.querySelectorAll('a, button, input[type=submit]'));
+
+	// Other clickable element already selected
+
+	const target = document.getElementById(selectedTarget);
+
+	// Add selected target to elements
+
+	if (target && !elements.some((element) => target === element)) {
+		elements.push(target);
+	}
 
 	// As first cut, only deal with items that have an id.
 
-	return Array.from(elements).filter((element) => {
+	return elements.filter((element) => {
 		return element.id && _isVisible(element);
 	});
 }

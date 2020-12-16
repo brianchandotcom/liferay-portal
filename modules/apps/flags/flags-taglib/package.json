@@ -3,7 +3,7 @@
 		"@clayui/alert": "3.5.0",
 		"@clayui/button": "3.5.0",
 		"@clayui/icon": "3.1.0",
-		"@clayui/modal": "3.8.1",
+		"@clayui/modal": "3.8.2",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",

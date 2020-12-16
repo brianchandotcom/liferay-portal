@@ -2230,7 +2230,7 @@ definition {
 
 			WebContent.viewWithStructureCP(
 				predefinedValue = "true",
-				webContentColor = "FF0000",
+				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentMultipleSelection = "Boolean",
 				webContentNumeric = "9",

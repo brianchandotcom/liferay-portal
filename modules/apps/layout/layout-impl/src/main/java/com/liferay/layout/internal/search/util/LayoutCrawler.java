@@ -79,21 +79,21 @@ public class LayoutCrawler {
 			HttpGet httpGet = new HttpGet(
 				_portal.getLayoutFullURL(layout, themeDisplay));
 
-			HttpClientContext httpContext = new HttpClientContext();
+			HttpClientContext httpClientContext = new HttpClientContext();
 
 			CookieStore cookieStore = new BasicCookieStore();
 
-			BasicClientCookie cookie = new BasicClientCookie(
+			BasicClientCookie basicClientCookie = new BasicClientCookie(
 				CookieKeys.GUEST_LANGUAGE_ID, LocaleUtil.toLanguageId(locale));
 
-			cookie.setDomain(inetAddress.getHostName());
+			basicClientCookie.setDomain(inetAddress.getHostName());
 
-			cookieStore.addCookie(cookie);
+			cookieStore.addCookie(basicClientCookie);
 
-			httpContext.setCookieStore(cookieStore);
+			httpClientContext.setCookieStore(cookieStore);
 
 			HttpResponse httpResponse = httpClient.execute(
-				httpGet, httpContext);
+				httpGet, httpClientContext);
 
 			StatusLine statusLine = httpResponse.getStatusLine();
 

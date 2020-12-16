@@ -23,6 +23,11 @@
 	<td>//div[@class='portlet-body']/div[contains(@class,'m-4')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BODY_FIELD_VIDEO</td>
+	<td>//div[@class='portlet-body']//div[contains(@data-embed-id,'${key_service}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

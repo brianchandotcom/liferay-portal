@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>SELECT_FROM_LIST</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::select</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form-builder-select-field')]//div[contains(@class,'option-selected')]</td>
 	<td></td>
 </tr>
 <tr>

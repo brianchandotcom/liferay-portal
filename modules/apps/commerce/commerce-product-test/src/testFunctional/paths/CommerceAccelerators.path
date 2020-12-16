@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ACCOUNT_SELECTOR_DROPDOWN</td>
-	<td>//button[@data-onclick='toggleAccountSelector']</td>
+	<td>//button[contains(@class,'commerce-account-selector-button')]</td>
 	<td></td>
 </tr>
 <tr>

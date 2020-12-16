@@ -80,6 +80,13 @@ definition {
 			locator1 = "Card#CARD");
 	}
 
+	macro viewCardSticker {
+		AssertVisible(
+			key_card = "${card}",
+			key_icon = "${icon}",
+			locator1 = "Card#CARD_STICKER");
+	}
+
 	macro viewCardSubtitle {
 		AssertTextEquals(
 			key_card = "${card}",

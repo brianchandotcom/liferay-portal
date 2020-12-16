@@ -120,6 +120,41 @@ definition {
 		VideoShortcut.viewCP(videoShortcutTitle = "Test Vimeo Video Name");
 	}
 
+	@description = "This test ensures that a user is able to embed an external video in web content."
+	@priority = "5"
+	test AddWCWithEmbeddedVideo {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "Test YouTube Video Name",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertVisible(
+			key_service = "https://www.youtube.com",
+			locator1 = "WCPreview#BODY_FIELD_VIDEO");
+	}
+
 	@description = "It ensures that a message is displayed in the preview section When pasting an invalid URL."
 	@priority = "4"
 	test AddWithInvalidURL {

@@ -20,8 +20,6 @@ import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -29,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -56,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_OPTIONS,
-		"mvc.command.name=/cp_options/edit_cp_option"
+		"mvc.command.name=editOption"
 	},
 	service = MVCActionCommand.class
 )
@@ -92,8 +91,6 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		try {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCPOptions(cpOptionId, actionRequest);
@@ -102,39 +99,20 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 					 cmd.equals(Constants.UPDATE)) {
 
 				CPOption cpOption = updateCPOption(cpOptionId, actionRequest);
-
-				jsonObject.put("cpOptionId", cpOption.getCPOptionId());
 			}
-
-			jsonObject.put("success", true);
 		}
 		catch (Exception exception) {
-			String key = "your-request-failed-to-complete";
+			if (exception instanceof CPOptionKeyException ||
+				exception instanceof CPOptionSKUContributorException) {
 
-			if (exception instanceof CPOptionKeyException) {
-				key = "that-key-is-already-being-used";
-			}
-			else if (exception instanceof CPOptionSKUContributorException) {
-				key =
-					"sku-contributor-cannot-be-set-as-true-for-the-selected-" +
-						"field-type";
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
 				_log.error(exception, exception);
+
+				throw new Exception(exception);
 			}
-
-			jsonObject.put(
-				"message", LanguageUtil.get(actionRequest.getLocale(), key)
-			).put(
-				"success", false
-			);
 		}
-
-		hideDefaultSuccessMessage(actionRequest);
-
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
-		writeJSON(actionResponse, jsonObject);
 	}
 
 	protected CPOption updateCPOption(

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -69,7 +70,8 @@ public class CPOptionsPortlet extends MVCPortlet {
 			CPOptionDisplayContext cpOptionDisplayContext =
 				new CPOptionDisplayContext(
 					_configurationProvider, null,
-					_ddmFormFieldTypeServicesTracker, renderRequest);
+					_ddmFormFieldTypeServicesTracker,
+					_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionDisplayContext);
@@ -91,5 +93,8 @@ public class CPOptionsPortlet extends MVCPortlet {
 
 	@Reference
 	private NPMResolver _npmResolver;
+
+	@Reference
+	private Portal _portal;
 
 }

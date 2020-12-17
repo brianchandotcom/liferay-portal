@@ -22,6 +22,7 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebC
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.asset.NotifiedAssetEntryThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -163,7 +164,13 @@ public class AssetEntriesCheckerHelper {
 					ListUtil.toString(
 						assetEntries, AssetEntry.ENTRY_ID_ACCESSOR)));
 
+			NotifiedAssetEntryThreadLocal.setNotifiedAssetEntryIdsModified(
+				true);
+
 			portletPreferences.store();
+
+			NotifiedAssetEntryThreadLocal.setNotifiedAssetEntryIdsModified(
+				false);
 		}
 		catch (IOException | PortletException exception) {
 			throw new PortalException(exception);

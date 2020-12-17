@@ -2542,7 +2542,7 @@ jdbc.default.password=${database.password}</echo>
 
 	<macrodef name="prepare-portal-template-freemarker-osgi-configuration">
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration.config">asyncRenderTimeout=L"7200000"</echo>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration.config">asyncRenderTimeout=L"7200000"${line.separator}loopSizeThreshold=I"2147483647"</echo>
 		</sequential>
 	</macrodef>
 

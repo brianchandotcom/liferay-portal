@@ -142,6 +142,8 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		if (addConnectedSiteButton) {
 			addConnectedSiteButton.addEventListener('click', function (event) {
 				Liferay.Util.openSelectionModal({
+					customSelectEvent: true,
+					id: '<portlet:namespace />selectSite',
 					onSelect: function (event) {
 						var toGroupIdInput = document.querySelector(
 							'#<portlet:namespace />toGroupId'

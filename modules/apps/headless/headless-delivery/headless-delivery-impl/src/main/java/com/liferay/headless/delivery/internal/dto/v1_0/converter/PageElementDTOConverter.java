@@ -15,10 +15,9 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.internal.dto.v1_0.exporter.LayoutStructureItemExporter;
-import com.liferay.headless.delivery.internal.dto.v1_0.exporter.LayoutStructureItemExporterTracker;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapper;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -102,15 +101,15 @@ public class PageElementDTOConverter {
 
 		Class<?> clazz = layoutStructureItem.getClass();
 
-		LayoutStructureItemExporter layoutStructureItemExporter =
-			_layoutStructureItemExporterTracker.getLayoutStructureItemExporter(
+		LayoutStructureItemMapper layoutStructureItemMapper =
+			_layoutStructureItemMapperTracker.getLayoutStructureItemMapper(
 				clazz.getName());
 
-		if (layoutStructureItemExporter == null) {
+		if (layoutStructureItemMapper == null) {
 			return null;
 		}
 
-		return layoutStructureItemExporter.getPageElement(
+		return layoutStructureItemMapper.getPageElement(
 			groupId, layoutStructureItem, saveInlineContent,
 			saveMappingConfiguration);
 	}
@@ -120,7 +119,6 @@ public class PageElementDTOConverter {
 		_layoutPageTemplateStructureLocalService;
 
 	@Reference
-	private LayoutStructureItemExporterTracker
-		_layoutStructureItemExporterTracker;
+	private LayoutStructureItemMapperTracker _layoutStructureItemMapperTracker;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.exporter;
+package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -20,7 +20,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 /**
  * @author Jürgen Kappler
  */
-public interface LayoutStructureItemExporter {
+public interface LayoutStructureItemMapper {
 
 	public String getClassName();
 

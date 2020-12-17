@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.exporter;
+package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
@@ -48,8 +48,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-public abstract class BaseStyledLayoutStructureItemExporter
-	implements LayoutStructureItemExporter {
+public abstract class BaseStyledLayoutStructureItemMapper
+	implements LayoutStructureItemMapper {
 
 	protected FragmentViewport[] getFragmentViewPorts(JSONObject jsonObject) {
 		if ((jsonObject == null) || (jsonObject.length() == 0)) {
@@ -519,6 +519,6 @@ public abstract class BaseStyledLayoutStructureItemExporter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseStyledLayoutStructureItemExporter.class);
+		BaseStyledLayoutStructureItemMapper.class);
 
 }

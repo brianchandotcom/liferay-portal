@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.exporter;
+package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.headless.delivery.dto.v1_0.ColumnViewport;
 import com.liferay.headless.delivery.dto.v1_0.ColumnViewportDefinition;
@@ -31,9 +31,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemExporter.class)
-public class ColumnLayoutStructureItemExporter
-	implements LayoutStructureItemExporter {
+@Component(service = LayoutStructureItemMapper.class)
+public class ColumnLayoutStructureItemMapper
+	implements LayoutStructureItemMapper {
 
 	@Override
 	public String getClassName() {

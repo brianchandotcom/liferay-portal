@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.exporter;
+package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,34 +25,34 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemExporterTracker.class)
-public class LayoutStructureItemExporterTracker {
+@Component(service = LayoutStructureItemMapperTracker.class)
+public class LayoutStructureItemMapperTracker {
 
-	public LayoutStructureItemExporter getLayoutStructureItemExporter(
+	public LayoutStructureItemMapper getLayoutStructureItemMapper(
 		String className) {
 
-		return _layoutStructureItemExporters.get(className);
+		return _layoutStructureItemMappers.get(className);
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
 	)
-	protected void setLayoutStructureItemExporter(
-		LayoutStructureItemExporter layoutStructureItemExporter) {
+	protected void setLayoutStructureItemMapper(
+		LayoutStructureItemMapper layoutStructureItemMapper) {
 
-		_layoutStructureItemExporters.put(
-			layoutStructureItemExporter.getClassName(),
-			layoutStructureItemExporter);
+		_layoutStructureItemMappers.put(
+			layoutStructureItemMapper.getClassName(),
+			layoutStructureItemMapper);
 	}
 
-	protected void unsetLayoutStructureItemExporter(
-		LayoutStructureItemExporter layoutStructureItemExporter) {
+	protected void unsetLayoutStructureItemMapper(
+		LayoutStructureItemMapper layoutStructureItemMapper) {
 
-		_layoutStructureItemExporters.remove(layoutStructureItemExporter);
+		_layoutStructureItemMappers.remove(layoutStructureItemMapper);
 	}
 
-	private final Map<String, LayoutStructureItemExporter>
-		_layoutStructureItemExporters = new ConcurrentHashMap<>();
+	private final Map<String, LayoutStructureItemMapper>
+		_layoutStructureItemMappers = new ConcurrentHashMap<>();
 
 }

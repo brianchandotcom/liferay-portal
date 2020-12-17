@@ -21,7 +21,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {useFieldTypesResource} from '../hooks/useResource.es';
-import {ActionsProvider} from './PageRenderer/Actions.es';
+import {ActionsProvider} from './Actions.es';
 import Page from './PageRenderer/index';
 
 function getDisplayableValue({containerId, readOnly, viewMode}) {
@@ -39,6 +39,7 @@ const Pages = React.forwardRef(
 			displayable: initialDisplayableValue,
 			editable,
 			editingLanguageId = themeDisplay.getLanguageId(),
+			focusedField,
 			pages = [],
 			paginationMode = 'wizard',
 			readOnly,
@@ -76,7 +77,7 @@ const Pages = React.forwardRef(
 						}
 					)}
 				>
-					<ActionsProvider>
+					<ActionsProvider focusedField={focusedField?.fieldName}>
 						{pages.map((page, index) => (
 							<Page
 								{...otherProps}

@@ -34,9 +34,9 @@ const ActionsContext = createContext({});
 /**
  * ActionsContext is responsible for store which field is being hovered or active
  */
-export const ActionsProvider = ({children}) => {
+export const ActionsProvider = ({children, focusedField}) => {
 	const [hoveredField, setHoveredField] = useState('');
-	const [activeField, setActiveField] = useState('');
+	const [activeField, setActiveField] = useState(focusedField);
 	const dispatch = useForm();
 
 	// App Builder needs information when the field is hovered, it
@@ -50,6 +50,10 @@ export const ActionsProvider = ({children}) => {
 			});
 		}
 	}, [hoveredField, dispatch]);
+
+	useEffect(() => {
+		setActiveField(focusedField);
+	}, [focusedField]);
 
 	return (
 		<ActionsContext.Provider
@@ -82,9 +86,7 @@ export const ActionsControls = ({
 		setActiveField,
 		setHoveredField,
 	} = useActions();
-
 	const dispatch = useForm();
-
 	const contentRect = useResizeObserver(columnRef);
 
 	useLayoutEffect(() => {

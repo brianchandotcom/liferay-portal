@@ -17,10 +17,10 @@ import classNames from 'classnames';
 import React, {useContext, useRef} from 'react';
 
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
-import {ParentFieldContext} from '../Field/ParentFieldContext.es';
 import {Actions, ActionsControls, useActions} from '../Actions.es';
-import * as DefaultVariant from './DefaultVariant.es';
+import {ParentFieldContext} from '../Field/ParentFieldContext.es';
 import {Placeholder} from '../Placeholder.es';
+import * as DefaultVariant from './DefaultVariant.es';
 
 export const Column = ({
 	activePage,

@@ -81,19 +81,19 @@ class FormBuilderBase extends Component {
 	}
 
 	render() {
-		const {props} = this;
 		const {
 			activePage,
 			allowNestedFields,
 			dnd,
 			editingLanguageId,
+			focusedField,
 			pages,
 			paginationMode,
 			portletNamespace,
 			spritemap,
 			successPageSettings,
 			view,
-		} = props;
+		} = this.props;
 
 		return (
 			<div class="ddm-form-builder-wrapper">
@@ -104,6 +104,7 @@ class FormBuilderBase extends Component {
 						dnd={dnd}
 						editable={true}
 						editingLanguageId={editingLanguageId}
+						focusedField={focusedField}
 						pages={this.preparePagesForRender(pages)}
 						paginationMode={paginationMode}
 						portletNamespace={portletNamespace}

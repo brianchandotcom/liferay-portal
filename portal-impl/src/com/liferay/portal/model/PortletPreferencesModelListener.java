@@ -14,12 +14,14 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.asset.NotifiedAssetEntryThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -129,6 +131,10 @@ public class PortletPreferencesModelListener
 					return;
 				}
 
+				if (_isOnlyNotifiedAssetEntryIdsModified(layout)) {
+					return;
+				}
+
 				layout.setModifiedDate(new Date());
 
 				LayoutLocalServiceUtil.updateLayout(
@@ -140,6 +146,22 @@ public class PortletPreferencesModelListener
 			_log.error(
 				"Unable to update the layout's modified date", exception);
 		}
+	}
+
+	private boolean _isOnlyNotifiedAssetEntryIdsModified(Layout layout) {
+		if (!NotifiedAssetEntryThreadLocal.isNotifiedAssetEntryIdsModified()) {
+			return false;
+		}
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		if (!layout.isLayoutPrototypeLinkActive() &&
+			!layoutSet.isLayoutSetPrototypeLinkActive()) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

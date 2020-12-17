@@ -14,7 +14,6 @@
 
 package com.liferay.blogs.internal.upgrade;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeClassNames;
 import com.liferay.blogs.internal.upgrade.v1_1_0.UpgradeFriendlyURL;
 import com.liferay.blogs.internal.upgrade.v1_1_1.UpgradeUrlTitle;
@@ -59,8 +58,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.1.2", "1.1.3",
 			new UpgradeDiscussionSubscriptionClassName(
-				_assetEntryLocalService, _classNameLocalService,
-				_subscriptionLocalService, BlogsEntry.class.getName(),
+				_classNameLocalService, _subscriptionLocalService,
+				BlogsEntry.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 
 		registry.register(
@@ -73,8 +72,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.0.0", "2.0.1",
 			new UpgradeDiscussionSubscriptionClassName(
-				_assetEntryLocalService, _classNameLocalService,
-				_subscriptionLocalService, BlogsEntry.class.getName(),
+				_classNameLocalService, _subscriptionLocalService,
+				BlogsEntry.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.
 					DELETE_OLD));
 
@@ -89,9 +88,6 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 			});
 	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

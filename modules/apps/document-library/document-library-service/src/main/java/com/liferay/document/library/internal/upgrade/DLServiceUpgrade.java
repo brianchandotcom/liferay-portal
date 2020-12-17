@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.internal.upgrade;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.document.library.internal.upgrade.v1_0_0.UpgradeDocumentLibrary;
 import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLConfiguration;
@@ -75,8 +74,8 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"3.0.0", "3.0.1",
 			new UpgradeDiscussionSubscriptionClassName(
-				_assetEntryLocalService, _classNameLocalService,
-				_subscriptionLocalService, DLFileEntry.class.getName(),
+				_classNameLocalService, _subscriptionLocalService,
+				DLFileEntry.class.getName(),
 				UpgradeDiscussionSubscriptionClassName.DeletionMode.UPDATE));
 
 		registry.register(
@@ -98,9 +97,6 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.document.library.internal.upgrade.v3_2_0.
 				UpgradeDLFileEntryType());
 	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

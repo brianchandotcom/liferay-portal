@@ -55,4 +55,31 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 			).toBeInTheDocument();
 		});
 	});
+
+	describe('when rendered with initial video', () => {
+		let result;
+		const props = {
+			dlVideoExternalShortcutHTML: '<iframe data-video-liferay></iframe>',
+			dlVideoExternalShortcutURL: 'VIDEO-URL',
+		};
+
+		beforeEach(() => {
+			result = renderComponent({
+				...defaultProps,
+				...props,
+			});
+		});
+
+		it('has a url input filled with the video url', () => {
+			expect(result.getByLabelText('video-url').value).toBe(
+				props.dlVideoExternalShortcutURL
+			);
+		});
+
+		it('has a video preview with embebed iframe', () => {
+			expect(
+				document.querySelector('iframe[data-video-liferay]')
+			).toBeInTheDocument();
+		});
+	});
 });

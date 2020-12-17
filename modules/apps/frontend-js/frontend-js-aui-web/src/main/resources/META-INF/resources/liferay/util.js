@@ -1532,29 +1532,30 @@
 					'.lfr-search-container-wrapper .selector-button'
 				);
 
-				A.each(selectorButtons, (item) => {
-					var assetEntryId =
-						item.attr('data-entityid') ||
-						item.attr('data-entityname');
+				if (selectedData) {
+					A.each(selectorButtons, (item) => {
+						var assetEntryId =
+							item.attr('data-entityid') ||
+							item.attr('data-entityname');
 
-					var assetGroupId = item.attr('data-groupid');
+						var assetGroupId = item.attr('data-groupid');
 
-					if (assetGroupId) {
-						assetEntryId = assetGroupId + '-' + assetEntryId;
-					}
+						if (assetGroupId) {
+							assetEntryId = assetGroupId + '-' + assetEntryId;
+						}
 
-					var disabled =
-						selectedData && selectedData.includes(assetEntryId);
+						var disabled = selectedData.includes(assetEntryId);
 
-					if (disabled) {
-						item.attr('data-prevent-selection', true);
-					}
-					else {
-						item.removeAttribute('data-prevent-selection');
-					}
+						if (disabled) {
+							item.attr('data-prevent-selection', true);
+						}
+						else {
+							item.removeAttribute('data-prevent-selection');
+						}
 
-					Util.toggleDisabled(item, disabled);
-				});
+						Util.toggleDisabled(item, disabled);
+					});
+				}
 			};
 
 			if (dialog) {

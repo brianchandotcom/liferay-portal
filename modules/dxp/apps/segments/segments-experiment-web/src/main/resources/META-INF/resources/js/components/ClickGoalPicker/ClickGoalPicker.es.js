@@ -166,7 +166,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 				</div>
 
 				{errors.clickTargetError && (
-					<div className="c-mb-2 c-mt-2 font-weight-bold text-danger">
+					<div className="c-mb-2 c-mt-2 font-weight-semi-bold text-danger">
 						<ClayIcon
 							className="c-mr-2"
 							symbol="exclamation-full"

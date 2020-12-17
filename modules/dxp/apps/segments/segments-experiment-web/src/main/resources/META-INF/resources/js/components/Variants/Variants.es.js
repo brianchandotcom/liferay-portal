@@ -82,7 +82,7 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 						{Liferay.Language.get('variants-help')}
 					</p>
 					{errors.variantsError && (
-						<div className="font-weight-bold mb-3 text-danger">
+						<div className="font-weight-semi-bold mb-3 text-danger">
 							<ClayIcon
 								className="mr-2"
 								symbol="exclamation-full"

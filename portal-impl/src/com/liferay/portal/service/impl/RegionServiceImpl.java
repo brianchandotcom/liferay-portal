@@ -130,7 +130,6 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 			_getOrderByComparator(countryId));
 	}
 
-	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public List<Region> getRegions(
 		long countryId, boolean active, int start, int end,
@@ -140,7 +139,6 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 			countryId, active, start, end, orderByComparator);
 	}
 
-	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public List<Region> getRegions(
 		long countryId, int start, int end,

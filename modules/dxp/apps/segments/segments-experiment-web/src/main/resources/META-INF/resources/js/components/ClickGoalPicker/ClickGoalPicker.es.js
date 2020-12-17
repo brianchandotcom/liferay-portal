@@ -49,6 +49,8 @@ const POPOVER_PADDING = 16;
 
 const THROTTLE_INTERVAL_MS = 100;
 
+const TOP_NAV_HEIGHT = -100;
+
 const DispatchContext = React.createContext();
 
 /**
@@ -113,7 +115,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 
 			// Make sure nothing slides under the top nav.
 
-			window.scrollBy(0, -100);
+			window.scrollBy(0, TOP_NAV_HEIGHT);
 		}
 
 		event.preventDefault();
@@ -131,7 +133,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 
 			// Make sure nothing slides under the top nav.
 
-			window.scrollBy(0, -100);
+			window.scrollBy(0, TOP_NAV_HEIGHT);
 
 			dispatch({
 				selector: value,

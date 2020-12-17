@@ -557,6 +557,20 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME");
 	}
 
+	macro changeLocale {
+		Click(
+			key_currentLocale = StringUtil.lowerCase("${currentLocale}"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		Click(
+			key_locale = "${locale}",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+		AssertVisible(
+			key_currentLocale = StringUtil.lowerCase("${locale}"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+	}
+
 	macro clickBack {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 	}

@@ -5,11 +5,11 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
-	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils", version: "default"
-	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "default"
+	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils", version: "1.9.4"
+	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
 	testIntegrationCompile group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
-	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "default"
-	testIntegrationCompile group: "junit", name: "junit", version: "default"
+	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationCompile group: "junit", name: "junit", version: "4.13.1"
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-api")
 	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

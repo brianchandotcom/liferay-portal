@@ -248,12 +248,7 @@
 </tr>
 <tr>
 	<td>METADATA_PANEL_DATE</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_dateValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METADATA_PANEL_NUMBER</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_numberValue}')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -267,8 +262,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METADATA_PANEL_TEXT</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_textContent}')]</td>
+	<td>METADATA_PANEL_TEXT_INPUT</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::input</td>
 	<td></td>
 </tr>
 <tr>

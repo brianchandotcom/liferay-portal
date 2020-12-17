@@ -1975,25 +1975,35 @@ definition {
 		}
 
 		if (isSet(textContent)) {
-			var key_textContent = "${textContent}";
+			if (!(isSet(textFieldLabel))) {
+				var textFieldLabel = "Text";
+			}
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_TEXT",
+			AssertTextEquals.assertValue(
+				key_fieldFieldLabel = "${textFieldLabel}",
+				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_TEXT_INPUT",
 				value1 = "${textContent}");
 		}
 
 		if (isSet(numericValue)) {
-			var key_numberValue = "${numericValue}";
+			if (!(isSet(numericFieldLabel))) {
+				var numericFieldLabel = "Numeric";
+			}
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_NUMBER",
+			AssertTextEquals.assertValue(
+				key_fieldFieldLabel = "${numericFieldLabel}",
+				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_TEXT_INPUT",
 				value1 = "${numericValue}");
 		}
 
 		if (isSet(dateValue)) {
-			var key_dateValue = "${dateValue}";
+			if (!(isSet(dateFieldLabel))) {
+				var dateFieldLabel = "Date";
+			}
 
-			AssertTextEquals.assertPartialText(
+			AssertAttributeValue(
+				attribute1 = "value",
+				key_fieldFieldLabel = "${dateFieldLabel}",
 				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_DATE",
 				value1 = "${dateValue}");
 		}

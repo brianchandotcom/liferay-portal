@@ -45,6 +45,41 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormRendererImpl implements DDMFormRenderer {
 
 	@Override
+	public String getModuleName() {
+		return _npmResolver.resolveModuleName(_MODULE_NAME);
+	}
+
+	@Override
+	public Map<String, Object> getReactData(
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			DDMFormRenderingContext ddmFormRenderingContext)
+		throws Exception {
+
+		Map<String, Object> ddmFormTemplateContext =
+			_ddmFormTemplateContextFactory.create(
+				ddmForm, ddmFormLayout, ddmFormRenderingContext);
+
+		ddmFormTemplateContext.put("editable", false);
+
+		ddmFormTemplateContext.remove("fieldTypes");
+
+		HttpServletRequest httpServletRequest =
+			ddmFormRenderingContext.getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String pathThemeImages = themeDisplay.getPathThemeImages();
+
+		String spriteMap = pathThemeImages.concat("/clay/icons.svg");
+
+		ddmFormTemplateContext.put("spritemap", spriteMap);
+
+		return ddmFormTemplateContext;
+	}
+
+	@Override
 	public String render(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
@@ -88,41 +123,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
-				_npmResolver.resolveModuleName(_MODULE_NAME),
-				ddmFormRenderingContext.getContainerId()),
-			_getReactData(ddmForm, ddmFormLayout, ddmFormRenderingContext),
+				getModuleName(), ddmFormRenderingContext.getContainerId()),
+			getReactData(ddmForm, ddmFormLayout, ddmFormRenderingContext),
 			ddmFormRenderingContext.getHttpServletRequest(), writer);
 
 		return writer.toString();
-	}
-
-	private Map<String, Object> _getReactData(
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			DDMFormRenderingContext ddmFormRenderingContext)
-		throws Exception {
-
-		Map<String, Object> ddmFormTemplateContext =
-			_ddmFormTemplateContextFactory.create(
-				ddmForm, ddmFormLayout, ddmFormRenderingContext);
-
-		ddmFormTemplateContext.put("editable", false);
-
-		ddmFormTemplateContext.remove("fieldTypes");
-
-		HttpServletRequest httpServletRequest =
-			ddmFormRenderingContext.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String pathThemeImages = themeDisplay.getPathThemeImages();
-
-		String spriteMap = pathThemeImages.concat("/clay/icons.svg");
-
-		ddmFormTemplateContext.put("spritemap", spriteMap);
-
-		return ddmFormTemplateContext;
 	}
 
 	private static final String _MODULE_NAME =

@@ -14,7 +14,6 @@
 
 import '../../css/main.scss';
 
-import Soy from 'metal-soy';
 import React, {
 	useCallback,
 	useEffect,
@@ -29,7 +28,6 @@ import pageLanguageUpdate from '../thunks/pageLanguageUpdate.es';
 import {getConnectedReactComponentAdapter} from '../util/ReactComponentAdapter.es';
 import {evaluate} from '../util/evaluation.es';
 import {getFormId, getFormNode} from '../util/formId.es';
-import templates from './Form.soy';
 
 const Form = React.forwardRef(
 	(
@@ -249,10 +247,10 @@ const Form = React.forwardRef(
 
 Form.displayName = 'Form';
 
-const FormProxy = React.forwardRef(
+const FormEditor = React.forwardRef(
 	(
 		{
-			instance,
+			onEvent,
 			activePage = 0,
 			defaultLanguageId = themeDisplay.getLanguageId(),
 			...otherProps
@@ -260,7 +258,7 @@ const FormProxy = React.forwardRef(
 		ref
 	) => (
 		<FormProvider
-			onEvent={(type, payload) => instance.emit(type, payload)}
+			onEvent={onEvent}
 			value={{...otherProps, activePage, defaultLanguageId}}
 		>
 			{(props) => <Form {...props} ref={ref} />}
@@ -268,10 +266,18 @@ const FormProxy = React.forwardRef(
 	)
 );
 
+FormEditor.displayName = 'FormEditor';
+
+const FormProxy = React.forwardRef(({instance, ...otherProps}, ref) => (
+	<FormEditor
+		{...otherProps}
+		onEvent={(type, payload) => instance.emit(type, payload)}
+		ref={ref}
+	/>
+));
+
 FormProxy.displayName = 'FormProxy';
 
-const ReactFormAdapter = getConnectedReactComponentAdapter(FormProxy);
+export const ReactFormAdapter = getConnectedReactComponentAdapter(FormProxy);
 
-Soy.register(ReactFormAdapter, templates);
-
-export default ReactFormAdapter;
+export default FormEditor;

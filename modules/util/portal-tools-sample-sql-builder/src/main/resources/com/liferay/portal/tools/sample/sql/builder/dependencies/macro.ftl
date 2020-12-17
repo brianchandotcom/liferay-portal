@@ -53,11 +53,11 @@
 </#macro>
 
 <#macro insertDDMContent
-	_currentIndex = -1
 	_ddmStorageLinkId
 	_ddmStructureId
-	_ddmStructureVersionId = 0
 	_entry
+	_ddmStructureVersionId = 0
+	_currentIndex = -1
 >
 	<#if _currentIndex = -1>
 		<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_entry, _ddmStorageLinkId, _ddmStructureId)>

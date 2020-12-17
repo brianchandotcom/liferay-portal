@@ -1516,11 +1516,20 @@ definition {
 
 		UserNavigator.gotoContact();
 
+		var testName = TestCase.getTestName();
+
+		if (contains("${testName}", "72")) {
+			var postalCode = "91765";
+		}
+		else {
+			var postalCode = "91789";
+		}
+
 		User.viewAddress(
 			addressType = "Business",
 			city = "Walnut",
 			country = "United States",
-			postalCode = "91789",
+			postalCode = "${postalCode}",
 			region = "California",
 			street1 = "1220 Brea Canyon Rd");
 

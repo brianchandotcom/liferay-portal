@@ -364,8 +364,9 @@ public class DDMFormAdminFieldSetDisplayContext
 	}
 
 	@Override
-	public String serializeSettingsForm(PageContext pageContext)
-		throws PortalException {
+	public Map<String, Object> getSerializeSettingsFormReactData(
+			PageContext pageContext)
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -375,7 +376,7 @@ public class DDMFormAdminFieldSetDisplayContext
 
 		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
 
-		return ddmFormRenderer.render(
+		return ddmFormRenderer.getReactData(
 			createSettingsDDMForm(0L, themeDisplay), ddmFormLayout,
 			createDDMFormRenderingContext(pageContext, renderRequest));
 	}

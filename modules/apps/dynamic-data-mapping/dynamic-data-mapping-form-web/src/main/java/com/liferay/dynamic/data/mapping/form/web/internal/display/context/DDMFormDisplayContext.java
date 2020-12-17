@@ -46,7 +46,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -181,11 +180,11 @@ public class DDMFormDisplayContext {
 		return _containerId;
 	}
 
-	public String getDDMFormHTML() throws PortalException {
+	public Map<String, Object> getDDMFormReactData() throws Exception {
 		DDMFormInstance ddmFormInstance = getFormInstance();
 
 		if (ddmFormInstance == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		boolean maximumSubmissionLimitReached =
@@ -259,7 +258,7 @@ public class DDMFormDisplayContext {
 		ddmFormRenderingContext.setShowSubmitButton(isShowSubmitButton());
 		ddmFormRenderingContext.setSubmitLabel(getSubmitLabel());
 
-		return _ddmFormRenderer.render(
+		return _ddmFormRenderer.getReactData(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
@@ -346,6 +345,10 @@ public class DDMFormDisplayContext {
 		return PrefsParamUtil.getLong(
 			_renderRequest.getPreferences(), _renderRequest,
 			"formInstanceRecordId");
+	}
+
+	public String getModuleName() {
+		return _ddmFormRenderer.getModuleName();
 	}
 
 	public String getRedirectURL() throws PortalException {

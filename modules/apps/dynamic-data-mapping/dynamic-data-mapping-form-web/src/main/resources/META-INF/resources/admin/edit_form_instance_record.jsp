@@ -65,6 +65,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 			</c:if>
 		</div>
 
-		<%= ddmFormAdminDisplayContext.getDDMFormHTML(renderRequest, false) %>
+		<react:component
+			module="<%= ddmFormAdminDisplayContext.getModuleName() %>"
+			props="<%= ddmFormAdminDisplayContext.getDDMFormReactData(renderRequest, false) %>"
+		/>
 	</aui:form>
 </clay:container-fluid>

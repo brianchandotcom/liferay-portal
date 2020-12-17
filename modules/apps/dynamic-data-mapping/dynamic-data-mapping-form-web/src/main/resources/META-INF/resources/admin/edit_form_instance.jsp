@@ -149,7 +149,10 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		cssClass="ddm-form-instance-settings hide"
 		id='<%= liferayPortletResponse.getNamespace() + "settings" %>'
 	>
-		<%= ddmFormAdminDisplayContext.serializeSettingsForm(pageContext) %>
+		<react:component
+			module="<%= ddmFormAdminDisplayContext.getModuleName() %>"
+			props="<%= ddmFormAdminDisplayContext.getSerializeSettingsFormReactData(pageContext) %>"
+		/>
 	</clay:container-fluid>
 </div>
 

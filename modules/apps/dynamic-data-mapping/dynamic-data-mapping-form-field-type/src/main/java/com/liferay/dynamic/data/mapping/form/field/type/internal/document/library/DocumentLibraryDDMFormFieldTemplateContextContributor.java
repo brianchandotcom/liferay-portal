@@ -133,17 +133,17 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
 
-		if (!themeDisplay.isSignedIn()) {
+		if ((themeDisplay == null) || themeDisplay.isSignedIn()) {
 			parameters.put(
-				"guestUploadURL",
-				getGuestUploadURL(
+				"itemSelectorURL",
+				getItemSelectorURL(
 					ddmFormFieldRenderingContext, folderId,
 					httpServletRequest));
 		}
 		else {
 			parameters.put(
-				"itemSelectorURL",
-				getItemSelectorURL(
+				"guestUploadURL",
+				getGuestUploadURL(
 					ddmFormFieldRenderingContext, folderId,
 					httpServletRequest));
 		}
@@ -256,7 +256,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		if (group == null) {
 			ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
 
-			group = themeDisplay.getScopeGroup();
+			if (themeDisplay != null) {
+				group = themeDisplay.getScopeGroup();
+			}
 		}
 
 		FileItemSelectorCriterion fileItemSelectorCriterion =
@@ -456,9 +458,13 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		long groupId, HttpServletRequest httpServletRequest) {
 
 		try {
-			long repositoryId = _getRepositoryId(groupId, httpServletRequest);
-
 			ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
+
+			if (themeDisplay == null) {
+				return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
+
+			long repositoryId = _getRepositoryId(groupId, httpServletRequest);
 
 			User user = _getDDMFormDefaultUser(themeDisplay.getCompanyId());
 

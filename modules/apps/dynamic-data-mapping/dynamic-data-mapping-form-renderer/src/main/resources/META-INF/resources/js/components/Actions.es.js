@@ -28,6 +28,7 @@ import React, {
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {useForm} from '../hooks/useForm.es';
+import {usePage} from '../hooks/usePage.es';
 import {useResizeObserver} from '../hooks/useResizeObserver.es';
 
 const ActionsContext = createContext({});
@@ -182,26 +183,7 @@ export const ActionsControls = ({
 
 export const Actions = forwardRef(
 	({activePage, field, isFieldSet}, actionsRef) => {
-		const dispatch = useForm();
-
-		const DROPDOWN_ACTIONS = [
-			{
-				label: Liferay.Language.get('duplicate'),
-				onClick: () =>
-					dispatch({
-						payload: {activePage, fieldName: field.fieldName},
-						type: EVENT_TYPES.FIELD_DUPLICATED,
-					}),
-			},
-			{
-				label: Liferay.Language.get('delete'),
-				onClick: () =>
-					dispatch({
-						payload: {activePage, fieldName: field.fieldName},
-						type: EVENT_TYPES.FIELD_DELETED,
-					}),
-			},
-		];
+		const {fieldActions} = usePage();
 
 		return (
 			<div
@@ -214,7 +196,20 @@ export const Actions = forwardRef(
 
 				<ClayDropDownWithItems
 					className="dropdown-action"
-					items={DROPDOWN_ACTIONS}
+					items={fieldActions.map(({action, ...otherProps}) => {
+						if (action) {
+							return {
+								onClick: () =>
+									action({
+										activePage,
+										fieldName: field.fieldName,
+									}),
+								...otherProps,
+							};
+						}
+
+						return otherProps;
+					})}
 					trigger={
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('actions')}

@@ -70,14 +70,13 @@ export default ({children, dataLayoutBuilder}) => {
 				onDeleteDefinitionField(event);
 			},
 			label: Liferay.Language.get('delete-from-object'),
-			style: 'danger',
 		};
 
 		let fieldActions = [
 			duplicateAction,
+			removeAction,
 			{
-				...removeAction,
-				separator: true,
+				type: 'divider',
 			},
 			deleteFromObjectAction,
 		];
@@ -94,7 +93,9 @@ export default ({children, dataLayoutBuilder}) => {
 				{
 					action: ({fieldName}) => saveAsFieldset(fieldName),
 					label: Liferay.Language.get('save-as-fieldset'),
-					separator: true,
+				},
+				{
+					type: 'divider',
 				},
 				deleteFromObjectAction,
 			];

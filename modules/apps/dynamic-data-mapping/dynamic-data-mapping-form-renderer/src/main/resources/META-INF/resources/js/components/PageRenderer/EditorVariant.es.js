@@ -75,7 +75,7 @@ export const Column = ({
 	return (
 		<ActionsControls
 			actionsRef={actionsRef}
-			activePage={activePage}
+			activePage={pageIndex}
 			columnRef={columnRef}
 			editable={editable}
 			fieldId={firstField.fieldName}
@@ -99,7 +99,7 @@ export const Column = ({
 			>
 				{editable && isFieldSelected && (
 					<Actions
-						activePage={activePage}
+						activePage={pageIndex}
 						field={firstField}
 						isFieldSet={isFieldSet}
 						ref={actionsRef}

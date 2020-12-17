@@ -279,6 +279,24 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldSearchable {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		Check.checkNotVisible(
+			key_fieldFieldLabel = "Searchable",
+			key_optionValue = "${searchableType}",
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro editFieldsGroupRepeatable {
 		if (!(isSet(fieldsGroupLabel))) {
 			var fieldsGroupLabel = "Fields Group";

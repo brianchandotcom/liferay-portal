@@ -1,0 +1,189 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-118100. View localizable fragment configuration field value in translated languages."
+	@priority = "4"
+	test ViewLocalizableConfigurationFieldValueInTranslatedLanguages {
+		task ("Add a fragment collection via JSON") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a fragment") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+		}
+
+		task ("Type html codes in HTML section") {
+			var htmlSnippet = '''
+<div class="fragment-example">
+	<button type="button" class="btn btn-primary">${configuration.buttonText}</button>
+</div>
+			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Type css codes in CSS section") {
+			var cssSnippet = '''
+.fragment-example {
+}
+		''';
+
+			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Type json codes in Configuration section") {
+			FragmentsEditor.gotoConfigurationTab();
+
+			Pause(locator1 = "3000");
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"label": "Button",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Go Somewhere",
+					"label": "Button Text",
+					"localizable": true,
+					"name": "buttonText",
+					"type": "text"
+				}
+			]
+		}
+	]
+}
+			''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			Pause(locator1 = "3000");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add the new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Change to es_ES via language selector") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+		}
+
+		task ("Type localized content in Button Text field") {
+			PageEditorConfiguration.changeConfigText(
+				editableText = "Ir a alguna parte",
+				fragmentName = "Fragment Name",
+				textConfigName = "buttonText");
+		}
+
+		task ("Assert localized content is shown in Button Text field") {
+			FormFields.viewTextValue(
+				fieldName = "buttonText",
+				fieldValue = "Ir a alguna parte");
+		}
+
+		task ("Assert localized content is shown in fragment") {
+			AssertVisible(
+				key_content = "Ir a alguna parte",
+				key_fragmentClass = "example",
+				locator1 = "Fragment#FRAGMENT");
+		}
+
+		task ("Change to en_US via language selector") {
+			PageEditor.changeLocale(
+				currentLocale = "es-ES",
+				locale = "en-US");
+		}
+
+		task ("Assert Go Somewhere is shown in Button Text field") {
+			FormFields.viewTextValue(
+				fieldName = "buttonText",
+				fieldValue = "Go Somewhere");
+		}
+
+		task ("Assert Go Somewhere is shown in fragment") {
+			AssertVisible(
+				key_content = "Go Somewhere",
+				key_fragmentClass = "example",
+				locator1 = "Fragment#FRAGMENT");
+		}
+
+		task ("Change to es_ES via language selector") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+		}
+
+		task ("Assert Ir a alguna parte is shown in Button Text field") {
+			FormFields.viewTextValue(
+				fieldName = "buttonText",
+				fieldValue = "Ir a alguna parte");
+		}
+
+		task ("Assert Ir a alguna parte is shown in fragment") {
+			AssertVisible(
+				key_content = "Ir a alguna parte",
+				key_fragmentClass = "example",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
+}

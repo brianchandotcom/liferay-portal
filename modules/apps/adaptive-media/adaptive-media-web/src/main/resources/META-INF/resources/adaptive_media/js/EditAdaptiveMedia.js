@@ -176,11 +176,19 @@ const EditAdaptiveMedia = ({
 		}
 	}, [redirect]);
 
+	const _getRandomUuid = () => {
+		return Math.floor(Math.random() * 10000);
+	};
+
 	const handleChangeUuid = (event) => {
 		const nameValue = event.target.value;
 
 		if (automaticId) {
-			setFieldValue(newUuidId, normalizeFriendlyURL(nameValue), false);
+			setFieldValue(
+				newUuidId,
+				normalizeFriendlyURL(nameValue) || _getRandomUuid(),
+				false
+			);
 		}
 
 		setFieldValue(nameId, nameValue);

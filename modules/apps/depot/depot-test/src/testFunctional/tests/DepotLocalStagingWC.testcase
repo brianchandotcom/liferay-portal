@@ -314,6 +314,7 @@ definition {
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_3.jpg",
+			dmDocumentFileNameEdit = "Document_3.jpg",
 			dmDocumentTitle = "Document_2.jpg",
 			dmDocumentTitleEdit = "Document_3.jpg");
 

@@ -22,10 +22,9 @@ import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Eduardo García
@@ -39,13 +38,15 @@ public class SitemapURLProviderRegistryUtil {
 	public static List<SitemapURLProvider> getSitemapURLProviders() {
 		Set<String> keySet = _sitemapURLProvidersServiceTrackerMap.keySet();
 
-		Stream<String> stream = keySet.stream();
+		List<SitemapURLProvider> sitemapURLProviders = new ArrayList<>(
+			keySet.size());
 
-		return stream.map(
-			key -> _sitemapURLProvidersServiceTrackerMap.getService(key)
-		).collect(
-			Collectors.toList()
-		);
+		for (String key : keySet) {
+			sitemapURLProviders.add(
+				_sitemapURLProvidersServiceTrackerMap.getService(key));
+		}
+
+		return sitemapURLProviders;
 	}
 
 	public static void register(SitemapURLProvider sitemapURLProvider) {

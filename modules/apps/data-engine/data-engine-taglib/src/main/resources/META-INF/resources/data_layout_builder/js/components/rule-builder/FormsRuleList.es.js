@@ -32,6 +32,7 @@ const LOGICAL_OPERATOR = {
 
 const OPERATORS = {
 	'belongs-to': Liferay.Language.get('belongs-to'),
+	contains: Liferay.Language.get('contains'),
 	'equals-to': Liferay.Language.get('is-equal-to'),
 	'greater-than': Liferay.Language.get('is-greater-than'),
 	'greater-than-equals': Liferay.Language.get('is-greater-than-or-equal-to'),
@@ -127,14 +128,10 @@ const Operand = ({field, left, type, value}) => {
 const Condition = ({operands: [left, right], operator}) => (
 	<>
 		<Operand {...left} />
-		{right && (
-			<>
-				<b className="inline-item inline-item-after inline-item-before text-lowercase">
-					<em>{OPERATORS[operator]}</em>
-				</b>
-				<Operand {...right} left={left} />
-			</>
-		)}
+		<b className="inline-item inline-item-after inline-item-before text-lowercase">
+			<em>{OPERATORS[operator]}</em>
+		</b>
+		{right && <Operand {...right} left={left} />}
 	</>
 );
 

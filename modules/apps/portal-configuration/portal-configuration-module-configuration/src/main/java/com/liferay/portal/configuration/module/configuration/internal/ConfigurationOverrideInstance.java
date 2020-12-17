@@ -14,19 +14,20 @@
 
 package com.liferay.portal.configuration.module.configuration.internal;
 
-import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.petra.memory.FinalizeManager;
+import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
 
-import java.lang.ref.Reference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 /**
  * @author Preston Crary
@@ -46,15 +47,17 @@ public class ConfigurationOverrideInstance {
 			return null;
 		}
 
+		String key = _getKey(clazz);
+
 		ConfigurationOverrideInstance configurationOverrideInstance =
-			_configurationOverrideInstances.get(configurationOverrideClass);
+			_configurationOverrideInstances.get(key);
 
 		if (configurationOverrideInstance == null) {
 			configurationOverrideInstance = new ConfigurationOverrideInstance(
 				configurationOverrideClass, typedSettings);
 
 			_configurationOverrideInstances.put(
-				configurationOverrideClass, configurationOverrideInstance);
+				key, configurationOverrideInstance);
 		}
 
 		return configurationOverrideInstance;
@@ -68,6 +71,27 @@ public class ConfigurationOverrideInstance {
 		}
 
 		return overriddenMethod.invoke(_configurationOverrideInstance);
+	}
+
+	protected static void clearConfigurationOverrideInstance(Class<?> clazz) {
+		clearConfigurationOverrideInstance(clazz.getName());
+	}
+
+	protected static void clearConfigurationOverrideInstance(String className) {
+		_configurationOverrideInstances.remove(className);
+	}
+
+	private static String _getKey(Class<?> clazz) {
+		Stream<Class<?>> classStream = Arrays.stream(clazz.getInterfaces());
+
+		return classStream.filter(
+			clazz1 -> clazz1.getAnnotation(Meta.OCD.class) != null
+		).map(
+			Class::getName
+		).findFirst(
+		).orElse(
+			clazz.getName()
+		);
 	}
 
 	private static Class<?> _getOverrideClass(Class<?> clazz) {
@@ -99,12 +123,8 @@ public class ConfigurationOverrideInstance {
 		}
 	}
 
-	private static final Map<Class<?>, ConfigurationOverrideInstance>
-		_configurationOverrideInstances = new ConcurrentReferenceKeyHashMap<>(
-			new ConcurrentReferenceValueHashMap
-				<Reference<Class<?>>, ConfigurationOverrideInstance>(
-					FinalizeManager.WEAK_REFERENCE_FACTORY),
-			FinalizeManager.WEAK_REFERENCE_FACTORY);
+	private static final Map<String, ConfigurationOverrideInstance>
+		_configurationOverrideInstances = new ConcurrentHashMap<>();
 
 	private final Object _configurationOverrideInstance;
 	private final Map<String, Method> _methods = new HashMap<>();

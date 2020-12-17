@@ -558,6 +558,9 @@ public class DLReferencesExportImportContentProcessor
 						content = StringUtil.replace(
 							content, exportedReference, originalReference);
 					}
+					else {
+						throw portalException;
+					}
 
 					continue;
 				}

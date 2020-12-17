@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import React, {useContext, useRef} from 'react';
 
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
+import {hasFieldSet} from '../../util/fields.es';
 import {Actions, ActionsControls, useActions} from '../Actions.es';
 import {ParentFieldContext} from '../Field/ParentFieldContext.es';
 import {Placeholder} from '../Placeholder.es';
@@ -62,7 +63,7 @@ export const Column = ({
 	const firstField = column.fields[0];
 	const rootParentField = parentField.root ?? firstField;
 	const isFieldSetOrGroup = firstField.type === 'fieldset';
-	const isFieldSet = isFieldSetOrGroup && firstField.ddmStructureId;
+	const isFieldSet = hasFieldSet(firstField);
 	const isFieldSelected =
 		firstField.fieldName === activeId || firstField.fieldName === hoveredId;
 
@@ -72,13 +73,17 @@ export const Column = ({
 		'data-ddm-field-row': rowIndex,
 	};
 
+	const fieldId =
+		!editable && hasFieldSet(parentField.root)
+			? parentField.root.fieldName
+			: firstField.fieldName;
+
 	return (
 		<ActionsControls
 			actionsRef={actionsRef}
 			activePage={pageIndex}
 			columnRef={columnRef}
-			editable={editable}
-			fieldId={firstField.fieldName}
+			fieldId={fieldId}
 		>
 			<DefaultVariant.Column
 				className={classNames({

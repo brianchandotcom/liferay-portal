@@ -81,12 +81,10 @@ export const ActionsProvider = ({children, focusedFieldId}) => {
 				// will be removed later.
 
 				case ACTIONS_TYPES.HOVER: {
-					if (fieldId) {
-						dispatchForm({
-							payload: {activePage, fieldName: fieldId},
-							type: EVENT_TYPES.FIELD_HOVERED,
-						});
-					}
+					dispatchForm({
+						payload: {activePage, fieldName: fieldId},
+						type: EVENT_TYPES.FIELD_HOVERED,
+					});
 					break;
 				}
 				default:
@@ -122,7 +120,6 @@ export const ActionsControls = ({
 	activePage,
 	children,
 	columnRef,
-	editable,
 	fieldId,
 }) => {
 	const [{activeId, hoveredId}, dispatch] = useActions();
@@ -140,7 +137,10 @@ export const ActionsControls = ({
 	const handleFieldInteractions = (event) => {
 		event.stopPropagation();
 
-		if (actionsRef.current?.contains(event.target) && !editable) {
+		if (
+			actionsRef.current?.contains(event.target) ||
+			!columnRef.current?.contains(event.target)
+		) {
 			return;
 		}
 

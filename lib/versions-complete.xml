@@ -789,7 +789,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.google.docs.jar!org.freemarker.jar</file-name>
-				<version>2.3.29.LIFERAY-PATCHED-1</version>
+				<version>2.3.29.LIFERAY-PATCHED-2</version>
 				<project-name>org.freemarker.freemarker</project-name>
 				<licenses>
 					<license>
@@ -1958,6 +1958,30 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.layout.impl.jar!httpclient.jar</file-name>
+				<version>4.5.3</version>
+				<project-name>HttpComponents Apache HttpClient</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.layout.impl.jar!httpcore.jar</file-name>
+				<version>4.4.6</version>
+				<project-name>HttpComponents Apache HttpCore</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3698,234 +3722,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.template.freemarker.jar!org.freemarker.jar</file-name>
-				<version>2.3.29.LIFERAY-PATCHED-1</version>
+				<version>2.3.29.LIFERAY-PATCHED-2</version>
 				<project-name>org.freemarker.freemarker</project-name>
 				<licenses>
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!aopalliance.jar</file-name>
-				<version>1.0</version>
-				<project-name>AOP alliance</project-name>
-				<project-url>http://aopalliance.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>Public Domain</license-name>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!args4j.jar</file-name>
-				<version>2.0.23</version>
-				<project-name>args4j</project-name>
-				<project-url>http://www.kohsuke.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>MIT license</license-name>
-						<license-url>http://www.opensource.org/licenses/mit-license.php</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!checker-qual.jar</file-name>
-				<version>2.5.2</version>
-				<project-name>Checker Qual</project-name>
-				<project-url>https://checkerframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>The MIT License</license-name>
-						<license-url>http://opensource.org/licenses/MIT</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!commons-lang3.jar</file-name>
-				<version>3.4</version>
-				<project-name>Apache Commons Lang</project-name>
-				<project-url>http://commons.apache.org/proper/commons-lang/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!error_prone_annotations.jar</file-name>
-				<version>2.2.0</version>
-				<project-name>error-prone annotations</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!failureaccess.jar</file-name>
-				<version>1.0.1</version>
-				<project-name>Guava InternalFutureFailureAccess and InternalFutures</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!gson.jar</file-name>
-				<version>2.7</version>
-				<project-name>Gson</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!guava.jar</file-name>
-				<version>27.0.1-jre</version>
-				<project-name>Guava: Google Core Libraries for Java</project-name>
-				<project-url>https://github.com/google/guava/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!guice-multibindings.jar</file-name>
-				<version>4.1.0</version>
-				<project-name>Google Guice - Extensions - MultiBindings</project-name>
-				<project-url>https://github.com/google/guice</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!guice.jar</file-name>
-				<version>4.1.0</version>
-				<project-name>Google Guice - Core Library</project-name>
-				<project-url>https://github.com/google/guice</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!icu4j.jar</file-name>
-				<version>57.1</version>
-				<project-name>ICU4J</project-name>
-				<project-url>http://icu-project.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>ICU License</license-name>
-						<license-url>http://source.icu-project.org/repos/icu/icu/trunk/LICENSE</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!j2objc-annotations.jar</file-name>
-				<version>1.1</version>
-				<project-name>J2ObjC Annotations</project-name>
-				<project-url>https://github.com/google/j2objc/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!javax.inject.jar</file-name>
-				<version>1</version>
-				<project-name>javax.inject</project-name>
-				<project-url>http://code.google.com/p/atinject/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!jsr305.jar</file-name>
-				<version>3.0.2</version>
-				<project-name>FindBugs-jsr305</project-name>
-				<project-url>http://findbugs.sourceforge.net/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!listenablefuture.jar</file-name>
-				<version>9999.0-empty-to-avoid-conflict-with-guava</version>
-				<project-name>Guava ListenableFuture only</project-name>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!protobuf-java.jar</file-name>
-				<version>3.3.0</version>
-				<project-name>Protocol Buffers [Core]</project-name>
-				<project-url>https://developers.google.com/protocol-buffers/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!soy.jar</file-name>
-				<version>2018-01-03</version>
-				<project-name>Closure Templates</project-name>
-				<project-url>https://github.com/google/closure-templates</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!truth.jar</file-name>
-				<version>0.36</version>
-				<project-name>Truth Core</project-name>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.template.soy.impl.jar!types.jar</file-name>
-				<version>1.0.4</version>
-				<project-name>Safe HTML Types Library</project-name>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4394,18 +4196,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!guava.jar</file-name>
-				<version>18.0</version>
-				<project-name>Guava: Google Core Libraries for Java</project-name>
-				<project-url>https://guava-libraries.googlecode.com/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!httpclient.jar</file-name>
 				<version>4.5.12</version>
 				<project-name>Apache HttpClient</project-name>
@@ -4430,45 +4220,10 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!jjwt.jar</file-name>
-				<version>0.4</version>
-				<project-name>JSON Web Token support for the JVM</project-name>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!joda-convert.jar</file-name>
-				<version>1.9.2</version>
-				<project-name>Joda-Convert</project-name>
-				<project-url>http://www.joda.org/joda-convert/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!joda-time.jar</file-name>
-				<version>2.10.6</version>
-				<project-name>Joda-Time</project-name>
-				<project-url>https://www.joda.org/joda-time/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.push.notifications.sender.sms.jar!json-simple.jar</file-name>
-				<version>1.1</version>
-				<project-name>JSON.simple</project-name>
-				<project-url>http://code.google.com/p/json-simple/</project-url>
+				<file-name>com.liferay.push.notifications.sender.sms.jar!jackson-datatype-jsr310.jar</file-name>
+				<version>2.11.3</version>
+				<project-name>Jackson datatype: JSR310</project-name>
+				<project-url>https://github.com/FasterXML/jackson-modules-java8/jackson-datatype-jsr310</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -4477,8 +4232,44 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.push.notifications.sender.sms.jar!jjwt-api.jar</file-name>
+				<version>0.11.2</version>
+				<project-name>JJWT :: API</project-name>
+				<project-url>https://github.com/jwtk/jjwt</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.push.notifications.sender.sms.jar!jjwt-impl.jar</file-name>
+				<version>0.11.2</version>
+				<project-name>JJWT :: Impl</project-name>
+				<project-url>https://github.com/jwtk/jjwt</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.push.notifications.sender.sms.jar!jjwt-jackson.jar</file-name>
+				<version>0.11.2</version>
+				<project-name>JJWT :: Extensions :: Jackson</project-name>
+				<project-url>https://github.com/jwtk/jjwt</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.push.notifications.sender.sms.jar!twilio.jar</file-name>
-				<version>6.6.10</version>
+				<version>8.3.0</version>
 				<project-name>twilio</project-name>
 				<project-url>https://www.twilio.com</project-url>
 				<licenses>
@@ -6412,7 +6203,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/daisydiff.jar</file-name>
-				<version>1.2</version>
+				<version>1.2.0-atlassian-hosted</version>
 				<project-name>DaisyDiff</project-name>
 				<project-url>http://code.google.com/p/daisydiff</project-url>
 				<licenses>
@@ -6421,7 +6212,7 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
-				<comments>This was recompiled for compatibility with JDK 5. Removed org.apache.*, org.cyberneko.*, and org.w3c.* because it conflicts with nekohtml.jar and xercesImpl.jar.</comments>
+				<comments>Removed org.apache.*, org.cyberneko.*, and org.w3c.* because it conflicts with nekohtml.jar and xercesImpl.jar.</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/displaytag.jar</file-name>
@@ -6631,18 +6422,6 @@
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 						<copyright-notice>Copyright (c) Bernhard Bablok 2008-2010</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/isoparser.jar</file-name>
-				<version>1.9.41.2</version>
-				<project-name>ISO Parser</project-name>
-				<project-url>https://github.com/tballison/mp4parser</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7362,6 +7141,18 @@
 					<license>
 						<license-name>LGPL 3.0</license-name>
 						<license-url>https://www.gnu.org/licenses/lgpl-3.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/portal/mp4parser.jar</file-name>
+				<version>1.9.41.2.LIFERAY-PATCHED-1</version>
+				<project-name>ISO Parser</project-name>
+				<project-url>https://github.com/tballison/mp4parser</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>

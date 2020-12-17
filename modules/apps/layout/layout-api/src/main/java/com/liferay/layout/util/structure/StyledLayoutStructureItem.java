@@ -372,6 +372,12 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 				configColorJSONObject.getString("color", StringPool.BLANK));
 		}
 		else if (styleColorJSONObject == null) {
+			String styleColor = stylesJSONObject.getString(property);
+
+			if (!styleColor.startsWith(StringPool.POUND)) {
+				return styleColor;
+			}
+
 			return StringPool.BLANK;
 		}
 

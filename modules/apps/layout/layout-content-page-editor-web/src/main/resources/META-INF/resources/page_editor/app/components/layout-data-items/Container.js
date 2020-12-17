@@ -166,6 +166,8 @@ const Container = React.forwardRef(
 					{
 						container: widthType === 'fixed',
 						empty: !item.children.length && !height,
+						[`bg-${backgroundColor}`]:
+							backgroundColor && !backgroundColor.startsWith('#'),
 						[`ml-${marginLeft || 0}`]:
 							widthType !== 'fixed' && !withinTopper,
 						[`mr-${marginRight || 0}`]:

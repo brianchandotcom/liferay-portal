@@ -168,7 +168,13 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public String getName() {
-		return (String)get("name");
+		Object name = get("name");
+
+		if ((name == null) || (name instanceof String)) {
+			return (String)name;
+		}
+
+		return "name";
 	}
 
 	public List<String> getOptions() {

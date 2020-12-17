@@ -86,7 +86,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteCompanyCountries(long companyId) {
+	public void deleteCompanyCountries(long companyId) throws PortalException {
 		List<Country> countries = countryPersistence.findByCompanyId(companyId);
 
 		for (Country country : countries) {

@@ -84,7 +84,9 @@ public class CountryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCompanyCountries(long companyId) {
+	public void deleteCompanyCountries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_countryLocalService.deleteCompanyCountries(companyId);
 	}
 
@@ -97,10 +99,12 @@ public class CountryLocalServiceWrapper
 	 *
 	 * @param country the country
 	 * @return the country that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Country deleteCountry(
-		com.liferay.portal.kernel.model.Country country) {
+			com.liferay.portal.kernel.model.Country country)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.deleteCountry(country);
 	}

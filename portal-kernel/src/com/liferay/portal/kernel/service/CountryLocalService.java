@@ -101,7 +101,7 @@ public interface CountryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteCompanyCountries(long companyId);
+	public void deleteCompanyCountries(long companyId) throws PortalException;
 
 	/**
 	 * Deletes the country from the database. Also notifies the appropriate model listeners.
@@ -112,10 +112,11 @@ public interface CountryLocalService
 	 *
 	 * @param country the country
 	 * @return the country that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public Country deleteCountry(Country country);
+	public Country deleteCountry(Country country) throws PortalException;
 
 	/**
 	 * Deletes the country with the primary key from the database. Also notifies the appropriate model listeners.

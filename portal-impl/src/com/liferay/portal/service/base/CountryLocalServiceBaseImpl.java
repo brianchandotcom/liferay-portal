@@ -142,10 +142,11 @@ public abstract class CountryLocalServiceBaseImpl
 	 *
 	 * @param country the country
 	 * @return the country that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Country deleteCountry(Country country) {
+	public Country deleteCountry(Country country) throws PortalException {
 		return countryPersistence.remove(country);
 	}
 

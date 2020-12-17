@@ -86,7 +86,9 @@ public class CountryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteCompanyCountries(long companyId) {
+	public static void deleteCompanyCountries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		getService().deleteCompanyCountries(companyId);
 	}
 
@@ -99,9 +101,11 @@ public class CountryLocalServiceUtil {
 	 *
 	 * @param country the country
 	 * @return the country that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.portal.kernel.model.Country deleteCountry(
-		com.liferay.portal.kernel.model.Country country) {
+			com.liferay.portal.kernel.model.Country country)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteCountry(country);
 	}

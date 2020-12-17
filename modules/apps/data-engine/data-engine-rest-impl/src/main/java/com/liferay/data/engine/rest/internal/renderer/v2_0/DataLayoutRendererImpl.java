@@ -63,13 +63,13 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		return _ddmFormRenderer.render(
 			ddmForm, ddmStructureLayout.getDDMFormLayout(),
 			_toDDMFormRenderingContext(
-				ddmStructure.getGroupId(), dataLayoutId,
-				dataLayoutRendererContext, ddmForm));
+				dataLayoutId, dataLayoutRendererContext, ddmForm,
+				ddmStructure.getGroupId()));
 	}
 
 	private DDMFormRenderingContext _toDDMFormRenderingContext(
-		long groupId, Long dataLayoutId,
-		DataLayoutRendererContext dataLayoutRendererContext, DDMForm ddmForm) {
+		Long dataLayoutId, DataLayoutRendererContext dataLayoutRendererContext,
+		DDMForm ddmForm, long groupId) {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();

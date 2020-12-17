@@ -61,7 +61,6 @@
 					<liferay-ui:input-localized
 						cssClass="form-control"
 						disabled="<%= useTermsOfUseJournal %>"
-						editorName="alloyeditor"
 						name="termsOfUseContent"
 						type="editor"
 						xml='<%= BeanPropertiesUtil.getString(cpDefinitionVirtualSetting, "termsOfUseContent") %>'

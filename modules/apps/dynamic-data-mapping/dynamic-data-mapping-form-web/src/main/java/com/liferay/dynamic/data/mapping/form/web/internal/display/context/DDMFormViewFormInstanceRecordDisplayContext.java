@@ -78,14 +78,15 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			httpServletRequest);
 	}
 
-	public String getDDMFormHTML(RenderRequest renderRequest)
-		throws PortalException {
+	public Map<String, Object> getDDMFormReactData(RenderRequest renderRequest)
+		throws Exception {
 
-		return getDDMFormHTML(renderRequest, true);
+		return getDDMFormReactData(renderRequest, true);
 	}
 
-	public String getDDMFormHTML(RenderRequest renderRequest, boolean readOnly)
-		throws PortalException {
+	public Map<String, Object> getDDMFormReactData(
+			RenderRequest renderRequest, boolean readOnly)
+		throws Exception {
 
 		DDMFormInstanceRecord formInstanceRecord = getDDMFormInstanceRecord();
 
@@ -124,8 +125,12 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		DDMFormLayout formLayout = structureVersion.getDDMFormLayout();
 
-		return _ddmFormRenderer.render(
+		return _ddmFormRenderer.getReactData(
 			structureVersion.getDDMForm(), formLayout, formRenderingContext);
+	}
+
+	public String getModuleName() {
+		return _ddmFormRenderer.getModuleName();
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(

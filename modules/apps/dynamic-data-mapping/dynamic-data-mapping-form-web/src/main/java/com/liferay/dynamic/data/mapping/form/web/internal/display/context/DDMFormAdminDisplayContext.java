@@ -339,22 +339,6 @@ public class DDMFormAdminDisplayContext {
 		return jsonArray;
 	}
 
-	public String getDDMFormHTML(RenderRequest renderRequest)
-		throws PortalException {
-
-		return getDDMFormHTML(renderRequest, true);
-	}
-
-	public String getDDMFormHTML(RenderRequest renderRequest, boolean readOnly)
-		throws PortalException {
-
-		DDMFormViewFormInstanceRecordDisplayContext
-			formViewRecordDisplayContext = getFormViewRecordDisplayContext();
-
-		return formViewRecordDisplayContext.getDDMFormHTML(
-			renderRequest, readOnly);
-	}
-
 	public DDMFormInstance getDDMFormInstance() throws PortalException {
 		if (_ddmFormInstance != null) {
 			return _ddmFormInstance;
@@ -385,6 +369,23 @@ public class DDMFormAdminDisplayContext {
 		DDMFormInstanceRecord formInstanceRecord = getDDMFormInstanceRecord();
 
 		return formInstanceRecord.getLatestFormInstanceRecordVersion();
+	}
+
+	public Map<String, Object> getDDMFormReactData(RenderRequest renderRequest)
+		throws Exception {
+
+		return getDDMFormReactData(renderRequest, true);
+	}
+
+	public Map<String, Object> getDDMFormReactData(
+			RenderRequest renderRequest, boolean readOnly)
+		throws Exception {
+
+		DDMFormViewFormInstanceRecordDisplayContext
+			formViewRecordDisplayContext = getFormViewRecordDisplayContext();
+
+		return formViewRecordDisplayContext.getDDMFormReactData(
+			renderRequest, readOnly);
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {
@@ -775,6 +776,10 @@ public class DDMFormAdminDisplayContext {
 		return _npmResolver.resolveModuleName("dynamic-data-mapping-form-web");
 	}
 
+	public String getModuleName() {
+		return ddmFormRenderer.getModuleName();
+	}
+
 	public List<NavigationItem> getNavigationItems() {
 		HttpServletRequest httpServletRequest =
 			formAdminRequestHelper.getRequest();
@@ -995,6 +1000,33 @@ public class DDMFormAdminDisplayContext {
 		return jsonSerializer.serializeDeep(context);
 	}
 
+	public Map<String, Object> getSerializeSettingsFormReactData(
+			PageContext pageContext)
+		throws Exception {
+
+		long formInstanceId = ParamUtil.getLong(
+			renderRequest, "formInstanceId");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			createDDMFormRenderingContext(pageContext, renderRequest);
+
+		setDDMFormRenderingContextDDMFormValues(
+			ddmFormRenderingContext, formInstanceId);
+
+		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
+			DDMFormInstanceSettings.class);
+
+		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
+
+		DDMForm ddmForm = createSettingsDDMForm(formInstanceId, themeDisplay);
+
+		return ddmFormRenderer.getReactData(
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+	}
+
 	public String getSharedFormURL() {
 		return _addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
 			getFormLayoutURL(formAdminRequestHelper.getThemeDisplay(), false);
@@ -1127,32 +1159,6 @@ public class DDMFormAdminDisplayContext {
 
 	public boolean isShowPublishAlert() {
 		return ParamUtil.getBoolean(renderRequest, "showPublishAlert");
-	}
-
-	public String serializeSettingsForm(PageContext pageContext)
-		throws PortalException {
-
-		long formInstanceId = ParamUtil.getLong(
-			renderRequest, "formInstanceId");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		DDMFormRenderingContext ddmFormRenderingContext =
-			createDDMFormRenderingContext(pageContext, renderRequest);
-
-		setDDMFormRenderingContextDDMFormValues(
-			ddmFormRenderingContext, formInstanceId);
-
-		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
-			DDMFormInstanceSettings.class);
-
-		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
-
-		DDMForm ddmForm = createSettingsDDMForm(formInstanceId, themeDisplay);
-
-		return ddmFormRenderer.render(
-			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(

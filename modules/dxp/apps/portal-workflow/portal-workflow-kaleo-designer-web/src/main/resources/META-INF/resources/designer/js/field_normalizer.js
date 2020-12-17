@@ -154,6 +154,10 @@ AUI.add(
 					COL_TYPES_ASSIGNMENT.forEach((item1) => {
 						var value = data[0][item1];
 
+						if (item1 === 'taskAssignees' && value === '') {
+							assignments.assignmentType = 'taskAssignees';
+						}
+
 						if (!isNotEmptyValue(value)) {
 							return;
 						}

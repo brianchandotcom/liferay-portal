@@ -54,9 +54,9 @@ definition {
 		Panel.expandPanel(panel = "Categorization");
 
 		AssertTextEquals(
-			key_tagName = "alice",
+			key_tagName = "adventures",
 			locator1 = "AssetCategorization#TAG",
-			value1 = "alice");
+			value1 = "adventures");
 	}
 
 	macro addContentPage {

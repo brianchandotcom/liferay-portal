@@ -33,49 +33,10 @@ import java.util.stream.Stream;
 public class SitemapURLProviderRegistryUtil {
 
 	public static SitemapURLProvider getSitemapURLProvider(String className) {
-		return _sitemapURLProviderRegistryUtil._getSitemapURLProvider(
-			className);
-	}
-
-	public static List<SitemapURLProvider> getSitemapURLProviders() {
-		return _sitemapURLProviderRegistryUtil._getSitemapURLProviders();
-	}
-
-	public static void register(SitemapURLProvider sitemapURLProvider) {
-		_sitemapURLProviderRegistryUtil._register(sitemapURLProvider);
-	}
-
-	public static void unregister(
-		List<SitemapURLProvider> sitemapURLProviders) {
-
-		for (SitemapURLProvider sitemapURLProvider : sitemapURLProviders) {
-			unregister(sitemapURLProvider);
-		}
-	}
-
-	public static void unregister(SitemapURLProvider sitemapURLProvider) {
-		_sitemapURLProviderRegistryUtil._unregister(sitemapURLProvider);
-	}
-
-	private SitemapURLProviderRegistryUtil() {
-		_sitemapURLProvidersServiceTrackerMap =
-			ServiceTrackerCollections.openSingleValueMap(
-				SitemapURLProvider.class, null,
-				(serviceReference, emitter) -> {
-					Registry registry = RegistryUtil.getRegistry();
-
-					SitemapURLProvider sitemapURLProvider = registry.getService(
-						serviceReference);
-
-					emitter.emit(sitemapURLProvider.getClassName());
-				});
-	}
-
-	private SitemapURLProvider _getSitemapURLProvider(String className) {
 		return _sitemapURLProvidersServiceTrackerMap.getService(className);
 	}
 
-	private List<SitemapURLProvider> _getSitemapURLProviders() {
+	public static List<SitemapURLProvider> getSitemapURLProviders() {
 		Set<String> keySet = _sitemapURLProvidersServiceTrackerMap.keySet();
 
 		Stream<String> stream = keySet.stream();
@@ -87,7 +48,7 @@ public class SitemapURLProviderRegistryUtil {
 		);
 	}
 
-	private void _register(SitemapURLProvider sitemapURLProvider) {
+	public static void register(SitemapURLProvider sitemapURLProvider) {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceRegistration<SitemapURLProvider> serviceRegistration =
@@ -97,7 +58,15 @@ public class SitemapURLProviderRegistryUtil {
 		_serviceRegistrations.put(sitemapURLProvider, serviceRegistration);
 	}
 
-	private void _unregister(SitemapURLProvider sitemapURLProvider) {
+	public static void unregister(
+		List<SitemapURLProvider> sitemapURLProviders) {
+
+		for (SitemapURLProvider sitemapURLProvider : sitemapURLProviders) {
+			unregister(sitemapURLProvider);
+		}
+	}
+
+	public static void unregister(SitemapURLProvider sitemapURLProvider) {
 		ServiceRegistration<SitemapURLProvider> serviceRegistration =
 			_serviceRegistrations.remove(sitemapURLProvider);
 
@@ -106,12 +75,20 @@ public class SitemapURLProviderRegistryUtil {
 		}
 	}
 
-	private static final SitemapURLProviderRegistryUtil
-		_sitemapURLProviderRegistryUtil = new SitemapURLProviderRegistryUtil();
-
-	private final ServiceRegistrationMap<SitemapURLProvider>
+	private static final ServiceRegistrationMap<SitemapURLProvider>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
-	private final ServiceTrackerMap<String, SitemapURLProvider>
-		_sitemapURLProvidersServiceTrackerMap;
+
+	private static final ServiceTrackerMap<String, SitemapURLProvider>
+		_sitemapURLProvidersServiceTrackerMap =
+			ServiceTrackerCollections.openSingleValueMap(
+				SitemapURLProvider.class, null,
+				(serviceReference, emitter) -> {
+					Registry registry = RegistryUtil.getRegistry();
+
+					SitemapURLProvider sitemapURLProvider = registry.getService(
+						serviceReference);
+
+					emitter.emit(sitemapURLProvider.getClassName());
+				});
 
 }

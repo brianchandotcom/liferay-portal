@@ -111,7 +111,6 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					<div class="entry-content form-group">
 						<liferay-ui:input-localized
 							defaultLanguageId="<%= defaultLanguageId %>"
-							editorName="alloyeditor"
 							name="descriptionMapAsXML"
 							type="editor"
 							xml="<%= descriptionMapAsXML %>"

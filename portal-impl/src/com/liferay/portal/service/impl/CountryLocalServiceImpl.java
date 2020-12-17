@@ -14,7 +14,9 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.CountryA2Exception;
 import com.liferay.portal.kernel.exception.CountryA3Exception;
 import com.liferay.portal.kernel.exception.CountryIddException;
@@ -24,7 +26,6 @@ import com.liferay.portal.kernel.exception.DuplicateCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -95,7 +96,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public Country deleteCountry(Country country) {
+	public Country deleteCountry(Country country) throws PortalException {
 
 		// Country
 
@@ -107,17 +108,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		// Organizations
 
-		List<Organization> organizations = organizationLocalService.search(
-			country.getCompanyId(),
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null,
-			country.getCountryId(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (Organization organization : organizations) {
-			organization.setCountryId(0);
-			organization.setRegionId(0);
-
-			organizationLocalService.updateOrganization(organization);
-		}
+		_updateOrganizationCountryIds(country.getCountryId());
 
 		// Regions
 
@@ -290,6 +281,30 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		if (Validator.isNull(number)) {
 			throw new CountryNumberException();
 		}
+	}
+
+	private void _updateOrganizationCountryIds(long countryId)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			organizationLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property countryIdProperty = PropertyFactoryUtil.forName(
+					"countryId");
+
+				dynamicQuery.add(countryIdProperty.eq(countryId));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(Organization organization) -> {
+				organization.setCountryId(0);
+				organization.setRegionId(0);
+
+				organizationLocalService.updateOrganization(organization);
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

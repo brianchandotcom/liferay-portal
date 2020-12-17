@@ -14,13 +14,14 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -90,17 +91,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		// Organizations
 
-		List<Organization> organizations = organizationLocalService.search(
-			region.getCompanyId(),
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null,
-			region.getRegionId(), region.getCountryId(), null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (Organization organization : organizations) {
-			organization.setRegionId(0);
-
-			organizationLocalService.updateOrganization(organization);
-		}
+		_updateOrganizationRegionIds(region.getRegionId());
 
 		return region;
 	}
@@ -200,6 +191,29 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		if (Validator.isNull(name)) {
 			throw new RegionNameException();
 		}
+	}
+
+	private void _updateOrganizationRegionIds(long regionId)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			organizationLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property regionIdProperty = PropertyFactoryUtil.forName(
+					"regionId");
+
+				dynamicQuery.add(regionIdProperty.eq(regionId));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(Organization organization) -> {
+				organization.setRegionId(0);
+
+				organizationLocalService.updateOrganization(organization);
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

@@ -16,6 +16,12 @@ package com.liferay.commerce.internal.upgrade.v4_10_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v4_10_0.util.CommerceOrderItemTable;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * @author Luca Pellizzon

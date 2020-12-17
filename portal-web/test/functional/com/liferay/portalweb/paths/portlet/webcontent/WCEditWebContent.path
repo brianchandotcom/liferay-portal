@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AUDIO_BUTTON</td>
-	<td>//a[contains(@title,'Audio')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>AUTOGENERATEID</td>
 	<td>//input[contains(@id,'autoArticleId')]</td>
 	<td></td>

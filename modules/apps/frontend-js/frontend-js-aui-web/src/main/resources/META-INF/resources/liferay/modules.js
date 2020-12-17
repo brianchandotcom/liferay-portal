@@ -49,7 +49,7 @@
 		base: Liferay.ThemeDisplay.getCDNBaseURL() + PATH_JAVASCRIPT + '/aui/',
 		combine: COMBINE,
 		comboBase: LiferayAUI.getComboPath(),
-		filter: Liferay.AUI.getFilter(),
+		filter: process.env.NODE_ENV === 'development' ? 'raw' : 'min',
 		groups: {
 			editor: {
 				base: PATH_EDITOR_CKEDITOR,

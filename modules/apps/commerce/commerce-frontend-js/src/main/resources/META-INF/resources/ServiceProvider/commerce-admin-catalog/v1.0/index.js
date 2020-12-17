@@ -12,4 +12,6 @@
  * details.
  */
 
+export {default as optionAPI} from './Option';
+export {default as optionValueAPI} from './OptionValue';
 export {default as productAPI} from './Product';

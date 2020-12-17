@@ -100,7 +100,7 @@ public class GoogleDocsUIItemsProcessor {
 			"content.Language", themeDisplay.getLocale(), getClass());
 
 		String message = LanguageUtil.get(
-			resourceBundle, "edit-in-google-docs");
+			resourceBundle, "edit-in-google-drive");
 
 		urlUIItem.setLabel(message);
 

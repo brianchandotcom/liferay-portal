@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.external.video.resolver.test;
+package com.liferay.document.library.video.external.shortcut.resolver.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;

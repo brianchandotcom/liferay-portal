@@ -21,9 +21,6 @@ public interface BenchmarksPropsKeys {
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 
-	public static final String ENABLE_SEARCH_BAR =
-		"sample.sql.search.bar.enabled";
-
 	public static final String MAX_ASSET_CATEGORY_COUNT =
 		"sample.sql.max.asset.category.count";
 
@@ -129,6 +126,9 @@ public interface BenchmarksPropsKeys {
 	public static final String OUTPUT_MERGE = "sample.sql.output.merge";
 
 	public static final String SCRIPT = "sample.sql.script";
+
+	public static final String SEARCH_BAR_ENABLED =
+		"sample.sql.search.bar.enabled";
 
 	public static final String VIRTUAL_HOST_NAME =
 		"sample.sql.virtual.hostname";

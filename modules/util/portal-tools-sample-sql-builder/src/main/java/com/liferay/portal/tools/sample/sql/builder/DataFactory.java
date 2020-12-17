@@ -2792,7 +2792,7 @@ public class DataFactory {
 		layoutModels.add(
 			newLayoutModel(groupId, "wiki", "", WikiPortletKeys.WIKI + ","));
 
-		if (BenchmarksPropsValues.ENABLE_SEARCH_BAR) {
+		if (BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
 			layoutModels.add(
 				newLayoutModel(
 					groupId, "search", true, "1_2_columns_i",

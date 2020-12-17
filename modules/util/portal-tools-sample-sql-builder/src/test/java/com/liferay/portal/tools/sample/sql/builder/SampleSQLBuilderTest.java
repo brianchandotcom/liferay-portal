@@ -125,7 +125,6 @@ public class SampleSQLBuilderTest {
 
 	private void _initProperties(Properties properties, String outputDir) {
 		properties.put(BenchmarksPropsKeys.DB_TYPE, "hypersonic");
-		properties.put(BenchmarksPropsKeys.ENABLE_SEARCH_BAR, "true");
 		properties.put(BenchmarksPropsKeys.MAX_ASSET_CATEGORY_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT, "1");
@@ -174,6 +173,7 @@ public class SampleSQLBuilderTest {
 			BenchmarksPropsKeys.SCRIPT,
 			"com/liferay/portal/tools/sample/sql/builder/dependencies" +
 				"/sample.ftl");
+		properties.put(BenchmarksPropsKeys.SEARCH_BAR_ENABLED, "true");
 		properties.put(BenchmarksPropsKeys.VIRTUAL_HOST_NAME, "localhost");
 	}
 

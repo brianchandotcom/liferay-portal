@@ -14,7 +14,6 @@
 
 package com.liferay.comment.upgrade;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.message.boards.model.MBDiscussion;
@@ -117,34 +116,6 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		String newSubscriptionClassName =
 			MBDiscussion.class.getName() + StringPool.UNDERLINE +
 				_oldSubscriptionClassName;
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_subscriptionLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"classNameId",
-					_classNameLocalService.getClassNameId(
-						_oldSubscriptionClassName))));
-		actionableDynamicQuery.setPerformActionMethod(
-			(Subscription subscription) -> {
-				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					newSubscriptionClassName, subscription.getClassPK());
-
-				if (assetEntry == null) {
-					_assetEntryLocalService.updateEntry(
-						subscription.getUserId(), subscription.getGroupId(),
-						subscription.getCreateDate(),
-						subscription.getModifiedDate(),
-						newSubscriptionClassName, subscription.getClassPK(),
-						null, 0, null, null, true, false, null, null, null,
-						null, null, String.valueOf(subscription.getGroupId()),
-						null, null, null, null, 0, 0, null);
-				}
-			});
-
-		actionableDynamicQuery.performActions();
 
 		runSQL(
 			StringBundler.concat(

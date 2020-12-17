@@ -21,6 +21,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
@@ -96,6 +97,7 @@ public class ViewChangesDisplayContext {
 		CTConfiguration ctConfiguration,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService,
+		CTSchemaVersionLocalService ctSchemaVersionLocalService,
 		GroupLocalService groupLocalService, Language language, Portal portal,
 		PublishScheduler publishScheduler, RenderRequest renderRequest,
 		RenderResponse renderResponse, UserLocalService userLocalService) {
@@ -107,6 +109,7 @@ public class ViewChangesDisplayContext {
 		_ctConfiguration = ctConfiguration;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
+		_ctSchemaVersionLocalService = ctSchemaVersionLocalService;
 		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
@@ -454,6 +457,11 @@ public class ViewChangesDisplayContext {
 
 	public boolean hasChanges() {
 		return _hasChanges;
+	}
+
+	public boolean isExpired(CTCollection ctCollection) {
+		return !_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+			ctCollection.getSchemaVersionId());
 	}
 
 	private JSONObject _getContextViewJSONObject(
@@ -916,6 +924,7 @@ public class ViewChangesDisplayContext {
 	private final CTConfiguration _ctConfiguration;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
+	private final CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final boolean _hasChanges;
 	private final HttpServletRequest _httpServletRequest;

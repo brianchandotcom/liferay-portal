@@ -2028,7 +2028,7 @@ class ChangeTrackingChangesView extends React.Component {
 							title={Liferay.Language.get('out-of-date')}
 						>
 							{Liferay.Language.get(
-								'this-publication-was-created-on-a-previous-liferay-version'
+								'this-publication-was-created-on-a-previous-liferay-version.-you-cannot-publish,-revert,-or-make-additional-changes'
 							)}
 						</ClayAlert>
 					)}

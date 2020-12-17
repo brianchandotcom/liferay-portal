@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessService;
+import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
@@ -55,12 +56,14 @@ public class ViewHistoryDisplayContext {
 		BackgroundTaskLocalService backgroundTaskLocalService,
 		CTCollectionLocalService ctCollectionLocalService,
 		CTProcessService ctProcessService,
+		CTSchemaVersionLocalService ctSchemaVersionLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_backgroundTaskLocalService = backgroundTaskLocalService;
 		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctProcessService = ctProcessService;
+		_ctSchemaVersionLocalService = ctSchemaVersionLocalService;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 
@@ -178,6 +181,11 @@ public class ViewHistoryDisplayContext {
 		).build();
 	}
 
+	public boolean isExpired(CTCollection ctCollection) {
+		return !_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+			ctCollection.getSchemaVersionId());
+	}
+
 	private String _getFilterByStatus() {
 		return ParamUtil.getString(_renderRequest, "status", "all");
 	}
@@ -229,6 +237,7 @@ public class ViewHistoryDisplayContext {
 	private final BackgroundTaskLocalService _backgroundTaskLocalService;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTProcessService _ctProcessService;
+	private final CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final RenderRequest _renderRequest;

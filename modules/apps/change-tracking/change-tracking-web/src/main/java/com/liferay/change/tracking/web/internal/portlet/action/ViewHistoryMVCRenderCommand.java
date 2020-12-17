@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessService;
+import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ViewHistoryDisplayContext;
@@ -50,8 +51,9 @@ public class ViewHistoryMVCRenderCommand implements MVCRenderCommand {
 		ViewHistoryDisplayContext viewHistoryDisplayContext =
 			new ViewHistoryDisplayContext(
 				_backgroundTaskLocalService, _ctCollectionLocalService,
-				_ctProcessService, _portal.getHttpServletRequest(renderRequest),
-				_language, renderRequest, renderResponse);
+				_ctProcessService, _ctSchemaVersionLocalService,
+				_portal.getHttpServletRequest(renderRequest), _language,
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_HISTORY_DISPLAY_CONTEXT, viewHistoryDisplayContext);
@@ -67,6 +69,9 @@ public class ViewHistoryMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTProcessService _ctProcessService;
+
+	@Reference
+	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 
 	@Reference
 	private Language _language;

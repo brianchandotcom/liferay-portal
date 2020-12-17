@@ -21,6 +21,7 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
@@ -115,8 +116,9 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 				activeCtCollectionId, _basePersistenceRegistry,
 				_ctClosureFactory, ctCollection, _ctConfiguration,
 				_ctDisplayRendererRegistry, _ctEntryLocalService,
-				_groupLocalService, _language, _portal, _publishScheduler,
-				renderRequest, renderResponse, _userLocalService);
+				_ctSchemaVersionLocalService, _groupLocalService, _language,
+				_portal, _publishScheduler, renderRequest, renderResponse,
+				_userLocalService);
 
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT, viewChangesDisplayContext);
@@ -159,6 +161,9 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

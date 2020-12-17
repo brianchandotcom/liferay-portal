@@ -225,16 +225,25 @@ portletDisplay.setShowBackIcon(true);
 						<div class="publication-description"><%= HtmlUtil.escape(description.concat(LanguageUtil.format(resourceBundle, "published-by-x-on-x", new Object[] {ctCollection.getUserName(), format.format(ctCollection.getStatusDate())}, false))) %></div>
 					</li>
 					<li class="tbar-item">
-						<liferay-portlet:renderURL var="revertURL">
-							<portlet:param name="mvcRenderCommandName" value="/change_tracking/undo_ct_collection" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-							<portlet:param name="revert" value="true" />
-						</liferay-portlet:renderURL>
+						<c:choose>
+							<c:when test="<%= viewChangesDisplayContext.isExpired(ctCollection) %>">
+								<a class="btn btn-secondary btn-sm disabled lfr-portal-tooltip" title="<liferay-ui:message key="this-publication-was-created-on-a-previous-liferay-version.-you-cannot-revert-it" />" type="button">
+									<liferay-ui:message key="revert" />
+								</a>
+							</c:when>
+							<c:otherwise>
+								<liferay-portlet:renderURL var="revertURL">
+									<portlet:param name="mvcRenderCommandName" value="/change_tracking/undo_ct_collection" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
+									<portlet:param name="revert" value="true" />
+								</liferay-portlet:renderURL>
 
-						<a class="btn btn-secondary btn-sm" href="<%= revertURL %>" type="button">
-							<liferay-ui:message key="revert" />
-						</a>
+								<a class="btn btn-secondary btn-sm" href="<%= revertURL %>" type="button">
+									<liferay-ui:message key="revert" />
+								</a>
+							</c:otherwise>
+						</c:choose>
 					</li>
 				</c:otherwise>
 			</c:choose>

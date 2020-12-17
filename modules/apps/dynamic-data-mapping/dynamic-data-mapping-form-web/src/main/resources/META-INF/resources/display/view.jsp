@@ -180,7 +180,10 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							cssClass="ddm-form-builder-app ddm-form-builder-app-not-ready"
 							id='<%= ddmFormDisplayContext.getContainerId() + "container" %>'
 						>
-							<%= ddmFormDisplayContext.getDDMFormHTML() %>
+							<react:component
+								module="<%= ddmFormDisplayContext.getModuleName() %>"
+								props="<%= ddmFormDisplayContext.getDDMFormReactData() %>"
+							/>
 
 							<aui:input name="empty" type="hidden" value="" />
 						</clay:container-fluid>

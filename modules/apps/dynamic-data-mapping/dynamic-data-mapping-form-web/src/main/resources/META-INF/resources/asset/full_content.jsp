@@ -21,5 +21,8 @@ DDMFormViewFormInstanceRecordDisplayContext ddmFormViewFormInstanceRecordDisplay
 %>
 
 <clay:container-fluid>
-	<%= ddmFormViewFormInstanceRecordDisplayContext.getDDMFormHTML(renderRequest) %>
+	<react:component
+		module="<%= ddmFormViewFormInstanceRecordDisplayContext.getModuleName() %>"
+		props="<%= ddmFormViewFormInstanceRecordDisplayContext.getDDMFormReactData(renderRequest) %>"
+	/>
 </clay:container-fluid>

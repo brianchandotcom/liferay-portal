@@ -77,6 +77,9 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 			</c:if>
 		</div>
 
-		<%= ddmFormDisplayContext.getDDMFormHTML() %>
+		<react:component
+			module="<%= ddmFormDisplayContext.getModuleName() %>"
+			props="<%= ddmFormDisplayContext.getDDMFormReactData() %>"
+		/>
 	</aui:form>
 </clay:container-fluid>

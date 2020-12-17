@@ -108,7 +108,10 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 </div>
 
 <div class="hide">
-	<%= ddmFormAdminDisplayContext.serializeSettingsForm(pageContext) %>
+	<react:component
+		module="<%= ddmFormAdminDisplayContext.getModuleName() %>"
+		props="<%= ddmFormAdminDisplayContext.getSerializeSettingsFormReactData(pageContext) %>"
+	/>
 </div>
 
 <aui:script>

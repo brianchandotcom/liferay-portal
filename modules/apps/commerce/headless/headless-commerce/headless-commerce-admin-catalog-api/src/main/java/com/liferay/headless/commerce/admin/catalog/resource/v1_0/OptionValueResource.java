@@ -49,6 +49,29 @@ public interface OptionValueResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Response deleteOptionValueByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public OptionValue getOptionValueByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response patchOptionValueByExternalReferenceCode(
+			String externalReferenceCode, OptionValue optionValue)
+		throws Exception;
+
+	public Response deleteOptionValue(Long id) throws Exception;
+
+	public Response deleteOptionValueBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
+	public OptionValue getOptionValue(Long id) throws Exception;
+
+	public Response patchOptionValue(Long id, OptionValue optionValue)
+		throws Exception;
+
 	public Page<OptionValue> getOptionByExternalReferenceCodeOptionValuesPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;

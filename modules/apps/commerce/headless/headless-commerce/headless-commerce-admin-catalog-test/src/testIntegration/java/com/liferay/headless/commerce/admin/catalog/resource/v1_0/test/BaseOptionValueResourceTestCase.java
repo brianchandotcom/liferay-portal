@@ -30,6 +30,7 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.OptionVa
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.OptionValueSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -46,6 +47,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -69,6 +72,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -194,6 +198,248 @@ public abstract class BaseOptionValueResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOptionValueByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionValue optionValue =
+			testDeleteOptionValueByExternalReferenceCode_addOptionValue();
+
+		assertHttpResponseStatusCode(
+			204,
+			optionValueResource.
+				deleteOptionValueByExternalReferenceCodeHttpResponse(
+					optionValue.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.
+				getOptionValueByExternalReferenceCodeHttpResponse(
+					optionValue.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.
+				getOptionValueByExternalReferenceCodeHttpResponse(
+					optionValue.getExternalReferenceCode()));
+	}
+
+	protected OptionValue
+			testDeleteOptionValueByExternalReferenceCode_addOptionValue()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetOptionValueByExternalReferenceCode() throws Exception {
+		OptionValue postOptionValue =
+			testGetOptionValueByExternalReferenceCode_addOptionValue();
+
+		OptionValue getOptionValue =
+			optionValueResource.getOptionValueByExternalReferenceCode(
+				postOptionValue.getExternalReferenceCode());
+
+		assertEquals(postOptionValue, getOptionValue);
+		assertValid(getOptionValue);
+	}
+
+	protected OptionValue
+			testGetOptionValueByExternalReferenceCode_addOptionValue()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOptionValueByExternalReferenceCode()
+		throws Exception {
+
+		OptionValue optionValue = testGraphQLOptionValue_addOptionValue();
+
+		Assert.assertTrue(
+			equals(
+				optionValue,
+				OptionValueSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"optionValueByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												optionValue.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/optionValueByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetOptionValueByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"optionValueByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPatchOptionValueByExternalReferenceCode() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testDeleteOptionValue() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionValue optionValue = testDeleteOptionValue_addOptionValue();
+
+		assertHttpResponseStatusCode(
+			204,
+			optionValueResource.deleteOptionValueHttpResponse(
+				optionValue.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.getOptionValueHttpResponse(
+				optionValue.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.getOptionValueHttpResponse(
+				optionValue.getId()));
+	}
+
+	protected OptionValue testDeleteOptionValue_addOptionValue()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteOptionValue() throws Exception {
+		OptionValue optionValue = testGraphQLOptionValue_addOptionValue();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOptionValue",
+						new HashMap<String, Object>() {
+							{
+								put("id", optionValue.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOptionValue"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"optionValue",
+						new HashMap<String, Object>() {
+							{
+								put("id", optionValue.getId());
+							}
+						},
+						new GraphQLField("id"))),
+				"JSONArray/errors");
+
+			Assert.assertTrue(errorsJSONArray.length() > 0);
+		}
+	}
+
+	@Test
+	public void testGetOptionValue() throws Exception {
+		OptionValue postOptionValue = testGetOptionValue_addOptionValue();
+
+		OptionValue getOptionValue = optionValueResource.getOptionValue(
+			postOptionValue.getId());
+
+		assertEquals(postOptionValue, getOptionValue);
+		assertValid(getOptionValue);
+	}
+
+	protected OptionValue testGetOptionValue_addOptionValue() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOptionValue() throws Exception {
+		OptionValue optionValue = testGraphQLOptionValue_addOptionValue();
+
+		Assert.assertTrue(
+			equals(
+				optionValue,
+				OptionValueSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"optionValue",
+								new HashMap<String, Object>() {
+									{
+										put("id", optionValue.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/optionValue"))));
+	}
+
+	@Test
+	public void testGraphQLGetOptionValueNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"optionValue",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPatchOptionValue() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetOptionByExternalReferenceCodeOptionValuesPage()
 		throws Exception {
 
@@ -248,6 +494,10 @@ public abstract class BaseOptionValueResourceTestCase {
 			Arrays.asList(optionValue1, optionValue2),
 			(List<OptionValue>)page.getItems());
 		assertValid(page);
+
+		optionValueResource.deleteOptionValue(optionValue1.getId());
+
+		optionValueResource.deleteOptionValue(optionValue2.getId());
 	}
 
 	@Test
@@ -335,6 +585,23 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		assertEquals(randomOptionValue, postOptionValue);
 		assertValid(postOptionValue);
+
+		randomOptionValue = randomOptionValue();
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.
+				getOptionValueByExternalReferenceCodeHttpResponse(
+					randomOptionValue.getExternalReferenceCode()));
+
+		testPostOptionByExternalReferenceCodeOptionValue_addOptionValue(
+			randomOptionValue);
+
+		assertHttpResponseStatusCode(
+			200,
+			optionValueResource.
+				getOptionValueByExternalReferenceCodeHttpResponse(
+					randomOptionValue.getExternalReferenceCode()));
 	}
 
 	protected OptionValue
@@ -390,6 +657,10 @@ public abstract class BaseOptionValueResourceTestCase {
 			Arrays.asList(optionValue1, optionValue2),
 			(List<OptionValue>)page.getItems());
 		assertValid(page);
+
+		optionValueResource.deleteOptionValue(optionValue1.getId());
+
+		optionValueResource.deleteOptionValue(optionValue2.getId());
 	}
 
 	@Test
@@ -465,6 +736,22 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		assertEquals(randomOptionValue, postOptionValue);
 		assertValid(postOptionValue);
+
+		randomOptionValue = randomOptionValue();
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.
+				getOptionValueByExternalReferenceCodeHttpResponse(
+					randomOptionValue.getExternalReferenceCode()));
+
+		testPostOptionIdOptionValue_addOptionValue(randomOptionValue);
+
+		assertHttpResponseStatusCode(
+			200,
+			optionValueResource.
+				getOptionValueByExternalReferenceCodeHttpResponse(
+					randomOptionValue.getExternalReferenceCode()));
 	}
 
 	protected OptionValue testPostOptionIdOptionValue_addOptionValue(
@@ -541,6 +828,14 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (optionValue.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
@@ -667,6 +962,17 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)optionValue1.getActions(),
+						(Map)optionValue2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
@@ -806,6 +1112,11 @@ public abstract class BaseOptionValueResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
 			sb.append("'");

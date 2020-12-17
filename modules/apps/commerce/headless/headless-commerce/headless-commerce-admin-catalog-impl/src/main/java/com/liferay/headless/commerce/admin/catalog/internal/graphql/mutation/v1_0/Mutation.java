@@ -678,6 +678,70 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response deleteOptionValueByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionValueResource ->
+				optionValueResource.deleteOptionValueByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	@GraphQLField
+	public Response patchOptionValueByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("optionValue") OptionValue optionValue)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionValueResource ->
+				optionValueResource.patchOptionValueByExternalReferenceCode(
+					externalReferenceCode, optionValue));
+	}
+
+	@GraphQLField
+	public Response deleteOptionValue(@GraphQLName("id") Long id)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionValueResource -> optionValueResource.deleteOptionValue(id));
+	}
+
+	@GraphQLField
+	public Response deleteOptionValueBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionValueResource -> optionValueResource.deleteOptionValueBatch(
+				id, callbackURL, object));
+	}
+
+	@GraphQLField
+	public Response patchOptionValue(
+			@GraphQLName("id") Long id,
+			@GraphQLName("optionValue") OptionValue optionValue)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_optionValueResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			optionValueResource -> optionValueResource.patchOptionValue(
+				id, optionValue));
+	}
+
+	@GraphQLField
 	public OptionValue createOptionByExternalReferenceCodeOptionValue(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("optionValue") OptionValue optionValue)

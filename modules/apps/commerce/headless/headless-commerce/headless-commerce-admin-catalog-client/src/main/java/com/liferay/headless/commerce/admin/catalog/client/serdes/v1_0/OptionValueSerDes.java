@@ -55,6 +55,16 @@ public class OptionValueSerDes {
 
 		sb.append("{");
 
+		if (optionValue.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(optionValue.getActions()));
+		}
+
 		if (optionValue.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -132,6 +142,13 @@ public class OptionValueSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (optionValue.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(optionValue.getActions()));
+		}
+
 		if (optionValue.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -190,7 +207,16 @@ public class OptionValueSerDes {
 			OptionValue optionValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					optionValue.setActions(
+						(Map)OptionValueSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				if (jsonParserFieldValue != null) {
 					optionValue.setExternalReferenceCode(
 						(String)jsonParserFieldValue);

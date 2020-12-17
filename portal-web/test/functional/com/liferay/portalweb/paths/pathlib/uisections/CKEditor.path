@@ -81,6 +81,11 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
+	<td>TOOLBAR_AUDIO_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@class,'audio')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_IMAGE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button') and contains(@class,'image')]</td>
 	<td></td>

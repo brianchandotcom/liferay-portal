@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -687,11 +688,25 @@ public class DataLayoutTaglibUtil {
 				return new UnlocalizedValue(StringPool.BLANK);
 			}
 
+			DDMFormFieldValidationExpression ddmFormFieldValidationExpression =
+				ddmFormFieldValidation.getDDMFormFieldValidationExpression();
+
 			return new UnlocalizedValue(
 				JSONUtil.put(
-					"errorMessage", ddmFormFieldValidation.getErrorMessage()
+					"errorMessage",
+					_getLocalizedValueJSONObject(
+						ddmFormFieldValidation.getErrorMessageLocalizedValue())
 				).put(
-					"expression", ddmFormFieldValidation.getExpression()
+					"expression",
+					JSONUtil.put(
+						"name", ddmFormFieldValidationExpression.getName()
+					).put(
+						"value", ddmFormFieldValidationExpression.getValue()
+					)
+				).put(
+					"parameter",
+					_getLocalizedValueJSONObject(
+						ddmFormFieldValidation.getParameterLocalizedValue())
 				).toString());
 		}
 
@@ -844,6 +859,15 @@ public class DataLayoutTaglibUtil {
 					new String[] {"size", "columns", "pages", "rows"}));
 
 			return _deserializeDDMFormLayout(jsonObject.toJSONString());
+		}
+
+		private JSONObject _getLocalizedValueJSONObject(
+			LocalizedValue localizedValue) {
+
+			Map<String, Object> localizedValuesMap =
+				LocalizedValueUtil.toLocalizedValuesMap(localizedValue);
+
+			return LocalizedValueUtil.toJSONObject(localizedValuesMap);
 		}
 
 		private List<Map<String, Object>> _getNestedFields(

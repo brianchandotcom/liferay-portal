@@ -90,17 +90,9 @@ export default class Blogs {
 				);
 			}
 
-			const editorName = `${namespace}contentEditor`;
-			if (CKEDITOR.instances[editorName]) {
-				this._bindEditor();
-			}
-			else {
-				Liferay.on('editorAPIReady', (event) => {
-					if (event.editorName === editorName) {
-						this._bindEditor();
-					}
-				});
-			}
+			window[`${namespace}onChangeContentEditor`] = (html) => {
+				this.setDescription(html);
+			};
 		});
 	}
 
@@ -126,19 +118,6 @@ export default class Blogs {
 		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
 		form.removeRule(this._getElementById('title'), 'required');
-	}
-
-	_bindEditor() {
-		const editorName = `${this._config.namespace}contentEditor`;
-		const contentEditor = CKEDITOR.instances[editorName];
-
-		contentEditor.on('instanceReady', () => {
-			this.setDescription(window[editorName].getText());
-		});
-
-		contentEditor.on('change', () => {
-			this.setDescription(window[editorName].getText());
-		});
 	}
 
 	_bindUI() {

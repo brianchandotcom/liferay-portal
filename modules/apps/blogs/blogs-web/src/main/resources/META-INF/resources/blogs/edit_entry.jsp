@@ -170,6 +170,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 								contents="<%= content %>"
 								editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>'
 								name="contentEditor"
+								onChangeMethod="onChangeContentEditor"
 								placeholder="content"
 								required="<%= true %>"
 							>

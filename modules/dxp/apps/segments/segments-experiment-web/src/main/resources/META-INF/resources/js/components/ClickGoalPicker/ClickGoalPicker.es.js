@@ -40,6 +40,8 @@ const {
 	useState,
 } = React;
 
+const ENTER_KEY = 'Enter';
+
 const ESCAPE_KEYS = [
 	'Escape', // Most browsers.
 	'Esc', // IE and Edge.
@@ -48,8 +50,6 @@ const ESCAPE_KEYS = [
 const POPOVER_PADDING = 16;
 
 const THROTTLE_INTERVAL_MS = 100;
-
-const TOP_NAV_HEIGHT = -100;
 
 const DispatchContext = React.createContext();
 
@@ -117,7 +117,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 
 			// Make sure nothing slides under the top nav.
 
-			window.scrollBy(0, TOP_NAV_HEIGHT);
+			window.scrollBy(0, -100);
 		}
 
 		event.preventDefault();
@@ -125,27 +125,41 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 		dispatch({type: 'activate'});
 	};
 
-	const handleInputBlur = (event) => {
-		const value = event.target.value;
-
+	const isValidNewClickTargetElement = (value) => {
 		const target = value && document.getElementById(value);
 
-		if (target) {
-			target.scrollIntoView();
+		setIsValidClickTargetElement(!!target);
 
-			// Make sure nothing slides under the top nav.
+		return !!target;
+	};
 
-			window.scrollBy(0, TOP_NAV_HEIGHT);
+	const selectNewClickTargetElement = (event) => {
+		scrollIntoView(event);
 
-			dispatch({
-				selector: value,
-				type: 'selectTarget',
-			});
+		dispatch({
+			selector: event.target.value,
+			type: 'selectTarget',
+		});
 
-			setIsValidClickTargetElement(true);
+		event.preventDefault();
+		stopImmediatePropagation(event);
+	};
+
+	const handleBlur = (event) => {
+		const value = event.target.value;
+
+		if (isValidNewClickTargetElement(value)) {
+			selectNewClickTargetElement(event);
 		}
-		else {
-			setIsValidClickTargetElement(false);
+	};
+
+	const handleKeyDown = (event) => {
+		if (event.key === ENTER_KEY) {
+			const value = event.target.value;
+
+			if (isValidNewClickTargetElement(value)) {
+				selectNewClickTargetElement(event);
+			}
 		}
 	};
 
@@ -217,7 +231,8 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 									data-tooltip-align="top"
 									defaultValue={inputRef.current?.value || ''}
 									id="clickableElement"
-									onBlur={handleInputBlur}
+									onBlur={handleBlur}
+									onKeyDown={handleKeyDown}
 									ref={inputRef}
 									title={inputRef.current?.value || ''}
 									type="text"

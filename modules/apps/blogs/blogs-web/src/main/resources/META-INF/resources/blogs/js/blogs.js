@@ -108,7 +108,7 @@ export default class Blogs {
 		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
 		form.addRule(
-			this._getElementById('title'),
+			`${this._config.namespace}title`,
 			'required',
 			this._config.strings.titleRequiredAtPublish
 		);
@@ -117,7 +117,7 @@ export default class Blogs {
 	_beforeSaveBtnClick() {
 		const form = Liferay.Form.get(`${this._config.namespace}fm`);
 
-		form.removeRule(this._getElementById('title'), 'required');
+		form.removeRule(`${this._config.namespace}title`, 'required');
 	}
 
 	_bindUI() {

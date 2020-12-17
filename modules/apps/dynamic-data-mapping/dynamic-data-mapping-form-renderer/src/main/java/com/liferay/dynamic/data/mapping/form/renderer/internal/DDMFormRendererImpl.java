@@ -24,11 +24,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
-import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
+import com.liferay.portal.template.react.renderer.ComponentDescriptor;
+import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import java.io.Writer;
 
@@ -85,24 +84,22 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws Exception {
 
-		ComponentDescriptor componentDescriptor = new ComponentDescriptor(
-			_TEMPLATE_NAMESPACE, _npmResolver.resolveModuleName(_MODULE_NAME),
-			ddmFormRenderingContext.getContainerId());
-
 		Writer writer = new UnsyncStringWriter();
 
-		_soyComponentRenderer.renderSoyComponent(
-			ddmFormRenderingContext.getHttpServletRequest(), writer,
-			componentDescriptor,
-			getContext(ddmForm, ddmFormLayout, ddmFormRenderingContext));
+		_reactRenderer.renderReact(
+			new ComponentDescriptor(
+				_npmResolver.resolveModuleName(_MODULE_NAME),
+				ddmFormRenderingContext.getContainerId()),
+			_getReactData(ddmForm, ddmFormLayout, ddmFormRenderingContext),
+			ddmFormRenderingContext.getHttpServletRequest(), writer);
 
 		return writer.toString();
 	}
 
-	protected Map<String, Object> getContext(
+	private Map<String, Object> _getReactData(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
-		throws PortalException {
+		throws Exception {
 
 		Map<String, Object> ddmFormTemplateContext =
 			_ddmFormTemplateContextFactory.create(
@@ -131,8 +128,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	private static final String _MODULE_NAME =
 		"dynamic-data-mapping-form-renderer/js/containers/Form.es";
 
-	private static final String _TEMPLATE_NAMESPACE = "FormRenderer.render";
-
 	@Reference
 	private DDM _ddm;
 
@@ -146,6 +141,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	private NPMResolver _npmResolver;
 
 	@Reference
-	private SoyComponentRenderer _soyComponentRenderer;
+	private ReactRenderer _reactRenderer;
 
 }

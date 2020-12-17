@@ -15,17 +15,23 @@
 package com.liferay.address.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -79,6 +85,46 @@ public class RegionLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteRegion() throws Exception {
+		Country country = _addCountry();
+
+		Region region = _addRegion(country.getCountryId());
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		organization.setRegionId(region.getRegionId());
+		organization.setCountryId(region.getCountryId());
+
+		_organizationLocalService.updateOrganization(organization);
+
+		Assert.assertFalse(
+			ListUtil.isEmpty(
+				_organizationLocalService.search(
+					country.getCompanyId(),
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
+					null, region.getRegionId(), country.getCountryId(), null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+
+		_regionLocalService.deleteRegion(region);
+
+		Assert.assertNull(
+			_regionLocalService.fetchRegion(region.getRegionId()));
+
+		organization = _organizationLocalService.getOrganization(
+			organization.getOrganizationId());
+
+		Assert.assertEquals(0, organization.getRegionId());
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_organizationLocalService.search(
+					country.getCompanyId(),
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
+					null, region.getRegionId(), country.getCountryId(), null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+	}
+
+	@Test
 	public void testUpdateRegion() throws Exception {
 		Country country = _addCountry();
 
@@ -100,11 +146,11 @@ public class RegionLocalServiceTest {
 
 	private Country _addCountry() throws Exception {
 		return _countryLocalService.addCountry(
-			RandomTestUtil.randomString(2), RandomTestUtil.randomString(3),
-			true, RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
+			"aa", "aaa", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 
@@ -121,6 +167,9 @@ public class RegionLocalServiceTest {
 
 	@Inject
 	private static CountryLocalService _countryLocalService;
+
+	@Inject
+	private static OrganizationLocalService _organizationLocalService;
 
 	@Inject
 	private static RegionLocalService _regionLocalService;

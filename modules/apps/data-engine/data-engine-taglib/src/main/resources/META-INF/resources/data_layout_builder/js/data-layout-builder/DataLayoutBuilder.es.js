@@ -618,7 +618,7 @@ class DataLayoutBuilder extends React.Component {
 		return (
 			<div
 				className={classNames(
-					'data-engine-form-builder ddm-form-builder',
+					'data-engine-form-builder ddm-form-builder pb-5',
 					{
 						'ddm-form-builder--sidebar-open': sidebarOpen,
 					}

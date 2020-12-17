@@ -130,3 +130,10 @@
 		z-index: 1000;
 	}
 }
+
+.portlet-journal
+	.edit-article-form
+	.contextual-sidebar-content
+	> .container-fluid {
+	overflow: inherit;
+}

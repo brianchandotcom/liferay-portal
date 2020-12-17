@@ -21,6 +21,7 @@ import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
@@ -1005,7 +1006,7 @@ class ChangeTrackingChangesView extends React.Component {
 					cells.push(
 						<ClayTable.Cell>
 							<span
-								className="lfr-portal-tooltip"
+								data-tooltip-align="top"
 								title={node.userName}
 							>
 								<span className="rounded-circle sticker sticker-primary">
@@ -1030,7 +1031,7 @@ class ChangeTrackingChangesView extends React.Component {
 					cells.push(
 						<ClayTable.Cell>
 							<span
-								className="lfr-portal-tooltip"
+								data-tooltip-align="top"
 								title={node.userName}
 							>
 								<span className={userPortraitCss}>
@@ -1119,7 +1120,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		return (
 			<ClayManagementToolbar.Item
-				className="lfr-portal-tooltip"
+				data-tooltip-align="top"
 				title={Liferay.Language.get('display-style')}
 			>
 				<ClayDropDownWithItems
@@ -1701,72 +1702,78 @@ class ChangeTrackingChangesView extends React.Component {
 		];
 
 		return (
-			<ClayManagementToolbar>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
-						<ClayDropDownWithItems
-							items={dropdownItems}
-							spritemap={this.spritemap}
-							trigger={
-								<ClayButton
-									className="nav-link"
-									displayType="unstyled"
-								>
-									<span className="navbar-breakpoint-down-d-none">
-										<span className="navbar-text-truncate">
-											{Liferay.Language.get(
-												'filter-and-order'
-											)}
-										</span>
-
-										<ClayIcon
-											className="inline-item inline-item-after"
-											spritemap={this.spritemap}
-											symbol="caret-bottom"
-										/>
-									</span>
-									<span className="navbar-breakpoint-d-none">
-										<ClayIcon
-											spritemap={this.spritemap}
-											symbol="filter"
-										/>
-									</span>
-								</ClayButton>
-							}
-						/>
-					</ClayManagementToolbar.Item>
-
-					<ClayManagementToolbar.Item
-						className="lfr-portal-tooltip"
-						title={Liferay.Language.get('reverse-sort-direction')}
-					>
-						<ClayButton
-							className={this.state.sortDirectionClass}
-							displayType="unstyled"
-							onClick={() => this._handleSortDirectionChange()}
-						>
-							<ClayIcon
+			<ClayTooltipProvider>
+				<ClayManagementToolbar>
+					<ClayManagementToolbar.ItemList>
+						<ClayManagementToolbar.Item>
+							<ClayDropDownWithItems
+								items={dropdownItems}
 								spritemap={this.spritemap}
-								symbol="order-arrow"
+								trigger={
+									<ClayButton
+										className="nav-link"
+										displayType="unstyled"
+									>
+										<span className="navbar-breakpoint-down-d-none">
+											<span className="navbar-text-truncate">
+												{Liferay.Language.get(
+													'filter-and-order'
+												)}
+											</span>
+
+											<ClayIcon
+												className="inline-item inline-item-after"
+												spritemap={this.spritemap}
+												symbol="caret-bottom"
+											/>
+										</span>
+										<span className="navbar-breakpoint-d-none">
+											<ClayIcon
+												spritemap={this.spritemap}
+												symbol="filter"
+											/>
+										</span>
+									</ClayButton>
+								}
 							/>
-						</ClayButton>
-					</ClayManagementToolbar.Item>
+						</ClayManagementToolbar.Item>
 
-					<ClayManagementToolbar.Item className="nav-item-expand" />
+						<ClayManagementToolbar.Item
+							data-tooltip-align="top"
+							title={Liferay.Language.get(
+								'reverse-sort-direction'
+							)}
+						>
+							<ClayButton
+								className={this.state.sortDirectionClass}
+								displayType="unstyled"
+								onClick={() =>
+									this._handleSortDirectionChange()
+								}
+							>
+								<ClayIcon
+									spritemap={this.spritemap}
+									symbol="order-arrow"
+								/>
+							</ClayButton>
+						</ClayManagementToolbar.Item>
 
-					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
-						<ClayToggle
-							label={Liferay.Language.get('show-all-items')}
-							onToggle={(showHideable) =>
-								this._handleShowHideableToggle(showHideable)
-							}
-							toggled={this.state.showHideable}
-						/>
-					</ClayManagementToolbar.Item>
+						<ClayManagementToolbar.Item className="nav-item-expand" />
 
-					{this._getViewTypes()}
-				</ClayManagementToolbar.ItemList>
-			</ClayManagementToolbar>
+						<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
+							<ClayToggle
+								label={Liferay.Language.get('show-all-items')}
+								onToggle={(showHideable) =>
+									this._handleShowHideableToggle(showHideable)
+								}
+								toggled={this.state.showHideable}
+							/>
+						</ClayManagementToolbar.Item>
+
+						{this._getViewTypes()}
+					</ClayManagementToolbar.ItemList>
+				</ClayManagementToolbar>
+			</ClayTooltipProvider>
 		);
 	}
 
@@ -1840,20 +1847,22 @@ class ChangeTrackingChangesView extends React.Component {
 
 		return (
 			<>
-				<ClayTable
-					className="publications-table"
-					headingNoWrap
-					hover
-					noWrap
-				>
-					{this._getTableHead()}
+				<ClayTooltipProvider>
+					<ClayTable
+						className="publications-table"
+						headingNoWrap
+						hover
+						noWrap
+					>
+						{this._getTableHead()}
 
-					<ClayTable.Body>
-						{this._getTableRows(
-							this._filterDisplayNodes(this.state.children)
-						)}
-					</ClayTable.Body>
-				</ClayTable>
+						<ClayTable.Body>
+							{this._getTableRows(
+								this._filterDisplayNodes(this.state.children)
+							)}
+						</ClayTable.Body>
+					</ClayTable>
+				</ClayTooltipProvider>
 
 				{this._renderPagination()}
 			</>

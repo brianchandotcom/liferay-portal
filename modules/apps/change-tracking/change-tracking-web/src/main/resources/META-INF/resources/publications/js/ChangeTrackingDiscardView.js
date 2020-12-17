@@ -15,6 +15,7 @@
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
@@ -83,7 +84,7 @@ const ChangeTrackingDiscardView = ({
 	const getUserPortrait = (entry) => {
 		if (entry.portraitURL) {
 			return (
-				<span className="lfr-portal-tooltip" title={entry.userName}>
+				<span data-tooltip-align="top" title={entry.userName}>
 					<span className="rounded-circle sticker sticker-primary">
 						<span className="sticker-overlay">
 							<img
@@ -103,7 +104,7 @@ const ChangeTrackingDiscardView = ({
 		userPortraitCss += entry.userId % 10;
 
 		return (
-			<span className="lfr-portal-tooltip" title={entry.userName}>
+			<span data-tooltip-align="top" title={entry.userName}>
 				<span className={userPortraitCss}>
 					<span className="inline-item">
 						<svg className="lexicon-icon">
@@ -218,20 +219,22 @@ const ChangeTrackingDiscardView = ({
 		<>
 			{renderViewModal()}
 
-			<ClayTable className="publications-table" hover>
-				<ClayTable.Head>
-					<ClayTable.Row>
-						<ClayTable.Cell headingCell style={{width: '5%'}}>
-							{Liferay.Language.get('user')}
-						</ClayTable.Cell>
+			<ClayTooltipProvider>
+				<ClayTable className="publications-table" hover>
+					<ClayTable.Head>
+						<ClayTable.Row>
+							<ClayTable.Cell headingCell style={{width: '5%'}}>
+								{Liferay.Language.get('user')}
+							</ClayTable.Cell>
 
-						<ClayTable.Cell headingCell style={{width: '95%'}}>
-							{Liferay.Language.get('change')}
-						</ClayTable.Cell>
-					</ClayTable.Row>
-				</ClayTable.Head>
-				<ClayTable.Body>{getTableRows()}</ClayTable.Body>
-			</ClayTable>
+							<ClayTable.Cell headingCell style={{width: '95%'}}>
+								{Liferay.Language.get('change')}
+							</ClayTable.Cell>
+						</ClayTable.Row>
+					</ClayTable.Head>
+					<ClayTable.Body>{getTableRows()}</ClayTable.Body>
+				</ClayTable>
+			</ClayTooltipProvider>
 
 			{renderPagination()}
 		</>

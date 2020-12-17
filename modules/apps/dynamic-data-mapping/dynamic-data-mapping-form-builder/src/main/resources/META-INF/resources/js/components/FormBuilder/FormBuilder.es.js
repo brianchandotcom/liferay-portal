@@ -87,6 +87,7 @@ class FormBuilderBase extends Component {
 			dnd,
 			editingLanguageId,
 			fieldActions,
+			fieldTypes,
 			focusedField,
 			pages,
 			paginationMode,
@@ -106,6 +107,7 @@ class FormBuilderBase extends Component {
 						editable={true}
 						editingLanguageId={editingLanguageId}
 						fieldActions={fieldActions}
+						fieldTypesMetadata={fieldTypes}
 						focusedField={focusedField}
 						pages={this.preparePagesForRender(pages)}
 						paginationMode={paginationMode}

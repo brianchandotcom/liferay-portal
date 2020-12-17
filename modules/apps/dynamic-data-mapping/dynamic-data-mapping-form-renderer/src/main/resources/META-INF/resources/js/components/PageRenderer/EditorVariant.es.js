@@ -105,7 +105,8 @@ export const Column = ({
 				{editable && isFieldSelected && (
 					<Actions
 						activePage={pageIndex}
-						field={firstField}
+						fieldId={firstField.fieldName}
+						fieldType={firstField.type}
 						isFieldSet={isFieldSet}
 						ref={actionsRef}
 					/>

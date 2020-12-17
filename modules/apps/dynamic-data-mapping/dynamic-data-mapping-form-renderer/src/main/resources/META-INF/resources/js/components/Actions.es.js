@@ -23,6 +23,7 @@ import React, {
 	useContext,
 	useEffect,
 	useLayoutEffect,
+	useMemo,
 	useReducer,
 } from 'react';
 
@@ -182,8 +183,17 @@ export const ActionsControls = ({
 };
 
 export const Actions = forwardRef(
-	({activePage, field, isFieldSet}, actionsRef) => {
-		const {fieldActions} = usePage();
+	({activePage, fieldId, fieldType, isFieldSet}, actionsRef) => {
+		const {fieldActions, fieldTypesMetadata} = usePage();
+
+		const label = useMemo(() => {
+			if (isFieldSet) {
+				return Liferay.Language.get('fieldset');
+			}
+
+			return fieldTypesMetadata.find(({name}) => name === fieldType)
+				.label;
+		}, [fieldType, isFieldSet, fieldTypesMetadata]);
 
 		return (
 			<div
@@ -192,7 +202,7 @@ export const Actions = forwardRef(
 				})}
 				ref={actionsRef}
 			>
-				<span className="actions-label">{field.label}</span>
+				<span className="actions-label">{label}</span>
 
 				<ClayDropDownWithItems
 					className="dropdown-action"
@@ -202,7 +212,7 @@ export const Actions = forwardRef(
 								onClick: () =>
 									action({
 										activePage,
-										fieldName: field.fieldName,
+										fieldName: fieldId,
 									}),
 								...otherProps,
 							};

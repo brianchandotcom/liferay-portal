@@ -16,9 +16,12 @@ package com.liferay.address.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionService;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -73,7 +77,34 @@ public class CountryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteCountry() throws Exception {
+	public void testDeleteCountryDeleteAddress() throws Exception {
+		Country country = _addCountry(
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+
+		User user = TestPropsValues.getUser();
+
+		Address address = _addressLocalService.addAddress(
+			null, user.getUserId(), null, user.getContactId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, null,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
+			country.getCountryId(), RandomTestUtil.randomLong(), false, false,
+			"1234567890", ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(country.getCountryId(), address.getCountryId());
+
+		_countryLocalService.deleteCountry(country);
+
+		Assert.assertNull(
+			_addressLocalService.fetchAddress(address.getAddressId()));
+		Assert.assertNull(
+			_countryLocalService.fetchCountry(country.getCountryId()));
+	}
+
+	@Test
+	public void testDeleteCountryUpdateOrganization() throws Exception {
 		Country country = _addCountry(
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
@@ -151,6 +182,9 @@ public class CountryLocalServiceTest {
 			subjectToVAT, zipRequired,
 			ServiceContextTestUtil.getServiceContext());
 	}
+
+	@Inject
+	private static AddressLocalService _addressLocalService;
 
 	@Inject
 	private static CountryLocalService _countryLocalService;

@@ -441,13 +441,19 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Rich Text,Upload,Color,Web Content,Link to Page");
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text Box",
-			fieldLocation = "13",
+			fieldLocation = "8",
 			fieldName = "Text",
 			fieldType = "Multiple Lines");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Decimal",
+			fieldLocation = "9",
+			fieldName = "Numeric",
+			numericType = "Decimal");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -458,7 +464,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Rich Text,Upload,Color,Web Content,Link to Page,Text Box",
+			templateFieldNames = "Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image,Text Box,Decimal",
 			templateName = "WC Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -550,6 +556,15 @@ definition {
 		PortletEntry.publish();
 
 		WebContent.viewTitle(webContentTitle = "Web Content4 Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Test Site Name");
+
+		AssetPublisherPortlet.viewFilterAndFieldsPG(
+			assetSubtype = "WC Structure Name",
+			assetSubtypeFields = "Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image,Text Box,Decimal",
+			selectedAsset = "Web Content Article");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -684,6 +699,18 @@ definition {
 			assetContent = "Web Content5 Text",
 			assetTitle = "Web Content5 Title");
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image,Text Box,Decimal") {
+			DataEngine.editFieldSearchable(
+				fieldFieldLabel = "${fieldFieldLabel}",
+				searchableType = "Disable");
+		}
+
 		WebContentStructures.saveCP();
 
 		Navigator.gotoSitePage(
@@ -692,7 +719,6 @@ definition {
 
 		AssetPublisherPortlet.viewFilterAndFieldsPG(
 			assetSubtype = "WC Structure Name",
-			assetSubtypeFields = "Date,Meeting Name,Time,Location,Product,Version,Areas of Interest,Competitors,Prospect Name",
 			noneIndexable = "true",
 			selectedAsset = "Web Content Article");
 	}

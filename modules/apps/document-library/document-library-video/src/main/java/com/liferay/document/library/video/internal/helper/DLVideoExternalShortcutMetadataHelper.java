@@ -131,6 +131,10 @@ public class DLVideoExternalShortcutMetadataHelper {
 	public String getFieldValue(String fieldName) {
 		Field field = _getField(fieldName);
 
+		if (field == null) {
+			return null;
+		}
+
 		Serializable value = field.getValue();
 
 		if (value == null) {
@@ -208,13 +212,7 @@ public class DLVideoExternalShortcutMetadataHelper {
 	private Field _getField(String fieldName) {
 		_initDLFileEntryMetadataAndFields();
 
-		Field field = _fieldsMap.get(fieldName);
-
-		if (field == null) {
-			throw new IllegalArgumentException("Unknown field " + fieldName);
-		}
-
-		return field;
+		return _fieldsMap.get(fieldName);
 	}
 
 	private void _initDLFileEntryMetadataAndFields() {

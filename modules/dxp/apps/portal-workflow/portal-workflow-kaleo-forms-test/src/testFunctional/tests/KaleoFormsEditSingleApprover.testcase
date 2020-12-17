@@ -99,7 +99,6 @@ definition {
 
 	@priority = "4"
 	test CompleteProcessAndViewEmailNotifications {
-		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "KaleoFormsEditSingleApprover#CompleteProcessAndViewEmailNotifications";
 		property test.smtp.server.enabled = "true";

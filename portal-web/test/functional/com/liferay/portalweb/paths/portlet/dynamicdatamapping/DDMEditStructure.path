@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>FIELDS_FIELD</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='${key_field}' and contains(@class,'property-builder-field-draggable')]/div</td>
+	<td>//li[@title='${key_field}' and contains(@class,'property-builder-field-draggable')]/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 <!--FORM-->
 <tr>
 	<td>FORM_BUILDER</td>
-	<td>//ul[contains(@class,'property-builder-fields-container')]</td>
+	<td>//div[contains(@class,'property-builder-content-container')]</td>
 	<td></td>
 </tr>
 <tr>

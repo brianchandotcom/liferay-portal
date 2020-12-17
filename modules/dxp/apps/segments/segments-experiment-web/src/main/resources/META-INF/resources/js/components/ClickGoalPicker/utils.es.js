@@ -44,24 +44,24 @@ export function stopImmediatePropagation(event) {
  */
 export function getTargetableElements(element, selectedTarget) {
 
-	// Look for links or buttons
+	// Allowed targetable elements with id
 
-	const elements = Array.from(element.querySelectorAll('a, button, input[type=submit]'));
+	const selector = ['a[id]', 'button[id]', 'input[type=submit][id]'];
 
-	// Other clickable element already selected
+	// Other targetable element already selected
 
-	const target = document.getElementById(selectedTarget);
-
-	// Add selected target to elements
-
-	if (target && !elements.some((element) => target === element)) {
-		elements.push(target);
+	if (selectedTarget) {
+		selector.push(`#${selectedTarget}`);
 	}
 
-	// As first cut, only deal with items that have an id.
+	// Look for links, buttons or inputs with type submit
 
-	return elements.filter((element) => {
-		return element.id && _isVisible(element);
+	const elements = element.querySelectorAll(selector.join());
+
+	// As first cut, only deal with visible items
+
+	return Array.from(elements).filter((element) => {
+		return _isVisible(element);
 	});
 }
 

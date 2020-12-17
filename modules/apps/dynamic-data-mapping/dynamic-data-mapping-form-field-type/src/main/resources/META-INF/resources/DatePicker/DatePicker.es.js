@@ -13,7 +13,7 @@
  */
 
 import ClayDatePicker from '@clayui/date-picker';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createAutoCorrectedDatePipe} from 'text-mask-addons';
 import {createTextMaskInputElement} from 'text-mask-core';
@@ -21,42 +21,23 @@ import {createTextMaskInputElement} from 'text-mask-core';
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 
-const getInputMask = (dateFormat, dateDelimiter) => {
-	const inputMaskArray = [];
+const DIGIT_REGEX = /\d/i;
+const LETTER_REGEX = /[a-z]/i;
 
-	dateFormat.split('').forEach((item) => {
-		if (item === dateDelimiter) {
-			inputMaskArray.push(dateDelimiter);
-		}
-		else if (item === 'Y') {
-			inputMaskArray.push(/\d/);
-			inputMaskArray.push(/\d/);
-			inputMaskArray.push(/\d/);
-			inputMaskArray.push(/\d/);
-		}
-		else if (item === 'd' || item === 'm') {
-			inputMaskArray.push(/\d/);
-			inputMaskArray.push(/\d/);
-		}
-	});
-
-	return inputMaskArray;
-};
-
-const getDateMask = (dateFormat, dateDelimiter) => {
+const getDateMask = (dateDelimiter, dateFormat) => {
 	return dateFormat
 		.split(dateDelimiter)
 		.map((item) => {
 			let currentFormat;
 
-			if (item === '%Y') {
+			if (item === 'YYYY') {
 				currentFormat = 'yyyy';
 			}
-			else if (item === '%m') {
-				currentFormat = 'MM';
+			else if (item === 'DD') {
+				currentFormat = 'dd';
 			}
 			else {
-				currentFormat = 'dd';
+				currentFormat = 'MM';
 			}
 
 			return currentFormat;
@@ -78,19 +59,41 @@ const getDelimiter = (dateFormat) => {
 	return dateDelimiter;
 };
 
-const getDateFormat = () => {
-	const dateFormat = Liferay.AUI.getDateFormat();
-	const dateDelimiter = getDelimiter(dateFormat);
+const getLocaleDateFormat = (locale, format = 'L') => {
+	moment.locale(locale);
+
+	return moment.localeData().longDateFormat(format);
+};
+
+const getMaskByDateFormat = (format) => {
+	const mask = [];
+
+	for (let i = 0; i < format.length; i++) {
+		if (LETTER_REGEX.test(format[i])) {
+			mask.push(DIGIT_REGEX);
+		}
+		else {
+			mask.push(`${format[i]}`);
+		}
+	}
+
+	return mask;
+};
+
+const getDateFormat = (locale) => {
+	const dateFormat = getLocaleDateFormat(locale);
+	const inputMask = getMaskByDateFormat(dateFormat);
+	const dateDelimiter = getDelimiter(inputMask);
 
 	return {
-		dateMask: getDateMask(dateFormat, dateDelimiter),
-		inputMask: getInputMask(dateFormat, dateDelimiter),
+		dateMask: getDateMask(dateDelimiter, dateFormat),
+		inputMask,
 	};
 };
 
-const transformToDate = (date) => {
+const transformToDate = (date, locale) => {
 	if (typeof date === 'string' && date.indexOf('_') === -1 && date !== '') {
-		return moment(date).toDate();
+		return moment(date).locale(locale).toDate();
 	}
 
 	return date;
@@ -114,6 +117,7 @@ const getValueForHidden = (value) => {
 
 const DatePicker = ({
 	disabled,
+	locale,
 	name,
 	onChange,
 	spritemap,
@@ -124,9 +128,10 @@ const DatePicker = ({
 
 	const [expanded, setExpand] = useState(false);
 
-	const initialValueMemoized = useMemo(() => transformToDate(initialValue), [
-		initialValue,
-	]);
+	const initialValueMemoized = useMemo(
+		() => transformToDate(initialValue, locale),
+		[initialValue, locale]
+	);
 
 	const [value, setValue] = useSyncValue(initialValueMemoized);
 	const [years, setYears] = useState(() => {
@@ -138,7 +143,7 @@ const DatePicker = ({
 		};
 	});
 
-	const {dateMask, inputMask} = getDateFormat();
+	const {dateMask, inputMask} = getDateFormat(locale);
 
 	useEffect(() => {
 		if (inputRef.current && inputMask && dateMask) {
@@ -199,7 +204,9 @@ const DatePicker = ({
 					}
 
 					if (moment(value).isValid()) {
-						onChange(moment(value).format(dateMask.toUpperCase()));
+						onChange(
+							moment(value).locale(locale).format('MM/DD/YYYY')
+						);
 					}
 				}}
 				ref={inputRef}
@@ -212,6 +219,7 @@ const DatePicker = ({
 };
 
 const Main = ({
+	locale,
 	name,
 	onChange,
 	placeholder,
@@ -229,6 +237,7 @@ const Main = ({
 	>
 		<DatePicker
 			disabled={readOnly}
+			locale={locale}
 			name={name}
 			onChange={(value) => onChange({}, value)}
 			placeholder={placeholder}

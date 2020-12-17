@@ -25,19 +25,32 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.O
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
+
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Alessio Antonio Rendina
@@ -120,10 +133,115 @@ public class OptionValueResourceImpl
 			_cpOptionService.getCPOption(id), optionValue);
 	}
 
+	private Map<String, Map<String, String>> _getActions(long cpOptionValueId) throws NoSuchMethodException, PortalException {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			_addAction(
+				ActionKeys.DELETE, cpOptionValueId,
+				contextUriInfo, "deleteOptionValue", getClass())
+
+		).put(
+			"get",
+			_addAction(
+				ActionKeys.VIEW, cpOptionValueId,
+				contextUriInfo, "getOptionValue", getClass())
+
+		).put(
+			"update",
+			_addAction(
+				ActionKeys.UPDATE, cpOptionValueId,
+				contextUriInfo, "patchOptionValue", getClass())
+		).build();
+	}
+
+	private Map<String, String> _addAction(
+		String actionId, long cpOptionValueId, UriInfo uriInfo,
+		String methodName, Class<?> clazz)
+		throws NoSuchMethodException, PortalException {
+
+		CPOptionValue cpOptionValue =
+			_cpOptionValueService.getCPOptionValue(cpOptionValueId);
+
+		if (!_cpOptionValueModelResourcePermission.contains(
+			PermissionThreadLocal.getPermissionChecker(), cpOptionValue.getCPOptionId(),
+			actionId)) {
+
+			return null;
+		}
+
+		return HashMapBuilder.put(
+			"href",
+			() -> {
+				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+
+				return uriBuilder.path(
+					_getVersion(uriInfo)
+				).path(
+					clazz.getSuperclass(), methodName
+				).toTemplate();
+			}
+		).put(
+			"method", _getHttpMethodName(clazz, _getMethod(clazz, methodName))
+		).build();
+	}
+
+	private String _getHttpMethodName(Class<?> clazz, Method method)
+		throws NoSuchMethodException {
+
+		Class<?> superClass = clazz.getSuperclass();
+
+		Method superMethod = superClass.getMethod(
+			method.getName(), method.getParameterTypes());
+
+		for (Annotation annotation : superMethod.getAnnotations()) {
+			Class<? extends Annotation> annotationType =
+				annotation.annotationType();
+
+			Annotation[] annotations = annotationType.getAnnotationsByType(
+				HttpMethod.class);
+
+			if (annotations.length > 0) {
+				HttpMethod httpMethod = (HttpMethod)annotations[0];
+
+				return httpMethod.value();
+			}
+		}
+
+		return null;
+	}
+
+	private Method _getMethod(Class<?> clazz, String methodName) {
+		for (Method method : clazz.getMethods()) {
+			if (!methodName.equals(method.getName())) {
+				continue;
+			}
+
+			return method;
+		}
+
+		return null;
+	}
+
+	private String _getVersion(UriInfo uriInfo) {
+		String version = "";
+
+		List<String> matchedURIs = uriInfo.getMatchedURIs();
+
+		if (!matchedURIs.isEmpty()) {
+			version = matchedURIs.get(matchedURIs.size() - 1);
+		}
+
+		return version;
+	}
+
 	private OptionValue _toOptionValue(Long cpOptionValueId) throws Exception {
+
 		return _optionValueDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpOptionValueId, contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				null,/*_getActions(cpOptionValueId)*/ _dtoConverterRegistry, cpOptionValueId,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	private List<OptionValue> _toOptionValues(
@@ -165,5 +283,14 @@ public class OptionValueResourceImpl
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"
+	)
+	private ModelResourcePermission<CPOption>
+		_cpOptionValueModelResourcePermission;
 
 }

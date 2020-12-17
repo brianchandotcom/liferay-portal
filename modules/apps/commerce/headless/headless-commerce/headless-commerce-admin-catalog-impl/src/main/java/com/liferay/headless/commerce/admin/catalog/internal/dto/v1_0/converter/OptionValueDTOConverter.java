@@ -49,6 +49,7 @@ public class OptionValueDTOConverter
 
 		return new OptionValue() {
 			{
+				actions = dtoConverterContext.getActions();
 				externalReferenceCode =
 					cpOptionValue.getExternalReferenceCode();
 				id = cpOptionValue.getCPOptionValueId();

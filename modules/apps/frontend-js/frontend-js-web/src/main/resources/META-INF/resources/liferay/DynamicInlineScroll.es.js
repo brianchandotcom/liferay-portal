@@ -44,6 +44,13 @@ class DynamicInlineScroll extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
+	created() {
+		this.handleListItemClick_ = this.handleListItemClick_.bind(this);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	detached() {
 		super.detached();
 
@@ -51,10 +58,7 @@ class DynamicInlineScroll extends PortletBase {
 
 		const listItem = document.createElement('li');
 
-		listItem.removeEventListener(
-			'click',
-			this.handleListItemClick_.bind(this)
-		);
+		listItem.removeEventListener('click', this.handleListItemClick_);
 	}
 
 	/**
@@ -76,10 +80,7 @@ class DynamicInlineScroll extends PortletBase {
 		listElement.appendChild(listItem);
 		listElement.setAttribute('data-page-index', pageIndex);
 
-		listItem.addEventListener(
-			'click',
-			this.handleListItemClick_.bind(this)
-		);
+		listItem.addEventListener('click', this.handleListItemClick_);
 	}
 
 	/**

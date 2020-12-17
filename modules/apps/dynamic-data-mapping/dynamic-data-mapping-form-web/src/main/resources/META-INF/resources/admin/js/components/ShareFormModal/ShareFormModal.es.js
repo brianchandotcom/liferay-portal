@@ -31,13 +31,19 @@ class ShareFormModal extends Component {
 		if (shareURLButton) {
 			shareURLButton.addEventListener(
 				'click',
-				this._handleShareButtonClicked.bind(this)
+				this._handleShareButtonClicked
 			);
 		}
 	}
 
 	close() {
 		this.refs.shareFormModalRef.emit('hide');
+	}
+
+	created() {
+		this._handleShareButtonClicked = this._handleShareButtonClicked.bind(
+			this
+		);
 	}
 
 	disposeInternal() {

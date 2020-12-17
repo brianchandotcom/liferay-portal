@@ -41,12 +41,12 @@ class JournalPortlet extends PortletBase {
 			buttonRow,
 			'click',
 			'button',
-			this._updateAction.bind(this)
+			this._updateAction
 		);
 
 		const form = this._getInputByName(this.ns('fm1'));
 
-		form.addEventListener('submit', this._onFormSubmit.bind(this));
+		form.addEventListener('submit', this._onFormSubmit);
 
 		const resetValuesButton = this._getInputByName(
 			this.ns('resetValuesButton')
@@ -55,7 +55,7 @@ class JournalPortlet extends PortletBase {
 		if (resetValuesButton) {
 			resetValuesButton.addEventListener(
 				'click',
-				this._resetValuesDDMStructure.bind(this)
+				this._resetValuesDDMStructure
 			);
 		}
 
@@ -75,13 +75,27 @@ class JournalPortlet extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
+	created() {
+		this._onContextualSidebarButtonClick = this._onContextualSidebarButtonClick.bind(
+			this
+		);
+		this._onFormSubmit = this._onFormSubmit.bind(this);
+		this._resetValuesDDMStructure = this._resetValuesDDMStructure.bind(
+			this
+		);
+		this._updateAction = this._updateAction.bind(this);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	detached() {
 		this._buttonClickUpdateAction.dispose();
 
 		const form = this._getInputByName(this.ns('fm1'));
 
 		if (form) {
-			form.removeEventListener('submit', this._onFormSubmit.bind(this));
+			form.removeEventListener('submit', this._onFormSubmit);
 		}
 
 		const resetValuesButton = this._getInputByName(
@@ -91,23 +105,19 @@ class JournalPortlet extends PortletBase {
 		if (resetValuesButton) {
 			resetValuesButton.removeEventListener(
 				'click',
-				this._resetValuesDDMStructure.bind(this)
+				this._resetValuesDDMStructure
 			);
 		}
 
 		const contextualSidebarButton = document.getElementById(
 			this.ns('contextualSidebarButton')
 		);
-		const contextualSidebarContainer = document.getElementById(
-			this.ns('contextualSidebarContainer')
-		);
 
 		if (contextualSidebarButton) {
-			contextualSidebarButton.removeEventListener('click', () => {
-				contextualSidebarContainer.classList.toggle(
-					SIDEBAR_VISIBLE_CLASS
-				);
-			});
+			contextualSidebarButton.removeEventListener(
+				'click',
+				this._onContextualSidebarButtonClick
+			);
 		}
 
 		this._localeChangedHandler.detachLocaleChangedEventListener();
@@ -141,6 +151,19 @@ class JournalPortlet extends PortletBase {
 	 */
 	_getInputByName(name) {
 		return document.getElementById(this.ns(name));
+	}
+
+	/**
+	 * @private
+	 */
+	_onContextualSidebarButtonClick() {
+		const contextualSidebarContainer = document.getElementById(
+			this.ns('contextualSidebarContainer')
+		);
+
+		if (contextualSidebarContainer) {
+			contextualSidebarContainer.classList.toggle(SIDEBAR_VISIBLE_CLASS);
+		}
 	}
 
 	/**
@@ -257,6 +280,7 @@ class JournalPortlet extends PortletBase {
 		const contextualSidebarButton = document.getElementById(
 			this.ns('contextualSidebarButton')
 		);
+
 		const contextualSidebarContainer = document.getElementById(
 			this.ns('contextualSidebarContainer')
 		);
@@ -269,11 +293,10 @@ class JournalPortlet extends PortletBase {
 		}
 
 		if (contextualSidebarButton) {
-			contextualSidebarButton.addEventListener('click', () => {
-				contextualSidebarContainer.classList.toggle(
-					SIDEBAR_VISIBLE_CLASS
-				);
-			});
+			contextualSidebarButton.addEventListener(
+				'click',
+				this._onContextualSidebarButtonClick
+			);
 		}
 	}
 

@@ -46,7 +46,9 @@ class FieldActionsDropDown extends Component {
 	}
 
 	attached() {
-		window.addEventListener('resize', this.align.bind(this));
+		this.alignFn = this.align.bind(this);
+
+		window.addEventListener('resize', this.alignFn);
 	}
 
 	close() {
@@ -58,7 +60,7 @@ class FieldActionsDropDown extends Component {
 	}
 
 	disposed() {
-		window.removeEventListener('resize', this.align);
+		window.removeEventListener('resize', this.alignFn);
 	}
 
 	getCssClasses() {

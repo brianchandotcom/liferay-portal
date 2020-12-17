@@ -157,7 +157,8 @@ class Sidebar extends Component {
 
 		document.removeEventListener(
 			'mousedown',
-			this._handleDocumentMouseDown
+			this._handleDocumentMouseDown,
+			false
 		);
 
 		this._eventHandler.removeAllListeners();

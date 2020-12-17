@@ -175,7 +175,7 @@ class Form extends Component {
 		if (addFieldButton) {
 			addFieldButton.addEventListener(
 				'click',
-				this._handleAddFieldButtonClicked.bind(this)
+				this._handleAddFieldButtonClicked
 			);
 		}
 
@@ -195,17 +195,14 @@ class Form extends Component {
 		if (previewButton) {
 			previewButton.addEventListener(
 				'click',
-				this._handlePreviewButtonClicked.bind(this)
+				this._handlePreviewButtonClicked
 			);
 		}
 
 		const saveButton = document.querySelector('.lfr-ddm-save-button');
 
 		if (saveButton) {
-			saveButton.addEventListener(
-				'click',
-				this._handleSaveButtonClicked.bind(this)
-			);
+			saveButton.addEventListener('click', this._handleSaveButtonClicked);
 		}
 
 		const publishButton = document.querySelector('.lfr-ddm-publish-button');
@@ -213,7 +210,7 @@ class Form extends Component {
 		if (publishButton) {
 			publishButton.addEventListener(
 				'click',
-				this._handlePublishButtonClicked.bind(this)
+				this._handlePublishButtonClicked
 			);
 		}
 
@@ -221,7 +218,7 @@ class Form extends Component {
 			document.body,
 			'click',
 			`#${namespace}controlMenu .sites-control-group span.lfr-portal-tooltip`,
-			this._handleBackButtonClicked.bind(this)
+			this._handleBackButtonClicked
 		);
 
 		const shareURLButton = document.querySelector(
@@ -295,6 +292,22 @@ class Form extends Component {
 	}
 
 	created() {
+		this._handleAddFieldButtonClicked = this._handleAddFieldButtonClicked.bind(
+			this
+		);
+		this._handlePreviewButtonClicked = this._handlePreviewButtonClicked.bind(
+			this
+		);
+		this._handleSaveButtonClicked = this._handleSaveButtonClicked.bind(
+			this
+		);
+		this._handlePublishButtonClicked = this._handlePublishButtonClicked.bind(
+			this
+		);
+		this._handleBackButtonClicked = this._handleBackButtonClicked.bind(
+			this
+		);
+
 		this._createFormURL = this._createFormURL.bind(this);
 		this._handleFormNavClicked = this._handleFormNavClicked.bind(this);
 		this._handleNameEditorCopyAndPaste = this._handleNameEditorCopyAndPaste.bind(
@@ -332,7 +345,7 @@ class Form extends Component {
 		if (addFieldButton) {
 			addFieldButton.removeEventListener(
 				'click',
-				this._handleAddFieldButtonClicked.bind(this)
+				this._handleAddFieldButtonClicked
 			);
 		}
 
@@ -352,7 +365,7 @@ class Form extends Component {
 		if (previewButton) {
 			previewButton.removeEventListener(
 				'click',
-				this._handlePreviewButtonClicked.bind(this)
+				this._handlePreviewButtonClicked
 			);
 		}
 
@@ -361,7 +374,7 @@ class Form extends Component {
 		if (saveButton) {
 			saveButton.removeEventListener(
 				'click',
-				this._handleSaveButtonClicked.bind(this)
+				this._handleSaveButtonClicked
 			);
 		}
 
@@ -370,7 +383,7 @@ class Form extends Component {
 		if (publishButton) {
 			publishButton.removeEventListener(
 				'click',
-				this._handlePublishButtonClicked.bind(this)
+				this._handlePublishButtonClicked
 			);
 		}
 

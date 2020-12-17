@@ -439,7 +439,7 @@ export const getMessagesQuery = gql`
 				encodingFormat
 				friendlyUrlPath
 				id
-				messageBoardMessages {
+				messageBoardMessages(flatten: true) {
 					items {
 						actions
 						articleBody

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -170,7 +171,8 @@ public class CollectionAssetCategoryFilterFragmentRendererDisplayContext {
 							FRAGMENT_ENTRY_LINK_ID));
 
 				return ParamUtil.getStringValues(
-					_httpServletRequest, "categoryId_" + fragmentEntryLinkId);
+					PortalUtil.getOriginalServletRequest(_httpServletRequest),
+					"categoryId_" + fragmentEntryLinkId);
 			}
 		).build();
 
@@ -179,7 +181,8 @@ public class CollectionAssetCategoryFilterFragmentRendererDisplayContext {
 
 	public String getSelectedAssetCategoryTitle() {
 		long assetCategoryId = ParamUtil.get(
-			_httpServletRequest, _getParameterName(), 0);
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			_getParameterName(), 0);
 
 		if (assetCategoryId != 0) {
 			AssetCategory assetCategory = null;

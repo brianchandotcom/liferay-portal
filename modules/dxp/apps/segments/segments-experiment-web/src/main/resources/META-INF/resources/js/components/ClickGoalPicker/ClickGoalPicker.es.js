@@ -64,18 +64,20 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 
 	const {errors} = useContext(GlobalStateContext);
 
-	const [inputValue, setInputValue] = useState(selectedTarget);
-
 	const [isValidClickTargetElement, setIsValidClickTargetElement] = useState(
 		true
 	);
 
 	const ref = useRef(selectedTarget);
 
+	const inputRef = useRef();
+
 	useEffect(() => {
 		ref.current = selectedTarget;
-		setInputValue(selectedTarget);
-		setIsValidClickTargetElement(true);
+
+		if (inputRef.current && selectedTarget) {
+			inputRef.current.value = selectedTarget;
+		}
 	}, [selectedTarget]);
 
 	const previousTarget = ref.current;
@@ -139,6 +141,8 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 				selector: value,
 				type: 'selectTarget',
 			});
+
+			setIsValidClickTargetElement(true);
 		}
 		else {
 			setIsValidClickTargetElement(false);
@@ -209,15 +213,12 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 						<ClayTooltipProvider>
 							<ClayInput
 								data-tooltip-align="top"
+								defaultValue={inputRef.current?.value || ''}
 								id="clickableElement"
 								onBlur={handleInputBlur}
-								onChange={(event) =>
-									setInputValue(event.target.value)
-								}
-								onFocus={() => dispatch({type: 'activate'})}
-								title={inputValue}
+								ref={inputRef}
+								title={inputRef.current?.value || ''}
 								type="text"
-								value={inputValue}
 							/>
 						</ClayTooltipProvider>
 						{!isValidClickTargetElement && (

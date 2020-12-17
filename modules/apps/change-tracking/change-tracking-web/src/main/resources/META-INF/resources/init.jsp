@@ -65,7 +65,6 @@ page import="com.liferay.portal.kernel.servlet.MultiSessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -76,8 +75,6 @@ page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.Objects" %>
-
-<%@ page import="javax.portlet.PortletRequest" %>
 
 <liferay-frontend:defineObjects />
 

@@ -159,10 +159,8 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 <%
 CTLocalizedException ctLocalizedException = null;
 
-PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-
-if ((portletRequest != null) && MultiSessionErrors.contains(portletRequest, CTLocalizedException.class.getName())) {
-	ctLocalizedException = (CTLocalizedException)MultiSessionErrors.get(portletRequest, CTLocalizedException.class.getName());
+if (MultiSessionErrors.contains(liferayPortletRequest, CTLocalizedException.class.getName())) {
+	ctLocalizedException = (CTLocalizedException)MultiSessionErrors.get(liferayPortletRequest, CTLocalizedException.class.getName());
 }
 %>
 

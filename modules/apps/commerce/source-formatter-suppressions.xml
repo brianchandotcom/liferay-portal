@@ -21,7 +21,6 @@
 		<suppress checks="BNDExportsCheck" files="commerce-shipping-web/bnd\.bnd" />
 		<suppress checks="CopyrightCheck" files="commerce-theme-minium/commerce-theme-minium/src/js/intersection-observer\.js" />
 		<suppress checks="CopyrightCheck" files="commerce-theme-speedwell/commerce-theme-speedwell/src/js/intersection-observer\.js" />
-		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-account-api/src/main/java/com/liferay/commerce/account/util/CommerceAccountHelper\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-account-api/src/main/java/com/liferay/commerce/account/util/CommerceAccountRoleHelper\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/context/CommerceContextFactory\.java" />

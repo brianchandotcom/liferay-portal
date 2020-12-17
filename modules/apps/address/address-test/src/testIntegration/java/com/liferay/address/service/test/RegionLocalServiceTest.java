@@ -61,6 +61,13 @@ public class RegionLocalServiceTest {
 
 		Assert.assertNotNull(
 			_regionLocalService.fetchRegion(region.getRegionId()));
+	}
+
+	@Test
+	public void testDeleteRegionDeleteAddress() throws Exception {
+		Country country = _addCountry();
+
+		Region region = _addRegion(country.getCountryId());
 
 		User user = TestPropsValues.getUser();
 
@@ -85,7 +92,7 @@ public class RegionLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteRegion() throws Exception {
+	public void testDeleteRegionUpdateOrganization() throws Exception {
 		Country country = _addCountry();
 
 		Region region = _addRegion(country.getCountryId());

@@ -70,6 +70,14 @@ public class CountryLocalServiceTest {
 
 		Assert.assertNotNull(
 			_countryLocalService.fetchCountry(country.getCountryId()));
+	}
+
+	@Test
+	public void testDeleteCountry() throws Exception {
+		Country country = _addCountry(
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 
 		Organization organization = OrganizationTestUtil.addOrganization();
 

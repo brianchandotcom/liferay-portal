@@ -24,3 +24,7 @@ String filters = (String)request.getAttribute("liferay-frontend:management-bar:f
 boolean includeCheckBox = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:management-bar:includeCheckBox"));
 String searchContainerId = (String)request.getAttribute("liferay-frontend:management-bar:searchContainerId");
 %>
+
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>

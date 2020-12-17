@@ -323,19 +323,21 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#SELECT_STRUCTURE_FIELD");
 
-		var key_fieldName = "${fieldFilter}";
-
 		if (isSet(fieldFilter)) {
-			Check(locator1 = "APConfigurationFilterbyfield#FIELD_FILTER_RADIO_BUTTON");
+			Check(
+				key_fieldName = "${fieldFilter}",
+				locator1 = "APConfigurationFilterbyfield#FIELD_FILTER_RADIO_BUTTON");
 		}
 
 		if (isSet(fieldValue)) {
 			Type(
-				locator1 = "TextInput#FIELD_FILTER_INPUT",
+				key_fieldFieldLabel = "${fieldFilter}",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "${fieldValue}");
 		}
 
 		AssertClick(
+			key_fieldName = "${fieldFilter}",
 			locator1 = "Button#FIELD_FILTER_APPLY",
 			value1 = "Apply");
 

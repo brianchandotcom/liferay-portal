@@ -28,6 +28,8 @@ public class Problem {
 		}
 
 		public ProblemException(Problem problem) {
+			super(problem.getTitle());
+
 			_problem = problem;
 		}
 	}

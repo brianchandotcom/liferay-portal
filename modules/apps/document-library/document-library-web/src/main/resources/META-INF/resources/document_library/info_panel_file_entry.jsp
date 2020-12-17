@@ -523,12 +523,15 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								persistState="<%= true %>"
 								title='<%= "metadata." + ddmStructure.getStructureKey() %>'
 							>
-								<liferay-data-engine:data-layout-renderer
-									containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
-									dataDefinitionId="<%= ddmStructure.getStructureId() %>"
-									dataRecordValues="<%= DataRecordValuesUtil.getDataRecordValues(ddmFormValues, ddmStructure) %>"
-									namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() %>"
+								<liferay-ddm:html
+									classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
+									classPK="<%= ddmStructure.getPrimaryKey() %>"
+									ddmFormValues="<%= ddmFormValues %>"
+									fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+									groupId="<%= fileVersion.getGroupId() %>"
 									readOnly="<%= true %>"
+									requestedLocale="<%= ddmFormValues.getDefaultLocale() %>"
+									showEmptyFieldLabel="<%= false %>"
 								/>
 							</liferay-ui:panel>
 

@@ -336,7 +336,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
-			key_imageTitle = "Document_3.jpg",
+			key_imageTitle = "Document_2.jpg",
 			locator1 = "WCPreview#PREVIEW_IMAGE");
 	}
 

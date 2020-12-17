@@ -41,9 +41,6 @@ definition {
 		}
 	}
 
-	// Ignore for LPS-123072
-
-	@ignore = "true"
 	@priority = "5"
 	test AddAudioViaWebContent {
 		property custom.properties = "xuggler.enabled=true";
@@ -173,9 +170,6 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	// Ignore for LPS-123072
-
-	@ignore = "true"
 	@priority = "5"
 	test AddImageToWebContentViaItemSelector {
 		property portal.acceptance = "true";

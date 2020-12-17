@@ -77,7 +77,7 @@ const Pages = React.forwardRef(
 						}
 					)}
 				>
-					<ActionsProvider focusedField={focusedField?.fieldName}>
+					<ActionsProvider focusedFieldId={focusedField?.fieldName}>
 						{pages.map((page, index) => (
 							<Page
 								{...otherProps}

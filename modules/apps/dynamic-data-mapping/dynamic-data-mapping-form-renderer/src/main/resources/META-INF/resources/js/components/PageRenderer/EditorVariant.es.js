@@ -37,7 +37,7 @@ export const Column = ({
 	const actionsRef = useRef(null);
 	const columnRef = useRef(null);
 
-	const {activeField, hoveredField} = useActions();
+	const [{activeId, hoveredId}] = useActions();
 
 	const {drop, overTarget} = useDrop({
 		columnIndex: index,
@@ -64,8 +64,7 @@ export const Column = ({
 	const isFieldSetOrGroup = firstField.type === 'fieldset';
 	const isFieldSet = isFieldSetOrGroup && firstField.ddmStructureId;
 	const isFieldSelected =
-		firstField.fieldName === activeField ||
-		firstField.fieldName === hoveredField;
+		firstField.fieldName === activeId || firstField.fieldName === hoveredId;
 
 	const addr = {
 		'data-ddm-field-column': index,
@@ -79,8 +78,7 @@ export const Column = ({
 			activePage={activePage}
 			columnRef={columnRef}
 			editable={editable}
-			expanded={isFieldSelected}
-			field={firstField}
+			fieldId={firstField.fieldName}
 		>
 			<DefaultVariant.Column
 				className={classNames({
@@ -88,8 +86,8 @@ export const Column = ({
 						isFieldSetOrGroup &&
 						overTarget &&
 						!rootParentField.ddmStructureId,
-					hovered: editable && firstField.fieldName === hoveredField,
-					selected: editable && firstField.fieldName === activeField,
+					hovered: editable && firstField.fieldName === hoveredId,
+					selected: editable && firstField.fieldName === activeId,
 					'target-over targetOver':
 						!rootParentField.ddmStructureId && overTarget,
 				})}
@@ -99,10 +97,9 @@ export const Column = ({
 				ref={columnRef}
 				rowIndex={rowIndex}
 			>
-				{editable && (
+				{editable && isFieldSelected && (
 					<Actions
 						activePage={activePage}
-						expanded={isFieldSelected}
 						field={firstField}
 						isFieldSet={isFieldSet}
 						ref={actionsRef}

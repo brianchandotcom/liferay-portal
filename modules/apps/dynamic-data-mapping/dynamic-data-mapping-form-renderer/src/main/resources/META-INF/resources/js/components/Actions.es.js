@@ -19,10 +19,11 @@ import domAlign from 'dom-align';
 import React, {
 	createContext,
 	forwardRef,
+	useCallback,
 	useContext,
 	useEffect,
 	useLayoutEffect,
-	useState,
+	useReducer,
 } from 'react';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
@@ -31,34 +32,77 @@ import {useResizeObserver} from '../hooks/useResizeObserver.es';
 
 const ActionsContext = createContext({});
 
+const ACTIONS_TYPES = {
+	ACTIVE: 'ACTIVE',
+	HOVER: 'hover',
+};
+
+const ACTIONS_INITAL_REDUCER = {
+	activeId: null,
+	hoveredId: null,
+};
+
+const reducer = (state, action) => {
+	switch (action.type) {
+		case ACTIONS_TYPES.ACTIVE:
+			return {
+				...state,
+				activeId: action.payload,
+			};
+		case ACTIONS_TYPES.HOVER:
+			return {
+				...state,
+				hoveredId: action.payload,
+			};
+		default:
+			return state;
+	}
+};
+
 /**
  * ActionsContext is responsible for store which field is being hovered or active
  */
-export const ActionsProvider = ({children, focusedField}) => {
-	const [hoveredField, setHoveredField] = useState('');
-	const [activeField, setActiveField] = useState(focusedField);
-	const dispatch = useForm();
+export const ActionsProvider = ({children, focusedFieldId}) => {
+	const [state, dispatch] = useReducer(reducer, ACTIONS_INITAL_REDUCER);
+	const dispatchForm = useForm();
 
-	// App Builder needs information when the field is hovered, it
-	// will be removed later.
+	const newDispatch = useCallback(
+		({payload: {activePage, fieldId}, type}) => {
+			switch (type) {
+				case ACTIONS_TYPES.ACTIVE:
+					dispatchForm({
+						payload: {activePage, fieldName: fieldId},
+						type: EVENT_TYPES.FIELD_CLICKED,
+					});
+					break;
+
+				// App Builder needs information when the field is hovered, it
+				// will be removed later.
+
+				case ACTIONS_TYPES.HOVER: {
+					if (fieldId) {
+						dispatchForm({
+							payload: {activePage, fieldName: fieldId},
+							type: EVENT_TYPES.FIELD_HOVERED,
+						});
+					}
+					break;
+				}
+				default:
+					break;
+			}
+
+			dispatch({payload: fieldId, type});
+		},
+		[dispatchForm, dispatch]
+	);
 
 	useEffect(() => {
-		if (hoveredField) {
-			return dispatch({
-				payload: {fieldName: hoveredField},
-				type: EVENT_TYPES.FIELD_HOVERED,
-			});
-		}
-	}, [hoveredField, dispatch]);
-
-	useEffect(() => {
-		setActiveField(focusedField);
-	}, [focusedField]);
+		dispatch({payload: focusedFieldId, type: ACTIONS_TYPES.ACTIVE});
+	}, [focusedFieldId]);
 
 	return (
-		<ActionsContext.Provider
-			value={{activeField, hoveredField, setActiveField, setHoveredField}}
-		>
+		<ActionsContext.Provider value={[state, newDispatch]}>
 			{children}
 		</ActionsContext.Provider>
 	);
@@ -78,15 +122,9 @@ export const ActionsControls = ({
 	children,
 	columnRef,
 	editable,
-	field,
+	fieldId,
 }) => {
-	const {
-		activeField,
-		hoveredField,
-		setActiveField,
-		setHoveredField,
-	} = useActions();
-	const dispatch = useForm();
+	const [{activeId, hoveredId}, dispatch] = useActions();
 	const contentRect = useResizeObserver(columnRef);
 
 	useLayoutEffect(() => {
@@ -96,7 +134,7 @@ export const ActionsControls = ({
 				points: ['bl', 'tl'],
 			});
 		}
-	}, [actionsRef, activeField, columnRef, contentRect, hoveredField]);
+	}, [actionsRef, columnRef, contentRect, hoveredId, activeId]);
 
 	const handleFieldInteractions = (event) => {
 		event.stopPropagation();
@@ -108,21 +146,25 @@ export const ActionsControls = ({
 		switch (event.type) {
 			case 'click':
 				dispatch({
-					payload: {activePage, fieldName: field.fieldName},
-					type: EVENT_TYPES.FIELD_CLICKED,
+					payload: {activePage, fieldId},
+					type: ACTIONS_TYPES.ACTIVE,
 				});
-
-				setActiveField(field.fieldName);
 
 				break;
 
 			case 'mouseover':
-				setHoveredField(field.fieldName);
+				dispatch({
+					payload: {activePage, fieldId},
+					type: ACTIONS_TYPES.HOVER,
+				});
 
 				break;
 
 			case 'mouseleave':
-				setHoveredField('');
+				dispatch({
+					payload: {activePage, fieldId: null},
+					type: ACTIONS_TYPES.HOVER,
+				});
 
 				break;
 
@@ -139,7 +181,7 @@ export const ActionsControls = ({
 };
 
 export const Actions = forwardRef(
-	({activePage, expanded, field, isFieldSet}, actionsRef) => {
+	({activePage, field, isFieldSet}, actionsRef) => {
 		const dispatch = useForm();
 
 		const DROPDOWN_ACTIONS = [
@@ -161,33 +203,29 @@ export const Actions = forwardRef(
 			},
 		];
 
-		if (expanded) {
-			return (
-				<div
-					className={classNames('ddm-field-actions-container', {
-						'ddm-fieldset': isFieldSet,
-					})}
-					ref={actionsRef}
-				>
-					<span className="actions-label">{field.label}</span>
+		return (
+			<div
+				className={classNames('ddm-field-actions-container', {
+					'ddm-fieldset': isFieldSet,
+				})}
+				ref={actionsRef}
+			>
+				<span className="actions-label">{field.label}</span>
 
-					<ClayDropDownWithItems
-						className="dropdown-action"
-						items={DROPDOWN_ACTIONS}
-						trigger={
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('actions')}
-								data-title={Liferay.Language.get('actions')}
-								displayType="unstyled"
-								symbol="ellipsis-v"
-							/>
-						}
-					/>
-				</div>
-			);
-		}
-
-		return null;
+				<ClayDropDownWithItems
+					className="dropdown-action"
+					items={DROPDOWN_ACTIONS}
+					trigger={
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('actions')}
+							data-title={Liferay.Language.get('actions')}
+							displayType="unstyled"
+							symbol="ellipsis-v"
+						/>
+					}
+				/>
+			</div>
+		);
 	}
 );
 

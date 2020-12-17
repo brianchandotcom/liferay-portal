@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.exporter;
+package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
@@ -33,9 +33,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemExporter.class)
-public class RowLayoutStructureItemExporter
-	extends BaseStyledLayoutStructureItemExporter {
+@Component(service = LayoutStructureItemMapper.class)
+public class RowLayoutStructureItemMapper
+	extends BaseStyledLayoutStructureItemMapper {
 
 	@Override
 	public String getClassName() {

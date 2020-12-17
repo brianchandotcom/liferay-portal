@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.exporter;
+package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemExporter.class)
-public class DropZoneLayoutStructureItemExporter
-	implements LayoutStructureItemExporter {
+@Component(service = LayoutStructureItemMapper.class)
+public class DropZoneLayoutStructureItemMapper
+	implements LayoutStructureItemMapper {
 
 	@Override
 	public String getClassName() {

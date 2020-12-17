@@ -292,6 +292,10 @@ public class EditImageConfigurationEntryMVCActionCommand
 					DuplicateAMImageConfigurationNameException.class,
 				"a-configuration-with-this-name-already-exists"
 			).put(
+				AMImageConfigurationException.
+					DuplicateAMImageConfigurationUuidException.class,
+				"a-configuration-with-this-id-already-exists"
+			).put(
 				AMImageConfigurationException.InvalidHeightException.class,
 				"please-enter-a-max-height-value-larger-than-0"
 			).put(

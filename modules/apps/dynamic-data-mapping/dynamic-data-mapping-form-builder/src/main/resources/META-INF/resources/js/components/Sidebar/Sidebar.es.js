@@ -18,9 +18,9 @@ import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import ClayModal from 'clay-modal';
 import {
-	Form,
 	FormSupport,
 	PagesVisitor,
+	ReactFormAdapter,
 	generateInstanceId,
 	generateName,
 } from 'dynamic-data-mapping-form-renderer';
@@ -1194,7 +1194,7 @@ class Sidebar extends Component {
 		}
 
 		return (
-			<Form
+			<ReactFormAdapter
 				activePage={activeTab}
 				builderRules={builderRules}
 				defaultLanguageId={defaultLanguageId}

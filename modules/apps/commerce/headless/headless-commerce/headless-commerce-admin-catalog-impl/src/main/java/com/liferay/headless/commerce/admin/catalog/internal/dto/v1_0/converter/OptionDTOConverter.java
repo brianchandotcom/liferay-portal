@@ -48,6 +48,7 @@ public class OptionDTOConverter implements DTOConverter<CPOption, Option> {
 
 		return new Option() {
 			{
+				actions = dtoConverterContext.getActions();
 				description = LanguageUtils.getLanguageIdMap(
 					cpOption.getDescriptionMap());
 				externalReferenceCode = cpOption.getExternalReferenceCode();

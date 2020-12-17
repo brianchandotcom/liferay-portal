@@ -30,14 +30,20 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -170,10 +176,32 @@ public class OptionResourceImpl
 		return _upsertOption(option);
 	}
 
+	private Map<String, Map<String, String>> _getActions(long cpOptionId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				ActionKeys.DELETE, cpOptionId, "deleteOption",
+				_cpOptionModelResourcePermission)
+		).put(
+			"get",
+			addAction(
+				ActionKeys.VIEW, cpOptionId, "getOption",
+				_cpOptionModelResourcePermission)
+		).put(
+			"update",
+			addAction(
+				ActionKeys.UPDATE, cpOptionId, "patchOption",
+				_cpOptionModelResourcePermission)
+		).build();
+	}
+
 	private Option _toOption(Long cpOptionId) throws Exception {
 		return _optionDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpOptionId, contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				_getActions(cpOptionId), _dtoConverterRegistry, cpOptionId,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	private Option _updateOption(CPOption cpOption, Option option)
@@ -234,6 +262,9 @@ public class OptionResourceImpl
 	private CPOptionService _cpOptionService;
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private OptionDTOConverter _optionDTOConverter;
 
 	@Reference
@@ -241,5 +272,11 @@ public class OptionResourceImpl
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"
+	)
+	private ModelResourcePermission<CPOption>
+		_cpOptionModelResourcePermission;
 
 }

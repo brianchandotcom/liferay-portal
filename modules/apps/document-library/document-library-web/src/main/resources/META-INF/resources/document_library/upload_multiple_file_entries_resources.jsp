@@ -188,11 +188,9 @@ else {
 								}
 					%>
 
-								<aui:input name="ddmFormFieldNamespace" type="hidden" value="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>" />
-
 								<div class="document-type-fields">
 									<liferay-data-engine:data-layout-renderer
-										containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" %>'
+										containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
 										dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 										dataRecordValues="<%= DataRecordValuesUtil.getDataRecordValues(ddmFormValues, ddmStructure) %>"
 										namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() %>"

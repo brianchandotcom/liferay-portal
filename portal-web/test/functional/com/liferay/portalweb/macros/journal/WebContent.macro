@@ -1566,7 +1566,7 @@ definition {
 	}
 
 	macro uploadAudio {
-		Click.pauseClickAt(locator1 = "WCEditWebContent#AUDIO_BUTTON");
+		Click.pauseClickAt(locator1 = "CKEditor#TOOLBAR_AUDIO_BUTTON");
 
 		ItemSelector.addAudioFromURL(
 			audioSourceURL = "${dmDocumentURL}",

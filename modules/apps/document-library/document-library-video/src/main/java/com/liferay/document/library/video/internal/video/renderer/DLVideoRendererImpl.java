@@ -14,18 +14,17 @@
 
 package com.liferay.document.library.video.internal.video.renderer;
 
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
 import com.liferay.document.library.video.external.shortcut.resolver.DLVideoExternalShortcutResolver;
-import com.liferay.document.library.video.internal.constants.DLVideoPortletKeys;
 import com.liferay.document.library.video.renderer.DLVideoRenderer;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-
-import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,35 +48,31 @@ public class DLVideoRendererImpl implements DLVideoRenderer {
 			return dlVideoExternalShortcut.renderHTML(httpServletRequest);
 		}
 
-		return StringBundler.concat(
-			"<iframe data-video-liferay height=\"315\" frameborder=\"0\" ",
-			"src=\"", _getEmbedVideoURL(fileVersion, httpServletRequest), "&",
-			"\" width=\"560\"></iframe>");
-	}
-
-	private String _getEmbedVideoURL(
-		FileVersion fileVersion, HttpServletRequest httpServletRequest) {
-
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
-
-		PortletURL getEmbedVideoURL =
-			requestBackedPortletURLFactory.createRenderURL(
-				DLVideoPortletKeys.DL_VIDEO);
-
 		try {
-			getEmbedVideoURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-		}
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		getEmbedVideoURL.setParameter(
-			"mvcRenderCommandName", "/document_library_video/embed_video");
-		getEmbedVideoURL.setParameter(
-			"fileVersionId", String.valueOf(fileVersion.getFileVersionId()));
+			return StringBundler.concat(
+				"<iframe data-video-liferay height=\"315\" frameborder=\"0\" ",
+				"src=\"",
+				_dlURLHelper.getPreviewURL(
+					fileVersion.getFileEntry(), fileVersion, themeDisplay,
+					"&videoEmbed=true", true, false),
+				"\" width=\"560\"></iframe>");
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 
-		return getEmbedVideoURL.toString();
+			return null;
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLVideoRendererImpl.class);
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private DLVideoExternalShortcutResolver _dlVideoExternalShortcutResolver;

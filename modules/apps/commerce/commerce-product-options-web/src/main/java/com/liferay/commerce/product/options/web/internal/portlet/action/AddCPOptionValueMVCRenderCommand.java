@@ -15,15 +15,13 @@
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.exception.NoSuchCPOptionValueException;
-import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.service.CPOptionValueService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.commerce.product.options.web.internal.display.context.CPOptionDisplayContext;
+import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -39,11 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_OPTIONS,
-		"mvc.command.name=editOptionValue"
+		"mvc.command.name=addCPOptionValue"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPOptionValueMVCRenderCommand implements MVCRenderCommand {
+public class AddCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -51,40 +49,32 @@ public class EditCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			setCPOptionValueRequestAttribute(renderRequest);
+			CPOptionDisplayContext cpOptionDisplayContext =
+				new CPOptionDisplayContext(
+					_configurationProvider, null,
+					_ddmFormFieldTypeServicesTracker,
+					_portal.getHttpServletRequest(renderRequest));
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, cpOptionDisplayContext);
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchCPOptionValueException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, exception.getClass());
-
-				return "/error.jsp";
-			}
-
 			throw new PortletException(exception);
 		}
 
-		return "/edit_option_value.jsp";
-	}
-
-	protected void setCPOptionValueRequestAttribute(RenderRequest renderRequest)
-		throws PortalException {
-
-		long cpOptionValueId = ParamUtil.getLong(
-			renderRequest, "cpOptionValueId");
-
-		CPOptionValue cpOptionValue = null;
-
-		if (cpOptionValueId > 0) {
-			cpOptionValue = _cpOptionValueService.getCPOptionValue(
-				cpOptionValueId);
-		}
-
-		renderRequest.setAttribute(CPWebKeys.CP_OPTION_VALUE, cpOptionValue);
+		return "/option/add_option_value.jsp";
 	}
 
 	@Reference
-	private CPOptionValueService _cpOptionValueService;
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPOptionService _cpOptionService;
+
+	@Reference
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	private Portal _portal;
 
 }

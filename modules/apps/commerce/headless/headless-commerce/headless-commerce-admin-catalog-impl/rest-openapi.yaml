@@ -331,6 +331,13 @@ components:
             type: object
         Option:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 catalogId:
                     format: int64
                     type: integer

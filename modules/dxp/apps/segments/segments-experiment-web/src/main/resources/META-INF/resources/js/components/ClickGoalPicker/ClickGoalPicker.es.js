@@ -190,37 +190,52 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 					</ClayButton>
 				)}
 
-				<ClayInput.Group
-					className={classNames({
-						'has-error': !isValidClickTargetElement,
-					})}
-				>
-					<ClayInput.GroupItem>
-						<label htmlFor="clickableElement">
-							{Liferay.Language.get('element-id')}
-							<ClayTooltipProvider>
-								<ClayIcon
-									className="c-ml-1 text-secondary"
-									data-tooltip-align="top"
-									small="true"
-									symbol="question-circle"
-									title={Liferay.Language.get(
-										'element-id-help'
-									)}
-								/>
-							</ClayTooltipProvider>
-						</label>
+				<ClayForm.Group>
+					<label htmlFor="clickableElement">
+						{Liferay.Language.get('element-id')}
 						<ClayTooltipProvider>
-							<ClayInput
+							<ClayIcon
+								className="c-ml-1 text-secondary"
 								data-tooltip-align="top"
-								defaultValue={inputRef.current?.value || ''}
-								id="clickableElement"
-								onBlur={handleInputBlur}
-								ref={inputRef}
-								title={inputRef.current?.value || ''}
-								type="text"
+								small="true"
+								symbol="question-circle"
+								title={Liferay.Language.get('element-id-help')}
 							/>
 						</ClayTooltipProvider>
+					</label>
+					<ClayInput.Group
+						className={classNames({
+							'has-error': !isValidClickTargetElement,
+						})}
+					>
+						<ClayInput.GroupItem prepend shrink>
+							<ClayInput.GroupText>{'#'}</ClayInput.GroupText>
+						</ClayInput.GroupItem>
+						<ClayInput.GroupItem append>
+							<ClayTooltipProvider>
+								<ClayInput
+									data-tooltip-align="top"
+									defaultValue={inputRef.current?.value || ''}
+									id="clickableElement"
+									onBlur={handleInputBlur}
+									ref={inputRef}
+									title={inputRef.current?.value || ''}
+									type="text"
+								/>
+							</ClayTooltipProvider>
+						</ClayInput.GroupItem>
+						<ClayInput.GroupItem shrink>
+							<ClayTooltipProvider>
+								<ClayButtonWithIcon
+									data-tooltip-align="bottom-right"
+									disabled={!state.selectedTarget}
+									displayType="secondary"
+									onClick={scrollIntoView}
+									symbol="view"
+									title={Liferay.Language.get('show-element')}
+								/>
+							</ClayTooltipProvider>
+						</ClayInput.GroupItem>
 						{!isValidClickTargetElement && (
 							<ClayForm.FeedbackGroup>
 								<ClayForm.FeedbackItem>
@@ -229,23 +244,8 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 								</ClayForm.FeedbackItem>
 							</ClayForm.FeedbackGroup>
 						)}
-					</ClayInput.GroupItem>
-					<ClayInput.GroupItem
-						className="form-group-item-label-spacer"
-						shrink
-					>
-						<ClayTooltipProvider>
-							<ClayButtonWithIcon
-								data-tooltip-align="bottom-right"
-								disabled={!state.selectedTarget}
-								displayType="secondary"
-								onClick={scrollIntoView}
-								symbol="view"
-								title={Liferay.Language.get('show-element')}
-							/>
-						</ClayTooltipProvider>
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
+					</ClayInput.Group>
+				</ClayForm.Group>
 
 				{state.mode === 'active' ? (
 					<ClickGoalPicker.OverlayContainer

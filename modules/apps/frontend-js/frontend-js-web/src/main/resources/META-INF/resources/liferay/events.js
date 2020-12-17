@@ -12,7 +12,7 @@
  * details.
  */
 
-(function (A, Liferay) {
+(function (A) {
 	var CLICK_EVENTS = {};
 	var Util = Liferay.Util;
 
@@ -204,4 +204,4 @@
 			dialog.hide();
 		}
 	});
-})(AUI(), Liferay);
+})(AUI());

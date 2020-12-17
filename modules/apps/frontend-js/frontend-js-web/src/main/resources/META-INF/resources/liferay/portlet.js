@@ -12,7 +12,7 @@
  * details.
  */
 
-(function (A, Liferay) {
+(function (A) {
 	var Lang = A.Lang;
 
 	var Util = Liferay.Util;
@@ -676,4 +676,4 @@
 	};
 
 	Liferay.Portlet = Portlet;
-})(AUI(), Liferay);
+})(AUI());

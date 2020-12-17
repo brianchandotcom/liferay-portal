@@ -12,7 +12,7 @@
  * details.
  */
 
-(function (Liferay) {
+(function () {
 	Liferay.lazyLoad = function () {
 		var failureCallback;
 
@@ -66,4 +66,4 @@
 			);
 		};
 	};
-})(Liferay);
+})();

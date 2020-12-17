@@ -14,7 +14,7 @@
 
 // For details about this file see: LPS-2155
 
-(function (A, Liferay) {
+(function (A) {
 	var Util = Liferay.Util;
 
 	var Lang = A.Lang;
@@ -502,4 +502,4 @@
 		},
 		['aui-io']
 	);
-})(AUI(), Liferay);
+})(AUI());

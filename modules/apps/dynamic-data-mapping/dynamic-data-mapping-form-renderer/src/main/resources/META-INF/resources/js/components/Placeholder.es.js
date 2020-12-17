@@ -16,8 +16,8 @@ import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
 import React, {useContext} from 'react';
 
-import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
-import {ParentFieldContext} from '../Field/ParentFieldContext.es';
+import {DND_ORIGIN_TYPE, useDrop} from '../hooks/useDrop.es';
+import {ParentFieldContext} from './Field/ParentFieldContext.es';
 
 export const Placeholder = ({
 	columnIndex,

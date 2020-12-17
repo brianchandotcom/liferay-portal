@@ -25,9 +25,9 @@ import React, {
 	useState,
 } from 'react';
 
-import {EVENT_TYPES} from '../../actions/eventTypes.es';
-import {useForm} from '../../hooks/useForm.es';
-import {useResizeObserver} from '../../hooks/useResizeObserver.es';
+import {EVENT_TYPES} from '../actions/eventTypes.es';
+import {useForm} from '../hooks/useForm.es';
+import {useResizeObserver} from '../hooks/useResizeObserver.es';
 
 const ActionsContext = createContext({});
 
@@ -38,6 +38,9 @@ export const ActionsProvider = ({children}) => {
 	const [hoveredField, setHoveredField] = useState('');
 	const [activeField, setActiveField] = useState('');
 	const dispatch = useForm();
+
+	// App Builder needs information when the field is hovered, it
+	// will be removed later.
 
 	useEffect(() => {
 		if (hoveredField) {
@@ -63,7 +66,7 @@ export const useActions = () => {
 
 ActionsContext.displayName = 'ActionsContext';
 
-const ACTIONS_CONTAINER_OFFSET = [14, 1];
+const ACTIONS_CONTAINER_OFFSET = [0, 1];
 
 export const ActionsControls = ({
 	actionsRef,

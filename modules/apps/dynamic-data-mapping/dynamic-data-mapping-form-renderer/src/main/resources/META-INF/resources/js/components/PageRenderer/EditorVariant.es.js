@@ -18,9 +18,9 @@ import React, {useContext, useRef} from 'react';
 
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
 import {ParentFieldContext} from '../Field/ParentFieldContext.es';
-import {Actions, ActionsControls, useActions} from './Actions.es';
+import {Actions, ActionsControls, useActions} from '../Actions.es';
 import * as DefaultVariant from './DefaultVariant.es';
-import {Placeholder} from './Placeholder.es';
+import {Placeholder} from '../Placeholder.es';
 
 export const Column = ({
 	activePage,

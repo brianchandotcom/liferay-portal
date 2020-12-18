@@ -490,8 +490,6 @@
 </tr>
 <!--PRODUCT-->
 <tr>
-	<td>CREATE_NEW_PRODUCT_CATALOG_FIELD</td>
-	<td>//label[text()='Catalog']/following::div//input[@placeholder='Type Here']</td>
 	<td></td>
 </tr>
 <tr>

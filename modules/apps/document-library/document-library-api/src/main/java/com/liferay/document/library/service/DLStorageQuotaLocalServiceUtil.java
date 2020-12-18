@@ -314,6 +314,12 @@ public class DLStorageQuotaLocalServiceUtil {
 		return getService().updateDLStorageQuota(dlStorageQuota);
 	}
 
+	public static void validateStorageQuota(long companyId, long increment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().validateStorageQuota(companyId, increment);
+	}
+
 	public static DLStorageQuotaLocalService getService() {
 		return _serviceTracker.getService();
 	}

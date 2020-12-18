@@ -275,6 +275,9 @@ public interface DLStorageQuotaLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DLStorageQuota updateDLStorageQuota(DLStorageQuota dlStorageQuota);
 
+	public void validateStorageQuota(long companyId, long increment)
+		throws PortalException;
+
 	@Override
 	@Transactional(enabled = false)
 	public CTPersistence<DLStorageQuota> getCTPersistence();

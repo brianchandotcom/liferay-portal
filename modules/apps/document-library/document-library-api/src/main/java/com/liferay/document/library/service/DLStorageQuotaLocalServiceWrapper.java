@@ -319,6 +319,13 @@ public class DLStorageQuotaLocalServiceWrapper
 	}
 
 	@Override
+	public void validateStorageQuota(long companyId, long increment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlStorageQuotaLocalService.validateStorageQuota(companyId, increment);
+	}
+
+	@Override
 	public CTPersistence<DLStorageQuota> getCTPersistence() {
 		return _dlStorageQuotaLocalService.getCTPersistence();
 	}

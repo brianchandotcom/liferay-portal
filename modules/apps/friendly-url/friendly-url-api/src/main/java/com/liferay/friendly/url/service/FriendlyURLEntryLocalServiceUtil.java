@@ -530,11 +530,24 @@ public class FriendlyURLEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getUniqueUrlTitle(long, long, long, String, String)}
+	 */
+	@Deprecated
 	public static String getUniqueUrlTitle(
 		long groupId, long classNameId, long classPK, String urlTitle) {
 
 		return getService().getUniqueUrlTitle(
 			groupId, classNameId, classPK, urlTitle);
+	}
+
+	public static String getUniqueUrlTitle(
+		long groupId, long classNameId, long classPK, String languageId,
+		String urlTitle) {
+
+		return getService().getUniqueUrlTitle(
+			groupId, classNameId, classPK, languageId, urlTitle);
 	}
 
 	public static void setMainFriendlyURLEntry(

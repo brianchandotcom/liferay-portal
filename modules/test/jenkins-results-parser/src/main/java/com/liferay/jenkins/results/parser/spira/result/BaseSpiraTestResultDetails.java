@@ -18,6 +18,7 @@ import com.liferay.jenkins.results.parser.AnalyticsCloudBranchInformationBuild;
 import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.ParallelExecutor;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalFixpackRelease;
@@ -31,8 +32,13 @@ import com.liferay.jenkins.results.parser.spira.SpiraReleaseBuild;
 
 import java.io.IOException;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author Michael Hashimoto
@@ -42,16 +48,111 @@ public abstract class BaseSpiraTestResultDetails
 
 	@Override
 	public String getDetails() {
+		List<Callable<Map.Entry<String, String>>> callables = new ArrayList<>();
+
+		callables.add(
+			new Callable() {
+
+				@Override
+				public Map.Entry<String, String> call() {
+					return new AbstractMap.SimpleEntry<>(
+						"GitHubSummary", _getGitHubSummary());
+				}
+
+			});
+		callables.add(
+			new Callable() {
+
+				@Override
+				public Map.Entry<String, String> call() {
+					return new AbstractMap.SimpleEntry<>(
+						"JenkinsSummary", _getJenkinsSummary());
+				}
+
+			});
+		callables.add(
+			new Callable() {
+
+				@Override
+				public Map.Entry<String, String> call() {
+					return new AbstractMap.SimpleEntry<>(
+						"PortalReleaseSummary", _getPortalReleaseSummary());
+				}
+
+			});
+		callables.add(
+			new Callable() {
+
+				@Override
+				public Map.Entry<String, String> call() {
+					return new AbstractMap.SimpleEntry<>(
+						"SpiraSummary", _getSpiraSummary());
+				}
+
+			});
+		callables.add(
+			new Callable() {
+
+				@Override
+				public Map.Entry<String, String> call() {
+					return new AbstractMap.SimpleEntry<>(
+						"TestraySummary", _getTestraySummary());
+				}
+
+			});
+		callables.add(
+			new Callable() {
+
+				@Override
+				public Map.Entry<String, String> call() {
+					return new AbstractMap.SimpleEntry<>(
+						"TestFailuresSummary", getTestFailuresSummary());
+				}
+
+			});
+		callables.add(
+			new Callable() {
+
+				@Override
+				public Map.Entry<String, String> call() {
+					return new AbstractMap.SimpleEntry<>(
+						"TestMethodsSummary", getTestMethodsSummary());
+				}
+
+			});
+		callables.add(
+			new Callable() {
+
+				@Override
+				public Map.Entry<String, String> call() {
+					return new AbstractMap.SimpleEntry<>(
+						"TestWarningsSummary", getTestWarningsSummary());
+				}
+
+			});
+
+		ThreadPoolExecutor threadPoolExecutor =
+			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+				callables.size(), true);
+
+		ParallelExecutor<Map.Entry<String, String>> parallelExecutor =
+			new ParallelExecutor<>(callables, threadPoolExecutor);
+
+		Map<String, String> summaries = new TreeMap<>();
+
+		for (Map.Entry<String, String> entry : parallelExecutor.execute()) {
+			summaries.put(entry.getKey(), entry.getValue());
+		}
+
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_getGitHubSummary());
-		sb.append(_getJenkinsSummary());
-		sb.append(_getPortalReleaseSummary());
-		sb.append(_getSpiraSummary());
-		sb.append(_getTestraySummary());
-		sb.append(getTestFailuresSummary());
-		sb.append(getTestMethodsSummary());
-		sb.append(getTestWarningsSummary());
+		for (String summary : summaries.values()) {
+			if (summary == null) {
+				continue;
+			}
+
+			sb.append(summary);
+		}
 
 		return sb.toString();
 	}

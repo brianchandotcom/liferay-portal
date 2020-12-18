@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Adolfo Pérez
@@ -97,6 +98,7 @@ public class DDMStructureClassType implements ClassType {
 			String type = ddmFormField.getType();
 
 			if (Validator.isNull(indexType) ||
+				Objects.equals(indexType, "none") ||
 				!ArrayUtil.contains(_SELECTABLE_DDM_STRUCTURE_FIELDS, type)) {
 
 				continue;

@@ -16,8 +16,7 @@ definition {
 
 			Click(locator1 = "Button#PLUS");
 
-			if (IsElementPresent(locator1 = "MenuItem#DROPDOWN_MENU_ITEM", key_menuItem = "Add SKU"))
-			{
+			if (IsElementPresent(locator1 = "MenuItem#DROPDOWN_MENU_ITEM", key_menuItem = "Add SKU")) {
 				AssertClick(
 					key_menuItem = "Add SKU",
 					locator1 = "MenuItem#DROPDOWN_MENU_ITEM",

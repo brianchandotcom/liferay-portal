@@ -603,6 +603,17 @@ definition {
 		}
 	}
 
+	macro selectAutoCompleteField {
+		Type(
+			key_label = "${label}",
+			locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_TEXT_FIELD",
+			value1 = "${entryName}");
+
+		Click(
+			key_menuItem = "${entryName}",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+	}
+
 	macro setEntryEligibility {
 		if (isSet(accountGroupsEligibility)) {
 			var title = "Add Account Groups";
@@ -1033,17 +1044,6 @@ definition {
 				key_rowEntry = "${specificationLabelsEntry}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
 		}
-	}
-
-	macro selectAutoCompleteField {
-		Type(
-			locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_TEXT_FIELD",
-			key_label = "${label}",
-			value1 = "${entryName}");
-
-		Click(
-			key_menuItem = "${entryName}",
-			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
 }

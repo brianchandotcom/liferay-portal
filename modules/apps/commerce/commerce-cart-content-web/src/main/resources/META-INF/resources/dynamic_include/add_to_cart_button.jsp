@@ -37,7 +37,7 @@ String quantityInputId = liferayPortletResponse.getNamespace() + cpCatalogEntry.
 <liferay-commerce-cart:add-to-cart
 	CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
 	CPInstanceId="<%= cpInstanceId %>"
-	elementClasses="btn-lg btn-default"
+	elementClasses="btn-lg btn-secondary"
 	productContentId='<%= productContentId %>'
 	taglibQuantityInputId='<%= quantityInputId %>'
 />

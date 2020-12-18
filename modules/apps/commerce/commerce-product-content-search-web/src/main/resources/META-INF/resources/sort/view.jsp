@@ -28,7 +28,7 @@ SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsD
 			<liferay-ui:message arguments="<%= cpCatalogEntrySearchContainer.getTotal() %>" key="x-products-available" />
 		</p>
 
-		<button aria-expanded="false" aria-haspopup="true" class="btn btn-default commerce-order-by dropdown-toggle" data-toggle="dropdown" onclick="<portlet:namespace />toggleDropdown();" type="button">
+		<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary commerce-order-by dropdown-toggle" data-toggle="dropdown" onclick="<portlet:namespace />toggleDropdown();" type="button">
 			<c:set var="orderByColArgument">
 				<span class="ml-1">
 					<liferay-ui:message key="<%= cpSearchResultsDisplayContext.getOrderByCol() %>" />

@@ -84,7 +84,7 @@ public class OrderTransitionsTag extends IncludeTag {
 
 	public void setCssClass(String cssClass) {
 		if (Validator.isNull(cssClass) || cssClass.equals(StringPool.NULL)) {
-			cssClass = "btn btn-default";
+			cssClass = "btn btn-secondary";
 		}
 
 		_cssClass = cssClass;

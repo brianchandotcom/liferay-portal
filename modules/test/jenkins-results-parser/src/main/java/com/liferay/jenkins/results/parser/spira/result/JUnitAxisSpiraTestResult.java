@@ -46,16 +46,22 @@ public class JUnitAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 
 		TestClassResult testClassResult = getTestClassResult();
 
-		for (TestResult testClassTestResult :
-				testClassResult.getTestResults()) {
+		if (testClassResult == null) {
+			return failedTestResults;
+		}
 
-			if ((testClassTestResult == null) ||
-				!testClassTestResult.isFailing()) {
+		List<TestResult> testResults = testClassResult.getTestResults();
 
+		if ((testResults == null) || testResults.isEmpty()) {
+			return failedTestResults;
+		}
+
+		for (TestResult testResult : testResults) {
+			if ((testResult == null) || !testResult.isFailing()) {
 				continue;
 			}
 
-			failedTestResults.add(testClassTestResult);
+			failedTestResults.add(testResult);
 		}
 
 		return failedTestResults;

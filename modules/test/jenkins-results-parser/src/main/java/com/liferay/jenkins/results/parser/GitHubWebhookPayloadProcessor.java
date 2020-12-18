@@ -2537,8 +2537,6 @@ public class GitHubWebhookPayloadProcessor {
 
 			String url = pullRequestJSONObject.getString("url");
 
-			_url = url;
-
 			int x = url.indexOf("repos/");
 
 			x = url.indexOf("/", x) + 1;
@@ -3421,7 +3419,6 @@ public class GitHubWebhookPayloadProcessor {
 		private final String _senderRefSHA;
 		private final JSONArray _senderRefSHAStatusesJSONArray;
 		private String _testerName;
-		private final String _url;
 
 	}
 

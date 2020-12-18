@@ -28,6 +28,7 @@ definition {
 	@priority = "5"
 	test AddBlogsImageViaURL {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ItemSelector#AddBlogsImageViaURL";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

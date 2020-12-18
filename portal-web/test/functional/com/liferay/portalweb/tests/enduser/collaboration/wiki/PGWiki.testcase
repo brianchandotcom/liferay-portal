@@ -489,6 +489,8 @@ definition {
 	@description = "This test covers LPS-95711. It ensures that an image can be added to the front page via URL."
 	@priority = "4"
 	test AddPageWithImageViaURL {
+		property test.name.skip.portal.instance = "PGWiki#AddPageWithImageViaURL";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",

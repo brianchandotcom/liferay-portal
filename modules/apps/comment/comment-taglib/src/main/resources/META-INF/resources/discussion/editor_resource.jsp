@@ -23,7 +23,7 @@
 	editorName="ckeditor"
 	name='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:name")) %>'
 	onChangeMethod='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:onChangeMethod")) %>'
-	placeholder='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:placeholder")) %>'
+	placeholder="type-your-comment-here"
 	showSource="<%= false %>"
 	skipEditorLoading="<%= true %>"
 />

@@ -241,54 +241,58 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return new ArrayList<>();
 		}
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			_portalTestClassJob.getPortalGitWorkingDirectory();
+		synchronized (_portalTestClassJob) {
+			PortalGitWorkingDirectory portalGitWorkingDirectory =
+				_portalTestClassJob.getPortalGitWorkingDirectory();
 
-		File portalDir = portalGitWorkingDirectory.getWorkingDirectory();
+			File portalDir = portalGitWorkingDirectory.getWorkingDirectory();
 
-		Map<String, String> parameters = new HashMap<>();
+			Map<String, String> parameters = new HashMap<>();
 
-		String testBaseDirName = _getTestBaseDirName();
+			String testBaseDirName = _getTestBaseDirName();
 
-		if (testBaseDirName != null) {
-			parameters.put("test.base.dir.name", testBaseDirName);
-		}
-
-		try {
-			AntUtil.callTarget(
-				portalDir, "build-test.xml", "prepare-poshi-runner-properties",
-				parameters);
-		}
-		catch (AntException antException) {
-			throw new RuntimeException(antException);
-		}
-
-		Properties properties = JenkinsResultsParserUtil.getProperties(
-			new File(portalDir, "portal-web/test/test-portal-web.properties"),
-			new File(
-				portalDir, "portal-web/test/test-portal-web-ext.properties"));
-
-		properties.setProperty("ignore.errors.util.classes", "true");
-
-		for (String propertyName : properties.stringPropertyNames()) {
-			String propertyValue = properties.getProperty(propertyName);
-
-			if (propertyValue == null) {
-				continue;
+			if (testBaseDirName != null) {
+				parameters.put("test.base.dir.name", testBaseDirName);
 			}
 
-			PropsUtil.set(propertyName, propertyValue);
-		}
+			try {
+				AntUtil.callTarget(
+					portalDir, "build-test.xml",
+					"prepare-poshi-runner-properties", parameters);
+			}
+			catch (AntException antException) {
+				throw new RuntimeException(antException);
+			}
 
-		try {
-			PoshiContext.clear();
+			Properties properties = JenkinsResultsParserUtil.getProperties(
+				new File(
+					portalDir, "portal-web/test/test-portal-web.properties"),
+				new File(
+					portalDir,
+					"portal-web/test/test-portal-web-ext.properties"));
 
-			PoshiContext.readFiles();
+			properties.setProperty("ignore.errors.util.classes", "true");
 
-			return PoshiContext.getTestBatchGroups(query, getAxisMaxSize());
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			for (String propertyName : properties.stringPropertyNames()) {
+				String propertyValue = properties.getProperty(propertyName);
+
+				if (propertyValue == null) {
+					continue;
+				}
+
+				PropsUtil.set(propertyName, propertyValue);
+			}
+
+			try {
+				PoshiContext.clear();
+
+				PoshiContext.readFiles();
+
+				return PoshiContext.getTestBatchGroups(query, getAxisMaxSize());
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 	}
 

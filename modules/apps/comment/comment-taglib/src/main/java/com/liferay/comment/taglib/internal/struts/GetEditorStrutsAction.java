@@ -68,7 +68,7 @@ public class GetEditorStrutsAction implements StrutsAction {
 
 		namespacedHttpServletRequest.setAttribute(
 			"liferay-comment:editor:onChangeMethod", onChangeMethod);
-		
+
 		String portletId = ParamUtil.getString(
 			namespacedHttpServletRequest, "portletId");
 

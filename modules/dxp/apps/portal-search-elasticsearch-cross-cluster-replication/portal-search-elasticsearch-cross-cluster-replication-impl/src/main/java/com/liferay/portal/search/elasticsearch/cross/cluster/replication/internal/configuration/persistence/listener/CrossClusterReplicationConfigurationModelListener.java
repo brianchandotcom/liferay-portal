@@ -55,18 +55,24 @@ public class CrossClusterReplicationConfigurationModelListener
 	public void onAfterSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		String remoteClusterAlias = (String)properties.get(
-			"remoteClusterAlias");
+		if (GetterUtil.getBoolean(properties.get("ccrEnabled"))) {
+			if (GetterUtil.getBoolean(
+					properties.get("automaticReplicationEnabled"))) {
 
-		if ((Boolean)properties.get("ccrEnabled")) {
-			String[] ccrLocalClusterConnectionConfigurations =
-				GetterUtil.getStringValues(
-					properties.get("ccrLocalClusterConnectionConfigurations"));
+				String remoteClusterAlias = (String)properties.get(
+					"remoteClusterAlias");
 
-			_validateCCRLocalClusterConnectionConfigurations(
-				ccrLocalClusterConnectionConfigurations, properties);
+				addRemoteAndFollowIndexes(remoteClusterAlias, properties);
+			}
 
-			addRemoteAndFollowIndexes(remoteClusterAlias, properties);
+			if (_log.isInfoEnabled()) {
+				_log.info("Read operations from local clusters are enabled");
+			}
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info("Read operations from local clusters are disabled");
+			}
 		}
 	}
 
@@ -74,14 +80,11 @@ public class CrossClusterReplicationConfigurationModelListener
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		String[] excludedIndexes = GetterUtil.getStringValues(
-			properties.get("excludedIndexes"));
-		boolean ccrEnabled = (Boolean)properties.get("ccrEnabled");
+		boolean ccrEnabled = GetterUtil.getBoolean(
+			properties.get("ccrEnabled"));
 		String[] ccrLocalClusterConnectionConfigurations =
 			GetterUtil.getStringValues(
 				properties.get("ccrLocalClusterConnectionConfigurations"));
-		String remoteClusterAlias = (String)properties.get(
-			"remoteClusterAlias");
 
 		if (ccrEnabled) {
 			_validateCCRLocalClusterConnectionConfigurations(
@@ -112,25 +115,39 @@ public class CrossClusterReplicationConfigurationModelListener
 		Dictionary<String, Object> previousProperties =
 			configuration.getProperties();
 
+		boolean automaticReplicationEnabled = GetterUtil.getBoolean(
+			properties.get("automaticReplicationEnabled"));
+		String[] excludedIndexes = GetterUtil.getStringValues(
+			properties.get("excludedIndexes"));
+		boolean previousAutomaticReplicationEnabled = GetterUtil.getBoolean(
+			previousProperties.get("automaticReplicationEnabled"), true);
 		String[] previousExcludedIndexes = GetterUtil.getStringValues(
 			previousProperties.get("excludedIndexes"));
-		boolean previousCcrEnabled = (Boolean)previousProperties.get(
-			"ccrEnabled");
+		boolean previousCcrEnabled = GetterUtil.getBoolean(
+			previousProperties.get("ccrEnabled"));
 		String[] previousCcrLocalClusterConnectionConfigurations =
 			GetterUtil.getStringValues(
 				previousProperties.get(
 					"ccrLocalClusterConnectionConfigurations"));
 		String previousRemoteClusterAlias = (String)previousProperties.get(
 			"remoteClusterAlias");
+		String previousRemoteClusterSeedNodeTransportAddress =
+			(String)previousProperties.get(
+				"remoteClusterSeedNodeTransportAddress");
+		String remoteClusterAlias = (String)properties.get(
+			"remoteClusterAlias");
+		String remoteClusterSeedNodeTransportAddress = (String)properties.get(
+			"remoteClusterSeedNodeTransportAddress");
 
-		if (previousCcrEnabled &&
-			(!ccrEnabled ||
-			 (ccrEnabled &&
-			  (!equals(
-				  previousCcrLocalClusterConnectionConfigurations,
-				  ccrLocalClusterConnectionConfigurations) ||
-			   !previousRemoteClusterAlias.equals(remoteClusterAlias) ||
-			   !equals(previousExcludedIndexes, excludedIndexes))))) {
+		if (previousCcrEnabled && previousAutomaticReplicationEnabled &&
+			(!ccrEnabled || !automaticReplicationEnabled ||
+			 !equals(
+				 previousCcrLocalClusterConnectionConfigurations,
+				 ccrLocalClusterConnectionConfigurations) ||
+			 !previousRemoteClusterAlias.equals(remoteClusterAlias) ||
+			 !previousRemoteClusterSeedNodeTransportAddress.equals(
+				 remoteClusterSeedNodeTransportAddress) ||
+			 !equals(previousExcludedIndexes, excludedIndexes))) {
 
 			unfollowIndexesAndDeleteRemoteCluster(
 				previousCcrLocalClusterConnectionConfigurations,
@@ -142,7 +159,7 @@ public class CrossClusterReplicationConfigurationModelListener
 		String remoteClusterAlias, Dictionary<String, Object> properties) {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Enabling Cross-Cluster Replication");
+			_log.info("Creating follower indexes");
 		}
 
 		Log log = LogFactoryUtil.getLog(
@@ -232,7 +249,7 @@ public class CrossClusterReplicationConfigurationModelListener
 		String remoteClusterAlias, String[] excludedIndexes) {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Disabling Cross-Cluster Replication");
+			_log.info("Deleting follower indexes");
 		}
 
 		for (String ccrLocalClusterConnectionConfiguration :

@@ -36,6 +36,12 @@ public interface CrossClusterReplicationConfiguration {
 	public boolean ccrEnabled();
 
 	@Meta.AD(
+		deflt = "true", description = "automatic-replication-enabled-help",
+		name = "automatic-replication-enabled", required = false
+	)
+	public boolean automaticReplicationEnabled();
+
+	@Meta.AD(
 		description = "cross-cluster-replication-local-cluster-connection-configurations-help",
 		name = "cross-cluster-replication-local-cluster-connection-configurations",
 		required = false

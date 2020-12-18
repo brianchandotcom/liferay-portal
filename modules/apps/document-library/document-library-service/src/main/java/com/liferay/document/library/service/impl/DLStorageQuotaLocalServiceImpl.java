@@ -17,8 +17,10 @@ package com.liferay.document.library.service.impl;
 import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.document.library.service.base.DLStorageQuotaLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,6 +51,34 @@ public class DLStorageQuotaLocalServiceImpl
 			dlStorageQuota.getStorageSize() + increment);
 
 		dlStorageQuotaLocalService.updateDLStorageQuota(dlStorageQuota);
+	}
+
+	@Override
+	public void validateStorageQuota(long companyId, long increment)
+		throws PortalException {
+
+		if (PropsValues.DATA_LIMIT_MAX_DL_STORAGE_SIZE <= 0) {
+			return;
+		}
+
+		long currentStorageSize = _getStorageSize(companyId);
+
+		if ((currentStorageSize + increment) >
+				PropsValues.DATA_LIMIT_MAX_DL_STORAGE_SIZE) {
+
+			throw new PortalException("Exceed maximum alowed DL Storage Quota");
+		}
+	}
+
+	private long _getStorageSize(long companyId) {
+		DLStorageQuota dlStorageQuota =
+			dlStorageQuotaPersistence.fetchByCompanyId(companyId);
+
+		if (dlStorageQuota == null) {
+			return 0;
+		}
+
+		return dlStorageQuota.getStorageSize();
 	}
 
 }

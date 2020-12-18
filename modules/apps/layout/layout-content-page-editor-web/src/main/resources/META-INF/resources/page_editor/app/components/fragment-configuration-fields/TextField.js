@@ -21,14 +21,7 @@ import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 export const TextField = ({field, onValueSelect, value}) => {
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const initialValue =
-		value === undefined
-			? field.defaultValue === undefined
-				? ''
-				: field.defaultValue
-			: value;
-
-	const [nextValue, setNextValue] = useState(initialValue);
+	const [nextValue, setNextValue] = useState(value);
 
 	useEffect(() => {
 		setNextValue(value);
@@ -48,7 +41,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 					if (event.target.checkValidity()) {
 						setErrorMessage('');
 
-						if (nextValue !== initialValue) {
+						if (nextValue !== value) {
 							onValueSelect(field.name, nextValue);
 						}
 					}
@@ -76,7 +69,7 @@ export const TextField = ({field, onValueSelect, value}) => {
 				}
 				sizing="sm"
 				type={type}
-				value={nextValue}
+				value={nextValue || ''}
 				{...additionalProps}
 			/>
 

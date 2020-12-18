@@ -298,6 +298,11 @@ public class DLStorageQuotaLocalServiceWrapper
 		return _dlStorageQuotaLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void incrementStorageSize(long companyId, long increment) {
+		_dlStorageQuotaLocalService.incrementStorageSize(companyId, increment);
+	}
+
 	/**
 	 * Updates the dl storage quota in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

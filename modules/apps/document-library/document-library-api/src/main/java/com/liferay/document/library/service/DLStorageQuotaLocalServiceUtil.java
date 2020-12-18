@@ -293,6 +293,10 @@ public class DLStorageQuotaLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void incrementStorageSize(long companyId, long increment) {
+		getService().incrementStorageSize(companyId, increment);
+	}
+
 	/**
 	 * Updates the dl storage quota in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

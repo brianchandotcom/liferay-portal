@@ -29,6 +29,7 @@ import React, {useCallback, useState} from 'react';
 import {HelpMessage, Input, RequiredMark} from './form/Components';
 import {alphanumeric, required, validate} from './form/validations';
 
+const getRandomUuid = () => Math.floor(Math.random() * 10000);
 const scrollToTop = () => window.scrollTo({behavior: 'smooth', top: 0});
 
 const VALID_INPUT_KEYS = new Set([
@@ -176,17 +177,13 @@ const EditAdaptiveMedia = ({
 		}
 	}, [redirect]);
 
-	const _getRandomUuid = () => {
-		return Math.floor(Math.random() * 10000);
-	};
-
 	const handleChangeUuid = (event) => {
 		const nameValue = event.target.value;
 
 		if (automaticId) {
 			setFieldValue(
 				newUuidId,
-				normalizeFriendlyURL(nameValue) || _getRandomUuid(),
+				normalizeFriendlyURL(nameValue) || getRandomUuid(),
 				false
 			);
 		}

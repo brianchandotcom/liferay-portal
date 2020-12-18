@@ -17,6 +17,7 @@ package com.liferay.document.library.internal.model.listener;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.service.DLStorageQuotaLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -48,6 +49,21 @@ public class DLStorageQuotaDLFileVersionModelListener
 
 		_dlStorageQuotaLocalService.incrementStorageSize(
 			dlFileVersion.getCompanyId(), -dlFileVersion.getSize());
+	}
+
+	@Override
+	public void onBeforeCreate(DLFileVersion dlFileVersion)
+		throws ModelListenerException {
+
+		try {
+			super.onBeforeCreate(dlFileVersion);
+
+			_dlStorageQuotaLocalService.validateStorageQuota(
+				dlFileVersion.getCompanyId(), dlFileVersion.getSize());
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	@Reference

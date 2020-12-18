@@ -341,6 +341,21 @@ public interface DDMFormInstanceRecordModel
 	public void setVersion(String version);
 
 	/**
+	 * Returns the ip address of this ddm form instance record.
+	 *
+	 * @return the ip address of this ddm form instance record
+	 */
+	@AutoEscape
+	public String getIpAddress();
+
+	/**
+	 * Sets the ip address of this ddm form instance record.
+	 *
+	 * @param ipAddress the ip address of this ddm form instance record
+	 */
+	public void setIpAddress(String ipAddress);
+
+	/**
 	 * Returns the last publish date of this ddm form instance record.
 	 *
 	 * @return the last publish date of this ddm form instance record

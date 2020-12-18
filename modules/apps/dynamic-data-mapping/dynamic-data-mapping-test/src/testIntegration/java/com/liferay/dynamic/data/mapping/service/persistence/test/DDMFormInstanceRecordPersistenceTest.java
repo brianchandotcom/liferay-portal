@@ -161,6 +161,8 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 		newDDMFormInstanceRecord.setVersion(RandomTestUtil.randomString());
 
+		newDDMFormInstanceRecord.setIpAddress(RandomTestUtil.randomString());
+
 		newDDMFormInstanceRecord.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_ddmFormInstanceRecords.add(
@@ -220,6 +222,9 @@ public class DDMFormInstanceRecordPersistenceTest {
 		Assert.assertEquals(
 			existingDDMFormInstanceRecord.getVersion(),
 			newDDMFormInstanceRecord.getVersion());
+		Assert.assertEquals(
+			existingDDMFormInstanceRecord.getIpAddress(),
+			newDDMFormInstanceRecord.getIpAddress());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingDDMFormInstanceRecord.getLastPublishDate()),
@@ -318,7 +323,8 @@ public class DDMFormInstanceRecordPersistenceTest {
 			"companyId", true, "userId", true, "userName", true,
 			"versionUserId", true, "versionUserName", true, "createDate", true,
 			"modifiedDate", true, "formInstanceId", true, "formInstanceVersion",
-			true, "storageId", true, "version", true, "lastPublishDate", true);
+			true, "storageId", true, "version", true, "ipAddress", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -663,6 +669,8 @@ public class DDMFormInstanceRecordPersistenceTest {
 		ddmFormInstanceRecord.setStorageId(RandomTestUtil.nextLong());
 
 		ddmFormInstanceRecord.setVersion(RandomTestUtil.randomString());
+
+		ddmFormInstanceRecord.setIpAddress(RandomTestUtil.randomString());
 
 		ddmFormInstanceRecord.setLastPublishDate(RandomTestUtil.nextDate());
 

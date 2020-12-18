@@ -78,7 +78,7 @@ public class DDMFormInstanceRecordCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -112,6 +112,8 @@ public class DDMFormInstanceRecordCacheModel
 		sb.append(storageId);
 		sb.append(", version=");
 		sb.append(version);
+		sb.append(", ipAddress=");
+		sb.append(ipAddress);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -188,6 +190,13 @@ public class DDMFormInstanceRecordCacheModel
 			ddmFormInstanceRecordImpl.setVersion(version);
 		}
 
+		if (ipAddress == null) {
+			ddmFormInstanceRecordImpl.setIpAddress("");
+		}
+		else {
+			ddmFormInstanceRecordImpl.setIpAddress(ipAddress);
+		}
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			ddmFormInstanceRecordImpl.setLastPublishDate(null);
 		}
@@ -227,6 +236,7 @@ public class DDMFormInstanceRecordCacheModel
 
 		storageId = objectInput.readLong();
 		version = objectInput.readUTF();
+		ipAddress = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -288,6 +298,13 @@ public class DDMFormInstanceRecordCacheModel
 			objectOutput.writeUTF(version);
 		}
 
+		if (ipAddress == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(ipAddress);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -307,6 +324,7 @@ public class DDMFormInstanceRecordCacheModel
 	public String formInstanceVersion;
 	public long storageId;
 	public String version;
+	public String ipAddress;
 	public long lastPublishDate;
 
 }

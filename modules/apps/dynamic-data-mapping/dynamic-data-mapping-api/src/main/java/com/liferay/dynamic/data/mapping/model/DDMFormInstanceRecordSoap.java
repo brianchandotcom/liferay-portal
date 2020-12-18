@@ -51,6 +51,7 @@ public class DDMFormInstanceRecordSoap implements Serializable {
 		soapModel.setFormInstanceVersion(model.getFormInstanceVersion());
 		soapModel.setStorageId(model.getStorageId());
 		soapModel.setVersion(model.getVersion());
+		soapModel.setIpAddress(model.getIpAddress());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -242,6 +243,14 @@ public class DDMFormInstanceRecordSoap implements Serializable {
 		_version = version;
 	}
 
+	public String getIpAddress() {
+		return _ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		_ipAddress = ipAddress;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -266,6 +275,7 @@ public class DDMFormInstanceRecordSoap implements Serializable {
 	private String _formInstanceVersion;
 	private long _storageId;
 	private String _version;
+	private String _ipAddress;
 	private Date _lastPublishDate;
 
 }

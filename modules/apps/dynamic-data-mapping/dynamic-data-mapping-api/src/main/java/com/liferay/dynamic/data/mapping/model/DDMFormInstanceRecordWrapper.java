@@ -63,6 +63,7 @@ public class DDMFormInstanceRecordWrapper
 		attributes.put("formInstanceVersion", getFormInstanceVersion());
 		attributes.put("storageId", getStorageId());
 		attributes.put("version", getVersion());
+		attributes.put("ipAddress", getIpAddress());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -166,6 +167,12 @@ public class DDMFormInstanceRecordWrapper
 
 		if (version != null) {
 			setVersion(version);
+		}
+
+		String ipAddress = (String)attributes.get("ipAddress");
+
+		if (ipAddress != null) {
+			setIpAddress(ipAddress);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -273,6 +280,16 @@ public class DDMFormInstanceRecordWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the ip address of this ddm form instance record.
+	 *
+	 * @return the ip address of this ddm form instance record
+	 */
+	@Override
+	public String getIpAddress() {
+		return model.getIpAddress();
 	}
 
 	/**
@@ -499,6 +516,16 @@ public class DDMFormInstanceRecordWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the ip address of this ddm form instance record.
+	 *
+	 * @param ipAddress the ip address of this ddm form instance record
+	 */
+	@Override
+	public void setIpAddress(String ipAddress) {
+		model.setIpAddress(ipAddress);
 	}
 
 	/**

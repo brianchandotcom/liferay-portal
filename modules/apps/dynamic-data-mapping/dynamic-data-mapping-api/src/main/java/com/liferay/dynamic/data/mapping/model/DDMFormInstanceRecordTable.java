@@ -82,6 +82,9 @@ public class DDMFormInstanceRecordTable
 	public final Column<DDMFormInstanceRecordTable, String> version =
 		createColumn(
 			"version", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DDMFormInstanceRecordTable, String> ipAddress =
+		createColumn(
+			"ipAddress", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DDMFormInstanceRecordTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

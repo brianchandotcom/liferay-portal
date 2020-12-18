@@ -83,7 +83,8 @@ public class DDMFormInstanceRecordModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"formInstanceId", Types.BIGINT},
 		{"formInstanceVersion", Types.VARCHAR}, {"storageId", Types.BIGINT},
-		{"version", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"version", Types.VARCHAR}, {"ipAddress", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -106,11 +107,12 @@ public class DDMFormInstanceRecordModelImpl
 		TABLE_COLUMNS_MAP.put("formInstanceVersion", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("storageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("ipAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFormInstanceRecord (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,formInstanceRecordId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,formInstanceId LONG,formInstanceVersion VARCHAR(75) null,storageId LONG,version VARCHAR(75) null,lastPublishDate DATE null,primary key (formInstanceRecordId, ctCollectionId))";
+		"create table DDMFormInstanceRecord (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,formInstanceRecordId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,formInstanceId LONG,formInstanceVersion VARCHAR(75) null,storageId LONG,version VARCHAR(75) null,ipAddress VARCHAR(75) null,lastPublishDate DATE null,primary key (formInstanceRecordId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMFormInstanceRecord";
@@ -217,6 +219,7 @@ public class DDMFormInstanceRecordModelImpl
 		model.setFormInstanceVersion(soapModel.getFormInstanceVersion());
 		model.setStorageId(soapModel.getStorageId());
 		model.setVersion(soapModel.getVersion());
+		model.setIpAddress(soapModel.getIpAddress());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -473,6 +476,12 @@ public class DDMFormInstanceRecordModelImpl
 			"version",
 			(BiConsumer<DDMFormInstanceRecord, String>)
 				DDMFormInstanceRecord::setVersion);
+		attributeGetterFunctions.put(
+			"ipAddress", DDMFormInstanceRecord::getIpAddress);
+		attributeSetterBiConsumers.put(
+			"ipAddress",
+			(BiConsumer<DDMFormInstanceRecord, String>)
+				DDMFormInstanceRecord::setIpAddress);
 		attributeGetterFunctions.put(
 			"lastPublishDate", DDMFormInstanceRecord::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -847,6 +856,26 @@ public class DDMFormInstanceRecordModelImpl
 
 	@JSON
 	@Override
+	public String getIpAddress() {
+		if (_ipAddress == null) {
+			return "";
+		}
+		else {
+			return _ipAddress;
+		}
+	}
+
+	@Override
+	public void setIpAddress(String ipAddress) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ipAddress = ipAddress;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -940,6 +969,7 @@ public class DDMFormInstanceRecordModelImpl
 			getFormInstanceVersion());
 		ddmFormInstanceRecordImpl.setStorageId(getStorageId());
 		ddmFormInstanceRecordImpl.setVersion(getVersion());
+		ddmFormInstanceRecordImpl.setIpAddress(getIpAddress());
 		ddmFormInstanceRecordImpl.setLastPublishDate(getLastPublishDate());
 
 		ddmFormInstanceRecordImpl.resetOriginalValues();
@@ -1105,6 +1135,14 @@ public class DDMFormInstanceRecordModelImpl
 			ddmFormInstanceRecordCacheModel.version = null;
 		}
 
+		ddmFormInstanceRecordCacheModel.ipAddress = getIpAddress();
+
+		String ipAddress = ddmFormInstanceRecordCacheModel.ipAddress;
+
+		if ((ipAddress != null) && (ipAddress.length() == 0)) {
+			ddmFormInstanceRecordCacheModel.ipAddress = null;
+		}
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1207,6 +1245,7 @@ public class DDMFormInstanceRecordModelImpl
 	private String _formInstanceVersion;
 	private long _storageId;
 	private String _version;
+	private String _ipAddress;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1255,6 +1294,7 @@ public class DDMFormInstanceRecordModelImpl
 		_columnOriginalValues.put("formInstanceVersion", _formInstanceVersion);
 		_columnOriginalValues.put("storageId", _storageId);
 		_columnOriginalValues.put("version", _version);
+		_columnOriginalValues.put("ipAddress", _ipAddress);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -1311,7 +1351,9 @@ public class DDMFormInstanceRecordModelImpl
 
 		columnBitmasks.put("version", 32768L);
 
-		columnBitmasks.put("lastPublishDate", 65536L);
+		columnBitmasks.put("ipAddress", 65536L);
+
+		columnBitmasks.put("lastPublishDate", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

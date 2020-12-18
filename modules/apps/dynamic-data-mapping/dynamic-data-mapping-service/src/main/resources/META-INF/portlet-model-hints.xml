@@ -132,6 +132,7 @@
 		<field name="formInstanceVersion" type="String" />
 		<field name="storageId" type="long" />
 		<field name="version" type="String" />
+		<field name="ipAddress" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion">

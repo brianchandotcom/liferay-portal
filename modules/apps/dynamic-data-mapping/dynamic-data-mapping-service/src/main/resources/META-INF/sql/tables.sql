@@ -113,6 +113,7 @@ create table DDMFormInstanceRecord (
 	formInstanceVersion VARCHAR(75) null,
 	storageId LONG,
 	version VARCHAR(75) null,
+	ipAddress VARCHAR(75) null,
 	lastPublishDate DATE null,
 	primary key (formInstanceRecordId, ctCollectionId)
 );

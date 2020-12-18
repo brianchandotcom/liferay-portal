@@ -136,6 +136,8 @@ definition {
 		}
 
 		task ("Select Blogs Entry in Asset Publisher") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetTitle = "Blogs Entry Title",
 				assetType = "Blogs Entry");

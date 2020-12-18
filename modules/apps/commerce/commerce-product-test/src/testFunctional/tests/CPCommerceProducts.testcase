@@ -37,7 +37,7 @@ definition {
 		}
 	}
 
-	test CreateProductBundle {
+	test CreateProductBundleWithPriceTypeDynamic {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceProducts#CreateProductBundle";
 

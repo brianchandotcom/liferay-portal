@@ -14,23 +14,16 @@
 
 package com.liferay.document.library.service.impl;
 
+import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.document.library.service.base.DLStorageQuotaLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the dl storage quota local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.document.library.service.DLStorageQuotaLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see DLStorageQuotaLocalServiceBaseImpl
+ * @author Adolfo Pérez
  */
 @Component(
 	property = "model.class.name=com.liferay.document.library.model.DLStorageQuota",
@@ -39,10 +32,23 @@ import org.osgi.service.component.annotations.Component;
 public class DLStorageQuotaLocalServiceImpl
 	extends DLStorageQuotaLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.document.library.service.DLStorageQuotaLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.document.library.service.DLStorageQuotaLocalServiceUtil</code>.
-	 */
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@Override
+	public void incrementStorageSize(long companyId, long increment) {
+		DLStorageQuota dlStorageQuota =
+			dlStorageQuotaPersistence.fetchByCompanyId(companyId);
+
+		if (dlStorageQuota == null) {
+			dlStorageQuota = dlStorageQuotaLocalService.createDLStorageQuota(
+				counterLocalService.increment());
+
+			dlStorageQuota.setCompanyId(companyId);
+		}
+
+		dlStorageQuota.setStorageSize(
+			dlStorageQuota.getStorageSize() + increment);
+
+		dlStorageQuotaLocalService.updateDLStorageQuota(dlStorageQuota);
+	}
 
 }

@@ -147,6 +147,10 @@ public class GitWorkingDirectory {
 
 		checkoutLocalGitBranch(localGitBranch);
 
+		createLocalGitBranch(
+			branchInformation.getUpstreamBranchName(), true,
+			branchInformation.getUpstreamBranchSHA());
+
 		return localGitBranch;
 	}
 

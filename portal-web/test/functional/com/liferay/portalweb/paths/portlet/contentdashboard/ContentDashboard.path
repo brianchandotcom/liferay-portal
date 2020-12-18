@@ -79,7 +79,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_PAGE_TITLE</td>
-	<td>//*[contains(@data-qa-id, 'headerTitle')]</td>
+	<td>//*[@data-qa-id='headerTitle']</td>
 	<td></td>
 </tr>
 <tr>

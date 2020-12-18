@@ -25,12 +25,15 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -292,24 +295,74 @@ public abstract class BaseJob implements Job {
 	protected List<BatchTestClassGroup> getBatchTestClassGroups(
 		Set<String> rawBatchNames) {
 
+		if (_batchTestClassGroups != null) {
+			return _batchTestClassGroups;
+		}
+
 		if ((rawBatchNames == null) || rawBatchNames.isEmpty()) {
 			return new ArrayList<>();
 		}
 
-		List<BatchTestClassGroup> batchTestClassGroups = new ArrayList<>();
+		List<Callable<BatchTestClassGroup>> callables = new ArrayList<>();
 
-		for (String batchName : rawBatchNames) {
-			BatchTestClassGroup batchTestClassGroup =
-				TestClassGroupFactory.newBatchTestClassGroup(batchName, this);
+		final Job job = this;
 
-			if (batchTestClassGroup.getAxisCount() <= 0) {
-				continue;
-			}
+		for (final String batchName : rawBatchNames) {
+			callables.add(
+				new Callable<BatchTestClassGroup>() {
 
-			batchTestClassGroups.add(batchTestClassGroup);
+					@Override
+					public BatchTestClassGroup call() throws Exception {
+						for (int i = 0; i < _pauseRetryCount; i++) {
+							try {
+								return _call();
+							}
+							catch (Exception exception) {
+								System.out.println(
+									JenkinsResultsParserUtil.combine(
+										"Retry creating a test class group in ",
+										String.valueOf(
+											_pauseRetryDuration / 1000),
+										" seconds."));
+
+								JenkinsResultsParserUtil.sleep(
+									_pauseRetryDuration);
+							}
+						}
+
+						return _call();
+					}
+
+					private BatchTestClassGroup _call() throws Exception {
+						BatchTestClassGroup batchTestClassGroup =
+							TestClassGroupFactory.newBatchTestClassGroup(
+								batchName, job);
+
+						if (batchTestClassGroup.getAxisCount() <= 0) {
+							return null;
+						}
+
+						return batchTestClassGroup;
+					}
+
+					private final Integer _pauseRetryCount = 2;
+					private final Integer _pauseRetryDuration = 5000;
+
+				});
 		}
 
-		return batchTestClassGroups;
+		ThreadPoolExecutor threadPoolExecutor =
+			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+				callables.size(), true);
+
+		ParallelExecutor<BatchTestClassGroup> parallelExecutor =
+			new ParallelExecutor<>(callables, threadPoolExecutor);
+
+		_batchTestClassGroups = parallelExecutor.execute();
+
+		_batchTestClassGroups.removeAll(Collections.singleton(null));
+
+		return _batchTestClassGroups;
 	}
 
 	protected Set<String> getFilteredBatchNames(Set<String> rawBatchNames) {
@@ -416,6 +469,7 @@ public abstract class BaseJob implements Job {
 
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
 
+	private List<BatchTestClassGroup> _batchTestClassGroups;
 	private final BuildProfile _buildProfile;
 	private final String _jobName;
 	private final Properties _jobProperties = new Properties();

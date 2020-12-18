@@ -53,7 +53,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		sb1.append("= LatestVersion.latestVersion");
 
 		try (Statement statement1 = connection.createStatement();
-			 ResultSet rs1 = statement1.executeQuery(sb1.toString())) {
+			ResultSet rs1 = statement1.executeQuery(sb1.toString())) {
 
 			while (rs1.next()) {
 				long id = rs1.getLong(1);
@@ -78,7 +78,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 				Map<String, String> urlTitleMap = new HashMap<>();
 
 				try (Statement statement2 = connection.createStatement();
-					 ResultSet rs2 = statement2.executeQuery(sb2.toString())) {
+					ResultSet rs2 = statement2.executeQuery(sb2.toString())) {
 
 					while (rs2.next()) {
 						String title = rs2.getString(1);
@@ -106,7 +106,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 								friendlyURLEntryId);
 
 						for (Map.Entry<String, String> entry :
-							urlTitleMap.entrySet()) {
+								urlTitleMap.entrySet()) {
 
 							_addMissingFriendlyURLEntryLocalization(
 								ctCollectionId, companyId, friendlyURLEntryId,
@@ -118,7 +118,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								"Journal Article with id " + id +
-								" has no associated FriendlyURLEntry.");
+									" has no associated FriendlyURLEntry.");
 						}
 					}
 				}
@@ -141,8 +141,8 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 	}
 
 	private void _addMissingFriendlyURLEntryLocalization(
-		long ctCollectionId, long companyId, long friendlyURLEntryId,
-		String languageId, String urlTitle, long groupId, long classPK)
+			long ctCollectionId, long companyId, long friendlyURLEntryId,
+			String languageId, String urlTitle, long groupId, long classPK)
 		throws Exception {
 
 		long friendlyURLEntryLocalizationId = increment(
@@ -160,7 +160,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		sb.append("?, ?, ?, ?)");
 
 		try (PreparedStatement ps = connection.prepareStatement(
-			sb.toString())) {
+				sb.toString())) {
 
 			ps.setLong(1, 0);
 			ps.setLong(2, ctCollectionId);
@@ -184,7 +184,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 	}
 
 	private int _countLocalizations(
-		long ctCollectionId, String urlTitle, long groupId)
+			long ctCollectionId, String urlTitle, long groupId)
 		throws Exception {
 
 		int count = 0;
@@ -202,7 +202,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		sb.append(_classNameIdJournalArticle);
 
 		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			 ResultSet rs = ps.executeQuery()) {
+			ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
 				count = rs.getInt(1);
@@ -222,7 +222,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		sb.append(friendlyURLEntryId);
 
 		try (Statement statement = connection.createStatement();
-			 ResultSet rs = statement.executeQuery(sb.toString())) {
+			ResultSet rs = statement.executeQuery(sb.toString())) {
 
 			if (rs.next()) {
 				return rs.getLong(1);
@@ -244,7 +244,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		sb.append(resourcePrimKey);
 
 		try (Statement statement = connection.createStatement();
-			 ResultSet rs = statement.executeQuery(sb.toString())) {
+			ResultSet rs = statement.executeQuery(sb.toString())) {
 
 			if (rs.next()) {
 				return rs.getLong(1);
@@ -255,7 +255,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 	}
 
 	private String _getUniqueURLTitle(
-		long ctCollectionId, String urlTitle, long groupId)
+			long ctCollectionId, String urlTitle, long groupId)
 		throws Exception {
 
 		String normalizedUrlTitle =

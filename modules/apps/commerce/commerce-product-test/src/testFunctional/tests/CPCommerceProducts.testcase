@@ -160,4 +160,73 @@ definition {
 			textIcon = "english-United States");
 	}
 
+	test CreateProductBundle {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceProducts#CreateProductBundle";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
+
+		CPCommerceCatalog.newOptionsEntry(
+			optionDescription = "Option Description",
+			optionFieldType = "Select from List",
+			optionName = "Color",
+			optionValuesList = "Black",
+			valuePriority = "1");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productName = "Shoes",
+			productCatalog = "Master",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceSKUs.addSKU(optionValuesList = "Shoes:50.0");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productName = "Simple T-Shirt",
+			productCatalog = "Master",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "Color",
+			title = "Add Option");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceSKUs.addSKU(optionValuesList = "Black:10.0");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+		
+		CommerceNavigator.gotoEntry(entryName = "Color");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Select(
+			key_fieldLabel = "Price Type",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Dynamic");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoEntry(entryName = "Black");
+
+		CommerceEntry.selectAutoCompleteField(
+			entryName = "SHOESSKU",
+			label = "SKU");
+
+		Button.clickSave();
+	}
+
 }

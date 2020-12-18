@@ -66,13 +66,16 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 
 	const ref = useRef(selectedTarget);
 
-	const inputRef = useRef();
+	const inputRef = useRef('');
 
 	useEffect(() => {
 		ref.current = selectedTarget;
 
-		if (inputRef.current && selectedTarget) {
+		if (selectedTarget) {
 			inputRef.current.value = selectedTarget;
+		}
+		else {
+			inputRef.current.value = '';
 		}
 	}, [selectedTarget]);
 
@@ -227,12 +230,12 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 							<ClayTooltipProvider>
 								<ClayInput
 									data-tooltip-align="top"
-									defaultValue={inputRef.current?.value || ''}
+									defaultValue={inputRef.current.value}
 									id="clickableElement"
 									onBlur={handleBlur}
 									onKeyDown={handleKeyDown}
 									ref={inputRef}
-									title={inputRef.current?.value || ''}
+									title={inputRef.current?.value}
 									type="text"
 								/>
 							</ClayTooltipProvider>

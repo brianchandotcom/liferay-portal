@@ -79,14 +79,14 @@ definition {
 
 			Select(
 				key_fieldFieldLabel = "Select from List",
-				locator1 = "DDMField#SELECT_FROM_LIST",
+				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
 				value1 = "value 2");
 
 			Pause(locator1 = "3000");
 
 			AssertSelectedLabel(
 				key_fieldFieldLabel = "Select from List",
-				locator1 = "DDMField#SELECT_FROM_LIST",
+				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
 				value1 = "value 2");
 
 			Button.click(button = "Apply");

@@ -198,6 +198,7 @@ public class SpiraResultImporter {
 
 		SpiraRestAPIUtil.summarizeRequests();
 
+		_updatePullRequest();
 		_updateSlackChannel();
 		_updateTopLevelBuildDescription();
 	}
@@ -535,6 +536,81 @@ public class SpiraResultImporter {
 
 		return SpiraAutomationHost.createSpiraAutomationHost(
 			_spiraBuildResult.getSpiraProject(), jenkinsNode);
+	}
+
+	private void _updatePullRequest() {
+		PullRequest pullRequest = _spiraBuildResult.getPullRequest();
+
+		if (pullRequest == null) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<strong>Jenkins Build:</strong> <a href=\"");
+		sb.append(_topLevelBuild.getBuildURL());
+		sb.append("\">");
+		sb.append(_topLevelBuild.getJobName());
+		sb.append("#");
+		sb.append(_topLevelBuild.getBuildNumber());
+		sb.append("</a><br />");
+
+		sb.append("<strong>Jenkins Report:</strong> <a href=\"");
+		sb.append(_topLevelBuild.getJenkinsReportURL());
+		sb.append("\">jenkins-report.html</a><br />");
+
+		String testSuiteName = _topLevelBuild.getTestSuiteName();
+
+		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
+			sb.append("<strong>Jenkins Suite:</strong> ");
+			sb.append(testSuiteName);
+			sb.append("<br />");
+		}
+
+		if (pullRequest != null) {
+			sb.append("<strong>Pull Request:</strong> <a href=\"");
+			sb.append(pullRequest.getHtmlURL());
+			sb.append("\">");
+			sb.append(pullRequest.getReceiverUsername());
+			sb.append("#");
+			sb.append(pullRequest.getNumber());
+			sb.append("</a><br />");
+		}
+
+		SpiraRelease spiraRelease = _spiraBuildResult.getSpiraRelease();
+
+		if (spiraRelease != null) {
+			sb.append("<strong>Spira Release:</strong> <a href=\"");
+			sb.append(spiraRelease.getURL());
+			sb.append("\">");
+			sb.append(spiraRelease.getPath());
+			sb.append("</a><br />");
+		}
+
+		SpiraReleaseBuild spiraReleaseBuild =
+			_spiraBuildResult.getSpiraReleaseBuild();
+
+		if (spiraReleaseBuild != null) {
+			sb.append("<strong>Spira Release Build:</strong> <a href=\"");
+			sb.append(spiraReleaseBuild.getURL());
+			sb.append("\">");
+			sb.append(spiraReleaseBuild.getName());
+			sb.append("</a><br />");
+		}
+
+		String currentJobName = System.getenv("JOB_NAME");
+
+		if (currentJobName.equals("publish-spira-report")) {
+			sb.append("<strong>Spira Jenkins Build:</strong> <a href=\"");
+			sb.append(System.getenv("BUILD_URL"));
+			sb.append("\">");
+			sb.append(currentJobName);
+			sb.append("#");
+			sb.append(System.getenv("BUILD_NUMBER"));
+			sb.append("</a><br />");
+		}
+
+		pullRequest.addComment(sb.toString());
 	}
 
 	private void _updateSlackChannel() {

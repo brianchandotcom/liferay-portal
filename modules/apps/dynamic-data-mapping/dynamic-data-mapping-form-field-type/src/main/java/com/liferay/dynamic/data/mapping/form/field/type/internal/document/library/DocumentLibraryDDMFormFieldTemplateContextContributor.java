@@ -152,6 +152,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			"maximumRepetitions",
 			GetterUtil.getInteger(
 				ddmFormField.getProperty("maximumRepetitions")));
+		parameters.put(
+			"maximumSubmissionLimitReached",
+			GetterUtil.getBoolean(
+				ddmFormField.getProperty("maximumSubmissionLimitReached")));
 
 		String value = ddmFormFieldRenderingContext.getValue();
 

@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormGuestUploadFieldUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceStagingUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -194,14 +195,25 @@ public class DDMFormDisplayContext {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-			if (ddmFormField.isRepeatable() &&
-				Objects.equals(ddmFormField.getType(), "document_library")) {
+		boolean maximumSubmissionLimitReached =
+			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
+				ddmFormInstance,
+				PortalUtil.getHttpServletRequest(_renderRequest),
+				_ddmFormWebConfiguration.
+					maximumSubmissionsForGuestUploadFields());
 
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (Objects.equals(ddmFormField.getType(), "document_library")) {
 				ddmFormField.setProperty(
-					"maximumRepetitions",
-					_ddmFormWebConfiguration.
-						maximumRepetitionsForUploadFields());
+					"maximumSubmissionLimitReached",
+					maximumSubmissionLimitReached);
+
+				if (ddmFormField.isRepeatable()) {
+					ddmFormField.setProperty(
+						"maximumRepetitions",
+						_ddmFormWebConfiguration.
+							maximumRepetitionsForUploadFields());
+				}
 			}
 		}
 

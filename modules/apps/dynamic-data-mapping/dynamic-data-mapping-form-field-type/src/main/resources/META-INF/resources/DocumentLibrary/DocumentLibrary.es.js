@@ -153,6 +153,7 @@ const GuestUploadFile = ({
 	onUploadSelectButtonClicked,
 	placeholder,
 	progress,
+	readOnly,
 	value,
 }) => {
 	const [transformedFileEntryTitle] = useMemo(
@@ -189,6 +190,7 @@ const GuestUploadFile = ({
 					</label>
 					<input
 						className="input-file"
+						disabled={readOnly}
 						id={`${name}inputFileGuestUpload`}
 						onChange={onUploadSelectButtonClicked}
 						type="file"
@@ -229,6 +231,7 @@ const Main = ({
 	id,
 	itemSelectorURL,
 	maximumRepetitions,
+	maximumSubmissionLimitReached,
 	name,
 	onBlur,
 	onChange,
@@ -370,18 +373,21 @@ const Main = ({
 
 	const isSignedIn = Liferay.ThemeDisplay.isSignedIn();
 
+	const hasCustomError =
+		(!isSignedIn && !allowGuestUsers) || maximumSubmissionLimitReached;
+
 	return (
 		<FieldBase
 			{...otherProps}
-			displayErrors={allowGuestUsers || isSignedIn ? displayErrors : true}
+			displayErrors={hasCustomError ? true : displayErrors}
 			errorMessage={getErrorMessages(errorMessage, isSignedIn)}
 			id={id}
 			name={name}
 			overMaximumRepetitionsLimit={
 				maximumRepetitions > 0 ? checkMaximumRepetitions() : false
 			}
-			readOnly={allowGuestUsers || isSignedIn ? readOnly : true}
-			valid={allowGuestUsers || isSignedIn ? valid : false}
+			readOnly={hasCustomError ? true : readOnly}
+			valid={hasCustomError ? false : valid}
 		>
 			{allowGuestUsers && !isSignedIn ? (
 				<GuestUploadFile
@@ -399,6 +405,7 @@ const Main = ({
 					}
 					placeholder={placeholder}
 					progress={progress}
+					readOnly={hasCustomError ? true : readOnly}
 					value={currentValue || ''}
 				/>
 			) : (
@@ -419,7 +426,7 @@ const Main = ({
 						})
 					}
 					placeholder={placeholder}
-					readOnly={isSignedIn ? readOnly : true}
+					readOnly={hasCustomError ? true : readOnly}
 					value={currentValue || ''}
 				/>
 			)}

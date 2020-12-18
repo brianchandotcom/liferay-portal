@@ -30,14 +30,18 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsSlave;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.LocalGitBranch;
+import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.ParallelExecutor;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraAutomationHost;
 import com.liferay.jenkins.results.parser.spira.SpiraProject;
+import com.liferay.jenkins.results.parser.spira.SpiraRelease;
+import com.liferay.jenkins.results.parser.spira.SpiraReleaseBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraRestAPIUtil;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseComponent;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
@@ -56,6 +60,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * @author Michael Hashimoto
@@ -191,6 +197,8 @@ public class SpiraResultImporter {
 		}
 
 		SpiraRestAPIUtil.summarizeRequests();
+
+		_updateSlackChannel();
 	}
 
 	public void setup() {
@@ -526,6 +534,82 @@ public class SpiraResultImporter {
 
 		return SpiraAutomationHost.createSpiraAutomationHost(
 			_spiraBuildResult.getSpiraProject(), jenkinsNode);
+	}
+
+	private void _updateSlackChannel() {
+		String buildName = JenkinsResultsParserUtil.combine(
+			_topLevelBuild.getJobName(), "#",
+			String.valueOf(_topLevelBuild.getBuildNumber()));
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("*Jenkins Build:* <");
+		sb.append(_topLevelBuild.getBuildURL());
+		sb.append("|");
+		sb.append(StringEscapeUtils.escapeHtml(buildName));
+		sb.append(">\n");
+
+		sb.append("*Jenkins Report:* <");
+		sb.append(_topLevelBuild.getJenkinsReportURL());
+		sb.append("|jenkins-report.html>\n");
+
+		String testSuiteName = _topLevelBuild.getTestSuiteName();
+
+		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
+			sb.append("*Jenkins Suite:* ");
+			sb.append(testSuiteName);
+			sb.append("\n");
+		}
+
+		PullRequest pullRequest = _spiraBuildResult.getPullRequest();
+
+		if (pullRequest != null) {
+			sb.append("*Pull Request:* <");
+			sb.append(pullRequest.getHtmlURL());
+			sb.append("|");
+			sb.append(pullRequest.getReceiverUsername());
+			sb.append("#");
+			sb.append(pullRequest.getNumber());
+			sb.append(">\n");
+		}
+
+		SpiraRelease spiraRelease = _spiraBuildResult.getSpiraRelease();
+
+		if (spiraRelease != null) {
+			sb.append("*Spira Release:* <");
+			sb.append(spiraRelease.getURL());
+			sb.append("|");
+			sb.append(StringEscapeUtils.escapeHtml(spiraRelease.getPath()));
+			sb.append(">\n");
+		}
+
+		SpiraReleaseBuild spiraReleaseBuild =
+			_spiraBuildResult.getSpiraReleaseBuild();
+
+		if (spiraReleaseBuild != null) {
+			sb.append("*Spira Release Build:* <");
+			sb.append(spiraReleaseBuild.getURL());
+			sb.append("|");
+			sb.append(
+				StringEscapeUtils.escapeHtml(spiraReleaseBuild.getName()));
+			sb.append(">\n");
+		}
+
+		String currentJobName = System.getenv("JOB_NAME");
+
+		if (currentJobName.equals("publish-spira-report")) {
+			sb.append("*Spira Jenkins Build:* <");
+			sb.append(System.getenv("BUILD_URL"));
+			sb.append("|");
+			sb.append(currentJobName);
+			sb.append("#");
+			sb.append(System.getenv("BUILD_NUMBER"));
+			sb.append(">\n");
+		}
+
+		NotificationUtil.sendSlackNotification(
+			sb.toString(), "#spira-reports", ":liferay-ci:", buildName,
+			"Liferay CI");
 	}
 
 	private static final int _GROUP_SIZE = 25;

@@ -21,10 +21,9 @@ import java.util.Set;
  */
 public interface DispatchTaskExecutorHelper {
 
-	public DispatchTaskExecutor getDispatchTaskExecutor(
-		String taskExecutorType);
+	public DispatchTaskExecutor getDispatchTaskExecutor(String type);
 
-	public String getDispatchTaskExecutorName(String taskExecutorType);
+	public String getDispatchTaskExecutorName(String type);
 
 	public Set<String> getDispatchTaskExecutorTypes();
 

@@ -11,4 +11,11 @@
 		<field name="fileVersionId" type="long" />
 		<field name="previewStatus" type="int" />
 	</model>
+	<model name="com.liferay.document.library.model.DLStorageQuota">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="dlStorageQuotaId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="storageSize" type="long" />
+	</model>
 </model-hints>

@@ -66,11 +66,25 @@ definition {
 	}
 
 	macro setLayoutPageTemplateEntryId {
-		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName}");
+		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
+
+		if ("${type}" == "Content Page Template") {
+			var type = "0";
+		}
+		else if ("${type}" == "Display Page Template") {
+			var type = "1";
+		}
+		else if ("${type}" == "Master Page Template") {
+			var type = "3";
+		}
+		else if ("${type}" == "Widget Page Template") {
+			var type = "2";
+		}
 
 		var layoutPageTemplateEntryId = JSONLayoutpagetemplateAPI._getLayoutPageTemplateEntryIdByName(
 			groupId = "${groupId}",
-			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}");
+			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
+			type = "${type}");
 
 		return "${layoutPageTemplateEntryId}";
 	}

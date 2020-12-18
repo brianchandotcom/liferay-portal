@@ -1,8 +1,6 @@
 {
 	"dependencies": {
-		"metal-component": "2.16.8",
-		"metal-soy": "2.16.9",
-		"metal-state": "2.16.8"
+		"frontend-js-web": "*"
 	},
 	"name": "commerce-product-options-web",
 	"scripts": {

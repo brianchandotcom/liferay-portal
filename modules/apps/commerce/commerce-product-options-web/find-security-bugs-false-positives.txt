@@ -1,2 +1,0 @@
-com/liferay/frontend/js/loader/modules/extender/npm/NPMResolver.resolveModuleName(Ljava/lang/String;)Ljava/lang/String;:0
-com/liferay/frontend/taglib/clay/servlet/taglib/util/NavigationItem.setLabel("option-templates"):0#1@org/apache/jsp/view_jsp

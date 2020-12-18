@@ -47,51 +47,64 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 		<portlet:param name="mvcRenderCommandName" value="editOption" />
 	</portlet:renderURL>
 
-	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/modals/index as ModalUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var <portlet:namespace />defaultLanguageId = null;
 
-		var AdminCatalogResource = ServiceProvider.default.AdminCatalogAPI('v1');
+	<liferay-frontend:component
+		componentId='<%= liferayPortletResponse.getNamespace() + "add_option" %>'
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"editOptionURL", editOptionURL
+			).put(
+				"windowState", LiferayWindowState.MAXIMIZED.toString()
+			).put(
+				"defaultLanguageId", "en_US"
+			).build()
+		%>'
+		module="js/add_option"/>
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />apiSubmit',
-			function () {
-				ModalUtils.isSubmitting();
+<%--	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/modals/index as ModalUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider">--%>
+<%--		var <portlet:namespace />defaultLanguageId = null;--%>
 
-				var formattedData =
-					{
-						fieldType : '',
-						key : '',
-						name: {}
-					};
+<%--		var AdminCatalogResource = ServiceProvider.default.AdminCatalogAPI('v1');--%>
 
-				formattedData.fieldType = document.getElementById('<portlet:namespace />DDMFormFieldTypeName').value;
+<%--		Liferay.provide(--%>
+<%--			window,--%>
+<%--			'<portlet:namespace />apiSubmit',--%>
+<%--			function () {--%>
+<%--				ModalUtils.isSubmitting();--%>
 
-				formattedData.key = document.getElementById('<portlet:namespace />key').value;
+<%--				var formattedData =--%>
+<%--					{--%>
+<%--						fieldType : '',--%>
+<%--						key : '',--%>
+<%--						name: {}--%>
+<%--					};--%>
 
-				formattedData.name[
-					<portlet:namespace />defaultLanguageId
-				] = document.getElementById('<portlet:namespace />name').value;
+<%--				formattedData.fieldType = document.getElementById('<portlet:namespace />DDMFormFieldTypeName').value;--%>
 
-				AdminCatalogResource.createOption(formattedData)
-					.then(function (cpOption) {
-						var redirectURL = new Liferay.PortletURL.createURL(
-							'<%= editOptionURL %>'
-						);
+<%--				formattedData.key = document.getElementById('<portlet:namespace />key').value;--%>
 
-						redirectURL.setParameter(
-							'p_p_state',
-							'<%= LiferayWindowState.MAXIMIZED.toString() %>'
-						);
+<%--				formattedData.name[--%>
+<%--					<portlet:namespace />defaultLanguageId--%>
+<%--				] = document.getElementById('<portlet:namespace />name').value;--%>
 
-						redirectURL.setParameter('cpOptionId', cpOption.id);
+<%--				AdminCatalogResource.createOption(formattedData)--%>
+<%--					.then(function (cpOption) {--%>
+<%--						var redirectURL = new Liferay.PortletURL.createURL(--%>
+<%--							'<%= editOptionURL %>'--%>
+<%--						);--%>
 
-						ModalUtils.closeAndRedirect(redirectURL);
-					})
-					.catch(ModalUtils.onSubmitFail);
-			},
-			['liferay-portlet-url']
-		);
+<%--						redirectURL.setParameter(--%>
+<%--							'p_p_state',--%>
+<%--							'<%= LiferayWindowState.MAXIMIZED.toString() %>'--%>
+<%--						);--%>
 
-	</aui:script>
+<%--						redirectURL.setParameter('cpOptionId', cpOption.id);--%>
+
+<%--						ModalUtils.closeAndRedirect(redirectURL);--%>
+<%--					})--%>
+<%--					.catch(ModalUtils.onSubmitFail);--%>
+<%--			},--%>
+<%--			['liferay-portlet-url']--%>
+<%--		);--%>
+<%--	</aui:script>--%>
 </commerce-ui:modal-content>

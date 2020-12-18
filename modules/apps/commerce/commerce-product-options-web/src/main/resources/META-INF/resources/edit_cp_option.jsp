@@ -55,9 +55,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<div class="row">
 			<div class="col-12">
 				<commerce-ui:panel
-					title='<%= LanguageUtil.get(request, "details") %>'
-				>
-
+					title='<%= LanguageUtil.get(request, "details") %>'>
 					<%
 					List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFieldTypes();
 					%>
@@ -132,29 +130,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</div>
 </aui:form>
 
-<aui:script require="commerce-frontend-js/utilities/debounce as debounce, commerce-frontend-js/utilities/slugify as slugify">
-	var form = document.getElementById('<portlet:namespace />fm');
-
-	var keyInput = form.querySelector('#<portlet:namespace />key');
-	var nameInput = form.querySelector('#<portlet:namespace />name');
-
-	var handleOnNameInput = function (event) {
-	keyInput.value = slugify.default(nameInput.value);
-	};
-
-	nameInput.addEventListener('input', debounce.default(handleOnNameInput, 200));
-
-	document
-	.getElementById('<portlet:namespace />publishButton')
-	.addEventListener('click', function (e) {
-	e.preventDefault();
-
-	var form = document.getElementById('<portlet:namespace />fm');
-
-	if (!form) {
-	throw new Error('Form with id: <portlet:namespace />fm not found!');
-	}
-
-	submitForm(form);
-	});
-</aui:script>
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "edit_option" %>'
+	module="js/edit_option"/>

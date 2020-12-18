@@ -12,8 +12,11 @@
  * details.
  */
 
+const preset = require('@liferay/npm-scripts/src/presets/standard');
+
 module.exports = {
-	rules: {
-		'react/no-string-refs': 'off',
+	build: {
+		dependencies: [...preset.build.dependencies, 'commerce-product-options-web'],
 	},
+	preset: '@liferay/npm-scripts/src/presets/standard',
 };

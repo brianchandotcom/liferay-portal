@@ -462,6 +462,7 @@ if (entry != null) {
 <liferay-frontend:component
 	context="<%= taglibContext %>"
 	module="blogs/js/blogs"
+	servletContext="<%= application %>"
 />
 
 <%

@@ -23,8 +23,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=commentEditor",
-		"service.ranking:Integer=10"
+		"editor.config.key=commentEditor", "service.ranking:Integer=10"
 	},
 	service = EditorConfigContributor.class
 )

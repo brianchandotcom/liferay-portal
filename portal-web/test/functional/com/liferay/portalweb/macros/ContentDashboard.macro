@@ -4,12 +4,6 @@ definition {
 		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
 	}
 
-	macro clickFirstWCTitle {
-		AssertClick(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_LINK",
-			value1 = "WC Title");
-	}
-
 	macro editWebContent {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 

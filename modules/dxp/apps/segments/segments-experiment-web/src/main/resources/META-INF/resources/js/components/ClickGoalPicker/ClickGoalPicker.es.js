@@ -176,9 +176,11 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 					/>
 				</h4>
 
-				<div className="c-mb-2 text-secondary">
-					{Liferay.Language.get('click-goal-description')}
-				</div>
+				{allowEdit && (
+					<div className="c-mb-2 text-secondary">
+						{Liferay.Language.get('click-goal-description')}
+					</div>
+				)}
 
 				{isValidTarget && errors.clickTargetError && (
 					<div className="c-mb-2 c-mt-2 font-weight-semi-bold text-danger">
@@ -234,6 +236,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 									id="clickableElement"
 									onBlur={handleBlur}
 									onKeyDown={handleKeyDown}
+									readOnly={!allowEdit}
 									ref={inputRef}
 									title={inputRef.current?.value}
 									type="text"

@@ -1,5 +1,25 @@
 package ${apiPackagePath}.service;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.InputStream;
+import java.io.Serializable;
+
+import java.sql.Blob;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+<#if entity.hasEntityColumns()>
+	import ${apiPackagePath}.model.${entity.name};
+</#if>
+
 <#if stringUtil.equals(sessionTypeName, "Local")>
 /**
  * Provides the local service utility for ${entity.name}. This utility wraps

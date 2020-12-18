@@ -179,7 +179,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 					{Liferay.Language.get('click-goal-description')}
 				</div>
 
-				{errors.clickTargetError && (
+				{isValidClickTargetElement && errors.clickTargetError && (
 					<div className="c-mb-2 c-mt-2 font-weight-semi-bold text-danger">
 						<ClayIcon
 							className="c-mr-2"

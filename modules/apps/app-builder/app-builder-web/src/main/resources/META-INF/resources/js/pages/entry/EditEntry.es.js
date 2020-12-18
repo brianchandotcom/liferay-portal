@@ -76,6 +76,16 @@ export const EditEntry = ({
 			event.preventDefault();
 			setSubmitting(true);
 
+			const parseResponse = (response) =>
+				new Promise((resolve, reject) => {
+					if (response.ok) {
+						resolve(response);
+					}
+					else {
+						reject(response);
+					}
+				});
+
 			validateForm(event)
 				.then((dataRecord) => {
 					if (dataRecordId !== '0') {
@@ -94,6 +104,7 @@ export const EditEntry = ({
 								method: 'POST',
 							}
 						)
+							.then(parseResponse)
 							.then(() => {
 								successToast(
 									Liferay.Language.get('an-entry-was-updated')
@@ -117,6 +128,7 @@ export const EditEntry = ({
 								method: 'POST',
 							}
 						)
+							.then(parseResponse)
 							.then(() => {
 								successToast(
 									Liferay.Language.get('an-entry-was-added')

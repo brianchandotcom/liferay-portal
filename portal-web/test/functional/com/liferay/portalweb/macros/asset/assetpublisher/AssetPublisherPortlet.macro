@@ -1271,7 +1271,7 @@ definition {
 			for (var assetSubtypeField : list "${assetSubtypeFields}") {
 				var key_fieldName = "${assetSubtypeField}";
 
-				AssertTextEquals.assertPartialText(
+				AssertTextEquals(
 					locator1 = "APConfigurationFilterbyfield#FIELD_FILTER_FIELD_NAME",
 					value1 = "${assetSubtypeField}");
 			}

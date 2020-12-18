@@ -245,7 +245,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	</liferay-frontend:fieldset>
 </liferay-frontend:fieldset-group>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule, frontend-js-web/liferay/util/build_fragment as buildFragmentModule">
 	var Util = Liferay.Util;
 
 	var MAP_DDM_STRUCTURES = {};
@@ -397,6 +397,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 			'<portlet:namespace />anyClassType<%= className %>'
 		);
 
+		var buildFragment = buildFragmentModule.default;
+
 		<c:if test="<%= editAssetListDisplayContext.isShowSubtypeFieldsFilter() %>">
 			function <%= className %>toggleSubclassesFields(
 				hideSubtypeFilterEnableWrapper
@@ -435,7 +437,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 								];
 
 							if (optTextOrderByColumn1) {
-								orderByColumn1.append(optTextOrderByColumn1);
+								orderByColumn1.append(buildFragment(optTextOrderByColumn1));
 							}
 
 							var optTextOrderByColumn2 =
@@ -446,7 +448,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 								];
 
 							if (optTextOrderByColumn2) {
-								orderByColumn2.append(optTextOrderByColumn2);
+								orderByColumn2.append(buildFragment(optTextOrderByColumn2));
 							}
 						}
 

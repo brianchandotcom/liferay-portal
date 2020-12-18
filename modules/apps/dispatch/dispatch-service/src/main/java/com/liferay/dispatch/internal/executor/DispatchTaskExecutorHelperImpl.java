@@ -39,15 +39,13 @@ public class DispatchTaskExecutorHelperImpl
 	implements DispatchTaskExecutorHelper {
 
 	@Override
-	public DispatchTaskExecutor getDispatchTaskExecutor(
-		String taskExecutorType) {
-
-		return _typeToDispatchTaskExecutorMap.get(taskExecutorType);
+	public DispatchTaskExecutor getDispatchTaskExecutor(String type) {
+		return _typeToDispatchTaskExecutorMap.get(type);
 	}
 
 	@Override
-	public String getDispatchTaskExecutorName(String taskExecutorType) {
-		return _typeToNameMap.get(taskExecutorType);
+	public String getDispatchTaskExecutorName(String type) {
+		return _typeToNameMap.get(type);
 	}
 
 	@Override

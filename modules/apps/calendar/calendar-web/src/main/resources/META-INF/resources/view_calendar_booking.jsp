@@ -39,7 +39,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 %>
 
 <clay:container-fluid>
-	<div class="panel panel-default">
+	<div class="panel panel-secondary">
 		<liferay-ui:header
 			backURL="<%= backURL %>"
 			cssClass="panel-heading"

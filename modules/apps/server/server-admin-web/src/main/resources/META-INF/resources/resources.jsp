@@ -40,7 +40,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 	id="adminServerAdministrationActionsPanelContainer"
 	persistState="<%= true %>"
 >
-	<div class="panel panel-default server-admin-tabs" id="adminServerInformationPanel">
+	<div class="panel panel-secondary server-admin-tabs" id="adminServerInformationPanel">
 		<div class="panel-body">
 			<div class="alert alert-info">
 				<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>

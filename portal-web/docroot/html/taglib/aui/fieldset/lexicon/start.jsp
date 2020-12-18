@@ -28,7 +28,7 @@ else if (collapsible) {
 }
 %>
 
-<fieldset aria-labelledby="<%= id %>Title" class="<%= collapsible ? "panel panel-default" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
+<fieldset aria-labelledby="<%= id %>Title" class="<%= collapsible ? "panel panel-secondary" : StringPool.BLANK %> <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + id + "\"" : StringPool.BLANK %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> role="group">
 	<c:if test="<%= Validator.isNotNull(label) %>">
 		<liferay-util:buffer
 			var="header"
@@ -50,7 +50,7 @@ else if (collapsible) {
 			<div class="panel-title" id="<%= id %>Title">
 				<c:choose>
 					<c:when test="<%= collapsible %>">
-						<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="liferay-collapse" href="#<%= id %>Content" role="button">
+						<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="btn btn-unstyled collapse-icon collapse-icon-middle panel-header panel-header-link <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="liferay-collapse" href="#<%= id %>Content" role="button">
 							<%= header %>
 						</a>
 					</c:when>

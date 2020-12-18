@@ -45,7 +45,7 @@ assetEntriesSearchFacetDisplayBuilder.setParameterValue(fieldParam);
 AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = assetEntriesSearchFacetDisplayBuilder.build();
 %>
 
-<div class="panel panel-default">
+<div class="panel panel-secondary">
 	<div class="panel-heading">
 		<div class="panel-title">
 			<liferay-ui:message key="asset-entries" />

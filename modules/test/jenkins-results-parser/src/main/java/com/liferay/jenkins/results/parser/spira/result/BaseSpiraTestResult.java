@@ -30,7 +30,7 @@ import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
 import com.liferay.jenkins.results.parser.spira.SpiraTestSet;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -132,9 +132,12 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 		requestJSONObject.put(
 			"RunnerStackTrace", _spiraTestResultDetails.getDetails());
 		requestJSONObject.put("RunnerTestName", getTestName());
+
+		Build build = getBuild();
+
 		requestJSONObject.put(
 			"StartDate",
-			BaseSpiraArtifact.toDateString(Calendar.getInstance()));
+			BaseSpiraArtifact.toDateString(new Date(build.getStartTime())));
 
 		SpiraTestCaseRun.RunnerFormat runnerFormat =
 			getSpiraTestCaseRunRunnerFormat();

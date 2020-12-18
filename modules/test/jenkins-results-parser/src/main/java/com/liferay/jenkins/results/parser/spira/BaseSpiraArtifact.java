@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,11 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 	public static String toDateString(Calendar calendar) {
 		return JenkinsResultsParserUtil.combine(
 			"/Date(", String.valueOf(calendar.getTimeInMillis()), ")/");
+	}
+
+	public static String toDateString(Date date) {
+		return JenkinsResultsParserUtil.combine(
+			"/Date(", String.valueOf(date.getTime()), ")/");
 	}
 
 	@Override

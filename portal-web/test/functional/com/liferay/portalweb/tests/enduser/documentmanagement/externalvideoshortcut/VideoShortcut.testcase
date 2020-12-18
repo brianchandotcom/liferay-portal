@@ -177,6 +177,14 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
 
 		VideoShortcut.validateURL(
+			invalidURL = "https://youtu.be/IxNczRyywXYtest",
+			youtube = "true");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "External Video Shortcut");
+
+		VideoShortcut.validateURL(
 			facebook = "true",
 			invalidURL = "https://www.facebook.com/Cristiano/videos/test");
 

@@ -106,6 +106,22 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 	}
 
+	private <T extends BaseModel<T>> String _getContent(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		CTDisplayRenderer<T> ctDisplayRenderer, T model) {
+
+		try {
+			return ctDisplayRenderer.getContent(
+				liferayPortletRequest, liferayPortletResponse, model);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return null;
+	}
+
 	private <T extends BaseModel<T>> JSONObject _getCTEntryRenderDataJSONObject(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			long ctEntryId)
@@ -182,9 +198,9 @@ public class GetEntryRenderDataMVCResourceCommand
 				jsonObject.put("rightRender", rightRender);
 
 				if (ctDisplayRenderer.hasContent()) {
-					rightContent = ctDisplayRenderer.getContent(
+					rightContent = _getContent(
 						liferayPortletRequest, liferayPortletResponse,
-						rightModel);
+						ctDisplayRenderer, rightModel);
 
 					if (rightContent != null) {
 						jsonObject.put("rightContent", rightContent);
@@ -219,9 +235,9 @@ public class GetEntryRenderDataMVCResourceCommand
 				);
 
 				if (ctDisplayRenderer.hasContent()) {
-					String leftContent = ctDisplayRenderer.getPreviousContent(
+					String leftContent = _getPreviousContent(
 						liferayPortletRequest, liferayPortletResponse,
-						rightModel, leftModel);
+						ctDisplayRenderer, rightModel, leftModel);
 
 					if (leftContent != null) {
 						jsonObject.put("leftContent", leftContent);
@@ -278,14 +294,14 @@ public class GetEntryRenderDataMVCResourceCommand
 
 				if (ctDisplayRenderer.hasContent()) {
 					if (rightModel != null) {
-						leftContent = ctDisplayRenderer.getPreviousContent(
+						leftContent = _getPreviousContent(
 							liferayPortletRequest, liferayPortletResponse,
-							rightModel, leftModel);
+							ctDisplayRenderer, rightModel, leftModel);
 					}
 					else {
-						leftContent = ctDisplayRenderer.getContent(
+						leftContent = _getContent(
 							liferayPortletRequest, liferayPortletResponse,
-							leftModel);
+							ctDisplayRenderer, leftModel);
 					}
 				}
 
@@ -319,6 +335,24 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		return jsonObject;
+	}
+
+	private <T extends BaseModel<T>> String _getPreviousContent(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		CTDisplayRenderer<T> ctDisplayRenderer, T currentModel,
+		T previousModel) {
+
+		try {
+			return ctDisplayRenderer.getPreviousContent(
+				liferayPortletRequest, liferayPortletResponse, currentModel,
+				previousModel);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return null;
 	}
 
 	private <T extends BaseModel<T>> JSONObject

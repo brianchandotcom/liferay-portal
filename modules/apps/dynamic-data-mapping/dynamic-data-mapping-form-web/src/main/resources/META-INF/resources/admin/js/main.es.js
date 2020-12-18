@@ -48,6 +48,8 @@ const NAV_ITEMS = {
 	RULES: 1,
 };
 
+const EDITOR_NAME = 'nameEditor';
+
 /**
  * Form.
  * @extends Component
@@ -69,20 +71,20 @@ class Form extends Component {
 		this._eventHandler = new EventHandler();
 
 		const dependencies = [
-			this._createEditor('nameEditor').then((editor) => {
-				this._eventHandler.add(
-					editor.element.$.addEventListener(
-						'keydown',
-						this._handleNameEditorKeydown
-					),
-					editor.element.$.addEventListener(
-						'keyup',
-						this._handleNameEditorCopyAndPaste
-					),
-					editor.element.$.addEventListener(
-						'keypress',
-						this._handleNameEditorCopyAndPaste
-					)
+			this._createEditor(EDITOR_NAME).then((editor) => {
+				editor.element.$.addEventListener(
+					'keydown',
+					this._handleNameEditorKeydown
+				);
+
+				editor.element.$.addEventListener(
+					'keyup',
+					this._handleNameEditorCopyAndPaste
+				);
+
+				editor.element.$.addEventListener(
+					'keypress',
+					this._handleNameEditorCopyAndPaste
 				);
 
 				return editor;
@@ -376,6 +378,29 @@ class Form extends Component {
 		if (this._translationManagerHandles) {
 			this._translationManagerHandles.forEach((handle) =>
 				handle.detach()
+			);
+		}
+
+		const {namespace} = this.props;
+
+		const editorName = `${namespace}${EDITOR_NAME}`;
+
+		const editor = window[editorName];
+
+		if (editor) {
+			editor.element.$.removeEventListener(
+				'keydown',
+				this._handleNameEditorKeydown
+			);
+
+			editor.element.$.removeEventListener(
+				'keyup',
+				this._handleNameEditorCopyAndPaste
+			);
+
+			editor.element.$.removeEventListener(
+				'keypress',
+				this._handleNameEditorCopyAndPaste
 			);
 		}
 	}

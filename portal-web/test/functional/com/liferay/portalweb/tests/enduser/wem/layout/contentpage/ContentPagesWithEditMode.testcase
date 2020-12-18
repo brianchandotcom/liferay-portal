@@ -215,9 +215,9 @@ definition {
 		}
 
 		task ("Assert can edit editable field of Image fragment") {
-			Click(locator1 = "//div[contains(@class,'component-image')]/img[@data-lfr-editable-id='image-square']");
+			Click(locator1 = "//div[contains(@class,'component-image')]//img[@data-lfr-editable-id='image-square']");
 
-			DoubleClick(locator1 = "//div[contains(@class,'component-image')]/img[@data-lfr-editable-id='image-square']");
+			DoubleClick(locator1 = "//div[contains(@class,'component-image')]//img[@data-lfr-editable-id='image-square']");
 
 			ItemSelector.selectDMImage(
 				imageFileName = "Document Title",

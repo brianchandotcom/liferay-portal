@@ -126,7 +126,7 @@ public class ServiceConfigurationInitializer {
 
 	private void _readResourceActions() {
 		try {
-			_resourceActions.readAndCheck(
+			_resourceActions.populateModelResources(
 				_classLoader,
 				StringUtil.split(
 					_portletConfiguration.get(

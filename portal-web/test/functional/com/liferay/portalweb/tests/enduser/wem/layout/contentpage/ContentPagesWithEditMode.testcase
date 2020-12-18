@@ -31,7 +31,7 @@ definition {
 	@description = "This is a use case for LPS-114438. Only can edit inline content, mapped content and comments of elements when select Content Editing."
 	@priority = "5"
 	test OnlyCanEditContentWhenSelectContentEdition {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		task ("Add a Web Content Article, a Blogs Entry and a Document") {
 			JSONWebcontent.addWebContent(

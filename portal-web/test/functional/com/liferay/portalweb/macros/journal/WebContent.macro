@@ -213,6 +213,10 @@ definition {
 			value1 = "Publish");
 
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
+
+		AssertTextPresent(value1 = "Please enter a valid title for the default language: en-US");
+
+		AssertTextPresent(value1 = "Your request failed to complete.");
 	}
 
 	macro addPGViaAP {

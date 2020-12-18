@@ -1293,6 +1293,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "test1@liferay.com");
 
+		JSONRole.assignRoleToUser(
+			roleTitle = "Power User",
+			userEmailAddress = "test1@liferay.com");
+
 		JSONUser.addUserToSite(
 			groupName = "Test Site Name",
 			userEmailAddress = "test1@liferay.com");

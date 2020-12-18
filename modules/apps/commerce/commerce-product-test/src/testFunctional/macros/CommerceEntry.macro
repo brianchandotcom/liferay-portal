@@ -342,13 +342,9 @@ definition {
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${productName}");
 
-		Type(
-			locator1 = "CommerceEntry#CREATE_NEW_PRODUCT_CATALOG_FIELD",
-			value1 = "${productCatalog}");
-
-		Click(
-			key_menuItem = "${productCatalog}",
-			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+		CommerceEntry.selectAutoCompleteField(
+			entryName = "${productCatalog}",
+			label = "Catalog");
 
 		Click(locator1 = "Button#SUBMIT");
 

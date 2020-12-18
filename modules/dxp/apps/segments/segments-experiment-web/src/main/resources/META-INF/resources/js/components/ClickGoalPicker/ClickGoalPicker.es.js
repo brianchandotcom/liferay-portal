@@ -60,13 +60,9 @@ const DispatchContext = React.createContext();
 function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 	const [state, dispatch] = useReducer(reducer, target, getInitialState);
 
-	const {selectedTarget} = state;
+	const {isValidTarget, selectedTarget} = state;
 
 	const {errors} = useContext(GlobalStateContext);
-
-	const [isValidClickTargetElement, setIsValidClickTargetElement] = useState(
-		true
-	);
 
 	const ref = useRef(selectedTarget);
 
@@ -128,7 +124,9 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 	const isValidNewClickTargetElement = (value) => {
 		const target = value && document.getElementById(value);
 
-		setIsValidClickTargetElement(!!target);
+		if (!target) {
+			dispatch({type: 'invalidTarget'});
+		}
 
 		return !!target;
 	};
@@ -179,7 +177,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 					{Liferay.Language.get('click-goal-description')}
 				</div>
 
-				{isValidClickTargetElement && errors.clickTargetError && (
+				{isValidTarget && errors.clickTargetError && (
 					<div className="c-mb-2 c-mt-2 font-weight-semi-bold text-danger">
 						<ClayIcon
 							className="c-mr-2"
@@ -219,7 +217,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 					</label>
 					<ClayInput.Group
 						className={classNames({
-							'has-error': !isValidClickTargetElement,
+							'has-error': !isValidTarget,
 						})}
 					>
 						<ClayInput.GroupItem prepend shrink>
@@ -251,7 +249,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 								/>
 							</ClayTooltipProvider>
 						</ClayInput.GroupItem>
-						{!isValidClickTargetElement && (
+						{!isValidTarget && (
 							<ClayForm.FeedbackGroup>
 								<ClayForm.FeedbackItem>
 									<ClayForm.FeedbackIndicator symbol="exclamation-full" />

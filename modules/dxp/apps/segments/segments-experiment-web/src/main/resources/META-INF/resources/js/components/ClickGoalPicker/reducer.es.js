@@ -35,10 +35,17 @@ export function reducer(state, action) {
 				editingTarget: action.selector,
 			};
 
+		case 'invalidTarget':
+			return {
+				...state,
+				isValidTarget: false,
+			};
+
 		case 'selectTarget':
 			return {
 				...state,
 				editingTarget: null,
+				isValidTarget: true,
 				mode: 'active',
 				selectedTarget: action.selector,
 			};
@@ -62,6 +69,11 @@ const INITIAL_STATE = {
 	 * the `editingTarget` becomes the new `selectedTarget`.
 	 */
 	editingTarget: '',
+
+	/**
+	 * The click goal target is valid or not.
+	 */
+	isValidTarget: true,
 
 	/**
 	 * The mode of the component, which will be one of:

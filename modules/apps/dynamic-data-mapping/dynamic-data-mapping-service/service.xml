@@ -260,6 +260,7 @@
 		<column name="formInstanceVersion" type="String" />
 		<column name="storageId" type="long" />
 		<column name="version" type="String" uad-nonanonymizable="true" />
+		<column name="ipAddress" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

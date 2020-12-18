@@ -20,7 +20,6 @@
 	autoCreate="<%= true %>"
 	configKey="commentEditor"
 	contents='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:contents")) %>'
-	cssClass="form-control"
 	editorName="ckeditor"
 	name='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:name")) %>'
 	onChangeMethod='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:onChangeMethod")) %>'

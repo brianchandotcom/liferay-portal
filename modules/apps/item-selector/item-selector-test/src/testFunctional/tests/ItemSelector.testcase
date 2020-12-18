@@ -29,6 +29,13 @@ definition {
 	test AddBlogsImageViaURL {
 		property portal.acceptance = "true";
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		BlogsNavigator.gotoAddEntry();
@@ -40,7 +47,7 @@ definition {
 		ItemSelector.gotoItemSelectorViaAlloyEditor();
 
 		ItemSelector.addImageFromURL(
-			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.png",
+			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
 			navTab = "URL");
 
 		Pause(locator1 = "1000");
@@ -55,7 +62,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.png");
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that the SVG image can be added to a fragment background."

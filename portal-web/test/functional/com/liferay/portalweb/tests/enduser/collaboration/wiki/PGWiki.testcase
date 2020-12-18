@@ -489,6 +489,13 @@ definition {
 	@description = "This test covers LPS-95711. It ensures that an image can be added to the front page via URL."
 	@priority = "4"
 	test AddPageWithImageViaURL {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		WikiNavigator.gotoFrontPagePG();
@@ -498,17 +505,17 @@ definition {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
-			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
+			imageSourceURL = "http://localhost:8080/webdav/guest/document_library/Document_2.jpg",
 			navTab = "URL");
 
-		CKEditor.viewEntryContentImage(contentImageName = "Document_1.jpg");
+		CKEditor.viewEntryContentImage(contentImageName = "Document_2.jpg");
 
 		PortletEntry.publish();
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		AssertElementPresent(
-			key_contentImageName = "Document_1.jpg",
+			key_contentImageName = "Document_2.jpg",
 			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 	}
 

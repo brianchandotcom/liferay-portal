@@ -151,6 +151,8 @@ export const Column = ({
 	);
 };
 
+Column.displayName = 'EditorVariant.Column';
+
 export const Page = ({
 	activePage,
 	children,
@@ -206,6 +208,8 @@ export const Page = ({
 	);
 };
 
+Page.displayName = 'EditorVariant.Page';
+
 export const Rows = ({children, editable, pageIndex, rows}) => {
 	if (!rows) {
 		return null;
@@ -235,3 +239,5 @@ export const Rows = ({children, editable, pageIndex, rows}) => {
 		</div>
 	));
 };
+
+Rows.displayName = 'EditorVariant.Rows';

@@ -30,6 +30,8 @@ export const Column = ({children, column, index}) => {
 	);
 };
 
+Column.displayName = 'TabbedVariant.Column';
+
 export const Container = ({activePage, children, pageIndex, pages}) => (
 	<div className="ddm-form-page-container tabbed">
 		{pages.length > 0 && pageIndex === activePage && (
@@ -46,7 +48,13 @@ export const Container = ({activePage, children, pageIndex, pages}) => (
 	</div>
 );
 
+Container.displayName = 'TabbedVariant.Container';
+
 export const Page = ({children}) => children;
+
+Page.displayName = 'TabbedVariant.Page';
 
 export const Rows = ({children, rows}) =>
 	rows.map((row, index) => children({index, row}));
+
+Rows.displayName = 'TabbedVariant.Rows';

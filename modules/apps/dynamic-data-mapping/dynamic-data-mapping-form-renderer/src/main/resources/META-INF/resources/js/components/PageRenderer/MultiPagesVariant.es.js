@@ -185,6 +185,8 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 	);
 };
 
+Container.displayName = 'MultiPagesVariant.Container';
+
 export const Page = ({
 	children,
 	editable,
@@ -220,3 +222,5 @@ export const Page = ({
 		)}
 	</div>
 );
+
+Page.displayName = 'MultiPagesVariant.Page';

@@ -77,3 +77,5 @@ export const Container = ({
 		)}
 	</div>
 );
+
+Container.displayName = 'WizardVariant.Container';

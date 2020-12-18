@@ -75,6 +75,8 @@ export const Container = ({children, pages, strings = {}}) => {
 	);
 };
 
+Container.displayName = 'SuccessVariant.Container';
+
 export const Page = ({page}) => {
 	const {editingLanguageId} = usePage();
 	const dispatch = useForm();
@@ -144,3 +146,5 @@ export const Page = ({page}) => {
 		</div>
 	);
 };
+
+Page.displayName = 'SuccessVariant.Page';

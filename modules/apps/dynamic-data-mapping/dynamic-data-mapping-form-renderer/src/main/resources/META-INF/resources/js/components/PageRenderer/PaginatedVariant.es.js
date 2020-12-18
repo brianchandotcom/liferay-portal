@@ -64,3 +64,5 @@ export const Container = ({
 		)}
 	</div>
 );
+
+Container.displayName = 'PaginatedVariant.Container';

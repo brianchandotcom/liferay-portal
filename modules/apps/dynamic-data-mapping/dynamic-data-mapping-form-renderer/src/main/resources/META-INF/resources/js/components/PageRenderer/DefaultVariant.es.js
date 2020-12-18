@@ -37,6 +37,8 @@ export const Container = ({
 	</div>
 );
 
+Container.displayName = 'DefaultVariant.Container';
+
 export const Column = forwardRef(
 	(
 		{
@@ -129,6 +131,8 @@ export const Page = ({
 	</div>
 );
 
+Page.displayName = 'DefaultVariant.Page';
+
 /* eslint-disable react/jsx-fragments */
 export const PageHeader = ({description, title}) => (
 	<React.Fragment>
@@ -139,11 +143,15 @@ export const PageHeader = ({description, title}) => (
 	</React.Fragment>
 );
 
+PageHeader.displayName = 'DefaultVariant.PageHeader';
+
 export const Row = ({children, index, row}) => (
 	<div className="position-relative row" key={index}>
 		{row.columns.map((column, index) => children({column, index}))}
 	</div>
 );
+
+Row.displayName = 'DefaultVariant.Row';
 
 export const Rows = ({children, rows}) => {
 	if (!rows) {
@@ -154,3 +162,5 @@ export const Rows = ({children, rows}) => {
 		<div key={index}>{children({index, row})}</div>
 	));
 };
+
+Rows.displayName = 'DefaultVariant.Rows';

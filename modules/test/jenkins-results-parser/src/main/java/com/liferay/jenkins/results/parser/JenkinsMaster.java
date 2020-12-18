@@ -217,6 +217,26 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return _jenkinsSlavesMap.get(jenkinsSlaveName);
 	}
 
+	public List<String> getJenkinsSlaveNames() {
+		List<JenkinsSlave> jenkinsSlaves = getJenkinsSlaves();
+
+		List<String> jenkinsSlaveNames = new ArrayList<>(jenkinsSlaves.size());
+
+		for (JenkinsSlave jenkinsSlave : jenkinsSlaves) {
+			jenkinsSlaveNames.add(jenkinsSlave.getName());
+		}
+
+		return jenkinsSlaveNames;
+	}
+
+	public List<JenkinsSlave> getJenkinsSlaves() {
+		if (_jenkinsSlavesMap.isEmpty()) {
+			update();
+		}
+
+		return new ArrayList<>(_jenkinsSlavesMap.values());
+	}
+
 	@Override
 	public String getName() {
 		return _masterName;

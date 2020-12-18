@@ -20,7 +20,6 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -216,14 +214,19 @@ public class ViewConflictsDisplayContext {
 			jsonObject.put("dismissURL", dismissURL.toString());
 		}
 
+		ResourceURL dataURL = _renderResponse.createResourceURL();
+
+		dataURL.setResourceID("/change_tracking/get_entry_render_data");
+
 		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
 			_ctCollection.getCtCollectionId(), modelClassNameId,
 			conflictInfo.getSourcePrimaryKey());
 
 		if (ctEntry != null) {
+			dataURL.setParameter(
+				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
 			jsonObject.put(
-				"dataURL", _getDataURL(_renderResponse, ctEntry)
-			).put(
 				"description",
 				_ctDisplayRendererRegistry.getEntryDescription(
 					_httpServletRequest, ctEntry)
@@ -285,6 +288,12 @@ public class ViewConflictsDisplayContext {
 			}
 		}
 		else {
+			dataURL.setParameter(
+				"modelClassNameId", String.valueOf(modelClassNameId));
+			dataURL.setParameter(
+				"modelClassPK",
+				String.valueOf(conflictInfo.getTargetPrimaryKey()));
+
 			T model = _ctDisplayRendererRegistry.fetchCTModel(
 				modelClassNameId, conflictInfo.getTargetPrimaryKey());
 
@@ -307,43 +316,12 @@ public class ViewConflictsDisplayContext {
 					_themeDisplay.getLocale(), modelClassNameId)
 			).put(
 				"title", title
-			).put(
-				"viewURL",
-				_getViewURL(
-					_renderResponse, modelClassNameId,
-					conflictInfo.getTargetPrimaryKey())
 			);
 		}
 
+		jsonObject.put("dataURL", dataURL.toString());
+
 		return jsonObject;
-	}
-
-	private String _getDataURL(RenderResponse renderResponse, CTEntry ctEntry) {
-		ResourceURL dataURL = renderResponse.createResourceURL();
-
-		dataURL.setResourceID("/change_tracking/get_entry_render_data");
-		dataURL.setParameter(
-			"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
-
-		return dataURL.toString();
-	}
-
-	private <T extends BaseModel<T>> String _getViewURL(
-		RenderResponse renderResponse, long modelClassNameId,
-		long modelClassPK) {
-
-		RenderURL viewURL = renderResponse.createRenderURL();
-
-		viewURL.setParameter(
-			"mvcRenderCommandName", "/change_tracking/view_entry");
-		viewURL.setParameter(
-			"modelClassNameId", String.valueOf(modelClassNameId));
-		viewURL.setParameter("modelClassPK", String.valueOf(modelClassPK));
-
-		PublicationsPortletURLUtil.setWindowState(
-			viewURL, LiferayWindowState.POP_UP);
-
-		return viewURL.toString();
 	}
 
 	private final long _activeCtCollectionId;

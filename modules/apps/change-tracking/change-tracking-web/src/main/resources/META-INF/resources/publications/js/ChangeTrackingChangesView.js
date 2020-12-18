@@ -35,12 +35,12 @@ class ChangeTrackingChangesView extends React.Component {
 			changes,
 			contextView,
 			ctCollectionId,
+			dataURL,
 			discardURL,
 			expired,
 			models,
 			namespace,
 			pathParam,
-			renderDataURL,
 			rootDisplayClasses,
 			showHideableParam,
 			siteNames,
@@ -71,11 +71,11 @@ class ChangeTrackingChangesView extends React.Component {
 		this.changes = changes;
 		this.contextView = contextView;
 		this.ctCollectionId = ctCollectionId;
+		this.dataURL = dataURL;
 		this.discardURL = discardURL;
 		this.expired = expired;
 		this.namespace = namespace;
 		this.models = models;
-		this.renderDataURL = renderDataURL;
 		this.rootDisplayClasses = rootDisplayClasses;
 		this.spritemap = spritemap;
 		this.userInfo = userInfo;
@@ -571,6 +571,28 @@ class ChangeTrackingChangesView extends React.Component {
 		return this.state.column;
 	}
 
+	_getDataURL(node) {
+		if (node.ctEntryId) {
+			return this._setParameter(
+				this.dataURL,
+				'ctEntryId',
+				node.ctEntryId.toString()
+			);
+		}
+
+		const dataURL = this._setParameter(
+			this.dataURL,
+			'modelClassNameId',
+			node.modelClassNameId.toString()
+		);
+
+		return this._setParameter(
+			dataURL,
+			'modelClassPK',
+			node.modelClassPK.toString()
+		);
+	}
+
 	_getDiscardURL(node) {
 		const discardURL = this._setParameter(
 			this.discardURL,
@@ -733,28 +755,6 @@ class ChangeTrackingChangesView extends React.Component {
 
 	_getPortraitURL(node) {
 		return this.userInfo[node.userId.toString()].portraitURL;
-	}
-
-	_getRenderDataURL(node) {
-		if (node.ctEntryId) {
-			return this._setParameter(
-				this.renderDataURL,
-				'ctEntryId',
-				node.ctEntryId.toString()
-			);
-		}
-
-		const renderDataURL = this._setParameter(
-			this.renderDataURL,
-			'modelClassNameId',
-			node.modelClassNameId.toString()
-		);
-
-		return this._setParameter(
-			renderDataURL,
-			'modelClassPK',
-			node.modelClassPK.toString()
-		);
 	}
 
 	_getRootDisplayOptions() {
@@ -1625,7 +1625,7 @@ class ChangeTrackingChangesView extends React.Component {
 				<div className="sheet-section">
 					<ChangeTrackingRenderView
 						ctEntry={this.state.node.ctEntryId ? true : false}
-						dataURL={this._getRenderDataURL(this.state.node)}
+						dataURL={this._getDataURL(this.state.node)}
 						getCache={() =>
 							this.renderCache[
 								this.state.node.modelClassNameId.toString() +

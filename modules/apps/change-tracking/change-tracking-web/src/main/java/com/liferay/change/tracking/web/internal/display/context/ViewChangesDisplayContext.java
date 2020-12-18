@@ -289,6 +289,15 @@ public class ViewChangesDisplayContext {
 		).put(
 			"ctCollectionId", _ctCollection.getCtCollectionId()
 		).put(
+			"dataURL",
+			() -> {
+				ResourceURL dataURL = _renderResponse.createResourceURL();
+
+				dataURL.setResourceID("/change_tracking/get_entry_render_data");
+
+				return dataURL.toString();
+			}
+		).put(
 			"discardURL",
 			() -> {
 				RenderURL discardURL = _renderResponse.createRenderURL();
@@ -326,16 +335,6 @@ public class ViewChangesDisplayContext {
 			"namespace", _renderResponse.getNamespace()
 		).put(
 			"pathParam", ParamUtil.getString(_renderRequest, "path")
-		).put(
-			"renderDataURL",
-			() -> {
-				ResourceURL renderDataURL = _renderResponse.createResourceURL();
-
-				renderDataURL.setResourceID(
-					"/change_tracking/get_entry_render_data");
-
-				return renderDataURL.toString();
-			}
 		).put(
 			"rootDisplayClasses",
 			() -> {

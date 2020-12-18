@@ -77,7 +77,6 @@ const ChangeTrackingRenderView = ({
 
 			if (!cachedData.content) {
 				newState.contentType = CONTENT_TYPE_DATA;
-				newState.viewType = VIEW_TYPE_FULL;
 			}
 
 			if (!cachedData.leftTitle) {
@@ -125,7 +124,6 @@ const ChangeTrackingRenderView = ({
 
 				if (!json.content) {
 					newState.contentType = CONTENT_TYPE_DATA;
-					newState.viewType = VIEW_TYPE_FULL;
 				}
 
 				if (!json.leftTitle) {
@@ -571,7 +569,7 @@ const ChangeTrackingRenderView = ({
 						: className
 				}
 			>
-				<td>{title}</td>
+				<td className="publications-render-view-divider">{title}</td>
 			</tr>
 		);
 	};

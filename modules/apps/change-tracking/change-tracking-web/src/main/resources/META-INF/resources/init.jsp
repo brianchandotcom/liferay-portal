@@ -44,7 +44,6 @@ page import="com.liferay.change.tracking.web.internal.display.context.SelectPubl
 page import="com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewConflictsDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewDiscardDisplayContext" %><%@
-page import="com.liferay.change.tracking.web.internal.display.context.ViewEntryDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewHistoryDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewHistoryManagementToolbarDisplayContext" %><%@
 page import="com.liferay.change.tracking.web.internal.display.context.ViewScheduledDisplayContext" %><%@

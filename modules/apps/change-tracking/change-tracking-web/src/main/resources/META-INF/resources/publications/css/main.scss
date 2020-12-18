@@ -61,22 +61,6 @@
 	}
 }
 
-.publications-entry-table.table {
-	border-collapse: collapse;
-	table-layout: fixed;
-	width: 100%;
-	word-wrap: break-word;
-
-	td.publications-entry-table-divider {
-		border-top: none;
-		text-align: center;
-	}
-
-	td.publications-entry-td {
-		vertical-align: top;
-	}
-}
-
 .publications-fieldset .panel-body {
 	margin-bottom: 24px;
 	padding-left: 0;
@@ -140,6 +124,8 @@
 	table.publications-render-view {
 		border-top: none;
 
+		.publications-render-view-divider.table-divider
+			td.publications-render-view-divider,
 		td.publications-render-view-toolbar {
 			border-top: none;
 		}

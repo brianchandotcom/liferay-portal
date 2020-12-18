@@ -498,19 +498,12 @@ const ConflictsTable = ({conflicts, spritemap}) => {
 						{getAlertFooter(viewConflict)}
 					</ClayAlert>
 				</ClayModal.Header>
-
-				{viewConflict.dataURL && (
-					<div className="publications-modal-body">
-						<ChangeTrackingRenderView
-							dataURL={viewConflict.dataURL}
-							spritemap={spritemap}
-						/>
-					</div>
-				)}
-
-				{viewConflict.viewURL && (
-					<ClayModal.Body url={viewConflict.viewURL}></ClayModal.Body>
-				)}
+				<div className="publications-modal-body">
+					<ChangeTrackingRenderView
+						dataURL={viewConflict.dataURL}
+						spritemap={spritemap}
+					/>
+				</div>
 			</ClayModal>
 		);
 	};

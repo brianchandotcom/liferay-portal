@@ -254,11 +254,9 @@ definition {
 
 		AssertVisible(locator1 = "Form#DESCRIPTION_FIELD");
 
-		Click(locator1 = "Form#NAME_FIELD");
-
-		AlloyEditor.typeEditor(
-			content = "${formName}",
-			editor = "name");
+		Type(
+			locator1 = "Form#NAME_FIELD",
+			value1 = "${formName}");
 	}
 
 	macro editNameLocalized {
@@ -270,11 +268,9 @@ definition {
 
 		AssertVisible(locator1 = "Form#DESCRIPTION_FIELD");
 
-		Click(locator1 = "Form#NAME_FIELD");
-
-		AlloyEditor.typeEditor(
-			content = "${formName}",
-			editor = "name");
+		Type(
+			locator1 = "Form#NAME_FIELD",
+			value1 = "${formName}");
 	}
 
 	macro editPageTitle {

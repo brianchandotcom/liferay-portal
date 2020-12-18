@@ -35,12 +35,12 @@
 </tr>
 <tr>
     <td>NAME_FIELD</td>
-    <td>//div[contains(@id,'nameEditorContainer')]/div</td>
+    <td>//div[contains(@class,'ddm-form-basic-info')]//textarea[contains(@id, 'nameEditor')]</td>
     <td></td>
 </tr>
 <tr>
     <td>DESCRIPTION_FIELD</td>
-    <td>//div[contains(@id,'descriptionEditorContainer')]/div</td>
+    <td>//div[contains(@class,'ddm-form-basic-info')]//textarea[contains(@id, 'descriptionEditor')]</td>
     <td></td>
 </tr>
 <tr>

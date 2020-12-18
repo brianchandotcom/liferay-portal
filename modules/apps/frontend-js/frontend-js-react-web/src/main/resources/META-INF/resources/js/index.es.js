@@ -12,18 +12,21 @@
  * details.
  */
 
-(function () {
-	const getModule = window[Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')];
+import process from 'process';
 
-	getModule('frontend-js-react-web')
-		.then((frontendJsReactWeb) => {
-			Liferay.Loader.define(
-				'frontend-js-react-web@5.0.0/js/index.es',
-				['module'],
-				(module) => {
-					module.exports = frontendJsReactWeb;
-				}
-			);
-		})
-		.catch(console.error);
-})();
+export {default as render} from './render.es';
+export {default as useEventListener} from './hooks/useEventListener.es';
+export {default as useInterval} from './hooks/useInterval.es';
+export {default as useIsMounted} from './hooks/useIsMounted.es';
+export {default as usePrevious} from './hooks/usePrevious.es';
+export {default as useStateSafe} from './hooks/useStateSafe.es';
+export {default as useThunk} from './hooks/useThunk.es';
+export {default as useTimeout} from './hooks/useTimeout.es';
+
+// Egregious hack because react-dnd expects `window.process` to exist:
+//
+// https://github.com/react-dnd/asap/blob/b6bebeb734/src/node/asap.ts#L24
+
+if (!window.process) {
+	window.process = process;
+}

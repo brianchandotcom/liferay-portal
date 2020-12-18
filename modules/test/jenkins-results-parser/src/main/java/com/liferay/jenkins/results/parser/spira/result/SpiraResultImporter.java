@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.google.common.collect.Lists;
+
 import com.liferay.jenkins.results.parser.AnalyticsCloudBranchInformationBuild;
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
@@ -28,6 +30,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsSlave;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.LocalGitBranch;
+import com.liferay.jenkins.results.parser.ParallelExecutor;
 import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
@@ -35,8 +38,10 @@ import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraAutomationHost;
 import com.liferay.jenkins.results.parser.spira.SpiraProject;
+import com.liferay.jenkins.results.parser.spira.SpiraRestAPIUtil;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseComponent;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
+import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
@@ -44,10 +49,13 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author Michael Hashimoto
@@ -68,6 +76,8 @@ public class SpiraResultImporter {
 	}
 
 	public void record() {
+		long start = System.currentTimeMillis();
+
 		_cacheSpiraAutomationHosts();
 		_cacheSpiraTestCaseComponents();
 		_cacheSpiraTestCaseObjects();
@@ -92,9 +102,95 @@ public class SpiraResultImporter {
 			}
 		}
 
-		for (SpiraTestResult spiraTestResult : spiraTestResults) {
-			spiraTestResult.record();
+		List<List<SpiraTestResult>> partition = Lists.partition(
+			spiraTestResults, _GROUP_SIZE);
+
+		List<Callable<List<SpiraTestCaseRun>>> callableList = new ArrayList<>();
+
+		System.out.println("Created " + partition.size() + " groups");
+
+		for (int i = 0; i < partition.size(); i++) {
+			final List<SpiraTestResult> results = partition.get(i);
+			final String groupName = "group-" + i;
+
+			callableList.add(
+				new Callable<List<SpiraTestCaseRun>>() {
+
+					@Override
+					public List<SpiraTestCaseRun> call() throws Exception {
+						long startGroup = System.currentTimeMillis();
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"[", groupName, "] ",
+								JenkinsResultsParserUtil.toDateString(
+									new Date(startGroup),
+									"America/Los_Angeles"),
+								" - Start recording ",
+								String.valueOf(results.size()), " tests"));
+
+						List<SpiraTestCaseRun> spiraTestCaseRuns =
+							SpiraTestCaseRun.recordSpiraTestCaseRuns(
+								_spiraBuildResult.getSpiraProject(),
+								results.toArray(new SpiraTestResult[0]));
+
+						long endGroup = System.currentTimeMillis();
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"[", groupName, "] ",
+								JenkinsResultsParserUtil.toDateString(
+									new Date(startGroup),
+									"America/Los_Angeles"),
+								" - Completed recording ",
+								String.valueOf(spiraTestCaseRuns.size()),
+								" tests in ",
+								JenkinsResultsParserUtil.toDurationString(
+									endGroup - startGroup)));
+
+						return spiraTestCaseRuns;
+					}
+
+				});
 		}
+
+		if (!callableList.isEmpty()) {
+			Callable<List<SpiraTestCaseRun>> callable = callableList.get(0);
+
+			List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
+
+			try {
+				spiraTestCaseRuns.addAll(callable.call());
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+
+			List<Callable<List<SpiraTestCaseRun>>> callableSubList =
+				callableList.subList(1, callableList.size());
+
+			ThreadPoolExecutor threadPoolExecutor =
+				JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+					_GROUP_THREAD_COUNT, true);
+
+			ParallelExecutor<List<SpiraTestCaseRun>> parallelExecutor =
+				new ParallelExecutor<>(callableSubList, threadPoolExecutor);
+
+			for (List<SpiraTestCaseRun> spiraTestCaseRunsList :
+					parallelExecutor.execute()) {
+
+				spiraTestCaseRuns.addAll(spiraTestCaseRunsList);
+			}
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Recorded ", String.valueOf(spiraTestCaseRuns.size()),
+					" tests in ",
+					JenkinsResultsParserUtil.toDurationString(
+						System.currentTimeMillis() - start)));
+		}
+
+		SpiraRestAPIUtil.summarizeRequests();
 	}
 
 	public void setup() {
@@ -431,6 +527,10 @@ public class SpiraResultImporter {
 		return SpiraAutomationHost.createSpiraAutomationHost(
 			_spiraBuildResult.getSpiraProject(), jenkinsNode);
 	}
+
+	private static final int _GROUP_SIZE = 25;
+
+	private static final int _GROUP_THREAD_COUNT = 5;
 
 	private List<SpiraAutomationHost> _spiraAutomationHosts;
 	private final SpiraBuildResult _spiraBuildResult;

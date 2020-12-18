@@ -425,63 +425,69 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	public TestClassResult getTestClassResult(String testClassName) {
-		if (_testClassResults.containsKey(testClassName)) {
+		synchronized (_testClassResults) {
+			if (_testClassResults.containsKey(testClassName)) {
+				return _testClassResults.get(testClassName);
+			}
+
+			if (!isCompleted()) {
+				return null;
+			}
+
+			for (TestClassResult testClassResult : getTestClassResults()) {
+				_testClassResults.put(
+					testClassResult.getClassName(), testClassResult);
+			}
+
 			return _testClassResults.get(testClassName);
 		}
-
-		if (!isCompleted()) {
-			return null;
-		}
-
-		for (TestClassResult testClassResult : getTestClassResults()) {
-			_testClassResults.put(
-				testClassResult.getClassName(), testClassResult);
-		}
-
-		return _testClassResults.get(testClassName);
 	}
 
 	public TestResult getTestResult(String testName) {
-		if (_testResults.containsKey(testName)) {
-			return _testResults.get(testName);
-		}
-
-		for (TestResult testResult : getTestResults(null)) {
-			if (testName.equals(testResult.getTestName())) {
-				return testResult;
+		synchronized (_testResults) {
+			if (_testResults.containsKey(testName)) {
+				return _testResults.get(testName);
 			}
-		}
 
-		return null;
+			for (TestResult testResult : getTestResults(null)) {
+				if (testName.equals(testResult.getTestName())) {
+					return testResult;
+				}
+			}
+
+			return null;
+		}
 	}
 
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
-		if (!isCompleted()) {
-			return Collections.emptyList();
+		synchronized (_testResults) {
+			if (!isCompleted()) {
+				return Collections.emptyList();
+			}
+
+			if (!_testResults.isEmpty()) {
+				return new ArrayList<>(_testResults.values());
+			}
+
+			JSONObject testReportJSONObject = getTestReportJSONObject(true);
+
+			if (testReportJSONObject == null) {
+				System.out.println(
+					"Unable to get test results for: " + getBuildURL());
+
+				return Collections.emptyList();
+			}
+
+			List<TestResult> testResults = getTestResults(
+				this, testReportJSONObject.getJSONArray("suites"), testStatus);
+
+			for (TestResult testResult : testResults) {
+				_testResults.put(testResult.getTestName(), testResult);
+			}
+
+			return testResults;
 		}
-
-		if (!_testResults.isEmpty()) {
-			return new ArrayList<>(_testResults.values());
-		}
-
-		JSONObject testReportJSONObject = getTestReportJSONObject(true);
-
-		if (testReportJSONObject == null) {
-			System.out.println(
-				"Unable to get test results for: " + getBuildURL());
-
-			return Collections.emptyList();
-		}
-
-		List<TestResult> testResults = getTestResults(
-			this, testReportJSONObject.getJSONArray("suites"), testStatus);
-
-		for (TestResult testResult : testResults) {
-			_testResults.put(testResult.getTestName(), testResult);
-		}
-
-		return testResults;
 	}
 
 	@Override
@@ -696,7 +702,8 @@ public class AxisBuild extends BaseBuild {
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
 
 	private final Map<String, TestClassResult> _testClassResults =
-		new TreeMap<>();
-	private final Map<String, TestResult> _testResults = new TreeMap<>();
+		Collections.synchronizedMap(new TreeMap<String, TestClassResult>());
+	private final Map<String, TestResult> _testResults =
+		Collections.synchronizedMap(new TreeMap<String, TestResult>());
 
 }

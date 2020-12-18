@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
 
 /**
  * @author Michael Hashimoto
@@ -35,25 +36,39 @@ import java.util.TreeSet;
 public class JUnitAxisSpiraTestResultValues
 	extends BaseAxisSpiraTestResultValues {
 
-	@Override
-	public List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues() {
-		List<SpiraCustomPropertyValue> spiraCustomPropertyValues =
-			super.getSpiraCustomPropertyValues();
-
-		spiraCustomPropertyValues.add(_getErrorMessageValue());
-		spiraCustomPropertyValues.add(_getMethodsValue());
-
-		spiraCustomPropertyValues.removeAll(Collections.singleton(null));
-
-		return spiraCustomPropertyValues;
-	}
-
 	protected JUnitAxisSpiraTestResultValues(
 		JUnitAxisSpiraTestResult jUnitAxisSpiraTestResult) {
 
 		super(jUnitAxisSpiraTestResult);
 
 		_jUnitAxisSpiraTestResult = jUnitAxisSpiraTestResult;
+	}
+
+	@Override
+	protected List<Callable<List<SpiraCustomPropertyValue>>> getCallables() {
+		List<Callable<List<SpiraCustomPropertyValue>>> callables =
+			super.getCallables();
+
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getErrorMessageValue());
+				}
+
+			});
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getMethodsValue());
+				}
+
+			});
+
+		return callables;
 	}
 
 	private SpiraCustomPropertyValue _getErrorMessageValue() {

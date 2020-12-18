@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.spira.result;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.ParallelExecutor;
 import com.liferay.jenkins.results.parser.PortalFixpackRelease;
 import com.liferay.jenkins.results.parser.PortalRelease;
 import com.liferay.jenkins.results.parser.spira.SpiraCustomProperty;
@@ -25,6 +26,8 @@ import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.json.JSONArray;
 
@@ -50,15 +53,24 @@ public abstract class BaseSpiraTestResultValues
 
 	@Override
 	public List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues() {
+		List<Callable<List<SpiraCustomPropertyValue>>> callables =
+			getCallables();
+
+		ThreadPoolExecutor threadPoolExecutor =
+			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+				callables.size(), true);
+
+		ParallelExecutor<List<SpiraCustomPropertyValue>> parallelExecutor =
+			new ParallelExecutor<>(callables, threadPoolExecutor);
+
 		List<SpiraCustomPropertyValue> spiraCustomPropertyValues =
 			new ArrayList<>();
 
-		spiraCustomPropertyValues.add(_getDurationValue());
-		spiraCustomPropertyValues.add(_getDurationStringValue());
-		spiraCustomPropertyValues.add(_getPortalFixpackReleaseValue());
-		spiraCustomPropertyValues.add(_getPortalReleaseValue());
-		spiraCustomPropertyValues.add(_getPortalSHAValue());
-		spiraCustomPropertyValues.add(_getProductVersionValue());
+		for (List<SpiraCustomPropertyValue> values :
+				parallelExecutor.execute()) {
+
+			spiraCustomPropertyValues.addAll(values);
+		}
 
 		spiraCustomPropertyValues.removeAll(Collections.singleton(null));
 
@@ -69,6 +81,75 @@ public abstract class BaseSpiraTestResultValues
 		_spiraTestResult = spiraTestResult;
 
 		_spiraBuildResult = _spiraTestResult.getSpiraBuildResult();
+	}
+
+	protected List<Callable<List<SpiraCustomPropertyValue>>> getCallables() {
+		List<Callable<List<SpiraCustomPropertyValue>>> callables =
+			new ArrayList<>();
+
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getDurationValue());
+				}
+
+			});
+
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getDurationStringValue());
+				}
+
+			});
+
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(
+						_getPortalFixpackReleaseValue());
+				}
+
+			});
+
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getPortalReleaseValue());
+				}
+
+			});
+
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getPortalSHAValue());
+				}
+
+			});
+
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(
+						(SpiraCustomPropertyValue)_getProductVersionValue());
+				}
+
+			});
+
+		return callables;
 	}
 
 	protected SpiraBuildResult getSpiraBuildResult() {

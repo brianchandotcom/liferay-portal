@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
 
 /**
@@ -38,22 +39,6 @@ import java.util.regex.Pattern;
  */
 public abstract class BaseAxisSpiraTestResultValues
 	extends BaseSpiraTestResultValues {
-
-	@Override
-	public List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues() {
-		List<SpiraCustomPropertyValue> spiraCustomPropertyValues =
-			super.getSpiraCustomPropertyValues();
-
-		spiraCustomPropertyValues.add(_getBatchNameValue());
-		spiraCustomPropertyValues.add(_getTestTypeValue());
-		spiraCustomPropertyValues.add(_getWarningsValue());
-
-		spiraCustomPropertyValues.addAll(getBatchCustomPropertyValues());
-
-		spiraCustomPropertyValues.removeAll(Collections.singleton(null));
-
-		return spiraCustomPropertyValues;
-	}
 
 	protected BaseAxisSpiraTestResultValues(
 		AxisSpiraTestResult axisSpiraTestResult) {
@@ -173,6 +158,51 @@ public abstract class BaseAxisSpiraTestResultValues
 			portalTestProperties,
 			JenkinsResultsParserUtil.combine(
 				batchPropertyName, "[", batchPropertyNameOpt, "]"));
+	}
+
+	@Override
+	protected List<Callable<List<SpiraCustomPropertyValue>>> getCallables() {
+		List<Callable<List<SpiraCustomPropertyValue>>> callables =
+			super.getCallables();
+
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return getBatchCustomPropertyValues();
+				}
+
+			});
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getBatchNameValue());
+				}
+
+			});
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getTestTypeValue());
+				}
+
+			});
+		callables.add(
+			new Callable<List<SpiraCustomPropertyValue>>() {
+
+				@Override
+				public List<SpiraCustomPropertyValue> call() throws Exception {
+					return Collections.singletonList(_getWarningsValue());
+				}
+
+			});
+
+		return callables;
 	}
 
 	private SpiraCustomPropertyValue _getBatchNameValue() {

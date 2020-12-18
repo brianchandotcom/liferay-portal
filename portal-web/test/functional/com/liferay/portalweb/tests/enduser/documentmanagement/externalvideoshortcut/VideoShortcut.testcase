@@ -189,6 +189,23 @@ definition {
 			vimeo = "true");
 	}
 
+	@description = "This ensures that a video shortcut can be added with a YouTube shortened URL."
+	@priority = "5"
+	test AddWithShortenedURL {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		VideoShortcut.addPG(
+			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://www.youtube.com",
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoURL = "https://youtu.be/HOdbzGCI5ME");
+
+		VideoShortcut.viewPG(
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutTitle = "Test YouTube Video Name");
+	}
+
 	@description = "This ensures that a video shortcut can be added with YouTube."
 	@priority = "5"
 	test AddYouTubePG {
@@ -246,6 +263,33 @@ definition {
 		ItemSelector.viewExternalVideoInDifferentViews(
 			navTab = "Documents and Media",
 			videoShortcutList = "Test Facebook Video,Test Vimeo Video,Test YouTube Video,Test Facebook Video");
+	}
+
+	@description = "This ensures that a video shortcut can be edited with a YouTube shortened URL."
+	@priority = "5"
+	test EditWithShortenedURL {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.editCP(
+			extractedVideoShortcutTitleEdit = "Liferay Digital Experience Platform",
+			videoShortcutDescriptionEdit = "Video Shortcut Description Edit",
+			videoShortcutPreview = "https://www.youtube.com",
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoShortcutTitleEdit = "Test YouTube Video Name Edit",
+			videoURLEdit = "https://youtu.be/HOdbzGCI5ME");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.viewCP(
+			videoShortcutDescription = "Video Shortcut Description Edit",
+			videoShortcutTitle = "Test YouTube Video Name Edit");
 	}
 
 	@description = "This ensures that a video shortcut associated with a category can be searched."

@@ -83,7 +83,7 @@ if (comment instanceof WorkflowableComment) {
 			<liferay-editor:editor
 				configKey="commentEditor"
 				contents="<%= comment.getBody() %>"
-				editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
+				editorName="ckeditor"
 				name="bodyEditor"
 				showSource="<%= false %>"
 			/>

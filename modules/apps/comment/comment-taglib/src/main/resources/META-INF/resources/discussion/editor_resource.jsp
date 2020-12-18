@@ -21,7 +21,7 @@
 	configKey="commentEditor"
 	contents='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:contents")) %>'
 	cssClass="form-control"
-	editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
+	editorName="ckeditor"
 	name='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:name")) %>'
 	onChangeMethod='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:onChangeMethod")) %>'
 	placeholder='<%= GetterUtil.getString(request.getAttribute("liferay-comment:editor:placeholder")) %>'

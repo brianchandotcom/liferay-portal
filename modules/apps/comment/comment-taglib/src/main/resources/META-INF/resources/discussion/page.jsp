@@ -146,7 +146,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 												<liferay-editor:editor
 													configKey="commentEditor"
 													contents=""
-													editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
+													editorName="ckeditor"
 													name="postReplyBody0"
 													onChangeMethod="0ReplyOnChange"
 													placeholder="type-your-comment-here"

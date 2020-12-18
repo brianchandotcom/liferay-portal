@@ -191,7 +191,7 @@ public class FilePropagator {
 		throws IOException, TimeoutException {
 
 		StringBuffer sb = new StringBuffer(
-			"ssh -o ConnectTimeout=10 -o NumberOfPasswordPrompts=0 ");
+			"ssh -o ConnectTimeout=30 -o NumberOfPasswordPrompts=0 ");
 
 		sb.append(targetSlave);
 		sb.append(" '");

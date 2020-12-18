@@ -5,7 +5,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Content Dashboard";
 
-setUp {
+	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -37,15 +37,128 @@ setUp {
 
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
+	test ContentDashboardClickTitleApprovedDPTWithNoPermissions {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithNoPermissions";
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			requirePasswordReset = "true",
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		JSONRole.addRegularRole(
+			roleKey = "WC Creator Edit Permissions",
+			roleTitle = "WC Creator Edit Permissions");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_SITE_ADMINISTRATION",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "WC Creator Edit Permissions");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+			roleTitle = "WC Creator Edit Permissions");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "WC Creator Edit Permissions");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "WC Creator Edit Permissions",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		LexiconTable.clickTableEntryColumnLink(
+			columnName = "title",
+			tableEntry = "");
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
+
+		JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title");
+	}
+
+	@description = "Validate if the user can edit a web content through the Edit option"
+	@priority = "5"
 	test ContentDashboardClickTitleApprovedDPTWithPermissions {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithPermissions";
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
@@ -106,7 +219,7 @@ setUp {
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
 			roleTitle = "WC Creator Edit Permissions");
-		
+
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
 			resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
@@ -135,126 +248,13 @@ setUp {
 		Pause(locator1 = "3000");
 
 		LexiconTable.clickTableEntryColumnLink(
-					columnName = "title",
-					tableEntry = "");
+			columnName = "title",
+			tableEntry = "");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#DISPLAY_PAGE_TITLE",
 			value1 = "Display Page Name");
-		
-		User.logoutPG();
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		JSONRole.deleteRole(roleTitle = "WC Creator Edit Permissions");
-
-		JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title");
-	}
-
-	@description = "Validate if the user can edit a web content through the Edit option"
-	@priority = "5"
-	test ContentDashboardClickTitleApprovedDPTWithNoPermissions {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithNoPermissions";
-
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-		Button.clickPublish();
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			requirePasswordReset = "true",
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
-
-		JSONRole.addRegularRole(
-			roleKey = "WC Creator Edit Permissions",
-			roleTitle = "WC Creator Edit Permissions");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "WC Creator Edit Permissions");
-		
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-			roleTitle = "WC Creator Edit Permissions");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = "90",
-			roleTitle = "WC Creator Edit Permissions");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "WC Creator Edit Permissions",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		LexiconTable.clickTableEntryColumnLink(
-					columnName = "title",
-					tableEntry = "");
-		
-		Pause(locator1 = "3000");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-			value1 = "WC Title");
-		
 		User.logoutPG();
 
 		User.loginUserPG(

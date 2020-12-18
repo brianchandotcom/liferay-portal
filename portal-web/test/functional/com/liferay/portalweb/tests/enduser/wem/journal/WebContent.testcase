@@ -901,6 +901,8 @@ definition {
 
 		WebContent.addNullCP(webContentContent = "WC WebContent Content");
 
+		Pause(locator1 = "3000");
+
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = "content",
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");

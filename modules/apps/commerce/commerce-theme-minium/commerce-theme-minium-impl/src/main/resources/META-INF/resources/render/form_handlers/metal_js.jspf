@@ -128,11 +128,89 @@
 			'[data-text-cp-instance-delivery-subscription-info]'
 		).innerHTML = productData.deliverySubscriptionInfo || '';
 
-		Liferay.fire('priceUpdated', {
-			displayDiscountLevels: productData.displayDiscountLevels,
-			id: '<%= "productDetail_" + cpCatalogEntry.getCPDefinitionId() %>',
-			prices: productData.prices,
-		});
+		let prices = productData.prices;
+
+		var finalPriceContainer = document.querySelector(
+			'[data-text-cp-instance-final-price]'
+		);
+
+		if (finalPriceContainer) {
+			finalPriceContainer.innerHTML = prices.finalPrice || '';
+		}
+
+		var priceLabelContainer = document.querySelector(
+			'[data-text-cp-instance-price-label]'
+		);
+
+		priceLabelContainer.classList.remove('hide');
+
+		var priceContainer = document.querySelector(
+			'[data-text-cp-instance-price]'
+		);
+
+		let price = '';
+
+		if (prices) {
+			price = prices.price;
+		}
+
+		priceContainer.innerHTML = price;
+
+		var promoPriceLabelContiainer = document.querySelector(
+			'[data-text-cp-instance-promo-price-label]'
+		);
+
+		var promoPriceContainer = document.querySelector(
+			'[data-text-cp-instance-promo-price]'
+		);
+
+		if (price && prices.promoPrice) {
+			promoPriceContainer.innerHTML = prices.promoPrice || '';
+
+			priceContainer.classList.add('price-value-inactive');
+
+			promoPriceLabelContiainer.classList.remove('hide');
+			promoPriceContainer.classList.remove('hide');
+		}
+		else {
+			if (!price) {
+				priceLabelContainer.classList.add('hide');
+			}
+
+			priceContainer.classList.remove('price-value-inactive');
+
+			promoPriceLabelContiainer.classList.add('hide');
+			promoPriceContainer.classList.add('hide');
+		}
+
+		if (
+			productData.displayDiscountLevels ||
+			(prices && prices.discountPercentage)
+		) {
+			if (productData.displayDiscountLevels) {
+				let discountPercentages = prices.discountPercentages;
+
+				for (var i = 0; i < discountPercentages.length; i++) {
+					document.querySelector(
+						`[data-text-cp-instance-discount-percentage-level-${i + 1}]`
+					).innerHTML = discountPercentages[i] || '';
+				}
+			}
+			else {
+				document.querySelector(
+					'[data-text-cp-instance-discount-percentage]'
+				).innerHTML = prices.discountPercentage || '';
+			}
+		}
+		else {
+			var discountAmountContainer = document.querySelector(
+				'[data-text-cp-instance-discount-amount]'
+			);
+
+			if (discountAmountContainer && price) {
+				discountAmountContainer.innerHTML = price - prices.finalPrice || '';
+			}
+		}
 	}
 
 	function updateView(productsData) {

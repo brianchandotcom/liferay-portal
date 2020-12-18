@@ -27,8 +27,11 @@ import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
@@ -48,6 +51,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -71,6 +75,18 @@ public class PriceTag extends IncludeTag {
 			setProductInfo();
 
 			setPriceInfo(_commerceContext, _themeDisplay.getLocale());
+
+			CommerceChannel commerceChannel =
+				commerceChannelLocalService.fetchCommerceChannel(
+					_commerceContext.getCommerceChannelId());
+
+			if ((commerceChannel != null) &&
+				Objects.equals(
+					commerceChannel.getPriceDisplayType(),
+					CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+
+				_netPrice = false;
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -79,9 +95,12 @@ public class PriceTag extends IncludeTag {
 			_commerceDiscountValue = null;
 			_discountLabel = null;
 			_displayDiscountLevels = false;
+			_displayOneLine = false;
+			_formattedFinalPrice = null;
 			_formattedPrice = null;
 			_formattedPromoPrice = null;
 			_promoPriceLabel = null;
+			_netPrice = true;
 			_showDiscount = false;
 			_showDiscountAmount = false;
 			_showPercentage = false;
@@ -107,12 +126,20 @@ public class PriceTag extends IncludeTag {
 		return _discountLabel;
 	}
 
+	public String getFormattedFinalPrice() {
+		return _formattedFinalPrice;
+	}
+
 	public String getPromoPriceLabel() {
 		return _promoPriceLabel;
 	}
 
 	public int getQuantity() {
 		return _quantity;
+	}
+
+	public boolean isNetPrice() {
+		return _netPrice;
 	}
 
 	public boolean isShowDiscount() {
@@ -147,10 +174,20 @@ public class PriceTag extends IncludeTag {
 		_discountLabel = discountLabel;
 	}
 
+	public void setFormattedFinalPrice(String formattedFinalPrice) {
+		_formattedFinalPrice = formattedFinalPrice;
+	}
+
+	public void setNetPrice(boolean netPrice) {
+		_netPrice = netPrice;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		commerceChannelLocalService =
+			ServletContextUtil.getCommerceChannelLocalService();
 		commerceProductPriceCalculation =
 			ServletContextUtil.getCommercePriceCalculation();
 		configurationProvider = ServletContextUtil.getConfigurationProvider();
@@ -198,14 +235,17 @@ public class PriceTag extends IncludeTag {
 		_decimalFormat = null;
 		_discountLabel = null;
 		_displayDiscountLevels = false;
+		_displayOneLine = false;
+		_formattedFinalPrice = null;
 		_formattedPrice = null;
 		_formattedPromoPrice = null;
+		_netPrice = true;
 		_promoPriceLabel = null;
 		_quantity = 0;
 		_showDiscount = true;
 		_showDiscountAmount = false;
 		_showPercentage = true;
-		_showPriceRange = false;
+		_showPriceRange = true;
 		_showPromo = true;
 		_themeDisplay = null;
 	}
@@ -254,9 +294,14 @@ public class PriceTag extends IncludeTag {
 			"liferay-commerce:price:displayDiscountLevels",
 			_displayDiscountLevels);
 		request.setAttribute(
+			"liferay-commerce:price:displayOneLine", _displayOneLine);
+		request.setAttribute(
+			"liferay-commerce:price:formattedFinalPrice", _formattedFinalPrice);
+		request.setAttribute(
 			"liferay-commerce:price:formattedPrice", _formattedPrice);
 		request.setAttribute(
 			"liferay-commerce:price:formattedPromoPrice", _formattedPromoPrice);
+		request.setAttribute("liferay-commerce:price:netPrice", _netPrice);
 		request.setAttribute(
 			"liferay-commerce:price:promoPriceLabel", _promoPriceLabel);
 		request.setAttribute(
@@ -285,8 +330,14 @@ public class PriceTag extends IncludeTag {
 			roundingTypeConfiguration.roundingMode());
 	}
 
-	protected void setDiscountInfo(CommerceProductPrice commerceProductPrice)
+	protected void setDiscountInfo(
+			CommerceProductPrice commerceProductPrice, Locale locale)
 		throws PortalException {
+
+		CommerceMoney finalPriceCommerceMoney =
+			commerceProductPrice.getFinalPrice();
+
+		_formattedFinalPrice = finalPriceCommerceMoney.format(locale);
 
 		_commerceDiscountValue = commerceProductPrice.getDiscountValue();
 
@@ -328,21 +379,21 @@ public class PriceTag extends IncludeTag {
 			_formattedPromoPrice = StringPool.BLANK;
 
 			if (_showPromo) {
-				CommerceMoney finalPriceCommerceMoney =
-					commerceProductPrice.getFinalPrice();
+				CommerceMoney unitPromoPriceCommerceMoney =
+					commerceProductPrice.getUnitPromoPrice();
 
-				BigDecimal promoPrice = finalPriceCommerceMoney.getPrice();
+				BigDecimal promoPrice = unitPromoPriceCommerceMoney.getPrice();
 
 				if (promoPrice.compareTo(unitPriceCommerceMoney.getPrice()) <
 						0) {
 
-					_formattedPromoPrice = finalPriceCommerceMoney.format(
+					_formattedPromoPrice = unitPromoPriceCommerceMoney.format(
 						locale);
 				}
 			}
 
 			if (_showDiscount) {
-				setDiscountInfo(commerceProductPrice);
+				setDiscountInfo(commerceProductPrice, locale);
 			}
 		}
 	}
@@ -380,6 +431,7 @@ public class PriceTag extends IncludeTag {
 		}
 	}
 
+	protected CommerceChannelLocalService commerceChannelLocalService;
 	protected CommerceProductPriceCalculation commerceProductPriceCalculation;
 	protected ConfigurationProvider configurationProvider;
 	protected CPDefinitionHelper cpDefinitionHelper;
@@ -396,14 +448,17 @@ public class PriceTag extends IncludeTag {
 	private DecimalFormat _decimalFormat;
 	private String _discountLabel;
 	private boolean _displayDiscountLevels;
+	private boolean _displayOneLine;
+	private String _formattedFinalPrice;
 	private String _formattedPrice;
 	private String _formattedPromoPrice;
+	private boolean _netPrice = true;
 	private String _promoPriceLabel;
 	private int _quantity;
 	private boolean _showDiscount = true;
 	private boolean _showDiscountAmount;
 	private boolean _showPercentage = true;
-	private boolean _showPriceRange;
+	private boolean _showPriceRange = true;
 	private boolean _showPromo = true;
 	private ThemeDisplay _themeDisplay;
 

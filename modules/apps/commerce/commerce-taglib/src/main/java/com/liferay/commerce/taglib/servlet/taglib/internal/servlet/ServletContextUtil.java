@@ -22,6 +22,7 @@ import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
@@ -44,6 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true, service = ServletContextUtil.class
 )
 public class ServletContextUtil {
+
+	public static final CommerceChannelLocalService
+		getCommerceChannelLocalService() {
+
+		return _servletContextUtil._getCommerceChannelLocalService();
+	}
 
 	public static final CommerceWorkflowedModelHelper getCommerceOrderHelper() {
 		return _servletContextUtil._getCommerceOrderHelper();
@@ -115,6 +122,13 @@ public class ServletContextUtil {
 	@Deactivate
 	protected void deactivate() {
 		_servletContextUtil = null;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCommerceChannelLocalService(
+		CommerceChannelLocalService commerceChannelLocalService) {
+
+		_commerceChannelLocalService = commerceChannelLocalService;
 	}
 
 	@Reference(
@@ -210,6 +224,10 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
+	private CommerceChannelLocalService _getCommerceChannelLocalService() {
+		return _commerceChannelLocalService;
+	}
+
 	private CommerceWorkflowedModelHelper _getCommerceOrderHelper() {
 		return _commerceWorkflowedModelHelper;
 	}
@@ -268,6 +286,7 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _servletContextUtil;
 
+	private CommerceChannelLocalService _commerceChannelLocalService;
 	private ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;

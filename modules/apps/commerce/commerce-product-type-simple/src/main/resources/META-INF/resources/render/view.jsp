@@ -79,7 +79,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 					<c:otherwise>
 						<h4 class="sku" data-text-cp-instance-sku=""></h4>
 
-						<div class="price" data-text-cp-instance-price=""></div>
+						<div class="price"><liferay-commerce:price CPDefinitionId="<%= cpDefinitionId %>" /></div>
 
 						<div class="subscription-info" data-text-cp-instance-subscription-info="" data-text-cp-instance-subscription-info-show></div>
 

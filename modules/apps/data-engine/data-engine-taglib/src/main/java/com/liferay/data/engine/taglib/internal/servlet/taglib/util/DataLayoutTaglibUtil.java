@@ -694,8 +694,10 @@ public class DataLayoutTaglibUtil {
 			return new UnlocalizedValue(
 				JSONUtil.put(
 					"errorMessage",
-					_getLocalizedValueJSONObject(
-						ddmFormFieldValidation.getErrorMessageLocalizedValue())
+					LocalizedValueUtil.toJSONObject(
+						LocalizedValueUtil.toLocalizedValuesMap(
+							ddmFormFieldValidation.
+								getErrorMessageLocalizedValue()))
 				).put(
 					"expression",
 					JSONUtil.put(
@@ -705,8 +707,10 @@ public class DataLayoutTaglibUtil {
 					)
 				).put(
 					"parameter",
-					_getLocalizedValueJSONObject(
-						ddmFormFieldValidation.getParameterLocalizedValue())
+					LocalizedValueUtil.toJSONObject(
+						LocalizedValueUtil.toLocalizedValuesMap(
+							ddmFormFieldValidation.
+								getParameterLocalizedValue()))
 				).toString());
 		}
 
@@ -859,15 +863,6 @@ public class DataLayoutTaglibUtil {
 					new String[] {"size", "columns", "pages", "rows"}));
 
 			return _deserializeDDMFormLayout(jsonObject.toJSONString());
-		}
-
-		private JSONObject _getLocalizedValueJSONObject(
-			LocalizedValue localizedValue) {
-
-			Map<String, Object> localizedValuesMap =
-				LocalizedValueUtil.toLocalizedValuesMap(localizedValue);
-
-			return LocalizedValueUtil.toJSONObject(localizedValuesMap);
 		}
 
 		private List<Map<String, Object>> _getNestedFields(

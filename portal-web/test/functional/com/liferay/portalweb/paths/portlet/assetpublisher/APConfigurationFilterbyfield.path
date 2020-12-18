@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>FIELD_FILTER_FIELD_NAME</td>
-	<td>//td//label[contains(.,'${key_fieldName}')] | //td//span[contains(.,'${key_fieldName}')]</td>
+	<td>//*[contains(@class,'control-label')][normalize-space(text())='${key_fieldName}']</td>
 	<td></td>
 </tr>
 <tr>

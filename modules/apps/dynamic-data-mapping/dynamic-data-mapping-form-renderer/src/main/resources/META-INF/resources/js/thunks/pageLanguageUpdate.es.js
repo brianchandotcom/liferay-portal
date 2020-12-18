@@ -51,7 +51,7 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 				if (preserveValue) {
 					dataRecordValues[fieldName] = {
 						...localizedValue,
-						[languageId]: [],
+						[languageId]: value,
 					};
 				}
 				else if (!repeatable && edited) {

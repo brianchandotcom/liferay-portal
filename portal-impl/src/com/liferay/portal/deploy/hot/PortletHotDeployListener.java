@@ -263,6 +263,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		String[] sources = _processPortletProperties(classLoader);
 
+		ResourceActionsUtil.populateModelResources(classLoader, sources);
+
 		for (Portlet portlet : portlets) {
 			ResourceActionsUtil.populatePortletResource(
 				portlet, classLoader, sources);

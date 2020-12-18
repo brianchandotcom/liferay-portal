@@ -12,15 +12,9 @@
  * details.
  */
 
-package com.liferay.osb.github.petra.doulos.processor;
+package com.liferay.jenkins.results.parser;
 
 import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
-
-import com.liferay.jenkins.results.parser.JenkinsMaster;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.JenkinsStopBuildUtil;
-import com.liferay.jenkins.results.parser.LoadBalancerUtil;
-import com.liferay.petra.doulos.processor.BaseDoulosRequestProcessor;
 
 import java.io.StringReader;
 
@@ -60,9 +54,9 @@ import org.json.JSONObject;
 /**
  * @author Brian Wing Shun Chan
  */
-public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
+public class GitHubWebhookPayloadProcessor {
 
-	public JenkinsDoulosRequestProcessor() throws Exception {
+	public GitHubWebhookPayloadProcessor() throws Exception {
 		Class<?> clazz = getClass();
 
 		_jenkinsProperties.load(
@@ -92,32 +86,35 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 	public List<String> getTestPullRequestQueryStrings() {
 		long expiredTime = getTestPullRequestQueryStringExpiredTime();
 
-		for (String testPullRequestQueryString :
-				_testPullRequestQueryStrings.keySet()) {
+		for (Map.Entry<String, Long> testPullRequestQueryStringsEntry :
+				_testPullRequestQueryStrings.entrySet()) {
 
-			long time = _testPullRequestQueryStrings.get(
-				testPullRequestQueryString);
+			long time = testPullRequestQueryStringsEntry.getValue();
 
 			if (time < expiredTime) {
-				_testPullRequestQueryStrings.remove(testPullRequestQueryString);
+				_testPullRequestQueryStrings.remove(
+					testPullRequestQueryStringsEntry.getKey());
 			}
 		}
 
-		return new ArrayList<String>(_testPullRequestQueryStrings.keySet());
+		return new ArrayList<>(_testPullRequestQueryStrings.keySet());
 	}
 
 	public List<String> getTestPullRequestURLs() {
 		long expiredTime = getTestPullRequestURLExpiredTime();
 
-		for (String testPullRequestURL : _testPullRequestURLs.keySet()) {
-			long time = _testPullRequestURLs.get(testPullRequestURL);
+		for (Map.Entry<String, Long> testPullRequestQueryStringsEntry :
+				_testPullRequestQueryStrings.entrySet()) {
+
+			long time = testPullRequestQueryStringsEntry.getValue();
 
 			if (time < expiredTime) {
-				_testPullRequestURLs.remove(testPullRequestURL);
+				_testPullRequestURLs.remove(
+					testPullRequestQueryStringsEntry.getKey());
 			}
 		}
 
-		return new ArrayList<String>(_testPullRequestURLs.keySet());
+		return new ArrayList<>(_testPullRequestURLs.keySet());
 	}
 
 	public boolean isGitHubAutopullEnabled() {
@@ -240,8 +237,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			if (action.equals("opened")) {
 				invokeCIStart(new JenkinsMaster("test-5-3"), payloadJSONObject);
 
-				_processPullRequestOpened(
-					payloadJSONObject, pullRequestJSONObject, pullRequest);
+				_processPullRequestOpened(pullRequestJSONObject, pullRequest);
 			}
 			else if (action.equals("synchronize")) {
 				invokeCIStart(new JenkinsMaster("test-5-3"), payloadJSONObject);
@@ -249,8 +245,6 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				_processPullRequestSynchronize(
 					pullRequest, pullRequestJSONObject);
 			}
-
-			return;
 		}
 	}
 
@@ -355,9 +349,9 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 				return responseBody;
 			}
-			catch (NoRouteToHostException nrthe) {
+			catch (NoRouteToHostException noRouteToHostException) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Retrying " + url, nrthe);
+					_log.info("Retrying " + url, noRouteToHostException);
 				}
 
 				Thread.sleep(1000);
@@ -388,8 +382,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		jsonObject.put("state", "closed");
 
 		processURL(
-			"https://api.github.com/repos/" + pullRequest.getOwnerName() +
-				"/" + pullRequest.getRepositoryName() + "/pulls/" +
+			"https://api.github.com/repos/" + pullRequest.getOwnerName() + "/" +
+				pullRequest.getRepositoryName() + "/pulls/" +
 					pullRequest.getNumber(),
 			jsonObject.toString(), "PATCH");
 	}
@@ -453,12 +447,12 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 			commentPullRequest(pullRequest, message);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Skip generation of the ci:merge diff because of an " +
 						"exception",
-					e);
+					exception);
 			}
 		}
 	}
@@ -475,8 +469,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		jsonObject.put("body", message);
 
 		processURL(
-			"https://api.github.com/repos/" + pullRequest.getOwnerName() +
-				"/" + pullRequest.getRepositoryName() + "/issues/" +
+			"https://api.github.com/repos/" + pullRequest.getOwnerName() + "/" +
+				pullRequest.getRepositoryName() + "/issues/" +
 					pullRequest.getNumber() + "/comments",
 			jsonObject.toString());
 	}
@@ -505,7 +499,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 	protected List<String> getBuildURLs(JSONObject payloadJSONObject)
 		throws Exception {
 
-		List<String> buildURLs = new ArrayList<String>();
+		List<String> buildURLs = new ArrayList<>();
 
 		String commentsURL = payloadJSONObject.optString("comments_url");
 
@@ -618,11 +612,13 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 	protected long getTestPullRequestQueryStringExpiredTime() {
 		//return System.currentTimeMillis() - 3600000; // 1 hour
+
 		return System.currentTimeMillis() - 21600000; // 6 hours
 	}
 
 	protected long getTestPullRequestURLExpiredTime() {
 		//return System.currentTimeMillis() - 3600000; // 1 hour
+
 		return System.currentTimeMillis() - 21600000; // 6 hours
 	}
 
@@ -654,11 +650,12 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			}
 			else {
 				try {
-					masterURL = LoadBalancerUtil.getMostAvailableMasterURL(
-						"base.invocation.url", "http://test-1.liferay.com") +
-							"/";
+					masterURL = JenkinsResultsParserUtil.combine(
+						LoadBalancerUtil.getMostAvailableMasterURL(
+							"base.invocation.url", "http://test-1.liferay.com"),
+						"/");
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					masterURL = "http://test-1.liferay.com/";
 				}
 			}
@@ -686,10 +683,22 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		invokeCIStart(null, payloadJSONObject);
 	}
 
-	protected boolean isBotPush(JSONObject payloadJSONObject) throws Exception {
-		String subrepoPath = getSubrepoPath(payloadJSONObject);
+	protected boolean isBlank(String string) {
+		if (string == null) {
+			return true;
+		}
 
-		if (isBlank(subrepoPath)) {
+		string = string.trim();
+
+		if (string.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isBotPush(JSONObject payloadJSONObject) throws Exception {
+		if (isBlank(getSubrepoPath(payloadJSONObject))) {
 			return false;
 		}
 
@@ -784,62 +793,57 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			return false;
 		}
 
-		String githubCIUsername = _jenkinsBuildProperties.getProperty(
-			"github.ci.username");
 		String ownerName = pullRequest.getOwnerName();
 		String refName = pullRequest.getRefName();
 		String repositoryName = pullRequest.getRepositoryName();
 		String senderName = pullRequest.getSenderName();
-		String subrepoCentralMergePullRequestRecipientName =
-			getSubrepoCentralMergePullRequestRecipientName(refName);
 
-		if (ownerName.equals(subrepoCentralMergePullRequestRecipientName)) {
-			if (pullRequest.isMergeSubrepoRequest()) {
-				if (!pullRequest.isValidCIMergeFile()) {
-					String message =
-						"Closing pull request because a subrepo merge " +
-							"request must only contain a single change to a " +
-								"single ci-merge file.";
+		if (ownerName.equals(
+				getSubrepoCentralMergePullRequestRecipientName(refName)) &&
+			pullRequest.isMergeSubrepoRequest()) {
 
-					if (_log.isInfoEnabled()) {
-						_log.info(message);
-					}
-
-					closePullRequest(pullRequest, message);
-
-					return false;
-				}
-
-				String sha = pullRequest.getCIMergeSha();
-
-				if (sha.equals("")) {
-					String message =
-						"Closing pull request because the ci-merge file " +
-							"modification is missing or incorrectly formatted";
-
-					if (_log.isInfoEnabled()) {
-						_log.info(message);
-					}
-
-					closePullRequest(pullRequest, message);
-
-					return false;
-				}
-			}
-		}
-
-		if (ownerName.equals("liferay")) {
-			if (!pullRequest.isSubrepo() &&
-				!repositoryName.equals("liferay-portal-ee")) {
+			if (!pullRequest.isValidCIMergeFile()) {
+				String message = JenkinsResultsParserUtil.combine(
+					"Closing pull request because a subrepo merge ",
+					"request must only contain a single change to a ",
+					"single ci-merge file.");
 
 				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Skip pull request because it is a pull sent to " +
-							"liferay that is not a subrepo request");
+					_log.info(message);
 				}
+
+				closePullRequest(pullRequest, message);
 
 				return false;
 			}
+
+			String sha = pullRequest.getCIMergeSha();
+
+			if (sha.equals("")) {
+				String message =
+					"Closing pull request because the ci-merge file " +
+						"modification is missing or incorrectly formatted";
+
+				if (_log.isInfoEnabled()) {
+					_log.info(message);
+				}
+
+				closePullRequest(pullRequest, message);
+
+				return false;
+			}
+		}
+
+		if (ownerName.equals("liferay") && !pullRequest.isSubrepo() &&
+			!repositoryName.equals("liferay-portal-ee")) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skip pull request because it is a pull sent to liferay " +
+						"that is not a subrepo request");
+			}
+
+			return false;
 		}
 
 		if (!pullRequest.isWhitelistedRepository()) {
@@ -887,8 +891,10 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			return false;
 		}
 
-		if (ownerName.equals("brianchandotcom") &&
-			refName.equals("master") &&
+		String githubCIUsername = _jenkinsBuildProperties.getProperty(
+			"github.ci.username");
+
+		if (ownerName.equals("brianchandotcom") && refName.equals("master") &&
 			repositoryName.equals("liferay-portal") &&
 			!senderName.equals(githubCIUsername)) {
 
@@ -1031,7 +1037,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			return;
 		}
 
-		processURL(pullRequest.getIssueURL() + "/" + "lock", null, "PUT");
+		processURL(pullRequest.getIssueURL() + "/lock", null, "PUT");
 	}
 
 	protected void lockPullRequest(PullRequest pullRequest, String message)
@@ -1050,6 +1056,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		throws Exception {
 
 		String ownerName = pullRequest.getOwnerName();
+
 		String refName = pullRequest.getRefName();
 
 		String subrepoCentralMergePullRequestRecipientName =
@@ -1072,10 +1079,10 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 		try {
 			if (!pullRequest.isValidCIMergeFile()) {
-				String message =
-					"Closing pull request because a subrepo merge " +
-						"request must only contain a single change to a " +
-							"single ci-merge file";
+				String message = JenkinsResultsParserUtil.combine(
+					"Closing pull request because a subrepo merge request ",
+					"must only contain a single change to a single ",
+					"ci-merge file");
 
 				if (_log.isInfoEnabled()) {
 					_log.info(message);
@@ -1086,11 +1093,11 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				return;
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			String message = "Skip merge subrepo because of a GitHub error";
 
 			if (_log.isInfoEnabled()) {
-				_log.info(message, e);
+				_log.info(message, exception);
 			}
 
 			commentPullRequest(pullRequest, message + ".");
@@ -1145,9 +1152,9 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 				break;
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Retrying " + statusURL, e);
+					_log.info("Retrying " + statusURL, exception);
 				}
 
 				Thread.sleep(1000);
@@ -1171,7 +1178,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		}
 
 		if (!force) {
-			Map<String, String> statuses = new HashMap();
+			Map<String, String> statuses = new HashMap<>();
 
 			for (int i = 0; i < statusesJSONArray.length(); i++) {
 				JSONObject statusJSONObject = statusesJSONArray.getJSONObject(
@@ -1224,10 +1231,11 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 					"/osb-github-web/subrepo",
 				jsonObject.toString());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Unable to remove key from subrepo processor queue", e);
+					"Unable to remove key from subrepo processor queue",
+					exception);
 			}
 		}
 
@@ -1253,19 +1261,17 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 			commentPullRequest(pullRequest, message + ".");
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 
 			String message = "Skip merge subrepo because of an internal error";
 
 			if (_log.isInfoEnabled()) {
-				_log.info(message, e);
+				_log.info(message, exception);
 			}
 
 			commentPullRequest(pullRequest, message + ".");
 		}
-
-		return;
 	}
 
 	protected void openPullRequest(PullRequest pullRequest) throws Exception {
@@ -1278,8 +1284,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		jsonObject.put("state", "open");
 
 		String pullRequestJSON = processURL(
-			"https://api.github.com/repos/" + pullRequest.getOwnerName() +
-				"/" + pullRequest.getRepositoryName() + "/pulls/" +
+			"https://api.github.com/repos/" + pullRequest.getOwnerName() + "/" +
+				pullRequest.getRepositoryName() + "/pulls/" +
 					pullRequest.getNumber(),
 			jsonObject.toString(), "PATCH");
 
@@ -1393,7 +1399,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		String jenkinsAccessToken = _jenkinsProperties.getProperty(
 			"jenkins.access.token");
 
-		List<String> urls = new ArrayList();
+		List<String> urls = new ArrayList<>();
 
 		urls.add(
 			JenkinsResultsParserUtil.combine(
@@ -1410,9 +1416,9 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				try {
 					processURL(url);
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isInfoEnabled()) {
-						_log.info("Skip sync autopull", e);
+						_log.info("Skip sync autopull", exception);
 					}
 
 					return;
@@ -1425,8 +1431,6 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 	}
 
 	protected void syncMirror(JSONObject payloadJSONObject) throws Exception {
-		JSONObject jsonObject = new JSONObject();
-
 		if (!isGitHubMirrorEnabled()) {
 			return;
 		}
@@ -1455,6 +1459,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			_log.info("Sync mirror repo: " + repo);
 		}
 
+		JSONObject jsonObject = new JSONObject();
+
 		jsonObject.put("repo", repo);
 
 		String sha = payloadJSONObject.getString("after");
@@ -1473,16 +1479,14 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				"http://" + gitHubWebMirrorHostname + "/osb-github-web/mirror",
 				jsonObject.toString());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Skip sync mirror", e);
+				_log.info("Skip sync mirror", exception);
 			}
 		}
 	}
 
 	protected void syncSubrepo(JSONObject payloadJSONObject) throws Exception {
-		JSONObject jsonObject = new JSONObject();
-
 		if (!isGitHubSubrepoSyncEnabled()) {
 			return;
 		}
@@ -1498,6 +1502,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync subrepo branch: " + branch);
 		}
+
+		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("branch", branch);
 
@@ -1568,9 +1574,9 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 					"/osb-github-web/subrepo",
 				jsonObject.toString());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Skip sync subrepo", e);
+				_log.info("Skip sync subrepo", exception);
 			}
 		}
 	}
@@ -1632,21 +1638,19 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 		addTestPullRequestQueryString(testPullRequestQueryString);
 
-		boolean gitHubWebhookPullRequestMirroring =
-			Boolean.parseBoolean(
-				_jenkinsBuildProperties.getProperty(
-					"github.webhook.pullrequest.mirroring",
-					Boolean.FALSE.toString()));
+		boolean gitHubWebhookPullRequestMirroring = Boolean.parseBoolean(
+			_jenkinsBuildProperties.getProperty(
+				"github.webhook.pullrequest.mirroring",
+				Boolean.FALSE.toString()));
 
 		if (gitHubWebhookPullRequestMirroring) {
 			String masterURL;
 
 			try {
-				masterURL =
-					LoadBalancerUtil.getMostAvailableMasterURL(
-						"base.invocation.url", "http://test-1.liferay.com");
+				masterURL = LoadBalancerUtil.getMostAvailableMasterURL(
+					"base.invocation.url", "http://test-1.liferay.com");
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Setting base invocation URL to " +
@@ -1676,8 +1680,9 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Skip CI action because " + login + " is not a " +
-						"Liferay member");
+					JenkinsResultsParserUtil.combine(
+						"Skip CI action because ", login,
+						" is not a Liferay member"));
 			}
 
 			if (hasLiferayEmailAddress(login)) {
@@ -1819,7 +1824,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 			commentPullRequest(pullRequest, sb.toString());
 
-			List<String> skippedTestSuites = new ArrayList(
+			List<String> skippedTestSuites = new ArrayList<>(
 				ciForwardRequiredTestSuites.length);
 
 			for (String ciForwardRequiredTestSuite :
@@ -1936,10 +1941,9 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 					sb.append(ciTestAvailableSuite);
 					sb.append("** - ");
 
-					String ciTestSuiteDescription =
-						pullRequest.getCIProperty(
-							"ci.test.suite.description[" +
-								ciTestAvailableSuite + "]");
+					String ciTestSuiteDescription = pullRequest.getCIProperty(
+						"ci.test.suite.description[" + ciTestAvailableSuite +
+							"]");
 
 					if (ciTestSuiteDescription != null) {
 						sb.append(ciTestSuiteDescription);
@@ -1988,10 +1992,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 			if (body.startsWith("ci:merge:force")) {
 				if (!login.equals("brianchandotcom") &&
-					!login.equals("brianwulbern") &&
-					!login.equals("jpince") &&
-					!login.equals("pyoo47") &&
-					!login.equals("shuyangzhou") &&
+					!login.equals("brianwulbern") && !login.equals("jpince") &&
+					!login.equals("pyoo47") && !login.equals("shuyangzhou") &&
 					!login.equals("stsquared99")) {
 
 					String message = "Only Brian Chan can force a merge";
@@ -2233,8 +2235,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 					if (testSuite.equals("gauntlet") &&
 						!login.equals("CsabaTurcsan") &&
-						!login.equals("Hanlf") &&
-						!login.equals("HarryC0204") &&
+						!login.equals("Hanlf") && !login.equals("HarryC0204") &&
 						!login.equals("Songyuewen") &&
 						!login.equals("SylviaLuan") &&
 						!login.equals("ZoltanTakacs") &&
@@ -2245,16 +2246,14 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 						!login.equals("jpince") &&
 						!login.equals("kiyoshilee") &&
 						!login.equals("lesliewong92") &&
-						!login.equals(
-							"liferay-continuous-integration-hu") &&
+						!login.equals("liferay-continuous-integration-hu") &&
 						!login.equals("michaelhashimoto") &&
 						!login.equals("michaelprigge") &&
 						!login.equals("pyoo47") &&
 						!login.equals("sharonchoi") &&
 						!login.equals("shuyangzhou") &&
 						!login.equals("stsquared99") &&
-						!login.equals("suilin") &&
-						!login.equals("vicnate5") &&
+						!login.equals("suilin") && !login.equals("vicnate5") &&
 						!login.equals("xbrianlee") &&
 						!login.equals("yunlinsun")) {
 
@@ -2289,13 +2288,10 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 			stopJenkinsTests(payloadJSONObject);
 		}
-
-		return;
 	}
 
 	private void _processPullRequestOpened(
-			JSONObject payloadJSONObject, JSONObject pullRequestJSONObject,
-			PullRequest pullRequest)
+			JSONObject pullRequestJSONObject, PullRequest pullRequest)
 		throws Exception {
 
 		String body = pullRequestJSONObject.optString("body");
@@ -2308,12 +2304,9 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		String refName = pullRequest.getRefName();
 		String repositoryName = pullRequest.getRepositoryName();
 		String senderName = pullRequest.getSenderName();
-		String subrepoCentralMergePullRequestRecipientName =
-			getSubrepoCentralMergePullRequestRecipientName(refName);
 
 		if (body.startsWith("Forwarded from:") &&
-			ownerName.equals(
-				pullRequestForwardDefaultReceiverUsername) &&
+			ownerName.equals(pullRequestForwardDefaultReceiverUsername) &&
 			senderName.equals(githubCIUsername)) {
 
 			StringBuilder sb = new StringBuilder(2);
@@ -2327,7 +2320,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		}
 
 		if (ownerName.equals(
-				subrepoCentralMergePullRequestRecipientName) &&
+				getSubrepoCentralMergePullRequestRecipientName(refName)) &&
 			pullRequest.isMergeSubrepoRequest()) {
 
 			commentMergeSubrepoPullRequest(pullRequest);
@@ -2388,8 +2381,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			List<String> ciTestAutoTestSuiteNames =
 				pullRequest.getCITestAutoTestSuiteNames();
 
-			if (
-					!ciTestAutoTestSuiteNames.isEmpty() &&
+			if (!ciTestAutoTestSuiteNames.isEmpty() &&
 				isTestablePullRequest(pullRequest)) {
 
 				StringBuilder sb = new StringBuilder();
@@ -2397,8 +2389,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				sb.append("CI is automatically triggering the following ");
 				sb.append("test suites:\n");
 
-				for (
-					String ciTestAutoTestSuiteName : ciTestAutoTestSuiteNames) {
+				for (String ciTestAutoTestSuiteName :
+						ciTestAutoTestSuiteNames) {
 
 					sb.append("- &nbsp;&nbsp;&nbsp;&nbsp;ci:test:**");
 					sb.append(ciTestAutoTestSuiteName);
@@ -2407,8 +2399,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 				commentPullRequest(pullRequest, sb.toString());
 
-				for (
-					String ciTestAutoTestSuiteName : ciTestAutoTestSuiteNames) {
+				for (String ciTestAutoTestSuiteName :
+						ciTestAutoTestSuiteNames) {
 
 					pullRequest.setCITestSuite(ciTestAutoTestSuiteName);
 
@@ -2431,8 +2423,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			sb.append("&quot;ci:test&quot; to run the PR Tester for ");
 			sb.append("this pull.");
 
-			if (!ownerName.equals("liferay") ||
-				pullRequest.isSubrepo() ||
+			if (!ownerName.equals("liferay") || pullRequest.isSubrepo() ||
 				repositoryName.equals("liferay-portal-ee")) {
 
 				commentPullRequest(pullRequest, sb.toString());
@@ -2452,10 +2443,10 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			_log.info("Synchronize triggered close pull request");
 		}
 
-		String message =
-			"Closing and locking pull request because pull requests " +
-				"sent to this user may not be updated. Please resend " +
-					"this pull request.";
+		String message = JenkinsResultsParserUtil.combine(
+			"Closing and locking pull request because pull requests ",
+			"sent to this user may not be updated. Please resend ",
+			"this pull request.");
 
 		closePullRequest(pullRequest, message);
 
@@ -2472,7 +2463,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 	};
 
 	private static Log _log = LogFactory.getLog(
-		JenkinsDoulosRequestProcessor.class);
+		GitHubWebhookPayloadProcessor.class);
 
 	private static Pattern _buildURLPattern = Pattern.compile(
 		"Build[\\w\\s]*started.*Job Link: <a href=\"(?<buildURL>[^\"]+)\"");
@@ -2488,10 +2479,10 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		"remote = .*/([^\\.]*)\\.git");
 	private Pattern _gitrepoSHAPattern = Pattern.compile(
 		"commit = ([0-9a-f]{40})");
-	private Properties _jenkinsBuildProperties = null;
+	private Properties _jenkinsBuildProperties;
 	private Properties _jenkinsProperties = new Properties();
-	private Map<String, Long> _testPullRequestQueryStrings;
-	private Map<String, Long> _testPullRequestURLs;
+	private final Map<String, Long> _testPullRequestQueryStrings;
+	private final Map<String, Long> _testPullRequestURLs;
 
 	private class Commit {
 
@@ -2510,7 +2501,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			return _commitJSONObject.getString("message");
 		}
 
-		private JSONObject _commitJSONObject;
+		private final JSONObject _commitJSONObject;
 
 	}
 
@@ -2610,8 +2601,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			try {
 				commitJSONObject = branchJSONObject.getJSONObject("commit");
 			}
-			catch (JSONException jsone) {
-				jsone.printStackTrace();
+			catch (JSONException jsonException) {
+				jsonException.printStackTrace();
 			}
 
 			if (commitJSONObject != null) {
@@ -2660,7 +2651,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				_log.info("Pull request sender ref sha: " + _senderRefSHA);
 			}
 
-			_senderRefSHAStatuses = new JSONArray(processURL(getStatusesURL()));
+			_senderRefSHAStatusesJSONArray = new JSONArray(
+				processURL(getStatusesURL()));
 
 			JSONArray commitsJSONArray = new JSONArray(
 				processURL(_pullRequestJSONObject.getString("commits_url")));
@@ -2756,7 +2748,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			try {
 				fileJSONObjects = getFileJSONObjects();
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				return "";
 			}
 
@@ -2803,8 +2795,6 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				Matcher matcher = _refNamePattern.matcher(_refName);
 
 				if (matcher.find()) {
-					String baseRefName = matcher.group("branchName");
-
 					if ((_repositoryName == null) ||
 						_repositoryName.isEmpty()) {
 
@@ -2816,7 +2806,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 					sb.append("https://raw.githubusercontent.com/liferay/");
 					sb.append(_repositoryName);
 					sb.append("/");
-					sb.append(baseRefName);
+					sb.append(matcher.group("branchName"));
 					sb.append("/ci.properties");
 
 					try {
@@ -2828,7 +2818,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 						_ciProperties = ciProperties;
 					}
-					catch (Exception e) {
+					catch (Exception exception) {
 						System.out.println(
 							"Unable to load ci.properties from " +
 								sb.toString());
@@ -2849,8 +2839,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			String ciTestAutoRecipientsProperty = getCIProperty(
 				"ci.test.auto.recipients");
 
-			if (
-					(ciTestAutoRecipientsProperty == null) ||
+			if ((ciTestAutoRecipientsProperty == null) ||
 				ciTestAutoRecipientsProperty.isEmpty()) {
 
 				return Collections.emptyList();
@@ -2859,9 +2848,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			Pattern pattern = Pattern.compile(
 				getOwnerName() + "\\[(?<testSuiteNames>[^\\]]+)]");
 
-			for (
-				String ciTestAutoRecipient :
-				ciTestAutoRecipientsProperty.split("\\s*,\\s*")) {
+			for (String ciTestAutoRecipient :
+					ciTestAutoRecipientsProperty.split("\\s*,\\s*")) {
 
 				Matcher matcher = pattern.matcher(ciTestAutoRecipient);
 
@@ -2891,9 +2879,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			String collaboratorsURL = repoJSONObject.getString(
 				"collaborators_url");
 
-			collaboratorsURL = collaboratorsURL.replace("{/collaborator}", "");
-
-			return collaboratorsURL;
+			return collaboratorsURL.replace("{/collaborator}", "");
 		}
 
 		public List<Commit> getCommits() throws Exception {
@@ -2901,7 +2887,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				return _commits;
 			}
 
-			List<Commit> commits = new ArrayList<Commit>();
+			List<Commit> commits = new ArrayList<>();
 
 			String commitsURL = _pullRequestJSONObject.getString("commits_url");
 
@@ -2926,12 +2912,12 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 					return _commits;
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							"Retrying " + commitsURL +
 								" because the JSON response was not an array",
-							e);
+							exception);
 					}
 
 					Thread.sleep(5000);
@@ -2950,7 +2936,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 				return _fileJSONObjects;
 			}
 
-			List<JSONObject> fileJSONObjects = new ArrayList<JSONObject>();
+			List<JSONObject> fileJSONObjects = new ArrayList<>();
 
 			String filesURL =
 				"https://api.github.com/repos/" + _ownerName + "/" +
@@ -2972,12 +2958,12 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 					return _fileJSONObjects;
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							"Retrying " + filesURL +
 								" because the JSON response was not an array",
-							e);
+							exception);
 					}
 
 					Thread.sleep(5000);
@@ -3000,7 +2986,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		}
 
 		public List<String> getLabelNames() throws Exception {
-			List<String> labelNames = new ArrayList<String>();
+			List<String> labelNames = new ArrayList<>();
 
 			JSONArray labelJSONArray = _pullRequestJSONObject.getJSONArray(
 				"labels");
@@ -3093,7 +3079,7 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		}
 
 		public JSONArray getSenderRefSHAStatuses() {
-			return _senderRefSHAStatuses;
+			return _senderRefSHAStatusesJSONArray;
 		}
 
 		public String getStatusesURL() throws Exception {
@@ -3142,20 +3128,19 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 			}
 
 			for (Commit commit : getCommits()) {
-				boolean hasJIRAProjectKey = false;
-
 				String message = commit.getMessage();
 
 				if (message.contains("subrepo:ignore")) {
 					return true;
 				}
 
-				for (int i = 0; i < _jiraProjectKeys.length; i++) {
-					if (message.contains(_jiraProjectKeys[i] + "-")) {
+				boolean hasJIRAProjectKey = false;
+
+				for (String jiraProjectKey : _jiraProjectKeys) {
+					if (message.contains(jiraProjectKey + "-")) {
 						if (_log.isInfoEnabled()) {
 							_log.info(
-								"Contains JIRA project keys " +
-									_jiraProjectKeys[i]);
+								"Contains JIRA project keys " + jiraProjectKey);
 						}
 
 						hasJIRAProjectKey = true;
@@ -3254,8 +3239,8 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		}
 
 		public boolean isMergeSubrepoRequest() throws Exception {
-			for (JSONObject file : getFileJSONObjects()) {
-				String fileName = file.getString("filename");
+			for (JSONObject fileJSONObject : getFileJSONObjects()) {
+				String fileName = fileJSONObject.getString("filename");
 
 				if (fileName.endsWith("/ci-merge")) {
 					return true;
@@ -3370,10 +3355,10 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		}
 
 		private List<String> _getCIEnabledBranchNames() {
-			String ciEnabledBranchNames =
-				_jenkinsBuildProperties.getProperty(
-					"github.ci.enabled.branch.names[" + _repositoryName + "]",
-					"");
+			String ciEnabledBranchNames = _jenkinsBuildProperties.getProperty(
+				JenkinsResultsParserUtil.combine(
+					"github.ci.enabled.branch.names[", _repositoryName, "]"),
+				"");
 
 			return Arrays.asList(ciEnabledBranchNames.split(","));
 		}
@@ -3400,7 +3385,9 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 
 			jsonObject.put("context", context);
 			jsonObject.put(
-				"description", "\"" + command + "\" was invoked on Jenkins.");
+				"description",
+				JenkinsResultsParserUtil.combine(
+					"\"", command, "\" was invoked on Jenkins."));
 			jsonObject.put("state", "pending");
 			jsonObject.put("target_url", targetURL);
 
@@ -3414,27 +3401,27 @@ public class JenkinsDoulosRequestProcessor extends BaseDoulosRequestProcessor {
 		private String _ciReevaluateBuildID;
 		private String _ciTestSuite = "default";
 		private List<Commit> _commits;
-		private String _commonParentSHA;
+		private final String _commonParentSHA;
 		private List<JSONObject> _fileJSONObjects;
 		private String[] _jiraProjectKeys = {};
-		private int _number;
-		private String _originName;
-		private String _ownerName;
+		private final int _number;
+		private final String _originName;
+		private final String _ownerName;
 		private Set<String> _passingTestSuites;
 		private Pattern _passingTestSuiteStatusPattern = Pattern.compile(
 			"\"ci:test:(?<testSuiteName>[^\"]+)\"\\s*has PASSED.");
 		private String _portalBundlesDistURL;
-		private String _portalRefName;
-		private JSONObject _pullRequestJSONObject;
-		private String _refName;
+		private final String _portalRefName;
+		private final JSONObject _pullRequestJSONObject;
+		private final String _refName;
 		private String _refSHA;
 		private String _repositoryName;
-		private String _senderName;
-		private String _senderRefName;
-		private String _senderRefSHA;
-		private JSONArray _senderRefSHAStatuses;
+		private final String _senderName;
+		private final String _senderRefName;
+		private final String _senderRefSHA;
+		private final JSONArray _senderRefSHAStatusesJSONArray;
 		private String _testerName;
-		private String _url;
+		private final String _url;
 
 	}
 

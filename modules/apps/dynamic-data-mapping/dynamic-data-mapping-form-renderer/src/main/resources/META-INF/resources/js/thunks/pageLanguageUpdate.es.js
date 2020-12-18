@@ -206,26 +206,25 @@ export default function pageLanguageUpdate({
 							field.localizedValue = {};
 						}
 
-						if (field.repeatable) {
+						const fieldRecordValue =
+							newDataRecordValues[field.fieldName];
+
+						if (field.repeatable && fieldRecordValue) {
 							let values = {};
-							Object.keys(
-								newDataRecordValues[field.fieldName]
-							).forEach((key) => {
+							Object.keys(fieldRecordValue).forEach((key) => {
 								values = {
 									...values,
 									[key]:
-										newDataRecordValues[field.fieldName][
-											key
-										][repeatableIndex],
+										fieldRecordValue[key][repeatableIndex],
 								};
 							});
 							field.localizedValue = values;
 
 							repeatableIndex++;
 						}
-						else if (newDataRecordValues[field.fieldName]) {
+						else if (fieldRecordValue) {
 							field.localizedValue = {
-								...newDataRecordValues[field.fieldName],
+								...fieldRecordValue,
 							};
 						}
 

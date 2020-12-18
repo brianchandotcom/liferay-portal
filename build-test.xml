@@ -308,6 +308,11 @@ jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}
 
+jdbc.counter.driverClassName=${database.driver}
+jdbc.counter.url=${database.url}
+jdbc.counter.username=${database.username}
+jdbc.counter.password=${database.password}
+
 // HikariCP
 
 jdbc.default.connectionTimeout=600000

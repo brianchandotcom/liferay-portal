@@ -346,6 +346,10 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 	@Override
 	public String getName() {
+		if (jsonObject.has("Name")) {
+			return jsonObject.getString("Name");
+		}
+
 		return jsonObject.getString("RunnerTestName");
 	}
 

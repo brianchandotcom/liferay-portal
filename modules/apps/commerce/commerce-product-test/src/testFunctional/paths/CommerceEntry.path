@@ -490,6 +490,8 @@
 </tr>
 <!--PRODUCT-->
 <tr>
+	<td>ANY_AUTOCOMPLETE_TEXT_FIELD</td>
+	<td>//label[text()='${key_label}']/following::div[@id="autocomplete-root"]//input[@type="text"]</td>
 	<td></td>
 </tr>
 <tr>

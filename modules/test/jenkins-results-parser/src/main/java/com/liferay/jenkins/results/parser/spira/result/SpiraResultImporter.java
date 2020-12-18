@@ -199,6 +199,7 @@ public class SpiraResultImporter {
 		SpiraRestAPIUtil.summarizeRequests();
 
 		_updateSlackChannel();
+		_updateTopLevelBuildDescription();
 	}
 
 	public void setup() {
@@ -610,6 +611,41 @@ public class SpiraResultImporter {
 		NotificationUtil.sendSlackNotification(
 			sb.toString(), "#spira-reports", ":liferay-ci:", buildName,
 			"Liferay CI");
+	}
+
+	private void _updateTopLevelBuildDescription() {
+		SpiraReleaseBuild spiraReleaseBuild =
+			_spiraBuildResult.getSpiraReleaseBuild();
+
+		if (spiraReleaseBuild == null) {
+			return;
+		}
+
+		String buildDescription = _topLevelBuild.getBuildDescription();
+
+		String text = ">Jenkins Report</a>";
+
+		if (!buildDescription.contains(text) ||
+			buildDescription.contains("Spira Report")) {
+
+			return;
+		}
+
+		int x = buildDescription.indexOf(text) + text.length();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(buildDescription.substring(0, x));
+		sb.append(" - <a href=\"");
+		sb.append(spiraReleaseBuild.getURL());
+		sb.append("\">Spira Report</a>");
+		sb.append(buildDescription.substring(x));
+
+		JenkinsMaster jenkinsMaster = _topLevelBuild.getJenkinsMaster();
+
+		JenkinsResultsParserUtil.updateBuildDescription(
+			sb.toString(), _topLevelBuild.getBuildNumber(),
+			_topLevelBuild.getJobName(), jenkinsMaster.getName());
 	}
 
 	private static final int _GROUP_SIZE = 25;

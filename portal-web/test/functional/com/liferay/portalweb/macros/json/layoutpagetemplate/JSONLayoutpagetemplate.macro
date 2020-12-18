@@ -182,13 +182,14 @@ definition {
 
 	@summary = "Delete a layoutPageTemplateEntry under an existing site"
 	macro deleteLayoutPageTemplateEntry {
-		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName}");
+		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 
 		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}",site = "${site}");
 
 		var layoutPageTemplateEntryId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateEntryId(
 			groupId = "${groupId}",
-			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}");
+			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
+			type = "${type}");
 
 		JSONLayoutpagetemplateAPI._deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId = "${layoutPageTemplateEntryId}");
 	}

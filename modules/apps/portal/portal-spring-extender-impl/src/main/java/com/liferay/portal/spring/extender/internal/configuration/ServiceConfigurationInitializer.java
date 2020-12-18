@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.internal.loader.ModuleResourceLoader;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -131,6 +132,14 @@ public class ServiceConfigurationInitializer {
 				StringUtil.split(
 					_portletConfiguration.get(
 						PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+
+			if (!PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED) {
+				_resourceActions.populatePortletResources(
+					_classLoader,
+					StringUtil.split(
+						_portletConfiguration.get(
+							PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+			}
 		}
 		catch (Exception exception) {
 			_log.error(

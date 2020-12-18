@@ -16,10 +16,13 @@ definition {
 
 			Click(locator1 = "Button#PLUS");
 
-			AssertClick(
-				key_menuItem = "Add SKU",
-				locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
-				value1 = "${key_menuItem}");
+			if (IsElementPresent(locator1 = "MenuItem#DROPDOWN_MENU_ITEM", key_menuItem = "Add SKU"))
+			{
+				AssertClick(
+					key_menuItem = "Add SKU",
+					locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
+					value1 = "${key_menuItem}");
+			}
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

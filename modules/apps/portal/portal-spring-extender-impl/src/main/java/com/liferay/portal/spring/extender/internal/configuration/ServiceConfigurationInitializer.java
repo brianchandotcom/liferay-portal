@@ -127,18 +127,18 @@ public class ServiceConfigurationInitializer {
 
 	private void _readResourceActions() {
 		try {
-			_resourceActions.populateModelResources(
-				_classLoader,
-				StringUtil.split(
-					_portletConfiguration.get(
-						PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+			String[] sources = StringUtil.split(
+				_portletConfiguration.get(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
 
-			if (!PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED) {
+			_resourceActions.populateModelResources(_classLoader, sources);
+
+			String bundleSymbolicName = _bundle.getSymbolicName();
+
+			if (!PropsValues.RESOURCE_ACTIONS_STRICT_MODE_ENABLED ||
+				bundleSymbolicName.contains("commerce")) {
+
 				_resourceActions.populatePortletResources(
-					_classLoader,
-					StringUtil.split(
-						_portletConfiguration.get(
-							PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+					_classLoader, sources);
 			}
 		}
 		catch (Exception exception) {

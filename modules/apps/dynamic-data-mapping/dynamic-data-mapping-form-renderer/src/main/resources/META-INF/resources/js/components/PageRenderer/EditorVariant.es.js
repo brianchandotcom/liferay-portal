@@ -176,7 +176,7 @@ export const Page = ({
 			invalidFormMessage={invalidFormMessage}
 			pageIndex={pageIndex}
 		>
-			{editable && empty && activePage === pageIndex ? (
+			{editable && empty ? (
 				<ClayLayout.Row>
 					<ClayLayout.Col
 						className="col-ddm col-empty last-col lfr-initial-col mb-4 mt-5"
@@ -206,14 +206,14 @@ export const Page = ({
 	);
 };
 
-export const Rows = ({activePage, children, editable, pageIndex, rows}) => {
+export const Rows = ({children, editable, pageIndex, rows}) => {
 	if (!rows) {
 		return null;
 	}
 
 	return rows.map((row, index) => (
 		<div key={index}>
-			{editable && index === 0 && activePage === pageIndex && (
+			{editable && index === 0 && (
 				<Placeholder
 					isRow
 					pageIndex={pageIndex}
@@ -224,7 +224,7 @@ export const Rows = ({activePage, children, editable, pageIndex, rows}) => {
 
 			{children({index, row})}
 
-			{editable && activePage === pageIndex && (
+			{editable && (
 				<Placeholder
 					isRow
 					pageIndex={pageIndex}

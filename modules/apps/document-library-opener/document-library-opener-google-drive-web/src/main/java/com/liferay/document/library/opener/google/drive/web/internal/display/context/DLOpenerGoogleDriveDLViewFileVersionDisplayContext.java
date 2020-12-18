@@ -19,7 +19,6 @@ import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.google.drive.constants.DLOpenerGoogleDriveMimeTypes;
-import com.liferay.document.library.opener.google.drive.constants.GoogleDriveUIItemKeys;
 import com.liferay.document.library.opener.google.drive.web.internal.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveConstants;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
@@ -166,7 +165,7 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setKey(GoogleDriveUIItemKeys.EDIT_IN_GOOGLE);
+		urlMenuItem.setKey("#edit-in-google-drive");
 		urlMenuItem.setLabel(LanguageUtil.get(_resourceBundle, _getLabelKey()));
 		urlMenuItem.setMethod(HttpMethods.POST);
 		urlMenuItem.setURL(_getActionURL(cmd));

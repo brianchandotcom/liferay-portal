@@ -96,6 +96,46 @@ definition {
 			value1 = "Publish");
 	}
 
+	macro editCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${videoShortcutTitle}");
+
+		Type(
+			key_text = "Video URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${videoURLEdit}");
+
+		Pause(locator1 = "5000");
+
+		if (isSet(videoShortcutPreview)) {
+			AssertVisible(
+				key_videoShortcutPreview = "${videoShortcutPreview}",
+				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
+		}
+
+		if (isSet(extractedVideoShortcutTitleEdit)) {
+			var titleText = selenium.getElementValue("TextInput#TITLE");
+
+			if ("${extractedVideoShortcutTitleEdit}" == "${titleText}") {
+				echo("This is a correct title.");
+			}
+			else {
+				fail("FAIL!");
+			}
+		}
+
+		if (isSet(videoShortcutTitleEdit)) {
+			PortletEntry.inputTitle(title = "${videoShortcutTitleEdit}");
+		}
+
+		if (isSet(videoShortcutDescriptionEdit)) {
+			PortletEntry.inputDescription(description = "${videoShortcutDescriptionEdit}");
+		}
+
+		PortletEntry.publish();
+	}
+
 	macro validateURL {
 		Type(
 			key_text = "Video URL",

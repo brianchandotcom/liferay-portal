@@ -59,6 +59,7 @@ AUI.add(
 
 				toolbarCssClass: {
 					value: {
+						footer: 'ml-auto',
 						header: 'order-1',
 					},
 				},

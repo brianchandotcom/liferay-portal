@@ -441,6 +441,46 @@ definition {
 		Pagination.viewResults(results = "Showing 21 to 30 of 30 entries.");
 	}
 
+	@description = "This ensures that users can preview the Facebook video in item selector."
+	@priority = "5"
+	test PreviewFacebookVideo {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Facebook Video",
+			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor(video = "true");
+
+		ItemSelector.previewVideoFromDM(
+			depotName = "Test Depot Name",
+			navTab = "Documents and Media",
+			validURL = "https://www.facebook.com",
+			videoShortcutTitle = "Test Facebook Video");
+	}
+
 	@description = "This ensures that a message is displayed in the preview section of the item selector when pasting an invalid URL."
 	@priority = "5"
 	test PreviewInvalidVideos {
@@ -550,6 +590,90 @@ definition {
 		ItemSelector.gotoPreviewViaSelectFile(navTab = "Documents and Media");
 
 		AssertVisible(locator1 = "ItemSelector#SELECT_IMAGE_PREVIEW");
+	}
+
+	@description = "This ensures that users can preview the Twitch video in item selector."
+	@priority = "5"
+	test PreviewTwitchVideo {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Twitch Video",
+			videoURL = "https://www.twitch.tv/videos/806178790");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
+
+		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
+
+		ItemSelector.previewVideoFromDM(
+			depotName = "Test Depot Name",
+			navTab = "Documents and Media",
+			validURL = "https://player.twitch.tv",
+			videoShortcutTitle = "Test Twitch Video");
+	}
+
+	@description = "This ensures that users can preview the Vimeo video in item selector."
+	@priority = "5"
+	test PreviewVimeoVideo {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Vimeo Video",
+			videoURL = "https://vimeo.com/483035084");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
+
+		ItemSelector.previewVideoFromDM(
+			navTab = "Documents and Media",
+			validURL = "https://player.vimeo.com",
+			videoShortcutTitle = "Test Vimeo Video");
+	}
+
+	@description = "This ensures that users can preview the YouTube video in item selector."
+	@priority = "5"
+	test PreviewYouTubeVideo {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
+
+		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
+
+		ItemSelector.previewVideoFromDM(
+			navTab = "Documents and Media",
+			validURL = "https://www.youtube.com",
+			videoShortcutTitle = "Test YouTube Video");
 	}
 
 	@description = "This test covers LPS-119709. It ensures that the blog images can not filter by the everywhere and the current site."

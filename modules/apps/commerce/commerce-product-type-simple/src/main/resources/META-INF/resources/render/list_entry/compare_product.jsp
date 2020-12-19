@@ -66,7 +66,7 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 	<div class="autofit-float autofit-row autofit-row-end product-price-section">
 		<div class="autofit-col">
 			<span class="product-price">
-				<liferay-commerce:price
+				<commerce-ui:price
 					CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
 				/>
 			</span>

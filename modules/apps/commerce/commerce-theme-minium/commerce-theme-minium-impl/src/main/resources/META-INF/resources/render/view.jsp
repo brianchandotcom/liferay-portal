@@ -89,7 +89,7 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 			</c:choose>
 
 			<div class="mt-3 price">
-				<liferay-commerce:price
+				<commerce-ui:price
 					CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
 					CPInstanceId="<%= (cpSku == null) ? 0 : cpSku.getCPInstanceId() %>"
 				/>

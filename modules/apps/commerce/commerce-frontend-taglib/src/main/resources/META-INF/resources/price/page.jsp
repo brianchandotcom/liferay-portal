@@ -17,21 +17,21 @@
 <%@ include file="/price/init.jsp" %>
 
 <%
-CommerceDiscountValue commerceDiscountValue = (CommerceDiscountValue)request.getAttribute("liferay-commerce:price:commerceDiscountValue");
-long cpInstanceId = (long)request.getAttribute("liferay-commerce:price:cpInstanceId");
-DecimalFormat decimalFormat = (DecimalFormat)request.getAttribute("liferay-commerce:price:decimalFormat");
-boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:price:displayDiscountLevels");
-boolean displayOneLine = (boolean)request.getAttribute("liferay-commerce:price:displayOneLine");
-String discountLabel = (String)request.getAttribute("liferay-commerce:price:discountLabel");
-boolean netPrice = (boolean)request.getAttribute("liferay-commerce:price:netPrice");
-String formattedFinalPrice = (String)request.getAttribute("liferay-commerce:price:formattedFinalPrice");
-String formattedPrice = (String)request.getAttribute("liferay-commerce:price:formattedPrice");
-String formattedPromoPrice = (String)request.getAttribute("liferay-commerce:price:formattedPromoPrice");
-String promoPriceLabel = (String)request.getAttribute("liferay-commerce:price:promoPriceLabel");
-boolean showDiscount = (boolean)request.getAttribute("liferay-commerce:price:showDiscount");
-boolean showDiscountAmount = (boolean)request.getAttribute("liferay-commerce:price:showDiscountAmount");
-boolean showPercentage = (boolean)request.getAttribute("liferay-commerce:price:showPercentage");
-boolean showPriceRange = (boolean)request.getAttribute("liferay-commerce:price:showPriceRange");
+CommerceDiscountValue commerceDiscountValue = (CommerceDiscountValue)request.getAttribute("commerce-ui:price:commerceDiscountValue");
+long cpInstanceId = (long)request.getAttribute("commerce-ui:price:cpInstanceId");
+DecimalFormat decimalFormat = (DecimalFormat)request.getAttribute("commerce-ui:price:decimalFormat");
+boolean displayDiscountLevels = (boolean)request.getAttribute("commerce-ui:price:displayDiscountLevels");
+boolean displayOneLine = (boolean)request.getAttribute("commerce-ui:price:displayOneLine");
+String discountLabel = (String)request.getAttribute("commerce-ui:price:discountLabel");
+boolean netPrice = (boolean)request.getAttribute("commerce-ui:price:netPrice");
+String formattedFinalPrice = (String)request.getAttribute("commerce-ui:price:formattedFinalPrice");
+String formattedPrice = (String)request.getAttribute("commerce-ui:price:formattedPrice");
+String formattedPromoPrice = (String)request.getAttribute("commerce-ui:price:formattedPromoPrice");
+String promoPriceLabel = (String)request.getAttribute("commerce-ui:price:promoPriceLabel");
+boolean showDiscount = (boolean)request.getAttribute("commerce-ui:price:showDiscount");
+boolean showDiscountAmount = (boolean)request.getAttribute("commerce-ui:price:showDiscountAmount");
+boolean showPercentage = (boolean)request.getAttribute("commerce-ui:price:showPercentage");
+boolean showPriceRange = (boolean)request.getAttribute("commerce-ui:price:showPriceRange");
 
 boolean showStartingAt = true;
 

@@ -77,7 +77,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 					<c:when test="<%= cpSku != null %>">
 						<h4 class="sku"><%= HtmlUtil.escape(cpSku.getSku()) %></h4>
 
-						<div class="price"><liferay-commerce:price CPDefinitionId="<%= cpDefinitionId %>" CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
+						<div class="price"><commerce-ui:price CPDefinitionId="<%= cpDefinitionId %>" CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
 
 						<div class="subscription-info"><commerce-ui:product-subscription-info CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
 
@@ -90,7 +90,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 					<c:otherwise>
 						<h4 class="sku" data-text-cp-instance-sku=""></h4>
 
-						<div class="price"><liferay-commerce:price CPDefinitionId="<%= cpDefinitionId %>" /></div>
+						<div class="price"><commerce-ui:price CPDefinitionId="<%= cpDefinitionId %>" /></div>
 
 						<div class="subscription-info" data-text-cp-instance-subscription-info="" data-text-cp-instance-subscription-info-show></div>
 

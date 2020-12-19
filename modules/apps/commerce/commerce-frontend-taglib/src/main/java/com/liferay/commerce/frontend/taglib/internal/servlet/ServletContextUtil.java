@@ -16,8 +16,11 @@ package com.liferay.commerce.frontend.taglib.internal.servlet;
 
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -48,12 +51,26 @@ public class ServletContextUtil {
 		return _servletContextUtil._getCommerceOrderHttpHelper();
 	}
 
+	public static final CommerceProductPriceCalculation
+		getCommerceProductPriceCalculation() {
+
+		return _servletContextUtil._getCommerceProductPriceCalculation();
+	}
+
 	public static final ConfigurationProvider getConfigurationProvider() {
 		return _servletContextUtil._getConfigurationProvider();
 	}
 
 	public static final CPContentHelper getCPContentHelper() {
 		return _servletContextUtil._getCPContentHelper();
+	}
+
+	public static final CPDefinitionHelper getCPDefinitionHelper() {
+		return _servletContextUtil._getCPDefinitionHelper();
+	}
+
+	public static final CPInstanceHelper getCPInstanceHelper() {
+		return _servletContextUtil._getCPInstanceHelper();
 	}
 
 	public static final CPSubscriptionTypeRegistry
@@ -99,6 +116,13 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCommerceProductPriceCalculation(
+		CommerceProductPriceCalculation commerceProductPriceCalculation) {
+
+		_commerceProductPriceCalculation = commerceProductPriceCalculation;
+	}
+
+	@Reference(unbind = "-")
 	protected void setConfigurationProvider(
 		ConfigurationProvider configurationProvider) {
 
@@ -108,6 +132,18 @@ public class ServletContextUtil {
 	@Reference(unbind = "-")
 	protected void setCPContentHelper(CPContentHelper cpContentHelper) {
 		_cpContentHelper = cpContentHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCPDefinitionHelper(
+		CPDefinitionHelper cpDefinitionHelper) {
+
+		_cpDefinitionHelper = cpDefinitionHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCPInstanceHelper(CPInstanceHelper cpInstanceHelper) {
+		_cpInstanceHelper = cpInstanceHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -143,12 +179,26 @@ public class ServletContextUtil {
 		return _commerceOrderHttpHelper;
 	}
 
+	private CommerceProductPriceCalculation
+		_getCommerceProductPriceCalculation() {
+
+		return _commerceProductPriceCalculation;
+	}
+
 	private ConfigurationProvider _getConfigurationProvider() {
 		return _configurationProvider;
 	}
 
 	private CPContentHelper _getCPContentHelper() {
 		return _cpContentHelper;
+	}
+
+	private CPDefinitionHelper _getCPDefinitionHelper() {
+		return _cpDefinitionHelper;
+	}
+
+	private CPInstanceHelper _getCPInstanceHelper() {
+		return _cpInstanceHelper;
 	}
 
 	private CPSubscriptionTypeRegistry _getCPSubscriptionTypeRegistry() {
@@ -171,8 +221,11 @@ public class ServletContextUtil {
 
 	private CommerceChannelLocalService _commerceChannelLocalService;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 	private ConfigurationProvider _configurationProvider;
 	private CPContentHelper _cpContentHelper;
+	private CPDefinitionHelper _cpDefinitionHelper;
+	private CPInstanceHelper _cpInstanceHelper;
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
 	private NPMResolver _npmResolver;
 	private ProductHelper _productHelper;

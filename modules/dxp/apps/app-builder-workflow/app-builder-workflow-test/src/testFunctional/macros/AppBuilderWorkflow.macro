@@ -260,6 +260,8 @@ definition {
 			key_positionNumber = "${positionNumber}",
 			locator1 = "AppBuilderWorkflow#CREATE_FORM_VIEW_BUTTON");
 
+		Pause(locator1 = "3000");
+
 		SelectFrame(
 			key_title = "New Form View",
 			locator1 = "IFrame#MODAL_ANY");
@@ -267,6 +269,8 @@ definition {
 
 	macro clickToCreateTableView {
 		Click.javaScriptClick(locator1 = "AppBuilderWorkflow#CREATE_TABLE_VIEW_BUTTON");
+
+		Pause(locator1 = "3000");
 
 		SelectFrame(
 			key_title = "New Table View",

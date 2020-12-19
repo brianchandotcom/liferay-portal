@@ -215,7 +215,7 @@ definition {
 
 	@description = "LRQA-63248 Automate LPS-112672: As an App Admin, I want to create a new Form View for an existing Object in the Workflow App creation UX"
 	@priority = "4"
-	test CancelCreationOfFormView {
+	test CancelCreationOfFormViewAndSelectSecondFormView {
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
 			isCreatingFormView = "false",
@@ -232,25 +232,25 @@ definition {
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderWorkflow.selectObject(objectName = "my custom object");
 		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
-		AppBuilderWorkflow.assertCreateFormViewButton(positionNumber = "1");
 		AppBuilderWorkflow.clickToCreateFormView(positionNumber = "1");
 		AppBuilderAdmin.cancel();
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "Select a Form View",
+			positionNumber = "1");
 
 		AppBuilderWorkflow.addNewStep();
-		AppBuilderWorkflow.assertStepPresent(step = "1");
 		AppBuilderWorkflow.selectDataAndViewsCard();
-
 		AppBuilderWorkflow.addNewFormView();
-		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
-		AppBuilderWorkflow.assertCreateFormViewButton(positionNumber = "1");
-		AppBuilderWorkflow.clickToCreateFormView(positionNumber = "1");
+		AppBuilderWorkflow.addNewFormView();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "2");
+		AppBuilderWorkflow.clickToCreateFormView(positionNumber = "2");
 		AppBuilderWorkflow.createSimpleFormView(
 			fieldType = "Text",
 			formViewName = "My Form View");
 
 		AppBuilderWorkflow.assertFormViewSelected(
 			formViewName = "My Form View",
-			positionNumber = "1");
+			positionNumber = "2");
 	}
 
 	@description = "Create a Basic Workflow App"

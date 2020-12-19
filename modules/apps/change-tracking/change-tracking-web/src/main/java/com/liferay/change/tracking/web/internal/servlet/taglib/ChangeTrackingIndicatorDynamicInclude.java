@@ -22,7 +22,6 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
-import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
@@ -59,6 +57,7 @@ import java.util.ResourceBundle;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -200,22 +199,24 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		checkoutURL.setParameter(
 			"redirect", _portal.getCurrentURL(httpServletRequest));
 
-		PortletURL selectURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, themeDisplay.getScopeGroup(),
-			CTPortletKeys.PUBLICATIONS, 0, 0, PortletRequest.RENDER_PHASE);
-
-		selectURL.setParameter(
-			"mvcPath", "/publications/select_publication.jsp");
-
-		PublicationsPortletURLUtil.setWindowState(
-			selectURL, LiferayWindowState.POP_UP);
-
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(
-			"checkoutURL", checkoutURL.toString()
+			"getSelectPublicationsURL",
+			() -> {
+				ResourceURL getSelectPublicationsURL =
+					(ResourceURL)_portal.getControlPanelPortletURL(
+						httpServletRequest, themeDisplay.getScopeGroup(),
+						CTPortletKeys.PUBLICATIONS, 0, 0,
+						PortletRequest.RESOURCE_PHASE);
+
+				getSelectPublicationsURL.setResourceID(
+					"/change_tracking/get_select_publications");
+
+				return getSelectPublicationsURL.toString();
+			}
 		).put(
 			"namespace", _portal.getPortletNamespace(CTPortletKeys.PUBLICATIONS)
 		).put(
-			"selectURL", selectURL.toString()
+			"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).build();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -388,7 +389,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 
-		data.put("items", jsonArray);
+		data.put("dropdownItems", jsonArray);
 
 		return data;
 	}

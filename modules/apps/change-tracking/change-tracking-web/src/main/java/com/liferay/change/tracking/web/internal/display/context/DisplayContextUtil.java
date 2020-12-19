@@ -17,7 +17,9 @@ package com.liferay.change.tracking.web.internal.display.context;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.taglib.ui.UserPortraitTag;
 
 import java.util.List;
 import java.util.Set;
@@ -52,6 +55,39 @@ public class DisplayContextUtil {
 		}
 
 		return typeNamesJSONObject;
+	}
+
+	public static JSONObject getUserInfoJSONObject(
+		Predicate innerJoinPredicate, Table<?> innerJoinTable,
+		ThemeDisplay themeDisplay, UserLocalService userLocalService,
+		Predicate wherePredicate) {
+
+		JSONObject userInfoJSONObject = JSONFactoryUtil.createJSONObject();
+
+		List<User> users = userLocalService.dslQuery(
+			DSLQueryFactoryUtil.selectDistinct(
+				UserTable.INSTANCE
+			).from(
+				UserTable.INSTANCE
+			).innerJoinON(
+				innerJoinTable, innerJoinPredicate
+			).where(
+				wherePredicate
+			));
+
+		for (User user : users) {
+			userInfoJSONObject.put(
+				String.valueOf(user.getUserId()),
+				JSONUtil.put(
+					"userName", user.getFullName()
+				).put(
+					"userPortraitHTML",
+					UserPortraitTag.getUserPortraitHTML(
+						StringPool.BLANK, StringPool.BLANK, user, themeDisplay)
+				));
+		}
+
+		return userInfoJSONObject;
 	}
 
 	public static JSONObject getUserInfoJSONObject(

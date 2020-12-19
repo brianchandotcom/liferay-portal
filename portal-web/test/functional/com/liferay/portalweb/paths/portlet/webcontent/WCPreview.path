@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_IMAGE</td>
-	<td>//img[contains(@src,'${key_imageTitle}')]</td>
+	<td>//source[contains(@srcset,'${key_imageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -38,6 +38,7 @@ definition {
 
 			if ("${navTab}" == "Documents and Media") {
 				ItemSelector.addVideoFromDM(
+					depotName = "${depotName}",
 					navTab = "${navTab}",
 					videoShortcutTitle = "${videoShortcutTitle}");
 			}

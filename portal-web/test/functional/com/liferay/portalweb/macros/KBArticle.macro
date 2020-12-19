@@ -1159,6 +1159,11 @@ definition {
 					key_service = "${service}",
 					locator1 = "BlogsEntry#CONTENT_VIDEO");
 			}
+
+			else if ("${internalVideo}" == "true") {
+				DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
+			}
+
 			else {
 				AssertElementPresent(
 					key_service = "youtube",

@@ -2048,6 +2048,16 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 	}
 
+	macro viewInternalVideoPreview {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
+
+		AssertVisible(
+			key_videoName = "${videoName}",
+			locator1 = "DocumentsAndMediaDocument#VIDEO_PREVIEW");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro viewLocation {
 		var key_dmFolderName = "${dmFolderName}";
 

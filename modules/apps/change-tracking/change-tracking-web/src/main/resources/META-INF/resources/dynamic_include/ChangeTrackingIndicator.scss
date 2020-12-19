@@ -44,3 +44,30 @@
 		}
 	}
 }
+
+.select-publications {
+	.list-group {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+
+	.management-bar {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+
+	.modal-body.inline-scroller {
+		max-height: none;
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 0;
+	}
+
+	.results-bar {
+		margin-bottom: 12px;
+	}
+
+	.select-publications-loading {
+		opacity: 0.5;
+	}
+}

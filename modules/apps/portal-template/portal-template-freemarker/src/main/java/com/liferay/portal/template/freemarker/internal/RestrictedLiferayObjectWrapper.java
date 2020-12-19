@@ -19,6 +19,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -47,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 /**
  * @author Mika Koivisto
@@ -206,6 +210,29 @@ public class RestrictedLiferayObjectWrapper extends LiferayObjectWrapper {
 				_serviceProxyClassNames.add(className);
 
 				return _SERVICE_PROXY_STRING_MODEL_FACTORY.create(object, this);
+			}
+		}
+		else if (object instanceof BaseModel) {
+			long currentCompanyId = CompanyThreadLocal.getCompanyId();
+
+			if (currentCompanyId != CompanyConstants.SYSTEM) {
+				BaseModel<?> baseModel = (BaseModel<?>)object;
+
+				Map<String, Function<Object, Object>> getterFunctions =
+					(Map<String, Function<Object, Object>>)
+						(Map<String, ?>)baseModel.getAttributeGetterFunctions();
+
+				Function<Object, Object> function = getterFunctions.get(
+					"companyId");
+
+				if ((function != null) &&
+					(currentCompanyId != (Long)function.apply(object))) {
+
+					throw new TemplateModelException(
+						StringBundler.concat(
+							"Denied access to model object as it does not ",
+							"belong to current company ", currentCompanyId));
+				}
 			}
 		}
 

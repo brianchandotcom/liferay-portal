@@ -21,6 +21,8 @@ import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.BuildDatabase;
+import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
 import com.liferay.jenkins.results.parser.BuildFactory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
@@ -198,6 +200,7 @@ public class SpiraResultImporter {
 
 		SpiraRestAPIUtil.summarizeRequests();
 
+		_updateCurrentBuildDescription();
 		_updatePullRequest();
 		_updateSlackChannel();
 		_updateTopLevelBuildDescription();
@@ -538,13 +541,7 @@ public class SpiraResultImporter {
 			_spiraBuildResult.getSpiraProject(), jenkinsNode);
 	}
 
-	private void _updatePullRequest() {
-		PullRequest pullRequest = _spiraBuildResult.getPullRequest();
-
-		if (pullRequest == null) {
-			return;
-		}
-
+	private String _getSpiraReport() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<strong>Jenkins Build:</strong> <a href=\"");
@@ -566,6 +563,8 @@ public class SpiraResultImporter {
 			sb.append(testSuiteName);
 			sb.append("<br />");
 		}
+
+		PullRequest pullRequest = _spiraBuildResult.getPullRequest();
 
 		if (pullRequest != null) {
 			sb.append("<strong>Pull Request:</strong> <a href=\"");
@@ -610,7 +609,41 @@ public class SpiraResultImporter {
 			sb.append("</a><br />");
 		}
 
-		pullRequest.addComment(sb.toString());
+		return sb.toString();
+	}
+
+	private void _updateCurrentBuildDescription() {
+		String buildURL = System.getenv("BUILD_URL");
+
+		if ((buildURL == null) || !buildURL.contains("publish-spira-report")) {
+			return;
+		}
+
+		String workspace = System.getenv("WORKSPACE");
+
+		if ((workspace == null) || workspace.isEmpty()) {
+			return;
+		}
+
+		Build build = BuildFactory.newBuild(buildURL, null);
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase(build);
+
+		Properties properties = buildDatabase.getProperties("start.properties");
+
+		properties.setProperty("BUILD_DESCRIPTION", _getSpiraReport());
+
+		buildDatabase.putProperties("stop.properties", properties);
+	}
+
+	private void _updatePullRequest() {
+		PullRequest pullRequest = _spiraBuildResult.getPullRequest();
+
+		if (pullRequest == null) {
+			return;
+		}
+
+		pullRequest.addComment(_getSpiraReport());
 	}
 
 	private void _updateSlackChannel() {

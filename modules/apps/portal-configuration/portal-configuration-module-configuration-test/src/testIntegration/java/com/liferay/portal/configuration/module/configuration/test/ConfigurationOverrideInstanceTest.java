@@ -56,16 +56,16 @@ public class ConfigurationOverrideInstanceTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		boolean currentValue = _getCurrentValue();
+		boolean rssEnabled = _isRssEnabled();
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("enableRss", !currentValue);
+		properties.put("enableRss", !rssEnabled);
 
 		ConfigurationTestUtil.saveConfiguration(
 			BlogsGroupServiceConfiguration.class.getName(), properties);
 
-		Assert.assertEquals(!currentValue, _getCurrentValue());
+		Assert.assertEquals(!rssEnabled, _isRssEnabled());
 	}
 
 	@Test
@@ -74,7 +74,7 @@ public class ConfigurationOverrideInstanceTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		boolean currentValue = _getCurrentValue();
+		boolean currentValue = _isRssEnabled();
 
 		Settings settings = SettingsFactoryUtil.getSettings(
 			new GroupServiceSettingsLocator(
@@ -87,10 +87,10 @@ public class ConfigurationOverrideInstanceTest {
 
 		modifiableSettings.store();
 
-		Assert.assertEquals(!currentValue, _getCurrentValue());
+		Assert.assertEquals(!currentValue, _isRssEnabled());
 	}
 
-	private boolean _getCurrentValue() throws Exception {
+	private boolean _isRssEnabled() throws Exception {
 		BlogsGroupServiceOverriddenConfiguration
 			blogsGroupServiceOverriddenConfiguration =
 				_configurationProvider.getConfiguration(

@@ -16,7 +16,10 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTimesException;
+import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
+import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
@@ -40,6 +43,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -88,12 +92,33 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String commerceOrderUuid = ParamUtil.getString(
-			actionRequest, "commerceOrderUuid");
+		try {
+			String commerceOrderUuid = ParamUtil.getString(
+				actionRequest, "commerceOrderUuid");
 
-		_validateCommerceOrder(actionRequest, commerceOrderUuid);
+			_validateCommerceOrder(actionRequest, commerceOrderUuid);
 
-		_checkoutCommerceOrder(_portal.getHttpServletRequest(actionRequest));
+			_checkoutCommerceOrder(
+				_portal.getHttpServletRequest(actionRequest));
+		}
+		catch (Exception exception) {
+			Throwable throwable = exception.getCause();
+
+			if (throwable instanceof CommerceDiscountLimitationTimesException ||
+				throwable instanceof CommerceOrderBillingAddressException ||
+				throwable instanceof CommerceOrderGuestCheckoutException ||
+				throwable instanceof CommerceOrderPaymentMethodException ||
+				throwable instanceof CommerceOrderShippingAddressException ||
+				throwable instanceof CommerceOrderShippingMethodException ||
+				throwable instanceof NoSuchDiscountException) {
+
+				SessionErrors.add(actionRequest, throwable.getClass());
+
+				return;
+			}
+
+			throw exception;
+		}
 	}
 
 	@Override

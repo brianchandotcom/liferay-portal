@@ -237,4 +237,28 @@ describe('Field DocumentLibrary', () => {
 
 		expect(guestUploadFileInput).toBe(null);
 	});
+
+	it('disables guest upload field if maximumSubmissionLimitReached property is true', () => {
+		const mockIsSignedIn = jest.fn();
+
+		Liferay.ThemeDisplay.isSignedIn = mockIsSignedIn;
+
+		render(
+			<DocumentLibraryWithProvider
+				{...defaultDocumentLibraryConfig}
+				allowGuestUsers={true}
+				maximumSubmissionLimitReached={true}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		const guestUploadFileInput = document.getElementById(
+			'textFieldinputFileGuestUpload'
+		);
+
+		expect(guestUploadFileInput.disabled).toBeTruthy();
+	});
 });

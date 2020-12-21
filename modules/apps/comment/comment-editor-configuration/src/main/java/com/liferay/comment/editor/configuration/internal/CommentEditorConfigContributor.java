@@ -46,7 +46,7 @@ public class CommentEditorConfigContributor
 		jsonObject.put(
 			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT
 		).put(
-			"toolbars", JSONFactoryUtil.createJSONObject()
+			"toolbar", JSONFactoryUtil.createJSONObject()
 		);
 
 		if (PropsValues.DISCUSSION_COMMENTS_FORMAT.equals("bbcode")) {

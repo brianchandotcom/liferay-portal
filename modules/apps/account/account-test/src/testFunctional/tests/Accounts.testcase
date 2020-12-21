@@ -404,13 +404,6 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
-		Accounts.addAssignee(
-			accountName = "Account no Domain",
-			assigneeType = "Users",
-			selectAll = "Yes");
-
-		Refresh();
-
 		for (var assigneeName : list "userfn1,userfn2") {
 			Accounts.viewAssignee(assigneeName = "${assigneeName}");
 		}

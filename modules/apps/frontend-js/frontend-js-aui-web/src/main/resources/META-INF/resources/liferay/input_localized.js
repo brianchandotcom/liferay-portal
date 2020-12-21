@@ -713,7 +713,6 @@ AUI.add(
 			'aui-palette',
 			'aui-set',
 			'liferay-form',
-			'portal-available-languages',
 		],
 	}
 );

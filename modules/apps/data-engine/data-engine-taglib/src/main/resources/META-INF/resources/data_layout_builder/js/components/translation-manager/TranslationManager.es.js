@@ -63,9 +63,7 @@ export default ({
 	const [available, setAvailable] = useState({});
 
 	useEffect(() => {
-		AUI().use('portal-available-languages', () => {
-			setAvailable(Liferay.Language.available);
-		});
+		setAvailable(Liferay.Language.available);
 	}, []);
 
 	useEffect(() => {

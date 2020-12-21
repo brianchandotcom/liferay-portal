@@ -132,6 +132,32 @@
 			</c:if>
 		];
 
+		(function () {
+			var available = {};
+
+			var direction = {};
+
+			<%
+			for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
+				String selLanguageId = LocaleUtil.toLanguageId(curLocale);
+			%>
+
+				available['<%= selLanguageId %>'] = '<%= curLocale.getDisplayName(locale) %>';
+				direction['<%= selLanguageId %>'] = '<%= LanguageUtil.get(curLocale, "lang.dir") %>';
+
+			<%
+			}
+			%>
+
+			Liferay.Language = {
+				available,
+				direction,
+				get: function(key) {
+					return key;
+				}
+			};
+		})();
+
 		Liferay.PortletKeys = {
 			DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
 			DYNAMIC_DATA_MAPPING: 'com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet',

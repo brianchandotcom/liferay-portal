@@ -268,7 +268,6 @@
 							'aui-event-input',
 							'aui-palette',
 							'aui-set',
-							'portal-available-languages',
 						],
 					},
 					'liferay-input-move-boxes': {
@@ -613,21 +612,6 @@
 					'liferay-xml-formatter': {
 						path: 'xml_formatter.js',
 						requires: ['aui-base'],
-					},
-				},
-				root: PATH_JAVASCRIPT + '/liferay/',
-			},
-
-			portal: {
-				base:
-					Liferay.ThemeDisplay.getCDNBaseURL() +
-					LiferayAUI.getJavaScriptRootPath() +
-					'/liferay/',
-				combine: false,
-				modules: {
-					'portal-available-languages': {
-						path: LiferayAUI.getAvailableLangPath(),
-						requires: ['liferay-language'],
 					},
 				},
 				root: PATH_JAVASCRIPT + '/liferay/',

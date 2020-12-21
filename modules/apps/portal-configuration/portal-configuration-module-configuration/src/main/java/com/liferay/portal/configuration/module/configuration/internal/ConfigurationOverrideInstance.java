@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.settings.TypedSettings;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 /**
  * @author Preston Crary
@@ -82,16 +80,13 @@ public class ConfigurationOverrideInstance {
 	}
 
 	private static String _getKey(Class<?> clazz) {
-		Stream<Class<?>> classStream = Arrays.stream(clazz.getInterfaces());
+		for (Class<?> interfaceClazz : clazz.getInterfaces()) {
+			if (interfaceClazz.getAnnotation(Meta.OCD.class) != null) {
+				return interfaceClazz.getName();
+			}
+		}
 
-		return classStream.filter(
-			clazz1 -> clazz1.getAnnotation(Meta.OCD.class) != null
-		).map(
-			Class::getName
-		).findFirst(
-		).orElse(
-			clazz.getName()
-		);
+		return clazz.getName();
 	}
 
 	private static Class<?> _getOverrideClass(Class<?> clazz) {

@@ -480,7 +480,7 @@ public class CommerceProductPriceCalculationV2Impl
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
+				cpInstance.getCPInstanceUuid(), false);
 
 		if (commercePriceEntry == null) {
 			return BigDecimal.ZERO;

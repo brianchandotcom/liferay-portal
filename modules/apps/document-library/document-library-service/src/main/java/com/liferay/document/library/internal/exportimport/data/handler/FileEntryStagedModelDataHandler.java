@@ -464,7 +464,7 @@ public class FileEntryStagedModelDataHandler
 				return;
 			}
 
-			importMetaData(
+			boolean updateFileEntry = importMetaData(
 				portletDataContext, fileEntryElement, fileEntry,
 				serviceContext);
 
@@ -523,7 +523,6 @@ public class FileEntryStagedModelDataHandler
 					boolean indexEnabled = serviceContext.isIndexingEnabled();
 
 					boolean deleteFileEntry = false;
-					boolean updateFileEntry = false;
 
 					if (!Objects.equals(
 							fileVersionUuid,
@@ -814,7 +813,7 @@ public class FileEntryStagedModelDataHandler
 		return new String[] {AssetDisplayPageEntry.class.getName()};
 	}
 
-	protected void importMetaData(
+	protected boolean importMetaData(
 			PortletDataContext portletDataContext, Element fileEntryElement,
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws Exception {
@@ -838,7 +837,7 @@ public class FileEntryStagedModelDataHandler
 		if (existingDLFileEntryType == null) {
 			serviceContext.setAttribute("fileEntryTypeId", -1);
 
-			return;
+			return false;
 		}
 
 		serviceContext.setAttribute(
@@ -846,6 +845,8 @@ public class FileEntryStagedModelDataHandler
 
 		List<DDMStructure> ddmStructures =
 			existingDLFileEntryType.getDDMStructures();
+
+		boolean updateFileEntry = false;
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Element structureFieldsElement =
@@ -873,7 +874,11 @@ public class FileEntryStagedModelDataHandler
 				DDMFormValues.class.getName() + StringPool.POUND +
 					ddmStructure.getStructureId(),
 				ddmFormValues);
+
+			updateFileEntry = true;
 		}
+
+		return updateFileEntry;
 	}
 
 	@Override

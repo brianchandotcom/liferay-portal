@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(
-	configurationPid = "com.liferay.fragment.renderer.collection.filter.internal.configuration.FFFragmentRendererCollectionFilterConfiguration",
+	configurationPid = "com.liferay.fragment.renderer.collection.asset.categories.filter.internal.configuration.FFFragmentRendererCollectionAssetCategoryFilterConfiguration",
 	service = FragmentRenderer.class
 )
 public class CollectionAssetCategoryFilterFragmentRenderer

@@ -739,6 +739,8 @@ public class FileEntryStagedModelDataHandler
 
 		structureFields.addAttribute("ddm-form-values-path", ddmFormValuesPath);
 
+		structureFields.addAttribute(
+			"structureKey", ddmStructure.getStructureKey());
 		structureFields.addAttribute("structureUuid", ddmStructure.getUuid());
 
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues =
@@ -851,6 +853,14 @@ public class FileEntryStagedModelDataHandler
 					StringBundler.concat(
 						"structure-fields[@structureUuid='",
 						ddmStructure.getUuid(), "']"));
+
+			if (structureFieldsElement == null) {
+				structureFieldsElement =
+					(Element)fileEntryElement.selectSingleNode(
+						StringBundler.concat(
+							"structure-fields[@structureKey='",
+							ddmStructure.getStructureKey(), "']"));
+			}
 
 			if (structureFieldsElement == null) {
 				continue;

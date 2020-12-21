@@ -101,7 +101,7 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 		DDMFormFieldType.INTEGER, DDMFormFieldType.NUMBER,
 		DDMFormFieldType.TEXT_HTML, DDMFormFieldType.RADIO,
 		DDMFormFieldType.SELECT, DDMFormFieldType.TEXT,
-		DDMFormFieldType.TEXT_AREA, "image", "rich_text"
+		DDMFormFieldType.TEXT_AREA, "image", "numeric", "rich_text"
 	};
 
 	@Reference

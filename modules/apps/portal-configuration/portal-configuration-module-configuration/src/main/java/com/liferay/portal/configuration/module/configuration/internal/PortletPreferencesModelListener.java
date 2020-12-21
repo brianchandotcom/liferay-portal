@@ -29,6 +29,7 @@ import org.osgi.service.cm.ConfigurationEvent;
 import org.osgi.service.cm.ConfigurationListener;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Drew Brokke
@@ -87,6 +88,11 @@ public class PortletPreferencesModelListener
 
 					emitter.emit(configurationPidMapping.getConfigurationPid());
 				});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_stringConfigurationPidMappingServiceTrackerMap.close();
 	}
 
 	private void _clearConfigurationOverrideInstance(

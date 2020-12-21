@@ -116,7 +116,7 @@ const ImagePicker = ({
 							disabled
 							id={id}
 							type="text"
-							value={imageValues.title}
+							value={imageValues.title || ''}
 						/>
 					</ClayInput.GroupItem>
 

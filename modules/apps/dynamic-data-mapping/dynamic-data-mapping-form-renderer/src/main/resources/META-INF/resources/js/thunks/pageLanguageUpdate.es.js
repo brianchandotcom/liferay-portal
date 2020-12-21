@@ -36,7 +36,14 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 			return;
 		}
 
-		let _value = value;
+		let _value = null;
+
+		try {
+			_value = JSON.parse(value);
+		}
+		catch (e) {
+			_value = value;
+		}
 
 		if (!visible) {
 			_value = '';

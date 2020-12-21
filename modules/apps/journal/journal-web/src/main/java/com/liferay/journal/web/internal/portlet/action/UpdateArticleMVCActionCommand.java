@@ -38,6 +38,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -66,7 +68,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -76,6 +80,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -416,6 +422,14 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
+		String friendlyURLChangesMessage = _getFriendlyURLChangesMessage(
+			actionRequest, friendlyURLMap, article.getFriendlyURLMap());
+
+		if (Validator.isNotNull(friendlyURLChangesMessage)) {
+			MultiSessionMessages.add(
+				actionRequest, "friendlyURLChanged", friendlyURLChangesMessage);
+		}
+
 		sendEditArticleRedirect(actionRequest, article, oldUrlTitle);
 
 		boolean hideDefaultSuccessMessage = ParamUtil.getBoolean(
@@ -541,6 +555,51 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		_journalContentSearchLocalService.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			portletResource, articleId, true);
+	}
+
+	private String _getFriendlyURLChangesMessage(
+		ActionRequest actionRequest, Map<Locale, String> originalFriendlyURLMap,
+		Map<Locale, String> finalFriendlyURLMap) {
+
+		List<String> messageList = new ArrayList<>();
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		for (Map.Entry<Locale, String> entry : finalFriendlyURLMap.entrySet()) {
+			Locale locale = entry.getKey();
+
+			String finalFriendlyURL = entry.getValue();
+
+			String originalFriendlyURL = originalFriendlyURLMap.get(locale);
+
+			String normalizedOriginalFriendlyURL =
+				FriendlyURLNormalizerUtil.normalizeWithEncoding(
+					originalFriendlyURL);
+
+			if (!originalFriendlyURL.equals(StringPool.BLANK) &&
+				!finalFriendlyURL.equals(normalizedOriginalFriendlyURL)) {
+
+				messageList.add(
+					LanguageUtil.format(
+						httpServletRequest, "for-locale-x-x-was-changed-to-x",
+						new Object[] {
+							"<strong>" + locale.getLanguage() + "</strong>",
+							"<strong>" + originalFriendlyURL + "</strong>",
+							"<strong>" + finalFriendlyURL + "</strong>"
+						}));
+			}
+		}
+
+		if (!messageList.isEmpty()) {
+			messageList.add(
+				0,
+				LanguageUtil.get(
+					httpServletRequest,
+					"for-uniqueness-these-friendly-urls-were-changed"));
+		}
+
+		return StringUtil.merge(messageList, "<br>");
 	}
 
 	private void _updateLayoutClassedModelUsage(

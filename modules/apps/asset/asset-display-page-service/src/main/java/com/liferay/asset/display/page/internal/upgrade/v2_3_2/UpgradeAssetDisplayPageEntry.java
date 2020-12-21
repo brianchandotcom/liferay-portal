@@ -14,7 +14,6 @@
 
 package com.liferay.asset.display.page.internal.upgrade.v2_3_2;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -40,11 +39,10 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				"update AssetDisplayPageEntry set classNameId = ? where " +
-					"classNameId = ? and type_ = ?")) {
+					"classNameId = ?")) {
 
 			ps.setLong(1, fileEntryClassNameId);
 			ps.setLong(2, dlFileEntryClassNameId);
-			ps.setLong(3, AssetDisplayPageConstants.TYPE_SPECIFIC);
 
 			ps.executeUpdate();
 		}

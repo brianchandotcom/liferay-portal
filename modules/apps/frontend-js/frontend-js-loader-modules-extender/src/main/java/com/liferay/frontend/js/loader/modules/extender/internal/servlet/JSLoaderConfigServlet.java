@@ -15,17 +15,16 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.servlet;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.minifier.MinifierUtil;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import java.util.Map;
 
@@ -87,16 +86,15 @@ public class JSLoaderConfigServlet extends HttpServlet {
 			_log.debug("Generating content for /js_loader_config");
 		}
 
-		StringWriter stringWriter = new StringWriter();
+		StringBundler sb = new StringBundler(11);
 
-		stringWriter.write("(function() {");
-		stringWriter.write(
-			"Liferay.EXPLAIN_RESOLUTIONS = " + _details.explainResolutions() +
-				";\n");
-		stringWriter.write(
-			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
-		stringWriter.write(
-			"Liferay.LOG_LEVEL = '" + _details.logLevel() + "';\n");
+		sb.append("(function() {Liferay.EXPLAIN_RESOLUTIONS=");
+		sb.append(_details.explainResolutions());
+		sb.append(";Liferay.EXPOSE_GLOBAL=");
+		sb.append(_details.exposeGlobal());
+		sb.append(";Liferay.LOG_LEVEL=\"");
+		sb.append(_details.logLevel());
+		sb.append("\";Liferay.RESOLVE_PATH=\"");
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
@@ -106,22 +104,17 @@ public class JSLoaderConfigServlet extends HttpServlet {
 			"/js_resolve_modules"
 		).build();
 
-		stringWriter.write("Liferay.RESOLVE_PATH = \"" + url + "\";\n");
+		sb.append(url);
 
-		stringWriter.write(
-			"Liferay.WAIT_TIMEOUT = " + (_details.waitTimeout() * 1000) +
-				";\n");
-		stringWriter.write("}());");
+		sb.append("\";Liferay.WAIT_TIMEOUT=");
+		sb.append(_details.waitTimeout() * 1000);
+		sb.append(";}());");
 
-		String content = stringWriter.toString();
+		String content = sb.toString();
 
-		String minifiedContent = MinifierUtil.minifyJavaScript(
-			"/o/js_loader_config", content);
+		_objectValuePair = new ObjectValuePair<>(getLastModified(), content);
 
-		_objectValuePair = new ObjectValuePair<>(
-			getLastModified(), minifiedContent);
-
-		_writeResponse(httpServletResponse, minifiedContent);
+		_writeResponse(httpServletResponse, content);
 	}
 
 	private boolean _isStale() {

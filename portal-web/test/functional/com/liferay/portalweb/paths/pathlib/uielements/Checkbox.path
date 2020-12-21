@@ -180,7 +180,7 @@
 </tr>
 <tr>
 	<td>ENABLE_DIRECTORY_INDEXING</td>
-	<td>//label[contains(.,'Enable Directory Indexing')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Enable Directory Indexing')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -240,7 +240,7 @@
 </tr>
 <tr>
 	<td>ENABLE_RSS_SUBSCRIPTION</td>
-	<td>//label[contains(.,'RSS Subscription')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'RSS Subscription')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

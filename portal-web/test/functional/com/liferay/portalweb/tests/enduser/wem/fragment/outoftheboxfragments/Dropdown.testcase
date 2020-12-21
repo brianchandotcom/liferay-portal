@@ -227,6 +227,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120190. Can define the panel type of Dropdown fragment."
+	@priority = "5"
+	test DefinePanelType {
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Grid element above the Drop Zone") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				dropTarget = "Header",
+				fragmentName = "Grid",
+				scope = "Master");
+		}
+
+		task ("Add a Dropdown fragment to the second module") {
+			PageEditor.addElementToColumn(
+				collectionName = "Basic Components",
+				columnNumber = "2",
+				fragmentName = "Dropdown",
+				navTab = "Fragments");
+		}
+
+		task ("Assert the panel type of Dropdown fragment") {
+			PageEditor.clickConfigurableField(fragmentName = "Dropdown");
+
+			Click(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			AssertVisible(
+				key_panelWidth = "240px",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_WIDTH");
+
+			PageEditor.gotoConfiguration(fragmentName = "Dropdown");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Panel Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Regular");
+		}
+
+		task ("Select the Full Width as Panel Type") {
+			PageEditor.editDropdown(
+				panel = "General",
+				panelType = "Full Width");
+		}
+
+		task ("Assert the panel type of Dropdown fragment") {
+			Click(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			var moduleContainerWidth = selenium.getAttribute("//div[contains(@class,'col-4')][2]//div[contains(@class,'col__border')]@width");
+
+			AssertVisible(
+				key_panelWidth = "${moduleContainerWidth}",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_WIDTH");
+		}
+
+		task ("Select the Mega Menu as Panel Type") {
+			PageEditor.editDropdown(
+				panel = "General",
+				panelType = "Mega Menu");
+		}
+
+		task ("Assert the panel type of Dropdown fragment") {
+			Click(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			var pageEditorWidth = selenium.getAttribute("//div[contains(@class,'layout-viewport')]/div[contains(@id,'page-editor')]@width");
+
+			AssertVisible(
+				key_panelWidth = "${pageEditorWidth}",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_WIDTH");
+		}
+	}
+
 	@description = "This is a test for LPS-120190. Can edit the text of dropdown button in Dropdown fragment."
 	@priority = "5"
 	test EditInlineContent {

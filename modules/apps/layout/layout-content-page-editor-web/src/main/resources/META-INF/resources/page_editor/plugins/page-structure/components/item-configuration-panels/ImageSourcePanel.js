@@ -163,9 +163,16 @@ function DirectImagePanel({item}) {
 			config: {
 				alt: {[languageId]: ''},
 				imageConfiguration: {},
+				imageTitle: nextImage.title,
 			},
-			[languageId]: nextImage,
+			[languageId]: nextImage.url,
 		};
+
+		if (config.adaptiveMediaEnabled) {
+			delete nextEditableValue.config.imageTitle;
+
+			nextEditableValue[languageId] = nextImage;
+		}
 
 		delete nextEditableValue.classNameId;
 		delete nextEditableValue.classPK;
@@ -253,7 +260,7 @@ function DirectImagePanel({item}) {
 				onImageSelected={handleImageChanged}
 			/>
 
-			{editableContent?.fileEntryId && (
+			{config.adaptiveMediaEnabled && editableContent?.fileEntryId && (
 				<ImageSelectorSize
 					editableElement={editableElement}
 					fileEntryId={editableContent.fileEntryId}

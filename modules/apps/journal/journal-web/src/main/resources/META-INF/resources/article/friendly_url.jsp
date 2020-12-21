@@ -24,6 +24,8 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 
 <p class="text-secondary"><liferay-ui:message key="changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft" /></p>
 
+<p class="text-secondary"><liferay-ui:message key="to-ensure-uniqueness-the-friendly-url-may-be-modified" /></p>
+
 <p class="mb-2 text-secondary">
 	<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>
 </p>

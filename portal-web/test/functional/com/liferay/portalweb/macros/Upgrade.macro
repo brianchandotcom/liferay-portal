@@ -1944,7 +1944,7 @@ definition {
 				imageSize = "0");
 
 			AssertElementPresent(
-				key_borderRadius = "0.375rem",
+				key_borderRadius = "lg",
 				key_fragmentName = "card",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS_IN_VIEW_MODE");
 
@@ -1971,7 +1971,7 @@ definition {
 
 			AssertElementPresent(
 				key_fragmentName = "heading",
-				key_textColor = "#287D3C",
+				key_textColor = "rgb(35, 109, 53)",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
 
 			AssertElementPresent(
@@ -2011,7 +2011,7 @@ definition {
 		task ("Assert styles of Paragraph in view mode") {
 			AssertElementPresent(
 				key_fragmentName = "paragraph",
-				key_textColor = "#B95000",
+				key_textColor = "rgb(164, 71, 0)",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
 
 			AssertElementPresent(
@@ -2088,7 +2088,7 @@ definition {
 				marginBottom = "1");
 
 			AssertElementPresent(
-				key_borderRadius = "0.375rem",
+				key_borderRadius = "lg",
 				key_fragmentName = "card",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS_IN_VIEW_MODE");
 
@@ -2104,7 +2104,7 @@ definition {
 
 			AssertElementPresent(
 				key_fragmentName = "heading",
-				key_textColor = "rgb(40, 125, 60)",
+				key_textColor = "rgb(35, 109, 53)",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
 		}
 
@@ -2126,7 +2126,7 @@ definition {
 		task ("Assert styles of Paragraph in edit mode") {
 			AssertElementPresent(
 				key_fragmentName = "paragraph",
-				key_textColor = "rgb(185, 80, 0)",
+				key_textColor = "rgb(164, 71, 0)",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
 
 			PageEditor.viewFragmentStyle(

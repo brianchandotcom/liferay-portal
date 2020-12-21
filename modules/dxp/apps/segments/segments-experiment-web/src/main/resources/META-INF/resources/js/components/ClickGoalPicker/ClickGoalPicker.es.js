@@ -288,6 +288,8 @@ ClickGoalPicker.propTypes = {
  * <Overlay /> component when active.
  */
 function OverlayContainer({allowEdit, root}) {
+	const mousedownRef = useRef(false);
+
 	const cssId = 'segments-experiments-click-goal-css-overrides';
 
 	const dispatch = useContext(DispatchContext);
@@ -365,21 +367,27 @@ function OverlayContainer({allowEdit, root}) {
 		[dispatch]
 	);
 
-	const handleClick = useCallback(
+	useEventListener('keydown', handleKeydown, true, document);
+
+	const handleMouseDown = useCallback(() => {
+		mousedownRef.current = true;
+	}, []);
+
+	const handleMouseUp = useCallback(
 		(event) => {
+			if (mousedownRef.current === true) {
+				event.preventDefault();
+				stopImmediatePropagation(event);
+				dispatch({type: 'deactivate'});
+			}
 
-			// Clicking anywhere other than a target aborts target selection.
-
-			event.preventDefault();
-			stopImmediatePropagation(event);
-			dispatch({type: 'deactivate'});
+			mousedownRef.current = false;
 		},
 		[dispatch]
 	);
 
-	useEventListener('keydown', handleKeydown, true, document);
-
-	useEventListener('click', handleClick, false, document);
+	useEventListener('mousedown', handleMouseDown, false, document);
+	useEventListener('mouseup', handleMouseUp, false, document);
 
 	return ReactDOM.createPortal(
 		<ClickGoalPicker.Overlay

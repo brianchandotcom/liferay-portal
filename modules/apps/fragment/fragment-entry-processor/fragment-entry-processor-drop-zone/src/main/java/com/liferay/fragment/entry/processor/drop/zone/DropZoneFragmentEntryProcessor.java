@@ -129,9 +129,8 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryProcessorContext.getHttpServletRequest(),
 				fragmentEntryProcessorContext.getHttpServletResponse(),
 				fieldValuesOptional.orElse(null),
-				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
-				dropZoneItemIds.get(i), fragmentEntryProcessorContext.getMode(),
-				true);
+				fragmentEntryLink.getGroupId(), 0, dropZoneItemIds.get(i),
+				fragmentEntryProcessorContext.getMode(), true);
 
 			Element dropZoneElement = new Element("div");
 

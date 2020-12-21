@@ -61,6 +61,14 @@
 			<finder-column name="commercePriceListId" />
 			<finder-column name="CPInstanceUuid" />
 		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_C_S" return-type="CommercePriceEntry" unique="true">
 			<finder-column name="commercePriceListId" />
 			<finder-column name="CPInstanceUuid" />
@@ -369,6 +377,19 @@
 		<finder name="C_LtM" return-type="Collection">
 			<finder-column name="commercePriceEntryId" />
 			<finder-column comparator="&lt;=" name="minQuantity" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_LtM_S" return-type="Collection">
+			<finder-column name="commercePriceEntryId" />
+			<finder-column comparator="&lt;=" name="minQuantity" />
+			<finder-column name="status" />
 		</finder>
 
 		<!-- References -->

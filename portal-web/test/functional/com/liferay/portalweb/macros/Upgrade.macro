@@ -1553,11 +1553,17 @@ definition {
 
 		UserNavigator.gotoPreferences();
 
-		for (var announcementType : list "General,News,Test") {
-			var key_announcementType = "${announcementType}";
-			var key_notificationType = "Email";
+		var testName = TestCase.getTestName();
 
-			AssertChecked(locator1 = "UsersAndOrganizationsEditUser#ALERTS_AND_ANNOUNCEMENTS_DELIVERY_CHECKBOX");
+		// Ignore these steps for 73 due to LPS-121271
+
+		if (!(contains("${testName}", "73"))) {
+			for (var announcementType : list "General,News,Test") {
+				AssertChecked(
+					key_announcementType = "${announcementType}",
+					key_notificationType = "Email",
+					locator1 = "UsersAndOrganizationsEditUser#ALERTS_AND_ANNOUNCEMENTS_DELIVERY_CHECKBOX");
+			}
 		}
 
 		Navigator.gotoNavNested(navNested = "Display Settings");

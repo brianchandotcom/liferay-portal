@@ -85,6 +85,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -601,6 +602,15 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		try {
 			noticeableFuture.get(timeout, TimeUnit.MILLISECONDS);
+		}
+		catch (ExecutionException executionException) {
+			Throwable throwable = executionException.getCause();
+
+			if (throwable instanceof Exception) {
+				throw (Exception)throwable;
+			}
+
+			throw new Exception(throwable);
 		}
 		catch (TimeoutException timeoutException) {
 			timeoutCounter.incrementAndGet();

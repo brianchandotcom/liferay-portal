@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -450,20 +449,9 @@ public class UpgradeJournal extends UpgradeProcess {
 	protected void initJournalDDMCompositeModelsResourceActions()
 		throws Exception {
 
-		_resourceActions.read(
+		_resourceActions.populateModelResources(
 			UpgradeJournal.class.getClassLoader(),
 			"/resource-actions/journal_ddm_composite_models.xml");
-
-		List<String> modelNames = _resourceActions.getPortletModelResources(
-			JournalPortletKeys.JOURNAL);
-
-		for (String modelName : modelNames) {
-			List<String> modelActions =
-				_resourceActions.getModelResourceActions(modelName);
-
-			_resourceActionLocalService.checkResourceActions(
-				modelName, modelActions);
-		}
 	}
 
 	protected void transformDateFieldValue(Element dynamicContentElement) {

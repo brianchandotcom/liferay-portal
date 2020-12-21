@@ -25,7 +25,6 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,8 +68,7 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 					for (DDMFormField ddmFormField :
 							ddmStructure.getDDMFormFields(false)) {
 
-						if (Validator.isNotNull(ddmFormField.getIndexType()) &&
-							ArrayUtil.contains(
+						if (ArrayUtil.contains(
 								_SELECTABLE_DDM_STRUCTURE_FIELDS,
 								ddmFormField.getType())) {
 

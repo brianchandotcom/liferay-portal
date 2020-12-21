@@ -776,6 +776,14 @@ public class ResourceActionsImpl implements ResourceActions {
 		readAndCheck(classLoader, sources);
 	}
 
+	public void readModelResources(ClassLoader classLoader, String source)
+		throws ResourceActionsException {
+
+		_read(
+			classLoader, source,
+			rootElement -> _readModelResources(rootElement, null));
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */

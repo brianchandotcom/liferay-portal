@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ACTIVE</td>
-	<td>//label[contains(.,'Active')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Active')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

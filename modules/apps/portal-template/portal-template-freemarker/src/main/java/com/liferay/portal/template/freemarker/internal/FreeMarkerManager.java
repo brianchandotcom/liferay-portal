@@ -61,6 +61,7 @@ import freemarker.ext.servlet.ServletContextHashModel;
 
 import freemarker.template.Configuration;
 import freemarker.template.ObjectWrapper;
+import freemarker.template.SimpleNumber;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
@@ -306,6 +307,11 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				_configuration, templateResourceLoader, portalCache);
 
 			field.set(_configuration, templateCache);
+
+			_configuration.setSharedVariable(
+				"loop-count-threshold",
+				new SimpleNumber(
+					_freeMarkerEngineConfiguration.loopCountThreshold()));
 		}
 		catch (Exception exception) {
 			throw new TemplateException(

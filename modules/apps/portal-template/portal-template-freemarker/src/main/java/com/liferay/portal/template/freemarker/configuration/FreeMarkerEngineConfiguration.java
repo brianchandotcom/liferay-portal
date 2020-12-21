@@ -52,6 +52,9 @@ public interface FreeMarkerEngineConfiguration {
 	@Meta.AD(deflt = "false", name = "localized-lookup", required = false)
 	public boolean localizedLookup();
 
+	@Meta.AD(deflt = "0", name = "loop-count-threshold", required = false)
+	public int loopCountThreshold();
+
 	@Meta.AD(
 		deflt = "60000", name = "resource-modification-check", required = false
 	)

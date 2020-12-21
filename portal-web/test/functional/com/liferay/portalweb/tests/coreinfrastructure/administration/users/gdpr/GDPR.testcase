@@ -610,6 +610,8 @@ definition {
 		GDPR.downloadExportedPersonalData(applications = "Web Content,Wiki,Message Boards,Contacts Center,Blogs,Announcements,Documents and Media");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.exception.SystemException");
 	}
 
 }

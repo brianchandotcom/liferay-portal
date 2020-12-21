@@ -207,7 +207,7 @@
 <!--MOVE-->
 <tr>
 	<td>MOVE_CURRENT_PARENT_TITLE_LABEL</td>
-	<td>//span[(@class='control-label') and contains (.,'Current Parent')]</td>
+	<td>//span[contains(@class,'control-label') and contains(.,'Current Parent')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -217,22 +217,22 @@
 </tr>
 <tr>
 	<td>MOVE_CURRENT_PARENT_PRIORITY_LABEL</td>
-	<td>//label[(@class='control-label') and contains(.,'Priority')]</td>
+	<td>//label[contains(@for,'knowledge_base_web') and contains(@for,'currentPriority')][normalize-space()='Priority']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_NEW_PARENT_TITLE_LABEL</td>
-	<td>//span[(@class='control-label') and contains (.,'New Parent')]</td>
+	<td>//span[contains(@class,'control-label') and contains(.,'New Parent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_NEW_PARENT_TITLE_FIELD</td>
-	<td>//div[contains(@id, 'knowledge_base_web') and contains(@id, 'newParent')]/input</td>
+	<td>//div[contains(@id,'knowledge_base_web') and contains(@id,'newParent')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_NEW_PARENT_PRIORITY_LABEL</td>
-	<td>//div[contains(@id, 'knowledge_base_web') and contains(@id, 'newParent')]//label[(@class='control-label') and contains(.,'Priority')]</td>
+	<td>//div[contains(@id,'knowledge_base_web') and contains(@id,'newParent')]//label[contains(@class,'control-label') and contains(.,'Priority')]</td>
 	<td></td>
 </tr>
 </tbody>

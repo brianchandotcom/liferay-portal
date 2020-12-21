@@ -1178,6 +1178,20 @@ definition {
 					checkboxName = "${displayedBehavior}",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 			}
+
+			if (isSet(panelType)) {
+				Select(
+					key_fieldLabel = "Panel Type",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${panelType}");
+
+				Pause(locator1 = "3000");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Panel Type",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${panelType}");
+			}
 		}
 
 		PageEditor.waitForAutoSave();

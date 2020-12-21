@@ -60,23 +60,20 @@ const DispatchContext = React.createContext();
 function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 	const [state, dispatch] = useReducer(reducer, target, getInitialState);
 
+	const [selectorInputValue, setSelectorInputValue] = useState(
+		state.selectedTarget
+	);
+
 	const {isValidTarget, selectedTarget} = state;
 
 	const {errors} = useContext(GlobalStateContext);
 
 	const ref = useRef(selectedTarget);
 
-	const inputRef = useRef('');
-
 	useEffect(() => {
 		ref.current = selectedTarget;
 
-		if (selectedTarget) {
-			inputRef.current.value = selectedTarget;
-		}
-		else {
-			inputRef.current.value = '';
-		}
+		setSelectorInputValue(selectedTarget);
 	}, [selectedTarget]);
 
 	const previousTarget = ref.current;
@@ -164,6 +161,10 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 		}
 	};
 
+	const handleInputChange = (event) => {
+		setSelectorInputValue(event.target.value);
+	};
+
 	return (
 		<DispatchContext.Provider value={dispatch}>
 			<StateContext.Provider value={state}>
@@ -232,14 +233,14 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 							<ClayTooltipProvider>
 								<ClayInput
 									data-tooltip-align="top"
-									defaultValue={inputRef.current.value}
 									id="clickableElement"
 									onBlur={handleBlur}
+									onChange={handleInputChange}
 									onKeyDown={handleKeyDown}
 									readOnly={!allowEdit}
-									ref={inputRef}
-									title={inputRef.current?.value}
+									title={selectorInputValue}
 									type="text"
+									value={selectorInputValue}
 								/>
 							</ClayTooltipProvider>
 						</ClayInput.GroupItem>

@@ -735,11 +735,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [
-			'array-invoke',
-			'aui-debounce',
-			'aui-node',
-			'portal-available-languages',
-		],
+		requires: ['array-invoke', 'aui-debounce', 'aui-node'],
 	}
 );

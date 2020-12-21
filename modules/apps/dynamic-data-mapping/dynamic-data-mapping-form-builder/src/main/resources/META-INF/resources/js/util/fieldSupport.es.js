@@ -162,6 +162,21 @@ export const normalizeSettingsContextPages = (
 				};
 			}
 
+			if (field.localizable) {
+				const {localizedValue} = field;
+				const availableLocales = Object.keys(localizedValue);
+
+				availableLocales.forEach((availableLocale) => {
+					if (
+						availableLocale !== defaultLanguageId &&
+						availableLocale !== editingLanguageId &&
+						localizedValue[availableLocale] === ''
+					) {
+						delete localizedValue[availableLocale];
+					}
+				});
+			}
+
 			const newInstanceId = generateInstanceId(8);
 
 			return {

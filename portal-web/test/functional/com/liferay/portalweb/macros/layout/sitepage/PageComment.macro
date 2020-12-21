@@ -24,9 +24,7 @@ definition {
 	}
 
 	macro editCommentField {
-		Type.typeEditor(
-			locator1 = "Comments#COMMENT_FIELD",
-			value1 = "${commentBody}");
+		CKEditor.addContent(content = "${commentBody}");
 	}
 
 	macro reply {

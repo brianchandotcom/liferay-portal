@@ -84,21 +84,6 @@ import javax.servlet.http.HttpSession;
  */
 public class ResourceActionsImpl implements ResourceActions {
 
-	public void afterPropertiesSet() {
-		try {
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			for (String config : PropsValues.RESOURCE_ACTIONS_CONFIGS) {
-				read(classLoader, config);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #check(String)}
 	 */

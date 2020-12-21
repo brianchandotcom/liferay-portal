@@ -14,10 +14,12 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.PatcherUtil;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.VerifyException;
 
 import java.sql.Connection;
@@ -50,25 +53,16 @@ public class StartupHelperUtil {
 		ResourceActionLocalServiceUtil.checkResourceActions();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<String> modelNames = ResourceActionsUtil.getModelNames();
+			ResourceActionsUtil.populateModelResources(
+				StartupHelperUtil.class.getClassLoader(),
+				PropsValues.RESOURCE_ACTIONS_CONFIGS);
 
-			for (String modelName : modelNames) {
-				List<String> actionIds =
-					ResourceActionsUtil.getModelResourceActions(modelName);
-
-				ResourceActionLocalServiceUtil.checkResourceActions(
-					modelName, actionIds, true);
-			}
-
-			List<String> portletNames = ResourceActionsUtil.getPortletNames();
-
-			for (String portletName : portletNames) {
-				List<String> actionIds =
-					ResourceActionsUtil.getPortletResourceActions(portletName);
-
-				ResourceActionLocalServiceUtil.checkResourceActions(
-					portletName, actionIds, true);
-			}
+			ResourceActionsUtil.populatePortletResources(
+				StartupHelperUtil.class.getClassLoader(),
+				PropsValues.RESOURCE_ACTIONS_CONFIGS);
+		}
+		catch (ResourceActionsException resourceActionsException) {
+			ReflectionUtil.throwException(resourceActionsException);
 		}
 	}
 

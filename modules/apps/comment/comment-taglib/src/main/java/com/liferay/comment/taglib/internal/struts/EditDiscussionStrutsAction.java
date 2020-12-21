@@ -21,7 +21,6 @@ import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -208,8 +207,6 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		DiscussionPermission discussionPermission = _getDiscussionPermission(
 			themeDisplay);
 
-		AssetEntry assetEntry = _getAssetEntry(commentId, className, classPK);
-
 		if (commentId <= 0) {
 
 			// Add message
@@ -242,12 +239,11 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 			try {
 				discussionPermission.checkAddPermission(
-					assetEntry.getCompanyId(), assetEntry.getGroupId(),
-					assetEntry.getClassName(), assetEntry.getClassPK());
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					className, classPK);
 
 				commentId = _commentManager.addComment(
-					user.getUserId(), assetEntry.getClassName(),
-					assetEntry.getClassPK(), user.getFullName(),
+					user.getUserId(), className, classPK, user.getFullName(),
 					parentCommentId, subject, body, serviceContextFunction);
 			}
 			finally {
@@ -261,17 +257,16 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			discussionPermission.checkUpdatePermission(commentId);
 
 			commentId = _commentManager.updateComment(
-				themeDisplay.getUserId(), assetEntry.getClassName(),
-				assetEntry.getClassPK(), commentId, subject, body,
-				serviceContextFunction);
+				themeDisplay.getUserId(), className, classPK, commentId,
+				subject, body, serviceContextFunction);
 		}
 
 		// Subscription
 
 		if (PropsValues.DISCUSSION_SUBSCRIBE) {
 			_commentManager.subscribeDiscussion(
-				themeDisplay.getUserId(), assetEntry.getGroupId(),
-				assetEntry.getClassName(), assetEntry.getClassPK());
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				className, classPK);
 		}
 
 		return commentId;
@@ -287,20 +282,6 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
-	}
-
-	private AssetEntry _getAssetEntry(
-			long commentId, String className, long classPK)
-		throws Exception {
-
-		if (Validator.isNotNull(className) && (classPK > 0)) {
-			return _assetEntryLocalService.getEntry(className, classPK);
-		}
-
-		Comment comment = _commentManager.fetchComment(commentId);
-
-		return _assetEntryLocalService.getEntry(
-			comment.getClassName(), comment.getClassPK());
 	}
 
 	private DiscussionPermission _getDiscussionPermission(

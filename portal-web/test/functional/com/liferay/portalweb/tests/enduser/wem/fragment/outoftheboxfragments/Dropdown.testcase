@@ -1,0 +1,90 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-120190. Can edit the text of dropdown button in Dropdown fragment."
+	@priority = "5"
+	test EditInlineContent {
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Dropdown fragment as header in custom master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Dropdown",
+				scope = "Master");
+		}
+
+		task ("Edit inline content of Dropdown fragment") {
+			PageEditor.editFragmentText(
+				fragmentName = "Dropdown",
+				id = "dropdown-text",
+				text = "Mega Menu");
+		}
+
+		task ("Assert the inline content of Dropdown fragment") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Mega Menu",
+				fragmentName = "Dropdown",
+				id = "dropdown-text");
+
+			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a page based on custom master page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Content Page");
+		}
+
+		task ("Assert the inline content of Dropdown fragment") {
+			AssertVisible(
+				key_fragmentName = "dropdown",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "dropdown",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS",
+				value1 = "Mega Menu");
+		}
+	}
+
+}

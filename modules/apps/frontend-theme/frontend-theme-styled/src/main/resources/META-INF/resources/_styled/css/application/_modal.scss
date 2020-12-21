@@ -29,6 +29,8 @@
 }
 
 .modal-dialog {
+	position: relative;
+
 	&.modal-dialog-sm {
 		max-width: $modal-md;
 	}

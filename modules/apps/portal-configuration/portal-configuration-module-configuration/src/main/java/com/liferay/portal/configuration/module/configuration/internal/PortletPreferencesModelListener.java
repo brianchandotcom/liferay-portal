@@ -34,10 +34,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Drew Brokke
  */
-@Component(
-	immediate = true,
-	service = {ConfigurationListener.class, ModelListener.class}
-)
+@Component(service = {ConfigurationListener.class, ModelListener.class})
 public class PortletPreferencesModelListener
 	extends BaseModelListener<PortletPreferences>
 	implements ConfigurationListener {

@@ -113,6 +113,10 @@ export default function MultiPanelSidebar({
 				});
 			};
 
+			if (sideNavigation.visible()) {
+				onCloseSidebar();
+			}
+
 			const sideNavigationListener = sideNavigation.on(
 				'openStart.lexicon.sidenav',
 				onCloseSidebar

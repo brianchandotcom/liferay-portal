@@ -306,12 +306,20 @@ public class ResourceActionsUtil {
 		getResourceActions().populatePortletResources(classLoader, sources);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void read(ClassLoader classLoader, String source)
 		throws Exception {
 
 		getResourceActions().read(classLoader, source);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void read(ClassLoader classLoader, String... sources)
 		throws Exception {
 
@@ -341,6 +349,10 @@ public class ResourceActionsUtil {
 		getResourceActions().read(servletContextName, classLoader, sources);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void readAndCheck(ClassLoader classLoader, String... sources)
 		throws Exception {
 

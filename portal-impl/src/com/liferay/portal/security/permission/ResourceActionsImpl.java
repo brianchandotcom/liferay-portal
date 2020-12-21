@@ -664,6 +664,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void read(ClassLoader classLoader, String source)
 		throws ResourceActionsException {
@@ -676,6 +680,10 @@ public class ResourceActionsImpl implements ResourceActions {
 			});
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void read(ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {
@@ -685,6 +693,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void read(Document document, Set<String> resourceNames)
 		throws ResourceActionsException {
@@ -742,6 +754,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		read(document, resourceNames);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void readAndCheck(ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {

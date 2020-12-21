@@ -1,0 +1,151 @@
+@component-name = "portal-document-management"
+definition {
+
+	property custom.properties = "xuggler.enabled=true";
+	property dummy.socket.proxy.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(installXuggler = "true");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(enableXuggler = "true");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Video Title In Site",
+			groupName = "Site Name",
+			mimeType = "video/mp4",
+			sourceFileName = "Document_1.mp4");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This test ensures that an internal video can be selected via item selector when creating Blog with enabling Xuggler."
+	@priority = "5"
+	test AddBlogEntryWithEmbeddedVideo {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+
+		Blogs.addEntry(
+			embedVideo = "true",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "DM Video Title In Site");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			embedVideo = "true",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			internalVideo = "true",
+			videoName = "Document_1.mp4");
+	}
+
+	@description = "This test ensures that an internal video can be selected via item selector when creating KB article with enabling Xuggler."
+	@priority = "5"
+	test AddKBArticleWithEmbeddedVideo {
+		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+
+		KBArticle.addCP(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "DM Video Title In Site");
+
+		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+
+		KBArticle.viewCP(
+			embedVideo = "true",
+			internalVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			videoName = "Document_1.mp4");
+	}
+
+	@description = "This test ensures that an internal video can be selected via item selector when creating Web Content with enabling Xuggler."
+	@priority = "5"
+	test AddWCWithEmbeddedVideo {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Video Title In Depot",
+			groupName = "Test Depot Name",
+			mimeType = "video/mp4",
+			sourceFileName = "Document_1.mp4");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Site Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			depotName = "Test Depot Name",
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "DM Video Title In Depot",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		Pause(locator1 = "5000");
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Site Name");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+	}
+
+}

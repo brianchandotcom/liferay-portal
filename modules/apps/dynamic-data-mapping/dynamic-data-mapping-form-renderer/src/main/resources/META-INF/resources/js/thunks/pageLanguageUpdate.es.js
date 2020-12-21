@@ -147,7 +147,7 @@ const getDataRecordValues = ({
 	return newDataRecordValues;
 };
 
-const getLocalizedValueEdited = (fieldName, pages) => {
+const getFieldProperties = (fieldName, pages) => {
 	const visitor = new PagesVisitor(pages);
 
 	const {localizedValueEdited} = visitor.findField(
@@ -240,7 +240,7 @@ export default function pageLanguageUpdate({
 
 						return {
 							...field,
-							...getLocalizedValueEdited(field.fieldName, pages),
+							...getFieldProperties(field.fieldName, pages),
 						};
 					},
 					true,

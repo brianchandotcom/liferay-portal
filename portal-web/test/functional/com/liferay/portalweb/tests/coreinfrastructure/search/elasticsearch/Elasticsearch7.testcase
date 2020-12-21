@@ -350,13 +350,23 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-	@ignore = "true"
+	@description = "This is a use case for LPS-57894."
 	@priority = "3"
-	test AssertSystemSettingsPropogateToModule {
+	test UpdateSystemSettingsWithoutPortalRestart {
+		property test.name.skip.portal.instance = "Elasticsearch7#UpdateSystemSettingsWithoutPortalRestart";
 
-		// Ignoring test until LPS-65459 is resolved
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "apple");
 
-		property test.name.skip.portal.instance = "Elasticsearch7#AssertSystemSettingsPropogateToModule";
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -368,15 +378,39 @@ definition {
 			configurationName = "Elasticsearch 7",
 			configurationScope = "System Scope");
 
-		SystemSettings.editTextAreaSetting(
-			settingName = "Cluster Name",
-			settingValue = "LiferayElasticsearchCluster1");
+		FormFields.editTextMultiline(
+			fieldName = "clusterName",
+			fieldValue = "LiferayElasticsearchCluster1");
 
 		SystemSettings.saveConfiguration();
 
-		Navigator.openSpecificURL(url = "http://localhost:9200");
+		Pause(locator1 = "10000");
+
+		AssertConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
+
+		Navigator.openSpecificURL(url = "http://localhost:9201");
 
 		Elasticsearch.viewClusterStatus(clusterStatus = "&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		AssertTextEquals.assertPartialText(
+			key_connectionID = "__SIDECAR__",
+			locator1 = "SearchAdmin#CLUSTER_NAME",
+			value1 = "LiferayElasticsearchCluster1");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article");
 	}
 
 	@priority = "5"

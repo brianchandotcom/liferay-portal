@@ -929,6 +929,8 @@ public class CommerceDiscountLocalServiceImpl
 			(commerceDiscount.getDisplayDate() != null) &&
 			now.before(commerceDiscount.getDisplayDate())) {
 
+			commerceDiscount.setActive(false);
+
 			status = WorkflowConstants.STATUS_SCHEDULED;
 		}
 
@@ -938,9 +940,12 @@ public class CommerceDiscountLocalServiceImpl
 			if ((expirationDate != null) && expirationDate.before(now)) {
 				commerceDiscount.setExpirationDate(null);
 			}
+
+			commerceDiscount.setActive(true);
 		}
 
 		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			commerceDiscount.setActive(false);
 			commerceDiscount.setExpirationDate(now);
 		}
 

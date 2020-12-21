@@ -22,6 +22,7 @@ import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntry
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.base.CommerceTierPriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -249,6 +251,12 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public void checkCommerceTierPriceEntries() throws PortalException {
+		checkCommerceTierPriceEntriesByDisplayDate();
+		checkCommerceTierPriceEntriesByExpirationDate();
+	}
+
+	@Override
 	public void deleteCommerceTierPriceEntries(long commercePriceEntryId)
 		throws PortalException {
 
@@ -336,8 +344,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		try {
 			commerceTierPriceEntry =
-				commerceTierPriceEntryPersistence.findByC_LtM_First(
+				commerceTierPriceEntryPersistence.findByC_LtM_S_First(
 					commercePriceEntryId, quantity,
+					WorkflowConstants.STATUS_APPROVED,
 					new CommerceTierPriceEntryMinQuantityComparator(false));
 		}
 		catch (NoSuchTierPriceEntryException noSuchTierPriceEntryException) {
@@ -350,9 +359,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	public List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
 		long commercePriceEntryId, int quantity) {
 
-		return commerceTierPriceEntryPersistence.findByC_LtM(
-			commercePriceEntryId, quantity, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS,
+		return commerceTierPriceEntryPersistence.findByC_LtM_S(
+			commercePriceEntryId, quantity, WorkflowConstants.STATUS_APPROVED,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new CommerceTierPriceEntryMinQuantityComparator(true));
 	}
 
@@ -826,6 +835,83 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
+	}
+
+	protected void checkCommerceTierPriceEntriesByDisplayDate()
+		throws PortalException {
+
+		List<CommerceTierPriceEntry> commerceTierPriceEntries =
+			commerceTierPriceEntryPersistence.findByLtD_S(
+				new Date(), WorkflowConstants.STATUS_SCHEDULED);
+
+		for (CommerceTierPriceEntry commerceTierPriceEntry :
+				commerceTierPriceEntries) {
+
+			long userId = PortalUtil.getValidUserId(
+				commerceTierPriceEntry.getCompanyId(),
+				commerceTierPriceEntry.getUserId());
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCommand(Constants.UPDATE);
+
+			CommercePriceEntry commercePriceEntry =
+				commerceTierPriceEntry.getCommercePriceEntry();
+
+			CommercePriceList commercePriceList =
+				commercePriceEntry.getCommercePriceList();
+
+			serviceContext.setScopeGroupId(commercePriceList.getGroupId());
+
+			commerceTierPriceEntryLocalService.updateStatus(
+				userId, commerceTierPriceEntry.getCommerceTierPriceEntryId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				new HashMap<String, Serializable>());
+		}
+	}
+
+	protected void checkCommerceTierPriceEntriesByExpirationDate()
+		throws PortalException {
+
+		List<CommerceTierPriceEntry> commerceTierPriceEntries =
+			commerceTierPriceEntryPersistence.findByLtE_S(
+				new Date(), WorkflowConstants.STATUS_APPROVED);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Expiring " + commerceTierPriceEntries.size() +
+					" commerce tier price entries");
+		}
+
+		if ((commerceTierPriceEntries != null) &&
+			!commerceTierPriceEntries.isEmpty()) {
+
+			for (CommerceTierPriceEntry commerceTierPriceEntry :
+					commerceTierPriceEntries) {
+
+				long userId = PortalUtil.getValidUserId(
+					commerceTierPriceEntry.getCompanyId(),
+					commerceTierPriceEntry.getUserId());
+
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setCommand(Constants.UPDATE);
+
+				CommercePriceEntry commercePriceEntry =
+					commerceTierPriceEntry.getCommercePriceEntry();
+
+				CommercePriceList commercePriceList =
+					commercePriceEntry.getCommercePriceList();
+
+				serviceContext.setScopeGroupId(commercePriceList.getGroupId());
+
+				commerceTierPriceEntryLocalService.updateStatus(
+					userId,
+					commerceTierPriceEntry.getCommerceTierPriceEntryId(),
+					WorkflowConstants.STATUS_EXPIRED, serviceContext,
+					new HashMap<String, Serializable>());
+			}
+		}
 	}
 
 	protected List<CommerceTierPriceEntry> getCommerceTierPriceEntries(

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -342,6 +343,12 @@ public class CommercePriceEntryLocalServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
+	}
+
+	@Override
+	public void checkCommercePriceEntries() throws PortalException {
+		checkCommercePriceEntriesByDisplayDate();
+		checkCommercePriceEntriesByExpirationDate();
 	}
 
 	@Override
@@ -1278,6 +1285,70 @@ public class CommercePriceEntryLocalServiceImpl
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
+	}
+
+	protected void checkCommercePriceEntriesByDisplayDate()
+		throws PortalException {
+
+		List<CommercePriceEntry> commercePriceEntries =
+			commercePriceEntryPersistence.findByLtD_S(
+				new Date(), WorkflowConstants.STATUS_SCHEDULED);
+
+		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
+			long userId = PortalUtil.getValidUserId(
+				commercePriceEntry.getCompanyId(),
+				commercePriceEntry.getUserId());
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCommand(Constants.UPDATE);
+
+			CommercePriceList commercePriceList =
+				commercePriceEntry.getCommercePriceList();
+
+			serviceContext.setScopeGroupId(commercePriceList.getGroupId());
+
+			commercePriceEntryLocalService.updateStatus(
+				userId, commercePriceEntry.getCommercePriceEntryId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				new HashMap<String, Serializable>());
+		}
+	}
+
+	protected void checkCommercePriceEntriesByExpirationDate()
+		throws PortalException {
+
+		List<CommercePriceEntry> commercePriceEntries =
+			commercePriceEntryPersistence.findByLtE_S(
+				new Date(), WorkflowConstants.STATUS_APPROVED);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Expiring " + commercePriceEntries.size() +
+					" commerce price entries");
+		}
+
+		if ((commercePriceEntries != null) && !commercePriceEntries.isEmpty()) {
+			for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
+				long userId = PortalUtil.getValidUserId(
+					commercePriceEntry.getCompanyId(),
+					commercePriceEntry.getUserId());
+
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setCommand(Constants.UPDATE);
+
+				CommercePriceList commercePriceList =
+					commercePriceEntry.getCommercePriceList();
+
+				serviceContext.setScopeGroupId(commercePriceList.getGroupId());
+
+				commercePriceEntryLocalService.updateStatus(
+					userId, commercePriceEntry.getCommercePriceEntryId(),
+					WorkflowConstants.STATUS_EXPIRED, serviceContext,
+					new HashMap<String, Serializable>());
+			}
+		}
 	}
 
 	protected List<CommercePriceEntry> getCommercePriceEntries(Hits hits)

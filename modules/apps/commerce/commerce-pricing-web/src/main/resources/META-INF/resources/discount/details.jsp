@@ -25,6 +25,11 @@ long commerceDiscountId = commerceDiscountDisplayContext.getCommerceDiscountId()
 PortletURL portletDiscountRuleURL = commerceDiscountDisplayContext.getPortletDiscountRuleURL();
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
+
+if ((commerceDiscount != null) && (commerceDiscount.getExpirationDate() != null)) {
+	neverExpire = false;
+}
+
 boolean usePercentage = ParamUtil.getBoolean(request, "usePercentage");
 
 String target = ParamUtil.getString(request, "target");

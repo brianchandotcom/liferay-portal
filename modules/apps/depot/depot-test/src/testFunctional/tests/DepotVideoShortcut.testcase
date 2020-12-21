@@ -24,13 +24,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Site.tearDownCP();
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
 
-			Depot.tearDownCP();
-
-			DMDocument.tearDownCP();
-
-			DMFolder.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
 			User.logoutPG();
 		}

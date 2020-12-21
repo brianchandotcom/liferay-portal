@@ -85,9 +85,10 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			eventName, itemSelectorCriterion);
 
-		StringBuilder sb = new StringBuilder(11);
+		StringBuilder sb = new StringBuilder(12);
 
-		sb.append("javascript:Liferay.Util.openSelectionModal({id: '");
+		sb.append("javascript:Liferay.Util.openSelectionModal({");
+		sb.append("customSelectEvent: true, id: '");
 		sb.append(namespace);
 		sb.append("selectSite', onSelect: function(selectedItem) ");
 		sb.append("{Liferay.Util.navigate(selectedItem.url);}");

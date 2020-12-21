@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-ui:success key="friendlyURLChanged" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChanged")) %>' timeout="<%= 20000 %>" translateMessage="<%= false %>" />
+
 <%
 JournalManagementToolbarDisplayContext journalManagementToolbarDisplayContext = null;
 

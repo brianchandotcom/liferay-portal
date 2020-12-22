@@ -46,10 +46,34 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 
+	/**
+	 * @param      userId
+	 * @param      name
+	 * @param      dispatchTaskExecutorType
+	 * @param      dispatchTaskSettingsUnicodeProperties
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addDispatchTrigger(long,
+	 *             String, UnicodeProperties, String)}
+	 */
+	@Deprecated
 	@Override
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, String taskExecutorType,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			long userId, String name, String dispatchTaskExecutorType,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties)
+		throws PortalException {
+
+		return addDispatchTrigger(
+			userId, dispatchTaskExecutorType,
+			dispatchTaskSettingsUnicodeProperties, name);
+	}
+
+	@Override
+	public DispatchTrigger addDispatchTrigger(
+			long userId, String dispatchTaskExecutorType,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
+			String name)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -57,8 +81,8 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			DispatchActionKeys.ADD_DISPATCH_TRIGGER);
 
 		return dispatchTriggerLocalService.addDispatchTrigger(
-			userId, name, false, taskExecutorType,
-			taskSettingsUnicodeProperties);
+			userId, dispatchTaskExecutorType,
+			dispatchTaskSettingsUnicodeProperties, name, false);
 	}
 
 	@Override
@@ -103,6 +127,52 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, boolean active, String cronExpression,
+			DispatchTaskClusterMode dispatchTaskClusterMode, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
+			int startDateDay, int startDateYear, int startDateHour,
+			int startDateMinute)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
+
+		return dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd, overlapAllowed, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute);
+	}
+
+	/**
+	 * @param      dispatchTriggerId
+	 * @param      active
+	 * @param      cronExpression
+	 * @param      endDateMonth
+	 * @param      endDateDay
+	 * @param      endDateYear
+	 * @param      endDateHour
+	 * @param      endDateMinute
+	 * @param      neverEnd
+	 * @param      overlapAllowed
+	 * @param      startDateMonth
+	 * @param      startDateDay
+	 * @param      startDateYear
+	 * @param      startDateHour
+	 * @param      startDateMinute
+	 * @param      dispatchTaskClusterMode
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #updateDispatchTrigger(long, boolean, String,
+	 *             DispatchTaskClusterMode, int, int, int, int, int, boolean,
+	 *             boolean, int, int, int, int, int)}
+	 */
+	@Deprecated
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
 			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
 			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
 			int startDateMonth, int startDateDay, int startDateYear,
@@ -110,27 +180,46 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			DispatchTaskClusterMode dispatchTaskClusterMode)
 		throws PortalException {
 
-		_dispatchTriggerModelResourcePermission.check(
-			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
+		return updateDispatchTrigger(
+			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd, overlapAllowed, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute);
+	}
 
-		return dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTriggerId, active, cronExpression, endDateMonth, endDateDay,
-			endDateYear, endDateHour, endDateMinute, neverEnd, overlapAllowed,
-			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute, dispatchTaskClusterMode);
+	/**
+	 * @param      dispatchTriggerId
+	 * @param      name
+	 * @param      dispatchTaskSettingsUnicodeProperties
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #updateDispatchTrigger(long, UnicodeProperties, String)}
+	 */
+	@Deprecated
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, String name,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties)
+		throws PortalException {
+
+		return updateDispatchTrigger(
+			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
 	}
 
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
-			long dispatchTriggerId, String name,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			long dispatchTriggerId,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
+			String name)
 		throws PortalException {
 
 		_dispatchTriggerModelResourcePermission.check(
 			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
 
 		return dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTriggerId, name, taskSettingsUnicodeProperties);
+			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
 	}
 
 	private static volatile ModelResourcePermission<DispatchTrigger>

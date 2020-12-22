@@ -61,14 +61,14 @@
 
 		<column name="active" type="boolean" />
 		<column name="cronExpression" type="String" />
+		<column name="dispatchTaskClusterMode" type="int" />
+		<column name="dispatchTaskExecutorType" type="String" />
+		<column name="dispatchTaskSettings" type="String" />
 		<column name="endDate" type="Date" />
 		<column name="name" type="String" />
 		<column name="overlapAllowed" type="boolean" />
 		<column name="startDate" type="Date" />
 		<column name="system" type="boolean" />
-		<column name="taskClusterMode" type="int" />
-		<column name="taskExecutorType" type="String" />
-		<column name="taskSettings" type="String" />
 
 		<!-- Order -->
 
@@ -85,17 +85,17 @@
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 		</finder>
+		<finder name="C_DTET" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="dispatchTaskExecutorType" />
+		</finder>
 		<finder name="C_N" return-type="DispatchTrigger" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="C_TET" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="taskExecutorType" />
-		</finder>
-		<finder name="A_TCM" return-type="Collection">
+		<finder name="A_DTCM" return-type="Collection">
 			<finder-column name="active" />
-			<finder-column arrayable-operator="OR" name="taskClusterMode" />
+			<finder-column arrayable-operator="OR" name="dispatchTaskClusterMode" />
 		</finder>
 	</entity>
 	<exceptions>

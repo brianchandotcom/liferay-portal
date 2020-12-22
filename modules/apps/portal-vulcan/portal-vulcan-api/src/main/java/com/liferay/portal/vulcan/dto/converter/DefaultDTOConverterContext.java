@@ -16,6 +16,8 @@ package com.liferay.portal.vulcan.dto.converter;
 
 import com.liferay.portal.kernel.model.User;
 
+import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -50,14 +52,9 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 		HttpServletRequest httpServletRequest, Object id, Locale locale,
 		UriInfo uriInfo, User user) {
 
-		_acceptAllLanguages = acceptAllLanguages;
-		_actions = actions;
-		_dtoConverterRegistry = dtoConverterRegistry;
-		_httpServletRequest = httpServletRequest;
-		_id = id;
-		_locale = locale;
-		_uriInfo = uriInfo;
-		_user = user;
+		this(
+			acceptAllLanguages, actions, new HashMap<>(), dtoConverterRegistry,
+			httpServletRequest, id, locale, uriInfo, user);
 	}
 
 	public DefaultDTOConverterContext(
@@ -68,6 +65,24 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 		this(
 			acceptAllLanguages, actions, dtoConverterRegistry, null, id, locale,
 			uriInfo, user);
+	}
+
+	public DefaultDTOConverterContext(
+		boolean acceptAllLanguages, Map<String, Map<String, String>> actions,
+		Map<String, Object> attributes,
+		DTOConverterRegistry dtoConverterRegistry,
+		HttpServletRequest httpServletRequest, Object id, Locale locale,
+		UriInfo uriInfo, User user) {
+
+		_acceptAllLanguages = acceptAllLanguages;
+		_actions = actions;
+		_attributes = attributes;
+		_dtoConverterRegistry = dtoConverterRegistry;
+		_httpServletRequest = httpServletRequest;
+		_id = id;
+		_locale = locale;
+		_uriInfo = uriInfo;
+		_user = user;
 	}
 
 	public DefaultDTOConverterContext(
@@ -110,6 +125,16 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	@Override
 	public Map<String, Map<String, String>> getActions() {
 		return _actions;
+	}
+
+	@Override
+	public Object getAttribute(String name) {
+		return _attributes.get(name);
+	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return _attributes;
 	}
 
 	@Override
@@ -156,8 +181,24 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 		return _acceptAllLanguages;
 	}
 
+	@Override
+	public Object removeAttribute(String name) {
+		return _attributes.remove(name);
+	}
+
+	@Override
+	public void setAttribute(String name, Object value) {
+		_attributes.put(name, value);
+	}
+
+	@Override
+	public void setAttributes(Map<String, Serializable> attributes) {
+		_attributes.putAll(attributes);
+	}
+
 	private final boolean _acceptAllLanguages;
 	private final Map<String, Map<String, String>> _actions;
+	private final Map<String, Object> _attributes;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final HttpServletRequest _httpServletRequest;
 	private final Object _id;

@@ -38,7 +38,7 @@ AUI.add(
 			'<span class="collapse-icon-closed"><span class="icon-caret-right"></span></span>';
 
 		var TPL_LAYOUTS_NAVBAR =
-			'<nav class="navbar navbar-default">' +
+			'<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">' +
 			'<div class="collapse navbar-collapse">' +
 			'<ul class="nav navbar-nav">' +
 			'<li class="public {publicLayoutClass}"><a href="javascript:;">' +

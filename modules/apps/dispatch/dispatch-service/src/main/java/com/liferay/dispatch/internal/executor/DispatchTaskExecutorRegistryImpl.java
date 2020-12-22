@@ -15,7 +15,7 @@
 package com.liferay.dispatch.internal.executor;
 
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
-import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,9 +34,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Matija Petanjek
  */
-@Component(service = DispatchTaskExecutorHelper.class)
-public class DispatchTaskExecutorHelperImpl
-	implements DispatchTaskExecutorHelper {
+@Component(service = DispatchTaskExecutorRegistry.class)
+public class DispatchTaskExecutorRegistryImpl
+	implements DispatchTaskExecutorRegistry {
 
 	@Override
 	public DispatchTaskExecutor getDispatchTaskExecutor(String type) {
@@ -118,7 +118,7 @@ public class DispatchTaskExecutorHelperImpl
 		"dispatch.task.executor.type";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DispatchTaskExecutorHelperImpl.class);
+		DispatchTaskExecutorRegistryImpl.class);
 
 	private final Map<String, String> _dispatchTaskExecutorNames =
 		new HashMap<>();

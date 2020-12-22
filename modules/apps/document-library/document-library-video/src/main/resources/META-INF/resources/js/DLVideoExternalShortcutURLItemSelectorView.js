@@ -45,7 +45,7 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 			}
 		>
 			<DLVideoExternalShortcutInput
-				labelTooltip="internal-video-tooltip"
+				labelTooltip={Liferay.Language.get('internal-video-tooltip')}
 				onChange={setUrl}
 				url={url}
 			/>

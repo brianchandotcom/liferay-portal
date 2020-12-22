@@ -77,13 +77,15 @@ public class CountryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteCountryDeleteAddress() throws Exception {
+	public void testDeleteCountry() throws Exception {
 		Country country = _addCountry(
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 
 		User user = TestPropsValues.getUser();
+
+		// Address
 
 		Address address = _addressLocalService.addAddress(
 			null, user.getUserId(), null, user.getContactId(),
@@ -95,20 +97,7 @@ public class CountryLocalServiceTest {
 
 		Assert.assertEquals(country.getCountryId(), address.getCountryId());
 
-		_countryLocalService.deleteCountry(country);
-
-		Assert.assertNull(
-			_addressLocalService.fetchAddress(address.getAddressId()));
-		Assert.assertNull(
-			_countryLocalService.fetchCountry(country.getCountryId()));
-	}
-
-	@Test
-	public void testDeleteCountryUpdateOrganization() throws Exception {
-		Country country = _addCountry(
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+		// Organization
 
 		Organization organization = OrganizationTestUtil.addOrganization();
 
@@ -129,6 +118,13 @@ public class CountryLocalServiceTest {
 
 		Assert.assertNull(
 			_countryLocalService.fetchCountry(country.getCountryId()));
+
+		// Assert address is deleted
+
+		Assert.assertNull(
+			_addressLocalService.fetchAddress(address.getAddressId()));
+
+		// Assert organization is updated
 
 		organization = _organizationLocalService.getOrganization(
 			organization.getOrganizationId());

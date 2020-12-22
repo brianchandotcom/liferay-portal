@@ -43,7 +43,7 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 		portletURL="<%= portletURL %>"
 	/>
 
-	<aui:nav-bar>
+	<aui:nav-bar cssClass="navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 			<liferay-portlet:renderURL var="exportPagesURL">
 				<portlet:param name="mvcRenderCommandName" value="/export_import/export_layouts" />

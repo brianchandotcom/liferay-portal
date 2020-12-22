@@ -107,29 +107,27 @@ if (tabs1.equals("published")) {
 		<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
 	</liferay-portlet:renderURL>
 
-	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-		<aui:nav cssClass="kaleo-process-workflow-nav-tabs nav-bar-workflow nav-tabs">
-			<liferay-portlet:renderURL var="viewPublishedURL">
-				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-				<portlet:param name="tabs1" value="published" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="historyKey" value="workflow" />
-				<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
-			</liferay-portlet:renderURL>
+	<aui:nav cssClass="kaleo-process-workflow-nav-tabs nav-bar-workflow nav-tabs">
+		<liferay-portlet:renderURL var="viewPublishedURL">
+			<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
+			<portlet:param name="tabs1" value="published" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="historyKey" value="workflow" />
+			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
+		</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= viewPublishedURL %>" label="published" selected='<%= tabs1.equals("published") %>' />
+		<aui:nav-item href="<%= viewPublishedURL %>" label="published" selected='<%= tabs1.equals("published") %>' />
 
-			<liferay-portlet:renderURL var="viewUnpublishedURL">
-				<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-				<portlet:param name="tabs1" value="unpublished" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="historyKey" value="workflow" />
-				<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
-			</liferay-portlet:renderURL>
+		<liferay-portlet:renderURL var="viewUnpublishedURL">
+			<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
+			<portlet:param name="tabs1" value="unpublished" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="historyKey" value="workflow" />
+			<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
+		</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= viewUnpublishedURL %>" label="unpublished" selected='<%= tabs1.equals("unpublished") %>' />
-		</aui:nav>
-	</aui:nav-bar>
+		<aui:nav-item href="<%= viewUnpublishedURL %>" label="unpublished" selected='<%= tabs1.equals("unpublished") %>' />
+	</aui:nav>
 
 	<c:choose>
 		<c:when test='<%= tabs1.equals("published") %>'>

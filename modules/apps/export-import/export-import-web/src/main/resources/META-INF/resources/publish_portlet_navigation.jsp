@@ -26,7 +26,7 @@ portletURL.setParameter("portletResource", portletResource);
 %>
 
 <c:if test="<%= (themeDisplay.getURLPublishToLive() != null) || layout.isTypeControlPanel() %>">
-	<aui:nav-bar cssClass="navbar-collapse-absolute" markupView="lexicon">
+	<aui:nav-bar cssClass="navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light" markupView="lexicon">
 		<aui:nav cssClass="navbar-nav">
 
 			<%

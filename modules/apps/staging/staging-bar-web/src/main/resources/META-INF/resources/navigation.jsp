@@ -21,8 +21,8 @@ String navigationName = ParamUtil.getString(request, "navigationName");
 %>
 
 <c:if test="<%= Validator.isNotNull(navigationName) %>">
-	<aui:nav-bar markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
+	<aui:nav-bar cssClass="navbar-expand navbar-underline navigation-bar navigation-bar-light" markupView="lexicon">
+		<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
 			<aui:nav-item label="<%= navigationName %>" selected="<%= true %>" />
 		</aui:nav>
 	</aui:nav-bar>

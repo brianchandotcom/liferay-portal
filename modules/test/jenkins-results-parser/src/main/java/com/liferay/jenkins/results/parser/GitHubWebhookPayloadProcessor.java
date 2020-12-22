@@ -16,9 +16,11 @@ package com.liferay.jenkins.results.parser;
 
 import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
+
+import java.io.IOException;
 import java.io.StringReader;
 
-import java.net.NoRouteToHostException;
 import java.net.URLEncoder;
 
 import java.util.ArrayList;
@@ -33,16 +35,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -248,120 +240,58 @@ public class GitHubWebhookPayloadProcessor {
 		}
 	}
 
-	public String processURL(String url) throws Exception {
-		return processURL(url, null, "GET");
+	public String processURL(String url) throws IOException {
+		return processURL(url, null, HttpRequestMethod.GET);
 	}
 
-	public String processURL(String url, String body) throws Exception {
-		return processURL(url, body, "POST");
+	public String processURL(String url, String body) throws IOException {
+		return processURL(url, body, HttpRequestMethod.POST);
 	}
 
-	public String processURL(String url, String body, String method)
-		throws Exception {
+	public String processURL(String url, String body, HttpRequestMethod method)
+		throws IOException {
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Processing URL: " + url);
-		}
+		if ((method == HttpRequestMethod.PATCH) ||
+			(method == HttpRequestMethod.POST)) {
 
-		HttpClient httpClient = new HttpClient();
-
-		HttpMethod httpMethod = null;
-
-		if (method.equals("GET")) {
-			if (body != null) {
-				throw new IllegalArgumentException(
-					"GET method should not have a body");
-			}
-
-			httpMethod = new GetMethod(url);
-		}
-		else if (method.equals("PATCH")) {
 			if (body == null) {
 				throw new IllegalArgumentException(
-					"PATCH method requires a body");
+					method.toString() + " method requires a body");
 			}
 
-			httpMethod = new PatchMethod(url);
+			body = JenkinsResultsParserUtil.combine(
+				"token=",
+				_jenkinsBuildProperties.getProperty(
+					"jenkins.authentication.token"),
+				"&", body);
 		}
-		else if (method.equals("POST")) {
-			if (body == null) {
-				throw new IllegalArgumentException(
-					"POST method requires a body");
-			}
+		else if ((method == HttpRequestMethod.DELETE) ||
+				 (method == HttpRequestMethod.PUT)) {
 
-			httpMethod = new PostMethod(url);
+			body = JenkinsResultsParserUtil.combine(
+				"token=",
+				_jenkinsBuildProperties.getProperty(
+					"jenkins.authentication.token"));
 		}
-		else if (method.equals("PUT")) {
+		else if (method == HttpRequestMethod.GET) {
 			if (body != null) {
 				throw new IllegalArgumentException(
-					"PUT method should not have a body");
+					method.toString() + " method should not have a body");
 			}
 
-			httpMethod = new PutMethod(url);
-		}
-		else {
-			throw new IllegalArgumentException("Invalid method " + method);
-		}
+			String prefix = "&";
 
-		for (int i = 0; i < 3; i++) {
-			try {
-				String gitHubAccessToken = _jenkinsBuildProperties.getProperty(
-					"github.access.token");
-
-				httpMethod.addRequestHeader(
-					"Accept", "application/vnd.github.moondragon+json");
-				httpMethod.addRequestHeader(
-					"Authorization", "token " + gitHubAccessToken);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("GitHub access token: " + gitHubAccessToken);
-				}
-
-				HttpMethodParams httpMethodParams = httpMethod.getParams();
-
-				httpMethodParams.setParameter(
-					HttpMethodParams.RETRY_HANDLER,
-					new DefaultHttpMethodRetryHandler(3, false));
-
-				if (body != null) {
-					RequestEntity requestEntity = new StringRequestEntity(
-						body, "application/json", "UTF-8");
-
-					EntityEnclosingMethod entityEnclosingMethod =
-						(EntityEnclosingMethod)httpMethod;
-
-					entityEnclosingMethod.setRequestEntity(requestEntity);
-				}
-
-				httpClient.executeMethod(httpMethod);
-
-				String responseBody = null;
-
-				byte[] responseBodyByteArray = httpMethod.getResponseBody();
-
-				if (responseBodyByteArray != null) {
-					responseBody = new String(responseBodyByteArray);
-				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Response body: " + responseBody);
-				}
-
-				return responseBody;
+			if (url.contains("?")) {
+				prefix = "?";
 			}
-			catch (NoRouteToHostException noRouteToHostException) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Retrying " + url, noRouteToHostException);
-				}
 
-				Thread.sleep(1000);
-			}
-			finally {
-				httpMethod.releaseConnection();
-			}
+			url = JenkinsResultsParserUtil.combine(
+				url, prefix, "token=",
+				_jenkinsBuildProperties.getProperty(
+					"jenkins.authentication.token"));
 		}
 
-		throw new RuntimeException("Too many retries");
+		return JenkinsResultsParserUtil.toString(url, false, method, body);
 	}
 
 	public void removeTestPullRequestQueryString(String queryString) {
@@ -382,10 +312,11 @@ public class GitHubWebhookPayloadProcessor {
 		jsonObject.put("state", "closed");
 
 		processURL(
-			"https://api.github.com/repos/" + pullRequest.getOwnerName() + "/" +
-				pullRequest.getRepositoryName() + "/pulls/" +
-					pullRequest.getNumber(),
-			jsonObject.toString(), "PATCH");
+			JenkinsResultsParserUtil.combine(
+				"https://api.github.com/repos/", pullRequest.getOwnerName(),
+				"/", pullRequest.getRepositoryName(), "/pulls/",
+				String.valueOf(pullRequest.getNumber())),
+			jsonObject.toString(), HttpRequestMethod.PATCH);
 	}
 
 	protected void closePullRequest(PullRequest pullRequest, String message)
@@ -1037,7 +968,8 @@ public class GitHubWebhookPayloadProcessor {
 			return;
 		}
 
-		processURL(pullRequest.getIssueURL() + "/lock", null, "PUT");
+		processURL(
+			pullRequest.getIssueURL() + "/lock", null, HttpRequestMethod.PUT);
 	}
 
 	protected void lockPullRequest(PullRequest pullRequest, String message)
@@ -1284,10 +1216,11 @@ public class GitHubWebhookPayloadProcessor {
 		jsonObject.put("state", "open");
 
 		String pullRequestJSON = processURL(
-			"https://api.github.com/repos/" + pullRequest.getOwnerName() + "/" +
-				pullRequest.getRepositoryName() + "/pulls/" +
-					pullRequest.getNumber(),
-			jsonObject.toString(), "PATCH");
+			JenkinsResultsParserUtil.combine(
+				"https://api.github.com/repos/", pullRequest.getOwnerName(),
+				"/", pullRequest.getRepositoryName(), "/pulls/",
+				String.valueOf(pullRequest.getNumber())),
+			jsonObject.toString(), HttpRequestMethod.PATCH);
 
 		JSONObject pullRequestJSONObject = new JSONObject(pullRequestJSON);
 
@@ -2506,19 +2439,6 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	private class GitHubAPICallException extends Exception {
-	}
-
-	private class PatchMethod extends PostMethod {
-
-		public PatchMethod(String url) {
-			super(url);
-		}
-
-		@Override
-		public String getName() {
-			return "PATCH";
-		}
-
 	}
 
 	private class PullRequest {

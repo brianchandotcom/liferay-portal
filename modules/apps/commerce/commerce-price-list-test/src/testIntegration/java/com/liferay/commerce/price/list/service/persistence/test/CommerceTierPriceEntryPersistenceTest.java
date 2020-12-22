@@ -326,6 +326,31 @@ public class CommerceTierPriceEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByLtE_S() throws Exception {
+		_persistence.countByLtE_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtE_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByC_LtM_S() throws Exception {
+		_persistence.countByC_LtM_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_LtM_S(0L, 0, 0);
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 

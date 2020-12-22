@@ -138,6 +138,8 @@ public interface CommerceTierPriceEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void checkCommerceTierPriceEntries() throws PortalException;
+
 	/**
 	 * Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	 *

@@ -203,6 +203,8 @@ public interface CommercePriceEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void checkCommercePriceEntries() throws PortalException;
+
 	/**
 	 * Creates a new commerce price entry with the primary key. Does not add the commerce price entry to the database.
 	 *

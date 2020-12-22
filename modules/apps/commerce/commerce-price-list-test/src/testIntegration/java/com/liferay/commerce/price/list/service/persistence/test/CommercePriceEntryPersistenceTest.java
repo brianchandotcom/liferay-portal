@@ -333,6 +333,22 @@ public class CommercePriceEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByLtE_S() throws Exception {
+		_persistence.countByLtE_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtE_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testCountByC_C_S() throws Exception {
 		_persistence.countByC_C_S(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());

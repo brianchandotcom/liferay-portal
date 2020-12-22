@@ -49,6 +49,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Timestamp;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -3048,6 +3050,1146 @@ public class CommercePriceEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_CPINSTANCEUUID_3 =
 		"(commercePriceEntry.CPInstanceUuid IS NULL OR commercePriceEntry.CPInstanceUuid = '')";
 
+	private FinderPath _finderPathWithPaginationFindByLtD_S;
+	private FinderPath _finderPathWithPaginationCountByLtD_S;
+
+	/**
+	 * Returns all the commerce price entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the matching commerce price entries
+	 */
+	@Override
+	public List<CommercePriceEntry> findByLtD_S(Date displayDate, int status) {
+		return findByLtD_S(
+			displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce price entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price entries
+	 * @param end the upper bound of the range of commerce price entries (not inclusive)
+	 * @return the range of matching commerce price entries
+	 */
+	@Override
+	public List<CommercePriceEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end) {
+
+		return findByLtD_S(displayDate, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price entries
+	 * @param end the upper bound of the range of commerce price entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price entries
+	 */
+	@Override
+	public List<CommercePriceEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		return findByLtD_S(
+			displayDate, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price entries
+	 * @param end the upper bound of the range of commerce price entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce price entries
+	 */
+	@Override
+	public List<CommercePriceEntry> findByLtD_S(
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByLtD_S;
+		finderArgs = new Object[] {
+			_getTime(displayDate), status, start, end, orderByComparator
+		};
+
+		List<CommercePriceEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommercePriceEntry>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommercePriceEntry commercePriceEntry : list) {
+					if ((displayDate.getTime() <=
+							commercePriceEntry.getDisplayDate(
+							).getTime()) ||
+						(status != commercePriceEntry.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEPRICEENTRY_WHERE);
+
+			boolean bindDisplayDate = false;
+
+			if (displayDate == null) {
+				sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+			}
+			else {
+				bindDisplayDate = true;
+
+				sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommercePriceEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindDisplayDate) {
+					queryPos.add(new Timestamp(displayDate.getTime()));
+				}
+
+				queryPos.add(status);
+
+				list = (List<CommercePriceEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price entry
+	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
+	 */
+	@Override
+	public CommercePriceEntry findByLtD_S_First(
+			Date displayDate, int status,
+			OrderByComparator<CommercePriceEntry> orderByComparator)
+		throws NoSuchPriceEntryException {
+
+		CommercePriceEntry commercePriceEntry = fetchByLtD_S_First(
+			displayDate, status, orderByComparator);
+
+		if (commercePriceEntry != null) {
+			return commercePriceEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("displayDate<");
+		sb.append(displayDate);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchPriceEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	 */
+	@Override
+	public CommercePriceEntry fetchByLtD_S_First(
+		Date displayDate, int status,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		List<CommercePriceEntry> list = findByLtD_S(
+			displayDate, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price entry
+	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
+	 */
+	@Override
+	public CommercePriceEntry findByLtD_S_Last(
+			Date displayDate, int status,
+			OrderByComparator<CommercePriceEntry> orderByComparator)
+		throws NoSuchPriceEntryException {
+
+		CommercePriceEntry commercePriceEntry = fetchByLtD_S_Last(
+			displayDate, status, orderByComparator);
+
+		if (commercePriceEntry != null) {
+			return commercePriceEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("displayDate<");
+		sb.append(displayDate);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchPriceEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	 */
+	@Override
+	public CommercePriceEntry fetchByLtD_S_Last(
+		Date displayDate, int status,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		int count = countByLtD_S(displayDate, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommercePriceEntry> list = findByLtD_S(
+			displayDate, status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commercePriceEntryId the primary key of the current commerce price entry
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price entry
+	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
+	 */
+	@Override
+	public CommercePriceEntry[] findByLtD_S_PrevAndNext(
+			long commercePriceEntryId, Date displayDate, int status,
+			OrderByComparator<CommercePriceEntry> orderByComparator)
+		throws NoSuchPriceEntryException {
+
+		CommercePriceEntry commercePriceEntry = findByPrimaryKey(
+			commercePriceEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommercePriceEntry[] array = new CommercePriceEntryImpl[3];
+
+			array[0] = getByLtD_S_PrevAndNext(
+				session, commercePriceEntry, displayDate, status,
+				orderByComparator, true);
+
+			array[1] = commercePriceEntry;
+
+			array[2] = getByLtD_S_PrevAndNext(
+				session, commercePriceEntry, displayDate, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommercePriceEntry getByLtD_S_PrevAndNext(
+		Session session, CommercePriceEntry commercePriceEntry,
+		Date displayDate, int status,
+		OrderByComparator<CommercePriceEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEPRICEENTRY_WHERE);
+
+		boolean bindDisplayDate = false;
+
+		if (displayDate == null) {
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+		}
+		else {
+			bindDisplayDate = true;
+
+			sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommercePriceEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindDisplayDate) {
+			queryPos.add(new Timestamp(displayDate.getTime()));
+		}
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commercePriceEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommercePriceEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce price entries where displayDate &lt; &#63; and status = &#63; from the database.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 */
+	@Override
+	public void removeByLtD_S(Date displayDate, int status) {
+		for (CommercePriceEntry commercePriceEntry :
+				findByLtD_S(
+					displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(commercePriceEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce price entries where displayDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param displayDate the display date
+	 * @param status the status
+	 * @return the number of matching commerce price entries
+	 */
+	@Override
+	public int countByLtD_S(Date displayDate, int status) {
+		FinderPath finderPath = _finderPathWithPaginationCountByLtD_S;
+
+		Object[] finderArgs = new Object[] {_getTime(displayDate), status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEPRICEENTRY_WHERE);
+
+			boolean bindDisplayDate = false;
+
+			if (displayDate == null) {
+				sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_1);
+			}
+			else {
+				bindDisplayDate = true;
+
+				sb.append(_FINDER_COLUMN_LTD_S_DISPLAYDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_LTD_S_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindDisplayDate) {
+					queryPos.add(new Timestamp(displayDate.getTime()));
+				}
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_LTD_S_DISPLAYDATE_1 =
+		"commercePriceEntry.displayDate IS NULL AND ";
+
+	private static final String _FINDER_COLUMN_LTD_S_DISPLAYDATE_2 =
+		"commercePriceEntry.displayDate < ? AND ";
+
+	private static final String _FINDER_COLUMN_LTD_S_STATUS_2 =
+		"commercePriceEntry.status = ?";
+
+	private FinderPath _finderPathWithPaginationFindByLtE_S;
+	private FinderPath _finderPathWithPaginationCountByLtE_S;
+
+	/**
+	 * Returns all the commerce price entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the matching commerce price entries
+	 */
+	@Override
+	public List<CommercePriceEntry> findByLtE_S(
+		Date expirationDate, int status) {
+
+		return findByLtE_S(
+			expirationDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce price entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price entries
+	 * @param end the upper bound of the range of commerce price entries (not inclusive)
+	 * @return the range of matching commerce price entries
+	 */
+	@Override
+	public List<CommercePriceEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end) {
+
+		return findByLtE_S(expirationDate, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price entries
+	 * @param end the upper bound of the range of commerce price entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price entries
+	 */
+	@Override
+	public List<CommercePriceEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		return findByLtE_S(
+			expirationDate, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price entries
+	 * @param end the upper bound of the range of commerce price entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce price entries
+	 */
+	@Override
+	public List<CommercePriceEntry> findByLtE_S(
+		Date expirationDate, int status, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByLtE_S;
+		finderArgs = new Object[] {
+			_getTime(expirationDate), status, start, end, orderByComparator
+		};
+
+		List<CommercePriceEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommercePriceEntry>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommercePriceEntry commercePriceEntry : list) {
+					if ((expirationDate.getTime() <=
+							commercePriceEntry.getExpirationDate(
+							).getTime()) ||
+						(status != commercePriceEntry.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEPRICEENTRY_WHERE);
+
+			boolean bindExpirationDate = false;
+
+			if (expirationDate == null) {
+				sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+			}
+			else {
+				bindExpirationDate = true;
+
+				sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommercePriceEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExpirationDate) {
+					queryPos.add(new Timestamp(expirationDate.getTime()));
+				}
+
+				queryPos.add(status);
+
+				list = (List<CommercePriceEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price entry
+	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
+	 */
+	@Override
+	public CommercePriceEntry findByLtE_S_First(
+			Date expirationDate, int status,
+			OrderByComparator<CommercePriceEntry> orderByComparator)
+		throws NoSuchPriceEntryException {
+
+		CommercePriceEntry commercePriceEntry = fetchByLtE_S_First(
+			expirationDate, status, orderByComparator);
+
+		if (commercePriceEntry != null) {
+			return commercePriceEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("expirationDate<");
+		sb.append(expirationDate);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchPriceEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	 */
+	@Override
+	public CommercePriceEntry fetchByLtE_S_First(
+		Date expirationDate, int status,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		List<CommercePriceEntry> list = findByLtE_S(
+			expirationDate, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price entry
+	 * @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
+	 */
+	@Override
+	public CommercePriceEntry findByLtE_S_Last(
+			Date expirationDate, int status,
+			OrderByComparator<CommercePriceEntry> orderByComparator)
+		throws NoSuchPriceEntryException {
+
+		CommercePriceEntry commercePriceEntry = fetchByLtE_S_Last(
+			expirationDate, status, orderByComparator);
+
+		if (commercePriceEntry != null) {
+			return commercePriceEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("expirationDate<");
+		sb.append(expirationDate);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchPriceEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	 */
+	@Override
+	public CommercePriceEntry fetchByLtE_S_Last(
+		Date expirationDate, int status,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		int count = countByLtE_S(expirationDate, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommercePriceEntry> list = findByLtE_S(
+			expirationDate, status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce price entries before and after the current commerce price entry in the ordered set where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param commercePriceEntryId the primary key of the current commerce price entry
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price entry
+	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
+	 */
+	@Override
+	public CommercePriceEntry[] findByLtE_S_PrevAndNext(
+			long commercePriceEntryId, Date expirationDate, int status,
+			OrderByComparator<CommercePriceEntry> orderByComparator)
+		throws NoSuchPriceEntryException {
+
+		CommercePriceEntry commercePriceEntry = findByPrimaryKey(
+			commercePriceEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommercePriceEntry[] array = new CommercePriceEntryImpl[3];
+
+			array[0] = getByLtE_S_PrevAndNext(
+				session, commercePriceEntry, expirationDate, status,
+				orderByComparator, true);
+
+			array[1] = commercePriceEntry;
+
+			array[2] = getByLtE_S_PrevAndNext(
+				session, commercePriceEntry, expirationDate, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommercePriceEntry getByLtE_S_PrevAndNext(
+		Session session, CommercePriceEntry commercePriceEntry,
+		Date expirationDate, int status,
+		OrderByComparator<CommercePriceEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCEPRICEENTRY_WHERE);
+
+		boolean bindExpirationDate = false;
+
+		if (expirationDate == null) {
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+		}
+		else {
+			bindExpirationDate = true;
+
+			sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommercePriceEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindExpirationDate) {
+			queryPos.add(new Timestamp(expirationDate.getTime()));
+		}
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commercePriceEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommercePriceEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce price entries where expirationDate &lt; &#63; and status = &#63; from the database.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 */
+	@Override
+	public void removeByLtE_S(Date expirationDate, int status) {
+		for (CommercePriceEntry commercePriceEntry :
+				findByLtE_S(
+					expirationDate, status, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(commercePriceEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce price entries where expirationDate &lt; &#63; and status = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @param status the status
+	 * @return the number of matching commerce price entries
+	 */
+	@Override
+	public int countByLtE_S(Date expirationDate, int status) {
+		FinderPath finderPath = _finderPathWithPaginationCountByLtE_S;
+
+		Object[] finderArgs = new Object[] {_getTime(expirationDate), status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEPRICEENTRY_WHERE);
+
+			boolean bindExpirationDate = false;
+
+			if (expirationDate == null) {
+				sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1);
+			}
+			else {
+				bindExpirationDate = true;
+
+				sb.append(_FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_LTE_S_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExpirationDate) {
+					queryPos.add(new Timestamp(expirationDate.getTime()));
+				}
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_LTE_S_EXPIRATIONDATE_1 =
+		"commercePriceEntry.expirationDate IS NULL AND ";
+
+	private static final String _FINDER_COLUMN_LTE_S_EXPIRATIONDATE_2 =
+		"commercePriceEntry.expirationDate < ? AND ";
+
+	private static final String _FINDER_COLUMN_LTE_S_STATUS_2 =
+		"commercePriceEntry.status = ?";
+
 	private FinderPath _finderPathFetchByC_C_S;
 	private FinderPath _finderPathCountByC_C_S;
 
@@ -4334,6 +5476,34 @@ public class CommercePriceEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"commercePriceListId", "CPInstanceUuid"}, false);
 
+		_finderPathWithPaginationFindByLtD_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
+			new String[] {
+				Date.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"displayDate", "status"}, true);
+
+		_finderPathWithPaginationCountByLtD_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+			new String[] {Date.class.getName(), Integer.class.getName()},
+			new String[] {"displayDate", "status"}, false);
+
+		_finderPathWithPaginationFindByLtE_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtE_S",
+			new String[] {
+				Date.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"expirationDate", "status"}, true);
+
+		_finderPathWithPaginationCountByLtE_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtE_S",
+			new String[] {Date.class.getName(), Integer.class.getName()},
+			new String[] {"expirationDate", "status"}, false);
+
 		_finderPathFetchByC_C_S = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_S",
 			new String[] {
@@ -4376,6 +5546,14 @@ public class CommercePriceEntryPersistenceImpl
 
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private static Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
 
 	private static final String _SQL_SELECT_COMMERCEPRICEENTRY =
 		"SELECT commercePriceEntry FROM CommercePriceEntry commercePriceEntry";

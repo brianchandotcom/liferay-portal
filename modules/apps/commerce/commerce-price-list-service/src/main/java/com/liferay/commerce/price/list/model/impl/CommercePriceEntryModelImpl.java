@@ -186,26 +186,38 @@ public class CommercePriceEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 16L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long STATUS_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -998,6 +1010,15 @@ public class CommercePriceEntryModelImpl
 		_displayDate = displayDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public Date getOriginalDisplayDate() {
+		return getColumnOriginalValue("displayDate");
+	}
+
 	@JSON
 	@Override
 	public Date getExpirationDate() {
@@ -1011,6 +1032,15 @@ public class CommercePriceEntryModelImpl
 		}
 
 		_expirationDate = expirationDate;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public Date getOriginalExpirationDate() {
+		return getColumnOriginalValue("expirationDate");
 	}
 
 	@JSON

@@ -264,6 +264,13 @@ public class CommercePriceEntryLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public void checkCommercePriceEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commercePriceEntryLocalService.checkCommercePriceEntries();
+	}
+
 	/**
 	 * Creates a new commerce price entry with the primary key. Does not add the commerce price entry to the database.
 	 *

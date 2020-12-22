@@ -175,19 +175,37 @@ public class CommerceTierPriceEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long MINQUANTITY_COLUMN_BITMASK = 8L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long MINQUANTITY_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long STATUS_COLUMN_BITMASK = 64L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -906,6 +924,15 @@ public class CommerceTierPriceEntryModelImpl
 		_displayDate = displayDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public Date getOriginalDisplayDate() {
+		return getColumnOriginalValue("displayDate");
+	}
+
 	@JSON
 	@Override
 	public Date getExpirationDate() {
@@ -919,6 +946,15 @@ public class CommerceTierPriceEntryModelImpl
 		}
 
 		_expirationDate = expirationDate;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public Date getOriginalExpirationDate() {
+		return getColumnOriginalValue("expirationDate");
 	}
 
 	@JSON
@@ -949,6 +985,16 @@ public class CommerceTierPriceEntryModelImpl
 		}
 
 		_status = status;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalStatus() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

@@ -554,7 +554,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		if (classPK == 0) {
 			return PortalUtil.getClassNameId(
-				"com.liferay.portlet.journal.model.JournalArticle");
+				"com.liferay.journal.model.JournalArticle");
 		}
 
 		return _structureClassNameIds.get(classPK);
@@ -1612,7 +1612,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				_CLASS_NAME_DDM_STRUCTURE));
 
 		_structureModelResourceNames.put(
-			"com.liferay.portlet.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle",
 			resourceActions.getCompositeModelName(
 				"com.liferay.journal.model.JournalArticle",
 				_CLASS_NAME_DDM_STRUCTURE));
@@ -1634,7 +1634,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				_CLASS_NAME_DDM_TEMPLATE));
 
 		_templateModelResourceNames.put(
-			"com.liferay.portlet.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle",
 			resourceActions.getCompositeModelName(
 				"com.liferay.journal.model.JournalArticle",
 				_CLASS_NAME_DDM_TEMPLATE));

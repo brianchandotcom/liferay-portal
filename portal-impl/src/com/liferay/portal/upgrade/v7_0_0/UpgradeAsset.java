@@ -114,7 +114,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		sb.append("0 and JournalArticle.version = TEMP_TABLE.maxVersion))");
 
 		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.journal.model.JournalArticle");
+			"com.liferay.journal.model.JournalArticle");
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(

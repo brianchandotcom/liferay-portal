@@ -15,7 +15,7 @@
 package com.liferay.dispatch.internal.executor;
 
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
-import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,18 +34,20 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Matija Petanjek
  */
-@Component(service = DispatchTaskExecutorHelper.class)
-public class DispatchTaskExecutorHelperImpl
-	implements DispatchTaskExecutorHelper {
+@Component(service = DispatchTaskExecutorRegistry.class)
+public class DispatchTaskExecutorRegistryImpl
+	implements DispatchTaskExecutorRegistry {
 
 	@Override
-	public DispatchTaskExecutor getDispatchTaskExecutor(String type) {
-		return _dispatchTaskExecutors.get(type);
+	public DispatchTaskExecutor getDispatchTaskExecutor(
+		String dispatchTaskExecutorType) {
+
+		return _dispatchTaskExecutors.get(dispatchTaskExecutorType);
 	}
 
 	@Override
-	public String getDispatchTaskExecutorName(String type) {
-		return _dispatchTaskExecutorNames.get(type);
+	public String getDispatchTaskExecutorName(String dispatchTaskExecutorType) {
+		return _dispatchTaskExecutorNames.get(dispatchTaskExecutorType);
 	}
 
 	@Override
@@ -62,12 +64,11 @@ public class DispatchTaskExecutorHelperImpl
 		DispatchTaskExecutor dispatchTaskExecutor,
 		Map<String, Object> properties) {
 
-		_validateDispatchTaskExecutorProperties(
-			dispatchTaskExecutor, properties, _dispatchTaskExecutorNames,
-			_dispatchTaskExecutors);
-
 		String dispatchTaskExecutorType = (String)properties.get(
 			_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
+
+		_validateDispatchTaskExecutorProperties(
+			dispatchTaskExecutor, dispatchTaskExecutorType);
 
 		_dispatchTaskExecutorNames.put(
 			dispatchTaskExecutorType,
@@ -89,26 +90,24 @@ public class DispatchTaskExecutorHelperImpl
 
 	private void _validateDispatchTaskExecutorProperties(
 		DispatchTaskExecutor dispatchTaskExecutor,
-		Map<String, Object> properties, Map<String, String> typeToNameMap,
-		Map<String, DispatchTaskExecutor> typeToDispatchTaskExecutorMap) {
+		String dispatchTaskExecutorType) {
 
-		String type = (String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
-
-		if (typeToNameMap.containsKey(type)) {
-			DispatchTaskExecutor curDispatchTaskExecutor =
-				typeToDispatchTaskExecutorMap.get(type);
-
-			Class<?> clazz1 = curDispatchTaskExecutor.getClass();
-
-			Class<?> clazz2 = dispatchTaskExecutor.getClass();
-
-			_log.error(
-				StringBundler.concat(
-					_KEY_DISPATCH_TASK_EXECUTOR_TYPE, " property must have ",
-					"unique value. The same value is found in ",
-					clazz1.getName(), " and ", clazz2.getName(),
-					StringPool.PERIOD));
+		if (!_dispatchTaskExecutors.containsKey(dispatchTaskExecutorType)) {
+			return;
 		}
+
+		DispatchTaskExecutor curDispatchTaskExecutor =
+			_dispatchTaskExecutors.get(dispatchTaskExecutorType);
+
+		Class<?> clazz1 = curDispatchTaskExecutor.getClass();
+
+		Class<?> clazz2 = dispatchTaskExecutor.getClass();
+
+		_log.error(
+			StringBundler.concat(
+				_KEY_DISPATCH_TASK_EXECUTOR_TYPE, " property must have unique ",
+				"value. The same value is found in ", clazz1.getName(), " and ",
+				clazz2.getName(), StringPool.PERIOD));
 	}
 
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_NAME =
@@ -118,7 +117,7 @@ public class DispatchTaskExecutorHelperImpl
 		"dispatch.task.executor.type";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DispatchTaskExecutorHelperImpl.class);
+		DispatchTaskExecutorRegistryImpl.class);
 
 	private final Map<String, String> _dispatchTaskExecutorNames =
 		new HashMap<>();

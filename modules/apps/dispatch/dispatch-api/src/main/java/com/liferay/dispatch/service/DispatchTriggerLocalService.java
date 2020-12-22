@@ -81,8 +81,9 @@ public interface DispatchTriggerLocalService
 	public DispatchTrigger addDispatchTrigger(DispatchTrigger dispatchTrigger);
 
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system, String taskExecutorType,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			long userId, String dispatchTaskExecutorType,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
+			String name, boolean system)
 		throws PortalException;
 
 	/**
@@ -312,16 +313,16 @@ public interface DispatchTriggerLocalService
 
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, boolean active, String cronExpression,
-			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
-			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute,
-			DispatchTaskClusterMode dispatchTaskClusterMode)
+			DispatchTaskClusterMode dispatchTaskClusterMode, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
+			int startDateDay, int startDateYear, int startDateHour,
+			int startDateMinute)
 		throws PortalException;
 
 	public DispatchTrigger updateDispatchTrigger(
-			long dispatchTriggerId, String name,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			long dispatchTriggerId,
+			UnicodeProperties taskSettingsUnicodeProperties, String name)
 		throws PortalException;
 
 }

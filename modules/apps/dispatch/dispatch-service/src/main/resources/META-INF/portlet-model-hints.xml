@@ -30,15 +30,15 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="active" type="boolean" />
 		<field name="cronExpression" type="String" />
+		<field name="dispatchTaskClusterMode" type="int" />
+		<field name="dispatchTaskExecutorType" type="String" />
+		<field name="dispatchTaskSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="endDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="overlapAllowed" type="boolean" />
 		<field name="startDate" type="Date" />
 		<field name="system" type="boolean" />
-		<field name="taskClusterMode" type="int" />
-		<field name="taskExecutorType" type="String" />
-		<field name="taskSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 	</model>
 </model-hints>

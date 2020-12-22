@@ -1921,6 +1921,1059 @@ public class DispatchTriggerPersistenceImpl
 	private static final String _FINDER_COLUMN_C_U_USERID_2 =
 		"dispatchTrigger.userId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_DTET;
+	private FinderPath _finderPathWithoutPaginationFindByC_DTET;
+	private FinderPath _finderPathCountByC_DTET;
+
+	/**
+	 * Returns all the dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @return the matching dispatch triggers
+	 */
+	@Override
+	public List<DispatchTrigger> findByC_DTET(
+		long companyId, String dispatchTaskExecutorType) {
+
+		return findByC_DTET(
+			companyId, dispatchTaskExecutorType, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @return the range of matching dispatch triggers
+	 */
+	@Override
+	public List<DispatchTrigger> findByC_DTET(
+		long companyId, String dispatchTaskExecutorType, int start, int end) {
+
+		return findByC_DTET(
+			companyId, dispatchTaskExecutorType, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch triggers
+	 */
+	@Override
+	public List<DispatchTrigger> findByC_DTET(
+		long companyId, String dispatchTaskExecutorType, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		return findByC_DTET(
+			companyId, dispatchTaskExecutorType, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching dispatch triggers
+	 */
+	@Override
+	public List<DispatchTrigger> findByC_DTET(
+		long companyId, String dispatchTaskExecutorType, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator,
+		boolean useFinderCache) {
+
+		dispatchTaskExecutorType = Objects.toString(
+			dispatchTaskExecutorType, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_DTET;
+				finderArgs = new Object[] {companyId, dispatchTaskExecutorType};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_DTET;
+			finderArgs = new Object[] {
+				companyId, dispatchTaskExecutorType, start, end,
+				orderByComparator
+			};
+		}
+
+		List<DispatchTrigger> list = null;
+
+		if (useFinderCache) {
+			list = (List<DispatchTrigger>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (DispatchTrigger dispatchTrigger : list) {
+					if ((companyId != dispatchTrigger.getCompanyId()) ||
+						!dispatchTaskExecutorType.equals(
+							dispatchTrigger.getDispatchTaskExecutorType())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_DTET_COMPANYID_2);
+
+			boolean bindDispatchTaskExecutorType = false;
+
+			if (dispatchTaskExecutorType.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3);
+			}
+			else {
+				bindDispatchTaskExecutorType = true;
+
+				sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(DispatchTriggerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindDispatchTaskExecutorType) {
+					queryPos.add(dispatchTaskExecutorType);
+				}
+
+				list = (List<DispatchTrigger>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching dispatch trigger
+	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public DispatchTrigger findByC_DTET_First(
+			long companyId, String dispatchTaskExecutorType,
+			OrderByComparator<DispatchTrigger> orderByComparator)
+		throws NoSuchTriggerException {
+
+		DispatchTrigger dispatchTrigger = fetchByC_DTET_First(
+			companyId, dispatchTaskExecutorType, orderByComparator);
+
+		if (dispatchTrigger != null) {
+			return dispatchTrigger;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", dispatchTaskExecutorType=");
+		sb.append(dispatchTaskExecutorType);
+
+		sb.append("}");
+
+		throw new NoSuchTriggerException(sb.toString());
+	}
+
+	/**
+	 * Returns the first dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public DispatchTrigger fetchByC_DTET_First(
+		long companyId, String dispatchTaskExecutorType,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		List<DispatchTrigger> list = findByC_DTET(
+			companyId, dispatchTaskExecutorType, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching dispatch trigger
+	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public DispatchTrigger findByC_DTET_Last(
+			long companyId, String dispatchTaskExecutorType,
+			OrderByComparator<DispatchTrigger> orderByComparator)
+		throws NoSuchTriggerException {
+
+		DispatchTrigger dispatchTrigger = fetchByC_DTET_Last(
+			companyId, dispatchTaskExecutorType, orderByComparator);
+
+		if (dispatchTrigger != null) {
+			return dispatchTrigger;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", dispatchTaskExecutorType=");
+		sb.append(dispatchTaskExecutorType);
+
+		sb.append("}");
+
+		throw new NoSuchTriggerException(sb.toString());
+	}
+
+	/**
+	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public DispatchTrigger fetchByC_DTET_Last(
+		long companyId, String dispatchTaskExecutorType,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		int count = countByC_DTET(companyId, dispatchTaskExecutorType);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DispatchTrigger> list = findByC_DTET(
+			companyId, dispatchTaskExecutorType, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param dispatchTriggerId the primary key of the current dispatch trigger
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next dispatch trigger
+	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
+	 */
+	@Override
+	public DispatchTrigger[] findByC_DTET_PrevAndNext(
+			long dispatchTriggerId, long companyId,
+			String dispatchTaskExecutorType,
+			OrderByComparator<DispatchTrigger> orderByComparator)
+		throws NoSuchTriggerException {
+
+		dispatchTaskExecutorType = Objects.toString(
+			dispatchTaskExecutorType, "");
+
+		DispatchTrigger dispatchTrigger = findByPrimaryKey(dispatchTriggerId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DispatchTrigger[] array = new DispatchTriggerImpl[3];
+
+			array[0] = getByC_DTET_PrevAndNext(
+				session, dispatchTrigger, companyId, dispatchTaskExecutorType,
+				orderByComparator, true);
+
+			array[1] = dispatchTrigger;
+
+			array[2] = getByC_DTET_PrevAndNext(
+				session, dispatchTrigger, companyId, dispatchTaskExecutorType,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DispatchTrigger getByC_DTET_PrevAndNext(
+		Session session, DispatchTrigger dispatchTrigger, long companyId,
+		String dispatchTaskExecutorType,
+		OrderByComparator<DispatchTrigger> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_DTET_COMPANYID_2);
+
+		boolean bindDispatchTaskExecutorType = false;
+
+		if (dispatchTaskExecutorType.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3);
+		}
+		else {
+			bindDispatchTaskExecutorType = true;
+
+			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(DispatchTriggerModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		if (bindDispatchTaskExecutorType) {
+			queryPos.add(dispatchTaskExecutorType);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						dispatchTrigger)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DispatchTrigger> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the dispatch triggers that the user has permission to view where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @return the matching dispatch triggers that the user has permission to view
+	 */
+	@Override
+	public List<DispatchTrigger> filterFindByC_DTET(
+		long companyId, String dispatchTaskExecutorType) {
+
+		return filterFindByC_DTET(
+			companyId, dispatchTaskExecutorType, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the dispatch triggers that the user has permission to view where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @return the range of matching dispatch triggers that the user has permission to view
+	 */
+	@Override
+	public List<DispatchTrigger> filterFindByC_DTET(
+		long companyId, String dispatchTaskExecutorType, int start, int end) {
+
+		return filterFindByC_DTET(
+			companyId, dispatchTaskExecutorType, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param start the lower bound of the range of dispatch triggers
+	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch triggers that the user has permission to view
+	 */
+	@Override
+	public List<DispatchTrigger> filterFindByC_DTET(
+		long companyId, String dispatchTaskExecutorType, int start, int end,
+		OrderByComparator<DispatchTrigger> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_DTET(
+				companyId, dispatchTaskExecutorType, start, end,
+				orderByComparator);
+		}
+
+		dispatchTaskExecutorType = Objects.toString(
+			dispatchTaskExecutorType, "");
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_DTET_COMPANYID_2);
+
+		boolean bindDispatchTaskExecutorType = false;
+
+		if (dispatchTaskExecutorType.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3);
+		}
+		else {
+			bindDispatchTaskExecutorType = true;
+
+			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(DispatchTriggerModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), DispatchTrigger.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			if (bindDispatchTaskExecutorType) {
+				queryPos.add(dispatchTaskExecutorType);
+			}
+
+			return (List<DispatchTrigger>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param dispatchTriggerId the primary key of the current dispatch trigger
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next dispatch trigger
+	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
+	 */
+	@Override
+	public DispatchTrigger[] filterFindByC_DTET_PrevAndNext(
+			long dispatchTriggerId, long companyId,
+			String dispatchTaskExecutorType,
+			OrderByComparator<DispatchTrigger> orderByComparator)
+		throws NoSuchTriggerException {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_DTET_PrevAndNext(
+				dispatchTriggerId, companyId, dispatchTaskExecutorType,
+				orderByComparator);
+		}
+
+		dispatchTaskExecutorType = Objects.toString(
+			dispatchTaskExecutorType, "");
+
+		DispatchTrigger dispatchTrigger = findByPrimaryKey(dispatchTriggerId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DispatchTrigger[] array = new DispatchTriggerImpl[3];
+
+			array[0] = filterGetByC_DTET_PrevAndNext(
+				session, dispatchTrigger, companyId, dispatchTaskExecutorType,
+				orderByComparator, true);
+
+			array[1] = dispatchTrigger;
+
+			array[2] = filterGetByC_DTET_PrevAndNext(
+				session, dispatchTrigger, companyId, dispatchTaskExecutorType,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DispatchTrigger filterGetByC_DTET_PrevAndNext(
+		Session session, DispatchTrigger dispatchTrigger, long companyId,
+		String dispatchTaskExecutorType,
+		OrderByComparator<DispatchTrigger> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_DTET_COMPANYID_2);
+
+		boolean bindDispatchTaskExecutorType = false;
+
+		if (dispatchTaskExecutorType.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3);
+		}
+		else {
+			bindDispatchTaskExecutorType = true;
+
+			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(DispatchTriggerModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), DispatchTrigger.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(companyId);
+
+		if (bindDispatchTaskExecutorType) {
+			queryPos.add(dispatchTaskExecutorType);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						dispatchTrigger)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<DispatchTrigger> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 */
+	@Override
+	public void removeByC_DTET(
+		long companyId, String dispatchTaskExecutorType) {
+
+		for (DispatchTrigger dispatchTrigger :
+				findByC_DTET(
+					companyId, dispatchTaskExecutorType, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(dispatchTrigger);
+		}
+	}
+
+	/**
+	 * Returns the number of dispatch triggers where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @return the number of matching dispatch triggers
+	 */
+	@Override
+	public int countByC_DTET(long companyId, String dispatchTaskExecutorType) {
+		dispatchTaskExecutorType = Objects.toString(
+			dispatchTaskExecutorType, "");
+
+		FinderPath finderPath = _finderPathCountByC_DTET;
+
+		Object[] finderArgs = new Object[] {
+			companyId, dispatchTaskExecutorType
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_DISPATCHTRIGGER_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_DTET_COMPANYID_2);
+
+			boolean bindDispatchTaskExecutorType = false;
+
+			if (dispatchTaskExecutorType.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3);
+			}
+			else {
+				bindDispatchTaskExecutorType = true;
+
+				sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindDispatchTaskExecutorType) {
+					queryPos.add(dispatchTaskExecutorType);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of dispatch triggers that the user has permission to view where companyId = &#63; and dispatchTaskExecutorType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param dispatchTaskExecutorType the dispatch task executor type
+	 * @return the number of matching dispatch triggers that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_DTET(
+		long companyId, String dispatchTaskExecutorType) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_DTET(companyId, dispatchTaskExecutorType);
+		}
+
+		dispatchTaskExecutorType = Objects.toString(
+			dispatchTaskExecutorType, "");
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_DTET_COMPANYID_2);
+
+		boolean bindDispatchTaskExecutorType = false;
+
+		if (dispatchTaskExecutorType.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3);
+		}
+		else {
+			bindDispatchTaskExecutorType = true;
+
+			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), DispatchTrigger.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			if (bindDispatchTaskExecutorType) {
+				queryPos.add(dispatchTaskExecutorType);
+			}
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_DTET_COMPANYID_2 =
+		"dispatchTrigger.companyId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2 =
+			"dispatchTrigger.dispatchTaskExecutorType = ?";
+
+	private static final String
+		_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3 =
+			"(dispatchTrigger.dispatchTaskExecutorType IS NULL OR dispatchTrigger.dispatchTaskExecutorType = '')";
+
 	private FinderPath _finderPathFetchByC_N;
 	private FinderPath _finderPathCountByC_N;
 
@@ -2168,78 +3221,80 @@ public class DispatchTriggerPersistenceImpl
 	private static final String _FINDER_COLUMN_C_N_NAME_3 =
 		"(dispatchTrigger.name IS NULL OR dispatchTrigger.name = '')";
 
-	private FinderPath _finderPathWithPaginationFindByC_TET;
-	private FinderPath _finderPathWithoutPaginationFindByC_TET;
-	private FinderPath _finderPathCountByC_TET;
+	private FinderPath _finderPathWithPaginationFindByA_DTCM;
+	private FinderPath _finderPathWithoutPaginationFindByA_DTCM;
+	private FinderPath _finderPathCountByA_DTCM;
+	private FinderPath _finderPathWithPaginationCountByA_DTCM;
 
 	/**
-	 * Returns all the dispatch triggers where companyId = &#63; and taskExecutorType = &#63;.
+	 * Returns all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
+	 * @param active the active
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @return the matching dispatch triggers
 	 */
 	@Override
-	public List<DispatchTrigger> findByC_TET(
-		long companyId, String taskExecutorType) {
+	public List<DispatchTrigger> findByA_DTCM(
+		boolean active, int dispatchTaskClusterMode) {
 
-		return findByC_TET(
-			companyId, taskExecutorType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByA_DTCM(
+			active, dispatchTaskClusterMode, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the dispatch triggers where companyId = &#63; and taskExecutorType = &#63;.
+	 * Returns a range of all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
+	 * @param active the active
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @return the range of matching dispatch triggers
 	 */
 	@Override
-	public List<DispatchTrigger> findByC_TET(
-		long companyId, String taskExecutorType, int start, int end) {
+	public List<DispatchTrigger> findByA_DTCM(
+		boolean active, int dispatchTaskClusterMode, int start, int end) {
 
-		return findByC_TET(companyId, taskExecutorType, start, end, null);
+		return findByA_DTCM(active, dispatchTaskClusterMode, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and taskExecutorType = &#63;.
+	 * Returns an ordered range of all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
+	 * @param active the active
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching dispatch triggers
 	 */
 	@Override
-	public List<DispatchTrigger> findByC_TET(
-		long companyId, String taskExecutorType, int start, int end,
+	public List<DispatchTrigger> findByA_DTCM(
+		boolean active, int dispatchTaskClusterMode, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		return findByC_TET(
-			companyId, taskExecutorType, start, end, orderByComparator, true);
+		return findByA_DTCM(
+			active, dispatchTaskClusterMode, start, end, orderByComparator,
+			true);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers where companyId = &#63; and taskExecutorType = &#63;.
+	 * Returns an ordered range of all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
+	 * @param active the active
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2247,1040 +3302,8 @@ public class DispatchTriggerPersistenceImpl
 	 * @return the ordered range of matching dispatch triggers
 	 */
 	@Override
-	public List<DispatchTrigger> findByC_TET(
-		long companyId, String taskExecutorType, int start, int end,
-		OrderByComparator<DispatchTrigger> orderByComparator,
-		boolean useFinderCache) {
-
-		taskExecutorType = Objects.toString(taskExecutorType, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_TET;
-				finderArgs = new Object[] {companyId, taskExecutorType};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_TET;
-			finderArgs = new Object[] {
-				companyId, taskExecutorType, start, end, orderByComparator
-			};
-		}
-
-		List<DispatchTrigger> list = null;
-
-		if (useFinderCache) {
-			list = (List<DispatchTrigger>)finderCache.getResult(
-				finderPath, finderArgs);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (DispatchTrigger dispatchTrigger : list) {
-					if ((companyId != dispatchTrigger.getCompanyId()) ||
-						!taskExecutorType.equals(
-							dispatchTrigger.getTaskExecutorType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_TET_COMPANYID_2);
-
-			boolean bindTaskExecutorType = false;
-
-			if (taskExecutorType.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_3);
-			}
-			else {
-				bindTaskExecutorType = true;
-
-				sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindTaskExecutorType) {
-					queryPos.add(taskExecutorType);
-				}
-
-				list = (List<DispatchTrigger>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first dispatch trigger in the ordered set where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByC_TET_First(
-			long companyId, String taskExecutorType,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByC_TET_First(
-			companyId, taskExecutorType, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", taskExecutorType=");
-		sb.append(taskExecutorType);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the first dispatch trigger in the ordered set where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByC_TET_First(
-		long companyId, String taskExecutorType,
-		OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		List<DispatchTrigger> list = findByC_TET(
-			companyId, taskExecutorType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByC_TET_Last(
-			long companyId, String taskExecutorType,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByC_TET_Last(
-			companyId, taskExecutorType, orderByComparator);
-
-		if (dispatchTrigger != null) {
-			return dispatchTrigger;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", taskExecutorType=");
-		sb.append(taskExecutorType);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
-	}
-
-	/**
-	 * Returns the last dispatch trigger in the ordered set where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByC_TET_Last(
-		long companyId, String taskExecutorType,
-		OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		int count = countByC_TET(companyId, taskExecutorType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<DispatchTrigger> list = findByC_TET(
-			companyId, taskExecutorType, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param dispatchTriggerId the primary key of the current dispatch trigger
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dispatch trigger
-	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
-	 */
-	@Override
-	public DispatchTrigger[] findByC_TET_PrevAndNext(
-			long dispatchTriggerId, long companyId, String taskExecutorType,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		taskExecutorType = Objects.toString(taskExecutorType, "");
-
-		DispatchTrigger dispatchTrigger = findByPrimaryKey(dispatchTriggerId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DispatchTrigger[] array = new DispatchTriggerImpl[3];
-
-			array[0] = getByC_TET_PrevAndNext(
-				session, dispatchTrigger, companyId, taskExecutorType,
-				orderByComparator, true);
-
-			array[1] = dispatchTrigger;
-
-			array[2] = getByC_TET_PrevAndNext(
-				session, dispatchTrigger, companyId, taskExecutorType,
-				orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected DispatchTrigger getByC_TET_PrevAndNext(
-		Session session, DispatchTrigger dispatchTrigger, long companyId,
-		String taskExecutorType,
-		OrderByComparator<DispatchTrigger> orderByComparator,
-		boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_TET_COMPANYID_2);
-
-		boolean bindTaskExecutorType = false;
-
-		if (taskExecutorType.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_3);
-		}
-		else {
-			bindTaskExecutorType = true;
-
-			sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			sb.append(DispatchTriggerModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = sb.toString();
-
-		Query query = session.createQuery(sql);
-
-		query.setFirstResult(0);
-		query.setMaxResults(2);
-
-		QueryPos queryPos = QueryPos.getInstance(query);
-
-		queryPos.add(companyId);
-
-		if (bindTaskExecutorType) {
-			queryPos.add(taskExecutorType);
-		}
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						dispatchTrigger)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<DispatchTrigger> list = query.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Returns all the dispatch triggers that the user has permission to view where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @return the matching dispatch triggers that the user has permission to view
-	 */
-	@Override
-	public List<DispatchTrigger> filterFindByC_TET(
-		long companyId, String taskExecutorType) {
-
-		return filterFindByC_TET(
-			companyId, taskExecutorType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the dispatch triggers that the user has permission to view where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @param start the lower bound of the range of dispatch triggers
-	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
-	 * @return the range of matching dispatch triggers that the user has permission to view
-	 */
-	@Override
-	public List<DispatchTrigger> filterFindByC_TET(
-		long companyId, String taskExecutorType, int start, int end) {
-
-		return filterFindByC_TET(companyId, taskExecutorType, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @param start the lower bound of the range of dispatch triggers
-	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching dispatch triggers that the user has permission to view
-	 */
-	@Override
-	public List<DispatchTrigger> filterFindByC_TET(
-		long companyId, String taskExecutorType, int start, int end,
-		OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_TET(
-				companyId, taskExecutorType, start, end, orderByComparator);
-		}
-
-		taskExecutorType = Objects.toString(taskExecutorType, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_TET_COMPANYID_2);
-
-		boolean bindTaskExecutorType = false;
-
-		if (taskExecutorType.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_3);
-		}
-		else {
-			bindTaskExecutorType = true;
-
-			sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_2);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			if (bindTaskExecutorType) {
-				queryPos.add(taskExecutorType);
-			}
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param dispatchTriggerId the primary key of the current dispatch trigger
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next dispatch trigger
-	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
-	 */
-	@Override
-	public DispatchTrigger[] filterFindByC_TET_PrevAndNext(
-			long dispatchTriggerId, long companyId, String taskExecutorType,
-			OrderByComparator<DispatchTrigger> orderByComparator)
-		throws NoSuchTriggerException {
-
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_TET_PrevAndNext(
-				dispatchTriggerId, companyId, taskExecutorType,
-				orderByComparator);
-		}
-
-		taskExecutorType = Objects.toString(taskExecutorType, "");
-
-		DispatchTrigger dispatchTrigger = findByPrimaryKey(dispatchTriggerId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DispatchTrigger[] array = new DispatchTriggerImpl[3];
-
-			array[0] = filterGetByC_TET_PrevAndNext(
-				session, dispatchTrigger, companyId, taskExecutorType,
-				orderByComparator, true);
-
-			array[1] = dispatchTrigger;
-
-			array[2] = filterGetByC_TET_PrevAndNext(
-				session, dispatchTrigger, companyId, taskExecutorType,
-				orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected DispatchTrigger filterGetByC_TET_PrevAndNext(
-		Session session, DispatchTrigger dispatchTrigger, long companyId,
-		String taskExecutorType,
-		OrderByComparator<DispatchTrigger> orderByComparator,
-		boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_TET_COMPANYID_2);
-
-		boolean bindTaskExecutorType = false;
-
-		if (taskExecutorType.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_3);
-		}
-		else {
-			bindTaskExecutorType = true;
-
-			sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_2);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
-							true));
-				}
-				else {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
-							true));
-				}
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
-				}
-				else {
-					sb.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
-				}
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-		sqlQuery.setFirstResult(0);
-		sqlQuery.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-		}
-		else {
-			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-		}
-
-		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-		queryPos.add(companyId);
-
-		if (bindTaskExecutorType) {
-			queryPos.add(taskExecutorType);
-		}
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						dispatchTrigger)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<DispatchTrigger> list = sqlQuery.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the dispatch triggers where companyId = &#63; and taskExecutorType = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 */
-	@Override
-	public void removeByC_TET(long companyId, String taskExecutorType) {
-		for (DispatchTrigger dispatchTrigger :
-				findByC_TET(
-					companyId, taskExecutorType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(dispatchTrigger);
-		}
-	}
-
-	/**
-	 * Returns the number of dispatch triggers where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @return the number of matching dispatch triggers
-	 */
-	@Override
-	public int countByC_TET(long companyId, String taskExecutorType) {
-		taskExecutorType = Objects.toString(taskExecutorType, "");
-
-		FinderPath finderPath = _finderPathCountByC_TET;
-
-		Object[] finderArgs = new Object[] {companyId, taskExecutorType};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_TET_COMPANYID_2);
-
-			boolean bindTaskExecutorType = false;
-
-			if (taskExecutorType.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_3);
-			}
-			else {
-				bindTaskExecutorType = true;
-
-				sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindTaskExecutorType) {
-					queryPos.add(taskExecutorType);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of dispatch triggers that the user has permission to view where companyId = &#63; and taskExecutorType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param taskExecutorType the task executor type
-	 * @return the number of matching dispatch triggers that the user has permission to view
-	 */
-	@Override
-	public int filterCountByC_TET(long companyId, String taskExecutorType) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_TET(companyId, taskExecutorType);
-		}
-
-		taskExecutorType = Objects.toString(taskExecutorType, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_TET_COMPANYID_2);
-
-		boolean bindTaskExecutorType = false;
-
-		if (taskExecutorType.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_3);
-		}
-		else {
-			bindTaskExecutorType = true;
-
-			sb.append(_FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_2);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			if (bindTaskExecutorType) {
-				queryPos.add(taskExecutorType);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	private static final String _FINDER_COLUMN_C_TET_COMPANYID_2 =
-		"dispatchTrigger.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_2 =
-		"dispatchTrigger.taskExecutorType = ?";
-
-	private static final String _FINDER_COLUMN_C_TET_TASKEXECUTORTYPE_3 =
-		"(dispatchTrigger.taskExecutorType IS NULL OR dispatchTrigger.taskExecutorType = '')";
-
-	private FinderPath _finderPathWithPaginationFindByA_TCM;
-	private FinderPath _finderPathWithoutPaginationFindByA_TCM;
-	private FinderPath _finderPathCountByA_TCM;
-	private FinderPath _finderPathWithPaginationCountByA_TCM;
-
-	/**
-	 * Returns all the dispatch triggers where active = &#63; and taskClusterMode = &#63;.
-	 *
-	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
-	 * @return the matching dispatch triggers
-	 */
-	@Override
-	public List<DispatchTrigger> findByA_TCM(
-		boolean active, int taskClusterMode) {
-
-		return findByA_TCM(
-			active, taskClusterMode, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the dispatch triggers where active = &#63; and taskClusterMode = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
-	 * @param start the lower bound of the range of dispatch triggers
-	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
-	 * @return the range of matching dispatch triggers
-	 */
-	@Override
-	public List<DispatchTrigger> findByA_TCM(
-		boolean active, int taskClusterMode, int start, int end) {
-
-		return findByA_TCM(active, taskClusterMode, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the dispatch triggers where active = &#63; and taskClusterMode = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
-	 * @param start the lower bound of the range of dispatch triggers
-	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching dispatch triggers
-	 */
-	@Override
-	public List<DispatchTrigger> findByA_TCM(
-		boolean active, int taskClusterMode, int start, int end,
-		OrderByComparator<DispatchTrigger> orderByComparator) {
-
-		return findByA_TCM(
-			active, taskClusterMode, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the dispatch triggers where active = &#63; and taskClusterMode = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
-	 * @param start the lower bound of the range of dispatch triggers
-	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching dispatch triggers
-	 */
-	@Override
-	public List<DispatchTrigger> findByA_TCM(
-		boolean active, int taskClusterMode, int start, int end,
+	public List<DispatchTrigger> findByA_DTCM(
+		boolean active, int dispatchTaskClusterMode, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator,
 		boolean useFinderCache) {
 
@@ -3291,14 +3314,14 @@ public class DispatchTriggerPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByA_TCM;
-				finderArgs = new Object[] {active, taskClusterMode};
+				finderPath = _finderPathWithoutPaginationFindByA_DTCM;
+				finderArgs = new Object[] {active, dispatchTaskClusterMode};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByA_TCM;
+			finderPath = _finderPathWithPaginationFindByA_DTCM;
 			finderArgs = new Object[] {
-				active, taskClusterMode, start, end, orderByComparator
+				active, dispatchTaskClusterMode, start, end, orderByComparator
 			};
 		}
 
@@ -3311,8 +3334,8 @@ public class DispatchTriggerPersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
 					if ((active != dispatchTrigger.isActive()) ||
-						(taskClusterMode !=
-							dispatchTrigger.getTaskClusterMode())) {
+						(dispatchTaskClusterMode !=
+							dispatchTrigger.getDispatchTaskClusterMode())) {
 
 						list = null;
 
@@ -3335,9 +3358,9 @@ public class DispatchTriggerPersistenceImpl
 
 			sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
 
-			sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_2);
+			sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -3360,7 +3383,7 @@ public class DispatchTriggerPersistenceImpl
 
 				queryPos.add(active);
 
-				queryPos.add(taskClusterMode);
+				queryPos.add(dispatchTaskClusterMode);
 
 				list = (List<DispatchTrigger>)QueryUtil.list(
 					query, getDialect(), start, end);
@@ -3383,22 +3406,22 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the first dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 * Returns the first dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching dispatch trigger
 	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
 	 */
 	@Override
-	public DispatchTrigger findByA_TCM_First(
-			boolean active, int taskClusterMode,
+	public DispatchTrigger findByA_DTCM_First(
+			boolean active, int dispatchTaskClusterMode,
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByA_TCM_First(
-			active, taskClusterMode, orderByComparator);
+		DispatchTrigger dispatchTrigger = fetchByA_DTCM_First(
+			active, dispatchTaskClusterMode, orderByComparator);
 
 		if (dispatchTrigger != null) {
 			return dispatchTrigger;
@@ -3411,8 +3434,8 @@ public class DispatchTriggerPersistenceImpl
 		sb.append("active=");
 		sb.append(active);
 
-		sb.append(", taskClusterMode=");
-		sb.append(taskClusterMode);
+		sb.append(", dispatchTaskClusterMode=");
+		sb.append(dispatchTaskClusterMode);
 
 		sb.append("}");
 
@@ -3420,20 +3443,20 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the first dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 * Returns the first dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	@Override
-	public DispatchTrigger fetchByA_TCM_First(
-		boolean active, int taskClusterMode,
+	public DispatchTrigger fetchByA_DTCM_First(
+		boolean active, int dispatchTaskClusterMode,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		List<DispatchTrigger> list = findByA_TCM(
-			active, taskClusterMode, 0, 1, orderByComparator);
+		List<DispatchTrigger> list = findByA_DTCM(
+			active, dispatchTaskClusterMode, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3443,22 +3466,22 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 * Returns the last dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching dispatch trigger
 	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
 	 */
 	@Override
-	public DispatchTrigger findByA_TCM_Last(
-			boolean active, int taskClusterMode,
+	public DispatchTrigger findByA_DTCM_Last(
+			boolean active, int dispatchTaskClusterMode,
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
-		DispatchTrigger dispatchTrigger = fetchByA_TCM_Last(
-			active, taskClusterMode, orderByComparator);
+		DispatchTrigger dispatchTrigger = fetchByA_DTCM_Last(
+			active, dispatchTaskClusterMode, orderByComparator);
 
 		if (dispatchTrigger != null) {
 			return dispatchTrigger;
@@ -3471,8 +3494,8 @@ public class DispatchTriggerPersistenceImpl
 		sb.append("active=");
 		sb.append(active);
 
-		sb.append(", taskClusterMode=");
-		sb.append(taskClusterMode);
+		sb.append(", dispatchTaskClusterMode=");
+		sb.append(dispatchTaskClusterMode);
 
 		sb.append("}");
 
@@ -3480,26 +3503,27 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the last dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 * Returns the last dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
 	 */
 	@Override
-	public DispatchTrigger fetchByA_TCM_Last(
-		boolean active, int taskClusterMode,
+	public DispatchTrigger fetchByA_DTCM_Last(
+		boolean active, int dispatchTaskClusterMode,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		int count = countByA_TCM(active, taskClusterMode);
+		int count = countByA_DTCM(active, dispatchTaskClusterMode);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<DispatchTrigger> list = findByA_TCM(
-			active, taskClusterMode, count - 1, count, orderByComparator);
+		List<DispatchTrigger> list = findByA_DTCM(
+			active, dispatchTaskClusterMode, count - 1, count,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3509,18 +3533,18 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set where active = &#63; and taskClusterMode = &#63;.
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param dispatchTriggerId the primary key of the current dispatch trigger
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next dispatch trigger
 	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
 	 */
 	@Override
-	public DispatchTrigger[] findByA_TCM_PrevAndNext(
-			long dispatchTriggerId, boolean active, int taskClusterMode,
+	public DispatchTrigger[] findByA_DTCM_PrevAndNext(
+			long dispatchTriggerId, boolean active, int dispatchTaskClusterMode,
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
@@ -3533,14 +3557,14 @@ public class DispatchTriggerPersistenceImpl
 
 			DispatchTrigger[] array = new DispatchTriggerImpl[3];
 
-			array[0] = getByA_TCM_PrevAndNext(
-				session, dispatchTrigger, active, taskClusterMode,
+			array[0] = getByA_DTCM_PrevAndNext(
+				session, dispatchTrigger, active, dispatchTaskClusterMode,
 				orderByComparator, true);
 
 			array[1] = dispatchTrigger;
 
-			array[2] = getByA_TCM_PrevAndNext(
-				session, dispatchTrigger, active, taskClusterMode,
+			array[2] = getByA_DTCM_PrevAndNext(
+				session, dispatchTrigger, active, dispatchTaskClusterMode,
 				orderByComparator, false);
 
 			return array;
@@ -3553,9 +3577,9 @@ public class DispatchTriggerPersistenceImpl
 		}
 	}
 
-	protected DispatchTrigger getByA_TCM_PrevAndNext(
+	protected DispatchTrigger getByA_DTCM_PrevAndNext(
 		Session session, DispatchTrigger dispatchTrigger, boolean active,
-		int taskClusterMode,
+		int dispatchTaskClusterMode,
 		OrderByComparator<DispatchTrigger> orderByComparator,
 		boolean previous) {
 
@@ -3572,9 +3596,9 @@ public class DispatchTriggerPersistenceImpl
 
 		sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
 
-		sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2);
+		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2);
 
-		sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_2);
+		sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -3647,7 +3671,7 @@ public class DispatchTriggerPersistenceImpl
 
 		queryPos.add(active);
 
-		queryPos.add(taskClusterMode);
+		queryPos.add(dispatchTaskClusterMode);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -3669,63 +3693,64 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = &#63;.
+	 * Returns all the dispatch triggers that the user has permission to view where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @return the matching dispatch triggers that the user has permission to view
 	 */
 	@Override
-	public List<DispatchTrigger> filterFindByA_TCM(
-		boolean active, int taskClusterMode) {
+	public List<DispatchTrigger> filterFindByA_DTCM(
+		boolean active, int dispatchTaskClusterMode) {
 
-		return filterFindByA_TCM(
-			active, taskClusterMode, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return filterFindByA_DTCM(
+			active, dispatchTaskClusterMode, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = &#63;.
+	 * Returns a range of all the dispatch triggers that the user has permission to view where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @return the range of matching dispatch triggers that the user has permission to view
 	 */
 	@Override
-	public List<DispatchTrigger> filterFindByA_TCM(
-		boolean active, int taskClusterMode, int start, int end) {
+	public List<DispatchTrigger> filterFindByA_DTCM(
+		boolean active, int dispatchTaskClusterMode, int start, int end) {
 
-		return filterFindByA_TCM(active, taskClusterMode, start, end, null);
+		return filterFindByA_DTCM(
+			active, dispatchTaskClusterMode, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where active = &#63; and taskClusterMode = &#63;.
+	 * Returns an ordered range of all the dispatch triggers that the user has permissions to view where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching dispatch triggers that the user has permission to view
 	 */
 	@Override
-	public List<DispatchTrigger> filterFindByA_TCM(
-		boolean active, int taskClusterMode, int start, int end,
+	public List<DispatchTrigger> filterFindByA_DTCM(
+		boolean active, int dispatchTaskClusterMode, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByA_TCM(
-				active, taskClusterMode, start, end, orderByComparator);
+			return findByA_DTCM(
+				active, dispatchTaskClusterMode, start, end, orderByComparator);
 		}
 
 		StringBundler sb = null;
@@ -3746,9 +3771,9 @@ public class DispatchTriggerPersistenceImpl
 				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_2);
+		sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(
@@ -3798,7 +3823,7 @@ public class DispatchTriggerPersistenceImpl
 
 			queryPos.add(active);
 
-			queryPos.add(taskClusterMode);
+			queryPos.add(dispatchTaskClusterMode);
 
 			return (List<DispatchTrigger>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
@@ -3812,24 +3837,25 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = &#63;.
+	 * Returns the dispatch triggers before and after the current dispatch trigger in the ordered set of dispatch triggers that the user has permission to view where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param dispatchTriggerId the primary key of the current dispatch trigger
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next dispatch trigger
 	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
 	 */
 	@Override
-	public DispatchTrigger[] filterFindByA_TCM_PrevAndNext(
-			long dispatchTriggerId, boolean active, int taskClusterMode,
+	public DispatchTrigger[] filterFindByA_DTCM_PrevAndNext(
+			long dispatchTriggerId, boolean active, int dispatchTaskClusterMode,
 			OrderByComparator<DispatchTrigger> orderByComparator)
 		throws NoSuchTriggerException {
 
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByA_TCM_PrevAndNext(
-				dispatchTriggerId, active, taskClusterMode, orderByComparator);
+			return findByA_DTCM_PrevAndNext(
+				dispatchTriggerId, active, dispatchTaskClusterMode,
+				orderByComparator);
 		}
 
 		DispatchTrigger dispatchTrigger = findByPrimaryKey(dispatchTriggerId);
@@ -3841,14 +3867,14 @@ public class DispatchTriggerPersistenceImpl
 
 			DispatchTrigger[] array = new DispatchTriggerImpl[3];
 
-			array[0] = filterGetByA_TCM_PrevAndNext(
-				session, dispatchTrigger, active, taskClusterMode,
+			array[0] = filterGetByA_DTCM_PrevAndNext(
+				session, dispatchTrigger, active, dispatchTaskClusterMode,
 				orderByComparator, true);
 
 			array[1] = dispatchTrigger;
 
-			array[2] = filterGetByA_TCM_PrevAndNext(
-				session, dispatchTrigger, active, taskClusterMode,
+			array[2] = filterGetByA_DTCM_PrevAndNext(
+				session, dispatchTrigger, active, dispatchTaskClusterMode,
 				orderByComparator, false);
 
 			return array;
@@ -3861,9 +3887,9 @@ public class DispatchTriggerPersistenceImpl
 		}
 	}
 
-	protected DispatchTrigger filterGetByA_TCM_PrevAndNext(
+	protected DispatchTrigger filterGetByA_DTCM_PrevAndNext(
 		Session session, DispatchTrigger dispatchTrigger, boolean active,
-		int taskClusterMode,
+		int dispatchTaskClusterMode,
 		OrderByComparator<DispatchTrigger> orderByComparator,
 		boolean previous) {
 
@@ -3886,9 +3912,9 @@ public class DispatchTriggerPersistenceImpl
 				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_2);
+		sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(
@@ -3998,7 +4024,7 @@ public class DispatchTriggerPersistenceImpl
 
 		queryPos.add(active);
 
-		queryPos.add(taskClusterMode);
+		queryPos.add(dispatchTaskClusterMode);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -4020,70 +4046,73 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = any &#63;.
+	 * Returns all the dispatch triggers that the user has permission to view where active = &#63; and dispatchTaskClusterMode = any &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterModes the task cluster modes
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @return the matching dispatch triggers that the user has permission to view
 	 */
 	@Override
-	public List<DispatchTrigger> filterFindByA_TCM(
-		boolean active, int[] taskClusterModes) {
+	public List<DispatchTrigger> filterFindByA_DTCM(
+		boolean active, int[] dispatchTaskClusterModes) {
 
-		return filterFindByA_TCM(
-			active, taskClusterModes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return filterFindByA_DTCM(
+			active, dispatchTaskClusterModes, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = any &#63;.
+	 * Returns a range of all the dispatch triggers that the user has permission to view where active = &#63; and dispatchTaskClusterMode = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param taskClusterModes the task cluster modes
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @return the range of matching dispatch triggers that the user has permission to view
 	 */
 	@Override
-	public List<DispatchTrigger> filterFindByA_TCM(
-		boolean active, int[] taskClusterModes, int start, int end) {
+	public List<DispatchTrigger> filterFindByA_DTCM(
+		boolean active, int[] dispatchTaskClusterModes, int start, int end) {
 
-		return filterFindByA_TCM(active, taskClusterModes, start, end, null);
+		return filterFindByA_DTCM(
+			active, dispatchTaskClusterModes, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = any &#63;.
+	 * Returns an ordered range of all the dispatch triggers that the user has permission to view where active = &#63; and dispatchTaskClusterMode = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param taskClusterModes the task cluster modes
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching dispatch triggers that the user has permission to view
 	 */
 	@Override
-	public List<DispatchTrigger> filterFindByA_TCM(
-		boolean active, int[] taskClusterModes, int start, int end,
+	public List<DispatchTrigger> filterFindByA_DTCM(
+		boolean active, int[] dispatchTaskClusterModes, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByA_TCM(
-				active, taskClusterModes, start, end, orderByComparator);
+			return findByA_DTCM(
+				active, dispatchTaskClusterModes, start, end,
+				orderByComparator);
 		}
 
-		if (taskClusterModes == null) {
-			taskClusterModes = new int[0];
+		if (dispatchTaskClusterModes == null) {
+			dispatchTaskClusterModes = new int[0];
 		}
-		else if (taskClusterModes.length > 1) {
-			taskClusterModes = ArrayUtil.sortedUnique(taskClusterModes);
+		else if (dispatchTaskClusterModes.length > 1) {
+			dispatchTaskClusterModes = ArrayUtil.sortedUnique(
+				dispatchTaskClusterModes);
 		}
 
 		StringBundler sb = new StringBundler();
@@ -4096,14 +4125,14 @@ public class DispatchTriggerPersistenceImpl
 				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
 
-		if (taskClusterModes.length > 0) {
+		if (dispatchTaskClusterModes.length > 0) {
 			sb.append("(");
 
-			sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_7);
+			sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7);
 
-			sb.append(StringUtil.merge(taskClusterModes));
+			sb.append(StringUtil.merge(dispatchTaskClusterModes));
 
 			sb.append(")");
 
@@ -4173,77 +4202,78 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns all the dispatch triggers where active = &#63; and taskClusterMode = any &#63;.
+	 * Returns all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param taskClusterModes the task cluster modes
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @return the matching dispatch triggers
 	 */
 	@Override
-	public List<DispatchTrigger> findByA_TCM(
-		boolean active, int[] taskClusterModes) {
+	public List<DispatchTrigger> findByA_DTCM(
+		boolean active, int[] dispatchTaskClusterModes) {
 
-		return findByA_TCM(
-			active, taskClusterModes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+		return findByA_DTCM(
+			active, dispatchTaskClusterModes, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the dispatch triggers where active = &#63; and taskClusterMode = any &#63;.
+	 * Returns a range of all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param taskClusterModes the task cluster modes
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @return the range of matching dispatch triggers
 	 */
 	@Override
-	public List<DispatchTrigger> findByA_TCM(
-		boolean active, int[] taskClusterModes, int start, int end) {
+	public List<DispatchTrigger> findByA_DTCM(
+		boolean active, int[] dispatchTaskClusterModes, int start, int end) {
 
-		return findByA_TCM(active, taskClusterModes, start, end, null);
+		return findByA_DTCM(active, dispatchTaskClusterModes, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers where active = &#63; and taskClusterMode = any &#63;.
+	 * Returns an ordered range of all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param taskClusterModes the task cluster modes
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching dispatch triggers
 	 */
 	@Override
-	public List<DispatchTrigger> findByA_TCM(
-		boolean active, int[] taskClusterModes, int start, int end,
+	public List<DispatchTrigger> findByA_DTCM(
+		boolean active, int[] dispatchTaskClusterModes, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		return findByA_TCM(
-			active, taskClusterModes, start, end, orderByComparator, true);
+		return findByA_DTCM(
+			active, dispatchTaskClusterModes, start, end, orderByComparator,
+			true);
 	}
 
 	/**
-	 * Returns an ordered range of all the dispatch triggers where active = &#63; and taskClusterMode = &#63;, optionally using the finder cache.
+	 * Returns an ordered range of all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DispatchTriggerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @param start the lower bound of the range of dispatch triggers
 	 * @param end the upper bound of the range of dispatch triggers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4251,21 +4281,23 @@ public class DispatchTriggerPersistenceImpl
 	 * @return the ordered range of matching dispatch triggers
 	 */
 	@Override
-	public List<DispatchTrigger> findByA_TCM(
-		boolean active, int[] taskClusterModes, int start, int end,
+	public List<DispatchTrigger> findByA_DTCM(
+		boolean active, int[] dispatchTaskClusterModes, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator,
 		boolean useFinderCache) {
 
-		if (taskClusterModes == null) {
-			taskClusterModes = new int[0];
+		if (dispatchTaskClusterModes == null) {
+			dispatchTaskClusterModes = new int[0];
 		}
-		else if (taskClusterModes.length > 1) {
-			taskClusterModes = ArrayUtil.sortedUnique(taskClusterModes);
+		else if (dispatchTaskClusterModes.length > 1) {
+			dispatchTaskClusterModes = ArrayUtil.sortedUnique(
+				dispatchTaskClusterModes);
 		}
 
-		if (taskClusterModes.length == 1) {
-			return findByA_TCM(
-				active, taskClusterModes[0], start, end, orderByComparator);
+		if (dispatchTaskClusterModes.length == 1) {
+			return findByA_DTCM(
+				active, dispatchTaskClusterModes[0], start, end,
+				orderByComparator);
 		}
 
 		Object[] finderArgs = null;
@@ -4275,13 +4307,13 @@ public class DispatchTriggerPersistenceImpl
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
-					active, StringUtil.merge(taskClusterModes)
+					active, StringUtil.merge(dispatchTaskClusterModes)
 				};
 			}
 		}
 		else if (useFinderCache) {
 			finderArgs = new Object[] {
-				active, StringUtil.merge(taskClusterModes), start, end,
+				active, StringUtil.merge(dispatchTaskClusterModes), start, end,
 				orderByComparator
 			};
 		}
@@ -4290,14 +4322,14 @@ public class DispatchTriggerPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<DispatchTrigger>)finderCache.getResult(
-				_finderPathWithPaginationFindByA_TCM, finderArgs);
+				_finderPathWithPaginationFindByA_DTCM, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DispatchTrigger dispatchTrigger : list) {
 					if ((active != dispatchTrigger.isActive()) ||
 						!ArrayUtil.contains(
-							taskClusterModes,
-							dispatchTrigger.getTaskClusterMode())) {
+							dispatchTaskClusterModes,
+							dispatchTrigger.getDispatchTaskClusterMode())) {
 
 						list = null;
 
@@ -4312,14 +4344,14 @@ public class DispatchTriggerPersistenceImpl
 
 			sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
 
-			sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2);
 
-			if (taskClusterModes.length > 0) {
+			if (dispatchTaskClusterModes.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_7);
+				sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7);
 
-				sb.append(StringUtil.merge(taskClusterModes));
+				sb.append(StringUtil.merge(dispatchTaskClusterModes));
 
 				sb.append(")");
 
@@ -4357,7 +4389,8 @@ public class DispatchTriggerPersistenceImpl
 
 				if (useFinderCache) {
 					finderCache.putResult(
-						_finderPathWithPaginationFindByA_TCM, finderArgs, list);
+						_finderPathWithPaginationFindByA_DTCM, finderArgs,
+						list);
 				}
 			}
 			catch (Exception exception) {
@@ -4372,16 +4405,16 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Removes all the dispatch triggers where active = &#63; and taskClusterMode = &#63; from the database.
+	 * Removes all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63; from the database.
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 */
 	@Override
-	public void removeByA_TCM(boolean active, int taskClusterMode) {
+	public void removeByA_DTCM(boolean active, int dispatchTaskClusterMode) {
 		for (DispatchTrigger dispatchTrigger :
-				findByA_TCM(
-					active, taskClusterMode, QueryUtil.ALL_POS,
+				findByA_DTCM(
+					active, dispatchTaskClusterMode, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
 			remove(dispatchTrigger);
@@ -4389,17 +4422,17 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of dispatch triggers where active = &#63; and taskClusterMode = &#63;.
+	 * Returns the number of dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @return the number of matching dispatch triggers
 	 */
 	@Override
-	public int countByA_TCM(boolean active, int taskClusterMode) {
-		FinderPath finderPath = _finderPathCountByA_TCM;
+	public int countByA_DTCM(boolean active, int dispatchTaskClusterMode) {
+		FinderPath finderPath = _finderPathCountByA_DTCM;
 
-		Object[] finderArgs = new Object[] {active, taskClusterMode};
+		Object[] finderArgs = new Object[] {active, dispatchTaskClusterMode};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
@@ -4408,9 +4441,9 @@ public class DispatchTriggerPersistenceImpl
 
 			sb.append(_SQL_COUNT_DISPATCHTRIGGER_WHERE);
 
-			sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_2);
+			sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2);
 
 			String sql = sb.toString();
 
@@ -4425,7 +4458,7 @@ public class DispatchTriggerPersistenceImpl
 
 				queryPos.add(active);
 
-				queryPos.add(taskClusterMode);
+				queryPos.add(dispatchTaskClusterMode);
 
 				count = (Long)query.uniqueResult();
 
@@ -4443,41 +4476,42 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of dispatch triggers where active = &#63; and taskClusterMode = any &#63;.
+	 * Returns the number of dispatch triggers where active = &#63; and dispatchTaskClusterMode = any &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterModes the task cluster modes
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @return the number of matching dispatch triggers
 	 */
 	@Override
-	public int countByA_TCM(boolean active, int[] taskClusterModes) {
-		if (taskClusterModes == null) {
-			taskClusterModes = new int[0];
+	public int countByA_DTCM(boolean active, int[] dispatchTaskClusterModes) {
+		if (dispatchTaskClusterModes == null) {
+			dispatchTaskClusterModes = new int[0];
 		}
-		else if (taskClusterModes.length > 1) {
-			taskClusterModes = ArrayUtil.sortedUnique(taskClusterModes);
+		else if (dispatchTaskClusterModes.length > 1) {
+			dispatchTaskClusterModes = ArrayUtil.sortedUnique(
+				dispatchTaskClusterModes);
 		}
 
 		Object[] finderArgs = new Object[] {
-			active, StringUtil.merge(taskClusterModes)
+			active, StringUtil.merge(dispatchTaskClusterModes)
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByA_TCM, finderArgs);
+			_finderPathWithPaginationCountByA_DTCM, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
 
 			sb.append(_SQL_COUNT_DISPATCHTRIGGER_WHERE);
 
-			sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2);
 
-			if (taskClusterModes.length > 0) {
+			if (dispatchTaskClusterModes.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_7);
+				sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7);
 
-				sb.append(StringUtil.merge(taskClusterModes));
+				sb.append(StringUtil.merge(dispatchTaskClusterModes));
 
 				sb.append(")");
 
@@ -4503,7 +4537,7 @@ public class DispatchTriggerPersistenceImpl
 				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(
-					_finderPathWithPaginationCountByA_TCM, finderArgs, count);
+					_finderPathWithPaginationCountByA_DTCM, finderArgs, count);
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -4517,25 +4551,27 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = &#63;.
+	 * Returns the number of dispatch triggers that the user has permission to view where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterMode the task cluster mode
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode
 	 * @return the number of matching dispatch triggers that the user has permission to view
 	 */
 	@Override
-	public int filterCountByA_TCM(boolean active, int taskClusterMode) {
+	public int filterCountByA_DTCM(
+		boolean active, int dispatchTaskClusterMode) {
+
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByA_TCM(active, taskClusterMode);
+			return countByA_DTCM(active, dispatchTaskClusterMode);
 		}
 
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
 
-		sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_2);
+		sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			sb.toString(), DispatchTrigger.class.getName(),
@@ -4555,7 +4591,7 @@ public class DispatchTriggerPersistenceImpl
 
 			queryPos.add(active);
 
-			queryPos.add(taskClusterMode);
+			queryPos.add(dispatchTaskClusterMode);
 
 			Long count = (Long)sqlQuery.uniqueResult();
 
@@ -4570,37 +4606,40 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of dispatch triggers that the user has permission to view where active = &#63; and taskClusterMode = any &#63;.
+	 * Returns the number of dispatch triggers that the user has permission to view where active = &#63; and dispatchTaskClusterMode = any &#63;.
 	 *
 	 * @param active the active
-	 * @param taskClusterModes the task cluster modes
+	 * @param dispatchTaskClusterModes the dispatch task cluster modes
 	 * @return the number of matching dispatch triggers that the user has permission to view
 	 */
 	@Override
-	public int filterCountByA_TCM(boolean active, int[] taskClusterModes) {
+	public int filterCountByA_DTCM(
+		boolean active, int[] dispatchTaskClusterModes) {
+
 		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByA_TCM(active, taskClusterModes);
+			return countByA_DTCM(active, dispatchTaskClusterModes);
 		}
 
-		if (taskClusterModes == null) {
-			taskClusterModes = new int[0];
+		if (dispatchTaskClusterModes == null) {
+			dispatchTaskClusterModes = new int[0];
 		}
-		else if (taskClusterModes.length > 1) {
-			taskClusterModes = ArrayUtil.sortedUnique(taskClusterModes);
+		else if (dispatchTaskClusterModes.length > 1) {
+			dispatchTaskClusterModes = ArrayUtil.sortedUnique(
+				dispatchTaskClusterModes);
 		}
 
 		StringBundler sb = new StringBundler();
 
 		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
 
-		sb.append(_FINDER_COLUMN_A_TCM_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
 
-		if (taskClusterModes.length > 0) {
+		if (dispatchTaskClusterModes.length > 0) {
 			sb.append("(");
 
-			sb.append(_FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_7);
+			sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7);
 
-			sb.append(StringUtil.merge(taskClusterModes));
+			sb.append(StringUtil.merge(dispatchTaskClusterModes));
 
 			sb.append(")");
 
@@ -4640,17 +4679,19 @@ public class DispatchTriggerPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_A_TCM_ACTIVE_2 =
+	private static final String _FINDER_COLUMN_A_DTCM_ACTIVE_2 =
 		"dispatchTrigger.active = ? AND ";
 
-	private static final String _FINDER_COLUMN_A_TCM_ACTIVE_2_SQL =
+	private static final String _FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL =
 		"dispatchTrigger.active_ = ? AND ";
 
-	private static final String _FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_2 =
-		"dispatchTrigger.taskClusterMode = ?";
+	private static final String
+		_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2 =
+			"dispatchTrigger.dispatchTaskClusterMode = ?";
 
-	private static final String _FINDER_COLUMN_A_TCM_TASKCLUSTERMODE_7 =
-		"dispatchTrigger.taskClusterMode IN (";
+	private static final String
+		_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7 =
+			"dispatchTrigger.dispatchTaskClusterMode IN (";
 
 	public DispatchTriggerPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -5264,6 +5305,25 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "userId"}, false);
 
+		_finderPathWithPaginationFindByC_DTET = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DTET",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "dispatchTaskExecutorType"}, true);
+
+		_finderPathWithoutPaginationFindByC_DTET = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_DTET",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "dispatchTaskExecutorType"}, true);
+
+		_finderPathCountByC_DTET = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DTET",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "dispatchTaskExecutorType"}, false);
+
 		_finderPathFetchByC_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -5274,48 +5334,29 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false);
 
-		_finderPathWithPaginationFindByC_TET = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_TET",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "taskExecutorType"}, true);
-
-		_finderPathWithoutPaginationFindByC_TET = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_TET",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "taskExecutorType"}, true);
-
-		_finderPathCountByC_TET = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_TET",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "taskExecutorType"}, false);
-
-		_finderPathWithPaginationFindByA_TCM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_TCM",
+		_finderPathWithPaginationFindByA_DTCM = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_DTCM",
 			new String[] {
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			},
-			new String[] {"active_", "taskClusterMode"}, true);
+			new String[] {"active_", "dispatchTaskClusterMode"}, true);
 
-		_finderPathWithoutPaginationFindByA_TCM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_TCM",
+		_finderPathWithoutPaginationFindByA_DTCM = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_DTCM",
 			new String[] {Boolean.class.getName(), Integer.class.getName()},
-			new String[] {"active_", "taskClusterMode"}, true);
+			new String[] {"active_", "dispatchTaskClusterMode"}, true);
 
-		_finderPathCountByA_TCM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_TCM",
+		_finderPathCountByA_DTCM = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_DTCM",
 			new String[] {Boolean.class.getName(), Integer.class.getName()},
-			new String[] {"active_", "taskClusterMode"}, false);
+			new String[] {"active_", "dispatchTaskClusterMode"}, false);
 
-		_finderPathWithPaginationCountByA_TCM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_TCM",
+		_finderPathWithPaginationCountByA_DTCM = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_DTCM",
 			new String[] {Boolean.class.getName(), Integer.class.getName()},
-			new String[] {"active_", "taskClusterMode"}, false);
+			new String[] {"active_", "dispatchTaskClusterMode"}, false);
 	}
 
 	@Deactivate

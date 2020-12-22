@@ -205,10 +205,10 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 				ParamUtil.getInteger(actionRequest, "taskClusterMode"));
 
 		_dispatchTriggerService.updateDispatchTrigger(
-			dispatchTriggerId, active, cronExpression, endDateMonth, endDateDay,
-			endDateYear, endDateHour, endDateMinute, neverEnd, overlapAllowed,
-			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute, dispatchTaskClusterMode);
+			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd, overlapAllowed, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute);
 	}
 
 	protected DispatchTrigger updateDispatchTrigger(
@@ -219,25 +219,25 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "dispatchTriggerId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		String taskExecutorType = ParamUtil.getString(
+		String dispatchTaskExecutorType = ParamUtil.getString(
 			actionRequest, "taskExecutorType");
 
-		UnicodeProperties taskSettingsUnicodeProperties = new UnicodeProperties(
-			true);
+		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
+			new UnicodeProperties(true);
 
-		taskSettingsUnicodeProperties.fastLoad(
+		dispatchTaskSettingsUnicodeProperties.fastLoad(
 			ParamUtil.getString(actionRequest, "taskSettings"));
 
 		DispatchTrigger dispatchTrigger = null;
 
 		if (dispatchTriggerId > 0) {
 			dispatchTrigger = _dispatchTriggerService.updateDispatchTrigger(
-				dispatchTriggerId, name, taskSettingsUnicodeProperties);
+				dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
 		}
 		else {
 			dispatchTrigger = _dispatchTriggerService.addDispatchTrigger(
-				_portal.getUserId(actionRequest), name, taskExecutorType,
-				taskSettingsUnicodeProperties);
+				_portal.getUserId(actionRequest), dispatchTaskExecutorType,
+				dispatchTaskSettingsUnicodeProperties, name);
 		}
 
 		return dispatchTrigger;

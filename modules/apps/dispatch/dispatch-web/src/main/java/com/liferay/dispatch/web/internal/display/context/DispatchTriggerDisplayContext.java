@@ -14,7 +14,7 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.web.internal.display.context.util.DispatchRequestHelper;
@@ -44,11 +44,11 @@ import javax.portlet.RenderRequest;
 public class DispatchTriggerDisplayContext {
 
 	public DispatchTriggerDisplayContext(
-		DispatchTaskExecutorHelper dispatchTaskExecutorHelper,
+		DispatchTaskExecutorRegistry dispatchTaskExecutorRegistry,
 		DispatchTriggerLocalService dispatchTriggerLocalService,
 		RenderRequest renderRequest) {
 
-		_dispatchTaskExecutorHelper = dispatchTaskExecutorHelper;
+		_dispatchTaskExecutorRegistry = dispatchTaskExecutorRegistry;
 		_dispatchTriggerLocalService = dispatchTriggerLocalService;
 
 		_dispatchRequestHelper = new DispatchRequestHelper(renderRequest);
@@ -152,17 +152,17 @@ public class DispatchTriggerDisplayContext {
 	}
 
 	public String getTaskExecutorName(String taskExecutorType) {
-		return _dispatchTaskExecutorHelper.getDispatchTaskExecutorName(
+		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorName(
 			taskExecutorType);
 	}
 
 	public Set<String> getTaskExecutorTypes() {
-		return _dispatchTaskExecutorHelper.getDispatchTaskExecutorTypes();
+		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
 	}
 
 	private final Format _dateFormatDateTime;
 	private final DispatchRequestHelper _dispatchRequestHelper;
-	private final DispatchTaskExecutorHelper _dispatchTaskExecutorHelper;
+	private final DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
 	private RowChecker _rowChecker;
 	private SearchContainer<DispatchTrigger> _searchContainer;

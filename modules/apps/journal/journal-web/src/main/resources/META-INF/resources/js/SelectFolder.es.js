@@ -12,8 +12,8 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {Treeview} from 'frontend-js-components-web';
 import React, {useCallback, useMemo, useState} from 'react';
@@ -57,26 +57,26 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	};
 
 	return (
-		<ClayLayout.ContainerFluid className="select-folder">
-			<nav className="collapse-basic-search navbar navbar-default navbar-no-collapse">
-				<ClayInput.Group className="basic-search">
+		<ClayLayout.ContainerFluid className="p-4 select-folder">
+			<ClayForm.Group>
+				<ClayInput.Group>
 					<ClayInput.GroupItem prepend>
 						<ClayInput
 							aria-label={Liferay.Language.get('search')}
+							className="input-group-inset input-group-inset-after"
 							onChange={handleQueryChange}
 							placeholder={`${Liferay.Language.get('search')}`}
 							type="text"
 						/>
-					</ClayInput.GroupItem>
 
-					<ClayInput.GroupItem append shrink>
-						<ClayButtonWithIcon
-							displayType="unstyled"
-							symbol="search"
-						/>
+						<ClayInput.GroupInsetItem after>
+							<div className="link-monospaced">
+								<ClayIcon symbol="search" />
+							</div>
+						</ClayInput.GroupInsetItem>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
-			</nav>
+			</ClayForm.Group>
 
 			<Treeview
 				NodeComponent={Treeview.Card}

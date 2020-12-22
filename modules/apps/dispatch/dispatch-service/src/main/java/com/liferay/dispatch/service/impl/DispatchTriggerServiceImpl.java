@@ -48,8 +48,9 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 
 	@Override
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, String taskExecutorType,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			long userId, String dispatchTaskExecutorType,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
+			String name)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -57,8 +58,8 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			DispatchActionKeys.ADD_DISPATCH_TRIGGER);
 
 		return dispatchTriggerLocalService.addDispatchTrigger(
-			userId, name, false, taskExecutorType,
-			taskSettingsUnicodeProperties);
+			userId, dispatchTaskExecutorType,
+			dispatchTaskSettingsUnicodeProperties, name, false);
 	}
 
 	@Override
@@ -103,34 +104,35 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, boolean active, String cronExpression,
-			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
-			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute,
-			DispatchTaskClusterMode dispatchTaskClusterMode)
+			DispatchTaskClusterMode dispatchTaskClusterMode, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
+			int startDateDay, int startDateYear, int startDateHour,
+			int startDateMinute)
 		throws PortalException {
 
 		_dispatchTriggerModelResourcePermission.check(
 			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
 
 		return dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTriggerId, active, cronExpression, endDateMonth, endDateDay,
-			endDateYear, endDateHour, endDateMinute, neverEnd, overlapAllowed,
-			startDateMonth, startDateDay, startDateYear, startDateHour,
-			startDateMinute, dispatchTaskClusterMode);
+			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd, overlapAllowed, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute);
 	}
 
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
-			long dispatchTriggerId, String name,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			long dispatchTriggerId,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
+			String name)
 		throws PortalException {
 
 		_dispatchTriggerModelResourcePermission.check(
 			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
 
 		return dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTriggerId, name, taskSettingsUnicodeProperties);
+			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
 	}
 
 	private static volatile ModelResourcePermission<DispatchTrigger>

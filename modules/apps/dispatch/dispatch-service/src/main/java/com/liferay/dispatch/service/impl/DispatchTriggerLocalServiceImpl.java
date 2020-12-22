@@ -57,8 +57,9 @@ public class DispatchTriggerLocalServiceImpl
 
 	@Override
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system, String taskExecutorType,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			long userId, String dispatchTaskExecutorType,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
+			String name, boolean system)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -71,11 +72,11 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setCompanyId(user.getCompanyId());
 		dispatchTrigger.setUserId(user.getUserId());
 		dispatchTrigger.setUserName(user.getFullName());
+		dispatchTrigger.setDispatchTaskExecutorType(dispatchTaskExecutorType);
+		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
+			dispatchTaskSettingsUnicodeProperties);
 		dispatchTrigger.setName(name);
 		dispatchTrigger.setSystem(system);
-		dispatchTrigger.setTaskExecutorType(taskExecutorType);
-		dispatchTrigger.setTaskSettingsUnicodeProperties(
-			taskSettingsUnicodeProperties);
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
@@ -107,7 +108,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getTaskClusterMode());
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		_dispatchTriggerHelper.deleteSchedulerJob(
 			dispatchTrigger.getDispatchTriggerId(),
@@ -145,7 +146,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getTaskClusterMode());
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		try {
 			return _dispatchTriggerHelper.getPreviousFireDate(
@@ -177,7 +178,7 @@ public class DispatchTriggerLocalServiceImpl
 	public List<DispatchTrigger> getDispatchTriggers(
 		boolean active, DispatchTaskClusterMode dispatchTaskClusterMode) {
 
-		return dispatchTriggerPersistence.findByA_TCM(
+		return dispatchTriggerPersistence.findByA_DTCM(
 			active, dispatchTaskClusterMode.getMode());
 	}
 
@@ -201,7 +202,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getTaskClusterMode());
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		try {
 			return _dispatchTriggerHelper.getNextFireDate(
@@ -223,7 +224,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getTaskClusterMode());
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		return _dispatchTriggerHelper.getPreviousFireDate(
 			dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
@@ -245,11 +246,11 @@ public class DispatchTriggerLocalServiceImpl
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, boolean active, String cronExpression,
-			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
-			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute,
-			DispatchTaskClusterMode dispatchTaskClusterMode)
+			DispatchTaskClusterMode dispatchTaskClusterMode, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
+			int startDateDay, int startDateYear, int startDateHour,
+			int startDateMinute)
 		throws PortalException {
 
 		DispatchTrigger dispatchTrigger =
@@ -275,7 +276,8 @@ public class DispatchTriggerLocalServiceImpl
 				startDateMonth, startDateDay, startDateYear, startDateHour,
 				startDateMinute, DispatchTriggerStartDateException.class));
 
-		dispatchTrigger.setTaskClusterMode(dispatchTaskClusterMode.getMode());
+		dispatchTrigger.setDispatchTaskClusterMode(
+			dispatchTaskClusterMode.getMode());
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
@@ -294,8 +296,8 @@ public class DispatchTriggerLocalServiceImpl
 
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
-			long dispatchTriggerId, String name,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			long dispatchTriggerId,
+			UnicodeProperties taskSettingsUnicodeProperties, String name)
 		throws PortalException {
 
 		DispatchTrigger dispatchTrigger =

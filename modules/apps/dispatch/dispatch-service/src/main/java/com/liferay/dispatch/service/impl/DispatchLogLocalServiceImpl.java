@@ -19,10 +19,12 @@ import com.liferay.dispatch.exception.DispatchLogStatusException;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.model.impl.DispatchLogModelImpl;
 import com.liferay.dispatch.service.base.DispatchLogLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -81,6 +83,16 @@ public class DispatchLogLocalServiceImpl
 	public DispatchLog fetchLatestDispatchLog(long dispatchTriggerId) {
 		return dispatchLogPersistence.fetchByDispatchTriggerId_First(
 			dispatchTriggerId, null);
+	}
+
+	@Override
+	public DispatchLog fetchLatestDispatchLog(
+		long dispatchTriggerId, DispatchTaskStatus dispatchTaskStatus) {
+
+		return dispatchLogPersistence.fetchByDTI_S_First(
+			dispatchTriggerId, dispatchTaskStatus.getStatus(),
+			OrderByComparatorFactoryUtil.create(
+				DispatchLogModelImpl.TABLE_NAME, "startDate", "false"));
 	}
 
 	@Override

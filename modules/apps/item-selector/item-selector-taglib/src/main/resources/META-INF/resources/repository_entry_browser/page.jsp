@@ -58,6 +58,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 
 <clay:management-toolbar-v2
 	clearResultsURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getClearResultsURL()) %>"
+	creationMenu="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterLabelItems() %>"
@@ -66,6 +67,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	searchFormMethod="POST"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
+	showCreationMenu="<%= true %>"
 	showInfoButton="<%= false %>"
 	showSearch="<%= showSearch %>"
 	sortingOrder="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getOrderByType() %>"

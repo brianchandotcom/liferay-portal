@@ -44,7 +44,11 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 				})
 			}
 		>
-			<DLVideoExternalShortcutInput onChange={setUrl} url={url} />
+			<DLVideoExternalShortcutInput
+				labelTooltip="internal-video-tooltip"
+				onChange={setUrl}
+				url={url}
+			/>
 
 			<ClayButton disabled={!fields || loading} type="submit">
 				{Liferay.Language.get('add')}

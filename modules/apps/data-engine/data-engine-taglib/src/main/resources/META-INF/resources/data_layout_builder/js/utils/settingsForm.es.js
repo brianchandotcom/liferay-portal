@@ -89,6 +89,14 @@ export const getFilteredSettingsContext = ({
 						] = getPredefinedValues(field);
 					}
 
+					if (fieldName === 'repeatable') {
+						return {
+							...updatedField,
+							name: generateName(name, updatedField),
+							showMaximumRepetitionsInfo: false,
+						};
+					}
+
 					return {
 						...updatedField,
 						name: generateName(name, updatedField),

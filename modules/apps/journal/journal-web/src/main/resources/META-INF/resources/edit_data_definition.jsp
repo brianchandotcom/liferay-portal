@@ -81,33 +81,37 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 		<clay:container-fluid
 			cssClass="container-view"
 		>
-			<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
-				<div class="alert alert-warning">
-					<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
-				</div>
-			</c:if>
+			<div class="contextual-sidebar-mr">
+				<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
+					<div class="alert alert-warning">
+						<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
+					</div>
+				</c:if>
 
-			<c:if test="<%= (journalEditDDMStructuresDisplayContext.getDDMStructureId() > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
-				</div>
-			</c:if>
+				<c:if test="<%= (journalEditDDMStructuresDisplayContext.getDDMStructureId() > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(null, PortalUtil.getClassNameId(DDMStructure.class), journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
+					</div>
+				</c:if>
 
-			<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
-				<div class="alert alert-warning">
-					<liferay-ui:message key="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure" />
-				</div>
-			</c:if>
+				<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
+					<div class="alert alert-warning">
+						<liferay-ui:message key="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure" />
+					</div>
+				</c:if>
 
-			<liferay-data-engine:data-layout-builder
-				additionalPanels="<%= journalEditDDMStructuresDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
-				componentId='<%= liferayPortletResponse.getNamespace() + "dataLayoutBuilder" %>'
-				contentType="journal"
-				dataDefinitionId="<%= ddmStructureId %>"
-				groupId="<%= groupId %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				singlePage="<%= true %>"
-			/>
+				<div class="contextual-sidebar-mr-n">
+					<liferay-data-engine:data-layout-builder
+						additionalPanels="<%= journalEditDDMStructuresDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
+						componentId='<%= liferayPortletResponse.getNamespace() + "dataLayoutBuilder" %>'
+						contentType="journal"
+						dataDefinitionId="<%= ddmStructureId %>"
+						groupId="<%= groupId %>"
+						namespace="<%= liferayPortletResponse.getNamespace() %>"
+						singlePage="<%= true %>"
+					/>
+				</div>
+			</div>
 		</clay:container-fluid>
 	</div>
 </aui:form>

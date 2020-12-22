@@ -29,6 +29,7 @@ import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataLayoutEntityM
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataDefinitionModelResourcePermission;
 import com.liferay.data.engine.rest.resource.exception.DataLayoutValidationException;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
+import com.liferay.data.engine.rest.util.DataDefinitionDDMFormUtil;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
@@ -203,7 +204,7 @@ public class DataLayoutResourceImpl
 			dataDefinitionId,
 			DataLayoutUtil.serialize(
 				dataLayout,
-				DataDefinitionUtil.toDDMForm(
+				DataDefinitionDDMFormUtil.toDDMForm(
 					DataDefinitionUtil.toDataDefinition(
 						_dataDefinitionContentTypeTracker,
 						_ddmFormFieldTypeServicesTracker, ddmStructure,
@@ -293,7 +294,7 @@ public class DataLayoutResourceImpl
 			dataLayoutId,
 			DataLayoutUtil.serialize(
 				dataLayout,
-				DataDefinitionUtil.toDDMForm(
+				DataDefinitionDDMFormUtil.toDDMForm(
 					DataDefinitionUtil.toDataDefinition(
 						_dataDefinitionContentTypeTracker,
 						_ddmFormFieldTypeServicesTracker,

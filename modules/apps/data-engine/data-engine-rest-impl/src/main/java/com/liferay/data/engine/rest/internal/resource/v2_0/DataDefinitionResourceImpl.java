@@ -42,6 +42,7 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordCollectionResource;
+import com.liferay.data.engine.rest.util.DataDefinitionDDMFormUtil;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
@@ -220,7 +221,7 @@ public class DataDefinitionResourceImpl
 
 			_updateDataDefinition(
 				dataDefinition, dataDefinition.getId(),
-				DataDefinitionUtil.toDDMForm(
+				DataDefinitionDDMFormUtil.toDDMForm(
 					dataDefinition, _ddmFormFieldTypeServicesTracker));
 		}
 
@@ -406,7 +407,7 @@ public class DataDefinitionResourceImpl
 			PermissionThreadLocal.getPermissionChecker(), contentType, siteId,
 			DataActionKeys.ADD_DATA_DEFINITION);
 
-		DDMForm ddmForm = DataDefinitionUtil.toDDMForm(
+		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
 		ddmForm.setDefinitionSchemaVersion("2.0");
@@ -525,7 +526,7 @@ public class DataDefinitionResourceImpl
 		JSONObject definitionJSONObject = _jsonFactory.createJSONObject(
 			ddmStructure.getDefinition());
 
-		DDMForm ddmForm = DataDefinitionUtil.toDDMForm(
+		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
 		ddmForm.setDefinitionSchemaVersion(
@@ -952,7 +953,7 @@ public class DataDefinitionResourceImpl
 
 		List<String> removedFieldNames = new ArrayList<>();
 
-		DDMForm ddmForm = DataDefinitionUtil.toDDMForm(
+		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
@@ -968,7 +969,7 @@ public class DataDefinitionResourceImpl
 				_ddmStructureLocalService.getStructure(dataDefinitionId),
 				_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
 
-		DDMForm existingDDMForm = DataDefinitionUtil.toDDMForm(
+		DDMForm existingDDMForm = DataDefinitionDDMFormUtil.toDDMForm(
 			existingDataDefinition, _ddmFormFieldTypeServicesTracker);
 
 		Map<String, DDMFormField> existingDDMFormFieldsMap =
@@ -1080,7 +1081,7 @@ public class DataDefinitionResourceImpl
 
 			ddmFormLayout = DataLayoutUtil.toDDMFormLayout(
 				dataLayout,
-				DataDefinitionUtil.toDDMForm(
+				DataDefinitionDDMFormUtil.toDDMForm(
 					dataDefinition, _ddmFormFieldTypeServicesTracker),
 				_ddmFormRuleDeserializer);
 

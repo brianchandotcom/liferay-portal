@@ -89,6 +89,10 @@ definition {
 		Click(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
 	}
 
+	macro refreshWorkflowList {
+		Click(locator1 = "AppBuilder#REFRESH_WORKFLOW_BUTTON");
+	}
+
 	macro saveApp {
 		AppBuilderAdmin.save();
 	}

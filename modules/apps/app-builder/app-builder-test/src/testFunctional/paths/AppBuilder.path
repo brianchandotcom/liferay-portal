@@ -206,6 +206,11 @@
 	<td>//table//tr//th[text()='${key_workflowColumnName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REFRESH_WORKFLOW_BUTTON</td>
+	<td>//a[contains(text(),'Refresh')]</td>
+	<td></td>
+</tr>
 
 <!-- CONTROL_PANEL -->
 

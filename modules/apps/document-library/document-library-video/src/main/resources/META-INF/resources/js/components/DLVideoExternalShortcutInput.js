@@ -29,7 +29,7 @@ const DLVideoExternalShortcutPreview = ({labelTooltip, onChange, url}) => {
 				{labelTooltip && (
 					<ClayTooltipProvider>
 						<ClayIcon
-							className="ml-1"
+							className="ml-1 text-secondary"
 							symbol="question-circle-full"
 							title={Liferay.Language.get(labelTooltip)}
 						/>

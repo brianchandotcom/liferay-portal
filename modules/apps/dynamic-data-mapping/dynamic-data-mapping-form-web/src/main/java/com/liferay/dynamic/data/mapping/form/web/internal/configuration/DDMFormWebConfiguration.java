@@ -70,4 +70,11 @@ public interface DDMFormWebConfiguration {
 	)
 	public int maximumRepetitionsForUploadFields();
 
+	@Meta.AD(
+		deflt = "5",
+		description = "maximum-submissions-for-guest-upload-fields-help",
+		name = "maximum-submissions-for-guest-upload-fields", required = false
+	)
+	public int maximumSubmissionsForGuestUploadFields();
+
 }

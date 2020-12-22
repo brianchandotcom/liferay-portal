@@ -74,7 +74,7 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 									}
 								%>
 
-									<aui:option label="<%= dispatchTaskClusterMode.getLabel() %>" selected="<%= dispatchTrigger.getTaskClusterMode() == dispatchTaskClusterMode.getMode() %>" value="<%= dispatchTaskClusterMode.getMode() %>" />
+									<aui:option label="<%= dispatchTaskClusterMode.getLabel() %>" selected="<%= dispatchTrigger.getDispatchTaskClusterMode() == dispatchTaskClusterMode.getMode() %>" value="<%= dispatchTaskClusterMode.getMode() %>" />
 
 								<%
 								}

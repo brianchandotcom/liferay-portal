@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.converter;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
@@ -65,6 +65,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,29 +80,27 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rubén Pulido
+ * @author Javier de Arcos
  */
-@Component(service = PageFragmentInstanceDefinitionDTOConverter.class)
-public class PageFragmentInstanceDefinitionDTOConverter {
+@Component(service = PageFragmentInstanceDefinitionUtil.class)
+public class PageFragmentInstanceDefinitionUtil {
 
-	public PageFragmentInstanceDefinition toDTO(
+	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem) {
 
-		return toDTO(fragmentStyledLayoutStructureItem, true, true);
+		return toPageFragmentInstanceDefinition(fragmentStyledLayoutStructureItem, true, true);
 	}
 
-	public PageFragmentInstanceDefinition toDTO(
+	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
 		boolean saveInlineContent, boolean saveMapping) {
 
-		return toDTO(fragmentStyledLayoutStructureItem, null, null, true, true);
+		return toPageFragmentInstanceDefinition(fragmentStyledLayoutStructureItem, null, null, true, true);
 	}
 
-	public PageFragmentInstanceDefinition toDTO(
+	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
 		FragmentStyle pageFragmentInstanceDefinitionFragmentStyle,
 		FragmentViewport[] pageFragmentInstanceDefinitionFragmentViewports,
@@ -208,8 +208,8 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 							else {
 								JSONDeserializer<Map<String, Object>>
 									jsonDeserializer =
-										JSONFactoryUtil.
-											createJSONDeserializer();
+									JSONFactoryUtil.
+										createJSONDeserializer();
 
 								value = jsonDeserializer.deserialize(
 									value.toString());
@@ -268,12 +268,12 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 			_getBackgroundImageFragmentFields(
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.background.image." +
-						"BackgroundImageFragmentEntryProcessor"),
+					"BackgroundImageFragmentEntryProcessor"),
 				saveMapping));
 
 		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
 			"com.liferay.fragment.entry.processor.editable." +
-				"EditableFragmentEntryProcessor");
+			"EditableFragmentEntryProcessor");
 
 		if (jsonObject != null) {
 			Map<String, String> editableTypes =
@@ -340,7 +340,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 
 		for (String fragmentEntryLinkPortletId : fragmentEntryLinkPortletIds) {
 			widgetInstances.add(
-				_widgetInstanceDTOConverter.toDTO(
+				_widgetInstanceUtil.toWidgetInstance(
 					fragmentEntryLink, fragmentEntryLinkPortletId));
 		}
 
@@ -373,7 +373,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 		Map<String, ClassPKReference> classPKReferences = new HashMap<>();
 
 		for (Map.Entry<String, JSONObject> entry :
-				localizedJSONObjects.entrySet()) {
+			localizedJSONObjects.entrySet()) {
 
 			JSONObject jsonObject = entry.getValue();
 
@@ -562,7 +562,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 						setUrl(
 							() -> {
 								if (_isSaveFragmentMappedValue(
-										jsonObject, saveMapping)) {
+									jsonObject, saveMapping)) {
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
@@ -591,7 +591,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 				setHtml(
 					() -> {
 						if (_isSaveFragmentMappedValue(
-								jsonObject, saveMapping)) {
+							jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
 								_toDefaultMappingValue(jsonObject, null),
@@ -641,7 +641,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 								}
 
 								if (_isSaveFragmentMappedValue(
-										jsonObject, saveMapping)) {
+									jsonObject, saveMapping)) {
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
@@ -673,7 +673,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 				setText(
 					() -> {
 						if (_isSaveFragmentMappedValue(
-								jsonObject, saveMapping)) {
+							jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
 								_toDefaultMappingValue(jsonObject, null),
@@ -755,7 +755,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 				setHref(
 					() -> {
 						if (_isSaveFragmentMappedValue(
-								configJSONObject, saveMapping)) {
+							configJSONObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
 								_toDefaultMappingValue(configJSONObject, null),
@@ -849,7 +849,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 				_log.warn(
 					String.format(
 						"Item class name could not be set since class name " +
-							"ID %s could not be parsed to a long",
+						"ID %s could not be parsed to a long",
 						classNameIdString),
 					numberFormatException);
 			}
@@ -866,7 +866,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Item class name could not be set since no class name " +
-						"could be obtained for class name ID " + classNameId,
+					"could be obtained for class name ID " + classNameId,
 					exception);
 			}
 
@@ -893,7 +893,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 				_log.warn(
 					String.format(
 						"Item class PK could not be set since class PK %s " +
-							"could not be parsed to a long",
+						"could not be parsed to a long",
 						classPKString),
 					numberFormatException);
 			}
@@ -1034,7 +1034,7 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageFragmentInstanceDefinitionDTOConverter.class);
+		PageFragmentInstanceDefinitionUtil.class);
 
 	@Reference
 	private FragmentCollectionContributorTracker
@@ -1059,6 +1059,5 @@ public class PageFragmentInstanceDefinitionDTOConverter {
 	private PortletRegistry _portletRegistry;
 
 	@Reference
-	private WidgetInstanceDTOConverter _widgetInstanceDTOConverter;
-
+	private WidgetInstanceUtil _widgetInstanceUtil;
 }

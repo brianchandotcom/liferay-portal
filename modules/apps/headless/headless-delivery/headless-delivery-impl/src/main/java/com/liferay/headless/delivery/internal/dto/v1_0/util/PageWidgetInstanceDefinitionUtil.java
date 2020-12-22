@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.converter;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
@@ -20,20 +20,23 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
+ * @author Javier de Arcos
  */
-@Component(service = PageWidgetInstanceDefinitionDTOConverter.class)
-public class PageWidgetInstanceDefinitionDTOConverter {
+public class PageWidgetInstanceDefinitionUtil {
 
-	public PageWidgetInstanceDefinition toDTO(
+	public static PageWidgetInstanceDefinition toPageWidgetInstanceDefinition(
+		FragmentEntryLink fragmentEntryLink, String portletId, WidgetInstanceUtil widgetInstanceUtil) {
+
+		return toPageWidgetInstanceDefinition(fragmentEntryLink, null, null, portletId, widgetInstanceUtil);
+	}
+
+	public static PageWidgetInstanceDefinition toPageWidgetInstanceDefinition(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentStyle pageWidgetInstanceDefinitionFragmentStyle,
 		FragmentViewport[] pageWidgetInstanceDefinitionFragmentViewports,
-		String portletId) {
+		String portletId, WidgetInstanceUtil widgetInstanceUtil) {
 
 		if (Validator.isNull(portletId)) {
 			return null;
@@ -44,19 +47,9 @@ public class PageWidgetInstanceDefinitionDTOConverter {
 				fragmentStyle = pageWidgetInstanceDefinitionFragmentStyle;
 				fragmentViewports =
 					pageWidgetInstanceDefinitionFragmentViewports;
-				widgetInstance = _widgetInstanceDTOConverter.toDTO(
+				widgetInstance = widgetInstanceUtil.toWidgetInstance(
 					fragmentEntryLink, portletId);
 			}
 		};
 	}
-
-	public PageWidgetInstanceDefinition toDTO(
-		FragmentEntryLink fragmentEntryLink, String portletId) {
-
-		return toDTO(fragmentEntryLink, null, null, portletId);
-	}
-
-	@Reference
-	private WidgetInstanceDTOConverter _widgetInstanceDTOConverter;
-
 }

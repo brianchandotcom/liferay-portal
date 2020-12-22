@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.converter;
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,16 +49,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
+ * @author Javier de Arcos
  */
-@Component(service = WidgetInstanceDTOConverter.class)
-public class WidgetInstanceDTOConverter {
+@Component(service = WidgetInstanceUtil.class)
+public class WidgetInstanceUtil {
 
-	public WidgetInstance toDTO(
+	public WidgetInstance toWidgetInstance(
 		FragmentEntryLink fragmentEntryLink, String portletId) {
 
 		if (Validator.isNull(portletId)) {
@@ -173,7 +173,7 @@ public class WidgetInstanceDTOConverter {
 					_log.warn(
 						String.format(
 							"Resource permission %s will not be exported " +
-								"since no role was found with role ID %s",
+							"since no role was found with role ID %s",
 							resourcePermission.getName(),
 							resourcePermission.getRoleId()));
 				}
@@ -218,7 +218,7 @@ public class WidgetInstanceDTOConverter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WidgetInstanceDTOConverter.class);
+		WidgetInstanceUtil.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -251,5 +251,4 @@ public class WidgetInstanceDTOConverter {
 
 	@Reference
 	private TeamLocalService _teamLocalService;
-
 }

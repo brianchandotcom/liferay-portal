@@ -15,7 +15,7 @@
 package com.liferay.dispatch.web.internal.portlet.action;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
-import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -47,7 +47,7 @@ public class EditDispatchTriggerMVCRenderCommand implements MVCRenderCommand {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
-				_dispatchTaskExecutorHelper, _dispatchTriggerLocalService,
+				_dispatchTaskExecutorRegistry, _dispatchTriggerLocalService,
 				renderRequest);
 
 		renderRequest.setAttribute(
@@ -57,7 +57,7 @@ public class EditDispatchTriggerMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private DispatchTaskExecutorHelper _dispatchTaskExecutorHelper;
+	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

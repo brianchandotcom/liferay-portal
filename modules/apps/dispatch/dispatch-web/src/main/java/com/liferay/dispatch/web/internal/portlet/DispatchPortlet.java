@@ -16,7 +16,7 @@ package com.liferay.dispatch.web.internal.portlet;
 
 import com.liferay.dispatch.constants.DispatchPortletKeys;
 import com.liferay.dispatch.constants.DispatchWebKeys;
-import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext;
@@ -83,7 +83,7 @@ public class DispatchPortlet extends MVCPortlet {
 
 		DispatchTriggerDisplayContext dispatchTriggerDisplayContext =
 			new DispatchTriggerDisplayContext(
-				_dispatchTaskExecutorHelper, _dispatchTriggerLocalService,
+				_dispatchTaskExecutorRegistry, _dispatchTriggerLocalService,
 				renderRequest);
 
 		renderRequest.setAttribute(
@@ -93,7 +93,7 @@ public class DispatchPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private DispatchTaskExecutorHelper _dispatchTaskExecutorHelper;
+	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

@@ -16,7 +16,7 @@ package com.liferay.dispatch.internal.messaging;
 
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
-import com.liferay.dispatch.executor.DispatchTaskExecutorHelper;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -69,7 +69,7 @@ public class DispatchMessageListener extends BaseMessageListener {
 		}
 
 		DispatchTaskExecutor dispatchTaskExecutor =
-			_dispatchTaskExecutorHelper.getDispatchTaskExecutor(
+			_dispatchTaskExecutorRegistry.getDispatchTaskExecutor(
 				dispatchTrigger.getTaskExecutorType());
 
 		dispatchTaskExecutor.execute(dispatchTriggerId);
@@ -79,7 +79,7 @@ public class DispatchMessageListener extends BaseMessageListener {
 	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
-	private DispatchTaskExecutorHelper _dispatchTaskExecutorHelper;
+	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

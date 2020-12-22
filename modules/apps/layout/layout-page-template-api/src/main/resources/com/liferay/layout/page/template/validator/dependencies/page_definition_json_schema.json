@@ -227,6 +227,9 @@
 						}
 					]
 				},
+				"fragmentImageClassPKReference": {
+					"$ref": "#/definitions/FragmentImageClassPKReference"
+				},
 				"title": {
 					"oneOf": [
 						{
@@ -246,6 +249,42 @@
 				}
 			},
 			"title": "The FragmentImage Schema",
+			"type": "object"
+		},
+		"FragmentImageClassPKReference": {
+			"additionalProperties": false,
+			"properties": {
+				"classPKReferences": {
+					"additionalProperties": {
+						"$ref": "#/definitions/ClassPKReference"
+					},
+					"title": "The classPKReferences Schema",
+					"type": "object"
+				},
+				"fragmentImageConfiguration": {
+					"$ref": "#/definitions/FragmentImageConfiguration"
+				}
+			},
+			"title": "The FragmentImageClassPKReference Schema",
+			"type": "object"
+		},
+		"FragmentImageConfiguration": {
+			"additionalProperties": false,
+			"properties": {
+				"landscapeMobile": {
+					"title": "The landscapeMobile Schema",
+					"type": "string"
+				},
+				"portraitMobile": {
+					"title": "The portraitMobile Schema",
+					"type": "string"
+				},
+				"tablet": {
+					"title": "The tablet Schema",
+					"type": "string"
+				}
+			},
+			"title": "The FragmentImageConfiguration Schema",
 			"type": "object"
 		},
 		"FragmentInlineValue": {

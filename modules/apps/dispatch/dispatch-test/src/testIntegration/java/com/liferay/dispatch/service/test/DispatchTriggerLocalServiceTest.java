@@ -100,6 +100,26 @@ public class DispatchTriggerLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchPreviousFireDateNull() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addUser(company);
+
+		DispatchTrigger expectedDispatchTrigger =
+			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1);
+
+		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
+			expectedDispatchTrigger);
+
+		Assert.assertNull(
+			_dispatchTriggerLocalService.fetchPreviousFireDate(Long.MIN_VALUE));
+
+		Assert.assertNull(
+			_dispatchTriggerLocalService.fetchPreviousFireDate(
+				dispatchTrigger.getDispatchTriggerId()));
+	}
+
+	@Test
 	public void testGetUserDispatchTriggers() throws Exception {
 		int userCount = RandomTestUtil.randomInt(4, 10);
 

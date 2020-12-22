@@ -10,6 +10,9 @@
 		"metal-jest-serializer": "2.0.0"
 	},
 	"private": true,
+	"resolutions": {
+		"webpack": "./webpack-5.11.0-fix-12255.tgz"
+	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"

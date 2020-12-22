@@ -17,7 +17,6 @@ package com.liferay.document.library.service.persistence;
 import com.liferay.document.library.exception.NoSuchStorageQuotaException;
 import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -34,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLStorageQuotaPersistence
-	extends BasePersistence<DLStorageQuota>, CTPersistence<DLStorageQuota> {
+	extends BasePersistence<DLStorageQuota> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

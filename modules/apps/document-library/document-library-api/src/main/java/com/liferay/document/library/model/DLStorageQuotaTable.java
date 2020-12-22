@@ -33,9 +33,6 @@ public class DLStorageQuotaTable extends BaseTable<DLStorageQuotaTable> {
 
 	public final Column<DLStorageQuotaTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<DLStorageQuotaTable, Long> ctCollectionId =
-		createColumn(
-			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLStorageQuotaTable, Long> dlStorageQuotaId =
 		createColumn(
 			"dlStorageQuotaId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

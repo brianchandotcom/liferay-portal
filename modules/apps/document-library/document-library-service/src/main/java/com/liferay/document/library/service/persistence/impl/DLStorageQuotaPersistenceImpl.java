@@ -22,7 +22,6 @@ import com.liferay.document.library.model.impl.DLStorageQuotaModelImpl;
 import com.liferay.document.library.service.persistence.DLStorageQuotaPersistence;
 import com.liferay.document.library.service.persistence.impl.constants.DLPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,12 +46,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -158,18 +150,15 @@ public class DLStorageQuotaPersistenceImpl
 	public DLStorageQuota fetchByCompanyId(
 		long companyId, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DLStorageQuota.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {companyId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByCompanyId, finderArgs);
 		}
@@ -205,7 +194,7 @@ public class DLStorageQuotaPersistenceImpl
 				List<DLStorageQuota> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache && productionMode) {
+					if (useFinderCache) {
 						finderCache.putResult(
 							_finderPathFetchByCompanyId, finderArgs, list);
 					}
@@ -257,21 +246,11 @@ public class DLStorageQuotaPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DLStorageQuota.class);
+		FinderPath finderPath = _finderPathCountByCompanyId;
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {companyId};
 
-		Long count = null;
-
-		if (productionMode) {
-			finderPath = _finderPathCountByCompanyId;
-
-			finderArgs = new Object[] {companyId};
-
-			count = (Long)finderCache.getResult(finderPath, finderArgs);
-		}
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -295,9 +274,7 @@ public class DLStorageQuotaPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				if (productionMode) {
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -329,10 +306,6 @@ public class DLStorageQuotaPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(DLStorageQuota dlStorageQuota) {
-		if (dlStorageQuota.getCtCollectionId() != 0) {
-			return;
-		}
-
 		entityCache.putResult(
 			DLStorageQuotaImpl.class, dlStorageQuota.getPrimaryKey(),
 			dlStorageQuota);
@@ -350,10 +323,6 @@ public class DLStorageQuotaPersistenceImpl
 	@Override
 	public void cacheResult(List<DLStorageQuota> dlStorageQuotas) {
 		for (DLStorageQuota dlStorageQuota : dlStorageQuotas) {
-			if (dlStorageQuota.getCtCollectionId() != 0) {
-				continue;
-			}
-
 			if (entityCache.getResult(
 					DLStorageQuotaImpl.class, dlStorageQuota.getPrimaryKey()) ==
 						null) {
@@ -502,9 +471,7 @@ public class DLStorageQuotaPersistenceImpl
 					dlStorageQuota.getPrimaryKeyObj());
 			}
 
-			if ((dlStorageQuota != null) &&
-				ctPersistenceHelper.isRemove(dlStorageQuota)) {
-
+			if (dlStorageQuota != null) {
 				session.delete(dlStorageQuota);
 			}
 		}
@@ -551,13 +518,7 @@ public class DLStorageQuotaPersistenceImpl
 		try {
 			session = openSession();
 
-			if (ctPersistenceHelper.isInsert(dlStorageQuota)) {
-				if (!isNew) {
-					session.evict(
-						DLStorageQuotaImpl.class,
-						dlStorageQuota.getPrimaryKeyObj());
-				}
-
+			if (isNew) {
 				session.save(dlStorageQuota);
 			}
 			else {
@@ -569,16 +530,6 @@ public class DLStorageQuotaPersistenceImpl
 		}
 		finally {
 			closeSession(session);
-		}
-
-		if (dlStorageQuota.getCtCollectionId() != 0) {
-			if (isNew) {
-				dlStorageQuota.setNew(false);
-			}
-
-			dlStorageQuota.resetOriginalValues();
-
-			return dlStorageQuota;
 		}
 
 		entityCache.putResult(
@@ -637,121 +588,12 @@ public class DLStorageQuotaPersistenceImpl
 	/**
 	 * Returns the dl storage quota with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the dl storage quota
-	 * @return the dl storage quota, or <code>null</code> if a dl storage quota with the primary key could not be found
-	 */
-	@Override
-	public DLStorageQuota fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DLStorageQuota.class)) {
-			return super.fetchByPrimaryKey(primaryKey);
-		}
-
-		DLStorageQuota dlStorageQuota = null;
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			dlStorageQuota = (DLStorageQuota)session.get(
-				DLStorageQuotaImpl.class, primaryKey);
-
-			if (dlStorageQuota != null) {
-				cacheResult(dlStorageQuota);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return dlStorageQuota;
-	}
-
-	/**
-	 * Returns the dl storage quota with the primary key or returns <code>null</code> if it could not be found.
-	 *
 	 * @param dlStorageQuotaId the primary key of the dl storage quota
 	 * @return the dl storage quota, or <code>null</code> if a dl storage quota with the primary key could not be found
 	 */
 	@Override
 	public DLStorageQuota fetchByPrimaryKey(long dlStorageQuotaId) {
 		return fetchByPrimaryKey((Serializable)dlStorageQuotaId);
-	}
-
-	@Override
-	public Map<Serializable, DLStorageQuota> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DLStorageQuota.class)) {
-			return super.fetchByPrimaryKeys(primaryKeys);
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DLStorageQuota> map =
-			new HashMap<Serializable, DLStorageQuota>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DLStorageQuota dlStorageQuota = fetchByPrimaryKey(primaryKey);
-
-			if (dlStorageQuota != null) {
-				map.put(primaryKey, dlStorageQuota);
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DLStorageQuota dlStorageQuota :
-					(List<DLStorageQuota>)query.list()) {
-
-				map.put(dlStorageQuota.getPrimaryKeyObj(), dlStorageQuota);
-
-				cacheResult(dlStorageQuota);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -818,28 +660,25 @@ public class DLStorageQuotaPersistenceImpl
 		int start, int end, OrderByComparator<DLStorageQuota> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DLStorageQuota.class);
-
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache && productionMode) {
+			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache && productionMode) {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<DLStorageQuota> list = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			list = (List<DLStorageQuota>)finderCache.getResult(
 				finderPath, finderArgs);
 		}
@@ -877,7 +716,7 @@ public class DLStorageQuotaPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache && productionMode) {
+				if (useFinderCache) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -910,15 +749,8 @@ public class DLStorageQuotaPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DLStorageQuota.class);
-
-		Long count = null;
-
-		if (productionMode) {
-			count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
-		}
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 		if (count == null) {
 			Session session = null;
@@ -930,10 +762,8 @@ public class DLStorageQuotaPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				if (productionMode) {
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -962,63 +792,8 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 	@Override
-	public Set<String> getCTColumnNames(
-		CTColumnResolutionType ctColumnResolutionType) {
-
-		return _ctColumnNamesMap.get(ctColumnResolutionType);
-	}
-
-	@Override
-	public List<String> getMappingTableNames() {
-		return _mappingTableNames;
-	}
-
-	@Override
-	public Map<String, Integer> getTableColumnsMap() {
+	protected Map<String, Integer> getTableColumnsMap() {
 		return DLStorageQuotaModelImpl.TABLE_COLUMNS_MAP;
-	}
-
-	@Override
-	public String getTableName() {
-		return "DLStorageQuota";
-	}
-
-	@Override
-	public List<String[]> getUniqueIndexColumnNames() {
-		return _uniqueIndexColumnNames;
-	}
-
-	private static final Map<CTColumnResolutionType, Set<String>>
-		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
-			CTColumnResolutionType.class);
-	private static final List<String> _mappingTableNames =
-		new ArrayList<String>();
-	private static final List<String[]> _uniqueIndexColumnNames =
-		new ArrayList<String[]>();
-
-	static {
-		Set<String> ctControlColumnNames = new HashSet<String>();
-		Set<String> ctIgnoreColumnNames = new HashSet<String>();
-		Set<String> ctMergeColumnNames = new HashSet<String>();
-		Set<String> ctStrictColumnNames = new HashSet<String>();
-
-		ctControlColumnNames.add("mvccVersion");
-		ctControlColumnNames.add("ctCollectionId");
-		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("storageSize");
-
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.CONTROL, ctControlColumnNames);
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
-		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.PK,
-			Collections.singleton("dlStorageQuotaId"));
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.STRICT, ctStrictColumnNames);
-
-		_uniqueIndexColumnNames.add(new String[] {"companyId"});
 	}
 
 	/**
@@ -1089,9 +864,6 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	protected CTPersistenceHelper ctPersistenceHelper;
 
 	@Reference
 	protected EntityCache entityCache;

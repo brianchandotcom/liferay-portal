@@ -12,9 +12,7 @@ create table DLFileVersionPreview (
 
 create table DLStorageQuota (
 	mvccVersion LONG default 0 not null,
-	ctCollectionId LONG default 0 not null,
-	dlStorageQuotaId LONG not null,
+	dlStorageQuotaId LONG not null primary key,
 	companyId LONG,
-	storageSize LONG,
-	primary key (dlStorageQuotaId, ctCollectionId)
+	storageSize LONG
 );

@@ -75,12 +75,10 @@ public class DLStorageQuotaCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", ctCollectionId=");
-		sb.append(ctCollectionId);
 		sb.append(", dlStorageQuotaId=");
 		sb.append(dlStorageQuotaId);
 		sb.append(", companyId=");
@@ -97,7 +95,6 @@ public class DLStorageQuotaCacheModel
 		DLStorageQuotaImpl dlStorageQuotaImpl = new DLStorageQuotaImpl();
 
 		dlStorageQuotaImpl.setMvccVersion(mvccVersion);
-		dlStorageQuotaImpl.setCtCollectionId(ctCollectionId);
 		dlStorageQuotaImpl.setDlStorageQuotaId(dlStorageQuotaId);
 		dlStorageQuotaImpl.setCompanyId(companyId);
 		dlStorageQuotaImpl.setStorageSize(storageSize);
@@ -111,8 +108,6 @@ public class DLStorageQuotaCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		ctCollectionId = objectInput.readLong();
-
 		dlStorageQuotaId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -124,8 +119,6 @@ public class DLStorageQuotaCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(ctCollectionId);
-
 		objectOutput.writeLong(dlStorageQuotaId);
 
 		objectOutput.writeLong(companyId);
@@ -134,7 +127,6 @@ public class DLStorageQuotaCacheModel
 	}
 
 	public long mvccVersion;
-	public long ctCollectionId;
 	public long dlStorageQuotaId;
 	public long companyId;
 	public long storageSize;

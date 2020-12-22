@@ -63,9 +63,8 @@ public class DLStorageQuotaModelImpl
 	public static final String TABLE_NAME = "DLStorageQuota";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"dlStorageQuotaId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"storageSize", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"dlStorageQuotaId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"storageSize", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -73,14 +72,13 @@ public class DLStorageQuotaModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dlStorageQuotaId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("storageSize", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLStorageQuota (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,dlStorageQuotaId LONG not null,companyId LONG,storageSize LONG,primary key (dlStorageQuotaId, ctCollectionId))";
+		"create table DLStorageQuota (mvccVersion LONG default 0 not null,dlStorageQuotaId LONG not null primary key,companyId LONG,storageSize LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLStorageQuota";
 
@@ -253,12 +251,6 @@ public class DLStorageQuotaModelImpl
 			"mvccVersion",
 			(BiConsumer<DLStorageQuota, Long>)DLStorageQuota::setMvccVersion);
 		attributeGetterFunctions.put(
-			"ctCollectionId", DLStorageQuota::getCtCollectionId);
-		attributeSetterBiConsumers.put(
-			"ctCollectionId",
-			(BiConsumer<DLStorageQuota, Long>)
-				DLStorageQuota::setCtCollectionId);
-		attributeGetterFunctions.put(
 			"dlStorageQuotaId", DLStorageQuota::getDlStorageQuotaId);
 		attributeSetterBiConsumers.put(
 			"dlStorageQuotaId",
@@ -292,20 +284,6 @@ public class DLStorageQuotaModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
-	}
-
-	@Override
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -415,7 +393,6 @@ public class DLStorageQuotaModelImpl
 		DLStorageQuotaImpl dlStorageQuotaImpl = new DLStorageQuotaImpl();
 
 		dlStorageQuotaImpl.setMvccVersion(getMvccVersion());
-		dlStorageQuotaImpl.setCtCollectionId(getCtCollectionId());
 		dlStorageQuotaImpl.setDlStorageQuotaId(getDlStorageQuotaId());
 		dlStorageQuotaImpl.setCompanyId(getCompanyId());
 		dlStorageQuotaImpl.setStorageSize(getStorageSize());
@@ -499,8 +476,6 @@ public class DLStorageQuotaModelImpl
 
 		dlStorageQuotaCacheModel.mvccVersion = getMvccVersion();
 
-		dlStorageQuotaCacheModel.ctCollectionId = getCtCollectionId();
-
 		dlStorageQuotaCacheModel.dlStorageQuotaId = getDlStorageQuotaId();
 
 		dlStorageQuotaCacheModel.companyId = getCompanyId();
@@ -581,7 +556,6 @@ public class DLStorageQuotaModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _dlStorageQuotaId;
 	private long _companyId;
 	private long _storageSize;
@@ -614,7 +588,6 @@ public class DLStorageQuotaModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("dlStorageQuotaId", _dlStorageQuotaId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("storageSize", _storageSize);
@@ -633,13 +606,11 @@ public class DLStorageQuotaModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("ctCollectionId", 2L);
+		columnBitmasks.put("dlStorageQuotaId", 2L);
 
-		columnBitmasks.put("dlStorageQuotaId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
-
-		columnBitmasks.put("storageSize", 16L);
+		columnBitmasks.put("storageSize", 8L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

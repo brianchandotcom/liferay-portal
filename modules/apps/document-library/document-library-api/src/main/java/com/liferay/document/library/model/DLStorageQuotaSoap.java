@@ -33,7 +33,6 @@ public class DLStorageQuotaSoap implements Serializable {
 		DLStorageQuotaSoap soapModel = new DLStorageQuotaSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
-		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setDlStorageQuotaId(model.getDlStorageQuotaId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setStorageSize(model.getStorageSize());
@@ -103,14 +102,6 @@ public class DLStorageQuotaSoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
-	public long getCtCollectionId() {
-		return _ctCollectionId;
-	}
-
-	public void setCtCollectionId(long ctCollectionId) {
-		_ctCollectionId = ctCollectionId;
-	}
-
 	public long getDlStorageQuotaId() {
 		return _dlStorageQuotaId;
 	}
@@ -136,7 +127,6 @@ public class DLStorageQuotaSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
-	private long _ctCollectionId;
 	private long _dlStorageQuotaId;
 	private long _companyId;
 	private long _storageSize;

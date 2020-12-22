@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * <p>
@@ -44,7 +42,6 @@ public class DLStorageQuotaWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("dlStorageQuotaId", getDlStorageQuotaId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("storageSize", getStorageSize());
@@ -58,12 +55,6 @@ public class DLStorageQuotaWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
-		}
-
-		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
-
-		if (ctCollectionId != null) {
-			setCtCollectionId(ctCollectionId);
 		}
 
 		Long dlStorageQuotaId = (Long)attributes.get("dlStorageQuotaId");
@@ -93,16 +84,6 @@ public class DLStorageQuotaWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
-	}
-
-	/**
-	 * Returns the ct collection ID of this dl storage quota.
-	 *
-	 * @return the ct collection ID of this dl storage quota
-	 */
-	@Override
-	public long getCtCollectionId() {
-		return model.getCtCollectionId();
 	}
 
 	/**
@@ -161,16 +142,6 @@ public class DLStorageQuotaWrapper
 	}
 
 	/**
-	 * Sets the ct collection ID of this dl storage quota.
-	 *
-	 * @param ctCollectionId the ct collection ID of this dl storage quota
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId) {
-		model.setCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Sets the dl storage quota ID of this dl storage quota.
 	 *
 	 * @param dlStorageQuotaId the dl storage quota ID of this dl storage quota
@@ -208,20 +179,6 @@ public class DLStorageQuotaWrapper
 	@Override
 	public void setStorageSize(long storageSize) {
 		model.setStorageSize(storageSize);
-	}
-
-	@Override
-	public Map<String, Function<DLStorageQuota, Object>>
-		getAttributeGetterFunctions() {
-
-		return model.getAttributeGetterFunctions();
-	}
-
-	@Override
-	public Map<String, BiConsumer<DLStorageQuota, Object>>
-		getAttributeSetterBiConsumers() {
-
-		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

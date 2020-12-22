@@ -14,10 +14,7 @@
 
 package com.liferay.document.library.service;
 
-import com.liferay.document.library.model.DLStorageQuota;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link DLStorageQuotaLocalService}.
@@ -47,7 +44,9 @@ public class DLStorageQuotaLocalServiceWrapper
 	 * @return the dl storage quota that was added
 	 */
 	@Override
-	public DLStorageQuota addDLStorageQuota(DLStorageQuota dlStorageQuota) {
+	public com.liferay.document.library.model.DLStorageQuota addDLStorageQuota(
+		com.liferay.document.library.model.DLStorageQuota dlStorageQuota) {
+
 		return _dlStorageQuotaLocalService.addDLStorageQuota(dlStorageQuota);
 	}
 
@@ -58,7 +57,9 @@ public class DLStorageQuotaLocalServiceWrapper
 	 * @return the new dl storage quota
 	 */
 	@Override
-	public DLStorageQuota createDLStorageQuota(long dlStorageQuotaId) {
+	public com.liferay.document.library.model.DLStorageQuota
+		createDLStorageQuota(long dlStorageQuotaId) {
+
 		return _dlStorageQuotaLocalService.createDLStorageQuota(
 			dlStorageQuotaId);
 	}
@@ -85,7 +86,10 @@ public class DLStorageQuotaLocalServiceWrapper
 	 * @return the dl storage quota that was removed
 	 */
 	@Override
-	public DLStorageQuota deleteDLStorageQuota(DLStorageQuota dlStorageQuota) {
+	public com.liferay.document.library.model.DLStorageQuota
+		deleteDLStorageQuota(
+			com.liferay.document.library.model.DLStorageQuota dlStorageQuota) {
+
 		return _dlStorageQuotaLocalService.deleteDLStorageQuota(dlStorageQuota);
 	}
 
@@ -101,7 +105,8 @@ public class DLStorageQuotaLocalServiceWrapper
 	 * @throws PortalException if a dl storage quota with the primary key could not be found
 	 */
 	@Override
-	public DLStorageQuota deleteDLStorageQuota(long dlStorageQuotaId)
+	public com.liferay.document.library.model.DLStorageQuota
+			deleteDLStorageQuota(long dlStorageQuotaId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlStorageQuotaLocalService.deleteDLStorageQuota(
@@ -216,7 +221,9 @@ public class DLStorageQuotaLocalServiceWrapper
 	}
 
 	@Override
-	public DLStorageQuota fetchDLStorageQuota(long dlStorageQuotaId) {
+	public com.liferay.document.library.model.DLStorageQuota
+		fetchDLStorageQuota(long dlStorageQuotaId) {
+
 		return _dlStorageQuotaLocalService.fetchDLStorageQuota(
 			dlStorageQuotaId);
 	}
@@ -236,7 +243,8 @@ public class DLStorageQuotaLocalServiceWrapper
 	 * @throws PortalException if a dl storage quota with the primary key could not be found
 	 */
 	@Override
-	public DLStorageQuota getDLStorageQuota(long dlStorageQuotaId)
+	public com.liferay.document.library.model.DLStorageQuota getDLStorageQuota(
+			long dlStorageQuotaId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dlStorageQuotaLocalService.getDLStorageQuota(dlStorageQuotaId);
@@ -254,8 +262,8 @@ public class DLStorageQuotaLocalServiceWrapper
 	 * @return the range of dl storage quotas
 	 */
 	@Override
-	public java.util.List<DLStorageQuota> getDLStorageQuotas(
-		int start, int end) {
+	public java.util.List<com.liferay.document.library.model.DLStorageQuota>
+		getDLStorageQuotas(int start, int end) {
 
 		return _dlStorageQuotaLocalService.getDLStorageQuotas(start, end);
 	}
@@ -314,7 +322,10 @@ public class DLStorageQuotaLocalServiceWrapper
 	 * @return the dl storage quota that was updated
 	 */
 	@Override
-	public DLStorageQuota updateDLStorageQuota(DLStorageQuota dlStorageQuota) {
+	public com.liferay.document.library.model.DLStorageQuota
+		updateDLStorageQuota(
+			com.liferay.document.library.model.DLStorageQuota dlStorageQuota) {
+
 		return _dlStorageQuotaLocalService.updateDLStorageQuota(dlStorageQuota);
 	}
 
@@ -323,26 +334,6 @@ public class DLStorageQuotaLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlStorageQuotaLocalService.validateStorageQuota(companyId, increment);
-	}
-
-	@Override
-	public CTPersistence<DLStorageQuota> getCTPersistence() {
-		return _dlStorageQuotaLocalService.getCTPersistence();
-	}
-
-	@Override
-	public Class<DLStorageQuota> getModelClass() {
-		return _dlStorageQuotaLocalService.getModelClass();
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DLStorageQuota>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return _dlStorageQuotaLocalService.updateWithUnsafeFunction(
-			updateUnsafeFunction);
 	}
 
 	@Override

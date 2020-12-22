@@ -17,7 +17,6 @@ package com.liferay.document.library.service.base;
 import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.document.library.service.DLStorageQuotaLocalService;
 import com.liferay.document.library.service.persistence.DLStorageQuotaPersistence;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -38,9 +37,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -375,7 +372,7 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 	public Class<?>[] getAopInterfaces() {
 		return new Class<?>[] {
 			DLStorageQuotaLocalService.class, IdentifiableOSGiService.class,
-			CTService.class, PersistedModelLocalService.class
+			PersistedModelLocalService.class
 		};
 	}
 
@@ -394,23 +391,8 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 		return DLStorageQuotaLocalService.class.getName();
 	}
 
-	@Override
-	public CTPersistence<DLStorageQuota> getCTPersistence() {
-		return dlStorageQuotaPersistence;
-	}
-
-	@Override
-	public Class<DLStorageQuota> getModelClass() {
+	protected Class<?> getModelClass() {
 		return DLStorageQuota.class;
-	}
-
-	@Override
-	public <R, E extends Throwable> R updateWithUnsafeFunction(
-			UnsafeFunction<CTPersistence<DLStorageQuota>, R, E>
-				updateUnsafeFunction)
-		throws E {
-
-		return updateUnsafeFunction.apply(dlStorageQuotaPersistence);
 	}
 
 	protected String getModelClassName() {

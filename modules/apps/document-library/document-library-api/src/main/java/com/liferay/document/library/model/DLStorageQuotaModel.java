@@ -17,7 +17,6 @@ package com.liferay.document.library.model;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -34,8 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLStorageQuotaModel
-	extends BaseModel<DLStorageQuota>, CTModel<DLStorageQuota>, MVCCModel,
-			ShardedModel {
+	extends BaseModel<DLStorageQuota>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -48,7 +46,6 @@ public interface DLStorageQuotaModel
 	 *
 	 * @return the primary key of this dl storage quota
 	 */
-	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -56,7 +53,6 @@ public interface DLStorageQuotaModel
 	 *
 	 * @param primaryKey the primary key of this dl storage quota
 	 */
-	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -74,22 +70,6 @@ public interface DLStorageQuotaModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
-
-	/**
-	 * Returns the ct collection ID of this dl storage quota.
-	 *
-	 * @return the ct collection ID of this dl storage quota
-	 */
-	@Override
-	public long getCtCollectionId();
-
-	/**
-	 * Sets the ct collection ID of this dl storage quota.
-	 *
-	 * @param ctCollectionId the ct collection ID of this dl storage quota
-	 */
-	@Override
-	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the dl storage quota ID of this dl storage quota.

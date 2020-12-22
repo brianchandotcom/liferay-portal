@@ -76,7 +76,7 @@ const Switcher = ({
 						dangerouslySetInnerHTML={{
 							__html: Liferay.Util.sub(
 								Liferay.Language.get(
-									'for-security-reasons-upload-field-repeatibilty-is-limited-the-limit-is-defined-in-x-system-settings-x'
+									'for-security-reasons-upload-field-repeatability-is-limited-the-limit-is-defined-in-x-system-settings-x'
 								),
 								`<a href=${systemSettingsURL} target="_blank">`,
 								'</a>'

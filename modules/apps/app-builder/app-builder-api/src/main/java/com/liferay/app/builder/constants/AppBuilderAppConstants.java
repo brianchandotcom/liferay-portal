@@ -22,6 +22,8 @@ public class AppBuilderAppConstants {
 
 	public static final String SCOPE_STANDARD = "standard";
 
+	public static final String SCOPE_WORKFLOW = "workflow";
+
 	public static final int SITE_ID_ALL = -1;
 
 }

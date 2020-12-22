@@ -55,10 +55,35 @@ import org.osgi.service.component.annotations.Reference;
 public class DispatchTriggerLocalServiceImpl
 	extends DispatchTriggerLocalServiceBaseImpl {
 
+	/**
+	 * @param      userId
+	 * @param      name
+	 * @param      system
+	 * @param      taskExecutorType
+	 * @param      taskSettingsUnicodeProperties
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addDispatchTrigger(long,
+	 *             String, UnicodeProperties, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public DispatchTrigger addDispatchTrigger(
 			long userId, String name, boolean system, String taskExecutorType,
 			UnicodeProperties taskSettingsUnicodeProperties)
+		throws PortalException {
+
+		return addDispatchTrigger(
+			userId, taskExecutorType, taskSettingsUnicodeProperties, name,
+			system);
+	}
+
+	@Override
+	public DispatchTrigger addDispatchTrigger(
+			long userId, String dispatchTaskExecutorType,
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
+			String name, boolean system)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -71,11 +96,11 @@ public class DispatchTriggerLocalServiceImpl
 		dispatchTrigger.setCompanyId(user.getCompanyId());
 		dispatchTrigger.setUserId(user.getUserId());
 		dispatchTrigger.setUserName(user.getFullName());
+		dispatchTrigger.setDispatchTaskExecutorType(dispatchTaskExecutorType);
+		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
+			dispatchTaskSettingsUnicodeProperties);
 		dispatchTrigger.setName(name);
 		dispatchTrigger.setSystem(system);
-		dispatchTrigger.setTaskExecutorType(taskExecutorType);
-		dispatchTrigger.setTaskSettingsUnicodeProperties(
-			taskSettingsUnicodeProperties);
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
@@ -107,7 +132,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getTaskClusterMode());
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		_dispatchTriggerHelper.deleteSchedulerJob(
 			dispatchTrigger.getDispatchTriggerId(),
@@ -145,7 +170,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getTaskClusterMode());
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		try {
 			return _dispatchTriggerHelper.getPreviousFireDate(
@@ -177,7 +202,7 @@ public class DispatchTriggerLocalServiceImpl
 	public List<DispatchTrigger> getDispatchTriggers(
 		boolean active, DispatchTaskClusterMode dispatchTaskClusterMode) {
 
-		return dispatchTriggerPersistence.findByA_TCM(
+		return dispatchTriggerPersistence.findByA_DTCM(
 			active, dispatchTaskClusterMode.getMode());
 	}
 
@@ -201,7 +226,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getTaskClusterMode());
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		try {
 			return _dispatchTriggerHelper.getNextFireDate(
@@ -223,7 +248,7 @@ public class DispatchTriggerLocalServiceImpl
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				dispatchTrigger.getTaskClusterMode());
+				dispatchTrigger.getDispatchTaskClusterMode());
 
 		return _dispatchTriggerHelper.getPreviousFireDate(
 			dispatchTriggerId, dispatchTaskClusterMode.getStorageType());
@@ -245,11 +270,11 @@ public class DispatchTriggerLocalServiceImpl
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, boolean active, String cronExpression,
-			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
-			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute,
-			DispatchTaskClusterMode dispatchTaskClusterMode)
+			DispatchTaskClusterMode dispatchTaskClusterMode, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
+			int startDateDay, int startDateYear, int startDateHour,
+			int startDateMinute)
 		throws PortalException {
 
 		DispatchTrigger dispatchTrigger =
@@ -275,7 +300,8 @@ public class DispatchTriggerLocalServiceImpl
 				startDateMonth, startDateDay, startDateYear, startDateHour,
 				startDateMinute, DispatchTriggerStartDateException.class));
 
-		dispatchTrigger.setTaskClusterMode(dispatchTaskClusterMode.getMode());
+		dispatchTrigger.setDispatchTaskClusterMode(
+			dispatchTaskClusterMode.getMode());
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
@@ -292,10 +318,74 @@ public class DispatchTriggerLocalServiceImpl
 		return dispatchTrigger;
 	}
 
+	/**
+	 * @param      dispatchTriggerId
+	 * @param      active
+	 * @param      cronExpression
+	 * @param      endDateMonth
+	 * @param      endDateDay
+	 * @param      endDateYear
+	 * @param      endDateHour
+	 * @param      endDateMinute
+	 * @param      neverEnd
+	 * @param      overlapAllowed
+	 * @param      startDateMonth
+	 * @param      startDateDay
+	 * @param      startDateYear
+	 * @param      startDateHour
+	 * @param      startDateMinute
+	 * @param      dispatchTaskClusterMode
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #updateDispatchTrigger(long, boolean, String,
+	 *             DispatchTaskClusterMode, int, int, int, int, int, boolean,
+	 *             boolean, int, int, int, int, int)}
+	 */
+	@Deprecated
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
+			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
+			int startDateMonth, int startDateDay, int startDateYear,
+			int startDateHour, int startDateMinute,
+			DispatchTaskClusterMode dispatchTaskClusterMode)
+		throws PortalException {
+
+		return updateDispatchTrigger(
+			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd, overlapAllowed, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute);
+	}
+
+	/**
+	 * @param      dispatchTriggerId
+	 * @param      name
+	 * @param      dispatchTaskSettingsUnicodeProperties
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #updateDispatchTrigger(long, UnicodeProperties, String)}
+	 */
+	@Deprecated
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId, String name,
-			UnicodeProperties taskSettingsUnicodeProperties)
+			UnicodeProperties dispatchTaskSettingsUnicodeProperties)
+		throws PortalException {
+
+		return updateDispatchTrigger(
+			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
+	}
+
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId,
+			UnicodeProperties taskSettingsUnicodeProperties, String name)
 		throws PortalException {
 
 		DispatchTrigger dispatchTrigger =
@@ -304,7 +394,7 @@ public class DispatchTriggerLocalServiceImpl
 		validate(dispatchTriggerId, dispatchTrigger.getCompanyId(), name);
 
 		dispatchTrigger.setName(name);
-		dispatchTrigger.setTaskSettingsUnicodeProperties(
+		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
 			taskSettingsUnicodeProperties);
 
 		return dispatchTriggerPersistence.update(dispatchTrigger);

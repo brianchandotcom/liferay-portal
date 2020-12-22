@@ -72,8 +72,8 @@ public class ReadOnlyTransactionThreadLocal {
 
 					if (!transactionAttribute.isReadOnly()) {
 						throw new IllegalStateException(
-							"Denied non-readonly nested transaction " +
-								"under strict-readonly transaction");
+							"Denied non-readonly nested transaction under " +
+								"strict-readonly transaction");
 					}
 
 					strictReadOnlyDeque.push(Boolean.TRUE);
@@ -101,7 +101,8 @@ public class ReadOnlyTransactionThreadLocal {
 
 				strictReadOnlyDeque.pop();
 
-				Deque<Boolean> readOnlyDeque = _readOnlyTransactionThreadLocal.get();
+				Deque<Boolean> readOnlyDeque =
+					_readOnlyTransactionThreadLocal.get();
 
 				readOnlyDeque.pop();
 			}
@@ -125,7 +126,6 @@ public class ReadOnlyTransactionThreadLocal {
 			ReadOnlyTransactionThreadLocal.class +
 				"._readOnlyTransactionThreadLocal",
 			ArrayDeque::new, false);
-
 	private static final ThreadLocal<Deque<Boolean>>
 		_strictReadOnlyTransactionThreadLocal = new CentralizedThreadLocal<>(
 			ReadOnlyTransactionThreadLocal.class +

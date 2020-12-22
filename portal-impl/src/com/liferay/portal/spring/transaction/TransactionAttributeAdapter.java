@@ -91,7 +91,7 @@ public class TransactionAttributeAdapter
 		return _transactionAttribute.rollbackOn(throwable);
 	}
 
-	private final TransactionAttribute _transactionAttribute;
 	private final boolean _strictReadOnly;
+	private final TransactionAttribute _transactionAttribute;
 
 }

@@ -35,6 +35,7 @@ if (Validator.isNull(title)) {
 		<c:if test="<%= Validator.isNotNull(iconCssClass) || Validator.isNotNull(label) %>">
 			<c:if test="<%= Validator.isNotNull(href) %>">
 				<a <%= Validator.isNotNull(ariaLabel) ? "aria-label=\"" + ariaLabel + "\"" : StringPool.BLANK %> class="<%= anchorCssClass %><%= !dropdown ? " nav-link " : "" %><%= selected ? " active " : StringPool.SPACE %>" <%= AUIUtil.buildData(anchorData) %> href="<%= HtmlUtil.escapeAttribute(href) %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" <%= Validator.isNotNull(target) ? "target=\"" + target + "\"" : StringPool.BLANK %> title="<liferay-ui:message key="<%= title %>" />">
+					<span class="c-inner" tabindex="-1">
 
 				<c:if test="<%= useDialog %>">
 					<aui:script>
@@ -51,7 +52,7 @@ if (Validator.isNull(title)) {
 						</c:when>
 					</c:choose>
 
-					<span class="nav-item-label">
+					<span class="navbar-text-truncate">
 						<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 					</span>
 
@@ -66,6 +67,7 @@ if (Validator.isNull(title)) {
 					<span class="opens-new-window-accessible"><liferay-ui:message key="opens-new-window" /></span>
 				</c:if>
 
+					</span>
 				</a>
 			</c:if>
 		</c:if>

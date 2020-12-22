@@ -251,14 +251,6 @@
 		}
 	}
 
-	.entry-card {
-		.aspect-ratio.aspect-ratio-bg-cover {
-			@include media-breakpoint-down(sm) {
-				padding-bottom: 50%;
-			}
-		}
-	}
-
 	.entry-title {
 		display: block;
 		position: relative;

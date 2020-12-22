@@ -153,9 +153,11 @@ public class SimpleSiteItemSelectorViewDisplayContext
 	}
 
 	public boolean isSiteAvailable(long siteGroupId) {
-		if (_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
-				siteGroupId) == null) {
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				siteGroupId);
 
+		if (commerceChannel == null) {
 			return true;
 		}
 

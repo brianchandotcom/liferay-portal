@@ -57,10 +57,12 @@ public class PriceModifierCategoryUtil {
 					priceModifierCategory.getCategoryExternalReferenceCode());
 
 			if (assetCategory == null) {
+				String categoryExternalReferenceCode =
+					priceModifierCategory.getCategoryExternalReferenceCode();
+
 				throw new NoSuchCategoryException(
 					"Unable to find Category with externalReferenceCode: " +
-						priceModifierCategory.
-							getCategoryExternalReferenceCode());
+						categoryExternalReferenceCode);
 			}
 		}
 

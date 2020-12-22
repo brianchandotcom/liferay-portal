@@ -42,10 +42,12 @@ public class AccountOrganizationUtil {
 					accountOrganization.getOrganizationExternalReferenceCode());
 
 			if (organization == null) {
+				String organizationExternalReferenceCode =
+					accountOrganization.getOrganizationExternalReferenceCode();
+
 				throw new NoSuchOrganizationException(
 					"Unable to find Organization with externalReferenceCode: " +
-						accountOrganization.
-							getOrganizationExternalReferenceCode());
+						organizationExternalReferenceCode);
 			}
 		}
 		else {

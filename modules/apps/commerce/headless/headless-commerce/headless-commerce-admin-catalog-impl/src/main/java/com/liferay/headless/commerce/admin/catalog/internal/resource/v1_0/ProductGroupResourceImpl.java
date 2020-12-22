@@ -223,10 +223,12 @@ public class ProductGroupResourceImpl
 				}
 
 				if (cProduct == null) {
+					String productExternalReferenceCode =
+						productGroupProduct.getProductExternalReferenceCode();
+
 					throw new NoSuchCProductException(
 						"Unable to find Product with externalReferenceCode: " +
-							productGroupProduct.
-								getProductExternalReferenceCode());
+							productExternalReferenceCode);
 				}
 
 				CommercePricingClassCPDefinitionRel

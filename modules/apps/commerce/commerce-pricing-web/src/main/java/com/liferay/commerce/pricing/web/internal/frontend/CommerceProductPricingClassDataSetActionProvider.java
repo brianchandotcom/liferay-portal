@@ -126,10 +126,12 @@ public class CommerceProductPricingClassDataSetActionProvider
 					fetchCommercePricingClassCPDefinitionRel(
 						pricingClassId, cpDefinitionId);
 
+		long commercePricingClassCPDefinitionRelId =
+			commercePricingClassCPDefinitionRel.
+				getCommercePricingClassCPDefinitionRelId();
+
 		return "/o/headless-commerce-admin-catalog/v1.0" +
-			"/product-group-products/" +
-				commercePricingClassCPDefinitionRel.
-					getCommercePricingClassCPDefinitionRelId();
+			"/product-group-products/" + commercePricingClassCPDefinitionRelId;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

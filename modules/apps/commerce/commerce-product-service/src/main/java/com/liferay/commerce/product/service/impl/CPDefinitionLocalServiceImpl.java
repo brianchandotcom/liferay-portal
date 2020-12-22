@@ -1224,9 +1224,11 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public boolean hasChildCPDefinitions(long cpDefinitionId) {
-		if (cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
-				cpDefinitionId) <= 0) {
+		int count =
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
+				cpDefinitionId);
 
+		if (count <= 0) {
 			return false;
 		}
 

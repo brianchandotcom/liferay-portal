@@ -555,10 +555,11 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			if (cpInstanceCPInstanceOptionValueHits.containsKey(
 					cpInstanceOptionValueRel.getCPInstanceId())) {
 
+				int value = cpInstanceCPInstanceOptionValueHits.get(
+					cpInstanceOptionValueRel.getCPInstanceId());
+
 				cpInstanceCPInstanceOptionValueHits.put(
-					cpInstanceOptionValueRel.getCPInstanceId(),
-					cpInstanceCPInstanceOptionValueHits.get(
-						cpInstanceOptionValueRel.getCPInstanceId()) + 1);
+					cpInstanceOptionValueRel.getCPInstanceId(), value + 1);
 
 				continue;
 			}

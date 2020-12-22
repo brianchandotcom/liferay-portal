@@ -333,9 +333,10 @@ public class AttachmentUtil {
 		long groupId, long userId, String curFileName) {
 
 		try {
-			if (TempFileEntryUtil.getTempFileEntry(
-					groupId, userId, _TEMP_FILE_NAME, curFileName) != null) {
+			FileEntry fileEntry = TempFileEntryUtil.getTempFileEntry(
+				groupId, userId, _TEMP_FILE_NAME, curFileName);
 
+			if (fileEntry != null) {
 				return true;
 			}
 

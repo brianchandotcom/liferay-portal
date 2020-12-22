@@ -40,9 +40,11 @@ public class CommerceChannelRelLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		if (commerceChannelRelPersistence.fetchByC_C_C(
-				classNameId, classPK, commerceChannelId) != null) {
+		CommerceChannelRel existingCommerceChannelRel =
+			commerceChannelRelPersistence.fetchByC_C_C(
+				classNameId, classPK, commerceChannelId);
 
+		if (existingCommerceChannelRel != null) {
 			throw new DuplicateCommerceChannelRelException();
 		}
 

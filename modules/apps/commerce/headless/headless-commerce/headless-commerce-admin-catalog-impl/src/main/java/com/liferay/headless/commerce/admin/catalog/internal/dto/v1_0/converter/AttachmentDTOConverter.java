@@ -74,10 +74,12 @@ public class AttachmentDTOConverter
 				id = cpAttachmentFileEntry.getCPAttachmentFileEntryId();
 				options = _getAttachmentOptions(cpAttachmentFileEntry);
 				priority = cpAttachmentFileEntry.getPriority();
-				src =
-					portalURL +
-						_commerceMediaResolver.getDownloadUrl(
-							cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+
+				String downloadUrl = _commerceMediaResolver.getDownloadUrl(
+					cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+
+				src = portalURL + downloadUrl;
+
 				title = LanguageUtils.getLanguageIdMap(
 					cpAttachmentFileEntry.getTitleMap());
 				type = cpAttachmentFileEntry.getType();

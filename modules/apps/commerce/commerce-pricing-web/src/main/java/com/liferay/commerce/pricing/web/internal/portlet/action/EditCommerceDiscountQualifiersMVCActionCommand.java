@@ -99,10 +99,12 @@ public class EditCommerceDiscountQualifiersMVCActionCommand
 			long commerceDiscountId)
 		throws Exception {
 
-		if (_commerceDiscountCommerceAccountGroupRelService.
+		int count =
+			_commerceDiscountCommerceAccountGroupRelService.
 				getCommerceDiscountCommerceAccountGroupRelsCount(
-					commerceDiscountId) == 0) {
+					commerceDiscountId);
 
+		if (count == 0) {
 			return;
 		}
 
@@ -114,9 +116,11 @@ public class EditCommerceDiscountQualifiersMVCActionCommand
 	private void _deleteCommerceDiscountAccountRels(long commerceDiscountId)
 		throws Exception {
 
-		if (_commerceDiscountAccountRelService.
-				getCommerceDiscountAccountRelsCount(commerceDiscountId) == 0) {
+		int count =
+			_commerceDiscountAccountRelService.
+				getCommerceDiscountAccountRelsCount(commerceDiscountId);
 
+		if (count == 0) {
 			return;
 		}
 

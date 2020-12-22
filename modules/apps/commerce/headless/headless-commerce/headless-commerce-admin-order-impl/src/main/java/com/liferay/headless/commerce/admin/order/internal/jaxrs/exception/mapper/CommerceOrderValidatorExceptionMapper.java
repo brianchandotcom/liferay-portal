@@ -94,9 +94,10 @@ public class CommerceOrderValidatorExceptionMapper
 		for (CommerceOrderValidatorResult commerceOrderValidatorResult :
 				commerceOrderValidatorResults) {
 
-			if (commerceOrderValidatorResults.indexOf(
-					commerceOrderValidatorResult) > 0) {
+			int index = commerceOrderValidatorResults.indexOf(
+				commerceOrderValidatorResult);
 
+			if (index > 0) {
 				sb.append(StringPool.COMMA);
 			}
 

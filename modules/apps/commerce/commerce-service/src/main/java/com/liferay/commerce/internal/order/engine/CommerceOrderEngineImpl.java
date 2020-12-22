@@ -598,10 +598,11 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			}
 		}
 
-		if ((commerceShippingMethod == null) &&
-			(_commerceShippingMethodLocalService.
-				getCommerceShippingMethodsCount(
-					commerceOrder.getGroupId(), true) > 0) &&
+		int count =
+			_commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
+				commerceOrder.getGroupId(), true);
+
+		if ((commerceShippingMethod == null) && (count > 0) &&
 			_commerceShippingHelper.isShippable(commerceOrder) &&
 			!_commerceShippingHelper.isFreeShipping(commerceOrder)) {
 

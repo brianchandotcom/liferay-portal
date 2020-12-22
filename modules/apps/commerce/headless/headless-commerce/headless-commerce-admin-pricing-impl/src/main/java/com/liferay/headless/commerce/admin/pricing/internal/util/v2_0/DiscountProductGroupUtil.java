@@ -59,10 +59,12 @@ public class DiscountProductGroupUtil {
 						getProductGroupExternalReferenceCode());
 
 			if (commercePricingClass == null) {
+				String productGroupExternalReferenceCode =
+					discountProductGroup.getProductGroupExternalReferenceCode();
+
 				throw new NoSuchPricingClassException(
 					"Unable to find ProductGroup with externalReferenceCode: " +
-						discountProductGroup.
-							getProductGroupExternalReferenceCode());
+						productGroupExternalReferenceCode);
 			}
 		}
 

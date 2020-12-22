@@ -60,11 +60,14 @@ public class PriceModifierProductGroupUtil {
 						getProductGroupExternalReferenceCode());
 
 			if (commercePricingClass == null) {
+				String productGroupExternalReferenceCode =
+					priceModifierProductGroup.
+						getProductGroupExternalReferenceCode();
+
 				throw new NoSuchPricingClassException(
 					"Unable to find Product Group with " +
 						"externalReferenceCode: " +
-							priceModifierProductGroup.
-								getProductGroupExternalReferenceCode());
+							productGroupExternalReferenceCode);
 			}
 		}
 

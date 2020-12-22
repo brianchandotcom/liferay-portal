@@ -101,10 +101,12 @@ public class EditCommercePriceListQualifiersMVCActionCommand
 			long commercePriceListId)
 		throws Exception {
 
-		if (_commercePriceListCommerceAccountGroupRelService.
+		int count =
+			_commercePriceListCommerceAccountGroupRelService.
 				getCommercePriceListCommerceAccountGroupRelsCount(
-					commercePriceListId) == 0) {
+					commercePriceListId);
 
+		if (count == 0) {
 			return;
 		}
 
@@ -116,10 +118,11 @@ public class EditCommercePriceListQualifiersMVCActionCommand
 	private void _deleteCommercePriceListAccountRels(long commercePriceListId)
 		throws Exception {
 
-		if (_commercePriceListAccountRelService.
-				getCommercePriceListAccountRelsCount(commercePriceListId) ==
-					0) {
+		int count =
+			_commercePriceListAccountRelService.
+				getCommercePriceListAccountRelsCount(commercePriceListId);
 
+		if (count == 0) {
 			return;
 		}
 

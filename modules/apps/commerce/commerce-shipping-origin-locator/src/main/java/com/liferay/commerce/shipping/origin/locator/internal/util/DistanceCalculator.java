@@ -30,11 +30,12 @@ public class DistanceCalculator {
 		latitude2 = Math.toRadians(latitude2);
 
 		double a =
-			Math.pow(Math.sin(latitudeDifference / 2), 2) +
-				(Math.pow(Math.sin(longitudeDifference / 2), 2) *
-					Math.cos(latitude1) * Math.cos(latitude2));
+			Math.pow(Math.sin(longitudeDifference / 2), 2) *
+				Math.cos(latitude1) * Math.cos(latitude2);
 
-		double c = 2 * Math.asin(Math.sqrt(a));
+		double b = Math.pow(Math.sin(latitudeDifference / 2), 2) + a;
+
+		double c = 2 * Math.asin(Math.sqrt(b));
 
 		return _EARTH_RADIUS * c;
 	}

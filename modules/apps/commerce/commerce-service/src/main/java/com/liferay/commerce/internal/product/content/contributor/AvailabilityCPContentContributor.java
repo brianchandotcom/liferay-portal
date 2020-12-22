@@ -90,12 +90,13 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 
 		boolean available = false;
 
-		if (_commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), commerceChannel.getGroupId(),
-				cpInstance.getSku()) >
-					cpDefinitionInventoryEngine.getMinStockQuantity(
-						cpInstance)) {
+		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+			cpInstance.getCompanyId(), commerceChannel.getGroupId(),
+			cpInstance.getSku());
+		int minStockQuantity = cpDefinitionInventoryEngine.getMinStockQuantity(
+			cpInstance);
 
+		if (stockQuantity > minStockQuantity) {
 			available = true;
 		}
 

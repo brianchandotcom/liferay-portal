@@ -330,9 +330,11 @@ public class CommerceOrderLocalServiceImpl
 
 		boolean hasDiscounts = false;
 
-		if (_commerceDiscountLocalService.getActiveCommerceDiscountsCount(
-				commerceOrder.getCompanyId(), couponCode, true) == 0) {
+		int count =
+			_commerceDiscountLocalService.getActiveCommerceDiscountsCount(
+				commerceOrder.getCompanyId(), couponCode, true);
 
+		if (count == 0) {
 			hasDiscounts = true;
 		}
 
@@ -2002,9 +2004,11 @@ public class CommerceOrderLocalServiceImpl
 			}
 		}
 
-		if ((commerceShippingMethod == null) &&
-			(commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
-				commerceOrder.getGroupId(), true) > 0) &&
+		int count =
+			commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
+				commerceOrder.getGroupId(), true);
+
+		if ((commerceShippingMethod == null) && (count > 0) &&
 			_commerceShippingHelper.isShippable(commerceOrder)) {
 
 			throw new CommerceOrderShippingMethodException();

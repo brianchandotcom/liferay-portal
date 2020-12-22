@@ -284,10 +284,14 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
 					cpInstanceOptionValueRels) {
 
-				if (cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId() ==
-							cpInstanceOptionValueRel.
-								getCPDefinitionOptionValueRelId()) {
+				long cpDefinitionOptionValueRelId1 =
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId();
+				long cpDefinitionOptionValueRelId2 =
+					cpInstanceOptionValueRel.getCPDefinitionOptionValueRelId();
+
+				if (cpDefinitionOptionValueRelId1 ==
+						cpDefinitionOptionValueRelId2) {
 
 					filteredCPDefinitionOptionValueRels.add(
 						cpDefinitionOptionValueRel);
@@ -418,9 +422,10 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	public boolean hasPreselectedCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId) {
 
-		if (cpDefinitionOptionValueRelPersistence.countByCDORI_P(
-				cpDefinitionOptionRelId, true) == 0) {
+		int count = cpDefinitionOptionValueRelPersistence.countByCDORI_P(
+			cpDefinitionOptionRelId, true);
 
+		if (count == 0) {
 			return false;
 		}
 

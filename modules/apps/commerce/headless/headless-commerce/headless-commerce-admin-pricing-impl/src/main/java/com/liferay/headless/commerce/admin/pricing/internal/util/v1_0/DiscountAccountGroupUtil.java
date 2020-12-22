@@ -57,10 +57,12 @@ public class DiscountAccountGroupUtil {
 						getAccountGroupExternalReferenceCode());
 
 			if (commerceAccountGroup == null) {
+				String accountGroupExternalReferenceCode =
+					discountAccountGroup.getAccountGroupExternalReferenceCode();
+
 				throw new NoSuchAccountGroupException(
 					"Unable to find AccountGroup with externalReferenceCode: " +
-						discountAccountGroup.
-							getAccountGroupExternalReferenceCode());
+						accountGroupExternalReferenceCode);
 			}
 		}
 

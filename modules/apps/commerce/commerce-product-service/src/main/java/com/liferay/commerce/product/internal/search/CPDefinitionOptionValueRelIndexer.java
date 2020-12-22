@@ -212,10 +212,13 @@ public class CPDefinitionOptionValueRelIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
+						long cpDefinitionOptionValueRelId =
+							cpDefinitionOptionValueRel.
+								getCPDefinitionOptionValueRelId();
+
 						_log.warn(
 							"Unable to index definition option rel " +
-								cpDefinitionOptionValueRel.
-									getCPDefinitionOptionValueRelId(),
+								cpDefinitionOptionValueRelId,
 							portalException);
 					}
 				}

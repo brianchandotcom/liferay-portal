@@ -124,9 +124,10 @@ public class ExpandoColumnModelListener
 			cpDefinitionOptionValueRelExpandoTable.getTableId(),
 			cpOptionValueExpandoColumn.getName());
 
-		if (_expandoColumnLocalService.getColumnsCount(
-				cpDefinitionOptionValueRelExpandoTable.getTableId()) == 0) {
+		int count = _expandoColumnLocalService.getColumnsCount(
+			cpDefinitionOptionValueRelExpandoTable.getTableId());
 
+		if (count == 0) {
 			_expandoTableLocalService.deleteTable(
 				cpDefinitionOptionValueRelExpandoTable.getTableId());
 		}

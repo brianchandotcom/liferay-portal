@@ -317,8 +317,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"No subscription type found for subscription entry " +
-						commerceSubscriptionEntry.
-							getCommerceSubscriptionEntryId());
+						commerceSubscriptionEntryId);
 			}
 
 			return commerceSubscriptionEntry;
@@ -385,8 +384,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"No subscription type found for subscription entry " +
-						commerceSubscriptionEntry.
-							getCommerceSubscriptionEntryId());
+						commerceSubscriptionEntryId);
 			}
 
 			return commerceSubscriptionEntry;

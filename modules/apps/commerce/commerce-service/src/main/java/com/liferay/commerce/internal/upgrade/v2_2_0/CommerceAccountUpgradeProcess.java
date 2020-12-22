@@ -97,11 +97,13 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 					"Organization data is missing, so accounts cannot be " +
 						"correctly created. Aborting data transformation.");
 
+				String organizationIdsString = ListUtil.toString(
+					organizationIds, StringPool.BLANK,
+					StringPool.COMMA_AND_SPACE);
+
 				_log.error(
 					"The following organizations are orphaned: " +
-						ListUtil.toString(
-							organizationIds, StringPool.BLANK,
-							StringPool.COMMA_AND_SPACE));
+						organizationIdsString);
 
 				return;
 			}

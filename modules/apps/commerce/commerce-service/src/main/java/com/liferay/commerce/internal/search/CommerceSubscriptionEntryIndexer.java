@@ -214,10 +214,13 @@ public class CommerceSubscriptionEntryIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
+						long commerceSubscriptionEntryId =
+							commerceSubscriptionEntry.
+								getCommerceSubscriptionEntryId();
+
 						_log.warn(
 							"Unable to index subscription entry " +
-								commerceSubscriptionEntry.
-									getCommerceSubscriptionEntryId(),
+								commerceSubscriptionEntryId,
 							portalException);
 					}
 				}

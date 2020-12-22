@@ -195,10 +195,13 @@ public class CommerceTierPriceEntryIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
+						long commerceTierPriceEntryId =
+							commerceTierPriceEntry.
+								getCommerceTierPriceEntryId();
+
 						_log.warn(
 							"Unable to index commerce tier price entry " +
-								commerceTierPriceEntry.
-									getCommerceTierPriceEntryId(),
+								commerceTierPriceEntryId,
 							portalException);
 					}
 				}

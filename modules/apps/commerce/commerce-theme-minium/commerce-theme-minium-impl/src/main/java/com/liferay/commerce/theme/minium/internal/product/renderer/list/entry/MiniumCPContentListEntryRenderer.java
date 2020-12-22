@@ -284,20 +284,24 @@ public class MiniumCPContentListEntryRenderer
 			boolean addedToWishlist = false;
 
 			if (cpSku != null) {
-				if (_commerceWishListItemService.
+				int count =
+					_commerceWishListItemService.
 						getCommerceWishListItemByContainsCPInstanceCount(
 							commerceWishList.getCommerceWishListId(),
-							cpSku.getCPInstanceUuid()) > 0) {
+							cpSku.getCPInstanceUuid());
 
+				if (count > 0) {
 					addedToWishlist = true;
 				}
 			}
 			else {
-				if (_commerceWishListItemService.
+				int count =
+					_commerceWishListItemService.
 						getCommerceWishListItemByContainsCProductCount(
 							commerceWishList.getCommerceWishListId(),
-							cpCatalogEntry.getCProductId()) > 0) {
+							cpCatalogEntry.getCProductId());
 
+				if (count > 0) {
 					addedToWishlist = true;
 				}
 			}

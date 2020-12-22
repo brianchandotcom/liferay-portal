@@ -84,10 +84,12 @@ public class OrderSubscriptionInfoTag extends IncludeTag {
 					_length *
 						commerceSubscriptionEntry.getMaxSubscriptionCycles();
 
+				long deliveryMaxSubscriptionCycles =
+					commerceSubscriptionEntry.
+						getDeliveryMaxSubscriptionCycles();
+
 				_deliveryDuration =
-					_deliveryLength *
-						commerceSubscriptionEntry.
-							getDeliveryMaxSubscriptionCycles();
+					_deliveryLength * deliveryMaxSubscriptionCycles;
 
 				subscriptionType =
 					commerceSubscriptionEntry.getSubscriptionType();

@@ -194,9 +194,11 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 
 	@Override
 	public boolean isEmpty() {
-		if (CommerceOrderItemLocalServiceUtil.getCommerceOrderItemsCount(
-				getCommerceOrderId()) > 0) {
+		int count =
+			CommerceOrderItemLocalServiceUtil.getCommerceOrderItemsCount(
+				getCommerceOrderId());
 
+		if (count > 0) {
 			return false;
 		}
 

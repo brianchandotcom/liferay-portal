@@ -62,10 +62,13 @@ public class PriceListAccountGroupUtil {
 						getAccountGroupExternalReferenceCode());
 
 			if (commerceAccountGroup == null) {
+				String accountGroupExternalReferenceCode =
+					priceListAccountGroup.
+						getAccountGroupExternalReferenceCode();
+
 				throw new NoSuchAccountGroupException(
 					"Unable to find AccountGroup with externalReferenceCode: " +
-						priceListAccountGroup.
-							getAccountGroupExternalReferenceCode());
+						accountGroupExternalReferenceCode);
 			}
 		}
 

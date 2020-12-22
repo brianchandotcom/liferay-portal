@@ -175,9 +175,11 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry.getClassName(),
 			cpAttachmentFileEntry.getClassPK());
 
-		if (cpAttachmentFileEntryPersistence.fetchByC_C_F(
-				classNameId, classPK, fileEntryId) != null) {
+		CPAttachmentFileEntry existingCPAttachmentFileEntry =
+			cpAttachmentFileEntryPersistence.fetchByC_C_F(
+				classNameId, classPK, fileEntryId);
 
+		if (existingCPAttachmentFileEntry != null) {
 			throw new DuplicateCPAttachmentFileEntryException();
 		}
 

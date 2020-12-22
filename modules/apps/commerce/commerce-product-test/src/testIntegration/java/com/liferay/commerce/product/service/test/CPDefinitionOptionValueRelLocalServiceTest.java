@@ -545,10 +545,14 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels()) {
 
-			if (randomCPDefinitionOptionValueRel.
-					getCPDefinitionOptionValueRelId() ==
-						cpDefinitionOptionValueRel.
-							getCPDefinitionOptionValueRelId()) {
+			long cpDefinitionOptionValueRelId1 =
+				randomCPDefinitionOptionValueRel.
+					getCPDefinitionOptionValueRelId();
+			long cpDefinitionOptionValueRelId2 =
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
+
+			if (cpDefinitionOptionValueRelId1 ==
+					cpDefinitionOptionValueRelId2) {
 
 				Assert.assertTrue(
 					"Option value preselected",

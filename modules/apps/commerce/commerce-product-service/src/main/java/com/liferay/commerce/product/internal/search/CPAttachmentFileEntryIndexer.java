@@ -303,11 +303,12 @@ public class CPAttachmentFileEntryIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
+						long cpAttachmentFileEntryId =
+							cpAttachmentFileEntry.getCPAttachmentFileEntryId();
+
 						_log.warn(
 							"Unable to index commerce product attachment" +
-								"file entry " +
-									cpAttachmentFileEntry.
-										getCPAttachmentFileEntryId(),
+								"file entry " + cpAttachmentFileEntryId,
 							portalException);
 					}
 				}

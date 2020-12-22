@@ -104,9 +104,11 @@ public class CPOptionsMVCResourceCommand extends BaseMVCResourceCommand {
 	private boolean _hasDDMFormFieldTypeProperties(
 		String ddmFormFieldTypeName) {
 
-		if (_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
-				ddmFormFieldTypeName) == null) {
+		Map<String, Object> properties =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+				ddmFormFieldTypeName);
 
+		if (properties == null) {
 			return false;
 		}
 

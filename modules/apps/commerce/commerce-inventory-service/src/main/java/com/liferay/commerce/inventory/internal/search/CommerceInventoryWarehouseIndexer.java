@@ -252,10 +252,13 @@ public class CommerceInventoryWarehouseIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
+						long commerceInventoryWarehouseId =
+							commerceInventoryWarehouse.
+								getCommerceInventoryWarehouseId();
+
 						_log.warn(
 							"Unable to index commerce inventory warehouse " +
-								commerceInventoryWarehouse.
-									getCommerceInventoryWarehouseId(),
+								commerceInventoryWarehouseId,
 							portalException);
 					}
 				}

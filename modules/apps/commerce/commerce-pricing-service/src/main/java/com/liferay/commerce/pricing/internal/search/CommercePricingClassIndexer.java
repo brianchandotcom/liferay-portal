@@ -151,10 +151,12 @@ public class CommercePricingClassIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
+						long commercePricingClassId =
+							commercePricingClass.getCommercePricingClassId();
+
 						_log.warn(
 							"Unable to index commerce pricing class " +
-								commercePricingClass.
-									getCommercePricingClassId(),
+								commercePricingClassId,
 							portalException);
 					}
 				}

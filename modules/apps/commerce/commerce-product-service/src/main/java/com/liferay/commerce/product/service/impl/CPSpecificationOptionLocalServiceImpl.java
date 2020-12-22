@@ -428,10 +428,13 @@ public class CPSpecificationOptionLocalServiceImpl
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
+						CPDefinition cpDefinition =
+							cpDefinitionSpecificationOptionValue.
+								getCPDefinition();
+
 						_log.warn(
 							"Unable to index commerce product definition " +
-								cpDefinitionSpecificationOptionValue.
-									getCPDefinition(),
+								cpDefinition,
 							portalException);
 					}
 				}

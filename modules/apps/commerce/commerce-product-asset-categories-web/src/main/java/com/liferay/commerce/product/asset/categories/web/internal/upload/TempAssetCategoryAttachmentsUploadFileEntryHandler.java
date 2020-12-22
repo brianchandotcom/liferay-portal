@@ -108,10 +108,11 @@ public class TempAssetCategoryAttachmentsUploadFileEntryHandler
 
 	private boolean _exists(ThemeDisplay themeDisplay, String curFileName) {
 		try {
-			if (TempFileEntryUtil.getTempFileEntry(
-					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					_TEMP_FOLDER_NAME, curFileName) != null) {
+			FileEntry fileEntry = TempFileEntryUtil.getTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				_TEMP_FOLDER_NAME, curFileName);
 
+			if (fileEntry != null) {
 				return true;
 			}
 

@@ -93,6 +93,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -1583,61 +1584,55 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	private void _initModelResourceNames(ResourceActions resourceActions) {
-		_structureModelResourceNames.put(
+		_structureModelResourceNames = HashMapBuilder.put(
 			"com.liferay.document.library.kernel.model.DLFileEntry",
 			resourceActions.getCompositeModelName(
 				"com.liferay.document.library.kernel.model.DLFileEntry",
-				_CLASS_NAME_DDM_STRUCTURE));
-
-		_structureModelResourceNames.put(
+				_CLASS_NAME_DDM_STRUCTURE)
+		).put(
 			"com.liferay.document.library.kernel.model.DLFileEntryMetadata",
 			resourceActions.getCompositeModelName(
 				"com.liferay.document.library.kernel.model.DLFileEntryMetadata",
-				_CLASS_NAME_DDM_STRUCTURE));
-
-		_structureModelResourceNames.put(
+				_CLASS_NAME_DDM_STRUCTURE)
+		).put(
 			"com.liferay.document.library.kernel.util.RawMetadataProcessor",
-			_CLASS_NAME_DDM_STRUCTURE);
-
-		_structureModelResourceNames.put(
+			_CLASS_NAME_DDM_STRUCTURE
+		).put(
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet",
 			resourceActions.getCompositeModelName(
 				"com.liferay.dynamic.data.lists.model.DDLRecordSet",
-				_CLASS_NAME_DDM_STRUCTURE));
-
-		_structureModelResourceNames.put(
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
-			resourceActions.getCompositeModelName(
-				"com.liferay.dynamic.data.lists.model.DDLRecordSet",
-				_CLASS_NAME_DDM_STRUCTURE));
-
-		_structureModelResourceNames.put(
+				_CLASS_NAME_DDM_STRUCTURE)
+		).put(
 			"com.liferay.journal.model.JournalArticle",
 			resourceActions.getCompositeModelName(
 				"com.liferay.journal.model.JournalArticle",
-				_CLASS_NAME_DDM_STRUCTURE));
+				_CLASS_NAME_DDM_STRUCTURE)
+		).put(
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
+			resourceActions.getCompositeModelName(
+				"com.liferay.dynamic.data.lists.model.DDLRecordSet",
+				_CLASS_NAME_DDM_STRUCTURE)
+		).build();
 
-		_templateModelResourceNames.put(
+		_templateModelResourceNames = HashMapBuilder.put(
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet",
 			resourceActions.getCompositeModelName(
 				"com.liferay.dynamic.data.lists.model.DDLRecordSet",
-				_CLASS_NAME_DDM_TEMPLATE));
-
-		_templateModelResourceNames.put(
+				_CLASS_NAME_DDM_TEMPLATE)
+		).put(
+			"com.liferay.journal.model.JournalArticle",
+			resourceActions.getCompositeModelName(
+				"com.liferay.journal.model.JournalArticle",
+				_CLASS_NAME_DDM_TEMPLATE)
+		).put(
 			"com.liferay.portlet.display.template.PortletDisplayTemplate",
-			_CLASS_NAME_DDM_TEMPLATE);
-
-		_templateModelResourceNames.put(
+			_CLASS_NAME_DDM_TEMPLATE
+		).put(
 			"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet",
 			resourceActions.getCompositeModelName(
 				"com.liferay.dynamic.data.lists.model.DDLRecordSet",
-				_CLASS_NAME_DDM_TEMPLATE));
-
-		_templateModelResourceNames.put(
-			"com.liferay.journal.model.JournalArticle",
-			resourceActions.getCompositeModelName(
-				"com.liferay.journal.model.JournalArticle",
-				_CLASS_NAME_DDM_TEMPLATE));
+				_CLASS_NAME_DDM_TEMPLATE)
+		).build();
 	}
 
 	private static final String _CLASS_NAME_DDM_STRUCTURE =
@@ -1693,10 +1688,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	private final Map<Long, Long> _structureClassNameIds = new HashMap<>();
 	private final Map<Long, Map<String, String>>
 		_structureInvalidDDMFormFieldNamesMap = new HashMap<>();
-	private final Map<String, String> _structureModelResourceNames =
-		new HashMap<>();
-	private final Map<String, String> _templateModelResourceNames =
-		new HashMap<>();
+	private Map<String, String> _structureModelResourceNames;
+	private Map<String, String> _templateModelResourceNames;
 	private final Map<Long, Long> _templateResourceClassNameIds =
 		new HashMap<>();
 	private final ViewCountEntryLocalService _viewCountEntryLocalService;

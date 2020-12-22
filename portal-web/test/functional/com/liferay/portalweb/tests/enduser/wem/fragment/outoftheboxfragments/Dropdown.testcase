@@ -28,6 +28,97 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120190. Can add fragments into drop zone of Dropdown fragment."
+	@priority = "5"
+	test AddFragmentIntoDropdownPanel {
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Dropdown fragment as header in custom master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Dropdown",
+				scope = "Master");
+		}
+
+		task ("Define the Keep Panel Open in Edit Mode as displayed behavior") {
+			PageEditor.editDropdown(
+				displayedBehavior = "Keep Panel Open in Edit Mode",
+				panel = "General");
+		}
+
+		task ("Add a Menu Display into dropdown panel") {
+			PageEditor.addElementToDropdownPanel(
+				collectionName = "Menu Display",
+				fragmentName = "Menu Display",
+				navTab = "Fragments");
+
+			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a page based on custom master page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Content Page");
+		}
+
+		task ("Assert the dropdown panel is collapsed") {
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "false");
+
+			AssertNotVisible(
+				key_element = "//div[contains(@class,'alert-info')][normalize-space(text())='There are no menu items to display.']",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
+		}
+
+		task ("Assert the Menu Display is shown in dropdown panel when click the toggle button") {
+			Click.javaScriptClick(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			AssertVisible(
+				key_element = "//div[contains(@class,'alert-info')][normalize-space(text())='There are no menu items to display.']",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the dropdown panel is collapsed in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page",
+				siteName = "Test Site Name");
+
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "false");
+
+			AssertNotVisible(
+				key_element = "//li[contains(@class,'nav-item')]//a[normalize-space()='Test Content Page']",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
+		}
+
+		task ("Assert the Menu Display is shown in dropdown panel when click the toggle button") {
+			Click(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			AssertVisible(
+				key_element = "//li[contains(@class,'nav-item')]//a[normalize-space()='Test Content Page']",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_MENU_CONTENT");
+		}
+	}
+
 	@description = "This is a test for LPS-120190. Can define the displayed behavior of dropdown panel in Dropdown fragment."
 	@priority = "5"
 	test DefineDisplayedBehaviorOfDropdownPanel {

@@ -14,9 +14,12 @@
 
 package com.liferay.app.builder.workflow.web.internal.servlet.taglib;
 
+import com.liferay.app.builder.constants.AppBuilderAppConstants;
+import com.liferay.app.builder.constants.AppBuilderWebKeys;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
 import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
+import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +32,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 
 import java.io.IOException;
+
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -57,9 +62,25 @@ public class AppBuilderEditEntryPostJSPDynamicInclude
 			return;
 		}
 
+		AppBuilderApp appBuilderApp =
+			(AppBuilderApp)httpServletRequest.getAttribute(
+				AppBuilderWebKeys.APP);
+
+		if ((appBuilderApp == null) ||
+			!Objects.equals(
+				appBuilderApp.getScope(),
+				AppBuilderAppConstants.SCOPE_WORKFLOW)) {
+
+			return;
+		}
+
 		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink =
 			_appBuilderAppDataRecordLinkLocalService.
 				fetchDDLRecordAppBuilderAppDataRecordLink(dataRecordId);
+
+		if (appBuilderAppDataRecordLink == null) {
+			return;
+		}
 
 		WorkflowInstanceLink workflowInstanceLink =
 			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
@@ -107,6 +128,9 @@ public class AppBuilderEditEntryPostJSPDynamicInclude
 	@Reference
 	private AppBuilderAppDataRecordLinkLocalService
 		_appBuilderAppDataRecordLinkLocalService;
+
+	@Reference
+	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	@Reference
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;

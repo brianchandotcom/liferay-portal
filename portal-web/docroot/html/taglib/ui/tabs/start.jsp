@@ -119,15 +119,15 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 			}
 			%>
 
-			<nav class="navbar navbar-default <%= cssClass %>">
+			<nav class="navbar <%= cssClass %>">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav">
 						<c:if test="<%= names.length > 1 %>">
-							<li class="active dropdown">
-								<a class="dropdown-toggle" data-toggle="liferay-dropdown" href="javascript:;">
-									<span id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(name)) %></span>
+							<li class="active dropdown nav-item">
+								<a class="dropdown-toggle nav-link" data-toggle="liferay-dropdown" href="javascript:;">
+									<span class="navbar-text-truncate" id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(name)) %></span>
 
-									<span class="caret"></span>
+									<aui:icon image="caret-bottom" markupView="lexicon" />
 								</a>
 
 								<ul class="dropdown-menu">

@@ -44,6 +44,7 @@ const KeyValue = ({className, disabled, onChange, value, ...otherProps}) => (
 );
 
 const Main = ({
+	editingLanguageId,
 	generateKeyword,
 	keyword: initialKeyword,
 	keywordReadOnly,
@@ -82,6 +83,7 @@ const Main = ({
 			visible={visible}
 		>
 			<Text
+				editingLanguageId={editingLanguageId}
 				name={`keyValueLabel${name}`}
 				onBlur={onBlur}
 				onChange={(event) => {

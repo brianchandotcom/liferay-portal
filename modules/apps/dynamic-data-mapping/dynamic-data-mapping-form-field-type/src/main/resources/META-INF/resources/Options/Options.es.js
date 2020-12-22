@@ -522,6 +522,7 @@ const Main = ({
 							displayErrors={
 								fieldError && fieldError === option.value
 							}
+							editingLanguageId={editingLanguageId}
 							errorMessage={Liferay.Language.get(
 								'this-reference-is-already-being-used'
 							)}

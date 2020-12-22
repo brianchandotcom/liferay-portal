@@ -20,7 +20,7 @@
 
 <%
 if (searchResultCssClass == null) {
-	searchResultCssClass = "display-style-icon list-unstyled row";
+	searchResultCssClass = "card-page card-page-equal-height";
 }
 
 request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER, rowChecker);
@@ -43,7 +43,7 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 %>
 
 	<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-		<div class="c-m-0 c-px-0 card-section-header">
+		<div class="card-section-header">
 			<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
 		</div>
 	</c:if>
@@ -89,13 +89,18 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
 
 			Map<String, Object> data = row.getData();
+			String rowCssClass = row.getCssClass();
 
 			if (data == null) {
 				data = new HashMap<String, Object>();
 			}
+
+			if (Validator.isNull(rowCssClass)) {
+				rowCssClass = "card-page-item card-page-item-asset";
+			}
 		%>
 
-			<li class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
+			<li class="<%= GetterUtil.getString(row.getClassName()) %> <%= rowCssClass %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
 
 				<%
 				for (int k = 0; k < entries.size(); k++) {

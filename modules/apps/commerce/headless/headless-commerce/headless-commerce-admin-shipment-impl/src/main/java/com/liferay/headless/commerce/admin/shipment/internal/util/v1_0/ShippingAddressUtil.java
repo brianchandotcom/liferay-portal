@@ -15,15 +15,15 @@
 package com.liferay.headless.commerce.admin.shipment.internal.util.v1_0;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,12 +32,11 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class ShippingAddressUtil {
 
-	public static CommerceShipment upsertShippingAddress(
+	public static CommerceShipment updateShippingAddress(
 			CommerceAddressService commerceAddressService,
-			CommerceCountryService commerceCountryService,
-			CommerceRegionService commerceRegionService,
 			CommerceShipmentService commerceShipmentService,
-			CommerceShipment commerceShipment, ShippingAddress shippingAddress,
+			CommerceShipment commerceShipment, CountryService countryService,
+			RegionService regionService, ShippingAddress shippingAddress,
 			ServiceContextHelper serviceContextHelper)
 		throws Exception {
 
@@ -45,10 +44,9 @@ public class ShippingAddressUtil {
 			commerceAddressService.fetchCommerceAddress(
 				commerceShipment.getCommerceAddressId());
 
-		CommerceCountry commerceCountry =
-			commerceCountryService.fetchCommerceCountry(
-				commerceShipment.getCompanyId(),
-				shippingAddress.getCountryISOCode());
+		Country country = countryService.fetchCountryByA2(
+			commerceShipment.getCompanyId(),
+			shippingAddress.getCountryISOCode());
 
 		return commerceShipmentService.updateAddress(
 			commerceShipment.getCommerceShipmentId(),
@@ -66,11 +64,9 @@ public class ShippingAddressUtil {
 			GetterUtil.get(
 				shippingAddress.getCity(), _getCity(commerceAddress)),
 			GetterUtil.get(shippingAddress.getZip(), _getZip(commerceAddress)),
-			_getCommerceRegionId(
-				commerceAddress, commerceCountry, commerceRegionService,
-				shippingAddress),
-			_getCommerceCountryId(
-				commerceAddress, commerceCountry, shippingAddress),
+			_getRegionId(
+				commerceAddress, country, regionService, shippingAddress),
+			_getCountryId(commerceAddress, country, shippingAddress),
 			GetterUtil.get(
 				shippingAddress.getPhoneNumber(),
 				_getPhoneNumber(commerceAddress)),
@@ -85,8 +81,8 @@ public class ShippingAddressUtil {
 		return commerceAddress.getCity();
 	}
 
-	private static long _getCommerceCountryId(
-		CommerceAddress commerceAddress, CommerceCountry commerceCountry,
+	private static long _getCountryId(
+		CommerceAddress commerceAddress, Country country,
 		ShippingAddress shippingAddress) {
 
 		if (Validator.isNull(shippingAddress.getCountryISOCode()) &&
@@ -95,37 +91,11 @@ public class ShippingAddressUtil {
 			return commerceAddress.getCommerceCountryId();
 		}
 
-		if (commerceCountry == null) {
+		if (country == null) {
 			return 0;
 		}
 
-		return commerceCountry.getCommerceCountryId();
-	}
-
-	private static long _getCommerceRegionId(
-			CommerceAddress commerceAddress, CommerceCountry commerceCountry,
-			CommerceRegionService commerceRegionService,
-			ShippingAddress shippingAddress)
-		throws Exception {
-
-		if (Validator.isNull(shippingAddress.getRegionISOCode()) &&
-			(commerceAddress != null)) {
-
-			return commerceAddress.getCommerceRegionId();
-		}
-
-		long commerceCountryId = _getCommerceCountryId(
-			commerceAddress, commerceCountry, shippingAddress);
-
-		CommerceRegion commerceRegion =
-			commerceRegionService.fetchCommerceRegion(
-				commerceCountryId, shippingAddress.getRegionISOCode());
-
-		if (commerceRegion == null) {
-			return 0;
-		}
-
-		return commerceRegion.getCommerceRegionId();
+		return country.getCountryId();
 	}
 
 	private static String _getDescription(CommerceAddress commerceAddress) {
@@ -150,6 +120,30 @@ public class ShippingAddressUtil {
 		}
 
 		return commerceAddress.getPhoneNumber();
+	}
+
+	private static long _getRegionId(
+			CommerceAddress commerceAddress, Country country,
+			RegionService regionService, ShippingAddress shippingAddress)
+		throws Exception {
+
+		if (Validator.isNull(shippingAddress.getRegionISOCode()) &&
+			(commerceAddress != null)) {
+
+			return commerceAddress.getCommerceRegionId();
+		}
+
+		long countryId = _getCountryId(
+			commerceAddress, country, shippingAddress);
+
+		Region region = regionService.fetchRegion(
+			countryId, shippingAddress.getRegionISOCode());
+
+		if (region == null) {
+			return 0;
+		}
+
+		return region.getRegionId();
 	}
 
 	private static String _getStreet1(CommerceAddress commerceAddress) {

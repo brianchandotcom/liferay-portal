@@ -17,8 +17,6 @@ package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
@@ -26,6 +24,8 @@ import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter.
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShippingAddressResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -78,10 +78,10 @@ public class ShippingAddressResourceImpl
 		CommerceShipment commerceShipment =
 			_commerceShipmentService.getCommerceShipment(shipmentId);
 
-		commerceShipment = ShippingAddressUtil.upsertShippingAddress(
-			_commerceAddressService, _commerceCountryService,
-			_commerceRegionService, _commerceShipmentService, commerceShipment,
-			shippingAddress, _serviceContextHelper);
+		commerceShipment = ShippingAddressUtil.updateShippingAddress(
+			_commerceAddressService, _commerceShipmentService, commerceShipment,
+			_countryService, _regionService, shippingAddress,
+			_serviceContextHelper);
 
 		return _shippingAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -93,13 +93,13 @@ public class ShippingAddressResourceImpl
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
-	private CommerceRegionService _commerceRegionService;
-
-	@Reference
 	private CommerceShipmentService _commerceShipmentService;
+
+	@Reference
+	private CountryService _countryService;
+
+	@Reference
+	private RegionService _regionService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

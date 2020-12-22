@@ -49,7 +49,7 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 	@Override
 	public String getCssClass() {
 		return "select-master-layout-option card-interactive " +
-			"card-interactive-primary";
+			"card-interactive-secondary";
 	}
 
 	@Override

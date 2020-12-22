@@ -38,8 +38,6 @@ describe('AddToCartButton', () => {
 	};
 
 	describe('by display settings', () => {
-		let Component;
-
 		beforeEach(() => {
 			jest.resetAllMocks();
 
@@ -48,8 +46,6 @@ describe('AddToCartButton', () => {
 
 		afterEach(() => {
 			cleanup();
-
-			Component = null;
 		});
 
 		it('renders by default a large Button element with a text label and an icon with the default class names', () => {
@@ -60,13 +56,11 @@ describe('AddToCartButton', () => {
 				'btn-primary',
 			];
 
-			Component = render(<AddToCartButton {...INITIAL_PROPS} />);
+			const {container} = render(<AddToCartButton {...INITIAL_PROPS} />);
 
-			const button = Component.container.querySelector('button');
-			const icon = Component.container.querySelector('.cart-icon svg');
-			const textLabel = Component.container.querySelector(
-				'.text-truncate'
-			);
+			const button = container.querySelector('button');
+			const icon = container.querySelector('.cart-icon svg');
+			const textLabel = container.querySelector('.text-truncate');
 
 			expect(button).toBeInTheDocument();
 			expect(icon).toBeInTheDocument();
@@ -95,15 +89,13 @@ describe('AddToCartButton', () => {
 				block: true,
 			};
 
-			Component = render(
+			const {container} = render(
 				<AddToCartButton {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const button = Component.container.querySelector('button');
-			const icon = Component.container.querySelector('.cart-icon svg');
-			const textLabel = Component.container.querySelector(
-				'.text-truncate'
-			);
+			const button = container.querySelector('button');
+			const icon = container.querySelector('.cart-icon svg');
+			const textLabel = container.querySelector('.text-truncate');
 
 			expect(button).toBeInTheDocument();
 			expect(icon).toBeInTheDocument();
@@ -130,15 +122,13 @@ describe('AddToCartButton', () => {
 				iconOnly: true,
 			};
 
-			Component = render(
+			const {container} = render(
 				<AddToCartButton {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const button = Component.container.querySelector('button');
-			const icon = Component.container.querySelector('.cart-icon svg');
-			const textLabel = Component.container.querySelector(
-				'.text-truncate'
-			);
+			const button = container.querySelector('button');
+			const icon = container.querySelector('.cart-icon svg');
+			const textLabel = container.querySelector('.text-truncate');
 
 			expect(button).toBeInTheDocument();
 			expect(icon).toBeInTheDocument();
@@ -155,13 +145,12 @@ describe('AddToCartButton', () => {
 		});
 
 		it('ignores block-styled button settings, if requested to render an icon-only-styled button', () => {
+			const BLOCK_CLASS_NAME = 'btn-block';
 			const DEFAULT_CLASS_NAMES = [
 				'btn',
 				'btn-add-to-cart',
 				'btn-primary',
 			];
-
-			const BLOCK_CLASS_NAME = 'btn-block';
 			const ICON_ONLY_CLASS_NAME = 'icon-only';
 			const LARGE_CLASS_NAME = 'btn-lg';
 
@@ -170,15 +159,13 @@ describe('AddToCartButton', () => {
 				iconOnly: true,
 			};
 
-			Component = render(
+			const {container} = render(
 				<AddToCartButton {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const button = Component.container.querySelector('button');
-			const icon = Component.container.querySelector('.cart-icon svg');
-			const textLabel = Component.container.querySelector(
-				'.text-truncate'
-			);
+			const button = container.querySelector('button');
+			const icon = container.querySelector('.cart-icon svg');
+			const textLabel = container.querySelector('.text-truncate');
 
 			expect(button).toBeInTheDocument();
 			expect(icon).toBeInTheDocument();
@@ -203,9 +190,9 @@ describe('AddToCartButton', () => {
 				},
 			};
 
-			Component = render(<AddToCartButton {...props} />);
+			const {getByRole} = render(<AddToCartButton {...props} />);
 
-			const element = Component.getByRole('button');
+			const element = getByRole('button');
 
 			expect(element).toBeInTheDocument();
 			expect(element).toBeDisabled();
@@ -213,16 +200,12 @@ describe('AddToCartButton', () => {
 	});
 
 	describe('by data flow', () => {
-		let Component;
-
 		beforeEach(() => {
 			jest.resetAllMocks();
 		});
 
 		afterEach(() => {
 			cleanup();
-
-			Component = null;
 		});
 
 		it("renders a Button element with the 'is-added' class name when an item is already present in an order", () => {
@@ -232,7 +215,6 @@ describe('AddToCartButton', () => {
 				'btn-add-to-cart',
 				'btn-primary',
 			];
-
 			const IS_ADDED_CLASS_NAME = 'is-added';
 
 			const cpInstance = {
@@ -240,11 +222,11 @@ describe('AddToCartButton', () => {
 				isInCart: true,
 			};
 
-			Component = render(
+			const {container} = render(
 				<AddToCartButton {...{...INITIAL_PROPS, cpInstance}} />
 			);
 
-			const button = Component.container.querySelector('button');
+			const button = container.querySelector('button');
 
 			expect(button).toBeInTheDocument();
 
@@ -261,11 +243,11 @@ describe('AddToCartButton', () => {
 				isInCart: true,
 			};
 
-			Component = render(
+			const {getByRole} = render(
 				<AddToCartButton {...{...INITIAL_PROPS, cpInstance}} />
 			);
 
-			const element = Component.getByRole('button');
+			const element = getByRole('button');
 
 			expect(element).toBeInTheDocument();
 			expect(element).toBeDisabled();
@@ -289,8 +271,6 @@ describe('AddToCartButton', () => {
 			skuId: INTERACTION_PROPS.cpInstance.skuId,
 		};
 
-		let Component;
-
 		beforeEach(() => {
 			jest.resetAllMocks();
 
@@ -306,19 +286,17 @@ describe('AddToCartButton', () => {
 
 		afterEach(() => {
 			cleanup();
-
-			Component = null;
 		});
 
 		it("on click, calls the API to add a cpInstance to the current open cart/order if the latter's ID is not '0'", async () => {
 			const orderId = 1234;
 
-			Component = render(
+			const {getByRole} = render(
 				<AddToCartButton {...{...INTERACTION_PROPS, orderId}} />
 			);
 
 			await act(async () => {
-				fireEvent.click(Component.getByRole('button'));
+				fireEvent.click(getByRole('button'));
 			});
 
 			await wait(() => {
@@ -333,10 +311,12 @@ describe('AddToCartButton', () => {
 		});
 
 		it("on click, if cart/order ID is '0', calls the API to create the order and add a cpInstance to it", async () => {
-			Component = render(<AddToCartButton {...{...INTERACTION_PROPS}} />);
+			const {getByRole} = render(
+				<AddToCartButton {...{...INTERACTION_PROPS}} />
+			);
 
 			await act(async () => {
-				fireEvent.click(Component.getByRole('button'));
+				fireEvent.click(getByRole('button'));
 			});
 
 			await wait(() => {
@@ -371,20 +351,20 @@ describe('AddToCartButton', () => {
 				},
 			};
 
-			Component = render(<AddToCartButton {...props} />);
+			const {getByRole} = render(<AddToCartButton {...props} />);
 
 			await act(async () => {
 				removeCBTrigger({skuId: INTERACTION_PROPS.cpInstance.skuId});
 			});
 
 			await wait(() => {
-				const element = Component.getByRole('button');
+				const element = getByRole('button');
 
 				expect(element.classList.contains('is-added')).toBe(false);
 			});
 		});
 
-		it(`on '${PRODUCT_REMOVED_FROM_CART}' event, if skuId does not coincide, it leaves the 'is-added' class from the button element`, async () => {
+		it(`on '${PRODUCT_REMOVED_FROM_CART}' event, if skuId does not coincide, it leaves the 'is-added' class in the button element`, async () => {
 			let removeCBTrigger;
 
 			window.Liferay.on = jest.fn((eventName, callback) => {
@@ -401,14 +381,14 @@ describe('AddToCartButton', () => {
 				},
 			};
 
-			Component = render(<AddToCartButton {...props} />);
+			const {getByRole} = render(<AddToCartButton {...props} />);
 
 			await act(async () => {
 				removeCBTrigger({skuId: 'fail'});
 			});
 
 			await wait(() => {
-				const element = Component.getByRole('button');
+				const element = getByRole('button');
 
 				expect(element.classList.contains('is-added')).toBe(true);
 			});
@@ -416,7 +396,7 @@ describe('AddToCartButton', () => {
 
 		it(
 			`on '${CP_INSTANCE_CHANGED}' event, calls the API and, if ` +
-				'present in the order, updates the local cpInstance and renders' +
+				'present in the order, updates the local cpInstance and renders ' +
 				"the button with the 'is-added' class name",
 			async () => {
 				ServiceProvider.DeliveryCartAPI(
@@ -440,14 +420,14 @@ describe('AddToCartButton', () => {
 
 				const outerCPInstanceId = 7777;
 
-				Component = render(<AddToCartButton {...props} />);
+				const {getByRole} = render(<AddToCartButton {...props} />);
 
 				await act(async () => {
 					resetCBTrigger({cpInstanceId: outerCPInstanceId});
 				});
 
 				await wait(() => {
-					const element = Component.getByRole('button');
+					const element = getByRole('button');
 
 					expect(
 						ServiceProvider.DeliveryCartAPI('v1').getItemById
@@ -459,7 +439,7 @@ describe('AddToCartButton', () => {
 
 		it(
 			`on '${CP_INSTANCE_CHANGED}' event, calls the API and, if not ` +
-				'present in the order, updates the local cpInstance and renders' +
+				'present in the order, updates the local cpInstance and renders ' +
 				"the button without the 'is-added' class name",
 			async () => {
 				ServiceProvider.DeliveryCartAPI(
@@ -483,14 +463,14 @@ describe('AddToCartButton', () => {
 
 				const outerCPInstanceId = 7777;
 
-				Component = render(<AddToCartButton {...props} />);
+				const {getByRole} = render(<AddToCartButton {...props} />);
 
 				await act(async () => {
 					resetCBTrigger({cpInstanceId: outerCPInstanceId});
 				});
 
 				await wait(() => {
-					const element = Component.getByRole('button');
+					const element = getByRole('button');
 
 					expect(
 						ServiceProvider.DeliveryCartAPI('v1').getItemById

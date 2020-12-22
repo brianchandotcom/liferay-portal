@@ -30,8 +30,6 @@ describe('AddToCart', () => {
 	};
 
 	describe('by display settings', () => {
-		let Component;
-
 		beforeEach(() => {
 			jest.resetAllMocks();
 
@@ -40,8 +38,6 @@ describe('AddToCart', () => {
 
 		afterEach(() => {
 			cleanup();
-
-			Component = null;
 		});
 
 		it('renders a Button with the appropriate settings wrapped with its quantity selector elements', () => {
@@ -56,17 +52,15 @@ describe('AddToCart', () => {
 				},
 			};
 
-			Component = render(<AddToCart {...props} />);
+			const {container} = render(<AddToCart {...props} />);
 
-			const WrapperWithQuantityContainer = Component.container.querySelector(
+			const WrapperWithQuantityContainer = container.querySelector(
 				'.add-to-cart'
 			);
-			const QuantitySelectorInputElement = Component.container.querySelector(
+			const QuantitySelectorInputElement = container.querySelector(
 				'input'
 			);
-			const AddToCartButtonElement = Component.container.querySelector(
-				'button'
-			);
+			const AddToCartButtonElement = container.querySelector('button');
 
 			expect(WrapperWithQuantityContainer).toBeInTheDocument();
 			expect(QuantitySelectorInputElement).toBeInTheDocument();
@@ -81,14 +75,12 @@ describe('AddToCart', () => {
 				},
 			};
 
-			Component = render(<AddToCart {...props} />);
+			const {container} = render(<AddToCart {...props} />);
 
-			const QuantitySelectorSelectElement = Component.container.querySelector(
+			const QuantitySelectorSelectElement = container.querySelector(
 				'input'
 			);
-			const AddToCartButtonElement = Component.container.querySelector(
-				'button'
-			);
+			const AddToCartButtonElement = container.querySelector('button');
 
 			expect(QuantitySelectorSelectElement).not.toBeInTheDocument();
 			expect(AddToCartButtonElement).toBeInTheDocument();

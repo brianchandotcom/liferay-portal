@@ -19,10 +19,10 @@ import AddToCartButton from './AddToCartButton';
 import WrapperWithQuantity from './WrapperWithQuantity';
 
 function AddToCart(props) {
-	return !props?.settings?.withQuantity ? (
-		<AddToCartButton {...props} />
-	) : (
+	return props?.settings?.withQuantity ? (
 		<WrapperWithQuantity AddToCartButton={AddToCartButton} {...props} />
+	) : (
+		<AddToCartButton {...props} />
 	);
 }
 

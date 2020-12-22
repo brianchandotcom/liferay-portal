@@ -42,6 +42,6 @@ for (let i = 1; i <= 15; i++) {
 				multipleQuantity: 1,
 			},
 		},
-		spritemap: './assets/icons.svg',
+		spritemap: './assets/clay/icons.svg',
 	});
 }

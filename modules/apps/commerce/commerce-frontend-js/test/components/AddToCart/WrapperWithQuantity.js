@@ -39,9 +39,53 @@ describe('WrapperWithQuantity', () => {
 		},
 	};
 
-	describe('by display settings', () => {
-		let Component;
+	describe('by interaction', () => {
+		beforeEach(() => {
+			jest.resetAllMocks();
+			jest.useFakeTimers();
+		});
 
+		afterEach(() => {
+			cleanup();
+		});
+
+		it('on quantity change via QuantitySelector component, renders the button with the correctly updated quantity', async () => {
+			const settings = {
+				withQuantity: {
+					forceDropdown: true,
+				},
+			};
+
+			const {container} = render(
+				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
+			);
+
+			const QuantitySelectorSelectElement = container.querySelector(
+				'select'
+			);
+			const AddToCartButtonElement = container.querySelector('button');
+
+			const updatedValue = 4;
+
+			await act(async () => {
+				fireEvent.change(QuantitySelectorSelectElement, {
+					target: {value: updatedValue},
+				});
+			});
+
+			act(() => {
+				jest.runAllTimers();
+			});
+
+			await wait(() => {
+				expect(
+					AddToCartButtonElement.getAttribute('data-test-quantity')
+				).toEqual('4');
+			});
+		});
+	});
+
+	describe('by display settings', () => {
 		beforeEach(() => {
 			jest.resetAllMocks();
 		});
@@ -57,17 +101,15 @@ describe('WrapperWithQuantity', () => {
 				'd-flex',
 			];
 
-			Component = render(<WrapperWithQuantity {...INITIAL_PROPS} />);
-
-			const DivContainerElement = Component.container.querySelector(
-				'div'
+			const {container} = render(
+				<WrapperWithQuantity {...INITIAL_PROPS} />
 			);
-			const QuantitySelectorSelectElement = Component.container.querySelector(
+
+			const DivContainerElement = container.querySelector('div');
+			const QuantitySelectorSelectElement = container.querySelector(
 				'select'
 			);
-			const AddToCartButtonElement = Component.container.querySelector(
-				'button'
-			);
+			const AddToCartButtonElement = container.querySelector('button');
 
 			expect(DivContainerElement).toBeInTheDocument();
 			expect(QuantitySelectorSelectElement).toBeInTheDocument();
@@ -96,19 +138,15 @@ describe('WrapperWithQuantity', () => {
 				},
 			};
 
-			Component = render(
+			const {container} = render(
 				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const DivContainerElement = Component.container.querySelector(
-				'div'
-			);
-			const QuantitySelectorSelectElement = Component.container.querySelector(
+			const DivContainerElement = container.querySelector('div');
+			const QuantitySelectorSelectElement = container.querySelector(
 				'select'
 			);
-			const AddToCartButtonElement = Component.container.querySelector(
-				'button'
-			);
+			const AddToCartButtonElement = container.querySelector('button');
 
 			expect(DivContainerElement).toBeInTheDocument();
 			expect(QuantitySelectorSelectElement).toBeInTheDocument();
@@ -135,11 +173,11 @@ describe('WrapperWithQuantity', () => {
 				},
 			};
 
-			Component = render(
+			const {container} = render(
 				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const QuantitySelectorSelectElement = Component.container.querySelector(
+			const QuantitySelectorSelectElement = container.querySelector(
 				'select'
 			);
 
@@ -156,11 +194,11 @@ describe('WrapperWithQuantity', () => {
 
 			const LARGE_CLASS_NAME = 'form-control-lg';
 
-			Component = render(
+			const {container} = render(
 				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const QuantitySelectorSelectElement = Component.container.querySelector(
+			const QuantitySelectorSelectElement = container.querySelector(
 				'select'
 			);
 
@@ -173,8 +211,6 @@ describe('WrapperWithQuantity', () => {
 	});
 
 	describe('by data flow', () => {
-		let Component;
-
 		beforeEach(() => {
 			jest.resetAllMocks();
 		});
@@ -190,60 +226,15 @@ describe('WrapperWithQuantity', () => {
 				},
 			};
 
-			Component = render(
+			const {container} = render(
 				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const QuantitySelectorSelectElement = Component.container.querySelector(
+			const QuantitySelectorSelectElement = container.querySelector(
 				'select'
 			);
 
 			expect(QuantitySelectorSelectElement).toBeDisabled();
-		});
-	});
-
-	describe('by interaction', () => {
-		let Component;
-
-		beforeEach(() => {
-			jest.resetAllMocks();
-		});
-
-		afterEach(() => {
-			cleanup();
-		});
-
-		it('on quantity change via QuantitySelector component, renders the button with the correctly updated quantity', async () => {
-			const settings = {
-				withQuantity: {
-					forceDropdown: true,
-				},
-			};
-
-			Component = render(
-				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
-			);
-
-			const QuantitySelectorSelectElement = Component.container.querySelector(
-				'select'
-			);
-			const AddToCartButtonElement = Component.container.querySelector(
-				'button'
-			);
-
-			const updatedValue = 4;
-
-			await act(async () => {
-				fireEvent.change(QuantitySelectorSelectElement, {
-					target: {value: updatedValue},
-				});
-			});
-
-			await wait(() => {
-				expect(
-					AddToCartButtonElement.getAttribute('data-test-quantity')
-				).toEqual('4');
-			});
 		});
 	});
 });

@@ -17,6 +17,7 @@ package com.liferay.document.library.service.impl;
 import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.document.library.service.base.DLStorageQuotaLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
@@ -31,6 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.document.library.model.DLStorageQuota",
 	service = AopService.class
 )
+@CTAware
 public class DLStorageQuotaLocalServiceImpl
 	extends DLStorageQuotaLocalServiceBaseImpl {
 

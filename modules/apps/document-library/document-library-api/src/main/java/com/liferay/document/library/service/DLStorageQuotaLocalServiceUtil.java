@@ -226,6 +226,13 @@ public class DLStorageQuotaLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static com.liferay.document.library.model.DLStorageQuota
+			getCompanyDLStorageQuota(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCompanyDLStorageQuota(companyId);
+	}
+
 	/**
 	 * Returns the dl storage quota with the primary key.
 	 *

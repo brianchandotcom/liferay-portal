@@ -83,7 +83,7 @@ public class DispatchTalendScreenNavigationCategory
 	public boolean isVisible(User user, DispatchTrigger dispatchTrigger) {
 		if ((dispatchTrigger == null) ||
 			!Objects.equals(
-				dispatchTrigger.getTaskExecutorType(),
+				dispatchTrigger.getDispatchTaskExecutorType(),
 				TalendDispatchTaskExecutor.TALEND) ||
 			!_omniadmin.isOmniadmin(user)) {
 

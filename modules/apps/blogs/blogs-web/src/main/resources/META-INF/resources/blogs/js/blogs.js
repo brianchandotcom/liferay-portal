@@ -33,7 +33,7 @@ const STRINGS = {
 	),
 };
 
-function nsObj(obj, namespace) {
+function addNamespace(obj, namespace) {
 	return Object.entries(obj).reduce((memo, [key, value]) => ({
 		...memo,
 		[`${namespace}${key}`]: value,
@@ -355,7 +355,7 @@ export default class Blogs {
 
 				const assetTagNames = this._getElementById('assetTagNames');
 
-				const bodyData = nsObj(
+				const bodyData = addNamespace(
 					{
 						allowPingbacks: allowPingbacks?.value,
 						allowTrackbacks: allowTrackbacks?.value,

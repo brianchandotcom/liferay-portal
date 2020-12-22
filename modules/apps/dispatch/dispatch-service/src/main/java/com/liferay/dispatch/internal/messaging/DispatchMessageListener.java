@@ -56,12 +56,9 @@ public class DispatchMessageListener extends BaseMessageListener {
 		if (!dispatchTrigger.isOverlapAllowed()) {
 			DispatchLog dispatchLog =
 				_dispatchLogLocalService.fetchLatestDispatchLog(
-					dispatchTriggerId);
+					dispatchTriggerId, DispatchTaskStatus.IN_PROGRESS);
 
-			if ((dispatchLog != null) &&
-				(DispatchTaskStatus.valueOf(dispatchLog.getStatus()) ==
-					DispatchTaskStatus.IN_PROGRESS)) {
-
+			if (dispatchLog != null) {
 				_dispatchLogLocalService.addDispatchLog(
 					dispatchTrigger.getUserId(),
 					dispatchTrigger.getDispatchTriggerId(), null, null, null,

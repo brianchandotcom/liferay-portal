@@ -182,7 +182,10 @@ const setDataDefinitionFields = (
 
 	visitor.mapFields((field) => {
 		const definitionField = dataLayoutBuilder.getDataDefinitionField(field);
-		const dataLayoutField = dataLayoutFields[definitionField.name] || {};
+		const dataLayoutField = dataLayoutFields[definitionField.name];
+
+		// If the field is required at the form view level,
+		// it cannot be required at the object level
 
 		if (dataLayoutField && dataLayoutField.required) {
 			definitionField.required = false;

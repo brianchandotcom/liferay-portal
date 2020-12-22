@@ -78,6 +78,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return batchName;
 	}
 
+	public Properties getJobProperties() {
+		return jobProperties;
+	}
+
 	public Integer getMaximumSlavesPerHost() {
 		String maximumSlavesPerHost = getFirstPropertyValue(
 			"test.batch.maximum.slaves.per.host");
@@ -396,6 +400,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return Integer.valueOf(segmentMaxChildren);
+	}
+
+	protected String getTestSuiteName() {
+		return testSuiteName;
 	}
 
 	protected boolean isIntegrationUnitTestFileModifiedOnly() {

@@ -414,6 +414,8 @@ definition {
 	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling Xuggler."
 	@priority = "4"
 	test EditInternalVideoInDepot {
+		property test.name.skip.portal.instance = "DepotLocalStagingDM#EditInternalVideoInDepot";
+
 		ServerAdministration.openServerAdmin();
 
 		ServerAdministration.configureExternalServices(installXuggler = "true");

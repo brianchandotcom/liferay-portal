@@ -52,6 +52,8 @@ definition {
 	@description = "This test ensures that an internal video can be selected via item selector when creating Blog with enabling Xuggler."
 	@priority = "5"
 	test AddBlogEntryWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DLVideo#AddBlogEntryWithEmbeddedVideo";
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
 		Blogs.addEntry(
@@ -77,6 +79,8 @@ definition {
 	@description = "This test ensures that an internal video can be selected via item selector when creating KB article with enabling Xuggler."
 	@priority = "5"
 	test AddKBArticleWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DLVideo#AddKBArticleWithEmbeddedVideo";
+
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
 
 		KBArticle.addCP(
@@ -100,6 +104,8 @@ definition {
 	@description = "This test ensures that an internal video can be selected via item selector when creating Web Content with enabling Xuggler."
 	@priority = "5"
 	test AddWCWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DLVideo#AddWCWithEmbeddedVideo";
+
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

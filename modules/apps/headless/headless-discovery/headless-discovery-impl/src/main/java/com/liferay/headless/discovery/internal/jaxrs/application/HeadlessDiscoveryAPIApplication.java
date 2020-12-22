@@ -43,6 +43,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
@@ -90,7 +92,7 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 		if ((accept != null) && accept.contains(MediaType.TEXT_HTML) &&
 			_headlessDiscoveryConfiguration.enableAPIExplorer()) {
 
-			URL url = _getURL();
+			URL url = _getURL("index.html");
 
 			if (url == null) {
 				return Response.serverError(
@@ -107,10 +109,19 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 				scanner.next(), "%CSRF-TOKEN%",
 				AuthTokenUtil.getToken(httpServletRequest));
 
+			html = StringUtil.replace(
+				html, "href=\"main.css\"", "href=\"/o/api/main.css\"");
+
+			html = StringUtil.replace(
+				html, "src=\"headless-discovery-web-min.js\"",
+				"src=\"/o/api/headless-discovery-web-min.js\"");
+
+			String finalHtml = html;
+
 			return Response.ok(
 				(StreamingOutput)streamingOutput -> {
 					InputStream htmlInputStream = new ByteArrayInputStream(
-						html.getBytes());
+						finalHtml.getBytes());
 
 					byte[] buffer = new byte[1024];
 					int read = 0;
@@ -152,6 +163,45 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 		return Response.ok(
 			resources
 		).build();
+	}
+
+	@GET
+	@Path("/{parameter}")
+	@Produces({"text/css", "text/javascript"})
+	public Response discoveryParameter(
+			@HeaderParam("Accept") String accept,
+			@Context HttpServletRequest httpServletRequest,
+			@Context HttpServletResponse httpServletResponse,
+			@PathParam("parameter") String parameter)
+		throws Exception {
+
+		URL url = _getURL(parameter);
+
+		if (url == null) {
+			return Response.serverError(
+			).build();
+		}
+
+		InputStream urlInputStream = url.openStream();
+
+		Response.ResponseBuilder responseBuilder = Response.ok(
+			(StreamingOutput)streamingOutput -> {
+				byte[] buffer = new byte[1024];
+				int read = 0;
+
+				while ((read = urlInputStream.read(buffer)) != -1) {
+					streamingOutput.write(buffer, 0, read);
+				}
+			});
+
+		if (parameter.contains("main.css")) {
+			responseBuilder.type("text/css");
+		}
+		else {
+			responseBuilder.type("text/javascript");
+		}
+
+		return responseBuilder.build();
 	}
 
 	public Set<Object> getSingletons() {
@@ -237,13 +287,13 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 		return resourcesMap;
 	}
 
-	private URL _getURL() {
+	private URL _getURL(String parameter) {
 		for (Bundle bundle : _bundleContext.getBundles()) {
 			if (StringUtil.equals(
 					bundle.getSymbolicName(),
 					"com.liferay.headless.discovery.web")) {
 
-				return bundle.getEntry("META-INF/resources/dist/index.html");
+				return bundle.getEntry("META-INF/resources/" + parameter);
 			}
 		}
 

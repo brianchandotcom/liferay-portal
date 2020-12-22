@@ -351,6 +351,10 @@ const Options = ({
 	const add = (fields, index, property, value) => {
 		fields[index][property] = value;
 
+		if (defaultLanguageId !== editingLanguageId) {
+			fields[index]['edited'] = true;
+		}
+
 		const initialOption = getInitialOption(
 			generateOptionValueUsingOptionLabel
 		);

@@ -1148,6 +1148,41 @@ definition {
 		}
 	}
 
+	macro editDropdown {
+		var key_fragmentName = "Dropdown";
+
+		if (IsNotVisible(locator1 = "Fragment#FRAGMENT_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		AssertVisible(
+			key_sidebarButton = "Selection",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		if ("${panel}" == "General") {
+			AssertClick(
+				key_navItem = "General",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "General");
+
+			if (isSet(displayedBehavior)) {
+				while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "${displayedBehavior}", locator1 = "Checkbox#ANY_CHECKBOX")) {
+					Click.clickAtNotVisible(
+						checkboxName = "${displayedBehavior}",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
+
+				Pause(locator1 = "3000");
+
+				AssertChecked.assertCheckedNotVisible(
+					checkboxName = "${displayedBehavior}",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro editExperience {
 		var key_experienceName = "${newExperience}";
 

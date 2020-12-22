@@ -112,8 +112,11 @@ public class SelectAssetVocabularyDisplayContext {
 
 	private List<AssetVocabulary> _getAssetVocabularies() {
 		return AssetVocabularyServiceUtil.getGroupVocabularies(
-			_themeDisplay.getScopeGroupId(),
-			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
+			new long[] {
+				_themeDisplay.getCompanyGroupId(),
+				_themeDisplay.getScopeGroupId()
+			},
+			new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 	}
 
 	private BreadcrumbEntry _getAssetVocabulariesBreadcrumbEntry() {

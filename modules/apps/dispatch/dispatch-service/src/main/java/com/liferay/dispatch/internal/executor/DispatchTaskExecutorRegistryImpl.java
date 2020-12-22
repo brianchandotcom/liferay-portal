@@ -39,13 +39,15 @@ public class DispatchTaskExecutorRegistryImpl
 	implements DispatchTaskExecutorRegistry {
 
 	@Override
-	public DispatchTaskExecutor getDispatchTaskExecutor(String type) {
-		return _dispatchTaskExecutors.get(type);
+	public DispatchTaskExecutor getDispatchTaskExecutor(
+		String dispatchTaskExecutorType) {
+
+		return _dispatchTaskExecutors.get(dispatchTaskExecutorType);
 	}
 
 	@Override
-	public String getDispatchTaskExecutorName(String type) {
-		return _dispatchTaskExecutorNames.get(type);
+	public String getDispatchTaskExecutorName(String dispatchTaskExecutorType) {
+		return _dispatchTaskExecutorNames.get(dispatchTaskExecutorType);
 	}
 
 	@Override
@@ -62,12 +64,11 @@ public class DispatchTaskExecutorRegistryImpl
 		DispatchTaskExecutor dispatchTaskExecutor,
 		Map<String, Object> properties) {
 
-		_validateDispatchTaskExecutorProperties(
-			dispatchTaskExecutor, properties, _dispatchTaskExecutorNames,
-			_dispatchTaskExecutors);
-
 		String dispatchTaskExecutorType = (String)properties.get(
 			_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
+
+		_validateDispatchTaskExecutorProperties(
+			dispatchTaskExecutor, dispatchTaskExecutorType);
 
 		_dispatchTaskExecutorNames.put(
 			dispatchTaskExecutorType,
@@ -89,26 +90,24 @@ public class DispatchTaskExecutorRegistryImpl
 
 	private void _validateDispatchTaskExecutorProperties(
 		DispatchTaskExecutor dispatchTaskExecutor,
-		Map<String, Object> properties, Map<String, String> typeToNameMap,
-		Map<String, DispatchTaskExecutor> typeToDispatchTaskExecutorMap) {
+		String dispatchTaskExecutorType) {
 
-		String type = (String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_TYPE);
-
-		if (typeToNameMap.containsKey(type)) {
-			DispatchTaskExecutor curDispatchTaskExecutor =
-				typeToDispatchTaskExecutorMap.get(type);
-
-			Class<?> clazz1 = curDispatchTaskExecutor.getClass();
-
-			Class<?> clazz2 = dispatchTaskExecutor.getClass();
-
-			_log.error(
-				StringBundler.concat(
-					_KEY_DISPATCH_TASK_EXECUTOR_TYPE, " property must have ",
-					"unique value. The same value is found in ",
-					clazz1.getName(), " and ", clazz2.getName(),
-					StringPool.PERIOD));
+		if (!_dispatchTaskExecutors.containsKey(dispatchTaskExecutorType)) {
+			return;
 		}
+
+		DispatchTaskExecutor curDispatchTaskExecutor =
+			_dispatchTaskExecutors.get(dispatchTaskExecutorType);
+
+		Class<?> clazz1 = curDispatchTaskExecutor.getClass();
+
+		Class<?> clazz2 = dispatchTaskExecutor.getClass();
+
+		_log.error(
+			StringBundler.concat(
+				_KEY_DISPATCH_TASK_EXECUTOR_TYPE, " property must have unique ",
+				"value. The same value is found in ", clazz1.getName(), " and ",
+				clazz2.getName(), StringPool.PERIOD));
 	}
 
 	private static final String _KEY_DISPATCH_TASK_EXECUTOR_NAME =

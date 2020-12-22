@@ -37,7 +37,7 @@ renderResponse.setTitle((accountEntryAddressId == 0) ? LanguageUtil.get(request,
 	action="<%= editAccountEntryAddressURL %>"
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryAddressId == 0) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 	<aui:input name="accountEntryAddressId" type="hidden" value="<%= accountEntryAddressId %>" />
 	<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryDisplay.getAccountEntryId() %>" />
 

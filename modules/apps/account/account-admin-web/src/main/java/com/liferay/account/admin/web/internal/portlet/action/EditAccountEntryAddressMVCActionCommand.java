@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -89,19 +88,14 @@ public class EditAccountEntryAddressMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		if (cmd.equals(Constants.ADD)) {
-			Address address = addAccountEntryAddress(actionRequest);
-
-			redirect = _http.setParameter(
-				redirect,
-				actionResponse.getNamespace() + "accountEntryAddressId",
-				address.getAddressId());
+			addAccountEntryAddress(actionRequest);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			updateAccountEntryAddress(actionRequest);
 		}
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			sendRedirect(actionRequest, actionResponse, redirect);
@@ -136,8 +130,5 @@ public class EditAccountEntryAddressMVCActionCommand
 
 	@Reference
 	private AddressLocalService _addressLocalService;
-
-	@Reference
-	private Http _http;
 
 }

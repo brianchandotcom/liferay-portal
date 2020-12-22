@@ -90,7 +90,7 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			numberField = "1234",
+			numericField = "1234",
 			textField = "Text");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -98,7 +98,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewDocumentTypePG(
-			numberValue = "1234",
+			numericValue = "1234",
 			textContent = "Text");
 	}
 

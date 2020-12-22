@@ -49,6 +49,7 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 /**
  * @author Adolfo Pérez
@@ -102,10 +103,7 @@ public class MenuItemProvider {
 				PortalUtil.getHttpServletRequest(portletRequest),
 				"file-upload"));
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, themeDisplay.getScopeGroup(),
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
@@ -151,10 +149,7 @@ public class MenuItemProvider {
 			LanguageUtil.get(
 				PortalUtil.getHttpServletRequest(portletRequest), "folder"));
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, themeDisplay.getScopeGroup(),
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_folder");
@@ -202,10 +197,7 @@ public class MenuItemProvider {
 				PortalUtil.getHttpServletRequest(portletRequest),
 				"multiple-files-upload"));
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, themeDisplay.getScopeGroup(),
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName",
@@ -252,10 +244,7 @@ public class MenuItemProvider {
 				PortalUtil.getHttpServletRequest(portletRequest),
 				"repository"));
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, themeDisplay.getScopeGroup(),
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_repository");
@@ -292,10 +281,7 @@ public class MenuItemProvider {
 			LanguageUtil.get(
 				PortalUtil.getHttpServletRequest(portletRequest), "shortcut"));
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, themeDisplay.getScopeGroup(),
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_shortcut");
@@ -355,10 +341,7 @@ public class MenuItemProvider {
 
 		urlMenuItem.setLabel(HtmlUtil.escape(label));
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, themeDisplay.getScopeGroup(),
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = _getPortletURL(themeDisplay, portletRequest);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
@@ -460,6 +443,23 @@ public class MenuItemProvider {
 		}
 
 		return menuItems;
+	}
+
+	private PortletURL _getPortletURL(
+		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			portletRequest, themeDisplay.getScopeGroup(),
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
+			PortletRequest.RENDER_PHASE);
+
+		try {
+			portletURL.setWindowState(portletRequest.getWindowState());
+		}
+		catch (WindowStateException windowStateException) {
+		}
+
+		return portletURL;
 	}
 
 	private long _getRepositoryId(Folder folder, ThemeDisplay themeDisplay) {

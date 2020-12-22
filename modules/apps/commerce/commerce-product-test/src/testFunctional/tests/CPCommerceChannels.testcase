@@ -53,8 +53,6 @@ definition {
 			channelType = "Site",
 			siteName = "Guest");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
 			portlet = "Channels");

@@ -51,6 +51,15 @@ public class CommerceRegionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceRegion fetchCommerceRegion(
+			long commerceCountryId, String code)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceRegionService.fetchCommerceRegion(
+			commerceCountryId, code);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceRegion getCommerceRegion(
 			long commerceRegionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

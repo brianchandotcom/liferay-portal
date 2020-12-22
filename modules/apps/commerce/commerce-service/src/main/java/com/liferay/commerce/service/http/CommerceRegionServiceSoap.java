@@ -100,6 +100,25 @@ public class CommerceRegionServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceRegionSoap
+			fetchCommerceRegion(long commerceCountryId, String code)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceRegion returnValue =
+				CommerceRegionServiceUtil.fetchCommerceRegion(
+					commerceCountryId, code);
+
+			return com.liferay.commerce.model.CommerceRegionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceRegionSoap
 			getCommerceRegion(long commerceRegionId)
 		throws RemoteException {
 

@@ -70,6 +70,11 @@ public interface CommerceRegionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceRegion fetchCommerceRegion(
+			long commerceCountryId, String code)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceRegion getCommerceRegion(long commerceRegionId)
 		throws PortalException;
 

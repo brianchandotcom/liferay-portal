@@ -53,6 +53,13 @@ public class CommerceRegionServiceUtil {
 		getService().deleteCommerceRegion(commerceRegionId);
 	}
 
+	public static com.liferay.commerce.model.CommerceRegion fetchCommerceRegion(
+			long commerceCountryId, String code)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCommerceRegion(commerceCountryId, code);
+	}
+
 	public static com.liferay.commerce.model.CommerceRegion getCommerceRegion(
 			long commerceRegionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

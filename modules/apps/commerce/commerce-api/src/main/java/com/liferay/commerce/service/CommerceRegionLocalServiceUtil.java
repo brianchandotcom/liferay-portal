@@ -237,6 +237,13 @@ public class CommerceRegionLocalServiceUtil {
 		return getService().fetchCommerceRegion(commerceRegionId);
 	}
 
+	public static com.liferay.commerce.model.CommerceRegion fetchCommerceRegion(
+			long commerceCountryId, String code)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCommerceRegion(commerceCountryId, code);
+	}
+
 	/**
 	 * Returns the commerce region with the matching UUID and company.
 	 *

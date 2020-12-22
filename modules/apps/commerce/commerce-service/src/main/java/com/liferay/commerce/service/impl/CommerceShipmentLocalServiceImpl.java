@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.exception.CommerceShipmentExpectedDateException;
@@ -354,12 +355,27 @@ public class CommerceShipmentLocalServiceImpl
 			String phoneNumber)
 		throws PortalException {
 
+		return commerceShipmentLocalService.updateAddress(
+			commerceShipmentId, name, description, street1, street2, street3,
+			city, zip, commerceRegionId, commerceCountryId, phoneNumber, null);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceShipment updateAddress(
+			long commerceShipmentId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, ServiceContext serviceContext)
+		throws PortalException {
+
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
 		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
 			commerceShipment, name, description, street1, street2, street3,
-			city, zip, commerceRegionId, commerceCountryId, phoneNumber);
+			city, zip, commerceRegionId, commerceCountryId, phoneNumber,
+			serviceContext);
 
 		commerceShipment.setCommerceAddressId(
 			commerceAddress.getCommerceAddressId());
@@ -654,6 +670,22 @@ public class CommerceShipmentLocalServiceImpl
 			String phoneNumber)
 		throws PortalException {
 
+		return updateCommerceShipmentAddress(
+			commerceShipment, name, description, street1, street2, street3,
+			city, zip, commerceRegionId, commerceCountryId, phoneNumber, null);
+	}
+
+	protected CommerceAddress updateCommerceShipmentAddress(
+			CommerceShipment commerceShipment, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (serviceContext == null) {
+			serviceContext = ServiceContextThreadLocal.getServiceContext();
+		}
+
 		CommerceAddress commerceAddress =
 			commerceShipment.fetchCommerceAddress();
 
@@ -677,8 +709,9 @@ public class CommerceShipmentLocalServiceImpl
 			commerceShipment.getModelClassName(),
 			commerceShipment.getCommerceShipmentId(), name, description,
 			street1, street2, street3, city, zip, commerceRegionId,
-			commerceCountryId, phoneNumber, false, false,
-			ServiceContextThreadLocal.getServiceContext());
+			commerceCountryId, phoneNumber,
+			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
+			serviceContext);
 	}
 
 	protected void validate(int status, int oldStatus) throws PortalException {

@@ -15,9 +15,9 @@
 package com.liferay.app.builder.web.internal.portlet;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
+import com.liferay.app.builder.constants.AppBuilderWebKeys;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
-import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.app.builder.web.internal.deploy.AppDeployUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;

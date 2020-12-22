@@ -191,6 +191,8 @@ definition {
 			accountsEntryName = "Test Account 2",
 			user = "Test Test");
 
+		Navigator.openURL();
+
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
 			panel = "Commerce",
@@ -209,11 +211,15 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
 
-		CommerceEntry.setEntryEligibility(accountsEligibility = "Test Account 1,Test Account 2");
+		CommerceEntry.setEntryEligibility(
+			accountsEligibility = "Test Account 1,Test Account 2",
+			unpublish = "true");
 
 		CommerceEntry.viewEntryEligibility(accountsEligibility = "Test Account 1,Test Account 2");
 
-		CommerceEntry.setEntryEligibility(accountGroupsEligibility = "Test Account Group 1,Test Account Group 2");
+		CommerceEntry.setEntryEligibility(
+			accountGroupsEligibility = "Test Account Group 1,Test Account Group 2",
+			unpublish = "true");
 
 		CommerceEntry.viewEntryEligibility(accountGroupsEligibility = "Test Account Group 1,Test Account Group 2");
 

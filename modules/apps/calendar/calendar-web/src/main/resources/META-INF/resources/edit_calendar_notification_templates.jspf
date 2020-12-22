@@ -38,7 +38,7 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 	title="<%= calendarName %>"
 />
 
-<aui:nav-bar cssClass="container-fluid container-fluid-max-xl" markupView="lexicon">
+<aui:nav-bar cssClass="navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%

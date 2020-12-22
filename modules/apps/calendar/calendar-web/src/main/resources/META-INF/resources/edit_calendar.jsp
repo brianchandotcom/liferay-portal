@@ -59,7 +59,7 @@ navigationURL.setParameter("calendarId", calendarId);
 navigationURL.setParameter("calendarResourceId", calendarResourceId);
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%

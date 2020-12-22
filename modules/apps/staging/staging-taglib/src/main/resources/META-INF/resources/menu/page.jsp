@@ -74,8 +74,8 @@ String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 			<%@ include file="/menu/staging_actions.jspf" %>
 		</c:when>
 		<c:otherwise>
-			<aui:nav-bar>
-				<aui:nav cssClass="navbar-nav">
+			<aui:nav-bar cssClass="navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+				<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
 					<aui:nav-item dropdown="<%= true %>" label="staging">
 						<aui:nav-item cssClass="<%= cssClass %>">
 							<%@ include file="/menu/staging_actions.jspf" %>

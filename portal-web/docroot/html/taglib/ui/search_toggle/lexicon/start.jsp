@@ -20,24 +20,20 @@
 boolean advancedSearch = displayTerms.isAdvancedSearch();
 %>
 
-<div class="basic-search input-group">
-	<div class="input-group-input">
-		<div class="basic-search-slider" id="<%= id %>simple">
-			<button class="basic-search-close btn btn-secondary" type="button">
-				<span class="icon-remove"></span>
-			</button>
-
-			<input class="form-control search-query" <%= advancedSearch ? "disabled" : StringPool.BLANK %> id="<%= id + DisplayTerms.KEYWORDS %>" name="<portlet:namespace /><%= DisplayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="search" />..." title="search" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
-		</div>
+<div class="input-group lfr-search-toggle">
+	<div class="input-group-item input-group-prepend" id="<%= id %>simple">
+		<input class="form-control search-query" <%= advancedSearch ? "disabled" : StringPool.BLANK %> id="<%= id + DisplayTerms.KEYWORDS %>" name="<portlet:namespace /><%= DisplayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="search" />..." title="search" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
 	</div>
 
-	<div class="input-group-btn">
-		<button class="btn btn-secondary" type="submit">
-			<span class="icon-search"></span>
+	<div class="input-group-append input-group-item input-group-item-shrink">
+		<button class="btn btn-monospaced btn-secondary" type="submit">
+			<aui:icon image="search" markupView="lexicon" />
 		</button>
+	</div>
 
-		<button class="btn btn-secondary toggle-advanced" id="<%= id %>toggleAdvanced" type="button">
-			<span class="caret"></span>
+	<div class="input-group-append input-group-item input-group-item-shrink">
+		<button class="btn btn-monospaced btn-secondary toggle-advanced" id="<%= id %>toggleAdvanced" type="button">
+			<aui:icon image="caret-bottom" markupView="lexicon" />
 		</button>
 	</div>
 </div>

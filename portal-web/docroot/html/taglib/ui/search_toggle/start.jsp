@@ -23,18 +23,20 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 <div class="taglib-search-toggle">
 	<div class="form-search">
 		<div class="advanced-search input-group" id="<%= id %>simple">
-			<input class="form-control search-query" <%= advancedSearch ? "disabled" : StringPool.BLANK %> id="<%= id + DisplayTerms.KEYWORDS %>" name="<portlet:namespace /><%= DisplayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" title="keywords" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
+			<div class="input-group-item input-group-prepend">
+				<input class="form-control search-query" <%= advancedSearch ? "disabled" : StringPool.BLANK %> id="<%= id + DisplayTerms.KEYWORDS %>" name="<portlet:namespace /><%= DisplayTerms.KEYWORDS %>" placeholder="<liferay-ui:message key="keywords" />" title="keywords" type="text" value="<%= HtmlUtil.escapeAttribute(displayTerms.getKeywords()) %>" />
+			</div>
 
-			<span class="input-group-btn">
+			<div class="input-group-append input-group-item input-group-item-shrink">
 				<button class="btn btn-secondary" type="submit">
 					<%= LanguageUtil.get(resourceBundle, buttonLabel, "search") %>
 				</button>
-			</span>
+			</div>
 		</div>
 
 		<a class="toggle-advanced" href="javascript:;" id="<%= id %>toggleAdvanced">
-			<i class="icon-search"></i>
-			<i class="caret"></i>
+			<aui:icon image="search" markupView="lexicon" />
+			<aui:icon image="caret-bottom" markupView="lexicon" />
 		</a>
 	</div>
 </div>

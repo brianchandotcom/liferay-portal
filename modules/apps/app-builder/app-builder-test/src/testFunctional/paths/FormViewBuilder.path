@@ -150,7 +150,7 @@
 
 <tr>
 	<td>FIELD_LABEL_REQUIRED</td>
-	<td>//label[contains(text(),'${fieldLabel}')]/span[@class='reference-mark']/*[contains(@class,'lexicon-icon-asterisk')] | //legend[contains(text(),'${fieldLabel}')]/span[@class='reference-mark']/*[contains(@class,'lexicon-icon-asterisk')]</td>
+	<td>//label[contains(text(),'${fieldLabel}')] | //legend[contains(text(),'${fieldLabel}')] | //label[contains(text(),'${fieldLabel}')]/span[@class='reference-mark']/*[contains(@class,'lexicon-icon-asterisk')] | //legend[contains(text(),'${fieldLabel}')]/span[@class='reference-mark']/*[contains(@class,'lexicon-icon-asterisk')]</td>
 	<td></td>
 </tr>
 

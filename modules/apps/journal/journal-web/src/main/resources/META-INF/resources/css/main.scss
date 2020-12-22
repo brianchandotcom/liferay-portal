@@ -8,6 +8,7 @@ $toolbarZIndex: 971;
 
 $controlMenuHeight: 56px;
 $sidebarHeaderHeight: 104px;
+$sidebarWidth: 398px;
 
 $portletLayoutMargin: 35px;
 
@@ -204,6 +205,14 @@ $productMenuWidth: 320px;
 						border-radius: 0;
 					}
 				}
+			}
+
+			.contextual-sidebar-mr {
+				margin-right: $sidebarWidth;
+			}
+
+			.contextual-sidebar-mr-n {
+				margin-right: -$sidebarWidth;
 			}
 
 			.sidebar-body {

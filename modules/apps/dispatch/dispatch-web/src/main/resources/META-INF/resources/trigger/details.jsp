@@ -28,8 +28,8 @@ String taskSettings = StringPool.BLANK;
 
 if (dispatchTrigger != null) {
 	dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
-	taskExecutorType = dispatchTrigger.getTaskExecutorType();
-	taskSettings = dispatchTrigger.getTaskSettings();
+	taskExecutorType = dispatchTrigger.getDispatchTaskExecutorType();
+	taskSettings = dispatchTrigger.getDispatchTaskSettings();
 }
 %>
 

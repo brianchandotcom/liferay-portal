@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
+import com.liferay.document.library.web.internal.util.DLFileEntryTypeIconProviderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -346,6 +347,9 @@ public class MenuItemProvider {
 		throws PortalException {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setIcon(
+			DLFileEntryTypeIconProviderUtil.getIcon(fileEntryType));
 
 		String label = LanguageUtil.get(
 			PortalUtil.getHttpServletRequest(portletRequest),

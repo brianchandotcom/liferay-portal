@@ -111,6 +111,15 @@ describe('DataLayoutBuilder', () => {
 		expect(props.appContext[0].action).toBe(action);
 	});
 
+	it('is dispatching action without context', () => {
+		component = new DataLayoutBuilder(props);
+		const action = 'action:test';
+		component.props.appContext[1] = null;
+		component.dispatchAction(action);
+
+		expect(props.appContext[0].action).toBe(action);
+	});
+
 	it('is getting data definition field', () => {
 		component = new DataLayoutBuilder(props);
 		component.componentDidMount();
@@ -145,6 +154,18 @@ describe('DataLayoutBuilder', () => {
 		expect(component.getDataDefinitionFieldFormattedValue('', 'test')).toBe(
 			'test'
 		);
+	});
+
+	it('is getting defaultDataLayout', () => {
+		component = new DataLayoutBuilder(props);
+		component.componentDidMount();
+		const dataDefinition = {
+			dataDefinitionFields: [],
+		};
+
+		expect(component.getDefaultDataLayout(dataDefinition)).toMatchObject({
+			dataLayoutPages: [{dataLayoutRows: []}],
+		});
 	});
 
 	it('is getting fieldTypes', () => {

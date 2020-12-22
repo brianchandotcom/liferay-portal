@@ -17,21 +17,6 @@
 <%@ include file="/social_activities/init.jsp" %>
 
 <div class="taglib-social-activities">
-	<c:if test="<%= feedEnabled && !activityDescriptors.isEmpty() %>">
-		<div class="clearfix">
-			<div class="float-right">
-				<liferay-rss:rss
-					delta="<%= feedDelta %>"
-					displayStyle="<%= feedDisplayStyle %>"
-					feedType="<%= feedType %>"
-					message="<%= feedURLMessage %>"
-					name="<%= feedTitle %>"
-					resourceURL="<%= feedResourceURL %>"
-					url="<%= feedURL %>"
-				/>
-			</div>
-		</div>
-	</c:if>
 
 	<%
 	ServiceContext serviceContext = ServiceContextFactory.getInstance(request);
@@ -68,42 +53,67 @@
 			}
 			%>
 
+			<div class="autofit-row mb-1">
+				<div class="autofit-col autofit-col-expand">
+					<div class="component-title">
+						<c:choose>
+							<c:when test="<%= curDaysBetween == 0 %>">
+								<liferay-ui:message key="today" />
+							</c:when>
+							<c:when test="<%= curDaysBetween == 1 %>">
+								<liferay-ui:message key="yesterday" />
+							</c:when>
+							<c:when test="<%= DateUtil.getYear(activityDate) == DateUtil.getYear(now) %>">
+								<%= dateFormatDate.format(activityDescriptor.getCreateDate()) %>
+							</c:when>
+							<c:otherwise>
+								<%= yearDateFormatDate.format(activityDescriptor.getCreateDate()) %>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+
+				<c:if test="<%= feedEnabled && !activityDescriptors.isEmpty() %>">
+					<div class="autofit-col">
+						<div class="link-outline link-outline-borderless link-outline-primary">
+							<liferay-rss:rss
+								delta="<%= feedDelta %>"
+								displayStyle="<%= feedDisplayStyle %>"
+								feedType="<%= feedType %>"
+								message="<%= feedURLMessage %>"
+								name="<%= feedTitle %>"
+								resourceURL="<%= feedResourceURL %>"
+								url="<%= feedURL %>"
+							/>
+						</div>
+					</div>
+				</c:if>
+			</div>
+
 			<ul class="list-unstyled">
-				<li class="c-m-0 c-px-0 card-section-header">
-					<c:choose>
-						<c:when test="<%= curDaysBetween == 0 %>">
-							<liferay-ui:message key="today" />
-						</c:when>
-						<c:when test="<%= curDaysBetween == 1 %>">
-							<liferay-ui:message key="yesterday" />
-						</c:when>
-						<c:when test="<%= DateUtil.getYear(activityDate) == DateUtil.getYear(now) %>">
-							<%= dateFormatDate.format(activityDescriptor.getCreateDate()) %>
-						</c:when>
-						<c:otherwise>
-							<%= yearDateFormatDate.format(activityDescriptor.getCreateDate()) %>
-						</c:otherwise>
-					</c:choose>
-				</li>
 		</c:if>
 
-		<li class="list-group-item">
+		<li>
 			<div class="card card-horizontal">
 				<div class="card-body">
-					<div class="card-col-field">
-						<liferay-ui:user-portrait
-							userId="<%= activityDescriptor.getUserId() %>"
-						/>
-					</div>
+					<div class="autofit-padded-no-gutters card-row">
+						<div class="autofit-col">
+							<liferay-ui:user-portrait
+								userId="<%= activityDescriptor.getUserId() %>"
+							/>
+						</div>
 
-					<div class="card-col-content card-col-gutters">
-						<h5 class="text-default">
-							<%= timeFormatDate.format(activityDescriptor.getCreateDate()) %>
-						</h5>
+						<div class="autofit-col autofit-col-expand">
+							<h5 class="component-subtitle">
+								<%= timeFormatDate.format(activityDescriptor.getCreateDate()) %>
+							</h5>
 
-						<%= activityFeedEntry.getTitle() %>
+							<div>
+								<%= activityFeedEntry.getTitle() %>
 
-						<%= activityFeedEntry.getBody() %>
+								<%= activityFeedEntry.getBody() %>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

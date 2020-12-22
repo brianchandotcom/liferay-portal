@@ -21,6 +21,8 @@ import {
 } from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
+import AppContext from '../../../AppContext.es';
+import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
 function getSettingsContext(
@@ -46,7 +48,7 @@ function getSettingsContext(
  *     required: (props) => <NewRequiredComponent {...props} />
  * }
  */
-const getColumn = (customFields = {}, dataLayoutBuilder) => ({
+const getColumn = ({customFields = {}, ...otherProps}) => ({
 	children,
 	column,
 	index,
@@ -57,7 +59,7 @@ const getColumn = (customFields = {}, dataLayoutBuilder) => ({
 
 	return (
 		<ClayLayout.Col key={index} md={column.size}>
-			{column.fields.map((field, fieldIndex) => {
+			{column.fields.map((field, index) => {
 				const {fieldName} = field;
 				const CustomField = customFields[fieldName];
 
@@ -66,21 +68,16 @@ const getColumn = (customFields = {}, dataLayoutBuilder) => ({
 						<div
 							className="ddm-field"
 							data-field-name={fieldName}
-							key={fieldIndex}
+							key={index}
 						>
-							<CustomField
-								AppContext={AppContext}
-								dataLayoutBuilder={dataLayoutBuilder}
-								field={field}
-								index={fieldIndex}
-							>
+							<CustomField {...otherProps} field={field}>
 								{children}
 							</CustomField>
 						</div>
 					);
 				}
 
-				return children({field, index: fieldIndex});
+				return children({field, index});
 			})}
 		</ClayLayout.Col>
 	);
@@ -96,13 +93,14 @@ export default function ({
 	focusedField,
 	hasFocusedCustomObjectField,
 }) {
-	const spritemap = useContext(ClayIconSpriteContext);
 	const [activePage, setActivePage] = useState(0);
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const spritemap = useContext(ClayIconSpriteContext);
 
-	const Column = useMemo(() => getColumn(customFields, dataLayoutBuilder), [
-		customFields,
-		dataLayoutBuilder,
-	]);
+	const Column = useMemo(
+		() => getColumn({AppContext, customFields, dataLayoutBuilder}),
+		[customFields, dataLayoutBuilder]
+	);
 
 	const settingsContext = getSettingsContext(
 		hasFocusedCustomObjectField,

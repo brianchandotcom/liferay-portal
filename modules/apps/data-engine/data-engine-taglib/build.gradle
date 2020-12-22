@@ -1,11 +1,5 @@
 apply plugin: "com.liferay.alloy.taglib"
 
-buildCSS {
-	imports = [
-		new File(npmInstall.nodeModulesDir, "@clayui/css/src/scss")
-	]
-}
-
 buildTaglibs {
 	componentsXmlFiles "liferay-data-engine.xml"
 	javaPackage = "com.liferay.data.engine.taglib.servlet"

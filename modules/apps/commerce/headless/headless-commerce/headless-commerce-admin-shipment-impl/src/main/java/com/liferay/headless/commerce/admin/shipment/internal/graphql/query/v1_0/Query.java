@@ -1,0 +1,398 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.headless.commerce.admin.shipment.internal.graphql.query.v1_0;
+
+import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
+import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
+import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
+import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentItemResource;
+import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentResource;
+import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShippingAddressResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Map;
+import java.util.function.BiFunction;
+
+import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.UriInfo;
+
+import org.osgi.service.component.ComponentServiceObjects;
+
+/**
+ * @author Andrea Sbarra
+ * @generated
+ */
+@Generated("")
+public class Query {
+
+	public static void setShipmentResourceComponentServiceObjects(
+		ComponentServiceObjects<ShipmentResource>
+			shipmentResourceComponentServiceObjects) {
+
+		_shipmentResourceComponentServiceObjects =
+			shipmentResourceComponentServiceObjects;
+	}
+
+	public static void setShipmentItemResourceComponentServiceObjects(
+		ComponentServiceObjects<ShipmentItemResource>
+			shipmentItemResourceComponentServiceObjects) {
+
+		_shipmentItemResourceComponentServiceObjects =
+			shipmentItemResourceComponentServiceObjects;
+	}
+
+	public static void setShippingAddressResourceComponentServiceObjects(
+		ComponentServiceObjects<ShippingAddressResource>
+			shippingAddressResourceComponentServiceObjects) {
+
+		_shippingAddressResourceComponentServiceObjects =
+			shippingAddressResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shipments(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ShipmentPage shipments(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shipmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shipmentResource -> new ShipmentPage(
+				shipmentResource.getShipmentsPage(
+					search,
+					_filterBiFunction.apply(shipmentResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(shipmentResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shipment(shipmentId: ___){accountId, actions, carrier, createDate, expectedDate, id, modifiedDate, orderId, shipmentItems, shippingAddress, shippingAddressId, shippingDate, shippingMethodId, shippingOptionName, status, trackingNumber, userName}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Shipment shipment(@GraphQLName("shipmentId") Long shipmentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shipmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shipmentResource -> shipmentResource.getShipment(shipmentId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shipmentItem(shipmentItemId: ___){actions, createDate, id, modifiedDate, orderItemId, quantity, shipmentId, userName, warehouseId}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ShipmentItem shipmentItem(
+			@GraphQLName("shipmentItemId") Long shipmentItemId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shipmentItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shipmentItemResource -> shipmentItemResource.getShipmentItem(
+				shipmentItemId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shipmentItems(page: ___, pageSize: ___, shipmentId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ShipmentItemPage shipmentItems(
+			@GraphQLName("shipmentId") Long shipmentId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shipmentItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shipmentItemResource -> new ShipmentItemPage(
+				shipmentItemResource.getShipmentItemsPage(
+					shipmentId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {shipmentShippingAddress(shipmentId: ___){city, countryISOCode, description, externalReferenceCode, id, latitude, longitude, name, phoneNumber, regionISOCode, street1, street2, street3, zip}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ShippingAddress shipmentShippingAddress(
+			@GraphQLName("shipmentId") Long shipmentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shippingAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shippingAddressResource ->
+				shippingAddressResource.getShipmentShippingAddress(shipmentId));
+	}
+
+	@GraphQLTypeExtension(ShipmentItem.class)
+	public class GetShipmentTypeExtension {
+
+		public GetShipmentTypeExtension(ShipmentItem shipmentItem) {
+			_shipmentItem = shipmentItem;
+		}
+
+		@GraphQLField
+		public Shipment shipment() throws Exception {
+			return _applyComponentServiceObjects(
+				_shipmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				shipmentResource -> shipmentResource.getShipment(
+					_shipmentItem.getShipmentId()));
+		}
+
+		private ShipmentItem _shipmentItem;
+
+	}
+
+	@GraphQLTypeExtension(Shipment.class)
+	public class GetShipmentItemsPageTypeExtension {
+
+		public GetShipmentItemsPageTypeExtension(Shipment shipment) {
+			_shipment = shipment;
+		}
+
+		@GraphQLField
+		public ShipmentItemPage items(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_shipmentItemResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				shipmentItemResource -> new ShipmentItemPage(
+					shipmentItemResource.getShipmentItemsPage(
+						_shipment.getId(), Pagination.of(page, pageSize))));
+		}
+
+		private Shipment _shipment;
+
+	}
+
+	@GraphQLName("ShipmentPage")
+	public class ShipmentPage {
+
+		public ShipmentPage(Page shipmentPage) {
+			actions = shipmentPage.getActions();
+
+			items = shipmentPage.getItems();
+			lastPage = shipmentPage.getLastPage();
+			page = shipmentPage.getPage();
+			pageSize = shipmentPage.getPageSize();
+			totalCount = shipmentPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Shipment> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ShipmentItemPage")
+	public class ShipmentItemPage {
+
+		public ShipmentItemPage(Page shipmentItemPage) {
+			actions = shipmentItemPage.getActions();
+
+			items = shipmentItemPage.getItems();
+			lastPage = shipmentItemPage.getLastPage();
+			page = shipmentItemPage.getPage();
+			pageSize = shipmentItemPage.getPageSize();
+			totalCount = shipmentItemPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ShipmentItem> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("ShippingAddressPage")
+	public class ShippingAddressPage {
+
+		public ShippingAddressPage(Page shippingAddressPage) {
+			actions = shippingAddressPage.getActions();
+
+			items = shippingAddressPage.getItems();
+			lastPage = shippingAddressPage.getLastPage();
+			page = shippingAddressPage.getPage();
+			pageSize = shippingAddressPage.getPageSize();
+			totalCount = shippingAddressPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ShippingAddress> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	private <T, R, E1 extends Throwable, E2 extends Throwable> R
+			_applyComponentServiceObjects(
+				ComponentServiceObjects<T> componentServiceObjects,
+				UnsafeConsumer<T, E1> unsafeConsumer,
+				UnsafeFunction<T, R, E2> unsafeFunction)
+		throws E1, E2 {
+
+		T resource = componentServiceObjects.getService();
+
+		try {
+			unsafeConsumer.accept(resource);
+
+			return unsafeFunction.apply(resource);
+		}
+		finally {
+			componentServiceObjects.ungetService(resource);
+		}
+	}
+
+	private void _populateResourceContext(ShipmentResource shipmentResource)
+		throws Exception {
+
+		shipmentResource.setContextAcceptLanguage(_acceptLanguage);
+		shipmentResource.setContextCompany(_company);
+		shipmentResource.setContextHttpServletRequest(_httpServletRequest);
+		shipmentResource.setContextHttpServletResponse(_httpServletResponse);
+		shipmentResource.setContextUriInfo(_uriInfo);
+		shipmentResource.setContextUser(_user);
+		shipmentResource.setGroupLocalService(_groupLocalService);
+		shipmentResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			ShipmentItemResource shipmentItemResource)
+		throws Exception {
+
+		shipmentItemResource.setContextAcceptLanguage(_acceptLanguage);
+		shipmentItemResource.setContextCompany(_company);
+		shipmentItemResource.setContextHttpServletRequest(_httpServletRequest);
+		shipmentItemResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		shipmentItemResource.setContextUriInfo(_uriInfo);
+		shipmentItemResource.setContextUser(_user);
+		shipmentItemResource.setGroupLocalService(_groupLocalService);
+		shipmentItemResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
+			ShippingAddressResource shippingAddressResource)
+		throws Exception {
+
+		shippingAddressResource.setContextAcceptLanguage(_acceptLanguage);
+		shippingAddressResource.setContextCompany(_company);
+		shippingAddressResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		shippingAddressResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		shippingAddressResource.setContextUriInfo(_uriInfo);
+		shippingAddressResource.setContextUser(_user);
+		shippingAddressResource.setGroupLocalService(_groupLocalService);
+		shippingAddressResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private static ComponentServiceObjects<ShipmentResource>
+		_shipmentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ShipmentItemResource>
+		_shipmentItemResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ShippingAddressResource>
+		_shippingAddressResourceComponentServiceObjects;
+
+	private AcceptLanguage _acceptLanguage;
+	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
+	private GroupLocalService _groupLocalService;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
+	private RoleLocalService _roleLocalService;
+	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
+	private UriInfo _uriInfo;
+	private com.liferay.portal.kernel.model.User _user;
+
+}

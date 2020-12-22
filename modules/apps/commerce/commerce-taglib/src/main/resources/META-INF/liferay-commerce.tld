@@ -17,17 +17,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>format-price</name>
-		<tag-class>com.liferay.commerce.taglib.servlet.taglib.FormatPriceTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>price</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.math.BigDecimal</type>
-		</attribute>
-	</tag>
-	<tag>
 		<name>order-transitions</name>
 		<tag-class>com.liferay.commerce.taglib.servlet.taglib.OrderTransitionsTag</tag-class>
 		<body-content>JSP</body-content>

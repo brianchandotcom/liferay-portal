@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 
@@ -25,36 +26,76 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 	}
 
 	@Override
-	public UnicodeProperties getTaskSettingsUnicodeProperties() {
-		if (_taskSettingsUnicodeProperties == null) {
-			_taskSettingsUnicodeProperties = new UnicodeProperties(true);
+	public UnicodeProperties getDispatchTaskSettingsUnicodeProperties() {
+		if (_dispatchTaskSettingsUnicodeProperties == null) {
+			_dispatchTaskSettingsUnicodeProperties = new UnicodeProperties(
+				true);
 
-			_taskSettingsUnicodeProperties.fastLoad(getTaskSettings());
+			_dispatchTaskSettingsUnicodeProperties.fastLoad(
+				getDispatchTaskSettings());
 		}
 
-		return _taskSettingsUnicodeProperties;
+		return _dispatchTaskSettingsUnicodeProperties;
+	}
+
+	/**
+	 * @return
+	 *
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #getDispatchTaskSettingsUnicodeProperties()}
+	 */
+	@Deprecated
+	@Override
+	public UnicodeProperties getTaskSettingsUnicodeProperties() {
+		return getDispatchTaskSettingsUnicodeProperties();
 	}
 
 	@Override
-	public void setTaskSettings(String taskSettings) {
-		super.setTaskSettings(taskSettings);
+	public void setDispatchTaskSettings(String dispatchTaskSettings) {
+		super.setDispatchTaskSettings(dispatchTaskSettings);
 
-		_taskSettingsUnicodeProperties = null;
+		_dispatchTaskSettingsUnicodeProperties = null;
 	}
 
+	@Override
+	public void setDispatchTaskSettingsUnicodeProperties(
+		UnicodeProperties dispatchTaskSettingsUnicodeProperties) {
+
+		_dispatchTaskSettingsUnicodeProperties =
+			dispatchTaskSettingsUnicodeProperties;
+
+		if (_dispatchTaskSettingsUnicodeProperties == null) {
+			_dispatchTaskSettingsUnicodeProperties = new UnicodeProperties();
+		}
+
+		super.setDispatchTaskSettings(
+			_dispatchTaskSettingsUnicodeProperties.toString());
+	}
+
+	/**
+	 * @param      taskSettings
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #setDispatchTaskSettings(String)}
+	 */
+	@Deprecated
+	@Override
+	public void setTaskSettings(String taskSettings) {
+		setDispatchTaskSettings(taskSettings);
+	}
+
+	/**
+	 * @param      taskSettingsUnicodeProperties
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 *             #setDispatchTaskSettingsUnicodeProperties(UnicodeProperties)}
+	 */
+	@Deprecated
 	@Override
 	public void setTaskSettingsUnicodeProperties(
 		UnicodeProperties taskSettingsUnicodeProperties) {
 
-		_taskSettingsUnicodeProperties = taskSettingsUnicodeProperties;
-
-		if (_taskSettingsUnicodeProperties == null) {
-			_taskSettingsUnicodeProperties = new UnicodeProperties();
-		}
-
-		super.setTaskSettings(_taskSettingsUnicodeProperties.toString());
+		setDispatchTaskSettingsUnicodeProperties(taskSettingsUnicodeProperties);
 	}
 
-	private transient UnicodeProperties _taskSettingsUnicodeProperties;
+	private transient UnicodeProperties _dispatchTaskSettingsUnicodeProperties;
 
 }

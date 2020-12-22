@@ -59,6 +59,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			navTab = "Documents and Media",
+			videoName = "Document_1.mp4",
 			videoShortcutTitle = "DM Video Title In Site");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
@@ -83,6 +84,7 @@ definition {
 			kbArticleContent = "Knowledge Base Video Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			navTab = "Documents and Media",
+			videoName = "Document_1.mp4",
 			videoShortcutTitle = "DM Video Title In Site");
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
@@ -131,7 +133,36 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "10000");
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Site Name");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "DM Video Title In Depot",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title In Depot");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		Pause(locator1 = "3000");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 

@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * @author Matija Petanjek
  */
-public interface DispatchTaskExecutorHelper {
+public interface DispatchTaskExecutorRegistry {
 
 	public DispatchTaskExecutor getDispatchTaskExecutor(String type);
 

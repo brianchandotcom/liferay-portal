@@ -38,8 +38,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -138,6 +141,72 @@ public class DispatchLogLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchLatestDispatchLog() throws Exception {
+		int dispatchLogsCount = RandomTestUtil.randomInt(10, 40);
+
+		Company company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addUser(company);
+
+		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
+			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
+
+		DispatchLog dispatchLog =
+			_dispatchLogLocalService.fetchLatestDispatchLog(
+				dispatchTrigger.getDispatchTriggerId());
+
+		Assert.assertNull(dispatchLog);
+
+		_addDispatchLogs(
+			user, dispatchTrigger.getDispatchTriggerId(),
+			DispatchTaskStatus.IN_PROGRESS, dispatchLogsCount);
+
+		dispatchLog = _dispatchLogLocalService.fetchLatestDispatchLog(
+			dispatchTrigger.getDispatchTriggerId(),
+			DispatchTaskStatus.SUCCESSFUL);
+
+		Assert.assertNull(dispatchLog);
+
+		_addDispatchLogs(
+			user, dispatchTrigger.getDispatchTriggerId(),
+			DispatchTaskStatus.SUCCESSFUL, dispatchLogsCount);
+
+		dispatchLog = _dispatchLogLocalService.fetchLatestDispatchLog(
+			dispatchTrigger.getDispatchTriggerId());
+
+		List<DispatchLog> dispatchLogs =
+			_dispatchLogLocalService.getDispatchLogs(
+				dispatchTrigger.getDispatchTriggerId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		_assertLatestStartDate(dispatchLog, dispatchLogs);
+
+		_dispatchLogLocalService.fetchLatestDispatchLog(
+			dispatchTrigger.getDispatchTriggerId(),
+			DispatchTaskStatus.SUCCESSFUL);
+
+		Assert.assertNotNull(dispatchLog);
+
+		Stream<DispatchLog> stream = dispatchLogs.stream();
+
+		_assertLatestStartDate(
+			dispatchLog,
+			stream.filter(
+				item -> {
+					if (DispatchTaskStatus.valueOf(item.getStatus()) ==
+							DispatchTaskStatus.SUCCESSFUL) {
+
+						return true;
+					}
+
+					return false;
+				}
+			).collect(
+				Collectors.toList()
+			));
+	}
+
+	@Test
 	public void testGetDispatchLogs() throws Exception {
 		int dispatchLogsCount = RandomTestUtil.randomInt(10, 40);
 
@@ -148,16 +217,9 @@ public class DispatchLogLocalServiceTest {
 		DispatchTrigger dispatchTrigger = _addDispatchTrigger(
 			DispatchTriggerTestUtil.randomDispatchTrigger(user, 1));
 
-		for (int i = 0; i < dispatchLogsCount; i++) {
-			DispatchLog dispatchLog = DispatchLogTestUtil.randomDispatchLog(
-				user, DispatchTaskStatus.IN_PROGRESS);
-
-			_dispatchLogLocalService.addDispatchLog(
-				user.getUserId(), dispatchTrigger.getDispatchTriggerId(),
-				dispatchLog.getEndDate(), dispatchLog.getError(),
-				dispatchLog.getOutput(), dispatchLog.getStartDate(),
-				DispatchTaskStatus.valueOf(dispatchLog.getStatus()));
-		}
+		_addDispatchLogs(
+			user, dispatchTrigger.getDispatchTriggerId(),
+			DispatchTaskStatus.IN_PROGRESS, dispatchLogsCount);
 
 		List<DispatchLog> dispatchLogs =
 			_dispatchLogLocalService.getDispatchLogs(
@@ -254,6 +316,28 @@ public class DispatchLogLocalServiceTest {
 			DispatchLogStatusException.class, exceptionClass);
 	}
 
+	private List<DispatchLog> _addDispatchLogs(
+			User user, long dispatchTriggerId,
+			DispatchTaskStatus dispatchTaskStatus, int dispatchLogsCount)
+		throws Exception {
+
+		List<DispatchLog> dispatchLogs = new ArrayList<>();
+
+		for (int i = 0; i < dispatchLogsCount; i++) {
+			DispatchLog dispatchLog = DispatchLogTestUtil.randomDispatchLog(
+				user, dispatchTaskStatus);
+
+			dispatchLogs.add(
+				_dispatchLogLocalService.addDispatchLog(
+					user.getUserId(), dispatchTriggerId,
+					dispatchLog.getEndDate(), dispatchLog.getError(),
+					dispatchLog.getOutput(), dispatchLog.getStartDate(),
+					DispatchTaskStatus.valueOf(dispatchLog.getStatus())));
+		}
+
+		return dispatchLogs;
+	}
+
 	private DispatchTrigger _addDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception {
 
@@ -282,6 +366,26 @@ public class DispatchLogLocalServiceTest {
 			actualDispatchLog.getStartDate());
 		Assert.assertEquals(
 			expectedDispatchLog.getStatus(), actualDispatchLog.getStatus());
+	}
+
+	private void _assertLatestStartDate(
+		DispatchLog currentDispatchLog, List<DispatchLog> dispatchLogs) {
+
+		Date currentStartDate = currentDispatchLog.getStartDate();
+
+		for (DispatchLog dispatchLog : dispatchLogs) {
+			if (currentDispatchLog.getDispatchLogId() ==
+					dispatchLog.getDispatchLogId()) {
+
+				continue;
+			}
+
+			Date startDate = dispatchLog.getStartDate();
+
+			Assert.assertTrue(
+				"Latest dispatch log start date",
+				currentStartDate.getTime() > startDate.getTime());
+		}
 	}
 
 	@Inject

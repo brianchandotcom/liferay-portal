@@ -27,6 +27,11 @@
 	const containerRequests = window[CONTAINER_REQUESTS_SYMBOL];
 	const sharedScope = window[SHARED_SCOPE_SYMBOL];
 
+	let inGetModule = false;
+	let nextCallId = 1;
+	const queuedGetModuleCalls = [];
+	const serializeModuleRequests = false;
+
 	/**
 	 * Create a new container request
 	 */
@@ -200,21 +205,50 @@
 		return window[CONTAINERS_SYMBOL][containerId];
 	}
 
-	let NEXT_CALL_ID = 1;
-
 	/**
 	 * Get a module (like require for webpack federation)
 	 */
-	function getModule(moduleName) {
-		const caller = `[${new Error().stack.split('\n')[1]}]`;
-		const callId = `[${NEXT_CALL_ID++}]`;
+	function getModule(moduleName, caller) {
+
+		// Queue this call for later resolution if needed
+
+		if (serializeModuleRequests) {
+			if (inGetModule) {
+				return new Promise((resolve, reject) => {
+					queuedGetModuleCalls.push(() =>
+						getModule(moduleName, caller)
+							.then(resolve)
+							.catch(reject)
+					);
+				});
+			}
+			else {
+				inGetModule = true;
+			}
+		}
+
+		const callId = `[${nextCallId++}]`;
+
+		caller = caller || `[${new Error().stack.split('\n')[1]}]`;
 
 		explain(callId, 'Getting module', moduleName, 'for', caller);
 
 		return new Promise((resolve, reject) => {
 			const {containerId, path} = splitModuleName(moduleName);
 
-			const resolveModule = () => {
+			const dispatchNextQueuedCall = () => {
+				if (!serializeModuleRequests) {
+					return;
+				}
+
+				inGetModule = false;
+
+				if (queuedGetModuleCalls.length) {
+					setTimeout(queuedGetModuleCalls.shift(), 0);
+				}
+			};
+
+			const resolveGetModuleCall = () => {
 				const containerRequest = containerRequests[containerId];
 				const {modules} = containerRequest;
 				const module = modules[path];
@@ -223,6 +257,8 @@
 					explain(callId, 'Resolving cached module');
 
 					resolve(module);
+
+					dispatchNextQueuedCall();
 				}
 				else {
 					const {container} = containerRequest;
@@ -241,8 +277,16 @@
 							explain(callId, 'Resolving module');
 
 							resolve(module);
+
+							dispatchNextQueuedCall();
 						})
-						.catch(reject);
+						.catch((err) => {
+							explain(callId, 'Rejecting module', err);
+
+							reject(err);
+
+							dispatchNextQueuedCall();
+						});
 				}
 			};
 
@@ -256,7 +300,7 @@
 
 					subscribeContainerRequest(
 						containerRequest,
-						resolveModule,
+						resolveGetModuleCall,
 						reject
 					);
 
@@ -273,10 +317,15 @@
 					return;
 				}
 
-				resolveModule();
+				resolveGetModuleCall();
 			}
 			else {
-				fetchContainer(callId, containerId, resolveModule, reject);
+				fetchContainer(
+					callId,
+					containerId,
+					resolveGetModuleCall,
+					reject
+				);
 			}
 		});
 	}

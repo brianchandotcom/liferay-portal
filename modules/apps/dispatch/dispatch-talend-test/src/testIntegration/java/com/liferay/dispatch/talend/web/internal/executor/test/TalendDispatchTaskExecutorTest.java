@@ -63,8 +63,8 @@ public class TalendDispatchTaskExecutorTest {
 	public void testExecute() throws Exception {
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				TestPropsValues.getUserId(), "TalendDispatchTrigger", false,
-				"talend", new UnicodeProperties());
+				TestPropsValues.getUserId(), "talend", new UnicodeProperties(),
+				"TalendDispatchTrigger", false);
 
 		_dispatchFileRepository.addFileEntry(
 			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
@@ -77,9 +77,9 @@ public class TalendDispatchTaskExecutorTest {
 		int year = calendar.get(Calendar.YEAR) + 1;
 
 		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTrigger.getDispatchTriggerId(), false, "* * * * * *", 5, 5,
-			year, 11, 11, false, false, 4, 4, year, 0, 0,
-			DispatchTaskClusterMode.SINGLE_NODE);
+			dispatchTrigger.getDispatchTriggerId(), false, "* * * * * *",
+			DispatchTaskClusterMode.SINGLE_NODE, 5, 5, year, 11, 11, false,
+			false, 4, 4, year, 0, 0);
 
 		_simulateSchedulerEvent(dispatchTrigger.getDispatchTriggerId());
 

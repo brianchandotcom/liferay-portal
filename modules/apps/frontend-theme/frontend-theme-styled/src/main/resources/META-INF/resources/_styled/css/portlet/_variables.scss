@@ -1,16 +1,10 @@
 // ---------- Portlet topper ----------
 
-$navbar-default-bg: #f7f7f7;
-$navbar-default-border: transparent;
-$navbar-default-color: $navbar-light-color;
-$navbar-default-link-color: $navbar-light-color;
-$navbar-default-link-hover-color: $navbar-light-hover-color;
-
-$portlet-topper-bg: $navbar-default-bg !default;
-$portlet-topper-border: $navbar-default-border !default;
-$portlet-topper-color: $navbar-default-color !default;
-$portlet-topper-link-color: $navbar-default-link-color !default;
-$portlet-topper-link-hover-color: $navbar-default-link-hover-color !default;
+$portlet-topper-bg: #f7f7f7 !default;
+$portlet-topper-border: transparent !default;
+$portlet-topper-color: $navbar-light-color !default;
+$portlet-topper-link-color: $navbar-light-color !default;
+$portlet-topper-link-hover-color: $navbar-light-hover-color !default;
 
 $portlet-topper-border-radius: $navbar-border-radius $navbar-border-radius 0 0 !default;
 
@@ -37,7 +31,7 @@ $portlet-content-border-width: $portlet-content-border-top-width
 $portlet-borderless-padding: map-get($spacers, 3) !default;
 
 $portlet-decorate-bg: $body-bg !default;
-$portlet-decorate-border-color: $navbar-default-border !default;
+$portlet-decorate-border-color: transparent !default;
 $portlet-decorate-border-style: solid !default;
 $portlet-decorate-border-width: $portlet-content-border-width !default;
 $portlet-decorate-padding: map-get($spacers, 3) !default;

@@ -243,9 +243,10 @@ public class DispatchLogDisplayContextTest {
 				user, RandomTestUtil.nextInt());
 
 		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-			dispatchTrigger.getUserId(), dispatchTrigger.getName(),
-			dispatchTrigger.isSystem(), dispatchTrigger.getTaskExecutorType(),
-			dispatchTrigger.getTaskSettingsUnicodeProperties());
+			dispatchTrigger.getUserId(),
+			dispatchTrigger.getDispatchTaskExecutorType(),
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
+			dispatchTrigger.getName(), dispatchTrigger.isSystem());
 
 		DispatchLog expectedDispatchLog = DispatchLogTestUtil.randomDispatchLog(
 			user, dispatchTaskStatus);

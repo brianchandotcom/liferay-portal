@@ -166,23 +166,11 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 			return _spiraTestCaseObject;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
 		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
-
-		SpiraTestCaseFolder spiraTestCaseFolder =
-			spiraBuildResult.getSpiraTestCaseFolder();
-
-		if (spiraTestCaseFolder != null) {
-			sb.append(spiraTestCaseFolder.getPath());
-		}
-
-		sb.append("/");
-		sb.append(BaseSpiraArtifact.fixStringForJSON(getTestName()));
 
 		_spiraTestCaseObject =
 			SpiraTestCaseObject.createSpiraTestCaseObjectByPath(
-				spiraBuildResult.getSpiraProject(), sb.toString(),
+				spiraBuildResult.getSpiraProject(), getSpiraTestCasePath(),
 				getSpiraTestCaseType(),
 				Lists.<SpiraCustomPropertyValue>newArrayList(
 					spiraBuildResult.getSpiraTestCaseProductVersion()));
@@ -258,6 +246,22 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 			this);
 		_spiraTestResultValues = SpiraResultFactory.newSpiraTestResultValues(
 			this);
+	}
+
+	protected String getSpiraTestCasePath() {
+		StringBuilder sb = new StringBuilder();
+
+		SpiraTestCaseFolder spiraTestCaseFolder =
+			spiraBuildResult.getSpiraTestCaseFolder();
+
+		if (spiraTestCaseFolder != null) {
+			sb.append(spiraTestCaseFolder.getPath());
+		}
+
+		sb.append("/");
+		sb.append(BaseSpiraArtifact.fixStringForJSON(getTestName()));
+
+		return sb.toString();
 	}
 
 	protected final SpiraBuildResult spiraBuildResult;

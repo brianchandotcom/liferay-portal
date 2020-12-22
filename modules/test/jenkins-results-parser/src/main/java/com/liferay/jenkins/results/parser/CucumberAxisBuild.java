@@ -23,6 +23,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 
+import org.json.JSONArray;
+
 /**
  * @author Michael Hashimoto
  */
@@ -50,6 +52,16 @@ public class CucumberAxisBuild extends AxisBuild {
 		return _cucumberFeatureResults;
 	}
 
+	public CucumberTestResult getCucumberTestResult(String testName) {
+		TestResult testResult = getTestResult(testName);
+
+		if (!(testResult instanceof CucumberTestResult)) {
+			return null;
+		}
+
+		return (CucumberTestResult)testResult;
+	}
+
 	public List<CucumberTestResult> getCucumberTestResults(String testStatus) {
 		List<CucumberTestResult> cucumberTestResults = new ArrayList<>();
 
@@ -65,7 +77,9 @@ public class CucumberAxisBuild extends AxisBuild {
 	}
 
 	@Override
-	public List<TestResult> getTestResults(String testStatus) {
+	public List<TestResult> getTestResults(
+		Build build, JSONArray suitesJSONArray) {
+
 		List<TestResult> testResults = new ArrayList<>();
 
 		for (CucumberScenarioResult cucumberScenarioResult :

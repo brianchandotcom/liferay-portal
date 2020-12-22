@@ -21,9 +21,12 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Michael Hashimoto
@@ -31,6 +34,22 @@ import java.util.regex.Pattern;
 public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 
 	public static class CucumberTestClass extends BaseTestClass {
+
+		public List<String> getCategoryNames() {
+			String folderNames = JenkinsResultsParserUtil.getPathRelativeTo(
+				getTestClassFile(),
+				_cucumberBatchTestClassGroup._getFeatureBaseDir());
+
+			folderNames = folderNames.replaceAll("(.*)/[^/]+.feature", "$1");
+
+			folderNames = folderNames.replaceAll("\\.", " ");
+
+			folderNames = StringUtils.capitalize(folderNames);
+
+			folderNames = folderNames.replaceAll("\\s*(.+?)[/\\s]*", "$1");
+
+			return Arrays.asList(folderNames.split("/"));
+		}
 
 		public String getFeatureDescription() {
 			return _featureDescription;
@@ -49,6 +68,7 @@ public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		protected CucumberTestClass(
+			CucumberBatchTestClassGroup cucumberBatchTestClassGroup,
 			File featureFile, String featureName, String featureDescription,
 			List<String> featureTags, String scenarioName) {
 
@@ -56,6 +76,7 @@ public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 
 			addTestClassMethod(scenarioName);
 
+			_cucumberBatchTestClassGroup = cucumberBatchTestClassGroup;
 			_featureName = featureName;
 			_featureDescription = featureDescription;
 			_featureTags = featureTags;
@@ -102,6 +123,7 @@ public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 			return false;
 		}
 
+		private final CucumberBatchTestClassGroup _cucumberBatchTestClassGroup;
 		private final String _featureDescription;
 		private final String _featureName;
 		private final List<String> _featureTags;
@@ -209,7 +231,7 @@ public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 
 			while (scenarioMatcher.find()) {
 				CucumberTestClass cucumberTestClass = new CucumberTestClass(
-					featureFile, featureFileMatcher.group("featureName"),
+					this, featureFile, featureFileMatcher.group("featureName"),
 					featureFileMatcher.group("featureDescription"), featureTags,
 					scenarioMatcher.group("scenarioName"));
 

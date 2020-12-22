@@ -1191,6 +1191,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	public List<TestResult> getTestResults(
+		Build build, JSONArray suitesJSONArray) {
+
+		return getTestResults(build, suitesJSONArray, null);
+	}
+
+	public List<TestResult> getTestResults(
 		Build build, JSONArray suitesJSONArray, String testStatus) {
 
 		List<TestResult> testResults = new ArrayList<>();

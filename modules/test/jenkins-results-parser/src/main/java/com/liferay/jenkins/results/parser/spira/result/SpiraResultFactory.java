@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser.spira.result;
 
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.CucumberAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.CucumberBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
@@ -54,6 +56,13 @@ public class SpiraResultFactory {
 
 		if (axisTestClassGroup == null) {
 			return new TopLevelSpiraTestResult(spiraBuildResult);
+		}
+
+		if (axisTestClassGroup instanceof CucumberAxisTestClassGroup) {
+			return new CucumberAxisSpiraTestResult(
+				spiraBuildResult,
+				(CucumberAxisTestClassGroup)axisTestClassGroup,
+				(CucumberBatchTestClassGroup.CucumberTestClass)testClass);
 		}
 
 		if (axisTestClassGroup instanceof FunctionalAxisTestClassGroup) {

@@ -466,8 +466,18 @@ public class AxisBuild extends BaseBuild {
 				return Collections.emptyList();
 			}
 
+			List<TestResult> testResults = new ArrayList<>();
+
 			if (!_testResults.isEmpty()) {
-				return new ArrayList<>(_testResults.values());
+				for (TestResult testResult : _testResults.values()) {
+					if ((testStatus == null) ||
+						testStatus.equals(testResult.getStatus())) {
+
+						testResults.add(testResult);
+					}
+				}
+
+				return testResults;
 			}
 
 			JSONObject testReportJSONObject = getTestReportJSONObject(true);
@@ -479,11 +489,17 @@ public class AxisBuild extends BaseBuild {
 				return Collections.emptyList();
 			}
 
-			List<TestResult> testResults = getTestResults(
-				this, testReportJSONObject.getJSONArray("suites"), testStatus);
+			for (TestResult testResult :
+					getTestResults(
+						this, testReportJSONObject.getJSONArray("suites"))) {
 
-			for (TestResult testResult : testResults) {
 				_testResults.put(testResult.getTestName(), testResult);
+
+				if ((testStatus == null) ||
+					testStatus.equals(testResult.getStatus())) {
+
+					testResults.add(testResult);
+				}
 			}
 
 			return testResults;

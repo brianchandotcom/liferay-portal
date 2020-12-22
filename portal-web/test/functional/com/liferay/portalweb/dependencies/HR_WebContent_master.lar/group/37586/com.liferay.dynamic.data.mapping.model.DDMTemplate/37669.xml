@@ -4,19 +4,19 @@
   <__mvccVersion>0</__mvccVersion>
   <__ctCollectionId>0</__ctCollectionId>
   <__uuid>7245613b-32f5-1c40-9b61-0f6fe93608d8</__uuid>
-  <__templateId>37580</__templateId>
-  <__groupId>37510</__groupId>
-  <__companyId>20101</__companyId>
-  <__userId>20130</__userId>
+  <__templateId>37669</__templateId>
+  <__groupId>37586</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
   <__userName>Test Test</__userName>
-  <__versionUserId>20130</__versionUserId>
+  <__versionUserId>20125</__versionUserId>
   <__versionUserName>Test Test</__versionUserName>
   <__createDate class="sql-timestamp">2016-06-09 22:35:56.444</__createDate>
   <__modifiedDate class="sql-timestamp">2016-06-10 05:37:07.161</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
-  <__classNameId>36463</__classNameId>
-  <__classPK>37569</__classPK>
-  <__resourceClassNameId>30501</__resourceClassNameId>
+  <__classNameId>30601</__classNameId>
+  <__classPK>37660</__classPK>
+  <__resourceClassNameId>20131</__resourceClassNameId>
   <__templateKey>32447</__templateKey>
   <__version>1.0</__version>
   <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Figures with Caption&lt;/Name&gt;&lt;/root&gt;</__name>
@@ -47,7 +47,7 @@
     &lt;/ul&gt;</__script>
   <__cacheable>false</__cacheable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>37581</__smallImageId>
+  <__smallImageId>37670</__smallImageId>
   <__smallImageURL></__smallImageURL>
   <__columnBitmask>0</__columnBitmask>
 </DDMTemplate>

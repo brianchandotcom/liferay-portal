@@ -4,11 +4,11 @@
   <__mvccVersion>1</__mvccVersion>
   <__ctCollectionId>0</__ctCollectionId>
   <__uuid>71f3093e-0e3f-6179-967b-c74c0ba0d481</__uuid>
-  <__id>37601</__id>
-  <__resourcePrimKey>37602</__resourcePrimKey>
-  <__groupId>37510</__groupId>
-  <__companyId>20101</__companyId>
-  <__userId>20130</__userId>
+  <__id>37687</__id>
+  <__resourcePrimKey>37688</__resourcePrimKey>
+  <__groupId>37586</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-05-24 01:44:43.649</__createDate>
   <__modifiedDate class="sql-timestamp">2016-05-24 01:47:15.064</__modifiedDate>
@@ -20,7 +20,8 @@
   <__articleId>36159</__articleId>
   <__version>1.1</__version>
   <__urlTitle>meet-and-gre-1</__urlTitle>
-  <__content>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
 &lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
 	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;text&quot; instance-id=&quot;czmn&quot;&gt;
 		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;div class=&quot;thumbnail&quot;&gt;
@@ -39,10 +40,10 @@
   <__displayDate class="sql-timestamp">2016-05-24 01:19:00</__displayDate>
   <__indexable>true</__indexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>37604</__smallImageId>
+  <__smallImageId>37689</__smallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
-  <__statusByUserId>20130</__statusByUserId>
+  <__statusByUserId>20125</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
   <__statusDate class="sql-timestamp">2016-05-24 01:47:15.064</__statusDate>
   <__columnBitmask>0</__columnBitmask>
@@ -52,7 +53,7 @@
       <string>Faculty Orientation</string>
     </entry>
   </__descriptionMap>
-  <__imagesFolderId>37603</__imagesFolderId>
+  <__imagesFolderId>0</__imagesFolderId>
   <__titleMap>
     <entry>
       <locale reference="../../../__descriptionMap/entry/locale"/>

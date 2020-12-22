@@ -1,0 +1,28 @@
+<DDMStructure>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__ctCollectionId>0</__ctCollectionId>
+  <__uuid>258542b4-408e-7970-61cd-516d99c92f5c</__uuid>
+  <__structureId>37660</__structureId>
+  <__groupId>37586</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20125</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2016-06-09 22:33:39.857</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-06-09 22:33:39.857</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__parentStructureId>0</__parentStructureId>
+  <__classNameId>20131</__classNameId>
+  <__structureKey>32443</__structureKey>
+  <__version>1.0</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Landing Page Feature Section&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__definition>{&quot;definitionSchemaVersion&quot;:&quot;2.0&quot;,&quot;availableLanguageIds&quot;:[&quot;en_US&quot;],&quot;successPage&quot;:{&quot;body&quot;:{},&quot;title&quot;:{},&quot;enabled&quot;:false},&quot;defaultLanguageId&quot;:&quot;en_US&quot;,&quot;fields&quot;:[{&quot;autocomplete&quot;:false,&quot;ddmDataProviderInstanceId&quot;:&quot;[]&quot;,&quot;dataType&quot;:&quot;string&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;tooltip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Headline&quot;},&quot;type&quot;:&quot;text&quot;,&quot;required&quot;:false,&quot;showLabel&quot;:true,&quot;nestedFields&quot;:[{&quot;dataType&quot;:&quot;image&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Background&quot;},&quot;type&quot;:&quot;image&quot;,&quot;required&quot;:false,&quot;showLabel&quot;:true,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;ddm&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;Background&quot;,&quot;localizable&quot;:true,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;validation&quot;:{&quot;expression&quot;:{&quot;name&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;},&quot;parameter&quot;:{},&quot;errorMessage&quot;:{}}},{&quot;autocomplete&quot;:false,&quot;ddmDataProviderInstanceId&quot;:&quot;[]&quot;,&quot;dataType&quot;:&quot;string&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;tooltip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Lead Text&quot;},&quot;type&quot;:&quot;text&quot;,&quot;required&quot;:false,&quot;showLabel&quot;:true,&quot;displayStyle&quot;:&quot;multiline&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;&quot;,&quot;ddmDataProviderInstanceOutput&quot;:&quot;[]&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;LeadText&quot;,&quot;options&quot;:[{&quot;label&quot;:{&quot;en_US&quot;:&quot;Option&quot;},&quot;value&quot;:&quot;Option&quot;}],&quot;localizable&quot;:true,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;placeholder&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;validation&quot;:{&quot;expression&quot;:{&quot;name&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;},&quot;parameter&quot;:{},&quot;errorMessage&quot;:{}},&quot;dataSourceType&quot;:&quot;manual&quot;}],&quot;displayStyle&quot;:&quot;singleline&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;&quot;,&quot;ddmDataProviderInstanceOutput&quot;:&quot;[]&quot;,&quot;repeatable&quot;:true,&quot;name&quot;:&quot;Headline&quot;,&quot;options&quot;:[{&quot;label&quot;:{&quot;en_US&quot;:&quot;Option&quot;},&quot;value&quot;:&quot;Option&quot;}],&quot;localizable&quot;:true,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;placeholder&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;validation&quot;:{&quot;expression&quot;:{&quot;name&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;},&quot;parameter&quot;:{},&quot;errorMessage&quot;:{}},&quot;dataSourceType&quot;:&quot;manual&quot;}]}</__definition>
+  <__storageType>default</__storageType>
+  <__type>0</__type>
+  <__columnBitmask>0</__columnBitmask>
+  <__className>com.liferay.journal.model.JournalArticle</__className>
+</DDMStructure>

@@ -3,31 +3,32 @@
   <__new>false</__new>
   <__mvccVersion>1</__mvccVersion>
   <__ctCollectionId>0</__ctCollectionId>
-  <__uuid>c1ce98f5-fbbe-c7ce-729a-4a226e1c2285</__uuid>
-  <__id>37588</__id>
-  <__resourcePrimKey>37589</__resourcePrimKey>
-  <__groupId>37510</__groupId>
-  <__companyId>20101</__companyId>
-  <__userId>20130</__userId>
+  <__uuid>a94a441d-8891-4d4f-184e-dcff1167bee0</__uuid>
+  <__id>37697</__id>
+  <__resourcePrimKey>37698</__resourcePrimKey>
+  <__groupId>37586</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
   <__userName>Test Test</__userName>
-  <__createDate class="sql-timestamp">2016-05-24 01:27:09.815</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-05-24 01:43:24.905</__modifiedDate>
+  <__createDate class="sql-timestamp">2016-05-24 01:47:27.535</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-05-24 01:49:42.503</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__classNameId>0</__classNameId>
   <__classPK>0</__classPK>
   <__treePath>/</__treePath>
-  <__articleId>36151</__articleId>
-  <__version>1.4</__version>
-  <__urlTitle>meet-and-greet</__urlTitle>
-  <__content>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  <__articleId>36167</__articleId>
+  <__version>1.1</__version>
+  <__urlTitle>orientation</__urlTitle>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
 &lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
 	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;text&quot; instance-id=&quot;czmn&quot;&gt;
 		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;div class=&quot;thumbnail&quot;&gt;
 &lt;div class=&quot;thumbnail-label&quot;&gt;
-&lt;h2 class=&quot;lead&quot;&gt;Faculty Meet-and-Greet Brunch &lt;small&gt;Events&lt;/small&gt;&lt;/h2&gt;
+&lt;h2 class=&quot;lead&quot;&gt;Vaccinations and Physical Check-Ups &lt;small&gt;Health&lt;/small&gt;&lt;/h2&gt;
 
-&lt;p&gt;All faculty are invited to a Meet-and-Greet Brunch at &lt;em&gt;Allen Café&lt;/em&gt; &lt;mark&gt;11:00 A.M. Saturday, June 13&lt;/mark&gt;. This brunch is intended to introduce new faculty members and promote inter-departmental unity. Brunch will be catered by the Provincetown chapter of the &lt;abbr title=&quot;New England Culinary Institute&quot;&gt;NECI&lt;/abbr&gt;.&lt;/p&gt;
+&lt;p&gt;Any members of faculty or staff planning to leave Earth are required to have up-to-date vaccinations. Please check with the Health Center on your status. In addition, &lt;u&gt;each and every Earth departure requires a physical check-up&lt;/u&gt;. The Health Center is happy to give both vaccinations and physical check-ups free of charge.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
@@ -39,24 +40,24 @@
   <__displayDate class="sql-timestamp">2016-05-24 01:19:00</__displayDate>
   <__indexable>true</__indexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>37593</__smallImageId>
+  <__smallImageId>37699</__smallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
-  <__statusByUserId>20130</__statusByUserId>
+  <__statusByUserId>20125</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-05-24 01:43:24.905</__statusDate>
+  <__statusDate class="sql-timestamp">2016-05-24 01:49:42.503</__statusDate>
   <__columnBitmask>0</__columnBitmask>
   <__descriptionMap>
     <entry>
       <locale>en_US</locale>
-      <string>Faculty Meet and Greet</string>
+      <string>Physical Check-Ups</string>
     </entry>
   </__descriptionMap>
-  <__imagesFolderId>37592</__imagesFolderId>
+  <__imagesFolderId>0</__imagesFolderId>
   <__titleMap>
     <entry>
       <locale reference="../../../__descriptionMap/entry/locale"/>
-      <string>Meet and Greet</string>
+      <string>Physicals</string>
     </entry>
   </__titleMap>
 </JournalArticle>

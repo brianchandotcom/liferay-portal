@@ -4,11 +4,11 @@
   <__mvccVersion>1</__mvccVersion>
   <__ctCollectionId>0</__ctCollectionId>
   <__uuid>19817faa-3aa9-8a30-3abf-9ef8cd42f592</__uuid>
-  <__id>37639</__id>
-  <__resourcePrimKey>37640</__resourcePrimKey>
-  <__groupId>37510</__groupId>
-  <__companyId>20101</__companyId>
-  <__userId>20130</__userId>
+  <__id>37724</__id>
+  <__resourcePrimKey>37725</__resourcePrimKey>
+  <__groupId>37586</__groupId>
+  <__companyId>20097</__companyId>
+  <__userId>20125</__userId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2019-03-05 02:32:35.519</__createDate>
   <__modifiedDate class="sql-timestamp">2019-03-05 02:32:35.55</__modifiedDate>
@@ -27,7 +27,7 @@
 		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[You&apos;re a part of the S.P.A.C.E. family]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
 	&lt;dynamic-element name=&quot;Image&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;hkbr&quot;&gt;
-		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[{&quot;groupId&quot;:&quot;37510&quot;,&quot;alt&quot;:&quot;&quot;,&quot;name&quot;:&quot;front page picture (1).jpg&quot;,&quot;title&quot;:&quot;front page picture (1).jpg&quot;,&quot;type&quot;:&quot;journal&quot;,&quot;uuid&quot;:&quot;cc56d2bf-6742-b121-3b6f-8679b8dc5ebd&quot;,&quot;fileEntryId&quot;:&quot;37636&quot;,&quot;resourcePrimKey&quot;:&quot;37536&quot;}]]&gt;&lt;/dynamic-content&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[{&quot;groupId&quot;:&quot;37586&quot;,&quot;alt&quot;:&quot;&quot;,&quot;name&quot;:&quot;front page picture (1).jpg&quot;,&quot;title&quot;:&quot;front page picture (1).jpg&quot;,&quot;type&quot;:&quot;journal&quot;,&quot;uuid&quot;:&quot;cc56d2bf-6742-b121-3b6f-8679b8dc5ebd&quot;,&quot;fileEntryId&quot;:&quot;37721&quot;,&quot;resourcePrimKey&quot;:&quot;37640&quot;}]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
 &lt;/root&gt;</__content>
   <__DDMStructureKey>32706</__DDMStructureKey>
@@ -37,10 +37,10 @@
   <__displayDate class="sql-timestamp">2019-03-05 02:31:00</__displayDate>
   <__indexable>true</__indexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>37642</__smallImageId>
+  <__smallImageId>37726</__smallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
-  <__statusByUserId>20130</__statusByUserId>
+  <__statusByUserId>20125</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
   <__statusDate class="sql-timestamp">2019-03-05 02:32:35.55</__statusDate>
   <__columnBitmask>0</__columnBitmask>
@@ -50,7 +50,7 @@
       <string>&lt;p&gt;Our S.P.A.C.E. Family&lt;/p&gt;</string>
     </entry>
   </__descriptionMap>
-  <__imagesFolderId>37641</__imagesFolderId>
+  <__imagesFolderId>0</__imagesFolderId>
   <__titleMap>
     <entry>
       <locale reference="../../../__descriptionMap/entry/locale"/>

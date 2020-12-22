@@ -110,7 +110,7 @@ exports[`EditFormViewApp renders 1`] = `
                 <div
                   class="list-group-title text-truncate"
                 >
-                  <label>
+                  <span>
                     Name
                     <span
                       class="reference-mark"
@@ -124,7 +124,7 @@ exports[`EditFormViewApp renders 1`] = `
                         />
                       </svg>
                     </span>
-                  </label>
+                  </span>
                 </div>
                 <p
                   class="list-group-subtitle text-truncate"
@@ -201,7 +201,7 @@ exports[`EditFormViewApp renders 1`] = `
                 <div
                   class="list-group-title text-truncate"
                 >
-                  <label>
+                  <span>
                     Options
                     <span
                       class="reference-mark"
@@ -215,7 +215,7 @@ exports[`EditFormViewApp renders 1`] = `
                         />
                       </svg>
                     </span>
-                  </label>
+                  </span>
                 </div>
                 <p
                   class="list-group-subtitle text-truncate"
@@ -299,9 +299,9 @@ exports[`EditFormViewApp renders 1`] = `
                     <div
                       class="list-group-title text-truncate"
                     >
-                      <label>
+                      <span>
                         Address
-                      </label>
+                      </span>
                     </div>
                     <p
                       class="list-group-subtitle text-truncate"
@@ -388,9 +388,9 @@ exports[`EditFormViewApp renders 1`] = `
                           <div
                             class="list-group-title text-truncate"
                           >
-                            <label>
+                            <span>
                               Text Field
-                            </label>
+                            </span>
                           </div>
                           <p
                             class="list-group-subtitle text-truncate"

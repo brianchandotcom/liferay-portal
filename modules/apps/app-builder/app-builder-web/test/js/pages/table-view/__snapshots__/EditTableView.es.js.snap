@@ -288,9 +288,9 @@ exports[`EditTableView renders 1`] = `
                     <div
                       class="list-group-title text-truncate"
                     >
-                      <label>
+                      <span>
                         Name
-                      </label>
+                      </span>
                     </div>
                     <p
                       class="list-group-subtitle text-truncate"

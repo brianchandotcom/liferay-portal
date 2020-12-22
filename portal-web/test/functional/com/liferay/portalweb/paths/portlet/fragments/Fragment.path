@@ -167,6 +167,11 @@
 </tr>
 <!--DROPDOWN_FRAGMENT-->
 <tr>
+	<td>DROPDOWN_FRAGMENT_MENU_CONTENT</td>
+	<td>//div[contains(@class,'dropdown-fragment-menu')]${key_element}</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_FRAGMENT_MENU_WIDTH</td>
 	<td>//div[contains(@class,'dropdown-fragment-menu')][contains(@style,'width: ${key_panelWidth}')]</td>
 	<td></td>

@@ -94,6 +94,17 @@ definition {
 		AppBuilderAdmin.gotoBack();
 	}
 
+	macro addObjectByDragAndDrop {
+		Pause(locator1 = "10000");
+
+		var key_fieldLabel = "${fieldType}";
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
+			locator2 = "FormViewBuilder#EMPTY_FORM_FIELD",
+			value1 = "${fieldType}");
+	}
+
 	macro addRule {
 		Click(locator1 = "FormViewBuilder#RULE_ADD_BUTTON");
 	}

@@ -165,6 +165,12 @@
 	<td>//div[contains(@class,'video')][contains(@style,'width: ${key_width}')]</td>
 	<td></td>
 </tr>
+<!--DROPDOWN_FRAGMENT-->
+<tr>
+	<td>DROPDOWN_FRAGMENT_TOGGLE</td>
+	<td>//button[contains(@class,'dropdown-fragment-toggle')]</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_CONFIGURAION-->
 <tr>
 	<td>FRAGMENT_CHECKBOX</td>

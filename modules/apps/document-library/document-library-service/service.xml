@@ -47,7 +47,7 @@
 			<finder-column name="previewStatus" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="DLStorageQuota" remote-service="false">
+	<entity change-tracking-enabled="false" local-service="true" name="DLStorageQuota" remote-service="false">
 
 		<!-- PK fields -->
 

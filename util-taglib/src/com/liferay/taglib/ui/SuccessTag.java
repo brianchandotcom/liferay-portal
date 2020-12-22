@@ -149,6 +149,8 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 		else {
 			values.put("message", HtmlUtil.escapeJS(message));
 
+			values.put("timeout", String.valueOf(getTimeout()));
+
 			String result = StringUtil.replace(
 				_CONTENT_TOAST_TMPL, StringPool.DOLLAR, StringPool.DOLLAR,
 				values);

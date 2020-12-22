@@ -637,7 +637,7 @@ definition {
 	@description = "This is a test for LPS-120094. Map manual URL to Image fragment."
 	@priority = "5"
 	test MapManualURLToImageFragment {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Add a Image fragment to page") {
 			ContentPagesNavigator.openEditContentPage(

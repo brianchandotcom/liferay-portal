@@ -5,7 +5,7 @@ create table DEDataDefinitionFieldLink (
 	classNameId LONG,
 	classPK LONG,
 	ddmStructureId LONG,
-	fieldName LONG
+	fieldName VARCHAR(75) null
 );
 
 create unique index IX_2CEE588F on DEDataDefinitionFieldLink (classNameId, classPK, ddmStructureId, fieldName);

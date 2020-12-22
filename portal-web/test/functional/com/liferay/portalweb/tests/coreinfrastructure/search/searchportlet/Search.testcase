@@ -2608,25 +2608,25 @@ definition {
 
 	test ViewSortedSearchResults {
 		JSONWebcontent.addWebContent(
-			content = "Content",
+			content = "Fruit",
 			groupName = "Guest",
 			title = "Apple");
 
 		Pause(locator1 = "1000");
 
 		JSONWebcontent.addWebContent(
-			content = "Content",
+			content = "Fruit",
 			groupName = "Guest",
 			title = "Banana");
 
 		Pause(locator1 = "1000");
 
 		JSONWebcontent.addWebContent(
-			content = "Content",
+			content = "Fruit",
 			groupName = "Guest",
 			title = "Cantaloupe");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Content");
+		SearchPortlets.searchEmbedded(searchTerm = "Fruit");
 
 		SearchPortlets.addWidgets(searchPortletList = "Sort");
 

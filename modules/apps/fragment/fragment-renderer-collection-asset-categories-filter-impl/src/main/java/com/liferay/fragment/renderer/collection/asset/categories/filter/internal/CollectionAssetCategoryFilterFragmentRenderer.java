@@ -215,18 +215,18 @@ public class CollectionAssetCategoryFilterFragmentRenderer
 						ASSET_VOCABULARY);
 			}
 			else if (assetCategoryTreeNodeType.equals("Vocabulary")) {
-				assetCategories =
-					_assetCategoryService.getVocabularyRootCategories(
-						themeDisplay.getScopeGroupId(), assetCategoryTreeNodeId,
-						0,
-						_assetCategoryService.getVocabularyCategoriesCount(
-							themeDisplay.getScopeGroupId(),
-							assetCategoryTreeNodeId),
-						null);
-
 				AssetVocabulary assetVocabulary =
 					_assetVocabularyService.fetchVocabulary(
 						assetCategoryTreeNodeId);
+
+				long groupId = assetVocabulary.getGroupId();
+
+				assetCategories =
+					_assetCategoryService.getVocabularyRootCategories(
+						groupId, assetCategoryTreeNodeId, 0,
+						_assetCategoryService.getVocabularyCategoriesCount(
+							groupId, assetCategoryTreeNodeId),
+						null);
 
 				httpServletRequest.setAttribute(
 					CollectionAssetCategoryFilterFragmentRendererWebKeys.

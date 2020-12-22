@@ -58,6 +58,19 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceRegion fetchCommerceRegion(
+			long commerceCountryId, String code)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
+		return commerceRegionLocalService.fetchCommerceRegion(
+			commerceCountryId, code);
+	}
+
+	@Override
 	public CommerceRegion getCommerceRegion(long commerceRegionId)
 		throws PortalException {
 

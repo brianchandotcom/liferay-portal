@@ -180,7 +180,6 @@ public class GitHubWebhookPayloadProcessor {
 		return false;
 	}
 
-	@Override
 	public void process(
 			String method, String pathInfo, Map<String, String[]> parameterMap,
 			JSONObject payloadJSONObject, JSONObject responseJSONObject)
@@ -2431,9 +2430,6 @@ public class GitHubWebhookPayloadProcessor {
 
 	}
 
-	private class GitHubAPICallException extends Exception {
-	}
-
 	private class PullRequest {
 
 		public PullRequest(JSONObject pullRequestJSONObject) throws Exception {
@@ -2485,6 +2481,9 @@ public class GitHubWebhookPayloadProcessor {
 					_log.info(
 						"Pull request portal ref name: " + _portalRefName);
 				}
+			}
+			else {
+				_portalRefName = null;
 			}
 
 			x = y + 1;
@@ -2582,28 +2581,6 @@ public class GitHubWebhookPayloadProcessor {
 
 		public String getAllowedSenderNames() throws Exception {
 			return getCIProperty("allowed.sender.names[" + _ownerName + "]");
-		}
-
-		public String getBaseBranchDescriptionHTML() {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("<h4>Base Branch:</h4>");
-			sb.append("Branch Name:<a href=\"https://github.com/liferay/");
-			sb.append(_repositoryName);
-			sb.append("/tree/");
-			sb.append(_refName);
-			sb.append("\">");
-			sb.append(_refName);
-			sb.append("</a><br />Branch GIT ID: ");
-			sb.append("<a href=\"https://github.com/liferay/");
-			sb.append(_repositoryName);
-			sb.append("/commit/");
-			sb.append(_refSHA);
-			sb.append("\">");
-			sb.append(_refSHA);
-			sb.append("</a>");
-
-			return sb.toString();
 		}
 
 		public String getCIForwardReceiverUsername() {
@@ -2896,21 +2873,6 @@ public class GitHubWebhookPayloadProcessor {
 			return _jiraProjectKeys;
 		}
 
-		public List<String> getLabelNames() throws Exception {
-			List<String> labelNames = new ArrayList<>();
-
-			JSONArray labelJSONArray = _pullRequestJSONObject.getJSONArray(
-				"labels");
-
-			for (int i = 0; i < labelJSONArray.length(); i++) {
-				JSONObject labelJSONObject = labelJSONArray.getJSONObject(i);
-
-				labelNames.add(labelJSONObject.getString("name"));
-			}
-
-			return labelNames;
-		}
-
 		public int getNumber() {
 			return _number;
 		}
@@ -2928,7 +2890,7 @@ public class GitHubWebhookPayloadProcessor {
 				return _passingTestSuites;
 			}
 
-			_passingTestSuites = new HashSet();
+			_passingTestSuites = new HashSet<>();
 
 			JSONArray statusesJSONArray = getSenderRefSHAStatuses();
 

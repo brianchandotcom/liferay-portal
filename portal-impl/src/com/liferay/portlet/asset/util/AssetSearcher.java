@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.StringQuery;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,7 +37,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,7 +94,7 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		long[] filteredAllCategoryIds = _filterCategoryIds(
+		long[] filteredAllCategoryIds = AssetUtil.filterCategoryIds(
 			PermissionThreadLocal.getPermissionChecker(), allCategoryIds);
 
 		if (allCategoryIds.length != filteredAllCategoryIds.length) {
@@ -205,7 +202,7 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		long[] filteredAnyCategoryIds = _filterCategoryIds(
+		long[] filteredAnyCategoryIds = AssetUtil.filterCategoryIds(
 			PermissionThreadLocal.getPermissionChecker(), anyCategoryIds);
 
 		if (filteredAnyCategoryIds.length == 0) {
@@ -562,31 +559,6 @@ public class AssetSearcher extends BaseSearcher {
 		if (booleanFilter.hasClauses() && !showInvisible) {
 			fullQuery.setPreBooleanFilter(booleanFilter);
 		}
-	}
-
-	private long[] _filterCategoryIds(
-			PermissionChecker permissionChecker, long[] categoryIds)
-		throws Exception {
-
-		if (permissionChecker == null) {
-			return categoryIds;
-		}
-
-		List<Long> viewableCategoryIds = new ArrayList<>();
-
-		for (long categoryId : categoryIds) {
-			AssetCategory category =
-				AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
-
-			if ((category != null) &&
-				AssetCategoryPermission.contains(
-					permissionChecker, category, ActionKeys.VIEW)) {
-
-				viewableCategoryIds.add(categoryId);
-			}
-		}
-
-		return ArrayUtil.toArray(viewableCategoryIds.toArray(new Long[0]));
 	}
 
 	private AssetEntryQuery _assetEntryQuery;

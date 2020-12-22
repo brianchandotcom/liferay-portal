@@ -14,7 +14,7 @@
  */
 --%>
 
-<span class="collapse-icon" data-qa-id="productMenuSiteAdministrationPanelCategory">
+<span data-qa-id="productMenuSiteAdministrationPanelCategory">
 	<clay:content-row
 		verticalAlign="center"
 	>

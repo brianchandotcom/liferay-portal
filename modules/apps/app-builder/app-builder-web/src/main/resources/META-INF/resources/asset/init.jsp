@@ -20,8 +20,8 @@
 taglib uri="http://liferay.com/tld/data-engine" prefix="liferay-data-engine" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTabContext" %><%@
-page import="com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys" %><%@
+<%@ page import="com.liferay.app.builder.constants.AppBuilderWebKeys" %><%@
+page import="com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTabContext" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
 <%@ page import="java.util.List" %>

@@ -15,9 +15,9 @@
 package com.liferay.app.builder.web.internal.portlet;
 
 import com.liferay.app.builder.constants.AppBuilderPortletKeys;
+import com.liferay.app.builder.constants.AppBuilderWebKeys;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppsPortletTab;
 import com.liferay.app.builder.web.internal.configuration.AppBuilderConfiguration;
-import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

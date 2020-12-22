@@ -14,9 +14,9 @@
 
 package com.liferay.app.builder.web.internal.asset.model;
 
+import com.liferay.app.builder.constants.AppBuilderWebKeys;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
-import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.data.engine.constants.DataActionKeys;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;

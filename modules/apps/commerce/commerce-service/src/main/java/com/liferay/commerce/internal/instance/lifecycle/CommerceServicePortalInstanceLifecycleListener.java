@@ -128,6 +128,11 @@ public class CommerceServicePortalInstanceLifecycleListener
 	private static final String _CLASS_NAME_COMMERCE_CART_RESOURCE =
 		"com.liferay.commerce.frontend.internal.cart.CommerceCartResource";
 
+	private static final String
+		_CLASS_NAME_COMMERCE_HEADLESS_CART_ITEM_RESOURCE =
+			"com.liferay.headless.commerce.delivery.cart.internal.resource." +
+				"v1_0.CartItemResourceImpl";
+
 	private static final String _CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE =
 		"com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0." +
 			"CartResourceImpl";
@@ -161,7 +166,8 @@ public class CommerceServicePortalInstanceLifecycleListener
 				CommerceOrderService.class.getName(), "#getCommerceOrder\n",
 				CommerceRegionService.class.getName(), "#getCommerceRegions\n",
 				_CLASS_NAME_COMMERCE_CART_RESOURCE, "*\n",
-				_CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE, "#getCart\n",
+				_CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE, "*\n",
+				_CLASS_NAME_COMMERCE_HEADLESS_CART_ITEM_RESOURCE, "*\n",
 				_CLASS_NAME_COMMERCE_SEARCH_RESOURCE)
 		}
 	};

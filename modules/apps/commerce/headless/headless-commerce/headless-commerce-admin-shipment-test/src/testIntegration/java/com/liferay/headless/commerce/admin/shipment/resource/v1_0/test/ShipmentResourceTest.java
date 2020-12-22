@@ -146,7 +146,8 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 	}
 
 	@Override
-	protected Shipment testPostShipmentStatusDelivered_addShipment(Shipment shipment)
+	protected Shipment testPostShipmentStatusDelivered_addShipment(
+			Shipment shipment)
 		throws Exception {
 
 		return _addShipment();
@@ -161,7 +162,8 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 	}
 
 	@Override
-	protected Shipment testPostShipmentStatusShipped_addShipment(Shipment shipment)
+	protected Shipment testPostShipmentStatusShipped_addShipment(
+			Shipment shipment)
 		throws Exception {
 
 		return _addShipment();

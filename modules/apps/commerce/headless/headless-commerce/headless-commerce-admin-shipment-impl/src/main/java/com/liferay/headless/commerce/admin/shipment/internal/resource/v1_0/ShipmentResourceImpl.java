@@ -136,7 +136,9 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	}
 
 	@Override
-	public Shipment postShipmentStatusDelivered(Long shipmentId) throws Exception {
+	public Shipment postShipmentStatusDelivered(Long shipmentId)
+		throws Exception {
+
 		return _toShipment(
 			_commerceShipmentService.updateStatus(
 				shipmentId,
@@ -154,7 +156,9 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	}
 
 	@Override
-	public Shipment postShipmentStatusShipped(Long shipmentId) throws Exception {
+	public Shipment postShipmentStatusShipped(Long shipmentId)
+		throws Exception {
+
 		return _toShipment(
 			_commerceShipmentService.updateStatus(
 				shipmentId, CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED));

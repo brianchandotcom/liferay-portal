@@ -226,7 +226,7 @@ public class ShippingAddressResourceTest
 		};
 	}
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
+	private static final BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
 		@Override
 		public void copyProperty(Object bean, String name, Object value)

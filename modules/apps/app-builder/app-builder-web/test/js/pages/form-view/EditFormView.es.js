@@ -100,7 +100,7 @@ describe('EditFormView', () => {
 		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it('renders with required fields', async () => {
+	it('renders with required fields at object level', async () => {
 		const {DATA_DEFINITION} = ENTRY;
 
 		const context = {
@@ -111,6 +111,7 @@ describe('EditFormView', () => {
 					{
 						...DATA_DEFINITION.dataDefinitionFields[0],
 						name: 'Text',
+						required: true,
 					},
 				],
 			},
@@ -118,6 +119,11 @@ describe('EditFormView', () => {
 				...FORM_VIEW_CONTEXT.dataLayout,
 				dataLayoutFields: {
 					Text: {
+
+						// Set form view level to required to ensure that when
+						// the object view level is NOT required, the mask should
+						// not be displayed
+
 						required: true,
 					},
 				},
@@ -146,7 +152,7 @@ describe('EditFormView', () => {
 
 		// assert with required fields at Object Level
 
-		context.dataLayout.dataLayoutFields.Text.required = false;
+		context.dataDefinition.dataDefinitionFields[0].required = false;
 
 		setDataLayoutBuilderProps({
 			...dataLayoutBuilderProps,

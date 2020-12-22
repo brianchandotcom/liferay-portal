@@ -76,6 +76,10 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		TalendProcess talendProcess = _getTalendProcess(
 			dispatchTrigger, talendArchive);
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Execute talend process " + talendProcess.toString());
+		}
+
 		try {
 			ProcessChannel<Serializable> processChannel =
 				_processExecutor.execute(

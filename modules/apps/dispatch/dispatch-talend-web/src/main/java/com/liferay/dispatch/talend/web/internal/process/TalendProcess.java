@@ -49,6 +49,21 @@ public class TalendProcess {
 		return _processConfig;
 	}
 
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(StringPool.OPEN_CURLY_BRACE);
+		sb.append("mainMethodArguments=");
+		sb.append(_mainMethodArguments.toString());
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append("processConfig=");
+		sb.append(_processConfig.toString());
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+		return sb.toString();
+	}
+
 	public static class Builder {
 
 		public TalendProcess build() {

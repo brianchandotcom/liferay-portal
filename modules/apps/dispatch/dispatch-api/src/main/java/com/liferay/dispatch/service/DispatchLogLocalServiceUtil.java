@@ -239,6 +239,14 @@ public class DispatchLogLocalServiceUtil {
 		return getService().fetchLatestDispatchLog(dispatchTriggerId);
 	}
 
+	public static com.liferay.dispatch.model.DispatchLog fetchLatestDispatchLog(
+		long dispatchTriggerId,
+		com.liferay.dispatch.executor.DispatchTaskStatus dispatchTaskStatus) {
+
+		return getService().fetchLatestDispatchLog(
+			dispatchTriggerId, dispatchTaskStatus);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

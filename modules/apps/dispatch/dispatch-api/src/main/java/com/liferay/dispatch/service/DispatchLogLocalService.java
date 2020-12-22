@@ -211,6 +211,10 @@ public interface DispatchLogLocalService
 	public DispatchLog fetchLatestDispatchLog(long dispatchTriggerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DispatchLog fetchLatestDispatchLog(
+		long dispatchTriggerId, DispatchTaskStatus dispatchTaskStatus);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

@@ -249,6 +249,15 @@ public class DispatchLogLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.dispatch.model.DispatchLog fetchLatestDispatchLog(
+		long dispatchTriggerId,
+		com.liferay.dispatch.executor.DispatchTaskStatus dispatchTaskStatus) {
+
+		return _dispatchLogLocalService.fetchLatestDispatchLog(
+			dispatchTriggerId, dispatchTaskStatus);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -57,29 +57,6 @@
 		}
 	}
 
-	.navbar-default {
-		@include media-breakpoint-up(sm) {
-			background-color: transparent;
-
-			.navbar-nav {
-				border-bottom: 1px solid #cdced9;
-				width: 100%;
-			}
-		}
-
-		.active > a {
-			font-weight: 600;
-			padding: 13px 16px;
-
-			&:after {
-				content: '';
-				height: 4px;
-				left: 0;
-				right: 0;
-			}
-		}
-	}
-
 	.navbar-collapse {
 		border-bottom: 1px solid #cdced9;
 	}

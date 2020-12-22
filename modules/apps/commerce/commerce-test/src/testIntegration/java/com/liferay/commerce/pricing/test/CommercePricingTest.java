@@ -27,6 +27,11 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.price.CommerceOrderItemPrice;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -44,8 +49,12 @@ import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
+import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -258,6 +267,173 @@ public class CommercePricingTest {
 		Assert.assertEquals(
 			expectedPrice.stripTrailingZeros(),
 			finalPrice.stripTrailingZeros());
+	}
+
+	@Test
+	public void testOrderItemPriceWithPromoHigherThanTier() throws Exception {
+		frutillaRule.scenario(
+			"The unit price and the promo price of a product is retrieved " +
+				"when no discounts are defined"
+		).given(
+			"A catalog with a product a price list with a price entry with " +
+				"the product and a promo on the product"
+		).when(
+			"The price of the product is discovered"
+		).then(
+			"The correct price and the promo is returned "
+		);
+
+		CommerceCatalog catalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
+				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				catalog.getGroupId(), 0.0);
+
+		CommercePriceList commercePromotion =
+			CommercePriceListTestUtil.addPromotion(catalog.getGroupId(), 0.0);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			catalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		BigDecimal price = BigDecimal.valueOf(100);
+		BigDecimal promoPrice = BigDecimal.valueOf(80);
+		BigDecimal tierPrice = BigDecimal.valueOf(50);
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryTestUtil.addCommercePriceEntry(
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), price, false, null,
+				null, null, null, true, true);
+
+		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
+			commercePriceEntry.getCommercePriceEntryId(), "", tierPrice, 5,
+			false, false, null, null, null, null, true, true);
+
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePromotion.getCommercePriceListId(), promoPrice, false, null,
+			null, null, null, true, true);
+
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_group.getGroupId(), _commerceCurrency.getCode());
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		CommerceTestUtil.addWarehouseCommerceChannelRel(
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			commerceChannel.getCommerceChannelId());
+
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
+			10);
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			_user.getUserId(), commerceChannel.getGroupId(), _commerceCurrency);
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, null, _user, _group, _commerceAccount,
+			commerceOrder);
+
+		CommerceOrderItem commerceOrderItem =
+			CommerceTestUtil.addCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(),
+				cpInstance.getCPInstanceId(), 10, commerceContext);
+
+		CommerceOrderItemPrice commerceOrderItemPrice =
+			_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
+				_commerceCurrency, commerceOrderItem);
+
+		Assert.assertNull(commerceOrderItemPrice.getPromoPrice());
+
+		_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
+	}
+
+	@Test
+	public void testOrderItemPriceWithPromoHigherThanUnit() throws Exception {
+		frutillaRule.scenario(
+			"The unit price and the promo price of a product is retrieved " +
+				"when no discounts are defined"
+		).given(
+			"A catalog with a product a price list with a price entry with " +
+				"the product and a promo on the product"
+		).when(
+			"The price of the product is discovered"
+		).then(
+			"The correct price and the promo is returned "
+		);
+
+		CommerceCatalog catalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
+				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				catalog.getGroupId(), 0.0);
+
+		CommercePriceList commercePromotion =
+			CommercePriceListTestUtil.addPromotion(catalog.getGroupId(), 0.0);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			catalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		BigDecimal price = BigDecimal.valueOf(100);
+		BigDecimal promoPrice = BigDecimal.valueOf(500);
+
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), price, false, null,
+			null, null, null, true, true);
+
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePromotion.getCommercePriceListId(), promoPrice, false, null,
+			null, null, null, true, true);
+
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_group.getGroupId(), _commerceCurrency.getCode());
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		CommerceTestUtil.addWarehouseCommerceChannelRel(
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			commerceChannel.getCommerceChannelId());
+
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
+			10);
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			_user.getUserId(), commerceChannel.getGroupId(), _commerceCurrency);
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, null, _user, _group, _commerceAccount,
+			commerceOrder);
+
+		CommerceOrderItem commerceOrderItem =
+			CommerceTestUtil.addCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(),
+				cpInstance.getCPInstanceId(), 1, commerceContext);
+
+		CommerceOrderItemPrice commerceOrderItemPrice =
+			_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
+				_commerceCurrency, commerceOrderItem);
+
+		Assert.assertNull(commerceOrderItemPrice.getPromoPrice());
+
+		_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 	}
 
 	@Test
@@ -1123,6 +1299,12 @@ public class CommercePricingTest {
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Inject
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Inject
 	private CommercePriceListAccountRelLocalService

@@ -12,11 +12,11 @@
 		"@clayui/navigation-bar": "3.3.2",
 		"@clayui/panel": "3.3.2",
 		"@clayui/tabs": "3.3.2",
-		"graphiql": "1.0.0-alpha.8",
+		"graphiql": "1.2.0",
 		"graphql": "^15.0.0",
 		"react": "16.12.0",
 		"react-dom": "16.12.0",
-		"swagger-ui-react": "^3.25.2"
+		"swagger-ui-react": "^3.28.0"
 	},
 	"name": "headless-discovery-web",
 	"scripts": {

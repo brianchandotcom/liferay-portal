@@ -1,3 +1,13 @@
+.collapse.open {
+	display: block;
+}
+
+.navbar-toggler-icon {
+	background-image: clay-icon(bars, $gray-900);
+	height: 1em;
+	width: 1em;
+}
+
 .navbar-nav .nav-item.hover {
 	&:after {
 		bottom: -$dropdown-spacer;
@@ -6,5 +16,13 @@
 		left: 0;
 		position: absolute;
 		width: 100%;
+	}
+}
+
+.navbar {
+	.navbar-toggler {
+		.c-inner {
+			max-width: none;
+		}
 	}
 }

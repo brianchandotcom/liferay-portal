@@ -16,14 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<aui:nav-bar cssClass="navbar-expand navbar-underline navigation-bar navigation-bar-light" markupView="lexicon">
+	<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
 		<aui:nav-item label="licenses" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 
-<clay:container-fluid>
-	<iframe allowTransparency="true" frameborder="0" id="<portlet:namespace />iframe" scrolling="no" src="<%= themeDisplay.getPathMain() %>/portal/license?p_l_id=<%= themeDisplay.getPlid() %>&p_p_state=pop_up" style="border: none; width: 100%;"></iframe>
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
+	<clay:sheet
+		size="fluid"
+	>
+		<iframe allowTransparency="true" frameborder="0" id="<portlet:namespace />iframe" scrolling="no" src="<%= themeDisplay.getPathMain() %>/portal/license?p_l_id=<%= themeDisplay.getPlid() %>&p_p_state=pop_up" style="border: none; width: 100%;"></iframe>
+	</clay:sheet>
 </clay:container-fluid>
 
 <aui:script use="aui-autosize-iframe">

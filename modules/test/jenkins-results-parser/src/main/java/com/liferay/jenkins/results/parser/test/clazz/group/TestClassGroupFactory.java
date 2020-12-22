@@ -29,6 +29,11 @@ public class TestClassGroupFactory {
 	public static AxisTestClassGroup newAxisTestClassGroup(
 		BatchTestClassGroup batchTestClassGroup) {
 
+		if (batchTestClassGroup instanceof CucumberBatchTestClassGroup) {
+			return new CucumberAxisTestClassGroup(
+				(CucumberBatchTestClassGroup)batchTestClassGroup);
+		}
+
 		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
 			return new FunctionalAxisTestClassGroup(
 				(FunctionalBatchTestClassGroup)batchTestClassGroup);

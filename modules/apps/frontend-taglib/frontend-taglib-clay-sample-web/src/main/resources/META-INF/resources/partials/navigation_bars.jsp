@@ -30,10 +30,3 @@
 	inverted="<%= true %>"
 	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
 />
-
-<h3>NAVIGATION BAR USING CONTRIBUTOR</h3>
-
-<clay:navigation-bar
-	contributorKey="SampleNavigationBar"
-	navigationItems="<%= navigationBarsDisplayContext.getNavigationItems() %>"
-/>

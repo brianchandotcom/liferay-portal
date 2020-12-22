@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
-
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
@@ -32,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,14 +55,6 @@ public class GitHubWebhookPayloadProcessor {
 
 		JenkinsResultsParserUtil.setBuildProperties(
 			_URLS_JENKINS_BUILD_PROPERTIES);
-
-		ConcurrentLinkedHashMap.Builder<String, Long> builder =
-			new ConcurrentLinkedHashMap.Builder<String, Long>();
-
-		builder.maximumWeightedCapacity(100);
-
-		_testPullRequestQueryStrings = builder.build();
-		_testPullRequestURLs = builder.build();
 	}
 
 	public void addTestPullRequestQueryString(String queryString) {
@@ -2414,8 +2405,10 @@ public class GitHubWebhookPayloadProcessor {
 		"commit = ([0-9a-f]{40})");
 	private Properties _jenkinsBuildProperties;
 	private Properties _jenkinsProperties = new Properties();
-	private final Map<String, Long> _testPullRequestQueryStrings;
-	private final Map<String, Long> _testPullRequestURLs;
+	private final Map<String, Long> _testPullRequestQueryStrings =
+		new ConcurrentHashMap<>(100);
+	private final Map<String, Long> _testPullRequestURLs =
+		new ConcurrentHashMap<>(100);
 
 	private class Commit {
 

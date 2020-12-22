@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>CHANGEABLE</td>
-	<td>//label[contains(.,'Changeable')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Changeable')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -200,7 +200,7 @@
 </tr>
 <tr>
 	<td>ENABLE_LOCKOUT</td>
-	<td>//label[contains(.,'Enable Lockout')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Enable Lockout')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -475,7 +475,7 @@
 </tr>
 <tr>
 	<td>ENABLE_SYNTAX_CHECKING</td>
-	<td>//label[contains(.,'Enable Syntax Checking')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Enable Syntax Checking')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

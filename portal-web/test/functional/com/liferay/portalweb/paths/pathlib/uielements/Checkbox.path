@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>CHANGE_REQUIRED</td>
-	<td>//label[contains(.,'Change Required')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Change Required')]/input[@type='checkbox'] | //input[@type='checkbox' and contains(@name,'changeRequired')]</td>
 	<td></td>
 </tr>
 <tr>

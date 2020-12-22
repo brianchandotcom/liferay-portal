@@ -336,6 +336,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			"com.liferay.portlet.expando.model.",
 			"com.liferay.expando.kernel.model."
 		},
+		{"com.liferay.portlet.journal.model.", "com.liferay.journal.model."},
 		{
 			"com.liferay.portlet.messageboards.model.",
 			"com.liferay.message.boards.kernel.model."
@@ -363,6 +364,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		{"com.liferay.portlet.asset", "com.liferay.asset"},
 		{"com.liferay.portlet.blogs", "com.liferay.blogs"},
 		{"com.liferay.portlet.documentlibrary", "com.liferay.document.library"},
+		{"com.liferay.portlet.journal", "com.liferay.journal"},
 		{"com.liferay.portlet.messageboards", "com.liferay.message.boards"}
 	};
 

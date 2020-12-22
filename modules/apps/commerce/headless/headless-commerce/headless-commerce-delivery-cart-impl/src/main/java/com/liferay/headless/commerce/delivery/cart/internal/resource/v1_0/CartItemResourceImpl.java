@@ -99,6 +99,13 @@ public class CartItemResourceImpl
 	}
 
 	@Override
+	public CartItem patchCartItem(@NotNull Long cartItemId, CartItem cartItem)
+		throws Exception {
+
+		return super.patchCartItem(cartItemId, cartItem);
+	}
+
+	@Override
 	public CartItem postCartItem(@NotNull Long cartId, CartItem cartItem)
 		throws Exception {
 

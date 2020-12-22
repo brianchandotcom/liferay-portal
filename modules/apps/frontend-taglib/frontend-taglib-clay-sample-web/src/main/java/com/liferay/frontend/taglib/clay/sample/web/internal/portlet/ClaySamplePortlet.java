@@ -69,13 +69,6 @@ public class ClaySamplePortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.CARDS_DISPLAY_CONTEXT, cardsDisplayContext);
 
-		MultiSelectDisplayContext multiSelectDisplayContext =
-			new MultiSelectDisplayContext();
-
-		renderRequest.setAttribute(
-			ClaySamplePortletKeys.MULTI_SELECT_DISPLAY_CONTEXT,
-			multiSelectDisplayContext);
-
 		DropdownsDisplayContext dropdownsDisplayContext =
 			new DropdownsDisplayContext();
 
@@ -89,6 +82,13 @@ public class ClaySamplePortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT,
 			managementToolbarsDisplayContext);
+
+		MultiSelectDisplayContext multiSelectDisplayContext =
+			new MultiSelectDisplayContext();
+
+		renderRequest.setAttribute(
+			ClaySamplePortletKeys.MULTI_SELECT_DISPLAY_CONTEXT,
+			multiSelectDisplayContext);
 
 		NavigationBarsDisplayContext navigationBarsDisplayContext =
 			new NavigationBarsDisplayContext();

@@ -1,0 +1,9 @@
+buildscript {
+	dependencies {
+		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
+	}
+}
+
+setProperty("liferay.workspace.product", "portal-7.3-ga6")
+
+apply plugin: "com.liferay.workspace"

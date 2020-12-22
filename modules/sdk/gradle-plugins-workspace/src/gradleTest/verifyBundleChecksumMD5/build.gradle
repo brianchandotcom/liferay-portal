@@ -1,0 +1,16 @@
+task runGradleTest1
+
+gradle.liferayWorkspace {
+	bundleChecksumMD5 "107aa96e14fc9fe09886ad76212ec385"
+}
+
+runGradleTest1 {
+	dependsOn initBundle
+
+	doLast {
+		
+		File generatedFile = new File(initBundle.destinationDir);
+
+		assert !generatedFile.exists()
+	}
+}

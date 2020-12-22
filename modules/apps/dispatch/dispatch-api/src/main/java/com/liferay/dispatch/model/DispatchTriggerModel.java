@@ -223,6 +223,50 @@ public interface DispatchTriggerModel
 	public void setCronExpression(String cronExpression);
 
 	/**
+	 * Returns the dispatch task cluster mode of this dispatch trigger.
+	 *
+	 * @return the dispatch task cluster mode of this dispatch trigger
+	 */
+	public int getDispatchTaskClusterMode();
+
+	/**
+	 * Sets the dispatch task cluster mode of this dispatch trigger.
+	 *
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode of this dispatch trigger
+	 */
+	public void setDispatchTaskClusterMode(int dispatchTaskClusterMode);
+
+	/**
+	 * Returns the dispatch task executor type of this dispatch trigger.
+	 *
+	 * @return the dispatch task executor type of this dispatch trigger
+	 */
+	@AutoEscape
+	public String getDispatchTaskExecutorType();
+
+	/**
+	 * Sets the dispatch task executor type of this dispatch trigger.
+	 *
+	 * @param dispatchTaskExecutorType the dispatch task executor type of this dispatch trigger
+	 */
+	public void setDispatchTaskExecutorType(String dispatchTaskExecutorType);
+
+	/**
+	 * Returns the dispatch task settings of this dispatch trigger.
+	 *
+	 * @return the dispatch task settings of this dispatch trigger
+	 */
+	@AutoEscape
+	public String getDispatchTaskSettings();
+
+	/**
+	 * Sets the dispatch task settings of this dispatch trigger.
+	 *
+	 * @param dispatchTaskSettings the dispatch task settings of this dispatch trigger
+	 */
+	public void setDispatchTaskSettings(String dispatchTaskSettings);
+
+	/**
 	 * Returns the end date of this dispatch trigger.
 	 *
 	 * @return the end date of this dispatch trigger
@@ -306,49 +350,5 @@ public interface DispatchTriggerModel
 	 * @param system the system of this dispatch trigger
 	 */
 	public void setSystem(boolean system);
-
-	/**
-	 * Returns the task cluster mode of this dispatch trigger.
-	 *
-	 * @return the task cluster mode of this dispatch trigger
-	 */
-	public int getTaskClusterMode();
-
-	/**
-	 * Sets the task cluster mode of this dispatch trigger.
-	 *
-	 * @param taskClusterMode the task cluster mode of this dispatch trigger
-	 */
-	public void setTaskClusterMode(int taskClusterMode);
-
-	/**
-	 * Returns the task executor type of this dispatch trigger.
-	 *
-	 * @return the task executor type of this dispatch trigger
-	 */
-	@AutoEscape
-	public String getTaskExecutorType();
-
-	/**
-	 * Sets the task executor type of this dispatch trigger.
-	 *
-	 * @param taskExecutorType the task executor type of this dispatch trigger
-	 */
-	public void setTaskExecutorType(String taskExecutorType);
-
-	/**
-	 * Returns the task settings of this dispatch trigger.
-	 *
-	 * @return the task settings of this dispatch trigger
-	 */
-	@AutoEscape
-	public String getTaskSettings();
-
-	/**
-	 * Sets the task settings of this dispatch trigger.
-	 *
-	 * @param taskSettings the task settings of this dispatch trigger
-	 */
-	public void setTaskSettings(String taskSettings);
 
 }

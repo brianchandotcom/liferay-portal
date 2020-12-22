@@ -17,7 +17,6 @@ package com.liferay.dispatch.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
-import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -54,6 +53,18 @@ public class DispatchTriggerTable extends BaseTable<DispatchTriggerTable> {
 	public final Column<DispatchTriggerTable, String> cronExpression =
 		createColumn(
 			"cronExpression", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DispatchTriggerTable, Integer> dispatchTaskClusterMode =
+		createColumn(
+			"dispatchTaskClusterMode", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
+	public final Column<DispatchTriggerTable, String> dispatchTaskExecutorType =
+		createColumn(
+			"dispatchTaskExecutorType", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<DispatchTriggerTable, String> dispatchTaskSettings =
+		createColumn(
+			"dispatchTaskSettings", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, Date> endDate = createColumn(
 		"endDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, String> name = createColumn(
@@ -66,16 +77,6 @@ public class DispatchTriggerTable extends BaseTable<DispatchTriggerTable> {
 		"startDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, Boolean> system = createColumn(
 		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<DispatchTriggerTable, Integer> taskClusterMode =
-		createColumn(
-			"taskClusterMode", Integer.class, Types.INTEGER,
-			Column.FLAG_DEFAULT);
-	public final Column<DispatchTriggerTable, String> taskExecutorType =
-		createColumn(
-			"taskExecutorType", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<DispatchTriggerTable, Clob> taskSettings = createColumn(
-		"taskSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private DispatchTriggerTable() {
 		super("DispatchTrigger", DispatchTriggerTable::new);

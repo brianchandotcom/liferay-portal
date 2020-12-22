@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
-import java.util.HashMap;
+import java.io.Serializable;
+
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -34,7 +36,15 @@ import javax.ws.rs.core.UriInfo;
 public interface DTOConverterContext {
 
 	public default Map<String, Map<String, String>> getActions() {
-		return new HashMap<>();
+		return Collections.emptyMap();
+	}
+
+	public default Object getAttribute(String name) {
+		return null;
+	}
+
+	public default Map<String, Object> getAttributes() {
+		return Collections.emptyMap();
 	}
 
 	public default DTOConverterRegistry getDTOConverterRegistry() {
@@ -69,6 +79,16 @@ public interface DTOConverterContext {
 
 	public default boolean isAcceptAllLanguages() {
 		return true;
+	}
+
+	public default Object removeAttribute(String name) {
+		return null;
+	}
+
+	public default void setAttribute(String name, Object value) {
+	}
+
+	public default void setAttributes(Map<String, Serializable> attributes) {
 	}
 
 }

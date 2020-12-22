@@ -17,4 +17,8 @@ import ReactDOM from 'react-dom';
 
 import App from './js/App.es';
 
+/* Bug with SwaggerUI: https://github.com/agoncal/swagger-ui-angular6/issues/2 */
+/* eslint-disable-next-line no-undef */
+window.Buffer = window.Buffer || require('buffer').Buffer;
+
 ReactDOM.render(<App />, document.getElementById('container'));

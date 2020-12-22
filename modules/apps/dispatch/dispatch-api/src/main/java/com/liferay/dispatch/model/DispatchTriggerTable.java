@@ -17,6 +17,7 @@ package com.liferay.dispatch.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -61,9 +62,9 @@ public class DispatchTriggerTable extends BaseTable<DispatchTriggerTable> {
 		createColumn(
 			"dispatchTaskExecutorType", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<DispatchTriggerTable, String> dispatchTaskSettings =
+	public final Column<DispatchTriggerTable, Clob> dispatchTaskSettings =
 		createColumn(
-			"dispatchTaskSettings", String.class, Types.VARCHAR,
+			"dispatchTaskSettings", Clob.class, Types.CLOB,
 			Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, Date> endDate = createColumn(
 		"endDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);

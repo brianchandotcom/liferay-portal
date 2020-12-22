@@ -206,7 +206,9 @@ public class DispatchTriggerCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		dispatchTriggerId = objectInput.readLong();
@@ -223,7 +225,7 @@ public class DispatchTriggerCacheModel
 
 		dispatchTaskClusterMode = objectInput.readInt();
 		dispatchTaskExecutorType = objectInput.readUTF();
-		dispatchTaskSettings = objectInput.readUTF();
+		dispatchTaskSettings = (String)objectInput.readObject();
 		endDate = objectInput.readLong();
 		name = objectInput.readUTF();
 
@@ -272,10 +274,10 @@ public class DispatchTriggerCacheModel
 		}
 
 		if (dispatchTaskSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(dispatchTaskSettings);
+			objectOutput.writeObject(dispatchTaskSettings);
 		}
 
 		objectOutput.writeLong(endDate);

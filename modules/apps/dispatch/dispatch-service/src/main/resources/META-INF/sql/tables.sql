@@ -26,7 +26,7 @@ create table DispatchTrigger (
 	cronExpression VARCHAR(75) null,
 	dispatchTaskClusterMode INTEGER,
 	dispatchTaskExecutorType VARCHAR(75) null,
-	dispatchTaskSettings VARCHAR(75) null,
+	dispatchTaskSettings TEXT null,
 	endDate DATE null,
 	name VARCHAR(75) null,
 	overlapAllowed BOOLEAN,

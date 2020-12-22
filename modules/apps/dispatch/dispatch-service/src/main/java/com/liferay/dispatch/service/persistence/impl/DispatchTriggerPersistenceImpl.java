@@ -2974,6 +2974,253 @@ public class DispatchTriggerPersistenceImpl
 		_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3 =
 			"(dispatchTrigger.dispatchTaskExecutorType IS NULL OR dispatchTrigger.dispatchTaskExecutorType = '')";
 
+	private FinderPath _finderPathFetchByC_N;
+	private FinderPath _finderPathCountByC_N;
+
+	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching dispatch trigger
+	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public DispatchTrigger findByC_N(long companyId, String name)
+		throws NoSuchTriggerException {
+
+		DispatchTrigger dispatchTrigger = fetchByC_N(companyId, name);
+
+		if (dispatchTrigger == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", name=");
+			sb.append(name);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchTriggerException(sb.toString());
+		}
+
+		return dispatchTrigger;
+	}
+
+	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public DispatchTrigger fetchByC_N(long companyId, String name) {
+		return fetchByC_N(companyId, name, true);
+	}
+
+	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public DispatchTrigger fetchByC_N(
+		long companyId, String name, boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(_finderPathFetchByC_N, finderArgs);
+		}
+
+		if (result instanceof DispatchTrigger) {
+			DispatchTrigger dispatchTrigger = (DispatchTrigger)result;
+
+			if ((companyId != dispatchTrigger.getCompanyId()) ||
+				!Objects.equals(name, dispatchTrigger.getName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				List<DispatchTrigger> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_N, finderArgs, list);
+					}
+				}
+				else {
+					DispatchTrigger dispatchTrigger = list.get(0);
+
+					result = dispatchTrigger;
+
+					cacheResult(dispatchTrigger);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (DispatchTrigger)result;
+		}
+	}
+
+	/**
+	 * Removes the dispatch trigger where companyId = &#63; and name = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the dispatch trigger that was removed
+	 */
+	@Override
+	public DispatchTrigger removeByC_N(long companyId, String name)
+		throws NoSuchTriggerException {
+
+		DispatchTrigger dispatchTrigger = findByC_N(companyId, name);
+
+		return remove(dispatchTrigger);
+	}
+
+	/**
+	 * Returns the number of dispatch triggers where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the number of matching dispatch triggers
+	 */
+	@Override
+	public int countByC_N(long companyId, String name) {
+		name = Objects.toString(name, "");
+
+		FinderPath finderPath = _finderPathCountByC_N;
+
+		Object[] finderArgs = new Object[] {companyId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_DISPATCHTRIGGER_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
+		"dispatchTrigger.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_N_NAME_2 =
+		"dispatchTrigger.name = ?";
+
+	private static final String _FINDER_COLUMN_C_N_NAME_3 =
+		"(dispatchTrigger.name IS NULL OR dispatchTrigger.name = '')";
+
 	private FinderPath _finderPathWithPaginationFindByA_DTCM;
 	private FinderPath _finderPathWithoutPaginationFindByA_DTCM;
 	private FinderPath _finderPathCountByA_DTCM;
@@ -4446,253 +4693,6 @@ public class DispatchTriggerPersistenceImpl
 		_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7 =
 			"dispatchTrigger.dispatchTaskClusterMode IN (";
 
-	private FinderPath _finderPathFetchByC_N;
-	private FinderPath _finderPathCountByC_N;
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger findByC_N(long companyId, String name)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByC_N(companyId, name);
-
-		if (dispatchTrigger == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchTriggerException(sb.toString());
-		}
-
-		return dispatchTrigger;
-	}
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByC_N(long companyId, String name) {
-		return fetchByC_N(companyId, name, true);
-	}
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	@Override
-	public DispatchTrigger fetchByC_N(
-		long companyId, String name, boolean useFinderCache) {
-
-		name = Objects.toString(name, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, name};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByC_N, finderArgs);
-		}
-
-		if (result instanceof DispatchTrigger) {
-			DispatchTrigger dispatchTrigger = (DispatchTrigger)result;
-
-			if ((companyId != dispatchTrigger.getCompanyId()) ||
-				!Objects.equals(name, dispatchTrigger.getName())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				List<DispatchTrigger> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_N, finderArgs, list);
-					}
-				}
-				else {
-					DispatchTrigger dispatchTrigger = list.get(0);
-
-					result = dispatchTrigger;
-
-					cacheResult(dispatchTrigger);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (DispatchTrigger)result;
-		}
-	}
-
-	/**
-	 * Removes the dispatch trigger where companyId = &#63; and name = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the dispatch trigger that was removed
-	 */
-	@Override
-	public DispatchTrigger removeByC_N(long companyId, String name)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = findByC_N(companyId, name);
-
-		return remove(dispatchTrigger);
-	}
-
-	/**
-	 * Returns the number of dispatch triggers where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the number of matching dispatch triggers
-	 */
-	@Override
-	public int countByC_N(long companyId, String name) {
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = _finderPathCountByC_N;
-
-		Object[] finderArgs = new Object[] {companyId, name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
-		"dispatchTrigger.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_2 =
-		"dispatchTrigger.name = ?";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_3 =
-		"(dispatchTrigger.name IS NULL OR dispatchTrigger.name = '')";
-
 	public DispatchTriggerPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -5324,6 +5324,16 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "dispatchTaskExecutorType"}, false);
 
+		_finderPathFetchByC_N = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "name"}, true);
+
+		_finderPathCountByC_N = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "name"}, false);
+
 		_finderPathWithPaginationFindByA_DTCM = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_DTCM",
 			new String[] {
@@ -5347,16 +5357,6 @@ public class DispatchTriggerPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_DTCM",
 			new String[] {Boolean.class.getName(), Integer.class.getName()},
 			new String[] {"active_", "dispatchTaskClusterMode"}, false);
-
-		_finderPathFetchByC_N = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
-
-		_finderPathCountByC_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false);
 	}
 
 	@Deactivate

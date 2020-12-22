@@ -927,6 +927,69 @@ public class DispatchTriggerUtil {
 	}
 
 	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching dispatch trigger
+	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger findByC_N(long companyId, String name)
+		throws com.liferay.dispatch.exception.NoSuchTriggerException {
+
+		return getPersistence().findByC_N(companyId, name);
+	}
+
+	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger fetchByC_N(long companyId, String name) {
+		return getPersistence().fetchByC_N(companyId, name);
+	}
+
+	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger fetchByC_N(
+		long companyId, String name, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_N(companyId, name, useFinderCache);
+	}
+
+	/**
+	 * Removes the dispatch trigger where companyId = &#63; and name = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the dispatch trigger that was removed
+	 */
+	public static DispatchTrigger removeByC_N(long companyId, String name)
+		throws com.liferay.dispatch.exception.NoSuchTriggerException {
+
+		return getPersistence().removeByC_N(companyId, name);
+	}
+
+	/**
+	 * Returns the number of dispatch triggers where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the number of matching dispatch triggers
+	 */
+	public static int countByC_N(long companyId, String name) {
+		return getPersistence().countByC_N(companyId, name);
+	}
+
+	/**
 	 * Returns all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
@@ -1374,69 +1437,6 @@ public class DispatchTriggerUtil {
 
 		return getPersistence().filterCountByA_DTCM(
 			active, dispatchTaskClusterModes);
-	}
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public static DispatchTrigger findByC_N(long companyId, String name)
-		throws com.liferay.dispatch.exception.NoSuchTriggerException {
-
-		return getPersistence().findByC_N(companyId, name);
-	}
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public static DispatchTrigger fetchByC_N(long companyId, String name) {
-		return getPersistence().fetchByC_N(companyId, name);
-	}
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public static DispatchTrigger fetchByC_N(
-		long companyId, String name, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_N(companyId, name, useFinderCache);
-	}
-
-	/**
-	 * Removes the dispatch trigger where companyId = &#63; and name = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the dispatch trigger that was removed
-	 */
-	public static DispatchTrigger removeByC_N(long companyId, String name)
-		throws com.liferay.dispatch.exception.NoSuchTriggerException {
-
-		return getPersistence().removeByC_N(companyId, name);
-	}
-
-	/**
-	 * Returns the number of dispatch triggers where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the number of matching dispatch triggers
-	 */
-	public static int countByC_N(long companyId, String name) {
-		return getPersistence().countByC_N(companyId, name);
 	}
 
 	/**

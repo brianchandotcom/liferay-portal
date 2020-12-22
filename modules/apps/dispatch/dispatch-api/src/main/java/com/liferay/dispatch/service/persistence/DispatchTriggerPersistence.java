@@ -703,6 +703,56 @@ public interface DispatchTriggerPersistence
 		long companyId, String dispatchTaskExecutorType);
 
 	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching dispatch trigger
+	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
+	 */
+	public DispatchTrigger findByC_N(long companyId, String name)
+		throws NoSuchTriggerException;
+
+	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	public DispatchTrigger fetchByC_N(long companyId, String name);
+
+	/**
+	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	public DispatchTrigger fetchByC_N(
+		long companyId, String name, boolean useFinderCache);
+
+	/**
+	 * Removes the dispatch trigger where companyId = &#63; and name = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the dispatch trigger that was removed
+	 */
+	public DispatchTrigger removeByC_N(long companyId, String name)
+		throws NoSuchTriggerException;
+
+	/**
+	 * Returns the number of dispatch triggers where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the number of matching dispatch triggers
+	 */
+	public int countByC_N(long companyId, String name);
+
+	/**
 	 * Returns all the dispatch triggers where active = &#63; and dispatchTaskClusterMode = &#63;.
 	 *
 	 * @param active the active
@@ -1060,56 +1110,6 @@ public interface DispatchTriggerPersistence
 	 */
 	public int filterCountByA_DTCM(
 		boolean active, int[] dispatchTaskClusterModes);
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or throws a <code>NoSuchTriggerException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching dispatch trigger
-	 * @throws NoSuchTriggerException if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger findByC_N(long companyId, String name)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByC_N(long companyId, String name);
-
-	/**
-	 * Returns the dispatch trigger where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
-	 */
-	public DispatchTrigger fetchByC_N(
-		long companyId, String name, boolean useFinderCache);
-
-	/**
-	 * Removes the dispatch trigger where companyId = &#63; and name = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the dispatch trigger that was removed
-	 */
-	public DispatchTrigger removeByC_N(long companyId, String name)
-		throws NoSuchTriggerException;
-
-	/**
-	 * Returns the number of dispatch triggers where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the number of matching dispatch triggers
-	 */
-	public int countByC_N(long companyId, String name);
 
 	/**
 	 * Caches the dispatch trigger in the entity cache if it is enabled.

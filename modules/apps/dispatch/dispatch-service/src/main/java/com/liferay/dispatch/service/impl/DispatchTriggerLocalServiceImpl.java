@@ -306,7 +306,7 @@ public class DispatchTriggerLocalServiceImpl
 		validate(dispatchTriggerId, dispatchTrigger.getCompanyId(), name);
 
 		dispatchTrigger.setName(name);
-		dispatchTrigger.setTaskSettingsUnicodeProperties(
+		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
 			taskSettingsUnicodeProperties);
 
 		return dispatchTriggerPersistence.update(dispatchTrigger);

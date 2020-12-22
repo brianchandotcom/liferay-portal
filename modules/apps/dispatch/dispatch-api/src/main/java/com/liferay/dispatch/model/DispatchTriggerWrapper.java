@@ -242,6 +242,13 @@ public class DispatchTriggerWrapper
 		return model.getDispatchTaskSettings();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getDispatchTaskSettingsUnicodeProperties() {
+
+		return model.getDispatchTaskSettingsUnicodeProperties();
+	}
+
 	/**
 	 * Returns the dispatch trigger ID of this dispatch trigger.
 	 *
@@ -330,13 +337,6 @@ public class DispatchTriggerWrapper
 	@Override
 	public boolean getSystem() {
 		return model.getSystem();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTaskSettingsUnicodeProperties() {
-
-		return model.getTaskSettingsUnicodeProperties();
 	}
 
 	/**
@@ -474,6 +474,15 @@ public class DispatchTriggerWrapper
 		model.setDispatchTaskSettings(dispatchTaskSettings);
 	}
 
+	@Override
+	public void setDispatchTaskSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			dispatchTaskSettingsUnicodeProperties) {
+
+		model.setDispatchTaskSettingsUnicodeProperties(
+			dispatchTaskSettingsUnicodeProperties);
+	}
+
 	/**
 	 * Sets the dispatch trigger ID of this dispatch trigger.
 	 *
@@ -562,19 +571,6 @@ public class DispatchTriggerWrapper
 	@Override
 	public void setSystem(boolean system) {
 		model.setSystem(system);
-	}
-
-	@Override
-	public void setTaskSettings(String taskSettings) {
-		model.setTaskSettings(taskSettings);
-	}
-
-	@Override
-	public void setTaskSettingsUnicodeProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			taskSettingsUnicodeProperties) {
-
-		model.setTaskSettingsUnicodeProperties(taskSettingsUnicodeProperties);
 	}
 
 	/**

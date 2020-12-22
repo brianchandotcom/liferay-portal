@@ -80,7 +80,7 @@ public class DispatchTriggerModelImpl
 		{"cronExpression", Types.VARCHAR},
 		{"dispatchTaskClusterMode", Types.INTEGER},
 		{"dispatchTaskExecutorType", Types.VARCHAR},
-		{"dispatchTaskSettings", Types.VARCHAR}, {"endDate", Types.TIMESTAMP},
+		{"dispatchTaskSettings", Types.CLOB}, {"endDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"overlapAllowed", Types.BOOLEAN},
 		{"startDate", Types.TIMESTAMP}, {"system_", Types.BOOLEAN}
 	};
@@ -100,7 +100,7 @@ public class DispatchTriggerModelImpl
 		TABLE_COLUMNS_MAP.put("cronExpression", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dispatchTaskClusterMode", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("dispatchTaskExecutorType", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("dispatchTaskSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dispatchTaskSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("endDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("overlapAllowed", Types.BOOLEAN);
@@ -109,7 +109,7 @@ public class DispatchTriggerModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,dispatchTaskClusterMode INTEGER,dispatchTaskExecutorType VARCHAR(75) null,dispatchTaskSettings VARCHAR(75) null,endDate DATE null,name VARCHAR(75) null,overlapAllowed BOOLEAN,startDate DATE null,system_ BOOLEAN)";
+		"create table DispatchTrigger (mvccVersion LONG default 0 not null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,dispatchTaskClusterMode INTEGER,dispatchTaskExecutorType VARCHAR(75) null,dispatchTaskSettings TEXT null,endDate DATE null,name VARCHAR(75) null,overlapAllowed BOOLEAN,startDate DATE null,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchTrigger";
 

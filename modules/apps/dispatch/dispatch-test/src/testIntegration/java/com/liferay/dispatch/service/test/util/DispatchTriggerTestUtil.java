@@ -381,8 +381,8 @@ public class DispatchTriggerTestUtil {
 			}
 
 			@Override
-			public void setTaskSettingsUnicodeProperties(
-				UnicodeProperties taskSettingsUnicodeProperties) {
+			public void setDispatchTaskSettingsUnicodeProperties(
+				UnicodeProperties dispatchTaskSettingsUnicodeProperties) {
 
 				throw new UnsupportedOperationException();
 			}

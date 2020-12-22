@@ -265,13 +265,9 @@ export default class Blogs {
 		return this._rootNode.querySelectorAll('img[data-random-id]');
 	}
 
-	_hasTempImages() {
-		return this._getTempImages().length > 0;
-	}
-
 	_initDraftSaveInterval() {
 		this._saveDraftTimer = setInterval(() => {
-			if (!this._hasTempImages()) {
+			if (!this._getTempImages().length) {
 				this._saveEntry(true, true);
 			}
 		}, this._config.saveInterval);

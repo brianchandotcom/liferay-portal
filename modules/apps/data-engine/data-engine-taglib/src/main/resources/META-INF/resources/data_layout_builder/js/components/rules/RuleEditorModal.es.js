@@ -20,7 +20,6 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {fetch} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 
-import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
 import {Editor} from '../rule-builder/editor/Editor.es';
 
 function getTransformedPages(pages) {
@@ -163,7 +162,7 @@ const RuleEditorModalContent = ({
 	);
 };
 
-const RuleEditorModal = ({
+export default ({
 	functionsMetadata,
 	functionsURL,
 	isVisible,
@@ -197,9 +196,3 @@ const RuleEditorModal = ({
 		</ClayModal>
 	);
 };
-
-export default (props) => (
-	<ModalWithEventPrevented>
-		<RuleEditorModal {...props} />
-	</ModalWithEventPrevented>
-);

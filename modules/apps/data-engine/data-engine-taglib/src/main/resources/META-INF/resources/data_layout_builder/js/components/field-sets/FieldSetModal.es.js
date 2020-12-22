@@ -28,7 +28,6 @@ import {
 	containsField,
 	isDataLayoutEmpty,
 } from '../../utils/dataLayoutVisitor.es';
-import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
 import TranslationManager from '../translation-manager/TranslationManager.es';
 import useCreateFieldSet from './actions/useCreateFieldSet.es';
 import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
@@ -261,7 +260,7 @@ const ModalContent = ({
 	);
 };
 
-const FieldSetModal = ({isVisible, onClose: onCloseFn, ...props}) => {
+export default ({isVisible, onClose: onCloseFn, ...props}) => {
 	const {observer, onClose} = useModal({
 		onClose: onCloseFn,
 	});
@@ -280,9 +279,3 @@ const FieldSetModal = ({isVisible, onClose: onCloseFn, ...props}) => {
 		</ClayModal>
 	);
 };
-
-export default (props) => (
-	<ModalWithEventPrevented>
-		<FieldSetModal {...props} />
-	</ModalWithEventPrevented>
-);

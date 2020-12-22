@@ -70,7 +70,7 @@ const getFieldTypes = ({
 }) => {
 	const customDataDefinitionFields = [];
 	const nativeDataDefinitionFields = [];
-	const {dataLayoutFields, dataLayoutPages} = dataLayout;
+	const {dataLayoutPages} = dataLayout;
 	const {dataDefinitionFields: fields, defaultLanguageId} = dataDefinition;
 
 	const setDefinitionField = (
@@ -97,9 +97,6 @@ const getFieldTypes = ({
 
 		const isFieldGroup = fieldType === 'fieldset';
 		const isFieldSet = isFieldGroup && ddmStructureId;
-
-		const {required: requiredAtObjectLevel = true} =
-			dataLayoutFields[name] || {};
 
 		const FieldTypeLabel = isFieldSet
 			? Liferay.Language.get('fieldset')
@@ -150,7 +147,7 @@ const getFieldTypes = ({
 			nestedDataDefinitionFields: nestedDataDefinitionFields.map(
 				(nestedField) => setDefinitionField(nestedField, true)
 			),
-			required: required && requiredAtObjectLevel,
+			required,
 		};
 
 		if (nested) {

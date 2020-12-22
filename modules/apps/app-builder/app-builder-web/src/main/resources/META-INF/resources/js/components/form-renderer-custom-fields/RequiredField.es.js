@@ -13,58 +13,74 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {ClayRadio, ClayToggle} from '@clayui/form';
+import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {
-	DataDefinitionUtils,
-	DataLayoutBuilderActions,
-} from 'data-engine-taglib';
+import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import isClickOutside from '../../utils/clickOutside.es';
+
+const FORM_VIEW_LEVEL = 'form-view-level';
+const OBJECT_VIEW_LEVEL = 'object-view-level';
+
+const VIEW_LEVEL = {
+	[FORM_VIEW_LEVEL]: {
+		label: Liferay.Language.get('only-for-this-form'),
+	},
+	[OBJECT_VIEW_LEVEL]: {
+		disabled: true,
+		label: Liferay.Language.get('for-all-forms-of-this-object'),
+	},
+};
+
+function getRequiredAtFormViewLevel(dataLayoutFields, fieldName) {
+	return dataLayoutFields[fieldName]?.required ?? false;
+}
 
 export default ({AppContext, dataLayoutBuilder}) => {
 	const popoverRef = useRef(null);
 	const triggerRef = useRef(null);
 	const [showPopover, setShowPopover] = useState(false);
+	const [selectedViewLevel, setSelectedViewLevel] = useState(FORM_VIEW_LEVEL);
 	const [
 		{
-			dataDefinition,
 			dataLayout: {dataLayoutFields},
-			focusedField: {fieldName: focusedFieldName},
+			focusedField: {fieldName},
 		},
 		dispatch,
 	] = useContext(AppContext);
 
-	const dataDefinitionField = DataDefinitionUtils.getDataDefinitionField(
-		dataDefinition,
-		focusedFieldName
+	const requiredAtFormViewLevel = getRequiredAtFormViewLevel(
+		dataLayoutFields,
+		fieldName
 	);
 
-	const {required = false} = dataLayoutFields[focusedFieldName] || {};
-	const objectLevelRequired = required && dataDefinitionField.required;
+	function setRequireAtFormViewLevel(toggle) {
 
-	const onToggleRequired = (value) => {
+		// Mark as required within an edited field in the data engine
+
 		dispatch({
 			payload: {
 				dataLayoutFields: {
 					...dataLayoutFields,
-					[focusedFieldName]: {
-						...dataLayoutFields[focusedFieldName],
-						required: value,
+					[fieldName]: {
+						...dataLayoutFields[fieldName],
+						required: toggle,
 					},
 				},
 			},
 			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_FIELDS,
 		});
 
+		// Mark as required within an edited field in the form builder
+
 		dataLayoutBuilder.dispatch('fieldEdited', {
-			fieldName: focusedFieldName,
+			fieldName,
 			propertyName: 'required',
-			propertyValue: value,
+			propertyValue: toggle,
 		});
-	};
+	}
 
 	useEffect(() => {
 		const handler = ({target}) => {
@@ -89,15 +105,15 @@ export default ({AppContext, dataLayoutBuilder}) => {
 			<ClayForm.Group className="form-renderer-required-field__toggle">
 				<ClayToggle
 					label={Liferay.Language.get('required-field')}
-					onToggle={onToggleRequired}
-					toggled={required}
+					onToggle={setRequireAtFormViewLevel}
+					toggled={requiredAtFormViewLevel}
 				/>
 			</ClayForm.Group>
 
 			<ClayTooltipProvider>
 				<ClayButtonWithIcon
 					borderless
-					disabled={!required}
+					disabled={!requiredAtFormViewLevel}
 					displayType="secondary"
 					onClick={() => setShowPopover(!showPopover)}
 					ref={triggerRef}
@@ -116,22 +132,18 @@ export default ({AppContext, dataLayoutBuilder}) => {
 				show={showPopover}
 			>
 				<div className="mt-2">
-					<ClayRadio
-						defaultChecked={!objectLevelRequired}
-						label={Liferay.Language.get('only-for-this-form')}
-						name="required-level"
-						value="view-level"
-					/>
-
-					<ClayRadio
-						defaultChecked={objectLevelRequired}
-						disabled
-						label={Liferay.Language.get(
-							'for-all-forms-of-this-object'
-						)}
-						name="required-level"
-						value="object-level"
-					/>
+					<ClayRadioGroup
+						onSelectedValueChange={setSelectedViewLevel}
+						selectedValue={selectedViewLevel}
+					>
+						{Object.keys(VIEW_LEVEL).map((key) => (
+							<ClayRadio
+								key={key}
+								value={key}
+								{...VIEW_LEVEL[key]}
+							/>
+						))}
+					</ClayRadioGroup>
 				</div>
 			</ClayPopover>
 		</div>

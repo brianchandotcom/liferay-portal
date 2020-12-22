@@ -12,10 +12,8 @@
  * details.
  */
 
-import React from 'react';
-
 import RequiredField from '../components/form-renderer-custom-fields/RequiredField.es';
 
 export default {
-	required: (props) => <RequiredField {...props} />,
+	required: RequiredField,
 };

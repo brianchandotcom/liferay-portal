@@ -809,64 +809,6 @@ paths:
             summary: Updates a Shipment by ID.
             tags:
                 - Shipment
-    /shipments/{shipmentId}/status-delivered:
-        post:
-            operationId: postShipmentStatusDelivered
-            parameters:
-                - in: path
-                  explode: false
-                  name: shipmentId
-                  required: true
-                  schema:
-                      description:
-                          The shipment resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Shipment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Shipment"
-                    description:
-                        ""
-            tags:
-                - Shipment
-    /shipments/{shipmentId}/status-finish-processing:
-        post:
-            operationId: postShipmentStatusFinishProcessing
-            parameters:
-                - in: path
-                  explode: false
-                  name: shipmentId
-                  required: true
-                  schema:
-                      description:
-                          The shipment resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Shipment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Shipment"
-                    description:
-                        ""
-            tags:
-                - Shipment
     /shipments/{shipmentId}/items:
         get:
             operationId: getShipmentItemsPage
@@ -1031,35 +973,6 @@ paths:
             summary: Creates a Shipment Item.
             tags:
                 - ShipmentItem
-    /shipments/{shipmentId}/status-shipped:
-        post:
-            operationId: postShipmentStatusShipped
-            parameters:
-                - in: path
-                  explode: false
-                  name: shipmentId
-                  required: true
-                  schema:
-                      description:
-                          The shipment resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Shipment"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Shipment"
-                    description:
-                        ""
-            tags:
-                - Shipment
     /shipments/{shipmentId}/shipping-address:
         get:
             operationId: getShipmentShippingAddress
@@ -1202,6 +1115,93 @@ paths:
             summary: Updates a Shipping Address by ID.
             tags:
                 - ShippingAddress
+    /shipments/{shipmentId}/status-delivered:
+        post:
+            operationId: postShipmentStatusDelivered
+            parameters:
+                - in: path
+                  explode: false
+                  name: shipmentId
+                  required: true
+                  schema:
+                      description:
+                          The shipment resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Shipment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Shipment"
+                    description:
+                        ""
+            tags:
+                - Shipment
+    /shipments/{shipmentId}/status-finish-processing:
+        post:
+            operationId: postShipmentStatusFinishProcessing
+            parameters:
+                - in: path
+                  explode: false
+                  name: shipmentId
+                  required: true
+                  schema:
+                      description:
+                          The shipment resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Shipment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Shipment"
+                    description:
+                        ""
+            tags:
+                - Shipment
+    /shipments/{shipmentId}/status-shipped:
+        post:
+            operationId: postShipmentStatusShipped
+            parameters:
+                - in: path
+                  explode: false
+                  name: shipmentId
+                  required: true
+                  schema:
+                      description:
+                          The shipment resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Shipment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Shipment"
+                    description:
+                        ""
+            tags:
+                - Shipment
 servers:
     - description:
           SwaggerHub API Auto Mocking

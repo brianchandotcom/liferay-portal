@@ -18,9 +18,7 @@ import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
@@ -33,6 +31,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -136,7 +136,9 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	}
 
 	@Override
-	public Shipment postShipmentStatusDelivered(Long shipmentId) throws Exception {
+	public Shipment postShipmentStatusDelivered(Long shipmentId)
+		throws Exception {
+
 		return _toShipment(
 			_commerceShipmentService.updateStatus(
 				shipmentId,
@@ -154,7 +156,9 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	}
 
 	@Override
-	public Shipment postShipmentStatusShipped(Long shipmentId) throws Exception {
+	public Shipment postShipmentStatusShipped(Long shipmentId)
+		throws Exception {
+
 		return _toShipment(
 			_commerceShipmentService.updateStatus(
 				shipmentId, CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED));
@@ -226,10 +230,10 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 		ShippingAddress shippingAddress = shipment.getShippingAddress();
 
 		if (shippingAddress != null) {
-			ShippingAddressUtil.upsertShippingAddress(
-				_commerceAddressService, _commerceCountryService,
-				_commerceRegionService, _commerceShipmentService,
-				commerceShipment, shippingAddress, _serviceContextHelper);
+			ShippingAddressUtil.updateShippingAddress(
+				_commerceAddressService, _commerceShipmentService,
+				commerceShipment, _countryService, _regionService,
+				shippingAddress, _serviceContextHelper);
 		}
 	}
 
@@ -274,19 +278,19 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
 	private CommerceOrderService _commerceOrderService;
-
-	@Reference
-	private CommerceRegionService _commerceRegionService;
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
 
 	@Reference
+	private CountryService _countryService;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private RegionService _regionService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

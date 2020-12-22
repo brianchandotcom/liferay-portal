@@ -146,6 +146,12 @@ definition {
 				ItemSelector.addVideoFromDM(
 					navTab = "${navTab}",
 					videoShortcutTitle = "${videoShortcutTitle}");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+				Pause(locator1 = "5000");
+
+				DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
 			}
 			else {
 				ItemSelector.addVideoFromURL(

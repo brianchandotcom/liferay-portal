@@ -51,6 +51,10 @@ definition {
 					depotName = "${depotName}",
 					navTab = "${navTab}",
 					videoShortcutTitle = "${videoShortcutTitle}");
+
+				Pause(locator1 = "5000");
+
+				DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
 			}
 			else {
 				ItemSelector.addVideoFromURL(

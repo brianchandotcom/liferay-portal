@@ -32,6 +32,7 @@ definition {
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}",
 			navTab = "${navTab}",
+			videoName = "${videoName}",
 			videoService = "${videoService}",
 			videoShortcutTitle = "${videoShortcutTitle}");
 

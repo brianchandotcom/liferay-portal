@@ -37,7 +37,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 %>
 
 <clay:container-fluid
-	cssClass="mt-4"
+	cssClass="container-view"
 >
 	<div class="lfr-search-container-wrapper">
 		<ul class="card-page card-page-equal-height">
@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 			for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : masterLayoutPageTemplateEntries) {
 			%>
 
-				<li class="card-page-item col-md-4 col-sm-6">
+				<li class="card-page-item card-page-item-asset">
 
 					<%
 					SelectLayoutPageTemplateEntryMasterLayoutVerticalCard selectLayoutPageTemplateEntryMasterLayoutVerticalCard = new SelectLayoutPageTemplateEntryMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse);

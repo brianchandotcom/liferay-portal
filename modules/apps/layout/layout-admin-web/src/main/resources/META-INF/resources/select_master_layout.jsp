@@ -24,17 +24,19 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPageTemplateEntryDisplayContext.getMasterLayoutPageTemplateEntries();
 %>
 
-<aui:form cssClass="container-fluid container-fluid-max-xl mt-3" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
 	<ul class="card-page card-page-equal-height">
 
 		<%
 		for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : masterLayoutPageTemplateEntries) {
 		%>
 
-			<li class="card-page-item col-md-3 col-sm-6 form-check-card">
-				<clay:vertical-card
-					verticalCard="<%= new SelectMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest) %>"
-				/>
+			<li class="card-page-item card-page-item-asset">
+				<div class="form-check form-check-card">
+					<clay:vertical-card
+						verticalCard="<%= new SelectMasterLayoutVerticalCard(masterLayoutPageTemplateEntry, renderRequest) %>"
+					/>
+				</div>
 			</li>
 
 		<%

@@ -33,22 +33,26 @@ StyleBookEntry layoutStyleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleB
 List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayContext.getStyleBookEntries();
 %>
 
-<aui:form cssClass="container-fluid container-fluid-max-xl mt-3" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
 	<ul class="card-page card-page-equal-height">
-		<li class="card-page-item col-md-3 col-sm-6 form-check-card">
-			<clay:vertical-card
-				verticalCard="<%= new DefaultStylebookLayoutVerticalCard(defaultStyleBookLabel, layoutStyleBookEntry, renderRequest) %>"
-			/>
+		<li class="card-page-item card-page-item-asset">
+			<div class="form-check form-check-card">
+				<clay:vertical-card
+					verticalCard="<%= new DefaultStylebookLayoutVerticalCard(defaultStyleBookLabel, layoutStyleBookEntry, renderRequest) %>"
+				/>
+			</div>
 		</li>
 
 		<%
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {
 		%>
 
-			<li class="card-page-item col-md-3 col-sm-6 form-check-card">
-				<clay:vertical-card
-					verticalCard="<%= new SelectStylebookLayoutVerticalCard(styleBookEntry, renderRequest) %>"
-				/>
+			<li class="card-page-item card-page-item-asset">
+				<div class="form-check form-check-card">
+					<clay:vertical-card
+						verticalCard="<%= new SelectStylebookLayoutVerticalCard(styleBookEntry, renderRequest) %>"
+					/>
+				</div>
 			</li>
 
 		<%

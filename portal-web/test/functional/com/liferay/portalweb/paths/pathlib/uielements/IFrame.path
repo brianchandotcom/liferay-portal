@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>EMBEDDED_VIDEO_IFRAME</td>
-	<td>//iframe[contains(@src,'embed')]</td>
+	<td>//iframe[contains(@src,'Embed')]</td>
 	<td></td>
 </tr>
 <tr>

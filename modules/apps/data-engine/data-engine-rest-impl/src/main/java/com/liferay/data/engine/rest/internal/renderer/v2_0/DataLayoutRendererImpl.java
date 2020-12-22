@@ -68,8 +68,10 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 	}
 
 	private DDMFormRenderingContext _toDDMFormRenderingContext(
-		Long dataLayoutId, DataLayoutRendererContext dataLayoutRendererContext,
-		DDMForm ddmForm, long groupId) {
+			Long dataLayoutId,
+			DataLayoutRendererContext dataLayoutRendererContext,
+			DDMForm ddmForm, long groupId)
+		throws Exception {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
@@ -94,8 +96,7 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 			StringPool.BLANK);
 
 		if (Validator.isNull(languageId)) {
-			locale = _portal.getLocale(
-				dataLayoutRendererContext.getHttpServletRequest());
+			locale = _portal.getSiteDefaultLocale(groupId);
 		}
 		else {
 			locale = LocaleUtil.fromLanguageId(languageId);

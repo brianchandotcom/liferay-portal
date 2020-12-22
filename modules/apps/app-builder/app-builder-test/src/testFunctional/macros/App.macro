@@ -30,6 +30,18 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
+	macro assertWorkflowColumnPresent {
+		AssertElementPresent(
+			key_workflowColumnName = "${workflowColumnName}",
+			locator1 = "AppBuilder#WORKFLOW_COLUMN");
+	}
+
+	macro assertWorkflowSelected {
+		AssertElementPresent(
+			key_itemName = "${workflowName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_SELECTED");
+	}
+
 	macro clickDeploy {
 		Button.click(button = "Deploy");
 		App.waitForDeployButtonNotVisible();

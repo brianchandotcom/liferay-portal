@@ -52,6 +52,16 @@
 	<td>xpath=(//div[contains(@class,'app-builder-control-menu')] | //div[contains(@class,'control-menu')]//*[contains(@class,'lexicon-icon-angle-left')])</td>
 	<td></td>
 </tr>
+<tr>
+	<td>STATUS_INFO</td>
+	<td>//span[contains(text(),'Status')]/parent::div//span[text()='${key_status}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STEP_INFO</td>
+	<td>//span[contains(text(),'Step')]/parent::div[contains(text(),'${key_step}')]</td>
+	<td></td>
+</tr>
 
 
 

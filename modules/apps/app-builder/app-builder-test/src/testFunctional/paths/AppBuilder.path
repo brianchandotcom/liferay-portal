@@ -196,6 +196,16 @@
 	<td>//button[contains(@class,'btn-primary') and contains(text(),'Deploy')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ITEM_ON_THE_TABLE_SELECTED</td>
+	<td>//table[contains(@class,'table')]//*[contains(text(),'${key_itemName}')]/parent::tr[contains(@class,'selectable-active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_COLUMN</td>
+	<td>//table//tr//th[text()='${key_workflowColumnName}']</td>
+	<td></td>
+</tr>
 
 <!-- CONTROL_PANEL -->
 

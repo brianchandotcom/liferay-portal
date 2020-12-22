@@ -571,6 +571,12 @@ export default class Blogs {
 		}
 
 		this._events.removeAll();
+
+		Liferay.detach('coverImageDeleted', this._removeCaption);
+		Liferay.detach(
+			['coverImageUploaded', 'coverImageSelected'],
+			this._showCaption
+		);
 	}
 
 	setCustomDescription(text) {

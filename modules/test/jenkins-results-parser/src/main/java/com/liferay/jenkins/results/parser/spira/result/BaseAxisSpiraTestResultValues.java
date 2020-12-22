@@ -143,7 +143,8 @@ public abstract class BaseAxisSpiraTestResultValues
 		}
 
 		if (propertyNameOpts.isEmpty()) {
-			return null;
+			return JenkinsResultsParserUtil.getProperty(
+				portalTestProperties, batchPropertyName);
 		}
 
 		String batchPropertyNameOpt = "";
@@ -208,7 +209,7 @@ public abstract class BaseAxisSpiraTestResultValues
 	private SpiraCustomPropertyValue _getBatchNameValue() {
 		String batchName = _axisSpiraTestResult.getBatchName();
 
-		if ((batchName == null) || !batchName.isEmpty()) {
+		if ((batchName == null) || batchName.isEmpty()) {
 			return null;
 		}
 

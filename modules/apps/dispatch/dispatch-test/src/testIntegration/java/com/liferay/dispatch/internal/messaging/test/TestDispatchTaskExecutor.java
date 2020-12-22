@@ -55,7 +55,7 @@ public class TestDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return DISPATCH_TASK_EXECUTOR_TYPE_TEST;
 	}
 
-	protected static final int SLEEP_MILLIS = 3000;
+	protected static final int SLEEP_MILLIS = 1500;
 
 	protected static final AtomicInteger executionCounter = new AtomicInteger(
 		0);

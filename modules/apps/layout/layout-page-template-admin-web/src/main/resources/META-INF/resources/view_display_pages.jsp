@@ -55,8 +55,6 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 		>
 
 			<%
-			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-
 			row.setData(
 				HashMapBuilder.<String, Object>put(
 					"actions", displayPageManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry)

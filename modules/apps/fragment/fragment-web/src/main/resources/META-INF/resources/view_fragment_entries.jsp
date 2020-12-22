@@ -38,8 +38,6 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 		>
 
 			<%
-			row.setCssClass("card-page-item-asset " + row.getCssClass());
-
 			row.setData(
 				HashMapBuilder.<String, Object>put(
 					"actions", fragmentDisplayContext.getAvailableActions(object)
@@ -67,7 +65,6 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
-			searchResultCssClass="card-page"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

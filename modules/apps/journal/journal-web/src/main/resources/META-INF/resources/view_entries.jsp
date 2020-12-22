@@ -147,11 +147,6 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
-
-						<%
-						row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-						%>
-
 						<liferay-ui:search-container-column-text>
 							<clay:vertical-card
 								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper) %>"
@@ -325,7 +320,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
 
 						<%
-						row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
+						row.setCssClass("card-page-item card-page-item-directory " + row.getCssClass());
 						%>
 
 						<liferay-ui:search-container-column-text

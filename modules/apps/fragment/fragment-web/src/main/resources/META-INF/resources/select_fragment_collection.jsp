@@ -33,11 +33,6 @@ SelectFragmentCollectionDisplayContext selectFragmentCollectionDisplayContext = 
 			keyProperty="fragmentCollectionId"
 			modelVar="fragmentCollection"
 		>
-
-			<%
-			row.setCssClass("card-page-item-asset " + row.getCssClass());
-			%>
-
 			<liferay-ui:search-container-column-text>
 				<clay:navigation-card
 					navigationCard="<%= new FragmentCollectionNavigationCard(fragmentCollection) %>"
@@ -48,7 +43,6 @@ SelectFragmentCollectionDisplayContext selectFragmentCollectionDisplayContext = 
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
-			searchResultCssClass="card-page"
 		/>
 	</liferay-ui:search-container>
 </aui:form>

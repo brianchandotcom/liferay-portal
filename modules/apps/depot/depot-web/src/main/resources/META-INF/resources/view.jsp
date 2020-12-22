@@ -91,11 +91,6 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test="<%= depotAdminDisplayContext.isDisplayStyleIcon() %>">
-
-							<%
-							row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-							%>
-
 							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
 									verticalCard="<%= depotAdminDisplayContext.getDepotEntryVerticalCard(depotEntry) %>"

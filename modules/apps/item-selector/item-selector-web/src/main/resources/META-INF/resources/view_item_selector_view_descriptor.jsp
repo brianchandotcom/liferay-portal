@@ -62,25 +62,32 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 
 			<c:choose>
 				<c:when test="<%= itemSelectorViewDescriptorRendererDisplayContext.isIconDisplayStyle() %>">
+					<c:choose>
+						<c:when test="<%= itemDescriptor.isCompact() %>">
 
-					<%
-					row.setCssClass("entry-card entry-display-style lfr-asset-item " + row.getCssClass());
-					%>
+							<%
+							row.setCssClass("card-page-item card-page-item-directory entry-display-style " + row.getCssClass());
+							%>
 
-					<liferay-ui:search-container-column-text>
-						<c:choose>
-							<c:when test="<%= itemDescriptor.isCompact() %>">
+							<liferay-ui:search-container-column-text>
 								<clay:horizontal-card
 									horizontalCard="<%= new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
-							</c:when>
-							<c:otherwise>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+						<c:otherwise>
+
+							<%
+							row.setCssClass("card-page-item card-page-item-asset entry-display-style " + row.getCssClass());
+							%>
+
+							<liferay-ui:search-container-column-text>
 								<clay:vertical-card
 									verticalCard="<%= new ItemDescriptorVerticalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker()) %>"
 								/>
-							</c:otherwise>
-						</c:choose>
-					</liferay-ui:search-container-column-text>
+							</liferay-ui:search-container-column-text>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:when test="<%= itemSelectorViewDescriptorRendererDisplayContext.isDescriptiveDisplayStyle() %>">
 

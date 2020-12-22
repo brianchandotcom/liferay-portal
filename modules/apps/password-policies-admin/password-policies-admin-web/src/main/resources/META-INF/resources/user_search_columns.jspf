@@ -51,11 +51,6 @@
 
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("icon") %>'>
-
-			<%
-			row.setCssClass("entry-card lfr-asset-item");
-			%>
-
 			<liferay-ui:search-container-column-text>
 				<liferay-frontend:user-vertical-card
 					cssClass="entry-display-style"

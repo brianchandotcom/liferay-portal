@@ -40,11 +40,6 @@ StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContex
 				keyProperty="styleBookEntryId"
 				modelVar="styleBookEntry"
 			>
-
-				<%
-				row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-				%>
-
 				<liferay-ui:search-container-column-text>
 					<clay:vertical-card
 						verticalCard="<%= new StyleBookVerticalCard(styleBookEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"

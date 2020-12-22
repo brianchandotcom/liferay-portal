@@ -131,11 +131,6 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 					/>
 				</c:when>
 				<c:when test='<%= Objects.equals(mdrActionDisplayContext.getDisplayStyle(), "icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:icon-vertical-card
 							actionJsp="/action_actions.jsp"

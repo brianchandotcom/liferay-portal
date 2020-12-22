@@ -138,7 +138,7 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
 					<%
-					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+					row.setCssClass("card-page-item card-page-item-directory " + row.getCssClass());
 
 					Map<String, Object> linkData = HashMapBuilder.<String, Object>put(
 						"prevent-selection", true

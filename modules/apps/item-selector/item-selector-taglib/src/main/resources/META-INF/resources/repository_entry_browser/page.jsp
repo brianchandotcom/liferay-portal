@@ -312,7 +312,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 							<c:when test='<%= displayStyle.equals("icon") %>'>
 
 								<%
-								row.setCssClass("entry-card lfr-asset-folder");
+								row.setCssClass("card-page-item card-page-item-directory");
 
 								if (folder != null) {
 									PortletURL viewFolderURL = EntryURLUtil.getFolderPortletURL(folder, liferayPortletRequest, liferayPortletResponse, portletURL);

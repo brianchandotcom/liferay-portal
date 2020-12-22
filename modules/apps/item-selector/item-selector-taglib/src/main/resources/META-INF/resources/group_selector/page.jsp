@@ -49,7 +49,7 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Group"
-			cssClass="entry-card lfr-asset-item"
+			cssClass="card-page-item card-page-item-directory"
 			modelVar="curGroup"
 		>
 			<liferay-ui:search-container-column-text

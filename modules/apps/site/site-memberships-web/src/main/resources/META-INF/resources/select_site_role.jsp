@@ -44,11 +44,6 @@ SelectRolesDisplayContext selectRolesDisplayContext = new SelectRolesDisplayCont
 
 			<c:choose>
 				<c:when test='<%= Objects.equals(selectRolesDisplayContext.getDisplayStyle(), "icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
 							verticalCard="<%= new SelectRoleVerticalCard(role, renderRequest) %>"

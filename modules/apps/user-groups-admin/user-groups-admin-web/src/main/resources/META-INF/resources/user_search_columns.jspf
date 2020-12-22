@@ -39,11 +39,6 @@
 		</c:if>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
-
-		<%
-		row.setCssClass("entry-card lfr-asset-item");
-		%>
-
 		<liferay-ui:search-container-column-text>
 			<liferay-frontend:user-vertical-card
 				actionJsp='<%= showActions ? "/user_action.jsp" : StringPool.BLANK %>'

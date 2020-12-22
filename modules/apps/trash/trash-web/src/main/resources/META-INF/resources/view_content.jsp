@@ -99,25 +99,27 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 								</liferay-ui:search-container-column-text>
 							</c:when>
 							<c:when test="<%= trashDisplayContext.isIconView() %>">
-
-								<%
-								row.setCssClass("entry-card lfr-asset-item");
-								%>
-
-								<liferay-ui:search-container-column-text>
-									<c:choose>
-										<c:when test="<%= !curTrashHandler.isContainerModel() %>">
+								<c:choose>
+									<c:when test="<%= !curTrashHandler.isContainerModel() %>">
+										<liferay-ui:search-container-column-text>
 											<clay:vertical-card
 												verticalCard="<%= new TrashContentVerticalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
 											/>
-										</c:when>
-										<c:otherwise>
+										</liferay-ui:search-container-column-text>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:search-container-column-text>
+
+											<%
+											row.setCssClass("card-page-item card-page-item-directory");
+											%>
+
 											<clay:horizontal-card
 												horizontalCard="<%= new TrashContentHorizontalCard(curTrashedModel, curTrashRenderer, liferayPortletResponse, renderRequest, rowURL.toString()) %>"
 											/>
-										</c:otherwise>
-									</c:choose>
-								</liferay-ui:search-container-column-text>
+										</liferay-ui:search-container-column-text>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
 							<c:when test="<%= trashDisplayContext.isListView() %>">
 								<liferay-ui:search-container-column-text

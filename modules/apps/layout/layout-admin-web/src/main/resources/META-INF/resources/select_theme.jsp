@@ -86,7 +86,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 				<c:when test='<%= Objects.equals(selectThemeDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
-					row.setCssClass(row.getCssClass() + " entry-card lfr-asset-item");
+					row.setCssClass(row.getCssClass() + " card-page-item card-page-item-asset");
 					%>
 
 					<liferay-ui:search-container-column-text>

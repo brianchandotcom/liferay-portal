@@ -47,11 +47,6 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
-
-		<%
-		row.setCssClass("entry-card lfr-asset-item");
-		%>
-
 		<liferay-ui:search-container-column-text>
 			<clay:user-card
 				userCard="<%= new ViewMembershipRequestsPendingUserCard(membershipRequest, membershipRequestUser, renderRequest, renderResponse) %>"

@@ -40,11 +40,6 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 			cssClass="entry"
 			modelVar="infoListProvider"
 		>
-
-			<%
-			row.setCssClass("entry-card entry-display-style lfr-asset-item " + row.getCssClass());
-			%>
-
 			<liferay-ui:search-container-column-icon
 				icon="list"
 			/>
@@ -52,13 +47,13 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 			<liferay-ui:search-container-column-text
 				colspan="<%= 2 %>"
 			>
-				<h5>
+				<div class="list-group-title">
 					<%= HtmlUtil.escape(infoListProviderDisplayContext.getTitle(infoListProvider)) %>
-				</h5>
+				</div>
 
-				<h6 class="text-default">
-					<strong><liferay-ui:message key="<%= HtmlUtil.escape(infoListProviderDisplayContext.getSubtitle(infoListProvider)) %>" /></strong>
-				</h6>
+				<div class="list-group-subtext">
+					<liferay-ui:message key="<%= HtmlUtil.escape(infoListProviderDisplayContext.getSubtitle(infoListProvider)) %>" />
+				</div>
 			</liferay-ui:search-container-column-text>
 
 			<%

@@ -88,11 +88,6 @@ SearchContainer<User> userSearchContainer = selectOrganizationUsersManagementToo
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:user-vertical-card
 							actionJspServletContext="<%= application %>"

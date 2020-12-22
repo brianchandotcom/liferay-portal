@@ -137,11 +137,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 								keyProperty="layoutPageTemplateEntryId"
 								modelVar="layoutPageTemplateEntry"
 							>
-
-								<%
-								row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-								%>
-
 								<liferay-ui:search-container-column-text>
 									<clay:vertical-card
 										verticalCard="<%= new SelectLayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>"

@@ -34,11 +34,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			keyProperty="key"
 			modelVar="siteInitializerItem"
 		>
-
-			<%
-			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-			%>
-
 			<liferay-ui:search-container-column-text>
 				<button class="add-site-action-button btn btn-unstyled mb-4 w-100" type="button">
 					<clay:vertical-card

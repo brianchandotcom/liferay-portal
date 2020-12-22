@@ -82,11 +82,6 @@ previewURL.setParameter("membershipRequestId", String.valueOf(membershipRequest.
 		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
-
-		<%
-		row.setCssClass("entry-card lfr-asset-item");
-		%>
-
 		<liferay-ui:search-container-column-text>
 			<clay:user-card
 				userCard="<%= new ViewMembershipRequestsUserCard(membershipRequest, membershipRequestUser, renderRequest, renderResponse) %>"

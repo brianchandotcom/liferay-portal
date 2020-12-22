@@ -54,8 +54,6 @@ LayoutPrototypeManagementToolbarDisplayContext layoutPrototypeManagementToolbarD
 			<%
 			LayoutPrototype layoutPrototype = LayoutPrototypeServiceUtil.getLayoutPrototype(layoutPageTemplateEntry.getLayoutPrototypeId());
 
-			row.setCssClass("entry-card lfr-asset-item");
-
 			row.setData(
 				HashMapBuilder.<String, Object>put(
 					"actions", layoutPrototypeManagementToolbarDisplayContext.getAvailableActions(layoutPrototype)

@@ -56,11 +56,6 @@
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
-
-				<%
-				row.setCssClass("entry-card lfr-asset-item");
-				%>
-
 				<liferay-ui:search-container-column-text>
 					<clay:vertical-card
 						verticalCard="<%= new JournalArticleCommentsVerticalCard(mbMessage, renderRequest) %>"

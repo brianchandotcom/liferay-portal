@@ -24,7 +24,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 	displayContext="<%= new AssetDisplayPagesItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPagesItemSelectorViewDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xl container-view" name="fm">
 	<liferay-ui:search-container
 		id="displayPages"
 		searchContainer="<%= assetDisplayPagesItemSelectorViewDisplayContext.getAssetDisplayPageSearchContainer() %>"
@@ -34,15 +34,12 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 			keyProperty="layoutPageTemplateEntryId"
 			modelVar="layoutPageTemplateEntry"
 		>
-
-			<%
-			row.setCssClass("entry-card form-check-card lfr-asset-item " + row.getCssClass());
-			%>
-
 			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					verticalCard="<%= new LayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest) %>"
-				/>
+				<div class="form-check form-check-card">
+					<clay:vertical-card
+						verticalCard="<%= new LayoutPageTemplateEntryVerticalCard(layoutPageTemplateEntry, renderRequest) %>"
+					/>
+				</div>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

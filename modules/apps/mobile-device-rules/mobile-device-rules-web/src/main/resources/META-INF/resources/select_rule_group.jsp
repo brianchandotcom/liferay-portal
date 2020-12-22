@@ -127,11 +127,6 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:icon-vertical-card
 							cssClass='<%= (ruleGroupInstance == null) ? "selector-button" : StringPool.BLANK %>'

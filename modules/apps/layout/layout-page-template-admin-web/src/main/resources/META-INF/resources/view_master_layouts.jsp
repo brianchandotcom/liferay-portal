@@ -56,8 +56,6 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 		>
 
 			<%
-			row.setCssClass("entry-card lfr-asset-item");
-
 			row.setData(
 				HashMapBuilder.<String, Object>put(
 					"actions", masterLayoutManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry)

@@ -98,11 +98,6 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 							/>
 						</c:when>
 						<c:when test="<%= dlViewEntriesDisplayContext.isIconDisplayStyle() %>">
-
-							<%
-							row.setCssClass("entry-card lfr-asset-item");
-							%>
-
 							<liferay-ui:search-container-column-text>
 								<c:choose>
 									<c:when test="<%= dlViewFileVersionDisplayContext.hasCustomThumbnail() %>">
@@ -319,7 +314,7 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 						<c:when test="<%= dlViewEntriesDisplayContext.isIconDisplayStyle() %>">
 
 							<%
-							row.setCssClass("entry-card lfr-asset-folder");
+							row.setCssClass("card-page-item card-page-item-directory");
 							%>
 
 							<liferay-ui:search-container-column-text

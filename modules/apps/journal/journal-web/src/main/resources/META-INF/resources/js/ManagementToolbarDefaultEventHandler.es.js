@@ -92,7 +92,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 
 		if (entrySelectorNodes.length === 0) {
 			entrySelectorNodes = document.querySelectorAll(
-				'.entry-card input[type="checkbox"]'
+				'.card-page-item input[type="checkbox"]'
 			);
 		}
 

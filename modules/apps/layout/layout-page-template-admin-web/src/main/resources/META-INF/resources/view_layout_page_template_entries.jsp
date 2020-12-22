@@ -44,8 +44,6 @@ LayoutPageTemplateManagementToolbarDisplayContext layoutPageTemplateManagementTo
 		>
 
 			<%
-			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-
 			row.setData(
 				HashMapBuilder.<String, Object>put(
 					"actions", layoutPageTemplateManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry)

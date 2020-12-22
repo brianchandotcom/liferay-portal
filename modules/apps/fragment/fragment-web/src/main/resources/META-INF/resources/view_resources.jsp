@@ -48,11 +48,6 @@ FragmentCollectionResourcesManagementToolbarDisplayContext fragmentCollectionRes
 			keyProperty="fileEntryId"
 			modelVar="fileEntry"
 		>
-
-			<%
-			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-			%>
-
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
 					verticalCard="<%= new FragmentCollectionResourceVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"

@@ -12,8 +12,6 @@
  * details.
  */
 
-import EventListener from './utils/EventListener';
-
 const CSS_INVISIBLE = 'invisible';
 const STR_BLANK = '';
 const STR_CHANGE = 'change';
@@ -64,7 +62,7 @@ export default class Blogs {
 		AUI().use('liferay-form', () => {
 			this._rootNode = this._getElementById('fm');
 
-			this._events = new EventListener();
+			this._eventsHandles = [];
 
 			this._bindUI();
 
@@ -96,6 +94,11 @@ export default class Blogs {
 		});
 	}
 
+	_addEventListener(target, ...rest) {
+		target.addEventListener(...rest);
+		this._eventsHandles.push(() => target.removeEventListener(...rest));
+	}
+
 	_automaticURL() {
 		const automaticURLInput = document.querySelector(
 			`input[name=${this._config.namespace}automaticURL]:checked`
@@ -121,8 +124,6 @@ export default class Blogs {
 	}
 
 	_bindUI() {
-		const events = this._events;
-
 		this._captionNode = this._rootNode.querySelector(
 			'.cover-image-caption'
 		);
@@ -137,7 +138,7 @@ export default class Blogs {
 		const publishButton = this._getElementById('publishButton');
 
 		if (publishButton) {
-			events.add(publishButton, STR_CLICK, () => {
+			this._addEventListener(publishButton, STR_CLICK, () => {
 				this._beforePublishBtnClick();
 				this._checkImagesBeforeSave(false, false);
 			});
@@ -146,7 +147,7 @@ export default class Blogs {
 		const saveButton = this._getElementById('saveButton');
 
 		if (saveButton) {
-			events.add(saveButton, STR_CLICK, () => {
+			this._addEventListener(saveButton, STR_CLICK, () => {
 				this._beforeSaveBtnClick();
 				this._checkImagesBeforeSave(true, false);
 			});
@@ -158,7 +159,7 @@ export default class Blogs {
 
 		if (customAbstractOptions.length) {
 			customAbstractOptions.forEach((option) => {
-				events.add(
+				this._addEventListener(
 					option,
 					STR_CHANGE,
 					this._configureAbstract.bind(this)
@@ -172,7 +173,7 @@ export default class Blogs {
 
 		if (urlOptions.length) {
 			urlOptions.forEach((option) => {
-				events.add(
+				this._addEventListener(
 					option,
 					STR_CHANGE,
 					this._onChangeURLOptions.bind(this)
@@ -183,7 +184,7 @@ export default class Blogs {
 		const titleInput = this._getElementById('title');
 
 		if (titleInput) {
-			events.add(titleInput, STR_CHANGE, (event) => {
+			this._addEventListener(titleInput, STR_CHANGE, (event) => {
 				this.updateFriendlyURL(event.target.value);
 			});
 		}
@@ -191,7 +192,7 @@ export default class Blogs {
 		const descriptionInput = this._getElementById('description');
 
 		if (descriptionInput) {
-			events.add(descriptionInput, STR_CHANGE, (event) => {
+			this._addEventListener(descriptionInput, STR_CHANGE, (event) => {
 				this.setCustomDescription(event.target.value);
 			});
 		}
@@ -566,7 +567,8 @@ export default class Blogs {
 			clearInterval(this._saveDraftTimer);
 		}
 
-		this._events.removeAll();
+		this._eventsHandles.forEach((removeListener) => removeListener());
+		this._eventsHandles = [];
 
 		Liferay.detach('coverImageDeleted', this._removeCaption);
 		Liferay.detach(

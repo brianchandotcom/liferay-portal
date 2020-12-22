@@ -28,6 +28,205 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-120190. Can define the displayed behavior of dropdown panel in Dropdown fragment."
+	@priority = "5"
+	test DefineDisplayedBehaviorOfDropdownPanel {
+		task ("Add a custom master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Dropdown fragment as header in custom master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				dropTarget = "Header",
+				fragmentName = "Dropdown",
+				scope = "Master");
+		}
+
+		task ("Assert the drop zone is shown in dropdown panel when click the toggle button") {
+			PageEditor.clickConfigurableField(fragmentName = "Dropdown");
+
+			Click(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "true");
+
+			AssertVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "menu",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+			Click(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "false");
+
+			AssertNotVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "menu",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Add a page based on custom master page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Custom Masters Page Template",
+				pageName = "Test Content Page");
+		}
+
+		task ("Assert the dropdown panel is not shown when click the toggle button") {
+			Click(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "false");
+		}
+
+		task ("Define the Display on Hover as displayed behavior") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.editDropdown(
+				displayedBehavior = "Display on Hover",
+				panel = "General");
+		}
+
+		task ("Assert the drop zone is shown in dropdown panel when hover on the toggle button") {
+			PageEditor.clickManagementBar();
+
+			MouseOver(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
+
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "true");
+
+			AssertVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "menu",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+			MouseOver(
+				key_sidebarButton = "Selection",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "false");
+
+			AssertNotVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "menu",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+		}
+
+		task ("Define the Keep Panel Open in Edit Mode as displayed behavior") {
+			PageEditor.editDropdown(
+				displayedBehavior = "Keep Panel Open in Edit Mode",
+				panel = "General");
+
+			while (IsChecked(checkboxName = "Display on Hover", locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click.clickAtNotVisible(
+					checkboxName = "Display on Hover",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			Pause(locator1 = "3000");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Display on Hover",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Assert the drop zone is always shown in dropdown panel") {
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "true");
+
+			AssertVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "menu",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+			PageEditor.clickManagementBar();
+
+			AssertNotVisible(
+				key_fragmentName = "Dropdown",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "true");
+
+			AssertVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "menu",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+		}
+
+		task ("Define the Display on Hover and Keep Panel Open in Edit Mode as displayed behavior") {
+			PageEditor.editDropdown(
+				displayedBehavior = "Display on Hover",
+				panel = "General");
+		}
+
+		task ("Assert the drop zone is always shown in dropdown panel") {
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "true");
+
+			AssertVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "menu",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+
+			PageEditor.clickManagementBar();
+
+			AssertNotVisible(
+				key_fragmentName = "Dropdown",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertAttributeValue(
+				attribute1 = "aria-expanded",
+				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
+				value1 = "true");
+
+			AssertVisible(
+				key_content = "Place fragments here.",
+				key_fragmentClass = "menu",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
+		}
+	}
+
 	@description = "This is a test for LPS-120190. Can edit the text of dropdown button in Dropdown fragment."
 	@priority = "5"
 	test EditInlineContent {

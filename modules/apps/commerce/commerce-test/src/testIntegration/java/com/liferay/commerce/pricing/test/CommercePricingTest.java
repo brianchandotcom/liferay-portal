@@ -56,6 +56,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -283,20 +284,21 @@ public class CommercePricingTest {
 			"The correct price and the promo is returned "
 		);
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
 				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				catalog.getGroupId(), 0.0);
+				commerceCatalog.getGroupId(), 0.0);
 
-		CommercePriceList commercePromotion =
-			CommercePriceListTestUtil.addPromotion(catalog.getGroupId(), 0.0);
+		CommercePriceList promotionalCommercePriceList =
+			CommercePriceListTestUtil.addPromotion(
+				commerceCatalog.getGroupId(), 0.0);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -306,19 +308,20 @@ public class CommercePricingTest {
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
-				"", cpDefinition.getCProductId(),
+				StringPool.BLANK, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), price, false, null,
 				null, null, null, true, true);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", tierPrice, 5,
-			false, false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
+			tierPrice, 5, false, false, null, null, null, null, true, true);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePromotion.getCommercePriceListId(), promoPrice, false, null,
-			null, null, null, true, true);
+			StringPool.BLANK, cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			promotionalCommercePriceList.getCommercePriceListId(), promoPrice,
+			false, null, null, null, null, true, true);
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
@@ -370,20 +373,21 @@ public class CommercePricingTest {
 			"The correct price and the promo is returned "
 		);
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
 				LocaleUtil.US.getDisplayLanguage(), null, _serviceContext);
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.addCommercePriceList(
-				catalog.getGroupId(), 0.0);
+				commerceCatalog.getGroupId(), 0.0);
 
-		CommercePriceList commercePromotion =
-			CommercePriceListTestUtil.addPromotion(catalog.getGroupId(), 0.0);
+		CommercePriceList promotionalCommercePriceList =
+			CommercePriceListTestUtil.addPromotion(
+				commerceCatalog.getGroupId(), 0.0);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -391,14 +395,16 @@ public class CommercePricingTest {
 		BigDecimal promoPrice = BigDecimal.valueOf(500);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			StringPool.BLANK, cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(), price, false, null,
 			null, null, null, true, true);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePromotion.getCommercePriceListId(), promoPrice, false, null,
-			null, null, null, true, true);
+			StringPool.BLANK, cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(),
+			promotionalCommercePriceList.getCommercePriceListId(), promoPrice,
+			false, null, null, null, null, true, true);
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());

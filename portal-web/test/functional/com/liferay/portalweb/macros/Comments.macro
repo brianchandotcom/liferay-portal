@@ -1,13 +1,13 @@
 definition {
 
 	macro addPG {
-		Click(
-			key_editor = "postReply",
-			locator1 = "AlloyEditor#EDITOR");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		AlloyEditor.typeEditor(
-			content = "${entryComment}",
-			editor = "postReply");
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "${entryComment}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#REPLY",
@@ -106,13 +106,15 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Edit");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "Comments#EDIT_COMMENT_FIELD");
+		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-		Click.clickAt(locator1 = "Comments#EDIT_COMMENT_FIELD");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		Type(
-			locator1 = "Comments#EDIT_COMMENT_FIELD",
+			locator1 = "CKEditor#BODY",
 			value1 = "${entryCommentEdit}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			key_text = "Save",

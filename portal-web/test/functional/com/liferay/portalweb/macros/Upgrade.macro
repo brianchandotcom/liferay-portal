@@ -1013,6 +1013,8 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Blogs");
 
+		Pause(locator1 = "3000");
+
 		Blogs.addWithWorkflow(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Subtitle",

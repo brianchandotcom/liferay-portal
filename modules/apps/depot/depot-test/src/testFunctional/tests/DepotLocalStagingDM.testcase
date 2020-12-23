@@ -94,8 +94,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertVisible(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "Document_2.jpg");
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		Staging.gotoPublishToLive();
 
@@ -106,8 +106,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertVisible(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "Document_2.jpg");
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -362,8 +362,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertVisible(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "Document_2.doc");
+			key_assetTitle = "Document_2.doc",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		Staging.gotoPublishToLive();
 
@@ -374,8 +374,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertVisible(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "Document_2.doc");
+			key_assetTitle = "Document_2.doc",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -393,8 +393,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertVisible(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "Document_3.doc");
+			key_assetTitle = "Document_3.doc",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		Navigator.gotoStagedView();
 
@@ -407,8 +407,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertVisible(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "Document_3.doc");
+			key_assetTitle = "Document_3.doc",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
 	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling Xuggler."
@@ -768,8 +768,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertVisible(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "Document_2.jpg");
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
 	@description = "This ensures that the latest version of an image in a depot can be published in local staging site."
@@ -852,8 +852,8 @@ definition {
 			siteName = "Site Name");
 
 		AssertVisible(
-			locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-			value1 = "Document_2.jpg");
+			key_assetTitle = "Document_2.jpg",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		AssertTextEquals.assertPartialText(
 			key_assetTitle = "Document_2.jpg",

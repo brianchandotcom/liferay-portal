@@ -241,6 +241,26 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetParametersShouldUseExistingGuestUploadURL() {
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			mockThemeDisplay());
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"field", "document_library");
+
+		String expectedGuestUploadURL = RandomTestUtil.randomString();
+
+		ddmFormField.setProperty("guestUploadURL", expectedGuestUploadURL);
+
+		Map<String, Object> parameters = spy.getParameters(
+			ddmFormField, createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(
+			expectedGuestUploadURL,
+			String.valueOf(parameters.get("guestUploadURL")));
+	}
+
+	@Test
 	public void testGetParametersShouldUseFileEntryTitle() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
 			mockThemeDisplay());

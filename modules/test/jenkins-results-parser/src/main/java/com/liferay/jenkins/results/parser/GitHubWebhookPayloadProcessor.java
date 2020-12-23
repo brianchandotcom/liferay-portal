@@ -208,31 +208,18 @@ public class GitHubWebhookPayloadProcessor {
 			syncSubrepo();
 		}
 
-		String action = _payloadJSONObject.optString("action");
-
-		if (action == null) {
-			return;
-		}
-
 		if (_payloadJSONObject.isCommentCreated()) {
 			_processCommentCreated();
 
 			return;
 		}
 
-		JSONObject pullRequestJSONObject = _payloadJSONObject.optJSONObject(
-			"pull_request");
+		if (_payloadJSONObject.isPullRequestOpened()) {
+			_processPullRequestOpened();
+		}
 
-		if (pullRequestJSONObject != null) {
-			PullRequest pullRequest = new PullRequest(pullRequestJSONObject);
-
-			if (action.equals("opened")) {
-				_processPullRequestOpened(pullRequestJSONObject, pullRequest);
-			}
-			else if (action.equals("synchronize")) {
-				_processPullRequestSynchronize(
-					pullRequest, pullRequestJSONObject);
-			}
+		if (_payloadJSONObject.isPullRequestSynchronize()) {
+			_processPullRequestSynchronize();
 		}
 	}
 
@@ -2314,10 +2301,33 @@ public class GitHubWebhookPayloadProcessor {
 		}
 
 		public boolean isCommentCreated() {
-			String action = getString("action");
-			JSONObject commentJSONObject = optJSONObject("comment");
+			String action = getAction();
 
-			if ((commentJSONObject != null) && action.equals("created")) {
+			if (!action.equals("created")) {
+				return false;
+			}
+
+			if (optJSONObject("comment") == null) {
+				return false;
+			}
+
+			return true;
+		}
+
+		public boolean isPullRequestOpened() {
+			String pullRequestAction = getPullRequestAction();
+
+			if (pullRequestAction.equals("opened")) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public boolean isPullRequestSynchronize() {
+			String pullRequestAction = getPullRequestAction();
+
+			if (pullRequestAction.equals("synchronize")) {
 				return true;
 			}
 
@@ -2330,6 +2340,24 @@ public class GitHubWebhookPayloadProcessor {
 			}
 
 			return false;
+		}
+
+		protected String getAction() {
+			String action = optString("action");
+
+			if (action == null) {
+				action = "";
+			}
+
+			return action;
+		}
+
+		protected String getPullRequestAction() {
+			if (optJSONObject("pull_request") == null) {
+				return "";
+			}
+
+			return getAction();
 		}
 
 		private String _getStringByPath(JSONObject jsonObject, String path) {

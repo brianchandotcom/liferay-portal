@@ -85,8 +85,12 @@ class DataLayoutBuilder extends React.Component {
 					allowMultiplePages: config.allowMultiplePages,
 					allowSuccessPage: config.allowSuccessPage,
 					context,
-					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
-					editingLanguageId: themeDisplay.getDefaultLanguageId(),
+					defaultLanguageId:
+						context.defaultLanguageId ||
+						themeDisplay.getDefaultLanguageId(),
+					editingLanguageId:
+						context.defaultLanguageId ||
+						themeDisplay.getDefaultLanguageId(),
 					initialPages: context.pages,
 					ref: 'layoutProvider',
 					rules: context.rules,

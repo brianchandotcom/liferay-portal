@@ -46,7 +46,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -425,51 +425,55 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	public TestClassResult getTestClassResult(String testClassName) {
-		synchronized (_testClassResults) {
-			if (_testClassResults.containsKey(testClassName)) {
-				return _testClassResults.get(testClassName);
-			}
+		TestClassResult targetTestClassResult = _testClassResults.get(
+			testClassName);
 
-			if (!isCompleted()) {
-				return null;
-			}
-
-			for (TestClassResult testClassResult : getTestClassResults()) {
-				_testClassResults.put(
-					testClassResult.getClassName(), testClassResult);
-			}
-
-			return _testClassResults.get(testClassName);
+		if (targetTestClassResult != null) {
+			return targetTestClassResult;
 		}
+
+		if (!isCompleted()) {
+			return null;
+		}
+
+		for (TestClassResult testClassResult : getTestClassResults()) {
+			_testClassResults.put(
+				testClassResult.getClassName(), testClassResult);
+		}
+
+		return _testClassResults.get(testClassName);
 	}
 
 	public TestResult getTestResult(String testName) {
-		synchronized (_testResults) {
-			if (_testResults.containsKey(testName)) {
-				return _testResults.get(testName);
-			}
+		TestResult targetTestResult = _testResults.get(testName);
 
-			for (TestResult testResult : getTestResults(null)) {
-				if (testName.equals(testResult.getTestName())) {
-					return testResult;
-				}
-			}
-
-			return null;
+		if (targetTestResult != null) {
+			return targetTestResult;
 		}
+
+		for (TestResult testResult : getTestResults(null)) {
+			if (testName.equals(testResult.getTestName())) {
+				return testResult;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
-		synchronized (_testResults) {
-			if (!isCompleted()) {
-				return Collections.emptyList();
-			}
+		if (!isCompleted()) {
+			return Collections.emptyList();
+		}
 
-			List<TestResult> testResults = new ArrayList<>();
+		if (_testResultsPopulated && !_testResults.isEmpty()) {
+			List<TestResult> availableTestResults = new ArrayList<>(
+				_testResults.values());
 
-			if (!_testResults.isEmpty()) {
-				for (TestResult testResult : _testResults.values()) {
+			if (!availableTestResults.isEmpty()) {
+				List<TestResult> testResults = new ArrayList<>();
+
+				for (TestResult testResult : availableTestResults) {
 					if ((testStatus == null) ||
 						testStatus.equals(testResult.getStatus())) {
 
@@ -479,31 +483,33 @@ public class AxisBuild extends BaseBuild {
 
 				return testResults;
 			}
+		}
 
-			JSONObject testReportJSONObject = getTestReportJSONObject(true);
+		JSONObject testReportJSONObject = getTestReportJSONObject(true);
 
-			if (testReportJSONObject == null) {
-				System.out.println(
-					"Unable to get test results for: " + getBuildURL());
+		if (testReportJSONObject == null) {
+			System.out.println(
+				"Unable to get test results for: " + getBuildURL());
 
-				return Collections.emptyList();
-			}
+			return Collections.emptyList();
+		}
 
+		synchronized (_testResults) {
 			for (TestResult testResult :
 					getTestResults(
 						this, testReportJSONObject.getJSONArray("suites"))) {
 
 				_testResults.put(testResult.getTestName(), testResult);
-
-				if ((testStatus == null) ||
-					testStatus.equals(testResult.getStatus())) {
-
-					testResults.add(testResult);
-				}
 			}
 
-			return testResults;
+			_testResultsPopulated = true;
 		}
+
+		if (_testResults.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return getTestResults(testStatus);
 	}
 
 	@Override
@@ -718,8 +724,9 @@ public class AxisBuild extends BaseBuild {
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
 
 	private final Map<String, TestClassResult> _testClassResults =
-		Collections.synchronizedMap(new TreeMap<String, TestClassResult>());
+		new ConcurrentHashMap<>();
 	private final Map<String, TestResult> _testResults =
-		Collections.synchronizedMap(new TreeMap<String, TestResult>());
+		new ConcurrentHashMap<>();
+	private boolean _testResultsPopulated;
 
 }

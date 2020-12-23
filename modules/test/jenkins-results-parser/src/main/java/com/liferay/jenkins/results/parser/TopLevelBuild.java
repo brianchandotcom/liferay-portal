@@ -47,6 +47,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -274,46 +275,27 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	public AxisBuild getDownstreamAxisBuild(String axisName) {
-		synchronized (_downstreamAxisBuilds) {
-			if (_downstreamAxisBuilds.containsKey(axisName)) {
-				return _downstreamAxisBuilds.get(axisName);
-			}
+		AxisBuild targetAxisBuild = _downstreamAxisBuilds.get(axisName);
 
-			for (AxisBuild axisBuild : getDownstreamAxisBuilds()) {
-				if (axisName.equals(axisBuild.getAxisName())) {
-					return axisBuild;
-				}
-			}
-
-			return null;
+		if (targetAxisBuild != null) {
+			return targetAxisBuild;
 		}
+
+		for (AxisBuild axisBuild : getDownstreamAxisBuilds()) {
+			if (axisName.equals(axisBuild.getAxisName())) {
+				return axisBuild;
+			}
+		}
+
+		return null;
 	}
 
 	public List<AxisBuild> getDownstreamAxisBuilds() {
-		synchronized (_downstreamAxisBuilds) {
-			if (!_downstreamAxisBuilds.isEmpty()) {
-				List<AxisBuild> axisBuilds = new ArrayList<>(
-					_downstreamAxisBuilds.values());
+		if (_downstreamAxisBuildsPopulated &&
+			!_downstreamAxisBuilds.isEmpty()) {
 
-				Collections.sort(
-					axisBuilds, new BaseBuild.BuildDisplayNameComparator());
-
-				return axisBuilds;
-			}
-
-			List<AxisBuild> downstreamAxisBuilds = new ArrayList<>();
-
-			for (BatchBuild downstreamBatchBuild : getDownstreamBatchBuilds()) {
-				downstreamAxisBuilds.addAll(
-					downstreamBatchBuild.getDownstreamAxisBuilds());
-			}
-
-			if (isCompleted()) {
-				for (AxisBuild downstreamAxisBuild : downstreamAxisBuilds) {
-					_downstreamAxisBuilds.put(
-						downstreamAxisBuild.getAxisName(), downstreamAxisBuild);
-				}
-			}
+			List<AxisBuild> downstreamAxisBuilds = new ArrayList<>(
+				_downstreamAxisBuilds.values());
 
 			Collections.sort(
 				downstreamAxisBuilds,
@@ -321,54 +303,53 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 			return downstreamAxisBuilds;
 		}
+
+		List<AxisBuild> downstreamAxisBuilds = new ArrayList<>();
+
+		for (BatchBuild downstreamBatchBuild : getDownstreamBatchBuilds()) {
+			downstreamAxisBuilds.addAll(
+				downstreamBatchBuild.getDownstreamAxisBuilds());
+		}
+
+		synchronized (_downstreamAxisBuilds) {
+			if (isCompleted()) {
+				for (AxisBuild downstreamAxisBuild : downstreamAxisBuilds) {
+					_downstreamAxisBuilds.put(
+						downstreamAxisBuild.getAxisName(), downstreamAxisBuild);
+				}
+
+				_downstreamAxisBuildsPopulated = true;
+			}
+		}
+
+		Collections.sort(
+			downstreamAxisBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		return downstreamAxisBuilds;
 	}
 
 	public BatchBuild getDownstreamBatchBuild(String jobVariant) {
-		synchronized (_downstreamBatchBuilds) {
-			if (_downstreamBatchBuilds.containsKey(jobVariant)) {
-				return _downstreamBatchBuilds.get(jobVariant);
-			}
+		BatchBuild targetBatchBuild = _downstreamBatchBuilds.get(jobVariant);
 
-			for (BatchBuild batchBuild : getDownstreamBatchBuilds()) {
-				if (jobVariant.equals(batchBuild.getJobVariant())) {
-					return batchBuild;
-				}
-			}
-
-			return null;
+		if (targetBatchBuild != null) {
+			return targetBatchBuild;
 		}
+
+		for (BatchBuild batchBuild : getDownstreamBatchBuilds()) {
+			if (jobVariant.equals(batchBuild.getJobVariant())) {
+				return batchBuild;
+			}
+		}
+
+		return null;
 	}
 
 	public List<BatchBuild> getDownstreamBatchBuilds() {
-		synchronized (_downstreamBatchBuilds) {
-			if (!_downstreamBatchBuilds.isEmpty()) {
-				List<BatchBuild> batchBuilds = new ArrayList<>(
-					_downstreamBatchBuilds.values());
+		if (_downstreamBatchBuildsPopulated &&
+			!_downstreamBatchBuilds.isEmpty()) {
 
-				Collections.sort(
-					batchBuilds, new BaseBuild.BuildDisplayNameComparator());
-
-				return batchBuilds;
-			}
-
-			List<BatchBuild> downstreamBatchBuilds = new ArrayList<>();
-
-			List<Build> downstreamBuilds = getDownstreamBuilds(null);
-
-			for (Build downstreamBuild : downstreamBuilds) {
-				if (!(downstreamBuild instanceof BatchBuild)) {
-					continue;
-				}
-
-				downstreamBatchBuilds.add((BatchBuild)downstreamBuild);
-			}
-
-			if (isCompleted()) {
-				for (BatchBuild batchBuild : downstreamBatchBuilds) {
-					_downstreamBatchBuilds.put(
-						batchBuild.getJobVariant(), batchBuild);
-				}
-			}
+			List<BatchBuild> downstreamBatchBuilds = new ArrayList<>(
+				_downstreamBatchBuilds.values());
 
 			Collections.sort(
 				downstreamBatchBuilds,
@@ -376,6 +357,35 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 			return downstreamBatchBuilds;
 		}
+
+		List<BatchBuild> downstreamBatchBuilds = new ArrayList<>();
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (!(downstreamBuild instanceof BatchBuild)) {
+				continue;
+			}
+
+			downstreamBatchBuilds.add((BatchBuild)downstreamBuild);
+		}
+
+		synchronized (_downstreamBatchBuilds) {
+			if (isCompleted()) {
+				for (BatchBuild downstreamBatchBuild : downstreamBatchBuilds) {
+					_downstreamBatchBuilds.put(
+						downstreamBatchBuild.getJobVariant(),
+						downstreamBatchBuild);
+				}
+
+				_downstreamBatchBuildsPopulated = true;
+			}
+		}
+
+		Collections.sort(
+			downstreamBatchBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		return downstreamBatchBuilds;
 	}
 
 	@Override
@@ -1750,9 +1760,11 @@ public abstract class TopLevelBuild extends BaseBuild {
 	private boolean _compareToUpstream;
 	private Build _controllerBuild;
 	private final Map<String, AxisBuild> _downstreamAxisBuilds =
-		Collections.synchronizedMap(new HashMap<String, AxisBuild>());
+		new ConcurrentHashMap<>();
+	private boolean _downstreamAxisBuildsPopulated;
 	private final Map<String, BatchBuild> _downstreamBatchBuilds =
-		Collections.synchronizedMap(new HashMap<String, BatchBuild>());
+		new ConcurrentHashMap<>();
+	private boolean _downstreamBatchBuildsPopulated;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private String _metricsHostName;
 	private int _metricsHostPort;

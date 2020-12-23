@@ -6,7 +6,7 @@ definition {
 		PortletEntry.inputTitle(title = "${webContentTitle}");
 
 		if (isSet(webContentBoolean)) {
-			Check(
+			Check.checkNotVisible(
 				key_fieldName = "Boolean",
 				locator1 = "DDMField#BOOLEAN");
 		}

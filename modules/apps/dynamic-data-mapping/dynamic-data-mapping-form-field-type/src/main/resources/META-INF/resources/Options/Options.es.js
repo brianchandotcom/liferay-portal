@@ -269,7 +269,11 @@ const Options = ({
 			if (existingValue) {
 				const {copyFrom} = existingValue;
 
-				if (copyFrom && copyFrom === editingLanguageId) {
+				if (
+					copyFrom &&
+					copyFrom === editingLanguageId &&
+					!existingValue.edited
+				) {
 					return {
 						...existingValue,
 						label: field.label,

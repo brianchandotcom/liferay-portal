@@ -503,7 +503,10 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ServerAdministration.openServerAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
 
 		ServerAdministration.configureExternalServices(installXuggler = "true");
 

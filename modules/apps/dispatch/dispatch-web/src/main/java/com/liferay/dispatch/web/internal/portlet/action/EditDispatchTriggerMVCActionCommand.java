@@ -226,7 +226,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 			new UnicodeProperties(true);
 
 		dispatchTaskSettingsUnicodeProperties.fastLoad(
-			ParamUtil.getString(actionRequest, "taskSettings"));
+			ParamUtil.getString(actionRequest, "dispatchTaskSettings"));
 
 		DispatchTrigger dispatchTrigger = null;
 

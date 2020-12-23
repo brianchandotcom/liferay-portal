@@ -309,16 +309,14 @@ definition {
 
 		if (isSet(webContentBoolean)) {
 			if ("${webContentBoolean}" == "true") {
-				AssertChecked(
-					key_fieldFieldLabel = "Boolean",
-					key_optionValue = "Boolean",
-					locator1 = "WCEditWebContent#SELECTION_OPTION");
+				AssertChecked.assertCheckedNotVisible(
+					key_fieldName = "Boolean",
+					locator1 = "DDMField#BOOLEAN");
 			}
 			else if ("${webContentBoolean}" == "false") {
-				AssertChecked(
-					key_fieldFieldLabel = "Boolean",
-					key_optionValue = "Boolean",
-					locator1 = "WCEditWebContent#SELECTION_OPTION");
+				AssertNotChecked.assertNotCheckedNotVisible(
+					key_fieldName = "Boolean",
+					locator1 = "DDMField#BOOLEAN");
 			}
 		}
 

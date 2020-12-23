@@ -2561,11 +2561,19 @@ definition {
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
 		}
 		else {
-			AssertVisible(
-				id = "${id}",
-				key_image = "${imageFileName}",
-				key_imageDescription = "${imageDescription}",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+			if (contains("${id}", "banner")) {
+				AssertVisible(
+					id = "${id}",
+					key_image = "${imageFileName}",
+					locator1 = "Fragment#BACKGROUND_IMAGE_EDITABLE_FIELD_IMAGE_PROPERTIES");
+			}
+			else {
+				AssertVisible(
+					id = "${id}",
+					key_image = "${imageFileName}",
+					key_imageDescription = "${imageDescription}",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
+			}
 		}
 	}
 

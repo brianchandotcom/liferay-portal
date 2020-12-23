@@ -222,10 +222,10 @@ definition {
 
 		if (isSet(webContentRichText)) {
 			AssertTextEquals.assertPartialText(
-				key_content = "${webContentHTML}",
+				key_content = "${webContentRichText}",
 				key_fieldName = "HTML",
 				locator1 = "Translation#BASE_LANGUAGE_CONTENT_FIELD",
-				value1 = "${webContentHTML}");
+				value1 = "${webContentRichText}");
 		}
 
 		if (isSet(webContentText)) {

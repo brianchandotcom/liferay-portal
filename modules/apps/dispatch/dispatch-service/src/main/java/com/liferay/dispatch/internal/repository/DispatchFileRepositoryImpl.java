@@ -146,12 +146,14 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 			String.valueOf(dispatchTriggerId), contentType, false);
 	}
 
-	private DispatchFileValidator _getFileValidator(String taskExecutorType) {
+	private DispatchFileValidator _getFileValidator(
+		String dispatchTaskExecutorType) {
+
 		if (_dispatchFileValidatorServiceTrackerMap.containsKey(
-				taskExecutorType)) {
+				dispatchTaskExecutorType)) {
 
 			return _dispatchFileValidatorServiceTrackerMap.getService(
-				taskExecutorType);
+				dispatchTaskExecutorType);
 		}
 
 		return _dispatchFileValidatorServiceTrackerMap.getService("default");

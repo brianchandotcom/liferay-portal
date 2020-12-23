@@ -220,7 +220,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String dispatchTaskExecutorType = ParamUtil.getString(
-			actionRequest, "taskExecutorType");
+			actionRequest, "dispatchTaskExecutorType");
 
 		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
 			new UnicodeProperties(true);

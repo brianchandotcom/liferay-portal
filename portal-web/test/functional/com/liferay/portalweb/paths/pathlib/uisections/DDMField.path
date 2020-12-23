@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>SEPARATOR</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//div[contains(@class,'separator')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::div[contains(@class,'separator')]</td>
 	<td></td>
 </tr>
 <tr>

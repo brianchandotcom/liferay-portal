@@ -19,13 +19,23 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.info.type.Keyed;
 import com.liferay.info.type.Labeled;
+import com.liferay.petra.reflect.GenericUtil;
 
 /**
  * @author Jorge Ferrer
  */
 public interface InfoItemRelatedItemsProvider<S, R> extends Keyed, Labeled {
 
-	public InfoPage<R> getRelatedItemsInfoPage(
+	public InfoPage<? extends R> getRelatedItemsInfoPage(
 		S sourceItem, Pagination pagination, Sort sort);
+
+	public default Class<? extends S> getSourceItemClass() {
+		return (Class<? extends S>) GenericUtil.getGenericClass(this, 0);
+	}
+
+	public default Class<? extends R> getRelatedItemClass() {
+
+		return (Class<? extends R>) GenericUtil.getGenericClass(this, 1);
+	}
 
 }

@@ -970,7 +970,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY",
-			value1 = "You are about to make changes that will only affect your calendar (Test Test).");
+			value1 = "Invited users will be notified.");
 
 		AssertClick(
 			locator1 = "CalendarEditEvent#DO_NOT_CHANGE_THE_EVENT_BUTTON",

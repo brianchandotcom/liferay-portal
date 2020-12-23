@@ -258,9 +258,10 @@ public class DispatchLogLocalServiceTest {
 		throws Exception {
 
 		return _dispatchTriggerLocalService.addDispatchTrigger(
-			dispatchTrigger.getUserId(), dispatchTrigger.getName(),
-			dispatchTrigger.isSystem(), dispatchTrigger.getTaskExecutorType(),
-			dispatchTrigger.getTaskSettingsUnicodeProperties());
+			dispatchTrigger.getUserId(),
+			dispatchTrigger.getDispatchTaskExecutorType(),
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
+			dispatchTrigger.getName(), dispatchTrigger.isSystem());
 	}
 
 	private void _assertEquals(

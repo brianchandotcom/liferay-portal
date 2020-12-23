@@ -58,10 +58,10 @@ public abstract class SpiraCustomPropertyValue<T> extends BaseSpiraArtifact {
 
 		if (spiraCustomPropertyType == SpiraCustomProperty.Type.MULTILIST) {
 			return new MultiListSpiraCustomPropertyValue(
+				spiraCustomProperty,
 				SpiraCustomListValue.createSpiraCustomListValue(
 					spiraCustomProperty.getSpiraProject(),
-					spiraCustomProperty.getSpiraCustomList(), value),
-				spiraCustomProperty);
+					spiraCustomProperty.getSpiraCustomList(), value));
 		}
 
 		if (spiraCustomPropertyType == SpiraCustomProperty.Type.TEXT) {

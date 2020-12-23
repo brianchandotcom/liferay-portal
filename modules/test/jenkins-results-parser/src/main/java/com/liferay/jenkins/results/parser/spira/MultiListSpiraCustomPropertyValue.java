@@ -26,6 +26,29 @@ import org.json.JSONObject;
 public class MultiListSpiraCustomPropertyValue
 	extends SpiraCustomPropertyValue<List<SpiraCustomListValue>> {
 
+	public static MultiListSpiraCustomPropertyValue
+		combineMultiListSpiraCustomPropertyValues(
+			MultiListSpiraCustomPropertyValue...
+				multiListSpiraCustomPropertyValues) {
+
+		SpiraCustomPropertyValue spiraCustomPropertyValue =
+			multiListSpiraCustomPropertyValues[0];
+
+		List<SpiraCustomListValue> spiraCustomListValues = new ArrayList<>();
+
+		for (MultiListSpiraCustomPropertyValue
+				multiListSpiraCustomPropertyValue :
+					multiListSpiraCustomPropertyValues) {
+
+			spiraCustomListValues.addAll(
+				multiListSpiraCustomPropertyValue.getValue());
+		}
+
+		return new MultiListSpiraCustomPropertyValue(
+			spiraCustomPropertyValue.getSpiraCustomProperty(),
+			spiraCustomListValues.toArray(new SpiraCustomListValue[0]));
+	}
+
 	@Override
 	public JSONObject getCustomPropertyJSONObject() {
 		JSONObject customPropertyJSONObject =
@@ -91,8 +114,8 @@ public class MultiListSpiraCustomPropertyValue
 	}
 
 	protected MultiListSpiraCustomPropertyValue(
-		SpiraCustomListValue spiraCustomListValue,
-		SpiraCustomProperty spiraCustomProperty) {
+		SpiraCustomProperty spiraCustomProperty,
+		SpiraCustomListValue... spiraCustomListValues) {
 
 		super(new JSONObject(), spiraCustomProperty);
 
@@ -100,11 +123,21 @@ public class MultiListSpiraCustomPropertyValue
 
 		JSONArray integerListValueJSONArray = new JSONArray();
 
-		integerListValueJSONArray.put(spiraCustomListValue.getID());
+		SpiraCustomList spiraCustomList = null;
+
+		for (SpiraCustomListValue spiraCustomListValue :
+				spiraCustomListValues) {
+
+			integerListValueJSONArray.put(spiraCustomListValue.getID());
+
+			if (spiraCustomList == null) {
+				spiraCustomList = spiraCustomListValue.getSpiraCustomList();
+			}
+		}
 
 		jsonObject.put("IntegerListValue", integerListValueJSONArray);
 
-		_spiraCustomList = spiraCustomListValue.getSpiraCustomList();
+		_spiraCustomList = spiraCustomList;
 	}
 
 	@Override

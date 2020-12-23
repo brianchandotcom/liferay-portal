@@ -41,6 +41,12 @@ public class CucumberAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 		return (CucumberAxisBuild)axisBuild;
 	}
 
+	public CucumberBatchTestClassGroup.CucumberTestClass
+		getCucumberTestClass() {
+
+		return _cucumberTestClass;
+	}
+
 	public CucumberTestResult getCucumberTestResult() {
 		CucumberAxisBuild cucumberAxisBuild = getCucumberAxisBuild();
 

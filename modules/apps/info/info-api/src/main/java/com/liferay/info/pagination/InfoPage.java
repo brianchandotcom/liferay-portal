@@ -22,24 +22,24 @@ import java.util.function.Supplier;
  */
 public class InfoPage<T> {
 
-	public static <T> InfoPage<T> of(List<T> pageItems) {
+	public static <T> InfoPage<T> of(List<? extends T> pageItems) {
 		return new InfoPage<T>(pageItems);
 	}
 
 	public static <T> InfoPage<T> of(
-		List<T> pageItems, Pagination pagination, int totalCount) {
+		List<? extends T> pageItems, Pagination pagination, int totalCount) {
 
 		return new InfoPage<T>(pageItems, pagination, totalCount);
 	}
 
 	public static <T> InfoPage<T> of(
-		List<T> pageItems, Pagination pagination,
+		List<? extends T> pageItems, Pagination pagination,
 		Supplier<Integer> totalCountSupplier) {
 
 		return new InfoPage<T>(pageItems, pagination, totalCountSupplier);
 	}
 
-	public List<T> getPageItems() {
+	public List<? extends T> getPageItems() {
 		return _pageItems;
 	}
 	
@@ -63,14 +63,20 @@ public class InfoPage<T> {
 		return false;
 	}
 
-	private InfoPage(List<T> pageItems) {
-		_pageItems = pageItems;
-		_pagination = Pagination.of(0, pageItems.size());
-		_totalCountSupplier = () -> pageItems.size();
+	private InfoPage(List<? extends T> pageItems) {
+		this(
+			pageItems, Pagination.of(0, pageItems.size()),
+			() -> pageItems.size());
 	}
 
 	private InfoPage(
-		List<T> pageItems, Pagination pagination,
+		List<? extends T> pageItems, Pagination pagination, int totalCount) {
+
+		this(pageItems, pagination, () -> totalCount);
+	}
+
+	private InfoPage(
+		List<? extends T> pageItems, Pagination pagination,
 		Supplier<Integer> totalCountSupplier) {
 
 		_pageItems = pageItems;
@@ -78,15 +84,7 @@ public class InfoPage<T> {
 		_totalCountSupplier = totalCountSupplier;
 	}
 
-	private InfoPage(
-		List<T> pageItems, Pagination pagination, int totalCount) {
-
-		_pageItems = pageItems;
-		_pagination = pagination;
-		_totalCountSupplier = () -> totalCount;
-	}
-
-	private final List<T> _pageItems;
+	private final List<? extends T> _pageItems;
 	private final Pagination _pagination;
 	private final Supplier<Integer> _totalCountSupplier;
 

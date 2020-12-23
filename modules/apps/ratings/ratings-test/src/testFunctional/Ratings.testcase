@@ -579,42 +579,6 @@ definition {
 	}
 
 	@priority = "4"
-	test RateBookmarksWithLikeStyle {
-		property portal.release = "false";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Bookmarks Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Bookmarks Page",
-			widgetName = "Asset Publisher");
-
-		Ratings.configureRatingType(
-			applications = "Bookmarks",
-			ratingType = "Like");
-
-		Navigator.gotoPage(pageName = "Bookmarks Page");
-
-		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Ratings");
-
-		Navigator.gotoPage(pageName = "Bookmarks Page");
-
-		Bookmark.addBookmarkViaAP(
-			bookmarkDescription = "Test Bookmark Description",
-			bookmarkName = "Test Bookmark Name",
-			bookmarkURL = "https://www.liferay.com");
-
-		Navigator.gotoPage(pageName = "Bookmarks Page");
-
-		Ratings.rateLike();
-
-		Ratings.viewRateLike(ratingLikeCount = "1");
-	}
-
-	@priority = "4"
 	test RateKBArticleWithoutSuggestions {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

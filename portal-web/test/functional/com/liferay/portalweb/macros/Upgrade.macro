@@ -3291,7 +3291,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentSelectFromList = "option 2",
-			webContentSeparatorFieldLabel = "Select",
+			webContentSelectFromListFieldLabel = "Select",
 			webContentTitle = "Select Web Content");
 
 		Navigator.gotoBack();

@@ -163,7 +163,7 @@ definition {
 
 		if (isSet(webContentTextBox)) {
 			Type(
-				key_fieldName = "TextBox",
+				key_fieldName = "Text Box",
 				locator1 = "TextArea#TRANSLATIONS_TARGET_TEXT_BOX_FIELD",
 				value1 = "${webContentTextBox}");
 		}
@@ -177,7 +177,7 @@ definition {
 
 		if (isSet(webContentNumber)) {
 			Type(
-				key_fieldName = "Number",
+				key_fieldName = "Numeric",
 				locator1 = "TextInput#TRANSLATIONS_TARGET_FIELD",
 				value1 = "${webContentNumber}");
 		}
@@ -270,7 +270,7 @@ definition {
 	macro viewTargetFields {
 		if (isSet(webContentTitle)) {
 			AssertElementPresent(
-				key_fieldName = "title",
+				key_fieldName = "Title",
 				key_fieldValue = "${webContentTitle}",
 				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
 		}
@@ -330,7 +330,7 @@ definition {
 
 		if (isSet(webContentTextBox)) {
 			AssertElementPresent(
-				key_fieldName = "TextBox",
+				key_fieldName = "Text Box",
 				key_fieldValue = "${webContentTextBox}",
 				locator1 = "Translation#TARGET_LANGUAGE_TEXT_BOX_FIELD");
 		}
@@ -344,7 +344,7 @@ definition {
 
 		if (isSet(webContentNumber)) {
 			AssertElementPresent(
-				key_fieldName = "Number",
+				key_fieldName = "Numeric",
 				key_fieldValue = "${webContentNumber}",
 				locator1 = "Translation#TARGET_LANGUAGE_FIELD");
 		}

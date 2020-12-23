@@ -22,9 +22,13 @@ definition {
 		var key_entryComment = "${entryComment}";
 		var key_mentionsUserScreenName = "${mentionsUserScreenName}";
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type.sendKeys(
-			locator1 = "Comments#COMMENT_FIELD",
+			locator1 = "CKEditor#BODY",
 			value1 = "${entryComment} @${mentionsUserScreenName}");
+
+		SelectFrame(value1 = "relative=top");
 
 		Click.clickNoMouseOver(locator1 = "Mentions#MENTIONS_USER_DISPLAY_OPTION");
 

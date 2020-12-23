@@ -112,11 +112,13 @@ definition {
 	}
 
 	macro addComment {
-		Click.clickAt(locator1 = "Comments#COMMENT_FIELD");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		Type.typeEditor(
-			locator1 = "Comments#COMMENT_FIELD",
+		Type(
+			locator1 = "CKEditor#BODY",
 			value1 = "${entryComment}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick.assertTextClickAt(
 			locator1 = "Button#REPLY",

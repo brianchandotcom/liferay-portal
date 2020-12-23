@@ -23,11 +23,13 @@ definition {
 
 		var entryComment = "${entryComment}";
 
-		Click(locator1 = "Comments#COMMENT_FIELD");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
-			locator1 = "Comments#COMMENT_FIELD",
+			locator1 = "CKEditor#BODY",
 			value1 = "${entryComment}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 
@@ -127,7 +129,7 @@ definition {
 	}
 
 	macro subscribePG {
-		AssertElementPresent.pauseAssertVisible(locator1 = "Comments#COMMENT_FIELD");
+		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		AssertClick(
 			locator1 = "Button#SUBSCRIBE",

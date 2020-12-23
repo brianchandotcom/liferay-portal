@@ -6,11 +6,15 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
 			value1 = "${dmDocumentTitle}");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		Type(
-			locator1 = "Comments#COMMENT_FIELD",
+			locator1 = "CKEditor#BODY",
 			value1 = "${commentBody}");
 
 		Pause(locator1 = "3000");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#REPLY",

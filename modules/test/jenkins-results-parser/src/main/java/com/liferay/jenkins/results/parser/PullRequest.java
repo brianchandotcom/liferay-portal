@@ -191,6 +191,34 @@ public class PullRequest {
 		return _commonParentSHA;
 	}
 
+	public List<String> getFilenames() {
+		if (!_fileNames.isEmpty()) {
+			return _fileNames;
+		}
+
+		String filesURL = JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", getReceiverUsername(), "/",
+			getGitHubRemoteGitRepositoryName(), "/pulls/", getNumber(),
+			"/files");
+
+		try {
+			JSONArray filesJSONArray = JenkinsResultsParserUtil.toJSONArray(
+				filesURL, false);
+
+			for (int j = 0; j < filesJSONArray.length(); j++) {
+				JSONObject fileJSONObject = filesJSONArray.getJSONObject(j);
+
+				_fileNames.add(fileJSONObject.getString("filename"));
+			}
+
+			return _fileNames;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get pull request filenames", ioException);
+		}
+	}
+
 	public GitHubRemoteGitCommit getGitHubRemoteGitCommit() {
 		return GitCommitFactory.newGitHubRemoteGitCommit(
 			getOwnerUsername(), getGitHubRemoteGitRepositoryName(),
@@ -386,6 +414,16 @@ public class PullRequest {
 		_autoCloseCommentAvailable = false;
 
 		return _autoCloseCommentAvailable;
+	}
+
+	public boolean isMergeSubrepoRequest() {
+		for (String filename : getFilenames()) {
+			if (filename.endsWith("/ci-merge")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void refresh() {
@@ -744,6 +782,7 @@ public class PullRequest {
 
 	private Boolean _autoCloseCommentAvailable;
 	private String _commonParentSHA;
+	private List<String> _fileNames = new ArrayList<>();
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
 	private String _gitHubRemoteGitRepositoryName;
 	private JSONObject _jsonObject;

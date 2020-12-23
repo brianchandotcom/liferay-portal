@@ -99,9 +99,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			httpServletRequest, "availableLocales",
 			availableLocales.toArray(new Locale[0]));
 
-		setNamespacedAttribute(
-			httpServletRequest, "defaultLanguageId", _getDefaultLanguageId());
-
 		HttpServletRequest tagHttpServletRequest = getRequest();
 
 		setNamespacedAttribute(
@@ -115,6 +112,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				availableLocales, getDataDefinitionId(), getDataLayoutId(),
 				httpServletRequest,
 				(HttpServletResponse)pageContext.getResponse()));
+		setNamespacedAttribute(
+			httpServletRequest, "defaultLanguageId", _getDefaultLanguageId());
 	}
 
 	private String _getDefaultLanguageId() {

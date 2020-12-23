@@ -3262,16 +3262,16 @@ definition {
 
 		Navigator.gotoBack();
 
-		WebContentUpgrade.viewWithStructureCP(
-			webContentImage = "Document_1.jpg",
-			webContentTitle = "Image Web Content");
-
-		Navigator.gotoBack();
-
 		WebContent.viewWithStructureCP(
 			webContentNumeric = "9",
 			webContentNumericFieldLabel = "Integer",
 			webContentTitle = "Integer Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
+			webContentLinkToPage = "Welcome",
+			webContentTitle = "Link to Page Web Content");
 
 		Navigator.gotoBack();
 
@@ -3297,6 +3297,12 @@ definition {
 		Navigator.gotoBack();
 
 		WebContent.viewWithStructureCP(
+			webContentSeparator = "true",
+			webContentTitle = "Separator Web Content");
+
+		Navigator.gotoBack();
+
+		WebContent.viewWithStructureCP(
 			webContentText = "This is a Text field",
 			webContentTitle = "Text Web Content");
 
@@ -3310,15 +3316,9 @@ definition {
 
 		Navigator.gotoBack();
 
-		WebContent.viewWithStructureCP(
-			webContentLinkToPage = "Welcome",
-			webContentTitle = "Link to Page Web Content");
-
-		Navigator.gotoBack();
-
-		WebContent.viewWithStructureCP(
-			webContentSeparator = "true",
-			webContentTitle = "Separator Web Content");
+		WebContentUpgrade.viewWithStructureCP(
+			webContentImage = "Document_1.jpg",
+			webContentTitle = "Image Web Content");
 	}
 
 	macro viewWebContentWithPredefinedValueInWebContentField {

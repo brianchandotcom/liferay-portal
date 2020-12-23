@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
 import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.WidgetInstanceMapper;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -27,16 +28,10 @@ import com.liferay.portal.kernel.util.Validator;
 public class PageWidgetInstanceDefinitionUtil {
 
 	public static PageWidgetInstanceDefinition toPageWidgetInstanceDefinition(
-		FragmentEntryLink fragmentEntryLink, String portletId, WidgetInstanceUtil widgetInstanceUtil) {
-
-		return toPageWidgetInstanceDefinition(fragmentEntryLink, null, null, portletId, widgetInstanceUtil);
-	}
-
-	public static PageWidgetInstanceDefinition toPageWidgetInstanceDefinition(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentStyle pageWidgetInstanceDefinitionFragmentStyle,
 		FragmentViewport[] pageWidgetInstanceDefinitionFragmentViewports,
-		String portletId, WidgetInstanceUtil widgetInstanceUtil) {
+		String portletId, WidgetInstanceMapper widgetInstanceMapper) {
 
 		if (Validator.isNull(portletId)) {
 			return null;
@@ -47,9 +42,10 @@ public class PageWidgetInstanceDefinitionUtil {
 				fragmentStyle = pageWidgetInstanceDefinitionFragmentStyle;
 				fragmentViewports =
 					pageWidgetInstanceDefinitionFragmentViewports;
-				widgetInstance = widgetInstanceUtil.toWidgetInstance(
+				widgetInstance = widgetInstanceMapper.getWidgetInstance(
 					fragmentEntryLink, portletId);
 			}
 		};
 	}
+
 }

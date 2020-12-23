@@ -60,13 +60,13 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 			long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 			long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 
-			String fileName = uploadPortletRequest.getFileName("file");
-
-			_ddmFormUploadValidator.validateFileExtension(fileName);
-
 			file = FileUtil.createTempFile(inputStream);
 
+			String fileName = uploadPortletRequest.getFileName("file");
+
 			_ddmFormUploadValidator.validateFileSize(file, fileName);
+
+			_ddmFormUploadValidator.validateFileExtension(fileName);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)uploadPortletRequest.getAttribute(

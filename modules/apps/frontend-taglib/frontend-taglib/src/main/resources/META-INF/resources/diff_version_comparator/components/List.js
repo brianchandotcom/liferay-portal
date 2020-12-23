@@ -35,7 +35,7 @@ export default function List({onChange, selected, versions}) {
 								onClick={onChange}
 							>
 								<ClayList.ItemField>
-									<div className="user-icon user-icon-color-1 user-icon-default">
+									<div className="sticker sticker-secondary sticker-user-icon user-icon-color-0">
 										<span>{version.userInitials}</span>
 									</div>
 								</ClayList.ItemField>

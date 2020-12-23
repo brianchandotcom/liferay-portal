@@ -283,10 +283,16 @@ const Options = ({
 				return existingValue;
 			}
 
+			let copyFrom = editingLanguageId;
+
+			if (languageId !== defaultLanguageId) {
+				copyFrom = defaultLanguageId;
+			}
+
 			return {
 				...field,
-				copyFrom: editingLanguageId,
-				edited: field.edited,
+				copyFrom,
+				edited: false,
 				label: field.label,
 			};
 		});

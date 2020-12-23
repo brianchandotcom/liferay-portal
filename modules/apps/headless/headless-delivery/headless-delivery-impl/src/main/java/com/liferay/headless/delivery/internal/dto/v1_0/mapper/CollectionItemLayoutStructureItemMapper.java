@@ -21,7 +21,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,11 +69,7 @@ public class CollectionItemLayoutStructureItemMapper
 			{
 				Set<String> keys = jsonObject.keySet();
 
-				Iterator<String> iterator = keys.iterator();
-
-				while (iterator.hasNext()) {
-					String key = iterator.next();
-
+				for (String key : keys) {
 					put(key, jsonObject.get(key));
 				}
 			}

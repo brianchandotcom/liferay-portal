@@ -17,10 +17,10 @@ package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperTracker;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.PageElementUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,44 +29,65 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
+ * @author Javier de Arcos
  */
-@Component(service = PageDefinitionDTOConverter.class)
-public class PageDefinitionDTOConverter {
+@Component(
+	property = "dto.class.name=com.liferay.layout.util.structure.LayoutStructure",
+	service = {DTOConverter.class, PageDefinitionDTOConverter.class}
+)
+public class PageDefinitionDTOConverter
+	implements DTOConverter<LayoutStructure, PageDefinition> {
 
-	public PageDefinition toDTO(Layout layout) {
-		return toDTO(layout, true, true);
+	@Override
+	public String getContentType() {
+		return PageDefinition.class.getSimpleName();
 	}
 
+	@Override
 	public PageDefinition toDTO(
-		Layout layout, boolean saveInlineContent,
-		boolean saveMappingConfiguration) {
+			DTOConverterContext dtoConverterContext,
+			LayoutStructure layoutStructure)
+		throws Exception {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(0L));
+		Layout layout = Optional.ofNullable(
+			dtoConverterContext.getAttribute("layout")
+		).map(
+			Layout.class::cast
+		).orElseThrow(
+			() -> new IllegalArgumentException(
+				"Layout not defined for layout structure item " +
+					layoutStructure.getMainItemId())
+		);
 
 		LayoutStructureItem mainLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
 
+		boolean saveInlineContent = GetterUtil.getBoolean(
+			dtoConverterContext.getAttribute("saveInlineContent"), true);
+
+		boolean saveMappingConfiguration = GetterUtil.getBoolean(
+			dtoConverterContext.getAttribute("saveMappingConfiguration"), true);
+
 		return new PageDefinition() {
 			{
-				pageElement = _pageElementDTOConverter.toDTO(
-					layout, mainLayoutStructureItem.getItemId(),
-					saveInlineContent, saveMappingConfiguration, 0);
+				pageElement = PageElementUtil.toPageElement(
+					layout.getGroupId(), layoutStructure,
+					mainLayoutStructureItem, _layoutStructureItemMapperTracker,
+					saveInlineContent, saveMappingConfiguration);
 				settings = _toSettings(layout);
 			}
 		};
@@ -182,10 +203,6 @@ public class PageDefinitionDTOConverter {
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private PageElementDTOConverter _pageElementDTOConverter;
+	private LayoutStructureItemMapperTracker _layoutStructureItemMapperTracker;
 
 }

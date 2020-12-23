@@ -15,108 +15,72 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapper;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.LayoutStructureItemMapperTracker;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.PageElementUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
+ * @author Javier de Arcos
  */
-@Component(service = PageElementDTOConverter.class)
-public class PageElementDTOConverter {
+@Component(
+	property = "dto.class.name=com.liferay.layout.util.structure.LayoutStructureItem",
+	service = {DTOConverter.class, PageElementDTOConverter.class}
+)
+public class PageElementDTOConverter
+	implements DTOConverter<LayoutStructureItem, PageElement> {
 
+	@Override
+	public String getContentType() {
+		return PageElement.class.getSimpleName();
+	}
+
+	@Override
 	public PageElement toDTO(
-		Layout layout, String layoutStructureItemId, boolean saveInlineContent,
-		boolean saveMappingConfiguration, long segmentsExperienceId) {
+			DTOConverterContext dtoConverterContext,
+			LayoutStructureItem layoutStructureItem)
+		throws Exception {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
+		Object groupIdObject = dtoConverterContext.getAttribute("groupId");
 
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
-
-		return _toPageElement(
-			layout.getGroupId(), layoutStructure,
-			layoutStructure.getLayoutStructureItem(layoutStructureItemId),
-			saveInlineContent, saveMappingConfiguration);
-	}
-
-	private PageElement _toPageElement(
-		long groupId, LayoutStructure layoutStructure,
-		LayoutStructureItem layoutStructureItem, boolean saveInlineContent,
-		boolean saveMappingConfiguration) {
-
-		List<PageElement> pageElements = new ArrayList<>();
-
-		List<String> childrenItemIds = layoutStructureItem.getChildrenItemIds();
-
-		for (String childItemId : childrenItemIds) {
-			LayoutStructureItem childLayoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childItemId);
-
-			List<String> grandChildrenItemIds =
-				childLayoutStructureItem.getChildrenItemIds();
-
-			if (grandChildrenItemIds.isEmpty()) {
-				pageElements.add(
-					_toPageElement(
-						groupId, childLayoutStructureItem, saveInlineContent,
-						saveMappingConfiguration));
-			}
-			else {
-				pageElements.add(
-					_toPageElement(
-						groupId, layoutStructure, childLayoutStructureItem,
-						saveInlineContent, saveMappingConfiguration));
-			}
+		if (groupIdObject == null) {
+			throw new IllegalArgumentException(
+				"GroupId not defined for layout structure item " +
+					layoutStructureItem.getItemId());
 		}
 
-		PageElement pageElement = _toPageElement(
-			groupId, layoutStructureItem, saveInlineContent,
-			saveMappingConfiguration);
+		long groupId = GetterUtil.getLong(groupIdObject);
 
-		if (!pageElements.isEmpty()) {
-			pageElement.setPageElements(
-				pageElements.toArray(new PageElement[0]));
-		}
+		LayoutStructure layoutStructure = Optional.ofNullable(
+			dtoConverterContext.getAttribute("layoutStructure")
+		).map(
+			LayoutStructure.class::cast
+		).orElseThrow(
+			() -> new IllegalArgumentException(
+				"Layout structure not defined for layout structure item " +
+					layoutStructureItem.getItemId())
+		);
 
-		return pageElement;
-	}
+		boolean saveInlineContent = GetterUtil.getBoolean(
+			dtoConverterContext.getAttribute("saveInlineContent"), true);
 
-	private PageElement _toPageElement(
-		long groupId, LayoutStructureItem layoutStructureItem,
-		boolean saveInlineContent, boolean saveMappingConfiguration) {
+		boolean saveMappingConfiguration = GetterUtil.getBoolean(
+			dtoConverterContext.getAttribute("saveMappingConfiguration"), true);
 
-		Class<?> clazz = layoutStructureItem.getClass();
-
-		LayoutStructureItemMapper layoutStructureItemMapper =
-			_layoutStructureItemMapperTracker.getLayoutStructureItemMapper(
-				clazz.getName());
-
-		if (layoutStructureItemMapper == null) {
-			return null;
-		}
-
-		return layoutStructureItemMapper.getPageElement(
-			groupId, layoutStructureItem, saveInlineContent,
+		return PageElementUtil.toPageElement(
+			groupId, layoutStructure, layoutStructureItem,
+			_layoutStructureItemMapperTracker, saveInlineContent,
 			saveMappingConfiguration);
 	}
-
-	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private LayoutStructureItemMapperTracker _layoutStructureItemMapperTracker;

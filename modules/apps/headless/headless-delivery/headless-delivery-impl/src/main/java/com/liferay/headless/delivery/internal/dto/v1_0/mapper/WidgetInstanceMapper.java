@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -49,14 +47,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jürgen Kappler
  * @author Javier de Arcos
  */
-@Component(service = WidgetInstanceUtil.class)
-public class WidgetInstanceUtil {
+@Component(service = WidgetInstanceMapper.class)
+public class WidgetInstanceMapper {
 
-	public WidgetInstance toWidgetInstance(
+	public WidgetInstance getWidgetInstance(
 		FragmentEntryLink fragmentEntryLink, String portletId) {
 
 		if (Validator.isNull(portletId)) {
@@ -94,7 +95,7 @@ public class WidgetInstanceUtil {
 		PortletConfigurationExporter portletConfigurationExporter =
 			_portletConfigurationExporterTracker.
 				getPortletConfigurationExporter(portletName);
-		
+
 		if (portletConfigurationExporter != null) {
 			return portletConfigurationExporter.getPortletConfiguration(
 				plid, portletId);
@@ -173,7 +174,7 @@ public class WidgetInstanceUtil {
 					_log.warn(
 						String.format(
 							"Resource permission %s will not be exported " +
-							"since no role was found with role ID %s",
+								"since no role was found with role ID %s",
 							resourcePermission.getName(),
 							resourcePermission.getRoleId()));
 				}
@@ -218,7 +219,7 @@ public class WidgetInstanceUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WidgetInstanceUtil.class);
+		WidgetInstanceMapper.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -251,4 +252,5 @@ public class WidgetInstanceUtil {
 
 	@Reference
 	private TeamLocalService _teamLocalService;
+
 }

@@ -17,9 +17,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.PageFragmentInstanceDefinitionUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.PageWidgetInstanceDefinitionUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.WidgetInstanceUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONException;
@@ -78,13 +76,15 @@ public class FragmentLayoutStructureItemMapper
 			return new PageElement() {
 				{
 					definition =
-						_pageFragmentInstanceDefinitionUtil.toPageFragmentInstanceDefinition(
-							fragmentStyledLayoutStructureItem,
-							toFragmentStyle(
-								itemConfigJSONObject.getJSONObject("styles"),
-								saveMappingConfiguration),
-							getFragmentViewPorts(itemConfigJSONObject),
-							saveInlineContent, saveMappingConfiguration);
+						_pageFragmentInstanceDefinitionMapper.
+							getPageFragmentInstanceDefinition(
+								fragmentStyledLayoutStructureItem,
+								toFragmentStyle(
+									itemConfigJSONObject.getJSONObject(
+										"styles"),
+									saveMappingConfiguration),
+								getFragmentViewPorts(itemConfigJSONObject),
+								saveInlineContent, saveMappingConfiguration);
 					type = Type.FRAGMENT;
 				}
 			};
@@ -94,15 +94,17 @@ public class FragmentLayoutStructureItemMapper
 
 		return new PageElement() {
 			{
-				definition = PageWidgetInstanceDefinitionUtil.toPageWidgetInstanceDefinition(
-					fragmentEntryLink,
-					toFragmentStyle(
-						itemConfigJSONObject.getJSONObject("styles"),
-						saveMappingConfiguration),
-					getFragmentViewPorts(
-						itemConfigJSONObject.getJSONObject("style")),
-					PortletIdCodec.encode(portletId, instanceId),
-					_widgetInstanceUtil);
+				definition =
+					PageWidgetInstanceDefinitionUtil.
+						toPageWidgetInstanceDefinition(
+							fragmentEntryLink,
+							toFragmentStyle(
+								itemConfigJSONObject.getJSONObject("styles"),
+								saveMappingConfiguration),
+							getFragmentViewPorts(
+								itemConfigJSONObject.getJSONObject("style")),
+							PortletIdCodec.encode(portletId, instanceId),
+							_widgetInstanceMapper);
 				type = Type.WIDGET;
 			}
 		};
@@ -112,9 +114,10 @@ public class FragmentLayoutStructureItemMapper
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
-	private PageFragmentInstanceDefinitionUtil
-		_pageFragmentInstanceDefinitionUtil;
+	private PageFragmentInstanceDefinitionMapper
+		_pageFragmentInstanceDefinitionMapper;
 
 	@Reference
-	private WidgetInstanceUtil _widgetInstanceUtil;
+	private WidgetInstanceMapper _widgetInstanceMapper;
+
 }

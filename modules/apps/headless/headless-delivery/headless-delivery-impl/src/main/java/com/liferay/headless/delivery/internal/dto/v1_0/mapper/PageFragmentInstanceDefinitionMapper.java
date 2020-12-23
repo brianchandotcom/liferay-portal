@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
@@ -65,12 +65,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -80,27 +77,17 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Rubén Pulido
  * @author Javier de Arcos
  */
-@Component(service = PageFragmentInstanceDefinitionUtil.class)
-public class PageFragmentInstanceDefinitionUtil {
+@Component(service = PageFragmentInstanceDefinitionMapper.class)
+public class PageFragmentInstanceDefinitionMapper {
 
-	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem) {
-
-		return toPageFragmentInstanceDefinition(fragmentStyledLayoutStructureItem, true, true);
-	}
-
-	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
-		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-		boolean saveInlineContent, boolean saveMapping) {
-
-		return toPageFragmentInstanceDefinition(fragmentStyledLayoutStructureItem, null, null, true, true);
-	}
-
-	public PageFragmentInstanceDefinition toPageFragmentInstanceDefinition(
+	public PageFragmentInstanceDefinition getPageFragmentInstanceDefinition(
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
 		FragmentStyle pageFragmentInstanceDefinitionFragmentStyle,
 		FragmentViewport[] pageFragmentInstanceDefinitionFragmentViewports,
@@ -144,7 +131,7 @@ public class PageFragmentInstanceDefinitionUtil {
 		Stream<Locale> stream = availableLocales.stream();
 
 		return stream.map(
-			availableLocale -> LanguageUtil.getLanguageId(availableLocale)
+			LanguageUtil::getLanguageId
 		).collect(
 			Collectors.toList()
 		);
@@ -192,11 +179,7 @@ public class PageFragmentInstanceDefinitionUtil {
 
 					Set<String> keys = jsonObject.keySet();
 
-					Iterator<String> iterator = keys.iterator();
-
-					while (iterator.hasNext()) {
-						String key = iterator.next();
-
+					for (String key : keys) {
 						Object value = jsonObject.get(key);
 
 						if (value instanceof JSONObject) {
@@ -208,8 +191,8 @@ public class PageFragmentInstanceDefinitionUtil {
 							else {
 								JSONDeserializer<Map<String, Object>>
 									jsonDeserializer =
-									JSONFactoryUtil.
-										createJSONDeserializer();
+										JSONFactoryUtil.
+											createJSONDeserializer();
 
 								value = jsonDeserializer.deserialize(
 									value.toString());
@@ -262,18 +245,16 @@ public class PageFragmentInstanceDefinitionUtil {
 			return null;
 		}
 
-		List<FragmentField> fragmentFields = new ArrayList<>();
-
-		fragmentFields.addAll(
+		List<FragmentField> fragmentFields = new ArrayList<>(
 			_getBackgroundImageFragmentFields(
 				editableValuesJSONObject.getJSONObject(
 					"com.liferay.fragment.entry.processor.background.image." +
-					"BackgroundImageFragmentEntryProcessor"),
+						"BackgroundImageFragmentEntryProcessor"),
 				saveMapping));
 
 		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
 			"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor");
+				"EditableFragmentEntryProcessor");
 
 		if (jsonObject != null) {
 			Map<String, String> editableTypes =
@@ -340,7 +321,7 @@ public class PageFragmentInstanceDefinitionUtil {
 
 		for (String fragmentEntryLinkPortletId : fragmentEntryLinkPortletIds) {
 			widgetInstances.add(
-				_widgetInstanceUtil.toWidgetInstance(
+				_widgetInstanceMapper.getWidgetInstance(
 					fragmentEntryLink, fragmentEntryLinkPortletId));
 		}
 
@@ -373,7 +354,7 @@ public class PageFragmentInstanceDefinitionUtil {
 		Map<String, ClassPKReference> classPKReferences = new HashMap<>();
 
 		for (Map.Entry<String, JSONObject> entry :
-			localizedJSONObjects.entrySet()) {
+				localizedJSONObjects.entrySet()) {
 
 			JSONObject jsonObject = entry.getValue();
 
@@ -562,7 +543,7 @@ public class PageFragmentInstanceDefinitionUtil {
 						setUrl(
 							() -> {
 								if (_isSaveFragmentMappedValue(
-									jsonObject, saveMapping)) {
+										jsonObject, saveMapping)) {
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
@@ -591,7 +572,7 @@ public class PageFragmentInstanceDefinitionUtil {
 				setHtml(
 					() -> {
 						if (_isSaveFragmentMappedValue(
-							jsonObject, saveMapping)) {
+								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
 								_toDefaultMappingValue(jsonObject, null),
@@ -641,7 +622,7 @@ public class PageFragmentInstanceDefinitionUtil {
 								}
 
 								if (_isSaveFragmentMappedValue(
-									jsonObject, saveMapping)) {
+										jsonObject, saveMapping)) {
 
 									return _toFragmentMappedValue(
 										_toDefaultMappingValue(
@@ -673,7 +654,7 @@ public class PageFragmentInstanceDefinitionUtil {
 				setText(
 					() -> {
 						if (_isSaveFragmentMappedValue(
-							jsonObject, saveMapping)) {
+								jsonObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
 								_toDefaultMappingValue(jsonObject, null),
@@ -755,7 +736,7 @@ public class PageFragmentInstanceDefinitionUtil {
 				setHref(
 					() -> {
 						if (_isSaveFragmentMappedValue(
-							configJSONObject, saveMapping)) {
+								configJSONObject, saveMapping)) {
 
 							return _toFragmentMappedValue(
 								_toDefaultMappingValue(configJSONObject, null),
@@ -849,7 +830,7 @@ public class PageFragmentInstanceDefinitionUtil {
 				_log.warn(
 					String.format(
 						"Item class name could not be set since class name " +
-						"ID %s could not be parsed to a long",
+							"ID %s could not be parsed to a long",
 						classNameIdString),
 					numberFormatException);
 			}
@@ -866,7 +847,7 @@ public class PageFragmentInstanceDefinitionUtil {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Item class name could not be set since no class name " +
-					"could be obtained for class name ID " + classNameId,
+						"could be obtained for class name ID " + classNameId,
 					exception);
 			}
 
@@ -876,7 +857,7 @@ public class PageFragmentInstanceDefinitionUtil {
 		return className;
 	}
 
-	private Long _toitemClassPK(JSONObject jsonObject) {
+	private Long _toItemClassPK(JSONObject jsonObject) {
 		String classPKString = jsonObject.getString("classPK");
 
 		if (Validator.isNull(classPKString)) {
@@ -893,7 +874,7 @@ public class PageFragmentInstanceDefinitionUtil {
 				_log.warn(
 					String.format(
 						"Item class PK could not be set since class PK %s " +
-						"could not be parsed to a long",
+							"could not be parsed to a long",
 						classPKString),
 					numberFormatException);
 			}
@@ -934,7 +915,7 @@ public class PageFragmentInstanceDefinitionUtil {
 		return new ClassPKReference() {
 			{
 				className = _toItemClassName(jsonObject);
-				classPK = _toitemClassPK(jsonObject);
+				classPK = _toItemClassPK(jsonObject);
 			}
 		};
 	}
@@ -972,11 +953,7 @@ public class PageFragmentInstanceDefinitionUtil {
 
 				Set<String> keys = jsonObject.keySet();
 
-				Iterator<String> iterator = keys.iterator();
-
-				while (iterator.hasNext()) {
-					String key = iterator.next();
-
+				for (String key : keys) {
 					JSONObject valueJSONObject = jsonObject.getJSONObject(key);
 
 					if (availableLanguageIds.contains(key) &&
@@ -996,11 +973,7 @@ public class PageFragmentInstanceDefinitionUtil {
 
 				Set<String> keys = jsonObject.keySet();
 
-				Iterator<String> iterator = keys.iterator();
-
-				while (iterator.hasNext()) {
-					String key = iterator.next();
-
+				for (String key : keys) {
 					if (availableLanguageIds.contains(key)) {
 						put(key, jsonObject.getString(key));
 					}
@@ -1034,7 +1007,7 @@ public class PageFragmentInstanceDefinitionUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageFragmentInstanceDefinitionUtil.class);
+		PageFragmentInstanceDefinitionMapper.class);
 
 	@Reference
 	private FragmentCollectionContributorTracker
@@ -1059,5 +1032,6 @@ public class PageFragmentInstanceDefinitionUtil {
 	private PortletRegistry _portletRegistry;
 
 	@Reference
-	private WidgetInstanceUtil _widgetInstanceUtil;
+	private WidgetInstanceMapper _widgetInstanceMapper;
+
 }

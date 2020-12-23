@@ -55,6 +55,17 @@ public class CucumberAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 	}
 
 	@Override
+	public Integer getDuration() {
+		CucumberTestResult cucumberTestResult = getCucumberTestResult();
+
+		if (cucumberTestResult != null) {
+			return (int)cucumberTestResult.getDuration();
+		}
+
+		return super.getDuration();
+	}
+
+	@Override
 	public List<TestResult> getFailedTestResults() {
 		List<TestResult> failedTestResults = getCommonFailedTestResults();
 

@@ -150,6 +150,9 @@ public class DDMFormTemplateContextFactoryImpl
 			"ddmStructureLayoutId",
 			ddmFormRenderingContext.getDDMStructureLayoutId());
 		templateContext.put(
+			"defaultLanguageId",
+			LanguageUtil.getLanguageId(ddmForm.getDefaultLocale()));
+		templateContext.put(
 			"editingLanguageId", LanguageUtil.getLanguageId(locale));
 		templateContext.put(
 			"evaluatorURL", getDDMFormContextProviderServletURL());

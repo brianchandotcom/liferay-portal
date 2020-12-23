@@ -51,14 +51,15 @@ public class DispatchTriggerWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("active", isActive());
 		attributes.put("cronExpression", getCronExpression());
+		attributes.put("dispatchTaskClusterMode", getDispatchTaskClusterMode());
+		attributes.put(
+			"dispatchTaskExecutorType", getDispatchTaskExecutorType());
+		attributes.put("dispatchTaskSettings", getDispatchTaskSettings());
 		attributes.put("endDate", getEndDate());
 		attributes.put("name", getName());
 		attributes.put("overlapAllowed", isOverlapAllowed());
 		attributes.put("startDate", getStartDate());
 		attributes.put("system", isSystem());
-		attributes.put("taskClusterMode", getTaskClusterMode());
-		attributes.put("taskExecutorType", getTaskExecutorType());
-		attributes.put("taskSettings", getTaskSettings());
 
 		return attributes;
 	}
@@ -119,6 +120,27 @@ public class DispatchTriggerWrapper
 			setCronExpression(cronExpression);
 		}
 
+		Integer dispatchTaskClusterMode = (Integer)attributes.get(
+			"dispatchTaskClusterMode");
+
+		if (dispatchTaskClusterMode != null) {
+			setDispatchTaskClusterMode(dispatchTaskClusterMode);
+		}
+
+		String dispatchTaskExecutorType = (String)attributes.get(
+			"dispatchTaskExecutorType");
+
+		if (dispatchTaskExecutorType != null) {
+			setDispatchTaskExecutorType(dispatchTaskExecutorType);
+		}
+
+		String dispatchTaskSettings = (String)attributes.get(
+			"dispatchTaskSettings");
+
+		if (dispatchTaskSettings != null) {
+			setDispatchTaskSettings(dispatchTaskSettings);
+		}
+
 		Date endDate = (Date)attributes.get("endDate");
 
 		if (endDate != null) {
@@ -147,24 +169,6 @@ public class DispatchTriggerWrapper
 
 		if (system != null) {
 			setSystem(system);
-		}
-
-		Integer taskClusterMode = (Integer)attributes.get("taskClusterMode");
-
-		if (taskClusterMode != null) {
-			setTaskClusterMode(taskClusterMode);
-		}
-
-		String taskExecutorType = (String)attributes.get("taskExecutorType");
-
-		if (taskExecutorType != null) {
-			setTaskExecutorType(taskExecutorType);
-		}
-
-		String taskSettings = (String)attributes.get("taskSettings");
-
-		if (taskSettings != null) {
-			setTaskSettings(taskSettings);
 		}
 	}
 
@@ -206,6 +210,43 @@ public class DispatchTriggerWrapper
 	@Override
 	public String getCronExpression() {
 		return model.getCronExpression();
+	}
+
+	/**
+	 * Returns the dispatch task cluster mode of this dispatch trigger.
+	 *
+	 * @return the dispatch task cluster mode of this dispatch trigger
+	 */
+	@Override
+	public int getDispatchTaskClusterMode() {
+		return model.getDispatchTaskClusterMode();
+	}
+
+	/**
+	 * Returns the dispatch task executor type of this dispatch trigger.
+	 *
+	 * @return the dispatch task executor type of this dispatch trigger
+	 */
+	@Override
+	public String getDispatchTaskExecutorType() {
+		return model.getDispatchTaskExecutorType();
+	}
+
+	/**
+	 * Returns the dispatch task settings of this dispatch trigger.
+	 *
+	 * @return the dispatch task settings of this dispatch trigger
+	 */
+	@Override
+	public String getDispatchTaskSettings() {
+		return model.getDispatchTaskSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getDispatchTaskSettingsUnicodeProperties() {
+
+		return model.getDispatchTaskSettingsUnicodeProperties();
 	}
 
 	/**
@@ -299,35 +340,11 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
-	 * Returns the task cluster mode of this dispatch trigger.
-	 *
-	 * @return the task cluster mode of this dispatch trigger
+	 * @return
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #getDispatchTaskSettingsUnicodeProperties()}
 	 */
-	@Override
-	public int getTaskClusterMode() {
-		return model.getTaskClusterMode();
-	}
-
-	/**
-	 * Returns the task executor type of this dispatch trigger.
-	 *
-	 * @return the task executor type of this dispatch trigger
-	 */
-	@Override
-	public String getTaskExecutorType() {
-		return model.getTaskExecutorType();
-	}
-
-	/**
-	 * Returns the task settings of this dispatch trigger.
-	 *
-	 * @return the task settings of this dispatch trigger
-	 */
-	@Override
-	public String getTaskSettings() {
-		return model.getTaskSettings();
-	}
-
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTaskSettingsUnicodeProperties() {
@@ -441,6 +458,45 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
+	 * Sets the dispatch task cluster mode of this dispatch trigger.
+	 *
+	 * @param dispatchTaskClusterMode the dispatch task cluster mode of this dispatch trigger
+	 */
+	@Override
+	public void setDispatchTaskClusterMode(int dispatchTaskClusterMode) {
+		model.setDispatchTaskClusterMode(dispatchTaskClusterMode);
+	}
+
+	/**
+	 * Sets the dispatch task executor type of this dispatch trigger.
+	 *
+	 * @param dispatchTaskExecutorType the dispatch task executor type of this dispatch trigger
+	 */
+	@Override
+	public void setDispatchTaskExecutorType(String dispatchTaskExecutorType) {
+		model.setDispatchTaskExecutorType(dispatchTaskExecutorType);
+	}
+
+	/**
+	 * Sets the dispatch task settings of this dispatch trigger.
+	 *
+	 * @param dispatchTaskSettings the dispatch task settings of this dispatch trigger
+	 */
+	@Override
+	public void setDispatchTaskSettings(String dispatchTaskSettings) {
+		model.setDispatchTaskSettings(dispatchTaskSettings);
+	}
+
+	@Override
+	public void setDispatchTaskSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			dispatchTaskSettingsUnicodeProperties) {
+
+		model.setDispatchTaskSettingsUnicodeProperties(
+			dispatchTaskSettingsUnicodeProperties);
+	}
+
+	/**
 	 * Sets the dispatch trigger ID of this dispatch trigger.
 	 *
 	 * @param dispatchTriggerId the dispatch trigger ID of this dispatch trigger
@@ -531,35 +587,22 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
-	 * Sets the task cluster mode of this dispatch trigger.
-	 *
-	 * @param taskClusterMode the task cluster mode of this dispatch trigger
+	 * @param taskSettings
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #setDispatchTaskSettings(String)}
 	 */
-	@Override
-	public void setTaskClusterMode(int taskClusterMode) {
-		model.setTaskClusterMode(taskClusterMode);
-	}
-
-	/**
-	 * Sets the task executor type of this dispatch trigger.
-	 *
-	 * @param taskExecutorType the task executor type of this dispatch trigger
-	 */
-	@Override
-	public void setTaskExecutorType(String taskExecutorType) {
-		model.setTaskExecutorType(taskExecutorType);
-	}
-
-	/**
-	 * Sets the task settings of this dispatch trigger.
-	 *
-	 * @param taskSettings the task settings of this dispatch trigger
-	 */
+	@Deprecated
 	@Override
 	public void setTaskSettings(String taskSettings) {
 		model.setTaskSettings(taskSettings);
 	}
 
+	/**
+	 * @param taskSettingsUnicodeProperties
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #setDispatchTaskSettingsUnicodeProperties(UnicodeProperties)}
+	 */
+	@Deprecated
 	@Override
 	public void setTaskSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties

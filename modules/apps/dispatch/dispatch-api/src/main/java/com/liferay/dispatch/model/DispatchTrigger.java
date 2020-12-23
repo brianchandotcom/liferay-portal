@@ -57,8 +57,35 @@ public interface DispatchTrigger extends DispatchTriggerModel, PersistedModel {
 		};
 
 	public com.liferay.portal.kernel.util.UnicodeProperties
+		getDispatchTaskSettingsUnicodeProperties();
+
+	/**
+	 * @return
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #getDispatchTaskSettingsUnicodeProperties()}
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTaskSettingsUnicodeProperties();
 
+	public void setDispatchTaskSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			dispatchTaskSettingsUnicodeProperties);
+
+	/**
+	 * @param taskSettings
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #setDispatchTaskSettings(String)}
+	 */
+	@Deprecated
+	public void setTaskSettings(String taskSettings);
+
+	/**
+	 * @param taskSettingsUnicodeProperties
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #setDispatchTaskSettingsUnicodeProperties(UnicodeProperties)}
+	 */
+	@Deprecated
 	public void setTaskSettingsUnicodeProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties
 			taskSettingsUnicodeProperties);

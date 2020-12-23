@@ -33,6 +33,7 @@ import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.selector.InfoItemSelector;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.info.list.provider.InfoListProvider;
+import com.liferay.info.item.provider.InfoItemRelatedItemsProvider;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.Keyed;
@@ -254,7 +255,7 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			InfoItemLanguagesProvider.class, InfoItemObjectProvider.class,
 			InfoItemPermissionProvider.class, InfoItemRenderer.class,
 			InfoItemSelector.class, InfoListRenderer.class,
-			InfoListProvider.class
+			InfoListProvider.class, InfoItemRelatedItemsProvider.class
 		};
 
 		for (Class<?> serviceClass : serviceClasses) {

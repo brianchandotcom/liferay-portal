@@ -187,6 +187,135 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-123101. The image resolution is applied to direct background image of elements."
+	@priority = "5"
+	test ViewAutoImageResolutionForBackgroundImageDirectlySelected {
+		task ("Add a Container element to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Directly select an image with width greater than 2000px as background image of Container") {
+			PageEditor.editLayoutContainer(
+				backgroundImage = "Direct",
+				panel = "Styles",
+				uploadFileName = "high_resolution_photo.jpg");
+
+			PageEditor.viewContainerStyle(
+				backgroundImage = "high_resolution_photo.jpg",
+				position = "1");
+		}
+
+		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
+			var width = PageEditor.getWidthOfSelectedImageResolution();
+		}
+
+		task ("Assert the Width and File Size of image resolution equal with orignal image") {
+			TestUtils.assertEquals(
+				actual = "${width}",
+				expected = "5464");
+
+			TestUtils.assertEquals(
+				actual = "${fileSizeDesktop}",
+				expected = "4405");
+		}
+
+		task ("Change to the Tablet viewport") {
+			Click(
+				key_deviceType = "Tablet",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Take down the Width and File Size of image resolution in Tablet viewport") {
+			var fileSizeTablet = PageEditor.getFileSizeOfSelectedImageResolution();
+			var width = PageEditor.getWidthOfSelectedImageResolution();
+		}
+
+		task ("Assert the Width of selected image resolution is 1000px") {
+			TestUtils.assertEquals(
+				actual = "${width}",
+				expected = "1000");
+		}
+
+		task ("Assert the File Size become smaller than Desktop viewport") {
+			TestUtils.isGreaterThan(
+				actual = "${fileSizeDesktop}",
+				expected = "${fileSizeTablet}");
+		}
+
+		task ("Back to the Desktop viewport") {
+			Click(
+				key_deviceType = "Desktop",
+				locator1 = "PageEditor#DEVICE_TYPE");
+		}
+
+		task ("Add a Banner Center fragment below the Container") {
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center",
+				targetFragmentName = "Container");
+		}
+
+		task ("Directly select an image with width greater than 2000px as background image of Banner Center") {
+			PageEditor.editFragmentImage(
+				fragmentName = "Banner Center",
+				id = "banner-center",
+				imageFileName = "high_resolution_photo.jpg");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "banner-center",
+				imageFileName = "high_resolution_photo.jpg");
+		}
+
+		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
+			var fileSizeDesktop = PageEditor.getFileSizeOfSelectedImageResolution();
+			var width = PageEditor.getWidthOfSelectedImageResolution();
+		}
+
+		task ("Assert the Width and File Size of image resolution equal with orignal image") {
+			TestUtils.assertEquals(
+				actual = "${width}",
+				expected = "5464");
+
+			TestUtils.assertEquals(
+				actual = "${fileSizeDesktop}",
+				expected = "4405");
+		}
+
+		task ("Change to the Portrait Phone viewport") {
+			Click(
+				key_deviceType = "Portrait Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Take down the Width and File Size of image resolution in Portrait Phone viewport") {
+			var fileSizePortraitPhone = PageEditor.getFileSizeOfSelectedImageResolution();
+			var width = PageEditor.getWidthOfSelectedImageResolution();
+		}
+
+		task ("Assert the Width of selected image resolution is 1000px") {
+			TestUtils.assertEquals(
+				actual = "${width}",
+				expected = "1000");
+		}
+
+		task ("Assert the File Size become smaller than Desktop viewport") {
+			TestUtils.isGreaterThan(
+				actual = "${fileSizeDesktop}",
+				expected = "${fileSizePortraitPhone}");
+		}
+	}
+
 	@description = "This is a test for LPS-122822. View auto image resolution for image mapped to web content."
 	@priority = "5"
 	test ViewAutoImageResolutionForImageMappedToWebContent {

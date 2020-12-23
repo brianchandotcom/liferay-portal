@@ -14,7 +14,7 @@
 
 module.exports = {
 	federation: {
-		bridges: ['@clayui/icon']
+		bridges: ['@clayui/icon'],
 	},
 	preset: '@liferay/npm-scripts/src/presets/standard',
 };

@@ -20,7 +20,10 @@ import com.liferay.jenkins.results.parser.CucumberTestResult;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.spira.BaseSpiraArtifact;
+import com.liferay.jenkins.results.parser.spira.SpiraCustomProperty;
+import com.liferay.jenkins.results.parser.spira.SpiraCustomPropertyValue;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseFolder;
+import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.test.clazz.group.CucumberAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.CucumberBatchTestClassGroup;
 
@@ -76,6 +79,35 @@ public class CucumberAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 		}
 
 		return failedTestResults;
+	}
+
+	@Override
+	public SpiraTestCaseObject getSpiraTestCaseObject() {
+		SpiraTestCaseObject spiraTestCaseObject =
+			super.getSpiraTestCaseObject();
+
+		if (!isSpiraPropertyUpdateEnabled()) {
+			return spiraTestCaseObject;
+		}
+
+		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
+
+		SpiraCustomProperty spiraCustomProperty =
+			SpiraCustomProperty.createSpiraCustomProperty(
+				spiraBuildResult.getSpiraProject(), SpiraTestCaseObject.class,
+				"File Path", SpiraCustomProperty.Type.TEXT);
+
+		CucumberBatchTestClassGroup cucumberBatchTestClassGroup =
+			_cucumberTestClass.getCucumberBatchTestClassGroup();
+
+		spiraTestCaseObject.updateSpiraCustomPropertyValues(
+			SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
+				spiraCustomProperty,
+				JenkinsResultsParserUtil.getPathRelativeTo(
+					_cucumberTestClass.getTestClassFile(),
+					cucumberBatchTestClassGroup.getFaroDir())));
+
+		return spiraTestCaseObject;
 	}
 
 	@Override

@@ -136,6 +136,25 @@ public abstract class BaseAxisSpiraTestResult
 		return false;
 	}
 
+	protected boolean isSpiraPropertyUpdateEnabled() {
+		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
+
+		TopLevelBuild topLevelBuild = spiraBuildResult.getTopLevelBuild();
+
+		String spiraPropertyUpdate = JenkinsResultsParserUtil.getProperty(
+			spiraBuildResult.getPortalTestProperties(),
+			"test.batch.spira.property.update", topLevelBuild.getJobName(),
+			topLevelBuild.getTestSuiteName());
+
+		if ((spiraPropertyUpdate != null) &&
+			spiraPropertyUpdate.equals("true")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private final AxisTestClassGroup _axisTestClassGroup;
 	private SpiraTestCaseType _spiraTestCaseType;
 

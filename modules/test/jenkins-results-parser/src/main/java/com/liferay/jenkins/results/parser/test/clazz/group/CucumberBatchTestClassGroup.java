@@ -33,6 +33,19 @@ import org.apache.commons.lang.StringUtils;
  */
 public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 
+	public File getFaroDir() {
+		File faroDir = new File(
+			JenkinsResultsParserUtil.getProperty(
+				getJobProperties(), "analytics.cloud.faro.dir"));
+
+		try {
+			return new File(faroDir.getCanonicalPath());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public static class CucumberTestClass extends BaseTestClass {
 
 		public List<String> getCategoryNames() {
@@ -49,6 +62,10 @@ public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 			folderNames = folderNames.replaceAll("\\s*(.+?)[/\\s]*", "$1");
 
 			return Arrays.asList(folderNames.split("/"));
+		}
+
+		public CucumberBatchTestClassGroup getCucumberBatchTestClassGroup() {
+			return _cucumberBatchTestClassGroup;
 		}
 
 		public String getFeatureDescription() {
@@ -160,24 +177,11 @@ public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 		return cucumberOptions;
 	}
 
-	private File _getFaroDir() {
-		File faroDir = new File(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "analytics.cloud.faro.dir"));
-
-		try {
-			return new File(faroDir.getCanonicalPath());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
 	private File _getFeatureBaseDir() {
 		String cucumberOptions = _getCucumberOptions();
 
 		return new File(
-			_getFaroDir(),
+			getFaroDir(),
 			JenkinsResultsParserUtil.combine(
 				"osb-faro-functional-test/",
 				cucumberOptions.replaceAll(".* ([^ ]+)", "$1")));

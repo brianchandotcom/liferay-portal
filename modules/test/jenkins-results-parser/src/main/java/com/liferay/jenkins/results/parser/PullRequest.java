@@ -154,6 +154,22 @@ public class PullRequest {
 		_jsonObject.put("state", "closed");
 	}
 
+	public String getCIMergeSHA() {
+		getFileNames();
+
+		return _ciMergeSHA;
+	}
+
+	public String getCIMergeSubrepo() {
+		for (String fileName : getFileNames()) {
+			if (fileName.endsWith("/ci-merge")) {
+				return fileName.replace("/ci-merge", "");
+			}
+		}
+
+		throw new IllegalStateException("Unable to find ci-merge file");
+	}
+
 	public List<Comment> getComments() {
 		List<Comment> comments = new ArrayList<>();
 
@@ -191,10 +207,12 @@ public class PullRequest {
 		return _commonParentSHA;
 	}
 
-	public List<String> getFilenames() {
+	public List<String> getFileNames() {
 		if (!_fileNames.isEmpty()) {
 			return _fileNames;
 		}
+
+		_ciMergeSHA = "";
 
 		String filesURL = JenkinsResultsParserUtil.combine(
 			"https://api.github.com/repos/", getReceiverUsername(), "/",
@@ -208,7 +226,23 @@ public class PullRequest {
 			for (int j = 0; j < filesJSONArray.length(); j++) {
 				JSONObject fileJSONObject = filesJSONArray.getJSONObject(j);
 
-				_fileNames.add(fileJSONObject.getString("filename"));
+				String fileName = fileJSONObject.getString("filename");
+
+				_fileNames.add(fileName);
+
+				if (fileName.endsWith("/ci-merge")) {
+					String patch = fileJSONObject.getString("patch");
+
+					Matcher matcher = _ciMergeSHAPattern.matcher(patch);
+
+					if (matcher.find()) {
+						String sha = matcher.group(1);
+
+						if (!matcher.find()) {
+							_ciMergeSHA = sha;
+						}
+					}
+				}
 			}
 
 			return _fileNames;
@@ -417,7 +451,7 @@ public class PullRequest {
 	}
 
 	public boolean isMergeSubrepoRequest() {
-		for (String filename : getFilenames()) {
+		for (String filename : getFileNames()) {
 			if (filename.endsWith("/ci-merge")) {
 				return true;
 			}
@@ -775,12 +809,15 @@ public class PullRequest {
 
 	private static final String _NAME_TEST_SUITE_DEFAULT = "default";
 
+	private static final Pattern _ciMergeSHAPattern = Pattern.compile(
+		"\\+([0-9a-f]{40})");
 	private static final Pattern _gitHubPullRequestURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<owner>[^/]+)/",
 			"(?<gitHubRemoteGitRepositoryName>[^/]+)/pull/(?<number>\\d+)"));
 
 	private Boolean _autoCloseCommentAvailable;
+	private String _ciMergeSHA = "";
 	private String _commonParentSHA;
 	private List<String> _fileNames = new ArrayList<>();
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;

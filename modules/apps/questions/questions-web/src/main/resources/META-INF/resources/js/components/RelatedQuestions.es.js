@@ -52,7 +52,7 @@ export default withRouter(
 
 						<hr />
 
-						<div className="row">
+						<div className="questions-container row">
 							{data.messageBoardThreads.items
 								.filter(
 									(otherQuestion) =>

@@ -64,145 +64,141 @@ export default withRouter(({history}) => {
 				<Redirect to={'/questions/' + context.rootTopicId} />
 			)}
 
-			<div className="questions-container">
-				<div className="row">
-					{!loading && (
-						<>
-							{sections &&
-								sections.actions &&
-								sections.actions.create &&
-								sections.items.length > 0 && (
-									<div className="c-mb-4 col-lg-4 col-md-6 col-xl-3">
-										<div className="questions-card text-decoration-none text-secondary">
-											<ClayCard
-												className="questions-new-section"
-												onClick={() =>
-													setTopicModalVisibility(
-														true
-													)
-												}
-											>
-												<ClayCard.Body>
-													<ClayEmptyState
-														description=""
-														imgSrc={
-															context.includeContextPath +
-															'/assets/new_topic_illustration.png'
-														}
-														title=""
-													>
-														<ClayIcon symbol="plus" />
-														<span className="c-ml-3 text-truncate">
-															{Liferay.Language.get(
-																'new-topic'
-															)}
-														</span>
-													</ClayEmptyState>
-												</ClayCard.Body>
-											</ClayCard>
-										</div>
-									</div>
-								)}
-
-							{(sections.items.length > 0 &&
-								sections.items.map((section) => (
-									<div
-										className="c-mb-4 col-lg-4 col-md-6 col-xl-3"
-										key={section.id}
-									>
-										<Link
-											className="questions-card text-decoration-none text-secondary"
-											to={`/questions/${
-												context.useTopicNamesInURL
-													? section.title
-													: section.id
-											}`}
-										>
-											<ClayCard>
-												<ClayCard.Body>
-													<ClayCard.Description
-														className="text-dark"
-														displayType="title"
-													>
-														{section.title}
-													</ClayCard.Description>
-
-													<ClayCard.Description
-														className="c-mt-3 flex-grow-1"
-														displayType="text"
-														truncate={true}
-													>
-														{descriptionTruncate(
-															section.description
-														)}
-													</ClayCard.Description>
-
-													<ClayCard.Description
-														className="c-mt-4 justify-content-end small"
-														displayType="text"
-														truncate={false}
-													>
-														<span className="x-questions">
-															{lang.sub(
-																Liferay.Language.get(
-																	'x-questions'
-																),
-																[
-																	section.numberOfMessageBoardThreads,
-																]
-															)}
-														</span>
-														<button className="btn btn-link btn-sm d-xl-none float-right font-weight-bold p-0">
-															View Topic
-														</button>
-													</ClayCard.Description>
-												</ClayCard.Body>
-											</ClayCard>
-										</Link>
-									</div>
-								))) || (
-								<ClayEmptyState
-									description={Liferay.Language.get(
-										'there-are-no-topics-in-this-page-be-the-first-to-create-a-topic'
-									)}
-									imgSrc={
-										context.includeContextPath +
-										'/assets/no_topics_illustration.png'
-									}
-									title={Liferay.Language.get(
-										'this-page-has-no-topics'
-									)}
-								>
-									{sections && sections.actions.create && (
-										<ClayButton
-											displayType="primary"
+			<div className="questions-container row">
+				{!loading && (
+					<>
+						{sections &&
+							sections.actions &&
+							sections.actions.create &&
+							sections.items.length > 0 && (
+								<div className="c-mb-4 col-lg-4 col-md-6 col-xl-3">
+									<div className="questions-card text-decoration-none text-secondary">
+										<ClayCard
+											className="questions-new-section"
 											onClick={() =>
 												setTopicModalVisibility(true)
 											}
 										>
-											{Liferay.Language.get('new-topic')}
-										</ClayButton>
-									)}
-								</ClayEmptyState>
+											<ClayCard.Body>
+												<ClayEmptyState
+													description=""
+													imgSrc={
+														context.includeContextPath +
+														'/assets/new_topic_illustration.png'
+													}
+													title=""
+												>
+													<ClayIcon symbol="plus" />
+													<span className="c-ml-3 text-truncate">
+														{Liferay.Language.get(
+															'new-topic'
+														)}
+													</span>
+												</ClayEmptyState>
+											</ClayCard.Body>
+										</ClayCard>
+									</div>
+								</div>
 							)}
-						</>
-					)}
 
-					<NewTopicModal
-						currentSectionId={+context.rootTopicId}
-						onClose={() => setTopicModalVisibility(false)}
-						onCreateNavigateTo={() => {
-							historyPushParser(`/tmp`);
-							history.goBack();
-						}}
-						setError={setError}
-						visible={topicModalVisibility}
-					/>
-				</div>
-				{loading && <ClayLoadingIndicator />}
+						{(sections.items.length > 0 &&
+							sections.items.map((section) => (
+								<div
+									className="c-mb-4 col-lg-4 col-md-6 col-xl-3"
+									key={section.id}
+								>
+									<Link
+										className="questions-card text-decoration-none text-secondary"
+										to={`/questions/${
+											context.useTopicNamesInURL
+												? section.title
+												: section.id
+										}`}
+									>
+										<ClayCard>
+											<ClayCard.Body>
+												<ClayCard.Description
+													className="text-dark"
+													displayType="title"
+												>
+													{section.title}
+												</ClayCard.Description>
 
-				<Alert info={error} />
+												<ClayCard.Description
+													className="c-mt-3 flex-grow-1"
+													displayType="text"
+													truncate={true}
+												>
+													{descriptionTruncate(
+														section.description
+													)}
+												</ClayCard.Description>
+
+												<ClayCard.Description
+													className="c-mt-4 justify-content-end small"
+													displayType="text"
+													truncate={false}
+												>
+													<span className="x-questions">
+														{lang.sub(
+															Liferay.Language.get(
+																'x-questions'
+															),
+															[
+																section.numberOfMessageBoardThreads,
+															]
+														)}
+													</span>
+													<button className="btn btn-link btn-sm d-xl-none float-right font-weight-bold p-0">
+														View Topic
+													</button>
+												</ClayCard.Description>
+											</ClayCard.Body>
+										</ClayCard>
+									</Link>
+								</div>
+							))) || (
+							<ClayEmptyState
+								description={Liferay.Language.get(
+									'there-are-no-topics-in-this-page-be-the-first-to-create-a-topic'
+								)}
+								imgSrc={
+									context.includeContextPath +
+									'/assets/no_topics_illustration.png'
+								}
+								title={Liferay.Language.get(
+									'this-page-has-no-topics'
+								)}
+							>
+								{sections && sections.actions.create && (
+									<ClayButton
+										displayType="primary"
+										onClick={() =>
+											setTopicModalVisibility(true)
+										}
+									>
+										{Liferay.Language.get('new-topic')}
+									</ClayButton>
+								)}
+							</ClayEmptyState>
+						)}
+					</>
+				)}
+
+				<NewTopicModal
+					currentSectionId={+context.rootTopicId}
+					onClose={() => setTopicModalVisibility(false)}
+					onCreateNavigateTo={() => {
+						historyPushParser(`/tmp`);
+						history.goBack();
+					}}
+					setError={setError}
+					visible={topicModalVisibility}
+				/>
 			</div>
+			{loading && <ClayLoadingIndicator />}
+
+			<Alert info={error} />
 		</section>
 	);
 });

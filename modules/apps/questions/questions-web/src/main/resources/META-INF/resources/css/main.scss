@@ -221,6 +221,7 @@
 }
 
 .questions-container {
+	max-width: 100vw;
 	word-break: break-word;
 
 	blockquote {
@@ -259,8 +260,6 @@
 .questions-root {
 	.questions-breadcrumb {
 		background-color: $light;
-		margin-left: -1rem;
-		margin-right: -1rem;
 	}
 
 	.breadcrumb-button {

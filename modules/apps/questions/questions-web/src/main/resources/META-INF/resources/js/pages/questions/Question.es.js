@@ -207,9 +207,9 @@ export default withRouter(
 					}
 				/>
 
-				<div className="c-mt-5 questions-container">
+				<div className="c-mt-5">
 					{!loading && (
-						<div className="row">
+						<div className="questions-container row">
 							<div className="col-md-1 text-md-center">
 								<Rating
 									aggregateRating={question.aggregateRating}

@@ -267,81 +267,75 @@ export default withRouter(
 					allowCreateTopicInRootTopic={allowCreateTopicInRootTopic}
 					section={section}
 				/>
-				<div className="questions-container">
-					<div className="row">
-						<div className="c-mt-3 col col-xl-12">
-							<QuestionsNavigationBar />
-						</div>
+				<div className="questions-container row">
+					<div className="c-mt-3 col col-xl-12">
+						<QuestionsNavigationBar />
+					</div>
 
-						{!!search && !loading && (
-							<ResultsMessage
-								maxNumberOfSearchResults={
-									MAX_NUMBER_OF_QUESTIONS
-								}
-								searchCriteria={search}
-								totalCount={totalCount}
-							/>
-						)}
+					{!!search && !loading && (
+						<ResultsMessage
+							maxNumberOfSearchResults={MAX_NUMBER_OF_QUESTIONS}
+							searchCriteria={search}
+							totalCount={totalCount}
+						/>
+					)}
 
-						<div className="c-mx-auto c-px-0 col-xl-10">
-							<PaginatedList
-								activeDelta={pageSize}
-								activePage={page}
-								changeDelta={(pageSize) =>
-									changePage(page, pageSize)
-								}
-								changePage={(page) =>
-									changePage(page, pageSize)
-								}
-								data={questions}
-								emptyState={
-									!search && !filter ? (
-										<ClayEmptyState
-											description={Liferay.Language.get(
-												'there-are-no-questions-inside-this-topic-be-the-first-to-ask-something'
-											)}
-											imgSrc={
-												context.includeContextPath +
-												'/assets/empty_questions_list.png'
-											}
-											title={Liferay.Language.get(
-												'this-topic-is-empty'
-											)}
-										>
-											<ClayButton
-												displayType="primary"
-												onClick={navigateToNewQuestion}
-											>
-												{Liferay.Language.get(
-													'ask-question'
-												)}
-											</ClayButton>
-										</ClayEmptyState>
-									) : (
-										<ClayEmptyState
-											title={Liferay.Language.get(
-												'there-are-no-results'
-											)}
-										/>
-									)
-								}
-								loading={loading}
-								totalCount={totalCount}
-							>
-								{(question) => (
-									<QuestionRow
-										currentSection={sectionTitle}
-										key={question.id}
-										question={question}
-										showSectionLabel={
-											!!section.numberOfMessageBoardSections
+					<div className="c-mx-auto c-px-0 col-xl-10">
+						<PaginatedList
+							activeDelta={pageSize}
+							activePage={page}
+							changeDelta={(pageSize) =>
+								changePage(page, pageSize)
+							}
+							changePage={(page) => changePage(page, pageSize)}
+							data={questions}
+							emptyState={
+								!search && !filter ? (
+									<ClayEmptyState
+										description={Liferay.Language.get(
+											'there-are-no-questions-inside-this-topic-be-the-first-to-ask-something'
+										)}
+										imgSrc={
+											context.includeContextPath +
+											'/assets/empty_questions_list.png'
 										}
+										title={Liferay.Language.get(
+											'this-topic-is-empty'
+										)}
+									>
+										<ClayButton
+											displayType="primary"
+											onClick={navigateToNewQuestion}
+										>
+											{Liferay.Language.get(
+												'ask-question'
+											)}
+										</ClayButton>
+									</ClayEmptyState>
+								) : (
+									<ClayEmptyState
+										title={Liferay.Language.get(
+											'there-are-no-results'
+										)}
 									/>
-								)}
-							</PaginatedList>
+								)
+							}
+							loading={loading}
+							totalCount={totalCount}
+						>
+							{(question) => (
+								<QuestionRow
+									currentSection={sectionTitle}
+									key={question.id}
+									question={question}
+									showSectionLabel={
+										!!section.numberOfMessageBoardSections
+									}
+								/>
+							)}
+						</PaginatedList>
 
-							<Alert info={error} />
-						</div>
+						<Alert info={error} />
 					</div>
 				</div>
 			</section>

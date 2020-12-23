@@ -24,12 +24,12 @@ long dispatchTriggerId = 0;
 DispatchTrigger dispatchTrigger = dispatchTriggerDisplayContext.getDispatchTrigger();
 
 String dispatchTaskExecutorType = ParamUtil.getString(request, "dispatchTaskExecutorType");
-String taskSettings = StringPool.BLANK;
+String dispatchTaskSettings = StringPool.BLANK;
 
 if (dispatchTrigger != null) {
 	dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
 	dispatchTaskExecutorType = dispatchTrigger.getDispatchTaskExecutorType();
-	taskSettings = dispatchTrigger.getDispatchTaskSettings();
+	dispatchTaskSettings = dispatchTrigger.getDispatchTaskSettings();
 }
 %>
 
@@ -47,7 +47,7 @@ if (dispatchTrigger != null) {
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTriggerId) %>" />
 			<aui:input name="dispatchTaskExecutorType" type="hidden" value="<%= dispatchTaskExecutorType %>" />
-			<aui:input name="taskSettings" type="hidden" />
+			<aui:input name="dispatchTaskSettings" type="hidden" />
 
 			<div class="lfr-form-content">
 				<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
@@ -56,7 +56,7 @@ if (dispatchTrigger != null) {
 					<aui:input disabled="<%= (dispatchTrigger != null) && dispatchTrigger.isSystem() %>" name="name" required="<%= true %>" />
 				</aui:fieldset>
 
-				<div id="<portlet:namespace />taskSettingsEditor"></div>
+				<div id="<portlet:namespace />dispatchTaskSettingsEditor"></div>
 
 				<aui:button-row>
 
@@ -98,7 +98,7 @@ if (dispatchTrigger != null) {
 	var STR_VALUE = 'value';
 
 	var contentEditor = new A.AceEditor({
-		boundingBox: '#<portlet:namespace />taskSettingsEditor',
+		boundingBox: '#<portlet:namespace />dispatchTaskSettingsEditor',
 		height: 600,
 		mode: 'xml',
 		tabSize: 4,
@@ -107,7 +107,11 @@ if (dispatchTrigger != null) {
 
 	var xmlFormatter = new Liferay.XMLFormatter();
 
-	var content = xmlFormatter.format('<%= HtmlUtil.escapeJS(taskSettings) %>');
+	var content = xmlFormatter.format(
+		'<%=
+			HtmlUtil.escapeJS(dispatchTaskSettings)
+		%>'
+	);
 
 	if (content) {
 		content = content.trim();
@@ -118,7 +122,7 @@ if (dispatchTrigger != null) {
 	Liferay.on('<portlet:namespace />saveTrigger', function (event) {
 		var form = window.document['<portlet:namespace />fm'];
 
-		form['<portlet:namespace />taskSettings'].value = contentEditor.get(
+		form['<portlet:namespace />dispatchTaskSettings'].value = contentEditor.get(
 			STR_VALUE
 		);
 

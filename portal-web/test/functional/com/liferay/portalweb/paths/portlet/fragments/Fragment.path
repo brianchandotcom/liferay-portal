@@ -306,6 +306,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BACKGROUND_IMAGE_EDITABLE_FIELD_IMAGE_PROPERTIES</td>
+	<td>//div[contains(@data-lfr-background-image-id,'${id}')][contains(@style,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'page-editor__topper__bar') and contains(.,'${key_fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//*[contains(@data-lfr-editable-id,'${id}')]</td>
 	<td></td>

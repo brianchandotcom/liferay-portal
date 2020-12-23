@@ -86,11 +86,19 @@ public class SpiraResultImporter {
 	public void record() {
 		long start = System.currentTimeMillis();
 
+		Job job = _topLevelBuild.getJob();
+
+		String spiraEnabled = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "test.batch.spira.enabled",
+			_topLevelBuild.getJobName(), _topLevelBuild.getTestSuiteName());
+
+		if ((spiraEnabled == null) || !spiraEnabled.equals("true")) {
+			return;
+		}
+
 		_cacheSpiraAutomationHosts();
 		_cacheSpiraTestCaseComponents();
 		_cacheSpiraTestCaseObjects();
-
-		Job job = _topLevelBuild.getJob();
 
 		List<SpiraTestResult> spiraTestResults = new ArrayList<>();
 

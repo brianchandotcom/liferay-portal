@@ -29,7 +29,13 @@
 }
 
 .modal-dialog {
-	position: relative;
+	&:not(.dialog-iframe-modal) {
+		position: relative;
+	}
+
+	&.dialog-iframe-modal {
+		max-width: none;
+	}
 
 	&.modal-dialog-sm {
 		max-width: $modal-md;

@@ -48,7 +48,7 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 						<div class="card-col-content">
 							<div class="lfr-discussion-details">
 								<liferay-ui:user-portrait
-									cssClass="user-icon-lg"
+									cssClass="sticker-lg"
 									userId="<%= commerceOrderNote.getUserId() %>"
 									userName="<%= commerceOrderNote.getUserName() %>"
 								/>

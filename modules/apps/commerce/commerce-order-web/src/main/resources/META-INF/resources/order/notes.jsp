@@ -51,7 +51,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						<div class="row">
 							<div class="col-auto">
 								<liferay-ui:user-portrait
-									cssClass="user-icon-lg"
+									cssClass="sticker-lg"
 									userId="<%= commerceOrderNote.getUserId() %>"
 									userName="<%= commerceOrderNote.getUserName() %>"
 								/>
@@ -146,7 +146,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<div class="panel-body px-0 py-4">
 						<div class="lfr-discussion-details">
 							<liferay-ui:user-portrait
-								cssClass="user-icon-lg"
+								cssClass="sticker-lg"
 								user="<%= user %>"
 							/>
 						</div>

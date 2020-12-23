@@ -26,7 +26,7 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 	<div class="aspect-ratio aspect-ratio-8-to-3 bg-light mb-4">
 		<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
 			<div class="text-secondary">
-				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-folder reference-mark user-icon-xl">
+				<svg aria-hidden="true" class="h4 lexicon-icon lexicon-icon-folder reference-mark">
 					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#folder" />
 				</svg>
 			</div>

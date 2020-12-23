@@ -68,7 +68,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 						%>
 
 						<div class="search-container-column-language">
-							<svg class="lexicon-icon lexicon-icon-<%= w3cLanguageId %> reference-mark user-icon-xl">
+							<svg class="h4 lexicon-icon lexicon-icon-<%= w3cLanguageId %> reference-mark">
 								<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#<%= w3cLanguageId %>" />
 							</svg>
 						</div>

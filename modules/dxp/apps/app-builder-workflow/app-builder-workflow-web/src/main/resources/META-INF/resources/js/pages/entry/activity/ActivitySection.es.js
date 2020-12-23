@@ -26,10 +26,18 @@ function ActivitySection({workflowInstanceId}) {
 	const groupActivities = (activities) => {
 		const isToday = (date) => moment().isSame(date, 'day');
 
-		const formattedItems = activities.map((activity) => {
+		const formattedItems = activities.map((activity, index) => {
 			const formattedDate = isToday(activity.dateCreated)
 				? Liferay.Language.get('today')
 				: formatDate(activity.dateCreated, 'LL');
+
+			if (
+				index < activities.length - 1 &&
+				activity.type == 'TaskAssign' &&
+				activity.role?.id
+			) {
+				activity.commentLog = '';
+			}
 
 			return {...activity, formattedDate};
 		});

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>BOOLEAN</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//label[@class='checkbox']</td>
+	<td>//div[@data-field-name='${key_fieldName}']//label[contains(.,'Boolean')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

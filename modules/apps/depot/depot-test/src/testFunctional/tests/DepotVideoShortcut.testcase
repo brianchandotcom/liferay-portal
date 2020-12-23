@@ -84,6 +84,8 @@ definition {
 	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."
 	@priority = "5"
 	test SearchForTag {
+		property test.name.skip.portal.instance = "DepotVideoShortcut#SearchForTag";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name",
@@ -127,6 +129,8 @@ definition {
 	@description = "This ensures that a depot video shortcut associated with a tag cannot be searched on a connected site when searching is disabled."
 	@priority = "5"
 	test SearchForUnsearchableTag {
+		property test.name.skip.portal.instance = "DepotVideoShortcut#SearchForUnsearchableTag";
+
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name",

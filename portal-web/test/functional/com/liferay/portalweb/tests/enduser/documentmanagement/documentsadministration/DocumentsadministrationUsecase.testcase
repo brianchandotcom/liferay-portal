@@ -1183,7 +1183,7 @@ definition {
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.edit(
-			dmDocumentTypeFieldNames = "Radio",
+			dmDocumentTypeFieldNames = "Image",
 			dmDocumentTypeName = "Photos",
 			rowNum = "2");
 

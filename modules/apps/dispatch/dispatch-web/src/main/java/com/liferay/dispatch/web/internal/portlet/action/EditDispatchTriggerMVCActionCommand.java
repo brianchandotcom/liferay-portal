@@ -202,7 +202,7 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 
 		DispatchTaskClusterMode dispatchTaskClusterMode =
 			DispatchTaskClusterMode.valueOf(
-				ParamUtil.getInteger(actionRequest, "taskClusterMode"));
+				ParamUtil.getInteger(actionRequest, "dispatchTaskClusterMode"));
 
 		_dispatchTriggerService.updateDispatchTrigger(
 			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,

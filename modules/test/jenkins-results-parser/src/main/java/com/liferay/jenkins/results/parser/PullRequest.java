@@ -128,7 +128,9 @@ public class PullRequest {
 			"issues/" + getNumber() + "/labels");
 
 		try {
-			_toString(gitHubApiUrl, jsonArray.toString());
+			JenkinsResultsParserUtil.toString(
+				gitHubApiUrl, false, HttpRequestMethod.POST,
+				jsonArray.toString());
 		}
 		catch (IOException ioException) {
 			System.out.println("Unable to add label " + label.getName());
@@ -141,14 +143,22 @@ public class PullRequest {
 		return true;
 	}
 
-	public void close() throws IOException {
+	public void close() {
 		if (Objects.equals(getState(), "open")) {
 			JSONObject postContentJSONObject = new JSONObject();
 
 			postContentJSONObject.put("state", "closed");
 
-			_toString(
-				_jsonObject.getString("url"), postContentJSONObject.toString());
+			try {
+				JenkinsResultsParserUtil.toString(
+					_jsonObject.getString("url"), false, HttpRequestMethod.POST,
+					postContentJSONObject.toString());
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to close pull request " + getHtmlURL(),
+					ioException);
+			}
 		}
 
 		_jsonObject.put("state", "closed");
@@ -460,6 +470,17 @@ public class PullRequest {
 		return false;
 	}
 
+	public void lock() {
+		try {
+			JenkinsResultsParserUtil.toString(
+				getIssueURL() + "/lock", false, HttpRequestMethod.PUT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to lock pull request " + getHtmlURL(), ioException);
+		}
+	}
+
 	public void refresh() {
 		try {
 			_jsonObject = JenkinsResultsParserUtil.toJSONObject(
@@ -506,10 +527,10 @@ public class PullRequest {
 		editCommentURL = editCommentURL.replaceFirst("issues/\\d+", "issues");
 
 		try {
-			_toString(
+			JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.combine(
 					editCommentURL, "/comments/", id),
-				HttpRequestMethod.DELETE);
+				false, HttpRequestMethod.DELETE);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -530,7 +551,8 @@ public class PullRequest {
 			getGitHubRemoteGitRepositoryName(), getOwnerUsername(), path);
 
 		try {
-			_toString(gitHubApiUrl, HttpRequestMethod.DELETE);
+			JenkinsResultsParserUtil.toString(
+				gitHubApiUrl, false, HttpRequestMethod.DELETE);
 
 			refresh();
 		}

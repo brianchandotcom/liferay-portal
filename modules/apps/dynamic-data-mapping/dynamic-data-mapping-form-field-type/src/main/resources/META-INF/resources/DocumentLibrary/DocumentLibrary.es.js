@@ -21,7 +21,7 @@ import axios from 'axios';
 import {PagesVisitor, usePage} from 'dynamic-data-mapping-form-renderer';
 import {convertToFormData} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import {ItemSelectorDialog} from 'frontend-js-web';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
@@ -249,6 +249,37 @@ const Main = ({
 	const [valid, setValid] = useState(initialValid);
 	const [progress, setProgress] = useState(0);
 
+	const getErrorMessages = (errorMessage, isSignedIn) => {
+		const errorMessages = [errorMessage];
+
+		if (!isSignedIn && !allowGuestUsers) {
+			errorMessages.push(
+				Liferay.Language.get(
+					'you-need-to-be-signed-in-to-edit-this-field'
+				)
+			);
+		}
+		else if (maximumSubmissionLimitReached) {
+			errorMessages.push(
+				Liferay.Language.get(
+					'the-maximum-number-of-submissions-allowed-for-this-form-has-been-reached'
+				)
+			);
+		}
+
+		return errorMessages.join(' ');
+	};
+
+	const isSignedIn = Liferay.ThemeDisplay.isSignedIn();
+
+	useEffect(() => {
+		setDisplayErrors(initialDisplayErrors);
+		setErrorMessage(getErrorMessages(initialErrorMessage, isSignedIn));
+		setValid(initialValid);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [initialDisplayErrors, initialErrorMessage, initialValid]);
+
 	const checkMaximumRepetitions = () => {
 		const visitor = new PagesVisitor(pages);
 
@@ -265,20 +296,6 @@ const Main = ({
 		);
 
 		return repetitionsCounter === maximumRepetitions;
-	};
-
-	const getErrorMessages = (errorMessage, isSignedIn) => {
-		const errorMessages = [errorMessage];
-
-		if (!isSignedIn && !allowGuestUsers) {
-			errorMessages.push(
-				Liferay.Language.get(
-					'you-need-to-be-signed-in-to-edit-this-field'
-				)
-			);
-		}
-
-		return errorMessages.join(' ');
 	};
 
 	const handleVisibleChange = (event) => {
@@ -371,8 +388,6 @@ const Main = ({
 			});
 	};
 
-	const isSignedIn = Liferay.ThemeDisplay.isSignedIn();
-
 	const hasCustomError =
 		(!isSignedIn && !allowGuestUsers) || maximumSubmissionLimitReached;
 
@@ -380,7 +395,7 @@ const Main = ({
 		<FieldBase
 			{...otherProps}
 			displayErrors={hasCustomError ? true : displayErrors}
-			errorMessage={getErrorMessages(errorMessage, isSignedIn)}
+			errorMessage={errorMessage}
 			id={id}
 			name={name}
 			overMaximumRepetitionsLimit={

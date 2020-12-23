@@ -88,6 +88,8 @@ public class OpenAPIResourceImpl {
 
 			add(ContentElementResourceImpl.class);
 
+			add(ContentPageResourceImpl.class);
+
 			add(ContentSetElementResourceImpl.class);
 
 			add(ContentStructureResourceImpl.class);

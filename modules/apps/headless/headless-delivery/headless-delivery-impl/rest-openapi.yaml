@@ -7650,6 +7650,7 @@ paths:
             # @review
             description:
                 Retrieves the content pages of the site
+            operationId: getSiteContentPagesPage
             parameters:
                 - in: path
                   name: siteId
@@ -7704,6 +7705,7 @@ paths:
             # @review
             description:
                 Retrieves a specific private content page of a site
+            operationId: getSiteContentPagePrivateFriendlyUrlPath
             parameters:
                 - in: path
                   name: siteId
@@ -7736,6 +7738,7 @@ paths:
         get:
             description:
                 Retrieves the rendered content of a given page.
+            operationId: getSiteContentPagePrivateFriendlyUrlPathRenderedPage
             parameters:
                 - in: path
                   name: siteId
@@ -7762,6 +7765,7 @@ paths:
             # @review
             description:
                 Retrieves a specific public content page of a site
+            operationId: getSiteContentPagePublicFriendlyUrlPath
             parameters:
                 - in: path
                   name: siteId
@@ -7794,6 +7798,7 @@ paths:
         get:
             description:
                 Retrieves the rendered content of a given page.
+            operationId: getSiteContentPagePublicFriendlyUrlPathRenderedPage
             parameters:
                 - in: path
                   name: siteId

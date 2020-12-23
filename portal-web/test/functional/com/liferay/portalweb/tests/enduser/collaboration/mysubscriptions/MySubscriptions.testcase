@@ -38,27 +38,30 @@ definition {
 		}
 	}
 
-	test SubscribeAndUnsubscribetoBookmarksRootFolder {
+	test SubscribeAndUnsubscribetoDMFolder {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(
-			pageName = "Bookmarks Page",
+			pageName = "Test Page",
 			sitePageType = "Widget Page");
 
-		Navigator.gotoPage(pageName = "Bookmarks Page");
+		Navigator.gotoPage(pageName = "Test Page");
 
-		Portlet.addPG(portletName = "Bookmarks");
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMFolder.addPG(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder");
 
 		Subscriptions.subscribeViaInfoPanelPG();
 
 		Navigator.gotoPage(pageName = "My Subscriptions Page");
 
 		Subscriptions.viewSubscription(
-			assetName = "Bookmarks Folder",
 			assetTitle = "Home",
-			assetType = "Bookmarks Folder");
+			assetType = "Documents Folder");
 
 		Subscriptions.unsubscribeViaMySubscriptions(rowNumber = "1");
 
@@ -66,7 +69,7 @@ definition {
 
 		Subscriptions.viewDefaultPG();
 
-		Navigator.gotoPage(pageName = "Bookmarks Page");
+		Navigator.gotoPage(pageName = "Test Page");
 
 		Subscriptions.viewUnsubscribedViaInfoPanel();
 	}

@@ -257,7 +257,7 @@ definition {
 			value1 = "${nodeAssignmentType}");
 
 		if ("${nodeAssignmentType}" == "Role") {
-			Click(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH");
+			Click.mouseOverClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH");
 
 			var key_roleTitle = "${roleTitle}";
 
@@ -363,9 +363,15 @@ definition {
 				value1 = "${nodeNotificationsRecipientType}");
 
 			if ("${nodeNotificationsRecipientType}" == "Role") {
-				Click(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH");
+				Click.mouseOverClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH");
 
 				var key_roleTitle = "${roleTitle}";
+
+				if (IsElementNotPresent(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT")) {
+					Type(
+						locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH",
+						value1 = "R");
+				}
 
 				Click(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT");
 			}
@@ -385,9 +391,7 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
+		Click.javaScriptClick(locator1 = "Button#SAVE");
 	}
 
 	macro editNodeScript {

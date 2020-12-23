@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -330,6 +331,17 @@ public class MainServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+		}
+
+		for (Portlet portlet : portlets) {
+			try {
+				ResourceActionsUtil.populatePortletResource(
+					portlet, MainServlet.class.getClassLoader(),
+					PropsValues.RESOURCE_ACTIONS_CONFIGS);
+			}
+			catch (Exception exception) {
+				_log.error(exception, exception);
+			}
 		}
 
 		try {

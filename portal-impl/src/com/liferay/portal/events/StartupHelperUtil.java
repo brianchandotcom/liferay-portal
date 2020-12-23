@@ -56,10 +56,6 @@ public class StartupHelperUtil {
 			ResourceActionsUtil.populateModelResources(
 				StartupHelperUtil.class.getClassLoader(),
 				PropsValues.RESOURCE_ACTIONS_CONFIGS);
-
-			ResourceActionsUtil.populatePortletResources(
-				StartupHelperUtil.class.getClassLoader(),
-				PropsValues.RESOURCE_ACTIONS_CONFIGS);
 		}
 		catch (ResourceActionsException resourceActionsException) {
 			ReflectionUtil.throwException(resourceActionsException);

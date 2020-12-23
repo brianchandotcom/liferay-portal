@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a category"
 	macro _addCategory {
-		Variables.assertDefined(parameterList = "${groupId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
+		Variables.assertDefined(parameterList = "${groupId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -14,7 +14,8 @@ definition {
 				-d titleMap=${titleMap} \
 				-d descriptionMap=${descriptionMap} \
 				-d vocabularyId=${vocabularyId} \
-				-d categoryProperties=
+				-d categoryProperties= \
+				-d serviceContext=${serviceContext}
 		''';
 
 		var categoryId = JSONCurlUtil.post("${curl}", "$.categoryId");
@@ -26,7 +27,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a vocabulary"
 	macro _addVocabulary {
-		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap}");
+		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -37,7 +38,8 @@ definition {
 				-d title= \
 				-d titleMap=${titleMap} \
 				-d descriptionMap=${descriptionMap} \
-				-d Settings=
+				-d Settings= \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

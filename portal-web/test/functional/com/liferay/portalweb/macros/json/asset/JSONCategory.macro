@@ -21,6 +21,8 @@ definition {
 			description = "${description}",
 			descriptionMap = "${descriptionMap}");
 
+		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = "${serviceContext}");
+
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
 			groupId = "${groupId}",
 			vocabularyName = "${vocabularyName}");
@@ -29,6 +31,7 @@ definition {
 			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			parentCategoryId = "${parentCategoryId}",
+			serviceContext = "${serviceContext}",
 			titleMap = "${titleMap}",
 			vocabularyId = "${vocabularyId}");
 
@@ -55,6 +58,8 @@ definition {
 			groupId = "${groupId}",
 			vocabularyId = "${vocabularyId}");
 
+		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = "${serviceContext}");
+
 		var titleMap = JSONCategorySetter.setTitleMap(
 			title = "${title}",
 			titleMap = "${titleMap}");
@@ -67,6 +72,7 @@ definition {
 			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			parentCategoryId = "${parentCategoryId}",
+			serviceContext = "${serviceContext}",
 			titleMap = "${titleMap}",
 			vocabularyId = "${vocabularyId}");
 	}
@@ -82,6 +88,8 @@ definition {
 
 		var groupId = JSONCategorySetter.setGroupId(groupName = "${groupName}", site = "${site}");
 
+		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = "${serviceContext}");
+
 		var titleMap = JSONCategorySetter.setTitleMap(
 			title = "${title}",
 			titleMap = "${titleMap}");
@@ -93,6 +101,7 @@ definition {
 		JSONCategoryAPI._addVocabulary(
 			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
+			serviceContext = "${serviceContext}",
 			titleMap = "${titleMap}");
 	}
 

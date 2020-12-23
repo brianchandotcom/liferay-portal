@@ -47,7 +47,11 @@ import org.json.JSONObject;
  */
 public class GitHubWebhookPayloadProcessor {
 
-	public GitHubWebhookPayloadProcessor() throws Exception {
+	public GitHubWebhookPayloadProcessor(String payloadJSONSource)
+		throws Exception {
+
+		_payloadJSONObject = new PayloadJSONObject(payloadJSONSource);
+
 		Class<?> clazz = getClass();
 
 		_jenkinsProperties.load(
@@ -187,12 +191,10 @@ public class GitHubWebhookPayloadProcessor {
 
 		_jenkinsBuildProperties = JenkinsResultsParserUtil.getBuildProperties();
 
-		JSONObject pusherJSONObject = payloadJSONObject.optJSONObject("pusher");
-
-		if (pusherJSONObject != null) {
-			syncAutopull(payloadJSONObject);
-			syncMirror(payloadJSONObject);
-			syncSubrepo(payloadJSONObject);
+		if (_payloadJSONObject.isPusher()) {
+			syncAutopull();
+			syncMirror();
+			syncSubrepo();
 		}
 
 		String action = payloadJSONObject.optString("action");
@@ -1272,26 +1274,19 @@ public class GitHubWebhookPayloadProcessor {
 		}
 	}
 
-	protected void syncAutopull(JSONObject payloadJSONObject) throws Exception {
-		String ref = payloadJSONObject.getString("ref");
+	protected void syncAutopull() throws Exception {
+		String branch = _payloadJSONObject.getPusherBranch();
 
-		if (!ref.startsWith("refs/heads/")) {
+		if ((branch == null) || branch.isEmpty()) {
 			return;
 		}
-
-		String branch = StringUtils.replace(ref, "refs/heads/", "");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync autopull branch: " + branch);
 		}
 
-		JSONObject repositoryJSONObject = payloadJSONObject.getJSONObject(
-			"repository");
-
-		JSONObject ownerJSONObject = repositoryJSONObject.getJSONObject(
-			"owner");
-
-		String ownerName = ownerJSONObject.getString("name");
+		String ownerName = _payloadJSONObject.getStringByPath(
+			"repository/owner/name");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync autopull owner: " + ownerName);
@@ -1307,7 +1302,7 @@ public class GitHubWebhookPayloadProcessor {
 			return;
 		}
 
-		String repo = repositoryJSONObject.getString("name");
+		String repo = _payloadJSONObject.getStringByPath("repository/name");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync autopull repo: " + repo);
@@ -1353,18 +1348,13 @@ public class GitHubWebhookPayloadProcessor {
 		}
 	}
 
-	protected void syncMirror(JSONObject payloadJSONObject) throws Exception {
+	protected void syncMirror() throws Exception {
 		if (!isGitHubMirrorEnabled()) {
 			return;
 		}
 
-		JSONObject repositoryJSONObject = payloadJSONObject.getJSONObject(
-			"repository");
-
-		JSONObject ownerJSONObject = repositoryJSONObject.getJSONObject(
-			"owner");
-
-		String ownerName = ownerJSONObject.getString("name");
+		String ownerName = _payloadJSONObject.getStringByPath(
+			"repository/owner/name");
 
 		if (!ownerName.equals("liferay")) {
 			if (_log.isInfoEnabled()) {
@@ -1376,7 +1366,7 @@ public class GitHubWebhookPayloadProcessor {
 			return;
 		}
 
-		String repo = repositoryJSONObject.getString("name");
+		String repo = _payloadJSONObject.getStringByPath("repository/name");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync mirror repo: " + repo);
@@ -1386,7 +1376,7 @@ public class GitHubWebhookPayloadProcessor {
 
 		jsonObject.put("repo", repo);
 
-		String sha = payloadJSONObject.getString("after");
+		String sha = _payloadJSONObject.getString("after");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync mirror sha: " + sha);
@@ -1409,18 +1399,16 @@ public class GitHubWebhookPayloadProcessor {
 		}
 	}
 
-	protected void syncSubrepo(JSONObject payloadJSONObject) throws Exception {
+	protected void syncSubrepo() throws Exception {
 		if (!isGitHubSubrepoSyncEnabled()) {
 			return;
 		}
 
-		String ref = payloadJSONObject.getString("ref");
+		String branch = _payloadJSONObject.getPusherBranch();
 
-		if (!ref.startsWith("refs/heads/")) {
+		if ((branch == null) || branch.isEmpty()) {
 			return;
 		}
-
-		String branch = StringUtils.replace(ref, "refs/heads/", "");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync subrepo branch: " + branch);
@@ -1430,13 +1418,8 @@ public class GitHubWebhookPayloadProcessor {
 
 		jsonObject.put("branch", branch);
 
-		JSONObject repositoryJSONObject = payloadJSONObject.getJSONObject(
-			"repository");
-
-		JSONObject ownerJSONObject = repositoryJSONObject.getJSONObject(
-			"owner");
-
-		String ownerName = ownerJSONObject.getString("name");
+		String ownerName = _payloadJSONObject.getStringByPath(
+			"repository/owner/name");
 
 		if (!ownerName.equals("liferay")) {
 			if (_log.isInfoEnabled()) {
@@ -1448,7 +1431,7 @@ public class GitHubWebhookPayloadProcessor {
 			return;
 		}
 
-		String repo = repositoryJSONObject.getString("name");
+		String repo = _payloadJSONObject.getStringByPath("repository/name");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync subrepo repo: " + repo);
@@ -1456,7 +1439,7 @@ public class GitHubWebhookPayloadProcessor {
 
 		jsonObject.put("repo", repo);
 
-		String sha = payloadJSONObject.getString("after");
+		String sha = _payloadJSONObject.getString("after");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Sync subrepo sha: " + sha);
@@ -1470,10 +1453,10 @@ public class GitHubWebhookPayloadProcessor {
 		String propertyName = "github.web.subrepo.hostname";
 		String subrepo = "all";
 
-		if (isBotPush(payloadJSONObject)) {
+		if (isBotPush(_payloadJSONObject)) {
 			command = "release";
 			propertyName = "github.web.release.hostname";
-			subrepo = getSubrepoPath(payloadJSONObject);
+			subrepo = getSubrepoPath(_payloadJSONObject);
 		}
 
 		jsonObject.put("command", command);
@@ -2404,10 +2387,67 @@ public class GitHubWebhookPayloadProcessor {
 		"commit = ([0-9a-f]{40})");
 	private Properties _jenkinsBuildProperties;
 	private Properties _jenkinsProperties = new Properties();
+	private final PayloadJSONObject _payloadJSONObject;
 	private final Map<String, Long> _testPullRequestQueryStrings =
 		new ConcurrentHashMap<>(100);
 	private final Map<String, Long> _testPullRequestURLs =
 		new ConcurrentHashMap<>(100);
+
+	private static class PayloadJSONObject extends JSONObject {
+
+		public PayloadJSONObject(String source) {
+			super(source);
+		}
+
+		public String getPusherBranch() {
+			if (!isPusher()) {
+				throw new IllegalStateException(
+					"Unable to find branch in a non-pusher payload");
+			}
+
+			Matcher matcher = _branchPattern.matcher(getString("ref"));
+
+			if (matcher.matches()) {
+				return matcher.group(1);
+			}
+
+			return null;
+		}
+
+		public String getStringByPath(String path) {
+			return _getStringByPath(this, path);
+		}
+
+		public boolean isPusher() {
+			if (optJSONObject("pusher") != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		private String _getStringByPath(JSONObject jsonObject, String path) {
+			Matcher matcher = _jsonPathPattern.matcher(path);
+
+			matcher.find();
+
+			String key = matcher.group(1);
+
+			String remainingPath = matcher.group(2);
+
+			if ((remainingPath == null) || remainingPath.isEmpty()) {
+				return jsonObject.getString(key);
+			}
+
+			return _getStringByPath(getJSONObject(key), remainingPath);
+		}
+
+		private static final Pattern _branchPattern = Pattern.compile(
+			"refs/heads/(.*)");
+		private static final Pattern _jsonPathPattern = Pattern.compile(
+			"([^/]+)/*(.*)");
+
+	}
 
 	private class Commit {
 

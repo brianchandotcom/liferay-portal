@@ -61,7 +61,7 @@ function transformFileEntryProperties({fileEntryTitle, fileEntryURL, value}) {
 		}
 	}
 
-	return [fileEntryTitle, fileEntryURL];
+	return value ? [fileEntryTitle, fileEntryURL] : [];
 }
 
 const DocumentLibrary = ({

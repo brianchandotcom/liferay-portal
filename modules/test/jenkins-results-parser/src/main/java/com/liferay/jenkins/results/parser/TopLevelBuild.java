@@ -312,7 +312,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		}
 
 		synchronized (_downstreamAxisBuilds) {
-			if (isCompleted()) {
+			if (isCompleted() && !_downstreamAxisBuildsPopulated) {
 				for (AxisBuild downstreamAxisBuild : downstreamAxisBuilds) {
 					_downstreamAxisBuilds.put(
 						downstreamAxisBuild.getAxisName(), downstreamAxisBuild);
@@ -371,7 +371,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		}
 
 		synchronized (_downstreamBatchBuilds) {
-			if (isCompleted()) {
+			if (isCompleted() && !_downstreamBatchBuildsPopulated) {
 				for (BatchBuild downstreamBatchBuild : downstreamBatchBuilds) {
 					_downstreamBatchBuilds.put(
 						downstreamBatchBuild.getJobVariant(),

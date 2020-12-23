@@ -425,20 +425,28 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	public TestClassResult getTestClassResult(String testClassName) {
-		TestClassResult targetTestClassResult = _testClassResults.get(
-			testClassName);
-
-		if (targetTestClassResult != null) {
-			return targetTestClassResult;
-		}
-
 		if (!isCompleted()) {
 			return null;
 		}
 
-		for (TestClassResult testClassResult : getTestClassResults()) {
-			_testClassResults.put(
-				testClassResult.getClassName(), testClassResult);
+		if (_testClassResultsPopulated && !_testClassResults.isEmpty()) {
+			TestClassResult targetTestClassResult = _testClassResults.get(
+				testClassName);
+
+			if (targetTestClassResult != null) {
+				return targetTestClassResult;
+			}
+		}
+
+		synchronized (_testClassResults) {
+			if (!_testClassResultsPopulated) {
+				for (TestClassResult testClassResult : getTestClassResults()) {
+					_testClassResults.put(
+						testClassResult.getClassName(), testClassResult);
+				}
+
+				_testClassResultsPopulated = true;
+			}
 		}
 
 		return _testClassResults.get(testClassName);
@@ -725,6 +733,7 @@ public class AxisBuild extends BaseBuild {
 
 	private final Map<String, TestClassResult> _testClassResults =
 		new ConcurrentHashMap<>();
+	private boolean _testClassResultsPopulated;
 	private final Map<String, TestResult> _testResults =
 		new ConcurrentHashMap<>();
 	private boolean _testResultsPopulated;

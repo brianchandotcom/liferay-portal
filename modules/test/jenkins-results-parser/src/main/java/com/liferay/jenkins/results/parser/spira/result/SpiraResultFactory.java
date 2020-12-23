@@ -85,6 +85,11 @@ public class SpiraResultFactory {
 	public static SpiraTestResultDetails newSpiraTestResultDetails(
 		SpiraTestResult spiraTestResult) {
 
+		if (spiraTestResult instanceof CucumberAxisSpiraTestResult) {
+			return new CucumberAxisSpiraTestResultDetails(
+				(CucumberAxisSpiraTestResult)spiraTestResult);
+		}
+
 		if (spiraTestResult instanceof FunctionalAxisSpiraTestResult) {
 			return new FunctionalAxisSpiraTestResultDetails(
 				(FunctionalAxisSpiraTestResult)spiraTestResult);

@@ -42,14 +42,16 @@ public class DispatchTriggerSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setActive(model.isActive());
 		soapModel.setCronExpression(model.getCronExpression());
+		soapModel.setDispatchTaskClusterMode(
+			model.getDispatchTaskClusterMode());
+		soapModel.setDispatchTaskExecutorType(
+			model.getDispatchTaskExecutorType());
+		soapModel.setDispatchTaskSettings(model.getDispatchTaskSettings());
 		soapModel.setEndDate(model.getEndDate());
 		soapModel.setName(model.getName());
 		soapModel.setOverlapAllowed(model.isOverlapAllowed());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setSystem(model.isSystem());
-		soapModel.setTaskClusterMode(model.getTaskClusterMode());
-		soapModel.setTaskExecutorType(model.getTaskExecutorType());
-		soapModel.setTaskSettings(model.getTaskSettings());
 
 		return soapModel;
 	}
@@ -185,6 +187,30 @@ public class DispatchTriggerSoap implements Serializable {
 		_cronExpression = cronExpression;
 	}
 
+	public int getDispatchTaskClusterMode() {
+		return _dispatchTaskClusterMode;
+	}
+
+	public void setDispatchTaskClusterMode(int dispatchTaskClusterMode) {
+		_dispatchTaskClusterMode = dispatchTaskClusterMode;
+	}
+
+	public String getDispatchTaskExecutorType() {
+		return _dispatchTaskExecutorType;
+	}
+
+	public void setDispatchTaskExecutorType(String dispatchTaskExecutorType) {
+		_dispatchTaskExecutorType = dispatchTaskExecutorType;
+	}
+
+	public String getDispatchTaskSettings() {
+		return _dispatchTaskSettings;
+	}
+
+	public void setDispatchTaskSettings(String dispatchTaskSettings) {
+		_dispatchTaskSettings = dispatchTaskSettings;
+	}
+
 	public Date getEndDate() {
 		return _endDate;
 	}
@@ -233,30 +259,6 @@ public class DispatchTriggerSoap implements Serializable {
 		_system = system;
 	}
 
-	public int getTaskClusterMode() {
-		return _taskClusterMode;
-	}
-
-	public void setTaskClusterMode(int taskClusterMode) {
-		_taskClusterMode = taskClusterMode;
-	}
-
-	public String getTaskExecutorType() {
-		return _taskExecutorType;
-	}
-
-	public void setTaskExecutorType(String taskExecutorType) {
-		_taskExecutorType = taskExecutorType;
-	}
-
-	public String getTaskSettings() {
-		return _taskSettings;
-	}
-
-	public void setTaskSettings(String taskSettings) {
-		_taskSettings = taskSettings;
-	}
-
 	private long _mvccVersion;
 	private long _dispatchTriggerId;
 	private long _companyId;
@@ -266,13 +268,13 @@ public class DispatchTriggerSoap implements Serializable {
 	private Date _modifiedDate;
 	private boolean _active;
 	private String _cronExpression;
+	private int _dispatchTaskClusterMode;
+	private String _dispatchTaskExecutorType;
+	private String _dispatchTaskSettings;
 	private Date _endDate;
 	private String _name;
 	private boolean _overlapAllowed;
 	private Date _startDate;
 	private boolean _system;
-	private int _taskClusterMode;
-	private String _taskExecutorType;
-	private String _taskSettings;
 
 }

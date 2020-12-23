@@ -447,6 +447,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>displayOneLine</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>promoPriceLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -138,6 +138,10 @@ public class PriceTag extends IncludeTag {
 		return _quantity;
 	}
 
+	public boolean isDisplayOneLine() {
+		return _displayOneLine;
+	}
+
 	public boolean isNetPrice() {
 		return _netPrice;
 	}
@@ -172,6 +176,10 @@ public class PriceTag extends IncludeTag {
 
 	public void setDiscountLabel(String discountLabel) {
 		_discountLabel = discountLabel;
+	}
+
+	public void setDisplayOneLine(boolean displayOneLine) {
+		_displayOneLine = displayOneLine;
 	}
 
 	public void setFormattedFinalPrice(String formattedFinalPrice) {

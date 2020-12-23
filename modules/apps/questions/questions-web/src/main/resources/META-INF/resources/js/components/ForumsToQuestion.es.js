@@ -31,7 +31,7 @@ export default withRouter(
 	}) => {
 		const context = useContext(AppContext);
 
-		const historyPushParser = historyPushWithSlug(history.push);
+		const historyPushParser = historyPushWithSlug(history.replace);
 
 		useQuery(getSectionByMessageQuery, {
 			onCompleted({messageBoardMessage}) {

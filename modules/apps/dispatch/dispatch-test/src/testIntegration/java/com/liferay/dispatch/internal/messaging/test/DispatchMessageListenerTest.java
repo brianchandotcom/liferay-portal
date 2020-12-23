@@ -185,21 +185,20 @@ public class DispatchMessageListenerTest {
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				user.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomBoolean(),
-				TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST,
-				null);
+				user.getUserId(),
+				TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST, null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
 
 		Date now = new Date();
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(now.getTime());
 
 		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
-			dispatchTrigger.getDispatchTriggerId(), false, _CRON_EXPRESSION, 0,
-			0, 0, 0, 0, true, overlapAllowed, calendar.get(Calendar.MONTH),
+			dispatchTrigger.getDispatchTriggerId(), false, _CRON_EXPRESSION,
+			DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true,
+			overlapAllowed, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
-			DispatchTaskClusterMode.NOT_APPLICABLE);
+			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
 
 		_execute(
 			dispatchTrigger.getDispatchTriggerId(), executeCount,

@@ -142,17 +142,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertCssValue(
+		AssertElementNotPresent(
 			key_imageTitle = "Document_2.jpg",
-			locator1 = "WCPreview#PREVIEW_IMAGE",
-			locator2 = "width",
-			value1 = "16px");
-
-		AssertCssValue(
-			key_imageTitle = "Document_2.jpg",
-			locator1 = "WCPreview#PREVIEW_IMAGE",
-			locator2 = "height",
-			value1 = "16px");
+			locator1 = "WCPreview#PREVIEW_IMAGE");
 	}
 
 	@description = "This ensures that friendly URL in basic article in depot can be edited and republished in staging site when enabling local staging."

@@ -343,7 +343,7 @@ definition {
 	test PaginateFiles {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.jpg,Document_3.jpg,Document_1.png,Document_2.png,Document_3.png");
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.jpg,Document_3.jpg,Document_4.jpg,Commerce_Black.jpg,Commerce_White.jpg");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -358,7 +358,7 @@ definition {
 			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
 			value1 = "Documents and Media");
 
-		for (var imageFileName : list "Document_1,Document_2,Document_3,Document_1,Document_2,Document_3") {
+		for (var imageFileName : list "Document_1,Document_2,Document_3,Document_4,Commerce_Black,Commerce_White") {
 			AssertElementPresent(
 				key_imageFileName = "${imageFileName}",
 				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
@@ -368,13 +368,13 @@ definition {
 
 		Pagination.changePagination(itemsPerPage = "4");
 
-		for (var imageFileName : list "Document_1,Document_2,Document_1,Document_2") {
+		for (var imageFileName : list "Commerce_Black,Commerce_White,Document_1,Document_2") {
 			AssertElementPresent(
 				key_imageFileName = "${imageFileName}",
 				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 		}
 
-		for (var imageFileName : list "Document_3,Document_3") {
+		for (var imageFileName : list "Document_3,Document_4") {
 			AssertElementNotPresent(
 				key_imageFileName = "${imageFileName}",
 				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");

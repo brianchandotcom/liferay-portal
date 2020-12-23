@@ -37,14 +37,39 @@ public class DispatchTriggerServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dispatch.service.impl.DispatchTriggerServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @param userId
+	 * @param name
+	 * @param dispatchTaskExecutorType
+	 * @param dispatchTaskSettingsUnicodeProperties
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addDispatchTrigger(long,
+	 String, UnicodeProperties, String)}
+	 */
+	@Deprecated
 	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-			long userId, String name, String taskExecutorType,
+			long userId, String name, String dispatchTaskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
-				taskSettingsUnicodeProperties)
+				dispatchTaskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addDispatchTrigger(
-			userId, name, taskExecutorType, taskSettingsUnicodeProperties);
+			userId, name, dispatchTaskExecutorType,
+			dispatchTaskSettingsUnicodeProperties);
+	}
+
+	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
+			long userId, String dispatchTaskExecutorType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				dispatchTaskSettingsUnicodeProperties,
+			String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addDispatchTrigger(
+			userId, dispatchTaskExecutorType,
+			dispatchTaskSettingsUnicodeProperties, name);
 	}
 
 	public static void deleteDispatchTrigger(long dispatchTriggerId)
@@ -78,6 +103,49 @@ public class DispatchTriggerServiceUtil {
 	public static com.liferay.dispatch.model.DispatchTrigger
 			updateDispatchTrigger(
 				long dispatchTriggerId, boolean active, String cronExpression,
+				com.liferay.dispatch.executor.DispatchTaskClusterMode
+					dispatchTaskClusterMode,
+				int endDateMonth, int endDateDay, int endDateYear,
+				int endDateHour, int endDateMinute, boolean neverEnd,
+				boolean overlapAllowed, int startDateMonth, int startDateDay,
+				int startDateYear, int startDateHour, int startDateMinute)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDispatchTrigger(
+			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd, overlapAllowed, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute);
+	}
+
+	/**
+	 * @param dispatchTriggerId
+	 * @param active
+	 * @param cronExpression
+	 * @param endDateMonth
+	 * @param endDateDay
+	 * @param endDateYear
+	 * @param endDateHour
+	 * @param endDateMinute
+	 * @param neverEnd
+	 * @param overlapAllowed
+	 * @param startDateMonth
+	 * @param startDateDay
+	 * @param startDateYear
+	 * @param startDateHour
+	 * @param startDateMinute
+	 * @param dispatchTaskClusterMode
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #updateDispatchTrigger(long, boolean, String,
+	 DispatchTaskClusterMode, int, int, int, int, int, boolean,
+	 boolean, int, int, int, int, int)}
+	 */
+	@Deprecated
+	public static com.liferay.dispatch.model.DispatchTrigger
+			updateDispatchTrigger(
+				long dispatchTriggerId, boolean active, String cronExpression,
 				int endDateMonth, int endDateDay, int endDateYear,
 				int endDateHour, int endDateMinute, boolean neverEnd,
 				boolean overlapAllowed, int startDateMonth, int startDateDay,
@@ -93,15 +161,37 @@ public class DispatchTriggerServiceUtil {
 			startDateMinute, dispatchTaskClusterMode);
 	}
 
+	/**
+	 * @param dispatchTriggerId
+	 * @param name
+	 * @param dispatchTaskSettingsUnicodeProperties
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Cavanaugh (7.4.x), use {@link
+	 #updateDispatchTrigger(long, UnicodeProperties, String)}
+	 */
+	@Deprecated
 	public static com.liferay.dispatch.model.DispatchTrigger
 			updateDispatchTrigger(
 				long dispatchTriggerId, String name,
 				com.liferay.portal.kernel.util.UnicodeProperties
-					taskSettingsUnicodeProperties)
+					dispatchTaskSettingsUnicodeProperties)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateDispatchTrigger(
-			dispatchTriggerId, name, taskSettingsUnicodeProperties);
+			dispatchTriggerId, name, dispatchTaskSettingsUnicodeProperties);
+	}
+
+	public static com.liferay.dispatch.model.DispatchTrigger
+			updateDispatchTrigger(
+				long dispatchTriggerId,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					dispatchTaskSettingsUnicodeProperties,
+				String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDispatchTrigger(
+			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
 	}
 
 	public static DispatchTriggerService getService() {

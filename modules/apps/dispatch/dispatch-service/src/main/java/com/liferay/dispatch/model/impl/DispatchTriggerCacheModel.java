@@ -98,6 +98,12 @@ public class DispatchTriggerCacheModel
 		sb.append(active);
 		sb.append(", cronExpression=");
 		sb.append(cronExpression);
+		sb.append(", dispatchTaskClusterMode=");
+		sb.append(dispatchTaskClusterMode);
+		sb.append(", dispatchTaskExecutorType=");
+		sb.append(dispatchTaskExecutorType);
+		sb.append(", dispatchTaskSettings=");
+		sb.append(dispatchTaskSettings);
 		sb.append(", endDate=");
 		sb.append(endDate);
 		sb.append(", name=");
@@ -108,12 +114,6 @@ public class DispatchTriggerCacheModel
 		sb.append(startDate);
 		sb.append(", system=");
 		sb.append(system);
-		sb.append(", taskClusterMode=");
-		sb.append(taskClusterMode);
-		sb.append(", taskExecutorType=");
-		sb.append(taskExecutorType);
-		sb.append(", taskSettings=");
-		sb.append(taskSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -158,6 +158,23 @@ public class DispatchTriggerCacheModel
 			dispatchTriggerImpl.setCronExpression(cronExpression);
 		}
 
+		dispatchTriggerImpl.setDispatchTaskClusterMode(dispatchTaskClusterMode);
+
+		if (dispatchTaskExecutorType == null) {
+			dispatchTriggerImpl.setDispatchTaskExecutorType("");
+		}
+		else {
+			dispatchTriggerImpl.setDispatchTaskExecutorType(
+				dispatchTaskExecutorType);
+		}
+
+		if (dispatchTaskSettings == null) {
+			dispatchTriggerImpl.setDispatchTaskSettings("");
+		}
+		else {
+			dispatchTriggerImpl.setDispatchTaskSettings(dispatchTaskSettings);
+		}
+
 		if (endDate == Long.MIN_VALUE) {
 			dispatchTriggerImpl.setEndDate(null);
 		}
@@ -182,21 +199,6 @@ public class DispatchTriggerCacheModel
 		}
 
 		dispatchTriggerImpl.setSystem(system);
-		dispatchTriggerImpl.setTaskClusterMode(taskClusterMode);
-
-		if (taskExecutorType == null) {
-			dispatchTriggerImpl.setTaskExecutorType("");
-		}
-		else {
-			dispatchTriggerImpl.setTaskExecutorType(taskExecutorType);
-		}
-
-		if (taskSettings == null) {
-			dispatchTriggerImpl.setTaskSettings("");
-		}
-		else {
-			dispatchTriggerImpl.setTaskSettings(taskSettings);
-		}
 
 		dispatchTriggerImpl.resetOriginalValues();
 
@@ -220,6 +222,10 @@ public class DispatchTriggerCacheModel
 
 		active = objectInput.readBoolean();
 		cronExpression = objectInput.readUTF();
+
+		dispatchTaskClusterMode = objectInput.readInt();
+		dispatchTaskExecutorType = objectInput.readUTF();
+		dispatchTaskSettings = (String)objectInput.readObject();
 		endDate = objectInput.readLong();
 		name = objectInput.readUTF();
 
@@ -227,10 +233,6 @@ public class DispatchTriggerCacheModel
 		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
-
-		taskClusterMode = objectInput.readInt();
-		taskExecutorType = objectInput.readUTF();
-		taskSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -262,6 +264,22 @@ public class DispatchTriggerCacheModel
 			objectOutput.writeUTF(cronExpression);
 		}
 
+		objectOutput.writeInt(dispatchTaskClusterMode);
+
+		if (dispatchTaskExecutorType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(dispatchTaskExecutorType);
+		}
+
+		if (dispatchTaskSettings == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(dispatchTaskSettings);
+		}
+
 		objectOutput.writeLong(endDate);
 
 		if (name == null) {
@@ -275,22 +293,6 @@ public class DispatchTriggerCacheModel
 		objectOutput.writeLong(startDate);
 
 		objectOutput.writeBoolean(system);
-
-		objectOutput.writeInt(taskClusterMode);
-
-		if (taskExecutorType == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(taskExecutorType);
-		}
-
-		if (taskSettings == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(taskSettings);
-		}
 	}
 
 	public long mvccVersion;
@@ -302,13 +304,13 @@ public class DispatchTriggerCacheModel
 	public long modifiedDate;
 	public boolean active;
 	public String cronExpression;
+	public int dispatchTaskClusterMode;
+	public String dispatchTaskExecutorType;
+	public String dispatchTaskSettings;
 	public long endDate;
 	public String name;
 	public boolean overlapAllowed;
 	public long startDate;
 	public boolean system;
-	public int taskClusterMode;
-	public String taskExecutorType;
-	public String taskSettings;
 
 }

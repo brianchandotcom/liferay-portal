@@ -65,7 +65,7 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 
 					<c:choose>
 						<c:when test="<%= ClusterExecutorUtil.isEnabled() %>">
-							<aui:select label="task-execution-cluster-mode" name="taskClusterMode">
+							<aui:select label="task-execution-cluster-mode" name="dispatchTaskClusterMode">
 
 								<%
 								for (DispatchTaskClusterMode dispatchTaskClusterMode : DispatchTaskClusterMode.values()) {
@@ -83,7 +83,7 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 							</aui:select>
 						</c:when>
 						<c:otherwise>
-							<aui:select disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-a-clustered-environment" label="task-execution-cluster-mode" name="taskClusterMode">
+							<aui:select disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-a-clustered-environment" label="task-execution-cluster-mode" name="dispatchTaskClusterMode">
 								<aui:option label="<%= DispatchTaskClusterMode.NOT_APPLICABLE.getLabel() %>" />
 							</aui:select>
 						</c:otherwise>

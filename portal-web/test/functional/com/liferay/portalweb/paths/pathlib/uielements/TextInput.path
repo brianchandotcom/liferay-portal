@@ -625,7 +625,7 @@
 </tr>
 <tr>
 	<td>TRANSLATIONS_TARGET_FIELD</td>
-	<td>//input[contains(@id,'${key_fieldName}') and (not(contains(@readonly,'true')))]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//input[not(contains(@readonly,'true'))]</td>
 	<td></td>
 </tr>
 <tr>

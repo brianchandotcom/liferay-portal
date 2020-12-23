@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>TRANSLATIONS_TARGET_TEXT_BOX_FIELD</td>
-	<td>//textarea[contains(@id,'${key_fieldName}') and (not(contains(@readonly,'true')))]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//textarea[not(contains(@readonly,'true'))]</td>
 	<td></td>
 </tr>
 <tr>

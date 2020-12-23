@@ -71,12 +71,12 @@
 </tr>
 <tr>
 	<td>TARGET_LANGUAGE_FIELD</td>
-	<td>//div[contains(@class,'form-group')]//input[contains(@id,'${key_fieldName}') and contains(@value,'${key_fieldValue}') and (not(@readonly='true'))]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//input[contains(@value,'${key_fieldValue}') and (not(@readonly='true'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TARGET_LANGUAGE_TEXT_BOX_FIELD</td>
-	<td>//div[contains(@class,'form-group')]//textarea[contains(@id,'${key_fieldName}') and contains(text(),'${key_fieldValue}') and (not(@readonly='true'))]</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//textarea[contains(text(),'${key_fieldValue}') and (not(@readonly='true'))]</td>
 	<td></td>
 </tr>
 <tr>

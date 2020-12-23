@@ -113,6 +113,80 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_S_T_D_R_L">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			LEFT JOIN
+				JournalArticle tempJournalArticle ON
+					[$STATUS_JOIN$] AND
+					(JournalArticle.groupId = tempJournalArticle.groupId) AND
+					(JournalArticle.articleId = tempJournalArticle.articleId) AND
+					(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN
+				JournalArticleLocalization ON
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
+					(JournalArticleLocalization.languageId = ?)
+			WHERE
+				(JournalArticle.companyId = ?) AND
+				(JournalArticle.groupId = ?) AND
+				([$FOLDER_ID$]) AND
+				(JournalArticle.classNameId = ?) AND
+				([$STATUS$]) AND
+				([$STRUCTURE_TEMPLATE$]) AND
+				(tempJournalArticle.id_ IS NULL) AND
+				(
+					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
+					(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_S_T_D_R_L">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
+			FROM
+				JournalArticle
+			LEFT JOIN
+				JournalArticle tempJournalArticle ON
+					[$STATUS_JOIN$] AND
+					(JournalArticle.groupId = tempJournalArticle.groupId) AND
+					(JournalArticle.articleId = tempJournalArticle.articleId) AND
+					(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN
+				JournalArticleLocalization ON
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
+					(JournalArticleLocalization.languageId = ?)
+			WHERE
+				(JournalArticle.companyId = ?) AND
+				(JournalArticle.groupId = ?) AND
+				([$FOLDER_ID$]) AND
+				(JournalArticle.classNameId = ?) AND
+				([$STATUS$]) AND
+				([$STRUCTURE_TEMPLATE$]) AND
+				(tempJournalArticle.id_ IS NULL) AND
+				(
+					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
+					(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT
@@ -434,6 +508,55 @@
 					WHERE
 						(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 						(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$])
+					GROUP BY
+						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description
+				) JournalArticleLocalization ON
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
+			WHERE
+				(JournalArticle.companyId = ?) AND
+				(JournalArticle.groupId = ?) AND
+				([$FOLDER_ID$]) AND
+				(JournalArticle.classNameId = ?) AND
+				([$STATUS$]) AND
+				([$STRUCTURE_TEMPLATE$]) AND
+				(tempJournalArticle.id_ IS NULL) AND
+				(
+					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
+					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])
+				)
+			ORDER BY
+				JournalArticle.id_ ASC
+		]]>
+	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_S_T_D_R_L">
+		<![CDATA[
+			SELECT
+				JournalArticle.*
+			FROM
+				JournalArticle
+			LEFT JOIN
+				JournalArticle tempJournalArticle ON
+					[$STATUS_JOIN$] AND
+					(JournalArticle.groupId = tempJournalArticle.groupId) AND
+					(JournalArticle.articleId = tempJournalArticle.articleId) AND
+					(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN
+				(
+					SELECT
+						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description
+					FROM
+						JournalArticleLocalization
+					WHERE
+						(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+						(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+						(JournalArticleLocalization.languageId = ?)
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description
 				) JournalArticleLocalization ON

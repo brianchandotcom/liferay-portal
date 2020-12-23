@@ -17,12 +17,18 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.ContentPage;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.ContentPageDTOConverter;
 import com.liferay.headless.delivery.resource.v1_0.ContentPageResource;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -31,6 +37,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
@@ -49,6 +56,26 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Override
+	public ContentPage getSiteContentPagePrivateFriendlyUrlPath(
+			@NotNull Long siteId, @NotNull String friendlyUrlPath)
+		throws Exception {
+
+		return _toContentPage(
+			_getLayout(siteId, true, friendlyUrlPath),
+			"getSiteContentPagePrivateFriendlyUrlPath");
+	}
+
+	@Override
+	public ContentPage getSiteContentPagePublicFriendlyUrlPath(
+			@NotNull Long siteId, @NotNull String friendlyUrlPath)
+		throws Exception {
+
+		return _toContentPage(
+			_getLayout(siteId, false, friendlyUrlPath),
+			"getSiteContentPagePublicFriendlyUrlPath");
+	}
+
+	@Override
 	public Page<ContentPage> getSiteContentPagesPage(
 		@NotNull Long siteId, String search, Aggregation aggregation,
 		Filter filter, Pagination pagination, Sort[] sorts) {
@@ -56,17 +83,62 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 		List<Layout> layouts = _layoutService.getLayouts(
 			siteId, LayoutConstants.TYPE_CONTENT);
 
-		return Page.of(TransformUtil.transform(layouts, this::_toContentPage));
+		return Page.of(
+			TransformUtil.transform(
+				layouts,
+				layout -> _toContentPage(layout, "getSiteContentPagesPage")));
 	}
 
-	private ContentPage _toContentPage(Layout layout) throws Exception {
+	private Layout _getLayout(
+			Long groupId, boolean privateLayout, String friendlyUrlPath)
+		throws Exception {
+
+		String languageId = LocaleUtil.toLanguageId(
+			contextAcceptLanguage.getPreferredLocale());
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+				groupId, privateLayout,
+				StringPool.FORWARD_SLASH + friendlyUrlPath, languageId);
+
+		return Optional.ofNullable(
+			layoutFriendlyURL
+		).map(
+			existingLayoutFriendlyURL -> _layoutLocalService.fetchLayout(
+				existingLayoutFriendlyURL.getPlid())
+		).orElseThrow(
+			() -> {
+				StringBuilder sb = new StringBuilder(6);
+
+				sb.append("No ");
+
+				if(privateLayout) {
+					sb.append("private ");
+				}
+				else {
+					sb.append("public ");
+				}
+
+				sb.append("page exists with friendly URL path ");
+				sb.append(friendlyUrlPath);
+				sb.append(" and language ID ");
+				sb.append(languageId);
+
+				return new NoSuchModelException(sb.toString());
+			}
+		);
+	}
+
+	private ContentPage _toContentPage(Layout layout, String methodName)
+		throws Exception {
+
 		return _contentPageDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
 					"get",
 					addAction(
-						"VIEW", "getSiteContentPagesPage",
+						"VIEW", methodName,
 						"com.liferay.portal.kernel.model.Group",
 						layout.getGroupId())
 				).build(),
@@ -81,6 +153,12 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

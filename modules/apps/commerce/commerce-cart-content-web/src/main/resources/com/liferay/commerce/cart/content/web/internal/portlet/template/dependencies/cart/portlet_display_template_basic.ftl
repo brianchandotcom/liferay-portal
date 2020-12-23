@@ -40,7 +40,7 @@
 						</a>
 					</td>
 					<td>
-						<@liferay_commerce["price"]
+						<@commerce_ui["price"]
 							CPDefinitionId=cpDefinition.getCPDefinitionId()
 							CPInstanceId=curCommerceOrderItem.getCPInstanceId()
 							showDiscount=false

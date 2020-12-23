@@ -40,7 +40,7 @@
 					</a>
 
 					<div class="commerce-price-section d-inline float-right">
-						<@liferay_commerce["price"]
+						<@commerce_ui["price"]
 							CPDefinitionId=cpDefinition.getCPDefinitionId()
 							CPInstanceId=curCommerceOrderItem.getCPInstanceId()
 							showDiscount=false

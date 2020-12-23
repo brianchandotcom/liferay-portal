@@ -40,7 +40,7 @@
 					<h4 class="sku">${HtmlUtil.escape(cpInstance.getSku())}</h4>
 
 					<div class="price">
-						<@liferay_commerce["price"]
+						<@commerce_ui["price"]
 							CPDefinitionId=cpDefinition.getCPDefinitionId()
 							CPInstanceId=cpInstance.getCPInstanceId()
 						/>

@@ -141,11 +141,15 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 					httpServletRequest));
 		}
 		else {
-			parameters.put(
-				"guestUploadURL",
-				getGuestUploadURL(
-					ddmFormFieldRenderingContext, folderId,
-					httpServletRequest));
+			String guestUploadURL = GetterUtil.getString(
+				ddmFormField.getProperty("guestUploadURL"));
+
+			if (Validator.isNull(guestUploadURL)) {
+				guestUploadURL = getGuestUploadURL(
+					ddmFormFieldRenderingContext, folderId, httpServletRequest);
+			}
+
+			parameters.put("guestUploadURL", guestUploadURL);
 		}
 
 		parameters.put(

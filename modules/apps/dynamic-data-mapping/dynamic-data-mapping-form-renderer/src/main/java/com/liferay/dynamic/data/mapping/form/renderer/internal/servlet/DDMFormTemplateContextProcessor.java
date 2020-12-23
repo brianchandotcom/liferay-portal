@@ -117,6 +117,8 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getString("fieldName"), ddmFormField);
 		setDDMFormFieldFieldReference(
 			jsonObject.getString("fieldReference"), ddmFormField);
+		setDDMFormFieldGuestUploadURL(
+			jsonObject.getString("guestUploadURL"), ddmFormField);
 		setDDMFormFieldInline(jsonObject.getBoolean("inline"), ddmFormField);
 		setDDMFormFieldLabel(jsonObject.getString("label"), ddmFormField);
 		setDDMFormFieldLocalizable(
@@ -295,6 +297,13 @@ public class DDMFormTemplateContextProcessor {
 		String fieldReference, DDMFormField ddmFormField) {
 
 		ddmFormField.setFieldReference(GetterUtil.getString(fieldReference));
+	}
+
+	protected void setDDMFormFieldGuestUploadURL(
+		String guestUploadURL, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty(
+			"guestUploadURL", GetterUtil.getString(guestUploadURL));
 	}
 
 	protected void setDDMFormFieldInline(

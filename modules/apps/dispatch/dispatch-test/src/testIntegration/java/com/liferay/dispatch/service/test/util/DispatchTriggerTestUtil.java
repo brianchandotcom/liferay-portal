@@ -65,7 +65,7 @@ public class DispatchTriggerTestUtil {
 
 	private static String _randomCronExpression() {
 		return String.format(
-			"0 0 0 ? %d/2 * 2077", RandomTestUtil.randomInt(1, 12));
+			"0 0 0 ? %d/2 * 2024", RandomTestUtil.randomInt(1, 12));
 	}
 
 	private static DispatchTrigger _randomDispatchTrigger(

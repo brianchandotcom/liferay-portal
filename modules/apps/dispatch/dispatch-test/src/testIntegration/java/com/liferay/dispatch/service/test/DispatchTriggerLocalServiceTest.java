@@ -191,8 +191,8 @@ public class DispatchTriggerLocalServiceTest {
 					dispatchTrigger.getDispatchTriggerId(),
 					expectedDispatchTrigger.isActive(),
 					expectedDispatchTrigger.getCronExpression(),
-					dispatchTaskClusterMode, 5, 5, 2024, 11, 11, false, true, 4,
-					4, 2024, 12, 0);
+					dispatchTaskClusterMode, 11, 31, 2024, 23, 59, false, true, 0,
+					1, 2024, 0, 0);
 
 			_basicAssertEquals(expectedDispatchTrigger, dispatchTrigger);
 

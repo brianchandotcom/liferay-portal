@@ -34,18 +34,14 @@ export const getLabel = (
 	defaultLanguageId,
 	editingLanguageId
 ) => {
-	let labelFieldLocalizedValue = getFieldLocalizedValue(
+	const labelFieldLocalizedValue = getFieldLocalizedValue(
 		originalField.settingsContext.pages,
 		'label',
 		editingLanguageId
 	);
 
 	if (!labelFieldLocalizedValue) {
-		labelFieldLocalizedValue = getFieldLocalizedValue(
-			originalField.settingsContext.pages,
-			'label',
-			defaultLanguageId
-		);
+		return;
 	}
 
 	return sub(Liferay.Language.get('copy-of-x'), [labelFieldLocalizedValue]);
@@ -96,14 +92,16 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 			availableLanguageId
 		);
 
-		duplicatedField = updateFieldLabel(
-			defaultLanguageId,
-			availableLanguageId,
-			fieldNameGenerator,
-			duplicatedField,
-			generateFieldNameUsingFieldLabel,
-			label
-		);
+		if (label) {
+			duplicatedField = updateFieldLabel(
+				defaultLanguageId,
+				availableLanguageId,
+				fieldNameGenerator,
+				duplicatedField,
+				generateFieldNameUsingFieldLabel,
+				label
+			);
+		}
 	});
 
 	if (duplicatedField.nestedFields?.length > 0) {

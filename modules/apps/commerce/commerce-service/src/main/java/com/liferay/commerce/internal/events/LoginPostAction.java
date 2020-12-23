@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -58,7 +60,11 @@ public class LoginPostAction extends Action {
 				if (name.startsWith(
 						CommerceOrder.class.getName() + StringPool.POUND)) {
 
-					HttpSession httpSession = httpServletRequest.getSession();
+					HttpServletRequest originalHttpServletRequest =
+						_portal.getOriginalServletRequest(httpServletRequest);
+
+					HttpSession httpSession =
+						originalHttpServletRequest.getSession();
 
 					httpSession.setAttribute(name, cookie.getValue());
 
@@ -76,5 +82,8 @@ public class LoginPostAction extends Action {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LoginPostAction.class);
+
+	@Reference
+	private Portal _portal;
 
 }

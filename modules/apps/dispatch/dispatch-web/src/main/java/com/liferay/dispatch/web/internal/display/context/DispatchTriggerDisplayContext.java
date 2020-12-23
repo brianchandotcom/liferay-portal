@@ -57,6 +57,15 @@ public class DispatchTriggerDisplayContext {
 			_dispatchRequestHelper.getLocale());
 	}
 
+	public String getDispatchTaskExecutorName(String dispatchTaskExecutorType) {
+		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorName(
+			dispatchTaskExecutorType);
+	}
+
+	public Set<String> getDispatchTaskExecutorTypes() {
+		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
+	}
+
 	public DispatchTrigger getDispatchTrigger() {
 		return _dispatchRequestHelper.getDispatchTrigger();
 	}
@@ -149,15 +158,6 @@ public class DispatchTriggerDisplayContext {
 		_searchContainer.setResults(results);
 
 		return _searchContainer;
-	}
-
-	public String getTaskExecutorName(String taskExecutorType) {
-		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorName(
-			taskExecutorType);
-	}
-
-	public Set<String> getTaskExecutorTypes() {
-		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
 	}
 
 	private final Format _dateFormatDateTime;

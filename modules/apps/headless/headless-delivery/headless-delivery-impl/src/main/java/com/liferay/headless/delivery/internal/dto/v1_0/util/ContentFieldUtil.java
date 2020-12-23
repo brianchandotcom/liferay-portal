@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -175,9 +176,8 @@ public class ContentFieldUtil {
 					}
 				};
 			}
-
-			if (Objects.equals(
-					DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
+			else if (Objects.equals(
+						DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -193,9 +193,8 @@ public class ContentFieldUtil {
 					}
 				};
 			}
-
-			if (Objects.equals(
-					DDMFormFieldType.IMAGE, ddmFormField.getType())) {
+			else if (Objects.equals(
+						DDMFormFieldType.IMAGE, ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -228,9 +227,9 @@ public class ContentFieldUtil {
 					}
 				};
 			}
-
-			if (Objects.equals(
-					DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
+			else if (Objects.equals(
+						DDMFormFieldType.JOURNAL_ARTICLE,
+						ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -259,9 +258,9 @@ public class ContentFieldUtil {
 					}
 				};
 			}
-
-			if (Objects.equals(
-					DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
+			else if (Objects.equals(
+						DDMFormFieldType.LINK_TO_PAGE,
+						ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -281,6 +280,22 @@ public class ContentFieldUtil {
 				return new ContentFieldValue() {
 					{
 						link = layoutByUuidAndGroupId.getFriendlyURL();
+					}
+				};
+			}
+			else if (Objects.equals(
+						DDMFormFieldType.RADIO, ddmFormField.getType())) {
+
+				DDMFormFieldOptions ddmFormFieldOptions =
+					ddmFormField.getDDMFormFieldOptions();
+
+				LocalizedValue selectedOptionLabelLocalizedValue =
+					ddmFormFieldOptions.getOptionLabels(valueString);
+
+				return new ContentFieldValue() {
+					{
+						data = selectedOptionLabelLocalizedValue.getString(
+							locale);
 					}
 				};
 			}

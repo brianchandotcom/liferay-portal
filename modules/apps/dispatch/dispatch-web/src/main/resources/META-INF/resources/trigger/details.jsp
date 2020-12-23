@@ -23,12 +23,12 @@ long dispatchTriggerId = 0;
 
 DispatchTrigger dispatchTrigger = dispatchTriggerDisplayContext.getDispatchTrigger();
 
-String taskExecutorType = ParamUtil.getString(request, "taskExecutorType");
+String dispatchTaskExecutorType = ParamUtil.getString(request, "dispatchTaskExecutorType");
 String taskSettings = StringPool.BLANK;
 
 if (dispatchTrigger != null) {
 	dispatchTriggerId = dispatchTrigger.getDispatchTriggerId();
-	taskExecutorType = dispatchTrigger.getDispatchTaskExecutorType();
+	dispatchTaskExecutorType = dispatchTrigger.getDispatchTaskExecutorType();
 	taskSettings = dispatchTrigger.getDispatchTaskSettings();
 }
 %>
@@ -46,7 +46,7 @@ if (dispatchTrigger != null) {
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTriggerId) %>" />
-			<aui:input name="taskExecutorType" type="hidden" value="<%= taskExecutorType %>" />
+			<aui:input name="dispatchTaskExecutorType" type="hidden" value="<%= dispatchTaskExecutorType %>" />
 			<aui:input name="taskSettings" type="hidden" />
 
 			<div class="lfr-form-content">

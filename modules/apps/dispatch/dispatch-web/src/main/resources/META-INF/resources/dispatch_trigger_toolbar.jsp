@@ -42,18 +42,18 @@ DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDi
 		>
 
 			<%
-			for (String taskExecutorType : dispatchTriggerDisplayContext.getTaskExecutorTypes()) {
+			for (String dispatchTaskExecutorType : dispatchTriggerDisplayContext.getDispatchTaskExecutorTypes()) {
 			%>
 
 				<liferay-portlet:renderURL var="addDispatchTriggerURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 					<portlet:param name="mvcRenderCommandName" value="/dispatch/edit_dispatch_trigger" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="taskExecutorType" value="<%= taskExecutorType %>" />
+					<portlet:param name="dispatchTaskExecutorType" value="<%= dispatchTaskExecutorType %>" />
 				</liferay-portlet:renderURL>
 
 				<liferay-frontend:add-menu-item
-					title="<%= LanguageUtil.get(request, dispatchTriggerDisplayContext.getTaskExecutorName(taskExecutorType)) %>"
+					title="<%= LanguageUtil.get(request, dispatchTriggerDisplayContext.getDispatchTaskExecutorName(dispatchTaskExecutorType)) %>"
 					url="<%= addDispatchTriggerURL %>"
 				/>
 

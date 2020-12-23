@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ExecutorService;
 
 import org.json.JSONArray;
 
@@ -53,15 +53,8 @@ public abstract class BaseSpiraTestResultValues
 
 	@Override
 	public List<SpiraCustomPropertyValue> getSpiraCustomPropertyValues() {
-		List<Callable<List<SpiraCustomPropertyValue>>> callables =
-			getCallables();
-
-		ThreadPoolExecutor threadPoolExecutor =
-			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				callables.size(), true);
-
 		ParallelExecutor<List<SpiraCustomPropertyValue>> parallelExecutor =
-			new ParallelExecutor<>(callables, threadPoolExecutor);
+			new ParallelExecutor<>(getCallables(), _executorService);
 
 		List<SpiraCustomPropertyValue> spiraCustomPropertyValues =
 			new ArrayList<>();
@@ -228,6 +221,11 @@ public abstract class BaseSpiraTestResultValues
 			_spiraBuildResult.getSpiraProject(), SpiraTestCaseRun.class,
 			spiraTestCaseProductVersion.getValueString());
 	}
+
+	private static final Integer _THREAD_COUNT = 50;
+
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
 	private final SpiraBuildResult _spiraBuildResult;
 	private final SpiraTestResult _spiraTestResult;

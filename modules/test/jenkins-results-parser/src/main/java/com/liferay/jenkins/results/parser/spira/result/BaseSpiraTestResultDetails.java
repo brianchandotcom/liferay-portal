@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Michael Hashimoto
@@ -48,14 +48,8 @@ public abstract class BaseSpiraTestResultDetails
 
 	@Override
 	public String getDetails() {
-		List<Callable<Map.Entry<String, String>>> callables = getCallables();
-
-		ThreadPoolExecutor threadPoolExecutor =
-			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				callables.size(), true);
-
 		ParallelExecutor<Map.Entry<String, String>> parallelExecutor =
-			new ParallelExecutor<>(callables, threadPoolExecutor);
+			new ParallelExecutor<>(getCallables(), _executorService);
 
 		Map<String, String> summaries = new TreeMap<>();
 
@@ -519,6 +513,11 @@ public abstract class BaseSpiraTestResultDetails
 
 		return sb.toString();
 	}
+
+	private static final Integer _THREAD_COUNT = 50;
+
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
 	private String _artifactBaseURLContent;
 	private final SpiraBuildResult _spiraBuildResult;

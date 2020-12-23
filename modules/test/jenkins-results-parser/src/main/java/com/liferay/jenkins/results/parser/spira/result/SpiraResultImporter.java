@@ -61,7 +61,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -174,15 +174,10 @@ public class SpiraResultImporter {
 				throw new RuntimeException(exception);
 			}
 
-			List<Callable<List<SpiraTestCaseRun>>> callableSubList =
-				callableList.subList(1, callableList.size());
-
-			ThreadPoolExecutor threadPoolExecutor =
-				JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-					_GROUP_THREAD_COUNT, true);
-
 			ParallelExecutor<List<SpiraTestCaseRun>> parallelExecutor =
-				new ParallelExecutor<>(callableSubList, threadPoolExecutor);
+				new ParallelExecutor<>(
+					callableList.subList(1, callableList.size()),
+					_executorService);
 
 			for (List<SpiraTestCaseRun> spiraTestCaseRunsList :
 					parallelExecutor.execute()) {
@@ -760,6 +755,10 @@ public class SpiraResultImporter {
 	private static final int _GROUP_SIZE = 25;
 
 	private static final int _GROUP_THREAD_COUNT = 5;
+
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+			_GROUP_THREAD_COUNT, true);
 
 	private List<SpiraAutomationHost> _spiraAutomationHosts;
 	private final SpiraBuildResult _spiraBuildResult;

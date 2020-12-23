@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.dto.v1_0.ContentElement;
+import com.liferay.headless.delivery.dto.v1_0.ContentPage;
 import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
@@ -43,6 +44,7 @@ import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
+import com.liferay.headless.delivery.resource.v1_0.ContentPageResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
@@ -130,6 +132,14 @@ public class Query {
 
 		_contentElementResourceComponentServiceObjects =
 			contentElementResourceComponentServiceObjects;
+	}
+
+	public static void setContentPageResourceComponentServiceObjects(
+		ComponentServiceObjects<ContentPageResource>
+			contentPageResourceComponentServiceObjects) {
+
+		_contentPageResourceComponentServiceObjects =
+			contentPageResourceComponentServiceObjects;
 	}
 
 	public static void setContentSetElementResourceComponentServiceObjects(
@@ -601,6 +611,121 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						contentElementResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPages(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the content pages of the site")
+	public ContentPagePage contentPages(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentPageResource -> new ContentPagePage(
+				contentPageResource.getSiteContentPagesPage(
+					Long.valueOf(siteKey), search,
+					_aggregationBiFunction.apply(
+						contentPageResource, aggregations),
+					_filterBiFunction.apply(contentPageResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(contentPageResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPagePrivateFriendlyUrlPath(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, defaultRenderedPage, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, privatePage, renderedPages, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves a specific private content page of a site"
+	)
+	public ContentPage contentPagePrivateFriendlyUrlPath(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentPageResource ->
+				contentPageResource.getSiteContentPagePrivateFriendlyUrlPath(
+					Long.valueOf(siteKey), friendlyUrlPath));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPagePrivateFriendlyUrlPathRenderedPage(friendlyUrlPath: ___, siteKey: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the rendered content of a given page."
+	)
+	public String contentPagePrivateFriendlyUrlPathRenderedPage(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentPageResource ->
+				contentPageResource.
+					getSiteContentPagePrivateFriendlyUrlPathRenderedPage(
+						Long.valueOf(siteKey), friendlyUrlPath));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPagePublicFriendlyUrlPath(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, defaultRenderedPage, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, privatePage, renderedPages, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves a specific public content page of a site"
+	)
+	public ContentPage contentPagePublicFriendlyUrlPath(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentPageResource ->
+				contentPageResource.getSiteContentPagePublicFriendlyUrlPath(
+					Long.valueOf(siteKey), friendlyUrlPath));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPagePublicFriendlyUrlPathRenderedPage(friendlyUrlPath: ___, siteKey: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the rendered content of a given page."
+	)
+	public String contentPagePublicFriendlyUrlPathRenderedPage(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentPageResource ->
+				contentPageResource.
+					getSiteContentPagePublicFriendlyUrlPathRenderedPage(
+						Long.valueOf(siteKey), friendlyUrlPath));
 	}
 
 	/**
@@ -3701,6 +3826,44 @@ public class Query {
 
 	}
 
+	@GraphQLName("ContentPagePage")
+	public class ContentPagePage {
+
+		public ContentPagePage(Page contentPagePage) {
+			actions = contentPagePage.getActions();
+
+			facets = contentPagePage.getFacets();
+
+			items = contentPagePage.getItems();
+			lastPage = contentPagePage.getLastPage();
+			page = contentPagePage.getPage();
+			pageSize = contentPagePage.getPageSize();
+			totalCount = contentPagePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<ContentPage> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("ContentSetElementPage")
 	public class ContentSetElementPage {
 
@@ -4695,6 +4858,20 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			ContentPageResource contentPageResource)
+		throws Exception {
+
+		contentPageResource.setContextAcceptLanguage(_acceptLanguage);
+		contentPageResource.setContextCompany(_company);
+		contentPageResource.setContextHttpServletRequest(_httpServletRequest);
+		contentPageResource.setContextHttpServletResponse(_httpServletResponse);
+		contentPageResource.setContextUriInfo(_uriInfo);
+		contentPageResource.setContextUser(_user);
+		contentPageResource.setGroupLocalService(_groupLocalService);
+		contentPageResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			ContentSetElementResource contentSetElementResource)
 		throws Exception {
 
@@ -4999,6 +5176,8 @@ public class Query {
 		_commentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentElementResource>
 		_contentElementResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ContentPageResource>
+		_contentPageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentSetElementResource>
 		_contentSetElementResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ContentStructureResource>

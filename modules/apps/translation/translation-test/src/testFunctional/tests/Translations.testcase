@@ -572,7 +572,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/es/group/guest/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "lista");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click.waitForMenuToggleJSClick(
 			key_webContentTitle = "WC WebContent Título",

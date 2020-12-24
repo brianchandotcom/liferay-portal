@@ -52,7 +52,7 @@ definition {
 			key_text = "Add",
 			locator1 = "Button#ANY_DISABLED");
 
-		Type.sendKeys(
+		Type(
 			locator1 = "TextInput#URL",
 			value1 = "${imageSourceURL}");
 

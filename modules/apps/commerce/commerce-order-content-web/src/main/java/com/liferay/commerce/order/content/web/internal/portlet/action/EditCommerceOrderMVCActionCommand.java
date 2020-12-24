@@ -108,6 +108,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceOrderAccountLimitException) {
+				hideDefaultErrorMessage(actionRequest);
+
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				return null;

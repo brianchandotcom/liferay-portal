@@ -675,12 +675,12 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertVisible(
-				key_append = "/img[contains(@src,'Document_1.jpg')]",
+				key_append = "//img[contains(@src,'Document_1.jpg')]",
 				key_URL = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			Click(
-				key_append = "/img[contains(@src,'Document_1.jpg')]",
+				key_append = "//img[contains(@src,'Document_1.jpg')]",
 				key_URL = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 

@@ -651,9 +651,9 @@ definition {
 
 		task ("Map manual URL to editable field of Image") {
 			PageEditor.editFragmentImage(
+				fileName = "Document_1.jpg",
 				fragmentName = "Image",
-				id = "image-square",
-				imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
+				id = "image-square");
 
 			PageEditorEditableLink.gotoEditableFieldLink(
 				fragmentName = "Image",

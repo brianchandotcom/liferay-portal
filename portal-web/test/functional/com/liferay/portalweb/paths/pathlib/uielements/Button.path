@@ -744,6 +744,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TWITCH_PLAY</td>
+	<td>//button[contains(@data-test-selector,'player-overlay-play-button') and contains(@aria-label,'Play')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TRY_REDIRECTION</td>
 	<td>//button[@type='button' and @title='Check URL']</td>
 	<td></td>

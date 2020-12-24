@@ -260,6 +260,7 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.model.SegmentsEntry;
+import com.liferay.segments.model.SegmentsEntryModel;
 import com.liferay.segments.model.impl.SegmentsEntryImpl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
@@ -3761,6 +3762,16 @@ public class DataFactory {
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
+		SegmentsEntryModel segmentsEntryModel) {
+
+		return Collections.singletonList(
+			newResourcePermissionModel(
+				SegmentsEntry.class.getName(),
+				String.valueOf(segmentsEntryModel.getSegmentsEntryId()),
+				_guestRoleModel.getRoleId(), _sampleUserId));
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
 		String name, long primKey) {
 
 		return newResourcePermissionModels(
@@ -3854,15 +3865,6 @@ public class DataFactory {
 		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
 
 		return segmentsEntry;
-	}
-
-	public ResourcePermissionModel newSegmentsEntryResourcePermissionModel(
-		SegmentsEntry segmentsEntry) {
-
-		return newResourcePermissionModel(
-			SegmentsEntry.class.getName(),
-			String.valueOf(segmentsEntry.getSegmentsEntryId()),
-			_guestRoleModel.getRoleId(), _sampleUserId);
 	}
 
 	public SocialActivityModel newSocialActivityModel(

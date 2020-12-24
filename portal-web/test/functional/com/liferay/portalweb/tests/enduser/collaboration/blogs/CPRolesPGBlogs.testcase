@@ -1342,7 +1342,7 @@ definition {
 
 	@priority = "5"
 	test SubscribeBlogsRegRole {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		Permissions.setUpRegRoleLoginUserPG(
 			pageName = "Blogs Page",
@@ -1604,7 +1604,7 @@ definition {
 
 	@priority = "5"
 	test ViewBlogsPermissionsRegRole {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPRolesPGBlogs#ViewBlogsPermissionsRegRole";
 
 		Permissions.setUpRegRoleLoginUserPG(

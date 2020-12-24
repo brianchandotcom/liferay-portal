@@ -1412,7 +1412,7 @@ definition {
 		task ("Add a Button fragment above the Grid") {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-			Navigator.gotoNavTab(navTab = "Fragments");
+			PageEditor.gotoSidebarPanelTab(navTab = "Fragments");
 
 			DragAndDrop.javaScriptDragAndDropToUp(
 				key_collectionName = "Basic Components",

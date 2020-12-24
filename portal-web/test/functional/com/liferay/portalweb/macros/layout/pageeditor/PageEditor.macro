@@ -75,7 +75,7 @@ definition {
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 		if ("${navTab}" == "Fragments") {
-			Navigator.gotoNavTab(navTab = "${navTab}");
+			PageEditor.gotoSidebarPanelTab(navTab = "${navTab}");
 
 			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
@@ -119,7 +119,7 @@ definition {
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 		}
 		else if ("${navTab}" == "Widgets") {
-			Navigator.gotoNavTab(navTab = "${navTab}");
+			PageEditor.gotoSidebarPanelTab(navTab = "${navTab}");
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
@@ -179,7 +179,7 @@ definition {
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 		if ("${navTab}" == "Fragments") {
-			Navigator.gotoNavTab(navTab = "${navTab}");
+			PageEditor.gotoSidebarPanelTab(navTab = "${navTab}");
 
 			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
@@ -201,7 +201,7 @@ definition {
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 		else if ("${navTab}" == "Widgets") {
-			Navigator.gotoNavTab(navTab = "${navTab}");
+			PageEditor.gotoSidebarPanelTab(navTab = "${navTab}");
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
@@ -237,7 +237,7 @@ definition {
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 		if ("${navTab}" == "Fragments") {
-			Navigator.gotoNavTab(navTab = "${navTab}");
+			PageEditor.gotoSidebarPanelTab(navTab = "${navTab}");
 
 			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
@@ -254,7 +254,7 @@ definition {
 				locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
 		}
 		else if ("${navTab}" == "Widgets") {
-			Navigator.gotoNavTab(navTab = "${navTab}");
+			PageEditor.gotoSidebarPanelTab(navTab = "${navTab}");
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
@@ -295,7 +295,7 @@ definition {
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 		if ("${navTab}" == "Fragments") {
-			Navigator.gotoNavTab(navTab = "${navTab}");
+			PageEditor.gotoSidebarPanelTab(navTab = "${navTab}");
 
 			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
@@ -313,7 +313,7 @@ definition {
 				locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
 		}
 		else if ("${navTab}" == "Widgets") {
-			Navigator.gotoNavTab(navTab = "${navTab}");
+			PageEditor.gotoSidebarPanelTab(navTab = "${navTab}");
 
 			Type.sendKeysApplicationSearch(
 				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
@@ -376,7 +376,7 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-		Navigator.gotoNavTab(navTab = "Fragments");
+		PageEditor.gotoSidebarPanelTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
@@ -485,7 +485,7 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-		Navigator.gotoNavTab(navTab = "Fragments");
+		PageEditor.gotoSidebarPanelTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
@@ -528,7 +528,7 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-		Navigator.gotoNavTab(navTab = "Widgets");
+		PageEditor.gotoSidebarPanelTab(navTab = "Widgets");
 
 		Type.sendKeysApplicationSearch(
 			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
@@ -1932,7 +1932,7 @@ definition {
 	macro expandFragmentCollection {
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-		Navigator.gotoNavTab(navTab = "Fragments");
+		PageEditor.gotoSidebarPanelTab(navTab = "Fragments");
 
 		AssertVisible(
 			key_collectionName = "${collectionName}",

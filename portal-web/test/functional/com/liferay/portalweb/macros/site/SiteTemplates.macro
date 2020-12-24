@@ -217,6 +217,20 @@ definition {
 		Button.clickSave();
 	}
 
+	macro enablePropagation {
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = "${siteTemplateName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Ready for Propagation",
+			rowEntry = "${siteTemplateName}");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro getSiteTemplateID {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage",

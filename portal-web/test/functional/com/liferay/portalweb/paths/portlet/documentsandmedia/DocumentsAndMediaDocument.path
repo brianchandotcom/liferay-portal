@@ -288,6 +288,11 @@
 	<td>//iframe[contains(@src,'${key_videoShortcutPreview}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TWITCH_VIDEO_INACTIVE</td>
+	<td>//div[contains(@class,'video-player__inactive')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

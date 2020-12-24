@@ -104,19 +104,6 @@ definition {
 			value1 = "${site}");
 	}
 
-	@summary = "Navigate to ${site} via the 'Home' link"
-	macro gotoSiteViaLink {
-		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			ApplicationsMenu.gotoSite(site = "${site}");
-		}
-
-		ProductMenuHelper.openProductMenu();
-
-		AssertClick(
-			locator1 = "ProductMenu#GO_TO_SITES_LINK",
-			value1 = "Home");
-	}
-
 	@summary = "Navigate to the Staging site"
 	macro gotoStagingSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {

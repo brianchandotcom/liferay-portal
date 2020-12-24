@@ -2094,6 +2094,20 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
+	macro gotoSidebarPanelTab {
+		Pause(locator1 = "3000");
+
+		var key_tab = "${navTab}";
+
+		if (IsElementNotPresent(locator1 = "NavTab#PAGE_EDITOR_SIDEBAR_PANEL_ACTIVE_TAB_LINK")) {
+			Click(locator1 = "NavTab#PAGE_EDITOR_SIDEBAR_PANEL_TAB_LINK");
+		}
+
+		AssertElementPresent(locator1 = "NavTab#PAGE_EDITOR_SIDEBAR_PANEL_ACTIVE_TAB_LINK");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
 	macro gotoStyle {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 

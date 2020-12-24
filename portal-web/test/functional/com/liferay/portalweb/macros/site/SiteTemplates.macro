@@ -190,6 +190,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro disablePropagation {
+		var key_siteTemplateName = "${siteTemplateName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = "${siteTemplateName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Disable Propagation",
+			rowEntry = "${siteTemplateName}");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editCP {
 		SiteTemplates.gotoSettingsCP(siteTemplateName = "${siteTemplateName}");
 

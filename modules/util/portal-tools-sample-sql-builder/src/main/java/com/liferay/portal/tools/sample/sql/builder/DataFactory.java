@@ -3822,51 +3822,6 @@ public class DataFactory {
 		return segmentsEntries;
 	}
 
-	public SegmentsEntry newSegmentsEntry(long groupId, int index) {
-		SegmentsEntry segmentsEntry = new SegmentsEntryImpl();
-
-		segmentsEntry.setActive(true);
-
-		Criteria criteria = new Criteria();
-
-		String filterString = StringBundler.concat(
-			"(firstName eq ''", _SAMPLE_USER_NAME, index, "'')");
-
-		criteria.addCriterion(
-			"user", Criteria.Type.MODEL, filterString,
-			Criteria.Conjunction.AND);
-
-		criteria.addFilter(
-			Criteria.Type.MODEL, filterString, Criteria.Conjunction.AND);
-
-		segmentsEntry.setCriteria(CriteriaSerializer.serialize(criteria));
-
-		segmentsEntry.setSegmentsEntryId(_counter.get());
-		segmentsEntry.setGroupId(groupId);
-		segmentsEntry.setCompanyId(_companyId);
-		segmentsEntry.setCreateDate(new Date());
-		segmentsEntry.setModifiedDate(new Date());
-		segmentsEntry.setSegmentsEntryKey(_counter.getString());
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><Name language-id=\"en_US\">");
-		sb.append("SampleSegment");
-		sb.append(index);
-		sb.append("</Name></root>");
-
-		segmentsEntry.setName(sb.toString());
-
-		segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
-		segmentsEntry.setType(User.class.getName());
-		segmentsEntry.setUuid(SequentialUUID.generate());
-		segmentsEntry.setUserId(_sampleUserId);
-		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
-
-		return segmentsEntry;
-	}
-
 	public SocialActivityModel newSocialActivityModel(
 		BlogsEntryModel blogsEntryModel) {
 
@@ -5001,6 +4956,51 @@ public class DataFactory {
 		roleModel.setType(type);
 
 		return roleModel;
+	}
+
+	protected SegmentsEntry newSegmentsEntry(long groupId, int index) {
+		SegmentsEntry segmentsEntry = new SegmentsEntryImpl();
+
+		segmentsEntry.setActive(true);
+
+		Criteria criteria = new Criteria();
+
+		String filterString = StringBundler.concat(
+			"(firstName eq ''", _SAMPLE_USER_NAME, index, "'')");
+
+		criteria.addCriterion(
+			"user", Criteria.Type.MODEL, filterString,
+			Criteria.Conjunction.AND);
+
+		criteria.addFilter(
+			Criteria.Type.MODEL, filterString, Criteria.Conjunction.AND);
+
+		segmentsEntry.setCriteria(CriteriaSerializer.serialize(criteria));
+
+		segmentsEntry.setSegmentsEntryId(_counter.get());
+		segmentsEntry.setGroupId(groupId);
+		segmentsEntry.setCompanyId(_companyId);
+		segmentsEntry.setCreateDate(new Date());
+		segmentsEntry.setModifiedDate(new Date());
+		segmentsEntry.setSegmentsEntryKey(_counter.getString());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><Name language-id=\"en_US\">");
+		sb.append("SampleSegment");
+		sb.append(index);
+		sb.append("</Name></root>");
+
+		segmentsEntry.setName(sb.toString());
+
+		segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
+		segmentsEntry.setType(User.class.getName());
+		segmentsEntry.setUuid(SequentialUUID.generate());
+		segmentsEntry.setUserId(_sampleUserId);
+		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
+
+		return segmentsEntry;
 	}
 
 	protected SocialActivityModel newSocialActivityModel(

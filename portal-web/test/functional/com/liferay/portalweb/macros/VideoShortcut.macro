@@ -211,4 +211,21 @@ definition {
 		}
 	}
 
+	macro viewPlayedVideo {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+
+		Pause(locator1 = "5000");
+
+		if (IsElementPresent(locator1 = "Button#TWITCH_PLAY")) {
+			Click(locator1 = "Button#TWITCH_PLAY");
+
+			AssertElementPresent(locator1 = "DocumentsAndMediaDocument#TWITCH_VIDEO_INACTIVE");
+		}
+		else {
+			AssertElementNotPresent(locator1 = "DocumentsAndMediaDocument#TWITCH_VIDEO_INACTIVE");
+		}
+
+		SelectFrameTop(value1 = "relative=top");
+	}
+
 }

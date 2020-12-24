@@ -134,6 +134,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_FRAGMENTS_AND_WIDGETS</td>
+	<td>//div[contains(@id,'fragment')]//section[contains(@id,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SPECIFIC_PORTLET_BORDER_DECORATOR</td>
 	<td>//div[@id='main-content']//div[contains(@class,'portlet-${key_decorator}')]//h2[contains(@class,'portlet-title') and (.='${key_portletTitleName}')] | //div[@id='main-content']//div[contains(@class,'portlet-${key_decorator}')]//section[contains(@id,'${key_portletTitleName}')]</td>
 	<td></td>

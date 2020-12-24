@@ -97,9 +97,27 @@ definition {
 			LexiconCard.clickCard(card = "${depotName}");
 		}
 
-		Click(
-			key_imageFileName = "${videoShortcutTitle}",
-			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		if (isSet(videoShortcutPreview)) {
+			Click(locator1 = "Icon#EYE_PREVIEW");
+
+			AssertVisible(
+				key_videoShortcutPreview = "${videoShortcutPreview}",
+				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
+
+			AssertTextEquals(
+				key_imageFileName = "${videoShortcutTitle}",
+				locator1 = "ItemSelector#VIEWER_FOOTER_IMAGE",
+				value1 = "${videoShortcutTitle}");
+
+			AssertClick(
+				locator1 = "ItemSelector#ADD_BUTTON",
+				value1 = "Add");
+		}
+		else {
+			Click(
+				key_imageFileName = "${videoShortcutTitle}",
+				locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		}
 
 		SelectFrameTop(value1 = "relative=top");
 	}

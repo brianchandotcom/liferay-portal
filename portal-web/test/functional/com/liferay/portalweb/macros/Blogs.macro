@@ -34,6 +34,7 @@ definition {
 			navTab = "${navTab}",
 			videoName = "${videoName}",
 			videoService = "${videoService}",
+			videoShortcutPreview = "${videoShortcutPreview}",
 			videoShortcutTitle = "${videoShortcutTitle}");
 
 		if (isSet(readingTime)) {

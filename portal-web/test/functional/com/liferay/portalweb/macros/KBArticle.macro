@@ -145,13 +145,16 @@ definition {
 			if ("${navTab}" == "Documents and Media") {
 				ItemSelector.addVideoFromDM(
 					navTab = "${navTab}",
+					videoShortcutPreview = "${videoShortcutPreview}",
 					videoShortcutTitle = "${videoShortcutTitle}");
 
-				SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+				if (isSet(viewInternalVideoPreview)) {
+					SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-				Pause(locator1 = "5000");
+					Pause(locator1 = "5000");
 
-				DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
+					DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
+				}
 			}
 			else {
 				ItemSelector.addVideoFromURL(

@@ -50,11 +50,14 @@ definition {
 				ItemSelector.addVideoFromDM(
 					depotName = "${depotName}",
 					navTab = "${navTab}",
+					videoShortcutPreview = "${videoShortcutPreview}",
 					videoShortcutTitle = "${videoShortcutTitle}");
 
-				Pause(locator1 = "5000");
+				if (isSet(viewInternalVideoPreview)) {
+					Pause(locator1 = "5000");
 
-				DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
+					DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
+				}
 			}
 			else {
 				ItemSelector.addVideoFromURL(
@@ -841,9 +844,16 @@ definition {
 		}
 
 		if (isSet(embedVideo)) {
-			AssertElementPresent(
-				key_service = "youtube",
-				locator1 = "BlogsEntry#CONTENT_VIDEO");
+			if ("${embedVideo}" == "twitch") {
+				AssertElementPresent(
+					key_service = "twitch",
+					locator1 = "BlogsEntry#CONTENT_VIDEO");
+			}
+			else {
+				AssertElementPresent(
+					key_service = "youtube",
+					locator1 = "BlogsEntry#CONTENT_VIDEO");
+			}
 		}
 
 		if (isSet(entryContent)) {

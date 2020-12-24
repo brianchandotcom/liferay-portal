@@ -42,6 +42,51 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that a user is able to embed a Twitch live stream in a blog."
+	@priority = "5"
+	test AddBlogWithTwitchStream {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blog Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blog Page",
+			widgetName = "Blogs");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Twitch Twitch live stream",
+			videoURL = "https://www.twitch.tv/esl_csgo");
+
+		Navigator.gotoSitePage(
+			pageName = "Blog Page",
+			siteName = "Guest");
+
+		Blogs.addEntry(
+			embedVideo = "true",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Documents and Media",
+			videoShortcutPreview = "https://player.twitch.tv",
+			videoShortcutTitle = "Test Twitch Twitch live stream");
+
+		Navigator.gotoSitePage(
+			pageName = "Blog Page",
+			siteName = "Guest");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			embedVideo = "twitch",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
+	}
+
 	@description = "This ensures that a video shortcut can be added with Facebook."
 	@priority = "5"
 	test AddFacebookCP {
@@ -84,6 +129,50 @@ definition {
 			kbArticleContent = "Knowledge Base Video Content",
 			kbArticleTitle = "Knowledge Base Article Title",
 			service = "twitch");
+	}
+
+	@description = "This test ensures that a user is able to embed a Twitch live stream in a KB article."
+	@priority = "5"
+	test AddKBArticleWithTwitchStream {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Twitch Twitch live stream",
+			videoURL = "https://www.twitch.tv/esl_csgo");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			navTab = "Documents and Media",
+			videoShortcutPreview = "https://player.twitch.tv",
+			videoShortcutTitle = "Test Twitch Twitch live stream");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			service = "twitch");
+	}
+
+	@description = "This ensures that a video shortcut can be added with Twitch live stream."
+	@priority = "5"
+	test AddTwitchLiveStreamCP {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://player.twitch.tv",
+			videoShortcutTitle = "Test Twitch Twitch live stream",
+			videoURL = "https://www.twitch.tv/esl_csgo");
+
+		VideoShortcut.viewCP(videoShortcutTitle = "Test Twitch Twitch live stream");
+
+		VideoShortcut.viewPlayedVideo();
 	}
 
 	@description = "This ensures that a video shortcut can be added with Twitch."

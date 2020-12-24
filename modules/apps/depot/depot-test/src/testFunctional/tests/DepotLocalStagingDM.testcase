@@ -861,6 +861,51 @@ definition {
 			value1 = "This is an edit DM Document Description");
 	}
 
+	@description = "This ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling local staging."
+	@priority = "3"
+	test PublishVideoShortcutThumbnail {
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video Name",
+			videoURL = "https://www.youtube.com/watch?v=2ewB-7_VMGU");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "Test YouTube Video Name",
+			assetType = "External Video Shortcut",
+			depotName = "Test Depot Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_thumbnailName = "https://i.ytimg.com",
+			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_thumbnailName = "https://i.ytimg.com",
+			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+	}
+
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling local staging."
 	@priority = "5"
 	test RemoveBlogSmallImage {

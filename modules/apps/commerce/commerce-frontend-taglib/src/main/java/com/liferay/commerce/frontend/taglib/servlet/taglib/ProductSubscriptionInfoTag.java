@@ -15,6 +15,7 @@
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
@@ -58,7 +59,11 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 				return SKIP_BODY;
 			}
 
-			if (cpInstance.isSubscriptionEnabled()) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			if (cpDefinition.isSubscriptionEnabled() ||
+				cpInstance.isSubscriptionEnabled()) {
+
 				_length = cpSubscriptionInfo.getSubscriptionLength();
 
 				_duration =
@@ -82,7 +87,9 @@ public class ProductSubscriptionInfoTag extends IncludeTag {
 				_durationPeriodKey = _getPeriodKey(period, _duration != 1);
 			}
 
-			if (cpInstance.isDeliverySubscriptionEnabled()) {
+			if (cpDefinition.isDeliverySubscriptionEnabled() ||
+				cpInstance.isDeliverySubscriptionEnabled()) {
+
 				_deliveryLength =
 					cpSubscriptionInfo.getDeliverySubscriptionLength();
 

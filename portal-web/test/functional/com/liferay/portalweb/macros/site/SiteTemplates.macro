@@ -48,6 +48,10 @@ definition {
 			Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES");
 		}
 
+		if ("${disablePropagation}" == "true") {
+			Uncheck.uncheckHiddenToggleSwitch(locator1 = "ToggleSwitch#READY_FOR_PROPAGATION");
+		}
+
 		PortletEntry.save();
 	}
 

@@ -19,10 +19,10 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -261,18 +260,26 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			}
 		}
 
+		DDMUserPersonalFolderItemSelectorCriterion
+			ddmUserPersonalFolderItemSelectorCriterion =
+				new DDMUserPersonalFolderItemSelectorCriterion();
+
+		ddmUserPersonalFolderItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(
+				new FileEntryItemSelectorReturnType());
+
 		FileItemSelectorCriterion fileItemSelectorCriterion =
 			new FileItemSelectorCriterion();
 
 		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			Collections.<ItemSelectorReturnType>singletonList(
-				new FileEntryItemSelectorReturnType()));
+			new FileEntryItemSelectorReturnType());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			group, groupId,
 			ddmFormFieldRenderingContext.getPortletNamespace() +
 				"selectDocumentLibrary",
+			ddmUserPersonalFolderItemSelectorCriterion,
 			fileItemSelectorCriterion);
 
 		itemSelectorURL.setParameter("folderId", String.valueOf(folderId));

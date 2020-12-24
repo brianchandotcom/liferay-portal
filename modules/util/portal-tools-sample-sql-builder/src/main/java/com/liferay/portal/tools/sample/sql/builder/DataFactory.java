@@ -4961,6 +4961,40 @@ public class DataFactory {
 	protected SegmentsEntry newSegmentsEntry(long groupId, int index) {
 		SegmentsEntry segmentsEntry = new SegmentsEntryImpl();
 
+		// UUID
+
+		segmentsEntry.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		segmentsEntry.setSegmentsEntryId(_counter.get());
+
+		// Group instance
+
+		segmentsEntry.setGroupId(groupId);
+
+		// Audit fields
+
+		segmentsEntry.setCompanyId(_companyId);
+		segmentsEntry.setUserId(_sampleUserId);
+		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
+		segmentsEntry.setCreateDate(new Date());
+		segmentsEntry.setModifiedDate(new Date());
+
+		// Other fields
+
+		segmentsEntry.setSegmentsEntryKey(_counter.getString());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><Name language-id=\"en_US\">");
+		sb.append("SampleSegment");
+		sb.append(index);
+		sb.append("</Name></root>");
+
+		segmentsEntry.setName(sb.toString());
+
 		segmentsEntry.setActive(true);
 
 		Criteria criteria = new Criteria();
@@ -4977,28 +5011,8 @@ public class DataFactory {
 
 		segmentsEntry.setCriteria(CriteriaSerializer.serialize(criteria));
 
-		segmentsEntry.setSegmentsEntryId(_counter.get());
-		segmentsEntry.setGroupId(groupId);
-		segmentsEntry.setCompanyId(_companyId);
-		segmentsEntry.setCreateDate(new Date());
-		segmentsEntry.setModifiedDate(new Date());
-		segmentsEntry.setSegmentsEntryKey(_counter.getString());
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><Name language-id=\"en_US\">");
-		sb.append("SampleSegment");
-		sb.append(index);
-		sb.append("</Name></root>");
-
-		segmentsEntry.setName(sb.toString());
-
 		segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
 		segmentsEntry.setType(User.class.getName());
-		segmentsEntry.setUuid(SequentialUUID.generate());
-		segmentsEntry.setUserId(_sampleUserId);
-		segmentsEntry.setUserName(_SAMPLE_USER_NAME);
 
 		return segmentsEntry;
 	}

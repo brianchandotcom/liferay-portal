@@ -14,13 +14,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CARD_ITEM</td>
-	<td>xpath=(//li[contains(@class,'asset-item')])[${key_index}]//*[contains(@class,'card-title')][contains(.,'${key_card}')]</td>
+	<td>CARD_LINK</td>
+	<td>//div[contains(@data-analytics-asset-title,'${key_card}')]//a[contains(@class,'card-link')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CARD_LINK</td>
-	<td>//div[contains(@data-analytics-asset-title,'${key_card}')]//a[contains(@class,'card-link')]</td>
+	<td>CARD_PAGE_ITEM</td>
+	<td>xpath=(//li[contains(@class,'card-page-item')])[${key_index}]//*[contains(@class,'card-title')][contains(.,'${key_card}')]</td>
 	<td></td>
 </tr>
 <tr>

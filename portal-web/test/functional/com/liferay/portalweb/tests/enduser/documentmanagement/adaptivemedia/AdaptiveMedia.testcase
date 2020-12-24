@@ -284,7 +284,7 @@ definition {
 
 	@priority = "5"
 	test AssertAdaptedImageInWebContent {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Adaptive Media Image Description",

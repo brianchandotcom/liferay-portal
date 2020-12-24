@@ -607,7 +607,7 @@ definition {
 
 	@priority = "5"
 	test DeleteDocumentInFolder {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -1170,8 +1170,7 @@ definition {
 
 	@priority = "5"
 	test RemovePortlet {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

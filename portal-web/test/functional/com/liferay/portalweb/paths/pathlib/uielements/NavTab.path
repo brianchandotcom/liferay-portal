@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_EDITOR_SIDEBAR_PANEL_ACTIVE_TAB_LINK</td>
+	<td>//div[contains(@class,'page-editor__sidebar__content')]//*[contains(@class,'nav-link') and contains(@class,'active')][normalize-space()='${key_tab}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_EDITOR_SIDEBAR_PANEL_TAB_LINK</td>
+	<td>//div[contains(@class,'page-editor__sidebar__content')]//*[contains(@class,'nav-link')][normalize-space()='${key_tab}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAB_LINK</td>
 	<td>//*[contains(@class,'nav-link') and normalize-space()='${key_tab}']</td>
 	<td></td>

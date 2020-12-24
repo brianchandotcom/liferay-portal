@@ -568,12 +568,14 @@ definition {
 
 		ItemSelector.previewEmbeddedVideo(validURL = "https://www.facebook.com");
 
-		ItemSelector.addVideoFromURL(
-			navTab = "URL",
-			unpublish = "true",
-			videoSourceURL = "https://www.twitch.tv/videos/806178790");
+		for (var videoSourceURL : list "https://www.twitch.tv/videos/806178790,https://www.twitch.tv/esl_csgo") {
+			ItemSelector.addVideoFromURL(
+				navTab = "URL",
+				unpublish = "true",
+				videoSourceURL = "${videoSourceURL}");
 
-		ItemSelector.previewEmbeddedVideo(validURL = "https://player.twitch.tv");
+			ItemSelector.previewEmbeddedVideo(validURL = "https://player.twitch.tv");
+		}
 
 		ItemSelector.addVideoFromURL(
 			navTab = "URL",

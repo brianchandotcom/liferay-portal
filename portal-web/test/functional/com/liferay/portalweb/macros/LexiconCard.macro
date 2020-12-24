@@ -71,7 +71,7 @@ definition {
 		AssertElementPresent(
 			key_card = "${card}",
 			key_index = "${index}",
-			locator1 = "Card#CARD_ITEM");
+			locator1 = "Card#CARD_PAGE_ITEM");
 	}
 
 	macro viewCardPresent {

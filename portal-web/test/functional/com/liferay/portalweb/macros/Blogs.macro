@@ -35,7 +35,8 @@ definition {
 			videoName = "${videoName}",
 			videoService = "${videoService}",
 			videoShortcutPreview = "${videoShortcutPreview}",
-			videoShortcutTitle = "${videoShortcutTitle}");
+			videoShortcutTitle = "${videoShortcutTitle}",
+			viewInternalVideoPreview = "${viewInternalVideoPreview}");
 
 		if (isSet(readingTime)) {
 			var key_readingTime = "${readingTime}";

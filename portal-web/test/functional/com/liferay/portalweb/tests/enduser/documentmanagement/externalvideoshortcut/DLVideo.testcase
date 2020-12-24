@@ -62,7 +62,8 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			navTab = "Documents and Media",
 			videoName = "Document_1.mp4",
-			videoShortcutTitle = "DM Video Title In Site");
+			videoShortcutTitle = "DM Video Title In Site",
+			viewInternalVideoPreview = "true");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -89,7 +90,8 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			navTab = "Documents and Media",
 			videoName = "Document_1.mp4",
-			videoShortcutTitle = "DM Video Title In Site");
+			videoShortcutTitle = "DM Video Title In Site",
+			viewInternalVideoPreview = "true");
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
 

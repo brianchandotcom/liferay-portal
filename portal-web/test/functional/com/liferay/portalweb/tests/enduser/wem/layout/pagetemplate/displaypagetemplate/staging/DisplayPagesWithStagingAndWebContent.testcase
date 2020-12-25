@@ -198,7 +198,7 @@ definition {
 		}
 	}
 
-	@description = "This tests one of the workarounds of LPS-86373."
+	@description = "This tests one of the workarounds of LPS-86373 and a use case for LPS-118841."
 	@priority = "5"
 	test PublishDisplayPageMarkedAsDefault {
 		property portal.acceptance = "true";
@@ -243,6 +243,22 @@ definition {
 
 		task ("Assert the web content article displays through the display page in the live site") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+
+			AssertVisible(
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				locator1 = "Fragment#FRAGMENT");
+
+			AssertVisible(
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				locator1 = "Fragment#FRAGMENT");
+		}
+
+		task ("Assert the web content article displays through the display page in the staging site after switching to staging view") {
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "Staging#STAGING_BUTTON",
+				value1 = "Staging");
 
 			AssertVisible(
 				key_content = "Webcontent Title",

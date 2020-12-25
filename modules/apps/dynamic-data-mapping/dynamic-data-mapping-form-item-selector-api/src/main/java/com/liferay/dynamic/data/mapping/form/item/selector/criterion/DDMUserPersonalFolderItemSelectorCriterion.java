@@ -21,4 +21,34 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class DDMUserPersonalFolderItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
+
+	public DDMUserPersonalFolderItemSelectorCriterion() {
+	}
+
+	public DDMUserPersonalFolderItemSelectorCriterion(
+		long folderId, long groupId) {
+
+		_folderId = folderId;
+		_groupId = groupId;
+	}
+
+	public long getFolderId() {
+		return _folderId;
+	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setFolderId(long folderId) {
+		_folderId = folderId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	private long _folderId;
+	private long _groupId;
+
 }

@@ -1985,7 +1985,7 @@ definition {
 
 			AssertElementPresent(
 				key_fragmentName = "heading",
-				key_textColor = "rgb(35, 109, 53)",
+				key_textColor = "success",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
 
 			AssertElementPresent(
@@ -2025,7 +2025,7 @@ definition {
 		task ("Assert styles of Paragraph in view mode") {
 			AssertElementPresent(
 				key_fragmentName = "paragraph",
-				key_textColor = "rgb(164, 71, 0)",
+				key_textColor = "warning",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
 
 			AssertElementPresent(
@@ -2118,7 +2118,7 @@ definition {
 
 			AssertElementPresent(
 				key_fragmentName = "heading",
-				key_textColor = "rgb(35, 109, 53)",
+				key_textColor = "success",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
 		}
 
@@ -2140,7 +2140,7 @@ definition {
 		task ("Assert styles of Paragraph in edit mode") {
 			AssertElementPresent(
 				key_fragmentName = "paragraph",
-				key_textColor = "rgb(164, 71, 0)",
+				key_textColor = "warning",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE");
 
 			PageEditor.viewFragmentStyle(

@@ -474,7 +474,7 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentNumeric = "123",
+			webContentNumeric = "345",
 			webContentTitle = "Web Content1 Title");
 
 		PortletEntry.publish();
@@ -500,7 +500,7 @@ definition {
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentNumeric = "345",
+			webContentNumeric = "123",
 			webContentTitle = "Web Content2 Title");
 
 		PortletEntry.publish();

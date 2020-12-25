@@ -399,6 +399,91 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@description = "This is a use case for LPS-100807."
+	@priority = "4"
+	test EditWikiPageInLiveSiteWhenWikiNotStaged {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page",
+			widgetName = "Wiki");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.activateStagingCP(
+			siteName = "Site Name",
+			uncheckContent = "Wiki");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.addPageContent(wikiPageContent = "Edited Wiki Page Content");
+
+		SelectFrame(value1 = "relative=top");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		AssertTextEquals.assertPartialText(
+			key_wikiPageTitle = "Wiki Page Title",
+			locator1 = "WikiTable#ALL_PAGES_REVISION",
+			value1 = "1.1");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewPG(
+			wikiPageContent = "Edited Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		AssertTextEquals.assertPartialText(
+			key_wikiPageTitle = "Wiki Page Title",
+			locator1 = "WikiTable#ALL_PAGES_REVISION",
+			value1 = "1.1");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.viewPG(
+			wikiPageContent = "Edited Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+		
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.addPageContent(wikiPageContent = "Edited Edited Wiki Page Content");
+
+		SelectFrame(value1 = "relative=top");
+
+		PortletEntry.publish();
+	}
+
 	@priority = "4"
 	test EnableStagingWithWebContentReferencedFromDeletedSite {
 		JSONWebcontent.addWebContent(

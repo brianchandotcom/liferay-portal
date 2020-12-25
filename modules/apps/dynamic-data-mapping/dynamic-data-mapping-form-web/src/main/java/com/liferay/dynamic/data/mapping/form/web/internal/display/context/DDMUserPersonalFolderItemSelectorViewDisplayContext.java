@@ -14,16 +14,28 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.form.web.internal.item.selector.DDMUserPersonalFolderItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,6 +59,7 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 			ddmUserPersonalFolderItemSelectorView,
 		PortletURL portletURL, boolean search) {
 
+		_httpServletRequest = httpServletRequest;
 		_itemSelectedEventName = itemSelectedEventName;
 		_itemSelectorReturnTypeResolverHandler =
 			itemSelectorReturnTypeResolverHandler;
@@ -56,6 +69,9 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 			ddmUserPersonalFolderItemSelectorView;
 		_portletURL = portletURL;
 		_search = search;
+
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			_httpServletRequest);
 	}
 
 	public String getItemSelectedEventName() {
@@ -71,12 +87,44 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 				_ddmUserPersonalFolderItemSelectorView, FileEntry.class);
 	}
 
-	public List<RepositoryEntry> getPortletFileEntries() {
-		return Collections.emptyList();
+	public List<RepositoryEntry> getPortletFileEntries()
+		throws PortalException {
+
+		long folderId =
+			_ddmUserPersonalFolderItemSelectorCriterion.getFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return new ArrayList<>();
+		}
+
+		int cur = ParamUtil.getInteger(
+			_httpServletRequest, SearchContainer.DEFAULT_CUR_PARAM,
+			SearchContainer.DEFAULT_CUR);
+		int delta = ParamUtil.getInteger(
+			_httpServletRequest, SearchContainer.DEFAULT_DELTA_PARAM,
+			SearchContainer.DEFAULT_DELTA);
+
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			cur, delta);
+
+		return new ArrayList<>(
+			PortletFileRepositoryUtil.getPortletFileEntries(
+				_ddmUserPersonalFolderItemSelectorCriterion.getGroupId(),
+				folderId, WorkflowConstants.STATUS_APPROVED, startAndEnd[0],
+				startAndEnd[1], _getOrderByComparator()));
 	}
 
-	public int getPortletFileEntriesCount() {
-		return 0;
+	public int getPortletFileEntriesCount() throws PortalException {
+		long folderId =
+			_ddmUserPersonalFolderItemSelectorCriterion.getFolderId();
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return 0;
+		}
+
+		return PortletFileRepositoryUtil.getPortletFileEntriesCount(
+			_ddmUserPersonalFolderItemSelectorCriterion.getGroupId(), folderId,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public PortletURL getPortletURL() {
@@ -108,13 +156,23 @@ public class DDMUserPersonalFolderItemSelectorViewDisplayContext {
 		return _search;
 	}
 
+	private OrderByComparator<FileEntry> _getOrderByComparator() {
+		return DLUtil.getRepositoryModelOrderByComparator(
+			RepositoryEntryBrowserTagUtil.getOrderByCol(
+				_httpServletRequest, _portalPreferences),
+			RepositoryEntryBrowserTagUtil.getOrderByType(
+				_httpServletRequest, _portalPreferences));
+	}
+
 	private final DDMUserPersonalFolderItemSelectorCriterion
 		_ddmUserPersonalFolderItemSelectorCriterion;
 	private final DDMUserPersonalFolderItemSelectorView
 		_ddmUserPersonalFolderItemSelectorView;
+	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
+	private final PortalPreferences _portalPreferences;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 

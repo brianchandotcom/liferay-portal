@@ -131,7 +131,7 @@ public class PortletPreferencesModelListener
 					return;
 				}
 
-				if (_isOnlyNotifiedAssetEntryIdsModified(layout)) {
+				if (_isNotifiedAssetEntryIdsModified(layout)) {
 					return;
 				}
 
@@ -148,7 +148,7 @@ public class PortletPreferencesModelListener
 		}
 	}
 
-	private boolean _isOnlyNotifiedAssetEntryIdsModified(Layout layout) {
+	private boolean _isNotifiedAssetEntryIdsModified(Layout layout) {
 		if (!NotifiedAssetEntryThreadLocal.isNotifiedAssetEntryIdsModified()) {
 			return false;
 		}

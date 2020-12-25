@@ -25,7 +25,7 @@ DDMUserPersonalFolderItemSelectorViewDisplayContext ddmUserPersonalFolderItemSel
 	itemSelectedEventName="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	itemSelectorReturnTypeResolver="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"
 	maxFileSize="<%= DLValidatorUtil.getMaxAllowableSize() %>"
-	portletURL="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
+	portletURL="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getPortletURL() %>"
 	repositoryEntries="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getPortletFileEntries() %>"
 	repositoryEntriesCount="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getPortletFileEntriesCount() %>"
 	showSearch="<%= false %>"

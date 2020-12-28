@@ -2,8 +2,14 @@
 <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
-	<portlet-resource>
-		<portlet-name>90</portlet-name>
+	<model-resource>
+		<model-name>com.liferay.commerce.account</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_account_group_admin_web_internal_portlet_CommerceAccountGroupAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_account_web_internal_portlet_CommerceAccountPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_ACCOUNT</action-key>
@@ -22,7 +28,7 @@
 				<action-key>VIEW_COMMERCE_ACCOUNT_GROUPS</action-key>
 			</guest-unsupported>
 		</permissions>
-	</portlet-resource>
+	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.commerce.account.model.CommerceAccount</model-name>
 		<portlet-ref>

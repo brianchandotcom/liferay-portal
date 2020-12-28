@@ -1,0 +1,25 @@
+task runGradleTest
+
+String errorMessage = ""
+
+gradle.liferayWorkspace {
+	bundleChecksumMD5 "bad_md5sum"
+}
+
+gradle.taskGraph.afterTask {
+	Task task, TaskState taskState ->
+
+	if (task.name.equals("verifyBundle")) {
+		errorMessage = taskState.failure.cause.message
+
+		taskState.failure = null
+	}
+}
+
+runGradleTest {
+	dependsOn verifyBundle
+
+	doLast {
+		assert errorMessage.contains("Expected bad_md5sum but got ef4fcaac5910613955ea1104613dbfe6")
+	}
+}

@@ -108,8 +108,8 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 					</c:if>
 
 					<liferay-ui:search-container-column-text
-						cssClass="entry"
 						colspan="<%= 2 %>"
+						cssClass="entry"
 					>
 						<c:if test="<%= Objects.nonNull(itemDescriptor.getModifiedDate()) %>">
 
@@ -255,7 +255,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						domElement = target.closest('tr');
 					}
 
-					var itemValue = "";
+					var itemValue = '';
 
 					if (domElement != null) {
 						itemValue = domElement.dataset.value;

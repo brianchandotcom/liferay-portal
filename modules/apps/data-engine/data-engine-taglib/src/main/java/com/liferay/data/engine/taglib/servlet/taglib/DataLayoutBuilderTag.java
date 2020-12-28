@@ -120,18 +120,18 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	private String _getDefaultLanguageId() {
 		long dataDefinitionId = getDataDefinitionId();
 
-		String siteDefaultLanguageId = LocaleUtil.toLanguageId(
+		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
 		if (dataDefinitionId <= 0) {
-			return siteDefaultLanguageId;
+			return languageId;
 		}
 
 		DDMStructure ddmStructure =
 			DDMStructureLocalServiceUtil.fetchDDMStructure(dataDefinitionId);
 
 		if (ddmStructure == null) {
-			return siteDefaultLanguageId;
+			return languageId;
 		}
 
 		return ddmStructure.getDefaultLanguageId();

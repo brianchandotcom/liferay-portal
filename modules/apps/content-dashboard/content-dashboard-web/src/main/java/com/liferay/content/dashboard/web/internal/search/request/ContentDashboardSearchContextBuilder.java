@@ -66,9 +66,6 @@ public class ContentDashboardSearchContextBuilder {
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
-		searchContext.setAssetTagNames(
-			ParamUtil.getStringValues(_httpServletRequest, "assetTagId"));
-
 		Integer status = GetterUtil.getInteger(
 			ParamUtil.getInteger(
 				_httpServletRequest, "status", WorkflowConstants.STATUS_ANY));
@@ -88,6 +85,7 @@ public class ContentDashboardSearchContextBuilder {
 					ParamUtil.getLongValues(
 						_httpServletRequest, "assetCategoryId"),
 					_assetCategoryLocalService, _assetVocabularyLocalService),
+				ParamUtil.getStringValues(_httpServletRequest, "assetTagId"),
 				ParamUtil.getLongValues(_httpServletRequest, "authorIds")));
 
 		String[] contentDashboardItemTypePayloads =
@@ -202,6 +200,24 @@ public class ContentDashboardSearchContextBuilder {
 		return Optional.of(booleanFilter);
 	}
 
+	private Optional<Filter> _getAssetTagNamesFilterOptional(
+		String[] assetTagNames) {
+
+		if (ArrayUtil.isEmpty(assetTagNames)) {
+			return Optional.empty();
+		}
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (String assetTagName : assetTagNames) {
+			booleanFilter.addTerm(
+				Field.ASSET_TAG_NAMES + ".raw", assetTagName,
+				BooleanClauseOccur.MUST);
+		}
+
+		return Optional.of(booleanFilter);
+	}
+
 	private Optional<Filter> _getAuthorIdsFilterOptional(long[] authorIds) {
 		if (ArrayUtil.isEmpty(authorIds)) {
 			return Optional.empty();
@@ -217,7 +233,8 @@ public class ContentDashboardSearchContextBuilder {
 	}
 
 	private BooleanClause[] _getBooleanClauses(
-		AssetCategoryIds assetCategoryIds, long[] authorIds) {
+		AssetCategoryIds assetCategoryIds, String[] assetTagNames,
+		long[] authorIds) {
 
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
@@ -229,6 +246,14 @@ public class ContentDashboardSearchContextBuilder {
 		if (assetCategoryIdsFilterOptional.isPresent()) {
 			booleanFilter.add(
 				assetCategoryIdsFilterOptional.get(), BooleanClauseOccur.MUST);
+		}
+
+		Optional<Filter> assetTagNamesFilterOptional =
+			_getAssetTagNamesFilterOptional(assetTagNames);
+
+		if (assetTagNamesFilterOptional.isPresent()) {
+			booleanFilter.add(
+				assetTagNamesFilterOptional.get(), BooleanClauseOccur.MUST);
 		}
 
 		Optional<Filter> authorIdsFilterOptional = _getAuthorIdsFilterOptional(

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
@@ -38,8 +38,12 @@ public class CommerceDataIntegrationProcessServiceImpl
 			UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_commerceDataIntegrationProcessModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceDataIntegrationActionKeys.
 				ADD_COMMERCE_DATA_INTEGRATION_PROCESS);
 

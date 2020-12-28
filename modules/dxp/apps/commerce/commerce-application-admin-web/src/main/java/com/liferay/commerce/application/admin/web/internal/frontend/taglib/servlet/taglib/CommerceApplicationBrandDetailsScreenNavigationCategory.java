@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.io.IOException;
 
@@ -88,8 +88,12 @@ public class CommerceApplicationBrandDetailsScreenNavigationCategory
 
 		try {
 			if (commerceApplicationBrand == null) {
-				return PortalPermissionUtil.contains(
-					permissionChecker,
+				PortletResourcePermission portletResourcePermission =
+					_commerceApplicationBrandModelResourcePermission.
+						getPortletResourcePermission();
+
+				return portletResourcePermission.contains(
+					permissionChecker, null,
 					CommerceApplicationActionKeys.ADD_COMMERCE_BRAND);
 			}
 

@@ -45,7 +45,7 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 			selectedDisplayStyle="list"
 		/>
 
-		<c:if test="<%= commerceApplicationAdminDisplayContext.hasPermissions(CommerceApplicationActionKeys.ADD_COMMERCE_MODEL) %>">
+		<c:if test="<%= commerceApplicationAdminDisplayContext.hasModelPermissions(CommerceApplicationActionKeys.ADD_COMMERCE_MODEL) %>">
 			<liferay-frontend:add-menu
 				inline="<%= true %>"
 			>

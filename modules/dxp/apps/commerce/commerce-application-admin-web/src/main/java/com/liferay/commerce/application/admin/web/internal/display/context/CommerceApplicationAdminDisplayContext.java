@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -277,6 +277,16 @@ public class CommerceApplicationAdminDisplayContext {
 		return _userFileUploadsConfiguration;
 	}
 
+	public boolean hasBrandPermissions(String actionId) {
+		PortletResourcePermission portletResourcePermission =
+			_commerceApplicationBrandModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_commerceApplicationAdminRequestHelper.getPermissionChecker(), null,
+			actionId);
+	}
+
 	public boolean hasCommerceApplicationBrandPermissions(
 			long commerceApplicationBrandId, String actionId)
 		throws PortalException {
@@ -295,9 +305,13 @@ public class CommerceApplicationAdminDisplayContext {
 			commerceApplicationModelId, actionId);
 	}
 
-	public boolean hasPermissions(String actionId) {
-		return PortalPermissionUtil.contains(
-			_commerceApplicationAdminRequestHelper.getPermissionChecker(),
+	public boolean hasModelPermissions(String actionId) {
+		PortletResourcePermission portletResourcePermission =
+			_commerceApplicationModelModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_commerceApplicationAdminRequestHelper.getPermissionChecker(), null,
 			actionId);
 	}
 

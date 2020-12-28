@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -126,19 +127,12 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 	protected JSONArray getOptionsJSONArray(
 		JSONObject checkboxFieldJSONObject) {
 
-		JSONArray optionsJSONArray = _jsonFactory.createJSONArray();
-
-		JSONObject optionJSONObject = _jsonFactory.createJSONObject();
-
-		optionJSONObject.put(
-			"label", checkboxFieldJSONObject.getJSONObject("label")
-		).put(
-			"value", checkboxFieldJSONObject.getString("name")
-		);
-
-		optionsJSONArray.put(optionJSONObject);
-
-		return optionsJSONArray;
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"label", checkboxFieldJSONObject.getJSONObject("label")
+			).put(
+				"value", checkboxFieldJSONObject.getString("name")
+			));
 	}
 
 	protected JSONObject getPredefinedValueJSONObject(

@@ -119,19 +119,12 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private JSONArray _getOptionsJSONArray(JSONObject jsonObject) {
-		JSONArray optionsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		JSONObject optionJSONObject = JSONFactoryUtil.createJSONObject();
-
-		optionJSONObject.put(
-			"label", jsonObject.getJSONObject("label")
-		).put(
-			"value", jsonObject.getString("name")
-		);
-
-		optionsJSONArray.put(optionJSONObject);
-
-		return optionsJSONArray;
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"label", jsonObject.getJSONObject("label")
+			).put(
+				"value", jsonObject.getString("name")
+			));
 	}
 
 	private JSONObject _getPredefinedValueJSONObject(JSONObject jsonObject) {

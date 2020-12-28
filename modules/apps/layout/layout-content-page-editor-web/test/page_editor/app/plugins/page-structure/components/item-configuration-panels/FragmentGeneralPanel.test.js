@@ -30,11 +30,22 @@ jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
+			availableLanguages: {
+				language_1: {
+					languageIcon: 'language-1',
+					languageLabel: 'language-1',
+				},
+				language_2: {
+					languageIcon: 'langauge-2',
+					languageLabel: 'langauge-2',
+				},
+			},
 			availableViewportSizes: {
 				desktop: {label: 'Desktop', sizeId: 'desktop'},
 				mobile: {label: 'Mobile', sizeId: 'mobile'},
 				tablet: {label: 'Tablet', sizeId: 'tablet'},
 			},
+			defaultLanguageId: 'language_1',
 		},
 	})
 );
@@ -54,7 +65,7 @@ jest.mock(
 
 const FRAGMENT_ENTRY_LINK_ID = '1';
 
-const defaultFragmentEntryLink = {
+const defaultFragmentEntryLink = (localizable = false) => ({
 	comments: [],
 	configuration: {
 		fieldSets: [
@@ -65,6 +76,7 @@ const defaultFragmentEntryLink = {
 						defaultValue: 'h1',
 						description: '',
 						label: 'Heading Level',
+						localizable,
 						name: 'headingLevel',
 						type: 'select',
 						typeOptions: {
@@ -90,7 +102,7 @@ const defaultFragmentEntryLink = {
 	},
 	fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
 	name: 'Heading',
-};
+});
 
 const item = {
 	children: [],
@@ -110,10 +122,11 @@ const mockDispatch = jest.fn((a) => {
 
 const renderGeneralPanel = ({
 	segmentsExperienceId,
-	fragmentEntryLink = defaultFragmentEntryLink,
+	fragmentEntryLink = defaultFragmentEntryLink(),
 }) => {
 	const state = {
 		fragmentEntryLinks: {[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink},
+		languageId: 'language_1',
 		segmentsExperienceId,
 		selectedViewportSize: VIEWPORT_SIZES.desktop,
 	};
@@ -156,6 +169,21 @@ describe('FragmentGeneralPanel', () => {
 				},
 			})
 		);
+	});
+
+	it('does not show flag icon when localizable property is false', async () => {
+		config.defaultSegmentsExperienceId = null;
+
+		const {getByLabelText} = renderGeneralPanel({
+			fragmentEntryLink: defaultFragmentEntryLink(false),
+			segmentsExperienceId: null,
+		});
+
+		const input = getByLabelText('Heading Level');
+
+		const wrapperDiv = input.parentElement.parentElement.parentElement;
+
+		expect(wrapperDiv.querySelector('.sr-only')).toBeNull();
 	});
 
 	it('prefix values with segments when we have experiences', async () => {
@@ -280,6 +308,23 @@ describe('FragmentGeneralPanel', () => {
 					},
 				},
 			})
+		);
+	});
+
+	it('shows corresponding flag icon when localizable property is true', async () => {
+		config.defaultSegmentsExperienceId = null;
+
+		const {getByLabelText} = renderGeneralPanel({
+			fragmentEntryLink: defaultFragmentEntryLink(true),
+			segmentsExperienceId: null,
+		});
+
+		const input = getByLabelText('Heading Level');
+
+		const wrapperDiv = input.parentElement.parentElement.parentElement;
+
+		expect(wrapperDiv.querySelector('.sr-only')).toHaveTextContent(
+			'language-1'
 		);
 	});
 });

@@ -82,10 +82,13 @@ public class CommerceBOMFolderModelResourcePermission
 
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+		return _portletResourcePermission;
 	}
 
 	@Reference
 	protected CommerceBOMFolderPermission commerceBOMFolderPermission;
+
+	@Reference(target = "(resource.name=com.liferay.commerce.bom)")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

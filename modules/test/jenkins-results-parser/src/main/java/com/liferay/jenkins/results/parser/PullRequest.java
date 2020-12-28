@@ -165,13 +165,13 @@ public class PullRequest {
 	}
 
 	public String getCIMergeSHA() {
-		getFileNames();
+		getFilenames();
 
 		return _ciMergeSHA;
 	}
 
 	public String getCIMergeSubrepo() {
-		for (String fileName : getFileNames()) {
+		for (String fileName : getFilenames()) {
 			if (fileName.endsWith("/ci-merge")) {
 				return fileName.replace("/ci-merge", "");
 			}
@@ -217,9 +217,9 @@ public class PullRequest {
 		return _commonParentSHA;
 	}
 
-	public List<String> getFileNames() {
-		if (!_fileNames.isEmpty()) {
-			return _fileNames;
+	public List<String> getFilenames() {
+		if (!_filenames.isEmpty()) {
+			return _filenames;
 		}
 
 		_ciMergeSHA = "";
@@ -238,7 +238,7 @@ public class PullRequest {
 
 				String fileName = fileJSONObject.getString("filename");
 
-				_fileNames.add(fileName);
+				_filenames.add(fileName);
 
 				if (fileName.endsWith("/ci-merge")) {
 					String patch = fileJSONObject.getString("patch");
@@ -255,7 +255,7 @@ public class PullRequest {
 				}
 			}
 
-			return _fileNames;
+			return _filenames;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -461,10 +461,20 @@ public class PullRequest {
 	}
 
 	public boolean isMergeSubrepoRequest() {
-		for (String filename : getFileNames()) {
+		for (String filename : getFilenames()) {
 			if (filename.endsWith("/ci-merge")) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	public boolean isValidCIMergeFile() {
+		List<String> filenames = getFilenames();
+
+		if ((filenames.size() == 1) && isMergeSubrepoRequest()) {
+			return true;
 		}
 
 		return false;
@@ -841,7 +851,7 @@ public class PullRequest {
 	private Boolean _autoCloseCommentAvailable;
 	private String _ciMergeSHA = "";
 	private String _commonParentSHA;
-	private List<String> _fileNames = new ArrayList<>();
+	private List<String> _filenames = new ArrayList<>();
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
 	private String _gitHubRemoteGitRepositoryName;
 	private JSONObject _jsonObject;

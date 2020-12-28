@@ -82,11 +82,14 @@ public class CommerceApplicationModelModelResourcePermission
 
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+		return _portletResourcePermission;
 	}
 
 	@Reference
 	protected CommerceApplicationModelPermission
 		commerceApplicationModelPermission;
+
+	@Reference(target = "(resource.name=com.liferay.commerce.application)")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v2_0.DataRule;
+import com.liferay.data.engine.rest.dto.v2_0.util.DataDefinitionDDMFormUtil;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
@@ -593,11 +594,18 @@ public class DataLayoutTaglibUtil {
 		}
 
 		public JSONObject toJSONObject() throws Exception {
-			if (_dataLayout.getId() == null) {
-				return _jsonFactory.createJSONObject();
-			}
+			DDMForm ddmForm = null;
 
-			DDMForm ddmForm = _getDDMForm();
+			if (_dataLayout.getId() == null) {
+				DataDefinition dataDefinition = DataDefinition.toDTO(
+					_httpServletRequest.getParameter("dataDefinition"));
+
+				ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
+					dataDefinition, _ddmFormFieldTypeServicesTracker);
+			}
+			else {
+				ddmForm = _getDDMForm();
+			}
 
 			Map<String, Object> ddmFormTemplateContext =
 				_ddmFormTemplateContextFactory.create(

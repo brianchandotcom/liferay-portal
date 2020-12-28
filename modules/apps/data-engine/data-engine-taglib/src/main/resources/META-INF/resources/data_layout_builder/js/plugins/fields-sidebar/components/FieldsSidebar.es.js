@@ -63,6 +63,7 @@ export const DataEngineFieldsSidebar = ({title}) => {
 			config={config}
 			customFields={customFields}
 			dataLayout={dataLayout}
+			defaultLanguageId={dataLayoutBuilder.props.defaultLanguageId}
 			dispatchEvent={(type, payload) => {
 				if (
 					hasFocusedCustomObjectField(focusedCustomObjectField) &&
@@ -111,6 +112,7 @@ export const FieldsSidebar = ({
 	config,
 	customFields,
 	dataLayout,
+	defaultLanguageId,
 	dispatchEvent,
 	displaySettings,
 	editingLanguageId,
@@ -154,6 +156,7 @@ export const FieldsSidebar = ({
 						config={config}
 						customFields={customFields}
 						dataRules={dataLayout.dataRules}
+						defaultLanguageId={defaultLanguageId}
 						dispatchEvent={dispatchEvent}
 						editingLanguageId={editingLanguageId}
 						focusedCustomObjectField={focusedCustomObjectField}

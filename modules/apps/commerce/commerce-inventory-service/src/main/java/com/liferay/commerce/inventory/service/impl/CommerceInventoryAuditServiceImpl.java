@@ -15,10 +15,12 @@
 package com.liferay.commerce.inventory.service.impl;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryAuditServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 
 import java.util.List;
 
@@ -34,8 +36,8 @@ public class CommerceInventoryAuditServiceImpl
 			long companyId, String sku, int start, int end)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryAuditLocalService.getCommerceInventoryAudits(
@@ -46,12 +48,19 @@ public class CommerceInventoryAuditServiceImpl
 	public int getCommerceInventoryAuditsCount(long companyId, String sku)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryAuditLocalService.
 			getCommerceInventoryAuditsCount(companyId, sku);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceInventoryAuditServiceImpl.class,
+				"_portletResourcePermission",
+				CommerceInventoryConstants.RESOURCE_NAME);
 
 }

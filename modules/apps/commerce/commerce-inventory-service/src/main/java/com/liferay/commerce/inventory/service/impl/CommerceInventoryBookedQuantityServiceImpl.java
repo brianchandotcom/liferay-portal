@@ -15,10 +15,12 @@
 package com.liferay.commerce.inventory.service.impl;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryBookedQuantityServiceBaseImpl;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 
 import java.util.List;
 
@@ -35,8 +37,8 @@ public class CommerceInventoryBookedQuantityServiceImpl
 				long companyId, String sku, int start, int end)
 		throws PrincipalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryBookedQuantityLocalService.
@@ -48,12 +50,19 @@ public class CommerceInventoryBookedQuantityServiceImpl
 			long companyId, String sku)
 		throws PrincipalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryBookedQuantityLocalService.
 			getCommerceInventoryBookedQuantitiesCount(companyId, sku);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceInventoryBookedQuantityServiceImpl.class,
+				"_portletResourcePermission",
+				CommerceInventoryConstants.RESOURCE_NAME);
 
 }

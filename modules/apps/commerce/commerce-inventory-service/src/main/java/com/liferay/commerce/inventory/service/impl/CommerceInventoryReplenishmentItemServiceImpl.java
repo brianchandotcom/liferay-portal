@@ -16,9 +16,13 @@ package com.liferay.commerce.inventory.service.impl;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryReplenishmentItemServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Date;
 import java.util.List;
@@ -37,9 +41,9 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 				Date availabilityDate, int quantity)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.UPDATE);
 
 		return commerceInventoryReplenishmentItemLocalService.
 			addCommerceInventoryReplenishmentItem(
@@ -52,9 +56,18 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 			long commerceInventoryReplenishmentItemId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
+			commerceInventoryReplenishmentItemLocalService.
+				fetchCommerceInventoryReplenishmentItem(
+					commerceInventoryReplenishmentItemId);
+
+		if (commerceInventoryReplenishmentItem != null) {
+			_commerceInventoryWarehouseModelResourcePermission.check(
+				getPermissionChecker(),
+				commerceInventoryReplenishmentItem.
+					getCommerceInventoryWarehouseId(),
+				ActionKeys.UPDATE);
+		}
 
 		commerceInventoryReplenishmentItemLocalService.
 			deleteCommerceInventoryReplenishmentItem(
@@ -67,9 +80,18 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 				long commerceInventoryReplenishmentItemId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
+			commerceInventoryReplenishmentItemLocalService.
+				fetchCommerceInventoryReplenishmentItem(
+					commerceInventoryReplenishmentItemId);
+
+		if (commerceInventoryReplenishmentItem != null) {
+			_commerceInventoryWarehouseModelResourcePermission.check(
+				getPermissionChecker(),
+				commerceInventoryReplenishmentItem.
+					getCommerceInventoryWarehouseId(),
+				ActionKeys.VIEW);
+		}
 
 		return commerceInventoryReplenishmentItemLocalService.
 			getCommerceInventoryReplenishmentItem(
@@ -82,8 +104,12 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 				long companyId, String sku, int start, int end)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryReplenishmentItemLocalService.
@@ -96,9 +122,13 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 			long commerceInventoryWarehouseId, String sku)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
 
 		return commerceInventoryReplenishmentItemLocalService.
 			getCommerceInventoryReplenishmentItemsCount(
@@ -110,8 +140,12 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 			long companyId, String sku)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryReplenishmentItemLocalService.
@@ -126,14 +160,30 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 				Date availabilityDate, int quantity, long mvccVersion)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
+			commerceInventoryReplenishmentItemLocalService.
+				fetchCommerceInventoryReplenishmentItem(
+					commerceInventoryReplenishmentItemId);
+
+		if (commerceInventoryReplenishmentItem != null) {
+			_commerceInventoryWarehouseModelResourcePermission.check(
+				getPermissionChecker(),
+				commerceInventoryReplenishmentItem.
+					getCommerceInventoryWarehouseId(),
+				ActionKeys.UPDATE);
+		}
 
 		return commerceInventoryReplenishmentItemLocalService.
 			updateCommerceInventoryReplenishmentItem(
 				commerceInventoryReplenishmentItemId, availabilityDate,
 				quantity, mvccVersion);
 	}
+
+	private static volatile ModelResourcePermission<CommerceInventoryWarehouse>
+		_commerceInventoryWarehouseModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CommerceInventoryReplenishmentItemServiceImpl.class,
+				"_commerceInventoryWarehouseModelResourcePermission",
+				CommerceInventoryWarehouse.class);
 
 }

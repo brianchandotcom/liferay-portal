@@ -354,13 +354,20 @@ public class DataLayoutTaglibUtil {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (Validator.isNull(dataDefinitionId) &&
-			Validator.isNull(dataLayoutId)) {
-
-			return _jsonFactory.createJSONObject();
-		}
-
 		try {
+			if (Validator.isNull(dataDefinitionId) &&
+				Validator.isNull(dataLayoutId)) {
+
+				DataLayoutDDMFormAdapter dataLayoutDDMFormAdapter =
+					new DataLayoutDDMFormAdapter(
+						availableLocales,
+						DataLayout.toDTO(
+							httpServletRequest.getParameter("dataLayout")),
+						httpServletRequest, httpServletResponse);
+
+				return dataLayoutDDMFormAdapter.toJSONObject();
+			}
+
 			DataLayout dataLayout = null;
 
 			if (Validator.isNotNull(dataLayoutId)) {

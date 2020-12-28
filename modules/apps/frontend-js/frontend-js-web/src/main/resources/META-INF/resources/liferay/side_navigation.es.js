@@ -463,25 +463,10 @@ SideNavigation.prototype = {
 		const options = instance.options;
 
 		const container = document.querySelector(options.container);
-		const body = container.querySelector('.sidebar-body');
-		const header = container.querySelector('.sidebar-header');
 		const toggler = instance.toggler;
 
 		const mobile = instance.mobile;
 		const type = mobile ? options.typeMobile : options.type;
-		const width = instance._getSidenavWidth();
-
-		if (body) {
-			setStyles(body, {
-				width: px(width),
-			});
-		}
-
-		if (header) {
-			setStyles(header, {
-				width: px(width),
-			});
-		}
 
 		if (!instance.useDataAttribute) {
 			if (mobile) {

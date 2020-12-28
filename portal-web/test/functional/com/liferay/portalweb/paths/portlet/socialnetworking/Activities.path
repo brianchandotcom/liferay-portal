@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ACTIVITY_TITLE_ASSET_NAME</td>
-	<td>//div[contains(@class,'card-col-content')]/a</td>
+	<td>//div/a[contains(.,'${key_assetName}')]</td>
 	<td></td>
 </tr>
 <tr>

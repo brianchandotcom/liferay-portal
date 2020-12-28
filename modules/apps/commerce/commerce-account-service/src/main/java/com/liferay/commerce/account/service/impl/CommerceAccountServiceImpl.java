@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,8 +47,13 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), CommerceAccountActionKeys.ADD_ACCOUNT);
+		PortletResourcePermission portletResourcePermission =
+			_commerceAccountModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceAccountActionKeys.ADD_ACCOUNT_GROUP);
 
 		return commerceAccountLocalService.addBusinessCommerceAccount(
 			name, parentCommerceAccountId, email, taxId, active,
@@ -62,8 +67,13 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), CommerceAccountActionKeys.ADD_ACCOUNT);
+		PortletResourcePermission portletResourcePermission =
+			_commerceAccountModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceAccountActionKeys.ADD_ACCOUNT_GROUP);
 
 		return commerceAccountLocalService.addCommerceAccount(
 			name, parentCommerceAccountId, email, taxId, type, active,
@@ -375,8 +385,13 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 				permissionChecker.getCompanyId(), externalReferenceCode);
 
 		if (commerceAccount == null) {
-			PortalPermissionUtil.check(
-				permissionChecker, CommerceAccountActionKeys.ADD_ACCOUNT);
+			PortletResourcePermission portletResourcePermission =
+				_commerceAccountModelResourcePermission.
+					getPortletResourcePermission();
+
+			portletResourcePermission.check(
+				getPermissionChecker(), null,
+				CommerceAccountActionKeys.ADD_ACCOUNT);
 		}
 		else {
 			_commerceAccountModelResourcePermission.check(
@@ -391,8 +406,12 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 	protected boolean hasManageCommerceAccountPermissions()
 		throws PortalException {
 
-		return PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_commerceAccountModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceAccountActionKeys.MANAGE_AVAILABLE_ACCOUNTS);
 	}
 
@@ -409,8 +428,12 @@ public class CommerceAccountServiceImpl extends CommerceAccountServiceBaseImpl {
 			return true;
 		}
 
-		return PortalPermissionUtil.contains(
-			getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_commerceAccountModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			getPermissionChecker(), null,
 			CommerceAccountActionKeys.MANAGE_ALL_ACCOUNTS);
 	}
 

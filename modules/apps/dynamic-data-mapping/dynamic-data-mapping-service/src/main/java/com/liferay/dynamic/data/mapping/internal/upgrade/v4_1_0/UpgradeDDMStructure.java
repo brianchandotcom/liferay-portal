@@ -49,9 +49,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marcela Cunha
@@ -114,6 +116,62 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				setVisibilityExpression(StringPool.BLANK);
 			}
 		};
+	}
+
+	private JSONArray _getOptionsJSONArray(JSONObject jsonObject) {
+		JSONArray optionsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		JSONObject optionJSONObject = JSONFactoryUtil.createJSONObject();
+
+		optionJSONObject.put(
+			"label", jsonObject.getJSONObject("label")
+		).put(
+			"value", jsonObject.getString("name")
+		);
+
+		optionsJSONArray.put(optionJSONObject);
+
+		return optionsJSONArray;
+	}
+
+	private JSONObject _getPredefinedValueJSONObject(JSONObject jsonObject) {
+		JSONObject oldPredefinedValueJSONObject = jsonObject.getJSONObject(
+			"predefinedValue");
+
+		JSONObject newPredefinedValueJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		Iterator<String> iterator = oldPredefinedValueJSONObject.keys();
+
+		while (iterator.hasNext()) {
+			String languageKey = iterator.next();
+
+			String predefinedValue = oldPredefinedValueJSONObject.getString(
+				languageKey);
+
+			if (Objects.equals(predefinedValue, "true")) {
+				predefinedValue = jsonObject.getString("name");
+			}
+			else {
+				predefinedValue = StringPool.BLANK;
+			}
+
+			newPredefinedValueJSONObject.put(languageKey, predefinedValue);
+		}
+
+		return newPredefinedValueJSONObject;
+	}
+
+	private void _upgradeBooleanField(JSONObject jsonObject) {
+		jsonObject.put(
+			"dataType", "string"
+		).put(
+			"options", _getOptionsJSONArray(jsonObject)
+		).put(
+			"predefinedValue", _getPredefinedValueJSONObject(jsonObject)
+		).put(
+			"type", "checkbox_multiple"
+		);
 	}
 
 	private void _upgradeColorField(JSONObject jsonObject) {
@@ -316,7 +374,10 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 				String type = jsonObject.getString("type");
 
-				if (StringUtil.equals(type, "ddm-color")) {
+				if (StringUtil.equals(type, "checkbox")) {
+					_upgradeBooleanField(jsonObject);
+				}
+				else if (StringUtil.equals(type, "ddm-color")) {
 					_upgradeColorField(jsonObject);
 				}
 				else if (StringUtil.equals(type, "ddm-date")) {

@@ -824,7 +824,6 @@ information.
 
 					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 						<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
-						<arg if:set="env.JENKINS_HOME" value="--no-daemon" />
 						<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 						<arg if:true="${gradle.profile.enabled}" value="--profile" />
 						<arg if:set="env.JENKINS_HOME" value="--profile" />
@@ -944,7 +943,6 @@ information.
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
 								<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
-								<arg if:set="env.JENKINS_HOME" value="--no-daemon" />
 								<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 								<arg if:true="${gradle.profile.enabled}" value="--profile" />
 								<arg if:set="env.JENKINS_HOME" value="--profile" />
@@ -981,7 +979,6 @@ information.
 								<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 									<args />
 									<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
-									<arg if:set="env.JENKINS_HOME" value="--no-daemon" />
 									<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 									<arg if:true="${gradle.profile.enabled}" value="--profile" />
 									<arg if:set="env.JENKINS_HOME" value="--profile" />

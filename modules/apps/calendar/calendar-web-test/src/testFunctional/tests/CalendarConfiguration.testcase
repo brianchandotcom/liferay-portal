@@ -144,7 +144,7 @@ definition {
 	test ConfigureEventsDisplaySettingsAndViewEvents {
 		property portal.upstream = "quarantine";
 
-		for (var eventNumber : list "1,2,3,4,5,6") {
+		for (var eventNumber : list "1,2,3,4,5") {
 			CalendarNavigator.gotoAddEvent();
 
 			CalendarEvent.add(
@@ -157,7 +157,7 @@ definition {
 
 		CalendarNavigator.gotoView(viewType = "Agenda");
 
-		for (var eventNumber : list "1,2,3,4,5,6") {
+		for (var eventNumber : list "1,2,3,4,5") {
 			CalendarEvent.viewViaAgendaView(eventNumber = "${eventNumber}");
 		}
 
@@ -165,7 +165,7 @@ definition {
 
 		CalendarNavigator.gotoConfiguration();
 
-		CalendarConfiguration.editNumberOfEventsDisplayed(maxNumberOfEvents = "5");
+		CalendarConfiguration.editNumberOfEventsDisplayed(maxNumberOfEvents = "4");
 
 		CalendarConfiguration.save();
 
@@ -173,11 +173,11 @@ definition {
 
 		CalendarNavigator.gotoView(viewType = "Agenda");
 
-		for (var eventNumber : list "1,2,3,4,5") {
+		for (var eventNumber : list "1,2,3,4") {
 			CalendarEvent.viewViaAgendaView(eventNumber = "${eventNumber}");
 		}
 
-		CalendarEvent.viewNotPresentViaAgendaView(eventNumber = "6");
+		CalendarEvent.viewNotPresentViaAgendaView(eventNumber = "5");
 	}
 
 	@priority = "4"

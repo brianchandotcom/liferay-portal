@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,42 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 
 	public void deleteLabel(Label oldLabel) {
 		updateLabel(null, null, null, oldLabel);
+	}
+
+	public List<String> getCollaboratorUsernames() {
+		if (_collaboratorUsernames != null) {
+			return _collaboratorUsernames;
+		}
+
+		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+			getName(), getUsername(), "collaborators");
+
+		try {
+			JSONArray collaboratorsJSONArray =
+				JenkinsResultsParserUtil.toJSONArray(url);
+
+			_collaboratorUsernames = new ArrayList<>(
+				collaboratorsJSONArray.length());
+
+			for (int i = 0; i < collaboratorsJSONArray.length(); i++) {
+				JSONObject collaboratorUserJSONObject =
+					collaboratorsJSONArray.getJSONObject(i);
+
+				_collaboratorUsernames.add(
+					collaboratorUserJSONObject.getString("login"));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get collaborators", ioException);
+		}
+
+		return _collaboratorUsernames;
+	}
+
+	public String getHtmlURL() {
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/", getUsername(), "/", getName());
 	}
 
 	public Label getLabel(String name) {
@@ -289,6 +326,7 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 	private static final Map<String, List<Label>> _labelsLists =
 		new ConcurrentHashMap<>();
 
+	private List<String> _collaboratorUsernames;
 	private String _labelRequestURL;
 
 }

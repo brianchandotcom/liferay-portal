@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -119,15 +120,18 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	private String _getDefaultLanguageId() {
 		long dataDefinitionId = getDataDefinitionId();
 
+		String siteDefaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
 		if (dataDefinitionId <= 0) {
-			return null;
+			return siteDefaultLanguageId;
 		}
 
 		DDMStructure ddmStructure =
 			DDMStructureLocalServiceUtil.fetchDDMStructure(dataDefinitionId);
 
 		if (ddmStructure == null) {
-			return null;
+			return siteDefaultLanguageId;
 		}
 
 		return ddmStructure.getDefaultLanguageId();

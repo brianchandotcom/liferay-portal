@@ -1,10 +1,10 @@
-task runGradleTest1
+task runGradleTest
 
 gradle.liferayWorkspace {
 	bundleChecksumMD5 "107aa96e14fc9fe09886ad76212ec385"
 }
 
-runGradleTest1 {
+runGradleTest {
 	dependsOn initBundle
 
 	doLast {

@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -497,8 +497,13 @@ public class CommerceBOMAdminDisplayContext {
 	}
 
 	public boolean hasPermissions(String actionId) {
-		return PortalPermissionUtil.contains(
-			_commerceBOMAdminRequestHelper.getPermissionChecker(), actionId);
+		PortletResourcePermission portletResourcePermission =
+			_commerceBOMFolderModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_commerceBOMAdminRequestHelper.getPermissionChecker(), null,
+			actionId);
 	}
 
 	protected SearchContext buildSearchContext(

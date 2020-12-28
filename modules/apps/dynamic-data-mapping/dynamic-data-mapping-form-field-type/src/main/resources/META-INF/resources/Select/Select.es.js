@@ -355,6 +355,41 @@ const Select = ({
 	const [currentValue, setCurrentValue] = useSyncValue(value, false);
 	const [expand, setExpand] = useState(false);
 
+	useEffect(() => {
+		const getDocumentHeight = () => {
+			const heights = [
+				document.body.clientHeight,
+				document.documentElement.clientHeight,
+				window.innerHeight,
+			];
+
+			return Math.max(...heights);
+		};
+
+		const onScroll = () => {
+			const {
+				height,
+				top,
+			} = triggerElementRef.current.getBoundingClientRect();
+
+			const scrollTop =
+				window.pageYOffset || document.documentElement.scrollTop;
+
+			const menuElementTop = height + scrollTop + top;
+
+			if (menuElementTop <= getDocumentHeight()) {
+				menuElementRef.current.style.setProperty(
+					'top',
+					`${menuElementTop}px`
+				);
+			}
+		};
+
+		document.addEventListener('scroll', onScroll, true);
+
+		return () => document.removeEventListener('scroll', onScroll, true);
+	}, []);
+
 	const handleFocus = (event, direction) => {
 		const target = event.target;
 		const focusabledElements = event.currentTarget.querySelectorAll(

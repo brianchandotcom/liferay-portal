@@ -15,6 +15,7 @@
 package com.liferay.commerce.account.internal.permission;
 
 import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.permission.CommerceAccountPermission;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
@@ -22,7 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -86,8 +87,8 @@ public class CommerceAccountPermissionImpl
 			String actionId)
 		throws PortalException {
 
-		if (PortalPermissionUtil.contains(
-				permissionChecker,
+		if (_portletResourcePermission.contains(
+				permissionChecker, null,
 				CommerceAccountActionKeys.MANAGE_ALL_ACCOUNTS)) {
 
 			return true;
@@ -148,8 +149,8 @@ public class CommerceAccountPermissionImpl
 				commerceAccount, permissionChecker);
 		}
 		else {
-			if (PortalPermissionUtil.contains(
-					permissionChecker,
+			if (_portletResourcePermission.contains(
+					permissionChecker, null,
 					CommerceAccountActionKeys.MANAGE_AVAILABLE_ACCOUNTS)) {
 
 				return true;
@@ -187,8 +188,8 @@ public class CommerceAccountPermissionImpl
 			return _hasOwnerPermission(commerceAccount, permissionChecker);
 		}
 
-		if (PortalPermissionUtil.contains(
-				permissionChecker,
+		if (_portletResourcePermission.contains(
+				permissionChecker, null,
 				CommerceAccountActionKeys.MANAGE_AVAILABLE_ACCOUNTS)) {
 
 			return true;
@@ -209,8 +210,8 @@ public class CommerceAccountPermissionImpl
 			return _hasOwnerPermission(commerceAccount, permissionChecker);
 		}
 
-		if (PortalPermissionUtil.contains(
-				permissionChecker,
+		if (_portletResourcePermission.contains(
+				permissionChecker, null,
 				CommerceAccountActionKeys.MANAGE_AVAILABLE_ACCOUNTS)) {
 
 			return true;
@@ -234,5 +235,10 @@ public class CommerceAccountPermissionImpl
 
 	@Reference
 	private CommerceAccountLocalService _commerceAccountLocalService;
+
+	@Reference(
+		target = "(resource.name=" + CommerceAccountConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

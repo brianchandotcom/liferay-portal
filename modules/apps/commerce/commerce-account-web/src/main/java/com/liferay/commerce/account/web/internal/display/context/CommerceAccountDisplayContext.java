@@ -37,8 +37,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -308,8 +308,11 @@ public class CommerceAccountDisplayContext {
 	}
 
 	public boolean hasAddAccountPermissions() {
-		return PortalPermissionUtil.contains(
-			_commerceAccountRequestHelper.getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_modelResourcePermission.getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			_commerceAccountRequestHelper.getPermissionChecker(), null,
 			CommerceAccountActionKeys.ADD_ACCOUNT);
 	}
 
@@ -360,11 +363,14 @@ public class CommerceAccountDisplayContext {
 	}
 
 	public boolean hasManageCommerceAccountPermissions() {
-		if (PortalPermissionUtil.contains(
-				_commerceAccountRequestHelper.getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_modelResourcePermission.getPortletResourcePermission();
+
+		if (portletResourcePermission.contains(
+				_commerceAccountRequestHelper.getPermissionChecker(), null,
 				CommerceAccountActionKeys.MANAGE_ALL_ACCOUNTS) ||
-			PortalPermissionUtil.contains(
-				_commerceAccountRequestHelper.getPermissionChecker(),
+			portletResourcePermission.contains(
+				_commerceAccountRequestHelper.getPermissionChecker(), null,
 				CommerceAccountActionKeys.MANAGE_AVAILABLE_ACCOUNTS)) {
 
 			return true;

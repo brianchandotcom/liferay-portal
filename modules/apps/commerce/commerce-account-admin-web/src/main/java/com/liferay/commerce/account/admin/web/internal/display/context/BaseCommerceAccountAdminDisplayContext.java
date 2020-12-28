@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -164,8 +164,13 @@ public abstract class BaseCommerceAccountAdminDisplayContext<T> {
 	}
 
 	public boolean hasPermission(String actionId) {
-		return PortalPermissionUtil.contains(
-			commerceAccountAdminRequestHelper.getPermissionChecker(), actionId);
+		PortletResourcePermission portletResourcePermission =
+			commerceAccountModelResourcePermission.
+				getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
+			commerceAccountAdminRequestHelper.getPermissionChecker(), null,
+			actionId);
 	}
 
 	protected String getKeywords() {

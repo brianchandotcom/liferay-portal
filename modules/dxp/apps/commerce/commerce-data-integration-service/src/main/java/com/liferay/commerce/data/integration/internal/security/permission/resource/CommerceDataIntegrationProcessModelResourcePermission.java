@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.data.integration.internal.security.permission.resource;
 
+import com.liferay.commerce.data.integration.constants.CommerceDataIntegrationConstants;
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
 import com.liferay.commerce.data.integration.permission.CommerceDataIntegrationProcessPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -84,11 +85,16 @@ public class CommerceDataIntegrationProcessModelResourcePermission
 
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
+		return _portletResourcePermission;
 	}
 
 	@Reference
 	protected CommerceDataIntegrationProcessPermission
 		commerceDataIntegrationProcessPermission;
+
+	@Reference(
+		target = "(resource.name=" + CommerceDataIntegrationConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

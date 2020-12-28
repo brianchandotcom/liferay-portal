@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -65,8 +66,6 @@ public class ContentDashboardSearchContextBuilder {
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
-		searchContext.setAssetCategoryIds(
-			ParamUtil.getLongValues(_httpServletRequest, "assetCategoryId"));
 		searchContext.setAssetTagNames(
 			ParamUtil.getStringValues(_httpServletRequest, "assetTagId"));
 
@@ -85,6 +84,10 @@ public class ContentDashboardSearchContextBuilder {
 
 		searchContext.setBooleanClauses(
 			_getBooleanClauses(
+				new AssetCategoryIds(
+					ParamUtil.getLongValues(
+						_httpServletRequest, "assetCategoryId"),
+					_assetCategoryLocalService, _assetVocabularyLocalService),
 				ParamUtil.getLongValues(_httpServletRequest, "authorIds")));
 
 		String[] contentDashboardItemTypePayloads =
@@ -162,14 +165,47 @@ public class ContentDashboardSearchContextBuilder {
 		return this;
 	}
 
-	private BooleanClause[] _getBooleanClauses(long[] authorIds) {
-		if (ArrayUtil.isEmpty(authorIds)) {
-			return new BooleanClause[0];
+	private Optional<Filter> _getAssetCategoryIdsFilterOptional(
+		AssetCategoryIds assetCategoryIds) {
+
+		if ((assetCategoryIds == null) ||
+			(ArrayUtil.isEmpty(
+				assetCategoryIds.getExternalAssetCategoryIds()) &&
+			 ArrayUtil.isEmpty(
+				 assetCategoryIds.getInternalAssetCategoryIds()))) {
+
+			return Optional.empty();
 		}
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
-
 		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (!ArrayUtil.isEmpty(
+				assetCategoryIds.getExternalAssetCategoryIds())) {
+
+			booleanFilter.add(
+				_getTermsFilter(
+					Field.ASSET_CATEGORY_IDS,
+					assetCategoryIds.getExternalAssetCategoryIds()),
+				BooleanClauseOccur.MUST);
+		}
+
+		if (!ArrayUtil.isEmpty(
+				assetCategoryIds.getInternalAssetCategoryIds())) {
+
+			booleanFilter.add(
+				_getTermsFilter(
+					Field.ASSET_INTERNAL_CATEGORY_IDS,
+					assetCategoryIds.getInternalAssetCategoryIds()),
+				BooleanClauseOccur.MUST);
+		}
+
+		return Optional.of(booleanFilter);
+	}
+
+	private Optional<Filter> _getAuthorIdsFilterOptional(long[] authorIds) {
+		if (ArrayUtil.isEmpty(authorIds)) {
+			return Optional.empty();
+		}
 
 		TermsFilter termsFilter = new TermsFilter(Field.USER_ID);
 
@@ -177,7 +213,31 @@ public class ContentDashboardSearchContextBuilder {
 			termsFilter.addValue(String.valueOf(authorId));
 		}
 
-		booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		return Optional.of(termsFilter);
+	}
+
+	private BooleanClause[] _getBooleanClauses(
+		AssetCategoryIds assetCategoryIds, long[] authorIds) {
+
+		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		Optional<Filter> assetCategoryIdsFilterOptional =
+			_getAssetCategoryIdsFilterOptional(assetCategoryIds);
+
+		if (assetCategoryIdsFilterOptional.isPresent()) {
+			booleanFilter.add(
+				assetCategoryIdsFilterOptional.get(), BooleanClauseOccur.MUST);
+		}
+
+		Optional<Filter> authorIdsFilterOptional = _getAuthorIdsFilterOptional(
+			authorIds);
+
+		if (authorIdsFilterOptional.isPresent()) {
+			booleanFilter.add(
+				authorIdsFilterOptional.get(), BooleanClauseOccur.MUST);
+		}
 
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
@@ -185,6 +245,17 @@ public class ContentDashboardSearchContextBuilder {
 			BooleanClauseFactoryUtil.create(
 				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
 		};
+	}
+
+	private BooleanFilter _getTermsFilter(String field, long[] values) {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (Long value : values) {
+			booleanFilter.addTerm(
+				field, String.valueOf(value), BooleanClauseOccur.MUST);
+		}
+
+		return booleanFilter;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

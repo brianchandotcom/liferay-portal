@@ -47,7 +47,6 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 	>
 		<liferay-ui:search-container-row
 			className="Object"
-			cssClass="entry"
 			modelVar="entry"
 		>
 
@@ -109,6 +108,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 					</c:if>
 
 					<liferay-ui:search-container-column-text
+						cssClass="entry"
 						colspan="<%= 2 %>"
 					>
 						<c:if test="<%= Objects.nonNull(itemDescriptor.getModifiedDate()) %>">
@@ -144,7 +144,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-cell-minw-200 table-title"
+						cssClass="entry table-cell-expand table-cell-minw-200 table-title"
 						name="title"
 						value="<%= itemDescriptor.getTitle(locale) %>"
 					/>

@@ -864,13 +864,22 @@ public class DataLayoutTaglibUtil {
 		}
 
 		private DDMFormLayout _getDDMFormLayout() throws Exception {
-			DDMStructureLayout ddmStructureLayout =
-				_ddmStructureLayoutLocalService.getStructureLayout(
-					_dataLayout.getId());
+			String definition = null;
+
+			if (_dataLayout.getId() == null) {
+				definition = _dataLayout.toString();
+			}
+			else {
+				DDMStructureLayout ddmStructureLayout =
+					_ddmStructureLayoutLocalService.getStructureLayout(
+						_dataLayout.getId());
+
+				definition = ddmStructureLayout.getDefinition();
+			}
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.replace(
-					ddmStructureLayout.getDefinition(),
+					definition,
 					new String[] {
 						"columnSize", "dataLayoutColumns", "dataLayoutPages",
 						"dataLayoutRows"

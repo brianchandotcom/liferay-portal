@@ -4,6 +4,4 @@ buildscript {
 	}
 }
 
-setProperty("liferay.workspace.product", "portal-7.3-ga6")
-
 apply plugin: "com.liferay.workspace"

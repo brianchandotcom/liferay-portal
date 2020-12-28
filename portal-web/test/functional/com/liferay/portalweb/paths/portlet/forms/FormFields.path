@@ -394,7 +394,7 @@
 </tr>
 <tr>
 	<td>CAPTCHA_LABEL</td>
-	<td>//div[@class='taglib-captcha']//label[@class='control-label']</td>
+	<td>//div[@class='taglib-captcha']//label[contains(@class,'control-label')]</td>
 	<td></td>
 </tr>
 <tr>

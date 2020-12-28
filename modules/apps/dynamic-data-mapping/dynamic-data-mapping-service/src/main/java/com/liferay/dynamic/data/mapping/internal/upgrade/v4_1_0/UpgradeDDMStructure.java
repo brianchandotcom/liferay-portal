@@ -348,7 +348,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	private void _upgradeDocumentLibraryField(JSONObject jsonObject) {
 		jsonObject.put(
-			"dataType", "string"
+			"dataType", "document-library"
 		).put(
 			"type", "document_library"
 		).put(

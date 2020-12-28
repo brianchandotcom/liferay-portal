@@ -26,6 +26,11 @@
 		<field name="groupId" type="long" />
 		<field name="blob" type="Blob" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry">
+		<field name="finderWhereClauseEntryId" type="long" />
+		<field name="name" type="String" />
+		<field name="nickname" type="String" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry">
 		<field name="uuid" type="String" />
 		<field name="lazyBlobEntryId" type="long" />

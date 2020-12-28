@@ -17,6 +17,8 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.FinderWhereClauseEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.FinderWhereClauseEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.FinderWhereClauseEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.FinderWhereClauseEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence" />

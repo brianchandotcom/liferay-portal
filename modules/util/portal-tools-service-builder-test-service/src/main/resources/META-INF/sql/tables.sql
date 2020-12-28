@@ -35,6 +35,12 @@ create table EagerBlobEntry (
 	blob_ BLOB
 );
 
+create table FinderWhereClauseEntry (
+	finderWhereClauseEntryId LONG not null primary key,
+	name VARCHAR(75) null,
+	nickname VARCHAR(75) null
+);
+
 create table LVEntries_BigDecimalEntries (
 	companyId LONG not null,
 	bigDecimalEntryId LONG not null,

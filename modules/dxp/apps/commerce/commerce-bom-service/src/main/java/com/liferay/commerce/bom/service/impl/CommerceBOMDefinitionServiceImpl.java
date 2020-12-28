@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.List;
 
@@ -38,8 +38,12 @@ public class CommerceBOMDefinitionServiceImpl
 			String name, String friendlyUrl)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_commerceBOMDefinitionModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceBOMActionKeys.ADD_COMMERCE_BOM_DEFINITION);
 
 		return commerceBOMDefinitionLocalService.addCommerceBOMDefinition(

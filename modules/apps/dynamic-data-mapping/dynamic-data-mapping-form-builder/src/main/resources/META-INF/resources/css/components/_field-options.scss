@@ -31,6 +31,10 @@ $c: '.ddm-field-options';
 			display: none;
 		}
 
+		.form-control {
+			padding-right: map-get($close, 'width');
+		}
+
 		.key-value-editor {
 			label,
 			p {
@@ -62,7 +66,7 @@ $c: '.ddm-field-options';
 	.close-modal {
 		font-size: 8px;
 		position: absolute;
-		right: 8px;
+		right: 0;
 		top: 4px;
 	}
 

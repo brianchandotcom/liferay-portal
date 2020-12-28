@@ -453,6 +453,102 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
+	public void testGetUserId() {
+		JournalArticle journalArticle = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle.getUserId()
+		).thenReturn(
+			12345L
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null, null, null, null, null, journalArticle, null, null,
+				null);
+
+		Assert.assertEquals(
+			journalArticle.getUserId(),
+			journalArticleContentDashboardItem.getUserId());
+	}
+
+	@Test
+	public void testGetUserIdWithLatestApprovedJournalArticle() {
+		JournalArticle journalArticle1 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle1.getUserId()
+		).thenReturn(
+			12345L
+		);
+
+		JournalArticle journalArticle2 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle2.getUserId()
+		).thenReturn(
+			52345L
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null, null, null, null, null, journalArticle1, null,
+				journalArticle2, null);
+
+		Assert.assertEquals(
+			journalArticle2.getUserId(),
+			journalArticleContentDashboardItem.getUserId());
+	}
+
+	@Test
+	public void testGetUserName() {
+		JournalArticle journalArticle = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle.getUserName()
+		).thenReturn(
+			"name"
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null, null, null, null, null, journalArticle, null, null,
+				null);
+
+		Assert.assertEquals(
+			journalArticle.getUserId(),
+			journalArticleContentDashboardItem.getUserId());
+	}
+
+	@Test
+	public void testGetUserNameWithLatestApprovedJournalArticle() {
+		JournalArticle journalArticle1 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle1.getUserName()
+		).thenReturn(
+			"name1"
+		);
+
+		JournalArticle journalArticle2 = _getJournalArticle();
+
+		Mockito.when(
+			journalArticle2.getUserName()
+		).thenReturn(
+			"name2"
+		);
+
+		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
+			new JournalArticleContentDashboardItem(
+				null, null, null, null, null, null, journalArticle1, null,
+				journalArticle2, null);
+
+		Assert.assertEquals(
+			journalArticle2.getUserId(),
+			journalArticleContentDashboardItem.getUserId());
+	}
+
+	@Test
 	public void testGetVersions() {
 		JournalArticle journalArticle = _getJournalArticle();
 

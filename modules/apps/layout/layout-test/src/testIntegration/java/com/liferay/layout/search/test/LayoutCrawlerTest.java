@@ -17,6 +17,7 @@ package com.liferay.layout.search.test;
 import static org.hamcrest.CoreMatchers.containsString;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
@@ -199,6 +200,28 @@ public class LayoutCrawlerTest {
 			mappedFragmentEntryLink.getFragmentEntryLinkId(),
 			columnLayoutStructureItem.getItemId(), 1);
 
+		JournalTestUtil.addArticle(
+			_group.getGroupId(), "test journal article",
+			"test journal article");
+
+		JSONObject widgetValueJSONObject = JSONUtil.put(
+			"instanceid", StringUtil.randomString()
+		).put(
+			"portletId", AssetPublisherPortletKeys.ASSET_PUBLISHER
+		);
+
+		FragmentEntryLink widgetFragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				_group.getGroupId(), 0, 0,
+				SegmentsExperienceConstants.ID_DEFAULT, _layout.getPlid(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, widgetValueJSONObject.toString(),
+				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			widgetFragmentEntryLink.getFragmentEntryLinkId(),
+			columnLayoutStructureItem.getItemId(), 2);
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_layout.getGroupId(), _layout.getPlid(),
@@ -238,6 +261,23 @@ public class LayoutCrawlerTest {
 		Assert.assertNotNull(content);
 
 		Assert.assertThat(content, containsString("test mapped value"));
+	}
+
+	@Test
+	public void testSearchLayoutContentByWidgetContent() throws Exception {
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Layout.class.getName());
+
+		Document document = indexer.getDocument(_layout);
+
+		Assert.assertNotNull(document);
+
+		String content = document.get(
+			LocaleUtil.fromLanguageId("en_US"), Field.CONTENT);
+
+		Assert.assertNotNull(content);
+
+		Assert.assertThat(content, containsString("test journal article"));
 	}
 
 	@Inject

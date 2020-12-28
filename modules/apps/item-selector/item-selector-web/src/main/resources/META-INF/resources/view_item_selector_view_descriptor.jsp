@@ -144,10 +144,13 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="entry table-cell-expand table-cell-minw-200 table-title"
+						cssClass="table-cell-expand table-cell-minw-200"
 						name="title"
-						value="<%= itemDescriptor.getTitle(locale) %>"
-					/>
+					>
+						<a class="entry" title="<%= itemDescriptor.getTitle(locale) %>">
+							<%= itemDescriptor.getTitle(locale) %>
+						</a>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand-smaller table-cell-minw-150"

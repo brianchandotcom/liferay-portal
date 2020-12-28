@@ -14,25 +14,40 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.servlet.taglib;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.servlet.JSLoaderConfigServlet;
+import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera Avellón
  */
 @Component(
+	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details",
 	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = DynamicInclude.class
 )
@@ -46,19 +61,48 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
+		printWriter.println("<script type=\"");
+		printWriter.print(ContentTypes.TEXT_JAVASCRIPT);
+		printWriter.print("\">window.__CONFIG__=");
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
 
-		String url =
-			"/js_loader_config?t=" + _jsLoaderConfigServlet.getLastModified();
+		JSONObject loaderConfigJSONObject = JSONUtil.put(
+			"basePath", StringPool.BLANK
+		).put(
+			"combine", themeDisplay.isThemeJsFastLoad()
+		).put(
+			"defaultURLParams", _getDefaultURLParamsJSONObject(themeDisplay)
+		).put(
+			"explainResolutions", _details.explainResolutions()
+		).put(
+			"exposeGlobal", _details.exposeGlobal()
+		).put(
+			"logLevel", _details.logLevel()
+		).put(
+			"namespace", "Liferay"
+		).put(
+			"reportMismatchedAnonymousModules", "warn"
+		).put(
+			"resolvePath",
+			absolutePortalURLBuilder.forWhiteboard(
+				"/js_resolve_modules"
+			).build()
+		).put(
+			"url", _getURL(httpServletRequest, themeDisplay)
+		).put(
+			"waitTimeout", _details.waitTimeout() * 1000
+		);
 
-		url = absolutePortalURLBuilder.forWhiteboard(
-			url
-		).build();
+		printWriter.print(loaderConfigJSONObject.toString());
 
-		printWriter.println(
-			"<script src=\"" + url + "\" type=\"text/javascript\"></script>");
+		printWriter.print(";</script>");
 	}
 
 	@Override
@@ -67,10 +111,47 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_js.jspf#resources");
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_details = ConfigurableUtil.createConfigurable(
+			Details.class, properties);
+	}
+
+	private JSONObject _getDefaultURLParamsJSONObject(
+		ThemeDisplay themeDisplay) {
+
+		if (themeDisplay.isThemeJsFastLoad()) {
+			return null;
+		}
+
+		return JSONUtil.put("languageId", themeDisplay.getLanguageId());
+	}
+
+	private String _getURL(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		if (themeDisplay.isThemeJsFastLoad()) {
+			String url = _portal.getStaticResourceURL(
+				httpServletRequest,
+				themeDisplay.getCDNDynamicResourcesHost() +
+					themeDisplay.getPathContext() + "/combo/",
+				"minifierType=",
+				PortalWebResourcesUtil.getLastModified(
+					PortalWebResourceConstants.RESOURCE_TYPE_JS));
+
+			return url + StringPool.AMPERSAND;
+		}
+
+		return themeDisplay.getCDNBaseURL();
+	}
+
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
+	private volatile Details _details;
+
 	@Reference
-	private JSLoaderConfigServlet _jsLoaderConfigServlet;
+	private Portal _portal;
 
 }

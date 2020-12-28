@@ -31,6 +31,36 @@ import org.json.JSONObject;
 public class GitCommitFactory {
 
 	public static GitHubRemoteGitCommit newGitHubRemoteGitCommit(
+		String gitHubUsername, String gitRepositoryName,
+		JSONObject jsonObject) {
+
+		JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
+
+		String message = commitJSONObject.getString("message");
+
+		JSONObject committerJSONObject = commitJSONObject.getJSONObject(
+			"committer");
+
+		try {
+			Date date = _gitHubDateFormat.parse(
+				committerJSONObject.getString("date"));
+
+			GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
+				gitHubUsername, gitRepositoryName, message,
+				jsonObject.getString("sha"), _getGitCommitType(message),
+				date.getTime());
+
+			_gitHubRemoteGitCommits.put(
+				jsonObject.getString("url"), remoteGitCommit);
+
+			return remoteGitCommit;
+		}
+		catch (ParseException parseException) {
+			throw new RuntimeException(parseException);
+		}
+	}
+
+	public static GitHubRemoteGitCommit newGitHubRemoteGitCommit(
 		String gitHubUsername, String gitRepositoryName, String sha) {
 
 		String gitHubCommitURL = _getGitHubCommitURL(
@@ -41,35 +71,9 @@ public class GitCommitFactory {
 		}
 
 		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				gitHubCommitURL);
-
-			JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
-
-			String message = commitJSONObject.getString("message");
-
-			JSONObject committerJSONObject = commitJSONObject.getJSONObject(
-				"committer");
-
-			try {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss");
-
-				Date date = simpleDateFormat.parse(
-					committerJSONObject.getString("date"));
-
-				GitHubRemoteGitCommit remoteGitCommit =
-					new GitHubRemoteGitCommit(
-						gitHubUsername, gitRepositoryName, message, sha,
-						_getGitCommitType(message), date.getTime());
-
-				_gitHubRemoteGitCommits.put(gitHubCommitURL, remoteGitCommit);
-
-				return remoteGitCommit;
-			}
-			catch (ParseException parseException) {
-				throw new RuntimeException(parseException);
-			}
+			return newGitHubRemoteGitCommit(
+				gitHubUsername, gitRepositoryName,
+				JenkinsResultsParserUtil.toJSONObject(gitHubCommitURL));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -101,6 +105,8 @@ public class GitCommitFactory {
 			gitRepositoryName, gitHubUsername, "commits/" + sha);
 	}
 
+	private static final SimpleDateFormat _gitHubDateFormat =
+		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	private static final Map<String, GitHubRemoteGitCommit>
 		_gitHubRemoteGitCommits = new HashMap<>();
 

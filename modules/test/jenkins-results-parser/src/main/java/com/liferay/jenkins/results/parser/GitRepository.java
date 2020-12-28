@@ -25,4 +25,6 @@ public interface GitRepository {
 
 	public String getName();
 
+	public boolean isSubrepository();
+
 }

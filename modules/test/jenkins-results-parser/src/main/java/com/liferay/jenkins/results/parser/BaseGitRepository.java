@@ -44,6 +44,17 @@ public abstract class BaseGitRepository implements GitRepository {
 		return getString("name");
 	}
 
+	@Override
+	public boolean isSubrepository() {
+		String name = getName();
+
+		if (name.startsWith("com-liferay-")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected BaseGitRepository(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
 

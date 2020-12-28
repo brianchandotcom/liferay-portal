@@ -5,7 +5,7 @@
 				"actionIds": [
 					"MANAGE_AVAILABLE_ACCOUNTS"
 				],
-				"resource": "90"
+				"resource": "com.liferay.commerce.account"
 			},
 			{
 				"actionIds": [
@@ -97,7 +97,6 @@
 		"actions": [
 			{
 				"actionIds": [
-					"MANAGE_ALL_ACCOUNTS",
 					"MANAGE_COMMERCE_SHIPMENTS",
 					"MANAGE_COMMERCE_SUBSCRIPTIONS",
 					"MANAGE_INVENTORY",
@@ -134,6 +133,12 @@
 					"MANAGE_COMMERCE_ORDERS"
 				],
 				"resource": "com.liferay.commerce.order"
+			},
+			{
+				"actionIds": [
+					"MANAGE_AVAILABLE_ACCOUNTS"
+				],
+				"resource": "com.liferay.commerce.account"
 			}
 		],
 		"name": "Operations Manager",

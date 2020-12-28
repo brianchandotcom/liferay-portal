@@ -83,7 +83,7 @@ public class LayoutModelDocumentContributor
 
 		for (Locale locale : locales) {
 			String content = _html.stripHtml(
-				_layoutCrawler.getLayoutContent(layout, locale));
+				_getWrapper(_layoutCrawler.getLayoutContent(layout, locale)));
 
 			if (Validator.isNull(content)) {
 				continue;
@@ -93,6 +93,19 @@ public class LayoutModelDocumentContributor
 				Field.getLocalizedName(locale, Field.CONTENT), content);
 		}
 	}
+
+	private String _getWrapper(String layoutContent) {
+		int wrapperIndex = layoutContent.indexOf(_WRAPPER_ELEMENT);
+
+		if (wrapperIndex == -1) {
+			return layoutContent;
+		}
+
+		return layoutContent.substring(
+			wrapperIndex + _WRAPPER_ELEMENT.length());
+	}
+
+	private static final String _WRAPPER_ELEMENT = "id=\"wrapper\">";
 
 	@Reference
 	private Html _html;

@@ -480,7 +480,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	private void _upgradeJournalArticleField(JSONObject jsonObject) {
 		jsonObject.put(
-			"dataType", "string"
+			"dataType", "journal-article"
 		).put(
 			"type", "journal_article"
 		);

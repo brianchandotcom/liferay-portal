@@ -323,6 +323,15 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public String getUserName() {
+		if (_latestApprovedJournalArticle != null) {
+			return _latestApprovedJournalArticle.getUserName();
+		}
+
+		return _journalArticle.getUserName();
+	}
+
+	@Override
 	public List<Version> getVersions(Locale locale) {
 		return Stream.of(
 			_toVersionOptional(_journalArticle, locale),

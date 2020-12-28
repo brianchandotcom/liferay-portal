@@ -335,6 +335,11 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public String getUserName() {
+				return RandomTestUtil.randomString();
+			}
+
+			@Override
 			public List<Version> getVersions(Locale locale) {
 				return null;
 			}

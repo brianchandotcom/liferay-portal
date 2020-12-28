@@ -296,6 +296,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
+			public String getUserName() {
+				return RandomTestUtil.randomString();
+			}
+
+			@Override
 			public List<Version> getVersions(Locale locale) {
 				return Collections.singletonList(
 					new Version("version", "style", 0.1));

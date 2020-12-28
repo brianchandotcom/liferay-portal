@@ -1,7 +1,6 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildClay(type: Copy)
-task buildLiferayAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 
 File jsDestinationDir = file("tmp/META-INF/resources")
@@ -23,21 +22,8 @@ buildClay {
 	into clayDestinationDir
 }
 
-buildLiferayAMDLoader {
-	dependsOn npmInstall
-	eachFile new StripPathSegmentsAction(4)
-	from npmInstall.nodeModulesDir
-
-	include "@liferay/amd-loader/build/loader/loader.js.map"
-	include "@liferay/amd-loader/build/loader/loader.js"
-
-	includeEmptyDirs = false
-	into new File(jsDestinationDir, "loader")
-}
-
 classes {
 	dependsOn buildClay
-	dependsOn buildLiferayAMDLoader
 }
 
 clean {

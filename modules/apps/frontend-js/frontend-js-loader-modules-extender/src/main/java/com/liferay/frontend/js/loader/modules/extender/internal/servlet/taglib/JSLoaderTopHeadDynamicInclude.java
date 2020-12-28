@@ -35,6 +35,7 @@ import java.io.PrintWriter;
 
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
 	service = DynamicInclude.class
 )
-public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
+public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -61,17 +62,13 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.println("<script type=\"");
+		printWriter.println("<script data-senna-track=\"temporary\" type=\"");
 		printWriter.print(ContentTypes.TEXT_JAVASCRIPT);
 		printWriter.print("\">window.__CONFIG__=");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		AbsolutePortalURLBuilder absolutePortalURLBuilder =
-			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				httpServletRequest);
 
 		JSONObject loaderConfigJSONObject = JSONUtil.put(
 			"basePath", StringPool.BLANK
@@ -90,10 +87,7 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		).put(
 			"reportMismatchedAnonymousModules", "warn"
 		).put(
-			"resolvePath",
-			absolutePortalURLBuilder.forWhiteboard(
-				"/js_resolve_modules"
-			).build()
+			"resolvePath", _getResolvePath(httpServletRequest)
 		).put(
 			"url", _getURL(httpServletRequest, themeDisplay)
 		).put(
@@ -103,6 +97,12 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.print(loaderConfigJSONObject.toString());
 
 		printWriter.print(";</script>");
+
+		printWriter.println("<script data-senna-track=\"permanent\" src=\"");
+		printWriter.print(_servletContext.getContextPath());
+		printWriter.print("/loader.js\" type=\"");
+		printWriter.print(ContentTypes.TEXT_JAVASCRIPT);
+		printWriter.print("\"></script>");
 	}
 
 	@Override
@@ -126,6 +126,16 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		}
 
 		return JSONUtil.put("languageId", themeDisplay.getLanguageId());
+	}
+
+	private String _getResolvePath(HttpServletRequest httpServletRequest) {
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
+
+		return absolutePortalURLBuilder.forWhiteboard(
+			"/js_resolve_modules"
+		).build();
 	}
 
 	private String _getURL(
@@ -153,5 +163,10 @@ public class JSLoaderConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.frontend.js.loader.modules.extender)"
+	)
+	private ServletContext _servletContext;
 
 }

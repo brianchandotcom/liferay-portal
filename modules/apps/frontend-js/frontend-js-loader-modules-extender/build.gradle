@@ -1,3 +1,29 @@
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+task buildLiferayAMDLoader(type: Copy)
+
+File jsDestinationDir = file("tmp/META-INF/resources")
+
+buildLiferayAMDLoader {
+	dependsOn npmInstall
+	eachFile new StripPathSegmentsAction(4)
+	from npmInstall.nodeModulesDir
+
+	include "@liferay/amd-loader/build/loader/loader.js.map"
+	include "@liferay/amd-loader/build/loader/loader.js"
+
+	includeEmptyDirs = false
+	into jsDestinationDir
+}
+
+classes {
+	dependsOn buildLiferayAMDLoader
+}
+
+clean {
+	delete "tmp"
+}
+
 dependencies {
 	compileInclude group: "com.github.yuchi", name: "npm-semver", version: "1.0.0"
 	compileInclude group: "org.json", name: "json", version: "20180813"

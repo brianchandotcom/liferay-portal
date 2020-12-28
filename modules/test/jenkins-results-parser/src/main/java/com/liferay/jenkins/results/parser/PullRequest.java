@@ -348,6 +348,15 @@ public class PullRequest {
 		return headJSONObject.getString("ref");
 	}
 
+	public RemoteGitBranch getSenderRemoteGitBranch() {
+		if (_senderRemoteGitBranch == null) {
+			_senderRemoteGitBranch = GitUtil.getRemoteGitBranch(
+				getSenderBranchName(), new File(""), getSenderRemoteURL());
+		}
+
+		return _senderRemoteGitBranch;
+	}
+
 	public String getSenderRemoteURL() {
 		return JenkinsResultsParserUtil.combine(
 			"git@github.com:", getSenderUsername(), "/",
@@ -860,6 +869,7 @@ public class PullRequest {
 	private RemoteGitBranch _liferayRemoteGitBranch;
 	private Integer _number;
 	private String _ownerUsername;
+	private RemoteGitBranch _senderRemoteGitBranch;
 	private final String _testSuiteName;
 	private TestSuiteStatus _testSuiteStatus = TestSuiteStatus.MISSING;
 

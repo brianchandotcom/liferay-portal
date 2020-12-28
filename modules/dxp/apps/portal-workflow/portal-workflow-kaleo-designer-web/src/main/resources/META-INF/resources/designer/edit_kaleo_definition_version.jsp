@@ -266,7 +266,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										<div class="tabbable">
 											<div class="tabbable-content">
 												<ul class="nav nav-tabs">
-													<li class="nav-item">
+													<li class="active nav-item">
 														<a class="active nav-link" href="javascript:;">
 															<liferay-ui:message key="nodes" />
 														</a>
@@ -290,7 +290,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											<div class="tabbable">
 												<div class="main-tab tabbable-content">
 													<ul class="nav nav-tabs">
-														<li class="nav-item">
+														<li class="active nav-item">
 															<a class="active nav-link" href="javascript:;">
 																<liferay-ui:message key="diagram" />
 															</a>

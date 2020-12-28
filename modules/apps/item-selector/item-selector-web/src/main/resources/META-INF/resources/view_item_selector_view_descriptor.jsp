@@ -241,10 +241,24 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						});
 					}
 
-					var newSelectedCard = event.delegateTarget.closest('.form-check-card');
+					var target = event.delegateTarget;
+
+					var newSelectedCard = target.closest('.form-check-card');
 
 					if (newSelectedCard) {
 						newSelectedCard.classList.add('active');
+					}
+
+					var domElement = target.closest('li');
+
+					if (domElement == null) {
+						domElement = target.closest('tr');
+					}
+
+					var itemValue = "";
+
+					if (domElement != null) {
+						itemValue = domElement.dataset.value;
 					}
 
 					Liferay.Util.getOpener().Liferay.fire(
@@ -253,7 +267,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 							data: {
 								returnType:
 									'<%= itemSelectorViewDescriptorRendererDisplayContext.getReturnType() %>',
-								value: event.delegateTarget.dataset.value,
+								value: itemValue,
 							},
 						}
 					);

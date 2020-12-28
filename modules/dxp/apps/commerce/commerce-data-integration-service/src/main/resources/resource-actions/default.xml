@@ -2,8 +2,13 @@
 <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
-	<portlet-resource>
-		<portlet-name>90</portlet-name>
+	<model-resource>
+		<model-name>com.liferay.commerce.data.integration</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_data_integration_web_internal_portlet_CommerceDataIntegrationPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMERCE_DATA_INTEGRATION_PROCESS</action-key>
@@ -14,13 +19,13 @@
 				<action-key>ADD_COMMERCE_DATA_INTEGRATION_PROCESS</action-key>
 			</guest-unsupported>
 		</permissions>
-	</portlet-resource>
+	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_data_integration_web_internal_portlet_CommerceDataIntegrationPortlet</portlet-name>
 		</portlet-ref>
-		<weight>1</weight>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>

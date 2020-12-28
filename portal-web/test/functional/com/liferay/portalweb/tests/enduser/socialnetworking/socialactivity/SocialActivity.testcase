@@ -128,4 +128,61 @@ definition {
 			locator1 = "Activities#ACTIVITY_TITLE_ASSET_NAME");
 	}
 
+	@description = "This is a use case for LPS-50602"
+	@priority = "5"
+	test NoUpdateAfterDraftwikiPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Activities Page");
+
+		Navigator.gotoPage(pageName = "Activities Page");
+
+		Portlet.addPG(portletName = "Activities");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Wiki Page");
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			wikiPageContent = "Wiki Page Content",
+			wikiPageTitle = "Wiki Page Title");
+
+		Navigator.gotoPage(pageName = "Activities Page");
+
+		AssertTextEquals.assertPartialText(
+			key_portletName = "Activities",
+			locator1 = "Portlet#BODY",
+			value1 = "Test wrote a new wiki page, Wiki Page Title.");
+
+		Navigator.gotoPage(pageName = "Wiki Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiNavigator.gotoEntryEditViaPGTable(wikiPageTitle = "Wiki Page Title");
+
+		WikiEntry.addPageContent(wikiPageContent = "Edit Wiki Page Content");
+
+		SelectFrame(value1 = "relative=top");
+
+		WikiEntry.saveAsDraft();
+
+		Navigator.gotoPage(pageName = "Activities Page");
+
+		AssertTextEquals.assertPartialText(
+			key_portletName = "Activities",
+			locator1 = "Portlet#BODY",
+			value1 = "Test wrote a new wiki page, Wiki Page Title.");
+
+		AssertTextNotEquals.assertNotPartialText(
+			key_portletName = "Activities",
+			locator1 = "Portlet#BODY",
+			value1 = "Test updated a wiki page, Wiki Page Title.");
+	}
+
 }

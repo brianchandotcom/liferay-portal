@@ -213,8 +213,6 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		Navigator.gotoStagedView();
-
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive(remoteStaging = "true");
@@ -265,8 +263,6 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
-
-		Navigator.gotoStagedView();
 
 		Staging.gotoPublishToLive();
 

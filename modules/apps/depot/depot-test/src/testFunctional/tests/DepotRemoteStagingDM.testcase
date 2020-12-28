@@ -144,8 +144,6 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Document_2.jpg");
 
-		Navigator.gotoStagedView();
-
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive(remoteStaging = "true");
@@ -460,8 +458,6 @@ definition {
 			key_assetTitle = "Document_3.doc",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
-		Navigator.gotoStagedView();
-
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive(remoteStaging = "true");
@@ -619,8 +615,6 @@ definition {
 		AssertVisible(
 			key_thumbnailName = "Document_2.mp4",
 			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
-
-		Navigator.gotoStagedView();
 
 		Staging.gotoPublishToLive();
 

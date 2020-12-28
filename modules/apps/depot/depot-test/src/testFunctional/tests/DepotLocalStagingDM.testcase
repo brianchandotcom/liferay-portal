@@ -131,6 +131,8 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Document_2.jpg");
 
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		Navigator.gotoStagedView();
 	}
 
@@ -396,6 +398,8 @@ definition {
 			key_assetTitle = "Document_3.doc",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		Navigator.gotoStagedView();
 
 		Staging.gotoPublishToLive();
@@ -507,6 +511,8 @@ definition {
 		AssertVisible(
 			key_thumbnailName = "Document_2.mp4",
 			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
+
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		Navigator.gotoStagedView();
 
@@ -757,6 +763,8 @@ definition {
 			assetType = "Basic Document",
 			depotName = "Test Depot Name");
 
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		Navigator.gotoStagedView();
 
 		Staging.gotoPublishToLive();
@@ -837,9 +845,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEW_VERSION_NUMBER",
 			value1 = "1.2");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		Navigator.gotoStagedView();
 

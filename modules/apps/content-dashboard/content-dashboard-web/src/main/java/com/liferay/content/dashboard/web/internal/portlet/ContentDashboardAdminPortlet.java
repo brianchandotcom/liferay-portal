@@ -102,7 +102,8 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 			new ContentDashboardDataProvider(
 				_aggregations,
 				new ContentDashboardSearchContextBuilder(
-					_portal.getHttpServletRequest(renderRequest)),
+					_portal.getHttpServletRequest(renderRequest),
+					_assetCategoryLocalService, _assetVocabularyLocalService),
 				_contentDashboardSearchRequestBuilderFactory,
 				_portal.getLocale(renderRequest), _queries, resourceBundle,
 				_searcher);
@@ -115,6 +116,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 		ContentDashboardItemSearchContainerFactory
 			contentDashboardItemSearchContainerFactory =
 				ContentDashboardItemSearchContainerFactory.getInstance(
+					_assetCategoryLocalService, _assetVocabularyLocalService,
 					_contentDashboardItemFactoryTracker,
 					_contentDashboardSearchRequestBuilderFactory, _portal,
 					renderRequest, renderResponse, _searcher);

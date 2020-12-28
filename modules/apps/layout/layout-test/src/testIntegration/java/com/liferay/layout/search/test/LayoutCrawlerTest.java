@@ -23,6 +23,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -126,7 +129,7 @@ public class LayoutCrawlerTest {
 					"en_US", "test inline value"
 				)));
 
-		FragmentEntryLink fragmentEntryLink =
+		FragmentEntryLink inlineFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				_group.getGroupId(), 0,
 				contributedFragmentEntry.getFragmentEntryId(),
@@ -156,8 +159,45 @@ public class LayoutCrawlerTest {
 				rowLayoutStructureItem.getItemId(), 0);
 
 		layoutStructure.addFragmentLayoutStructureItem(
-			fragmentEntryLink.getFragmentEntryLinkId(),
+			inlineFragmentEntryLink.getFragmentEntryLinkId(),
 			columnLayoutStructureItem.getItemId(), 0);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), "test mapped value", "test mapped value");
+
+		JSONObject mappedValueJSONObject = JSONUtil.put(
+			"com.liferay.fragment.entry.processor.editable." +
+				"EditableFragmentEntryProcessor",
+			JSONUtil.put(
+				"element-text",
+				JSONUtil.put(
+					"classNameId",
+					_portal.getClassNameId(JournalArticle.class.getName())
+				).put(
+					"classPK", journalArticle.getResourcePrimKey()
+				).put(
+					"config", JSONFactoryUtil.createJSONObject()
+				).put(
+					"defaultValue", "default value"
+				).put(
+					"fieldId", "title"
+				)));
+
+		FragmentEntryLink mappedFragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				_group.getGroupId(), 0,
+				contributedFragmentEntry.getFragmentEntryId(),
+				SegmentsExperienceConstants.ID_DEFAULT, _layout.getPlid(),
+				contributedFragmentEntry.getCss(),
+				contributedFragmentEntry.getHtml(),
+				contributedFragmentEntry.getJs(),
+				contributedFragmentEntry.getConfiguration(),
+				mappedValueJSONObject.toString(), StringPool.BLANK, 0,
+				contributedFragmentEntry.getFragmentEntryKey(), serviceContext);
+
+		layoutStructure.addFragmentLayoutStructureItem(
+			mappedFragmentEntryLink.getFragmentEntryLinkId(),
+			columnLayoutStructureItem.getItemId(), 1);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -183,6 +223,23 @@ public class LayoutCrawlerTest {
 		Assert.assertThat(content, containsString("test inline value"));
 	}
 
+	@Test
+	public void testSearchLayoutContentByMappedFieldValue() throws Exception {
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Layout.class.getName());
+
+		Document document = indexer.getDocument(_layout);
+
+		Assert.assertNotNull(document);
+
+		String content = document.get(
+			LocaleUtil.fromLanguageId("en_US"), Field.CONTENT);
+
+		Assert.assertNotNull(content);
+
+		Assert.assertThat(content, containsString("test mapped value"));
+	}
+
 	@Inject
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
@@ -204,5 +261,8 @@ public class LayoutCrawlerTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

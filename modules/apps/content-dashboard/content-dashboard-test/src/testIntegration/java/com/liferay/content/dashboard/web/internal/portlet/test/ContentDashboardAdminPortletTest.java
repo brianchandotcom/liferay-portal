@@ -1325,6 +1325,94 @@ public class ContentDashboardAdminPortletTest {
 	}
 
 	@Test
+	public void testGetSearchContainerWithMultipleAssetCategories()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_company.getCompanyId(), _company.getGroupId(),
+				_user.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), "topic");
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _company.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _company.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		try {
+			JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			_journalArticleLocalService.updateAsset(
+				_user.getUserId(), journalArticle1,
+				new long[] {assetCategory1.getCategoryId()}, new String[0],
+				new long[0], null);
+
+			JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			_journalArticleLocalService.updateAsset(
+				_user.getUserId(), journalArticle2,
+				new long[] {
+					assetCategory1.getCategoryId(),
+					assetCategory2.getCategoryId()
+				},
+				new String[0], new long[0], null);
+
+			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+				_getMockLiferayPortletRenderRequest();
+
+			mockLiferayPortletRenderRequest.addParameter(
+				"assetCategoryId",
+				String.valueOf(assetCategory1.getCategoryId()));
+			mockLiferayPortletRenderRequest.addParameter(
+				"assetCategoryId",
+				String.valueOf(assetCategory2.getCategoryId()));
+
+			SearchContainer<Object> searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			Assert.assertEquals(2, searchContainer.getTotal());
+
+			List<Object> results = searchContainer.getResults();
+
+			Stream<Object> stream = results.stream();
+
+			Assert.assertTrue(
+				stream.anyMatch(
+					result -> Objects.equals(
+						journalArticle1.getTitle(LocaleUtil.US),
+						ReflectionTestUtil.invoke(
+							result, "getTitle", new Class<?>[] {Locale.class},
+							LocaleUtil.US))));
+
+			stream = results.stream();
+
+			Assert.assertTrue(
+				stream.anyMatch(
+					result -> Objects.equals(
+						journalArticle2.getTitle(LocaleUtil.US),
+						ReflectionTestUtil.invoke(
+							result, "getTitle", new Class<?>[] {Locale.class},
+							LocaleUtil.US))));
+		}
+		finally {
+			_assetCategoryLocalService.deleteAssetCategory(
+				assetCategory1.getCategoryId());
+			_assetCategoryLocalService.deleteAssetCategory(
+				assetCategory2.getCategoryId());
+		}
+	}
+
+	@Test
 	public void testGetSearchContainerWithMultipleAuthors() throws Exception {
 		User user = UserTestUtil.addGroupAdminUser(_group);
 
@@ -1455,6 +1543,94 @@ public class ContentDashboardAdminPortletTest {
 					ReflectionTestUtil.invoke(
 						result, "getTitle", new Class<?>[] {Locale.class},
 						LocaleUtil.US))));
+	}
+
+	@Test
+	public void testGetSearchContainerWithMultipleInternalAssetCategories()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_company.getCompanyId(), _company.getGroupId(),
+				_user.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), "audience");
+
+		AssetCategory assetCategory1 = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _company.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		AssetCategory assetCategory2 = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _company.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		try {
+			JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			_journalArticleLocalService.updateAsset(
+				_user.getUserId(), journalArticle1,
+				new long[] {assetCategory1.getCategoryId()}, new String[0],
+				new long[0], null);
+
+			JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			_journalArticleLocalService.updateAsset(
+				_user.getUserId(), journalArticle2,
+				new long[] {
+					assetCategory1.getCategoryId(),
+					assetCategory2.getCategoryId()
+				},
+				new String[0], new long[0], null);
+
+			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+				_getMockLiferayPortletRenderRequest();
+
+			mockLiferayPortletRenderRequest.addParameter(
+				"assetCategoryId",
+				String.valueOf(assetCategory1.getCategoryId()));
+			mockLiferayPortletRenderRequest.addParameter(
+				"assetCategoryId",
+				String.valueOf(assetCategory2.getCategoryId()));
+
+			SearchContainer<Object> searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			Assert.assertEquals(2, searchContainer.getTotal());
+
+			List<Object> results = searchContainer.getResults();
+
+			Stream<Object> stream = results.stream();
+
+			Assert.assertTrue(
+				stream.anyMatch(
+					result -> Objects.equals(
+						journalArticle1.getTitle(LocaleUtil.US),
+						ReflectionTestUtil.invoke(
+							result, "getTitle", new Class<?>[] {Locale.class},
+							LocaleUtil.US))));
+
+			stream = results.stream();
+
+			Assert.assertTrue(
+				stream.anyMatch(
+					result -> Objects.equals(
+						journalArticle2.getTitle(LocaleUtil.US),
+						ReflectionTestUtil.invoke(
+							result, "getTitle", new Class<?>[] {Locale.class},
+							LocaleUtil.US))));
+		}
+		finally {
+			_assetCategoryLocalService.deleteAssetCategory(
+				assetCategory1.getCategoryId());
+			_assetCategoryLocalService.deleteAssetCategory(
+				assetCategory2.getCategoryId());
+		}
 	}
 
 	@Test

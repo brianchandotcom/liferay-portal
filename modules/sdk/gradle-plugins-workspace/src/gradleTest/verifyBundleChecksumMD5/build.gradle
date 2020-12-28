@@ -1,16 +1,21 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
-	bundleChecksumMD5 "107aa96e14fc9fe09886ad76212ec385"
+	bundleChecksumMD5 "ef4fcaac5910613955ea1104613dbfe6"
 }
 
 runGradleTest {
-	dependsOn initBundle
+	dependsOn verifyBundle
 
 	doLast {
-		
-		File generatedFile = new File(initBundle.destinationDir);
+		File downloadFile = downloadBundle.outputs.files.singleFile
 
-		assert !generatedFile.exists()
+		String name = downloadFile.name
+
+		assert name == "liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
+
+		File md5File = new File(System.getProperty("user.home") + "/.liferay/workspace/" + name + ".MD5")
+
+		assert md5File.exists()
 	}
 }

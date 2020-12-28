@@ -46,6 +46,8 @@ public class CommerceAccountConstants {
 
 	public static final long DEFAULT_PARENT_ACCOUNT_ID = 0;
 
+	public static final String RESOURCE_NAME = "com.liferay.commerce.account";
+
 	public static final String ROLE_NAME_ACCOUNT_ADMINISTRATOR =
 		"Account Administrator";
 

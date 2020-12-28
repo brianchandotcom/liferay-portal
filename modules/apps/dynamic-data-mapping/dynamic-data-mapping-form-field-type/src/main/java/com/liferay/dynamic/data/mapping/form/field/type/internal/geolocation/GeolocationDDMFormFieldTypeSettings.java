@@ -28,7 +28,13 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
  */
 @DDMForm(
 	rules = {
-		@DDMFormRule(actions = "setVisible('type', false)", condition = "TRUE")
+		@DDMFormRule(
+			actions = {
+				"setVisible('dataType', false)",
+				"setVisible('predefinedValue', false)"
+			},
+			condition = "TRUE"
+		)
 	}
 )
 @DDMFormLayout(
@@ -67,6 +73,10 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 )
 public interface GeolocationDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
+
+	@DDMFormField(predefinedValue = "geolocation", required = true)
+	@Override
+	public String dataType();
 
 	@DDMFormField(
 		label = "%searchable", optionLabels = {"%disable", "%keyword", "%text"},

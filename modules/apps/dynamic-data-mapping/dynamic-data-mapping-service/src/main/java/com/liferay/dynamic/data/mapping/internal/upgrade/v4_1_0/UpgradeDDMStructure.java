@@ -179,7 +179,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	private void _upgradeDateField(JSONObject jsonObject) {
 		jsonObject.put(
-			"dataType", "string"
+			"dataType", "date"
 		).put(
 			"type", "date"
 		).put(
@@ -446,7 +446,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	private void _upgradeGeolocation(JSONObject jsonObject) {
 		jsonObject.put(
-			"dataType", "string"
+			"dataType", "geolocation"
 		).put(
 			"type", "geolocation"
 		);

@@ -996,7 +996,7 @@ public class ContentDashboardAdminPortletTest {
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
-				serviceContext.getScopeGroupId(), "audience");
+				serviceContext.getScopeGroupId(), "topic");
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			_user.getUserId(), _company.getGroupId(),
@@ -1239,6 +1239,62 @@ public class ContentDashboardAdminPortletTest {
 			ReflectionTestUtil.invoke(
 				results.get(1), "getTitle", new Class<?>[] {Locale.class},
 				LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetSearchContainerWithInternalAssetCategory()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_company.getCompanyId(), _company.getGroupId(),
+				_user.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), "audience");
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			_user.getUserId(), _company.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		try {
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			_journalArticleLocalService.updateAsset(
+				_user.getUserId(), journalArticle,
+				new long[] {assetCategory.getCategoryId()}, new String[0],
+				new long[0], null);
+
+			JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+				_getMockLiferayPortletRenderRequest();
+
+			mockLiferayPortletRenderRequest.setParameter(
+				"assetCategoryId",
+				String.valueOf(assetCategory.getCategoryId()));
+
+			SearchContainer<Object> searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			Assert.assertEquals(1, searchContainer.getTotal());
+
+			List<Object> results = searchContainer.getResults();
+
+			Assert.assertEquals(
+				journalArticle.getTitle(LocaleUtil.US),
+				ReflectionTestUtil.invoke(
+					results.get(0), "getTitle", new Class<?>[] {Locale.class},
+					LocaleUtil.US));
+		}
+		finally {
+			_assetCategoryLocalService.deleteAssetCategory(
+				assetCategory.getCategoryId());
+		}
 	}
 
 	@Test

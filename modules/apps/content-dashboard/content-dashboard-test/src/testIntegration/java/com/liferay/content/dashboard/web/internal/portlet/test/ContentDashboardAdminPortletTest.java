@@ -1111,58 +1111,6 @@ public class ContentDashboardAdminPortletTest {
 	}
 
 	@Test
-	public void testGetSearchContainerWithAuthors() throws Exception {
-		User user = UserTestUtil.addGroupAdminUser(_group);
-
-		try {
-			JournalArticle journalArticle1 = JournalTestUtil.addArticle(
-				user.getUserId(), _group.getGroupId(), 0);
-			JournalArticle journalArticle2 = JournalTestUtil.addArticle(
-				_user.getUserId(), _group.getGroupId(), 0);
-
-			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-				_getMockLiferayPortletRenderRequest();
-
-			mockLiferayPortletRenderRequest.setParameter(
-				"authorIds",
-				new String[] {
-					String.valueOf(user.getUserId()),
-					String.valueOf(_user.getUserId())
-				});
-
-			SearchContainer<Object> searchContainer = _getSearchContainer(
-				mockLiferayPortletRenderRequest);
-
-			Assert.assertEquals(2, searchContainer.getTotal());
-
-			List<Object> results = searchContainer.getResults();
-
-			Stream<Object> stream = results.stream();
-
-			Assert.assertTrue(
-				stream.anyMatch(
-					result -> Objects.equals(
-						journalArticle1.getTitle(LocaleUtil.US),
-						ReflectionTestUtil.invoke(
-							result, "getTitle", new Class<?>[] {Locale.class},
-							LocaleUtil.US))));
-
-			stream = results.stream();
-
-			Assert.assertTrue(
-				stream.anyMatch(
-					result -> Objects.equals(
-						journalArticle2.getTitle(LocaleUtil.US),
-						ReflectionTestUtil.invoke(
-							result, "getTitle", new Class<?>[] {Locale.class},
-							LocaleUtil.US))));
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-		}
-	}
-
-	@Test
 	public void testGetSearchContainerWithContentDashboardItemType()
 		throws Exception {
 
@@ -1318,6 +1266,58 @@ public class ContentDashboardAdminPortletTest {
 			ReflectionTestUtil.invoke(
 				results.get(0), "getTitle", new Class<?>[] {Locale.class},
 				LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetSearchContainerWithMultipleAuthors() throws Exception {
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		try {
+			JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+				user.getUserId(), _group.getGroupId(), 0);
+			JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+				_user.getUserId(), _group.getGroupId(), 0);
+
+			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+				_getMockLiferayPortletRenderRequest();
+
+			mockLiferayPortletRenderRequest.setParameter(
+				"authorIds",
+				new String[] {
+					String.valueOf(user.getUserId()),
+					String.valueOf(_user.getUserId())
+				});
+
+			SearchContainer<Object> searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			Assert.assertEquals(2, searchContainer.getTotal());
+
+			List<Object> results = searchContainer.getResults();
+
+			Stream<Object> stream = results.stream();
+
+			Assert.assertTrue(
+				stream.anyMatch(
+					result -> Objects.equals(
+						journalArticle1.getTitle(LocaleUtil.US),
+						ReflectionTestUtil.invoke(
+							result, "getTitle", new Class<?>[] {Locale.class},
+							LocaleUtil.US))));
+
+			stream = results.stream();
+
+			Assert.assertTrue(
+				stream.anyMatch(
+					result -> Objects.equals(
+						journalArticle2.getTitle(LocaleUtil.US),
+						ReflectionTestUtil.invoke(
+							result, "getTitle", new Class<?>[] {Locale.class},
+							LocaleUtil.US))));
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test

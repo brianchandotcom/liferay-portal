@@ -15,14 +15,15 @@
 package com.liferay.commerce.inventory.internal.permission;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.permission.CommerceInventoryWarehousePermission;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -141,8 +142,8 @@ public class CommerceInventoryWarehousePermissionImpl
 			return true;
 		}
 
-		if (_portalPermission.contains(
-				PermissionThreadLocal.getPermissionChecker(),
+		if (_portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), null,
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
 			return true;
@@ -158,7 +159,9 @@ public class CommerceInventoryWarehousePermissionImpl
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
 
-	@Reference
-	private PortalPermission _portalPermission;
+	@Reference(
+		target = "(resource.name=" + CommerceInventoryConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

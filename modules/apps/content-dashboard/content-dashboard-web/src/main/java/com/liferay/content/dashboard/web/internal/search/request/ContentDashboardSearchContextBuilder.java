@@ -14,6 +14,8 @@
 
 package com.liferay.content.dashboard.web.internal.search.request;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,9 +47,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentDashboardSearchContextBuilder {
 
 	public ContentDashboardSearchContextBuilder(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		AssetCategoryLocalService assetCategoryLocalService,
+		AssetVocabularyLocalService assetVocabularyLocalService) {
 
 		_httpServletRequest = httpServletRequest;
+		_assetCategoryLocalService = assetCategoryLocalService;
+		_assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
 	public SearchContext build() {
@@ -179,6 +185,8 @@ public class ContentDashboardSearchContextBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentDashboardSearchContextBuilder.class);
 
+	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private Integer _end;
 	private final HttpServletRequest _httpServletRequest;
 	private Sort _sort;

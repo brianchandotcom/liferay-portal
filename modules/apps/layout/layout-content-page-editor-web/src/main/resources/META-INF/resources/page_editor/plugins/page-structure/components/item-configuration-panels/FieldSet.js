@@ -70,11 +70,27 @@ export const FieldSet = ({
 							field.type &&
 							FRAGMENT_CONFIGURATION_FIELDS[field.type];
 
-						const fieldValue = field.localizable
-							? values[field.name][languageId] ||
-							  values[field.name][config.defaultLanguageId] ||
-							  field.defaultValue
-							: values[field.name] || field.defaultValue;
+						const fieldValueObject = values[field.name];
+						let fieldValue = field.defaultValue;
+
+						if (field.localizable) {
+							fieldValue = Object.keys(fieldValueObject).includes(
+								languageId
+							)
+								? fieldValueObject[languageId]
+								: Object.keys(fieldValueObject).includes(
+										config.defaultLanguageId
+								  )
+								? values[field.name][config.defaultLanguageId]
+								: field.defaultValue;
+						}
+						else {
+							fieldValue = Object.keys(values).includes(
+								field.name
+							)
+								? values[field.name]
+								: field.defaultValue;
+						}
 
 						const visible =
 							!field.dependencies ||

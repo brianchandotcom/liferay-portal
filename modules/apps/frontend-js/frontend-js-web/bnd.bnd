@@ -15,9 +15,6 @@ Liferay-JS-Submodules-Bridge: frontend-js-web
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="liferay.js";\
-		version:Version="${Bundle-Version}",\
-	soy;\
-		type="frontend-js-web";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /frontend-js-web
 -donotcopy: (\.touch|.*_diffs.*)

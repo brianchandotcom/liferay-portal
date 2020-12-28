@@ -1,7 +1,6 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildClay(type: Copy)
-task buildLodash(type: Copy)
 
 File jsDestinationDir = file("tmp/META-INF/resources")
 

@@ -14,6 +14,9 @@
 
 package com.liferay.content.dashboard.web.internal.search.request;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.json.JSONException;
@@ -36,6 +39,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -191,5 +196,53 @@ public class ContentDashboardSearchContextBuilder {
 	private final HttpServletRequest _httpServletRequest;
 	private Sort _sort;
 	private Integer _start;
+
+	private static class AssetCategoryIds {
+
+		public AssetCategoryIds(
+			long[] assetCategoryIds,
+			AssetCategoryLocalService assetCategoryLocalService,
+			AssetVocabularyLocalService assetVocabularyLocalService) {
+
+			List<Long> externalAssetCategoryIds = new ArrayList<>();
+			List<Long> internalAssetCategoryIds = new ArrayList<>();
+
+			for (long assetCategoryId : assetCategoryIds) {
+				AssetCategory assetCategory =
+					assetCategoryLocalService.fetchAssetCategory(
+						assetCategoryId);
+
+				AssetVocabulary assetVocabulary =
+					assetVocabularyLocalService.fetchAssetVocabulary(
+						assetCategory.getVocabularyId());
+
+				if (assetVocabulary.getVisibilityType() ==
+						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {
+
+					internalAssetCategoryIds.add(assetCategoryId);
+				}
+				else {
+					externalAssetCategoryIds.add(assetCategoryId);
+				}
+			}
+
+			_externalAssetCategoryIds = ArrayUtil.toLongArray(
+				externalAssetCategoryIds);
+			_internalAssetCategoryIds = ArrayUtil.toLongArray(
+				internalAssetCategoryIds);
+		}
+
+		public long[] getExternalAssetCategoryIds() {
+			return _externalAssetCategoryIds;
+		}
+
+		public long[] getInternalAssetCategoryIds() {
+			return _internalAssetCategoryIds;
+		}
+
+		private final long[] _externalAssetCategoryIds;
+		private final long[] _internalAssetCategoryIds;
+
+	}
 
 }

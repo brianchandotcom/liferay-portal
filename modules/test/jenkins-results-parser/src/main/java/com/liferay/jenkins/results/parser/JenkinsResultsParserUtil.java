@@ -1040,6 +1040,34 @@ public class JenkinsResultsParserUtil {
 		return _getCanonicalPath(canonicalFile);
 	}
 
+	public static String getCIProperty(
+		String branchName, String key, String repositoryName) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://raw.githubusercontent.com/liferay/");
+		sb.append(repositoryName);
+		sb.append("/");
+		sb.append(branchName);
+		sb.append("/ci.properties");
+
+		Properties ciProperties = new Properties();
+
+		try {
+			String ciPropertiesString = toString(sb.toString(), true);
+
+			ciProperties.load(new StringReader(ciPropertiesString));
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"Unable to load ci.properties from " + sb.toString());
+
+			return null;
+		}
+
+		return ciProperties.getProperty(key);
+	}
+
 	public static String getCohortName() {
 		String jenkinsURL = System.getenv("JENKINS_URL");
 
@@ -2751,7 +2779,9 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorizationHeader == null) &&
-					url.startsWith("https://api.github.com")) {
+					(url.startsWith("https://api.github.com") ||
+					 url.startsWith(
+						 "https://raw.githubusercontent.com/liferay/"))) {
 
 					Properties buildProperties = getBuildProperties();
 

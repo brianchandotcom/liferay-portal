@@ -36,6 +36,7 @@ import com.liferay.portal.search.searcher.Searcher;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -129,9 +130,24 @@ public class ContentDashboardItemSearchContainerFactory {
 	}
 
 	private String _getOrderByType() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
-			"desc");
+		String orderByCol = _getOrderByCol();
+
+		String orderByType = ParamUtil.getString(
+			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM);
+
+		if (Objects.equals(orderByCol, "title")) {
+			if (Objects.equals("desc", orderByType)) {
+				return "desc";
+			}
+
+			return "asc";
+		}
+
+		if (Objects.equals("asc", orderByType)) {
+			return "asc";
+		}
+
+		return "desc";
 	}
 
 	private SearchResponse _getSearchResponse(int end, int start) {

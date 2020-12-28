@@ -180,6 +180,170 @@ const dataDefinitionField = {
 	},
 };
 
+export const dataDefinitionWithAllTypes = {
+	availableLanguageIds: ['en_US'],
+	dataDefinitionFields: [
+		{
+			customProperties: {},
+			fieldType: 'date',
+			label: {
+				en_US: 'School Date',
+			},
+			localizable: true,
+			name: 'fieldDate',
+			nestedDataDefinitionFields: [],
+			readOnly: false,
+			repeatable: false,
+			required: false,
+			showLabel: true,
+		},
+		{
+			customProperties: {
+				displayStyle: 'singleline',
+			},
+			fieldType: 'text',
+			label: {
+				en_US: 'School',
+			},
+			localizable: true,
+			name: 'fieldText',
+			repeatable: false,
+			required: false,
+			showLabel: true,
+		},
+		{
+			customProperties: {
+				multiple: false,
+				options: {
+					en_US: [
+						{
+							label: 'Grade A',
+							value: 'Opo72476108',
+						},
+						{
+							label: 'Grade B',
+							value: 'Opo58255447',
+						},
+					],
+				},
+			},
+			fieldType: 'select',
+			label: {
+				en_US: 'School Grade',
+			},
+			localizable: true,
+			name: 'fieldSchoolGrade',
+			repeatable: false,
+			required: false,
+			showLabel: true,
+		},
+		{
+			customProperties: {
+				fieldReference: 'fieldRadio',
+				options: {
+					en_US: [
+						{
+							label: 'Option A',
+							value: 'Opo40716029',
+						},
+						{
+							label: 'Option B',
+							value: 'Opo72919976',
+						},
+					],
+				},
+			},
+			fieldType: 'radio',
+			label: {
+				en_US: 'School Option',
+			},
+			localizable: true,
+			name: 'fieldRadio',
+			repeatable: false,
+			required: false,
+			showLabel: true,
+		},
+		{
+			customProperties: {
+				fieldReference: 'fieldSchoolMark',
+				options: {
+					en_US: [
+						{
+							label: 'Logo A',
+							value: 'Opo17059431',
+						},
+						{
+							label: 'Logo B',
+							value: 'Opo96017747',
+						},
+					],
+				},
+				showAsSwitcher: false,
+			},
+			fieldType: 'checkbox_multiple',
+			label: {
+				en_US: 'School Mark',
+			},
+			localizable: true,
+			name: 'fieldSchoolMark',
+			repeatable: false,
+			required: false,
+			showLabel: true,
+		},
+		{
+			customProperties: {},
+			fieldType: 'numeric',
+			label: {
+				en_US: 'School Number',
+			},
+			localizable: true,
+			name: 'fieldNumber',
+			repeatable: false,
+			required: false,
+			showLabel: true,
+		},
+		{
+			customProperties: {},
+			fieldType: 'document_library',
+			label: {
+				en_US: 'School Register',
+			},
+			localizable: true,
+			name: 'fieldRegister',
+			repeatable: false,
+			required: false,
+			showLabel: true,
+		},
+		{
+			customProperties: {},
+			fieldType: 'fieldset',
+			label: {en_US: 'FieldSet Address'},
+			localizable: false,
+			name: 'fieldSetAddress',
+			nestedDataDefinitionFields: [
+				{
+					customProperties: {
+						displayStyle: 'singleline',
+						fieldReference: 'fieldFSAddress',
+						nativeField: false,
+					},
+					fieldType: 'text',
+					label: {en_US: 'Text EN'},
+					localizable: true,
+					name: 'fieldFSAddress',
+					repeatable: false,
+					required: false,
+					showLabel: true,
+				},
+			],
+			repeatable: false,
+			required: false,
+			showLabel: true,
+		},
+	],
+	defaultLanguageId: 'en_US',
+};
+
 const dataDefinition = {
 	availableLanguageIds: ['en_US'],
 	dataDefinitionFields: [dataDefinitionField],

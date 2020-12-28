@@ -111,16 +111,17 @@ describe('EditEntry', () => {
 	});
 
 	it('renders FieldPreview for Date', async () => {
-		const {queryByText} = render(
+		const {asFragment, queryByText} = render(
 			<FieldPreviewWrapper fieldName="fieldDate" />
 		);
 
 		expect(queryByText('School Date')).toBeTruthy();
 		expect(queryByText('12/23/2020')).toBeTruthy();
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders FieldPreview for Text', async () => {
-		const {queryByText, rerender} = render(
+		const {asFragment, queryByText, rerender} = render(
 			<FieldPreviewWrapper fieldName="fieldText" />
 		);
 
@@ -133,19 +134,21 @@ describe('EditEntry', () => {
 		rerender(<FieldPreviewWrapper fieldName="fieldText" />);
 
 		expect(queryByText('Liferay School')).toBeTruthy();
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders FieldPreview for Number', async () => {
-		const {queryByText} = render(
+		const {asFragment, queryByText} = render(
 			<FieldPreviewWrapper fieldName="fieldNumber" />
 		);
 
 		expect(queryByText('School Number')).toBeTruthy();
 		expect(queryByText('1234')).toBeTruthy();
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders FieldPreview for CheckBox', async () => {
-		const {queryAllByText, queryByText, rerender} = render(
+		const {asFragment, queryAllByText, queryByText, rerender} = render(
 			<FieldPreviewWrapper fieldName="fieldSchoolMark" />
 		);
 
@@ -161,10 +164,11 @@ describe('EditEntry', () => {
 		dataRecords.fieldSchoolMark.en_US.push('Logo C');
 
 		expect(queryAllByText(/Logo/)).toHaveLength(2);
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders FieldPreview for Select', async () => {
-		const {container, queryByText, rerender} = render(
+		const {asFragment, container, queryByText, rerender} = render(
 			<FieldPreviewWrapper fieldName="fieldSchoolGrade" />
 		);
 
@@ -193,10 +197,11 @@ describe('EditEntry', () => {
 		expect(container.querySelectorAll('li')).toHaveLength(2);
 		expect(queryByText('Grade A')).toBeTruthy();
 		expect(queryByText('Grade B')).toBeTruthy();
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders FieldPreview for Radio', async () => {
-		const {queryByText, rerender} = render(
+		const {asFragment, queryByText, rerender} = render(
 			<FieldPreviewWrapper fieldName="fieldRadio" />
 		);
 
@@ -209,10 +214,11 @@ describe('EditEntry', () => {
 		rerender(<FieldPreviewWrapper fieldName="fieldRadio" />);
 
 		expect(queryByText('Option A, Option B')).toBeTruthy();
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders FieldPreview for DocumentLibrary', async () => {
-		const {container, queryByText, rerender} = render(
+		const {asFragment, container, queryByText, rerender} = render(
 			<FieldPreviewWrapper fieldName="fieldRegister" />
 		);
 
@@ -261,10 +267,11 @@ describe('EditEntry', () => {
 		expect(window.location.href).toBe(
 			'//documents/123/123/school_photo.jpg?download=true'
 		);
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders FieldPreview for Section', async () => {
-		const {queryByText} = render(
+		const {asFragment, queryByText} = render(
 			<AppContextProvider userLanguageId="en_US">
 				<SectionRenderer
 					collapsible
@@ -278,5 +285,6 @@ describe('EditEntry', () => {
 
 		expect(queryByText('FieldSet Address')).toBeTruthy();
 		expect(queryByText('Address CustomField')).toBeTruthy();
+		expect(asFragment()).toMatchSnapshot();
 	});
 });

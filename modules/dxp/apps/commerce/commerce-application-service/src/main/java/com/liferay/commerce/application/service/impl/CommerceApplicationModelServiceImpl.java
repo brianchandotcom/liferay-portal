@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.List;
 
@@ -38,8 +38,12 @@ public class CommerceApplicationModelServiceImpl
 			String year)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		PortletResourcePermission portletResourcePermission =
+			_commerceApplicationModelModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceApplicationActionKeys.ADD_COMMERCE_MODEL);
 
 		return commerceApplicationModelLocalService.addCommerceApplicationModel(

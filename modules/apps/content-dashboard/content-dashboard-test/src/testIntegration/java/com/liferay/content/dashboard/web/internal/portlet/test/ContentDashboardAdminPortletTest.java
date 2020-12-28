@@ -1380,29 +1380,15 @@ public class ContentDashboardAdminPortletTest {
 			SearchContainer<Object> searchContainer = _getSearchContainer(
 				mockLiferayPortletRenderRequest);
 
-			Assert.assertEquals(2, searchContainer.getTotal());
+			Assert.assertEquals(1, searchContainer.getTotal());
 
 			List<Object> results = searchContainer.getResults();
 
-			Stream<Object> stream = results.stream();
-
-			Assert.assertTrue(
-				stream.anyMatch(
-					result -> Objects.equals(
-						journalArticle1.getTitle(LocaleUtil.US),
-						ReflectionTestUtil.invoke(
-							result, "getTitle", new Class<?>[] {Locale.class},
-							LocaleUtil.US))));
-
-			stream = results.stream();
-
-			Assert.assertTrue(
-				stream.anyMatch(
-					result -> Objects.equals(
-						journalArticle2.getTitle(LocaleUtil.US),
-						ReflectionTestUtil.invoke(
-							result, "getTitle", new Class<?>[] {Locale.class},
-							LocaleUtil.US))));
+			Assert.assertEquals(
+				journalArticle2.getTitle(LocaleUtil.US),
+				ReflectionTestUtil.invoke(
+					results.get(0), "getTitle", new Class<?>[] {Locale.class},
+					LocaleUtil.US));
 		}
 		finally {
 			_assetCategoryLocalService.deleteAssetCategory(
@@ -1651,29 +1637,15 @@ public class ContentDashboardAdminPortletTest {
 			SearchContainer<Object> searchContainer = _getSearchContainer(
 				mockLiferayPortletRenderRequest);
 
-			Assert.assertEquals(2, searchContainer.getTotal());
+			Assert.assertEquals(1, searchContainer.getTotal());
 
 			List<Object> results = searchContainer.getResults();
 
-			Stream<Object> stream = results.stream();
-
-			Assert.assertTrue(
-				stream.anyMatch(
-					result -> Objects.equals(
-						journalArticle1.getTitle(LocaleUtil.US),
-						ReflectionTestUtil.invoke(
-							result, "getTitle", new Class<?>[] {Locale.class},
-							LocaleUtil.US))));
-
-			stream = results.stream();
-
-			Assert.assertTrue(
-				stream.anyMatch(
-					result -> Objects.equals(
-						journalArticle2.getTitle(LocaleUtil.US),
-						ReflectionTestUtil.invoke(
-							result, "getTitle", new Class<?>[] {Locale.class},
-							LocaleUtil.US))));
+			Assert.assertEquals(
+				journalArticle2.getTitle(LocaleUtil.US),
+				ReflectionTestUtil.invoke(
+					results.get(0), "getTitle", new Class<?>[] {Locale.class},
+					LocaleUtil.US));
 		}
 		finally {
 			_assetCategoryLocalService.deleteAssetCategory(

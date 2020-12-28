@@ -2145,7 +2145,7 @@ public class DataFactory {
 			ddmFieldModel.setFieldName(
 				nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i - 1));
 			ddmFieldModel.setFieldType("string");
-			ddmFieldModel.setInstanceId(StringUtil.randomId());
+			ddmFieldModel.setInstanceId(StringUtil.randomString());
 			ddmFieldModel.setLocalizable(true);
 			ddmFieldModel.setPriority(i);
 

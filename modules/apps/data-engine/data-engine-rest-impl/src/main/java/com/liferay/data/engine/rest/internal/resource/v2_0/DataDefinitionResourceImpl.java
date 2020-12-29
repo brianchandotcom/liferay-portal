@@ -311,13 +311,19 @@ public class DataDefinitionResourceImpl
 			Long siteId, String contentType, String dataDefinitionKey)
 		throws Exception {
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			siteId,
+			_dataDefinitionContentTypeTracker.getClassNameId(contentType),
+			dataDefinitionKey);
+
+		_dataDefinitionModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			ddmStructure.getStructureId(), ActionKeys.VIEW);
+
 		return DataDefinitionUtil.toDataDefinition(
 			_dataDefinitionContentTypeTracker, _ddmFormFieldTypeServicesTracker,
-			_ddmStructureLocalService.getStructure(
-				siteId,
-				_dataDefinitionContentTypeTracker.getClassNameId(contentType),
-				dataDefinitionKey),
-			_ddmStructureLayoutLocalService, _spiDDMFormRuleConverter);
+			ddmStructure, _ddmStructureLayoutLocalService,
+			_spiDDMFormRuleConverter);
 	}
 
 	@Override

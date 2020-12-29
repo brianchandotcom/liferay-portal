@@ -14,24 +14,26 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.util.HashMap;
+import com.liferay.petra.function.UnsafeConsumer;
+
+import java.util.ArrayList;
 
 /**
- * @author Julien Castelain
+ * @author Kresimir Coko
  */
-public class MultiSelectLocator extends HashMap<String, String> {
+public class MultiselectItemList extends ArrayList<MultiselectItem> {
 
-	public MultiSelectLocator() {
-		put("label", "label");
-		put("value", "value");
-	}
+	public void add(UnsafeConsumer<MultiselectItem, Exception> unsafeConsumer) {
+		MultiselectItem multiselectItem = new MultiselectItem();
 
-	public void setLabel(String label) {
-		put("label", label);
-	}
+		try {
+			unsafeConsumer.accept(multiselectItem);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 
-	public void setValue(String value) {
-		put("value", value);
+		add(multiselectItem);
 	}
 
 }

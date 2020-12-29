@@ -2694,8 +2694,8 @@
 	</tag>
 	<tag>
 		<description></description>
-		<name>multi-select</name>
-		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.MultiSelectTag</tag-class>
+		<name>multiselect</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.MultiselectTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>

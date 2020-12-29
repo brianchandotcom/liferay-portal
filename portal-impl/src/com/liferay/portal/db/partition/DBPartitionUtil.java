@@ -80,18 +80,19 @@ public class DBPartitionUtil {
 					if (_isControlTable(dbInspector, tableName)) {
 						statement.executeUpdate(
 							StringBundler.concat(
-								"create view ", _getSchemaName(companyId),
-								StringPool.PERIOD, tableName, " as select * ",
-								"from ", _defaultSchemaName, StringPool.PERIOD,
+								"create or replace view ",
+								_getSchemaName(companyId), StringPool.PERIOD,
+								tableName, " as select * from ",
+								_defaultSchemaName, StringPool.PERIOD,
 								tableName));
 					}
 					else {
 						statement.executeUpdate(
 							StringBundler.concat(
-								"create table ", _getSchemaName(companyId),
-								StringPool.PERIOD, tableName, " like ",
-								_defaultSchemaName, StringPool.PERIOD,
-								tableName));
+								"create table if not exists ",
+								_getSchemaName(companyId), StringPool.PERIOD,
+								tableName, " like ", _defaultSchemaName,
+								StringPool.PERIOD, tableName));
 					}
 				}
 			}

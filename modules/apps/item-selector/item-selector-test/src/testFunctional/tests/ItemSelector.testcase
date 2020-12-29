@@ -1005,6 +1005,60 @@ definition {
 			webContentTitle = "WC WebContent From Site");
 	}
 
+	@description = "This ensures that the video thumbnails can be viewed in Item Selector."
+	@priority = "5"
+	test ViewVideoThumbnailsViaWC {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Shortened URL Video",
+			videoURL = "https://youtu.be/HOdbzGCI5ME");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test Vimeo Video",
+			videoURL = "https://vimeo.com/483035084");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
+
+		ItemSelector.viewCardThumbnails(
+			cardList = "Test YouTube Video,Test Shortened URL Video,Test Vimeo Video",
+			depotName = "Test Depot Name",
+			navTab = "Documents and Media");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		ItemSelector.gotoItemSelectorViaCKEditor(video = "true");
+
+		ItemSelector.viewListThumbnails(
+			depotName = "Test Depot Name",
+			listEntry = "Test YouTube Video,Test Shortened URL Video,Test Vimeo Video",
+			navTab = "Documents and Media");
+	}
+
 	@description = "It ensures that the web content draft in an Asset Library cannot be found when searching in an Item Selector in that Library."
 	@priority = "4"
 	test ViewWCDraftViaFilterResults {

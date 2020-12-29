@@ -644,4 +644,63 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_DETAIL_EXTERNAL_VIDEO_THUMBNAIL");
 	}
 
+	@description = "This ensures that the thumbnail of Vimeo video can be viewed in DM."
+	@priority = "5"
+	test ViewVimeoThumbnail {
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		VideoShortcut.addPG(
+			videoShortcutTitle = "Test Vimeo Video",
+			videoURL = "https://vimeo.com/483035084");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		LexiconCard.viewCardThumbnail(card = "Test Vimeo Video");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertVisible(
+			key_list = "Test Vimeo Video",
+			locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_THUMBNAIL_LIST");
+	}
+
+	@description = "This ensures that the thumbnail of YouTube video can be viewed in DM."
+	@priority = "5"
+	test ViewYouTubeThumbnail {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://youtu.be/HOdbzGCI5ME");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertVisible(
+			key_list = "Test YouTube Video",
+			locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_THUMBNAIL_LIST");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		LexiconCard.viewCardThumbnail(card = "Test YouTube Video");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.editCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoShortcutTitleEdit = "Test YouTube Video Edit",
+			videoURLEdit = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertVisible(
+			key_list = "Test YouTube Video",
+			locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_THUMBNAIL_LIST");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		LexiconCard.viewCardThumbnail(card = "Test YouTube Video");
+	}
+
 }

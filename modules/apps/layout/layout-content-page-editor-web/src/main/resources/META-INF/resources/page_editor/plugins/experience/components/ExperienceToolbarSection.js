@@ -49,8 +49,6 @@ export default function ExperienceToolbarSection({selectId}) {
 	const segments = useMemo(
 		() => Object.values(config.availableSegmentsEntries),
 		[]
-	).filter(
-		(segment) => segment.segmentsEntryId !== config.defaultSegmentsEntryId
 	);
 
 	const selectedExperience =

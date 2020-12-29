@@ -103,6 +103,8 @@ definition {
 		}
 
 		if (isSet(dmDocumentTypeFieldRequiredEdit)) {
+			DMDocumentType.gotoTab(tabName = "Builder");
+
 			DMDocumentType.gotoEditField(fieldName = "${dmDocumentTypeFieldRequiredEdit}");
 
 			FormFields.enableSwitcher(fieldName = "Required Field");

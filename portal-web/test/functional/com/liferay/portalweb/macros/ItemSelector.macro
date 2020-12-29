@@ -551,6 +551,26 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro viewCardThumbnails {
+		if (isSet(depotName)) {
+			ItemSelector.changeWorkspaces(
+				customImage = "${customImage}",
+				navTab = "${navTab}",
+				workspacesType = "Asset Library");
+
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+		else {
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		for (var card : list "${cardList}") {
+			LexiconCard.viewCardThumbnail(card = "${card}");
+		}
+	}
+
 	macro viewCurrentSiteFilterResults {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
@@ -650,6 +670,28 @@ definition {
 				key_tableEntry = "${videoShortcutTitle}",
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
 				value1 = "${videoShortcutTitle}");
+		}
+	}
+
+	macro viewListThumbnails {
+		if (isSet(depotName)) {
+			ItemSelector.changeWorkspaces(
+				customImage = "${customImage}",
+				navTab = "${navTab}",
+				workspacesType = "Asset Library");
+
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+		else {
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		for (var list : list "${listEntry}") {
+			AssertVisible(
+				key_list = "${list}",
+				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_THUMBNAIL_LIST");
 		}
 	}
 

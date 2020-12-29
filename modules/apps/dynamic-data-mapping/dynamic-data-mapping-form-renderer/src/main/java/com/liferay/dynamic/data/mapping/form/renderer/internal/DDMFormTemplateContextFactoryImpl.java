@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -152,6 +153,9 @@ public class DDMFormTemplateContextFactoryImpl
 		templateContext.put(
 			"defaultLanguageId",
 			LanguageUtil.getLanguageId(ddmForm.getDefaultLocale()));
+		templateContext.put(
+			"defaultSiteLanguageId",
+			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
 		templateContext.put(
 			"editingLanguageId", LanguageUtil.getLanguageId(locale));
 		templateContext.put(

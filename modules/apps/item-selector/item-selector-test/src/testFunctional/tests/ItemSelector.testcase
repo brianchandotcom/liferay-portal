@@ -454,6 +454,8 @@ definition {
 	@description = "This ensures that users can preview the Facebook video in item selector."
 	@priority = "5"
 	test PreviewFacebookVideo {
+		property test.name.skip.portal.instance = "ItemSelector#PreviewFacebookVideo";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -605,6 +607,8 @@ definition {
 	@description = "This ensures that users can preview the Twitch video in item selector."
 	@priority = "5"
 	test PreviewTwitchVideo {
+		property test.name.skip.portal.instance = "ItemSelector#PreviewTwitchVideo";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

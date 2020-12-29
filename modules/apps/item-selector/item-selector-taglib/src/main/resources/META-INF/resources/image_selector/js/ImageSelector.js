@@ -17,6 +17,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
+
 const SELECT_FILE_BUTTON = `<button class='btn btn-secondary' type='button'>${Liferay.Language.get(
 	'select-file'
 )}</button>`;
@@ -190,6 +192,8 @@ const ImageSelector = ({
 					handleClickPicture={handleSelectFileClick}
 				/>
 			)}
+
+			<DropHereInfo />
 		</div>
 	);
 };

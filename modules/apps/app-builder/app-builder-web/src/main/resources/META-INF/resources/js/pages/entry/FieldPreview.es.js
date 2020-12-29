@@ -97,7 +97,7 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 				<StringRenderer value={title} />
 			) : fileEntryId ? (
 				<ClayTooltipProvider>
-					<ClayButton.Group className="data-record-document-field">
+					<ClayButton.Group className="data-record-document-field mb-2">
 						<ClayButton
 							data-tooltip-align="bottom"
 							data-tooltip-delay="200"
@@ -254,9 +254,19 @@ const getFieldValueRenderer = (
 	}
 
 	if (fieldType === 'document_library') {
-		return ({value}) => (
-			<DocumentRenderer displayType={displayType} value={value} />
-		);
+		return ({value}) => {
+			if (repeatable) {
+				return value.map((repeatableValue, key) => (
+					<DocumentRenderer
+						displayType={displayType}
+						key={key}
+						value={repeatableValue}
+					/>
+				));
+			}
+
+			return <DocumentRenderer displayType={displayType} value={value} />;
+		};
 	}
 
 	if (fieldType === 'radio') {

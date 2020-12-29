@@ -338,6 +338,7 @@ public class DDMTemplateLocalServiceImpl
 	 * @return the new template
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMTemplate copyTemplate(
 			long userId, long templateId, Map<Locale, String> nameMap,
@@ -352,6 +353,7 @@ public class DDMTemplateLocalServiceImpl
 			serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMTemplate copyTemplate(
 			long userId, long templateId, ServiceContext serviceContext)
@@ -383,6 +385,7 @@ public class DDMTemplateLocalServiceImpl
 	 * @return the new templates
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public List<DDMTemplate> copyTemplates(
 			long userId, long classNameId, long oldClassPK, long newClassPK,
@@ -1646,20 +1649,77 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	protected DDMTemplate copyTemplate(
-			long userId, DDMTemplate template, long classPK,
+			long userId, DDMTemplate oldTemplate, long classPK,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		File smallImageFile = getSmallImageFile(template);
+		File smallImageFile = getSmallImageFile(oldTemplate);
 
-		return ddmTemplateLocalService.addTemplate(
-			userId, template.getGroupId(), template.getClassNameId(), classPK,
-			template.getResourceClassNameId(), null, nameMap, descriptionMap,
-			template.getType(), template.getMode(), template.getLanguage(),
-			template.getScript(), template.isCacheable(),
-			template.isSmallImage(), template.getSmallImageURL(),
-			smallImageFile, serviceContext);
+		// Template
+
+		if (!ddmWebConfiguration.enableTemplateCreation()) {
+			throw new TemplateCreationDisabledException();
+		}
+
+		User user = userLocalService.getUser(userId);
+
+		boolean smallImage = oldTemplate.isSmallImage();
+
+		byte[] smallImageBytes = null;
+
+		if (oldTemplate.isSmallImage()) {
+			try {
+				smallImageBytes = FileUtil.getBytes(smallImageFile);
+			}
+			catch (IOException ioException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException, ioException);
+				}
+			}
+
+			if ((smallImageBytes == null) &&
+				!Validator.isUrl(oldTemplate.getSmallImageURL())) {
+
+				smallImage = false;
+			}
+		}
+
+		String templateKey = String.valueOf(counterLocalService.increment());
+
+		validate(
+			oldTemplate.getGroupId(), oldTemplate.getClassNameId(), templateKey,
+			LocaleUtil.getSiteDefault(), nameMap, oldTemplate.getScript(),
+			smallImage, oldTemplate.getSmallImageURL(), smallImageFile,
+			smallImageBytes);
+
+		DDMTemplate template = addTemplate(
+			user, oldTemplate.getGroupId(), oldTemplate.getClassNameId(),
+			classPK, oldTemplate.getResourceClassNameId(), templateKey, nameMap,
+			descriptionMap, oldTemplate.getType(), oldTemplate.getMode(),
+			oldTemplate.getLanguage(), oldTemplate.getScript(),
+			oldTemplate.isCacheable(), smallImage,
+			oldTemplate.getSmallImageURL(), serviceContext);
+
+		// Resources
+
+		resourceLocalService.copyModelResources(
+			oldTemplate.getCompanyId(), DDMTemplate.class.getName(),
+			oldTemplate.getPrimaryKey(), template.getPrimaryKey());
+
+		// Small image
+
+		saveImages(
+			smallImage, template.getSmallImageId(), smallImageFile,
+			smallImageBytes);
+
+		// Template version
+
+		addTemplateVersion(
+			user, template, DDMTemplateConstants.VERSION_DEFAULT,
+			serviceContext);
+
+		return template;
 	}
 
 	protected String formatScript(String type, String language, String script)

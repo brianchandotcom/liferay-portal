@@ -367,22 +367,72 @@ public class DDMStructureLocalServiceImpl
 	 *         group permissions for the structure.
 	 * @return the new structure
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMStructure copyStructure(
-			long userId, long structureId, Map<Locale, String> nameMap,
+			long userId, long oldStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
-			structureId);
+		DDMStructure oldStructure = ddmStructurePersistence.findByPrimaryKey(
+			oldStructureId);
 
-		return addStructure(
-			userId, structure.getGroupId(), structure.getParentStructureId(),
-			structure.getClassNameId(), null, nameMap, descriptionMap,
-			structure.getDDMForm(), structure.getDDMFormLayout(),
-			structure.getStorageType(), structure.getType(), serviceContext);
+		// Structure
+
+		User user = userLocalService.getUser(userId);
+
+		String structureKey = String.valueOf(counterLocalService.increment());
+
+		validate(
+			oldStructure.getGroupId(), oldStructure.getParentStructureId(),
+			oldStructure.getClassNameId(), structureKey, nameMap,
+			oldStructure.getDDMForm());
+
+		DDMStructure structure = addStructure(
+			user, oldStructure.getGroupId(),
+			oldStructure.getParentStructureId(), oldStructure.getClassNameId(),
+			structureKey, nameMap, descriptionMap, oldStructure.getDDMForm(),
+			oldStructure.getStorageType(), oldStructure.getType(),
+			serviceContext);
+
+		// Resources
+
+		resourceLocalService.copyModelResources(
+			oldStructure.getCompanyId(), DDMStructure.class.getName(),
+			oldStructure.getPrimaryKey(), structure.getPrimaryKey());
+
+		// Structure version
+
+		DDMStructureVersion structureVersion = addStructureVersion(
+			user, structure, DDMStructureConstants.VERSION_DEFAULT,
+			serviceContext);
+
+		// Structure layout
+
+		if (oldStructure.getDDMFormLayout() != null) {
+			DDMStructureLayout structureLayout =
+				_ddmStructureLayoutLocalService.addStructureLayout(
+					userId, oldStructure.getGroupId(),
+					structureVersion.getStructureVersionId(),
+					oldStructure.getDDMFormLayout(), serviceContext);
+
+			structureLayout.setClassNameId(structure.getClassNameId());
+			structureLayout.setStructureLayoutKey(structure.getStructureKey());
+
+			_ddmStructureLayoutLocalService.updateDDMStructureLayout(
+				structureLayout);
+		}
+
+		// Data provider instance links
+
+		addDataProviderInstanceLinks(
+			oldStructure.getGroupId(), structure.getStructureId(),
+			oldStructure.getDDMForm());
+
+		return structure;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMStructure copyStructure(
 			long userId, long structureId, ServiceContext serviceContext)
@@ -391,12 +441,9 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		return addStructure(
-			userId, structure.getGroupId(), structure.getParentStructureId(),
-			structure.getClassNameId(), null, structure.getNameMap(),
-			structure.getDescriptionMap(), structure.getDDMForm(),
-			structure.getDDMFormLayout(), structure.getStorageType(),
-			structure.getType(), serviceContext);
+		return copyStructure(
+			userId, structureId, structure.getNameMap(),
+			structure.getDescriptionMap(), serviceContext);
 	}
 
 	/**

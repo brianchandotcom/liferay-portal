@@ -32,7 +32,6 @@ const ChangeTrackingIndicator = ({
 	getSelectPublicationsURL,
 	iconClass,
 	iconName,
-	namespace,
 	spritemap,
 	title,
 }) => {
@@ -49,6 +48,22 @@ const ChangeTrackingIndicator = ({
 	const [searchTerms, setSearchTerms] = useState('');
 	const [showMobile, setShowMobile] = useState(false);
 	const [showModal, setShowModal] = useState(false);
+
+	const indicatorDropdownItems = dropdownItems.slice(0);
+
+	for (let i = 0; i < indicatorDropdownItems.length; i++) {
+		const dropdownItem = indicatorDropdownItems[i];
+
+		if (dropdownItem.href === '') {
+			indicatorDropdownItems[i] = {
+				label: dropdownItem.label,
+				onClick: () => setShowModal(true),
+				symbolLeft: dropdownItem.symbolLeft,
+			};
+
+			break;
+		}
+	}
 
 	/* eslint-disable no-unused-vars */
 	const {observer, onClose} = useModal({
@@ -210,10 +225,6 @@ const ChangeTrackingIndicator = ({
 		setPage(1);
 	};
 
-	const onSelectPublication = () => {
-		setShowModal(true);
-	};
-
 	const renderList = () => {
 		if (!fetchData || !fetchData.entries) {
 			return '';
@@ -361,7 +372,7 @@ const ChangeTrackingIndicator = ({
 			return 1;
 		});
 
-		const dropdownItems = [
+		const toolbarDropdownItems = [
 			{
 				items,
 				label: Liferay.Language.get('order-by'),
@@ -374,7 +385,7 @@ const ChangeTrackingIndicator = ({
 				<ClayManagementToolbar.ItemList>
 					<ClayManagementToolbar.Item>
 						<ClayDropDownWithItems
-							items={dropdownItems}
+							items={toolbarDropdownItems}
 							spritemap={spritemap}
 							trigger={
 								<ClayButton
@@ -443,7 +454,9 @@ const ChangeTrackingIndicator = ({
 								onChange={(event) =>
 									setSearchTerms(event.target.value)
 								}
-								placeholder={`${Liferay.Language.get('search')}...`}
+								placeholder={`${Liferay.Language.get(
+									'search'
+								)}...`}
 								type="text"
 								value={searchTerms}
 							/>
@@ -455,7 +468,6 @@ const ChangeTrackingIndicator = ({
 									symbol="times"
 								/>
 								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('search')}
 									displayType="unstyled"
 									symbol="search"
 									type="submit"
@@ -559,22 +571,13 @@ const ChangeTrackingIndicator = ({
 		);
 	};
 
-	const onDestroyPortlet = function () {
-		Liferay.detach('destroyPortlet', onDestroyPortlet);
-		Liferay.detach(namespace + 'openDialog', onSelectPublication);
-	};
-
-	Liferay.on('destroyPortlet', onDestroyPortlet);
-
-	Liferay.on(namespace + 'openDialog', onSelectPublication);
-
 	return (
 		<>
 			{renderModal()}
 
 			<ClayDropDownWithItems
 				alignmentPosition={Align.BottomCenter}
-				items={dropdownItems}
+				items={indicatorDropdownItems}
 				trigger={
 					<button className="change-tracking-indicator-button">
 						<ClayIcon className={iconClass} symbol={iconName} />

@@ -42,7 +42,7 @@ public class DispatchTriggerTestUtil {
 
 		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), dispatchTrigger.getCompanyId(),
-			_randomCronExpression(), _randomTaskClusterMode(),
+			CronExpressionUtil.getCronExpression(), _randomTaskClusterMode(),
 			dispatchTrigger.getDispatchTaskExecutorType(),
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
 			_randomName(nameSalt), dispatchTrigger.isSystem(),
@@ -56,16 +56,12 @@ public class DispatchTriggerTestUtil {
 
 		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), user.getCompanyId(),
-			_randomCronExpression(), 0, RandomTestUtil.randomString(20),
+			CronExpressionUtil.getCronExpression(), 0,
+			RandomTestUtil.randomString(20),
 			RandomTestUtil.randomUnicodeProperties(
 				RandomTestUtil.randomInt(10, 30), 32, 64),
 			_randomName(nameSalt), RandomTestUtil.randomBoolean(),
 			user.getUserId());
-	}
-
-	private static String _randomCronExpression() {
-		return String.format(
-			"0 0 0 ? %d/2 * 2024", RandomTestUtil.randomInt(1, 12));
 	}
 
 	private static DispatchTrigger _randomDispatchTrigger(

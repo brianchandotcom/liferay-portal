@@ -37,6 +37,8 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -66,9 +69,11 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -135,8 +140,18 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		String articleId = ParamUtil.getString(
 			uploadPortletRequest, "articleId");
 		double version = ParamUtil.getDouble(uploadPortletRequest, "version");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "titleMapAsXML");
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		JSONObject titleValueJSONObject = _jsonFactory.createJSONObject(
+			ParamUtil.getString(uploadPortletRequest, "titleValue"));
+
+		Set<String> keySet = titleValueJSONObject.keySet();
+
+		keySet.forEach(
+			key -> titleMap.put(
+				LocaleUtil.fromLanguageId(key),
+				titleValueJSONObject.getString(key)));
 
 		String ddmStructureKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmStructureKey");
@@ -581,6 +596,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JournalHelper _journalHelper;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

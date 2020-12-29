@@ -99,7 +99,7 @@ public class WorkspaceExtension {
 		_bundleUrl = _getProperty(
 			settings, "bundle.url", _getDefaultProductBundleUrl());
 
-		_bundleChecksumMD5 = _getBundleChecksumMD5(_bundleUrl);
+		_bundleChecksumMD5Default = _getBundleChecksumMD5(_bundleUrl);
 
 		_configsDir = _getProperty(
 			settings, "configs.dir",
@@ -201,7 +201,11 @@ public class WorkspaceExtension {
 	}
 
 	public String getBundleChecksumMD5() {
-		return GradleUtil.toString(_bundleChecksumMD5);
+		if (_bundleChecksumMD5 != null) {
+			return GradleUtil.toString(_bundleChecksumMD5);
+		}
+
+		return GradleUtil.toString(_bundleChecksumMD5Default);
 	}
 
 	public String getBundleDistRootDirName() {
@@ -325,6 +329,8 @@ public class WorkspaceExtension {
 
 	public void setBundleUrl(Object bundleUrl) {
 		_bundleUrl = bundleUrl;
+
+		_bundleChecksumMD5Default = _getBundleChecksumMD5(bundleUrl);
 	}
 
 	public void setConfigsDir(Object configsDir) {
@@ -379,7 +385,7 @@ public class WorkspaceExtension {
 	}
 
 	private String _getBundleChecksumMD5(Object bundleUrl) {
-		String bundleUrlString = (String)bundleUrl;
+		String bundleUrlString = bundleUrl.toString();
 
 		if (Objects.isNull(bundleUrlString) || bundleUrlString.isEmpty()) {
 			return null;
@@ -411,7 +417,7 @@ public class WorkspaceExtension {
 				return null;
 			}
 
-			return md5Contents[0];
+			return md5Contents[0].trim();
 		}
 		catch (Exception exception) {
 		}
@@ -568,6 +574,7 @@ public class WorkspaceExtension {
 	private final Object _appServerTomcatVersion;
 	private Object _bundleCacheDir;
 	private Object _bundleChecksumMD5;
+	private String _bundleChecksumMD5Default;
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;
 	private Object _bundleTokenEmailAddress;

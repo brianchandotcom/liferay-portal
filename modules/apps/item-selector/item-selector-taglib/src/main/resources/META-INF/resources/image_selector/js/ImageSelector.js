@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
@@ -96,6 +96,20 @@ const ChangeImageControls = ({handleClickDelete, handleClickPicture}) => (
 	</div>
 );
 
+const ProgressWrapper = ({fileName, onCancel}) => (
+	<div className="progress-wrapper">
+		<p className="file-name">{fileName}</p>
+
+		<div className="progressbar"></div>
+
+		<p className="progress-data size"></p>
+
+		<ClayButton displayType="primary" onClick={onCancel}>
+			{Liferay.Language.get('cancel')}
+		</ClayButton>
+	</div>
+);
+
 const ImageSelector = ({
 	draggableImage,
 	cropRegion,
@@ -114,7 +128,13 @@ const ImageSelector = ({
 		src: imageURL,
 	});
 
+	const [fileName, setFileName] = useState('');
+
 	const rootNodeRef = useRef(null);
+
+	let uploader = null;
+
+	let uploaderStatusStopped;
 
 	const handleSelectFileClick = (event) => {
 		if (event.target.tagName === 'BUTTON') {
@@ -149,43 +169,64 @@ const ImageSelector = ({
 		});
 	};
 
-	const onFileSelect = () => {
-		console.log('onFileSelect');
+	const onFileSelect = (event) => {
+		rootNodeRef.current.classList.remove(CSS_DROP_ACTIVE);
+
+		const file = event.fileList[0];
+
+		setFileName(file.get('name'));
+
+		let queue = uploader.queue;
+
+		if (
+			queue &&
+			queue._currentState === uploaderStatusStopped
+		) {
+			queue.startUpload();
+		}
+
+		uploader.uploadThese(event.fileList);
 	};
-	
+
+	const onUploadCancel = () => {
+		console.log('onUploadCancel');
+	};
+
 	const onUploadComplete = () => {
 		console.log('onUploadComplete');
-	}
-	
+	};
+
 	const onUploadProgress = () => {
 		console.log('onUploadProgress');
-	}
+	};
 
 	const onUploadStart = () => {
 		console.log('onUploadStart');
-	}
+	};
 
 	AUI().use('uploader', (A) => {
 		const rootNode = rootNodeRef.current;
 
-		new A.Uploader({
+		uploader = new A.Uploader({
 			boundingBox: rootNode,
 			dragAndDropArea: rootNode,
 			fileFieldName: 'imageSelectorFileName',
 			on: {
-				dragleave: function() {
-					rootNode.classList.remove(CSS_DROP_ACTIVE)
+				dragleave() {
+					rootNode.classList.remove(CSS_DROP_ACTIVE);
 				},
-				dragover: function() {
-					rootNode.classList.add(CSS_DROP_ACTIVE)
+				dragover() {
+					rootNode.classList.add(CSS_DROP_ACTIVE);
 				},
 				fileselect: onFileSelect,
 				uploadcomplete: onUploadComplete,
 				uploadprogress: onUploadProgress,
 				uploadstart: onUploadStart,
 			},
-			uploadURL: uploadURL,
+			uploadURL,
 		}).render();
+
+		uploaderStatusStopped = A.Uploader.Queue.STOPPED;
 	});
 
 	return (
@@ -238,6 +279,7 @@ const ImageSelector = ({
 			)}
 
 			<DropHereInfo />
+			<ProgressWrapper fileName={fileName} onCancel={onUploadCancel} />
 		</div>
 	);
 };

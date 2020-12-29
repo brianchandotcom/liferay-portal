@@ -601,7 +601,7 @@ definition {
 	@description = "Publishing navigation menus should not also publish pages. When publishing only navigation menus, pages that exist in the staging site but do not exist in the live site should not appear in the Navigation Menu widget. This test has the Navigation Menu widget display a specific navigation menu and covers LPS-86525."
 	@priority = "5"
 	test PublishNavigationMenuWithDeletedPages {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Add the first page, second page, and third page to the navigation menu") {
 			NavigationMenusAdmin.addItem(
@@ -831,7 +831,7 @@ definition {
 	@description = "Publishing navigation menus should not also publish pages. When publishing only navigation menus, pages that exist in the staging site but do not exist in the live site should not appear in the Navigation Menu widget. This test has the Navigation Menu widget display the primary navigation menu."
 	@priority = "5"
 	test PublishPrimaryNavigationMenuWithDeletedPages {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Add the first page, second page, and third page to the navigation menu") {
 			NavigationMenusAdmin.addItem(

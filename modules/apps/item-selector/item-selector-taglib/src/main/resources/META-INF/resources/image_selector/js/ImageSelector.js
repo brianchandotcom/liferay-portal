@@ -15,10 +15,11 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 
+const CSS_DROP_ACTIVE = 'drop-active';
 const SELECT_FILE_BUTTON = `<button class='btn btn-secondary' type='button'>${Liferay.Language.get(
 	'select-file'
 )}</button>`;
@@ -105,12 +106,15 @@ const ImageSelector = ({
 	maxFileSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 	portletNamespace,
 	paramName,
+	uploadURL,
 	validExtensions,
 }) => {
 	const [image, setImage] = useState({
 		fileEntryId,
 		src: imageURL,
 	});
+
+	const rootNodeRef = useRef(null);
 
 	const handleSelectFileClick = (event) => {
 		if (event.target.tagName === 'BUTTON') {
@@ -145,6 +149,47 @@ const ImageSelector = ({
 		});
 	};
 
+	const onFileSelect = () => {
+		console.log('onFileSelect');
+	};
+	
+	const onUploadComplete = () => {
+		console.log('onUploadComplete');
+	}
+	
+	const onUploadProgress = () => {
+		console.log('onUploadProgress');
+	}
+
+	const onUploadStart = () => {
+		console.log('onUploadStart');
+	}
+
+	AUI().use('uploader', (A) => {
+		new A.Uploader({
+			boundingBox: rootNodeRef.current,
+			dragAndDropArea: rootNodeRef.current,
+			fileFieldName: 'imageSelectorFileName',
+			on: {
+				dragleave: A.bind(
+					'removeClass',
+					rootNodeRef.current,
+					CSS_DROP_ACTIVE
+				),
+				dragover: A.bind(
+					'addClass',
+					rootNodeRef.current,
+					CSS_DROP_ACTIVE
+				),
+				fileselect: onFileSelect,
+				uploadcomplete: onUploadComplete,
+				uploadprogress: onUploadProgress,
+				uploadstart: onUploadStart,
+			},
+			uploadURL: uploadURL,
+		}).render();
+	});
+
 	return (
 		<div
 			className={classNames(
@@ -153,6 +198,7 @@ const ImageSelector = ({
 				{'drop-enabled': image.fileEntryId == 0},
 				'taglib-image-selector'
 			)}
+			ref={rootNodeRef}
 		>
 			<input
 				name={`${portletNamespace}${paramName}Id`}

@@ -15,7 +15,7 @@
 import core from 'metal';
 
 import PortletBase from './PortletBase.es';
-import {delegate} from './delegate/delegate.es';
+import delegate from './delegate/delegate.es';
 
 /**
  * Appends list item elements to dropdown menus with inline-scrollers on scroll

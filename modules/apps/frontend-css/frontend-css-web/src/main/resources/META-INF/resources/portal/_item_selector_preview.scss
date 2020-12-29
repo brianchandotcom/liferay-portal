@@ -73,6 +73,11 @@ $infoPanelSidebarDDColor: $secondary-l1;
 			height: calc(100% - 7rem);
 			text-align: left;
 
+			.sidebar-header,
+			.sidebar-body {
+				min-width: $sidenav-width;
+			}
+
 			.nav-link.active {
 				color: $white;
 			}

@@ -135,31 +135,19 @@ public class SubscriptionLocalServiceImpl
 
 		if (groupId > 0) {
 
-			// Asset
-
-			AssetEntry assetEntry = null;
-
-			try {
-				assetEntry = assetEntryLocalService.getEntry(
-					className, classPK);
-			}
-			catch (Exception exception) {
-				assetEntry = assetEntryLocalService.updateEntry(
-					userId, groupId, subscription.getCreateDate(),
-					subscription.getModifiedDate(), className, classPK, null, 0,
-					null, null, true, false, null, null, null, null, null,
-					String.valueOf(groupId), null, null, null, null, 0, 0,
-					null);
-			}
-
 			// Social
 
-			JSONObject extraDataJSONObject = JSONUtil.put(
-				"title", assetEntry.getTitle());
+			AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+				className, classPK);
 
-			SocialActivityManagerUtil.addActivity(
-				userId, assetEntry, SocialActivityConstants.TYPE_SUBSCRIBE,
-				extraDataJSONObject.toString(), 0);
+			if (assetEntry != null) {
+				JSONObject extraDataJSONObject = JSONUtil.put(
+					"title", assetEntry.getTitle());
+
+				SocialActivityManagerUtil.addActivity(
+					userId, assetEntry, SocialActivityConstants.TYPE_SUBSCRIBE,
+					extraDataJSONObject.toString(), 0);
+			}
 		}
 
 		return subscription;

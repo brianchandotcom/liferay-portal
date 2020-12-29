@@ -102,7 +102,7 @@ public class DDMUserPersonalFolderItemSelectorView
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(
-				"/item_selector/ddm_user_personal_folder.jsp");
+				"/item_selector/user_personal_folder.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

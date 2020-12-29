@@ -962,6 +962,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 	<macrodef name="prepare-test-build-dist">
 		<attribute name="app.server.type" />
+		<attribute default="" name="dist.type" />
 
 		<sequential>
 			<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}" />
@@ -3620,7 +3621,10 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="dist-jdk7">
 		<parallel threadCount="1" timeout="7200000">
-			<prepare-test-build-dist app.server.type="${axis.variable}" />
+			<prepare-test-build-dist
+				app.server.type="${axis.variable}"
+				dist.type="${dist.type}"
+			/>
 		</parallel>
 	</target>
 

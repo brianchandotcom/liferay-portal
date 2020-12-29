@@ -166,21 +166,19 @@ const ImageSelector = ({
 	}
 
 	AUI().use('uploader', (A) => {
+		const rootNode = rootNodeRef.current;
+
 		new A.Uploader({
-			boundingBox: rootNodeRef.current,
-			dragAndDropArea: rootNodeRef.current,
+			boundingBox: rootNode,
+			dragAndDropArea: rootNode,
 			fileFieldName: 'imageSelectorFileName',
 			on: {
-				dragleave: A.bind(
-					'removeClass',
-					rootNodeRef.current,
-					CSS_DROP_ACTIVE
-				),
-				dragover: A.bind(
-					'addClass',
-					rootNodeRef.current,
-					CSS_DROP_ACTIVE
-				),
+				dragleave: function() {
+					rootNode.classList.remove(CSS_DROP_ACTIVE)
+				},
+				dragover: function() {
+					rootNode.classList.add(CSS_DROP_ACTIVE)
+				},
 				fileselect: onFileSelect,
 				uploadcomplete: onUploadComplete,
 				uploadprogress: onUploadProgress,

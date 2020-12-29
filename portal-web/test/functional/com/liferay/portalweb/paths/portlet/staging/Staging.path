@@ -107,6 +107,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_PUBLICATION_PERMISSION</td>
+	<td>//span[contains(@class,'label-text') and contains(.,'Publish Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

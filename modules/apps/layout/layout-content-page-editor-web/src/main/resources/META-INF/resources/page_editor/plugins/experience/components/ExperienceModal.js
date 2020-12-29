@@ -48,22 +48,15 @@ const ExperienceModal = ({
 
 	const [name, setName] = useState(initialName);
 	const [requiredNameError, setRequiredNameError] = useState(false);
-	const [requiredSegmentError, setRequiredSegmentError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
 
 		const validName = _getValidValue(name);
-		const validSegmentId = _getValidValue(selectedSegmentId);
 
-		if (!validName || !validSegmentId) {
-			if (!validName) {
-				setRequiredNameError(true);
-			}
-			if (!validSegmentId) {
-				setRequiredSegmentError(true);
-			}
+		if (!validName) {
+			setRequiredNameError(true);
 		}
 		else {
 			setLoading(true);
@@ -92,15 +85,6 @@ const ExperienceModal = ({
 		setName(value);
 	};
 	const handleSegmentChange = (event) => {
-		const {value} = event.target;
-
-		if (!_getValidValue(value)) {
-			setRequiredSegmentError(true);
-		}
-		else {
-			setRequiredSegmentError(false);
-		}
-
 		setSelectedSegmentId(event.target.value);
 	};
 	const handleNewSegmentClick = (event) => {
@@ -118,9 +102,6 @@ const ExperienceModal = ({
 
 	const nameGroupClassName = classNames('my-2', {
 		'has-error': requiredNameError,
-	});
-	const segmentGroupClassName = classNames('my-2', {
-		'has-error': requiredSegmentError,
 	});
 
 	const modalTitle = experienceId
@@ -182,7 +163,7 @@ const ExperienceModal = ({
 						)}
 					</ClayForm.Group>
 
-					<ClayForm.Group className={segmentGroupClassName}>
+					<ClayForm.Group className="my-2">
 						<label htmlFor={segmentSelectId}>
 							{Liferay.Language.get('audience')}
 
@@ -232,16 +213,6 @@ const ExperienceModal = ({
 								</Button>
 							)}
 						</div>
-
-						{requiredSegmentError && (
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation" />
-
-								{Liferay.Language.get(
-									'an-audience-is-required'
-								)}
-							</ClayForm.FeedbackItem>
-						)}
 					</ClayForm.Group>
 				</ClayForm>
 			</ClayModal.Body>

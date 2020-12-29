@@ -141,24 +141,24 @@ for (int i = 0; i < 8; i++) {
 	options="<%= selectOptions %>"
 />
 
-<h3>MULTI-SELECT</h3>
+<h3>MULTISELECT</h3>
 
-<clay:multi-select
+<clay:multiselect
 	helpText="Some text to help you"
-	id="multi-select-1"
+	id="multiselect-1"
 	inputName="multiSelectInput1"
-	label="MultiSelect 1"
-	locator="<%= multiSelectDisplayContext.getLocator() %>"
-	selectedItems="<%= multiSelectDisplayContext.getCustomSelectedItems() %>"
-	sourceItems="<%= multiSelectDisplayContext.getCustomSourceItems() %>"
+	label="Multiselect 1"
+	locator="<%= multiselectDisplayContext.getLocator() %>"
+	selectedItems="<%= multiselectDisplayContext.getCustomSelectedItems() %>"
+	sourceItems="<%= multiselectDisplayContext.getCustomSourceItems() %>"
 />
 
-<clay:multi-select
+<clay:multiselect
 	helpText="Help text displayed here"
-	id="multi-select-2"
+	id="multiselect-2"
 	inputName="multiSelectInput2"
-	label="MultiSelect with custom menu renderer"
-	propsTransformer="js/ClaySampleMultiSelectPropsTransformer"
-	selectedItems="<%= multiSelectDisplayContext.getSelectedItems() %>"
-	sourceItems="<%= multiSelectDisplayContext.getSourceItems() %>"
+	label="Multiselect with custom menu renderer"
+	propsTransformer="js/ClaySampleMultiselectPropsTransformer"
+	selectedItems="<%= multiselectDisplayContext.getSelectedItems() %>"
+	sourceItems="<%= multiselectDisplayContext.getSourceItems() %>"
 />

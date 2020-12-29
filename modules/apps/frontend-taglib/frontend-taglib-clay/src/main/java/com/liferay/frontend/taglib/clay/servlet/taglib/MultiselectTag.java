@@ -15,8 +15,8 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiSelectItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiSelectLocator;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiselectItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.MultiselectLocator;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -33,7 +33,7 @@ import javax.servlet.jsp.JspWriter;
 /**
  * @author Kresimir Coko
  */
-public class MultiSelectTag extends BaseContainerTag {
+public class MultiselectTag extends BaseContainerTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -67,19 +67,19 @@ public class MultiSelectTag extends BaseContainerTag {
 		return _label;
 	}
 
-	public MultiSelectLocator getLocator() {
+	public MultiselectLocator getLocator() {
 		if (_locator != null) {
 			return _locator;
 		}
 
-		return new MultiSelectLocator();
+		return new MultiselectLocator();
 	}
 
-	public List<MultiSelectItem> getSelectedItems() {
+	public List<MultiselectItem> getSelectedItems() {
 		return _selectedItems;
 	}
 
-	public List<MultiSelectItem> getSourceItems() {
+	public List<MultiselectItem> getSourceItems() {
 		return _sourceItems;
 	}
 
@@ -142,15 +142,15 @@ public class MultiSelectTag extends BaseContainerTag {
 	public void setLabelLocator() {
 	}
 
-	public void setLocator(MultiSelectLocator locator) {
+	public void setLocator(MultiselectLocator locator) {
 		_locator = locator;
 	}
 
-	public void setSelectedItems(List<MultiSelectItem> selectedItems) {
+	public void setSelectedItems(List<MultiselectItem> selectedItems) {
 		_selectedItems = selectedItems;
 	}
 
-	public void setSourceItems(List<MultiSelectItem> sourceItems) {
+	public void setSourceItems(List<MultiselectItem> sourceItems) {
 		_sourceItems = sourceItems;
 	}
 
@@ -181,7 +181,7 @@ public class MultiSelectTag extends BaseContainerTag {
 
 	@Override
 	protected String getHydratedModuleName() {
-		return "frontend-taglib-clay/MultiSelect";
+		return "frontend-taglib-clay/Multiselect";
 	}
 
 	@Override
@@ -239,12 +239,12 @@ public class MultiSelectTag extends BaseContainerTag {
 		jspWriter.write("form-control-tag-group input-group\"><div class=\"");
 		jspWriter.write("input-group-item\">");
 
-		List<MultiSelectItem> selectedItems = getSelectedItems();
+		List<MultiselectItem> selectedItems = getSelectedItems();
 
 		if (!ListUtil.isEmpty(selectedItems)) {
-			MultiSelectLocator locator = getLocator();
+			MultiselectLocator locator = getLocator();
 
-			for (MultiSelectItem selectedItem : selectedItems) {
+			for (MultiselectItem selectedItem : selectedItems) {
 				String selectedItemLabel = selectedItem.get(
 					locator.get("label"));
 
@@ -340,7 +340,7 @@ public class MultiSelectTag extends BaseContainerTag {
 	protected void writeIdAttribute() {
 	}
 
-	private static final String _ATTRIBUTE_NAMESPACE = "clay:multi-select:";
+	private static final String _ATTRIBUTE_NAMESPACE = "clay:multiselect:";
 
 	private String _clearAllTitle;
 	private boolean _disabled;
@@ -349,9 +349,9 @@ public class MultiSelectTag extends BaseContainerTag {
 	private String _inputName;
 	private String _inputValue;
 	private String _label;
-	private MultiSelectLocator _locator;
-	private List<MultiSelectItem> _selectedItems;
-	private List<MultiSelectItem> _sourceItems;
+	private MultiselectLocator _locator;
+	private List<MultiselectItem> _selectedItems;
+	private List<MultiselectItem> _sourceItems;
 	private boolean _valid = true;
 
 }

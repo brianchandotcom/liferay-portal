@@ -19,9 +19,9 @@ import java.util.HashMap;
 /**
  * @author Kresimir Coko
  */
-public class MultiSelectItem extends HashMap<String, String> {
+public class MultiselectItem extends HashMap<String, String> {
 
-	public MultiSelectItem() {
+	public MultiselectItem() {
 		put("label", "label");
 		put("value", "value");
 	}

@@ -64,6 +64,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<aui:input autoFocus="<%= (article == null) || article.isNew() %>" cssClass="form-control-inline" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label="" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />
+					<aui:input name="titleValue" type="hidden" />
 				</li>
 				<li class="tbar-item">
 					<div class="journal-article-button-row tbar-section text-right">

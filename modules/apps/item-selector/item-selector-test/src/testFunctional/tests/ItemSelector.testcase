@@ -20,6 +20,8 @@ definition {
 		else {
 			BlogsEntry.tearDownCP();
 
+			Depot.tearDownCP();
+
 			User.logoutPG();
 		}
 	}

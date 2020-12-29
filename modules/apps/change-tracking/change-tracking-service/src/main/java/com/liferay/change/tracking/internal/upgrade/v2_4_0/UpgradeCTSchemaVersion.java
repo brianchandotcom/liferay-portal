@@ -40,6 +40,10 @@ public class UpgradeCTSchemaVersion extends UpgradeProcess {
 				"update CTCollection set status = ",
 				WorkflowConstants.STATUS_EXPIRED, " where status = ",
 				WorkflowConstants.STATUS_DRAFT));
+
+		runSQL(
+			"update CTPreferences set ctCollectionId = 0, " +
+				"previousCtCollectionId = 0");
 	}
 
 }

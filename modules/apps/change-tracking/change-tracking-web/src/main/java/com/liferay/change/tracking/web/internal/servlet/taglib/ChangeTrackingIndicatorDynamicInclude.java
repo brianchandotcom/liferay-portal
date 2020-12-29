@@ -25,6 +25,7 @@ import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -214,8 +215,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				return getSelectPublicationsURL.toString();
 			}
 		).put(
-			"namespace", _portal.getPortletNamespace(CTPortletKeys.PUBLICATIONS)
-		).put(
 			"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).build();
 
@@ -288,11 +287,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		jsonArray.put(
 			JSONUtil.put(
-				"href",
-				StringBundler.concat(
-					"javascript:Liferay.fire('",
-					_portal.getPortletNamespace(CTPortletKeys.PUBLICATIONS),
-					"openDialog', {}); void(0);")
+				"href", StringPool.BLANK
 			).put(
 				"label", _language.get(resourceBundle, "select-a-publication")
 			).put(

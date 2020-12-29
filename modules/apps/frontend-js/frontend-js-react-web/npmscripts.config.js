@@ -13,6 +13,17 @@
  */
 
 module.exports = {
-	federation: true,
+	federation: {
+		bridges: [
+			'classnames',
+			'formik',
+			'prop-types',
+			'react',
+			'react-dnd',
+			'react-dnd-html5-backend',
+			'react-dom',
+		],
+		runLegacyBuild: false,
+	},
 	preset: '@liferay/npm-scripts/src/presets/standard',
 };

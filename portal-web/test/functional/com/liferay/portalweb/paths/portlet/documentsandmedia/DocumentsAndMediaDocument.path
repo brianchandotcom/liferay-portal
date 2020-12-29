@@ -289,6 +289,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIDEO_SHORTCUT_THUMBNAIL_LIST</td>
+	<td>//li[@data-qa-id='row'][contains(.,'${key_list}')]//div[contains(@class,'bg-cover')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TWITCH_VIDEO_INACTIVE</td>
 	<td>//div[contains(@class,'video-player__inactive')]</td>
 	<td></td>

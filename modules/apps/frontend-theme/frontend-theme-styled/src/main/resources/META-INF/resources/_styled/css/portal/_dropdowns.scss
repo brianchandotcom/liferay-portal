@@ -1,0 +1,39 @@
+.dropdown.open > .dropdown-menu,
+.overlay-content .open > .dropdown-menu {
+	display: block;
+}
+
+.dropdown-menu {
+	border: 1px solid $dropdown-border-color;
+}
+
+// Moved .dropdown-menu > li > a to .dropdown-item in BS4
+
+.dropdown-menu > li > a,
+.dropdown-menu .link-list > li > a {
+	color: #6b6c7e;
+	display: block;
+	overflow: hidden;
+	padding: 0.5rem 1.25rem;
+}
+
+.dropdown-menu > li.disabled > a,
+.dropdown-menu .link-list > .disabled > a {
+	box-shadow: none;
+	color: #a7a9bc;
+	cursor: not-allowed;
+}
+
+.dropdown-toggle:after {
+	border-width: 0;
+	content: normal;
+}
+
+.dropup .dropdown-toggle:after {
+	border-width: 0;
+	content: normal;
+}
+
+.dropdown > .dropdown-menu {
+	position: absolute;
+}

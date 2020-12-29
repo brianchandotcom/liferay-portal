@@ -977,15 +977,28 @@ app.server.type=@{app.server.type}]]></echo>
 			<antcall inheritAll="false" target="compile" />
 
 			<if>
-				<or>
-					<equals arg1="@{app.server.type}" arg2="weblogic" />
-					<equals arg1="@{app.server.type}" arg2="websphere" />
-				</or>
+				<and>
+					<equals arg1="@{app.server.type}" arg2="tomcat" />
+					<equals arg1="@{dist.type}" arg2="release" />
+				</and>
 				<then>
-					<antcall inheritAll="false" target="prepare-test-build-custom">
-						<param name="app.server.type" value="@{app.server.type}" />
-					</antcall>
+					<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}.dist" />
+
+					<ant antfile="build-test.xml" target="prepare-release-bundle" />
+
+					<lstopwatch action="total" name="prepare-test-build-dist.bundles.@{app.server.type}.dist" />
 				</then>
+				<elseif>
+					<or>
+						<equals arg1="@{app.server.type}" arg2="weblogic" />
+						<equals arg1="@{app.server.type}" arg2="websphere" />
+					</or>
+					<then>
+						<antcall inheritAll="false" target="prepare-test-build-custom">
+							<param name="app.server.type" value="@{app.server.type}" />
+						</antcall>
+					</then>
+				</elseif>
 				<else>
 					<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}.build-dist" />
 

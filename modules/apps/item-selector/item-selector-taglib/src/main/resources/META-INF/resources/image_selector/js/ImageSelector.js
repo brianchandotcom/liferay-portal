@@ -20,6 +20,7 @@ import React, {useRef, useState} from 'react';
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 
 const CSS_DROP_ACTIVE = 'drop-active';
+const CSS_PROGRESS_ACTIVE = 'progress-active';
 const SELECT_FILE_BUTTON = `<button class='btn btn-secondary' type='button'>${Liferay.Language.get(
 	'select-file'
 )}</button>`;
@@ -190,19 +191,21 @@ const ImageSelector = ({
 
 	const onUploadCancel = () => {
 		console.log('onUploadCancel');
+		stopProgress();
 	};
 
 	const onUploadComplete = () => {
 		console.log('onUploadComplete');
+		stopProgress();
 	};
 
 	const onUploadProgress = () => {
 		console.log('onUploadProgress');
 	};
 
-	const onUploadStart = () => {
-		console.log('onUploadStart');
-	};
+	const stopProgress = () => {
+		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
+	}
 
 	AUI().use('uploader', (A) => {
 		const rootNode = rootNodeRef.current;
@@ -221,7 +224,9 @@ const ImageSelector = ({
 				fileselect: onFileSelect,
 				uploadcomplete: onUploadComplete,
 				uploadprogress: onUploadProgress,
-				uploadstart: onUploadStart,
+				uploadstart() {
+					rootNode.classList.add(CSS_PROGRESS_ACTIVE);
+				},
 			},
 			uploadURL,
 		}).render();

@@ -194,14 +194,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("itemSelectorURL"));
-
-		String itemSelectorURL = String.valueOf(
-			parameters.get("itemSelectorURL"));
-
-		Assert.assertThat(
-			itemSelectorURL,
-			CoreMatchers.containsString(
-				"param_folderId=" + _PRIVATE_FOLDER_ID));
 	}
 
 	@Test
@@ -277,13 +269,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			new DDMFormField("field", "document_library"),
 			createDDMFormFieldRenderingContext());
 
-		String itemSelectorURL = String.valueOf(
-			parameters.get("itemSelectorURL"));
-
-		Assert.assertThat(
-			itemSelectorURL,
-			CoreMatchers.containsString(
-				"param_folderId=" + _PRIVATE_FOLDER_ID));
+		Assert.assertTrue(parameters.containsKey("itemSelectorURL"));
 	}
 
 	protected DDMFormFieldRenderingContext

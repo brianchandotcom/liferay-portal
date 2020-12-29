@@ -3,7 +3,7 @@ task runGradleTest
 String errorMessage = ""
 
 gradle.liferayWorkspace {
-	bundleChecksumMD5 "bad_md5sum"
+	bundleChecksumMD5 = "bad_md5sum"
 }
 
 gradle.taskGraph.afterTask {

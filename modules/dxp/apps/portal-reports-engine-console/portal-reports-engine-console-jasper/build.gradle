@@ -27,7 +27,7 @@ dependencies {
 	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "4.1.2"
 	compileInclude group: "org.apache.poi", name: "poi-ooxml-schemas", version: "4.1.2"
 	compileInclude group: "org.apache.xmlbeans", name: "xmlbeans", version: "3.1.0"
-	compileInclude group: "org.codehaus.groovy", name: "groovy-all", version: "2.4.17"
+	compileInclude group: "org.codehaus.groovy", name: "groovy-all", version: "2.4.21"
 	compileInclude group: "org.eclipse.jdt", name: "core", version: "3.1.1"
 	compileInclude group: "org.jfree", name: "jcommon", version: "1.0.24"
 	compileInclude group: "org.jfree", name: "jfreechart", version: "1.0.19"

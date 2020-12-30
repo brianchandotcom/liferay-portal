@@ -130,7 +130,7 @@ definition {
 
 	@description = "This is a use case for LPS-50602"
 	@priority = "5"
-	test NoUpdateAfterDraftwikiPage {
+	test ViewDraftWikiPageViaActivities {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Activities Page");

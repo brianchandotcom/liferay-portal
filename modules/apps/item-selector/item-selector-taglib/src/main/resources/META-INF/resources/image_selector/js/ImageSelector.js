@@ -47,6 +47,8 @@ const ImageSelector = ({
 
 	const [fileName, setFileName] = useState('');
 
+	const [progressValue, setProgressValue] = useState(0);
+
 	const rootNodeRef = useRef(null);
 
 	let uploader = null;
@@ -134,12 +136,16 @@ const ImageSelector = ({
 		});
 	};
 
-	const onUploadProgress = () => {
-		console.log('onUploadProgress');
+	const onUploadProgress = (event) => {
+		const percentLoaded = Math.round(event.percentLoaded);
+
+		setProgressValue(Math.ceil(percentLoaded));
 	};
 
 	const stopProgress = () => {
 		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
+
+		setProgressValue(0);
 	};
 
 	AUI().use('uploader', (A) => {
@@ -219,7 +225,11 @@ const ImageSelector = ({
 			)}
 
 			<DropHereInfo />
-			<ProgressWrapper fileName={fileName} onCancel={onUploadCancel} />
+			<ProgressWrapper
+				fileName={fileName}
+				onCancel={onUploadCancel}
+				progressValue={progressValue}
+			/>
 		</div>
 	);
 };

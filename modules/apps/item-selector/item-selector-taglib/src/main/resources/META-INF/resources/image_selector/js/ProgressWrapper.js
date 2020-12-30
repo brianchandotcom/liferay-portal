@@ -13,14 +13,15 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayProgressBar from '@clayui/progress-bar';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ProgressWrapper = ({fileName, onCancel}) => (
+const ProgressWrapper = ({fileName, onCancel, progressValue}) => (
 	<div className="progress-wrapper">
 		<p className="file-name">{fileName}</p>
 
-		<div className="progressbar"></div>
+		<ClayProgressBar className="progressbar" value={progressValue} />
 
 		<p className="progress-data size"></p>
 

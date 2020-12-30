@@ -42,6 +42,10 @@ import org.json.JSONObject;
 public abstract class BaseSpiraArtifact implements SpiraArtifact {
 
 	public static String fixStringForJSON(String string) {
+		if (string == null) {
+			return "";
+		}
+
 		int maxJSONStringSize = 2048;
 
 		if (string.length() > maxJSONStringSize) {

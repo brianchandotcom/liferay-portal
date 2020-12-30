@@ -222,7 +222,7 @@ public abstract class BaseSpiraTestResultValues
 			spiraTestCaseProductVersion.getValueString());
 	}
 
-	private static final Integer _THREAD_COUNT = 50;
+	private static final Integer _THREAD_COUNT = 100;
 
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);

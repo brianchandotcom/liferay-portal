@@ -983,7 +983,7 @@ public class SpiraResultImporter {
 
 	private static final int _GROUP_SIZE = 25;
 
-	private static final int _GROUP_THREAD_COUNT = 5;
+	private static final int _GROUP_THREAD_COUNT = 10;
 
 	private static final ExecutorService _buildResultExecutorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(

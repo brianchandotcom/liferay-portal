@@ -182,7 +182,8 @@ const GuestUploadFile = ({
 							'btn btn-secondary select-button' +
 							(transformedFileEntryTitle
 								? ' clear-button-upload-on'
-								: '')
+								: '') +
+							(readOnly ? ' disabled' : '')
 						}
 						htmlFor={`${name}inputFileGuestUpload`}
 					>

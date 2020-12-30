@@ -99,7 +99,7 @@ definition {
 
 		MouseOver(locator1 = "Comments#COMMENT_BODY_SPECIFIC");
 
-		Click(locator1 = "Comments#COMMENT_ACTIONS");
+		Click.mouseOverClick(locator1 = "Comments#COMMENT_ACTIONS");
 
 		AssertClick(
 			key_menuItem = "Edit",

@@ -55,15 +55,15 @@ const ImageSelector = ({
 
 	const rootNodeRef = useRef(null);
 
-	let uploader = null;
+	const uploaderRef = useRef(null);
 
-	let uploaderStatusStopped;
+	const uploaderStatusStoppedRef = useRef(null);
 
 	useEffect(() => {
 		AUI().use('uploader', (A) => {
 			const rootNode = rootNodeRef.current;
-	
-			uploader = new A.Uploader({
+
+			uploaderRef.current = new A.Uploader({
 				boundingBox: rootNode,
 				dragAndDropArea: rootNode,
 				fileFieldName: 'imageSelectorFileName',
@@ -83,8 +83,8 @@ const ImageSelector = ({
 				},
 				uploadURL,
 			}).render();
-	
-			uploaderStatusStopped = A.Uploader.Queue.STOPPED;
+
+			uploaderStatusStoppedRef.current = A.Uploader.Queue.STOPPED;
 		});
 	}, []);
 
@@ -126,9 +126,10 @@ const ImageSelector = ({
 
 		setFileName(file.get('name'));
 
+		const uploader = uploaderRef.current;
 		const queue = uploader.queue;
 
-		if (queue && queue._currentState === uploaderStatusStopped) {
+		if (queue && queue._currentState === uploaderStatusStoppedRef.current) {
 			queue.startUpload();
 		}
 

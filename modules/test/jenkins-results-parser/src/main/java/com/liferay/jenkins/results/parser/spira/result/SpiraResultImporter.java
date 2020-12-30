@@ -100,6 +100,7 @@ public class SpiraResultImporter {
 			return;
 		}
 
+		_cacheBuildDatabase();
 		_cacheSpiraAutomationHosts();
 		_cacheSpiraTestCaseComponents();
 		_cacheSpiraTestCaseObjects();
@@ -234,6 +235,25 @@ public class SpiraResultImporter {
 		_checkoutOSBFaroBranch();
 		_checkoutPluginsBranch();
 		_checkoutQAWebsitesBranch();
+	}
+
+	private void _cacheBuildDatabase() {
+		long start = System.currentTimeMillis();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Started loading for Build Database at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
+
+		BuildDatabaseUtil.getBuildDatabase(_topLevelBuild);
+
+		long end = System.currentTimeMillis();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Completed loading Build Database in ",
+				JenkinsResultsParserUtil.toDurationString(end - start), " at ",
+				JenkinsResultsParserUtil.toDateString(new Date(end))));
 	}
 
 	private void _cacheSpiraAutomationHosts() {
@@ -867,10 +887,15 @@ public class SpiraResultImporter {
 			_topLevelBuild.getJobName(), jenkinsMaster.getName());
 	}
 
+	private static final int _BUILD_RESULT_THREAD_COUNT = 50;
+
 	private static final int _GROUP_SIZE = 25;
 
 	private static final int _GROUP_THREAD_COUNT = 5;
 
+	private static final ExecutorService _buildResultExecutorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+			_BUILD_RESULT_THREAD_COUNT, true);
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(
 			_GROUP_THREAD_COUNT, true);

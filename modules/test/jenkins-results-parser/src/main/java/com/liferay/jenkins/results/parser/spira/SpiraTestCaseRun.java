@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -196,7 +197,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 						String startString =
 							JenkinsResultsParserUtil.toDateString(
-								new Date(start), "America/Los_Angeles");
+								new Date(start));
 
 						print("Starting at " + startString);
 
@@ -273,7 +274,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 						System.out.println(
 							JenkinsResultsParserUtil.combine(
-								spiraTestCaseObject.getPath(), " ",
+								spiraTestCaseObject.getName(), " ",
 								spiraTestCaseObject.getURL(), " in ",
 								JenkinsResultsParserUtil.toDurationString(
 									System.currentTimeMillis() - start)));
@@ -346,11 +347,22 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
 	@Override
 	public String getName() {
-		if (jsonObject.has("Name")) {
-			return jsonObject.getString("Name");
+		SpiraTestCaseObject spiraTestCaseObject = getSpiraTestCaseObject();
+
+		return spiraTestCaseObject.getName();
+	}
+
+	public SpiraTestCaseObject getSpiraTestCaseObject() {
+		if (_spiraTestCaseObject != null) {
+			return _spiraTestCaseObject;
 		}
 
-		return jsonObject.getString("RunnerTestName");
+		SpiraProject spiraProject = getSpiraProject();
+
+		_spiraTestCaseObject = spiraProject.getSpiraTestCaseObjectByID(
+			jsonObject.getInt(SpiraTestCaseObject.KEY_ID));
+
+		return _spiraTestCaseObject;
 	}
 
 	@Override
@@ -662,32 +674,78 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 	protected static final String KEY_ID = "TestRunId";
 
 	private static List<SpiraTestCaseRun> _recordSpiraTestCaseRuns(
-		SpiraProject spiraProject, JSONArray requestJSONArray) {
+		final SpiraProject spiraProject, final JSONArray requestJSONArray) {
 
-		Map<String, String> urlPathReplacements = new HashMap<>();
+		final long startInvocation = System.currentTimeMillis();
 
-		urlPathReplacements.put(
-			"project_id", String.valueOf(spiraProject.getID()));
+		List<Callable<List<SpiraTestCaseRun>>> callables = new ArrayList<>();
 
-		try {
-			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-				"projects/{project_id}/test-runs/record-multiple", null,
-				urlPathReplacements, HttpRequestMethod.POST,
-				requestJSONArray.toString());
+		callables.add(
+			new Callable<List<SpiraTestCaseRun>>() {
 
-			List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
+				@Override
+				public List<SpiraTestCaseRun> call() throws Exception {
+					long startRequest = System.currentTimeMillis();
 
-			for (int i = 0; i < responseJSONArray.length(); i++) {
-				spiraTestCaseRuns.add(
-					new SpiraTestCaseRun(
-						spiraProject, responseJSONArray.getJSONObject(i)));
-			}
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Test runs was in queue in ",
+							JenkinsResultsParserUtil.toDurationString(
+								startRequest - startInvocation)));
 
-			return spiraTestCaseRuns;
+					Map<String, String> urlPathReplacements = new HashMap<>();
+
+					urlPathReplacements.put(
+						"project_id", String.valueOf(spiraProject.getID()));
+
+					try {
+						JSONArray responseJSONArray =
+							SpiraRestAPIUtil.requestJSONArray(
+								"projects/{project_id}/test-runs" +
+									"/record-multiple",
+								null, urlPathReplacements,
+								HttpRequestMethod.POST,
+								requestJSONArray.toString());
+
+						List<SpiraTestCaseRun> spiraTestCaseRuns =
+							new ArrayList<>();
+
+						for (int i = 0; i < responseJSONArray.length(); i++) {
+							spiraTestCaseRuns.add(
+								new SpiraTestCaseRun(
+									spiraProject,
+									responseJSONArray.getJSONObject(i)));
+						}
+
+						return spiraTestCaseRuns;
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+					finally {
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"Record test runs process completed in ",
+								JenkinsResultsParserUtil.toDurationString(
+									System.currentTimeMillis() -
+										startRequest)));
+					}
+				}
+
+			});
+
+		ParallelExecutor<List<SpiraTestCaseRun>> parallelExecutor =
+			new ParallelExecutor<>(callables, _executorService);
+
+		List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
+
+		for (List<SpiraTestCaseRun> spiraTestCaseRunList :
+				parallelExecutor.execute()) {
+
+			spiraTestCaseRuns.addAll(spiraTestCaseRunList);
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+
+		return spiraTestCaseRuns;
 	}
 
 	private static List<JSONObject> _requestSpiraTestCaseRuns(
@@ -758,7 +816,13 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		cacheSpiraArtifact(SpiraTestCaseRun.class, this);
 	}
 
+	private static final int _THREAD_COUNT = 5;
+
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
+
 	private JSONObject _automatedJSONObject;
+	private SpiraTestCaseObject _spiraTestCaseObject;
 
 	private abstract static class IndexedCallable<T> implements Callable<T> {
 

@@ -50,23 +50,30 @@ public class BuildDatabaseUtil {
 		int buildNumber = build.getBuildNumber();
 
 		if (JenkinsResultsParserUtil.isCINode()) {
-			String filePath =
-				"/opt/java/jenkins/userContent/jobs/" + jobName + "/builds/" +
-					buildNumber;
+			String filePath = JenkinsResultsParserUtil.combine(
+				"/opt/java/jenkins/userContent/jobs/", jobName, "/builds/",
+				String.valueOf(buildNumber));
 
-			_downloadBuildDatabaseFile(baseDir, masterName, filePath);
+			try {
+				_downloadBuildDatabaseFile(baseDir, masterName, filePath);
 
-			return;
+				return;
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
+			}
 		}
 
 		try {
-			String buildDatabaseURL =
-				"http://" + masterName + "/userContent/jobs/" + jobName +
-					"/builds/" + buildNumber + "/" +
-						BuildDatabase.FILE_NAME_BUILD_DATABASE;
+			String buildDatabaseURL = JenkinsResultsParserUtil.combine(
+				"http://", masterName, "/userContent/jobs/", jobName,
+				"/builds/", String.valueOf(buildNumber), "/",
+				BuildDatabase.FILE_NAME_BUILD_DATABASE);
 
 			JenkinsResultsParserUtil.write(
-				baseDir + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE,
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(baseDir), "/",
+					BuildDatabase.FILE_NAME_BUILD_DATABASE),
 				JenkinsResultsParserUtil.toString(buildDatabaseURL));
 		}
 		catch (IOException ioException) {
@@ -111,7 +118,7 @@ public class BuildDatabaseUtil {
 				command = command.replaceAll("\\)", "\\\\)");
 
 				Process process = JenkinsResultsParserUtil.executeBashCommands(
-					true, command);
+					true, new File("."), 10 * 60 * 1000, command);
 
 				if (process.exitValue() != 0) {
 					throw new RuntimeException(
@@ -154,36 +161,39 @@ public class BuildDatabaseUtil {
 			}
 		}
 
-		BuildDatabase buildDatabase = _buildDatabases.get(baseDirPath);
+		synchronized (_buildDatabases) {
+			BuildDatabase buildDatabase = _buildDatabases.get(baseDirPath);
 
-		if (buildDatabase == null) {
-			File baseDir = new File(baseDirPath);
+			if (buildDatabase == null) {
+				File baseDir = new File(baseDirPath);
 
-			if (!baseDir.exists()) {
-				baseDir.mkdirs();
+				if (!baseDir.exists()) {
+					baseDir.mkdirs();
+				}
+
+				File buildDatabaseFile = new File(
+					baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+				if (!buildDatabaseFile.exists() && download) {
+					String distNodes = System.getenv("DIST_NODES");
+					String distPath = System.getenv("DIST_PATH");
+
+					if ((distNodes != null) && (distPath != null)) {
+						_downloadBuildDatabaseFile(
+							baseDir, distNodes, distPath);
+					}
+					else if (build instanceof TopLevelBuild) {
+						_downloadBuildDatabaseFile(baseDir, build);
+					}
+				}
+
+				buildDatabase = new DefaultBuildDatabase(baseDir);
+
+				_buildDatabases.put(baseDirPath, buildDatabase);
 			}
 
-			File buildDatabaseFile = new File(
-				baseDir, BuildDatabase.FILE_NAME_BUILD_DATABASE);
-
-			if (!buildDatabaseFile.exists() && download) {
-				String distNodes = System.getenv("DIST_NODES");
-				String distPath = System.getenv("DIST_PATH");
-
-				if ((distNodes != null) && (distPath != null)) {
-					_downloadBuildDatabaseFile(baseDir, distNodes, distPath);
-				}
-				else if (build instanceof TopLevelBuild) {
-					_downloadBuildDatabaseFile(baseDir, build);
-				}
-			}
-
-			buildDatabase = new DefaultBuildDatabase(baseDir);
-
-			_buildDatabases.put(baseDirPath, buildDatabase);
+			return buildDatabase;
 		}
-
-		return buildDatabase;
 	}
 
 	private static String _getDistPath(Build build) {

@@ -90,22 +90,48 @@ const ImageSelector = ({
 		});
 	}, []);
 
-	const onFileSelect = useCallback((event) => {
-		rootNodeRef.current.classList.remove(CSS_DROP_ACTIVE);
+	const showImagePreview = useCallback(
+		(file) => {
+			const reader = new FileReader();
 
-		const file = event.fileList[0];
+			reader.addEventListener('loadend', () => {
+				if (progressValue < 100) {
+					setImage({
+						fileEntryId: '-1',
+						src: reader.result,
+					});
+				}
+			});
 
-		setFileName(file.get('name'));
+			reader.readAsDataURL(file);
+		},
+		[progressValue]
+	);
 
-		const uploader = uploaderRef.current;
-		const queue = uploader.queue;
+	const onFileSelect = useCallback(
+		(event) => {
+			rootNodeRef.current.classList.remove(CSS_DROP_ACTIVE);
 
-		if (queue && queue._currentState === uploaderStatusStoppedRef.current) {
-			queue.startUpload();
-		}
+			const file = event.fileList[0];
 
-		uploader.uploadThese(event.fileList);
-	}, []);
+			setFileName(file.get('name'));
+
+			showImagePreview(file.get('file'));
+
+			const uploader = uploaderRef.current;
+			const queue = uploader.queue;
+
+			if (
+				queue &&
+				queue._currentState === uploaderStatusStoppedRef.current
+			) {
+				queue.startUpload();
+			}
+
+			uploader.uploadThese(event.fileList);
+		},
+		[showImagePreview]
+	);
 
 	const stopProgress = useCallback(() => {
 		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);

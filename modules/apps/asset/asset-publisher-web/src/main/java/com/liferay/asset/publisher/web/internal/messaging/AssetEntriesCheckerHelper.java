@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.internal.messaging;
 
+import com.liferay.asset.kernel.messaging.NotifiedAssetEntryThreadLocal;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
@@ -22,7 +23,6 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebC
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.asset.NotifiedAssetEntryThreadLocal;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;

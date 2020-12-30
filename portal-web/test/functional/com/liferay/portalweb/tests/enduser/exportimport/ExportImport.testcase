@@ -1799,7 +1799,10 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		var templateScript = '''<p>${webContentData}</p>''';
+		var templateScript = '''
+		<#assign webContentData = jsonFactoryUtil.createJSONObject(WebContent.getData())/>
+		${webContentData}
+		''';
 
 		WebContentTemplates.addCP(
 			structureName = "Structure Name B",

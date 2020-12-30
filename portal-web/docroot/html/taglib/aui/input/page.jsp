@@ -206,8 +206,12 @@ boolean choiceField = checkboxField || radioField;
 <c:if test="<%= Validator.isNotNull(prefix) || Validator.isNotNull(suffix) %>">
 	<div class="<%= addOnCssClass %>">
 		<c:if test="<%= Validator.isNotNull(prefix) %>">
-			<span class="<%= helpTextCssClass %>"><liferay-ui:message key="<%= prefix %>" /></span>
+			<div class="input-group-item input-group-item-shrink input-group-prepend">
+				<span class="input-group-text <%= helpTextCssClass %>"><liferay-ui:message key="<%= prefix %>" /></span>
+			</div>
 		</c:if>
+
+		<div class="input-group-item input-group-prepend">
 </c:if>
 
 <c:choose>
@@ -444,8 +448,12 @@ boolean choiceField = checkboxField || radioField;
 </c:choose>
 
 <c:if test="<%= Validator.isNotNull(prefix) || Validator.isNotNull(suffix) %>">
+		</div>
+
 		<c:if test="<%= Validator.isNotNull(suffix) %>">
-			<span class="<%= helpTextCssClass %>"><liferay-ui:message key="<%= suffix %>" /></span>
+			<div class="input-group-append input-group-item-shrink">
+				<span class="input-group-text <%= helpTextCssClass %>"><liferay-ui:message key="<%= suffix %>" /></span>
+			</div>
 		</c:if>
 	</div>
 </c:if>

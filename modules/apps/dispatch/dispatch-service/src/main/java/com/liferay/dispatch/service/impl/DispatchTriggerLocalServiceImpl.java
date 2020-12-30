@@ -55,30 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DispatchTriggerLocalServiceImpl
 	extends DispatchTriggerLocalServiceBaseImpl {
 
-	/**
-	 * @param      userId
-	 * @param      name
-	 * @param      system
-	 * @param      taskExecutorType
-	 * @param      taskSettingsUnicodeProperties
-	 * @return
-	 *
-	 * @throws     PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addDispatchTrigger(long,
-	 *             String, UnicodeProperties, String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system, String taskExecutorType,
-			UnicodeProperties taskSettingsUnicodeProperties)
-		throws PortalException {
-
-		return addDispatchTrigger(
-			userId, taskExecutorType, taskSettingsUnicodeProperties, name,
-			system);
-	}
-
 	@Override
 	public DispatchTrigger addDispatchTrigger(
 			long userId, String dispatchTaskExecutorType,
@@ -316,70 +292,6 @@ public class DispatchTriggerLocalServiceImpl
 		}
 
 		return dispatchTrigger;
-	}
-
-	/**
-	 * @param      dispatchTriggerId
-	 * @param      active
-	 * @param      cronExpression
-	 * @param      endDateMonth
-	 * @param      endDateDay
-	 * @param      endDateYear
-	 * @param      endDateHour
-	 * @param      endDateMinute
-	 * @param      neverEnd
-	 * @param      overlapAllowed
-	 * @param      startDateMonth
-	 * @param      startDateDay
-	 * @param      startDateYear
-	 * @param      startDateHour
-	 * @param      startDateMinute
-	 * @param      dispatchTaskClusterMode
-	 * @return
-	 *
-	 * @throws     PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 *             #updateDispatchTrigger(long, boolean, String,
-	 *             DispatchTaskClusterMode, int, int, int, int, int, boolean,
-	 *             boolean, int, int, int, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public DispatchTrigger updateDispatchTrigger(
-			long dispatchTriggerId, boolean active, String cronExpression,
-			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
-			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute,
-			DispatchTaskClusterMode dispatchTaskClusterMode)
-		throws PortalException {
-
-		return updateDispatchTrigger(
-			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
-			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
-			neverEnd, overlapAllowed, startDateMonth, startDateDay,
-			startDateYear, startDateHour, startDateMinute);
-	}
-
-	/**
-	 * @param      dispatchTriggerId
-	 * @param      name
-	 * @param      dispatchTaskSettingsUnicodeProperties
-	 * @return
-	 *
-	 * @throws     PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 *             #updateDispatchTrigger(long, UnicodeProperties, String)}
-	 */
-	@Deprecated
-	@Override
-	public DispatchTrigger updateDispatchTrigger(
-			long dispatchTriggerId, String name,
-			UnicodeProperties dispatchTaskSettingsUnicodeProperties)
-		throws PortalException {
-
-		return updateDispatchTrigger(
-			dispatchTriggerId, dispatchTaskSettingsUnicodeProperties, name);
 	}
 
 	@Override

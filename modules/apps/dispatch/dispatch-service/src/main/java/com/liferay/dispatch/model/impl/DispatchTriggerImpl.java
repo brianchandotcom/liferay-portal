@@ -38,18 +38,6 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 		return _dispatchTaskSettingsUnicodeProperties;
 	}
 
-	/**
-	 * @return
-	 *
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 *             #getDispatchTaskSettingsUnicodeProperties()}
-	 */
-	@Deprecated
-	@Override
-	public UnicodeProperties getTaskSettingsUnicodeProperties() {
-		return getDispatchTaskSettingsUnicodeProperties();
-	}
-
 	@Override
 	public void setDispatchTaskSettings(String dispatchTaskSettings) {
 		super.setDispatchTaskSettings(dispatchTaskSettings);
@@ -70,30 +58,6 @@ public class DispatchTriggerImpl extends DispatchTriggerBaseImpl {
 
 		super.setDispatchTaskSettings(
 			_dispatchTaskSettingsUnicodeProperties.toString());
-	}
-
-	/**
-	 * @param      taskSettings
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 *             #setDispatchTaskSettings(String)}
-	 */
-	@Deprecated
-	@Override
-	public void setTaskSettings(String taskSettings) {
-		setDispatchTaskSettings(taskSettings);
-	}
-
-	/**
-	 * @param      taskSettingsUnicodeProperties
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 *             #setDispatchTaskSettingsUnicodeProperties(UnicodeProperties)}
-	 */
-	@Deprecated
-	@Override
-	public void setTaskSettingsUnicodeProperties(
-		UnicodeProperties taskSettingsUnicodeProperties) {
-
-		setDispatchTaskSettingsUnicodeProperties(taskSettingsUnicodeProperties);
 	}
 
 	private transient UnicodeProperties _dispatchTaskSettingsUnicodeProperties;

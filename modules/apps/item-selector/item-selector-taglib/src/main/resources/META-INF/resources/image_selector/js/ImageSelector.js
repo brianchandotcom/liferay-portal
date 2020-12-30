@@ -12,109 +12,20 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
+import BrowseImage from './BrowseImage';
+import ChangeImageControls from './ChangeImageControls';
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
+import ProgressWrapper from './ProgressWrapper';
 
 const CSS_DROP_ACTIVE = 'drop-active';
 const CSS_PROGRESS_ACTIVE = 'progress-active';
-const SELECT_FILE_BUTTON = `<button class='btn btn-secondary' type='button'>${Liferay.Language.get(
-	'select-file'
-)}</button>`;
 const STR_IMAGE_DELETED = 'coverImageDeleted';
 const STR_IMAGE_SELECTED = 'coverImageSelected';
 const STR_IMAGE_UPLOADED = 'coverImageUploaded';
-
-const BrowseImageZone = ({
-	handleClick,
-	itemSelectorEventName,
-	itemSelectorURL,
-	maxFileSize,
-	validExtensions,
-}) => (
-	<div className="browse-image-controls">
-		<div className="drag-drop-label" onClick={(event) => {
-			if (event.target.tagName === 'BUTTON') {
-				handleClick(event);
-			}
-		}}>
-			{itemSelectorEventName && itemSelectorURL ? (
-				Liferay.Browser.isMobile() ? (
-					SELECT_FILE_BUTTON
-				) : (
-					<span
-						className="pr-1"
-						dangerouslySetInnerHTML={{
-							__html: Liferay.Util.sub(
-								Liferay.Language.get(
-									'drag-and-drop-to-upload-or-x'
-								),
-								SELECT_FILE_BUTTON
-							),
-						}}
-					></span>
-				)
-			) : (
-				Liferay.Language.get('drag-and-drop-to-upload')
-			)}
-		</div>
-		<div className="file-validation-info">
-			{validExtensions && <strong>{validExtensions}</strong>}
-
-			{maxFileSize !== 0 && (
-				<span
-					className="pl-1"
-					dangerouslySetInnerHTML={{
-						__html: Liferay.Util.sub(
-							Liferay.Language.get('maximum-size-x'),
-							Liferay.Util.formatStorage(
-								parseInt(maxFileSize, 10)
-							)
-						),
-					}}
-				></span>
-			)}
-		</div>
-	</div>
-);
-
-const ChangeImageControls = ({handleClickDelete, handleClickPicture}) => (
-	<div className="change-image-controls">
-		<ClayButtonWithIcon
-			displayType="secondary"
-			monospaced
-			onClick={handleClickPicture}
-			symbol="picture"
-			title={Liferay.Language.get('change-image')}
-		/>
-
-		<ClayButtonWithIcon
-			className="ml-1"
-			displayType="secondary"
-			monospaced
-			onClick={handleClickDelete}
-			symbol="trash"
-			title={Liferay.Language.get('remove-image')}
-		/>
-	</div>
-);
-
-const ProgressWrapper = ({fileName, onCancel}) => (
-	<div className="progress-wrapper">
-		<p className="file-name">{fileName}</p>
-
-		<div className="progressbar"></div>
-
-		<p className="progress-data size"></p>
-
-		<ClayButton displayType="primary" onClick={onCancel}>
-			{Liferay.Language.get('cancel')}
-		</ClayButton>
-	</div>
-);
 
 const ImageSelector = ({
 	draggableImage,
@@ -292,7 +203,7 @@ const ImageSelector = ({
 			)}
 
 			{image.fileEntryId == 0 && (
-				<BrowseImageZone
+				<BrowseImage
 					handleClick={handleSelectFileClick}
 					itemSelectorEventName={itemSelectorEventName}
 					itemSelectorURL={itemSelectorURL}

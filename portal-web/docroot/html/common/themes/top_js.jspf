@@ -337,9 +337,6 @@
 			long jsLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS);
 			%>
 
-			getAvailableLangPath: function() {
-				return '<%= PortalUtil.getStaticResourceURL(request, "available_languages.jsp", LanguageUtil.getLastModified()) %>';
-			},
 			getCombine: function() {
 				return <%= themeDisplay.isThemeJsFastLoad() %>;
 			},
@@ -382,9 +379,6 @@
 			},
 			getJavaScriptRootPath: function() {
 				return '<%= themeDisplay.getPathJavaScript() %>';
-			},
-			getLangPath: function() {
-				return '<%= PortalUtil.getStaticResourceURL(request, "aui_lang.jsp", jsLastModified) %>';
 			},
 			getPortletRootPath: function() {
 				return '<%= themeDisplay.getPathContext() %>/html/portlet';

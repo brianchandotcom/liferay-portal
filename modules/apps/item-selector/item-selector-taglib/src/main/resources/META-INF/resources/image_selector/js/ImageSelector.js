@@ -26,6 +26,7 @@ const SELECT_FILE_BUTTON = `<button class='btn btn-secondary' type='button'>${Li
 )}</button>`;
 const STR_IMAGE_DELETED = 'coverImageDeleted';
 const STR_IMAGE_SELECTED = 'coverImageSelected';
+const STR_IMAGE_UPLOADED = 'coverImageUploaded';
 
 const BrowseImageZone = ({
 	handleClick,
@@ -194,9 +195,31 @@ const ImageSelector = ({
 		stopProgress();
 	};
 
-	const onUploadComplete = () => {
-		console.log('onUploadComplete');
+	const onUploadComplete = (event) => {
 		stopProgress();
+
+		const data = JSON.parse(event.data);
+
+		const image = data.file;
+		const success = data.success;
+
+		let fireEvent = STR_IMAGE_DELETED;
+
+		if (success) {
+			fireEvent = STR_IMAGE_UPLOADED;
+
+			setImage({
+				fileEntryId: image.fileEntryId,
+				src: image.url,
+			});
+		}
+		else {
+			//TODO error
+		}
+
+		Liferay.fire(fireEvent, {
+			imageData: success ? image : null
+		});
 	};
 
 	const onUploadProgress = () => {

@@ -2087,7 +2087,7 @@ public abstract class BaseBuild implements Build {
 			return JenkinsResultsParserUtil.combine(
 				getName(), " started at ",
 				JenkinsResultsParserUtil.toDateString(
-					new Date(getStartTimestamp()), "America/Los_Angeles"),
+					new Date(getStartTimestamp())),
 				" and ran for ",
 				JenkinsResultsParserUtil.toDurationString(getDuration()), ".");
 		}

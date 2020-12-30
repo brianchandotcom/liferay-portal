@@ -767,9 +767,7 @@ public class GitHubDevSyncUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(
-			JenkinsResultsParserUtil.toDateString(
-				new Date(), "America/Los_Angeles"));
+		sb.append(JenkinsResultsParserUtil.toDateString(new Date()));
 		sb.append("\n\n");
 
 		JenkinsSlave jenkinsSlave = new JenkinsSlave();

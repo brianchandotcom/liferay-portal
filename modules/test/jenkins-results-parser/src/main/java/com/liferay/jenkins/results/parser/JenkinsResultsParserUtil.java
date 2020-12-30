@@ -2868,6 +2868,11 @@ public class JenkinsResultsParserUtil {
 		return byteCount + " B";
 	}
 
+	public static String toDateString(Date date) {
+		return toDateString(
+			date, "MMM dd, yyyy h:mm:ss a z", "America/Los_Angeles");
+	}
+
 	public static String toDateString(Date date, String timeZoneName) {
 		return toDateString(date, "MMM dd, yyyy h:mm:ss a z", timeZoneName);
 	}

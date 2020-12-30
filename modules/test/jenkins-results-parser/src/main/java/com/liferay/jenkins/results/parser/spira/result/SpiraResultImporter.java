@@ -159,8 +159,7 @@ public class SpiraResultImporter {
 							JenkinsResultsParserUtil.combine(
 								"[", groupName, "] ",
 								JenkinsResultsParserUtil.toDateString(
-									new Date(startGroup),
-									"America/Los_Angeles"),
+									new Date(startGroup)),
 								" - Start recording ",
 								String.valueOf(results.size()), " tests"));
 
@@ -175,8 +174,7 @@ public class SpiraResultImporter {
 							JenkinsResultsParserUtil.combine(
 								"[", groupName, "] ",
 								JenkinsResultsParserUtil.toDateString(
-									new Date(startGroup),
-									"America/Los_Angeles"),
+									new Date(startGroup)),
 								" - Completed recording ",
 								String.valueOf(spiraTestCaseRuns.size()),
 								" tests in ",

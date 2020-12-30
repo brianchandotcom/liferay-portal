@@ -36,7 +36,11 @@ const BrowseImageZone = ({
 	validExtensions,
 }) => (
 	<div className="browse-image-controls">
-		<div className="drag-drop-label" onClick={handleClick}>
+		<div className="drag-drop-label" onClick={(event) => {
+			if (event.target.tagName === 'BUTTON') {
+				handleClick(event);
+			}
+		}}>
 			{itemSelectorEventName && itemSelectorURL ? (
 				Liferay.Browser.isMobile() ? (
 					SELECT_FILE_BUTTON
@@ -138,26 +142,24 @@ const ImageSelector = ({
 
 	let uploaderStatusStopped;
 
-	const handleSelectFileClick = (event) => {
-		if (event.target.tagName === 'BUTTON') {
-			Liferay.Util.openSelectionModal({
-				onSelect: (selectedItem) => {
-					if (selectedItem) {
-						const itemValue = JSON.parse(selectedItem.value);
+	const handleSelectFileClick = () => {
+		Liferay.Util.openSelectionModal({
+			onSelect: (selectedItem) => {
+				if (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
 
-						setImage({
-							fileEntryId: itemValue.fileEntryId || 0,
-							src: itemValue.url || '',
-						});
+					setImage({
+						fileEntryId: itemValue.fileEntryId || 0,
+						src: itemValue.url || '',
+					});
 
-						Liferay.fire(STR_IMAGE_SELECTED);
-					}
-				},
-				selectEventName: itemSelectorEventName,
-				title: Liferay.Language.get('select-file'),
-				url: itemSelectorURL,
-			});
-		}
+					Liferay.fire(STR_IMAGE_SELECTED);
+				}
+			},
+			selectEventName: itemSelectorEventName,
+			title: Liferay.Language.get('select-file'),
+			url: itemSelectorURL,
+		});
 	};
 
 	const handleDeleteImageClick = () => {

@@ -26,6 +26,10 @@ const CSS_PROGRESS_ACTIVE = 'progress-active';
 const STR_IMAGE_DELETED = 'coverImageDeleted';
 const STR_IMAGE_SELECTED = 'coverImageSelected';
 const STR_IMAGE_UPLOADED = 'coverImageUploaded';
+const STR_SPACE = ' ';
+
+const TPL_PROGRESS_DATA =
+	'<strong>{0}</strong> {1} of <strong>{2}</strong> {3}';
 
 const ImageSelector = ({
 	draggableImage,
@@ -48,6 +52,7 @@ const ImageSelector = ({
 	const [fileName, setFileName] = useState('');
 
 	const [progressValue, setProgressValue] = useState(0);
+	const [progressData, setProgressData] = useState();
 
 	const rootNodeRef = useRef(null);
 
@@ -140,6 +145,24 @@ const ImageSelector = ({
 		const percentLoaded = Math.round(event.percentLoaded);
 
 		setProgressValue(Math.ceil(percentLoaded));
+
+		const bytesLoaded = Liferay.Util.formatStorage(event.bytesLoaded);
+
+		const bytesTotal = Liferay.Util.formatStorage(event.bytesTotal);
+
+		const bytesLoadedSpaceIndex = bytesLoaded.indexOf(STR_SPACE);
+
+		const bytesTotalSpaceIndex = bytesTotal.indexOf(STR_SPACE);
+
+		setProgressData(
+			Liferay.Util.sub(
+				TPL_PROGRESS_DATA,
+				bytesLoaded.substring(0, bytesLoadedSpaceIndex),
+				bytesLoaded.substring(bytesLoadedSpaceIndex + 1),
+				bytesTotal.substring(0, bytesTotalSpaceIndex),
+				bytesTotal.substring(bytesTotalSpaceIndex + 1)
+			)
+		);
 	};
 
 	const stopProgress = () => {
@@ -228,6 +251,7 @@ const ImageSelector = ({
 			<ProgressWrapper
 				fileName={fileName}
 				onCancel={onUploadCancel}
+				progressData={progressData}
 				progressValue={progressValue}
 			/>
 		</div>

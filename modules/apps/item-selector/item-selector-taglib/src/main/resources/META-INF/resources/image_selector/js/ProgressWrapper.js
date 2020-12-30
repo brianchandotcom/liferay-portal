@@ -17,13 +17,18 @@ import ClayProgressBar from '@clayui/progress-bar';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ProgressWrapper = ({fileName, onCancel, progressValue}) => (
+const ProgressWrapper = ({fileName, onCancel, progressData, progressValue}) => (
 	<div className="progress-wrapper">
 		<p className="file-name">{fileName}</p>
 
 		<ClayProgressBar className="progressbar" value={progressValue} />
 
-		<p className="progress-data size"></p>
+		<p
+			className="progress-data size"
+			dangerouslySetInnerHTML={{
+				__html: progressData,
+			}}
+		/>
 
 		<ClayButton displayType="primary" onClick={onCancel}>
 			{Liferay.Language.get('cancel')}

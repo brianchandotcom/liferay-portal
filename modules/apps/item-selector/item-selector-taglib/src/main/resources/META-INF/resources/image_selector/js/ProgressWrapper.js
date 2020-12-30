@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const ProgressWrapper = ({fileName, onCancel}) => (
@@ -28,5 +29,10 @@ const ProgressWrapper = ({fileName, onCancel}) => (
 		</ClayButton>
 	</div>
 );
+
+ProgressWrapper.propTypes = {
+	fileName: PropTypes.string,
+	onCancel: PropTypes.func.isRequired,
+};
 
 export default ProgressWrapper;

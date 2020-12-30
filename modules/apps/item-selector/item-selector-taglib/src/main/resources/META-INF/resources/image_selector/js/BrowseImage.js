@@ -12,6 +12,7 @@
  * details.
  */
 
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const SELECT_FILE_BUTTON = `<button class='btn btn-secondary' type='button'>${Liferay.Language.get(
@@ -70,5 +71,13 @@ const BrowseImage = ({
 		</div>
 	</div>
 );
+
+BrowseImage.propTypes = {
+    handleClick: PropTypes.func,
+	itemSelectorEventName: PropTypes.string,
+	itemSelectorURL: PropTypes.string,
+	maxFileSize: PropTypes.string,
+	validExtensions: PropTypes.string.isRequired,
+};
 
 export default BrowseImage;

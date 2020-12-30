@@ -13,6 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 const ChangeImageControls = ({handleClickDelete, handleClickPicture}) => (
@@ -35,5 +36,10 @@ const ChangeImageControls = ({handleClickDelete, handleClickPicture}) => (
 		/>
 	</div>
 );
+
+ChangeImageControls.propTypes = {
+	handleClickDelete: PropTypes.func.isRequired,
+	handleClickPicture: PropTypes.func.isRequired,
+};
 
 export default ChangeImageControls;

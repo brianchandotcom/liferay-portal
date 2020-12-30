@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.spira.BaseSpiraArtifact;
@@ -72,10 +73,35 @@ public class JUnitAxisSpiraTestResultValues
 	}
 
 	private SpiraCustomPropertyValue _getErrorMessageValue() {
+		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
+
+		SpiraCustomProperty spiraCustomProperty =
+			SpiraCustomProperty.createSpiraCustomProperty(
+				spiraBuildResult.getSpiraProject(), SpiraTestCaseRun.class,
+				"Error Message", SpiraCustomProperty.Type.TEXT, true);
+
 		TestClassResult testClassResult =
 			_jUnitAxisSpiraTestResult.getTestClassResult();
 
-		if ((testClassResult == null) || !testClassResult.isFailing()) {
+		if (testClassResult == null) {
+			AxisBuild axisBuild = _jUnitAxisSpiraTestResult.getAxisBuild();
+
+			String status = "FAILURE";
+
+			if (axisBuild != null) {
+				status = axisBuild.getResult();
+			}
+
+			if (!status.equals("SUCCESS")) {
+				return SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
+					spiraCustomProperty,
+					"The build failed prior to running the test.");
+			}
+
+			return null;
+		}
+
+		if (!testClassResult.isFailing()) {
 			return null;
 		}
 
@@ -158,13 +184,8 @@ public class JUnitAxisSpiraTestResultValues
 
 		sb.append("</ol></details>");
 
-		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
-
 		return SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
-			SpiraCustomProperty.createSpiraCustomProperty(
-				spiraBuildResult.getSpiraProject(), SpiraTestCaseRun.class,
-				"Error Message", SpiraCustomProperty.Type.TEXT, true),
-			sb.toString());
+			spiraCustomProperty, sb.toString());
 	}
 
 	private SpiraCustomPropertyValue _getMethodsValue() {

@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.spira.result;
 
+import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.spira.SpiraCustomProperty;
 import com.liferay.jenkins.results.parser.spira.SpiraCustomPropertyValue;
@@ -87,9 +88,30 @@ public class FunctionalAxisSpiraTestResultValues
 	}
 
 	private SpiraCustomPropertyValue _getErrorMessageValue() {
+		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
+
+		SpiraCustomProperty spiraCustomProperty =
+			SpiraCustomProperty.createSpiraCustomProperty(
+				spiraBuildResult.getSpiraProject(), SpiraTestCaseRun.class,
+				"Error Message", SpiraCustomProperty.Type.TEXT, true);
+
 		TestResult testResult = _functionalAxisSpiraTestResult.getTestResult();
 
 		if (testResult == null) {
+			AxisBuild axisBuild = _functionalAxisSpiraTestResult.getAxisBuild();
+
+			String status = "FAILURE";
+
+			if (axisBuild != null) {
+				status = axisBuild.getResult();
+			}
+
+			if (!status.equals("SUCCESS")) {
+				return SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
+					spiraCustomProperty,
+					"The build failed prior to running the test.");
+			}
+
 			return null;
 		}
 
@@ -102,13 +124,6 @@ public class FunctionalAxisSpiraTestResultValues
 		if ((errorDetails == null) || errorDetails.isEmpty()) {
 			return null;
 		}
-
-		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
-
-		SpiraCustomProperty spiraCustomProperty =
-			SpiraCustomProperty.createSpiraCustomProperty(
-				spiraBuildResult.getSpiraProject(), SpiraTestCaseRun.class,
-				"Error Message", SpiraCustomProperty.Type.TEXT, true);
 
 		errorDetails = StringEscapeUtils.escapeHtml(errorDetails);
 

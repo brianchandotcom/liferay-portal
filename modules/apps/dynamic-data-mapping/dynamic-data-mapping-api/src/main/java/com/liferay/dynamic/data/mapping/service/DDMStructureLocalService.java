@@ -160,11 +160,13 @@ public interface DDMStructureLocalService
 	 group permissions for the structure.
 	 * @return the new structure
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure copyStructure(
-			long userId, long structureId, Map<Locale, String> nameMap,
+			long userId, long oldStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure copyStructure(
 			long userId, long structureId, ServiceContext serviceContext)
 		throws PortalException;

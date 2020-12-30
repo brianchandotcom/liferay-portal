@@ -57,7 +57,11 @@ const RichText = ({
 				onMode={({editor}) => {
 					if (editor.mode === 'source') {
 						editor.on('afterSetData', ({data}) => {
-							setCurrentValue(data.dataValue);
+							const {dataValue} = data;
+
+							setCurrentValue(dataValue);
+
+							onChange({}, dataValue);
 						});
 					}
 					else {

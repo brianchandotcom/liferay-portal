@@ -742,6 +742,15 @@ definition {
 	@description = "This is a test for LPS-113806. View auto image resolution when viewport is greater than original image and original image is greater than image resolution."
 	@priority = "4"
 	test ViewAutoImageResolutionWhenViewportIsGreaterThanOriginalImageAndOriginalImageIsGreaterThanImageResolution {
+		task ("Add an Image") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "Adaptive Media Image Description",
+				dmDocumentTitle = "analytics-cloud-hero-image.png",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "analytics-cloud-hero-image.png");
+		}
+
 		task ("Add an Image Resolution with 600px Max Width") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -765,9 +774,9 @@ definition {
 
 		task ("Select an Image with width between 600px and 700px") {
 			PageEditor.editFragmentImage(
-				fileName = "analytics-cloud-hero-image.png",
 				fragmentName = "Image",
-				id = "image-square");
+				id = "image-square",
+				imageFileName = "analytics-cloud-hero-image.png");
 
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",

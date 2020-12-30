@@ -52,50 +52,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class DispatchTriggerServiceHttp {
 
 	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-			HttpPrincipal httpPrincipal, long userId, String name,
-			String dispatchTaskExecutorType,
-			com.liferay.portal.kernel.util.UnicodeProperties
-				dispatchTaskSettingsUnicodeProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				DispatchTriggerServiceUtil.class, "addDispatchTrigger",
-				_addDispatchTriggerParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, name, dispatchTaskExecutorType,
-				dispatchTaskSettingsUnicodeProperties);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.dispatch.model.DispatchTrigger)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
 			HttpPrincipal httpPrincipal, long userId,
 			String dispatchTaskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
@@ -106,7 +62,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "addDispatchTrigger",
-				_addDispatchTriggerParameterTypes1);
+				_addDispatchTriggerParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, dispatchTaskExecutorType,
@@ -147,7 +103,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "deleteDispatchTrigger",
-				_deleteDispatchTriggerParameterTypes2);
+				_deleteDispatchTriggerParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, dispatchTriggerId);
@@ -183,7 +139,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "getDispatchTriggers",
-				_getDispatchTriggersParameterTypes3);
+				_getDispatchTriggersParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, start, end);
@@ -223,7 +179,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "getDispatchTriggersCount",
-				_getDispatchTriggersCountParameterTypes4);
+				_getDispatchTriggersCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -270,7 +226,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "updateDispatchTrigger",
-				_updateDispatchTriggerParameterTypes5);
+				_updateDispatchTriggerParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, dispatchTriggerId, active, cronExpression,
@@ -278,103 +234,6 @@ public class DispatchTriggerServiceHttp {
 				endDateHour, endDateMinute, neverEnd, overlapAllowed,
 				startDateMonth, startDateDay, startDateYear, startDateHour,
 				startDateMinute);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.dispatch.model.DispatchTrigger)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.dispatch.model.DispatchTrigger
-			updateDispatchTrigger(
-				HttpPrincipal httpPrincipal, long dispatchTriggerId,
-				boolean active, String cronExpression, int endDateMonth,
-				int endDateDay, int endDateYear, int endDateHour,
-				int endDateMinute, boolean neverEnd, boolean overlapAllowed,
-				int startDateMonth, int startDateDay, int startDateYear,
-				int startDateHour, int startDateMinute,
-				com.liferay.dispatch.executor.DispatchTaskClusterMode
-					dispatchTaskClusterMode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				DispatchTriggerServiceUtil.class, "updateDispatchTrigger",
-				_updateDispatchTriggerParameterTypes6);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, dispatchTriggerId, active, cronExpression,
-				endDateMonth, endDateDay, endDateYear, endDateHour,
-				endDateMinute, neverEnd, overlapAllowed, startDateMonth,
-				startDateDay, startDateYear, startDateHour, startDateMinute,
-				dispatchTaskClusterMode);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.dispatch.model.DispatchTrigger)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.dispatch.model.DispatchTrigger
-			updateDispatchTrigger(
-				HttpPrincipal httpPrincipal, long dispatchTriggerId,
-				String name,
-				com.liferay.portal.kernel.util.UnicodeProperties
-					dispatchTaskSettingsUnicodeProperties)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				DispatchTriggerServiceUtil.class, "updateDispatchTrigger",
-				_updateDispatchTriggerParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, dispatchTriggerId, name,
-				dispatchTaskSettingsUnicodeProperties);
 
 			Object returnObj = null;
 
@@ -415,7 +274,7 @@ public class DispatchTriggerServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DispatchTriggerServiceUtil.class, "updateDispatchTrigger",
-				_updateDispatchTriggerParameterTypes8);
+				_updateDispatchTriggerParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, dispatchTriggerId,
@@ -454,21 +313,16 @@ public class DispatchTriggerServiceHttp {
 
 	private static final Class<?>[] _addDispatchTriggerParameterTypes0 =
 		new Class[] {
-			long.class, String.class, String.class,
-			com.liferay.portal.kernel.util.UnicodeProperties.class
-		};
-	private static final Class<?>[] _addDispatchTriggerParameterTypes1 =
-		new Class[] {
 			long.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, String.class
 		};
-	private static final Class<?>[] _deleteDispatchTriggerParameterTypes2 =
+	private static final Class<?>[] _deleteDispatchTriggerParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getDispatchTriggersParameterTypes3 =
+	private static final Class<?>[] _getDispatchTriggersParameterTypes2 =
 		new Class[] {int.class, int.class};
-	private static final Class<?>[] _getDispatchTriggersCountParameterTypes4 =
+	private static final Class<?>[] _getDispatchTriggersCountParameterTypes3 =
 		new Class[] {};
-	private static final Class<?>[] _updateDispatchTriggerParameterTypes5 =
+	private static final Class<?>[] _updateDispatchTriggerParameterTypes4 =
 		new Class[] {
 			long.class, boolean.class, String.class,
 			com.liferay.dispatch.executor.DispatchTaskClusterMode.class,
@@ -476,19 +330,7 @@ public class DispatchTriggerServiceHttp {
 			boolean.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class
 		};
-	private static final Class<?>[] _updateDispatchTriggerParameterTypes6 =
-		new Class[] {
-			long.class, boolean.class, String.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class, boolean.class,
-			int.class, int.class, int.class, int.class, int.class,
-			com.liferay.dispatch.executor.DispatchTaskClusterMode.class
-		};
-	private static final Class<?>[] _updateDispatchTriggerParameterTypes7 =
-		new Class[] {
-			long.class, String.class,
-			com.liferay.portal.kernel.util.UnicodeProperties.class
-		};
-	private static final Class<?>[] _updateDispatchTriggerParameterTypes8 =
+	private static final Class<?>[] _updateDispatchTriggerParameterTypes5 =
 		new Class[] {
 			long.class, com.liferay.portal.kernel.util.UnicodeProperties.class,
 			String.class

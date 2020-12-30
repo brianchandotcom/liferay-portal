@@ -80,23 +80,6 @@ public interface DispatchTriggerLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DispatchTrigger addDispatchTrigger(DispatchTrigger dispatchTrigger);
 
-	/**
-	 * @param userId
-	 * @param name
-	 * @param system
-	 * @param taskExecutorType
-	 * @param taskSettingsUnicodeProperties
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link #addDispatchTrigger(long,
-	 String, UnicodeProperties, String, boolean)}
-	 */
-	@Deprecated
-	public DispatchTrigger addDispatchTrigger(
-			long userId, String name, boolean system, String taskExecutorType,
-			UnicodeProperties taskSettingsUnicodeProperties)
-		throws PortalException;
-
 	public DispatchTrigger addDispatchTrigger(
 			long userId, String dispatchTaskExecutorType,
 			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
@@ -335,55 +318,6 @@ public interface DispatchTriggerLocalService
 			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
 			int startDateDay, int startDateYear, int startDateHour,
 			int startDateMinute)
-		throws PortalException;
-
-	/**
-	 * @param dispatchTriggerId
-	 * @param active
-	 * @param cronExpression
-	 * @param endDateMonth
-	 * @param endDateDay
-	 * @param endDateYear
-	 * @param endDateHour
-	 * @param endDateMinute
-	 * @param neverEnd
-	 * @param overlapAllowed
-	 * @param startDateMonth
-	 * @param startDateDay
-	 * @param startDateYear
-	 * @param startDateHour
-	 * @param startDateMinute
-	 * @param dispatchTaskClusterMode
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 #updateDispatchTrigger(long, boolean, String,
-	 DispatchTaskClusterMode, int, int, int, int, int, boolean,
-	 boolean, int, int, int, int, int)}
-	 */
-	@Deprecated
-	public DispatchTrigger updateDispatchTrigger(
-			long dispatchTriggerId, boolean active, String cronExpression,
-			int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-			int endDateMinute, boolean neverEnd, boolean overlapAllowed,
-			int startDateMonth, int startDateDay, int startDateYear,
-			int startDateHour, int startDateMinute,
-			DispatchTaskClusterMode dispatchTaskClusterMode)
-		throws PortalException;
-
-	/**
-	 * @param dispatchTriggerId
-	 * @param name
-	 * @param dispatchTaskSettingsUnicodeProperties
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 #updateDispatchTrigger(long, UnicodeProperties, String)}
-	 */
-	@Deprecated
-	public DispatchTrigger updateDispatchTrigger(
-			long dispatchTriggerId, String name,
-			UnicodeProperties dispatchTaskSettingsUnicodeProperties)
 		throws PortalException;
 
 	public DispatchTrigger updateDispatchTrigger(

@@ -139,61 +139,6 @@ public class DispatchTriggerServiceSoap {
 		}
 	}
 
-	/**
-	 * @param dispatchTriggerId
-	 * @param active
-	 * @param cronExpression
-	 * @param endDateMonth
-	 * @param endDateDay
-	 * @param endDateYear
-	 * @param endDateHour
-	 * @param endDateMinute
-	 * @param neverEnd
-	 * @param overlapAllowed
-	 * @param startDateMonth
-	 * @param startDateDay
-	 * @param startDateYear
-	 * @param startDateHour
-	 * @param startDateMinute
-	 * @param dispatchTaskClusterMode
-	 * @return
-	 * @throws PortalException
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 #updateDispatchTrigger(long, boolean, String,
-	 DispatchTaskClusterMode, int, int, int, int, int, boolean,
-	 boolean, int, int, int, int, int)}
-	 */
-	@Deprecated
-	public static com.liferay.dispatch.model.DispatchTriggerSoap
-			updateDispatchTrigger(
-				long dispatchTriggerId, boolean active, String cronExpression,
-				int endDateMonth, int endDateDay, int endDateYear,
-				int endDateHour, int endDateMinute, boolean neverEnd,
-				boolean overlapAllowed, int startDateMonth, int startDateDay,
-				int startDateYear, int startDateHour, int startDateMinute,
-				com.liferay.dispatch.executor.DispatchTaskClusterMode
-					dispatchTaskClusterMode)
-		throws RemoteException {
-
-		try {
-			com.liferay.dispatch.model.DispatchTrigger returnValue =
-				DispatchTriggerServiceUtil.updateDispatchTrigger(
-					dispatchTriggerId, active, cronExpression, endDateMonth,
-					endDateDay, endDateYear, endDateHour, endDateMinute,
-					neverEnd, overlapAllowed, startDateMonth, startDateDay,
-					startDateYear, startDateHour, startDateMinute,
-					dispatchTaskClusterMode);
-
-			return com.liferay.dispatch.model.DispatchTriggerSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		DispatchTriggerServiceSoap.class);
 

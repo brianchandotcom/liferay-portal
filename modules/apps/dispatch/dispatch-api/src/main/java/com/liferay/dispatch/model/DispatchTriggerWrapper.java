@@ -340,19 +340,6 @@ public class DispatchTriggerWrapper
 	}
 
 	/**
-	 * @return
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 #getDispatchTaskSettingsUnicodeProperties()}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties
-		getTaskSettingsUnicodeProperties() {
-
-		return model.getTaskSettingsUnicodeProperties();
-	}
-
-	/**
 	 * Returns the user ID of this dispatch trigger.
 	 *
 	 * @return the user ID of this dispatch trigger
@@ -584,31 +571,6 @@ public class DispatchTriggerWrapper
 	@Override
 	public void setSystem(boolean system) {
 		model.setSystem(system);
-	}
-
-	/**
-	 * @param taskSettings
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 #setDispatchTaskSettings(String)}
-	 */
-	@Deprecated
-	@Override
-	public void setTaskSettings(String taskSettings) {
-		model.setTaskSettings(taskSettings);
-	}
-
-	/**
-	 * @param taskSettingsUnicodeProperties
-	 * @deprecated As of Cavanaugh (7.4.x), use {@link
-	 #setDispatchTaskSettingsUnicodeProperties(UnicodeProperties)}
-	 */
-	@Deprecated
-	@Override
-	public void setTaskSettingsUnicodeProperties(
-		com.liferay.portal.kernel.util.UnicodeProperties
-			taskSettingsUnicodeProperties) {
-
-		model.setTaskSettingsUnicodeProperties(taskSettingsUnicodeProperties);
 	}
 
 	/**

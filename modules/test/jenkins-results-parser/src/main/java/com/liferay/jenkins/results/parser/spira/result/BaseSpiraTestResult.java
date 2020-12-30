@@ -18,6 +18,7 @@ import com.google.common.collect.Lists;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.JenkinsSlave;
 import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.BaseSpiraArtifact;
@@ -151,8 +152,14 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 	public SpiraAutomationHost getSpiraAutomationHost() {
 		Build build = getBuild();
 
+		JenkinsSlave jenkinsSlave = build.getJenkinsSlave();
+
+		if (jenkinsSlave == null) {
+			return null;
+		}
+
 		return SpiraAutomationHost.createSpiraAutomationHost(
-			spiraBuildResult.getSpiraProject(), build.getJenkinsSlave());
+			spiraBuildResult.getSpiraProject(), jenkinsSlave);
 	}
 
 	@Override

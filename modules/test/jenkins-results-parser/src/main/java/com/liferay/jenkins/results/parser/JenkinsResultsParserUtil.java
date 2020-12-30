@@ -3184,37 +3184,45 @@ public class JenkinsResultsParserUtil {
 			int timeout, HTTPAuthorization httpAuthorizationHeader)
 		throws IOException {
 
-		try (BufferedReader bufferedReader = toBufferedReader(
-				url, checkCache, maxRetries, method, postContent, retryPeriod,
-				timeout, httpAuthorizationHeader)) {
+		for (int i = 0; i < 2; i++) {
+			try (BufferedReader bufferedReader = toBufferedReader(
+					url, checkCache, maxRetries, method, postContent,
+					retryPeriod, timeout, httpAuthorizationHeader)) {
 
-			StringBuilder sb = new StringBuilder();
+				StringBuilder sb = new StringBuilder();
 
-			String line = bufferedReader.readLine();
+				String line = bufferedReader.readLine();
 
-			while (line != null) {
-				sb.append(line);
-				sb.append("\n");
+				while (line != null) {
+					sb.append(line);
+					sb.append("\n");
 
-				line = bufferedReader.readLine();
+					line = bufferedReader.readLine();
+				}
+
+				int bytes = sb.length();
+
+				if ((bytes == 0) && (i < 1)) {
+					continue;
+				}
+
+				String content = sb.toString();
+
+				if (checkCache && !url.startsWith("file:") &&
+					(bytes < (3 * 1024 * 1024))) {
+
+					url = fixURL(url);
+
+					String key = url.replace("//", "/");
+
+					saveToCacheFile(_PREFIX_TO_STRING_CACHE + key, content);
+				}
+
+				return content;
 			}
-
-			int bytes = sb.length();
-
-			String content = sb.toString();
-
-			if (checkCache && !url.startsWith("file:") &&
-				(bytes < (3 * 1024 * 1024))) {
-
-				url = fixURL(url);
-
-				String key = url.replace("//", "/");
-
-				saveToCacheFile(_PREFIX_TO_STRING_CACHE + key, content);
-			}
-
-			return content;
 		}
+
+		return "";
 	}
 
 	public static String toString(

@@ -14,7 +14,7 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import BrowseImage from './BrowseImage';
@@ -86,9 +86,9 @@ const ImageSelector = ({
 
 			uploaderStatusStoppedRef.current = A.Uploader.Queue.STOPPED;
 		});
-	}, []);
+	}, [onFileSelect, onUploadComplete, onUploadProgress, uploadURL]);
 
-	const handleSelectFileClick = () => {
+	const handleSelectFileClick = useCallback(() => {
 		Liferay.Util.openSelectionModal({
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
@@ -106,9 +106,9 @@ const ImageSelector = ({
 			title: Liferay.Language.get('select-file'),
 			url: itemSelectorURL,
 		});
-	};
+	}, [itemSelectorEventName, itemSelectorURL]);
 
-	const handleDeleteImageClick = () => {
+	const handleDeleteImageClick = useCallback(() => {
 		setImage({
 			fileEntryId: 0,
 			src: '',
@@ -117,9 +117,9 @@ const ImageSelector = ({
 		Liferay.fire(STR_IMAGE_DELETED, {
 			imageData: null,
 		});
-	};
+	}, []);
 
-	const onFileSelect = (event) => {
+	const onFileSelect = useCallback((event) => {
 		rootNodeRef.current.classList.remove(CSS_DROP_ACTIVE);
 
 		const file = event.fileList[0];
@@ -134,43 +134,46 @@ const ImageSelector = ({
 		}
 
 		uploader.uploadThese(event.fileList);
-	};
+	}, []);
 
-	const onUploadCancel = () => {
+	const onUploadCancel = useCallback(() => {
 		console.log('onUploadCancel');
 		stopProgress();
-	};
+	}, [stopProgress]);
 
-	const onUploadComplete = (event) => {
-		stopProgress();
+	const onUploadComplete = useCallback(
+		(event) => {
+			stopProgress();
 
-		const data = JSON.parse(event.data);
+			const data = JSON.parse(event.data);
 
-		const image = data.file;
-		const success = data.success;
+			const image = data.file;
+			const success = data.success;
 
-		let fireEvent = STR_IMAGE_DELETED;
+			let fireEvent = STR_IMAGE_DELETED;
 
-		if (success) {
-			fireEvent = STR_IMAGE_UPLOADED;
+			if (success) {
+				fireEvent = STR_IMAGE_UPLOADED;
 
-			setImage({
-				fileEntryId: image.fileEntryId,
-				src: image.url,
+				setImage({
+					fileEntryId: image.fileEntryId,
+					src: image.url,
+				});
+			}
+			else {
+
+				//TODO error
+
+			}
+
+			Liferay.fire(fireEvent, {
+				imageData: success ? image : null,
 			});
-		}
-		else {
+		},
+		[stopProgress]
+	);
 
-			//TODO error
-
-		}
-
-		Liferay.fire(fireEvent, {
-			imageData: success ? image : null,
-		});
-	};
-
-	const onUploadProgress = (event) => {
+	const onUploadProgress = useCallback((event) => {
 		const percentLoaded = Math.round(event.percentLoaded);
 
 		setProgressValue(Math.ceil(percentLoaded));
@@ -192,13 +195,13 @@ const ImageSelector = ({
 				bytesTotal.substring(bytesTotalSpaceIndex + 1)
 			)
 		);
-	};
+	}, []);
 
-	const stopProgress = () => {
+	const stopProgress = useCallback(() => {
 		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
 
 		setProgressValue(0);
-	};
+	}, []);
 
 	return (
 		<div

@@ -2327,6 +2327,20 @@ public class JenkinsResultsParserUtil {
 		return true;
 	}
 
+	public static boolean isNullOrEmpty(String string) {
+		if (string == null) {
+			return true;
+		}
+
+		String trimmedString = string.trim();
+
+		if (trimmedString.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isReachable(String hostname) {
 		try {
 			InetAddress inetAddress = InetAddress.getByName(hostname);
@@ -2572,6 +2586,14 @@ public class JenkinsResultsParserUtil {
 
 	public static void saveToCacheFile(String key, String text) {
 		File cacheFile = _getCacheFile(key);
+
+		if (isNullOrEmpty(text)) {
+			if (cacheFile.exists()) {
+				cacheFile.delete();
+			}
+
+			return;
+		}
 
 		try {
 			write(cacheFile, text);

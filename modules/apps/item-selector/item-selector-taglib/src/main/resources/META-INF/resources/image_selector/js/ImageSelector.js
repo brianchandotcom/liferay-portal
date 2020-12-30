@@ -14,7 +14,7 @@
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import BrowseImage from './BrowseImage';
@@ -50,7 +50,6 @@ const ImageSelector = ({
 	});
 
 	const [fileName, setFileName] = useState('');
-
 	const [progressValue, setProgressValue] = useState(0);
 	const [progressData, setProgressData] = useState();
 
@@ -59,6 +58,35 @@ const ImageSelector = ({
 	let uploader = null;
 
 	let uploaderStatusStopped;
+
+	useEffect(() => {
+		AUI().use('uploader', (A) => {
+			const rootNode = rootNodeRef.current;
+	
+			uploader = new A.Uploader({
+				boundingBox: rootNode,
+				dragAndDropArea: rootNode,
+				fileFieldName: 'imageSelectorFileName',
+				on: {
+					dragleave() {
+						rootNode.classList.remove(CSS_DROP_ACTIVE);
+					},
+					dragover() {
+						rootNode.classList.add(CSS_DROP_ACTIVE);
+					},
+					fileselect: onFileSelect,
+					uploadcomplete: onUploadComplete,
+					uploadprogress: onUploadProgress,
+					uploadstart() {
+						rootNode.classList.add(CSS_PROGRESS_ACTIVE);
+					},
+				},
+				uploadURL,
+			}).render();
+	
+			uploaderStatusStopped = A.Uploader.Queue.STOPPED;
+		});
+	}, []);
 
 	const handleSelectFileClick = () => {
 		Liferay.Util.openSelectionModal({
@@ -170,33 +198,6 @@ const ImageSelector = ({
 
 		setProgressValue(0);
 	};
-
-	AUI().use('uploader', (A) => {
-		const rootNode = rootNodeRef.current;
-
-		uploader = new A.Uploader({
-			boundingBox: rootNode,
-			dragAndDropArea: rootNode,
-			fileFieldName: 'imageSelectorFileName',
-			on: {
-				dragleave() {
-					rootNode.classList.remove(CSS_DROP_ACTIVE);
-				},
-				dragover() {
-					rootNode.classList.add(CSS_DROP_ACTIVE);
-				},
-				fileselect: onFileSelect,
-				uploadcomplete: onUploadComplete,
-				uploadprogress: onUploadProgress,
-				uploadstart() {
-					rootNode.classList.add(CSS_PROGRESS_ACTIVE);
-				},
-			},
-			uploadURL,
-		}).render();
-
-		uploaderStatusStopped = A.Uploader.Queue.STOPPED;
-	});
 
 	return (
 		<div

@@ -31,6 +31,7 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 
 <liferay-frontend:edit-form
 	action="<%= editAccountURL %>"
+	cssClass="container-form-lg"
 >
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryDisplay.getAccountEntryId() == 0) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

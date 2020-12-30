@@ -29,9 +29,7 @@ else {
 }
 %>
 
-<clay:container-fluid
-	cssClass="main-content-body"
->
+<clay:container-fluid>
 	<clay:alert
 		message="<%= message %>"
 	/>

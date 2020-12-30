@@ -958,7 +958,7 @@ public class CommerceOrderTest {
 			null, 1, null, _serviceContext);
 
 		_resourcePermissionLocalService.addResourcePermission(
-			_serviceContext.getCompanyId(), "90", 1,
+			_serviceContext.getCompanyId(), "com.liferay.commerce.account", 1,
 			String.valueOf(role.getCompanyId()), role.getRoleId(),
 			"MANAGE_AVAILABLE_ACCOUNTS");
 

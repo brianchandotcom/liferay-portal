@@ -228,7 +228,11 @@ definition {
 			openNotification = "true",
 			ownerName = "Test Test");
 
-		AssertElementPresent(locator1 = "Comments#COMMENT_FIELD");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertElementPresent(locator1 = "CKEditor#BODY");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertElementNotPresent(locator1 = "Button#EDIT");
 

@@ -1242,7 +1242,11 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			userFullName = "Guestfn Guestln");
 
-		AssertElementPresent(locator1 = "Comments#COMMENT_FIELD");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertElementPresent(locator1 = "CKEditor#BODY");
+
+		SelectFrame(value1 = "relative=top");
 
 		User.loginUserPG(
 			password = "test",
@@ -1276,7 +1280,11 @@ definition {
 			noAddPermissions = "true",
 			userFullName = "Guestfn Guestln");
 
-		AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertElementNotPresent(locator1 = "CKEditor#BODY");
+
+		SelectFrame(value1 = "relative=top");
 
 		User.loginUserPG(
 			password = "test",

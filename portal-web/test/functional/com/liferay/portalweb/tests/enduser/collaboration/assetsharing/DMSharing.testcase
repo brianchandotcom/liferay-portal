@@ -585,11 +585,15 @@ definition {
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
 			value1 = "DM Document Title");
 
-		Click(locator1 = "Comments#COMMENT_FIELD");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
-			locator1 = "Comments#COMMENT_FIELD",
+			locator1 = "CKEditor#BODY",
 			value1 = "Userea Comment");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#REPLY",
@@ -614,9 +618,15 @@ definition {
 
 		Click(locator1 = "Sharing#SHARED_CONTENT_REPLY_TO_COMMENT");
 
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
 		Type(
-			locator1 = "Comments#COMMENT_FIELD_LAST",
+			locator1 = "CKEditor#BODY",
 			value1 = "Userea2 Reply To Comment");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#REPLY_LAST",

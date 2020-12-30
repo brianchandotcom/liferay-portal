@@ -29,7 +29,7 @@
 }
 
 .modal-dialog {
-	&:not(.dialog-iframe-modal) {
+	&:not(.dialog-iframe-modal):not(.modal-full-screen) {
 		position: relative;
 	}
 

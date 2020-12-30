@@ -59,35 +59,6 @@ const ImageSelector = ({
 
 	const uploaderStatusStoppedRef = useRef(null);
 
-	useEffect(() => {
-		AUI().use('uploader', (A) => {
-			const rootNode = rootNodeRef.current;
-
-			uploaderRef.current = new A.Uploader({
-				boundingBox: rootNode,
-				dragAndDropArea: rootNode,
-				fileFieldName: 'imageSelectorFileName',
-				on: {
-					dragleave() {
-						rootNode.classList.remove(CSS_DROP_ACTIVE);
-					},
-					dragover() {
-						rootNode.classList.add(CSS_DROP_ACTIVE);
-					},
-					fileselect: onFileSelect,
-					uploadcomplete: onUploadComplete,
-					uploadprogress: onUploadProgress,
-					uploadstart() {
-						rootNode.classList.add(CSS_PROGRESS_ACTIVE);
-					},
-				},
-				uploadURL,
-			}).render();
-
-			uploaderStatusStoppedRef.current = A.Uploader.Queue.STOPPED;
-		});
-	}, [onFileSelect, onUploadComplete, onUploadProgress, uploadURL]);
-
 	const handleSelectFileClick = useCallback(() => {
 		Liferay.Util.openSelectionModal({
 			onSelect: (selectedItem) => {
@@ -134,6 +105,12 @@ const ImageSelector = ({
 		}
 
 		uploader.uploadThese(event.fileList);
+	}, []);
+
+	const stopProgress = useCallback(() => {
+		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
+
+		setProgressValue(0);
 	}, []);
 
 	const onUploadCancel = useCallback(() => {
@@ -197,11 +174,35 @@ const ImageSelector = ({
 		);
 	}, []);
 
-	const stopProgress = useCallback(() => {
-		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
+	useEffect(() => {
+		console.log('init the uploader');
+		AUI().use('uploader', (A) => {
+			const rootNode = rootNodeRef.current;
 
-		setProgressValue(0);
-	}, []);
+			uploaderRef.current = new A.Uploader({
+				boundingBox: rootNode,
+				dragAndDropArea: rootNode,
+				fileFieldName: 'imageSelectorFileName',
+				on: {
+					dragleave() {
+						rootNode.classList.remove(CSS_DROP_ACTIVE);
+					},
+					dragover() {
+						rootNode.classList.add(CSS_DROP_ACTIVE);
+					},
+					fileselect: onFileSelect,
+					uploadcomplete: onUploadComplete,
+					uploadprogress: onUploadProgress,
+					uploadstart() {
+						rootNode.classList.add(CSS_PROGRESS_ACTIVE);
+					},
+				},
+				uploadURL,
+			}).render();
+
+			uploaderStatusStoppedRef.current = A.Uploader.Queue.STOPPED;
+		});
+	}, [onFileSelect, onUploadComplete, onUploadProgress, uploadURL]);
 
 	return (
 		<div

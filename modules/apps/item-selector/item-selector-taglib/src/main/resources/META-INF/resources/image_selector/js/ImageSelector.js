@@ -114,7 +114,7 @@ const ImageSelector = ({
 	}, []);
 
 	const onUploadCancel = useCallback(() => {
-		console.log('onUploadCancel');
+		uploaderRef.current.queue.cancelUpload();
 		stopProgress();
 	}, [stopProgress]);
 
@@ -175,7 +175,6 @@ const ImageSelector = ({
 	}, []);
 
 	useEffect(() => {
-		console.log('init the uploader');
 		AUI().use('uploader', (A) => {
 			const rootNode = rootNodeRef.current;
 

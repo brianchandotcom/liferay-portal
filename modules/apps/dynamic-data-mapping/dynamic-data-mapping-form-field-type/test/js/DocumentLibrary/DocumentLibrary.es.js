@@ -260,5 +260,11 @@ describe('Field DocumentLibrary', () => {
 		);
 
 		expect(guestUploadFileInput.disabled).toBeTruthy();
+
+		const guestUploadFileInputLabel = document.querySelector(
+			'.select-button'
+		);
+
+		expect(guestUploadFileInputLabel.classList).toContain('disabled');
 	});
 });

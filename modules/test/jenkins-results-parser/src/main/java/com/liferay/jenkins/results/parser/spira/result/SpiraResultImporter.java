@@ -19,7 +19,6 @@ import com.google.common.collect.Lists;
 import com.liferay.jenkins.results.parser.AnalyticsCloudBranchInformationBuild;
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
-import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
@@ -62,6 +61,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -240,29 +241,72 @@ public class SpiraResultImporter {
 				spiraAutomationHost.getName(), spiraAutomationHost);
 		}
 
-		for (AxisBuild axisBuild : _topLevelBuild.getDownstreamAxisBuilds()) {
-			JenkinsSlave jenkinsSlave = axisBuild.getJenkinsSlave();
+		Properties buildProperties = _getBuildProperties();
 
-			if ((jenkinsSlave != null) &&
-				!spiraAutomationHostMap.containsKey(jenkinsSlave.getName())) {
+		for (String buildPropertyName : buildProperties.stringPropertyNames()) {
+			Matcher masterPropertyNameMatcher =
+				_masterPropertyNamePattern.matcher(buildPropertyName);
 
-				SpiraAutomationHost spiraAutomationHost =
-					_getSpiraAutomationHost(jenkinsSlave);
-
-				spiraAutomationHostMap.put(
-					spiraAutomationHost.getName(), spiraAutomationHost);
+			if (!masterPropertyNameMatcher.find()) {
+				continue;
 			}
 
-			JenkinsMaster jenkinsMaster = axisBuild.getJenkinsMaster();
+			String masterHostname = masterPropertyNameMatcher.group(
+				"masterHostname");
 
-			if ((jenkinsMaster != null) &&
-				!spiraAutomationHostMap.containsKey(jenkinsMaster.getName())) {
-
+			if (!spiraAutomationHostMap.containsKey(masterHostname)) {
 				SpiraAutomationHost spiraAutomationHost =
-					_getSpiraAutomationHost(jenkinsMaster);
+					_getSpiraAutomationHost(new JenkinsMaster(masterHostname));
 
 				spiraAutomationHostMap.put(
 					spiraAutomationHost.getName(), spiraAutomationHost);
+
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Creating ", spiraAutomationHost.getName(), " at ",
+						spiraAutomationHost.getURL()));
+			}
+
+			String slaveHostnameRanges = JenkinsResultsParserUtil.getProperty(
+				_getBuildProperties(), buildPropertyName);
+
+			for (String slaveHostnameRange : slaveHostnameRanges.split(",")) {
+				Matcher slaveHostnameRangeMatcher =
+					_slaveHostnameRangePattern.matcher(slaveHostnameRange);
+
+				if (!slaveHostnameRangeMatcher.find()) {
+					continue;
+				}
+
+				String slaveHostnamePrefix = slaveHostnameRangeMatcher.group(
+					"slaveHostnamePrefix");
+
+				int first = Integer.valueOf(
+					slaveHostnameRangeMatcher.group("first"));
+
+				int last = Integer.valueOf(
+					slaveHostnameRangeMatcher.group("last"));
+
+				for (int j = first; j <= last; j++) {
+					String slaveHostname = JenkinsResultsParserUtil.combine(
+						slaveHostnamePrefix, "-", String.valueOf(j));
+
+					if (spiraAutomationHostMap.containsKey(slaveHostname)) {
+						continue;
+					}
+
+					SpiraAutomationHost spiraAutomationHost =
+						_getSpiraAutomationHost(
+							new JenkinsSlave(slaveHostname));
+
+					spiraAutomationHostMap.put(
+						spiraAutomationHost.getName(), spiraAutomationHost);
+
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Creating ", spiraAutomationHost.getName(), " at ",
+							spiraAutomationHost.getURL()));
+				}
 			}
 		}
 
@@ -816,6 +860,11 @@ public class SpiraResultImporter {
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(
 			_GROUP_THREAD_COUNT, true);
+	private static final Pattern _masterPropertyNamePattern = Pattern.compile(
+		"master\\.slaves\\((?<masterHostname>test-\\d+-\\d+)\\)");
+	private static final Pattern _slaveHostnameRangePattern = Pattern.compile(
+		"(?<slaveHostnamePrefix>cloud-\\d+-\\d+-\\d+)-(?<first>\\d+)\\.\\." +
+			"(?<last>\\d+)");
 
 	private List<SpiraAutomationHost> _spiraAutomationHosts;
 	private final SpiraBuildResult _spiraBuildResult;

@@ -48,6 +48,9 @@ import com.liferay.jenkins.results.parser.spira.SpiraTestCaseComponent;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseObject;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.CucumberAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.io.File;
@@ -110,13 +113,24 @@ public class SpiraResultImporter {
 		for (AxisTestClassGroup axisTestClassGroup :
 				job.getAxisTestClassGroups()) {
 
-			for (TestClassGroup.TestClass testClass :
-					axisTestClassGroup.getTestClasses()) {
+			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
+				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
+				axisTestClassGroup instanceof JUnitAxisTestClassGroup) {
 
-				spiraTestResults.add(
-					SpiraResultFactory.newSpiraTestResult(
-						_spiraBuildResult, axisTestClassGroup, testClass));
+				for (TestClassGroup.TestClass testClass :
+						axisTestClassGroup.getTestClasses()) {
+
+					spiraTestResults.add(
+						SpiraResultFactory.newSpiraTestResult(
+							_spiraBuildResult, axisTestClassGroup, testClass));
+				}
+
+				continue;
 			}
+
+			spiraTestResults.add(
+				SpiraResultFactory.newSpiraTestResult(
+					_spiraBuildResult, axisTestClassGroup, null));
 		}
 
 		List<List<SpiraTestResult>> partition = Lists.partition(

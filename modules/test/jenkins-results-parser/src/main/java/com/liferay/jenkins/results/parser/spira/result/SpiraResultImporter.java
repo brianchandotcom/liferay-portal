@@ -19,6 +19,7 @@ import com.google.common.collect.Lists;
 import com.liferay.jenkins.results.parser.AnalyticsCloudBranchInformationBuild;
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
+import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
@@ -38,6 +39,7 @@ import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
+import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.spira.SpiraAutomationHost;
 import com.liferay.jenkins.results.parser.spira.SpiraProject;
@@ -101,6 +103,7 @@ public class SpiraResultImporter {
 		}
 
 		_cacheBuildDatabase();
+		_cacheBuildResults();
 		_cacheSpiraAutomationHosts();
 		_cacheSpiraTestCaseComponents();
 		_cacheSpiraTestCaseObjects();
@@ -201,7 +204,7 @@ public class SpiraResultImporter {
 			ParallelExecutor<List<SpiraTestCaseRun>> parallelExecutor =
 				new ParallelExecutor<>(
 					callableList.subList(1, callableList.size()),
-					_executorService);
+					_groupExecutorService);
 
 			for (List<SpiraTestCaseRun> spiraTestCaseRunsList :
 					parallelExecutor.execute()) {
@@ -256,12 +259,91 @@ public class SpiraResultImporter {
 				JenkinsResultsParserUtil.toDateString(new Date(end))));
 	}
 
+	private void _cacheBuildResults() {
+		long start = System.currentTimeMillis();
+
+		List<Callable<List<TestResult>>> callables = new ArrayList<>();
+
+		List<AxisBuild> downstreamAxisBuilds =
+			_topLevelBuild.getDownstreamAxisBuilds();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Started loading for Build Results in ",
+				String.valueOf(downstreamAxisBuilds.size()), " Axis Builds at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
+
+		for (int i = 0; i < downstreamAxisBuilds.size(); i++) {
+			final AxisBuild axisBuild = downstreamAxisBuilds.get(i);
+			final String axisBuildName = "axis-" + i;
+
+			callables.add(
+				new Callable<List<TestResult>>() {
+
+					@Override
+					public List<TestResult> call() throws Exception {
+						long start = System.currentTimeMillis();
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"[", axisBuildName,
+								"] Start loading Test Results for ",
+								axisBuild.getAxisName(), " at ",
+								JenkinsResultsParserUtil.toDateString(
+									new Date(start))));
+
+						try {
+							return axisBuild.getTestResults(null);
+						}
+						catch (Exception exception) {
+							throw new RuntimeException(exception);
+						}
+						finally {
+							System.out.println(
+								JenkinsResultsParserUtil.combine(
+									"[", axisBuildName,
+									"] Completed loading Test Results for ",
+									axisBuild.getAxisName(), " in ",
+									JenkinsResultsParserUtil.toDurationString(
+										System.currentTimeMillis() - start),
+									" at ",
+									JenkinsResultsParserUtil.toDateString(
+										new Date())));
+						}
+					}
+
+				});
+		}
+
+		List<TestResult> testResults = new ArrayList<>();
+
+		ParallelExecutor<List<TestResult>> parallelExecutor =
+			new ParallelExecutor<>(callables, _buildResultExecutorService);
+
+		for (List<TestResult> testResultList : parallelExecutor.execute()) {
+			testResults.addAll(testResultList);
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Completed loading ", String.valueOf(testResults.size()),
+				" Build Results in ",
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - start),
+				" at ", JenkinsResultsParserUtil.toDateString(new Date())));
+	}
+
 	private void _cacheSpiraAutomationHosts() {
 		if (_spiraAutomationHosts != null) {
 			return;
 		}
 
 		long start = System.currentTimeMillis();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Started searching for Spira Automation Hosts at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
 
 		Map<String, SpiraAutomationHost> spiraAutomationHostMap =
 			new HashMap<>();
@@ -362,6 +444,11 @@ public class SpiraResultImporter {
 
 		long start = System.currentTimeMillis();
 
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Started searching for Spira Test Case Components at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
+
 		Map<String, SpiraTestCaseComponent> spiraTestCaseComponentsMap =
 			new HashMap<>();
 
@@ -415,6 +502,11 @@ public class SpiraResultImporter {
 		}
 
 		long start = System.currentTimeMillis();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Started searching for Spira Test Cases at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
 
 		SpiraProject spiraProject = _spiraBuildResult.getSpiraProject();
 
@@ -896,7 +988,7 @@ public class SpiraResultImporter {
 	private static final ExecutorService _buildResultExecutorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(
 			_BUILD_RESULT_THREAD_COUNT, true);
-	private static final ExecutorService _executorService =
+	private static final ExecutorService _groupExecutorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(
 			_GROUP_THREAD_COUNT, true);
 	private static final Pattern _masterPropertyNamePattern = Pattern.compile(

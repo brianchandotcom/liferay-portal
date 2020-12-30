@@ -26,6 +26,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -303,6 +304,14 @@ public abstract class BaseJob implements Job {
 			return new ArrayList<>();
 		}
 
+		long start = System.currentTimeMillis();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Started creating ", String.valueOf(rawBatchNames.size()),
+				" batch test class groups at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
+
 		List<Callable<BatchTestClassGroup>> callables = new ArrayList<>();
 
 		final Job job = this;
@@ -334,6 +343,15 @@ public abstract class BaseJob implements Job {
 					}
 
 					private BatchTestClassGroup _call() throws Exception {
+						long start = System.currentTimeMillis();
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"[", batchName, "] Started batch test class ",
+								"group at ",
+								JenkinsResultsParserUtil.toDateString(
+									new Date(start))));
+
 						BatchTestClassGroup batchTestClassGroup =
 							TestClassGroupFactory.newBatchTestClassGroup(
 								batchName, job);
@@ -341,6 +359,16 @@ public abstract class BaseJob implements Job {
 						if (batchTestClassGroup.getAxisCount() <= 0) {
 							return null;
 						}
+
+						System.out.println(
+							JenkinsResultsParserUtil.combine(
+								"[", batchName, "] Completed batch test class ",
+								"group in ",
+								JenkinsResultsParserUtil.toDurationString(
+									System.currentTimeMillis() - start),
+								" at ",
+								JenkinsResultsParserUtil.toDateString(
+									new Date())));
 
 						return batchTestClassGroup;
 					}
@@ -351,16 +379,21 @@ public abstract class BaseJob implements Job {
 				});
 		}
 
-		ThreadPoolExecutor threadPoolExecutor =
-			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				callables.size(), true);
-
 		ParallelExecutor<BatchTestClassGroup> parallelExecutor =
-			new ParallelExecutor<>(callables, threadPoolExecutor);
+			new ParallelExecutor<>(callables, _executorService);
 
 		_batchTestClassGroups = parallelExecutor.execute();
 
 		_batchTestClassGroups.removeAll(Collections.singleton(null));
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Completed creating ",
+				String.valueOf(_batchTestClassGroups.size()),
+				" batch test class groups in ",
+				JenkinsResultsParserUtil.toDurationString(
+					System.currentTimeMillis() - start),
+				" at ", JenkinsResultsParserUtil.toDateString(new Date())));
 
 		return _batchTestClassGroups;
 	}
@@ -468,6 +501,11 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
+
+	private static final Integer _THREAD_COUNT = 20;
+
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
 	private List<BatchTestClassGroup> _batchTestClassGroups;
 	private final BuildProfile _buildProfile;

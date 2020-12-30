@@ -27,11 +27,14 @@ const BrowseImage = ({
 	validExtensions,
 }) => (
 	<div className="browse-image-controls">
-		<div className="drag-drop-label" onClick={(event) => {
-			if (event.target.tagName === 'BUTTON') {
-				handleClick(event);
-			}
-		}}>
+		<div
+			className="drag-drop-label"
+			onClick={(event) => {
+				if (event.target.tagName === 'BUTTON') {
+					handleClick(event);
+				}
+			}}
+		>
 			{itemSelectorEventName && itemSelectorURL ? (
 				Liferay.Browser.isMobile() ? (
 					SELECT_FILE_BUTTON
@@ -73,7 +76,7 @@ const BrowseImage = ({
 );
 
 BrowseImage.propTypes = {
-    handleClick: PropTypes.func,
+	handleClick: PropTypes.func,
 	itemSelectorEventName: PropTypes.string,
 	itemSelectorURL: PropTypes.string,
 	maxFileSize: PropTypes.string,

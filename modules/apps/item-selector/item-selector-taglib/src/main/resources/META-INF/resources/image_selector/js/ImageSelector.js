@@ -16,9 +16,9 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
+import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import BrowseImage from './BrowseImage';
 import ChangeImageControls from './ChangeImageControls';
-import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import ProgressWrapper from './ProgressWrapper';
 
 const CSS_DROP_ACTIVE = 'drop-active';
@@ -91,12 +91,9 @@ const ImageSelector = ({
 
 		setFileName(file.get('name'));
 
-		let queue = uploader.queue;
+		const queue = uploader.queue;
 
-		if (
-			queue &&
-			queue._currentState === uploaderStatusStopped
-		) {
+		if (queue && queue._currentState === uploaderStatusStopped) {
 			queue.startUpload();
 		}
 
@@ -127,11 +124,13 @@ const ImageSelector = ({
 			});
 		}
 		else {
+
 			//TODO error
+
 		}
 
 		Liferay.fire(fireEvent, {
-			imageData: success ? image : null
+			imageData: success ? image : null,
 		});
 	};
 
@@ -141,7 +140,7 @@ const ImageSelector = ({
 
 	const stopProgress = () => {
 		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
-	}
+	};
 
 	AUI().use('uploader', (A) => {
 		const rootNode = rootNodeRef.current;

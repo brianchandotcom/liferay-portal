@@ -41,7 +41,7 @@ public class ContainsFunction
 		if ((object1 instanceof JSONObjectImpl) &&
 			(object2 instanceof JSONObjectImpl)) {
 
-			return _apply((JSONObjectImpl)object1, (JSONObjectImpl)object2);
+			return apply((JSONObjectImpl)object1, (JSONObjectImpl)object2);
 		}
 
 		if ((object1 instanceof JSONArray) && (object2 instanceof String)) {
@@ -60,6 +60,28 @@ public class ContainsFunction
 		return NAME;
 	}
 
+	protected Boolean apply(JSONObject jsonObject1, JSONObject jsonObject2) {
+		if ((jsonObject1 == null) || (jsonObject2 == null)) {
+			return false;
+		}
+
+		Set<String> keySet = jsonObject2.keySet();
+
+		for (String key : keySet) {
+			String value = jsonObject1.getString(key);
+
+			if (value == null) {
+				return false;
+			}
+
+			if (!Objects.equals(value, jsonObject2.get(key))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	protected Boolean apply(String string1, String string2) {
 		if (Validator.isNull(string1) || Validator.isNull(string2)) {
 			return false;
@@ -69,33 +91,6 @@ public class ContainsFunction
 		string2 = StringUtil.toLowerCase(string2);
 
 		return string1.contains(string2);
-	}
-
-	private Boolean _apply(
-		JSONObject componentValuesJSONObject, JSONObject ruleValuesJSONObject) {
-
-		if ((componentValuesJSONObject == null) ||
-			(ruleValuesJSONObject == null)) {
-
-			return false;
-		}
-
-		Set<String> keySet = ruleValuesJSONObject.keySet();
-
-		for (String key : keySet) {
-			String value = componentValuesJSONObject.getString(key);
-
-			if (value != null) {
-				if (!Objects.equals(value, ruleValuesJSONObject.get(key))) {
-					return false;
-				}
-			}
-			else {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 }

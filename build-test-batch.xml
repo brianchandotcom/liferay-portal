@@ -4898,6 +4898,10 @@ log.sanitizer.enabled=false</echo>
 		<run-legacy-database-dump database.type="mysql" database.version="5.7" />
 	</target>
 
+	<target name="legacy-functional-bundle-tomcat-oracle193">
+		<run-legacy-database-dump database.type="oracle" database.version="19.3.0.0.0" />
+	</target>
+
 	<target name="legacy-functional-bundle-tomcat-postgresql11">
 		<run-legacy-database-dump database.type="postgresql" database.version="11" />
 	</target>

@@ -74,6 +74,20 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return axisTestClassGroups;
 	}
 
+	public String getBatchJobName() {
+		String topLevelJobName = portalTestClassJob.getJobName();
+
+		Matcher jobNameMatcher = _jobNamePattern.matcher(topLevelJobName);
+
+		if (jobNameMatcher.find()) {
+			return JenkinsResultsParserUtil.combine(
+				jobNameMatcher.group("jobBaseName"), "-batch",
+				jobNameMatcher.group("jobVariant"));
+		}
+
+		return topLevelJobName + "-batch";
+	}
+
 	public String getBatchName() {
 		return batchName;
 	}
@@ -149,6 +163,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		this.batchName = batchName;
+		this.portalTestClassJob = portalTestClassJob;
 
 		portalGitWorkingDirectory =
 			portalTestClassJob.getPortalGitWorkingDirectory();
@@ -519,6 +534,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected boolean includeStableTestSuite;
 	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
+	protected final PortalTestClassJob portalTestClassJob;
 	protected List<String> stableTestSuiteBatchNames = new ArrayList<>();
 	protected boolean testPrivatePortalBranch;
 	protected boolean testReleaseBundle;
@@ -671,6 +687,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private static final boolean _ENABLE_TEST_RELEVANT_CHANGES_DEFAULT = false;
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
+
+	private static final Pattern _jobNamePattern = Pattern.compile(
+		"(?<jobBaseName>.*)(?<jobVariant>\\([^\\)]+\\))");
 
 	private final List<SegmentTestClassGroup> _segmentTestClassGroups =
 		new ArrayList<>();

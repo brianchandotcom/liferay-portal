@@ -49,6 +49,10 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return segmentTestClassGroups.indexOf(this);
 	}
 
+	public String getBatchJobName() {
+		return _parentBatchTestClassGroup.getBatchJobName();
+	}
+
 	public String getBatchName() {
 		return _parentBatchTestClassGroup.getBatchName();
 	}

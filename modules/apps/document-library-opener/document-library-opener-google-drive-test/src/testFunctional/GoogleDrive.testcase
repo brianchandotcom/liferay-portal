@@ -254,6 +254,82 @@ definition {
 			value1 = "Untitled");
 	}
 
+	@description = "This test covers LPS-107584. It ensures that a checked out google document cannot be edited by another user."
+	@priority = "4"
+	test CheckOutGoogleDoc {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "GoogleDrive#CheckOutGoogleDoc";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Regular Role");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+				roleTitle = "Regular Role");
+		}
+
+		for (var resourceAction : list "UPDATE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+				roleTitle = "Regular Role");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkoutPG(dmDocumentTitle = "Untitled");
+
+		User.logoutUserPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Check(
+			key_dmDocumentTitle = "Untitled",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.editCmdPG(
+			checkedOut = "true",
+			dmDocumentTitle = "Untitled",
+			userName = "Test Test");
+	}
+
 	@description = "This test ensures a Google Doc title can be changed through the editor"
 	@priority = "4"
 	test EditGoogleDoc {

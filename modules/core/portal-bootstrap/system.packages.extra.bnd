@@ -115,7 +115,7 @@ Export-Package:\
 	com.sun.syndication.io;version='1.0',\
 	com.sun.syndication.io.impl;version='1.0',\
 	\
-	com.thoughtworks.xstream.*;version='1.4.14',\
+	com.thoughtworks.xstream.*;version='1.4.15',\
 	\
 	java_cup.runtime.*;version='2.7.1',\
 	\

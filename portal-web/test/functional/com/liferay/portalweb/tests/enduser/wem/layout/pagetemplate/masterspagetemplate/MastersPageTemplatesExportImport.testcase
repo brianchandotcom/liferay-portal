@@ -519,7 +519,7 @@ definition {
 			IFrame.selectPermissionsFrame();
 
 			Check(
-				key_roleTitle = "account-manager",
+				key_roleTitle = "account-administrator",
 				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 
 			Button.clickSave();
@@ -577,7 +577,7 @@ definition {
 			IFrame.selectPermissionsFrame();
 
 			AssertChecked(
-				key_roleTitle = "account-manager",
+				key_roleTitle = "account-administrator",
 				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 		}
 	}

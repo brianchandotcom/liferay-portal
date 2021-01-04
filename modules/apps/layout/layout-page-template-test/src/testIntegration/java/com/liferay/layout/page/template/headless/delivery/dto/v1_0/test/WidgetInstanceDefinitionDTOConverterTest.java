@@ -189,7 +189,7 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 			resourcePrimKey, roleIdsToActionIds);
 
 		WidgetInstance widgetInstance = ReflectionTestUtil.invoke(
-			_getService(), "toDTO",
+			_getService(), "getWidgetInstance",
 			new Class<?>[] {FragmentEntryLink.class, String.class},
 			fragmentEntryLink, testPortletId);
 
@@ -230,9 +230,8 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 	private Object _getService() {
 		ServiceReference<?> serviceReference =
 			_bundleContext.getServiceReference(
-				"com.liferay.layout.page.template.admin.web.internal." +
-					"headless.delivery.dto.v1_0.converter." +
-						"WidgetInstanceDTOConverter");
+				"com.liferay.headless.delivery.internal.dto.v1_0.mapper." +
+					"WidgetInstanceMapper");
 
 		return _bundleContext.getService(serviceReference);
 	}

@@ -1654,17 +1654,15 @@ public class DDMTemplateLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		File smallImageFile = getSmallImageFile(template);
-
 		// Template
 
 		if (!ddmWebConfiguration.enableTemplateCreation()) {
 			throw new TemplateCreationDisabledException();
 		}
 
-		User user = userLocalService.getUser(userId);
-
 		boolean smallImage = template.isSmallImage();
+
+		File smallImageFile = getSmallImageFile(template);
 
 		byte[] smallImageBytes = null;
 
@@ -1692,6 +1690,8 @@ public class DDMTemplateLocalServiceImpl
 			LocaleUtil.getSiteDefault(), nameMap, template.getScript(),
 			smallImage, template.getSmallImageURL(), smallImageFile,
 			smallImageBytes);
+
+		User user = userLocalService.getUser(userId);
 
 		DDMTemplate newTemplate = addTemplate(
 			user, template.getGroupId(), template.getClassNameId(), classPK,

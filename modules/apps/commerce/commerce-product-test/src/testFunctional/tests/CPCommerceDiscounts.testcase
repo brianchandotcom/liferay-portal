@@ -27,7 +27,8 @@ definition {
 	}
 
 	test AssertDiscountIsAppliedToChannel {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

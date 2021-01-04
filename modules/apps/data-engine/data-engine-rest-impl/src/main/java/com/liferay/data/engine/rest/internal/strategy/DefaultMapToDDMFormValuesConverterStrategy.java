@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -141,9 +142,19 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 				Map<String, Object> localizedValues =
 					(Map<String, Object>)value;
 
+				Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
 				list = (List<Object>)localizedValues.get(
 					LanguageUtil.getLanguageId(
-						(Locale)GetterUtil.getObject(locale, defaultLocale)));
+						(Locale)GetterUtil.getObject(
+							locale, siteDefaultLocale)));
+
+				if (!siteDefaultLocale.equals(defaultLocale) &&
+					ListUtil.isEmpty(list)) {
+
+					list = (List<Object>)localizedValues.get(
+						LanguageUtil.getLanguageId(defaultLocale));
+				}
 			}
 			else {
 				list = (List<Object>)dataRecordValues.get(

@@ -200,6 +200,8 @@ definition {
 	@description = "This ensures that a video shortcut can be added with a YouTube shortened URL."
 	@priority = "5"
 	test AddWithShortenedURL {
+		property portal.acceptance = "true";
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		VideoShortcut.addPG(

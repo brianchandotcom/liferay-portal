@@ -128,6 +128,7 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 };
 
 const getDataRecordValues = ({
+	defaultSiteLanguageId,
 	nextEditingLanguageId,
 	pages,
 	preserveValue,
@@ -143,6 +144,9 @@ const getDataRecordValues = ({
 
 	Object.keys(dataRecordValues).forEach((key) => {
 		if (newDataRecordValues[key]) {
+			newDataRecordValues[key][defaultSiteLanguageId] =
+				dataRecordValues[key][defaultSiteLanguageId];
+
 			newDataRecordValues[key][prevEditingLanguageId] =
 				dataRecordValues[key][prevEditingLanguageId];
 		}
@@ -166,6 +170,7 @@ const getFieldProperties = (fieldName, pages) => {
 
 export default function pageLanguageUpdate({
 	ddmStructureLayoutId,
+	defaultSiteLanguageId,
 	nextEditingLanguageId,
 	pages,
 	portletNamespace,
@@ -176,6 +181,7 @@ export default function pageLanguageUpdate({
 }) {
 	return (dispatch) => {
 		const newDataRecordValues = getDataRecordValues({
+			defaultSiteLanguageId,
 			nextEditingLanguageId,
 			pages,
 			preserveValue,

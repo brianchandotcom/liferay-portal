@@ -236,6 +236,82 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
 	}
 
+	macro editAddress {
+		LexiconEntry.gotoEntry(rowEntry = "${addressName}");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit Address");
+
+		if (isSet(addressName)) {
+			PortletEntry.inputName(name = "${addressName}");
+		}
+
+		if (isSet(addressDescription)) {
+			PortletEntry.inputDescription(description = "${addressDescription}");
+		}
+
+		if (isSet(addressType)) {
+			SelectField.select(
+				selectFieldLabel = "Type",
+				selectFieldValue = "${addressType}");
+		}
+
+		if (isSet(addressStreet1)) {
+			Type(
+				locator1 = "TextInput#STREET_1",
+				value1 = "${addressStreet1}");
+		}
+
+		if (isSet(addressStreet2)) {
+			Type(
+				key_streetNumber = "2",
+				locator1 = "TextInput#STREET_N",
+				value1 = "${addressStreet2}");
+		}
+
+		if (isSet(addressStreet3)) {
+			Type(
+				key_streetNumber = "3",
+				locator1 = "TextInput#STREET_N",
+				value1 = "${addressStreet3}");
+		}
+
+		if (isSet(addressCity)) {
+			Type(
+				locator1 = "TextInput#CITY",
+				value1 = "${addressCity}");
+		}
+
+		if (isSet(addressRegion)) {
+			Select(
+				locator1 = "Select#REGION",
+				value1 = "${addressRegion}");
+		}
+
+		if (isSet(addressPostalCode)) {
+			Type(
+				locator1 = "TextInput#POSTAL_CODE",
+				value1 = "${addressPostalCode}");
+		}
+
+		if (isSet(addressCountry)) {
+			Select(
+				locator1 = "Select#COUNTRY",
+				value1 = "${addressCountry}");
+		}
+
+		if (isSet(phoneNumber)) {
+			Type(
+				locator1 = "TextInput#NUMBER",
+				value1 = "${phoneNumber}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editCP {
 		Accounts.gotoEdit(accountName = "${accountName}");
 

@@ -183,7 +183,6 @@ if (Validator.isNotNull(backURL)) {
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="descriptive"
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>

@@ -24,11 +24,19 @@ if (liveGroup == null) {
 	liveGroupId = groupId;
 }
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
 String navigation = ParamUtil.getString(request, "navigation", "all");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(displayStyle) && Validator.isNotNull(displayStyle)) {
+	portalPreferences.setValue(ExportImportPortletKeys.EXPORT, "displayStyle", displayStyle);
+	portalPreferences.setValue(ExportImportPortletKeys.EXPORT, "displayStyle", displayStyle);
+}
+else {
+	displayStyle = portalPreferences.getValue(ExportImportPortletKeys.EXPORT, "displayStyle", "descriptive");
+}
 
 if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
 	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", orderByCol);

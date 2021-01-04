@@ -32,7 +32,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		<liferay-util:include page="/export/processes_list/export_layouts_processes.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-			<liferay-util:param name="displayStyle" value='<%= ParamUtil.getString(request, "displayStyle", "descriptive") %>' />
+			<liferay-util:param name="displayStyle" value='<%= ParamUtil.getString(request, "displayStyle") %>' />
 			<liferay-util:param name="navigation" value='<%= ParamUtil.getString(request, "navigation", "all") %>' />
 			<liferay-util:param name="orderByCol" value='<%= ParamUtil.getString(request, "orderByCol") %>' />
 			<liferay-util:param name="orderByType" value='<%= ParamUtil.getString(request, "orderByType") %>' />

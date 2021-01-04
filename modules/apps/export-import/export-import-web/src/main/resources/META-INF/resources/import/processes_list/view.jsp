@@ -33,7 +33,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			<liferay-util:param name="validate" value="<%= String.valueOf(Boolean.TRUE) %>" />
-			<liferay-util:param name="displayStyle" value='<%= ParamUtil.getString(request, "displayStyle", "descriptive") %>' />
+			<liferay-util:param name="displayStyle" value='<%= ParamUtil.getString(request, "displayStyle") %>' />
 			<liferay-util:param name="navigation" value='<%= ParamUtil.getString(request, "navigation", "all") %>' />
 			<liferay-util:param name="orderByCol" value='<%= ParamUtil.getString(request, "orderByCol") %>' />
 			<liferay-util:param name="orderByType" value='<%= ParamUtil.getString(request, "orderByType") %>' />

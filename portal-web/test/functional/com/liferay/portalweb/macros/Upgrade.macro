@@ -3229,8 +3229,9 @@ definition {
 				workflowStatus = "Approved");
 		}
 
-		WebContentUpgrade.viewWithStructureCP(
-			webContentBoolean = "true",
+		WebContent.viewWithStructureCP(
+			webContentMultipleSelection = "Boolean",
+			webContentMultipleSelectionFieldLabel = "Boolean",
 			webContentTitle = "Boolean Web Content");
 
 		Navigator.gotoBack();

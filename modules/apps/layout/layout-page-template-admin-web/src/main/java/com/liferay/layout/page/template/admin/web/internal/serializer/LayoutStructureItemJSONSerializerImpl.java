@@ -84,7 +84,7 @@ public class LayoutStructureItemJSONSerializerImpl
 		try {
 			PageElement pageElement = pageElementDTOConverter.toDTO(
 				dtoConverterContext,
-				layoutStructure.getMainLayoutStructureItem());
+				layoutStructure.getLayoutStructureItem(layoutStructureItemId));
 
 			SimpleFilterProvider simpleFilterProvider =
 				new SimpleFilterProvider();

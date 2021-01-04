@@ -1280,8 +1280,6 @@ definition {
 			noAddPermissions = "true",
 			userFullName = "Guestfn Guestln");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
 		AssertElementNotPresent(locator1 = "CKEditor#BODY");
 
 		SelectFrame(value1 = "relative=top");

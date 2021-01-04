@@ -23,9 +23,9 @@ String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_ENTRY_N
 
 <liferay-portlet:actionURL name="/dispatch_talend/edit_dispatch_talend_job_archive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />
 
-<div class="closed container-fluid container-fluid-max-xl" id="<portlet:namespace />editDispatchTriggerId">
-	<div class="container main-content-body sheet">
-		<aui:form action="<%= editDispatchTalendJobArchiveActionURL %>" cssClass="container-fluid container-fluid-max-xl" enctype="multipart/form-data" method="post" name="fm">
+<div class="closed container-view" id="<portlet:namespace />editDispatchTriggerId">
+	<div class="sheet">
+		<aui:form action="<%= editDispatchTalendJobArchiveActionURL %>" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTrigger.getDispatchTriggerId()) %>" />
 
@@ -50,11 +50,11 @@ String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_ENTRY_N
 				</div>
 			</c:if>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="save" />
+			<div class="sheet-footer">
+				<aui:button type="submit" value="save" />
 
-				<aui:button cssClass="btn-lg" href="<%= currentURL %>" type="cancel" />
-			</aui:button-row>
+				<aui:button href="<%= currentURL %>" type="cancel" />
+			<div>
 		</aui:form>
 	</div>
 </div>

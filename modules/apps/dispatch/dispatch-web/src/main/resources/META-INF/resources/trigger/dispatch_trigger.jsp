@@ -50,7 +50,7 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 
 <portlet:actionURL name="/dispatch/edit_dispatch_trigger" var="editDispatchTriggerActionURL" />
 
-<aui:form action="<%= editDispatchTriggerActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+<aui:form action="<%= editDispatchTriggerActionURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="schedule" />
 	<aui:input name="dispatchTriggerId" type="hidden" value="<%= String.valueOf(dispatchTrigger.getDispatchTriggerId()) %>" />
@@ -152,11 +152,11 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 					</aui:field-wrapper>
 				</aui:fieldset>
 
-				<aui:button-row>
-					<aui:button cssClass="btn-lg" type="submit" value="save" />
+				<div class="sheet-footer">
+					<aui:button type="submit" value="save" />
 
-					<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
-				</aui:button-row>
+					<aui:button href="<%= backURL %>" type="cancel" />
+				</div>
 			</div>
 		</aui:fieldset>
 	</aui:fieldset-group>

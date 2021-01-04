@@ -35,8 +35,8 @@ if (dispatchTrigger != null) {
 
 <portlet:actionURL name="/dispatch/edit_dispatch_trigger" var="editDispatchTriggerActionURL" />
 
-<div class="closed container-fluid container-fluid-max-xl" id="<portlet:namespace />editDispatchTriggerId">
-	<div class="container main-content-body sheet">
+<div class="closed container-view" id="<portlet:namespace />editDispatchTriggerId">
+	<div class="sheet">
 		<liferay-ui:error exception="<%= NoSuchLogException.class %>" message="the-log-could-not-be-found" />
 		<liferay-ui:error exception="<%= NoSuchTriggerException.class %>" message="the-trigger-could-not-be-found" />
 
@@ -58,16 +58,16 @@ if (dispatchTrigger != null) {
 
 				<div id="<portlet:namespace />dispatchTaskSettingsEditor"></div>
 
-				<aui:button-row>
+				<div class="sheet-footer">
 
 					<%
 					String taglibSaveOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTrigger');";
 					%>
 
-					<aui:button onClick="<%= taglibSaveOnClick %>" value="save" />
+					<aui:button onClick="<%= taglibSaveOnClick %>" primary="<%= true %>" value="save" />
 
-					<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
-				</aui:button-row>
+					<aui:button href="<%= backURL %>" type="cancel" />
+				</div>
 			</div>
 		</aui:form>
 	</div>

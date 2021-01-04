@@ -517,6 +517,88 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Back Icon Account");
 	}
 
+	@priority = "3"
+	test ChangeAddressType {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is a test of changing account address type.",
+			accountName = "Change Account Address Type");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressDescription = "Address of DL office.",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "1005 High-Tech Zone",
+			phoneNumber = "+86 (0)411 88120855");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Change Account Address Type");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
+
+		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning,116023,Billing and Shipping") {
+			LexiconEntry.viewEntryContent(
+				rowAny = "${rowAny}",
+				rowEntry = "Liferay Dalian Software Co., Ltd.");
+		}
+
+		Accounts.editAddress(
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressType = "Shipping");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Change Account Address Type");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning,116023,Shipping") {
+			LexiconEntry.viewEntryContent(
+				rowAny = "${rowAny}",
+				rowEntry = "Liferay Dalian Software Co., Ltd.");
+		}
+
+		Accounts.editAddress(
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressType = "Billing");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Change Account Address Type");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		for (var rowAny : list "537 Huangpu Road Taide Building,Dalian,Liaoning,116023,Billing") {
+			LexiconEntry.viewEntryContent(
+				rowAny = "${rowAny}",
+				rowEntry = "Liferay Dalian Software Co., Ltd.");
+		}
+	}
+
 	@priority = "4"
 	test DeleteAccount {
 		property portal.acceptance = "true";

@@ -1149,7 +1149,7 @@ definition {
 		Navigator.closeWindow();
 	}
 
-	@description = "Automate LPS-111683: As an App Admin, I want to view and edit existing Form and Table Views during my App creation experience"
+	@description = "LRQA-63477 - Automate LPS-111683: As an App Admin, I want to view and edit existing Form and Table Views during my App creation experience"
 	@priority = "4"
 	test OpenFormViewOnNewStep {
 		AppBuilderAdmin.addCustomObject(
@@ -1183,18 +1183,20 @@ definition {
 			formViewName = "My Form View",
 			positionNumber = "1");
 		AppBuilderWorkflow.openFormView(positionNumber = "1");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
 		AppBuilderAdmin.cancel();
 
 		AppBuilderWorkflow.addNewFormView();
 		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "2");
 		AppBuilderWorkflow.clickToCreateFormView(positionNumber = "2");
 		AppBuilderWorkflow.createSimpleFormView(
-			fieldType = "Text",
+			fieldType = "Numeric",
 			formViewName = "My Form View 2");
 		AppBuilderWorkflow.assertFormViewSelected(
 			formViewName = "My Form View 2",
 			positionNumber = "2");
 		AppBuilderWorkflow.openFormView(positionNumber = "2");
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
 	}
 
 	@description = "LRQA-63084 - Automate LPS-105493: As an App Adm, I want create the workflow process of my App during the App deployment"

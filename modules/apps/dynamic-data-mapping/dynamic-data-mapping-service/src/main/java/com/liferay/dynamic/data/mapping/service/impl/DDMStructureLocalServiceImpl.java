@@ -409,18 +409,11 @@ public class DDMStructureLocalServiceImpl
 		// Structure layout
 
 		if (structure.getDDMFormLayout() != null) {
-			DDMStructureLayout structureLayout =
-				_ddmStructureLayoutLocalService.addStructureLayout(
-					userId, structure.getGroupId(),
-					structureVersion.getStructureVersionId(),
-					structure.getDDMFormLayout(), serviceContext);
-
-			structureLayout.setClassNameId(newStructure.getClassNameId());
-			structureLayout.setStructureLayoutKey(
-				newStructure.getStructureKey());
-
-			_ddmStructureLayoutLocalService.updateDDMStructureLayout(
-				structureLayout);
+			_ddmStructureLayoutLocalService.addStructureLayout(
+				userId, structure.getGroupId(), newStructure.getClassNameId(),
+				newStructure.getStructureKey(),
+				structureVersion.getStructureVersionId(),
+				structure.getDDMFormLayout(), serviceContext);
 		}
 
 		// Data provider instance links

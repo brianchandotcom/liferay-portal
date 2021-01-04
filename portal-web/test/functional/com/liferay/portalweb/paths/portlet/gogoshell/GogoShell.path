@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>COMMAND_FIELD</td>
-	<td>//form[contains(@id,'GogoShellPortlet')]//div[@class='input-group']/input</td>
+	<td>//form[contains(@id,'GogoShellPortlet')]//div[@class='input-group']//input</td>
 	<td></td>
 </tr>
 <tr>

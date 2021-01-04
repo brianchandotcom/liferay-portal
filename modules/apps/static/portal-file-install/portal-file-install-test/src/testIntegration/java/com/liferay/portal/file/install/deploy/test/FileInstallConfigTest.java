@@ -178,10 +178,11 @@ public class FileInstallConfigTest {
 
 			Assert.assertEquals(expectedWarningMessage, actualWarningMessage);
 
-			Dictionary<String, Object> properties =
-				_configuration.getProperties();
+			Configuration configurationDeprecated =
+				_configurationAdmin.getConfiguration(
+					configurationPidDeprecated, StringPool.QUESTION);
 
-			Assert.assertNull(properties.get("testKeyDeprecated"));
+			Assert.assertNull(configurationDeprecated.getProperties());
 		}
 		finally {
 			Files.deleteIfExists(configPathDeprecated);

@@ -162,7 +162,7 @@ public interface DDMStructureLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure copyStructure(
-			long userId, long oldStructureId, Map<Locale, String> nameMap,
+			long userId, long structureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 

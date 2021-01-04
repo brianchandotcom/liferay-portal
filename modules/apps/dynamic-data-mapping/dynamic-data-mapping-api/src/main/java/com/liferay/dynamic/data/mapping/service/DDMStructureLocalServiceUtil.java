@@ -173,14 +173,14 @@ public class DDMStructureLocalServiceUtil {
 	 */
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure
 			copyStructure(
-				long userId, long oldStructureId,
+				long userId, long structureId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().copyStructure(
-			userId, oldStructureId, nameMap, descriptionMap, serviceContext);
+			userId, structureId, nameMap, descriptionMap, serviceContext);
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure

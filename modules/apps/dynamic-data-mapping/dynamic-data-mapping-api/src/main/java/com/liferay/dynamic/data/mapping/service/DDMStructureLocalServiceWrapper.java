@@ -169,14 +169,14 @@ public class DDMStructureLocalServiceWrapper
 	 */
 	@Override
 	public DDMStructure copyStructure(
-			long userId, long oldStructureId,
+			long userId, long structureId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureLocalService.copyStructure(
-			userId, oldStructureId, nameMap, descriptionMap, serviceContext);
+			userId, structureId, nameMap, descriptionMap, serviceContext);
 	}
 
 	@Override

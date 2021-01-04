@@ -185,6 +185,13 @@ definition {
 			locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE");
 	}
 
+	macro viewEntryContent {
+		AssertElementPresent(
+			key_rowAny = "${rowAny}",
+			key_rowEntry = "${rowEntry}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ANY");
+	}
+
 	macro viewEntryName {
 		var browserType = PropsUtil.get("browser.type");
 

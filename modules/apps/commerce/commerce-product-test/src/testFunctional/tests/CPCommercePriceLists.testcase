@@ -339,7 +339,8 @@ definition {
 	}
 
 	test AssertPriceListIsAppliedToAllAssociatedAccounts {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListIsAppliedToAllAssociatedAccounts";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

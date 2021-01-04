@@ -1002,7 +1002,8 @@ definition {
 	}
 
 	test GuestCheckoutEnabledWithoutAuthenticationPage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "GuestCheckout#GuestCheckoutEnabledWithoutAuthenticationPage";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");

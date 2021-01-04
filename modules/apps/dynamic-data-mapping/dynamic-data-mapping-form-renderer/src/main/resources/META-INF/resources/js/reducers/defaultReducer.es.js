@@ -18,7 +18,7 @@ import {PagesVisitor} from '../util/visitors.es';
 export default (state, action) => {
 	switch (action.type) {
 		case EVENT_TYPES.ALL: {
-			const {defaultLanguageId, defaultSiteLanguageId} = state;
+			const {defaultSiteLanguageId} = state;
 			const {editingLanguageId, pages} = action.payload;
 
 			if (
@@ -34,7 +34,6 @@ export default (state, action) => {
 							let value;
 
 							const defaultValue =
-								localizedValue[defaultLanguageId] ||
 								localizedValue[defaultSiteLanguageId];
 
 							if (localizedValue) {

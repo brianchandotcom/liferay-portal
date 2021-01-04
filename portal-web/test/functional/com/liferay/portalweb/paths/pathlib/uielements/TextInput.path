@@ -594,6 +594,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STREET_N</td>
+	<td>//div[label[contains(.,'Street ${key_streetNumber}')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBJECT</td>
 	<td>//input[contains(@id,'subject')] | //input[contains(@id,'Subject')]</td>
 	<td></td>

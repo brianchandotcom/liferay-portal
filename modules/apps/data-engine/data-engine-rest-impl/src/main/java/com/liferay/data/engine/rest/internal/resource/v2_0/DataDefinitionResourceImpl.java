@@ -989,10 +989,15 @@ public class DataDefinitionResourceImpl
 				continue;
 			}
 
+			long ddmStructureId = MapUtil.getLong(
+				ddmFormField.getProperties(), "ddmStructureId");
+
 			DDMStructure fieldSetDDMStructure =
-				_ddmStructureLocalService.getDDMStructure(
-					MapUtil.getLong(
-						ddmFormField.getProperties(), "ddmStructureId"));
+				_ddmStructureLocalService.fetchDDMStructure(ddmStructureId);
+
+			if (fieldSetDDMStructure == null) {
+				continue;
+			}
 
 			Map<String, DDMFormField> map =
 				fieldSetDDMStructure.getFullHierarchyDDMFormFieldsMap(false);

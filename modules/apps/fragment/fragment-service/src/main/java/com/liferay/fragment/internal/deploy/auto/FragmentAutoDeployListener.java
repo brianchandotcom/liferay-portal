@@ -192,8 +192,12 @@ public class FragmentAutoDeployListener implements AutoDeployListener {
 
 		_fragmentsImporter.importFile(user.getUserId(), groupId, 0, file, true);
 
-		_layoutPageTemplatesImporter.importFile(
-			user.getUserId(), groupId, 0L, file, true);
+		if ((company != null) && (group != null) &&
+			(company.getGroupId() != group.getGroupId())) {
+
+			_layoutPageTemplatesImporter.importFile(
+				user.getUserId(), groupId, 0L, file, true);
+		}
 	}
 
 	private JSONObject _getDeployJSONObject(File file)

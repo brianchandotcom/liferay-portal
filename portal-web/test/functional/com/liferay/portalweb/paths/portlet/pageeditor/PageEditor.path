@@ -463,7 +463,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON</td>
-	<td>//div[contains(@class,'page-editor__sidebar__buttons')]//*[contains(@title,'${key_tabName}')]</td>
+	<td>//div[contains(@class,'page-editor__sidebar__buttons')]//*[@*='${key_tabName}']</td>
 	<td></td>
 </tr>
 <tr>

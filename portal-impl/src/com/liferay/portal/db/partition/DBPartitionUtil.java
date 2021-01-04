@@ -246,20 +246,30 @@ public class DBPartitionUtil {
 		};
 	}
 
-	private static String _getCreateTable(
-		String tableName, String sourceTableName) {
-
+	private static String _getCreateTable(long companyId, String tableName) {
 		return StringBundler.concat(
-			"create table if not exists ", tableName, " like ",
-			sourceTableName);
+			"create table if not exists ", _getSchemaName(companyId),
+			StringPool.PERIOD, tableName, " like ", _defaultSchemaName,
+			StringPool.PERIOD, tableName);
 	}
 
-	private static String _getCreateView(
-		String viewName, String sourceTableName) {
-
+	private static String _getCreateView(long companyId, String viewName) {
 		return StringBundler.concat(
-			"create or replace view ", viewName, " as select * from ",
-			sourceTableName);
+			"create or replace view ", _getSchemaName(companyId),
+			StringPool.PERIOD, viewName, " as select * from ",
+			_defaultSchemaName, StringPool.PERIOD, viewName);
+	}
+
+	private static String _getDropTable(long companyId, String tableName) {
+		return StringBundler.concat(
+			"drop table if exists ", _getSchemaName(companyId),
+			StringPool.PERIOD, tableName);
+	}
+
+	private static String _getDropView(long companyId, String viewName) {
+		return StringBundler.concat(
+			"drop view if exists ", _getSchemaName(companyId),
+			StringPool.PERIOD, viewName);
 	}
 
 	private static String _getSchemaName(long companyId) {
@@ -285,17 +295,17 @@ public class DBPartitionUtil {
 			DBInspector dbInspector)
 		throws Exception {
 
-		String defaultSchemaTableName =
-			_defaultSchemaName + StringPool.PERIOD + tableName;
+		statement.executeUpdate(_getDropView(companyId, tableName));
 
-		String companySchemaTableName =
-			_getSchemaName(companyId) + StringPool.PERIOD + tableName;
+		statement.executeUpdate(_getCreateTable(companyId, tableName));
 
-		statement.executeUpdate(
-			"drop view if exists " + companySchemaTableName);
+		_populateTable(companyId, tableName, statement, dbInspector);
+	}
 
-		statement.executeUpdate(
-			_getCreateTable(companySchemaTableName, defaultSchemaTableName));
+	private static void _populateTable(
+			long companyId, String tableName, Statement statement,
+			DBInspector dbInspector)
+		throws Exception {
 
 		String whereClause = StringPool.BLANK;
 
@@ -305,25 +315,20 @@ public class DBPartitionUtil {
 
 		statement.executeUpdate(
 			StringBundler.concat(
-				"insert ", companySchemaTableName, " select * from ",
-				defaultSchemaTableName, whereClause));
+				"insert ",
+				_getSchemaName(companyId) + StringPool.PERIOD + tableName,
+				" select * from ",
+				_defaultSchemaName + StringPool.PERIOD + tableName,
+				whereClause));
 	}
 
 	private static void _restoreView(
 			long companyId, String tableName, Statement statement)
 		throws Exception {
 
-		String defaultSchemaTableName =
-			_defaultSchemaName + StringPool.PERIOD + tableName;
+		statement.executeUpdate(_getDropTable(companyId, tableName));
 
-		String companySchemaTableName =
-			_getSchemaName(companyId) + StringPool.PERIOD + tableName;
-
-		statement.executeUpdate(
-			"drop table if exists " + companySchemaTableName);
-
-		statement.executeUpdate(
-			_getCreateView(companySchemaTableName, defaultSchemaTableName));
+		statement.executeUpdate(_getCreateView(companyId, tableName));
 	}
 
 	private static void _useSchema(Connection connection) throws SQLException {

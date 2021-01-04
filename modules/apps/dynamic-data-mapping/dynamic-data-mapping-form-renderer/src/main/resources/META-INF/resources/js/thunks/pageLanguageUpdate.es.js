@@ -84,7 +84,13 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 			}
 
 			if (repeatable) {
-				Object.keys(localizedValue).forEach((key) => {
+				const availableLanguageIds = Object.keys(localizedValue);
+
+				if (!availableLanguageIds.includes(languageId)) {
+					availableLanguageIds.push(languageId);
+				}
+
+				availableLanguageIds.forEach((key) => {
 					if (edited && key === languageId) {
 						dataRecordValues[fieldName][key][
 							repeatableIndex

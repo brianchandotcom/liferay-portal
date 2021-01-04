@@ -241,28 +241,18 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	};
 
 	useEffect(() => {
-		const infoItem = mappedInfoItems.find(
-			(infoItem) =>
-				infoItem.classNameId === mappedItem.classNameId &&
-				infoItem.classPK === mappedItem.classPK
-		);
+		if (mappedItem.classNameId && mappedItem.classPK) {
+			const infoItem = mappedInfoItems.find(
+				(infoItem) =>
+					infoItem.classNameId === mappedItem.classNameId &&
+					infoItem.classPK === mappedItem.classPK
+			);
 
-		setSelectedItem((selectedItem) => {
-			if (
-				selectedItem.classPK &&
-				selectedItem.classNameId &&
-				selectedItem.classPK != mappedItem?.classPK &&
-				selectedItem.classNameId != mappedItem?.classNameId
-			) {
-				return selectedItem;
-			}
-			else {
-				return {
-					...infoItem,
-					...mappedItem,
-				};
-			}
-		});
+			setSelectedItem({
+				...infoItem,
+				...mappedItem,
+			});
+		}
 	}, [mappedItem, mappedInfoItems, setSelectedItem]);
 
 	useEffect(() => {

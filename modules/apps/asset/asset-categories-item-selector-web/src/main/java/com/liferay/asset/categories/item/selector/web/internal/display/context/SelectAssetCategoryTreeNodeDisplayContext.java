@@ -198,14 +198,20 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 		else if (assetCategoryTreeNodeType.equals(
 					AssetCategoryTreeNodeConstants.TYPE_ASSET_VOCABULARY)) {
 
-			int count =
-				AssetCategoryServiceUtil.getVocabularyRootCategoriesCount(
-					_themeDisplay.getScopeGroupId(),
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyServiceUtil.fetchVocabulary(
 					getAssetCategoryTreeNodeId());
 
-			return AssetCategoryServiceUtil.getVocabularyRootCategories(
-				_themeDisplay.getScopeGroupId(), getAssetCategoryTreeNodeId(),
-				0, count, null);
+			if (assetVocabulary != null) {
+				int count =
+					AssetCategoryServiceUtil.getVocabularyRootCategoriesCount(
+						assetVocabulary.getGroupId(),
+						getAssetCategoryTreeNodeId());
+
+				return AssetCategoryServiceUtil.getVocabularyRootCategories(
+					assetVocabulary.getGroupId(), getAssetCategoryTreeNodeId(),
+					0, count, null);
+			}
 		}
 
 		return new ArrayList<>();

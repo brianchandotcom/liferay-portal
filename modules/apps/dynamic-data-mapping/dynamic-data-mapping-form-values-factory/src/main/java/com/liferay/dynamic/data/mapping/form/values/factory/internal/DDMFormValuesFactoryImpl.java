@@ -32,7 +32,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -393,9 +392,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 			sb.setIndex(sb.index() - 1);
 
-			sb.append(
-				LanguageUtil.getLanguageId(
-					LocaleThreadLocal.getThemeDisplayLocale()));
+			sb.append(LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
 		}
 
 		DDMFormFieldValueRequestParameterRetriever

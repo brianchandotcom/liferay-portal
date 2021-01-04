@@ -112,6 +112,8 @@ describe('QuantitySelector', () => {
 		});
 
 		it('calls the onUpdate callback on input value change after 500ms', async () => {
+			jest.useFakeTimers();
+
 			const element = Component.container.querySelector('input');
 			const updatedValue = 2;
 
@@ -123,8 +125,12 @@ describe('QuantitySelector', () => {
 
 			await wait(
 				() => {
+					jest.advanceTimersByTime(Utils.UPDATE_AFTER);
+
 					expect(onUpdateSpy).toHaveBeenCalledTimes(1);
 					expect(onUpdateSpy).toHaveBeenCalledWith(updatedValue);
+
+					jest.clearAllTimers();
 				},
 				{
 					timeout: Utils.UPDATE_AFTER,
@@ -133,8 +139,12 @@ describe('QuantitySelector', () => {
 		});
 
 		it('calls the onUpdate callback only once if typed value did not change within 500ms', async () => {
+			jest.useFakeTimers();
+
 			const TIMES = 4;
 			const TYPING_THRESHOLD = 25;
+
+			const TIMEOUT_AT_MS = TIMES * TYPING_THRESHOLD + Utils.UPDATE_AFTER;
 
 			const element = Component.container.querySelector('input');
 
@@ -142,7 +152,7 @@ describe('QuantitySelector', () => {
 
 			await act(async () => {
 				const updateByTyping = setInterval(() => {
-					if (updatedValue.length < TIMES) {
+					if (updatedValue.length <= TIMES) {
 						updatedValue += '0';
 
 						fireEvent.change(element, {
@@ -157,11 +167,15 @@ describe('QuantitySelector', () => {
 
 			await wait(
 				() => {
+					jest.advanceTimersByTime(TIMEOUT_AT_MS);
+
 					expect(onUpdateSpy).toHaveBeenCalledTimes(1);
 					expect(onUpdateSpy).toHaveBeenCalledWith(1000);
+
+					jest.clearAllTimers();
 				},
 				{
-					timeout: TIMES * TYPING_THRESHOLD + Utils.UPDATE_AFTER,
+					timeout: TIMEOUT_AT_MS,
 				}
 			);
 		});
@@ -227,6 +241,8 @@ describe('QuantitySelector', () => {
 		});
 
 		it('floors the input value to the closest lower multiple if multipleQuantity > 1', async () => {
+			jest.useFakeTimers();
+
 			const onUpdateSpy = jest.fn();
 
 			const optionSettingsProps = {
@@ -253,8 +269,12 @@ describe('QuantitySelector', () => {
 
 			await wait(
 				() => {
+					jest.advanceTimersByTime(Utils.UPDATE_AFTER);
+
 					expect(onUpdateSpy).toHaveBeenCalledTimes(1);
 					expect(onUpdateSpy).toHaveBeenCalledWith(52);
+
+					jest.clearAllTimers();
 				},
 				{
 					timeout: Utils.UPDATE_AFTER,

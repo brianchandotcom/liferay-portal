@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,6 +42,12 @@ public class DDMFormInstanceRecordModelListener
 		throws ModelListenerException {
 
 		try {
+			if (ddmFormInstanceRecord.getStatus() !=
+					WorkflowConstants.STATUS_APPROVED) {
+
+				return;
+			}
+
 			DDMFormInstanceReport ddmFormInstanceReport =
 				ddmFormInstanceReportLocalService.
 					getFormInstanceReportByFormInstanceId(

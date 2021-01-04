@@ -15,6 +15,7 @@
 package com.liferay.portal.security.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SynchronousInvocationHandler;
@@ -101,10 +103,19 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 			ProxyUtil.fetchInvocationHandler(
 				_resourcePermissionLocalService, AopInvocationHandler.class);
 
+		ServiceWrapper<ResourcePermissionLocalService>
+			resourcePermissionLocalServiceWrapper =
+				(ServiceWrapper<ResourcePermissionLocalService>)
+					aopInvocationHandler.getTarget();
+
+		ClassLoaderBeanHandler classLoaderBeanHandler =
+			(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
+				resourcePermissionLocalServiceWrapper.getWrappedService());
+
 		final ResourcePermissionLocalServiceImpl
 			resourcePermissionLocalServiceImpl =
 				(ResourcePermissionLocalServiceImpl)
-					aopInvocationHandler.getTarget();
+					classLoaderBeanHandler.getBean();
 
 		final ResourcePermissionPersistence resourcePermissionPersistence =
 			resourcePermissionLocalServiceImpl.

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -70,7 +69,7 @@ public class DDMFormValuesToMapConverterImpl
 		Map<String, DDMFormField> ddmFormFields =
 			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
 
-		Map<String, Object> values = new HashMap<>(ddmFormFields.size());
+		Map<String, Object> values = new LinkedHashMap<>(ddmFormFields.size());
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {

@@ -25,19 +25,6 @@ definition {
 			}
 		}
 
-		if (isSet(webContentBoolean)) {
-			if ("${webContentBoolean}" == "true") {
-				AssertChecked.assertCheckedNotVisible(
-					key_fieldName = "Boolean",
-					locator1 = "DDMField#BOOLEAN");
-			}
-			else if ("${webContentBoolean}" == "false") {
-				AssertNotChecked.assertNotCheckedNotVisible(
-					key_fieldName = "Boolean",
-					locator1 = "DDMField#BOOLEAN");
-			}
-		}
-
 		if (isSet(webContentImage)) {
 			if (!(isSet(webContentImageFieldLabel))) {
 				var webContentImageFieldLabel = "Image";

@@ -195,7 +195,7 @@ definition {
 
 		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
-		AssertTextEquals(
+		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "Edited Text Field");

@@ -18,6 +18,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1141,9 +1142,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		companyInfoPersistence.remove(company.getCompanyInfo());
 
-		if (DBPartitionUtil.removeDBPartition(companyId)) {
-			_deletePortalInstance(company);
+		UnsafeConsumer<Company, PortalException> deletePortalInstance =
+			portalInstance -> _deletePortalInstance(portalInstance);
 
+		if (DBPartitionUtil.removeDBPartition(company, deletePortalInstance)) {
 			return company;
 		}
 

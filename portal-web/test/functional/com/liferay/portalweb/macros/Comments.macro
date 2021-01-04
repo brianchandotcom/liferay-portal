@@ -97,9 +97,9 @@ definition {
 	macro edit {
 		var key_entryComment = "${entryComment}";
 
-		MouseOver(locator1 = "Comments#COMMENT_BODY_SPECIFIC");
+		Click.mouseOverClick(locator1 = "Comments#COMMENT_BODY_SPECIFIC");
 
-		Click.mouseOverClick(locator1 = "Comments#COMMENT_ACTIONS");
+		Click.clickNoMouseOver(locator1 = "Comments#COMMENT_ACTIONS");
 
 		AssertClick(
 			key_menuItem = "Edit",

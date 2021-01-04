@@ -32,9 +32,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 	selectable="<%= false %>"
 />
 
-<clay:container-fluid
-	cssClass="main-content-body"
->
+<clay:container-fluid>
 	<liferay-ui:breadcrumb
 		showLayout="<%= false %>"
 	/>

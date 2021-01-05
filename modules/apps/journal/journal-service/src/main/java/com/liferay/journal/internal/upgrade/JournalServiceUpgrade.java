@@ -270,6 +270,11 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.3.0", "3.4.0", new UpgradeStorageLinks(_classNameLocalService));
+
+		registry.register(
+			"3.4.0", "3.4.1",
+			new com.liferay.journal.internal.upgrade.v3_4_1.
+				UpgradeJournalArticleLocalization());
 	}
 
 	protected void deleteTempImages() throws Exception {

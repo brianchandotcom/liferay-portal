@@ -1602,9 +1602,9 @@ definition {
 			kfProcessName = "Kaleo Forms Process");
 
 		DynamicDataMapping.addField(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			field = "Select",
+			fieldFieldLabel = "Select",
+			fieldName = "Select");
 
 		DynamicDataMapping.addField(
 			field = "Text Box",
@@ -1612,9 +1612,9 @@ definition {
 			fieldName = "TextBox");
 
 		DynamicDataMapping.addField(
-			field = "Select",
-			fieldFieldLabel = "Select",
-			fieldName = "Select");
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
 
 		KaleoFormsAdmin.saveFieldSet();
 
@@ -1678,21 +1678,21 @@ definition {
 
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
-		KaleoFormsAdmin.populateFieldText(
-			fieldName = "Text",
-			kfProcessFieldData = "Test Description");
+		KaleoFormsAdmin.populateFieldSelect(
+			fieldName = "Select",
+			kfProcessFieldData = "option 2");
 
 		KaleoFormsAdmin.populateFieldTextBox(
 			fieldName = "TextBox",
 			kfProcessFieldData = "Test Box Description");
 
-		KaleoFormsAdmin.populateFieldSelect(
-			fieldName = "Select",
-			kfProcessFieldData = "option 2");
+		KaleoFormsAdmin.populateFieldText(
+			fieldName = "Text",
+			kfProcessFieldData = "Test Description");
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][1]//label",
-			value1 = "Text");
+			value1 = "Select");
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][2]//label",
@@ -1700,7 +1700,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][3]//label",
-			value1 = "Select");
+			value1 = "Text");
 
 		KaleoFormsAdmin.saveProcessRecord();
 
@@ -1721,12 +1721,12 @@ definition {
 		Workflow.gotoCompletedTaskAssignedToMePreview(workflowAssetTitle = "Kaleo Forms Process");
 
 		WorkflowAsset.previewViewContent(
-			fieldLabel = "Text",
-			fieldValue = "Test Description");
-
-		WorkflowAsset.previewViewContent(
 			fieldLabel = "Select",
 			fieldValue = "option 2");
+
+		WorkflowAsset.previewViewContent(
+			fieldLabel = "Text",
+			fieldValue = "Test Description");
 
 		WorkflowAsset.previewViewContentFieldNotPresent(fieldLabel = "Text Box");
 
@@ -1747,22 +1747,22 @@ definition {
 		Workflow.gotoCompletedTaskAssignedToMePreview(workflowAssetTitle = "Kaleo Forms Process");
 
 		WorkflowAsset.previewViewContent(
-			fieldLabel = "Text",
-			fieldValue = "Test Description");
-
-		WorkflowAsset.previewViewContent(
 			fieldLabel = "Select",
 			fieldValue = "option 2");
+
+		WorkflowAsset.previewViewContent(
+			fieldLabel = "Text",
+			fieldValue = "Test Description");
 
 		WorkflowAsset.previewViewContentFieldNotPresent(fieldLabel = "Text Box");
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][1]//label",
-			value1 = "Text");
+			value1 = "Select");
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][2]//label",
-			value1 = "Select");
+			value1 = "Text");
 	}
 
 	@priority = "5"

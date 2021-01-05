@@ -253,6 +253,37 @@ definition {
 			positionNumber = "2");
 	}
 
+	@description = "LRQA-63715 Automate LPS-111511: As an App Admin, I want to create a new Object and Form during the Workflow App creation experience"
+	@priority = "4"
+	test CancelCreationOfObjectAndForm {
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.clickOnAddNewCustomObjectButton();
+		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Continue");
+		AppBuilderWorkflow.cancelCustomObjectCreation();
+
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.addNewObject(objectName = "my custom object");
+		AppBuilderAdmin.cancel();
+		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
+		AppBuilderWorkflow.clickToCreateFormView(positionNumber = "1");
+		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
+		AppBuilderWorkflow.createSimpleFormView(
+			fieldType = "Text",
+			formViewName = "My Form View");
+
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "My Form View",
+			positionNumber = "1");
+	}
+
 	@description = "Create a Basic Workflow App"
 	@priority = "5"
 	test CreateBasicWorkflowApp {

@@ -87,6 +87,10 @@ public interface AccountRoleLocalService
 			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException;
 
+	public void associateUser(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws PortalException;
+
 	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *
@@ -280,6 +284,11 @@ public interface AccountRoleLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserAccountRole(
+			long accountEntryId, long accountRoleId, long userId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

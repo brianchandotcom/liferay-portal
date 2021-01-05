@@ -76,6 +76,18 @@ public class AccountEntryUserRelLocalServiceUtil {
 			firstName, middleName, lastName, prefixId, suffixId);
 	}
 
+	public static com.liferay.account.model.AccountEntryUserRel
+			addAccountEntryUserRelByEmailAddress(
+				long accountEntryId, String emailAddress, long[] accountRoleIds,
+				String userExternalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAccountEntryUserRelByEmailAddress(
+			accountEntryId, emailAddress, accountRoleIds,
+			userExternalReferenceCode, serviceContext);
+	}
+
 	public static void addAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -98,6 +98,8 @@ function doSubmit() {
 				this._animateMarker(this.quantity);
 				this.quantity = this.inputQuantity;
 				resetInputQuantity.call(this);
+
+				Liferay.fire('commerce:productAddedToCart', jsonresponse);
 			}
 			else if (jsonresponse.errorMessages) {
 				showNotification(jsonresponse.errorMessages[0], 'danger');

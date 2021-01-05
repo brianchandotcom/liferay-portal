@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.asset.NotifiedAssetEntryThreadLocal;
+import com.liferay.asset.kernel.util.NotifiedAssetEntryThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;

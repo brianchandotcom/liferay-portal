@@ -1181,7 +1181,7 @@ definition {
 			entryContent = "This is a blog about Potatoes",
 			entryTitle = "Potato Blog");
 
-		var currentDate = DateUtil.getFormattedCurrentDate("MMM dd, yyyy");
+		var currentDate = DateUtil.getFormattedDate("0", "MMM d, YYYY");
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");

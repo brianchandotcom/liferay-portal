@@ -16,16 +16,18 @@ import {AOP} from 'frontend-js-web';
 
 class LocaleChangedHandler {
 	constructor({
-		callback,
 		contentTitle,
 		context,
 		defaultLanguageId,
 		namespace,
+		onDefaultLocaleChangedCallback,
+		onLocaleChangedCallback,
 	}) {
 		this.contentTitle = contentTitle;
 		this.defaultLanguageId = defaultLanguageId;
 		this.namespace = namespace;
-		this.callback = callback;
+		this.onDefaultLocaleChangedCallback = onDefaultLocaleChangedCallback;
+		this.onLocaleChangedCallback = onLocaleChangedCallback;
 		this.context = context;
 
 		this.attachLocaleChangedEventListener();
@@ -55,6 +57,10 @@ class LocaleChangedHandler {
 	_onDefaultLocaleChange(event) {
 		if (event.item) {
 			this.defaultLanguageId = event.item.getAttribute('data-value');
+
+			if (this.onDefaultLocaleChangedCallback) {
+				this.onDefaultLocaleChangedCallback(this.defaultLanguageId);
+			}
 		}
 	}
 
@@ -83,8 +89,8 @@ class LocaleChangedHandler {
 			this._updateLanguageIdInput(selectedLanguageId);
 		}
 
-		if (this.callback) {
-			this.callback(this.context, selectedLanguageId);
+		if (this.onLocaleChangedCallback) {
+			this.onLocaleChangedCallback(this.context, selectedLanguageId);
 		}
 	}
 

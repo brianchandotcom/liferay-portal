@@ -193,6 +193,10 @@ definition {
 		AppBuilderAppAdmin.waitForItemPresentOnTable(itemName = "${assignee}");
 	}
 
+	macro cancelCustomObjectCreation {
+		Click(locator1 = "AppBuilderWorkflow#CUSTOM_OBJECT_CANCEL");
+	}
+
 	macro changeDeploymentType {
 		Click.javaScriptClick(locator1 = "AppBuilderWorkflow#DEPLOY_SETTINGS_BUTTON");
 

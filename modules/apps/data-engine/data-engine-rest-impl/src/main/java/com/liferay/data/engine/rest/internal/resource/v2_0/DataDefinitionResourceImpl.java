@@ -842,23 +842,14 @@ public class DataDefinitionResourceImpl
 	}
 
 	private DDMForm _getDDMForm() {
-		try {
-			DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-				ParamUtil.getLong(contextHttpServletRequest, "ddmStructureId"));
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+			ParamUtil.getLong(contextHttpServletRequest, "ddmStructureId"));
 
-			if (ddmStructure == null) {
-				return null;
-			}
-
-			return ddmStructure.getDDMForm();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
+		if (ddmStructure == null) {
+			return null;
 		}
 
-		return null;
+		return ddmStructure.getDDMForm();
 	}
 
 	private long _getDefaultDataLayoutId(long dataDefinitionId)

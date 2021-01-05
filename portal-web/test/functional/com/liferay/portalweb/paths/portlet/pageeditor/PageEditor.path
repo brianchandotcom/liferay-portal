@@ -694,6 +694,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW</td>
+	<td>//div[contains(@class,'management-bar')]//button[@*='Preview']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNDO_HISTORY</td>
 	<td>//button[contains(@aria-label,'History')]</td>
 	<td></td>

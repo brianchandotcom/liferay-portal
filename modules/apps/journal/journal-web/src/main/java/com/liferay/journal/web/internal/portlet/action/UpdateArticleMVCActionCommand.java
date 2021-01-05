@@ -38,7 +38,6 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -69,11 +67,9 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -141,17 +137,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "articleId");
 		double version = ParamUtil.getDouble(uploadPortletRequest, "version");
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		JSONObject titleValueJSONObject = _jsonFactory.createJSONObject(
-			ParamUtil.getString(uploadPortletRequest, "titleValue"));
-
-		Set<String> languageIds = titleValueJSONObject.keySet();
-
-		languageIds.forEach(
-			languageId -> titleMap.put(
-				LocaleUtil.fromLanguageId(languageId),
-				titleValueJSONObject.getString(languageId)));
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "titleMapAsXML");
 
 		String ddmStructureKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmStructureKey");

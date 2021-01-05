@@ -505,6 +505,19 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro selectFilterInCollectionCategoryFilter {
+		Click(
+			key_title = "${title}",
+			locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE");
+
+		DropdownMenuItem.click(menuItem = "${filterName}");
+
+		AssertTextEquals(
+			key_title = "${title}",
+			locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE",
+			value1 = "${selectedName}");
+	}
+
 	macro selectMobileDeviceFamily {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

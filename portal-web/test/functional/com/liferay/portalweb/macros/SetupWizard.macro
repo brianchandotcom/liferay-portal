@@ -313,6 +313,8 @@ definition {
 	}
 
 	macro viewPopulatedSampleData {
+		var testRunEnvironment = PropsUtil.get("test.run.environment");
+
 		AssertConsoleTextPresent(value1 = "Finished adding data");
 
 		ApplicationsMenu.gotoPortlet(
@@ -339,41 +341,80 @@ definition {
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
-		Organization.viewCP(
-			orgName = "Liferay DXP, Inc.",
-			orgType = "Organization");
+		if ("${testRunEnvironment}" == "EE") {
+			Organization.viewCP(
+				orgName = "Liferay DXP, Inc.",
+				orgType = "Organization");
 
-		Navigator.gotoBack();
+			Navigator.gotoBack();
 
-		Organization.gotoCP(
-			orgName = "Liferay DXP, Inc.",
-			searchToken = "Liferay DXP, Inc.");
+			Organization.gotoCP(
+				orgName = "Liferay DXP, Inc.",
+				searchToken = "Liferay DXP, Inc.");
 
-		User.searchCP(searchTerm = "Test DLC 1");
+			User.searchCP(searchTerm = "Test DLC 1");
 
-		Organization.viewAssignMemberCP(userName = "Test DLC 1");
+			Organization.viewAssignMemberCP(userName = "Test DLC 1");
 
-		Search.searchCP(searchTerm = "LiferayChicago");
+			Search.searchCP(searchTerm = "Liferay DXPChicago");
 
-		var key_suborgName = "LiferayChicago";
+			var key_suborgName = "Liferay DXPChicago";
 
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_NAME",
-			value1 = "LiferayChicago");
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_NAME",
+				value1 = "Liferay DXPChicago");
 
-		AssertTextEquals(
-			locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_TYPE",
-			value1 = "Organization");
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_TYPE",
+				value1 = "Organization");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		AssertTextEquals.assertPartialText(
-			key_siteName = "Liferay DXP, Inc.",
-			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Liferay DXP, Inc.");
+			AssertTextEquals.assertPartialText(
+				key_siteName = "Liferay DXP, Inc.",
+				locator1 = "Sites#SITE_TABLE_NAME",
+				value1 = "Liferay DXP, Inc.");
+		}
+		else {
+			Organization.viewCP(
+				orgName = "Liferay, Inc.",
+				orgType = "Organization");
+
+			Navigator.gotoBack();
+
+			Organization.gotoCP(
+				orgName = "Liferay, Inc.",
+				searchToken = "Liferay, Inc.");
+
+			User.searchCP(searchTerm = "Test DLC 1");
+
+			Organization.viewAssignMemberCP(userName = "Test DLC 1");
+
+			Search.searchCP(searchTerm = "Liferay Chicago");
+
+			var key_suborgName = "Liferay Chicago";
+
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_NAME",
+				value1 = "Liferay Chicago");
+
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_TYPE",
+				value1 = "Organization");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			AssertTextEquals.assertPartialText(
+				key_siteName = "Liferay, Inc.",
+				locator1 = "Sites#SITE_TABLE_NAME",
+				value1 = "Liferay, Inc.");
+		}
 	}
 
 	macro viewSampleDataEnabledInPropertiesFile {

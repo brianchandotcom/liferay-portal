@@ -259,7 +259,7 @@ public class BlogsEntryStagedModelDataHandler
 
 			importedEntry = _blogsEntryLocalService.addEntry(
 				userId, entry.getTitle(), entry.getSubtitle(),
-				entry.getDescription(), entry.getContent(),
+				entry.getUrlTitle(), entry.getDescription(), entry.getContent(),
 				entry.getDisplayDate(), entry.isAllowPingbacks(),
 				entry.isAllowTrackbacks(), trackbacks,
 				entry.getCoverImageCaption(), null, null, serviceContext);
@@ -267,7 +267,8 @@ public class BlogsEntryStagedModelDataHandler
 		else {
 			importedEntry = _blogsEntryLocalService.updateEntry(
 				userId, existingEntry.getEntryId(), entry.getTitle(),
-				entry.getSubtitle(), entry.getDescription(), entry.getContent(),
+				entry.getSubtitle(), entry.getUrlTitle(),
+				entry.getDescription(), entry.getContent(),
 				entry.getDisplayDate(), entry.isAllowPingbacks(),
 				entry.isAllowTrackbacks(), trackbacks,
 				entry.getCoverImageCaption(), null, null, serviceContext);

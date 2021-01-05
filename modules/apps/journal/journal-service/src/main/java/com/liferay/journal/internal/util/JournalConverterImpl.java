@@ -376,7 +376,8 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			Serializable serializable = getFieldValue(
-				dataType, type, dynamicContentElement, defaultLocale);
+				dataType, type, dynamicContentElement, dynamicElementElement,
+				defaultLocale);
 
 			ddmField.addValue(locale, serializable);
 		}
@@ -412,7 +413,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 	protected Serializable getFieldValue(
 		String dataType, String type, Element dynamicContentElement,
-		Locale defaultLocale) {
+		Element dynamicElementElement, Locale defaultLocale) {
 
 		if (Objects.equals(DDMFormFieldType.DOCUMENT_LIBRARY, type) ||
 			Objects.equals(DDMFormFieldType.IMAGE, type)) {
@@ -431,6 +432,18 @@ public class JournalConverterImpl implements JournalConverter {
 
 		if (Objects.equals(DDMFormFieldType.SELECT, type)) {
 			return _getSelectValue(dynamicContentElement);
+		}
+
+		if (Objects.equals(
+				dynamicElementElement.attributeValue("type"), "boolean")) {
+
+			if (GetterUtil.getBoolean(dynamicContentElement.getText())) {
+				return JSONUtil.putAll(
+					dynamicElementElement.attributeValue("name")
+				).toJSONString();
+			}
+
+			return StringPool.BLANK;
 		}
 
 		return FieldConstants.getSerializable(

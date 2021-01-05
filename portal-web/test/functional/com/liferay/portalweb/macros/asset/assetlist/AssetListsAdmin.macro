@@ -329,10 +329,13 @@ definition {
 	}
 
 	macro selectAsset {
-		var key_title = "${assetListName}";
 		var key_assetType = "${assetType}";
 
-		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+		if (isSet(assetListName)) {
+			Click(
+				key_title = "${assetListName}",
+				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+		}
 
 		Pause(locator1 = "3000");
 

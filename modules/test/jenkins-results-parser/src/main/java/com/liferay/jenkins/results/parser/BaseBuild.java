@@ -1523,6 +1523,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public void remove(Build build) {
+		downstreamBuilds.remove(build);
+	}
+
+	@Override
 	public String replaceBuildURL(String text) {
 		if ((text == null) || text.isEmpty()) {
 			return text;

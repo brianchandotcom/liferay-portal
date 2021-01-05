@@ -201,6 +201,8 @@ public interface Build {
 
 	public void reinvoke(ReinvokeRule reinvokeRule);
 
+	public void remove(Build build);
+
 	public String replaceBuildURL(String text);
 
 	public void setCompareToUpstream(boolean compareToUpstream);

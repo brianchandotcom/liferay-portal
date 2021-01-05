@@ -42,6 +42,16 @@ public class PortalEnvironmentJob
 
 		super(jobName, buildProfile);
 
+		_portalBranchName = portalBranchName;
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			getPortalGitWorkingDirectory();
+
+		jobPropertiesFiles.add(
+			new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"test.properties"));
+
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
 
@@ -51,8 +61,6 @@ public class PortalEnvironmentJob
 				"commands/dependencies/test-environment.properties"));
 
 		readJobProperties();
-
-		_portalBranchName = portalBranchName;
 	}
 
 	@Override

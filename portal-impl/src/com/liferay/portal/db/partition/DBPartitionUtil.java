@@ -14,7 +14,6 @@
 
 package com.liferay.portal.db.partition;
 
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -102,12 +100,8 @@ public class DBPartitionUtil {
 		return true;
 	}
 
-	public static boolean removeDBPartition(
-			Company company,
-			UnsafeConsumer<Company, PortalException> unsafeConsumer)
+	public static boolean removeDBPartition(long companyId)
 		throws PortalException {
-
-		long companyId = company.getCompanyId();
 
 		if (!_DATABASE_PARTITION_ENABLED || (companyId == _defaultCompanyId)) {
 			return false;
@@ -116,12 +110,12 @@ public class DBPartitionUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
+		DBInspector dbInspector = new DBInspector(connection);
+
 		List<String> controlTableNames = new ArrayList<>();
 
 		try {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			DBInspector dbInspector = new DBInspector(connection);
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
 					dbInspector.getCatalog(), dbInspector.getSchema(), null,
@@ -139,8 +133,6 @@ public class DBPartitionUtil {
 					}
 				}
 			}
-
-			unsafeConsumer.accept(company);
 		}
 		catch (Exception exception1) {
 			if (ListUtil.isEmpty(controlTableNames)) {
@@ -150,7 +142,8 @@ public class DBPartitionUtil {
 			try {
 				for (String tableName : controlTableNames) {
 					try (Statement statement = connection.createStatement()) {
-						_restoreView(companyId, tableName, statement);
+						_restoreTable(
+							companyId, tableName, statement, dbInspector);
 					}
 				}
 			}
@@ -281,21 +274,9 @@ public class DBPartitionUtil {
 		return false;
 	}
 
-	private static void _migrateTable(
-			long companyId, String tableName, Statement statement,
-			DBInspector dbInspector)
-		throws Exception {
-
-		statement.executeUpdate(_getDropView(companyId, tableName));
-
-		statement.executeUpdate(_getCreateTable(companyId, tableName));
-
-		_populateTable(companyId, tableName, statement, dbInspector);
-	}
-
-	private static void _populateTable(
-			long companyId, String tableName, Statement statement,
-			DBInspector dbInspector)
+	private static void _migrateData(
+			long companyId, String tableName, String fromSchemaName,
+			String toSchemaName, Statement statement, DBInspector dbInspector)
 		throws Exception {
 
 		String whereClause = StringPool.BLANK;
@@ -306,16 +287,40 @@ public class DBPartitionUtil {
 
 		statement.executeUpdate(
 			StringBundler.concat(
-				"insert ",
-				_getSchemaName(companyId) + StringPool.PERIOD + tableName,
-				" select * from ",
-				_defaultSchemaName + StringPool.PERIOD + tableName,
+				"insert ", toSchemaName, StringPool.PERIOD, tableName,
+				" select * from ", fromSchemaName, StringPool.PERIOD, tableName,
 				whereClause));
+
+		if (!whereClause.isEmpty()) {
+			statement.executeUpdate(
+				StringBundler.concat(
+					"delete from ", fromSchemaName, StringPool.PERIOD,
+					tableName, whereClause));
+		}
 	}
 
-	private static void _restoreView(
-			long companyId, String tableName, Statement statement)
+	private static void _migrateTable(
+			long companyId, String tableName, Statement statement,
+			DBInspector dbInspector)
 		throws Exception {
+
+		statement.executeUpdate(_getDropView(companyId, tableName));
+
+		statement.executeUpdate(_getCreateTable(companyId, tableName));
+
+		_migrateData(
+			companyId, tableName, _defaultSchemaName, _getSchemaName(companyId),
+			statement, dbInspector);
+	}
+
+	private static void _restoreTable(
+			long companyId, String tableName, Statement statement,
+			DBInspector dbInspector)
+		throws Exception {
+
+		_migrateData(
+			companyId, tableName, _getSchemaName(companyId), _defaultSchemaName,
+			statement, dbInspector);
 
 		statement.executeUpdate(_getDropTable(companyId, tableName));
 

@@ -969,6 +969,67 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
+	macro editCollectionCategoryFilter {
+		var key_fragmentName = "${fragmentName}";
+
+		Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+
+		PageEditor.gotoTab(tabName = "Selection");
+
+		AssertClick(
+			key_navItem = "General",
+			locator1 = "PageEditor#NAV_ITEM_BUTTON",
+			value1 = "General");
+
+		if (isSet(selectedName)) {
+			AssertElementPresent(
+				key_contentName = "${selectedName}",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
+		else {
+			Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "name",
+				tableEntry = "${vocabularyName}");
+
+			AssertVisible(
+				key_columnName = "name",
+				key_tableEntry = "${categoryName}",
+				locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+
+			if (isSet(subCategoryName)) {
+				LexiconTable.clickTableEntryColumnLink(
+					columnName = "name",
+					tableEntry = "${categoryName}");
+
+				AssertVisible(
+					key_columnName = "name",
+					key_tableEntry = "${subCategoryName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+
+				Button.click(button = "Select This Level");
+
+				Pause(locator1 = "3000");
+
+				AssertElementPresent(
+					key_contentName = "${categoryName}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
+			else {
+				Button.click(button = "Select This Level");
+
+				Pause(locator1 = "3000");
+
+				AssertElementPresent(
+					key_contentName = "${vocabularyName}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
+		}
+	}
+
 	macro editCollectionDisplay {
 		var key_fragmentName = "${fragmentName}";
 

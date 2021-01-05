@@ -166,6 +166,12 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 
 	@Test
 	public void testCreateWithDifferentLanguageFromRequest() throws Exception {
+		when(
+			LocaleUtil.getSiteDefault()
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
+
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		ddmForm.addDDMFormField(

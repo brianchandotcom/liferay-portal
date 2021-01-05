@@ -1,4 +1,5 @@
 #set($h1 = '#')
+#set($h2 = '##')
 #set($h3 = '###')
 #set($h4 = '####')
 $h1 Getting Started with Liferay Workspace
@@ -6,7 +7,7 @@ $h1 Getting Started with Liferay Workspace
 Complete documentation for Liferay Workspace can be found
 [here](https://learn.liferay.com/dxp/7.x/en/developing-applications/tooling/liferay-workspace.html).
 
-$h3 Folder Structure
+$h2 Folder Structure
 ```
 my-project
 ├── configs
@@ -27,58 +28,58 @@ my-project
     └── js themes
 ```
 
-$h3 Running Liferay DXP locally
+$h2 Running Liferay DXP locally
 ```
 my-project $ blade gw initBundle
 my-project $ blade gw deploy
 my-project $ blade server run
 ```
-$h3 Running Liferay DXP in Docker
+$h2 Running Liferay DXP in Docker
 ```
 my-project $ blade gw createDockerContainer
 my-project $ blade gw startDockerContainer
 ```
 
-$h3 Creating a Liferay DXP distribution
+$h2 Creating a Liferay DXP distribution
 
-$h4 Creating a tar
+$h3 Creating a tar
 ```
 my-project $ blade gw distBundleTar
 ```
 
-$h4 Creating a zip
+$h3 Creating a zip
 ```
 my-project $ blade gw distBundleZip
 ```
 
-$h4 Creating a docker image
+$h3 Creating a docker image
 ```
 my-project $ blade gw buildDockerImage
 ```
 
-$h3 Create a Liferay DXP module
+$h2 Create a Liferay DXP module
 
-$h4 Creating a new service
+$h3 Creating a new service
 ```
 my-project $ blade create -t service-builder my-service
 ```
 
-$h4 Creating a javascript theme
+$h3 Creating a javascript theme
 ```
 my-project $ blade create -t js-theme my-theme
 ```
 
-$h4 Creating a Java Widget
+$h3 Creating a Java Widget
 ```
 my-project $ blade create -t mvc-portlet "my-java-widget"
 ```
 
-$h4 Create a JS Widget
+$h3 Create a JS Widget
 ```
 my-project $ blade create -t js-widget "my-js-widget"
 ```
 
-$h3 Gradle Properties
+$h2 Gradle Properties
 
 Set the following in `gradle.properties` to change the default settings.
 

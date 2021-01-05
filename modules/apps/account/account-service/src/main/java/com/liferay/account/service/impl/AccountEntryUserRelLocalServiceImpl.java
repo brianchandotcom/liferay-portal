@@ -17,11 +17,13 @@ package com.liferay.account.service.impl;
 import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryTypeException;
+import com.liferay.account.exception.AccountEntryUserRelEmailAddressException;
 import com.liferay.account.exception.DuplicateAccountEntryIdException;
 import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.time.Month;
 
@@ -136,6 +140,59 @@ public class AccountEntryUserRelLocalServiceImpl
 
 		return accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, user.getUserId());
+	}
+
+	@Override
+	public AccountEntryUserRel addAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress, long[] accountRoleIds,
+			String userExternalReferenceCode, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = null;
+
+		if (Validator.isNotNull(userExternalReferenceCode)) {
+			user = userLocalService.fetchUserByReferenceCode(
+				serviceContext.getCompanyId(), userExternalReferenceCode);
+		}
+
+		if (user == null) {
+			if (Validator.isNull(emailAddress)) {
+				throw new AccountEntryUserRelEmailAddressException();
+			}
+
+			user = userLocalService.fetchUserByEmailAddress(
+				serviceContext.getCompanyId(), emailAddress);
+		}
+
+		if (user == null) {
+			AccountEntry accountEntry =
+				accountEntryLocalService.getAccountEntry(accountEntryId);
+
+			Group group = accountEntry.getAccountEntryGroup();
+
+			user = userLocalService.addUserWithWorkflow(
+				serviceContext.getUserId(), serviceContext.getCompanyId(), true,
+				StringPool.BLANK, StringPool.BLANK, true, StringPool.BLANK,
+				emailAddress, 0, StringPool.BLANK, serviceContext.getLocale(),
+				emailAddress, StringPool.BLANK, emailAddress, 0, 0, true, 1, 1,
+				1970, StringPool.BLANK,
+				new long[] {
+					group.getGroupId(), serviceContext.getScopeGroupId()
+				},
+				null, null, null, true, serviceContext);
+
+			user.setExternalReferenceCode(userExternalReferenceCode);
+
+			user = userLocalService.updateUser(user);
+		}
+
+		AccountEntryUserRel accountEntryUserRel =
+			accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntryId, user.getUserId());
+
+		updateRoles(accountEntryId, user.getUserId(), accountRoleIds);
+
+		return accountEntryUserRel;
 	}
 
 	@Override
@@ -301,6 +358,18 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 	}
 
+	protected void updateRoles(
+			long accountEntryId, long userId, long[] accountRoleIds)
+		throws PortalException {
+
+		if (accountRoleIds == null) {
+			return;
+		}
+
+		_accountRoleLocalService.associateUser(
+			accountEntryId, accountRoleIds, userId);
+	}
+
 	@Reference
 	protected AccountEntryLocalService accountEntryLocalService;
 
@@ -362,6 +431,9 @@ public class AccountEntryUserRelLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountEntryUserRelLocalServiceImpl.class);
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

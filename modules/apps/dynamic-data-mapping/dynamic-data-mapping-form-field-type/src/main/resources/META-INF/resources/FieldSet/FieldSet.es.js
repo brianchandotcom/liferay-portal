@@ -72,6 +72,7 @@ const FieldSet = ({
 			repeatable={collapsible ? false : repeatable}
 			required={false}
 			showLabel={false}
+			tip={null}
 			type={type}
 		>
 			<div className="ddm-field-types-fieldset__nested">

@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalEnvironmentJob;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.util.HashMap;
@@ -61,7 +62,11 @@ public class TestClassGroupFactory {
 
 		BatchTestClassGroup batchTestClassGroup = null;
 
-		if (job instanceof PortalTestClassJob) {
+		if (job instanceof PortalEnvironmentJob) {
+			batchTestClassGroup = new EnvironmentFunctionalBatchTestClassGroup(
+				batchName, (PortalEnvironmentJob)job);
+		}
+		else if (job instanceof PortalTestClassJob) {
 			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
 			if (batchName.contains("cucumber-")) {
@@ -136,6 +141,13 @@ public class TestClassGroupFactory {
 
 	public static SegmentTestClassGroup newSegmentTestClassGroup(
 		BatchTestClassGroup batchTestClassGroup) {
+
+		if (batchTestClassGroup instanceof
+				EnvironmentFunctionalBatchTestClassGroup) {
+
+			return new EnvironmentFunctionalSegmentTestClassGroup(
+				(EnvironmentFunctionalBatchTestClassGroup)batchTestClassGroup);
+		}
 
 		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
 			return new FunctionalSegmentTestClassGroup(

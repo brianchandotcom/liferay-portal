@@ -133,28 +133,12 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testAddDBPartition() throws Exception {
-		CurrentConnection defaultCurrentConnection =
-			CurrentConnectionUtil.getCurrentConnection();
+		_addDBPartition();
 
-		try {
-			CurrentConnection currentConnection = dataSource -> _connection;
-
-			ReflectionTestUtil.setFieldValue(
-				CurrentConnectionUtil.class, "_currentConnection",
-				currentConnection);
-
-			DBPartitionUtil.addDBPartition(_COMPANY_ID);
-
-			try (Statement statement = _connection.createStatement()) {
-				statement.execute(
-					"select 1 from " + _getSchemaName(_COMPANY_ID) +
-						".CompanyInfo");
-			}
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				CurrentConnectionUtil.class, "_currentConnection",
-				defaultCurrentConnection);
+		try (Statement statement = _connection.createStatement()) {
+			statement.execute(
+				"select 1 from " + _getSchemaName(_COMPANY_ID) +
+					".CompanyInfo");
 		}
 	}
 
@@ -219,6 +203,26 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 
 		return _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;
+	}
+
+	private void _addDBPartition() throws Exception {
+		CurrentConnection defaultCurrentConnection =
+			CurrentConnectionUtil.getCurrentConnection();
+
+		try {
+			CurrentConnection currentConnection = dataSource -> _connection;
+
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				currentConnection);
+
+			DBPartitionUtil.addDBPartition(_COMPANY_ID);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				defaultCurrentConnection);
+		}
 	}
 
 	private static final long _COMPANY_ID = 1L;

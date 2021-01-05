@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
@@ -198,8 +197,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	private static String _getSchemaName(long companyId) {
 		if (_dbPartitionEnabled) {
-			return PropsUtil.get("database.partition.schema.name.prefix") +
-				companyId;
+			return (String)ReflectionTestUtil.getFieldValue(
+				DBPartitionUtil.class,
+				"_DATABASE_PARTITION_SCHEMA_NAME_PREFIX") + companyId;
 		}
 
 		return _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;

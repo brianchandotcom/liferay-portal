@@ -153,12 +153,16 @@ public class AssetCategoryStagedModelDataHandler
 				category.getCategoryId());
 
 		for (AssetCategoryProperty categoryProperty : categoryProperties) {
-			Element propertyElement = categoryElement.addElement("property");
+			if (!_propertyExists(categoryElement, categoryProperty)) {
+				Element propertyElement = categoryElement.addElement(
+					"property");
 
-			propertyElement.addAttribute(
-				"userUuid", categoryProperty.getUserUuid());
-			propertyElement.addAttribute("key", categoryProperty.getKey());
-			propertyElement.addAttribute("value", categoryProperty.getValue());
+				propertyElement.addAttribute(
+					"userUuid", categoryProperty.getUserUuid());
+				propertyElement.addAttribute("key", categoryProperty.getKey());
+				propertyElement.addAttribute(
+					"value", categoryProperty.getValue());
+			}
 		}
 
 		String categoryPath = ExportImportPathUtil.getModelPath(category);
@@ -319,6 +323,20 @@ public class AssetCategoryStagedModelDataHandler
 		}
 
 		return titleMap;
+	}
+
+	private boolean _propertyExists(
+		Element categoryElement, AssetCategoryProperty categoryProperty) {
+
+		String key = categoryProperty.getKey();
+
+		for (Element propertyElement : categoryElement.elements("property")) {
+			if (key.equals(propertyElement.attributeValue("key"))) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Reference

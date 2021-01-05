@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.asset;
+package com.liferay.asset.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 

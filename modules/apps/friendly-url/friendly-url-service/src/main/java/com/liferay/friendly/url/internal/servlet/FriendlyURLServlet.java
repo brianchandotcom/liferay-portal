@@ -166,6 +166,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		Map<String, String[]> params = httpServletRequest.getParameterMap();
 
+		Layout defaultLayout = null;
+
 		try {
 			LayoutFriendlyURLSeparatorComposite
 				layoutFriendlyURLSeparatorComposite =
@@ -174,6 +176,8 @@ public class FriendlyURLServlet extends HttpServlet {
 						requestContext);
 
 			Layout layout = layoutFriendlyURLSeparatorComposite.getLayout();
+
+			defaultLayout = layout;
 
 			httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
@@ -257,17 +261,30 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 		}
 		catch (NoSuchLayoutException noSuchLayoutException) {
-			List<Layout> layouts = layoutLocalService.getLayouts(
-				group.getGroupId(), _private,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			Layout redirectLayout = null;
 
-			for (Layout layout : layouts) {
-				if (layout.matches(httpServletRequest, layoutFriendlyURL)) {
-					String redirect = portal.getLayoutActualURL(
-						layout, Portal.PATH_MAIN);
+			if (layoutFriendlyURL == null) {
+				redirectLayout = defaultLayout;
+			}
+			else {
+				List<Layout> layouts = layoutLocalService.getLayouts(
+					group.getGroupId(), _private,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-					return new Redirect(redirect);
+				for (Layout layout : layouts) {
+					if (layout.matches(httpServletRequest, layoutFriendlyURL)) {
+						redirectLayout = layout;
+
+						break;
+					}
 				}
+			}
+
+			if (redirectLayout != null) {
+				String redirect = portal.getLayoutActualURL(
+					redirectLayout, Portal.PATH_MAIN);
+
+				return new Redirect(redirect);
 			}
 
 			if (redirectNotFoundEntryLocalService != null) {

@@ -144,14 +144,14 @@ export const ImageSelectorSize = ({
 				</ClayForm.Group>
 			)}
 
-			{imageSize.width && (
+			{!!imageSize.width && (
 				<div className="small text-secondary">
 					<b>{Liferay.Language.get('width')}:</b>
 					<span className="ml-1">{imageSize.width}px</span>
 				</div>
 			)}
 
-			{imageSize.size && (
+			{!!imageSize.size && (
 				<div className="small text-secondary">
 					<b>{Liferay.Language.get('file-size')}:</b>
 					<span className="ml-1">

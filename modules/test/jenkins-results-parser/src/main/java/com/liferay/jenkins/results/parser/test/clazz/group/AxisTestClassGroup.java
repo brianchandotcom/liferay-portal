@@ -41,6 +41,10 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 			String.valueOf(axisTestClassGroups.indexOf(this)));
 	}
 
+	public String getBatchJobName() {
+		return _batchTestClassGroup.getBatchJobName();
+	}
+
 	public String getBatchName() {
 		return _batchTestClassGroup.getBatchName();
 	}
@@ -55,6 +59,14 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return _batchTestClassGroup.getMinimumSlaveRAM();
+	}
+
+	public String getSegmentName() {
+		if (_segmentTestClassGroup != null) {
+			return _segmentTestClassGroup.getSegmentName();
+		}
+
+		return null;
 	}
 
 	public SegmentTestClassGroup getSegmentTestClassGroup() {

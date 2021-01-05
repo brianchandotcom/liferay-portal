@@ -303,10 +303,6 @@ public abstract class BaseJob implements Job {
 	protected List<BatchTestClassGroup> getBatchTestClassGroups(
 		Set<String> rawBatchNames) {
 
-		if (_batchTestClassGroups != null) {
-			return _batchTestClassGroups;
-		}
-
 		if ((rawBatchNames == null) || rawBatchNames.isEmpty()) {
 			return new ArrayList<>();
 		}
@@ -389,20 +385,21 @@ public abstract class BaseJob implements Job {
 		ParallelExecutor<BatchTestClassGroup> parallelExecutor =
 			new ParallelExecutor<>(callables, _executorService);
 
-		_batchTestClassGroups = parallelExecutor.execute();
+		List<BatchTestClassGroup> batchTestClassGroups =
+			parallelExecutor.execute();
 
-		_batchTestClassGroups.removeAll(Collections.singleton(null));
+		batchTestClassGroups.removeAll(Collections.singleton(null));
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Completed creating ",
-				String.valueOf(_batchTestClassGroups.size()),
+				String.valueOf(batchTestClassGroups.size()),
 				" batch test class groups in ",
 				JenkinsResultsParserUtil.toDurationString(
 					System.currentTimeMillis() - start),
 				" at ", JenkinsResultsParserUtil.toDateString(new Date())));
 
-		return _batchTestClassGroups;
+		return batchTestClassGroups;
 	}
 
 	protected Set<String> getFilteredBatchNames(Set<String> rawBatchNames) {
@@ -514,7 +511,6 @@ public abstract class BaseJob implements Job {
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
-	private List<BatchTestClassGroup> _batchTestClassGroups;
 	private final BuildProfile _buildProfile;
 	private final String _jobName;
 	private final Properties _jobProperties = new Properties();

@@ -158,7 +158,7 @@ to the distributable Zip/Tar. The default value is `false`.
 Set this property to `yarn` to build Node.js-style projects using Yarn. The
 default value is `npm`.
 
-#### liferay.workspace.plugins.sdk.di
+#### liferay.workspace.plugins.sdk.dir
 Set the folder that contains the Plugins SDK environment. The default value is
 `plugins-sdk`.
 
@@ -170,8 +170,8 @@ Set the folder that contains Node.js-style theme projects. The default value is
 Set this to true to build the theme projects using the Liferay Portal Tools
 Theme Builder. The default value is `false`.
 
-#### microsoft.translator.subscription.key=
-Set the subscription key for Microsoft Translation integration. This is service  
+#### microsoft.translator.subscription.key
+Set the subscription key for Microsoft Translation integration. This is service
 is used to provide automatic translations for `buildLang`.
 
 #### target.platform.index.sources

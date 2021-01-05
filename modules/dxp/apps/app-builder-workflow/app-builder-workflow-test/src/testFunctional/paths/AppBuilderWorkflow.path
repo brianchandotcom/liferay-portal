@@ -194,6 +194,11 @@
 	<td>//button[contains(text(),'Continue')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CUSTOM_OBJECT_CANCEL</td>
+	<td>//div[contains(@class, "modal-item-last")]//button[contains(text(),'Cancel')]</td>
+	<td></td>
+</tr>
 <!--APP_RUNNING-->
 <tr>
 	<td>SELECT_NEW_ASSIGNEE_BUTTON</td>

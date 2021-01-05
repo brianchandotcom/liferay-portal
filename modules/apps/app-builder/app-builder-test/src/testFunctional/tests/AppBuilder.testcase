@@ -2061,6 +2061,84 @@ definition {
 		FormViewBuilder.validateObjectFieldName(fieldName = "Text");
 	}
 
+	@description = "Automate LPS-122695 Use fieldsets with translations in Form view Object"
+	@priority = "5"
+	test ReusedTranslatedFieldset {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setUpFieldSet(
+			fieldLabel = "Name EN",
+			fieldSetName = "Field Set English",
+			fieldType = "Text");
+
+		FormViewBuilder.editFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Edit");
+
+		FormViewBuilder.switchLocalizationForFieldSets(
+			localizationName = "pt-BR",
+			statusName = "Not Translated",
+			symbolName = "en-US");
+
+		FormViewBuilder.gotoFirstFieldset(fieldLabel = "Name EN");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Name BR");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Field Set Brazil");
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set English");
+
+		FormViewBuilder.fieldEllipsisAction(
+			fieldLabel = "Field Set Brazil",
+			selectAction = "Remove");
+
+		FormViewBuilder.addObjectByDragAndDrop(fieldType = "Field Set Brazil");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Name BR");
+
+		FormViewBuilder.validateObjectFieldName(fieldName = "Field Set Brazil");
+
+		FormViewBuilder.setName(formViewName = "Translated Form");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 2",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set English");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Name BR");
+
+		FormViewBuilder.validateObjectFieldName(fieldName = "Field Set Brazil");
+
+		FormViewBuilder.setName(formViewName = "Reused Object Form");
+
+		FormViewBuilder.save();
+	}
+
 	@description = "Search for a column(field) in the columns list in Table View Builder"
 	@priority = "5"
 	test SearchColumnListInTableViewBuilder {

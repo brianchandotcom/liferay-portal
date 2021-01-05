@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE</td>
+	<td>//p[normalize-space(text())='${key_title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_DISPLAY_FRAGMENT_BODY</td>
 	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'fragment-content') and contains(.,'${key_entryContent}')]</td>
 	<td></td>

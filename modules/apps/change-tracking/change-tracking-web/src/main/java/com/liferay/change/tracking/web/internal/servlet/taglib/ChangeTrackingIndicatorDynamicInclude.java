@@ -123,8 +123,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 								httpServletRequest,
 								StringBundler.concat(
 									_servletContext.getContextPath(),
-									"/dynamic_include/ChangeTrackingIndicator.",
-									"css")));
+									"/publications/css",
+									"/ChangeTrackingIndicator.css")));
 						writer.write(
 							"\" rel=\"stylesheet\" type=\"text/css\" />");
 					}
@@ -163,7 +163,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"IndicatorComponent";
 			String module =
 				_npmResolver.resolveModuleName("change-tracking-web") +
-					"/dynamic_include/ChangeTrackingIndicator";
+					"/publications/js/ChangeTrackingIndicator";
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(module, componentId),

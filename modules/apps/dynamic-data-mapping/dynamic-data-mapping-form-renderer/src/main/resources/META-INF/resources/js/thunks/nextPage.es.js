@@ -21,6 +21,7 @@ export default function nextPage({
 	defaultLanguageId,
 	editingLanguageId,
 	formId,
+	groupId,
 	pages,
 	portletNamespace,
 	rules,
@@ -29,6 +30,7 @@ export default function nextPage({
 		evaluate(null, {
 			defaultLanguageId,
 			editingLanguageId,
+			groupId,
 			pages,
 			portletNamespace,
 			rules,

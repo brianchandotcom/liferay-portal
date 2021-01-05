@@ -40,6 +40,7 @@ const Form = React.forwardRef(
 			defaultLanguageId,
 			description,
 			editingLanguageId,
+			groupId,
 			name,
 			pages,
 			paginationMode,
@@ -61,6 +62,7 @@ const Form = React.forwardRef(
 						activePage,
 						defaultLanguageId,
 						editingLanguageId,
+						groupId,
 						pages,
 						portletNamespace,
 						rules,
@@ -71,6 +73,7 @@ const Form = React.forwardRef(
 				activePage,
 				defaultLanguageId,
 				editingLanguageId,
+				groupId,
 				pages,
 				portletNamespace,
 				rules,
@@ -105,6 +108,7 @@ const Form = React.forwardRef(
 				evaluate(null, {
 					defaultLanguageId,
 					editingLanguageId,
+					groupId,
 					pages,
 					portletNamespace,
 					rules,
@@ -214,6 +218,7 @@ const Form = React.forwardRef(
 				defaultLanguageId={defaultLanguageId}
 				description={description}
 				editingLanguageId={editingLanguageId}
+				groupId={groupId}
 				name={name}
 				pages={pages}
 				paginationMode={paginationMode}

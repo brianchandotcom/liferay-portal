@@ -20,6 +20,7 @@ export default function previousPage({
 	defaultLanguageId,
 	editingLanguageId,
 	formId,
+	groupId,
 	pages,
 	portletNamespace,
 	rules,
@@ -28,6 +29,7 @@ export default function previousPage({
 		evaluate(null, {
 			defaultLanguageId,
 			editingLanguageId,
+			groupId,
 			pages,
 			portletNamespace,
 			rules,

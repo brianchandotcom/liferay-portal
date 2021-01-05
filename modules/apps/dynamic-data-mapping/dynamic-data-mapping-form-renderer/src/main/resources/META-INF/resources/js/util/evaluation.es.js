@@ -109,6 +109,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 	const {
 		defaultLanguageId,
 		editingLanguageId,
+		groupId,
 		pages,
 		portletNamespace,
 	} = evaluatorContext;
@@ -128,7 +129,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 			portletNamespace,
 			serializedFormContext: JSON.stringify({
 				...evaluatorContext,
-				groupId: themeDisplay.getScopeGroupId(),
+				groupId: groupId ? groupId : themeDisplay.getScopeGroupId(),
 				portletNamespace,
 			}),
 			trigger: fieldName,

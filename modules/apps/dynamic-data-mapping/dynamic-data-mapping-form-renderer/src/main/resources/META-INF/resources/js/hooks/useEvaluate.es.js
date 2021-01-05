@@ -25,6 +25,7 @@ export const useEvaluate = (thunk) => {
 	const {
 		defaultLanguageId,
 		editingLanguageId,
+		groupId,
 		pages,
 		portletNamespace,
 		rules,
@@ -35,6 +36,7 @@ export const useEvaluate = (thunk) => {
 			thunk({
 				defaultLanguageId,
 				editingLanguageId,
+				groupId,
 				pages,
 				portletNamespace,
 				rules,
@@ -43,6 +45,7 @@ export const useEvaluate = (thunk) => {
 		[
 			defaultLanguageId,
 			editingLanguageId,
+			groupId,
 			pages,
 			portletNamespace,
 			rules,

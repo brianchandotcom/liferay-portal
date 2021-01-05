@@ -1177,7 +1177,7 @@ definition {
 
 		takeScreenshot();
 
-		Click(locator1 = "Link#REFRESH_COUNTS");
+		Click.javaScriptClick(locator1 = "Link#REFRESH_COUNTS");
 
 		Pause(locator1 = "3000");
 

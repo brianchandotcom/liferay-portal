@@ -711,10 +711,17 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 							new ArrayList<>();
 
 						for (int i = 0; i < responseJSONArray.length(); i++) {
-							spiraTestCaseRuns.add(
+							SpiraTestCaseRun spiraTestCaseRun =
 								new SpiraTestCaseRun(
 									spiraProject,
-									responseJSONArray.getJSONObject(i)));
+									responseJSONArray.getJSONObject(i));
+
+							spiraTestCaseRuns.add(spiraTestCaseRun);
+
+							System.out.println(
+								JenkinsResultsParserUtil.combine(
+									spiraTestCaseRun.getName(), " ",
+									spiraTestCaseRun.getURL()));
 						}
 
 						return spiraTestCaseRuns;

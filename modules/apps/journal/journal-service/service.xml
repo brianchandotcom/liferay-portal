@@ -249,6 +249,10 @@
 		<finder name="ArticlePK" return-type="Collection">
 			<finder-column name="articlePK" />
 		</finder>
+		<finder name="C_A" return-type="JournalArticleLocalization">
+			<finder-column name="companyId" />
+			<finder-column name="articlePK" />
+		</finder>
 		<finder name="A_L" return-type="JournalArticleLocalization" unique="true">
 			<finder-column name="articlePK" />
 			<finder-column name="languageId" />

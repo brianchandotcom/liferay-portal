@@ -42,9 +42,9 @@ const ChangeTrackingIndicator = ({
 	const [column, setColumn] = useState(SORT_COLUMN_MODIFIED_DATE);
 	const [delta, setDelta] = useState(20);
 	const [fetchData, setFetchData] = useState(null);
-	const [keywords, setKeywords] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [page, setPage] = useState(1);
+	const [resultsKeywords, setResultsKeywords] = useState('');
 	const [searchTerms, setSearchTerms] = useState('');
 	const [showMobile, setShowMobile] = useState(false);
 	const [showModal, setShowModal] = useState(false);
@@ -76,8 +76,8 @@ const ChangeTrackingIndicator = ({
 			setColumn(SORT_COLUMN_MODIFIED_DATE);
 			setDelta(20);
 			setFetchData(null);
-			setKeywords(null);
 			setPage(1);
+			setResultsKeywords('');
 			setSearchTerms('');
 			setShowMobile(false);
 			setLoading(false);
@@ -89,10 +89,6 @@ const ChangeTrackingIndicator = ({
 			const portletURL = Liferay.PortletURL.createURL(
 				getSelectPublicationsURL
 			);
-
-			if (keywords) {
-				portletURL.setParameter('keywords', keywords);
-			}
 
 			setLoading(true);
 
@@ -121,7 +117,7 @@ const ChangeTrackingIndicator = ({
 					setLoading(false);
 				});
 		});
-	}, [getSelectPublicationsURL, keywords, showModal]);
+	}, [getSelectPublicationsURL, showModal]);
 
 	const filterEntries = (entries) => {
 		const filteredEntries = entries.slice(0);
@@ -223,6 +219,47 @@ const ChangeTrackingIndicator = ({
 	const handleDeltaChange = (delta) => {
 		setDelta(delta);
 		setPage(1);
+	};
+
+	const onSubmit = (keywords) => {
+		setResultsKeywords(keywords);
+
+		AUI().use('liferay-portlet-url', () => {
+			const portletURL = Liferay.PortletURL.createURL(
+				getSelectPublicationsURL
+			);
+
+			if (keywords) {
+				portletURL.setParameter('keywords', keywords);
+			}
+
+			setLoading(true);
+
+			fetch(portletURL.toString())
+				.then((response) => response.json())
+				.then((json) => {
+					if (!json.entries) {
+						setFetchData({
+							errorMessage: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						});
+
+						return;
+					}
+
+					setFetchData(json);
+					setLoading(false);
+				})
+				.catch((response) => {
+					setFetchData({
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					});
+					setLoading(false);
+				});
+		});
 	};
 
 	const renderList = () => {
@@ -442,7 +479,7 @@ const ChangeTrackingIndicator = ({
 					onSubmit={(event) => {
 						event.preventDefault();
 
-						setKeywords(searchTerms);
+						onSubmit(searchTerms.trim());
 					}}
 					showMobile={showMobile}
 				>
@@ -492,7 +529,7 @@ const ChangeTrackingIndicator = ({
 	};
 
 	const renderResultsBar = () => {
-		if (!fetchData || !fetchData.entries || !keywords) {
+		if (!fetchData || !fetchData.entries || !resultsKeywords) {
 			return '';
 		}
 
@@ -503,29 +540,31 @@ const ChangeTrackingIndicator = ({
 		}
 
 		return (
-			<ClayResultsBar className="results-bar">
-				<ClayResultsBar.Item expand>
-					<span className="component-text text-truncate-inline">
-						<span className="text-truncate">
-							{format(key, [fetchData.entries.length]) + ' '}
+			<div className="results-bar">
+				<ClayResultsBar>
+					<ClayResultsBar.Item expand>
+						<span className="component-text text-truncate-inline">
+							<span className="text-truncate">
+								{format(key, [fetchData.entries.length]) + ' '}
 
-							<strong>{keywords}</strong>
+								<strong>{resultsKeywords}</strong>
+							</span>
 						</span>
-					</span>
-				</ClayResultsBar.Item>
-				<ClayResultsBar.Item>
-					<ClayButton
-						className="component-link tbar-link"
-						displayType="unstyled"
-						onClick={() => {
-							setKeywords('');
-							setSearchTerms('');
-						}}
-					>
-						{Liferay.Language.get('clear')}
-					</ClayButton>
-				</ClayResultsBar.Item>
-			</ClayResultsBar>
+					</ClayResultsBar.Item>
+					<ClayResultsBar.Item>
+						<ClayButton
+							className="component-link tbar-link"
+							displayType="unstyled"
+							onClick={() => {
+								onSubmit('');
+								setSearchTerms('');
+							}}
+						>
+							{Liferay.Language.get('clear')}
+						</ClayButton>
+					</ClayResultsBar.Item>
+				</ClayResultsBar>
+			</div>
 		);
 	};
 

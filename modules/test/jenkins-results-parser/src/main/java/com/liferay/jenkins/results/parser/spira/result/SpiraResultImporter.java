@@ -231,6 +231,8 @@ public class SpiraResultImporter {
 
 		_checkoutPortalBaseBranch();
 
+		_setupProfileDXP();
+
 		_callPrepareTCK();
 
 		_checkoutOSBFaroBranch();
@@ -830,6 +832,44 @@ public class SpiraResultImporter {
 		}
 
 		return sb.toString();
+	}
+
+	private void _setupProfileDXP() {
+		boolean setupProfileDXP = false;
+
+		TopLevelBuild topLevelBuild = _spiraBuildResult.getTopLevelBuild();
+
+		String branchName = topLevelBuild.getBranchName();
+		String jobName = topLevelBuild.getJobName();
+
+		if (!branchName.startsWith("ee-") && !branchName.endsWith("-private") &&
+			jobName.contains("environment")) {
+
+			setupProfileDXP = true;
+		}
+
+		String portalBuildProfile = topLevelBuild.getParameterValue(
+			"TEST_PORTAL_BUILD_PROFILE");
+
+		if ((portalBuildProfile != null) && portalBuildProfile.equals("dxp")) {
+			setupProfileDXP = true;
+		}
+
+		if (!setupProfileDXP) {
+			return;
+		}
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		try {
+			AntUtil.callTarget(
+				portalGitWorkingDirectory.getWorkingDirectory(), "build.xml",
+				"setup-profile-dxp");
+		}
+		catch (AntException antException) {
+			throw new RuntimeException(antException);
+		}
 	}
 
 	private void _updateCurrentBuildDescription() {

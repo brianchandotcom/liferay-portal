@@ -715,6 +715,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		DocumentFolder randomPatchDocumentFolder = randomPatchDocumentFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder patchDocumentFolder =
 			documentFolderResource.patchDocumentFolder(
 				postDocumentFolder.getId(), randomPatchDocumentFolder);

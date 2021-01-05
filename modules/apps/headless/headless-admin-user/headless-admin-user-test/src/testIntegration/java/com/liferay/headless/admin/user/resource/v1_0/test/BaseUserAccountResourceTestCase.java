@@ -1294,6 +1294,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		UserAccount randomPatchUserAccount = randomPatchUserAccount();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount patchUserAccount = userAccountResource.patchUserAccount(
 			postUserAccount.getId(), randomPatchUserAccount);
 

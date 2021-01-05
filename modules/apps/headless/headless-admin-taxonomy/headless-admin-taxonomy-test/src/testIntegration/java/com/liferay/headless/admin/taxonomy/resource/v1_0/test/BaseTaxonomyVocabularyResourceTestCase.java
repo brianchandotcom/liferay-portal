@@ -1138,6 +1138,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		TaxonomyVocabulary randomPatchTaxonomyVocabulary =
 			randomPatchTaxonomyVocabulary();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyVocabulary patchTaxonomyVocabulary =
 			taxonomyVocabularyResource.patchTaxonomyVocabulary(
 				postTaxonomyVocabulary.getId(), randomPatchTaxonomyVocabulary);

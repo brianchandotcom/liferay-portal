@@ -2077,6 +2077,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContent randomPatchStructuredContent =
 			randomPatchStructuredContent();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent patchStructuredContent =
 			structuredContentResource.patchStructuredContent(
 				postStructuredContent.getId(), randomPatchStructuredContent);

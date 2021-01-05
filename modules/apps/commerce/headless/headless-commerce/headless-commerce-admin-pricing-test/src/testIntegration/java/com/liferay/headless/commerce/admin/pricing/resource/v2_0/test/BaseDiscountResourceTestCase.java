@@ -619,6 +619,7 @@ public abstract class BaseDiscountResourceTestCase {
 
 		Discount randomPatchDiscount = randomPatchDiscount();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Discount patchDiscount =
 			discountResource.patchDiscountByExternalReferenceCode(
 				postDiscount.getExternalReferenceCode(), randomPatchDiscount);
@@ -763,6 +764,7 @@ public abstract class BaseDiscountResourceTestCase {
 
 		Discount randomPatchDiscount = randomPatchDiscount();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Discount patchDiscount = discountResource.patchDiscount(
 			postDiscount.getId(), randomPatchDiscount);
 

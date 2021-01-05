@@ -325,6 +325,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		CartComment randomPatchCartComment = randomPatchCartComment();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartComment patchCartComment = cartCommentResource.patchCartComment(
 			postCartComment.getId(), randomPatchCartComment);
 

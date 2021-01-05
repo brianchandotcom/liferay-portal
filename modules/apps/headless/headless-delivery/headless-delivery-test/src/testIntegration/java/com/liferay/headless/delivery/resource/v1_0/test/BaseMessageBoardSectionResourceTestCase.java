@@ -353,6 +353,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		MessageBoardSection randomPatchMessageBoardSection =
 			randomPatchMessageBoardSection();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardSection patchMessageBoardSection =
 			messageBoardSectionResource.patchMessageBoardSection(
 				postMessageBoardSection.getId(),

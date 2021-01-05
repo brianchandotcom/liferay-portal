@@ -605,6 +605,7 @@ public abstract class BaseChannelResourceTestCase {
 
 		Channel randomPatchChannel = randomPatchChannel();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Channel patchChannel = channelResource.patchChannel(
 			postChannel.getId(), randomPatchChannel);
 

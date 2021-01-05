@@ -336,6 +336,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 		DiscountRule randomPatchDiscountRule = randomPatchDiscountRule();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountRule patchDiscountRule = discountRuleResource.patchDiscountRule(
 			postDiscountRule.getId(), randomPatchDiscountRule);
 

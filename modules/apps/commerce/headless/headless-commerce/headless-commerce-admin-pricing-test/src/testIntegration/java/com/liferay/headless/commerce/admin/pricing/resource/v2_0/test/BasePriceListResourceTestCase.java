@@ -626,6 +626,7 @@ public abstract class BasePriceListResourceTestCase {
 
 		PriceList randomPatchPriceList = randomPatchPriceList();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceList patchPriceList =
 			priceListResource.patchPriceListByExternalReferenceCode(
 				postPriceList.getExternalReferenceCode(), randomPatchPriceList);
@@ -771,6 +772,7 @@ public abstract class BasePriceListResourceTestCase {
 
 		PriceList randomPatchPriceList = randomPatchPriceList();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceList patchPriceList = priceListResource.patchPriceList(
 			postPriceList.getId(), randomPatchPriceList);
 

@@ -606,6 +606,7 @@ public abstract class BaseAccountResourceTestCase {
 
 		Account randomPatchAccount = randomPatchAccount();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Account patchAccount =
 			accountResource.patchAccountByExternalReferenceCode(
 				postAccount.getExternalReferenceCode(), randomPatchAccount);
@@ -774,6 +775,7 @@ public abstract class BaseAccountResourceTestCase {
 
 		Account randomPatchAccount = randomPatchAccount();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Account patchAccount = accountResource.patchAccount(
 			postAccount.getId(), randomPatchAccount);
 

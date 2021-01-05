@@ -342,6 +342,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		BlogPosting randomPatchBlogPosting = randomPatchBlogPosting();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting patchBlogPosting = blogPostingResource.patchBlogPosting(
 			postBlogPosting.getId(), randomPatchBlogPosting);
 

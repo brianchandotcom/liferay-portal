@@ -364,6 +364,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticle randomPatchKnowledgeBaseArticle =
 			randomPatchKnowledgeBaseArticle();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle patchKnowledgeBaseArticle =
 			knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
 				postKnowledgeBaseArticle.getId(),

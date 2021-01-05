@@ -867,6 +867,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		DataRecord randomPatchDataRecord = randomPatchDataRecord();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecord patchDataRecord = dataRecordResource.patchDataRecord(
 			postDataRecord.getId(), randomPatchDataRecord);
 

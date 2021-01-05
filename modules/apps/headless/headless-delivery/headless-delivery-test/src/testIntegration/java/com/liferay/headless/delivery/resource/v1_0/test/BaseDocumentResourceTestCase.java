@@ -1018,6 +1018,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Map<String, File> multipartFiles = getMultipartFiles();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document patchDocument = documentResource.patchDocument(
 			postDocument.getId(), randomPatchDocument, multipartFiles);
 

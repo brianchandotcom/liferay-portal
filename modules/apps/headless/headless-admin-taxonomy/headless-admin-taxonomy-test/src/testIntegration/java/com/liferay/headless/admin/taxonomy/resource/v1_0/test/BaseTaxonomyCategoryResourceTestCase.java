@@ -815,6 +815,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		TaxonomyCategory randomPatchTaxonomyCategory =
 			randomPatchTaxonomyCategory();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory patchTaxonomyCategory =
 			taxonomyCategoryResource.patchTaxonomyCategory(
 				postTaxonomyCategory.getId(), randomPatchTaxonomyCategory);

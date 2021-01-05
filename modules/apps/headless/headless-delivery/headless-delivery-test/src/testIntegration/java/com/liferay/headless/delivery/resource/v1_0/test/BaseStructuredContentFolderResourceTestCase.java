@@ -1601,6 +1601,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		StructuredContentFolder randomPatchStructuredContentFolder =
 			randomPatchStructuredContentFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContentFolder patchStructuredContentFolder =
 			structuredContentFolderResource.patchStructuredContentFolder(
 				postStructuredContentFolder.getId(),

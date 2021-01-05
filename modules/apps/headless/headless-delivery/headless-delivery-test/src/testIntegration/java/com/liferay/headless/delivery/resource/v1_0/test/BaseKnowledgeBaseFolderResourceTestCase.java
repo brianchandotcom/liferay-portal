@@ -347,6 +347,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder randomPatchKnowledgeBaseFolder =
 			randomPatchKnowledgeBaseFolder();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder patchKnowledgeBaseFolder =
 			knowledgeBaseFolderResource.patchKnowledgeBaseFolder(
 				postKnowledgeBaseFolder.getId(),

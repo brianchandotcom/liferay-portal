@@ -321,6 +321,7 @@ class JournalPortlet extends PortletBase {
 
 JournalPortlet.STATE = {
 	_selectedLanguageId: Config.internal().string(),
+	articleId: Config.string(),
 	availableLocales: Config.array(),
 	contentTitle: Config.string(),
 	defaultLanguageId: Config.string(),

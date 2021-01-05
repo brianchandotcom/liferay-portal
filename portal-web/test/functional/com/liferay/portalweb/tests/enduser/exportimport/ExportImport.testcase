@@ -1799,17 +1799,11 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		var templateScript = '''
-		<#assign webContentData = jsonFactoryUtil.createJSONObject(WebContent.getData())/>
-		${webContentData}
-		''';
-
 		WebContentTemplates.addCP(
 			structureName = "Structure Name B",
 			templateDescription = "Template Description B",
 			templateFieldNames = "Web Content",
-			templateName = "Template Name B",
-			templateScript = "${templateScript}");
+			templateName = "Template Name B");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
@@ -1867,7 +1861,9 @@ definition {
 			pageName = "Page B",
 			siteName = "Site Name");
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Title 1");
+		AssertTextEquals.assertPartialText(
+			locator1 = "WCD#WEB_CONTENT_TITLE",
+			value1 = "WC WebContent Title 2");
 
 		LAR.exportSiteCP(siteScopeName = "Site Name");
 

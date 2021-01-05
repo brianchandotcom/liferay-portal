@@ -308,6 +308,76 @@ public class JournalArticleLocalizationUtil {
 	}
 
 	/**
+	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @return the matching journal article localization
+	 * @throws NoSuchArticleLocalizationException if a matching journal article localization could not be found
+	 */
+	public static JournalArticleLocalization findByC_A(
+			long companyId, long articlePK)
+		throws com.liferay.journal.exception.
+			NoSuchArticleLocalizationException {
+
+		return getPersistence().findByC_A(companyId, articlePK);
+	}
+
+	/**
+	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @return the matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
+	 */
+	public static JournalArticleLocalization fetchByC_A(
+		long companyId, long articlePK) {
+
+		return getPersistence().fetchByC_A(companyId, articlePK);
+	}
+
+	/**
+	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
+	 */
+	public static JournalArticleLocalization fetchByC_A(
+		long companyId, long articlePK, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_A(
+			companyId, articlePK, useFinderCache);
+	}
+
+	/**
+	 * Removes the journal article localization where companyId = &#63; and articlePK = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @return the journal article localization that was removed
+	 */
+	public static JournalArticleLocalization removeByC_A(
+			long companyId, long articlePK)
+		throws com.liferay.journal.exception.
+			NoSuchArticleLocalizationException {
+
+		return getPersistence().removeByC_A(companyId, articlePK);
+	}
+
+	/**
+	 * Returns the number of journal article localizations where companyId = &#63; and articlePK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @return the number of matching journal article localizations
+	 */
+	public static int countByC_A(long companyId, long articlePK) {
+		return getPersistence().countByC_A(companyId, articlePK);
+	}
+
+	/**
 	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
 	 *
 	 * @param articlePK the article pk

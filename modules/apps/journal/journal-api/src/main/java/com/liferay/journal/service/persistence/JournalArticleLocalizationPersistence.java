@@ -188,6 +188,58 @@ public interface JournalArticleLocalizationPersistence
 	public int countByArticlePK(long articlePK);
 
 	/**
+	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @return the matching journal article localization
+	 * @throws NoSuchArticleLocalizationException if a matching journal article localization could not be found
+	 */
+	public JournalArticleLocalization findByC_A(long companyId, long articlePK)
+		throws NoSuchArticleLocalizationException;
+
+	/**
+	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @return the matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
+	 */
+	public JournalArticleLocalization fetchByC_A(
+		long companyId, long articlePK);
+
+	/**
+	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
+	 */
+	public JournalArticleLocalization fetchByC_A(
+		long companyId, long articlePK, boolean useFinderCache);
+
+	/**
+	 * Removes the journal article localization where companyId = &#63; and articlePK = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @return the journal article localization that was removed
+	 */
+	public JournalArticleLocalization removeByC_A(
+			long companyId, long articlePK)
+		throws NoSuchArticleLocalizationException;
+
+	/**
+	 * Returns the number of journal article localizations where companyId = &#63; and articlePK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param articlePK the article pk
+	 * @return the number of matching journal article localizations
+	 */
+	public int countByC_A(long companyId, long articlePK);
+
+	/**
 	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
 	 *
 	 * @param articlePK the article pk

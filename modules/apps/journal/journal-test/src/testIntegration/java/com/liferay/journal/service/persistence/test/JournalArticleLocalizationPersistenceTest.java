@@ -183,6 +183,14 @@ public class JournalArticleLocalizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_A() throws Exception {
+		_persistence.countByC_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_A(0L, 0L);
+	}
+
+	@Test
 	public void testCountByA_L() throws Exception {
 		_persistence.countByA_L(RandomTestUtil.nextLong(), "");
 
@@ -517,6 +525,17 @@ public class JournalArticleLocalizationPersistenceTest {
 
 	private void _assertOriginalValues(
 		JournalArticleLocalization journalArticleLocalization) {
+
+		Assert.assertEquals(
+			Long.valueOf(journalArticleLocalization.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				journalArticleLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			Long.valueOf(journalArticleLocalization.getArticlePK()),
+			ReflectionTestUtil.<Long>invoke(
+				journalArticleLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "articlePK"));
 
 		Assert.assertEquals(
 			Long.valueOf(journalArticleLocalization.getArticlePK()),

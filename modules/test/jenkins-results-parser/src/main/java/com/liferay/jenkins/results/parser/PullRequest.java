@@ -51,16 +51,6 @@ public class PullRequest {
 	}
 
 	public PullRequest(String gitHubURL) {
-		this(gitHubURL, _NAME_TEST_SUITE_DEFAULT);
-	}
-
-	public PullRequest(String gitHubURL, String testSuiteName) {
-		if ((testSuiteName == null) || testSuiteName.isEmpty()) {
-			testSuiteName = _NAME_TEST_SUITE_DEFAULT;
-		}
-
-		_testSuiteName = testSuiteName;
-
 		Matcher matcher = _gitHubPullRequestURLPattern.matcher(gitHubURL);
 
 		if (!matcher.find()) {
@@ -414,10 +404,6 @@ public class PullRequest {
 		return _jsonObject.getString("state");
 	}
 
-	public TestSuiteStatus getTestSuiteStatus() {
-		return _testSuiteStatus;
-	}
-
 	public String getTitle() {
 		return _jsonObject.getString("title");
 	}
@@ -598,28 +584,30 @@ public class PullRequest {
 		_autoCloseCommentAvailable = null;
 	}
 
-	public void setTestSuiteStatus(TestSuiteStatus testSuiteStatus) {
-		setTestSuiteStatus(testSuiteStatus, null);
+	public void setTestSuiteStatus(
+		String testSuiteName, TestSuiteStatus testSuiteStatus) {
+
+		setTestSuiteStatus(testSuiteName, testSuiteStatus, null);
 	}
 
 	public void setTestSuiteStatus(
-		TestSuiteStatus testSuiteStatus, String targetURL) {
+		String testSuiteName, TestSuiteStatus testSuiteStatus,
+		String targetURL) {
 
-		setTestSuiteStatus(testSuiteStatus, targetURL, null);
+		setTestSuiteStatus(testSuiteName, testSuiteStatus, targetURL, null);
 	}
 
 	public void setTestSuiteStatus(
-		TestSuiteStatus testSuiteStatus, String targetURL, String senderSHA) {
-
-		_testSuiteStatus = testSuiteStatus;
+		String testSuiteName, TestSuiteStatus testSuiteStatus, String targetURL,
+		String senderSHA) {
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("ci:test");
 
-		if (!_testSuiteName.equals(_NAME_TEST_SUITE_DEFAULT)) {
+		if (!testSuiteName.equals(_NAME_TEST_SUITE_DEFAULT)) {
 			sb.append(":");
-			sb.append(_testSuiteName);
+			sb.append(testSuiteName);
 		}
 
 		sb.append(" ");
@@ -680,17 +668,17 @@ public class PullRequest {
 
 		String context = _NAME_TEST_SUITE_DEFAULT;
 
-		if (!_testSuiteName.equals(_NAME_TEST_SUITE_DEFAULT)) {
-			context = "liferay/ci:test:" + _testSuiteName;
+		if (!testSuiteName.equals(_NAME_TEST_SUITE_DEFAULT)) {
+			context = "liferay/ci:test:" + testSuiteName;
 		}
 
 		sb = new StringBuilder();
 
 		sb.append("\"ci:test");
 
-		if (!_testSuiteName.equals(_NAME_TEST_SUITE_DEFAULT)) {
+		if (!testSuiteName.equals(_NAME_TEST_SUITE_DEFAULT)) {
 			sb.append(":");
-			sb.append(_testSuiteName);
+			sb.append(testSuiteName);
 		}
 
 		sb.append("\"");
@@ -875,15 +863,13 @@ public class PullRequest {
 	private List<String> _filenames = new ArrayList<>();
 	private List<GitHubRemoteGitCommit> _gitHubRemoteGitCommits;
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
-	private String _gitHubRemoteGitRepositoryName;
+	private final String _gitHubRemoteGitRepositoryName;
 	private JSONObject _jsonObject;
 	private final List<GitHubRemoteGitRepository.Label> _labels =
 		new ArrayList<>();
 	private RemoteGitBranch _liferayRemoteGitBranch;
-	private Integer _number;
-	private String _ownerUsername;
+	private final Integer _number;
+	private final String _ownerUsername;
 	private RemoteGitBranch _senderRemoteGitBranch;
-	private final String _testSuiteName;
-	private TestSuiteStatus _testSuiteStatus = TestSuiteStatus.MISSING;
 
 }

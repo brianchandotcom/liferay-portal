@@ -400,13 +400,23 @@ definition {
 			}
 		}
 		else if (isSet(targetFragmentName)) {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_collectionName = "${collectionName}",
-				key_fragmentName = "${fragmentName}",
-				key_targetFragmentName = "${targetFragmentName}",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-				value1 = "");
+			if ("${dropTarget}" == "Header") {
+				DragAndDrop.javaScriptDragAndDropToUp(
+					key_collectionName = "${collectionName}",
+					key_fragmentName = "${fragmentName}",
+					key_targetFragmentName = "${targetFragmentName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+			}
+			else {
+				DragAndDrop.javaScriptDragAndDropToBottom(
+					key_collectionName = "${collectionName}",
+					key_fragmentName = "${fragmentName}",
+					key_targetFragmentName = "${targetFragmentName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+					value1 = "");
+			}
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(

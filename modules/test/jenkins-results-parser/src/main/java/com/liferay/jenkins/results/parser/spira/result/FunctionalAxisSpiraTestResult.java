@@ -229,6 +229,10 @@ public class FunctionalAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 
 		AxisBuild axisBuild = getAxisBuild();
 
+		if (axisBuild == null) {
+			return null;
+		}
+
 		return _testResult = axisBuild.getTestResult(
 			_functionalTestClass.getTestClassMethodName());
 	}

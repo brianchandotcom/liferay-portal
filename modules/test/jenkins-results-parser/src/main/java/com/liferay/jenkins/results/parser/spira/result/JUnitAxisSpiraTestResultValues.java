@@ -55,15 +55,6 @@ public class JUnitAxisSpiraTestResultValues
 
 				@Override
 				public List<SpiraCustomPropertyValue> call() throws Exception {
-					return Collections.singletonList(_getErrorMessageValue());
-				}
-
-			});
-		callables.add(
-			new Callable<List<SpiraCustomPropertyValue>>() {
-
-				@Override
-				public List<SpiraCustomPropertyValue> call() throws Exception {
 					return Collections.singletonList(_getMethodsValue());
 				}
 
@@ -72,7 +63,8 @@ public class JUnitAxisSpiraTestResultValues
 		return callables;
 	}
 
-	private SpiraCustomPropertyValue _getErrorMessageValue() {
+	@Override
+	protected SpiraCustomPropertyValue getErrorMessageValue() {
 		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
 
 		SpiraCustomProperty spiraCustomProperty =
@@ -86,11 +78,12 @@ public class JUnitAxisSpiraTestResultValues
 		if (testClassResult == null) {
 			AxisBuild axisBuild = _jUnitAxisSpiraTestResult.getAxisBuild();
 
-			String status = "FAILURE";
-
-			if (axisBuild != null) {
-				status = axisBuild.getResult();
+			if (axisBuild == null) {
+				return SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
+					spiraCustomProperty, "The test class failed to run.");
 			}
+
+			String status = axisBuild.getResult();
 
 			if (!status.equals("SUCCESS")) {
 				return SpiraCustomPropertyValue.createSpiraCustomPropertyValue(

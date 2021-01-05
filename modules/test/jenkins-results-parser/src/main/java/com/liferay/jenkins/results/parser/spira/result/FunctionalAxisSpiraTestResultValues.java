@@ -70,15 +70,6 @@ public class FunctionalAxisSpiraTestResultValues
 
 				@Override
 				public List<SpiraCustomPropertyValue> call() throws Exception {
-					return Collections.singletonList(_getErrorMessageValue());
-				}
-
-			});
-		callables.add(
-			new Callable<List<SpiraCustomPropertyValue>>() {
-
-				@Override
-				public List<SpiraCustomPropertyValue> call() throws Exception {
 					return Collections.singletonList(_getTeamNameValue());
 				}
 
@@ -87,7 +78,8 @@ public class FunctionalAxisSpiraTestResultValues
 		return callables;
 	}
 
-	private SpiraCustomPropertyValue _getErrorMessageValue() {
+	@Override
+	protected SpiraCustomPropertyValue getErrorMessageValue() {
 		SpiraBuildResult spiraBuildResult = getSpiraBuildResult();
 
 		SpiraCustomProperty spiraCustomProperty =
@@ -100,11 +92,12 @@ public class FunctionalAxisSpiraTestResultValues
 		if (testResult == null) {
 			AxisBuild axisBuild = _functionalAxisSpiraTestResult.getAxisBuild();
 
-			String status = "FAILURE";
-
-			if (axisBuild != null) {
-				status = axisBuild.getResult();
+			if (axisBuild == null) {
+				return SpiraCustomPropertyValue.createSpiraCustomPropertyValue(
+					spiraCustomProperty, "The test failed to run.");
 			}
+
+			String status = axisBuild.getResult();
 
 			if (!status.equals("SUCCESS")) {
 				return SpiraCustomPropertyValue.createSpiraCustomPropertyValue(

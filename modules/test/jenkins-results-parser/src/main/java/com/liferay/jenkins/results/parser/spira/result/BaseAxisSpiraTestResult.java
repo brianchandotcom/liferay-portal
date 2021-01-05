@@ -60,6 +60,10 @@ public abstract class BaseAxisSpiraTestResult
 
 		AxisBuild axisBuild = getAxisBuild();
 
+		if (axisBuild == null) {
+			return commonFailedTestResults;
+		}
+
 		String result = axisBuild.getResult();
 
 		if (!result.equals("SUCCESS") && !result.equals("UNSTABLE")) {

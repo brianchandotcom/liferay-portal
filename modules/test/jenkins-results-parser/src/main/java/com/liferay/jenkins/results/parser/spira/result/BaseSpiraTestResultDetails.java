@@ -79,12 +79,22 @@ public abstract class BaseSpiraTestResultDetails
 	protected String getArtifactBaseURL() {
 		Build build = _spiraTestResult.getBuild();
 
+		if (build == null) {
+			return null;
+		}
+
 		return String.valueOf(build.getArtifactsBaseURL());
 	}
 
 	protected String getArtifactBaseURLContent() {
 		if (_artifactBaseURLContent != null) {
 			return _artifactBaseURLContent;
+		}
+
+		String artifactBaseURL = getArtifactBaseURL();
+
+		if (artifactBaseURL == null) {
+			return _artifactBaseURLContent = "";
 		}
 
 		try {

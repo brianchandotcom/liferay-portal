@@ -133,12 +133,7 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 		requestJSONObject.put(
 			"RunnerStackTrace", _spiraTestResultDetails.getDetails());
 		requestJSONObject.put("RunnerTestName", getTestName());
-
-		Build build = getBuild();
-
-		requestJSONObject.put(
-			"StartDate",
-			BaseSpiraArtifact.toDateString(new Date(build.getStartTime())));
+		requestJSONObject.put("StartDate", _getStartDateString());
 
 		SpiraTestCaseRun.RunnerFormat runnerFormat =
 			getSpiraTestCaseRunRunnerFormat();
@@ -151,6 +146,10 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 	@Override
 	public SpiraAutomationHost getSpiraAutomationHost() {
 		Build build = getBuild();
+
+		if (build == null) {
+			return null;
+		}
 
 		JenkinsSlave jenkinsSlave = build.getJenkinsSlave();
 
@@ -272,6 +271,28 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 	}
 
 	protected final SpiraBuildResult spiraBuildResult;
+
+	private String _getStartDateString() {
+		Long startTime = null;
+
+		Build build = getBuild();
+
+		TopLevelBuild topLevelBuild = spiraBuildResult.getTopLevelBuild();
+
+		if (build != null) {
+			startTime = build.getStartTime();
+		}
+
+		if ((topLevelBuild != null) && (startTime == null)) {
+			startTime = topLevelBuild.getStartTime();
+		}
+
+		if (startTime == null) {
+			startTime = System.currentTimeMillis();
+		}
+
+		return BaseSpiraArtifact.toDateString(new Date(startTime));
+	}
 
 	private SpiraTestCaseObject _spiraTestCaseObject;
 	private final SpiraTestResultDetails _spiraTestResultDetails;

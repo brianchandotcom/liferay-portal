@@ -551,14 +551,14 @@ public class JournalConverterImpl implements JournalConverter {
 		Element dynamicContentElement, String fieldType, boolean multiple,
 		String fieldValue) {
 
-		if (DDMFormFieldType.CHECKBOX.equals(fieldType)) {
+		if (Objects.equals(DDMFormFieldType.CHECKBOX, fieldType)) {
 			if (fieldValue.equals(Boolean.FALSE.toString())) {
 				fieldValue = StringPool.BLANK;
 			}
 
 			dynamicContentElement.addCDATA(fieldValue);
 		}
-		else if (DDMFormFieldType.SELECT.equals(fieldType) &&
+		else if (Objects.equals(DDMFormFieldType.SELECT, fieldType) &&
 				 Validator.isNotNull(fieldValue)) {
 
 			JSONArray jsonArray = null;

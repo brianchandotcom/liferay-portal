@@ -41,6 +41,10 @@ definition {
 	test AddMultipleSites {
 		Site.openSitesAdmin();
 
+		JSONGroup.addChildSite(
+			groupName = "Child Site Name",
+			parentGroupName = "Site Name");
+
 		Site.addBlankCP(
 			membershipType = "Private",
 			siteName = "Private Site Name");
@@ -67,10 +71,14 @@ definition {
 
 		Depot.connectSite(siteList = "Site Name,Private Site Name,Restricted Site Name");
 
+		Depot.connectSite(
+			parentSiteName = "Site Name",
+			siteList = "Child Site Name");
+
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewConnectedSiteNumber(
-			connectedSiteNumber = "3",
+			connectedSiteNumber = "4",
 			depotName = "Test Depot Name");
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
@@ -79,7 +87,7 @@ definition {
 
 		Depot.viewConnectedSite(
 			depotName = "Test Depot Name",
-			siteList = "Site Name,Private Site Name,Restricted Site Name");
+			siteList = "Site Name,Private Site Name,Restricted Site Name,Child Site Name");
 	}
 
 	@description = "This ensures that an asset library can not be connected to a staged site."

@@ -24,6 +24,7 @@
 		<column name="parentAccountEntryId" type="long" />
 		<column name="description" type="String" />
 		<column name="domains" type="String" />
+		<column name="emailAddress" type="String" />
 		<column name="logoId" type="long" />
 		<column name="name" type="String" />
 		<column name="taxIdNumber" type="String" />

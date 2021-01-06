@@ -28,10 +28,29 @@
 </div>
 
 <c:if test="<%= fixed %>">
-	<aui:script require="metal-affix/src/Affix">
-		new metalAffixSrcAffix.default({
-			element: '.info-bar-container',
-			offsetTop: 15,
-		});
+	<aui:script sandbox="<%= true %>">
+		const element = document.querySelector('.info-bar-container');
+
+		let lastPosition;
+		let topOffset = 15;
+
+		function checkPosition() {
+			let newPosition = 'affix';
+
+			if (document.defaultView.pageYOffset <= topOffset) {
+				newPosition = 'affix-top';
+			}
+
+			if (element && newPosition !== lastPosition) {
+				element.classList.add(newPosition);
+				element.classList.remove(lastPosition);
+
+				lastPosition = newPosition;
+			}
+		}
+
+		checkPosition();
+
+		document.addEventListener('scroll', checkPosition);
 	</aui:script>
 </c:if>

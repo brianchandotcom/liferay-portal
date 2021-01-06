@@ -17,16 +17,13 @@ package com.liferay.data.engine.rest.dto.v2_0.util;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.util.SettingsDDMFormFieldsUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -53,27 +50,6 @@ import java.util.stream.Stream;
  * @author Marcos Martins
  */
 public class DataDefinitionDDMFormUtil {
-
-	public static Map<String, DDMFormField> getSettingsDDMFormFields(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
-		String type) {
-
-		DDMFormFieldType ddmFormFieldType =
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(type);
-
-		Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings =
-			DefaultDDMFormFieldTypeSettings.class;
-
-		if (ddmFormFieldType != null) {
-			ddmFormFieldTypeSettings =
-				ddmFormFieldType.getDDMFormFieldTypeSettings();
-		}
-
-		DDMForm settingsDDMForm = DDMFormFactory.create(
-			ddmFormFieldTypeSettings);
-
-		return settingsDDMForm.getDDMFormFieldsMap(true);
-	}
 
 	public static DDMForm toDDMForm(
 		DataDefinition dataDefinition,
@@ -261,7 +237,7 @@ public class DataDefinitionDDMFormUtil {
 
 		if (MapUtil.isNotEmpty(customProperties)) {
 			Map<String, DDMFormField> settingsDDMFormFieldsMap =
-				getSettingsDDMFormFields(
+				SettingsDDMFormFieldsUtil.getSettingsDDMFormFields(
 					ddmFormFieldTypeServicesTracker,
 					dataDefinitionField.getFieldType());
 

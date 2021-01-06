@@ -18,7 +18,6 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
-import com.liferay.data.engine.rest.dto.v2_0.util.DataDefinitionDDMFormUtil;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -31,6 +30,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
+import com.liferay.dynamic.data.mapping.util.SettingsDDMFormFieldsUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -109,7 +109,7 @@ public class DataDefinitionUtil {
 		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
 
 		Map<String, DDMFormField> settingsDDMFormFieldsMap =
-			DataDefinitionDDMFormUtil.getSettingsDDMFormFields(
+			SettingsDDMFormFieldsUtil.getSettingsDDMFormFields(
 				ddmFormFieldTypeServicesTracker, ddmFormField.getType());
 
 		Map<String, Object> properties = ddmFormField.getProperties();

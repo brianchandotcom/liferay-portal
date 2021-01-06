@@ -404,6 +404,13 @@ public class PullRequest {
 		return _jsonObject.getString("state");
 	}
 
+	public List<String> getStatusDescriptions() {
+		GitHubRemoteGitCommit gitHubRemoteGitCommit =
+			getGitHubRemoteGitCommit();
+
+		return gitHubRemoteGitCommit.getStatusDescriptions();
+	}
+
 	public String getTitle() {
 		return _jsonObject.getString("title");
 	}

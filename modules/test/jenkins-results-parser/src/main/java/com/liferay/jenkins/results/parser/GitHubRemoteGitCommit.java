@@ -16,8 +16,12 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -29,6 +33,32 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 		return JenkinsResultsParserUtil.combine(
 			"https://github.com/", _gitHubUsername, "/", getGitRepositoryName(),
 			"/commit/", getSHA());
+	}
+
+	public List<String> getStatusDescriptions() {
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				getGitHubStatusURL());
+
+			JSONArray statusesJSONArray = jsonObject.getJSONArray("statuses");
+
+			List<String> statusDescriptions = new ArrayList<>(
+				statusesJSONArray.length());
+
+			for (int i = 0; i < statusesJSONArray.length(); i++) {
+				JSONObject statusJSONObject = statusesJSONArray.getJSONObject(
+					i);
+
+				statusDescriptions.add(
+					statusJSONObject.optString("description"));
+			}
+
+			return statusDescriptions;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get status data", ioException);
+		}
 	}
 
 	public void setStatus(

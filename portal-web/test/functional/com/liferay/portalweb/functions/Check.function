@@ -46,7 +46,9 @@ definition {
 
 		selenium.mouseOver();
 
-		selenium.clickAt();
+		if (selenium.isNotChecked()) {
+			selenium.clickAt();
+		}
 
 		selenium.assertChecked();
 

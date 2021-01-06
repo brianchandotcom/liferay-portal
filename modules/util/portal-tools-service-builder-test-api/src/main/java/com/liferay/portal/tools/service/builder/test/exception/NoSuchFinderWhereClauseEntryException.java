@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portal.tools.service.builder.test.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchFinderWhereClauseEntryException extends NoSuchModelException {
+public class NoSuchFinderWhereClauseEntryException
+	extends NoSuchModelException {
 
 	public NoSuchFinderWhereClauseEntryException() {
 	}
@@ -27,7 +29,9 @@ public class NoSuchFinderWhereClauseEntryException extends NoSuchModelException 
 		super(msg);
 	}
 
-	public NoSuchFinderWhereClauseEntryException(String msg, Throwable throwable) {
+	public NoSuchFinderWhereClauseEntryException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 

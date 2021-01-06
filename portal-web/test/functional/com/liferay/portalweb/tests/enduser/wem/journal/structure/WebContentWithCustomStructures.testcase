@@ -207,7 +207,7 @@ definition {
 	@description = "This is a use case for LPS-69560."
 	@priority = "5"
 	test AddStructureWithWebContentAndGeolocationFields {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property testray.component.names = "Web Content Administration";
 
 		JSONWebcontent.addWebContent(

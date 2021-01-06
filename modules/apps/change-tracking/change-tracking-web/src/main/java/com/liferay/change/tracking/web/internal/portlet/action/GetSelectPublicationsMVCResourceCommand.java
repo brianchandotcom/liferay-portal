@@ -100,9 +100,6 @@ public class GetSelectPublicationsMVCResourceCommand
 			JSONObject entryJSONObject = JSONUtil.put(
 				"description", ctCollection.getDescription()
 			).put(
-				"expired",
-				ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED
-			).put(
 				"modifiedDate", modifiedDate.getTime()
 			).put(
 				"name", ctCollection.getName()

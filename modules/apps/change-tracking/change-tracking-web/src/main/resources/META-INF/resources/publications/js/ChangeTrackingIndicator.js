@@ -54,7 +54,7 @@ const ChangeTrackingIndicator = ({
 		onClose: () => setShowModal(false),
 	});
 
-	const filterEntries = (ascending, column, entries) => {
+	const filterEntries = (ascending, column, delta, entries, page) => {
 		const filteredEntries = entries.slice(0);
 
 		if (column === SORT_COLUMN_MODIFIED_DATE) {
@@ -114,6 +114,10 @@ const ChangeTrackingIndicator = ({
 
 				return 0;
 			});
+		}
+
+		if (entries.length > 5) {
+			return filteredEntries.slice(delta * (page - 1), delta * page);
 		}
 
 		return filteredEntries;

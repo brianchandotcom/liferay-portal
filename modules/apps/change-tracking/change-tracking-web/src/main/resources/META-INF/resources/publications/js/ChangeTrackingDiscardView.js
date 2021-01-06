@@ -75,7 +75,7 @@ const ChangeTrackingDiscardView = ({
 
 	const filterDisplayEntries = (entries) => {
 		if (entries.length > 5) {
-			entries = entries.slice(delta * (page - 1), delta * page);
+			return entries.slice(delta * (page - 1), delta * page);
 		}
 
 		return entries;

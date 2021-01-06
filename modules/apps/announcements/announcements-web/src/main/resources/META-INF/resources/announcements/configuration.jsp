@@ -402,10 +402,10 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 			}
 
 			var currentScopeUserGroupIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />selectedScopeUserGroupIds'
+				'#<portlet:namespace />currentScopeUserGroupIds'
 			);
 			var selectedScopeUserGroupIds = <portlet:namespace />form.querySelector(
-				'#<portlet:namespace />currentScopeUserGroupIds'
+				'#<portlet:namespace />selectedScopeUserGroupIds'
 			);
 
 			if (currentScopeUserGroupIds && selectedScopeUserGroupIds) {

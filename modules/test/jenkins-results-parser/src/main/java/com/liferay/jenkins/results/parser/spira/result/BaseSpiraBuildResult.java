@@ -24,10 +24,10 @@ import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalFixpackRelease;
 import com.liferay.jenkins.results.parser.PortalFixpackReleaseBuild;
-import com.liferay.jenkins.results.parser.PortalGitRepositoryJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalRelease;
 import com.liferay.jenkins.results.parser.PortalReleaseBuild;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.PullRequestBuild;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
@@ -167,11 +167,10 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
 		Job job = _topLevelBuild.getJob();
 
-		if (job instanceof PortalGitRepositoryJob) {
-			PortalGitRepositoryJob portalGitRepositoryJob =
-				(PortalGitRepositoryJob)job;
+		if (job instanceof PortalTestClassJob) {
+			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
-			return portalGitRepositoryJob.getPortalGitWorkingDirectory();
+			return portalTestClassJob.getPortalGitWorkingDirectory();
 		}
 
 		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
@@ -198,7 +197,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		if (spiraProject != null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Spira Project created in ",
+					"Spira Project ", spiraProject.getURL(), " created in ",
 					JenkinsResultsParserUtil.toDurationString(
 						System.currentTimeMillis() - start)));
 
@@ -252,7 +251,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		if (spiraRelease != null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Spira Release created in ",
+					"Spira Release ", spiraRelease.getURL(), " created in ",
 					JenkinsResultsParserUtil.toDurationString(
 						System.currentTimeMillis() - start)));
 
@@ -316,7 +315,8 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		if (spiraReleaseBuild != null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Spira Release Build created in ",
+					"Spira Release Build ", spiraReleaseBuild.getURL(),
+					" created in ",
 					JenkinsResultsParserUtil.toDurationString(
 						System.currentTimeMillis() - start)));
 
@@ -415,7 +415,8 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		if (spiraTestCaseFolder != null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Base Spira Test Case Folder created in ",
+					"Base Spira Test Case Folder ",
+					spiraTestCaseFolder.getURL(), " created in ",
 					JenkinsResultsParserUtil.toDurationString(
 						System.currentTimeMillis() - start)));
 

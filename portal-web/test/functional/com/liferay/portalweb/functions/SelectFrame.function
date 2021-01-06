@@ -8,6 +8,8 @@ definition {
 				attributeValue = "dialog-iframe-popup",
 				eventName = "modalIframeLoaded");
 
+			selenium.waitForVisible();
+
 			selenium.mouseOver();
 
 			selenium.selectFrame();

@@ -66,6 +66,8 @@ public class AccountEntryTable extends BaseTable<AccountEntryTable> {
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, String> domains = createColumn(
 		"domains", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AccountEntryTable, String> emailAddress = createColumn(
+		"emailAddress", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, Long> logoId = createColumn(
 		"logoId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AccountEntryTable, String> name = createColumn(

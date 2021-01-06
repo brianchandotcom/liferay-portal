@@ -274,6 +274,21 @@ public interface AccountEntryModel
 	public void setDomains(String domains);
 
 	/**
+	 * Returns the email address of this account entry.
+	 *
+	 * @return the email address of this account entry
+	 */
+	@AutoEscape
+	public String getEmailAddress();
+
+	/**
+	 * Sets the email address of this account entry.
+	 *
+	 * @param emailAddress the email address of this account entry
+	 */
+	public void setEmailAddress(String emailAddress);
+
+	/**
 	 * Returns the logo ID of this account entry.
 	 *
 	 * @return the logo ID of this account entry

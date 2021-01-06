@@ -56,6 +56,7 @@ public class AccountEntryWrapper
 		attributes.put("parentAccountEntryId", getParentAccountEntryId());
 		attributes.put("description", getDescription());
 		attributes.put("domains", getDomains());
+		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("logoId", getLogoId());
 		attributes.put("name", getName());
 		attributes.put("taxIdNumber", getTaxIdNumber());
@@ -147,6 +148,12 @@ public class AccountEntryWrapper
 
 		if (domains != null) {
 			setDomains(domains);
+		}
+
+		String emailAddress = (String)attributes.get("emailAddress");
+
+		if (emailAddress != null) {
+			setEmailAddress(emailAddress);
 		}
 
 		Long logoId = (Long)attributes.get("logoId");
@@ -268,6 +275,16 @@ public class AccountEntryWrapper
 	@Override
 	public String getDomains() {
 		return model.getDomains();
+	}
+
+	/**
+	 * Returns the email address of this account entry.
+	 *
+	 * @return the email address of this account entry
+	 */
+	@Override
+	public String getEmailAddress() {
+		return model.getEmailAddress();
 	}
 
 	/**
@@ -473,6 +490,16 @@ public class AccountEntryWrapper
 	@Override
 	public void setDomains(String domains) {
 		model.setDomains(domains);
+	}
+
+	/**
+	 * Sets the email address of this account entry.
+	 *
+	 * @param emailAddress the email address of this account entry
+	 */
+	@Override
+	public void setEmailAddress(String emailAddress) {
+		model.setEmailAddress(emailAddress);
 	}
 
 	/**

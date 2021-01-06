@@ -19,6 +19,7 @@
 		<field name="domains" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
+		<field name="emailAddress" type="String" />
 		<field name="logoId" type="long" />
 		<field name="name" type="String">
 			<hint name="max-length">100</hint>

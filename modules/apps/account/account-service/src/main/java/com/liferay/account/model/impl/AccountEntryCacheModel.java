@@ -77,7 +77,7 @@ public class AccountEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -105,6 +105,8 @@ public class AccountEntryCacheModel
 		sb.append(description);
 		sb.append(", domains=");
 		sb.append(domains);
+		sb.append(", emailAddress=");
+		sb.append(emailAddress);
 		sb.append(", logoId=");
 		sb.append(logoId);
 		sb.append(", name=");
@@ -176,6 +178,13 @@ public class AccountEntryCacheModel
 			accountEntryImpl.setDomains(domains);
 		}
 
+		if (emailAddress == null) {
+			accountEntryImpl.setEmailAddress("");
+		}
+		else {
+			accountEntryImpl.setEmailAddress(emailAddress);
+		}
+
 		accountEntryImpl.setLogoId(logoId);
 
 		if (name == null) {
@@ -227,6 +236,7 @@ public class AccountEntryCacheModel
 		parentAccountEntryId = objectInput.readLong();
 		description = objectInput.readUTF();
 		domains = objectInput.readUTF();
+		emailAddress = objectInput.readUTF();
 
 		logoId = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -283,6 +293,13 @@ public class AccountEntryCacheModel
 			objectOutput.writeUTF(domains);
 		}
 
+		if (emailAddress == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(emailAddress);
+		}
+
 		objectOutput.writeLong(logoId);
 
 		if (name == null) {
@@ -322,6 +339,7 @@ public class AccountEntryCacheModel
 	public long parentAccountEntryId;
 	public String description;
 	public String domains;
+	public String emailAddress;
 	public long logoId;
 	public String name;
 	public String taxIdNumber;

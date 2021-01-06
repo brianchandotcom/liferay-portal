@@ -148,6 +148,8 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setDomains(RandomTestUtil.randomString());
 
+		newAccountEntry.setEmailAddress(RandomTestUtil.randomString());
+
 		newAccountEntry.setLogoId(RandomTestUtil.nextLong());
 
 		newAccountEntry.setName(RandomTestUtil.randomString());
@@ -199,6 +201,9 @@ public class AccountEntryPersistenceTest {
 			newAccountEntry.getDescription());
 		Assert.assertEquals(
 			existingAccountEntry.getDomains(), newAccountEntry.getDomains());
+		Assert.assertEquals(
+			existingAccountEntry.getEmailAddress(),
+			newAccountEntry.getEmailAddress());
 		Assert.assertEquals(
 			existingAccountEntry.getLogoId(), newAccountEntry.getLogoId());
 		Assert.assertEquals(
@@ -266,8 +271,8 @@ public class AccountEntryPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"defaultBillingAddressId", true, "defaultShippingAddressId", true,
 			"parentAccountEntryId", true, "description", true, "domains", true,
-			"logoId", true, "name", true, "taxIdNumber", true, "type", true,
-			"status", true);
+			"emailAddress", true, "logoId", true, "name", true, "taxIdNumber",
+			true, "type", true, "status", true);
 	}
 
 	@Test
@@ -574,6 +579,8 @@ public class AccountEntryPersistenceTest {
 		accountEntry.setDescription(RandomTestUtil.randomString());
 
 		accountEntry.setDomains(RandomTestUtil.randomString());
+
+		accountEntry.setEmailAddress(RandomTestUtil.randomString());
 
 		accountEntry.setLogoId(RandomTestUtil.nextLong());
 

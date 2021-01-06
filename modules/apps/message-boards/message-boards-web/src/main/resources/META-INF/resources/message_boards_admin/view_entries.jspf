@@ -18,7 +18,7 @@
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 %>
 
-<div class="container-fluid container-fluid-max-xl view-entries-container">
+<div class="container-fluid container-fluid-max-xl container-view view-entries-container">
 	<c:if test="<%= category != null %>">
 
 		<%

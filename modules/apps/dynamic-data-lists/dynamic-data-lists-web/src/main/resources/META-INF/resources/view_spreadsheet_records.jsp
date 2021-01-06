@@ -29,7 +29,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 %>
 
 <clay:container-fluid
-	cssClass="lfr-spreadsheet-container"
+	cssClass="container-view lfr-spreadsheet-container"
 >
 	<div id="<portlet:namespace />spreadsheet">
 		<div class="table-striped yui3-datatable yui3-widget" id="<portlet:namespace />dataTable">

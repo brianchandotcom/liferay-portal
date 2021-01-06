@@ -709,16 +709,30 @@ public abstract class BaseBuild implements Build {
 
 		Map<String, String> buildParameters = topLevelBuild.getParameters();
 
-		String buildProfile = buildParameters.get("TEST_PORTAL_BUILD_PROFILE");
-
-		if ((buildProfile == null) || !buildProfile.equals("dxp")) {
-			buildProfile = "portal";
-		}
-
 		String branchName = topLevelBuild.getBranchName();
 
-		if (branchName.startsWith("ee-")) {
-			buildProfile = "portal";
+		String buildProfile;
+
+		if (topLevelJobName.contains("environment")) {
+			if (!branchName.startsWith("ee-") &&
+				!branchName.endsWith("-private")) {
+
+				buildProfile = "dxp";
+			}
+			else {
+				buildProfile = "portal";
+			}
+		}
+		else {
+			buildProfile = buildParameters.get("TEST_PORTAL_BUILD_PROFILE");
+
+			if ((buildProfile == null) || !buildProfile.equals("dxp")) {
+				buildProfile = "portal";
+			}
+
+			if (branchName.startsWith("ee-")) {
+				buildProfile = "portal";
+			}
 		}
 
 		_job = JobFactory.newJob(

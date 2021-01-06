@@ -2549,7 +2549,7 @@ public class GitWorkingDirectory {
 
 		List<LocalGitCommit> localGitCommits = new ArrayList<>(num);
 
-		String gitLog = _log(start, num, file, _gitLogEntityFormat, sha);
+		String gitLog = _log(start, num, file, _FORMAT_GIT_LOG_ENTITY, sha);
 
 		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
 
@@ -2623,11 +2623,12 @@ public class GitWorkingDirectory {
 
 	private static final int _BRANCHES_DELETE_BATCH_SIZE = 5;
 
+	private static final String _FORMAT_GIT_LOG_ENTITY = "%H %ct %ae %s";
+
 	private static final Pattern _badRefPattern = Pattern.compile(
 		"fatal: bad object (?<badRef>.+/HEAD)");
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*)\\s*");
-	private static final String _gitLogEntityFormat = "%H %ct %ae %s";
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(
 		"(?<sha>[0-9a-f]{40}) (?<commitTime>\\d+) (?<email>[^\\s]+) " +
 			"(?<message>.*)");

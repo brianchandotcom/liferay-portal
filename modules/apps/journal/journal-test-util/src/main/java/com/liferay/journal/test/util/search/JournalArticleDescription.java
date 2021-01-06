@@ -16,8 +16,23 @@ package com.liferay.journal.test.util.search;
 
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * @author Adam Brandizzi
  */
 public class JournalArticleDescription extends LocalizedValuesMap {
+
+	public JournalArticleDescription() {
+	}
+
+	public JournalArticleDescription(
+		JournalArticleDescription journalArticleDescription) {
+
+		Map<Locale, String> values = journalArticleDescription.getValues();
+
+		values.forEach((locale, value) -> put(locale, value));
+	}
+
 }

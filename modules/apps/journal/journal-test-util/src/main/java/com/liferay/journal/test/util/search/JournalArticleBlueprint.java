@@ -16,8 +16,12 @@ package com.liferay.journal.test.util.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -25,6 +29,27 @@ import java.util.Map;
  * @author André de Oliveira
  */
 public class JournalArticleBlueprint {
+
+	public JournalArticleBlueprint() {
+	}
+
+	public JournalArticleBlueprint(
+		JournalArticleBlueprint journalArticleBlueprint) {
+
+		_assetCategoryIds = journalArticleBlueprint._assetCategoryIds;
+		_draft = journalArticleBlueprint._draft;
+		_expandoBridgeAttributes = getExpandoBridgeAttributes(
+			journalArticleBlueprint._expandoBridgeAttributes);
+		_groupId = journalArticleBlueprint._groupId;
+		_journalArticleContent = getJournalArticleContent(
+			journalArticleBlueprint._journalArticleContent);
+		_journalArticleDescription = getJournalArticleDescription(
+			journalArticleBlueprint._journalArticleDescription);
+		_journalArticleTitle = getJournalArticleTitle(
+			journalArticleBlueprint._journalArticleTitle);
+		_userId = journalArticleBlueprint._userId;
+		_workflowEnabled = journalArticleBlueprint._workflowEnabled;
+	}
 
 	public long[] getAssetCategoryIds() {
 		return _assetCategoryIds;
@@ -40,6 +65,10 @@ public class JournalArticleBlueprint {
 		}
 
 		return null;
+	}
+
+	public Map<String, Serializable> getExpandoBridgeAttributes() {
+		return _expandoBridgeAttributes;
 	}
 
 	public long getGroupId() {
@@ -83,6 +112,12 @@ public class JournalArticleBlueprint {
 		_draft = draft;
 	}
 
+	public void setExpandoBridgeAttributes(
+		Map<String, Serializable> expandoBridgeAttributes) {
+
+		_expandoBridgeAttributes = expandoBridgeAttributes;
+	}
+
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 	}
@@ -113,8 +148,51 @@ public class JournalArticleBlueprint {
 		_workflowEnabled = workflowEnabled;
 	}
 
+	protected static HashMap<String, Serializable> getExpandoBridgeAttributes(
+		Map<String, Serializable> expandoBridgeAttributes) {
+
+		if (expandoBridgeAttributes == null) {
+			return null;
+		}
+
+		return HashMapBuilder.<String, Serializable>putAll(
+			expandoBridgeAttributes
+		).build();
+	}
+
+	protected static JournalArticleContent getJournalArticleContent(
+		JournalArticleContent journalArticleContent) {
+
+		if (journalArticleContent == null) {
+			return null;
+		}
+
+		return new JournalArticleContent(journalArticleContent);
+	}
+
+	protected static JournalArticleDescription getJournalArticleDescription(
+		JournalArticleDescription journalArticleDescription) {
+
+		if (journalArticleDescription == null) {
+			return null;
+		}
+
+		return new JournalArticleDescription(journalArticleDescription);
+	}
+
+	protected static JournalArticleTitle getJournalArticleTitle(
+		JournalArticleTitle journalArticleTitle) {
+
+		if (journalArticleTitle == null) {
+			return null;
+		}
+
+		return new JournalArticleTitle(journalArticleTitle);
+	}
+
 	private long[] _assetCategoryIds;
 	private boolean _draft;
+	private Map<String, Serializable> _expandoBridgeAttributes;
 	private long _groupId;
 	private JournalArticleContent _journalArticleContent;
 	private JournalArticleDescription _journalArticleDescription;

@@ -28,6 +28,18 @@ import java.util.Map;
  */
 public class JournalArticleContent extends LocalizedValuesMap {
 
+	public JournalArticleContent() {
+	}
+
+	public JournalArticleContent(JournalArticleContent journalArticleContent) {
+		_defaultLocale = journalArticleContent._defaultLocale;
+		_name = journalArticleContent._name;
+
+		Map<Locale, String> values = journalArticleContent.getValues();
+
+		values.forEach((locale, value) -> put(locale, value));
+	}
+
 	public String getContentString() {
 		List<Map<Locale, String>> list = getContents();
 

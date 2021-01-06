@@ -63,6 +63,8 @@ public class JournalArticleSearchFixture {
 
 		serviceContext.setAssetCategoryIds(
 			journalArticleBlueprint.getAssetCategoryIds());
+		serviceContext.setExpandoBridgeAttributes(
+			journalArticleBlueprint.getExpandoBridgeAttributes());
 
 		if (journalArticleBlueprint.isWorkflowEnabled()) {
 			serviceContext.setWorkflowAction(

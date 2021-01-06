@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -277,19 +276,12 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			setDesiredItemSelectorReturnTypes(
 				new FileEntryItemSelectorReturnType());
 
-		FileItemSelectorCriterion fileItemSelectorCriterion =
-			new FileItemSelectorCriterion();
-
-		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
-
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			group, groupId,
 			ddmFormFieldRenderingContext.getPortletNamespace() +
 				"selectDocumentLibrary",
-			ddmUserPersonalFolderItemSelectorCriterion,
-			fileItemSelectorCriterion);
+			ddmUserPersonalFolderItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
 	}

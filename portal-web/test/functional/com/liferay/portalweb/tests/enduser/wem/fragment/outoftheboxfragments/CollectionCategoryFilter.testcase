@@ -809,7 +809,7 @@ definition {
 
 		task ("Select the Vocabulary Name in Collection Category Filter") {
 			PageEditor.editCollectionCategoryFilter(
-				categoryName = "Category Name",
+				categoryNameList = "Category Name",
 				fragmentName = "Collection Category Filter",
 				vocabularyName = "Vocabulary Name");
 		}

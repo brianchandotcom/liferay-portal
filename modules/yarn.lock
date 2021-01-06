@@ -10483,11 +10483,6 @@ metal-structs@1.0.2, metal-structs@^1.0.0:
   dependencies:
     metal "^2.16.6"
 
-metal-throttle@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/metal-throttle/-/metal-throttle-3.0.1.tgz#d9b976c0d4fef11e08cc9d72ff5478f1998805e2"
-  integrity sha512-aigicXXWzpllJGWdLaCQVVFSDLfLlVAyG0LRuzwrVToWVJpdDL0RJ5nWad30X/p0Fa3IuewEMD55UuWkT4TNqw==
-
 metal-toggler@2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/metal-toggler/-/metal-toggler-2.3.0.tgz#16805424dd06adf499ac3e19a53b412ccd13acec"

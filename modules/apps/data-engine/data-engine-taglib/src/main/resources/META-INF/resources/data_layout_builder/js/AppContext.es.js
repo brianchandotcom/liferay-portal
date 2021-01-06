@@ -117,6 +117,13 @@ const deleteDataDefinitionField = (dataDefinition, fieldName) => {
 const deleteDataLayoutField = (dataLayout, fieldName) => {
 	return {
 		...dataLayout,
+		dataLayoutFields: {
+			...dataLayout.dataLayoutFields,
+			[fieldName]: {
+				...dataLayout.dataLayoutFields[fieldName],
+				required: false,
+			},
+		},
 		dataLayoutPages: DataLayoutVisitor.deleteField(
 			dataLayout.dataLayoutPages,
 			fieldName

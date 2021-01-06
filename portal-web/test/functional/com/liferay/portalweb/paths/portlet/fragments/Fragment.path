@@ -295,7 +295,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_TEXT_COLOR_IN_VIEW_MODE</td>
-	<td>//*[contains(@class,'${key_fragmentName}')]/parent::div/parent::div[contains(@style,'color: ${key_textColor}')] | //*[contains(@class,'${key_fragmentName}')]/parent::div/parent::div[contains(@class,'text-${key_textColor}')]</td>
+	<td>//*[contains(@class,'${key_fragmentName}')]/parent::div/parent::div[contains(@style,'color: ${key_textColor}')]</td>
 	<td></td>
 </tr>
 <!--FRAGMENT_EDITABLE_FIELD-->

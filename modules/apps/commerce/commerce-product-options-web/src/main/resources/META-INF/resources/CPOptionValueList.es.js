@@ -13,7 +13,6 @@
  */
 
 import Component from 'metal-component';
-import dom from 'metal-dom';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -35,7 +34,7 @@ class CPOptionValueList extends Component {
 	_handleSelectOptionValueClick(event) {
 		var target = event.target;
 
-		var row = dom.closest(target, 'tr');
+		var row = target.closest('tr');
 
 		var cpOptionValueId = row.getAttribute('data-id');
 

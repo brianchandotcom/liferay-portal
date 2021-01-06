@@ -41,9 +41,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(assetRenderer.getTitle(workflowTaskDisplayContext.getTaskContentLocale()));
 %>
 
-<clay:container-fluid
-	cssClass="main-content-body"
->
+<clay:container-fluid>
 	<clay:col
 		cssClass="lfr-asset-column lfr-asset-column-details"
 		md="12"

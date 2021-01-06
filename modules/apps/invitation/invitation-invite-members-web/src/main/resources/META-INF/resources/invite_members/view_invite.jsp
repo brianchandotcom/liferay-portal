@@ -36,9 +36,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		<aui:input name="invitedTeamId" type="hidden" value="" />
 
 		<div class="dialog-body">
-			<clay:container-fluid
-				cssClass="main-content-body"
-			>
+			<clay:container-fluid>
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
 						<label><liferay-ui:message key="find-members" /></label>

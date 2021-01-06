@@ -29,7 +29,7 @@ PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 </aui:form>
 
 <clay:container-fluid
-	cssClass="main-content-body workflow-instance-container"
+	cssClass="workflow-instance-container"
 >
 	<%@ include file="/instance/workflow_instance.jspf" %>
 </clay:container-fluid>

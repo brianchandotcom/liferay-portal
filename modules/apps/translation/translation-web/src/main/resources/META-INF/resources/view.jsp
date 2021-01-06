@@ -24,10 +24,8 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 	displayContext="<%= viewDisplayContext.getTranslationEntryManagementToolbarDisplayContext() %>"
 />
 
-<clay:container-fluid
-	cssClass="main-content-body"
->
-	<aui:form action="<%= viewDisplayContext.getActionURL() %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
+<clay:container-fluid>
+	<aui:form action="<%= viewDisplayContext.getActionURL() %>" name="fm">
 		<liferay-ui:search-container
 			id="searchContainer"
 			searchContainer="<%= viewDisplayContext.getSearchContainer() %>"

@@ -67,9 +67,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 	viewTypeItems="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<clay:container-fluid
-	cssClass="main-content-body"
->
+<clay:container-fluid>
 	<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
 
 	<aui:form action="<%= editImageURL %>" name="fm">

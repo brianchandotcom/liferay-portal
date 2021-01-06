@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ANY_CHECKBOX</td>
+	<td>xpath=(//div | //li)[(contains(@class,'open') or contains(@class,'show')) and (contains(@class,'dropdown') or contains(.//*/@class,'dropdown'))]//label[contains(.,'${key_checkboxName}')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_MENU_ITEM</td>
 	<td>xpath=(//div | //li)[contains(@class,'open') or contains(@class,'show')]//*[normalize-space(text())='${key_menuItem}']</td>
 	<td></td>

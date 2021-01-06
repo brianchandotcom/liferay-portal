@@ -869,7 +869,7 @@ definition {
 				locator1 = "BlogsEntry#CONTENT_LINK",
 				value1 = "${entryContent}");
 
-			AssertLocation(value1 = "${entryExternalURL}/");
+			AssertLocation.assertPartialLocation(value1 = "${entryExternalURL}");
 		}
 
 		if (isSet(entryInlineImage)) {

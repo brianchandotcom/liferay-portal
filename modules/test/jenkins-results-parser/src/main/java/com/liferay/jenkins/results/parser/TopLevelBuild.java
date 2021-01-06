@@ -267,7 +267,11 @@ public abstract class TopLevelBuild extends BaseBuild {
 	public String getDisplayName() {
 		String displayName = super.getDisplayName();
 
-		if (getParentBuild() != null) {
+		String jenkinsJobVariant = getParameterValue("JENKINS_JOB_VARIANT");
+
+		if ((getParentBuild() != null) && (jenkinsJobVariant != null) &&
+			!jenkinsJobVariant.isEmpty()) {
+
 			displayName += "/" + getParameterValue("JENKINS_JOB_VARIANT");
 		}
 

@@ -241,24 +241,6 @@
 	}
 }
 
-.diagram-node-suggest-connector .popover-content {
-	.diagram-node-label {
-		font-size: 14px;
-		text-align: center;
-		white-space: nowrap;
-	}
-
-	.property-builder-field {
-		margin: 5px 0;
-		position: relative;
-		width: 50%;
-
-		.property-builder-field-icon {
-			font-size: 32px;
-		}
-	}
-}
-
 .full-width-content {
 	&,
 	> * {

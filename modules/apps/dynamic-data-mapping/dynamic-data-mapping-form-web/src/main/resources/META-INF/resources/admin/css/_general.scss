@@ -141,11 +141,6 @@ td.lfr-name-column {
 	}
 }
 
-.ddm-share-url-popover {
-	max-width: 500px;
-	width: 100%;
-}
-
 .dynamic-data-mapping-data-providers-modal {
 	max-width: 720px;
 
@@ -176,36 +171,6 @@ td.lfr-name-column {
 			padding-top: 0 !important;
 		}
 	}
-}
-
-.form-builder-page-manager-popover-header {
-	.popover-content {
-		left: -16px;
-		padding: 0;
-		position: absolute;
-		top: 30px;
-		transform: translate3d(-208px, 32px, 0);
-		will-change: transform;
-	}
-
-	li {
-		color: #869cad;
-		cursor: pointer;
-		font-size: 15px;
-		font-weight: normal;
-		line-height: 16px;
-		list-style-type: none;
-		padding: 5px 0;
-	}
-
-	ul {
-		margin: 0;
-		padding: 0;
-	}
-}
-
-.form-builder-page-manager-popover-header.popover.left > .arrow {
-	margin-left: 19px;
 }
 
 .form-builder-section-title {

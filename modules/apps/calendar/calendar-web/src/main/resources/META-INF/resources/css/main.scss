@@ -211,10 +211,6 @@
 		padding: 2px 4px;
 	}
 
-	.popover.scheduler-event-recorder-popover {
-		max-width: none;
-	}
-
 	.scheduler-view-agenda-info-container {
 		font-size: 1em;
 
@@ -529,12 +525,6 @@
 		background: #ffc;
 		border-color: #fc0;
 	}
-}
-
-.scheduler-event-recorder-popover .popover-content .close {
-	position: absolute;
-	right: 10px;
-	top: 5px;
 }
 
 .scheduler-view-agenda {

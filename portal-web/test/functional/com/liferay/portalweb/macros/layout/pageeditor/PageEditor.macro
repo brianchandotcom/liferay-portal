@@ -995,20 +995,24 @@ definition {
 				columnName = "name",
 				tableEntry = "${vocabularyName}");
 
-			AssertVisible(
-				key_columnName = "name",
-				key_tableEntry = "${categoryName}",
-				locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+			for (var categoryName : list "${categoryNameList}") {
+				AssertVisible(
+					key_columnName = "name",
+					key_tableEntry = "${categoryName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+			}
 
 			if (isSet(subCategoryName)) {
 				LexiconTable.clickTableEntryColumnLink(
 					columnName = "name",
 					tableEntry = "${categoryName}");
 
-				AssertVisible(
-					key_columnName = "name",
-					key_tableEntry = "${subCategoryName}",
-					locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+				for (var subCategoryName : list "${subCategoryNameList}") {
+					AssertVisible(
+						key_columnName = "name",
+						key_tableEntry = "${subCategoryName}",
+						locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
+				}
 
 				Button.click(button = "Select This Level");
 
@@ -1027,6 +1031,20 @@ definition {
 					key_contentName = "${vocabularyName}",
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 			}
+		}
+
+		if (isSet(multipleSelection)) {
+			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Multiple Selection", locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click.clickAtNotVisible(
+					checkboxName = "Multiple Selection",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			Pause(locator1 = "3000");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Multiple Selection",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 	}
 

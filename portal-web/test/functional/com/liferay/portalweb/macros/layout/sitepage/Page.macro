@@ -510,7 +510,24 @@ definition {
 			key_title = "${title}",
 			locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE");
 
-		DropdownMenuItem.click(menuItem = "${filterName}");
+		if (isSet(multipleSelection)) {
+			for (var categoryName : list "${categoryNameList}") {
+				Check.checkNotVisible(
+					key_checkboxName = "${categoryName}",
+					locator1 = "MenuItem#ANY_CHECKBOX");
+
+				Pause(locator1 = "3000");
+
+				AssertChecked.assertCheckedNotVisible(
+					key_checkboxName = "${categoryName}",
+					locator1 = "MenuItem#ANY_CHECKBOX");
+			}
+
+			Button.clickApply();
+		}
+		else {
+			DropdownMenuItem.click(menuItem = "${filterName}");
+		}
 
 		AssertTextEquals(
 			key_title = "${title}",

@@ -195,18 +195,27 @@ definition {
 			portlet = "Settings");
 
 		Depot.editDepot(
+			checkTranslatedName = "true",
 			depotNameEdit = "título",
 			language = "es-ES",
 			settings = "true");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editUserAssetLibraryCP(
 			depotName = "Test Depot Name",
 			userScreenName = "usersn");
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoMemberships();
+
+		AssertTextEquals.assertPartialText(
+			key_siteName = "Test Depot Name",
+			locator1 = "UsersAndOrganizationsEditUser#SITES_TABLE_NAME",
+			value1 = "Test Depot Name");
 
 		Navigator.ensureLocaleURL(locale = "es");
 

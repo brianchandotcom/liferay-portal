@@ -512,6 +512,20 @@ definition {
 		else {
 			Alert.viewSuccessMessage();
 		}
+
+		if (isSet(checkTranslatedName)) {
+			Click.clickNoMouseOver(
+				key_fieldName = "Name",
+				locator1 = "Button#LOCALIZATION");
+
+			Click(
+				key_locale = StringUtil.replace("${language}", "-", "_"),
+				locator1 = "Translation#LOCALIZATION_NAME");
+
+			AssertTextEquals.assertValue(
+				locator1 = "TextInput#NAME",
+				value1 = "${depotNameEdit}");
+		}
 	}
 
 	macro getDepotID {

@@ -9981,33 +9981,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<isset property="lcs.email.id.1" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.email.id.1=${lcs.email.id.1}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.id.2" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.email.id.2=${lcs.email.id.2}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="lcs.email.id.3" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					lcs.email.id.3=${lcs.email.id.3}
-				</echo>
-			</then>
-		</if>
-
-		<if>
 			<isset property="lcs.site.password.1" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

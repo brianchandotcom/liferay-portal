@@ -22,6 +22,7 @@ import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -36,8 +37,14 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -68,6 +75,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		_connection = DataAccess.getConnection();
 
 		_defaultSchemaName = _connection.getCatalog();
+
+		_dbInspector = new DBInspector(_connection);
 
 		_enableDBPartition();
 
@@ -145,6 +154,36 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testAddDefaultDBPartition() throws PortalException {
 		Assert.assertFalse(
 			DBPartitionUtil.addDBPartition(_portal.getDefaultCompanyId()));
+	}
+
+	@Test
+	public void testRemoveDBPartition() throws Exception {
+		_addDBPartition();
+
+		List<String> initialViewNames = _getObjectNames("VIEW");
+
+		int initialViewCount = _getViewCount();
+
+		Assert.assertNotEquals(0, initialViewCount);
+
+		int initialTableCount = _getTablesCount();
+
+		_removeDBPartition();
+
+		int finalTableCount = _getTablesCount();
+		int finalViewCount = _getViewCount();
+
+		Assert.assertEquals(
+			initialTableCount + initialViewCount, finalTableCount);
+
+		Assert.assertEquals(0, finalViewCount);
+
+		for (String initialViewName : initialViewNames) {
+			Assert.assertEquals(
+				initialViewName + " count",
+				_getCount(initialViewName, true),
+				_getCount(initialViewName, false));
+		}
 	}
 
 	private static void _disableDBPartition() {
@@ -225,6 +264,83 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 	}
 
+	private int _getCount(String tableName, boolean defaultSchema)
+		throws Exception {
+
+		String whereClause = StringPool.BLANK;
+
+		if (_dbInspector.hasColumn(tableName, "companyId")) {
+			whereClause = " where companyId = " + _COMPANY_ID;
+		}
+
+		String fullTableName = tableName;
+
+		if (!defaultSchema) {
+			fullTableName =
+				_getSchemaName(_COMPANY_ID) + StringPool.PERIOD + tableName;
+		}
+
+		try (PreparedStatement ps = _connection.prepareStatement(
+				"select count(1) from " + fullTableName + whereClause);
+			ResultSet resultSet = ps.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		throw new Exception("Table does not exist");
+	}
+
+	private List<String> _getObjectNames(String objectType) throws Exception {
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		List<String> objectNames = new ArrayList<>();
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				_getSchemaName(_COMPANY_ID), _dbInspector.getSchema(), null,
+				new String[] {objectType})) {
+
+			while (resultSet.next()) {
+				objectNames.add(resultSet.getString("TABLE_NAME"));
+			}
+		}
+
+		return objectNames;
+	}
+
+	private int _getTablesCount() throws Exception {
+		List<String> tableNames = _getObjectNames("TABLE");
+
+		return tableNames.size();
+	}
+
+	private int _getViewCount() throws Exception {
+		List<String> viewNames = _getObjectNames("VIEW");
+
+		return viewNames.size();
+	}
+
+	private void _removeDBPartition() throws Exception {
+		CurrentConnection defaultCurrentConnection =
+			CurrentConnectionUtil.getCurrentConnection();
+
+		try {
+			CurrentConnection currentConnection = dataSource -> _connection;
+
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				currentConnection);
+
+			DBPartitionUtil.removeDBPartition(_COMPANY_ID);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				defaultCurrentConnection);
+		}
+	}
+
 	private static final long _COMPANY_ID = 1L;
 
 	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
@@ -233,6 +349,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private static Connection _connection;
 	private static final DataSource _currentDataSource =
 		ReflectionTestUtil.getFieldValue(DBInitUtil.class, "_dataSource");
+	private static DBInspector _dbInspector;
 	private static boolean _dbPartitionEnabled;
 	private static String _defaultSchemaName;
 	private static LazyConnectionDataSourceProxy _lazyConnectionDataSourceProxy;

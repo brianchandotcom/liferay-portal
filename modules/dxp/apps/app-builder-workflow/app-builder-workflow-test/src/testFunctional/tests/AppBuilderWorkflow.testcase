@@ -256,6 +256,7 @@ definition {
 	@description = "Create a Basic Workflow App"
 	@priority = "5"
 	test CreateBasicWorkflowApp {
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		AppBuilderAdmin.addCustomObject(
@@ -604,6 +605,7 @@ definition {
 	@description = "Create an App through the 'Apps' portlet"
 	@priority = "5"
 	test CreateStandardApp {
+		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(

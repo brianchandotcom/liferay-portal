@@ -1011,15 +1011,15 @@ definition {
 					locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
 			}
 
-			if (isSet(subCategoryName)) {
+			if (isSet(subcategoryName)) {
 				LexiconTable.clickTableEntryColumnLink(
 					columnName = "name",
 					tableEntry = "${categoryName}");
 
-				for (var subCategoryName : list "${subCategoryNameList}") {
+				for (var subcategoryName : list "${subcategoryNameList}") {
 					AssertVisible(
 						key_columnName = "name",
-						key_tableEntry = "${subCategoryName}",
+						key_tableEntry = "${subcategoryName}",
 						locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
 				}
 

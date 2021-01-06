@@ -391,7 +391,14 @@ definition {
 
 			Navigator.gotoNavItem(navItem = "My Sites");
 
-			SiteSelector.selectSite(site = "${siteName}");
+			if (isSet(parentSiteName)) {
+				Search.searchCP(searchTerm = "${parentSiteName}");
+
+				LexiconEntry.gotoEntry(rowEntry = "${siteList}");
+			}
+			else {
+				SiteSelector.selectSite(site = "${siteName}");
+			}
 
 			SelectFrame(value1 = "relative=top");
 

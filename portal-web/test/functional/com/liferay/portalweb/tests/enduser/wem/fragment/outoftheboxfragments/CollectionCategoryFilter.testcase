@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection via selecting multiple categories in multiple filters."
-	@priority = "5"
+	@priority = "4"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionByContainsAllCategories {
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
@@ -905,7 +905,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-111807. Can filter the results of a collection page based on manual collection with via selecting subcategories from Global site."
-	@priority = "5"
+	@priority = "4"
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySubcategoryFromGlobalSite {
 		task ("Add a category in Topic from Global site") {
 			var categoryId = JSONCategory.addCategory(

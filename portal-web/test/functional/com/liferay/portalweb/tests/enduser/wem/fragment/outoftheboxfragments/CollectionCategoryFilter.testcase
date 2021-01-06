@@ -821,15 +821,19 @@ definition {
 				value1 = "Vocabulary Name");
 		}
 
-		task ("Assert filter works in preview mode") {
+		task ("Open the Preview modal") {
 			Click(locator1 = "PageEditor#PREVIEW");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
 
+		task ("Assert the order of elements inside of Container") {
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[contains(@class,'list-group')]");
+		}
 
+		task ("Assert filter works in preview mode") {
 			var n = "1";
 
 			for (var title : list "Web Content Title,Web Content Title With Category,Blogs Entry Title,Blogs Entry Title With Category,Document Title,Document Title With Category") {
@@ -864,15 +868,19 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Assert filter works in view mode") {
+		task ("Navigate to page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
 				siteName = "Test Site Name");
+		}
 
+		task ("Assert the order of elements inside of Container") {
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[1]//*[contains(@data-lfr-editable-id,'element-text')][normalize-space(text())='Manual Collection']");
 
 			AssertVisible(locator1 = "xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'container')]/div)[2]//ul[contains(@class,'list-group')]");
+		}
 
+		task ("Assert filter works in view mode") {
 			var n = "1";
 
 			for (var title : list "Web Content Title,Web Content Title With Category,Blogs Entry Title,Blogs Entry Title With Category,Document Title,Document Title With Category") {

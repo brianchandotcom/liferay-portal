@@ -414,7 +414,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 					getResourceBundle(user.getLocale()),
 					"this-folder-was-automatically-created-by-forms-to-store-" +
 						"all-your-uploaded-files"),
-				_getServiceContext(httpServletRequest));
+				ServiceContextFactory.getInstance(httpServletRequest));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

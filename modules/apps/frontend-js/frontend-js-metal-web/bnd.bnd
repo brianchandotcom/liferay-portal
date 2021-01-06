@@ -12,7 +12,6 @@ Liferay-JS-Submodules-Bridge:\
 	metal-assertions,\
 	metal-clipboard,\
 	metal-component,\
-	metal-debounce,\
 	metal-dom,\
 	metal-drag-drop,\
 	metal-events,\

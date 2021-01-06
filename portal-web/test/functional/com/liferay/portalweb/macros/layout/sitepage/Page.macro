@@ -506,9 +506,18 @@ definition {
 	}
 
 	macro selectFilterInCollectionCategoryFilter {
-		Click(
-			key_title = "${title}",
-			locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE");
+		if (isSet(columnNumber)) {
+			Click.clickNoWaitForVisible(
+				key_columnNumber = "${columnNumber}",
+				key_elementHeader = "//p[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+		else {
+			Click(
+				key_title = "${title}",
+				locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE");
+		}
 
 		if (isSet(multipleSelection)) {
 			for (var categoryName : list "${categoryNameList}") {
@@ -529,10 +538,20 @@ definition {
 			DropdownMenuItem.click(menuItem = "${filterName}");
 		}
 
-		AssertTextEquals(
-			key_title = "${title}",
-			locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE",
-			value1 = "${selectedName}");
+		if (isSet(columnNumber)) {
+			AssertTextEquals(
+				key_columnNumber = "${columnNumber}",
+				key_elementHeader = "//p[normalize-space(text())='${title}']//following-sibling::div//button[contains(@class,'dropdown-toggle')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT",
+				value1 = "${selectedName}");
+		}
+		else {
+			AssertTextEquals(
+				key_title = "${title}",
+				locator1 = "Fragment#COLLECTION_CATEGORY_FILTER_DROPDOWN_TOGGLE",
+				value1 = "${selectedName}");
+		}
 	}
 
 	macro selectMobileDeviceFamily {

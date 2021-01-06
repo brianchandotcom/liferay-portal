@@ -106,7 +106,7 @@ definition {
 	@description = "This is a use case for LPS-77769."
 	@priority = "5"
 	test StagingPublishWCWithImageFieldEdit {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

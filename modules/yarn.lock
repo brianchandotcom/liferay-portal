@@ -10235,17 +10235,6 @@ merge@^1.2.0, merge@^1.2.1:
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
   integrity sha512-VjFo4P5Whtj4vsLzsYBu5ayHhoHJ0UqNm7ibvShmbmoz7tGi0vXaoJbGdB+GmDMLUdg8DpQXEIeVDAe8MaABvQ==
 
-metal-affix@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/metal-affix/-/metal-affix-2.0.0.tgz#16c4d914a627d15232a22776691bf2ab1b0cde37"
-  integrity sha1-FsTZFKYn0VIyoid2aRvyqxsM3jc=
-  dependencies:
-    metal "^2.0.0"
-    metal-dom "^2.0.0"
-    metal-events "^2.0.0"
-    metal-position "^2.0.0"
-    metal-state "^2.0.0"
-
 metal-ajax@2.1.1, metal-ajax@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/metal-ajax/-/metal-ajax-2.1.1.tgz#f715dd98fb38bc2ad2269eb960f3318ff8a4e543"
@@ -10396,7 +10385,7 @@ metal-path-parser@1.0.4, metal-path-parser@^1.0.3:
   dependencies:
     metal "^2.16.6"
 
-metal-position@2.1.2, metal-position@^2.0.0, metal-position@^2.1.0, metal-position@^2.1.2:
+metal-position@2.1.2, metal-position@^2.1.0, metal-position@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/metal-position/-/metal-position-2.1.2.tgz#3643a7f83a6b5a39061841858b058935390bd13c"
   integrity sha512-XvE1AQoySYFGG0sc3unZWfK97UKOvHvg/asq2k1Oh+vs1NGD9PhhGBQKiD0/Rix85ICHEeLUVzS0WGQr5wdapQ==

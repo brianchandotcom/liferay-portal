@@ -992,7 +992,8 @@ public class JenkinsResultsParserUtil {
 		}
 
 		try {
-			return Files.newBufferedReader(Paths.get(cachedTextFile.toURI()));
+			return Files.newBufferedReader(
+				Paths.get(cachedTextFile.toURI()), StandardCharsets.UTF_8);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(

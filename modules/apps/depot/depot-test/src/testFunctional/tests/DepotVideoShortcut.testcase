@@ -226,10 +226,11 @@ definition {
 	@description = "This ensures that a depot video shortcut can be used through Related Assets on a connected site."
 	@priority = "3"
 	test ViewInRelatedAssets {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Asset Publisher");
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

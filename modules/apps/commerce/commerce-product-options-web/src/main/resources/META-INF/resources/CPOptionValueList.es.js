@@ -32,11 +32,11 @@ class CPOptionValueList extends Component {
 	}
 
 	_handleSelectOptionValueClick(event) {
-		var target = event.target;
+		const target = event.target;
 
-		var row = target.closest('tr');
+		const row = target.closest('tr');
 
-		var cpOptionValueId = row.getAttribute('data-id');
+		const cpOptionValueId = row.getAttribute('data-id');
 
 		this.emit('optionValueSelected', cpOptionValueId);
 	}

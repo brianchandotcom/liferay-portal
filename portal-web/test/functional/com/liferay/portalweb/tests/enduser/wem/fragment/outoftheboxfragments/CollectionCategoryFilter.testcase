@@ -863,6 +863,12 @@ definition {
 				var n = ${n} + 1;
 			}
 
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
 			IFrame.closeFrame();
 
 			PageEditor.clickPublish();
@@ -909,6 +915,12 @@ definition {
 
 				var n = ${n} + 1;
 			}
+
+			AssertElementNotPresent(
+				key_entryContent = "",
+				key_fragmentName = "Collection Display",
+				key_position = "4",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 		}
 	}
 

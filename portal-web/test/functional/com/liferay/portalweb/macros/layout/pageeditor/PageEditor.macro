@@ -1144,6 +1144,10 @@ definition {
 				locator1 = "FormFields#NUMBER_FIELD",
 				value1 = "${maxNumberOfItems}");
 
+			Click(
+				key_sidebarButton = "Selection",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
 			AssertTextEquals(
 				key_fieldLabel = "Max Number Of Items",
 				locator1 = "FormFields#NUMBER_FIELD",

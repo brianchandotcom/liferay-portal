@@ -1378,8 +1378,6 @@ definition {
 
 			PageEditor.addWidget(portletName = "Language Selector");
 
-			PageEditor.gotoTab(tabName = "Fragments");
-
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title",

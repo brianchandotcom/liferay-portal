@@ -972,7 +972,16 @@ definition {
 	macro editCollectionCategoryFilter {
 		var key_fragmentName = "${fragmentName}";
 
-		Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		if (isSet(columnNumber)) {
+			Click.clickNoWaitForVisible(
+				key_columnNumber = "${columnNumber}",
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+		else {
+			Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 
 		PageEditor.gotoTab(tabName = "Selection");
 

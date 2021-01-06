@@ -318,7 +318,7 @@ const PublicationsSearchContainer = ({
 	};
 
 	const renderResultsBar = () => {
-		if (!fetchData || !fetchData.entries || !resultsKeywords) {
+		if (!resultsKeywords) {
 			return '';
 		}
 
@@ -357,12 +357,22 @@ const PublicationsSearchContainer = ({
 		);
 	};
 
-	const renderList = () => {
-		if (viewType !== VIEW_TYPE_LIST || !fetchData || !fetchData.entries) {
-			return '';
+	const renderBody = () => {
+		if (!fetchData) {
+			return <span aria-hidden="true" className="loading-animation" />;
 		}
-
-		if (fetchData.entries.length === 0) {
+		else if (fetchData.errorMessage) {
+			return (
+				<ClayAlert
+					displayType="danger"
+					spritemap={spritemap}
+					title={Liferay.Language.get('error')}
+				>
+					{fetchData.errorMessage}
+				</ClayAlert>
+			);
+		}
+		else if (fetchData.entries.length === 0) {
 			return (
 				<div className="taglib-empty-result-message">
 					<div className="taglib-empty-result-message-header" />
@@ -373,61 +383,58 @@ const PublicationsSearchContainer = ({
 			);
 		}
 
-		const items = [];
+		if (viewType === VIEW_TYPE_LIST) {
+			const items = [];
 
-		const entries = filterEntries(ascending, column, fetchData.entries);
+			const entries = filterEntries(
+				ascending,
+				column,
+				delta,
+				fetchData.entries,
+				page
+			);
 
-		for (let i = 0; i < entries.length; i++) {
-			items.push(getListItem(entries[i], fetchData));
+			for (let i = 0; i < entries.length; i++) {
+				items.push(getListItem(entries[i], fetchData));
+			}
+
+			return (
+				<>
+					<ClayTooltipProvider>
+						<ClayList
+							className={
+								loading ? 'select-publications-loading' : ''
+							}
+						>
+							{items}
+						</ClayList>
+					</ClayTooltipProvider>
+
+					{fetchData.entries.length > 5 && (
+						<ClayPaginationBarWithBasicItems
+							activeDelta={delta}
+							activePage={page}
+							deltas={[4, 8, 20, 40, 60].map((size) => ({
+								label: size,
+							}))}
+							ellipsisBuffer={3}
+							onDeltaChange={(delta) => handleDeltaChange(delta)}
+							onPageChange={(page) => setPage(page)}
+							totalItems={fetchData.entries.length}
+						/>
+					)}
+				</>
+			);
 		}
 
-		return (
-			<>
-				<ClayTooltipProvider>
-					<ClayList
-						className={loading ? 'select-publications-loading' : ''}
-					>
-						{items}
-					</ClayList>
-				</ClayTooltipProvider>
-
-				{fetchData.entries.length > 5 && (
-					<ClayPaginationBarWithBasicItems
-						activeDelta={delta}
-						activePage={page}
-						deltas={[4, 8, 20, 40, 60].map((size) => ({
-							label: size,
-						}))}
-						ellipsisBuffer={3}
-						onDeltaChange={(delta) => handleDeltaChange(delta)}
-						onPageChange={(page) => setPage(page)}
-						totalItems={fetchData.entries.length}
-					/>
-				)}
-			</>
-		);
+		return '';
 	};
 
 	return (
 		<>
 			{renderManagementToolbar()}
 			{renderResultsBar()}
-
-			{!fetchData && (
-				<span aria-hidden="true" className="loading-animation" />
-			)}
-
-			{fetchData && fetchData.errorMessage && (
-				<ClayAlert
-					displayType="danger"
-					spritemap={spritemap}
-					title={Liferay.Language.get('error')}
-				>
-					{fetchData.errorMessage}
-				</ClayAlert>
-			)}
-
-			{renderList()}
+			{renderBody()}
 		</>
 	);
 };

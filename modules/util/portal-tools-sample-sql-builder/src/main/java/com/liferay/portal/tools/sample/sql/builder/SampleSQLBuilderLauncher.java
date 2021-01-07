@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.BufferedInputStream;
@@ -77,6 +78,24 @@ public class SampleSQLBuilderLauncher {
 		Thread thread = Thread.currentThread();
 
 		ClassLoader classLoader = thread.getContextClassLoader();
+
+		String classPath = classLoader.toString();
+
+		int startIndex = classPath.indexOf(StringPool.OPEN_BRACKET);
+
+		int endIndex = classPath.indexOf(StringPool.CLOSE_BRACKET);
+
+		classPath = classPath.substring(startIndex + 1, endIndex);
+
+		String[] paths = classPath.split(File.pathSeparator);
+
+		for (String path : paths) {
+			File file = new File(path);
+
+			URI uri = file.toURI();
+
+			urls.add(uri.toURL());
+		}
 
 		File tempDir = new File(SystemProperties.get(SystemProperties.TMP_DIR));
 

@@ -198,35 +198,24 @@ const Options = ({
 	});
 
 	useEffect(() => {
-		const localizedOptions = value[editingLanguageId];
+		const availableLanguageIds = Object.getOwnPropertyNames(value);
 
-		if (localizedOptions && localizedOptions.length > 0) {
-			const firstOption = localizedOptions[0];
+		availableLanguageIds.forEach((languageId) => {
+			normalizedValue[languageId] = value[languageId].map((option) => {
+				if (option.edited) {
+					return option;
+				}
 
-			if (firstOption.value) {
-				const availableLanguageIds = Object.getOwnPropertyNames(value);
+				const {label} = value[defaultLanguageId].find(
+					(defaultOption) => defaultOption.value === option.value
+				);
 
-				availableLanguageIds.forEach((languageId) => {
-					normalizedValue[languageId] = value[languageId].map(
-						(option) => {
-							if (option.edited) {
-								return option;
-							}
-
-							const {label} = value[defaultLanguageId].find(
-								(defaultOption) =>
-									defaultOption.value === option.value
-							);
-
-							return {
-								...option,
-								label,
-							};
-						}
-					);
-				});
-			}
-		}
+				return {
+					...option,
+					label,
+				};
+			});
+		});
 
 		const options =
 			normalizedValue[editingLanguageId] ||

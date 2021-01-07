@@ -94,6 +94,16 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	@Override
+	public void associateUser(
+			long accountEntryId, long[] accountRoleIds, long userId)
+		throws PortalException {
+
+		for (long accountRoleId : accountRoleIds) {
+			associateUser(accountEntryId, accountRoleId, userId);
+		}
+	}
+
+	@Override
 	public AccountRole deleteAccountRole(AccountRole accountRole)
 		throws PortalException {
 

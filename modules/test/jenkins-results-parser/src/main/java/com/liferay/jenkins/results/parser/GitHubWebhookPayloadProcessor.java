@@ -899,7 +899,9 @@ public class GitHubWebhookPayloadProcessor {
 
 		String ownerUsername = pullRequest.getOwnerUsername();
 
-		if (!_whiteListedOwnerNames.contains(ownerUsername)) {
+		if (!_whiteListedOwnerNames.isEmpty() &&
+			!_whiteListedOwnerNames.contains(ownerUsername)) {
+
 			String message = JenkinsResultsParserUtil.combine(
 				"Skip pull request because the owner ", ownerUsername,
 				" is not on the whitelist\n\nPull request tests have been ",

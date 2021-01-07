@@ -689,13 +689,19 @@ definition {
 			key_commentBody = "${entryComment}",
 			locator1 = "Comments#COMMENT_BODY_ASSET");
 
-		Click(locator1 = "Comments#COMMENT_ACTIONS");
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "Comments#COMMENT_ACTIONS");
 
 		MenuItem.click(menuItem = "Edit");
 
-		Type.typeEditor(
-			locator1 = "Comments#EDIT_COMMENT_FIELD",
+		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		Type(
+			locator1 = "CKEditor#BODY",
 			value1 = "${entryCommentEdit}");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			key_text = "Save",

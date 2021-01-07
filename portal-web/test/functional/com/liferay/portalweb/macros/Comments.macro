@@ -99,7 +99,7 @@ definition {
 
 		Click.mouseOverClick(locator1 = "Comments#COMMENT_BODY_SPECIFIC");
 
-		Click.clickNoMouseOver(locator1 = "Comments#COMMENT_ACTIONS");
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "Comments#COMMENT_ACTIONS");
 
 		AssertClick(
 			key_menuItem = "Edit",

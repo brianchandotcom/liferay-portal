@@ -1052,7 +1052,9 @@ public class GitHubWebhookPayloadProcessor {
 		List<String> allowedSenderUsernames = getAllowedSenderUsernames(
 			pullRequest);
 
-		if (!allowedSenderUsernames.contains(senderUsername)) {
+		if (!allowedSenderUsernames.isEmpty() &&
+			!allowedSenderUsernames.contains(senderUsername)) {
+
 			StringBuilder sb = new StringBuilder(7);
 
 			sb.append("Closing pull request because ");

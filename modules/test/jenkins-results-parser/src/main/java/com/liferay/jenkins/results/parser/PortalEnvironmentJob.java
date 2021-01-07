@@ -34,7 +34,7 @@ public class PortalEnvironmentJob
 	@Override
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-			_portalBranchName);
+			getPortalBranchName());
 	}
 
 	protected PortalEnvironmentJob(
@@ -63,10 +63,14 @@ public class PortalEnvironmentJob
 		readJobProperties();
 	}
 
+	protected String getPortalBranchName() {
+		return _portalBranchName;
+	}
+
 	@Override
 	protected Set<String> getRawBatchNames() {
 		String environmentJobNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "environment.job.names", _portalBranchName);
+			getJobProperties(), "environment.job.names", getPortalBranchName());
 
 		return new HashSet<>(Arrays.asList(environmentJobNames.split(",")));
 	}

@@ -14,6 +14,9 @@
 
 package com.liferay.journal.web.internal.portlet.template;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -25,6 +28,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,8 +39,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -141,6 +147,59 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	}
 
 	@Override
+	protected TemplateVariableGroup getStructureFieldsTemplateVariableGroup(
+			long ddmStructureId, Locale locale)
+		throws PortalException {
+
+		if (ddmStructureId <= 0) {
+			return null;
+		}
+
+		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
+			"fields");
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
+		DDMForm fullHierarchyDDMForm = ddmStructure.getFullHierarchyDDMForm();
+
+		Map<String, String> fieldNameVariableNameMap = new LinkedHashMap<>();
+
+		for (DDMFormField ddmFormField :
+				fullHierarchyDDMForm.getDDMFormFields()) {
+
+			fieldNameVariableNameMap.put(
+				ddmFormField.getName(), ddmFormField.getName());
+
+			collectNestedFieldNameVariableName(
+				ddmFormField, fieldNameVariableNameMap);
+		}
+
+		for (Map.Entry<String, String> fieldNameVariableName :
+				fieldNameVariableNameMap.entrySet()) {
+
+			String fieldName = fieldNameVariableName.getKey();
+
+			String dataType = ddmStructure.getFieldDataType(fieldName);
+
+			if (Validator.isNull(dataType)) {
+				continue;
+			}
+
+			String label = ddmStructure.getFieldLabel(fieldName, locale);
+			String tip = ddmStructure.getFieldTip(fieldName, locale);
+			boolean repeatable = ddmStructure.getFieldRepeatable(fieldName);
+
+			templateVariableGroup.addFieldVariable(
+				label, getFieldVariableClass(),
+				fieldNameVariableName.getValue(), tip, dataType, repeatable,
+				getTemplateVariableCodeHandler());
+		}
+
+		return templateVariableGroup;
+	}
+
+	@Override
 	protected TemplateVariableCodeHandler getTemplateVariableCodeHandler() {
 		return _templateVariableCodeHandler;
 	}
@@ -167,6 +226,9 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 			"xsl",
 			"com/liferay/journal/web/portlet/template/dependencies/template.xsl"
 		).build();
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	private JournalContent _journalContent;
 

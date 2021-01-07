@@ -69,6 +69,7 @@ TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 	public static final String TABLE_SQL_DROP = "drop table AccountGroup";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
+		"create index IX_38BDB33 on AccountGroup (companyId, defaultAccountGroup)",
 		"create index IX_F7BFA1CD on AccountGroup (companyId, externalReferenceCode[$COLUMN_LENGTH:75$])"
 	};
 

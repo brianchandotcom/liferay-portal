@@ -43,10 +43,9 @@ public class SettingsDDMFormFieldsUtil {
 				ddmFormFieldType.getDDMFormFieldTypeSettings();
 		}
 
-		DDMForm settingsDDMForm = DDMFormFactory.create(
-			ddmFormFieldTypeSettings);
+		DDMForm ddmForm = DDMFormFactory.create(ddmFormFieldTypeSettings);
 
-		return settingsDDMForm.getDDMFormFieldsMap(true);
+		return ddmForm.getDDMFormFieldsMap(true);
 	}
 
 }

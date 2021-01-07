@@ -1020,14 +1020,14 @@ class Form extends Component {
 					title,
 				} = page;
 
-				if (!core.isString(description)) {
+				if (description && !core.isString(description)) {
 					description = description[themeDisplay.getLanguageId()];
 					localizedDescription = {
 						[themeDisplay.getLanguageId()]: description,
 					};
 				}
 
-				if (!core.isString(title)) {
+				if (title && !core.isString(title)) {
 					title = title[themeDisplay.getLanguageId()];
 					localizedTitle = {
 						[themeDisplay.getLanguageId()]: title,

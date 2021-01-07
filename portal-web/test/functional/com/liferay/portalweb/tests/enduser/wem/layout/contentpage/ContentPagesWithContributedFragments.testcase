@@ -325,7 +325,7 @@ definition {
 
 		AssertElementPresent(
 			key_columnNumber = "1",
-			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Tabs')]//li[contains(@class,'title')]",
+			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Tabs')]//li[contains(@class,'title')]",
 			key_position = "1",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}

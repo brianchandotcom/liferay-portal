@@ -776,7 +776,7 @@ definition {
 
 		AssertElementPresent(
 			key_columnNumber = "1",
-			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]//h1[contains(.,'Heading Example')]",
+			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]//h1[contains(.,'Heading Example')]",
 			key_position = "1",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
@@ -955,7 +955,7 @@ definition {
 
 		AssertElementPresent(
 			key_columnNumber = "1",
-			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]//h1[contains(.,'New editable fragment text')]",
+			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]//h1[contains(.,'New editable fragment text')]",
 			key_position = "1",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 

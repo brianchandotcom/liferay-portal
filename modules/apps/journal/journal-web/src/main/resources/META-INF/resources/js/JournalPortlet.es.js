@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PortletBase, delegate} from 'frontend-js-web';
+import {PortletBase, delegate, openToast} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 import {LocaleChangedHandler} from './LocaleChangedHandler.es';
@@ -60,11 +60,14 @@ class JournalPortlet extends PortletBase {
 		}
 
 		this._localeChangedHandler = new LocaleChangedHandler({
-			callback: this._onLocaleChanged,
 			contentTitle: this.contentTitle,
 			context: this,
 			defaultLanguageId: this.defaultLanguageId,
 			namespace: this.namespace,
+			onDefaultLocaleChangedCallback: (languageId) => {
+				this.defaultLanguageId = languageId;
+			},
+			onLocaleChangedCallback: this._onLocaleChanged,
 		});
 
 		this._selectedLanguageId = this.defaultLanguageId;
@@ -84,7 +87,9 @@ class JournalPortlet extends PortletBase {
 		this._resetValuesDDMStructure = this._resetValuesDDMStructure.bind(
 			this
 		);
+		this._saveArticle = this._saveArticle.bind(this);
 		this._updateAction = this._updateAction.bind(this);
+		this._validTitle = this._validTitle.bind(this);
 	}
 
 	/**
@@ -173,6 +178,21 @@ class JournalPortlet extends PortletBase {
 	_onFormSubmit(event) {
 		event.preventDefault();
 
+		if (!this._validTitle()) {
+			this._showAlert(
+				Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-valid-title-for-the-default-language-x'
+					),
+					this.defaultLanguageId
+				)
+			);
+
+			event.stopImmediatePropagation();
+
+			return;
+		}
+
 		const actionInput = this._getInputByName(ACTION_INPUT_NAME);
 
 		const actionName = actionInput.value;
@@ -213,8 +233,6 @@ class JournalPortlet extends PortletBase {
 	 * @param {string} actionName
 	 */
 	_saveArticle(actionName) {
-		const articleId = this._getInputByName('articleId').value;
-
 		if (actionName === 'publish') {
 			const workflowActionInput = this._getInputByName('workflowAction');
 
@@ -224,15 +242,13 @@ class JournalPortlet extends PortletBase {
 		}
 
 		if (!actionName) {
-			const classNameId = this._getInputByName('classNameId').value;
-
-			if (classNameId > 0) {
-				actionName = articleId
+			if (this.classNameId && this.classNameId !== '0') {
+				actionName = this.articleId
 					? '/journal/update_data_engine_default_values'
 					: '/journal/add_data_engine_default_values';
 			}
 			else {
-				actionName = articleId
+				actionName = this.articleId
 					? '/journal/update_article'
 					: '/journal/add_article';
 			}
@@ -242,7 +258,7 @@ class JournalPortlet extends PortletBase {
 
 		this._setAvailableLocales(this.availableLocales);
 
-		if (!articleId) {
+		if (!this.articleId) {
 			const articleIdInput = this._getInputByName('articleId');
 
 			const newArticleIdInput = this._getInputByName('newArticleId');
@@ -304,6 +320,27 @@ class JournalPortlet extends PortletBase {
 	}
 
 	/**
+	 * @private
+	 */
+	_showAlert(message) {
+		let alertContainer = document.querySelector('.journal-alert-container');
+
+		if (!alertContainer) {
+			alertContainer = document.createElement('div');
+
+			const content = document.querySelector('.article-content-content');
+
+			content.prepend(alertContainer);
+		}
+
+		openToast({
+			container: alertContainer,
+			message,
+			type: 'danger',
+		});
+	}
+
+	/**
 	 * Change the portlet action based on the button clicked
 	 * @param {Event} event
 	 * @private
@@ -317,12 +354,30 @@ class JournalPortlet extends PortletBase {
 			this._setActionName(actionName);
 		}
 	}
+
+	/**
+	 * @private
+	 */
+	_validTitle() {
+		if (!this.classNameId || this.classNameId === '0') {
+			const inputComponent = Liferay.component(this.ns('titleMapAsXML'));
+
+			const value = inputComponent.getValue(this.defaultLanguageId);
+
+			if (!value) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
 
 JournalPortlet.STATE = {
 	_selectedLanguageId: Config.internal().string(),
 	articleId: Config.string(),
 	availableLocales: Config.array(),
+	classNameId: Config.string(),
 	contentTitle: Config.string(),
 	defaultLanguageId: Config.string(),
 };

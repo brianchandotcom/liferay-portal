@@ -124,11 +124,11 @@ const Checkbox = ({
 };
 
 const Main = ({
-	disabled,
 	label,
 	name,
 	onChange,
 	predefinedValue = true,
+	readOnly,
 	required,
 	showAsSwitcher = true,
 	showLabel = true,
@@ -151,7 +151,7 @@ const Main = ({
 		>
 			<Toggle
 				checked={value !== undefined ? value : predefinedValue}
-				disabled={disabled}
+				disabled={readOnly}
 				label={label}
 				name={name}
 				onChange={onChange}

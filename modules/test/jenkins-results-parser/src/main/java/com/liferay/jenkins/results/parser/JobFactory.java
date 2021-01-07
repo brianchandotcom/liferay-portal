@@ -185,6 +185,14 @@ public class JobFactory {
 			return _jobs.get(jobKey);
 		}
 
+		if (jobName.startsWith("test-portal-aws(")) {
+			_jobs.put(
+				jobKey,
+				new PortalAWSJob(jobName, buildProfile, portalBranchName));
+
+			return _jobs.get(jobKey);
+		}
+
 		if (jobName.startsWith("test-portal-environment(")) {
 			_jobs.put(
 				jobKey,

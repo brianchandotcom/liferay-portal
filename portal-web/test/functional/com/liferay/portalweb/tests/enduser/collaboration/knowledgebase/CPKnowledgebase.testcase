@@ -153,9 +153,7 @@ definition {
 	test AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin {
 		property test.name.skip.portal.instance = "CPKnowledgebase#AddKBArticleWithBlogsEntryRelatedAssetViaKBAdmin";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 

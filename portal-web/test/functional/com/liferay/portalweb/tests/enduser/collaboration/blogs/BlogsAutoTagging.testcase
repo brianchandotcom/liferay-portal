@@ -47,11 +47,10 @@ definition {
 	test AddAndRemoveAutoTagViaGogoShell {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#AddOrRemoveAutoTagViaGogoShell";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
-			entryTitle = "Digital Transformation or Digital Experience?");
+			entryTitle = "Digital Transformation or Digital Experience?",
+			groupName = "Site Name");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/blogs-page");
 
@@ -174,11 +173,10 @@ definition {
 			disableAutoTaggingFor = "Site Settings",
 			site = "Site AutoTag Disabled");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-autotag-disabled");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
-			entryTitle = "Digital Transformation or Digital Experience?");
+			entryTitle = "Digital Transformation or Digital Experience?",
+			groupName = "Site AutoTag Disabled");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-autotag-disabled/autotag-disabled-site-page");
 
@@ -198,11 +196,11 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
-		Blogs.addEntryWithTag(
+		JSONBlog.addEntry(
+			assetTagNames = "collaboration",
 			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
 			entryTitle = "Digital Transformation or Digital Experience?",
-			pageName = "Blogs Page",
-			tagName = "collaboration");
+			groupName = "Site Name");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/blogs-page");
 
@@ -224,11 +222,12 @@ definition {
 	test RemoveAutoTag {
 		property test.name.skip.portal.instance = "BlogsAutoTagging#RemoveAutoTag";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
-			entryTitle = "Digital Transformation or Digital Experience?");
+			entryTitle = "Digital Transformation or Digital Experience?",
+			groupName = "Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Digital Transformation or Digital Experience?");
 
@@ -255,11 +254,10 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BlogsAutoTagging#Smoke";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
-			entryTitle = "Digital Transformation or Digital Experience?");
+			entryTitle = "Digital Transformation or Digital Experience?",
+			groupName = "Site Name");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/blogs-page");
 

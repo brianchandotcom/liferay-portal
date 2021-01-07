@@ -391,7 +391,7 @@ definition {
 	test SearchBlogsEntryContent {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 

@@ -507,7 +507,7 @@ definition {
 
 	@priority = "4"
 	test ImportBlogsCommentLAR {
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
@@ -620,15 +620,15 @@ definition {
 
 		Portlet.addPG(portletName = "Blogs");
 
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Refresh();
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content 2",
 			entryTitle = "Blogs Entry Title 2");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsEntry.removeViewPermissionsPG(
 			entryTitle = "Blogs Entry Title 2",

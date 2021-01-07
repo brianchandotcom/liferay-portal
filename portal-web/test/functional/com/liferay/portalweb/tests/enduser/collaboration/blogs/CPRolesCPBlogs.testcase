@@ -70,7 +70,7 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Blogs");
 
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 

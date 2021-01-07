@@ -21,7 +21,6 @@
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"lodash.omit": "^4.5.0",
-		"metal": "2.16.8",
 		"metal-jsx": "2.16.8",
 		"moment": "^2.24.0",
 		"prop-types": "15.7.2",

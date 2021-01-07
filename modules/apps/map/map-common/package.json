@@ -1,7 +1,6 @@
 {
 	"dependencies": {
 		"frontend-js-web": "*",
-		"metal": "2.16.8",
 		"metal-state": "2.16.8"
 	},
 	"name": "map-common",

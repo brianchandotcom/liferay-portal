@@ -13,7 +13,6 @@
  */
 
 import dateFns from 'date-fns';
-import {getUid} from 'metal';
 
 import {CONJUNCTIONS} from './constants.es';
 
@@ -32,12 +31,14 @@ export const createNewGroup = (items) => ({
 	items,
 });
 
+let uniqueIdCounter_ = 1;
+
 /**
  * Generates a unique group id.
  * @return {string} The unique id.
  */
 export function generateGroupId() {
-	return `${GROUP_ID_NAMESPACE}${getUid()}`;
+	return `${GROUP_ID_NAMESPACE}${uniqueIdCounter_++}`;
 }
 
 /**

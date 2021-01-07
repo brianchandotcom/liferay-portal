@@ -12,7 +12,7 @@
  * details.
  */
 
-import {isObject} from 'metal';
+import isObject from './is_object';
 
 /**
  * Returns dimensions and coordinates representing a cropped region

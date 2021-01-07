@@ -12,7 +12,6 @@
  * details.
  */
 
-import core from 'metal';
 import Component from 'metal-component';
 
 import objectToFormData from './util/form/object_to_form_data.es';
@@ -23,6 +22,10 @@ function toElementHelper(elementOrSelector) {
 	}
 
 	return elementOrSelector;
+}
+
+function isString(val) {
+	return typeof val === 'string';
 }
 
 /**
@@ -182,7 +185,7 @@ PortletBase.STATE = {
 	 * @type {string}
 	 */
 	namespace: {
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -193,7 +196,7 @@ PortletBase.STATE = {
 	 * @type {string}
 	 */
 	portletNamespace: {
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**

@@ -12,8 +12,6 @@
  * details.
  */
 
-import {isFunction} from 'metal';
-
 const componentConfigs = {};
 let componentPromiseWrappers = {};
 const components = {};
@@ -136,9 +134,10 @@ const _onStartNavigate = function (event) {
 				}
 			);
 
-			const cacheableComponent = isFunction(component.isCacheable)
-				? component.isCacheable(uri)
-				: false;
+			const cacheableComponent =
+				typeof component.isCacheable === 'function'
+					? component.isCacheable(uri)
+					: false;
 
 			return (
 				cacheableComponent &&
@@ -207,7 +206,7 @@ const component = function (id, value, componentConfig) {
 	if (arguments.length === 1) {
 		let component = components[id];
 
-		if (component && isFunction(component)) {
+		if (component && typeof component === 'function') {
 			componentsFn[id] = component;
 
 			component = component();

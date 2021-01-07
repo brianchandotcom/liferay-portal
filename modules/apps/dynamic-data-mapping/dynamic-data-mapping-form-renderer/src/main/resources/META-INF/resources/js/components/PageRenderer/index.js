@@ -13,7 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import core from 'metal';
+import {isObject} from 'frontend-js-web';
 import React from 'react';
 
 import {PageProvider} from '../../hooks/usePage.es';
@@ -85,13 +85,13 @@ const isEmptyPage = ({rows}) => {
 };
 
 const normalizePage = (page, editingLanguageId) => {
-	if (core.isObject(page.description)) {
+	if (isObject(page.description)) {
 		page = {
 			...page,
 			description: page.description[editingLanguageId],
 		};
 	}
-	if (core.isObject(page.title)) {
+	if (isObject(page.title)) {
 		page = {
 			...page,
 			title: page.title[editingLanguageId],

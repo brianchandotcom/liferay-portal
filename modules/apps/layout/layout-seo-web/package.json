@@ -2,7 +2,6 @@
 	"dependencies": {
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
-		"metal": "2.16.8",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},

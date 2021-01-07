@@ -12,10 +12,16 @@
  * details.
  */
 
-import core from 'metal';
-
 import PortletBase from './PortletBase.es';
 import delegate from './delegate/delegate.es';
+
+function isBoolean(val) {
+	return typeof val === 'boolean';
+}
+
+function isString(val) {
+	return typeof val === 'string';
+}
 
 /**
  * Appends list item elements to dropdown menus with inline-scrollers on scroll
@@ -201,7 +207,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	cur: {
 		setter: 'getNumber_',
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -212,7 +218,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	curParam: {
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -223,7 +229,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {boolean}
 	 */
 	forcePost: {
-		validator: core.isBoolean,
+		validator: isBoolean,
 	},
 
 	/**
@@ -234,7 +240,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	formName: {
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -247,7 +253,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	initialPages: {
 		setter: 'getNumber_',
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -258,7 +264,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	jsCall: {
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -269,7 +275,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	namespace: {
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -281,7 +287,7 @@ DynamicInlineScroll.STATE = {
 	 */
 	pages: {
 		setter: 'getNumber_',
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -292,7 +298,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	randomNamespace: {
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -303,7 +309,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	url: {
-		validator: core.isString,
+		validator: isString,
 	},
 
 	/**
@@ -314,7 +320,7 @@ DynamicInlineScroll.STATE = {
 	 * @type {string}
 	 */
 	urlAnchor: {
-		validator: core.isString,
+		validator: isString,
 	},
 };
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {isObject} from 'metal';
+import isObject from './is_object';
 
 /**
  * Returns a FormData containing serialized object.

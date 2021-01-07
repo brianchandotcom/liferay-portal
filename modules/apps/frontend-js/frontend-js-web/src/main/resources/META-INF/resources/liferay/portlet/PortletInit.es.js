@@ -12,10 +12,10 @@
  * details.
  */
 
-import {isDefAndNotNull, isFunction, isObject, isString} from 'metal';
 import uuidv1 from 'uuid/v1';
 
 import fetch from './../util/fetch.es';
+import isObject from './../util/is_object';
 import RenderState from './RenderState.es';
 import PortletConstants from './portlet_constants.es';
 import {
@@ -202,7 +202,7 @@ class PortletInit {
 	 */
 
 	_setPageState(portletId, updateString) {
-		if (!isString(updateString)) {
+		if (typeof updateString !== 'string') {
 			throw new TypeError(`Invalid update string: ${updateString}`);
 		}
 
@@ -636,7 +636,7 @@ class PortletInit {
 			);
 		}
 
-		if (!isString(type) || !isFunction(handler)) {
+		if (typeof type !== 'string' || typeof handler !== 'function') {
 			throw new TypeError('Invalid arguments passed to addEventListener');
 		}
 
@@ -706,7 +706,7 @@ class PortletInit {
 		let cacheability = null;
 
 		if (cache) {
-			if (isString(cache)) {
+			if (typeof cache === 'string') {
 				if (
 					cache === 'cacheLevelPage' ||
 					cache === 'cacheLevelPortlet' ||
@@ -731,7 +731,7 @@ class PortletInit {
 			cacheability = 'cacheLevelPage';
 		}
 
-		if (resourceId && !isString(resourceId)) {
+		if (resourceId && typeof resourceId !== 'string') {
 			throw new TypeError(
 				'Invalid argument type. Resource ID argument must be a string.'
 			);
@@ -838,7 +838,7 @@ class PortletInit {
 			);
 		}
 
-		if (!isDefAndNotNull(handle)) {
+		if (handle === undefined || handle === null) {
 			throw new TypeError(
 				`The event handle provided is ${typeof handle}`
 			);

@@ -12,8 +12,7 @@
  * details.
  */
 
-import {isDef, isObject, isString} from 'metal';
-
+import isObject from './../is_object';
 import setFormValues from './set_form_values.es';
 
 /**
@@ -44,10 +43,10 @@ export default function postForm(form, options) {
 				return;
 			}
 
-			if (!isDef(url)) {
+			if (url === undefined) {
 				submitForm(form);
 			}
-			else if (isString(url)) {
+			else if (typeof url === 'string') {
 				submitForm(form, url);
 			}
 		}

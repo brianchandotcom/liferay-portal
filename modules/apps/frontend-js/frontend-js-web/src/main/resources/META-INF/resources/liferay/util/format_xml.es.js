@@ -12,8 +12,6 @@
  * details.
  */
 
-import {isString} from 'metal';
-
 const NEW_LINE = '\r\n';
 
 const REGEX_CDATA = /<!\[CDATA\[.*?\]\]>/gs;
@@ -75,7 +73,7 @@ export default function formatXML(content, options = {}) {
 		...options,
 	};
 
-	if (!isString(content)) {
+	if (typeof content !== 'string') {
 		throw new TypeError('Parameter content must be a string');
 	}
 

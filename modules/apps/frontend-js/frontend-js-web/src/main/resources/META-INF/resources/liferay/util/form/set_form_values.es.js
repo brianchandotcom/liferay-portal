@@ -12,8 +12,7 @@
  * details.
  */
 
-import {isDef, isObject} from 'metal';
-
+import isObject from './../is_object';
 import getFormElement from './get_form_element.es';
 
 /**
@@ -25,7 +24,7 @@ import getFormElement from './get_form_element.es';
  */
 
 export default function setFormValues(form, data) {
-	if (!isDef(form) || form.nodeName !== 'FORM' || !isObject(data)) {
+	if (form === undefined || form.nodeName !== 'FORM' || !isObject(data)) {
 		return;
 	}
 

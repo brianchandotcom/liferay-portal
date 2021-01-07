@@ -12,8 +12,6 @@
  * details.
  */
 
-import {isNumber} from 'metal';
-
 const DEFAULT_OPTIONS = {
 	addSpaceBeforeSuffix: false,
 	decimalSeparator: '.',
@@ -44,7 +42,7 @@ export default function formatStorage(size, options = {}) {
 		...options,
 	};
 
-	if (!isNumber(size)) {
+	if (typeof size !== 'number') {
 		throw new TypeError('Parameter size must be a number');
 	}
 

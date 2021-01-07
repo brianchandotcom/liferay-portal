@@ -29,7 +29,6 @@ import {
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
 import {delegate} from 'frontend-js-web';
-import core from 'metal';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
@@ -970,12 +969,18 @@ class Form extends Component {
 			successPageSettings.enabled = true;
 		}
 
-		if (successPageSettings && core.isString(successPageSettings.title)) {
+		if (
+			successPageSettings &&
+			typeof successPageSettings.title === 'string'
+		) {
 			successPageSettings.title = {};
 			successPageSettings.title[defaultLanguageId] = '';
 		}
 
-		if (successPageSettings && core.isString(successPageSettings.body)) {
+		if (
+			successPageSettings &&
+			typeof successPageSettings.body === 'string'
+		) {
 			successPageSettings.body = {};
 			successPageSettings.body[defaultLanguageId] = '';
 		}
@@ -1020,14 +1025,14 @@ class Form extends Component {
 					title,
 				} = page;
 
-				if (description && !core.isString(description)) {
+				if (description && typeof description !== 'string') {
 					description = description[themeDisplay.getLanguageId()];
 					localizedDescription = {
 						[themeDisplay.getLanguageId()]: description,
 					};
 				}
 
-				if (title && !core.isString(title)) {
+				if (title && typeof title !== 'string') {
 					title = title[themeDisplay.getLanguageId()];
 					localizedTitle = {
 						[themeDisplay.getLanguageId()]: title,

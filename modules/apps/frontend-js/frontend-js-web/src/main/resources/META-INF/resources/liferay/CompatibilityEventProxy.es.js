@@ -12,8 +12,9 @@
  * details.
  */
 
-import {core} from 'metal';
 import State from 'metal-state';
+
+import isObject from './util/is_object';
 
 /**
  * Adds compatibility for YUI events, re-emitting events according to YUI naming
@@ -75,7 +76,7 @@ class CompatibilityEventProxy extends State {
 					: eventName;
 				const yuiEvent = target._yuievt.events[prefixedEventName];
 
-				if (core.isObject(event)) {
+				if (isObject(event)) {
 					try {
 						event.target = this.host;
 					}

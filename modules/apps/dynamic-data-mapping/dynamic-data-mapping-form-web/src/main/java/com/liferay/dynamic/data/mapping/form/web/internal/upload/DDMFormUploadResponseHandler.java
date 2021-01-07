@@ -58,7 +58,8 @@ public class DDMFormUploadResponseHandler implements UploadResponseHandler {
 			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-extension-x",
 				StringUtil.merge(
-					_ddmFormUploadValidator.getGuestUploadFileExtensions()));
+					_ddmFormUploadValidator.getGuestUploadFileExtensions(),
+					StringPool.COMMA_AND_SPACE));
 		}
 		else if (portalException instanceof FileNameException) {
 			errorMessage = themeDisplay.translate(

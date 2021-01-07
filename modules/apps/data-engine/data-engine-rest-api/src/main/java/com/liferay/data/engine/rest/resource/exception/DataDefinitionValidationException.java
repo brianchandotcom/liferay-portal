@@ -149,7 +149,7 @@ public class DataDefinitionValidationException extends RuntimeException {
 			return _fieldName;
 		}
 
-		private String _fieldName;
+		private final String _fieldName;
 
 	}
 
@@ -185,7 +185,7 @@ public class DataDefinitionValidationException extends RuntimeException {
 		}
 
 		private final String _fieldLabel;
-		private String _fieldName;
+		private final String _fieldName;
 
 	}
 
@@ -213,8 +213,8 @@ public class DataDefinitionValidationException extends RuntimeException {
 			return _property;
 		}
 
-		private String _fieldName;
-		private String _property;
+		private final String _fieldName;
+		private final String _property;
 
 	}
 
@@ -233,7 +233,7 @@ public class DataDefinitionValidationException extends RuntimeException {
 			return _fieldName;
 		}
 
-		private String _fieldName;
+		private final String _fieldName;
 
 	}
 
@@ -297,8 +297,8 @@ public class DataDefinitionValidationException extends RuntimeException {
 			return _property;
 		}
 
-		private String _fieldName;
-		private String _property;
+		private final String _fieldName;
+		private final String _property;
 
 	}
 
@@ -317,7 +317,7 @@ public class DataDefinitionValidationException extends RuntimeException {
 			return _fieldName;
 		}
 
-		private String _fieldName;
+		private final String _fieldName;
 
 	}
 

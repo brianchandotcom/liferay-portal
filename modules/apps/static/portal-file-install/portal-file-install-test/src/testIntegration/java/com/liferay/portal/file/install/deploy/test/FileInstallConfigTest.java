@@ -173,13 +173,11 @@ public class FileInstallConfigTest {
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
-			String actualWarningMessage = (String)loggingEvent.getMessage();
-
-			String expectedWarningMessage = StringBundler.concat(
-				"Unable to install .cfg file ", configPathDeprecated.toString(),
-				", please use .config file instead.");
-
-			Assert.assertEquals(expectedWarningMessage, actualWarningMessage);
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to install .cfg file ", configPathDeprecated,
+					", please use .config file instead."),
+				loggingEvent.getMessage());
 
 			Configuration configurationDeprecated =
 				_configurationAdmin.getConfiguration(

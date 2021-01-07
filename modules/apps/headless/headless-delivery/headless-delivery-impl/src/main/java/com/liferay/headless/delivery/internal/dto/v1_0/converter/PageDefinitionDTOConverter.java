@@ -69,16 +69,13 @@ public class PageDefinitionDTOConverter
 			Layout.class::cast
 		).orElseThrow(
 			() -> new IllegalArgumentException(
-				"Layout not defined for layout structure item " +
+				"Layout is not defined for layout structure item " +
 					layoutStructure.getMainItemId())
 		);
-
 		LayoutStructureItem mainLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
-
 		boolean saveInlineContent = GetterUtil.getBoolean(
 			dtoConverterContext.getAttribute("saveInlineContent"), true);
-
 		boolean saveMappingConfiguration = GetterUtil.getBoolean(
 			dtoConverterContext.getAttribute("saveMappingConfiguration"), true);
 

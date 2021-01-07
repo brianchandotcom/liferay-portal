@@ -54,7 +54,7 @@ public class PageElementDTOConverter
 
 		if (groupIdObject == null) {
 			throw new IllegalArgumentException(
-				"GroupId not defined for layout structure item " +
+				"Group ID is not defined for layout structure item " +
 					layoutStructureItem.getItemId());
 		}
 
@@ -66,13 +66,11 @@ public class PageElementDTOConverter
 			LayoutStructure.class::cast
 		).orElseThrow(
 			() -> new IllegalArgumentException(
-				"Layout structure not defined for layout structure item " +
+				"Layout structure is not defined for layout structure item " +
 					layoutStructureItem.getItemId())
 		);
-
 		boolean saveInlineContent = GetterUtil.getBoolean(
 			dtoConverterContext.getAttribute("saveInlineContent"), true);
-
 		boolean saveMappingConfiguration = GetterUtil.getBoolean(
 			dtoConverterContext.getAttribute("saveMappingConfiguration"), true);
 

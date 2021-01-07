@@ -41,7 +41,7 @@ public class AccountEntryTestUtil {
 
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), null, null,
+			RandomTestUtil.randomString(50), null, null, null,
 			RandomTestUtil.randomString(50),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, status,
 			ServiceContextTestUtil.getServiceContext());
@@ -54,7 +54,7 @@ public class AccountEntryTestUtil {
 
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, name, description, null, null,
-			RandomTestUtil.randomString(50),
+			null, RandomTestUtil.randomString(50),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
@@ -66,7 +66,7 @@ public class AccountEntryTestUtil {
 
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), domains, null,
+			RandomTestUtil.randomString(50), domains, null, null,
 			RandomTestUtil.randomString(50),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
@@ -79,7 +79,7 @@ public class AccountEntryTestUtil {
 
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), null, null,
+			RandomTestUtil.randomString(50), null, null, null,
 			RandomTestUtil.randomString(50),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
 			WorkflowConstants.STATUS_APPROVED,

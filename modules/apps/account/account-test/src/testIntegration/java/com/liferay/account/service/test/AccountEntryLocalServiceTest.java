@@ -99,7 +99,7 @@ public class AccountEntryLocalServiceTest {
 			TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
@@ -843,7 +843,8 @@ public class AccountEntryLocalServiceTest {
 		return _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), parentAccountEntryId,
 			RandomTestUtil.randomString(50), RandomTestUtil.randomString(50),
-			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			null, null, null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -897,7 +898,7 @@ public class AccountEntryLocalServiceTest {
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			userId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
-			RandomTestUtil.randomString(), null, null, null, type,
+			RandomTestUtil.randomString(), null, null, null, null, type,
 			WorkflowConstants.STATUS_APPROVED, null);
 
 		if (ArrayUtil.isNotEmpty(organizationIds)) {

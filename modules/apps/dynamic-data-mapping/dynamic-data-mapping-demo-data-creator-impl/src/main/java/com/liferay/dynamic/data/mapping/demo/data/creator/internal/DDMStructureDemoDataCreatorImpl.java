@@ -58,6 +58,8 @@ public class DDMStructureDemoDataCreatorImpl
 
 		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
+		ddmFormLayout.setPaginationMode(DDMFormLayout.WIZARD_MODE);
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
 			userId, groupId, 0,
 			_portal.getClassNameId(DDMFormInstance.class.getName()), null,

@@ -259,6 +259,7 @@ exports[`Field Checkbox is not editable 1`] = `
       <input
         checked=""
         class="toggle-switch-check"
+        disabled=""
         type="checkbox"
         value="true"
       />

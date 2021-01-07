@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 
 import java.util.List;
 
@@ -51,6 +52,11 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 	public BatchTestClassGroup getBatchTestClassGroup() {
 		return _batchTestClassGroup;
+	}
+
+	@Override
+	public Job getJob() {
+		return _batchTestClassGroup.getJob();
 	}
 
 	public Integer getMinimumSlaveRAM() {

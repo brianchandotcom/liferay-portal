@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.Job;
+
 import java.io.File;
 
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.List;
  * @author Peter Yoo
  */
 public interface TestClassGroup {
+
+	public Job getJob();
 
 	public List<TestClass> getTestClasses();
 

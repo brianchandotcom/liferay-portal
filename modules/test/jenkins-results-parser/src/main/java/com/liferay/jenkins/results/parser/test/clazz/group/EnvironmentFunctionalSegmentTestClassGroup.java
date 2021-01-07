@@ -15,6 +15,8 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalFixpackEnvironmentJob;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -43,11 +45,13 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 		entries.add(_getBrowserVersionEntry());
 		entries.add(_getDatabaseTypeEntry());
 		entries.add(_getDatabaseVersionEntry());
+		entries.add(_getFixPackURLEntry());
 		entries.add(_getJavaJDKArchitectureEntry());
 		entries.add(_getJavaJDKTypeEntry());
 		entries.add(_getJavaJDKVersionEntry());
 		entries.add(_getOperatingSystemTypeEntry());
 		entries.add(_getOperatingSystemVersionEntry());
+		entries.add(_getTestrayBuildNameEntry());
 
 		entries.removeAll(Collections.singleton(null));
 
@@ -122,6 +126,23 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 		return new AbstractMap.SimpleEntry<>(key, value);
 	}
 
+	private Map.Entry<String, String> _getFixPackURLEntry() {
+		Job job = getJob();
+
+		if (!(job instanceof PortalFixpackEnvironmentJob)) {
+			return null;
+		}
+
+		String fixPackZipURL = System.getenv("TEST_BUILD_FIX_PACK_ZIP_URL");
+
+		if ((fixPackZipURL == null) || !fixPackZipURL.matches("https?://.*")) {
+			return null;
+		}
+
+		return new AbstractMap.SimpleEntry<>(
+			"TEST_BUILD_FIX_PACK_ZIP_URL", fixPackZipURL);
+	}
+
 	private Map.Entry<String, String> _getJavaJDKArchitectureEntry() {
 		return _getEnvironmentVariableEntry(
 			"JAVA_JDK_ARCHITECTURE", "environment.java.jdk.architecture");
@@ -145,6 +166,23 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 	private Map.Entry<String, String> _getOperatingSystemVersionEntry() {
 		return _getEnvironmentVariableEntry(
 			"OPERATING_SYSTEM_VERSION", "environment.operating.system.version");
+	}
+
+	private Map.Entry<String, String> _getTestrayBuildNameEntry() {
+		Job job = getJob();
+
+		if (!(job instanceof PortalFixpackEnvironmentJob)) {
+			return null;
+		}
+
+		String testrayBuildName = System.getenv("TESTRAY_BUILD_NAME");
+
+		if ((testrayBuildName == null) || testrayBuildName.isEmpty()) {
+			return null;
+		}
+
+		return new AbstractMap.SimpleEntry<>(
+			"TESTRAY_BUILD_NAME", testrayBuildName);
 	}
 
 	private final EnvironmentFunctionalBatchTestClassGroup

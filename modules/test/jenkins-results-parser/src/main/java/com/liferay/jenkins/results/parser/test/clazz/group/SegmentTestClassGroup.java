@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,11 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 
 	public String getBatchName() {
 		return _parentBatchTestClassGroup.getBatchName();
+	}
+
+	@Override
+	public Job getJob() {
+		return _parentBatchTestClassGroup.getJob();
 	}
 
 	public Integer getMaximumSlavesPerHost() {

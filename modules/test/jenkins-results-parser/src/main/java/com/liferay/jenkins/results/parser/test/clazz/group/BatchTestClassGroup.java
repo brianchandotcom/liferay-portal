@@ -18,6 +18,7 @@ import com.google.common.collect.Lists;
 
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
@@ -90,6 +91,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public String getBatchName() {
 		return batchName;
+	}
+
+	@Override
+	public Job getJob() {
+		return portalTestClassJob;
 	}
 
 	public Properties getJobProperties() {

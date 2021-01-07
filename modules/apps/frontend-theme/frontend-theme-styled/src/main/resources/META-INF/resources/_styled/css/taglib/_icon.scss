@@ -37,10 +37,10 @@ a.taglib-icon {
 	&[class*=' icon-'] {
 		color: inherit;
 		display: inline-block;
-		height: $icon-monospaced-size;
+		height: 2rem;
 		line-height: 34px;
 		text-align: center;
-		width: $icon-monospaced-size;
+		width: 2rem;
 	}
 
 	&.lexicon-icon {

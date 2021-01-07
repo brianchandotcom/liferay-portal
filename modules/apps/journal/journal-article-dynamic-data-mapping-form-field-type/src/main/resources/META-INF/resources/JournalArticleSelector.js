@@ -18,6 +18,18 @@ import {ReactFieldBase} from 'dynamic-data-mapping-form-field-type';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+function parseInputValue(inputValue) {
+	if (!inputValue) {
+		return {};
+	}
+
+	if (typeof inputValue === 'object') {
+		return inputValue;
+	}
+
+	return JSON.parse(inputValue);
+}
+
 const JournalArticleSelector = ({
 	disabled,
 	inputValue,
@@ -26,12 +38,10 @@ const JournalArticleSelector = ({
 	onChange,
 	portletNamespace,
 }) => {
-	const [article, setArticle] = useState(() =>
-		JSON.parse(inputValue || '{}')
-	);
+	const [article, setArticle] = useState(() => parseInputValue(inputValue));
 
 	useEffect(() => {
-		setArticle(JSON.parse(inputValue || '{}'));
+		setArticle(parseInputValue(inputValue));
 	}, [inputValue]);
 
 	const handleClearClick = () => {

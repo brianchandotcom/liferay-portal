@@ -52,8 +52,6 @@ import java.util.Optional;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.validation.constraints.NotNull;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -74,7 +72,7 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Override
 	public ContentPage getSiteContentPagePrivateFriendlyUrlPath(
-			@NotNull Long siteId, @NotNull String friendlyUrlPath)
+			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
 		return _toContentPage(
@@ -84,7 +82,7 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Override
 	public String getSiteContentPagePrivateFriendlyUrlPathRenderedPage(
-			@NotNull Long siteId, @NotNull String friendlyUrlPath)
+			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
 		return _getRenderedLayout(friendlyUrlPath, true, siteId);
@@ -92,7 +90,7 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Override
 	public ContentPage getSiteContentPagePublicFriendlyUrlPath(
-			@NotNull Long siteId, @NotNull String friendlyUrlPath)
+			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
 		return _toContentPage(
@@ -102,7 +100,7 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Override
 	public String getSiteContentPagePublicFriendlyUrlPathRenderedPage(
-			@NotNull Long siteId, @NotNull String friendlyUrlPath)
+			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
 		return _getRenderedLayout(friendlyUrlPath, false, siteId);
@@ -110,8 +108,8 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Override
 	public Page<ContentPage> getSiteContentPagesPage(
-		@NotNull Long siteId, String search, Aggregation aggregation,
-		Filter filter, Pagination pagination, Sort[] sorts) {
+		Long siteId, String search, Aggregation aggregation, Filter filter,
+		Pagination pagination, Sort[] sorts) {
 
 		List<Layout> layouts = _layoutService.getLayouts(
 			siteId, LayoutConstants.TYPE_CONTENT);

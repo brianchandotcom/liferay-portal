@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
 import java.net.URLEncoder;
@@ -35,7 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -75,6 +73,121 @@ public class GitHubWebhookPayloadProcessor {
 		_testPullRequestURLs.put(url, System.currentTimeMillis());
 	}
 
+	public String getCIJobName(
+		PullRequestTesterParameters pullRequestTesterParameters) {
+
+		if (_ciForwardEligible) {
+			return "forward-pullrequest";
+		}
+
+		String ciReevaluateBuildId =
+			pullRequestTesterParameters.getCiReevaluateBuildId();
+
+		if (ciReevaluateBuildId != null) {
+			return "test-portal-evaluate-pullrequest";
+		}
+
+		String ciTestSuiteName =
+			pullRequestTesterParameters.getCiTestSuiteName();
+
+		if (ciTestSuiteName.equals("sf")) {
+			return "test-portal-source-format";
+		}
+
+		PullRequest pullRequest = pullRequestTesterParameters.getPullRequest();
+
+		String repositoryName = pullRequest.getGitRepositoryName();
+
+		if (repositoryName.equals("liferay-jenkins-ee")) {
+			return "test-jenkins-acceptance-pullrequest";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		if (repositoryName.startsWith("com-liferay-")) {
+			sb.append("test-subrepository-acceptance-pullrequest");
+		}
+		else if (repositoryName.startsWith("liferay-plugins")) {
+			sb.append("test-plugins-acceptance-pullrequest");
+		}
+		else if (repositoryName.startsWith("liferay-portal")) {
+			sb.append("test-portal-acceptance-pullrequest");
+		}
+
+		sb.append("(");
+
+		String upstreamBranchName = pullRequest.getUpstreamBranchName();
+
+		GitHubRemoteGitRepository gitHubRemoteGitRepository =
+			pullRequest.getGitHubRemoteGitRepository();
+
+		if (gitHubRemoteGitRepository.isSubrepository() &&
+			(upstreamBranchName != null)) {
+
+			sb.append(upstreamBranchName);
+		}
+		else {
+			sb.append(pullRequest.getSenderBranchName());
+		}
+
+		sb.append(")");
+
+		return sb.toString();
+	}
+
+	public List<String> getCITestAutoTestSuiteNames(PullRequest pullRequest) {
+		String ciTestAutoRecipientsProperty =
+			JenkinsResultsParserUtil.getCIProperty(
+				pullRequest.getUpstreamBranchName(), "ci.test.auto.recipients",
+				pullRequest.getGitHubRemoteGitRepositoryName());
+
+		if ((ciTestAutoRecipientsProperty == null) ||
+			ciTestAutoRecipientsProperty.isEmpty()) {
+
+			return Collections.emptyList();
+		}
+
+		Pattern pattern = Pattern.compile(
+			pullRequest.getOwnerUsername() + "\\[(?<testSuiteNames>[^\\]]+)]");
+
+		for (String ciTestAutoRecipient :
+				ciTestAutoRecipientsProperty.split("\\s*,\\s*")) {
+
+			Matcher matcher = pattern.matcher(ciTestAutoRecipient);
+
+			if (!matcher.matches()) {
+				continue;
+			}
+
+			String ciTestAutoTestSuiteNames = matcher.group("testSuiteNames");
+
+			return Arrays.asList(ciTestAutoTestSuiteNames.split(":"));
+		}
+
+		return Collections.emptyList();
+	}
+
+	public Set<String> getPassingTestSuites() throws JSONException {
+		if ((_passingTestSuites != null) && !_passingTestSuites.isEmpty()) {
+			return _passingTestSuites;
+		}
+
+		_passingTestSuites = new HashSet<>();
+
+		PullRequest pullRequest = _payloadJSONObject.getPullRequest();
+
+		for (String statusDescription : pullRequest.getStatusDescriptions()) {
+			Matcher matcher = _passingTestSuiteStatusDescriptionPattern.matcher(
+				statusDescription);
+
+			if (matcher.matches()) {
+				_passingTestSuites.add(matcher.group("testSuiteName"));
+			}
+		}
+
+		return _passingTestSuites;
+	}
+
 	public List<String> getTestPullRequestQueryStrings() {
 		long expiredTime = getTestPullRequestQueryStringExpiredTime();
 
@@ -107,6 +220,51 @@ public class GitHubWebhookPayloadProcessor {
 		}
 
 		return new ArrayList<>(_testPullRequestURLs.keySet());
+	}
+
+	public void invokePullRequestTester(
+		String masterURL,
+		PullRequestTesterParameters pullRequestTesterParameters) {
+
+		PullRequest pullRequest = pullRequestTesterParameters.getPullRequest();
+
+		String invocationURL = JenkinsResultsParserUtil.combine(
+			masterURL, "/job/", getCIJobName(pullRequestTesterParameters),
+			"/buildWithParameters?",
+			pullRequestTesterParameters.toQueryString());
+
+		addTestPullRequestURL(invocationURL);
+
+		if (isJenkinsJobEnabled()) {
+			processURL(invocationURL);
+
+			String ciReevaluateBuildId =
+				pullRequestTesterParameters.getCiReevaluateBuildId();
+
+			ciReevaluateBuildId = ciReevaluateBuildId.trim();
+
+			if (_ciForwardEligible || ciReevaluateBuildId.isEmpty()) {
+				return;
+			}
+
+			String publicJobURL = JenkinsResultsParserUtil.getRemoteURL(
+				invocationURL.replaceFirst("(.*)/.*", "$1"));
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					JenkinsResultsParserUtil.combine(
+						"Pull request test invoked at ", publicJobURL, "."));
+			}
+
+			pullRequest.setTestSuiteStatus(
+				pullRequestTesterParameters.getCiTestSuiteName(),
+				PullRequest.TestSuiteStatus.PENDING, publicJobURL);
+		}
+		else {
+			if (_log.isInfoEnabled()) {
+				_log.info("Pull request test URL: " + invocationURL);
+			}
+		}
 	}
 
 	public boolean isGitHubAutopullEnabled() {
@@ -184,6 +342,22 @@ public class GitHubWebhookPayloadProcessor {
 	public boolean isValidAutopull(String repo) {
 		if (repo.startsWith("com-liferay-")) {
 			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isValidCIMergeFile(PullRequest pullRequest) {
+		List<String> filenames = pullRequest.getFilenames();
+
+		if (filenames.size() > 1) {
+			return false;
+		}
+
+		for (String filename : filenames) {
+			if (filename.endsWith("/ci-merge")) {
+				return true;
+			}
 		}
 
 		return false;
@@ -291,33 +465,6 @@ public class GitHubWebhookPayloadProcessor {
 		_testPullRequestURLs.remove(url);
 	}
 
-	protected void closePullRequest(PullRequest pullRequest) {
-		if (!isGitHubPostEnabled()) {
-			return;
-		}
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("state", "closed");
-
-		processURL(
-			JenkinsResultsParserUtil.combine(
-				"https://api.github.com/repos/", pullRequest.getOwnerName(),
-				"/", pullRequest.getRepositoryName(), "/pulls/",
-				String.valueOf(pullRequest.getNumber())),
-			jsonObject.toString(), HttpRequestMethod.PATCH);
-	}
-
-	protected void closePullRequest(PullRequest pullRequest, String message) {
-		if (!isGitHubPostEnabled()) {
-			return;
-		}
-
-		commentPullRequest(pullRequest, message);
-
-		closePullRequest(pullRequest);
-	}
-
 	protected void commentMergeSubrepoPullRequest(PullRequest pullRequest) {
 		try {
 			String currentSHA = "";
@@ -325,9 +472,9 @@ public class GitHubWebhookPayloadProcessor {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("https://raw.githubusercontent.com/liferay/");
-			sb.append(pullRequest.getRepositoryName());
+			sb.append(pullRequest.getGitHubRemoteGitRepositoryName());
 			sb.append("/");
-			sb.append(pullRequest.getRefName());
+			sb.append(pullRequest.getUpstreamBranchName());
 			sb.append("/");
 			sb.append(pullRequest.getCIMergeSubrepo());
 			sb.append("/.gitrepo");
@@ -348,7 +495,7 @@ public class GitHubWebhookPayloadProcessor {
 				repo = matcher.group(1);
 			}
 
-			String mergeSHA = pullRequest.getCIMergeSha();
+			String mergeSHA = pullRequest.getCIMergeSHA();
 
 			String compareURL =
 				"https://github.com/liferay/" + repo + "/compare/" +
@@ -363,7 +510,7 @@ public class GitHubWebhookPayloadProcessor {
 					"\n\nci:test:sf and ci:test:relevant must pass in order " +
 						"for auto-merge to initiate.";
 
-			commentPullRequest(pullRequest, message);
+			pullRequest.addComment(message);
 		}
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
@@ -375,47 +522,30 @@ public class GitHubWebhookPayloadProcessor {
 		}
 	}
 
-	protected void commentPullRequest(PullRequest pullRequest, String message) {
-		if (!isGitHubPostEnabled()) {
-			return;
-		}
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("body", message);
-
-		processURL(
-			"https://api.github.com/repos/" + pullRequest.getOwnerName() + "/" +
-				pullRequest.getRepositoryName() + "/issues/" +
-					pullRequest.getNumber() + "/comments",
-			jsonObject.toString());
-	}
-
-	protected String encode(String string) {
-		try {
-			return URLEncoder.encode(string, "UTF-8");
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new RuntimeException(
-				"Unsupported Encoding: UTF-8", unsupportedEncodingException);
-		}
-	}
-
 	protected String formatCSV(String string) {
-		string = string.replace(",", ", ");
+		string = string.replaceAll("\\s*,\\s*", ", ");
 
-		if (StringUtils.countMatches(string, ", ") == 1) {
-			string = string.replace(", ", " or ");
+		string = string.replaceFirst(",\\s+$", "");
+
+		return string.replaceFirst("(.*), (.+)", "$1 or $2");
+	}
+
+	protected List<String> getAllowedSenderUsernames(PullRequest pullRequest) {
+		String allowedSenderNamesProperty =
+			JenkinsResultsParserUtil.getCIProperty(
+				pullRequest.getUpstreamBranchName(),
+				JenkinsResultsParserUtil.combine(
+					"allowed.sender.names[", pullRequest.getOwnerUsername(),
+					"]"),
+				pullRequest.getGitHubRemoteGitRepositoryName());
+
+		if ((allowedSenderNamesProperty == null) ||
+			allowedSenderNamesProperty.isEmpty()) {
+
+			return Collections.emptyList();
 		}
-		else if (StringUtils.countMatches(string, ", ") > 1) {
-			int index = string.lastIndexOf(", ");
 
-			string =
-				string.substring(0, index) + ", or " +
-					string.substring(index + 2);
-		}
-
-		return string;
+		return Arrays.asList(allowedSenderNamesProperty.split("\\s*,\\s*"));
 	}
 
 	protected List<String> getBuildURLs(JSONObject payloadJSONObject) {
@@ -479,6 +609,28 @@ public class GitHubWebhookPayloadProcessor {
 		return branchName + "-private";
 	}
 
+	protected List<String> getJiraProjectKeys(PullRequest pullRequest) {
+		if (_jiraProjectKeys != null) {
+			return _jiraProjectKeys;
+		}
+
+		String branchName = pullRequest.getUpstreamBranchName();
+
+		String repositoryName = pullRequest.getGitRepositoryName();
+
+		String jiraProjectKeysProperty = JenkinsResultsParserUtil.getCIProperty(
+			branchName, "jira.project.keys", repositoryName);
+
+		if ((jiraProjectKeysProperty != null) &&
+			jiraProjectKeysProperty.isEmpty()) {
+
+			_jiraProjectKeys = Arrays.asList(
+				jiraProjectKeysProperty.split("\\s*,\\s*"));
+		}
+
+		return _jiraProjectKeys;
+	}
+
 	protected String getSubrepoCentralMergePullRequestRecipientName(
 		String refName) {
 
@@ -540,13 +692,13 @@ public class GitHubWebhookPayloadProcessor {
 		return System.currentTimeMillis() - 21600000; // 6 hours
 	}
 
-	protected boolean hasLiferayEmailAddress(String login) {
-		if (login.equals("liferay")) {
+	protected boolean hasLiferayEmailAddress(String githubUsername) {
+		if (githubUsername.equals("liferay")) {
 			return true;
 		}
 
 		JSONObject jsonObject = new JSONObject(
-			processURL("https://api.github.com/users/" + login));
+			processURL("https://api.github.com/users/" + githubUsername));
 
 		String emailAddress = jsonObject.optString("email");
 
@@ -555,6 +707,60 @@ public class GitHubWebhookPayloadProcessor {
 		}
 
 		return false;
+	}
+
+	protected boolean hasValidJIRAReferences(PullRequest pullRequest) {
+		String ownerUsername = pullRequest.getOwnerUsername();
+
+		if (!ownerUsername.equals("brianchandotcom")) {
+			return true;
+		}
+
+		List<String> jiraProjectKeys = getJiraProjectKeys(pullRequest);
+
+		if (jiraProjectKeys.isEmpty()) {
+			return true;
+		}
+
+		for (GitCommit commit : pullRequest.getGitHubRemoteCommits()) {
+			String message = commit.getMessage();
+
+			if (message.contains("subrepo:ignore")) {
+				return true;
+			}
+
+			boolean hasJIRAProjectKey = false;
+
+			for (String jiraProjectKey : _jiraProjectKeys) {
+				if (message.contains(jiraProjectKey + "-")) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Contains JIRA project keys " + jiraProjectKey);
+					}
+
+					hasJIRAProjectKey = true;
+				}
+			}
+
+			String emailAddress = commit.getEmailAddress();
+
+			if (emailAddress.equals("brian.chan@liferay.com") ||
+				emailAddress.equals("continuous-integration@liferay.com") ||
+				emailAddress.equals("samuel.tran@liferay.com")) {
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Allow commit from Brian, Sam, or CI");
+				}
+
+				continue;
+			}
+
+			if (!hasJIRAProjectKey) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected void invokeCIStart(
@@ -623,15 +829,15 @@ public class GitHubWebhookPayloadProcessor {
 		return true;
 	}
 
-	protected boolean isLiferayUser(String userLogin) {
-		if (userLogin.equals("liferay")) {
+	protected boolean isLiferayUser(String gitHubUsername) {
+		if (gitHubUsername.equals("liferay")) {
 			return true;
 		}
 
 		JSONArray jsonArray = new JSONArray(
 			processURL(
 				JenkinsResultsParserUtil.combine(
-					"https://api.github.com/users/", userLogin, "/orgs")));
+					"https://api.github.com/users/", gitHubUsername, "/orgs")));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -640,7 +846,7 @@ public class GitHubWebhookPayloadProcessor {
 
 			if (organizationLogin.equals("liferay")) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Valid Liferay member: " + userLogin);
+					_log.info("Valid Liferay member: " + gitHubUsername);
 				}
 
 				return true;
@@ -648,55 +854,70 @@ public class GitHubWebhookPayloadProcessor {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Invalid Liferay member: " + userLogin);
+			_log.info("Invalid Liferay member: " + gitHubUsername);
 		}
 
 		return false;
 	}
 
+	protected boolean isSynchronizeablePullRequest(PullRequest pullRequest) {
+		String receiverUsername = pullRequest.getReceiverUsername();
+
+		if (receiverUsername.equals("brianchandotcom")) {
+			return false;
+		}
+
+		return true;
+	}
+
 	protected boolean isTestablePullRequest(PullRequest pullRequest) {
-		if (!pullRequest.isValidRef()) {
+		String branchName = pullRequest.getUpstreamBranchName();
+
+		String repositoryName = pullRequest.getGitRepositoryName();
+
+		List<String> ciEnabledBranchNames = _getCIEnabledBranchNames(
+			repositoryName);
+
+		if (!ciEnabledBranchNames.contains(branchName)) {
 			StringBuilder sb = new StringBuilder(4);
 
 			sb.append("Closing pull request because pulls for reference ");
-			sb.append(pullRequest.getRefName());
+			sb.append(branchName);
 			sb.append(" should not be sent to repository ");
-			sb.append(pullRequest.getRepositoryName());
+			sb.append(repositoryName);
 
-			String message = sb.toString();
+			if (_log.isInfoEnabled()) {
+				_log.info(sb.toString());
+			}
+
+			pullRequest.addComment(sb.toString());
+
+			pullRequest.close();
+
+			return false;
+		}
+
+		String ownerUsername = pullRequest.getOwnerUsername();
+
+		if (!_whiteListedOwnerNames.contains(ownerUsername)) {
+			String message = JenkinsResultsParserUtil.combine(
+				"Skip pull request because the owner ", ownerUsername,
+				" is not on the whitelist\n\nPull request tests have been ",
+				"temporarily suspended.");
 
 			if (_log.isInfoEnabled()) {
 				_log.info(message);
 			}
 
-			closePullRequest(pullRequest, message);
+			pullRequest.addComment(message);
 
 			return false;
 		}
 
-		if (!pullRequest.isWhitelistedOwner()) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Skip pull request because the owner " +
-						pullRequest.getOwnerName() +
-							" is not on the whitelist");
-			}
+		String senderUsername = pullRequest.getSenderUsername();
 
-			String message =
-				"Pull request tests have been temporarily suspended.";
-
-			commentPullRequest(pullRequest, message);
-
-			return false;
-		}
-
-		String ownerName = pullRequest.getOwnerName();
-		String refName = pullRequest.getRefName();
-		String repositoryName = pullRequest.getRepositoryName();
-		String senderName = pullRequest.getSenderName();
-
-		if (ownerName.equals(
-				getSubrepoCentralMergePullRequestRecipientName(refName)) &&
+		if (ownerUsername.equals(
+				getSubrepoCentralMergePullRequestRecipientName(branchName)) &&
 			pullRequest.isMergeSubrepoRequest()) {
 
 			if (!pullRequest.isValidCIMergeFile()) {
@@ -709,12 +930,14 @@ public class GitHubWebhookPayloadProcessor {
 					_log.info(message);
 				}
 
-				closePullRequest(pullRequest, message);
+				pullRequest.addComment(message);
+
+				pullRequest.close();
 
 				return false;
 			}
 
-			String sha = pullRequest.getCIMergeSha();
+			String sha = pullRequest.getCIMergeSHA();
 
 			if (sha.equals("")) {
 				String message =
@@ -725,53 +948,62 @@ public class GitHubWebhookPayloadProcessor {
 					_log.info(message);
 				}
 
-				closePullRequest(pullRequest, message);
+				pullRequest.addComment(message);
+
+				pullRequest.close();
 
 				return false;
 			}
 		}
 
-		if (ownerName.equals("liferay") && !pullRequest.isSubrepo() &&
+		GitHubRemoteGitRepository gitHubRemoteGitRepository =
+			pullRequest.getGitHubRemoteGitRepository();
+
+		if (ownerUsername.equals("liferay") &&
+			!gitHubRemoteGitRepository.isSubrepository() &&
 			!repositoryName.equals("liferay-portal-ee")) {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Skip pull request because it is a pull sent to liferay " +
-						"that is not a subrepo request");
+					JenkinsResultsParserUtil.combine(
+						"Skip pull request because it is a pull sent to ",
+						"Liferay that is not a subrepo request"));
 			}
 
 			return false;
 		}
 
-		if (!pullRequest.isWhitelistedRepository()) {
+		if (_whiteListedRepositoryMultiPattern.matches(branchName) == null) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Skip pull request because the repository " +
-						pullRequest.getRepositoryName() +
-							" is not on the whitelist");
+					JenkinsResultsParserUtil.combine(
+						"Skip pull request because the repository ",
+						repositoryName, " is not on the whitelist"));
 			}
 
 			return false;
 		}
 
-		if (!isLiferayUser(pullRequest.getOwnerName())) {
+		if (!isLiferayUser(ownerUsername)) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Skip pull request because the owner " +
-						pullRequest.getOwnerName() + " does not have access");
+					JenkinsResultsParserUtil.combine(
+						"Skip pull request because the owner ", ownerUsername,
+						" does not have access"));
 			}
 
 			return false;
 		}
 
-		if (!isLiferayUser(pullRequest.getTesterName())) {
+		if (!isLiferayUser(senderUsername)) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Skip pull request because the tester " +
-						pullRequest.getSenderName() + " does not have access");
+					JenkinsResultsParserUtil.combine(
+						"Skip pull request because the tester ", senderUsername,
+						" does not have access"));
 			}
 
-			if (hasLiferayEmailAddress(pullRequest.getSenderName())) {
+			if (hasLiferayEmailAddress(senderUsername)) {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("Your pull request was not tested because you ");
@@ -782,7 +1014,7 @@ public class GitHubWebhookPayloadProcessor {
 				sb.append("/publicizing-or-hiding-organization-");
 				sb.append("membership for more information.");
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 			}
 
 			return false;
@@ -791,9 +1023,10 @@ public class GitHubWebhookPayloadProcessor {
 		String githubCIUsername = _jenkinsBuildProperties.getProperty(
 			"github.ci.username");
 
-		if (ownerName.equals("brianchandotcom") && refName.equals("master") &&
+		if (ownerUsername.equals("brianchandotcom") &&
+			branchName.equals("master") &&
 			repositoryName.equals("liferay-portal") &&
-			!senderName.equals(githubCIUsername)) {
+			!senderUsername.equals(githubCIUsername)) {
 
 			StringBuilder sb = new StringBuilder(4);
 
@@ -808,20 +1041,26 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info(message);
 			}
 
-			closePullRequest(pullRequest, message);
+			pullRequest.addComment(message);
+
+			pullRequest.close();
 
 			return false;
 		}
 
-		if (!pullRequest.isAllowedSender()) {
+		List<String> allowedSenderUsernames = getAllowedSenderUsernames(
+			pullRequest);
+
+		if (!allowedSenderUsernames.contains(senderUsername)) {
 			StringBuilder sb = new StringBuilder(7);
 
 			sb.append("Closing pull request because ");
-			sb.append(pullRequest.getSenderName());
+			sb.append(senderUsername);
 			sb.append(" is not an allowed sender on this branch. Please ");
 			sb.append("resend this pull request to one of the following ");
 			sb.append("allowed senders: ");
-			sb.append(formatCSV(pullRequest.getAllowedSenderNames()));
+			sb.append(
+				JenkinsResultsParserUtil.join(", ", allowedSenderUsernames));
 			sb.append(".");
 
 			String message = sb.toString();
@@ -830,19 +1069,24 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info(message);
 			}
 
-			closePullRequest(pullRequest, message);
+			pullRequest.addComment(message);
+
+			pullRequest.close();
 
 			return false;
 		}
 
-		if (!pullRequest.hasRequiredCollaborators()) {
+		List<String> collaboratorUsernames =
+			gitHubRemoteGitRepository.getCollaboratorUsernames();
+
+		if (!collaboratorUsernames.contains("liferay-continuous-integration")) {
 			if (_log.isInfoEnabled()) {
 				StringBuilder sb = new StringBuilder(4);
 
 				sb.append("Skip pull request because ");
 				sb.append("liferay-continuous-integration does not have ");
 				sb.append("write access to ");
-				sb.append(pullRequest.getRepoHTMLURL());
+				sb.append(gitHubRemoteGitRepository.getHtmlURL());
 
 				_log.info(sb.toString());
 			}
@@ -855,18 +1099,20 @@ public class GitHubWebhookPayloadProcessor {
 			sb.append("Pull+Request+Tester+for+Liferay+Developers for more ");
 			sb.append("information.");
 
-			commentPullRequest(pullRequest, sb.toString());
+			pullRequest.addComment(sb.toString());
 
 			return false;
 		}
 
-		if (!pullRequest.hasValidJIRAReferences()) {
+		if (!hasValidJIRAReferences(pullRequest)) {
 			StringBuilder sb = new StringBuilder(7);
 
 			sb.append("Closing pull request because at least one commit ");
 			sb.append("message is missing a reference to a required JIRA ");
 			sb.append("project: ");
-			sb.append(join(pullRequest.getJIRAProjectKeys()));
+			sb.append(
+				JenkinsResultsParserUtil.join(
+					", ", getJiraProjectKeys(pullRequest)));
 			sb.append(". Please verify that the JIRA project keys are ");
 			sb.append("specified in ci.properties in the liferay-portal ");
 			sb.append("repository.");
@@ -877,7 +1123,9 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info(message);
 			}
 
-			closePullRequest(pullRequest, message);
+			pullRequest.addComment(message);
+
+			pullRequest.close();
 
 			return false;
 		}
@@ -897,7 +1145,7 @@ public class GitHubWebhookPayloadProcessor {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://api.github.com/repos/liferay/");
-		sb.append(pullRequest.getRepositoryName());
+		sb.append(pullRequest.getGitHubRemoteGitRepositoryName());
 		sb.append("/commits/");
 		sb.append(refSHA);
 
@@ -928,34 +1176,17 @@ public class GitHubWebhookPayloadProcessor {
 		return sb.toString();
 	}
 
-	protected void lockPullRequest(PullRequest pullRequest) {
-		if (!isGitHubPostEnabled()) {
-			return;
-		}
-
-		processURL(
-			pullRequest.getIssueURL() + "/lock", null, HttpRequestMethod.PUT);
-	}
-
-	protected void lockPullRequest(PullRequest pullRequest, String message) {
-		if (!isGitHubPostEnabled()) {
-			return;
-		}
-
-		commentPullRequest(pullRequest, message);
-
-		lockPullRequest(pullRequest);
-	}
-
 	protected void mergeSubrepo(PullRequest pullRequest, boolean force) {
-		String ownerName = pullRequest.getOwnerName();
+		String ownerUsername = pullRequest.getOwnerUsername();
 
-		String refName = pullRequest.getRefName();
+		String branchName = pullRequest.getUpstreamBranchName();
 
 		String subrepoCentralMergePullRequestRecipientName =
-			getSubrepoCentralMergePullRequestRecipientName(refName);
+			getSubrepoCentralMergePullRequestRecipientName(branchName);
 
-		if (!ownerName.equals(subrepoCentralMergePullRequestRecipientName)) {
+		if (!ownerUsername.equals(
+				subrepoCentralMergePullRequestRecipientName)) {
+
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Skip merge subrepo because the user is not " +
@@ -963,12 +1194,14 @@ public class GitHubWebhookPayloadProcessor {
 			}
 		}
 
+		String repositoryName = pullRequest.getGitHubRemoteGitRepositoryName();
+
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("branch", refName);
+		jsonObject.put("branch", branchName);
 		jsonObject.put("command", "pull");
 		jsonObject.put("pullRequestNumber", pullRequest.getNumber());
-		jsonObject.put("repo", pullRequest.getRepositoryName());
+		jsonObject.put("repo", repositoryName);
 
 		try {
 			if (!pullRequest.isValidCIMergeFile()) {
@@ -981,7 +1214,9 @@ public class GitHubWebhookPayloadProcessor {
 					_log.info(message);
 				}
 
-				closePullRequest(pullRequest, message);
+				pullRequest.addComment(message);
+
+				pullRequest.close();
 
 				return;
 			}
@@ -993,12 +1228,12 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info(message, exception);
 			}
 
-			commentPullRequest(pullRequest, message + ".");
+			pullRequest.addComment(message + ".");
 
 			return;
 		}
 
-		String sha = pullRequest.getCIMergeSha();
+		String sha = pullRequest.getCIMergeSHA();
 
 		if (sha.equals("")) {
 			String message =
@@ -1009,7 +1244,9 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info(message);
 			}
 
-			closePullRequest(pullRequest, message);
+			pullRequest.addComment(message);
+
+			pullRequest.close();
 
 			return;
 		}
@@ -1031,8 +1268,8 @@ public class GitHubWebhookPayloadProcessor {
 		String statusURL =
 			"https://api.github.com/repos/" +
 				subrepoCentralMergePullRequestRecipientName + "/" +
-					pullRequest.getRepositoryName() + "/commits/" +
-						pullRequest.getSenderRefSHA() + "/status";
+					repositoryName + "/commits/" + pullRequest.getSenderSHA() +
+						"/status";
 
 		JSONArray statusesJSONArray = null;
 
@@ -1061,7 +1298,9 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info(message);
 			}
 
-			commentPullRequest(pullRequest, message + ".");
+			pullRequest.addComment(message);
+
+			pullRequest.close();
 
 			return;
 		}
@@ -1107,7 +1346,9 @@ public class GitHubWebhookPayloadProcessor {
 					_log.info(message);
 				}
 
-				commentPullRequest(pullRequest, message + ".");
+				pullRequest.addComment(message);
+
+				pullRequest.close();
 
 				return;
 			}
@@ -1152,7 +1393,7 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info(message);
 			}
 
-			commentPullRequest(pullRequest, message + ".");
+			pullRequest.addComment(message + ".");
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -1163,7 +1404,7 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info(message, exception);
 			}
 
-			commentPullRequest(pullRequest, message + ".");
+			pullRequest.addComment(message + ".");
 		}
 	}
 
@@ -1176,10 +1417,12 @@ public class GitHubWebhookPayloadProcessor {
 
 		jsonObject.put("state", "open");
 
+		String repositoryName = pullRequest.getGitHubRemoteGitRepositoryName();
+
 		String pullRequestJSON = processURL(
 			JenkinsResultsParserUtil.combine(
-				"https://api.github.com/repos/", pullRequest.getOwnerName(),
-				"/", pullRequest.getRepositoryName(), "/pulls/",
+				"https://api.github.com/repos/", pullRequest.getOwnerUsername(),
+				"/", repositoryName, "/pulls/",
 				String.valueOf(pullRequest.getNumber())),
 			jsonObject.toString(), HttpRequestMethod.PATCH);
 
@@ -1201,14 +1444,14 @@ public class GitHubWebhookPayloadProcessor {
 				continue;
 			}
 
-			commentPullRequest(pullRequest, "GitHub error message: " + message);
+			pullRequest.addComment("GitHub error message: " + message);
 		}
 	}
 
-	protected void stopJenkinsTests(JSONObject payloadJSONObject) {
+	protected void stopJenkinsTests() {
 		String ciStopSuite = null;
 
-		JSONObject commentJSONObject = payloadJSONObject.optJSONObject(
+		JSONObject commentJSONObject = _payloadJSONObject.optJSONObject(
 			"comment");
 
 		if (commentJSONObject != null) {
@@ -1221,7 +1464,7 @@ public class GitHubWebhookPayloadProcessor {
 			}
 		}
 
-		for (String buildURL : getBuildURLs(payloadJSONObject)) {
+		for (String buildURL : getBuildURLs(_payloadJSONObject)) {
 			if (ciStopSuite != null) {
 				Map<String, String> buildParameters =
 					JenkinsResultsParserUtil.getBuildParameters(buildURL);
@@ -1460,60 +1703,19 @@ public class GitHubWebhookPayloadProcessor {
 		}
 	}
 
-	protected void testPullRequest(JSONObject pullRequestJSONObject) {
-		PullRequest pullRequest = new PullRequest(pullRequestJSONObject);
+	protected void testPullRequest(
+		PullRequestTesterParameters pullRequestTesterParameters) {
 
-		testPullRequest(pullRequest);
-	}
+		if (!isTestablePullRequest(
+				pullRequestTesterParameters.getPullRequest())) {
 
-	protected void testPullRequest(PullRequest pullRequest) {
-		if (!isTestablePullRequest(pullRequest)) {
 			return;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		String pullRequestTesterQueryString =
+			pullRequestTesterParameters.toQueryString();
 
-		String ciForwardReceiverUsername =
-			pullRequest.getCIForwardReceiverUsername();
-
-		if ((ciForwardReceiverUsername != null) &&
-			!ciForwardReceiverUsername.isEmpty()) {
-
-			sb.append("CI_FORWARD_RECEIVER_USERNAME=");
-			sb.append(ciForwardReceiverUsername);
-			sb.append("&");
-		}
-
-		sb.append("BUILD_ID=");
-		sb.append(pullRequest.getCIReevaluateBuildID());
-		sb.append("&CI_TEST_SUITE=");
-		sb.append(encode(pullRequest.getCITestSuite()));
-		sb.append("&GITHUB_PULL_REQUEST_NUMBER=");
-		sb.append(pullRequest.getNumber());
-		sb.append("&GITHUB_ORIGIN_NAME=");
-		sb.append(encode(pullRequest.getOriginName()));
-		sb.append("&GITHUB_RECEIVER_USERNAME=");
-		sb.append(encode(pullRequest.getOwnerName()));
-		sb.append("&GITHUB_SENDER_BRANCH_NAME=");
-		sb.append(encode(pullRequest.getSenderRefName()));
-		sb.append("&GITHUB_SENDER_BRANCH_SHA=");
-		sb.append(pullRequest.getSenderRefSHA());
-		sb.append("&GITHUB_SENDER_USERNAME=");
-		sb.append(encode(pullRequest.getSenderName()));
-		sb.append("&GITHUB_UPSTREAM_BRANCH_NAME=");
-		sb.append(encode(pullRequest.getRefName()));
-		sb.append("&GITHUB_UPSTREAM_BRANCH_SHA=");
-		sb.append(pullRequest.getRefSHA());
-		sb.append("&PORTAL_BUNDLES_DIST_URL=");
-		sb.append(pullRequest.getPortalBundlesDistURL());
-		sb.append("&PULL_REQUEST_URL=");
-		sb.append(pullRequest.getHtmlURL());
-		sb.append("&REPOSITORY_NAME=");
-		sb.append(encode(pullRequest.getRepositoryName()));
-
-		String testPullRequestQueryString = sb.toString();
-
-		addTestPullRequestQueryString(testPullRequestQueryString);
+		addTestPullRequestQueryString(pullRequestTesterQueryString);
 
 		boolean gitHubWebhookPullRequestMirroring = Boolean.parseBoolean(
 			_jenkinsBuildProperties.getProperty(
@@ -1538,8 +1740,17 @@ public class GitHubWebhookPayloadProcessor {
 				masterURL = "http://test-1.liferay.com";
 			}
 
-			pullRequest.invoke(masterURL, testPullRequestQueryString);
+			invokePullRequestTester(masterURL, pullRequestTesterParameters);
 		}
+	}
+
+	private List<String> _getCIEnabledBranchNames(String repositoryName) {
+		String ciEnabledBranchNames = _jenkinsBuildProperties.getProperty(
+			JenkinsResultsParserUtil.combine(
+				"github.ci.enabled.branch.names[", repositoryName, "]"),
+			"");
+
+		return Arrays.asList(ciEnabledBranchNames.split(","));
 	}
 
 	private void _processCommentCreated() {
@@ -1563,16 +1774,7 @@ public class GitHubWebhookPayloadProcessor {
 			}
 
 			if (hasLiferayEmailAddress(login)) {
-				JSONObject issueJSONObject = _payloadJSONObject.getJSONObject(
-					"issue");
-
-				JSONObject pullRequestJSONObject =
-					issueJSONObject.getJSONObject("pull_request");
-
-				String url = pullRequestJSONObject.getString("url");
-
-				PullRequest pullRequest = new PullRequest(
-					new JSONObject(processURL(url + ".json")));
+				PullRequest pullRequest = _payloadJSONObject.getPullRequest();
 
 				StringBuilder sb = new StringBuilder();
 
@@ -1584,30 +1786,27 @@ public class GitHubWebhookPayloadProcessor {
 				sb.append("/publicizing-or-hiding-organization-");
 				sb.append("membership for more information.");
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 			}
 
 			return;
 		}
 
-		PullRequest pullRequest = new PullRequest(
-			new JSONObject(
-				processURL(
-					_payloadJSONObject.getStringByPath(
-						"issue/pull_request/url") + ".json")));
+		PullRequest pullRequest = _payloadJSONObject.getPullRequest();
+
+		PullRequestTesterParameters pullRequestTesterParameters =
+			new PullRequestTesterParameters(pullRequest);
 
 		if (body.startsWith("ci:close")) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Comment triggered close pull request");
 			}
 
-			closePullRequest(pullRequest);
+			pullRequest.close();
 		}
 
 		if (body.startsWith("ci:forward")) {
-			pullRequest.setTesterName(login);
-
-			pullRequest.setCIForwardReceiverUsername(
+			pullRequestTesterParameters.setCiForwardReceiverUsername(
 				_jenkinsBuildProperties.getProperty(
 					"pull.request.forward.default.receiver.username"));
 
@@ -1622,7 +1821,7 @@ public class GitHubWebhookPayloadProcessor {
 				sb.append("\nIf you think this is a mistake please ");
 				sb.append("contact the CI Infrastructure team.");
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 
 				return;
 			}
@@ -1638,7 +1837,7 @@ public class GitHubWebhookPayloadProcessor {
 				sb.append("\nIf you think this is a mistake please ");
 				sb.append("contact the CI Infrastructure team.");
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 
 				return;
 			}
@@ -1659,11 +1858,13 @@ public class GitHubWebhookPayloadProcessor {
 			sb.append("\n");
 			sb.append("The pull request will automatically be forwarded ");
 			sb.append("to the user `");
-			sb.append(pullRequest.getCIForwardReceiverUsername());
+			sb.append(
+				pullRequestTesterParameters.getCiForwardReceiverUsername());
 			sb.append("` if the following test suites pass:\n");
 
-			boolean ciForwardEligible = true;
-			Set<String> passingTestSuites = pullRequest.getPassingTestSuites();
+			_ciForwardEligible = true;
+
+			Set<String> passingTestSuites = getPassingTestSuites();
 
 			for (String ciForwardRequiredPassingSuite :
 					ciForwardRequiredPassingSuites) {
@@ -1675,11 +1876,11 @@ public class GitHubWebhookPayloadProcessor {
 				if (!passingTestSuites.contains(
 						ciForwardRequiredPassingSuite)) {
 
-					ciForwardEligible = false;
+					_ciForwardEligible = false;
 				}
 			}
 
-			commentPullRequest(pullRequest, sb.toString());
+			pullRequest.addComment(sb.toString());
 
 			List<String> skippedTestSuites = new ArrayList<>(
 				ciForwardRequiredTestSuites.length);
@@ -1693,9 +1894,10 @@ public class GitHubWebhookPayloadProcessor {
 					continue;
 				}
 
-				pullRequest.setCITestSuite(ciForwardRequiredTestSuite);
+				pullRequestTesterParameters.setCiTestSuiteName(
+					ciForwardRequiredTestSuite);
 
-				testPullRequest(pullRequest);
+				testPullRequest(pullRequestTesterParameters);
 			}
 
 			if (!skippedTestSuites.isEmpty()) {
@@ -1713,13 +1915,11 @@ public class GitHubWebhookPayloadProcessor {
 					_log.info(sb.toString());
 				}
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 			}
 
-			if (ciForwardEligible) {
-				pullRequest.setCIForwardEligible(ciForwardEligible);
-
-				testPullRequest(pullRequest);
+			if (_ciForwardEligible) {
+				testPullRequest(pullRequestTesterParameters);
 			}
 		}
 
@@ -1763,8 +1963,11 @@ public class GitHubWebhookPayloadProcessor {
 			sb.append("running tests. Optionally specify the name of the ");
 			sb.append("test suite.\n");
 
-			String ciTestAvailableSuites = pullRequest.getCIProperty(
-				"ci.test.available.suites");
+			String ciTestAvailableSuites =
+				JenkinsResultsParserUtil.getCIProperty(
+					pullRequest.getUpstreamBranchName(),
+					"ci.test.available.suites",
+					pullRequest.getGitHubRemoteGitRepositoryName());
 
 			if (ciTestAvailableSuites != null) {
 				sb.append("#### ci:test[:suite][:SHA|nocompile|");
@@ -1785,9 +1988,13 @@ public class GitHubWebhookPayloadProcessor {
 					sb.append(ciTestAvailableSuite);
 					sb.append("** - ");
 
-					String ciTestSuiteDescription = pullRequest.getCIProperty(
-						"ci.test.suite.description[" + ciTestAvailableSuite +
-							"]");
+					String ciTestSuiteDescription =
+						JenkinsResultsParserUtil.getCIProperty(
+							pullRequest.getUpstreamBranchName(),
+							JenkinsResultsParserUtil.combine(
+								"ci.test.suite.description[",
+								ciTestAvailableSuite, "]"),
+							pullRequest.getGitHubRemoteGitRepositoryName());
 
 					if (ciTestSuiteDescription != null) {
 						sb.append(ciTestSuiteDescription);
@@ -1813,7 +2020,7 @@ public class GitHubWebhookPayloadProcessor {
 			sb.append("[GROW](https://grow.liferay.com/share/CI+");
 			sb.append("liferay-continuous-integration+GitHub+Commands).");
 
-			commentPullRequest(pullRequest, sb.toString());
+			pullRequest.addComment(sb.toString());
 		}
 
 		if (body.startsWith("ci:merge")) {
@@ -1833,7 +2040,7 @@ public class GitHubWebhookPayloadProcessor {
 						_log.info(message);
 					}
 
-					commentPullRequest(pullRequest, message + ".");
+					pullRequest.addComment(message + ".");
 
 					return;
 				}
@@ -1857,21 +2064,21 @@ public class GitHubWebhookPayloadProcessor {
 
 				String buildID = matcher.group("buildID");
 
-				pullRequest.setCIReevaluateBuildID(buildID);
+				pullRequestTesterParameters.setCiReevaluateBuildId(buildID);
 
 				sb.append("CI is reevaluating the build with build ID: `");
 				sb.append(buildID);
 				sb.append("` against the latest valid upstream results.");
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 
-				testPullRequest(pullRequest);
+				testPullRequest(pullRequestTesterParameters);
 			}
 			else {
 				sb.append("There is a missing or invalid build ID. ");
 				sb.append("No reevaluation was triggered.");
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 			}
 		}
 
@@ -1884,8 +2091,6 @@ public class GitHubWebhookPayloadProcessor {
 		}
 
 		if (body.startsWith("ci:retest") || body.startsWith("ci:test")) {
-			pullRequest.setTesterName(login);
-
 			Matcher matcher = _testPattern.matcher(body);
 
 			if (matcher.find()) {
@@ -1915,7 +2120,7 @@ public class GitHubWebhookPayloadProcessor {
 							_log.info(message);
 						}
 
-						commentPullRequest(pullRequest, message + ".");
+						pullRequest.addComment(message + ".");
 
 						testSuite = testOption1;
 					}
@@ -1933,7 +2138,7 @@ public class GitHubWebhookPayloadProcessor {
 						_log.info(message);
 					}
 
-					commentPullRequest(pullRequest, message + ".");
+					pullRequest.addComment(message + ".");
 
 					return;
 				}
@@ -1970,7 +2175,7 @@ public class GitHubWebhookPayloadProcessor {
 							_log.info(message);
 						}
 
-						commentPullRequest(pullRequest, message + ".");
+						pullRequest.addComment(message + ".");
 
 						return;
 					}
@@ -1979,12 +2184,12 @@ public class GitHubWebhookPayloadProcessor {
 				if ((rebaseSHA != null) && rebaseSHA.equals("nocompile")) {
 					String distPortalBundlesBuildURL =
 						JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
-							pullRequest.getRefName());
+							pullRequest.getUpstreamBranchName());
 
 					String message = null;
 
 					if (distPortalBundlesBuildURL != null) {
-						pullRequest.setPortalBundlesDistURL(
+						pullRequestTesterParameters.setPortalBundlesDistURL(
 							distPortalBundlesBuildURL);
 
 						rebaseSHA = processURL(
@@ -2004,7 +2209,7 @@ public class GitHubWebhookPayloadProcessor {
 						_log.info(message);
 					}
 
-					commentPullRequest(pullRequest, message + ".");
+					pullRequest.addComment(message + ".");
 				}
 				else if ((rebaseSHA != null) && rebaseSHA.equals("norebase")) {
 					String message = "The test will run without rebasing.";
@@ -2013,17 +2218,13 @@ public class GitHubWebhookPayloadProcessor {
 						_log.info(message);
 					}
 
-					commentPullRequest(pullRequest, message + ".");
+					pullRequest.addComment(message + ".");
 
 					rebaseSHA = pullRequest.getCommonParentSHA();
 				}
 
-				if (rebaseSHA != null) {
-					pullRequest.setRefSHA(rebaseSHA);
-				}
-
 				if (testSuite != null) {
-					pullRequest.setCITestSuite(testSuite);
+					pullRequestTesterParameters.setCiTestSuiteName(testSuite);
 
 					if (testSuite.equals("gauntlet") &&
 						!login.equals("CsabaTurcsan") &&
@@ -2057,7 +2258,7 @@ public class GitHubWebhookPayloadProcessor {
 							_log.info(message);
 						}
 
-						commentPullRequest(pullRequest, message + ".");
+						pullRequest.addComment(message + ".");
 
 						return;
 					}
@@ -2068,7 +2269,7 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info("Comment triggered test");
 			}
 
-			testPullRequest(pullRequest);
+			testPullRequest(pullRequestTesterParameters);
 		}
 
 		if (body.startsWith("ci:stop")) {
@@ -2076,23 +2277,32 @@ public class GitHubWebhookPayloadProcessor {
 				_log.info("Comment triggered stop");
 			}
 
-			stopJenkinsTests(_payloadJSONObject);
+			stopJenkinsTests();
 		}
 	}
 
-	private void _processPullRequestOpened(
-		JSONObject pullRequestJSONObject, PullRequest pullRequest) {
+	private void _processPullRequestOpened() {
+		PullRequest pullRequest = _payloadJSONObject.getPullRequest();
 
-		String body = pullRequestJSONObject.optString("body");
+		PullRequestTesterParameters pullRequestTesterParameters =
+			new PullRequestTesterParameters(pullRequest);
+
+		List<PullRequest.Comment> pullRequestComments =
+			pullRequest.getComments();
+
+		PullRequest.Comment initialComment = pullRequestComments.get(0);
+
+		String body = initialComment.getBody();
+
 		String githubCIUsername = _jenkinsBuildProperties.getProperty(
 			"github.ci.username");
-		String ownerName = pullRequest.getOwnerName();
+		String ownerName = pullRequest.getOwnerUsername();
 		String pullRequestForwardDefaultReceiverUsername =
 			_jenkinsBuildProperties.getProperty(
 				"pull.request.forward.default.receiver.username");
-		String refName = pullRequest.getRefName();
-		String repositoryName = pullRequest.getRepositoryName();
-		String senderName = pullRequest.getSenderName();
+		String refName = pullRequest.getUpstreamBranchName();
+		String repositoryName = pullRequest.getGitHubRemoteGitRepositoryName();
+		String senderName = pullRequest.getSenderUsername();
 
 		if (body.startsWith("Forwarded from:") &&
 			ownerName.equals(pullRequestForwardDefaultReceiverUsername) &&
@@ -2103,7 +2313,7 @@ public class GitHubWebhookPayloadProcessor {
 			sb.append("To conserve resources, the PR Tester does not ");
 			sb.append("automatically run for forwarded pull requests.");
 
-			commentPullRequest(pullRequest, sb.toString());
+			pullRequest.addComment(sb.toString());
 
 			return;
 		}
@@ -2114,13 +2324,13 @@ public class GitHubWebhookPayloadProcessor {
 
 			commentMergeSubrepoPullRequest(pullRequest);
 
-			pullRequest.setCITestSuite("relevant");
+			pullRequestTesterParameters.setCiTestSuiteName("relevant");
 
-			testPullRequest(pullRequest);
+			testPullRequest(pullRequestTesterParameters);
 
-			pullRequest.setCITestSuite("sf");
+			pullRequestTesterParameters.setCiTestSuiteName("sf");
 
-			testPullRequest(pullRequest);
+			testPullRequest(pullRequestTesterParameters);
 
 			return;
 		}
@@ -2140,7 +2350,7 @@ public class GitHubWebhookPayloadProcessor {
 				sb.append("Formatter.\n\nComment &quot;ci:test&quot; ");
 				sb.append("to run the full PR Tester for this pull.");
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 			}
 			else {
 				StringBuilder sb = new StringBuilder(6);
@@ -2152,23 +2362,23 @@ public class GitHubWebhookPayloadProcessor {
 				sb.append("&quot;ci:test&quot; to run the full PR ");
 				sb.append("Tester for this pull.");
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 
-				pullRequest.setCITestSuite("relevant");
+				pullRequestTesterParameters.setCiTestSuiteName("relevant");
 
-				testPullRequest(pullRequest);
+				testPullRequest(pullRequestTesterParameters);
 			}
 
-			pullRequest.setCITestSuite("sf");
+			pullRequestTesterParameters.setCiTestSuiteName("sf");
 
-			testPullRequest(pullRequest);
+			testPullRequest(pullRequestTesterParameters);
 
 			return;
 		}
 
 		if (!ownerName.equals("liferay")) {
-			List<String> ciTestAutoTestSuiteNames =
-				pullRequest.getCITestAutoTestSuiteNames();
+			List<String> ciTestAutoTestSuiteNames = getCITestAutoTestSuiteNames(
+				pullRequest);
 
 			if (!ciTestAutoTestSuiteNames.isEmpty() &&
 				isTestablePullRequest(pullRequest)) {
@@ -2186,21 +2396,22 @@ public class GitHubWebhookPayloadProcessor {
 					sb.append("**\n");
 				}
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 
 				for (String ciTestAutoTestSuiteName :
 						ciTestAutoTestSuiteNames) {
 
-					pullRequest.setCITestSuite(ciTestAutoTestSuiteName);
+					pullRequestTesterParameters.setCiTestSuiteName(
+						ciTestAutoTestSuiteName);
 
-					testPullRequest(pullRequest);
+					testPullRequest(pullRequestTesterParameters);
 				}
 
 				return;
 			}
 		}
 
-		if (isLiferayUser(pullRequest.getSenderName())) {
+		if (isLiferayUser(pullRequest.getSenderUsername())) {
 			StringBuilder sb = new StringBuilder(7);
 
 			sb.append("To conserve resources, the PR Tester does not ");
@@ -2212,18 +2423,22 @@ public class GitHubWebhookPayloadProcessor {
 			sb.append("&quot;ci:test&quot; to run the PR Tester for ");
 			sb.append("this pull.");
 
-			if (!ownerName.equals("liferay") || pullRequest.isSubrepo() ||
+			GitHubRemoteGitRepository gitHubRemoteGitRepository =
+				pullRequest.getGitHubRemoteGitRepository();
+
+			if (!ownerName.equals("liferay") ||
+				gitHubRemoteGitRepository.isSubrepository() ||
 				repositoryName.equals("liferay-portal-ee")) {
 
-				commentPullRequest(pullRequest, sb.toString());
+				pullRequest.addComment(sb.toString());
 			}
 		}
 	}
 
-	private void _processPullRequestSynchronize(
-		PullRequest pullRequest, JSONObject pullRequestJSONObject) {
+	private void _processPullRequestSynchronize() {
+		PullRequest pullRequest = _payloadJSONObject.getPullRequest();
 
-		if (pullRequest.isSynchronizeAllowed()) {
+		if (isSynchronizeablePullRequest(pullRequest)) {
 			return;
 		}
 
@@ -2236,11 +2451,13 @@ public class GitHubWebhookPayloadProcessor {
 			"sent to this user may not be updated. Please resend ",
 			"this pull request.");
 
-		closePullRequest(pullRequest, message);
+		pullRequest.addComment(message);
 
-		lockPullRequest(pullRequest);
+		pullRequest.close();
 
-		stopJenkinsTests(pullRequestJSONObject);
+		pullRequest.lock();
+
+		stopJenkinsTests();
 	}
 
 	private static final String[] _URLS_JENKINS_BUILD_PROPERTIES = {
@@ -2255,20 +2472,31 @@ public class GitHubWebhookPayloadProcessor {
 
 	private static Pattern _buildURLPattern = Pattern.compile(
 		"Build[\\w\\s]*started.*Job Link: <a href=\"(?<buildURL>[^\"]+)\"");
+	private static Set<String> _passingTestSuites;
 	private static Pattern _reevaluatePattern = Pattern.compile(
 		"ci:reevaluate:(?<buildID>[\\d]+_[\\d]+)");
-	private static Pattern _refNamePattern = Pattern.compile(
-		"(?<branchName>(ee-)?\\w+(\\.\\w+)*)(?<private>-private)?(-.*)?");
 	private static Pattern _testPattern = Pattern.compile(
 		"ci:(re)?test:(?<testOption1>[^:\\s]+)(:(?<testOption2>[^:\\s]+))?");
+	private static final List<String> _whiteListedOwnerNames =
+		Collections.emptyList();
+	private static final MultiPattern _whiteListedRepositoryMultiPattern =
+		new MultiPattern(
+			"liferay-jenkins-ee", "liferay-plugins(-ee)?",
+			"liferay-portal(-ee)?", "com-liferay-.*");
 
-	private Pattern _ciMergeSHAPattern = Pattern.compile("\\+([0-9a-f]{40})");
+	private boolean _ciForwardEligible;
 	private Pattern _gitrepoRepoPattern = Pattern.compile(
 		"remote = .*/([^\\.]*)\\.git");
 	private Pattern _gitrepoSHAPattern = Pattern.compile(
 		"commit = ([0-9a-f]{40})");
+	/*Arrays.asList(
+		"brianchandotcom", "liferay-continuous-integration", "liferay",
+		"pyoo47", "shuyangzhou", "stsquared99");*/
 	private Properties _jenkinsBuildProperties;
 	private Properties _jenkinsProperties = new Properties();
+	private List<String> _jiraProjectKeys;
+	private Pattern _passingTestSuiteStatusDescriptionPattern = Pattern.compile(
+		"\"ci:test:(?<testSuiteName>[^\"]+)\"\\s*has PASSED.");
 	private final PayloadJSONObject _payloadJSONObject;
 	private final Map<String, Long> _testPullRequestQueryStrings =
 		new ConcurrentHashMap<>(100);
@@ -2279,6 +2507,15 @@ public class GitHubWebhookPayloadProcessor {
 
 		public PayloadJSONObject(String source) {
 			super(source);
+		}
+
+		public PullRequest getPullRequest() {
+			if (_pullRequest == null) {
+				_pullRequest = new PullRequest(
+					getStringByPath("pull_request/html_url"));
+			}
+
+			return _pullRequest;
 		}
 
 		public String getPusherBranch() {
@@ -2381,891 +2618,161 @@ public class GitHubWebhookPayloadProcessor {
 		private static final Pattern _jsonPathPattern = Pattern.compile(
 			"([^/]+)/*(.*)");
 
-	}
-
-	private class Commit {
-
-		public Commit(JSONObject commitJSONObject) {
-			_commitJSONObject = commitJSONObject;
-		}
-
-		public String getEmailAddress() {
-			JSONObject authorJSONObject = _commitJSONObject.getJSONObject(
-				"author");
-
-			return authorJSONObject.getString("email");
-		}
-
-		public String getMessage() {
-			return _commitJSONObject.getString("message");
-		}
-
-		private final JSONObject _commitJSONObject;
+		private PullRequest _pullRequest;
 
 	}
 
-	private class PullRequest {
+	private static class PullRequestTesterParameters
+		extends HashMap<String, String> {
 
-		public PullRequest(JSONObject pullRequestJSONObject) {
-			_pullRequestJSONObject = pullRequestJSONObject;
+		public PullRequestTesterParameters(PullRequest pullRequest) {
+			_pullRequest = pullRequest;
 
-			JSONObject baseJSONObject = pullRequestJSONObject.getJSONObject(
-				"base");
-
-			_number = pullRequestJSONObject.getInt("number");
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request number: " + _number);
-			}
-
-			String url = pullRequestJSONObject.getString("url");
-
-			int x = url.indexOf("repos/");
-
-			x = url.indexOf("/", x) + 1;
-
-			int y = url.indexOf("/", x);
-
-			_ownerName = url.substring(x, y);
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request owner: " + _ownerName);
-			}
-
-			_refName = baseJSONObject.getString("ref");
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request ref name: " + _refName);
-			}
-
-			Matcher matcher = _refNamePattern.matcher(_refName);
-
-			if (matcher.find()) {
-				String portalRefName = matcher.group("branchName");
-
-				String privateGroup = matcher.group("private");
-
-				if (privateGroup != null) {
-					portalRefName += matcher.group("private");
-				}
-
-				_portalRefName = portalRefName;
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Pull request portal ref name: " + _portalRefName);
-				}
-			}
-			else {
-				_portalRefName = null;
-			}
-
-			x = y + 1;
-
-			y = url.indexOf("/", x);
-
-			_repositoryName = url.substring(x, y);
-
-			String branchURL =
-				"https://api.github.com/repos/liferay/" + _repositoryName +
-					"/branches/" + _refName;
-
-			if (_repositoryName.startsWith("com-liferay-") &&
-				!_repositoryName.endsWith("-private")) {
-
-				branchURL =
-					"https://api.github.com/repos/liferay/" + _repositoryName +
-						"-private/branches/" + _refName;
-			}
-
-			JSONObject branchJSONObject = new JSONObject(processURL(branchURL));
-
-			JSONObject commitJSONObject = null;
+			Properties jenkinsBuildProperties;
 
 			try {
-				commitJSONObject = branchJSONObject.getJSONObject("commit");
+				jenkinsBuildProperties =
+					JenkinsResultsParserUtil.getBuildProperties();
 			}
-			catch (JSONException jsonException) {
-				jsonException.printStackTrace();
-			}
-
-			if (commitJSONObject != null) {
-				_refSHA = commitJSONObject.getString("sha");
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to get build properties", ioException);
 			}
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request ref sha: " + _refSHA);
+			put(_KEY_CI_TEST_SUITE_NAME, "default");
+
+			put(
+				_KEY_JENKINS_ACCESS_TOKEN,
+				jenkinsBuildProperties.getProperty("jenkins.access.token"));
+
+			String ciForwardReceiverUsername =
+				jenkinsBuildProperties.getProperty(
+					"pull.request.forward.default.receiver.username");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					ciForwardReceiverUsername)) {
+
+				setCiForwardReceiverUsername(ciForwardReceiverUsername);
 			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request repository: " + _repositoryName);
-			}
-
-			JSONObject userJSONObject = pullRequestJSONObject.getJSONObject(
-				"user");
-
-			_senderName = userJSONObject.getString("login");
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request sender name: " + _senderName);
-			}
-
-			_testerName = _senderName;
-
-			JSONObject headJSONObject = pullRequestJSONObject.getJSONObject(
-				"head");
-
-			userJSONObject = headJSONObject.getJSONObject("user");
-
-			_originName = userJSONObject.getString("login");
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request origin name: " + _originName);
-			}
-
-			_senderRefName = headJSONObject.getString("ref");
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request sender ref name: " + _senderRefName);
-			}
-
-			_senderRefSHA = headJSONObject.getString("sha");
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Pull request sender ref sha: " + _senderRefSHA);
-			}
-
-			_senderRefSHAStatusesJSONArray = new JSONArray(
-				processURL(getStatusesURL()));
-
-			JSONArray commitsJSONArray = new JSONArray(
-				processURL(_pullRequestJSONObject.getString("commits_url")));
-
-			JSONObject firstCommitJSONObject = commitsJSONArray.getJSONObject(
-				0);
-
-			JSONArray parentsJSONArray = firstCommitJSONObject.getJSONArray(
-				"parents");
-
-			JSONObject firstParentJSONObject = parentsJSONArray.getJSONObject(
-				0);
-
-			_commonParentSHA = firstParentJSONObject.getString("sha");
 		}
 
-		public String getAllowedSenderNames() {
-			return getCIProperty("allowed.sender.names[" + _ownerName + "]");
+		public String getCiForwardReceiverUsername() {
+			return get(_KEY_CI_FORWARD_RECEIVER_USERNAME);
 		}
 
-		public String getCIForwardReceiverUsername() {
-			return _ciForwardReceiverUsername;
+		public String getCiReevaluateBuildId() {
+			return get(_KEY_CI_REEVALUATE_BUILD_ID);
 		}
 
-		public String getCIJobName() {
-			if (_ciForwardEligible) {
-				return "forward-pullrequest";
+		public String getCiTestSuiteName() {
+			return get(_KEY_CI_TEST_SUITE_NAME);
+		}
+
+		public PullRequest getPullRequest() {
+			return _pullRequest;
+		}
+
+		public void setCiForwardReceiverUsername(
+			String ciForwardReceiverUsername) {
+
+			put(_KEY_CI_FORWARD_RECEIVER_USERNAME, ciForwardReceiverUsername);
+		}
+
+		public void setCiReevaluateBuildId(String ciReevaluateBuildId) {
+			put(_KEY_CI_REEVALUATE_BUILD_ID, ciReevaluateBuildId);
+		}
+
+		public void setCiTestSuiteName(String ciTestSuiteName) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(ciTestSuiteName)) {
+				ciTestSuiteName = "default";
 			}
 
-			if (_ciReevaluateBuildID != null) {
-				return "test-portal-evaluate-pullrequest";
-			}
+			put(_KEY_CI_TEST_SUITE_NAME, ciTestSuiteName);
+		}
 
-			if (_ciTestSuite.equals("sf")) {
-				return "test-portal-source-format";
-			}
+		public void setPortalBundlesDistURL(String portalBundlesDistURL) {
+			put(_KEY_PORTAL_BUNDLES_DIST_URL, portalBundlesDistURL);
+		}
 
-			if (_repositoryName.equals("liferay-jenkins-ee")) {
-				return "test-jenkins-acceptance-pullrequest";
-			}
-
+		public String toQueryString() {
 			StringBuilder sb = new StringBuilder();
 
-			if (_repositoryName.startsWith("com-liferay-")) {
-				sb.append("test-subrepository-acceptance-pullrequest");
-			}
-			else if (_repositoryName.startsWith("liferay-plugins")) {
-				sb.append("test-plugins-acceptance-pullrequest");
-			}
-			else if (_repositoryName.startsWith("liferay-portal")) {
-				sb.append("test-portal-acceptance-pullrequest");
+			for (Map.Entry<String, String> entry : entrySet()) {
+				_appendParameter(sb, entry.getKey(), entry.getValue());
 			}
 
-			sb.append("(");
-
-			if (isSubrepo() && (_portalRefName != null)) {
-				sb.append(_portalRefName);
-			}
-			else {
-				sb.append(_refName);
-			}
-
-			sb.append(")");
+			_appendParameter(
+				sb, _KEY_PULL_REQUEST_NUMBER, _pullRequest.getNumber());
+			_appendParameter(
+				sb, "GITHUB_ORIGIN_NAME",
+				_encode(_pullRequest.getSenderUsername()));
+			_appendParameter(
+				sb, "GITHUB_RECEIVER_USERNAME",
+				_pullRequest.getReceiverUsername());
+			_appendParameter(
+				sb, "GITHUB_SENDER_BRANCH_NAME",
+				_pullRequest.getSenderBranchName());
+			_appendParameter(
+				sb, "GITHUB_SENDER_BRANCH_SHA", _pullRequest.getSenderSHA());
+			_appendParameter(
+				sb, "GITHUB_SENDER_USERNAME",
+				_encode(_pullRequest.getSenderUsername()));
+			_appendParameter(
+				sb, "GITHUB_UPSTREAM_BRANCH_NAME",
+				_pullRequest.getUpstreamBranchName());
+			_appendParameter(
+				sb, "GITHUB_UPSTREAM_BRANCH_SHA",
+				_pullRequest.getUpstreamBranchSHA());
+			_appendParameter(sb, "PULL_REQUEST_URL", _pullRequest.getHtmlURL());
+			_appendParameter(
+				sb, "REPOSITORY_NAME", _pullRequest.getGitRepositoryName());
 
 			return sb.toString();
 		}
 
-		public String getCIMergeSha() {
-			List<JSONObject> fileJSONObjects = null;
+		private void _appendParameter(
+			StringBuilder sb, String name, String value) {
 
-			try {
-				fileJSONObjects = getFileJSONObjects();
-			}
-			catch (Exception exception) {
-				return "";
-			}
-
-			JSONObject fileJSONObject = fileJSONObjects.get(0);
-
-			String fileName = fileJSONObject.getString("filename");
-
-			if (!fileName.endsWith("/ci-merge")) {
-				return "";
-			}
-
-			String patch = fileJSONObject.getString("patch");
-
-			Matcher matcher = _ciMergeSHAPattern.matcher(patch);
-
-			int counter = 0;
-			String sha = "";
-
-			while (matcher.find()) {
-				sha = matcher.group(1);
-
-				counter++;
-			}
-
-			if (counter != 1) {
-				return "";
-			}
-
-			return sha;
-		}
-
-		public String getCIMergeSubrepo() {
-			List<JSONObject> fileJSONObjects = getFileJSONObjects();
-
-			JSONObject fileJSONObject = fileJSONObjects.get(0);
-
-			String fileName = fileJSONObject.getString("filename");
-
-			return StringUtils.replace(fileName, "/ci-merge", "");
-		}
-
-		public String getCIProperty(String key) {
-			if (_ciProperties == null) {
-				Matcher matcher = _refNamePattern.matcher(_refName);
-
-				if (matcher.find()) {
-					if ((_repositoryName == null) ||
-						_repositoryName.isEmpty()) {
-
-						return null;
-					}
-
-					StringBuilder sb = new StringBuilder();
-
-					sb.append("https://raw.githubusercontent.com/liferay/");
-					sb.append(_repositoryName);
-					sb.append("/");
-					sb.append(matcher.group("branchName"));
-					sb.append("/ci.properties");
-
-					try {
-						String ciPropertiesString = processURL(sb.toString());
-
-						Properties ciProperties = new Properties();
-
-						ciProperties.load(new StringReader(ciPropertiesString));
-
-						_ciProperties = ciProperties;
-					}
-					catch (Exception exception) {
-						System.out.println(
-							"Unable to load ci.properties from " +
-								sb.toString());
-
-						return null;
-					}
-				}
-			}
-
-			return _ciProperties.getProperty(key);
-		}
-
-		public String getCIReevaluateBuildID() {
-			return _ciReevaluateBuildID;
-		}
-
-		public List<String> getCITestAutoTestSuiteNames() {
-			String ciTestAutoRecipientsProperty = getCIProperty(
-				"ci.test.auto.recipients");
-
-			if ((ciTestAutoRecipientsProperty == null) ||
-				ciTestAutoRecipientsProperty.isEmpty()) {
-
-				return Collections.emptyList();
-			}
-
-			Pattern pattern = Pattern.compile(
-				getOwnerName() + "\\[(?<testSuiteNames>[^\\]]+)]");
-
-			for (String ciTestAutoRecipient :
-					ciTestAutoRecipientsProperty.split("\\s*,\\s*")) {
-
-				Matcher matcher = pattern.matcher(ciTestAutoRecipient);
-
-				if (!matcher.matches()) {
-					continue;
-				}
-
-				String ciTestAutoTestSuiteNames = matcher.group(
-					"testSuiteNames");
-
-				return Arrays.asList(ciTestAutoTestSuiteNames.split(":"));
-			}
-
-			return Collections.emptyList();
-		}
-
-		public String getCITestSuite() {
-			return _ciTestSuite;
-		}
-
-		public String getCollaboratorsURL() {
-			JSONObject baseJSONObject = _pullRequestJSONObject.getJSONObject(
-				"base");
-
-			JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
-
-			String collaboratorsURL = repoJSONObject.getString(
-				"collaborators_url");
-
-			return collaboratorsURL.replace("{/collaborator}", "");
-		}
-
-		public List<Commit> getCommits() {
-			if (_commits != null) {
-				return _commits;
-			}
-
-			List<Commit> commits = new ArrayList<>();
-
-			String commitsURL = _pullRequestJSONObject.getString("commits_url");
-
-			for (int i = 0; i < 6; i++) {
-				try {
-					JSONArray commitsJSONArray = new JSONArray(
-						processURL(commitsURL));
-
-					for (int j = 0; j < commitsJSONArray.length(); j++) {
-						JSONObject jsonObject = commitsJSONArray.getJSONObject(
-							j);
-
-						JSONObject commitJSONObject = jsonObject.getJSONObject(
-							"commit");
-
-						Commit commit = new Commit(commitJSONObject);
-
-						commits.add(commit);
-					}
-
-					_commits = commits;
-
-					return _commits;
-				}
-				catch (Exception exception) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Retrying " + commitsURL +
-								" because the JSON response was not an array",
-							exception);
-					}
-
-					JenkinsResultsParserUtil.sleep(5000);
-				}
-			}
-
-			throw new RuntimeException("Unable to process commits URL");
-		}
-
-		public String getCommonParentSHA() {
-			return _commonParentSHA;
-		}
-
-		public List<JSONObject> getFileJSONObjects() {
-			if (_fileJSONObjects != null) {
-				return _fileJSONObjects;
-			}
-
-			List<JSONObject> fileJSONObjects = new ArrayList<>();
-
-			String filesURL =
-				"https://api.github.com/repos/" + _ownerName + "/" +
-					_repositoryName + "/pulls/" + _number + "/files";
-
-			for (int i = 0; i < 6; i++) {
-				try {
-					JSONArray filesJSONArray = new JSONArray(
-						processURL(filesURL));
-
-					for (int j = 0; j < filesJSONArray.length(); j++) {
-						JSONObject fileJSONObject =
-							filesJSONArray.getJSONObject(j);
-
-						fileJSONObjects.add(fileJSONObject);
-					}
-
-					_fileJSONObjects = fileJSONObjects;
-
-					return _fileJSONObjects;
-				}
-				catch (Exception exception) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Retrying " + filesURL +
-								" because the JSON response was not an array",
-							exception);
-					}
-
-					JenkinsResultsParserUtil.sleep(5000);
-				}
-			}
-
-			throw new RuntimeException("Unable to process files URL");
-		}
-
-		public String getHtmlURL() {
-			return _pullRequestJSONObject.getString("html_url");
-		}
-
-		public String getIssueURL() {
-			return _pullRequestJSONObject.getString("issue_url");
-		}
-
-		public String[] getJIRAProjectKeys() {
-			return _jiraProjectKeys;
-		}
-
-		public int getNumber() {
-			return _number;
-		}
-
-		public String getOriginName() {
-			return _originName;
-		}
-
-		public String getOwnerName() {
-			return _ownerName;
-		}
-
-		public Set<String> getPassingTestSuites() throws JSONException {
-			if (_passingTestSuites != null) {
-				return _passingTestSuites;
-			}
-
-			_passingTestSuites = new HashSet<>();
-
-			JSONArray statusesJSONArray = getSenderRefSHAStatuses();
-
-			for (int i = 0; i < statusesJSONArray.length(); i++) {
-				JSONObject jsonObject = statusesJSONArray.getJSONObject(i);
-
-				String description = jsonObject.getString("description");
-
-				Matcher matcher = _passingTestSuiteStatusPattern.matcher(
-					description);
-
-				if (matcher.find()) {
-					_passingTestSuites.add(matcher.group("testSuiteName"));
-				}
-			}
-
-			return _passingTestSuites;
-		}
-
-		public String getPortalBundlesDistURL() {
-			if (_portalBundlesDistURL == null) {
-				return "";
-			}
-
-			return _portalBundlesDistURL;
-		}
-
-		public String getRefName() {
-			return _refName;
-		}
-
-		public String getRefSHA() {
-			return _refSHA;
-		}
-
-		public String getRepoHTMLURL() {
-			JSONObject baseJSONObject = _pullRequestJSONObject.getJSONObject(
-				"base");
-
-			JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
-
-			return repoJSONObject.getString("html_url");
-		}
-
-		public String getRepositoryName() {
-			return _repositoryName;
-		}
-
-		public String getSenderName() {
-			return _senderName;
-		}
-
-		public String getSenderRefName() {
-			return _senderRefName;
-		}
-
-		public String getSenderRefSHA() {
-			return _senderRefSHA;
-		}
-
-		public JSONArray getSenderRefSHAStatuses() {
-			return _senderRefSHAStatusesJSONArray;
-		}
-
-		public String getStatusesURL() {
-			return _pullRequestJSONObject.getString("statuses_url");
-		}
-
-		public String getTesterName() {
-			return _testerName;
-		}
-
-		public boolean hasRequiredCollaborators() {
-			String githubCIUsername = _jenkinsBuildProperties.getProperty(
-				"github.ci.username");
-
-			String collaboratorsURL =
-				getCollaboratorsURL() + "/" + githubCIUsername;
-
-			String responseBody = processURL(collaboratorsURL);
-
-			if (responseBody != null) {
-				return false;
-			}
-
-			return true;
-		}
-
-		public boolean hasValidJIRAReferences() {
-			if (!_ownerName.equals("brianchandotcom")) {
-				return true;
-			}
-
-			String jiraProjectKeysString = getCIProperty("jira.project.keys");
-
-			if (_log.isInfoEnabled()) {
-				_log.info("JIRA project keys: " + jiraProjectKeysString);
-			}
-
-			if (jiraProjectKeysString == null) {
-				return true;
-			}
-
-			_jiraProjectKeys = jiraProjectKeysString.split(",");
-
-			if (_jiraProjectKeys.length == 0) {
-				return true;
-			}
-
-			for (Commit commit : getCommits()) {
-				String message = commit.getMessage();
-
-				if (message.contains("subrepo:ignore")) {
-					return true;
-				}
-
-				boolean hasJIRAProjectKey = false;
-
-				for (String jiraProjectKey : _jiraProjectKeys) {
-					if (message.contains(jiraProjectKey + "-")) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Contains JIRA project keys " + jiraProjectKey);
-						}
-
-						hasJIRAProjectKey = true;
-					}
-				}
-
-				String emailAddress = commit.getEmailAddress();
-
-				if (emailAddress.equals("brian.chan@liferay.com") ||
-					emailAddress.equals("continuous-integration@liferay.com") ||
-					emailAddress.equals("samuel.tran@liferay.com")) {
-
-					if (_log.isInfoEnabled()) {
-						_log.info("Allow commit from Brian, Sam, or CI");
-					}
-
-					continue;
-				}
-
-				if (!hasJIRAProjectKey) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		public void invoke(
-			String masterURL, String testPullRequestQueryString) {
-
-			String invocationURL = StringUtils.join(
-				masterURL, "/job/", getCIJobName(), "/buildWithParameters?",
-				testPullRequestQueryString, "&token=",
-				_jenkinsProperties.getProperty("jenkins.access.token"));
-
-			addTestPullRequestURL(invocationURL);
-
-			if (isJenkinsJobEnabled()) {
-				processURL(invocationURL);
-
-				if (_ciForwardEligible || (_ciReevaluateBuildID != null)) {
-					return;
-				}
-
-				String publicMasterURL = masterURL.replace("http:", "https:");
-
-				if (!publicMasterURL.contains(".liferay.com")) {
-					publicMasterURL = publicMasterURL + ".liferay.com";
-				}
-
-				String publicJobURL = StringUtils.join(
-					publicMasterURL, "/job/", getCIJobName());
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringUtils.join(
-							"Pull request test invoked at ", publicJobURL,
-							"."));
-				}
-
-				_updateInvocationStatus(publicJobURL);
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info("Pull request test URL: " + invocationURL);
-				}
-			}
-		}
-
-		public boolean isAllowedSender() {
-			String allowedSenderNamesString = getAllowedSenderNames();
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Allowed sender names: " + allowedSenderNamesString);
-			}
-
-			if (allowedSenderNamesString == null) {
-				return true;
-			}
-
-			_allowedSenderNames = allowedSenderNamesString.split(",");
-
-			if (_allowedSenderNames.length == 0) {
-				return true;
-			}
-
-			for (String allowedSenderName : _allowedSenderNames) {
-				if (StringUtils.equalsIgnoreCase(
-						_senderName, allowedSenderName)) {
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public boolean isMergeSubrepoRequest() {
-			for (JSONObject fileJSONObject : getFileJSONObjects()) {
-				String fileName = fileJSONObject.getString("filename");
-
-				if (fileName.endsWith("/ci-merge")) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public boolean isSubrepo() {
-			if (_repositoryName.startsWith("com-liferay-")) {
-				return true;
-			}
-
-			return false;
-		}
-
-		public boolean isSynchronizeAllowed() {
-			if (_ownerName.equals("brianchandotcom")) {
-				return false;
-			}
-
-			return true;
-		}
-
-		public boolean isValidCIMergeFile() {
-			List<JSONObject> fileJSONObjects = getFileJSONObjects();
-
-			if (fileJSONObjects.size() > 1) {
-				return false;
-			}
-
-			JSONObject fileJSONObject = fileJSONObjects.get(0);
-
-			String fileName = fileJSONObject.getString("filename");
-
-			if (fileName.endsWith("/ci-merge")) {
-				return true;
-			}
-
-			return false;
-		}
-
-		public boolean isValidRef() {
-			if (_refSHA == null) {
-				return false;
-			}
-
-			List<String> ciEnabledBranchNames = _getCIEnabledBranchNames();
-
-			return ciEnabledBranchNames.contains(_refName);
-		}
-
-		public boolean isWhitelistedOwner() {
-			/*if (_ownerName.equals("brianchandotcom") ||
-				_ownerName.equals("liferay-continuous-integration") ||
-				_ownerName.equals("liferay") ||
-				_ownerName.equals("pyoo47") ||
-				_ownerName.equals("shuyangzhou") ||
-				_ownerName.equals("stsquared99")) {
-
-				return true;
-			}
-
-			return false;*/
-
-			return true;
-		}
-
-		public boolean isWhitelistedRepository() {
-			if (_repositoryName.equals("liferay-jenkins-ee") ||
-				_repositoryName.equals("liferay-plugins") ||
-				_repositoryName.equals("liferay-plugins-ee") ||
-				_repositoryName.equals("liferay-portal") ||
-				_repositoryName.equals("liferay-portal-ee") ||
-				_repositoryName.startsWith("com-liferay-")) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		public void setCIForwardEligible(boolean ciForwardEligible) {
-			_ciForwardEligible = ciForwardEligible;
-		}
-
-		public void setCIForwardReceiverUsername(
-			String ciForwardReceiverUsername) {
-
-			_ciForwardReceiverUsername = ciForwardReceiverUsername;
-		}
-
-		public void setCIReevaluateBuildID(String ciReevaluateBuildID) {
-			_ciReevaluateBuildID = ciReevaluateBuildID;
-		}
-
-		public void setCITestSuite(String ciTestSuite) {
-			_ciTestSuite = ciTestSuite;
-		}
-
-		public void setPortalBundlesDistURL(String portalBundlesDistURL) {
-			_portalBundlesDistURL = portalBundlesDistURL;
-		}
-
-		public void setRefSHA(String refSHA) {
-			_refSHA = refSHA;
-		}
-
-		public void setTesterName(String testerName) {
-			_testerName = testerName;
-		}
-
-		private List<String> _getCIEnabledBranchNames() {
-			String ciEnabledBranchNames = _jenkinsBuildProperties.getProperty(
-				JenkinsResultsParserUtil.combine(
-					"github.ci.enabled.branch.names[", _repositoryName, "]"),
-				"");
-
-			return Arrays.asList(ciEnabledBranchNames.split(","));
-		}
-
-		private void _updateInvocationStatus(String targetURL) {
-			String command = "ci:test";
-			String context = _ciTestSuite;
-
-			if (!context.equals("default")) {
-				command = "ci:test:" + context;
-
-				context = "liferay/ci:test:" + context;
-			}
-
-			String repositoryName = getRepositoryName();
-
-			if (repositoryName.startsWith("com-liferay-")) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
 				return;
 			}
 
-			JSONObject jsonObject = new JSONObject();
+			if (sb.length() > 0) {
+				sb.append("&");
+			}
 
-			jsonObject.put("context", context);
-			jsonObject.put(
-				"description",
-				JenkinsResultsParserUtil.combine(
-					"\"", command, "\" was invoked on Jenkins."));
-			jsonObject.put("state", "pending");
-			jsonObject.put("target_url", targetURL);
-
-			processURL(getStatusesURL(), jsonObject.toString());
+			sb.append(name);
+			sb.append("=");
+			sb.append(value);
 		}
 
-		private String[] _allowedSenderNames = {};
-		private boolean _ciForwardEligible;
-		private String _ciForwardReceiverUsername;
-		private Properties _ciProperties;
-		private String _ciReevaluateBuildID;
-		private String _ciTestSuite = "default";
-		private List<Commit> _commits;
-		private final String _commonParentSHA;
-		private List<JSONObject> _fileJSONObjects;
-		private String[] _jiraProjectKeys = {};
-		private final int _number;
-		private final String _originName;
-		private final String _ownerName;
-		private Set<String> _passingTestSuites;
-		private Pattern _passingTestSuiteStatusPattern = Pattern.compile(
-			"\"ci:test:(?<testSuiteName>[^\"]+)\"\\s*has PASSED.");
-		private String _portalBundlesDistURL;
-		private final String _portalRefName;
-		private final JSONObject _pullRequestJSONObject;
-		private final String _refName;
-		private String _refSHA;
-		private String _repositoryName;
-		private final String _senderName;
-		private final String _senderRefName;
-		private final String _senderRefSHA;
-		private final JSONArray _senderRefSHAStatusesJSONArray;
-		private String _testerName;
+		private String _encode(String string) {
+			try {
+				return URLEncoder.encode(string, "UTF-8");
+			}
+			catch (UnsupportedEncodingException unsupportedEncodingException) {
+				throw new RuntimeException(
+					"Unsupported Encoding: UTF-8",
+					unsupportedEncodingException);
+			}
+		}
+
+		private static final String _KEY_CI_FORWARD_RECEIVER_USERNAME =
+			"CI_FORWARD_RECEIVER_USERNAME";
+
+		private static final String _KEY_CI_REEVALUATE_BUILD_ID = "BUILD_ID";
+
+		private static final String _KEY_CI_TEST_SUITE_NAME = "CI_TEST_SUITE";
+
+		private static final String _KEY_JENKINS_ACCESS_TOKEN = "token";
+
+		private static final String _KEY_PORTAL_BUNDLES_DIST_URL =
+			"PORTAL_BUNDLES_DIST_URL";
+
+		private static final String _KEY_PULL_REQUEST_NUMBER =
+			"GITHUB_PULL_REQUEST_NUMBER";
+
+		private PullRequest _pullRequest;
 
 	}
 

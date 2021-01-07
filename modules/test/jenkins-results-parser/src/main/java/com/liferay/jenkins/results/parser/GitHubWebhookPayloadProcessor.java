@@ -2515,7 +2515,7 @@ public class GitHubWebhookPayloadProcessor {
 		public PullRequest getPullRequest() {
 			if (_pullRequest == null) {
 				_pullRequest = new PullRequest(
-					getStringByPath("pull_request/html_url"));
+					getStringByPath("issue/pull_request/html_url"));
 			}
 
 			return _pullRequest;

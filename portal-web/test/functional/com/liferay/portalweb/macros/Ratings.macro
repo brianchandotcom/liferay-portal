@@ -90,7 +90,7 @@ definition {
 
 	macro rateThumb {
 		if (isSet(blogCommentRating)) {
-			Click.mouseOverClick(
+			Click.javaScriptClick(
 				key_ratingResult = "${ratingResult}",
 				locator1 = "Ratings#COMMENT_RATING_THUMB");
 		}

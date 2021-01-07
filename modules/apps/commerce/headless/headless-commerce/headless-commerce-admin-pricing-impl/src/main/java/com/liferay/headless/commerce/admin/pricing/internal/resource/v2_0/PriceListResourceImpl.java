@@ -507,8 +507,13 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 		throws Exception {
 
 		CommerceCurrency commerceCurrency =
+			commercePriceList.getCommerceCurrency();
+
+		CommerceCurrency updatedCommerceCurrency =
 			_commerceCurrencyService.getCommerceCurrency(
-				contextCompany.getCompanyId(), priceList.getCurrencyCode());
+				contextCompany.getCompanyId(),
+				GetterUtil.get(
+					priceList.getCurrencyCode(), commerceCurrency.getCode()));
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());
@@ -521,7 +526,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		commercePriceList = _commercePriceListService.updateCommercePriceList(
 			commercePriceList.getCommercePriceListId(),
-			commerceCurrency.getCommerceCurrencyId(),
+			updatedCommerceCurrency.getCommerceCurrencyId(),
 			GetterUtil.get(
 				priceList.getNetPrice(), commercePriceList.isNetPrice()),
 			GetterUtil.get(

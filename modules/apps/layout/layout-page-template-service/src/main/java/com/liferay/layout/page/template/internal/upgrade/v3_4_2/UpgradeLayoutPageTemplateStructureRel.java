@@ -257,7 +257,7 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 	}
 
 	private static final String[] _ALIGN_KEYS = {
-		"buttonAlign", "contentAlign", "imageAlign"
+		"buttonAlign", "contentAlign", "imageAlign", "textAlign"
 	};
 
 	private static final Map<String, String> _borderRadiuses =

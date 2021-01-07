@@ -179,6 +179,21 @@ public class AccountRoleLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasUserAccountRole(
+			long accountEntryId, long accountRoleId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = accountEntryPersistence.findByPrimaryKey(
+			accountEntryId);
+
+		AccountRole accountRole = getAccountRole(accountRoleId);
+
+		return userGroupRoleLocalService.hasUserGroupRole(
+			userId, accountEntry.getAccountEntryGroupId(),
+			accountRole.getRoleId());
+	}
+
+	@Override
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
 		long companyId, long accountEntryId, String keywords, int start,
 		int end, OrderByComparator<?> orderByComparator) {

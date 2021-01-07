@@ -27,7 +27,7 @@ function switchLanguage(layoutRendererInstance, languageId) {
 function onLocaleChange(layoutRendererInstance, event) {
 	const selectedLanguageId = event.item.getAttribute('data-value');
 
-	switchLanguage.call(this, layoutRendererInstance, selectedLanguageId)();
+	switchLanguage.call(this, layoutRendererInstance, selectedLanguageId);
 }
 
 export default function dataEngineLayoutRendererLanguageProxy(props) {

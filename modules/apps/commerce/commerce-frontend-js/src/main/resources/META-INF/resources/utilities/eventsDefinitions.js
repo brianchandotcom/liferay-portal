@@ -12,6 +12,7 @@
  * details.
  */
 
+export const ADD_TO_ORDER = 'refreshCartUsingData';
 export const AUTOCOMPLETE_VALUE_UPDATED = 'autocomplete-updated';
 export const CART_PRODUCT_QUANTITY_CHANGED = 'quantity-changed-from-cart';
 export const CHANGE_ACCOUNT = 'accountSelected';
@@ -37,6 +38,7 @@ export const SIDE_PANEL_CLOSED = 'side-panel-closed';
 export const UPDATE_DATASET_DISPLAY = 'update-data-set-display';
 
 export default {
+	ADD_TO_ORDER,
 	AUTOCOMPLETE_VALUE_UPDATED,
 	CART_PRODUCT_QUANTITY_CHANGED,
 	CHANGE_ACCOUNT,

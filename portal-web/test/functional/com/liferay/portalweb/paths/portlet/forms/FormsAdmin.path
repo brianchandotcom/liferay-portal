@@ -8,6 +8,17 @@
 <tr><td rowspan="1" colspan="3">FormsAdmin</td></tr>
 </thead>
 <tbody>
+<!--FORMS_ENTRY_TABLE-->
+<tr>
+	<td>FORM_ENTRY_TABLE_ENTRY</td>
+	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_ENTRY_WORKFLOW_STATUS</td>
+	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]//..//strong[contains(.,'${key_workflowStatus}')]</td>
+	<td></td>
+</tr>
 <!--FORMS_TABLE-->
 <tr>
 	<td>FORMS_TABLE_NAME</td>
@@ -27,17 +38,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--FORMS_ENTRY_TABLE-->
-<tr>
-	<td>FORM_ENTRY_TABLE_ENTRY</td>
-	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_ENTRY_WORKFLOW_STATUS</td>
-	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]//..//strong[contains(.,'${key_workflowStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

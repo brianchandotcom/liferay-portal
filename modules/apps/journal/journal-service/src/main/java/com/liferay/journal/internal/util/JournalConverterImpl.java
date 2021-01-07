@@ -16,8 +16,10 @@ package com.liferay.journal.internal.util;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -66,6 +68,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -539,8 +542,8 @@ public class JournalConverterImpl implements JournalConverter {
 				String valueString = String.valueOf(fieldValue);
 
 				updateDynamicContentValue(
-					dynamicContentElement, fieldType, multiple,
-					valueString.trim());
+					ddmStructure, dynamicContentElement, fieldName, fieldType,
+					multiple, valueString.trim());
 			}
 		}
 
@@ -548,12 +551,44 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	protected void updateDynamicContentValue(
-		Element dynamicContentElement, String fieldType, boolean multiple,
+		DDMStructure ddmStructure, Element dynamicContentElement,
+		String fieldName, String fieldType, boolean multiple,
 		String fieldValue) {
 
-		if (Objects.equals(DDMFormFieldType.CHECKBOX, fieldType)) {
-			if (fieldValue.equals(Boolean.FALSE.toString())) {
-				fieldValue = StringPool.BLANK;
+		if (Objects.equals(DDMFormFieldType.CHECKBOX_MULTIPLE, fieldType)) {
+			try {
+				DDMFormField ddmFormField = ddmStructure.getDDMFormField(
+					fieldName);
+
+				DDMFormFieldOptions ddmFormFieldOptions =
+					(DDMFormFieldOptions)ddmFormField.getProperty("options");
+
+				Map<String, LocalizedValue> options =
+					ddmFormFieldOptions.getOptions();
+
+				if (options.size() > 1) {
+					dynamicContentElement.addCDATA(fieldValue);
+
+					return;
+				}
+
+				JSONArray fieldValueJSONArray = JSONFactoryUtil.createJSONArray(
+					fieldValue);
+
+				if (Objects.equals(fieldValueJSONArray.get(0), fieldName)) {
+					fieldValue = Boolean.TRUE.toString();
+				}
+				else {
+					fieldValue = StringPool.BLANK;
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to get dynamic data mapping form field for " +
+							fieldName,
+						portalException);
+				}
 			}
 
 			dynamicContentElement.addCDATA(fieldValue);
@@ -617,7 +652,31 @@ public class JournalConverterImpl implements JournalConverter {
 
 		String type = ddmFieldType;
 
-		if (Objects.equals(ddmFieldType, "color")) {
+		if (Objects.equals(ddmFieldType, "checkbox_multiple")) {
+			try {
+				DDMFormField ddmFormField = ddmStructure.getDDMFormField(
+					fieldName);
+
+				DDMFormFieldOptions ddmFormFieldOptions =
+					(DDMFormFieldOptions)ddmFormField.getProperty("options");
+
+				Map<String, LocalizedValue> options =
+					ddmFormFieldOptions.getOptions();
+
+				if (options.size() == 1) {
+					type = "boolean";
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to get dynamic data mapping form field for " +
+							fieldName,
+						portalException);
+				}
+			}
+		}
+		else if (Objects.equals(ddmFieldType, "color")) {
 			type = "ddm-color";
 		}
 		else if (Objects.equals(ddmFieldType, "date")) {

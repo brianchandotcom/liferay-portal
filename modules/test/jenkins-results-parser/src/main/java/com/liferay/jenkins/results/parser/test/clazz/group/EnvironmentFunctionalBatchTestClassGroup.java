@@ -36,6 +36,12 @@ public class EnvironmentFunctionalBatchTestClassGroup
 
 	@Override
 	public String getRelevantTestBatchRunPropertyQuery() {
+		String propertyQuery = System.getenv("TEST_BATCH_RUN_PROPERTY_QUERY");
+
+		if ((propertyQuery != null) && !propertyQuery.isEmpty()) {
+			return propertyQuery;
+		}
+
 		String jobName = portalTestClassJob.getJobName();
 
 		return JenkinsResultsParserUtil.getProperty(

@@ -192,8 +192,14 @@
 		}
 	}
 
-	.property-builder-tabs-content .property-builder-fields-container {
-		padding: 0;
+	.property-builder-tabs-content {
+		.property-builder-fields-container {
+			padding: 0;
+		}
+
+		.tab-content .tab-pane.active {
+			max-height: 544px;
+		}
 	}
 
 	.property-builder-content-container .btn-toolbar-button {

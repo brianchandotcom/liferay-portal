@@ -10404,13 +10404,6 @@ metal-position@2.1.2, metal-position@^2.0.0, metal-position@^2.1.0, metal-positi
     metal "^2.16.6"
     metal-dom "^2.16.6"
 
-metal-promise@3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/metal-promise/-/metal-promise-3.0.5.tgz#03d8fb40579e5b97a4e44356e00042f2d34844de"
-  integrity sha512-9LRn5oPcv439xCiNvmKBWVopFBaJ5zBV75lkZMydufJX17YJ8J6+EVrL2ctlrxxxyF/hFhiEGVGPvxNjY9kwxg==
-  dependencies:
-    metal "^2.16.6"
-
 metal-promise@^2.0.0, metal-promise@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/metal-promise/-/metal-promise-2.0.1.tgz#28ff43210e4c69e5fff51dbf201e4ae2fe6f83d5"

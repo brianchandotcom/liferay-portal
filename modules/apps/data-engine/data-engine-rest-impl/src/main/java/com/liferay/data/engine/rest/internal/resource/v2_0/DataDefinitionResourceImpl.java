@@ -1284,6 +1284,7 @@ public class DataDefinitionResourceImpl
 						ddmFormValidationException;
 
 			return new DataDefinitionValidationException.MustSetOptionsForField(
+				mustSetOptionsForField.getFieldLabel(),
 				mustSetOptionsForField.getFieldName());
 		}
 

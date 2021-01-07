@@ -162,12 +162,29 @@ public class DataDefinitionValidationException extends RuntimeException {
 					"At least one option must be set for field %s", fieldName));
 
 			_fieldName = fieldName;
+
+			_fieldLabel = fieldName;
+		}
+
+		public MustSetOptionsForField(String fieldLabel, String fieldName) {
+			super(
+				String.format(
+					"At least one option must be set for field %s",
+					fieldLabel));
+
+			_fieldLabel = fieldLabel;
+			_fieldName = fieldName;
+		}
+
+		public String getFieldLabel() {
+			return _fieldLabel;
 		}
 
 		public String getFieldName() {
 			return _fieldName;
 		}
 
+		private final String _fieldLabel;
 		private String _fieldName;
 
 	}

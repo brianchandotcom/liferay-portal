@@ -32,11 +32,11 @@ public class SettingsDDMFormFieldsUtil {
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 		String type) {
 
-		DDMFormFieldType ddmFormFieldType =
-			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(type);
-
 		Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings =
 			DefaultDDMFormFieldTypeSettings.class;
+
+		DDMFormFieldType ddmFormFieldType =
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(type);
 
 		if (ddmFormFieldType != null) {
 			ddmFormFieldTypeSettings =

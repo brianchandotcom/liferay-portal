@@ -220,6 +220,7 @@
 	</entity>
 	<exceptions>
 		<exception>AccountEntryDomains</exception>
+		<exception>AccountEntryEmailAddress</exception>
 		<exception>AccountEntryName</exception>
 		<exception>AccountEntryType</exception>
 		<exception>AccountEntryUserRelEmailAddress</exception>

@@ -97,10 +97,10 @@ public class Entity implements Comparable<Entity> {
 	public Entity(ServiceBuilder serviceBuilder, String name) {
 		this(
 			serviceBuilder, null, null, null, name, null, null, null, null,
-			null, null, false, false, false, false, true, true, null, null,
-			null, null, null, true, false, false, false, false, false, null,
-			false, null, null, false, null, null, null, null, null, null, null,
-			null, null, null, false);
+			null, null, false, false, false, null, false, true, true, null,
+			null, null, null, null, true, false, false, false, false, false,
+			null, false, null, null, false, null, null, null, null, null, null,
+			null, null, null, null, false);
 	}
 
 	public Entity(
@@ -109,13 +109,13 @@ public class Entity implements Comparable<Entity> {
 		String variableName, String pluralName, String pluralVariableName,
 		String humanName, String table, String alias, boolean uuid,
 		boolean uuidAccessor, boolean externalReferenceCode,
-		boolean localService, boolean remoteService, boolean persistence,
-		String persistenceClassName, String finderClassName, String dataSource,
-		String sessionFactory, String txManager, boolean cacheEnabled,
-		boolean changeTrackingEnabled, boolean dynamicUpdateEnabled,
-		boolean jsonEnabled, boolean mvccEnabled, boolean trashEnabled,
-		String uadApplicationName, boolean uadAutoDelete, String uadOutputPath,
-		String uadPackagePath, boolean deprecated,
+		String externalReferenceCodeScope, boolean localService,
+		boolean remoteService, boolean persistence, String persistenceClassName,
+		String finderClassName, String dataSource, String sessionFactory,
+		String txManager, boolean cacheEnabled, boolean changeTrackingEnabled,
+		boolean dynamicUpdateEnabled, boolean jsonEnabled, boolean mvccEnabled,
+		boolean trashEnabled, String uadApplicationName, boolean uadAutoDelete,
+		String uadOutputPath, String uadPackagePath, boolean deprecated,
 		List<EntityColumn> pkEntityColumns,
 		List<EntityColumn> regularEntityColumns,
 		List<EntityColumn> blobEntityColumns,
@@ -154,6 +154,7 @@ public class Entity implements Comparable<Entity> {
 		_uuid = uuid;
 		_uuidAccessor = uuidAccessor;
 		_externalReferenceCode = externalReferenceCode;
+		_externalReferenceCodeScope = externalReferenceCodeScope;
 		_localService = localService;
 		_remoteService = remoteService;
 		_persistence = persistence;
@@ -342,6 +343,10 @@ public class Entity implements Comparable<Entity> {
 
 	public EntityOrder getEntityOrder() {
 		return _entityOrder;
+	}
+
+	public String getExternalReferenceCodeScope() {
+		return _externalReferenceCodeScope;
 	}
 
 	public EntityColumn getFilterPKEntityColumn() {
@@ -1309,6 +1314,7 @@ public class Entity implements Comparable<Entity> {
 	private final List<EntityFinder> _entityFinders;
 	private final EntityOrder _entityOrder;
 	private final boolean _externalReferenceCode;
+	private final String _externalReferenceCodeScope;
 	private final String _finderClassName;
 	private final List<EntityColumn> _finderEntityColumns;
 	private final String _humanName;

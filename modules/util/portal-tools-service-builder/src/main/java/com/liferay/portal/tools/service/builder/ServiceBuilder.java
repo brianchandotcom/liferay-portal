@@ -5980,8 +5980,6 @@ public class ServiceBuilder {
 			entityElement.attributeValue("uuid"));
 		boolean uuidAccessor = GetterUtil.getBoolean(
 			entityElement.attributeValue("uuid-accessor"));
-		boolean externalReferenceCode = GetterUtil.getBoolean(
-			entityElement.attributeValue("external-reference-code"));
 		boolean localService = GetterUtil.getBoolean(
 			entityElement.attributeValue("local-service"));
 		boolean remoteService = GetterUtil.getBoolean(
@@ -5993,6 +5991,16 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_packagePath, ".service.persistence.impl.", entityName,
 				"PersistenceImpl"));
+
+		boolean externalReferenceCode = false;
+		String externalReferenceCodeScope = GetterUtil.getString(
+			entityElement.attributeValue("external-reference-code"), "false");
+
+		if (!StringUtil.equals(externalReferenceCodeScope, "false")) {
+			externalReferenceCode = true;
+			externalReferenceCodeScope = StringUtil.replace(
+				externalReferenceCodeScope, "true", "company");
+		}
 
 		String finderClassName = "";
 
@@ -6460,18 +6468,23 @@ public class ServiceBuilder {
 			finderElements.add(0, finderElement);
 		}
 
-		if (externalReferenceCode &&
-			entityColumns.contains(new EntityColumn(this, "companyId"))) {
-
+		if (externalReferenceCode) {
 			Element finderElement = DocumentHelper.createElement("finder");
 
-			finderElement.addAttribute("name", "C_ERC");
+			String scopeUpperCase = StringUtil.toUpperCase(
+				externalReferenceCodeScope);
+
+			char scopeId = scopeUpperCase.charAt(0);
+
+			finderElement.addAttribute("name", scopeId + "_ERC");
+
 			finderElement.addAttribute("return-type", entityName);
 
 			Element finderColumnElement = finderElement.addElement(
 				"finder-column");
 
-			finderColumnElement.addAttribute("name", "companyId");
+			finderColumnElement.addAttribute(
+				"name", externalReferenceCodeScope + "Id");
 
 			finderColumnElement = finderElement.addElement("finder-column");
 
@@ -6699,14 +6712,15 @@ public class ServiceBuilder {
 		Entity entity = new Entity(
 			this, _packagePath, _apiPackagePath, _portletShortName, entityName,
 			variableName, pluralName, pluralVariableName, humanName, tableName,
-			alias, uuid, uuidAccessor, externalReferenceCode, localService,
-			remoteService, persistence, persistenceClassName, finderClassName,
-			dataSource, sessionFactory, txManager, cacheEnabled,
-			changeTrackingEnabled, dynamicUpdateEnabled, jsonEnabled,
-			mvccEnabled, trashEnabled, uadApplicationName, uadAutoDelete,
-			uadOutputPath, uadPackagePath, deprecated, pkEntityColumns,
-			regularEntityColumns, blobEntityColumns, collectionEntityColumns,
-			entityColumns, entityOrder, entityFinders, referenceEntities,
+			alias, uuid, uuidAccessor, externalReferenceCode,
+			externalReferenceCodeScope, localService, remoteService,
+			persistence, persistenceClassName, finderClassName, dataSource,
+			sessionFactory, txManager, cacheEnabled, changeTrackingEnabled,
+			dynamicUpdateEnabled, jsonEnabled, mvccEnabled, trashEnabled,
+			uadApplicationName, uadAutoDelete, uadOutputPath, uadPackagePath,
+			deprecated, pkEntityColumns, regularEntityColumns,
+			blobEntityColumns, collectionEntityColumns, entityColumns,
+			entityOrder, entityFinders, referenceEntities,
 			unresolvedReferenceEntityNames, txRequiredMethodNames,
 			resourceActionModel);
 

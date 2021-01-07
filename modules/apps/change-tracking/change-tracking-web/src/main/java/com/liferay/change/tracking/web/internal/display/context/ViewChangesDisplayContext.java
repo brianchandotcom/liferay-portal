@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -398,9 +399,10 @@ public class ViewChangesDisplayContext {
 		).put(
 			"userInfo",
 			DisplayContextUtil.getUserInfoJSONObject(
+				CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
+				CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,
 				CTEntryTable.INSTANCE.ctCollectionId.eq(
-					_ctCollection.getCtCollectionId()),
-				_themeDisplay, _userLocalService)
+					_ctCollection.getCtCollectionId()))
 		).build();
 	}
 

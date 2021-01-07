@@ -1000,53 +1000,17 @@ class ChangeTrackingChangesView extends React.Component {
 				);
 			}
 			else {
-				const portraitURL = this._getPortraitURL(node);
-
-				if (portraitURL) {
-					cells.push(
-						<ClayTable.Cell>
-							<span
-								data-tooltip-align="top"
-								title={node.userName}
-							>
-								<span className="rounded-circle sticker sticker-primary">
-									<span className="sticker-overlay">
-										<img
-											alt="thumbnail"
-											className="img-fluid"
-											src={portraitURL}
-										/>
-									</span>
-								</span>
-							</span>
-						</ClayTable.Cell>
-					);
-				}
-				else {
-					let userPortraitCss =
-						'sticker sticker-circle sticker-light user-icon-color-';
-
-					userPortraitCss += node.userId % 10;
-
-					cells.push(
-						<ClayTable.Cell>
-							<span
-								data-tooltip-align="top"
-								title={node.userName}
-							>
-								<span className={userPortraitCss}>
-									<span className="inline-item">
-										<svg className="lexicon-icon">
-											<use
-												href={this.spritemap + '#user'}
-											/>
-										</svg>
-									</span>
-								</span>
-							</span>
-						</ClayTable.Cell>
-					);
-				}
+				cells.push(
+					<ClayTable.Cell>
+						<div
+							dangerouslySetInnerHTML={this._getUserPortraitHTML(
+								node
+							)}
+							data-tooltip-align="top"
+							title={node.userName}
+						/>
+					</ClayTable.Cell>
+				);
 
 				cells.push(<ClayTable.Cell>{node.siteName}</ClayTable.Cell>);
 
@@ -1086,6 +1050,10 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return rows;
+	}
+
+	_getUserPortraitHTML(node) {
+		return {__html: this.userInfo[node.userId.toString()].userPortraitHTML};
 	}
 
 	_getViewTypes() {

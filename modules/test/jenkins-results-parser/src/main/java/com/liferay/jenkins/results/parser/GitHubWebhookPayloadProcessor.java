@@ -972,7 +972,9 @@ public class GitHubWebhookPayloadProcessor {
 			return false;
 		}
 
-		if (_whiteListedRepositoryMultiPattern.matches(branchName) == null) {
+		if (_whiteListedRepositoryMultiPattern.matches(repositoryName) ==
+				null) {
+
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					JenkinsResultsParserUtil.combine(

@@ -16,6 +16,7 @@ package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
+import com.liferay.account.exception.AccountEntryEmailAddressException;
 import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.model.AccountEntry;
@@ -80,6 +81,7 @@ import java.util.ListIterator;
 import java.util.stream.Stream;
 
 import org.apache.commons.validator.routines.DomainValidator;
+import org.apache.commons.validator.routines.EmailValidator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -149,11 +151,28 @@ public class AccountEntryLocalServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
 			String taxIdNumber, String type, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addAccountEntry(
+			userId, parentAccountEntryId, name, description, domains, null,
+			logoBytes, taxIdNumber, type, status, serviceContext);
+	}
+
+	@Override
+	public AccountEntry addAccountEntry(
+			long userId, long parentAccountEntryId, String name,
+			String description, String[] domains, String emailAddress,
+			byte[] logoBytes, String taxIdNumber, String type, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -186,6 +205,10 @@ public class AccountEntryLocalServiceImpl
 		domains = _validateDomains(domains);
 
 		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
+
+		_validateEmailAddress(emailAddress);
+
+		accountEntry.setEmailAddress(emailAddress);
 
 		_portal.updateImageId(
 			accountEntry, true, logoBytes, "logoId",
@@ -464,12 +487,29 @@ public class AccountEntryLocalServiceImpl
 			domains, logoBytes, null, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
 			byte[] logoBytes, String taxIdNumber, int status,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateAccountEntry(
+			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
+			domains, null, logoBytes, taxIdNumber, status, serviceContext);
+	}
+
+	@Override
+	public AccountEntry updateAccountEntry(
+			Long accountEntryId, long parentAccountEntryId, String name,
+			String description, boolean deleteLogo, String[] domains,
+			String emailAddress, byte[] logoBytes, String taxIdNumber,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		AccountEntry accountEntry = accountEntryPersistence.fetchByPrimaryKey(
@@ -486,6 +526,10 @@ public class AccountEntryLocalServiceImpl
 		domains = _validateDomains(domains);
 
 		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
+
+		_validateEmailAddress(emailAddress);
+
+		accountEntry.setEmailAddress(emailAddress);
 
 		_portal.updateImageId(
 			accountEntry, !deleteLogo, logoBytes, "logoId",
@@ -780,6 +824,18 @@ public class AccountEntryLocalServiceImpl
 		}
 
 		return ArrayUtil.distinct(domains);
+	}
+
+	private void _validateEmailAddress(String emailAddress)
+		throws AccountEntryEmailAddressException {
+
+		if (Validator.isNotNull(emailAddress)) {
+			EmailValidator emailValidator = EmailValidator.getInstance();
+
+			if (!emailValidator.isValid(emailAddress)) {
+				throw new AccountEntryEmailAddressException();
+			}
+		}
 	}
 
 	private void _validateName(String name) throws PortalException {

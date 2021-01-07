@@ -78,7 +78,6 @@ public class LayoutPageTemplatesExporter {
 
 		DTOConverter<LayoutStructure, PageDefinition>
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
-
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		try {
@@ -108,17 +107,15 @@ public class LayoutPageTemplatesExporter {
 	public File exportGroupLayoutPageTemplates(long groupId)
 		throws PortletException {
 
+		Map<Long, LayoutPageTemplateCollection>
+			layoutPageTemplateCollectionKeyMap = new HashMap<>();
+		DTOConverter<LayoutStructure, PageDefinition>
+			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 				groupId);
-
-		DTOConverter<LayoutStructure, PageDefinition>
-			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
-
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
-		Map<Long, LayoutPageTemplateCollection>
-			layoutPageTemplateCollectionKeyMap = new HashMap<>();
 
 		try {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
@@ -171,7 +168,6 @@ public class LayoutPageTemplatesExporter {
 
 		DTOConverter<LayoutStructure, PageDefinition>
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
-
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		try {
@@ -202,13 +198,11 @@ public class LayoutPageTemplatesExporter {
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries)
 		throws PortletException {
 
-		DTOConverter<LayoutStructure, PageDefinition>
-			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
-
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
 		Map<Long, LayoutPageTemplateCollection>
 			layoutPageTemplateCollectionKeyMap = new HashMap<>();
+		DTOConverter<LayoutStructure, PageDefinition>
+			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		try {
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :

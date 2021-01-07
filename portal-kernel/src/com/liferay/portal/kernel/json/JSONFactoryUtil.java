@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.json;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -67,6 +68,10 @@ public class JSONFactoryUtil {
 
 	public static JSONObject createJSONObject() {
 		return getJSONFactory().createJSONObject();
+	}
+
+	public static JSONObject createJSONObject(Map<?, ?> map) {
+		return getJSONFactory().createJSONObject(map);
 	}
 
 	public static JSONObject createJSONObject(String json)

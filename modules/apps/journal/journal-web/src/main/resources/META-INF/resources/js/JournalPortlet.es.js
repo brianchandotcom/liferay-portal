@@ -153,23 +153,17 @@ class JournalPortlet extends PortletBase {
 		return document.getElementById(this.ns(name));
 	}
 
-	_getInputLocalizedValues(field) {
+	_getInputTranslatedLanguages(field) {
 		const inputLocalized = Liferay.component(this.ns(field));
-		const localizedValues = {};
+		let translatedLanguages = [];
 
 		if (inputLocalized) {
-			const translatedLanguages = inputLocalized
+			translatedLanguages = inputLocalized
 				.get('translatedLanguages')
 				.values();
-
-			translatedLanguages.forEach((languageId) => {
-				localizedValues[languageId] = inputLocalized.getValue(
-					languageId
-				);
-			});
 		}
 
-		return JSON.stringify(localizedValues);
+		return translatedLanguages.toString();
 	}
 
 	/**
@@ -266,9 +260,13 @@ class JournalPortlet extends PortletBase {
 			articleIdInput.value = newArticleIdInput.value;
 		}
 
-		const titleValueInput = this._getInputByName(this.ns('titleValue'));
+		const titleTranslatedLanguageIdsInput = this._getInputByName(
+			this.ns('titleTranslatedLanguageIds')
+		);
 
-		titleValueInput.value = this._getInputLocalizedValues('titleMapAsXML');
+		titleTranslatedLanguageIdsInput.value = this._getInputTranslatedLanguages(
+			'titleMapAsXML'
+		);
 
 		const form = this._getInputByName(this.ns('fm1'));
 

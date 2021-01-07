@@ -159,9 +159,7 @@ public class FileInstallConfigTest {
 						"ConfigurationFileInstaller",
 					Level.WARN)) {
 
-			Files.write(
-				configPathDeprecated,
-				contentDeprecated.getBytes(Charset.defaultCharset()));
+			Files.write(configPathDeprecated, contentDeprecated.getBytes());
 
 			_configuration = _createConfiguration(configurationPid, content);
 

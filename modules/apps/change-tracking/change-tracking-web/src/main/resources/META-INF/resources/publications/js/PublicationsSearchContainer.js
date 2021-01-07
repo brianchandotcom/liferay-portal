@@ -179,141 +179,145 @@ const PublicationsSearchContainer = ({
 		const viewTypeActive = viewTypes.find((type) => type.active);
 
 		return (
-			<ClayManagementToolbar>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
-						<ClayDropDownWithItems
-							items={[
-								{
-									items,
-									label: Liferay.Language.get('order-by'),
-									type: 'group',
-								},
-							]}
-							spritemap={spritemap}
-							trigger={
-								<ClayButton
-									className="nav-link"
-									displayType="unstyled"
-								>
-									<span className="navbar-breakpoint-down-d-none">
-										<span className="navbar-text-truncate">
-											{Liferay.Language.get(
-												'filter-and-order'
-											)}
-										</span>
-
-										<ClayIcon
-											className="inline-item inline-item-after"
-											spritemap={spritemap}
-											symbol="caret-bottom"
-										/>
-									</span>
-									<span className="navbar-breakpoint-d-none">
-										<ClayIcon
-											spritemap={spritemap}
-											symbol="filter"
-										/>
-									</span>
-								</ClayButton>
-							}
-						/>
-					</ClayManagementToolbar.Item>
-					<ClayManagementToolbar.Item
-						className="lfr-portal-tooltip"
-						title={Liferay.Language.get('reverse-sort-direction')}
-					>
-						<ClayButton
-							className={
-								'nav-link nav-link-monospaced ' +
-								(ascending
-									? 'order-arrow-down-active'
-									: 'order-arrow-up-active')
-							}
-							displayType="unstyled"
-							onClick={() => setAscending(!ascending)}
-						>
-							<ClayIcon
+			<ClayTooltipProvider>
+				<ClayManagementToolbar>
+					<ClayManagementToolbar.ItemList>
+						<ClayManagementToolbar.Item>
+							<ClayDropDownWithItems
+								items={[
+									{
+										items,
+										label: Liferay.Language.get('order-by'),
+										type: 'group',
+									},
+								]}
 								spritemap={spritemap}
-								symbol="order-arrow"
-							/>
-						</ClayButton>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
-				<ClayManagementToolbar.Search
-					onSubmit={(event) => {
-						event.preventDefault();
+								trigger={
+									<ClayButton
+										className="nav-link"
+										displayType="unstyled"
+									>
+										<span className="navbar-breakpoint-down-d-none">
+											<span className="navbar-text-truncate">
+												{Liferay.Language.get(
+													'filter-and-order'
+												)}
+											</span>
 
-						onSubmit(searchTerms.trim());
-					}}
-					showMobile={showMobile}
-				>
-					<ClayInput.Group>
-						<ClayInput.GroupItem>
-							<ClayInput
-								aria-label={Liferay.Language.get('search')}
-								className="input-group-inset input-group-inset-after"
-								onChange={(event) =>
-									setSearchTerms(event.target.value)
+											<ClayIcon
+												className="inline-item inline-item-after"
+												spritemap={spritemap}
+												symbol="caret-bottom"
+											/>
+										</span>
+										<span className="navbar-breakpoint-d-none">
+											<ClayIcon
+												spritemap={spritemap}
+												symbol="filter"
+											/>
+										</span>
+									</ClayButton>
 								}
-								placeholder={`${Liferay.Language.get(
-									'search'
-								)}...`}
-								type="text"
-								value={searchTerms}
 							/>
-							<ClayInput.GroupInsetItem after tag="span">
-								<ClayButtonWithIcon
-									className="navbar-breakpoint-d-none"
-									displayType="unstyled"
-									onClick={() => setShowMobile(false)}
-									symbol="times"
-								/>
-								<ClayButtonWithIcon
-									displayType="unstyled"
-									symbol="search"
-									type="submit"
-								/>
-							</ClayInput.GroupInsetItem>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-				</ClayManagementToolbar.Search>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
-						<ClayButton
-							className="nav-link nav-link-monospaced"
-							displayType="unstyled"
-							onClick={() => setShowMobile(true)}
+						</ClayManagementToolbar.Item>
+						<ClayManagementToolbar.Item
+							data-tooltip-align="top"
+							title={Liferay.Language.get(
+								'reverse-sort-direction'
+							)}
 						>
-							<ClayIcon symbol="search" />
-						</ClayButton>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+							<ClayButton
+								className={
+									'nav-link nav-link-monospaced ' +
+									(ascending
+										? 'order-arrow-down-active'
+										: 'order-arrow-up-active')
+								}
+								displayType="unstyled"
+								onClick={() => setAscending(!ascending)}
+							>
+								<ClayIcon
+									spritemap={spritemap}
+									symbol="order-arrow"
+								/>
+							</ClayButton>
+						</ClayManagementToolbar.Item>
+					</ClayManagementToolbar.ItemList>
+					<ClayManagementToolbar.Search
+						onSubmit={(event) => {
+							event.preventDefault();
 
-				{viewTypes.length > 1 && (
-					<ClayManagementToolbar.Item>
-						<ClayDropDownWithItems
-							items={viewTypes}
-							spritemap={spritemap}
-							trigger={
-								<ClayButton
-									className="nav-link nav-link-monospaced"
-									displayType="unstyled"
-								>
-									<ClayIcon
-										spritemap={spritemap}
-										symbol={
-											viewTypeActive
-												? viewTypeActive.symbolLeft
-												: ''
-										}
+							onSubmit(searchTerms.trim());
+						}}
+						showMobile={showMobile}
+					>
+						<ClayInput.Group>
+							<ClayInput.GroupItem>
+								<ClayInput
+									aria-label={Liferay.Language.get('search')}
+									className="input-group-inset input-group-inset-after"
+									onChange={(event) =>
+										setSearchTerms(event.target.value)
+									}
+									placeholder={`${Liferay.Language.get(
+										'search'
+									)}...`}
+									type="text"
+									value={searchTerms}
+								/>
+								<ClayInput.GroupInsetItem after tag="span">
+									<ClayButtonWithIcon
+										className="navbar-breakpoint-d-none"
+										displayType="unstyled"
+										onClick={() => setShowMobile(false)}
+										symbol="times"
 									/>
-								</ClayButton>
-							}
-						/>
-					</ClayManagementToolbar.Item>
-				)}
-			</ClayManagementToolbar>
+									<ClayButtonWithIcon
+										displayType="unstyled"
+										symbol="search"
+										type="submit"
+									/>
+								</ClayInput.GroupInsetItem>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</ClayManagementToolbar.Search>
+					<ClayManagementToolbar.ItemList>
+						<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+							<ClayButton
+								className="nav-link nav-link-monospaced"
+								displayType="unstyled"
+								onClick={() => setShowMobile(true)}
+							>
+								<ClayIcon symbol="search" />
+							</ClayButton>
+						</ClayManagementToolbar.Item>
+					</ClayManagementToolbar.ItemList>
+
+					{viewTypes.length > 1 && (
+						<ClayManagementToolbar.Item>
+							<ClayDropDownWithItems
+								items={viewTypes}
+								spritemap={spritemap}
+								trigger={
+									<ClayButton
+										className="nav-link nav-link-monospaced"
+										displayType="unstyled"
+									>
+										<ClayIcon
+											spritemap={spritemap}
+											symbol={
+												viewTypeActive
+													? viewTypeActive.symbolLeft
+													: ''
+											}
+										/>
+									</ClayButton>
+								}
+							/>
+						</ClayManagementToolbar.Item>
+					)}
+				</ClayManagementToolbar>
+			</ClayTooltipProvider>
 		);
 	};
 

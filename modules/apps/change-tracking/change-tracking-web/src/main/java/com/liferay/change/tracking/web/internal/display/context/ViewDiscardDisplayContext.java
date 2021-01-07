@@ -21,6 +21,7 @@ import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistr
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -129,9 +130,10 @@ public class ViewDiscardDisplayContext {
 		).put(
 			"userInfo",
 			DisplayContextUtil.getUserInfoJSONObject(
+				CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
+				CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,
 				CTEntryTable.INSTANCE.ctEntryId.in(
-					ctEntryIds.toArray(new Long[0])),
-				_themeDisplay, _userLocalService)
+					ctEntryIds.toArray(new Long[0])))
 		).build();
 	}
 

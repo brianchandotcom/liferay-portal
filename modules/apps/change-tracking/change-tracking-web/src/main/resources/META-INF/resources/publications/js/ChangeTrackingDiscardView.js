@@ -42,8 +42,10 @@ const ChangeTrackingDiscardView = ({
 
 		const entryUserInfo = userInfo[entry.userId.toString()];
 
-		entry.portraitURL = entryUserInfo.portraitURL;
 		entry.userName = entryUserInfo.userName;
+		entry.userPortraitHTML = {
+			__html: entryUserInfo.userPortraitHTML,
+		};
 
 		entry.typeName = typeNames[entry.modelClassNameId.toString()];
 	}
@@ -81,41 +83,6 @@ const ChangeTrackingDiscardView = ({
 		return entries;
 	};
 
-	const getUserPortrait = (entry) => {
-		if (entry.portraitURL) {
-			return (
-				<span data-tooltip-align="top" title={entry.userName}>
-					<span className="rounded-circle sticker sticker-primary">
-						<span className="sticker-overlay">
-							<img
-								alt="thumbnail"
-								className="img-fluid"
-								src={entry.portraitURL}
-							/>
-						</span>
-					</span>
-				</span>
-			);
-		}
-
-		let userPortraitCss =
-			'sticker sticker-circle sticker-light user-icon-color-';
-
-		userPortraitCss += entry.userId % 10;
-
-		return (
-			<span data-tooltip-align="top" title={entry.userName}>
-				<span className={userPortraitCss}>
-					<span className="inline-item">
-						<svg className="lexicon-icon">
-							<use href={spritemap + '#user'} />
-						</svg>
-					</span>
-				</span>
-			</span>
-		);
-	};
-
 	const getTableRows = () => {
 		const rows = [];
 
@@ -143,7 +110,13 @@ const ChangeTrackingDiscardView = ({
 					className="cursor-pointer"
 					onClick={() => setViewEntry(entry)}
 				>
-					<ClayTable.Cell>{getUserPortrait(entry)}</ClayTable.Cell>
+					<ClayTable.Cell>
+						<div
+							dangerouslySetInnerHTML={entry.userPortraitHTML}
+							data-tooltip-align="top"
+							title={entry.userName}
+						/>
+					</ClayTable.Cell>
 					<ClayTable.Cell>
 						<div className="publication-name">{entry.title}</div>
 						<div className="publication-description">
@@ -195,7 +168,13 @@ const ChangeTrackingDiscardView = ({
 				<ClayModal.Header>
 					<div className="autofit-row">
 						<div className="autofit-col publications-discard-user-portrait">
-							{getUserPortrait(viewEntry)}
+							<div
+								dangerouslySetInnerHTML={
+									viewEntry.userPortraitHTML
+								}
+								data-tooltip-align="top"
+								title={viewEntry.userName}
+							/>
 						</div>
 						<div className="autofit-col">
 							<div className="modal-title">{viewEntry.title}</div>

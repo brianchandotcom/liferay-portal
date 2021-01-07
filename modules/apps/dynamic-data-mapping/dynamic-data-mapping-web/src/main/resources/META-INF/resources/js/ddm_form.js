@@ -238,12 +238,48 @@ AUI.add(
 					delete templateResourceParameters.doAsGroupId;
 				}
 
+				var fields = instance._valueFields();
+
+				if (fields && fields.length) {
+					instance._removeDoAsGroupIdParam(
+						fields,
+						templateResourceParameters
+					);
+				}
+
 				var templateResourceURL = Liferay.Util.PortletURL.createResourceURL(
 					themeDisplay.getLayoutURL(),
 					templateResourceParameters
 				);
 
 				return templateResourceURL.toString();
+			},
+
+			_removeDoAsGroupIdParam(fields, templateResourceParameters) {
+				var instance = this;
+
+				fields.forEach((field) => {
+					if (!templateResourceParameters.doAsGroupId) {
+						return;
+					}
+
+					var dataType = field.get('dataType');
+
+					if (dataType && dataType === 'html') {
+						delete templateResourceParameters.doAsGroupId;
+
+						return;
+					}
+
+					var nestedFields = field.get('fields');
+
+					if (nestedFields && nestedFields.length) {
+						instance._removeDoAsGroupIdParam(
+							nestedFields,
+							templateResourceParameters
+						);
+					}
+				});
 			},
 
 			_valueDisplayLocale() {

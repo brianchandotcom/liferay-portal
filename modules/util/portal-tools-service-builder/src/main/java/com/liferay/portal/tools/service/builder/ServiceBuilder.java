@@ -5980,8 +5980,6 @@ public class ServiceBuilder {
 			entityElement.attributeValue("uuid"));
 		boolean uuidAccessor = GetterUtil.getBoolean(
 			entityElement.attributeValue("uuid-accessor"));
-		boolean externalReferenceCode = GetterUtil.getBoolean(
-			entityElement.attributeValue("external-reference-code"));
 		boolean localService = GetterUtil.getBoolean(
 			entityElement.attributeValue("local-service"));
 		boolean remoteService = GetterUtil.getBoolean(
@@ -5993,6 +5991,14 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_packagePath, ".service.persistence.impl.", entityName,
 				"PersistenceImpl"));
+
+		String externalReferenceCode = GetterUtil.getString(
+			entityElement.attributeValue("external-reference-code"), "none");
+
+		externalReferenceCode = StringUtil.replace(
+			externalReferenceCode, "false", "none");
+		externalReferenceCode = StringUtil.replace(
+			externalReferenceCode, "true", "company");
 
 		String finderClassName = "";
 
@@ -6117,6 +6123,12 @@ public class ServiceBuilder {
 
 		List<Element> derivedColumnElements = new ArrayList<>();
 
+		if (columnElements.contains(
+				new EntityColumn(this, "externalReferenceCode"))) {
+
+			externalReferenceCode = "none";
+		}
+
 		if (mvccEnabled && !columnElements.isEmpty()) {
 			Element columnElement = DocumentHelper.createElement("column");
 
@@ -6148,7 +6160,7 @@ public class ServiceBuilder {
 			derivedColumnElements.add(columnElement);
 		}
 
-		if (externalReferenceCode) {
+		if (!StringUtil.equals(externalReferenceCode, "none")) {
 			Element columnElement = DocumentHelper.createElement("column");
 
 			columnElement.addAttribute("name", "externalReferenceCode");
@@ -6460,18 +6472,23 @@ public class ServiceBuilder {
 			finderElements.add(0, finderElement);
 		}
 
-		if (externalReferenceCode &&
-			entityColumns.contains(new EntityColumn(this, "companyId"))) {
-
+		if (!StringUtil.equals(externalReferenceCode, "none")) {
 			Element finderElement = DocumentHelper.createElement("finder");
 
-			finderElement.addAttribute("name", "C_ERC");
+			String scopeUpperCase = StringUtil.toUpperCase(
+				externalReferenceCode);
+
+			char scopeId = scopeUpperCase.charAt(0);
+
+			finderElement.addAttribute("name", scopeId + "_ERC");
+
 			finderElement.addAttribute("return-type", entityName);
 
 			Element finderColumnElement = finderElement.addElement(
 				"finder-column");
 
-			finderColumnElement.addAttribute("name", "companyId");
+			finderColumnElement.addAttribute(
+				"name", externalReferenceCode + "Id");
 
 			finderColumnElement = finderElement.addElement("finder-column");
 

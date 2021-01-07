@@ -97,10 +97,10 @@ public class Entity implements Comparable<Entity> {
 	public Entity(ServiceBuilder serviceBuilder, String name) {
 		this(
 			serviceBuilder, null, null, null, name, null, null, null, null,
-			null, null, false, false, false, false, true, true, null, null,
-			null, null, null, true, false, false, false, false, false, null,
-			false, null, null, false, null, null, null, null, null, null, null,
-			null, null, null, false);
+			null, null, false, false, null, false, true, true, null, null, null,
+			null, null, true, false, false, false, false, false, null, false,
+			null, null, false, null, null, null, null, null, null, null, null,
+			null, null, false);
 	}
 
 	public Entity(
@@ -108,7 +108,7 @@ public class Entity implements Comparable<Entity> {
 		String apiPackagePath, String portletShortName, String name,
 		String variableName, String pluralName, String pluralVariableName,
 		String humanName, String table, String alias, boolean uuid,
-		boolean uuidAccessor, boolean externalReferenceCode,
+		boolean uuidAccessor, String externalReferenceCode,
 		boolean localService, boolean remoteService, boolean persistence,
 		String persistenceClassName, String finderClassName, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
@@ -342,6 +342,10 @@ public class Entity implements Comparable<Entity> {
 
 	public EntityOrder getEntityOrder() {
 		return _entityOrder;
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
 	}
 
 	public EntityColumn getFilterPKEntityColumn() {
@@ -864,7 +868,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean hasExternalReferenceCode() {
-		return _externalReferenceCode;
+		return !StringUtil.equals(_externalReferenceCode, "none");
 	}
 
 	public boolean hasFinderClassName() {
@@ -1308,7 +1312,7 @@ public class Entity implements Comparable<Entity> {
 	private final List<EntityColumn> _entityColumns;
 	private final List<EntityFinder> _entityFinders;
 	private final EntityOrder _entityOrder;
-	private final boolean _externalReferenceCode;
+	private final String _externalReferenceCode;
 	private final String _finderClassName;
 	private final List<EntityColumn> _finderEntityColumns;
 	private final String _humanName;

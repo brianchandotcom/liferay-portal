@@ -194,6 +194,15 @@ public class JobFactory {
 			return _jobs.get(jobKey);
 		}
 
+		if (jobName.startsWith("test-portal-environment-release(")) {
+			_jobs.put(
+				jobKey,
+				new PortalReleaseEnvironmentJob(
+					jobName, buildProfile, portalBranchName));
+
+			return _jobs.get(jobKey);
+		}
+
 		if (jobName.startsWith("test-portal-fixpack-environment(")) {
 			_jobs.put(
 				jobKey,

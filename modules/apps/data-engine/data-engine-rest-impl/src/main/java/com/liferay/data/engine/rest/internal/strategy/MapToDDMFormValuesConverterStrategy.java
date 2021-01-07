@@ -21,6 +21,8 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -57,6 +59,14 @@ public interface MapToDDMFormValuesConverterStrategy {
 					localizedValue.addString(
 						LocaleUtil.fromLanguageId(entry.getKey()),
 						jsonArray.toString());
+				}
+				else if (entry.getValue() instanceof Map) {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						(Map)entry.getValue());
+
+					localizedValue.addString(
+						LocaleUtil.fromLanguageId(entry.getKey()),
+						jsonObject.toString());
 				}
 				else {
 					localizedValue.addString(

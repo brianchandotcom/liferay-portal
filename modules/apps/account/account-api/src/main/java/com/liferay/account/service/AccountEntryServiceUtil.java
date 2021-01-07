@@ -73,14 +73,14 @@ public class AccountEntryServiceUtil {
 
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, byte[] logoBytes,
-			String taxIdNumber, String type, int status,
+			String description, String[] domains, String email,
+			byte[] logoBytes, String taxIdNumber, String type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAccountEntry(
-			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			taxIdNumber, type, status, serviceContext);
+			userId, parentAccountEntryId, name, description, domains, email,
+			logoBytes, taxIdNumber, type, status, serviceContext);
 	}
 
 	public static java.util.List<com.liferay.account.model.AccountEntry>

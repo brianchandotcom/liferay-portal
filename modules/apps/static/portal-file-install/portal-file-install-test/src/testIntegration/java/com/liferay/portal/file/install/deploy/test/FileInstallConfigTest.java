@@ -168,6 +168,9 @@ public class FileInstallConfigTest {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
+			Assert.assertEquals(
+				loggingEvents.toString(), 1, loggingEvents.size());
+
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			String actualWarningMessage = (String)loggingEvent.getMessage();

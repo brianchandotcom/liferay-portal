@@ -40,6 +40,11 @@
 	<td>//table[contains(.,'${key_fieldLabel}')]//tbody/tr/td[contains(.,'${key_fieldValue}')]//..//strong[contains(.,'${key_workflowStatus}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FORMS_NAVIGATION_BAR_ITEM</td>
+	<td>//div[@class='forms-navigation-bar']//button[contains(@class,'nav-link') and .='${key_navigationItem}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

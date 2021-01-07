@@ -80,7 +80,7 @@ public class SpiraResultImporter {
 		Build build = BuildFactory.newBuild(buildURL, null);
 
 		if (!(build instanceof TopLevelBuild)) {
-			throw new RuntimeException("Invalid top level build" + buildURL);
+			throw new RuntimeException("Invalid top level build " + buildURL);
 		}
 
 		_topLevelBuild = (TopLevelBuild)build;
@@ -248,7 +248,12 @@ public class SpiraResultImporter {
 				"Started loading for Build Database at ",
 				JenkinsResultsParserUtil.toDateString(new Date(start))));
 
-		BuildDatabaseUtil.getBuildDatabase(_topLevelBuild);
+		try {
+			BuildDatabaseUtil.getBuildDatabase(_topLevelBuild);
+		}
+		catch (Exception exception) {
+			System.out.println("Could not find the build-database.json");
+		}
 
 		long end = System.currentTimeMillis();
 

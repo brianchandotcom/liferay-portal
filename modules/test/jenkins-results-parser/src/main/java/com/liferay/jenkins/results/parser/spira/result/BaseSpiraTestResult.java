@@ -65,7 +65,9 @@ public abstract class BaseSpiraTestResult implements SpiraTestResult {
 			Build.BranchInformation portalBranchInformation =
 				portalBranchInformationBuild.getPortalBranchInformation();
 
-			portalSHA = portalBranchInformation.getSenderBranchSHA();
+			if (portalBranchInformation != null) {
+				portalSHA = portalBranchInformation.getSenderBranchSHA();
+			}
 		}
 
 		if (portalSHA.length() > 7) {

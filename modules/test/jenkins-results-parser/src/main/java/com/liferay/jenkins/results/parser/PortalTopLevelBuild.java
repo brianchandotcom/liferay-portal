@@ -47,6 +47,10 @@ public class PortalTopLevelBuild
 		BranchInformation portalBranchInformation =
 			getPortalBranchInformation();
 
+		if (portalBranchInformation == null) {
+			return null;
+		}
+
 		String upstreamBranchName =
 			portalBranchInformation.getUpstreamBranchName();
 

@@ -101,7 +101,8 @@ public class MentionsPortletTest {
 		int companyUsersCount = _userLocalService.getCompanyUsersCount(
 			TestPropsValues.getCompanyId());
 
-		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
+		Assert.assertEquals(
+			Math.min(companyUsersCount, _MAX_USERS) - 1, jsonArray.length());
 
 		_assertAnyJSONObject(
 			jsonArray,
@@ -200,7 +201,8 @@ public class MentionsPortletTest {
 		int companyUsersCount = _userLocalService.getCompanyUsersCount(
 			TestPropsValues.getCompanyId());
 
-		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
+		Assert.assertEquals(
+			Math.min(companyUsersCount, _MAX_USERS) - 1, jsonArray.length());
 
 		_assertAnyJSONObject(
 			jsonArray,
@@ -234,7 +236,8 @@ public class MentionsPortletTest {
 		int companyUsersCount = _userLocalService.getCompanyUsersCount(
 			TestPropsValues.getCompanyId());
 
-		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
+		Assert.assertEquals(
+			Math.min(companyUsersCount, _MAX_USERS) - 1, jsonArray.length());
 	}
 
 	private void _assertAnyJSONObject(
@@ -277,6 +280,8 @@ public class MentionsPortletTest {
 
 		return themeDisplay;
 	}
+
+	private static final int _MAX_USERS = 20;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

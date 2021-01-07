@@ -3811,9 +3811,9 @@ public class DataFactory {
 
 	public List<SegmentsEntry> newSegmentsEntries(long groupId) {
 		List<SegmentsEntry> segmentsEntries = new ArrayList<>(
-			BenchmarksPropsValues.MAX_SEGMENTS_ENTRY_COUNT);
+			BenchmarksPropsValues.MAX_SEGMENTS_ENTRIES_COUNT);
 
-		for (int i = 0; i < BenchmarksPropsValues.MAX_SEGMENTS_ENTRY_COUNT;
+		for (int i = 0; i < BenchmarksPropsValues.MAX_SEGMENTS_ENTRIES_COUNT;
 			 i++) {
 
 			segmentsEntries.add(newSegmentsEntry(groupId, i));

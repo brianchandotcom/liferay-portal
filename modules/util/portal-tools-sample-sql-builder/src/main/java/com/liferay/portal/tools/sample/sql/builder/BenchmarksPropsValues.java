@@ -140,8 +140,8 @@ public class BenchmarksPropsValues {
 	public static final int MAX_MB_THREAD_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_MB_THREAD_COUNT));
 
-	public static final int MAX_SEGMENTS_ENTRY_COUNT = GetterUtil.getInteger(
-		PropertiesHolder._get(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT));
+	public static final int MAX_SEGMENTS_ENTRIES_COUNT = GetterUtil.getInteger(
+		PropertiesHolder._get(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRIES_COUNT));
 
 	public static final int MAX_USER_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_USER_COUNT));

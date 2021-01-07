@@ -150,6 +150,8 @@ public class LayoutPageTemplateServiceUpgrade
 		registry.register(
 			"3.4.1", "3.4.2",
 			new com.liferay.layout.page.template.internal.upgrade.v3_4_2.
+				UpgradeFragmentEntryLinkEditableValues(),
+			new com.liferay.layout.page.template.internal.upgrade.v3_4_2.
 				UpgradeLayoutPageTemplateStructureRel());
 	}
 

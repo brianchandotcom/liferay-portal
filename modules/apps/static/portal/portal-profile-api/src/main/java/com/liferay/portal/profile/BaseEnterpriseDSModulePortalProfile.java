@@ -98,10 +98,8 @@ public class BaseEnterpriseDSModulePortalProfile implements PortalProfile {
 		boolean dxp = false;
 
 		try {
-			Class<?> clazz = classLoader.loadClass(
-				"com.liferay.portal.license.LicenseManager");
-
-			clazz.getDeclaredMethod("checkUserLicense");
+			classLoader.loadClass(
+				"com.liferay.portal.ee.license.LCSLicenseManager");
 
 			dxp = true;
 		}

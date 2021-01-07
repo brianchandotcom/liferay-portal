@@ -16,7 +16,9 @@ package com.liferay.journal.web.internal.portlet.template;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -45,6 +47,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -184,6 +187,24 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 			if (Validator.isNull(dataType)) {
 				continue;
+			}
+
+			if (Objects.equals(
+					ddmStructure.getFieldType(fieldName),
+					"checkbox_multiple")) {
+
+				DDMFormField ddmFormField = ddmStructure.getDDMFormField(
+					fieldName);
+
+				DDMFormFieldOptions ddmFormFieldOptions =
+					(DDMFormFieldOptions)ddmFormField.getProperty("options");
+
+				Map<String, LocalizedValue> options =
+					ddmFormFieldOptions.getOptions();
+
+				if (options.size() == 1) {
+					dataType = "boolean";
+				}
 			}
 
 			String label = ddmStructure.getFieldLabel(fieldName, locale);

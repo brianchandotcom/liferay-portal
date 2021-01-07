@@ -363,10 +363,7 @@ public class GitHubWebhookPayloadProcessor {
 		return false;
 	}
 
-	public void process(
-		String method, String pathInfo, Map<String, String[]> parameterMap,
-		JSONObject responseJSONObject) {
-
+	public void process() {
 		try {
 			_jenkinsBuildProperties =
 				JenkinsResultsParserUtil.getBuildProperties();

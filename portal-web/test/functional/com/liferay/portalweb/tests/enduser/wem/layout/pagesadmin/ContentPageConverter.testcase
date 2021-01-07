@@ -552,7 +552,7 @@ definition {
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
-			key_columnNumber = "1",
+			key_columnNumber = "2",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
@@ -570,7 +570,7 @@ definition {
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
-			key_columnNumber = "1",
+			key_columnNumber = "2",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
@@ -791,7 +791,7 @@ definition {
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
-			key_columnNumber = "1",
+			key_columnNumber = "2",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
@@ -815,7 +815,7 @@ definition {
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
 		AssertElementPresent(
-			key_columnNumber = "1",
+			key_columnNumber = "2",
 			key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Profile')]",
 			key_position = "1",
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");

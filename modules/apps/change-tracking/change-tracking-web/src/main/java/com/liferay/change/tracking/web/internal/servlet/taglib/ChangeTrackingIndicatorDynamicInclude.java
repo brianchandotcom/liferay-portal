@@ -25,10 +25,7 @@ import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -239,8 +236,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			data.put("title", ctCollection.getName());
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		if (ctPreferences != null) {
 			if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 				long previousCtCollectionId =
@@ -255,7 +250,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						"ctCollectionId",
 						String.valueOf(previousCtCollectionId));
 
-					jsonArray.put(
+					data.put(
+						"checkoutDropdownItem",
 						JSONUtil.put(
 							"href", checkoutURL.toString()
 						).put(
@@ -273,7 +269,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"ctCollectionId",
 					String.valueOf(CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
-				jsonArray.put(
+				data.put(
+					"checkoutDropdownItem",
 					JSONUtil.put(
 						"href", checkoutURL.toString()
 					).put(
@@ -284,15 +281,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					));
 			}
 		}
-
-		jsonArray.put(
-			JSONUtil.put(
-				"href", StringPool.BLANK
-			).put(
-				"label", _language.get(resourceBundle, "select-a-publication")
-			).put(
-				"symbolLeft", "cards2"
-			));
 
 		PortletURL addURL = _portal.getControlPanelPortletURL(
 			httpServletRequest, themeDisplay.getScopeGroup(),
@@ -307,7 +295,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		addURL.setParameter("redirect", redirectURL.toString());
 
-		jsonArray.put(
+		data.put(
+			"createDropdownItem",
 			JSONUtil.put(
 				"href", addURL.toString()
 			).put(
@@ -326,17 +315,15 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			reviewURL.setParameter(
 				"ctCollectionId", String.valueOf(ctCollectionId));
 
-			jsonArray.put(
-				JSONUtil.put("type", "divider")
-			).put(
+			data.put(
+				"reviewDropdownItem",
 				JSONUtil.put(
 					"href", reviewURL.toString()
 				).put(
 					"label", _language.get(resourceBundle, "review-changes")
 				).put(
 					"symbolLeft", "list-ul"
-				)
-			);
+				));
 
 			int count = _ctEntryLocalService.getCTCollectionCTEntriesCount(
 				ctCollection.getCtCollectionId());
@@ -345,8 +332,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				_ctCollectionModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), ctCollection,
 					CTActionKeys.PUBLISH)) {
-
-				jsonArray.put(JSONUtil.put("type", "divider"));
 
 				PortletURL publishURL = _portal.getControlPanelPortletURL(
 					httpServletRequest, themeDisplay.getScopeGroup(),
@@ -359,7 +344,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"ctCollectionId",
 					String.valueOf(ctCollection.getCtCollectionId()));
 
-				jsonArray.put(
+				data.put(
+					"publishDropdownItem",
 					JSONUtil.put(
 						"href", publishURL.toString()
 					).put(
@@ -372,7 +358,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					publishURL.setParameter(
 						"schedule", Boolean.TRUE.toString());
 
-					jsonArray.put(
+					data.put(
+						"scheduleDropdownItem",
 						JSONUtil.put(
 							"href", publishURL.toString()
 						).put(
@@ -383,8 +370,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				}
 			}
 		}
-
-		data.put("dropdownItems", jsonArray);
 
 		return data;
 	}

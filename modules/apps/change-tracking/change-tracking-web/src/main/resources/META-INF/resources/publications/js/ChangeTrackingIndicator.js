@@ -21,10 +21,14 @@ import React, {useState} from 'react';
 import PublicationsSearchContainer from './PublicationsSearchContainer';
 
 const ChangeTrackingIndicator = ({
-	dropdownItems,
+	checkoutDropdownItem,
+	createDropdownItem,
 	getSelectPublicationsURL,
 	iconClass,
 	iconName,
+	publishDropdownItem,
+	reviewDropdownItem,
+	scheduleDropdownItem,
 	spritemap,
 	title,
 }) => {
@@ -33,20 +37,32 @@ const ChangeTrackingIndicator = ({
 
 	const [showModal, setShowModal] = useState(false);
 
-	const indicatorDropdownItems = dropdownItems.slice(0);
+	const dropdownItems = [];
 
-	for (let i = 0; i < indicatorDropdownItems.length; i++) {
-		const dropdownItem = indicatorDropdownItems[i];
+	if (checkoutDropdownItem) {
+		dropdownItems.push(checkoutDropdownItem);
+	}
 
-		if (dropdownItem.href === '') {
-			indicatorDropdownItems[i] = {
-				label: dropdownItem.label,
-				onClick: () => setShowModal(true),
-				symbolLeft: dropdownItem.symbolLeft,
-			};
+	dropdownItems.push({
+		label: Liferay.Language.get('select-a-publication'),
+		onClick: () => setShowModal(true),
+		symbolLeft: 'cards2',
+	});
 
-			break;
-		}
+	dropdownItems.push(createDropdownItem);
+
+	if (reviewDropdownItem) {
+		dropdownItems.push({type: 'divider'});
+		dropdownItems.push(reviewDropdownItem);
+	}
+
+	if (publishDropdownItem) {
+		dropdownItems.push({type: 'divider'});
+		dropdownItems.push(publishDropdownItem);
+	}
+
+	if (scheduleDropdownItem) {
+		dropdownItems.push(scheduleDropdownItem);
 	}
 
 	/* eslint-disable no-unused-vars */
@@ -251,7 +267,7 @@ const ChangeTrackingIndicator = ({
 
 			<ClayDropDownWithItems
 				alignmentPosition={Align.BottomCenter}
-				items={indicatorDropdownItems}
+				items={dropdownItems}
 				trigger={
 					<button className="change-tracking-indicator-button">
 						<ClayIcon className={iconClass} symbol={iconName} />

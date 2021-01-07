@@ -45,8 +45,6 @@ import java.util.function.Predicate;
 
 import javax.portlet.Portlet;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -54,7 +52,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -258,16 +255,17 @@ public class MentionsPortletTest {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		MockResourceRequest mockResourceRequest = new MockResourceRequest(
-			themeDisplay);
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
 
-		mockResourceRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		mockLiferayResourceRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		if (query != null) {
-			mockResourceRequest.setParameter("query", query);
+			mockLiferayResourceRequest.setParameter("query", query);
 		}
 
-		return mockResourceRequest;
+		return mockLiferayResourceRequest;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -297,27 +295,5 @@ public class MentionsPortletTest {
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();
-
-	private static class MockResourceRequest
-		extends MockLiferayResourceRequest {
-
-		public MockResourceRequest(ThemeDisplay themeDisplay) {
-			_themeDisplay = themeDisplay;
-		}
-
-		@Override
-		public HttpServletRequest getHttpServletRequest() {
-			MockHttpServletRequest mockHttpServletRequest =
-				new MockHttpServletRequest();
-
-			mockHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, _themeDisplay);
-
-			return mockHttpServletRequest;
-		}
-
-		private final ThemeDisplay _themeDisplay;
-
-	}
 
 }

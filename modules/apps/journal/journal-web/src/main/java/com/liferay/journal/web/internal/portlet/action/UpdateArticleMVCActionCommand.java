@@ -38,7 +38,6 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -68,12 +67,14 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -141,17 +142,22 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "articleId");
 		double version = ParamUtil.getDouble(uploadPortletRequest, "version");
 
-		Map<Locale, String> titleMap = new HashMap<>();
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "titleMapAsXML");
 
-		JSONObject titleValueJSONObject = _jsonFactory.createJSONObject(
-			ParamUtil.getString(uploadPortletRequest, "titleValue"));
+		List<String> titleTranslatedLanguageIds = Arrays.asList(
+			StringUtil.split(
+				ParamUtil.getString(
+					uploadPortletRequest, "titleTranslatedLanguageIds")));
 
-		Set<String> languageIds = titleValueJSONObject.keySet();
+		Stream<String> stream = titleTranslatedLanguageIds.stream();
 
-		languageIds.forEach(
-			languageId -> titleMap.put(
-				LocaleUtil.fromLanguageId(languageId),
-				titleValueJSONObject.getString(languageId)));
+		Map<Locale, String> translatedTitleMap = stream.map(
+			titleTranslatedLanguageId -> LocaleUtil.fromLanguageId(
+				titleTranslatedLanguageId)
+		).collect(
+			Collectors.toMap(locale -> locale, locale -> titleMap.get(locale))
+		);
 
 		String ddmStructureKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmStructureKey");
@@ -317,9 +323,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 			article = _journalArticleService.addArticle(
 				groupId, folderId, classNameId, classPK, articleId,
-				autoArticleId, titleMap, descriptionMap, friendlyURLMap,
-				content, ddmStructureKey, ddmTemplateKey, layoutUuid,
-				displayDateMonth, displayDateDay, displayDateYear,
+				autoArticleId, translatedTitleMap, descriptionMap,
+				friendlyURLMap, content, ddmStructureKey, ddmTemplateKey,
+				layoutUuid, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, reviewDateMonth,
@@ -338,7 +344,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 			if (actionName.equals("/journal/update_article")) {
 				article = _journalArticleService.updateArticle(
-					groupId, folderId, articleId, version, titleMap,
+					groupId, folderId, articleId, version, translatedTitleMap,
 					descriptionMap, friendlyURLMap, content, ddmStructureKey,
 					ddmTemplateKey, layoutUuid, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,

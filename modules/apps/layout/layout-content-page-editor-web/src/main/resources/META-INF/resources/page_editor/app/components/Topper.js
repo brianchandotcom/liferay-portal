@@ -189,6 +189,7 @@ function TopperContent({
 
 				hoverItem(item.itemId);
 			}}
+			ref={canUpdatePageStructure ? handlerRef : null}
 			style={style}
 		>
 			<TopperLabel
@@ -198,10 +199,7 @@ function TopperContent({
 			>
 				<ul className="tbar-nav">
 					{canUpdatePageStructure && (
-						<TopperListItem
-							className="page-editor__topper__drag-handler"
-							ref={handlerRef}
-						>
+						<TopperListItem className="page-editor__topper__drag-handler">
 							<ClayIcon
 								className="page-editor__topper__drag-icon page-editor__topper__icon"
 								symbol="drag"

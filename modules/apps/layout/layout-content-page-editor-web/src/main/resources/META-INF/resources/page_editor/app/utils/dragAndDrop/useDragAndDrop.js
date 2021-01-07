@@ -92,6 +92,18 @@ export const initialDragDrop = {
 
 const DragAndDropContext = React.createContext(initialDragDrop);
 
+export const NotDraggableArea = ({children}) => (
+	<div
+		draggable
+		onDragStart={(e) => {
+			e.preventDefault();
+			e.stopPropagation();
+		}}
+	>
+		{children}
+	</div>
+);
+
 export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 	const getSourceItem = useCallback(() => sourceItem, [sourceItem]);
 	const {dispatch, layoutDataRef, state} = useContext(DragAndDropContext);

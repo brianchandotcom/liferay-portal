@@ -4525,6 +4525,13 @@ definition {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			key_fieldName = "${uploadFieldName}",
 			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "Document_1.mp4");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid extension (doc, docx, jpeg, jpg, pdf, png, ppt, pptx, tiff, txt, xls, xlsx).");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
 			value1 = "Document -_.jpg");
 
 		FormPortlet.submitSuccessfully();

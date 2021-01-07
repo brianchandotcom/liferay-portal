@@ -90,13 +90,7 @@ definition {
 	macro submitWithValidationError {
 		FormPortlet.submit();
 
-		WaitForElementPresent(
-			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-			value1 = "${validationErrorMessage}");
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-			value1 = "${validationErrorMessage}");
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "${validationErrorMessage}");
 	}
 
 	macro viewSuccessPage {
@@ -111,6 +105,16 @@ definition {
 		AssertTextEquals(
 			locator1 = "FormPortlet#SUCCESS_PAGE_DESCRIPTION",
 			value1 = "${successPageDescription}");
+	}
+
+	macro viewValidationErrorMessage {
+		WaitForElementPresent(
+			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+			value1 = "${validationErrorMessage}");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+			value1 = "${validationErrorMessage}");
 	}
 
 	macro waitFormRenderer {

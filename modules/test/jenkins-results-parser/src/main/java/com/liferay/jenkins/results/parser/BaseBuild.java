@@ -713,10 +713,10 @@ public abstract class BaseBuild implements Build {
 
 		String buildProfile;
 
-		if (topLevelJobName.contains("environment")) {
-			if (!branchName.startsWith("ee-") &&
-				!branchName.endsWith("-private")) {
+		if (topLevelJobName.contains("aws") ||
+			topLevelJobName.contains("environment")) {
 
+			if (!branchName.startsWith("ee-")) {
 				buildProfile = "dxp";
 			}
 			else {

@@ -21,7 +21,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
@@ -150,12 +150,12 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 					sb.append("public ");
 				}
 
-				sb.append("page exists with friendly URL path ");
+				sb.append("layout exists with friendly URL path ");
 				sb.append(friendlyUrlPath);
 				sb.append(" and language ID ");
 				sb.append(languageId);
 
-				return new NoSuchModelException(sb.toString());
+				return new NoSuchLayoutException(sb.toString());
 			}
 		);
 	}

@@ -145,7 +145,7 @@ public abstract class BaseTierPriceResourceImpl
 	@GET
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "id"),
+			@Parameter(in = ParameterIn.PATH, name = "priceEntryId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -154,7 +154,8 @@ public abstract class BaseTierPriceResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "TierPrice")})
 	public Page<TierPrice> getPriceEntryIdTierPricesPage(
-			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			@NotNull @Parameter(hidden = true) @PathParam("priceEntryId") Long
+				priceEntryId,
 			@Context Pagination pagination)
 		throws Exception {
 

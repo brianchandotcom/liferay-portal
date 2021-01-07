@@ -376,20 +376,22 @@ public abstract class BaseTierPriceResourceTestCase {
 	@Test
 	public void testGetPriceEntryIdTierPricesPage() throws Exception {
 		Page<TierPrice> page = tierPriceResource.getPriceEntryIdTierPricesPage(
-			testGetPriceEntryIdTierPricesPage_getId(), Pagination.of(1, 2));
+			testGetPriceEntryIdTierPricesPage_getPriceEntryId(),
+			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long id = testGetPriceEntryIdTierPricesPage_getId();
-		Long irrelevantId = testGetPriceEntryIdTierPricesPage_getIrrelevantId();
+		Long priceEntryId = testGetPriceEntryIdTierPricesPage_getPriceEntryId();
+		Long irrelevantPriceEntryId =
+			testGetPriceEntryIdTierPricesPage_getIrrelevantPriceEntryId();
 
-		if ((irrelevantId != null)) {
+		if ((irrelevantPriceEntryId != null)) {
 			TierPrice irrelevantTierPrice =
 				testGetPriceEntryIdTierPricesPage_addTierPrice(
-					irrelevantId, randomIrrelevantTierPrice());
+					irrelevantPriceEntryId, randomIrrelevantTierPrice());
 
 			page = tierPriceResource.getPriceEntryIdTierPricesPage(
-				irrelevantId, Pagination.of(1, 2));
+				irrelevantPriceEntryId, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -400,13 +402,13 @@ public abstract class BaseTierPriceResourceTestCase {
 		}
 
 		TierPrice tierPrice1 = testGetPriceEntryIdTierPricesPage_addTierPrice(
-			id, randomTierPrice());
+			priceEntryId, randomTierPrice());
 
 		TierPrice tierPrice2 = testGetPriceEntryIdTierPricesPage_addTierPrice(
-			id, randomTierPrice());
+			priceEntryId, randomTierPrice());
 
 		page = tierPriceResource.getPriceEntryIdTierPricesPage(
-			id, Pagination.of(1, 2));
+			priceEntryId, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -424,26 +426,26 @@ public abstract class BaseTierPriceResourceTestCase {
 	public void testGetPriceEntryIdTierPricesPageWithPagination()
 		throws Exception {
 
-		Long id = testGetPriceEntryIdTierPricesPage_getId();
+		Long priceEntryId = testGetPriceEntryIdTierPricesPage_getPriceEntryId();
 
 		TierPrice tierPrice1 = testGetPriceEntryIdTierPricesPage_addTierPrice(
-			id, randomTierPrice());
+			priceEntryId, randomTierPrice());
 
 		TierPrice tierPrice2 = testGetPriceEntryIdTierPricesPage_addTierPrice(
-			id, randomTierPrice());
+			priceEntryId, randomTierPrice());
 
 		TierPrice tierPrice3 = testGetPriceEntryIdTierPricesPage_addTierPrice(
-			id, randomTierPrice());
+			priceEntryId, randomTierPrice());
 
 		Page<TierPrice> page1 = tierPriceResource.getPriceEntryIdTierPricesPage(
-			id, Pagination.of(1, 2));
+			priceEntryId, Pagination.of(1, 2));
 
 		List<TierPrice> tierPrices1 = (List<TierPrice>)page1.getItems();
 
 		Assert.assertEquals(tierPrices1.toString(), 2, tierPrices1.size());
 
 		Page<TierPrice> page2 = tierPriceResource.getPriceEntryIdTierPricesPage(
-			id, Pagination.of(2, 2));
+			priceEntryId, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -452,7 +454,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		Assert.assertEquals(tierPrices2.toString(), 1, tierPrices2.size());
 
 		Page<TierPrice> page3 = tierPriceResource.getPriceEntryIdTierPricesPage(
-			id, Pagination.of(1, 3));
+			priceEntryId, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(tierPrice1, tierPrice2, tierPrice3),
@@ -460,19 +462,21 @@ public abstract class BaseTierPriceResourceTestCase {
 	}
 
 	protected TierPrice testGetPriceEntryIdTierPricesPage_addTierPrice(
-			Long id, TierPrice tierPrice)
+			Long priceEntryId, TierPrice tierPrice)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetPriceEntryIdTierPricesPage_getId() throws Exception {
+	protected Long testGetPriceEntryIdTierPricesPage_getPriceEntryId()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetPriceEntryIdTierPricesPage_getIrrelevantId()
+	protected Long testGetPriceEntryIdTierPricesPage_getIrrelevantPriceEntryId()
 		throws Exception {
 
 		return null;

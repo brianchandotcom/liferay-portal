@@ -59,11 +59,11 @@ public interface TierPriceResource {
 		throws Exception;
 
 	public Page<TierPrice> getPriceEntryIdTierPricesPage(
-			Long id, Pagination pagination)
+			Long priceEntryId, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getPriceEntryIdTierPricesPageHttpResponse(
-			Long id, Pagination pagination)
+			Long priceEntryId, Pagination pagination)
 		throws Exception;
 
 	public TierPrice postPriceEntryIdTierPrice(
@@ -330,11 +330,12 @@ public interface TierPriceResource {
 		}
 
 		public Page<TierPrice> getPriceEntryIdTierPricesPage(
-				Long id, Pagination pagination)
+				Long priceEntryId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPriceEntryIdTierPricesPageHttpResponse(id, pagination);
+				getPriceEntryIdTierPricesPageHttpResponse(
+					priceEntryId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -358,7 +359,7 @@ public interface TierPriceResource {
 
 		public HttpInvoker.HttpResponse
 				getPriceEntryIdTierPricesPageHttpResponse(
-					Long id, Pagination pagination)
+					Long priceEntryId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -393,7 +394,7 @@ public interface TierPriceResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/tier-prices",
-				id);
+				priceEntryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

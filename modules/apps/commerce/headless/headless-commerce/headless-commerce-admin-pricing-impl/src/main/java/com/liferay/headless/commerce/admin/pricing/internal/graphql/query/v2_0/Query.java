@@ -1559,11 +1559,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceEntryIdTierPrices(id: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {priceEntryIdTierPrices(page: ___, pageSize: ___, priceEntryId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public TierPricePage priceEntryIdTierPrices(
-			@GraphQLName("id") Long id, @GraphQLName("pageSize") int pageSize,
+			@GraphQLName("priceEntryId") Long priceEntryId,
+			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
 
@@ -1572,7 +1573,7 @@ public class Query {
 			this::_populateResourceContext,
 			tierPriceResource -> new TierPricePage(
 				tierPriceResource.getPriceEntryIdTierPricesPage(
-					id, Pagination.of(page, pageSize))));
+					priceEntryId, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -1620,6 +1621,34 @@ public class Query {
 				Query.this::_populateResourceContext,
 				productResource -> productResource.getPriceEntryIdProduct(
 					_priceEntry.getPriceEntryId()));
+		}
+
+		private PriceEntry _priceEntry;
+
+	}
+
+	@GraphQLTypeExtension(PriceEntry.class)
+	public class GetPriceEntryIdTierPricesPageTypeExtension {
+
+		public GetPriceEntryIdTierPricesPageTypeExtension(
+			PriceEntry priceEntry) {
+
+			_priceEntry = priceEntry;
+		}
+
+		@GraphQLField
+		public TierPricePage idTierPrices(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_tierPriceResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				tierPriceResource -> new TierPricePage(
+					tierPriceResource.getPriceEntryIdTierPricesPage(
+						_priceEntry.getPriceEntryId(),
+						Pagination.of(page, pageSize))));
 		}
 
 		private PriceEntry _priceEntry;

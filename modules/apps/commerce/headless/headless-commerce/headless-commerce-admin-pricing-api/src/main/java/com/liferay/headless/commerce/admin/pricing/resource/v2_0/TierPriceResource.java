@@ -58,7 +58,7 @@ public interface TierPriceResource {
 		throws Exception;
 
 	public Page<TierPrice> getPriceEntryIdTierPricesPage(
-			Long id, Pagination pagination)
+			Long priceEntryId, Pagination pagination)
 		throws Exception;
 
 	public TierPrice postPriceEntryIdTierPrice(

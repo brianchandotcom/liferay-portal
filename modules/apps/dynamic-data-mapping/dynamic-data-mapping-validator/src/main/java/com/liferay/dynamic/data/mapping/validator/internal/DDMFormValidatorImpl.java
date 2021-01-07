@@ -199,7 +199,9 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			return;
 		}
 
-		if (!Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
+		if (!Validator.isBlank(ddmFormField.getDataSourceType()) &&
+			!Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
+
 			return;
 		}
 

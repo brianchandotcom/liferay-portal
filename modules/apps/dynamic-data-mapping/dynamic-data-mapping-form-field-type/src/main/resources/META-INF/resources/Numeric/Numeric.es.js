@@ -41,7 +41,7 @@ const getMaskConfig = (dataType, symbols) => {
 };
 
 const getValue = (dataType, symbols, value) => {
-	let newValue = value;
+	let newValue = typeof value === 'number' ? `${value}` : value;
 
 	let decimalSymbol = symbols.decimalSymbol;
 

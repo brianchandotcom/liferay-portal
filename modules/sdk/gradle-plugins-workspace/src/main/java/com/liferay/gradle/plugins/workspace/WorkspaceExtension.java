@@ -48,6 +48,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -592,7 +593,7 @@ public class WorkspaceExtension {
 	private Object _nodePackageManager;
 	private Object _product;
 	private final Map<String, ProductInfo> _productInfos = new HashMap<>();
-	private final LinkedHashSet<ProjectConfigurator> _projectConfigurators =
+	private final Set<ProjectConfigurator> _projectConfigurators =
 		new LinkedHashSet<>();
 	private final Plugin<Project> _rootProjectConfigurator;
 	private Object _targetPlatformVersion;

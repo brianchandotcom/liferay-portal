@@ -224,7 +224,10 @@ const ModalContent = ({
 								'untitled-fieldset'
 							)}
 							type="text"
-							value={name[editingLanguageId] || ''}
+							value={
+								name[editingLanguageId] ||
+								name[defaultLanguageId]
+							}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

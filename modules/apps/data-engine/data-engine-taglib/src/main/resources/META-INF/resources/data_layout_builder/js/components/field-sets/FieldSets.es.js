@@ -71,7 +71,9 @@ export default function FieldSets({keywords}) {
 
 	const filteredFieldsets = getFilteredFieldsets(fieldSets, keywords);
 
-	let defaultLanguageId = dataDefinition.defaultLanguageId;
+	let defaultLanguageId = dataDefinition.id
+		? dataDefinition.defaultLanguageId
+		: appProps.defaultLanguageId;
 
 	const toggleFieldSet = (fieldSet, editingDataDefinition) => {
 		let childrenAppProps = {

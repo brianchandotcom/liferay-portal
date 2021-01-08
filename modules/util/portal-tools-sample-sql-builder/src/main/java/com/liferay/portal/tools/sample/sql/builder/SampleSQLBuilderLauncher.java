@@ -77,12 +77,13 @@ public class SampleSQLBuilderLauncher {
 
 		Collections.addAll(urls, javaClassPathURLs);
 
-		_getLibs(classLoader, urls);
+		_populateBundledClassPath(classLoader, urls);
 
 		return urls.toArray(new URL[0]);
 	}
 
-	private static void _getLibs(ClassLoader classLoader, Set<URL> urls)
+	private static void _populateBundledClassPath(
+			ClassLoader classLoader, Set<URL> urls)
 		throws Exception {
 
 		File tempDir = new File(SystemProperties.get(SystemProperties.TMP_DIR));

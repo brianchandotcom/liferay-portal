@@ -212,6 +212,43 @@ public class AssetListEntryAssetEntryRelServiceAssetCategoriesTest {
 		Assert.assertTrue(assetEntryIds.contains(_assetEntry5.getEntryId()));
 	}
 
+	@Test
+	public void testGetAssetListEntryAssetEntryRelsNullAssetVocabularies5Results() {
+		long[][] assetCategoryIds = null;
+
+		int assetListEntryRelListCount =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					_assetListEntry.getAssetListEntryId(), new long[] {0},
+					assetCategoryIds);
+
+		Assert.assertEquals(5, assetListEntryRelListCount);
+
+		List<AssetListEntryAssetEntryRel> assetListEntryRelList =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					_assetListEntry.getAssetListEntryId(), new long[] {0},
+					assetCategoryIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetListEntryRelList.toString(), 5, assetListEntryRelList.size());
+
+		Stream<AssetListEntryAssetEntryRel> stream =
+			assetListEntryRelList.stream();
+
+		List<Long> assetEntryIds = stream.map(
+			AssetListEntryAssetEntryRelModel::getAssetEntryId
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry1.getEntryId()));
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry2.getEntryId()));
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry3.getEntryId()));
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry4.getEntryId()));
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry5.getEntryId()));
+	}
+
 	private AssetEntry _assetEntry1;
 	private AssetEntry _assetEntry2;
 	private AssetEntry _assetEntry3;

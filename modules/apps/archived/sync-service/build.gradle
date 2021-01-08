@@ -20,6 +20,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:archived:sync-api")
 	compileOnly project(":apps:document-library:document-library-sync-api")
 	compileOnly project(":apps:petra:petra-io-delta")
 	compileOnly project(":apps:portal:portal-aop-api")
@@ -27,7 +28,6 @@ dependencies {
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
-	compileOnly project(":apps:sync:sync-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-executor")

@@ -160,20 +160,29 @@ export const normalizeSettingsContextPages = (
 						...field.value,
 						[editingLanguageId]:
 							field.value[editingLanguageId] ??
-							field.value[defaultLanguageId],
+							field.value[field.locale],
 					},
 				};
+
+				field.value[defaultLanguageId] =
+					field.value[defaultLanguageId] ??
+					field.value[editingLanguageId];
 			}
 
 			if (field.localizable) {
 				const {localizedValue} = field;
+
+				localizedValue[defaultLanguageId] =
+					localizedValue[defaultLanguageId] ??
+					localizedValue[field.locale];
+
 				const availableLocales = Object.keys(localizedValue);
 
 				availableLocales.forEach((availableLocale) => {
 					if (
 						availableLocale !== defaultLanguageId &&
 						availableLocale !== editingLanguageId &&
-						localizedValue[availableLocale] === ''
+						!localizedValue[availableLocale]
 					) {
 						delete localizedValue[availableLocale];
 					}
@@ -184,7 +193,9 @@ export const normalizeSettingsContextPages = (
 
 			return {
 				...field,
+				defaultLanguageId,
 				instanceId: newInstanceId,
+				locale: defaultLanguageId,
 				name: generateName(field.name, {
 					instanceId: newInstanceId,
 					repeatedIndex: getRepeatedIndex(field.name),
@@ -236,8 +247,10 @@ export const createField = (props, event) => {
 		name: newFieldName,
 		settingsContext: {
 			...fieldType.settingsContext,
+			defaultLanguageId,
+			editingLanguageId,
 			pages: normalizeSettingsContextPages(
-				fieldType.settingsContext.pages,
+				[...fieldType.settingsContext.pages],
 				defaultLanguageId,
 				editingLanguageId,
 				fieldType,

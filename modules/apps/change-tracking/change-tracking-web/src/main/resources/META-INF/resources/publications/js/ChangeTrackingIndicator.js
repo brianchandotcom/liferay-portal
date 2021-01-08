@@ -193,34 +193,33 @@ const ChangeTrackingIndicator = ({
 				</ClayList.Item>
 			);
 		}
-		else {
-			return (
-				<ClayList.Item flex>
-					<ClayList.ItemField>
-						<div
-							dangerouslySetInnerHTML={getUserPortraitHTML(
-								entry,
-								fetchData
-							)}
-							data-tooltip-align="top"
-							title={getUserName(entry, fetchData)}
-						/>
-					</ClayList.ItemField>
-					<ClayList.ItemField
-						className="font-italic"
-						data-tooltip-align="top"
-						title={Liferay.Language.get(
-							'already-working-on-this-publication'
+
+		return (
+			<ClayList.Item flex>
+				<ClayList.ItemField>
+					<div
+						dangerouslySetInnerHTML={getUserPortraitHTML(
+							entry,
+							fetchData
 						)}
-					>
-						<ClayList.ItemTitle>{entry.name}</ClayList.ItemTitle>
-						<ClayList.ItemText subtext>
-							{entry.description}
-						</ClayList.ItemText>
-					</ClayList.ItemField>
-				</ClayList.Item>
-			);
-		}
+						data-tooltip-align="top"
+						title={getUserName(entry, fetchData)}
+					/>
+				</ClayList.ItemField>
+				<ClayList.ItemField
+					className="font-italic"
+					data-tooltip-align="top"
+					title={Liferay.Language.get(
+						'already-working-on-this-publication'
+					)}
+				>
+					<ClayList.ItemTitle>{entry.name}</ClayList.ItemTitle>
+					<ClayList.ItemText subtext>
+						{entry.description}
+					</ClayList.ItemText>
+				</ClayList.ItemField>
+			</ClayList.Item>
+		);
 	};
 
 	const renderModal = () => {

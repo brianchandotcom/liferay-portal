@@ -591,8 +591,12 @@ public class PullRequest {
 	}
 
 	public Comment updateComment(String body, String id) {
+		JSONObject jsonObject = new JSONObject();
+
 		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
 		body = body.replace("&quot;", "\\&quot;");
+
+		jsonObject.put("body", body);
 
 		try {
 			String editCommentURL = _jsonObject.getString("issue_url");
@@ -604,7 +608,7 @@ public class PullRequest {
 				JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.combine(
 						editCommentURL, "/comments/", id),
-					false, HttpRequestMethod.PATCH));
+					false, HttpRequestMethod.PATCH, jsonObject.toString()));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(

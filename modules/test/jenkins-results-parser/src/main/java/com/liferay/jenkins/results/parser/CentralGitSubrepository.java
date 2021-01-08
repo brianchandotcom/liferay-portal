@@ -212,11 +212,10 @@ public class CentralGitSubrepository {
 			_gitSubrepositoryName, _gitSubrepositoryUsername, path);
 
 		for (int i = 0; i < 15; i++) {
-			JSONArray statusesJSONArray = new JSONArray(
-				JenkinsResultsParserUtil.toString(
-					JenkinsResultsParserUtil.combine(
-						url, "?page=", String.valueOf(i + 1)),
-					true));
+			JSONArray statusesJSONArray = JenkinsResultsParserUtil.toJSONArray(
+				JenkinsResultsParserUtil.combine(
+					url, "?page=", String.valueOf(i + 1)),
+				true);
 
 			if ((statusesJSONArray == null) ||
 				(statusesJSONArray.length() == 0)) {

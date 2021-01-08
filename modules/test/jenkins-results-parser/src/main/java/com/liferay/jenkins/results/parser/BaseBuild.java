@@ -2412,8 +2412,8 @@ public abstract class BaseBuild implements Build {
 
 		try {
 			content = JenkinsResultsParserUtil.toString(
-				JenkinsResultsParserUtil.getLocalURL(urlString), false, 0, 0,
-				0);
+				JenkinsResultsParserUtil.getLocalURL(urlString), false, 0, 0, 0,
+				true);
 		}
 		catch (IOException ioException) {
 			if (required) {

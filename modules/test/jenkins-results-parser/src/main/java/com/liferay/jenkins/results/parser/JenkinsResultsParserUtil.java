@@ -3045,6 +3045,16 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(
+			String url, boolean checkCache, HttpRequestMethod method,
+			String postContent)
+		throws IOException {
+
+		return toJSONObject(
+			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, method, postContent,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
+	}
+
+	public static JSONObject toJSONObject(
 			String url, boolean checkCache, int timeout)
 		throws IOException {
 
@@ -3154,6 +3164,16 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String toString(
+			String url, boolean checkCache, boolean requireResponse)
+		throws IOException {
+
+		return toString(
+			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, null, null,
+			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null,
+			requireResponse);
+	}
+
+	public static String toString(
 			String url, boolean checkCache, HttpRequestMethod method)
 		throws IOException {
 
@@ -3208,6 +3228,9 @@ public class JenkinsResultsParserUtil {
 				int bytes = sb.length();
 
 				if (expectResponse && (bytes == 0) && (i < 1)) {
+					System.out.println(
+						"Could not find response, retrying request");
+
 					continue;
 				}
 
@@ -3238,6 +3261,16 @@ public class JenkinsResultsParserUtil {
 		return toString(
 			url, checkCache, maxRetries, null, null, retryPeriodSeconds,
 			timeout, null, false);
+	}
+
+	public static String toString(
+			String url, boolean checkCache, int maxRetries,
+			int retryPeriodSeconds, int timeout, boolean expectResponse)
+		throws IOException {
+
+		return toString(
+			url, checkCache, maxRetries, null, null, retryPeriodSeconds,
+			timeout, null, expectResponse);
 	}
 
 	public static String toString(

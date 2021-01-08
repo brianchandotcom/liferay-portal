@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>NODE_NAME</td>
-	<td>//span[@class='nav-item-label' and contains(.,'${key_wikiNodeName}')]</td>
+	<td>//span[@class='navbar-text-truncate' and contains(.,'${key_wikiNodeName}')]</td>
 	<td></td>
 </tr>
 <tr>

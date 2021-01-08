@@ -28,10 +28,10 @@ const getPredefinedValues = ({locale, localizedValue, options}) => {
 
 export const getFilteredSettingsContext = ({
 	config,
+	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
 	editingLanguageId,
 	settingsContext,
 }) => {
-	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 	const unsupportedTabs = [...config.disabledTabs];
 
 	const pages = settingsContext.pages.filter(

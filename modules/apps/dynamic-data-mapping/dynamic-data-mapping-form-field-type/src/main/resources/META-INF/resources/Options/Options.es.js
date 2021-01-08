@@ -498,7 +498,7 @@ const Options = ({
 };
 
 const Main = ({
-	defaultLanguageId = themeDisplay.getLanguageId(),
+	defaultLanguageId,
 	editingLanguageId = themeDisplay.getLanguageId(),
 	generateOptionValueUsingOptionLabel = false,
 	onChange,

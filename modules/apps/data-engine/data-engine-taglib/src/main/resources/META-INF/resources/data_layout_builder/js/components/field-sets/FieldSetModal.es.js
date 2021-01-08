@@ -236,6 +236,7 @@ const ModalContent = ({
 						dataLayoutBuilderId={`${appProps.dataLayoutBuilderId}_2`}
 						setChildrenContext={setChildrenContext}
 						{...childrenAppProps}
+						defaultLanguageId={defaultLanguageId}
 					/>
 				</div>
 			</ClayModal.Body>

@@ -39,19 +39,25 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 			dataLayout: {dataLayoutPages},
 		} = childrenState;
 
-		const normalizedDataDefinition = normalizeDataDefinition({
-			...fieldSet,
-			availableLanguageIds,
-			dataDefinitionFields,
-			name,
-		});
+		const normalizedDataDefinition = normalizeDataDefinition(
+			{
+				...fieldSet,
+				availableLanguageIds,
+				dataDefinitionFields,
+				name,
+			},
+			fieldSet.defaultLanguageId
+		);
 
 		const normalizedFieldSet = {
 			...normalizedDataDefinition,
-			defaultDataLayout: normalizeDataLayout({
-				...fieldSet.defaultDataLayout,
-				dataLayoutPages,
-			}),
+			defaultDataLayout: normalizeDataLayout(
+				{
+					...fieldSet.defaultDataLayout,
+					dataLayoutPages,
+				},
+				fieldSet.defaultLanguageId
+			),
 		};
 
 		return updateItem(

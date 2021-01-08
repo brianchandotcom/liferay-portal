@@ -62,6 +62,7 @@ const initialState = {
 	dataDefinition: {
 		availableLanguageIds: [],
 		dataDefinitionFields: [],
+		defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 		name: {},
 	},
 	dataDefinitionId: 0,
@@ -74,7 +75,7 @@ const initialState = {
 	},
 	dataLayoutId: 0,
 	editingDataDefinitionId: 0,
-	editingLanguageId: themeDisplay.getLanguageId(),
+	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	fieldSets: [],
 	fieldTypes: [],
 	focusedCustomObjectField: {},

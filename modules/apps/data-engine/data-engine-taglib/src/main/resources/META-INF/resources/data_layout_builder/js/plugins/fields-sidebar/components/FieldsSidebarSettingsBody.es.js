@@ -113,10 +113,11 @@ export default function ({
 		() =>
 			getFilteredSettingsContext({
 				config,
+				defaultLanguageId,
 				editingLanguageId,
 				settingsContext,
 			}),
-		[config, editingLanguageId, settingsContext]
+		[config, defaultLanguageId, editingLanguageId, settingsContext]
 	);
 
 	useEffect(() => {

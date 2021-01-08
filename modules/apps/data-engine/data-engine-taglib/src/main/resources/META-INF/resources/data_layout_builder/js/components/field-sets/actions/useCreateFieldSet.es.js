@@ -33,11 +33,14 @@ export default ({availableLanguageIds, childrenContext, defaultLanguageId}) => {
 			dataLayout: {dataLayoutPages},
 		} = childrenState;
 
-		const normalizedDataDefinition = normalizeDataDefinition({
-			availableLanguageIds,
-			dataDefinitionFields,
-			name,
-		});
+		const normalizedDataDefinition = normalizeDataDefinition(
+			{
+				availableLanguageIds,
+				dataDefinitionFields,
+				name,
+			},
+			defaultLanguageId
+		);
 
 		const fieldSet = {
 			...normalizedDataDefinition,

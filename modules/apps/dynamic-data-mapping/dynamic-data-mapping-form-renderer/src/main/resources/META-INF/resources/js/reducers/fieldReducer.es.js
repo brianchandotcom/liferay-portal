@@ -24,17 +24,23 @@ import {PagesVisitor} from '../util/visitors.es';
 export const createRepeatedField = (sourceField, repeatedIndex) => {
 	const instanceId = generateInstanceId();
 
-	return {
-		...sourceField,
-		instanceId,
-		localizedValue: Object.keys(sourceField.localizedValue).reduce(
+	let localizedValue;
+
+	if (sourceField.localizedValue) {
+		localizedValue = Object.keys(sourceField.localizedValue).reduce(
 			(localizedValues, key) => {
 				localizedValues[key] = '';
 
 				return localizedValues;
 			},
 			{}
-		),
+		);
+	}
+
+	return {
+		...sourceField,
+		instanceId,
+		localizedValue,
 		name: generateName(sourceField.name, {instanceId, repeatedIndex}),
 		nestedFields: (sourceField.nestedFields || []).map((nestedField) => ({
 			...nestedField,

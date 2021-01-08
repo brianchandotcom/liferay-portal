@@ -59,6 +59,7 @@ const PublicationsSearchContainer = ({
 							'an-unexpected-error-occurred'
 						),
 					});
+					setLoading(false);
 
 					return;
 				}
@@ -100,7 +101,7 @@ const PublicationsSearchContainer = ({
 		return keyArray.join('');
 	};
 
-	const handleDeltaChange = (delta) => {
+	const onDeltaChange = (delta) => {
 		setDelta(delta);
 		setPage(1);
 	};
@@ -126,6 +127,7 @@ const PublicationsSearchContainer = ({
 								'an-unexpected-error-occurred'
 							),
 						});
+						setLoading(false);
 
 						return;
 					}
@@ -145,6 +147,12 @@ const PublicationsSearchContainer = ({
 	};
 
 	const renderManagementToolbar = () => {
+		const disabled =
+			!resultsKeywords &&
+			fetchData &&
+			fetchData.entries &&
+			fetchData.entries.length === 0;
+
 		const items = [];
 
 		for (let i = 0; i < orderByItems.length; i++) {
@@ -195,6 +203,7 @@ const PublicationsSearchContainer = ({
 								trigger={
 									<ClayButton
 										className="nav-link"
+										disabled={disabled}
 										displayType="unstyled"
 									>
 										<span className="navbar-breakpoint-down-d-none">
@@ -233,6 +242,7 @@ const PublicationsSearchContainer = ({
 										? 'order-arrow-down-active'
 										: 'order-arrow-up-active')
 								}
+								disabled={disabled}
 								displayType="unstyled"
 								onClick={() => setAscending(!ascending)}
 							>
@@ -256,6 +266,7 @@ const PublicationsSearchContainer = ({
 								<ClayInput
 									aria-label={Liferay.Language.get('search')}
 									className="input-group-inset input-group-inset-after"
+									disabled={disabled}
 									onChange={(event) =>
 										setSearchTerms(event.target.value)
 									}
@@ -273,6 +284,7 @@ const PublicationsSearchContainer = ({
 										symbol="times"
 									/>
 									<ClayButtonWithIcon
+										disabled={disabled}
 										displayType="unstyled"
 										symbol="search"
 										type="submit"
@@ -285,6 +297,7 @@ const PublicationsSearchContainer = ({
 						<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
 							<ClayButton
 								className="nav-link nav-link-monospaced"
+								disabled={disabled}
 								displayType="unstyled"
 								onClick={() => setShowMobile(true)}
 							>
@@ -422,7 +435,7 @@ const PublicationsSearchContainer = ({
 								label: size,
 							}))}
 							ellipsisBuffer={3}
-							onDeltaChange={(delta) => handleDeltaChange(delta)}
+							onDeltaChange={(delta) => onDeltaChange(delta)}
 							onPageChange={(page) => setPage(page)}
 							totalItems={fetchData.entries.length}
 						/>

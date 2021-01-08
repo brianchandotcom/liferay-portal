@@ -17,7 +17,7 @@ package com.liferay.commerce.machine.learning.recommendation.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.machine.learning.recommendation.FrequentPatternCommerceMLRecommendation;
 import com.liferay.commerce.machine.learning.recommendation.FrequentPatternCommerceMLRecommendationManager;
-import com.liferay.commerce.machine.learning.recommendation.test.util.FrequentPatternCommerceMLRecommendationComparator;
+import com.liferay.commerce.machine.learning.recommendation.test.util.comparator.FrequentPatternCommerceMLRecommendationComparator;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;

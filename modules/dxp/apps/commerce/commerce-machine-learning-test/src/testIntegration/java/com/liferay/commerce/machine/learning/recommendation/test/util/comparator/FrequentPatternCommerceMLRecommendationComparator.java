@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.recommendation.test.util;
+package com.liferay.commerce.machine.learning.recommendation.test.util.comparator;
 
 import com.liferay.commerce.machine.learning.recommendation.FrequentPatternCommerceMLRecommendation;
 import com.liferay.portal.kernel.util.SetUtil;

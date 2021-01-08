@@ -238,11 +238,9 @@ public class GitHubWebhookPayloadProcessor {
 		if (isJenkinsJobEnabled()) {
 			processURL(invocationURL);
 
-			String ciReevaluateBuildId =
-				pullRequestTesterParameters.getCiReevaluateBuildId();
-
 			if (_ciForwardEligible ||
-				JenkinsResultsParserUtil.isNullOrEmpty(ciReevaluateBuildId)) {
+				!JenkinsResultsParserUtil.isNullOrEmpty(
+					pullRequestTesterParameters.getCiReevaluateBuildId())) {
 
 				return;
 			}

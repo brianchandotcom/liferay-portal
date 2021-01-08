@@ -280,6 +280,10 @@ public class DDMFormFieldTemplateContextFactory {
 
 		List<Map<String, String>> list = new ArrayList<>();
 
+		if (ddmFormFieldOptions == null) {
+			return list;
+		}
+
 		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
 
 		Map<String, String> optionsReferences =
@@ -491,6 +495,10 @@ public class DDMFormFieldTemplateContextFactory {
 	protected void setDDMFormFieldTemplateContextLocalizedValue(
 		Map<String, Object> ddmFormFieldTemplateContext, String propertyName,
 		LocalizedValue localizedValue) {
+
+		if (localizedValue == null) {
+			return;
+		}
 
 		String propertyValue = GetterUtil.getString(
 			localizedValue.getString(_locale));

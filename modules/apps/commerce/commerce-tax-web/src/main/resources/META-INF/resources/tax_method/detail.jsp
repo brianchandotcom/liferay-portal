@@ -28,7 +28,7 @@ if (commerceTaxMethod != null) {
 }
 %>
 
-<portlet:actionURL name="/commerce_channels/edit_commerce_tax_method" var="editCommerceTaxMethodActionURL" />
+<portlet:actionURL name="/commerce_tax_methods/edit_commerce_tax_method" var="editCommerceTaxMethodActionURL" />
 
 <aui:form action="<%= editCommerceTaxMethodActionURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceTaxMethod == null) ? Constants.ADD : Constants.UPDATE %>" />

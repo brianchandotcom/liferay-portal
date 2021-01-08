@@ -2,7 +2,9 @@
 
 <suppressions>
 	<checkstyle>
+		<suppress checks="FactoryCheck" files="sync-service/src/main/java/com/liferay/sync/internal/util/SyncHelperImpl\.java" />
 		<suppress checks="MapBuilderCheck" files="powwow-portlet/docroot/WEB-INF/src/com/liferay/powwow/provider/PowwowServiceProviderFactory\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="sync-service/src/main/java/com/liferay/sync/internal/util/SyncDLObjectUpdate\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDirectoryNameCheck" files=".*" />

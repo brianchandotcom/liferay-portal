@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="FactoryCheck" files="sync-service/src/main/java/com/liferay/sync/internal/util/SyncHelperImpl\.java" />
-		<suppress checks="MissingEmptyLineCheck" files="sync-service/src/main/java/com/liferay/sync/internal/util/SyncDLObjectUpdate\.java" />
-	</checkstyle>
-</suppressions>

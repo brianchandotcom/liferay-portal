@@ -2097,12 +2097,12 @@ public class GitHubWebhookPayloadProcessor {
 			if (matcher.find()) {
 				String testOption1 = matcher.group("testOption1");
 
-				String rebaseSHA = null;
 				String testSuite = null;
 
 				if (testOption1.matches("[0-9a-f]{7,40}")) {
 					if (isValidPullRequestRefSHA(pullRequest, testOption1)) {
-						rebaseSHA = testOption1;
+						pullRequestTesterParameters.setUpstreamBranchSHA(
+							testOption1);
 					}
 					else {
 						StringBuilder sb = new StringBuilder();
@@ -2143,23 +2143,18 @@ public class GitHubWebhookPayloadProcessor {
 
 					return;
 				}
-				else if (testOption1.equals("nocompile") ||
-						 testOption1.equals("norebase")) {
+				else if (!testOption1.equals("nocompile") &&
+						 !testOption1.equals("norebase")) {
 
-					rebaseSHA = testOption1;
-				}
-				else {
 					testSuite = testOption1;
 				}
 
 				String testOption2 = matcher.group("testOption2");
 
 				if (testOption2 != null) {
-					if (testOption2.matches("[0-9a-f]{7,40}") ||
-						testOption2.equals("nocompile") ||
-						testOption2.equals("norebase")) {
-
-						rebaseSHA = testOption2;
+					if (testOption2.matches("[0-9a-f]{7,40}")) {
+						pullRequestTesterParameters.setUpstreamBranchSHA(
+							testOption2);
 					}
 					else if (testOption2.equals("forward")) {
 						StringBuilder sb = new StringBuilder(5);
@@ -2182,7 +2177,10 @@ public class GitHubWebhookPayloadProcessor {
 					}
 				}
 
-				if ((rebaseSHA != null) && rebaseSHA.equals("nocompile")) {
+				List<String> testOptions = Arrays.asList(
+					testOption1, testOption2);
+
+				if (testOptions.contains("nocompile")) {
 					String distPortalBundlesBuildURL =
 						JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
 							pullRequest.getUpstreamBranchName());
@@ -2193,17 +2191,16 @@ public class GitHubWebhookPayloadProcessor {
 						pullRequestTesterParameters.setPortalBundlesDistURL(
 							distPortalBundlesBuildURL);
 
-						rebaseSHA = processURL(
+						String upstreamBranchSHA = processURL(
 							distPortalBundlesBuildURL + "/git-hash");
 
-						rebaseSHA = rebaseSHA.trim();
+						pullRequestTesterParameters.setUpstreamBranchSHA(
+							upstreamBranchSHA.trim());
 
 						message = "The test will run with a prebuilt bundle.";
 					}
 					else {
 						message = "No valid prebuilt bundle is available.";
-
-						rebaseSHA = null;
 					}
 
 					if (_log.isInfoEnabled()) {
@@ -2212,7 +2209,7 @@ public class GitHubWebhookPayloadProcessor {
 
 					pullRequest.addComment(message + ".");
 				}
-				else if ((rebaseSHA != null) && rebaseSHA.equals("norebase")) {
+				else if (testOptions.contains("norebase")) {
 					String message = "The test will run without rebasing.";
 
 					if (_log.isInfoEnabled()) {
@@ -2221,7 +2218,8 @@ public class GitHubWebhookPayloadProcessor {
 
 					pullRequest.addComment(message + ".");
 
-					rebaseSHA = pullRequest.getCommonParentSHA();
+					pullRequestTesterParameters.setUpstreamBranchSHA(
+						pullRequest.getCommonParentSHA());
 				}
 
 				if (testSuite != null) {
@@ -2675,6 +2673,17 @@ public class GitHubWebhookPayloadProcessor {
 			return _pullRequest;
 		}
 
+		@Override
+		public String put(String key, String value) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(value) &&
+				containsKey(key)) {
+
+				return remove(key);
+			}
+
+			return super.put(key, value);
+		}
+
 		public void setCiForwardReceiverUsername(
 			String ciForwardReceiverUsername) {
 
@@ -2695,6 +2704,10 @@ public class GitHubWebhookPayloadProcessor {
 
 		public void setPortalBundlesDistURL(String portalBundlesDistURL) {
 			put(_KEY_PORTAL_BUNDLES_DIST_URL, portalBundlesDistURL);
+		}
+
+		public void setUpstreamBranchSHA(String upstreamBranchSHA) {
+			put(_KEY_GITHUB_UPSTREAM_BRANCH_SHA, upstreamBranchSHA);
 		}
 
 		public String toQueryString() {
@@ -2723,9 +2736,13 @@ public class GitHubWebhookPayloadProcessor {
 			_appendParameter(
 				sb, "GITHUB_UPSTREAM_BRANCH_NAME",
 				_pullRequest.getUpstreamBranchName());
-			_appendParameter(
-				sb, "GITHUB_UPSTREAM_BRANCH_SHA",
-				_pullRequest.getUpstreamBranchSHA());
+
+			if (!containsKey(_KEY_GITHUB_UPSTREAM_BRANCH_SHA)) {
+				_appendParameter(
+					sb, _KEY_GITHUB_UPSTREAM_BRANCH_SHA,
+					_pullRequest.getUpstreamBranchSHA());
+			}
+
 			_appendParameter(sb, "PULL_REQUEST_URL", _pullRequest.getHtmlURL());
 			_appendParameter(
 				sb, "REPOSITORY_NAME", _pullRequest.getGitRepositoryName());
@@ -2766,6 +2783,9 @@ public class GitHubWebhookPayloadProcessor {
 		private static final String _KEY_CI_REEVALUATE_BUILD_ID = "BUILD_ID";
 
 		private static final String _KEY_CI_TEST_SUITE_NAME = "CI_TEST_SUITE";
+
+		private static final String _KEY_GITHUB_UPSTREAM_BRANCH_SHA =
+			"GITHUB_UPSTREAM_BRANCH_SHA";
 
 		private static final String _KEY_JENKINS_AUTHENTICATION_TOKEN = "token";
 

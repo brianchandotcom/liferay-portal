@@ -213,6 +213,30 @@ public class AssetListEntryAssetEntryRelServiceAssetCategoriesTest {
 	}
 
 	@Test
+	public void testGetAssetListEntryAssetEntryRels1AssetVocabulary0Results() {
+		long[][] assetCategoryIds = {
+			{_assetVocabulary1AssetCategory5.getCategoryId()}
+		};
+
+		int assetListEntryRelListCount =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					_assetListEntry.getAssetListEntryId(), new long[] {0},
+					assetCategoryIds);
+
+		Assert.assertEquals(0, assetListEntryRelListCount);
+
+		List<AssetListEntryAssetEntryRel> assetListEntryRelList =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					_assetListEntry.getAssetListEntryId(), new long[] {0},
+					assetCategoryIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetListEntryRelList.toString(), 0, assetListEntryRelList.size());
+	}
+
+	@Test
 	public void testGetAssetListEntryAssetEntryRelsNullAssetVocabularies5Results() {
 		long[][] assetCategoryIds = null;
 

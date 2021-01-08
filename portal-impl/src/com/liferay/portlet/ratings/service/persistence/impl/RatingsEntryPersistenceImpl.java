@@ -1901,11 +1901,7 @@ public class RatingsEntryPersistenceImpl
 				return Collections.emptyList();
 			}
 			else {
-				List<RatingsEntry> list = new ArrayList<RatingsEntry>(1);
-
-				list.add(ratingsEntry);
-
-				return list;
+				return Collections.singletonList(ratingsEntry);
 			}
 		}
 
@@ -1952,54 +1948,33 @@ public class RatingsEntryPersistenceImpl
 		}
 
 		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_RATINGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_C_C_USERID_2);
-
-			sb.append(_FINDER_COLUMN_U_C_C_CLASSNAMEID_2);
-
-			if (classPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_U_C_C_CLASSPK_7);
-
-				sb.append(StringUtil.merge(classPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(RatingsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) &&
+					(end == QueryUtil.ALL_POS) &&
+					(databaseInMaxParameters > 0) &&
+					(classPKs.length > databaseInMaxParameters)) {
 
-				Query query = session.createQuery(sql);
+					list = new ArrayList<RatingsEntry>();
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					long[][] classPKsPages = (long[][])ArrayUtil.split(
+						classPKs, databaseInMaxParameters);
 
-				queryPos.add(userId);
+					for (long[] classPKsPage : classPKsPages) {
+						list.addAll(
+							_findByU_C_C(
+								userId, classNameId, classPKsPage, start, end,
+								orderByComparator));
+					}
 
-				queryPos.add(classNameId);
+					Collections.sort(list, orderByComparator);
 
-				list = (List<RatingsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = _findByU_C_C(
+						userId, classNameId, classPKs, start, end,
+						orderByComparator);
+				}
 
 				cacheResult(list);
 
@@ -2011,9 +1986,71 @@ public class RatingsEntryPersistenceImpl
 			catch (Exception exception) {
 				throw processException(exception);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return list;
+	}
+
+	private List<RatingsEntry> _findByU_C_C(
+		long userId, long classNameId, long[] classPKs, int start, int end,
+		OrderByComparator<RatingsEntry> orderByComparator) {
+
+		List<RatingsEntry> list = null;
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(_SQL_SELECT_RATINGSENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_U_C_C_USERID_2);
+
+		sb.append(_FINDER_COLUMN_U_C_C_CLASSNAMEID_2);
+
+		if (classPKs.length > 0) {
+			sb.append("(");
+
+			sb.append(_FINDER_COLUMN_U_C_C_CLASSPK_7);
+
+			sb.append(StringUtil.merge(classPKs));
+
+			sb.append(")");
+
+			sb.append(")");
+		}
+
+		sb.setStringAt(
+			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(
+				sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+		}
+		else {
+			sb.append(RatingsEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			QueryPos queryPos = QueryPos.getInstance(query);
+
+			queryPos.add(userId);
+
+			queryPos.add(classNameId);
+
+			list = (List<RatingsEntry>)QueryUtil.list(
+				query, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -2298,45 +2335,24 @@ public class RatingsEntryPersistenceImpl
 		}
 
 		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_RATINGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_C_C_USERID_2);
-
-			sb.append(_FINDER_COLUMN_U_C_C_CLASSNAMEID_2);
-
-			if (classPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_U_C_C_CLASSPK_7);
-
-				sb.append(StringUtil.merge(classPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+					(classPKs.length > databaseInMaxParameters)) {
 
-				Query query = session.createQuery(sql);
+					count = Long.valueOf(0);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					long[][] classPKsPages = (long[][])ArrayUtil.split(
+						classPKs, databaseInMaxParameters);
 
-				queryPos.add(userId);
-
-				queryPos.add(classNameId);
-
-				count = (Long)query.uniqueResult();
+					for (long[] classPKsPage : classPKsPages) {
+						count += Long.valueOf(
+							_countByU_C_C(userId, classNameId, classPKsPage));
+					}
+				}
+				else {
+					count = Long.valueOf(
+						_countByU_C_C(userId, classNameId, classPKs));
+				}
 
 				if (productionMode) {
 					FinderCacheUtil.putResult(
@@ -2347,9 +2363,59 @@ public class RatingsEntryPersistenceImpl
 			catch (Exception exception) {
 				throw processException(exception);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByU_C_C(long userId, long classNameId, long[] classPKs) {
+		Long count = null;
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(_SQL_COUNT_RATINGSENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_U_C_C_USERID_2);
+
+		sb.append(_FINDER_COLUMN_U_C_C_CLASSNAMEID_2);
+
+		if (classPKs.length > 0) {
+			sb.append("(");
+
+			sb.append(_FINDER_COLUMN_U_C_C_CLASSPK_7);
+
+			sb.append(StringUtil.merge(classPKs));
+
+			sb.append(")");
+
+			sb.append(")");
+		}
+
+		sb.setStringAt(
+			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			QueryPos queryPos = QueryPos.getInstance(query);
+
+			queryPos.add(userId);
+
+			queryPos.add(classNameId);
+
+			count = (Long)query.uniqueResult();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();

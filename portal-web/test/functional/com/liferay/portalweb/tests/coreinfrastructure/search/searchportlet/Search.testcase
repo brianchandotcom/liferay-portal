@@ -358,6 +358,57 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-115435."
+	@priority = "3"
+	test ModifyPaginationConfigurationProperties {
+		for (var count : list "1,2,3,4,5") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Guest",
+				title = "Apple ${count}");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+
+		SearchPortlets.addWidgets(searchPortletList = "Sort");
+
+		Refresh();
+
+		SearchPortlets.chooseSortOption(sortOption = "Title");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article,Apple 5/Web Content Article,",
+			searchTerm = "Apple");
+
+		SearchResultPortlet.configureSearchResults(paginationDelta = "3");
+
+		Refresh();
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Apple 4",
+			searchAssetType = "Web Content Article");
+
+		Pagination.changePagination(itemsPerPage = "20");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article,Apple 5/Web Content Article,",
+			searchTerm = "Apple");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article",
+			searchTerm = "Apple");
+
+		Pagination.changePagination(itemsPerPage = "20");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article,Apple 5/Web Content Article",
+			searchTerm = "Apple");
+	}
+
 	@description = "This is a use case for LPS-90078."
 	@priority = "4"
 	test ModifyPaginationPortalProperties {

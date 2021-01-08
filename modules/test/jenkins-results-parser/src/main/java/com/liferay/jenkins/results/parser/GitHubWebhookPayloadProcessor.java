@@ -2613,7 +2613,8 @@ public class GitHubWebhookPayloadProcessor {
 				return jsonObject.getString(key);
 			}
 
-			return _getStringByPath(getJSONObject(key), remainingPath);
+			return _getStringByPath(
+				jsonObject.getJSONObject(key), remainingPath);
 		}
 
 		private static final Pattern _branchPattern = Pattern.compile(

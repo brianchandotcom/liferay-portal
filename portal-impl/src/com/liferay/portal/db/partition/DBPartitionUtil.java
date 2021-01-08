@@ -230,6 +230,18 @@ public class DBPartitionUtil {
 		};
 	}
 
+	private static void _copyData(
+			String tableName, String fromSchemaName, String toSchemaName,
+			Statement statement, String whereClause)
+		throws Exception {
+
+		statement.executeUpdate(
+			StringBundler.concat(
+				"insert ", toSchemaName, StringPool.PERIOD, tableName,
+				" select * from ", fromSchemaName, StringPool.PERIOD, tableName,
+				whereClause));
+	}
+
 	private static String _getCreateTable(long companyId, String tableName) {
 		return StringBundler.concat(
 			"create table if not exists ", _getSchemaName(companyId),
@@ -274,31 +286,6 @@ public class DBPartitionUtil {
 		return false;
 	}
 
-	private static void _migrateData(
-			long companyId, String tableName, String fromSchemaName,
-			String toSchemaName, Statement statement, DBInspector dbInspector)
-		throws Exception {
-
-		String whereClause = StringPool.BLANK;
-
-		if (dbInspector.hasColumn(tableName, "companyId")) {
-			whereClause = " where companyId = " + companyId;
-		}
-
-		statement.executeUpdate(
-			StringBundler.concat(
-				"insert ", toSchemaName, StringPool.PERIOD, tableName,
-				" select * from ", fromSchemaName, StringPool.PERIOD, tableName,
-				whereClause));
-
-		if (!whereClause.isEmpty()) {
-			statement.executeUpdate(
-				StringBundler.concat(
-					"delete from ", fromSchemaName, StringPool.PERIOD,
-					tableName, whereClause));
-		}
-	}
-
 	private static void _migrateTable(
 			long companyId, String tableName, Statement statement,
 			DBInspector dbInspector)
@@ -308,9 +295,34 @@ public class DBPartitionUtil {
 
 		statement.executeUpdate(_getCreateTable(companyId, tableName));
 
-		_migrateData(
-			companyId, tableName, _defaultSchemaName, _getSchemaName(companyId),
-			statement, dbInspector);
+		if (dbInspector.hasColumn(tableName, "companyId")) {
+			_moveCompanyData(
+				companyId, tableName, _defaultSchemaName,
+				_getSchemaName(companyId), statement);
+		}
+		else {
+			_copyData(
+				tableName, _defaultSchemaName, _getSchemaName(companyId),
+				statement, StringPool.BLANK);
+		}
+	}
+
+	private static void _moveCompanyData(
+			long companyId, String tableName, String fromSchemaName,
+			String toSchemaName, Statement statement)
+		throws Exception {
+
+		String whereClause = " where companyId = " + companyId;
+
+		_copyData(
+			tableName, fromSchemaName, toSchemaName, statement, whereClause);
+
+		if (!whereClause.isEmpty()) {
+			statement.executeUpdate(
+				StringBundler.concat(
+					"delete from ", fromSchemaName, StringPool.PERIOD,
+					tableName, whereClause));
+		}
 	}
 
 	private static void _restoreTable(
@@ -318,9 +330,11 @@ public class DBPartitionUtil {
 			DBInspector dbInspector)
 		throws Exception {
 
-		_migrateData(
-			companyId, tableName, _getSchemaName(companyId), _defaultSchemaName,
-			statement, dbInspector);
+		if (dbInspector.hasColumn(tableName, "companyId")) {
+			_moveCompanyData(
+				companyId, tableName, _getSchemaName(companyId),
+				_defaultSchemaName, statement);
+		}
 
 		statement.executeUpdate(_getDropTable(companyId, tableName));
 

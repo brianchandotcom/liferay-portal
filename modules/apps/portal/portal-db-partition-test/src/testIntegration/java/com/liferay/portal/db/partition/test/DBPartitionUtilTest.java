@@ -162,7 +162,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		List<String> initialViewNames = _getObjectNames("VIEW");
 
-		int initialViewCount = _getViewCount();
+		int initialViewCount = initialViewNames.size();
 
 		Assert.assertNotEquals(0, initialViewCount);
 
@@ -180,9 +180,41 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		for (String initialViewName : initialViewNames) {
 			Assert.assertEquals(
-				initialViewName + " count",
-				_getCount(initialViewName, true),
+				initialViewName + " count", _getCount(initialViewName, true),
 				_getCount(initialViewName, false));
+		}
+	}
+
+	@Test
+	public void testRollbackRemoveDBPartition() throws Exception {
+		_addDBPartition();
+
+		int initialViewCount = _getViewCount();
+		int initialTableCount = _getTablesCount();
+
+		String fullTestTableName =
+			_getSchemaName(_COMPANY_ID) + StringPool.PERIOD + "test";
+
+		try (Statement statement = _connection.createStatement()) {
+			statement.execute("create table test (test varchar(1))");
+			statement.execute(
+				"create table " + fullTestTableName + "(test varchar(1))");
+
+			try {
+				_removeDBPartition();
+
+				Assert.fail("Should throw an exception");
+			}
+			catch (Exception exception) {
+				Assert.assertEquals(initialViewCount, _getViewCount());
+				Assert.assertEquals(initialTableCount, _getTablesCount());
+			}
+		}
+		finally {
+			try (Statement statement = _connection.createStatement()) {
+				statement.execute("drop table if exists test");
+				statement.execute("drop table if exists " + fullTestTableName);
+			}
 		}
 	}
 

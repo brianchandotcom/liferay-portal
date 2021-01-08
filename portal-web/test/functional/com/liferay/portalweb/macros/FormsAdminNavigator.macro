@@ -94,7 +94,7 @@ definition {
 	}
 
 	macro gotoFormBuilder {
-		var key_navigationItem = "Form";
+		var key_navigationBarItem = "Form";
 
 		WaitForElementPresent(
 			locator1 = "FormsAdmin#FORMS_NAVIGATION_BAR_ITEM",
@@ -140,7 +140,7 @@ definition {
 	}
 
 	macro gotoRules {
-		var key_navigationItem = "Rules";
+		var key_navigationBarItem = "Rules";
 
 		WaitForElementPresent(
 			locator1 = "FormsAdmin#FORMS_NAVIGATION_BAR_ITEM",

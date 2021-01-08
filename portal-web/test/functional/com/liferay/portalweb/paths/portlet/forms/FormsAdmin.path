@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>FORMS_NAVIGATION_BAR_ITEM</td>
-	<td>//div[@class='forms-navigation-bar']//button[contains(@class,'nav-link') and .='${key_navigationItem}']</td>
+	<td>//div[@class='forms-navigation-bar']//button[contains(@class,'nav-link') and .='${key_navigationBarItem}']</td>
 	<td></td>
 </tr>
 </tbody>

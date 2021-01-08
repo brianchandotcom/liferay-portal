@@ -27,8 +27,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DDMFormRenderer {
 
-	public String getModuleName();
-
 	public Map<String, Object> getReactData(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)

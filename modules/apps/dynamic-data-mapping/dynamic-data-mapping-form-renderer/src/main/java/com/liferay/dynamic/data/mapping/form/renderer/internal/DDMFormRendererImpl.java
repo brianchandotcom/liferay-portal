@@ -45,11 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormRendererImpl implements DDMFormRenderer {
 
 	@Override
-	public String getModuleName() {
-		return _npmResolver.resolveModuleName(_MODULE_NAME);
-	}
-
-	@Override
 	public Map<String, Object> getReactData(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
@@ -123,7 +118,8 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
-				getModuleName(), ddmFormRenderingContext.getContainerId()),
+				_npmResolver.resolveModuleName(_MODULE_NAME),
+				ddmFormRenderingContext.getContainerId()),
 			getReactData(ddmForm, ddmFormLayout, ddmFormRenderingContext),
 			ddmFormRenderingContext.getHttpServletRequest(), writer);
 

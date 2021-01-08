@@ -19,6 +19,8 @@
 		<java
 			classname="com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilderLauncher"
 			classpathref="sample.sql.builder.classpath"
+			dir="."
+			fork="true"
 		>
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<sysproperty key="sample-sql-properties" value="${sample.sql.properties.file}" />

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
+import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.io.BufferedInputStream;
@@ -38,6 +38,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -51,16 +52,17 @@ import java.util.jar.JarFile;
 public class SampleSQLBuilderLauncher {
 
 	public static void main(String[] args) throws Exception {
-		ClassLoader classLoader = new URLClassLoader(_getDependencies());
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		ClassLoader classLoader = new URLClassLoader(
+			_getDependencies(contextClassLoader), null);
 
 		Class<?> clazz = classLoader.loadClass(
 			"com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilder");
 
 		Method method = clazz.getMethod("main", String[].class);
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		currentThread.setContextClassLoader(classLoader);
 
@@ -72,30 +74,15 @@ public class SampleSQLBuilderLauncher {
 		}
 	}
 
-	private static URL[] _getDependencies() throws Exception {
+	private static URL[] _getDependencies(ClassLoader classLoader)
+		throws Exception {
+
 		Set<URL> urls = new LinkedHashSet<>();
 
-		Thread thread = Thread.currentThread();
+		URL[] javaClassPathURLs = ClassPathUtil.getClassPathURLs(
+			ClassPathUtil.getJVMClassPath(true));
 
-		ClassLoader classLoader = thread.getContextClassLoader();
-
-		String classPath = classLoader.toString();
-
-		int startIndex = classPath.indexOf(StringPool.OPEN_BRACKET);
-
-		int endIndex = classPath.indexOf(StringPool.CLOSE_BRACKET);
-
-		classPath = classPath.substring(startIndex + 1, endIndex);
-
-		String[] paths = classPath.split(File.pathSeparator);
-
-		for (String path : paths) {
-			File file = new File(path);
-
-			URI uri = file.toURI();
-
-			urls.add(uri.toURL());
-		}
+		Collections.addAll(urls, javaClassPathURLs);
 
 		File tempDir = new File(SystemProperties.get(SystemProperties.TMP_DIR));
 

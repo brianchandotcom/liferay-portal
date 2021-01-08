@@ -2043,7 +2043,7 @@ definition {
 
 		task ("Assert styles of Separator in view mode") {
 			PageEditor.viewFragmentStyle(
-				bottomSpacing = "3",
+				bottomSpacing = "1",
 				separatorColor = "dark");
 		}
 
@@ -2153,7 +2153,7 @@ definition {
 
 		task ("Assert styles of Separator in edit mode") {
 			PageEditor.viewFragmentStyle(
-				bottomSpacing = "3",
+				bottomSpacing = "1",
 				separatorColor = "dark");
 		}
 

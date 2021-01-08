@@ -233,7 +233,7 @@ public class SpiraRestAPIUtil {
 						spiraRestAPIURL, urlPath,
 						_toURLParametersString(urlParameters)),
 					false, 0, httpRequestMethod, requestData, 0,
-					_MILLIS_TIMEOUT_DEFAULT, null);
+					_MILLIS_TIMEOUT_DEFAULT, null, true);
 
 				return responseData;
 			}

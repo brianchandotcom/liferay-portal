@@ -721,14 +721,14 @@ public class PullRequest {
 		throws IOException {
 
 		return JenkinsResultsParserUtil.toString(
-			url, true, 10, httpRequestMethod, null, 30, 5000, null);
+			url, true, 10, httpRequestMethod, null, 30, 5000, null, false);
 	}
 
 	private static String _toString(String url, String postContent)
 		throws IOException {
 
 		return JenkinsResultsParserUtil.toString(
-			url, false, 10, null, postContent, 30, 5000, null);
+			url, false, 10, null, postContent, 30, 5000, null, false);
 	}
 
 	private static final String _NAME_TEST_SUITE_DEFAULT = "default";

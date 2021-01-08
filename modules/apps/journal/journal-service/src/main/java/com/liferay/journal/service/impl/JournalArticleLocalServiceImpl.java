@@ -1978,6 +1978,26 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, status, orderByComparator);
 	}
 
+	/**
+	 * Returns the latest web content article matching the group, external reference code, and
+	 * workflow status.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  externalReferenceCode the web content article's external reference code
+	 * @return the latest matching web content article, or <code>null</code> if
+	 *         no matching web content article could be found
+	 */
+	@Override
+	public JournalArticle fetchLatestArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
+
+		return journalArticlePersistence.fetchByG_ERC_First(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
 	@Override
 	public JournalArticle fetchLatestArticleByUrlTitle(
 		long groupId, String urlTitle, int status) {
@@ -3417,6 +3437,27 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return articles.get(0);
+	}
+
+	/**
+	 * Returns the latest web content article matching the group, external reference code, and
+	 * workflow status.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  externalReferenceCode the web content article's external reference code
+	 * @return the latest matching web content article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public JournalArticle getLatestArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		OrderByComparator<JournalArticle> orderByComparator =
+			new ArticleVersionComparator();
+
+		return journalArticlePersistence.findByG_ERC_First(
+			groupId, externalReferenceCode, orderByComparator);
 	}
 
 	/**

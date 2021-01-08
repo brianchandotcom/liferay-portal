@@ -661,6 +661,33 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the latest web content article matching the group, external reference code,
+	 * and workflow status.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  externalReferenceCode the external reference code of the web content article
+	 * @return the latest matching web content article, or <code>null</code> if
+	 *         no matching web content article could be found
+	 */
+	@Override
+	public JournalArticle fetchLatestArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		JournalArticle article =
+			journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					groupId, externalReferenceCode);
+
+		if (article != null) {
+			_journalArticleModelResourcePermission.check(
+				getPermissionChecker(), article, ActionKeys.VIEW);
+		}
+
+		return article;
+	}
+
+	/**
 	 * Returns the web content article with the ID.
 	 *
 	 * @param  id the primary key of the web content article
@@ -1653,6 +1680,30 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		JournalArticle article = journalArticleLocalService.getLatestArticle(
 			groupId, className, classPK);
+
+		_journalArticleModelResourcePermission.check(
+			getPermissionChecker(), article, ActionKeys.VIEW);
+
+		return article;
+	}
+
+	/**
+	 * Returns the latest web content article matching the group, external reference code,
+	 * and workflow status.
+	 *
+	 * @param  groupId the primary key of the web content article's group
+	 * @param  externalReferenceCode the external reference code of the web content article
+	 * @return the latest matching web content article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public JournalArticle getLatestArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		JournalArticle article =
+			journalArticleLocalService.getLatestArticleByExternalReferenceCode(
+				groupId, externalReferenceCode);
 
 		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);

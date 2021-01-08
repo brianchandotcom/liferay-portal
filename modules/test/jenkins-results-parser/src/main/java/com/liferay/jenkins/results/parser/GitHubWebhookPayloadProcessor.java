@@ -2646,8 +2646,9 @@ public class GitHubWebhookPayloadProcessor {
 			put(_KEY_CI_TEST_SUITE_NAME, "default");
 
 			put(
-				_KEY_JENKINS_ACCESS_TOKEN,
-				jenkinsBuildProperties.getProperty("jenkins.access.token"));
+				_KEY_JENKINS_AUTHENTICATION_TOKEN,
+				jenkinsBuildProperties.getProperty(
+					"jenkins.authentication.token"));
 
 			String ciForwardReceiverUsername =
 				jenkinsBuildProperties.getProperty(
@@ -2768,7 +2769,7 @@ public class GitHubWebhookPayloadProcessor {
 
 		private static final String _KEY_CI_TEST_SUITE_NAME = "CI_TEST_SUITE";
 
-		private static final String _KEY_JENKINS_ACCESS_TOKEN = "token";
+		private static final String _KEY_JENKINS_AUTHENTICATION_TOKEN = "token";
 
 		private static final String _KEY_PORTAL_BUNDLES_DIST_URL =
 			"PORTAL_BUNDLES_DIST_URL";

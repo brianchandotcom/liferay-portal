@@ -1297,8 +1297,8 @@ definition {
 	@description = "This is a use case for LPS-73332."
 	@priority = "2"
 	test ViewPreviousFormRuleIsCopiedToNewDuplicatedForm {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ViewPreviousFormRuleIsCopiedToNewDuplicatedForm";
 
 		Navigator.openURL();
@@ -1405,8 +1405,8 @@ definition {
 	@description = "This is a use case for LPS-75495."
 	@priority = "3"
 	test ViewShowRuleActivationAfterInputtingUnrelatedField {
-		property portal.acceptance = "true";
-		property portal.upstream = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "FormRules#ViewShowRuleActivationAfterInputtingUnrelatedField";
 
 		Navigator.openURL();

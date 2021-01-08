@@ -143,15 +143,6 @@ public class TestClassGroupFactory {
 	public static SegmentTestClassGroup newSegmentTestClassGroup(
 		BatchTestClassGroup batchTestClassGroup) {
 
-		Job job = batchTestClassGroup.getJob();
-
-		if ((job instanceof PortalAWSJob) &&
-			(batchTestClassGroup instanceof FunctionalBatchTestClassGroup)) {
-
-			return new AWSFunctionalSegmentTestClassGroup(
-				(FunctionalBatchTestClassGroup)batchTestClassGroup);
-		}
-
 		if (batchTestClassGroup instanceof
 				EnvironmentFunctionalBatchTestClassGroup) {
 
@@ -160,8 +151,18 @@ public class TestClassGroupFactory {
 		}
 
 		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
+			FunctionalBatchTestClassGroup functionalBatchTestClassGroup =
+				(FunctionalBatchTestClassGroup)batchTestClassGroup;
+
+			Job job = batchTestClassGroup.getJob();
+
+			if (job instanceof PortalAWSJob) {
+				return new AWSFunctionalSegmentTestClassGroup(
+					functionalBatchTestClassGroup);
+			}
+
 			return new FunctionalSegmentTestClassGroup(
-				(FunctionalBatchTestClassGroup)batchTestClassGroup);
+				functionalBatchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
 			return new JUnitSegmentTestClassGroup(

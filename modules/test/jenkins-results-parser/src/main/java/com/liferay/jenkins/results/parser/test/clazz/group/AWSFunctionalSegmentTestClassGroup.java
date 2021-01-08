@@ -14,9 +14,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,57 +56,31 @@ public class AWSFunctionalSegmentTestClassGroup
 		FunctionalBatchTestClassGroup parentFunctionalBatchTestClassGroup) {
 
 		super(parentFunctionalBatchTestClassGroup);
-
-		_parentFunctionalBatchTestClassGroup =
-			parentFunctionalBatchTestClassGroup;
 	}
 
 	private Map.Entry<String, String> _getAppServerTypeEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"APP_SERVER_TYPE", "environment.app.server.type");
 	}
 
 	private Map.Entry<String, String> _getDatabaseTypeEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"DATABASE_TYPE", "environment.database.type");
 	}
 
 	private Map.Entry<String, String> _getDatabaseVersionEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"DATABASE_VERSION", "environment.database.version");
 	}
 
-	private Map.Entry<String, String> _getEnvironmentVariableEntry(
-		String key, String name) {
-
-		if ((key == null) || key.isEmpty() || (name == null) ||
-			name.isEmpty()) {
-
-			return null;
-		}
-
-		String value = JenkinsResultsParserUtil.getProperty(
-			_parentFunctionalBatchTestClassGroup.getJobProperties(), name,
-			_parentFunctionalBatchTestClassGroup.getBatchName());
-
-		if ((value == null) || value.isEmpty()) {
-			return null;
-		}
-
-		return new AbstractMap.SimpleEntry<>(key, value);
-	}
-
 	private Map.Entry<String, String> _getOperatingSystemTypeEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"OPERATING_SYSTEM_TYPE", "environment.operating.system.type");
 	}
 
 	private Map.Entry<String, String> _getOperatingSystemVersionEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"OPERATING_SYSTEM_VERSION", "environment.operating.system.version");
 	}
-
-	private final FunctionalBatchTestClassGroup
-		_parentFunctionalBatchTestClassGroup;
 
 }

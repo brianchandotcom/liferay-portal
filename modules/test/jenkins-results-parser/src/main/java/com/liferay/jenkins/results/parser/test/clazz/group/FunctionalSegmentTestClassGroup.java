@@ -16,8 +16,10 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -119,6 +121,32 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		FunctionalBatchTestClassGroup parentFunctionalBatchTestClassGroup) {
 
 		super(parentFunctionalBatchTestClassGroup);
+
+		_parentFunctionalBatchTestClassGroup =
+			parentFunctionalBatchTestClassGroup;
 	}
+
+	protected Map.Entry<String, String> getEnvironmentVariableEntry(
+		String key, String name) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(key) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+
+			return null;
+		}
+
+		String value = JenkinsResultsParserUtil.getProperty(
+			_parentFunctionalBatchTestClassGroup.getJobProperties(), name,
+			_parentFunctionalBatchTestClassGroup.getBatchName());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
+			return null;
+		}
+
+		return new AbstractMap.SimpleEntry<>(key, value);
+	}
+
+	private final FunctionalBatchTestClassGroup
+		_parentFunctionalBatchTestClassGroup;
 
 }

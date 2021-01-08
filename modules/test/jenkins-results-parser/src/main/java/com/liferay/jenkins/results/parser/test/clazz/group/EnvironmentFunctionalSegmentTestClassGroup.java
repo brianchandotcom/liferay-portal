@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalFixpackEnvironmentJob;
 
@@ -70,60 +69,36 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 			parentEnvironmentFunctionalBatchTestClassGroup) {
 
 		super(parentEnvironmentFunctionalBatchTestClassGroup);
-
-		_parentEnvironmentFunctionalBatchTestClassGroup =
-			parentEnvironmentFunctionalBatchTestClassGroup;
 	}
 
 	private Map.Entry<String, String> _getAppServerTypeEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"APP_SERVER_TYPE", "environment.app.server.type");
 	}
 
 	private Map.Entry<String, String> _getAppServerVersionEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"APP_SERVER_VERSION", "environment.app.server.version");
 	}
 
 	private Map.Entry<String, String> _getBrowserTypeEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"BROWSER_TYPE", "environment.browser.type");
 	}
 
 	private Map.Entry<String, String> _getBrowserVersionEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"BROWSER_VERSION", "environment.browser.version");
 	}
 
 	private Map.Entry<String, String> _getDatabaseTypeEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"DATABASE_TYPE", "environment.database.type");
 	}
 
 	private Map.Entry<String, String> _getDatabaseVersionEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"DATABASE_VERSION", "environment.database.version");
-	}
-
-	private Map.Entry<String, String> _getEnvironmentVariableEntry(
-		String key, String name) {
-
-		if ((key == null) || key.isEmpty() || (name == null) ||
-			name.isEmpty()) {
-
-			return null;
-		}
-
-		String value = JenkinsResultsParserUtil.getProperty(
-			_parentEnvironmentFunctionalBatchTestClassGroup.getJobProperties(),
-			name,
-			_parentEnvironmentFunctionalBatchTestClassGroup.getBatchName());
-
-		if ((value == null) || value.isEmpty()) {
-			return null;
-		}
-
-		return new AbstractMap.SimpleEntry<>(key, value);
 	}
 
 	private Map.Entry<String, String> _getFixPackURLEntry() {
@@ -144,27 +119,27 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 	}
 
 	private Map.Entry<String, String> _getJavaJDKArchitectureEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"JAVA_JDK_ARCHITECTURE", "environment.java.jdk.architecture");
 	}
 
 	private Map.Entry<String, String> _getJavaJDKTypeEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"JAVA_JDK_TYPE", "environment.java.jdk.type");
 	}
 
 	private Map.Entry<String, String> _getJavaJDKVersionEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"JAVA_JDK_VERSION", "environment.java.jdk.version");
 	}
 
 	private Map.Entry<String, String> _getOperatingSystemTypeEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"OPERATING_SYSTEM_TYPE", "environment.operating.system.type");
 	}
 
 	private Map.Entry<String, String> _getOperatingSystemVersionEntry() {
-		return _getEnvironmentVariableEntry(
+		return getEnvironmentVariableEntry(
 			"OPERATING_SYSTEM_VERSION", "environment.operating.system.version");
 	}
 
@@ -184,8 +159,5 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 		return new AbstractMap.SimpleEntry<>(
 			"TESTRAY_BUILD_NAME", testrayBuildName);
 	}
-
-	private final EnvironmentFunctionalBatchTestClassGroup
-		_parentEnvironmentFunctionalBatchTestClassGroup;
 
 }

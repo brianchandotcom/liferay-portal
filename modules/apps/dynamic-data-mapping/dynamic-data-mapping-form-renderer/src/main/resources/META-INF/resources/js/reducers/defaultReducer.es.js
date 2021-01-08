@@ -37,10 +37,7 @@ export default (state, action) => {
 								localizedValue[defaultSiteLanguageId];
 
 							if (localizedValue) {
-								if (
-									localizedValue[editingLanguageId] !==
-									undefined
-								) {
+								if (localizedValue[editingLanguageId] != null) {
 									if (
 										!localizedValue[editingLanguageId]
 											.length &&

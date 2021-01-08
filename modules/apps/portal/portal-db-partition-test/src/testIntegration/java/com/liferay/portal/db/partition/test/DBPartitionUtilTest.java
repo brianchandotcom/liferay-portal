@@ -206,7 +206,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				Assert.fail("Should throw an exception");
 			}
 			catch (Exception exception) {
-				Assert.assertEquals(initialViewCount, _getViewCount());
+				Assert.assertEquals(initialViewCount, _getViewCount() - 1);
 				Assert.assertEquals(initialTableCount, _getTablesCount());
 			}
 		}

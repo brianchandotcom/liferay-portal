@@ -37,6 +37,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -81,11 +82,23 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetValueBigDecimal() {
+		Assert.assertEquals(
+			new BigDecimal("3.5"),
+			_numericDDMFormFieldTypeReportProcessor.getValueBigDecimal(
+				_mockDDMFormFieldValue(LocaleUtil.BRAZIL, "field1", "3,5")));
+		Assert.assertEquals(
+			new BigDecimal("4.5"),
+			_numericDDMFormFieldTypeReportProcessor.getValueBigDecimal(
+				_mockDDMFormFieldValue(LocaleUtil.US, "field1", "4.5")));
+	}
+
+	@Test
 	public void testProcessDDMFormInstanceReportOnDeleteEvent()
 		throws Exception {
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"field1", "3");
+			LocaleUtil.US, "field1", "3");
 
 		long formInstanceRecordId = 3;
 
@@ -193,7 +206,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		throws Exception {
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"field1", "1");
+			LocaleUtil.US, "field1", "1");
 
 		long formInstanceRecordId = 1;
 
@@ -224,7 +237,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		throws Exception {
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"field1", "3");
+			LocaleUtil.US, "field1", "3");
 
 		long formInstanceRecordId = 0;
 
@@ -276,7 +289,8 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		// LPS-118317
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"field1", "99999999999999999999999999999999999999999");
+			LocaleUtil.US, "field1",
+			"99999999999999999999999999999999999999999");
 
 		long formInstanceRecordId = 0;
 
@@ -335,7 +349,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			DDMFormInstanceRecord.class);
 
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
-			"", valueString);
+			LocaleUtil.US, "", valueString);
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
@@ -357,7 +371,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 	}
 
 	private DDMFormFieldValue _mockDDMFormFieldValue(
-		String fieldName, String fieldValue) {
+		Locale defaultLocale, String fieldName, String fieldValue) {
 
 		DDMFormFieldValue ddmFormFieldValue = mock(DDMFormFieldValue.class);
 
@@ -373,10 +387,9 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			DDMFormFieldType.NUMERIC
 		);
 
-		Value value = new LocalizedValue();
+		Value value = new LocalizedValue(defaultLocale);
 
 		value.addString(value.getDefaultLocale(), fieldValue);
-		value.setDefaultLocale(LocaleUtil.US);
 
 		when(
 			ddmFormFieldValue.getValue()

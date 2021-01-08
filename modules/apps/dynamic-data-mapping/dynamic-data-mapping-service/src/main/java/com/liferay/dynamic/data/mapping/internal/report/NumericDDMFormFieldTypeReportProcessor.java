@@ -65,7 +65,7 @@ public class NumericDDMFormFieldTypeReportProcessor
 			ddmFormFieldValue, fieldJSONObject, formInstanceRecordId,
 			ddmFormInstanceReportEvent);
 
-		BigDecimal valueBigDecimal = _getValueBigDecimal(ddmFormFieldValue);
+		BigDecimal valueBigDecimal = getValueBigDecimal(ddmFormFieldValue);
 
 		if (valueBigDecimal == null) {
 			return jsonObject;
@@ -219,7 +219,7 @@ public class NumericDDMFormFieldTypeReportProcessor
 		return sb.toString();
 	}
 
-	private BigDecimal _getValueBigDecimal(
+	protected BigDecimal getValueBigDecimal(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		try {
@@ -270,7 +270,7 @@ public class NumericDDMFormFieldTypeReportProcessor
 						ddmFormFieldValues.stream();
 
 					return ddmFormFieldValuesStream.map(
-						ddmFormFieldValue -> _getValueBigDecimal(
+						ddmFormFieldValue -> getValueBigDecimal(
 							ddmFormFieldValue)
 					).findFirst(
 					).get();

@@ -152,6 +152,8 @@ public class AccountGroupLocalServiceImpl
 		DynamicQuery dynamicQuery = accountGroupLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("defaultAccountGroup", false));
 
 		if (Validator.isNotNull(keywords)) {
 			Disjunction disjunction = RestrictionsFactoryUtil.disjunction();

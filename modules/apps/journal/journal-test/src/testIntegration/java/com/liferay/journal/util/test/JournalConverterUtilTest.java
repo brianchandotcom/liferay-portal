@@ -120,27 +120,6 @@ public class JournalConverterUtilTest {
 	}
 
 	@Test
-	public void testGetContentFromBooleanField() throws Exception {
-		Fields fields = new Fields();
-
-		fields.put(getBooleanField(_ddmStructure.getStructureId()));
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			"boolean_INSTANCE_Okhyj6Ni,boolean_INSTANCE_1SYNQuhg");
-
-		fields.put(fieldsDisplayField);
-
-		String expectedContent = read(
-			"test-journal-content-boolean-repeatable-field.xml");
-
-		String actualContent = _journalConverter.getContent(
-			_ddmStructure, fields, _ddmStructure.getGroupId());
-
-		assertEquals(expectedContent, actualContent);
-	}
-
-	@Test
 	public void testGetContentFromListField() throws Exception {
 		Fields fields = new Fields();
 
@@ -253,27 +232,6 @@ public class JournalConverterUtilTest {
 			_ddmStructure, fields, _ddmStructure.getGroupId());
 
 		assertEquals(expectedContent, actualContent);
-	}
-
-	@Test
-	public void testGetFieldsFromContentWithBooleanElement() throws Exception {
-		Fields expectedFields = new Fields();
-
-		expectedFields.put(getBooleanField(_ddmStructure.getStructureId()));
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			"boolean_INSTANCE_Okhyj6Ni,boolean_INSTANCE_1SYNQuhg");
-
-		expectedFields.put(fieldsDisplayField);
-
-		String content = read(
-			"test-journal-content-boolean-repeatable-field.xml");
-
-		Fields actualFields = _journalConverter.getDDMFields(
-			_ddmStructure, content);
-
-		Assert.assertEquals(expectedFields, actualFields);
 	}
 
 	@Test

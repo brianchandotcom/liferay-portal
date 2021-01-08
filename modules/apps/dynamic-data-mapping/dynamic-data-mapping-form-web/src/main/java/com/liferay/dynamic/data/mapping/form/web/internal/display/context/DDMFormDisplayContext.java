@@ -347,10 +347,6 @@ public class DDMFormDisplayContext {
 			"formInstanceRecordId");
 	}
 
-	public String getModuleName() {
-		return _ddmFormRenderer.getModuleName();
-	}
-
 	public String getRedirectURL() throws PortalException {
 		DDMFormInstance ddmFormInstance = getFormInstance();
 

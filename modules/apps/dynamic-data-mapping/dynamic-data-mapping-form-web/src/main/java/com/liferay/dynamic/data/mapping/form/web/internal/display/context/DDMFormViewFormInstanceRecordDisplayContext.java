@@ -129,10 +129,6 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			structureVersion.getDDMForm(), formLayout, formRenderingContext);
 	}
 
-	public String getModuleName() {
-		return _ddmFormRenderer.getModuleName();
-	}
-
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		DDMForm ddmForm, boolean readOnly) {
 

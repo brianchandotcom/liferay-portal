@@ -53,9 +53,9 @@ definition {
 
 		Navigator.openStagingSiteURL(defaultSite = "true");
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
-
 		// Workaround for LPS-110206
+
+		//SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		//AssertCssValue(
 		//	locator1 = "//body",
@@ -212,9 +212,9 @@ definition {
 
 		Button.clickPublish();
 
-		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
-
 		// Workaround for LPS-110206
+
+		//SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
 		//AssertCssValue(
 		//	locator1 = "//body",

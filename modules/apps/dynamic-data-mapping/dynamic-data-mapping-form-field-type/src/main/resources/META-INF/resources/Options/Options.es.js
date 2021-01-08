@@ -228,10 +228,7 @@ const Options = ({
 			}
 		}
 
-		const options =
-			normalizedValue[editingLanguageId] ||
-			normalizedValue[defaultLanguageId] ||
-			[];
+		const options = normalizedValue[editingLanguageId] || [];
 
 		setFields(
 			refreshFields(

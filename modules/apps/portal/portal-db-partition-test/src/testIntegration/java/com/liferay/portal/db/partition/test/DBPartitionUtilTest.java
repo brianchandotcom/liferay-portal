@@ -87,15 +87,15 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		db.runSQL("drop schema " + _getSchemaName(_COMPANY_ID));
-
 		DataAccess.cleanUp(_connection);
 
 		_disableDBPartition();
 	}
 
 	@After
-	public void tearDown() throws SQLException {
+	public void tearDown() throws Exception {
+		db.runSQL("drop schema if exists " + _getSchemaName(_COMPANY_ID));
+
 		try (Statement statement = _connection.createStatement()) {
 			statement.execute("use " + _defaultSchemaName);
 		}

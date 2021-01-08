@@ -246,7 +246,7 @@ public class GitHubWebhookPayloadProcessor {
 			}
 
 			String publicJobURL = JenkinsResultsParserUtil.getRemoteURL(
-				invocationURL.replaceFirst("(.*)/.*", "$1"));
+				invocationURL.replaceFirst("([^\\?]*)/.*", "$1"));
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

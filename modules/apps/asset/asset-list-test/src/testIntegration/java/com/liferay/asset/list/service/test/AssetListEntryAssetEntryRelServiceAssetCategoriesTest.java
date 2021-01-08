@@ -237,6 +237,41 @@ public class AssetListEntryAssetEntryRelServiceAssetCategoriesTest {
 	}
 
 	@Test
+	public void testGetAssetListEntryAssetEntryRels1AssetVocabulary1Result() {
+		long[][] assetCategoryIds = {
+			{_assetVocabulary1AssetCategory4.getCategoryId()}
+		};
+
+		int assetListEntryRelListCount =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					_assetListEntry.getAssetListEntryId(), new long[] {0},
+					assetCategoryIds);
+
+		Assert.assertEquals(1, assetListEntryRelListCount);
+
+		List<AssetListEntryAssetEntryRel> assetListEntryRelList =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					_assetListEntry.getAssetListEntryId(), new long[] {0},
+					assetCategoryIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetListEntryRelList.toString(), 1, assetListEntryRelList.size());
+
+		Stream<AssetListEntryAssetEntryRel> stream =
+			assetListEntryRelList.stream();
+
+		List<Long> assetEntryIds = stream.map(
+			AssetListEntryAssetEntryRelModel::getAssetEntryId
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry3.getEntryId()));
+	}
+
+	@Test
 	public void testGetAssetListEntryAssetEntryRelsNullAssetVocabularies5Results() {
 		long[][] assetCategoryIds = null;
 

@@ -21,19 +21,28 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
+import com.liferay.asset.list.model.AssetListEntryAssetEntryRelModel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.util.AssetListTestUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -164,6 +173,43 @@ public class AssetListEntryAssetEntryRelServiceAssetCategoriesTest {
 		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
 			_assetEntry3.getEntryId(),
 			_assetVocabulary3AssetCategory4.getCategoryId(), 0);
+	}
+
+	@Test
+	public void testGetAssetListEntryAssetEntryRels0AssetVocabularies5Results() {
+		long[][] assetCategoryIds = {};
+
+		int assetListEntryRelListCount =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRelsCount(
+					_assetListEntry.getAssetListEntryId(), new long[] {0},
+					assetCategoryIds);
+
+		Assert.assertEquals(5, assetListEntryRelListCount);
+
+		List<AssetListEntryAssetEntryRel> assetListEntryRelList =
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					_assetListEntry.getAssetListEntryId(), new long[] {0},
+					assetCategoryIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			assetListEntryRelList.toString(), 5, assetListEntryRelList.size());
+
+		Stream<AssetListEntryAssetEntryRel> stream =
+			assetListEntryRelList.stream();
+
+		List<Long> assetEntryIds = stream.map(
+			AssetListEntryAssetEntryRelModel::getAssetEntryId
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry1.getEntryId()));
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry2.getEntryId()));
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry3.getEntryId()));
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry4.getEntryId()));
+		Assert.assertTrue(assetEntryIds.contains(_assetEntry5.getEntryId()));
 	}
 
 	private AssetEntry _assetEntry1;

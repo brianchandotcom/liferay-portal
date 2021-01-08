@@ -32,6 +32,7 @@
 		<column name="classPK" type="long" />
 		<column name="treePath" type="String" />
 		<column accessor="true" name="articleId" type="String" />
+		<column accessor="true" name="externalReferenceCode" type="String" />
 		<column name="version" type="double" />
 		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
 		<column name="content" type="String" uad-nonanonymizable="true" />
@@ -98,6 +99,10 @@
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="articleId" />
+		</finder>
+		<finder name="G_ERC" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="externalReferenceCode" />
 		</finder>
 		<finder name="G_UT" return-type="Collection">
 			<finder-column name="groupId" />
@@ -188,6 +193,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="articleId" />
 			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="G_ERC_V" return-type="JournalArticle" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="version" />
 		</finder>
 		<finder name="G_UT_ST" return-type="Collection">
 			<finder-column name="groupId" />

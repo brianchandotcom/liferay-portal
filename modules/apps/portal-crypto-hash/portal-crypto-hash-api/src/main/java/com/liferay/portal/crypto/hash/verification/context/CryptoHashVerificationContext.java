@@ -35,30 +35,49 @@ public interface CryptoHashVerificationContext {
 
 	public Map<String, ?> getCryptoHashProviderProperties();
 
-	public interface Builder extends PepperedBuilder {
-
-		public ContextBuilder setHashFlavor(byte[] serializedHashFlavor)
-			throws IOException;
-
-		public ContextBuilder setHashFlavor(CryptoHashFlavor cryptoHashFlavor);
-
-	}
-
-	public interface ContextBuilder {
+	public interface Builder {
 
 		public CryptoHashVerificationContext build();
 
-	}
+		/**
+		 * Set Hash flavor to this builder.
+		 *
+		 * @param serializedHashFlavor the serialized HashFlavor. A hashFlavor contains all flavors including pepper and salt.
+		 * @return the builder object itself.
+		 * @throws IllegalArgumentException if any other setters were invoked before.
+		 * @throws IOException if failed to parse the serialized HashFlavor.
+		 */
+		public Builder setHashFlavor(byte[] serializedHashFlavor)
+			throws IllegalArgumentException, IOException;
 
-	public interface PepperedBuilder extends SaltedBuilder {
+		/**
+		 * Set Hash flavor to this builder.
+		 *
+		 * @param HashFlavor the HashFlavor. A hashFlavor contains all flavors including pepper and salt.
+		 * @return the builder object itself.
+		 * @throws IllegalArgumentException if any other setters were invoked before.
+		 */
+		public Builder setHashFlavor(CryptoHashFlavor cryptoHashFlavor)
+			throws IllegalArgumentException;
 
-		public SaltedBuilder setPepperId(String pepperId);
+		/**
+		 * Set pepperId to this builder.
+		 *
+		 * @param pepperId the pepperId. A pepperId is the ID to the bytes of pepper that is stored in some storage.
+		 * @return the builder object itself.
+		 * @throws IllegalArgumentException if setHashFlavor() or setSalt() was invoked before.
+		 */
+		public Builder setPepperId(String pepperId)
+			throws IllegalArgumentException;
 
-	}
-
-	public interface SaltedBuilder extends ContextBuilder {
-
-		public ContextBuilder setSalt(byte[] salt);
+		/**
+		 * Set salt to this builder.
+		 *
+		 * @param salt the salt.
+		 * @return the builder object itself.
+		 * @throws IllegalArgumentException if setHashFlavor() was invoked before.
+		 */
+		public Builder setSalt(byte[] salt) throws IllegalArgumentException;
 
 	}
 

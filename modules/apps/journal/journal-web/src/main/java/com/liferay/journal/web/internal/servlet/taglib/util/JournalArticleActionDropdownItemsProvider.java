@@ -174,7 +174,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				JournalArticlePermission.contains(
 					_themeDisplay.getPermissionChecker(), _article,
 					ActionKeys.EXPIRE) &&
-				_article.hasApprovedVersion(),
+				(_article.hasApprovedVersion() || _article.isScheduled()),
 			_getExpireArticleActionConsumer(_article.getArticleId())
 		).add(
 			() -> hasDeletePermission && trashEnabled,
@@ -224,7 +224,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				JournalArticlePermission.contains(
 					_themeDisplay.getPermissionChecker(), _article,
 					ActionKeys.EXPIRE) &&
-				(_article.getStatus() == WorkflowConstants.STATUS_APPROVED),
+				((_article.getStatus() == WorkflowConstants.STATUS_APPROVED) ||
+				 (_article.getStatus() == WorkflowConstants.STATUS_SCHEDULED)),
 			_getExpireArticleActionConsumer(
 				articleId, _themeDisplay.getURLCurrent())
 		).add(

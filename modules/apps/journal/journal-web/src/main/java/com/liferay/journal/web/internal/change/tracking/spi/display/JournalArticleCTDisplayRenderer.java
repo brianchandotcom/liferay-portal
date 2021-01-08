@@ -166,7 +166,7 @@ public class JournalArticleCTDisplayRenderer
 
 		Locale locale = displayBuilder.getLocale();
 
-		JournalArticleDisplay journalContentDisplay =
+		JournalArticleDisplay journalArticleDisplay =
 			_journalContent.getDisplay(
 				journalArticle, "", "", _language.getLanguageId(locale), 1,
 				null, null);
@@ -207,7 +207,7 @@ public class JournalArticleCTDisplayRenderer
 				return ddmTemplate.getName(locale);
 			}
 		).display(
-			"content", journalContentDisplay.getContent(), false
+			"content", journalArticleDisplay.getContent(), false
 		);
 	}
 
@@ -229,12 +229,12 @@ public class JournalArticleCTDisplayRenderer
 			throw new CompareVersionsException(journalArticle.getVersion());
 		}
 
-		JournalArticleDisplay articleDisplay =
+		JournalArticleDisplay journalArticleDisplay =
 			_journalArticleLocalService.getArticleDisplay(
 				journalArticle, null, Constants.VIEW, languageId, 1,
 				portletRequestModel, themeDisplay);
 
-		return articleDisplay.getContent();
+		return journalArticleDisplay.getContent();
 	}
 
 	@Reference

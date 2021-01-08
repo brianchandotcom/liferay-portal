@@ -1,0 +1,205 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.asset.list.service.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
+import com.liferay.asset.list.util.AssetListTestUtil;
+import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Rubén Pulido
+ */
+@RunWith(Arquillian.class)
+public class AssetListEntryAssetEntryRelServiceAssetCategoriesTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		AssetVocabulary vocabulary1 = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+		AssetVocabulary vocabulary2 = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+		AssetVocabulary vocabulary3 = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		_assetVocabulary1AssetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary1.getVocabularyId());
+		_assetVocabulary1AssetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary1.getVocabularyId());
+		_assetVocabulary1AssetCategory3 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary1.getVocabularyId());
+		_assetVocabulary1AssetCategory4 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary1.getVocabularyId());
+		_assetVocabulary1AssetCategory5 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary1.getVocabularyId());
+
+		_assetVocabulary2AssetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary2.getVocabularyId());
+		_assetVocabulary2AssetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary2.getVocabularyId());
+		_assetVocabulary2AssetCategory3 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary2.getVocabularyId());
+		_assetVocabulary2AssetCategory4 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary2.getVocabularyId());
+
+		_assetVocabulary3AssetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary3.getVocabularyId());
+		_assetVocabulary3AssetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary3.getVocabularyId());
+		_assetVocabulary3AssetCategory3 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary3.getVocabularyId());
+		_assetVocabulary3AssetCategory4 = AssetTestUtil.addCategory(
+			_group.getGroupId(), vocabulary3.getVocabularyId());
+
+		_assetEntry1 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+		_assetEntry2 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+		_assetEntry3 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+		_assetEntry4 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+		_assetEntry5 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
+
+		_assetListEntry = AssetListTestUtil.addAssetListEntry(
+			_group.getGroupId());
+
+		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+			_group.getGroupId(), _assetEntry1, _assetListEntry, 0);
+		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+			_group.getGroupId(), _assetEntry2, _assetListEntry, 0);
+		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+			_group.getGroupId(), _assetEntry3, _assetListEntry, 0);
+		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+			_group.getGroupId(), _assetEntry4, _assetListEntry, 0);
+		AssetListTestUtil.addAssetListEntryAssetEntryRel(
+			_group.getGroupId(), _assetEntry5, _assetListEntry, 0);
+
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry1.getEntryId(),
+			_assetVocabulary1AssetCategory1.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry1.getEntryId(),
+			_assetVocabulary1AssetCategory2.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry1.getEntryId(),
+			_assetVocabulary2AssetCategory1.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry1.getEntryId(),
+			_assetVocabulary2AssetCategory2.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry1.getEntryId(),
+			_assetVocabulary3AssetCategory1.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry1.getEntryId(),
+			_assetVocabulary3AssetCategory2.getCategoryId(), 0);
+
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry2.getEntryId(),
+			_assetVocabulary1AssetCategory2.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry2.getEntryId(),
+			_assetVocabulary1AssetCategory3.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry2.getEntryId(),
+			_assetVocabulary2AssetCategory2.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry2.getEntryId(),
+			_assetVocabulary2AssetCategory3.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry2.getEntryId(),
+			_assetVocabulary3AssetCategory2.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry2.getEntryId(),
+			_assetVocabulary3AssetCategory3.getCategoryId(), 0);
+
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry3.getEntryId(),
+			_assetVocabulary1AssetCategory4.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry3.getEntryId(),
+			_assetVocabulary2AssetCategory4.getCategoryId(), 0);
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			_assetEntry3.getEntryId(),
+			_assetVocabulary3AssetCategory4.getCategoryId(), 0);
+	}
+
+	private AssetEntry _assetEntry1;
+	private AssetEntry _assetEntry2;
+	private AssetEntry _assetEntry3;
+	private AssetEntry _assetEntry4;
+	private AssetEntry _assetEntry5;
+
+	@Inject
+	private AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
+
+	@Inject
+	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
+
+	private AssetListEntry _assetListEntry;
+
+	@Inject
+	private AssetListEntryAssetEntryRelLocalService
+		_assetListEntryAssetEntryRelLocalService;
+
+	private AssetCategory _assetVocabulary1AssetCategory1;
+	private AssetCategory _assetVocabulary1AssetCategory2;
+	private AssetCategory _assetVocabulary1AssetCategory3;
+	private AssetCategory _assetVocabulary1AssetCategory4;
+	private AssetCategory _assetVocabulary1AssetCategory5;
+	private AssetCategory _assetVocabulary2AssetCategory1;
+	private AssetCategory _assetVocabulary2AssetCategory2;
+	private AssetCategory _assetVocabulary2AssetCategory3;
+	private AssetCategory _assetVocabulary2AssetCategory4;
+	private AssetCategory _assetVocabulary3AssetCategory1;
+	private AssetCategory _assetVocabulary3AssetCategory2;
+	private AssetCategory _assetVocabulary3AssetCategory3;
+	private AssetCategory _assetVocabulary3AssetCategory4;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+}

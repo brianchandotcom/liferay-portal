@@ -51,6 +51,13 @@ definition {
 				value1 = "${fieldsToDisplay}");
 		}
 
+		if (isSet(paginationDelta)) {
+			Type(
+				key_fieldLabel = "Pagination Delta",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${paginationDelta}");
+		}
+
 		PortletEntry.save();
 
 		IFrame.closeFrame();

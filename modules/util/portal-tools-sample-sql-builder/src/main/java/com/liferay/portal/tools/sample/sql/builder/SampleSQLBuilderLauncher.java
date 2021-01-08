@@ -22,7 +22,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import java.lang.reflect.Method;
 
@@ -31,17 +30,11 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -97,41 +90,23 @@ public class SampleSQLBuilderLauncher {
 
 		jarFile.close();
 
-		for (String jar : _getLibs(new File(tempDir, "lib"))) {
-			File file = new File(jar);
-
-			URI uri = file.toURI();
-
-			urls.add(uri.toURL());
-		}
+		_getLibs(new File(tempDir, "lib"), urls);
 
 		return urls.toArray(new URL[0]);
 	}
 
-	private static List<String> _getLibs(File baseDir) throws Exception {
-		List<String> libs = new ArrayList<>();
+	private static void _getLibs(File baseDir, Set<URL> urls) throws Exception {
+		for (File file : baseDir.listFiles()) {
+			String fileName = file.getName();
 
-		Files.walkFileTree(
-			baseDir.toPath(),
-			new SimpleFileVisitor<Path>() {
+			if (fileName.endsWith(".jar")) {
+				Path path = file.toPath();
 
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
+				URI uri = path.toUri();
 
-					String fileName = String.valueOf(path.getFileName());
-
-					if (fileName.endsWith(".jar")) {
-						libs.add(String.valueOf(path.toAbsolutePath()));
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		return libs;
+				urls.add(uri.toURL());
+			}
+		}
 	}
 
 	private static void _unJar(JarFile jarFile, File destDir) throws Exception {

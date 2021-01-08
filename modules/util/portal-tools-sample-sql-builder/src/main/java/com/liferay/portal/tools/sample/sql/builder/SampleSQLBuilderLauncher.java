@@ -77,6 +77,14 @@ public class SampleSQLBuilderLauncher {
 
 		Collections.addAll(urls, javaClassPathURLs);
 
+		_getLibs(classLoader, urls);
+
+		return urls.toArray(new URL[0]);
+	}
+
+	private static void _getLibs(ClassLoader classLoader, Set<URL> urls)
+		throws Exception {
+
 		File tempDir = new File(SystemProperties.get(SystemProperties.TMP_DIR));
 
 		URL libDirURL = classLoader.getResource("lib");
@@ -90,13 +98,9 @@ public class SampleSQLBuilderLauncher {
 
 		jarFile.close();
 
-		_getLibs(new File(tempDir, "lib"), urls);
+		File libDir = new File(tempDir, "lib");
 
-		return urls.toArray(new URL[0]);
-	}
-
-	private static void _getLibs(File baseDir, Set<URL> urls) throws Exception {
-		for (File file : baseDir.listFiles()) {
+		for (File file : libDir.listFiles()) {
 			String fileName = file.getName();
 
 			if (fileName.endsWith(".jar")) {

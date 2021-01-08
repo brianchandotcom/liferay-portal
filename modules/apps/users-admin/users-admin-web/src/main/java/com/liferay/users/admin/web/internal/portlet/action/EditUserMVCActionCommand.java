@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.exception.UserIdException;
 import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
@@ -167,24 +169,29 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		long[] deleteUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteUserIds"), 0L);
 
-		for (long deleteUserId : deleteUserIds) {
-			if (cmd.equals(Constants.DEACTIVATE) ||
-				cmd.equals(Constants.RESTORE)) {
+		try (SafeClosable safeClosable =
+				ProxyModeThreadLocal.setWithSafeClosable(true)) {
 
-				int status = WorkflowConstants.STATUS_APPROVED;
+			for (long deleteUserId : deleteUserIds) {
+				if (cmd.equals(Constants.DEACTIVATE) ||
+					cmd.equals(Constants.RESTORE)) {
 
-				if (cmd.equals(Constants.DEACTIVATE)) {
-					status = WorkflowConstants.STATUS_INACTIVE;
+					int status = WorkflowConstants.STATUS_APPROVED;
+
+					if (cmd.equals(Constants.DEACTIVATE)) {
+						status = WorkflowConstants.STATUS_INACTIVE;
+					}
+
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(
+							User.class.getName(), actionRequest);
+
+					_userService.updateStatus(
+						deleteUserId, status, serviceContext);
 				}
-
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						User.class.getName(), actionRequest);
-
-				_userService.updateStatus(deleteUserId, status, serviceContext);
-			}
-			else {
-				_userService.deleteUser(deleteUserId);
+				else {
+					_userService.deleteUser(deleteUserId);
+				}
 			}
 		}
 	}

@@ -2097,8 +2097,6 @@ public class GitHubWebhookPayloadProcessor {
 			if (matcher.find()) {
 				String testOption1 = matcher.group("testOption1");
 
-				String testSuite = null;
-
 				if (testOption1.matches("[0-9a-f]{7,40}")) {
 					if (isValidPullRequestRefSHA(pullRequest, testOption1)) {
 						pullRequestTesterParameters.setUpstreamBranchSHA(
@@ -2123,7 +2121,8 @@ public class GitHubWebhookPayloadProcessor {
 
 						pullRequest.addComment(message + ".");
 
-						testSuite = testOption1;
+						pullRequestTesterParameters.setCiTestSuiteName(
+							testOption1);
 					}
 				}
 				else if (testOption1.equals("forward")) {
@@ -2146,7 +2145,7 @@ public class GitHubWebhookPayloadProcessor {
 				else if (!testOption1.equals("nocompile") &&
 						 !testOption1.equals("norebase")) {
 
-					testSuite = testOption1;
+					pullRequestTesterParameters.setCiTestSuiteName(testOption1);
 				}
 
 				String testOption2 = matcher.group("testOption2");
@@ -2222,45 +2221,24 @@ public class GitHubWebhookPayloadProcessor {
 						pullRequest.getCommonParentSHA());
 				}
 
-				if (testSuite != null) {
-					pullRequestTesterParameters.setCiTestSuiteName(testSuite);
+				String testSuiteName =
+					pullRequestTesterParameters.getCiTestSuiteName();
 
-					if (testSuite.equals("gauntlet") &&
-						!login.equals("CsabaTurcsan") &&
-						!login.equals("Hanlf") && !login.equals("HarryC0204") &&
-						!login.equals("Songyuewen") &&
-						!login.equals("SylviaLuan") &&
-						!login.equals("ZoltanTakacs") &&
-						!login.equals("brianchandotcom") &&
-						!login.equals("brianwulbern") &&
-						!login.equals("ctampoya") &&
-						!login.equals("gergelyszaz") &&
-						!login.equals("jpince") &&
-						!login.equals("kiyoshilee") &&
-						!login.equals("lesliewong92") &&
-						!login.equals("liferay-continuous-integration-hu") &&
-						!login.equals("michaelhashimoto") &&
-						!login.equals("michaelprigge") &&
-						!login.equals("pyoo47") &&
-						!login.equals("sharonchoi") &&
-						!login.equals("shuyangzhou") &&
-						!login.equals("stsquared99") &&
-						!login.equals("suilin") && !login.equals("vicnate5") &&
-						!login.equals("xbrianlee") &&
-						!login.equals("yunlinsun")) {
+				if ((testSuiteName != null) &&
+					testSuiteName.equals("gauntlet") &&
+					!_gauntletUsernames.contains(login)) {
 
-						String message =
-							"You do not have permission to run the test " +
-								"gauntlet";
+					String message =
+						"You do not have permission to run the test " +
+							"gauntlet";
 
-						if (_log.isInfoEnabled()) {
-							_log.info(message);
-						}
-
-						pullRequest.addComment(message + ".");
-
-						return;
+					if (_log.isInfoEnabled()) {
+						_log.info(message);
 					}
+
+					pullRequest.addComment(message + ".");
+
+					return;
 				}
 			}
 
@@ -2471,6 +2449,13 @@ public class GitHubWebhookPayloadProcessor {
 
 	private static Pattern _buildURLPattern = Pattern.compile(
 		"Build[\\w\\s]*started.*Job Link: <a href=\"(?<buildURL>[^\"]+)\"");
+	private static List<String> _gauntletUsernames = Arrays.asList(
+		"CsabaTurcsan", "Hanlf", "HarryC0204", "Songyuewen", "SylviaLuan",
+		"ZoltanTakacs", "brianchandotcom", "brianwulbern", "ctampoya",
+		"gergelyszaz", "jpince", "kiyoshilee", "lesliewong92",
+		"liferay-continuous-integration-hu", "michaelhashimoto",
+		"michaelprigge", "pyoo47", "sharonchoi", "shuyangzhou", "stsquared99",
+		"suilin", "vicnate5", "xbrianlee", "yunlinsun");
 	private static Set<String> _passingTestSuites;
 	private static Pattern _reevaluatePattern = Pattern.compile(
 		"ci:reevaluate:(?<buildID>[\\d]+_[\\d]+)");
@@ -2488,9 +2473,6 @@ public class GitHubWebhookPayloadProcessor {
 		"remote = .*/([^\\.]*)\\.git");
 	private Pattern _gitrepoSHAPattern = Pattern.compile(
 		"commit = ([0-9a-f]{40})");
-	/*Arrays.asList(
-		"brianchandotcom", "liferay-continuous-integration", "liferay",
-		"pyoo47", "shuyangzhou", "stsquared99");*/
 	private Properties _jenkinsBuildProperties;
 	private Properties _jenkinsProperties = new Properties();
 	private List<String> _jiraProjectKeys;

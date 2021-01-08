@@ -16,7 +16,7 @@ import React, {useEffect, useRef} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 
-const Separator = ({style, ...otherProps}) => {
+const Separator = ({name, style, ...otherProps}) => {
 	const elRef = useRef(null);
 
 	useEffect(() => {
@@ -32,8 +32,9 @@ const Separator = ({style, ...otherProps}) => {
 	}, [style]);
 
 	return (
-		<FieldBase {...otherProps}>
+		<FieldBase name={name} {...otherProps}>
 			<div className="separator" ref={elRef} />
+			<input name={name} type="hidden" />
 		</FieldBase>
 	);
 };

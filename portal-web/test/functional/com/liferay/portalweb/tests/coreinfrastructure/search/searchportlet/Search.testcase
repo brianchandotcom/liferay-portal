@@ -402,6 +402,10 @@ definition {
 			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article",
 			searchTerm = "Apple");
 
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Apple 5",
+			searchAssetType = "Web Content Article");
+
 		Pagination.changePagination(itemsPerPage = "20");
 
 		SearchResultPortlet.viewMultipleSearchResults(

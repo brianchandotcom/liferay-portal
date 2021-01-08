@@ -49,7 +49,7 @@ else {
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:renderURL>
 
-<portlet:renderURL var="lookAndFeelDetailURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+<portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="lookAndFeelDetailURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" />
 </portlet:renderURL>
 

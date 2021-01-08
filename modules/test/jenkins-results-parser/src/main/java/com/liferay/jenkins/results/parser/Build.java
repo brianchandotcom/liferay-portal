@@ -201,7 +201,7 @@ public interface Build {
 
 	public void reinvoke(ReinvokeRule reinvokeRule);
 
-	public void remove(Build build);
+	public void removeDownstreamBuild(Build build);
 
 	public String replaceBuildURL(String text);
 

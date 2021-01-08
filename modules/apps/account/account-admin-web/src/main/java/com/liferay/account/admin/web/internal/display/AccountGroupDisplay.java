@@ -37,12 +37,8 @@ public class AccountGroupDisplay {
 			AccountGroupLocalServiceUtil.fetchAccountGroup(accountGroupId));
 	}
 
-	public String getAccountEntriesCount() {
-		if (_accountEntriesCount < 0) {
-			return StringPool.DOUBLE_DASH;
-		}
-
-		return String.valueOf(_accountEntriesCount);
+	public long getAccountEntriesCount() {
+		return _accountEntriesCount;
 	}
 
 	public long getAccountGroupId() {
@@ -57,14 +53,9 @@ public class AccountGroupDisplay {
 		return _name;
 	}
 
-	public boolean isDefaultAccountGroup() {
-		return _defaultAccountGroup;
-	}
-
 	private AccountGroupDisplay() {
 		_accountEntriesCount = 0;
 		_accountGroupId = 0;
-		_defaultAccountGroup = false;
 		_description = StringPool.BLANK;
 		_name = StringPool.BLANK;
 	}
@@ -72,16 +63,11 @@ public class AccountGroupDisplay {
 	private AccountGroupDisplay(AccountGroup accountGroup) {
 		_accountEntriesCount = _getAccountEntriesCount(accountGroup);
 		_accountGroupId = accountGroup.getAccountGroupId();
-		_defaultAccountGroup = accountGroup.isDefaultAccountGroup();
 		_description = accountGroup.getDescription();
 		_name = accountGroup.getName();
 	}
 
 	private long _getAccountEntriesCount(AccountGroup accountGroup) {
-		if (accountGroup.isDefaultAccountGroup()) {
-			return -1;
-		}
-
 		return AccountGroupAccountEntryRelLocalServiceUtil.
 			getAccountGroupAccountEntryRelsCountByAccountGroupId(
 				accountGroup.getAccountGroupId());
@@ -92,7 +78,6 @@ public class AccountGroupDisplay {
 
 	private final long _accountEntriesCount;
 	private final long _accountGroupId;
-	private final boolean _defaultAccountGroup;
 	private final String _description;
 	private final String _name;
 

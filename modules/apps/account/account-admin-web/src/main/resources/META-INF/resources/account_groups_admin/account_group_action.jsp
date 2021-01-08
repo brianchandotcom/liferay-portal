@@ -29,25 +29,23 @@ AccountGroupDisplay accountGroupDisplay = (AccountGroupDisplay)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= !accountGroupDisplay.isDefaultAccountGroup() %>">
-		<portlet:renderURL var="editAccountGroupURL">
-			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_group" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
-		</portlet:renderURL>
+	<portlet:renderURL var="editAccountGroupURL">
+		<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_group" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+	</portlet:renderURL>
 
-		<liferay-ui:icon
-			message="edit"
-			url="<%= editAccountGroupURL %>"
-		/>
+	<liferay-ui:icon
+		message="edit"
+		url="<%= editAccountGroupURL %>"
+	/>
 
-		<portlet:actionURL name="/account_admin/delete_account_groups" var="deleteAccountGroupURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="accountGroupIds" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
-		</portlet:actionURL>
+	<portlet:actionURL name="/account_admin/delete_account_groups" var="deleteAccountGroupURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="accountGroupIds" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+	</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteAccountGroupURL %>"
-		/>
-	</c:if>
+	<liferay-ui:icon-delete
+		url="<%= deleteAccountGroupURL %>"
+	/>
 </liferay-ui:icon-menu>

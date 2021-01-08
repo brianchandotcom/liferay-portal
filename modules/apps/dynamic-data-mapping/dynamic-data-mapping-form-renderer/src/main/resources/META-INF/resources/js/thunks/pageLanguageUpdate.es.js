@@ -98,10 +98,8 @@ const formatDataRecord = (languageId, pages, preserveValue) => {
 
 			if (repeatable) {
 				availableLanguageIds.forEach((key) => {
-					if (edited && key === languageId) {
-						dataRecordValues[fieldName][key][
-							repeatableIndex
-						] = _value;
+					if (!localizedValue || (edited && key === languageId)) {
+						dataRecordValues[fieldName][key].push(_value);
 					}
 					else {
 						dataRecordValues[fieldName][key][repeatableIndex] =

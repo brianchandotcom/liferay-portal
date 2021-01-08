@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -48,7 +48,13 @@ export function handleAction(
 		title,
 		url,
 	},
-	{executeAsyncItemAction, highlightItems, openModal, openSidePanel}
+	{
+		executeAsyncItemAction,
+		highlightItems,
+		openModal,
+		openSidePanel,
+		toggleItemInlineEdit,
+	}
 ) {
 	if (target?.includes('modal')) {
 		event.preventDefault();
@@ -91,6 +97,11 @@ export function handleAction(
 			.catch((_) => {
 				setLoading(false);
 			});
+	}
+	else if (target === 'inlineEdit') {
+		event.preventDefault();
+
+		toggleItemInlineEdit(itemId);
 	}
 	else if (target === 'blank') {
 		event.preventDefault();
@@ -167,6 +178,25 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	const [active, setActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 
+	if (context.modifiedItems[itemId]) {
+		return (
+			<div className="d-flex">
+				<ClayButtonWithIcon
+					className="mr-1"
+					displayType="secondary"
+					onClick={() => context.toggleItemInlineEdit(itemId)}
+					small
+					symbol="times-small"
+				/>
+				<ClayButtonWithIcon
+					onClick={() => context.applyItemInlineUpdates(itemId)}
+					small
+					symbol="check"
+				/>
+			</div>
+		);
+	}
+
 	const formattedActions = actions
 		? actions.reduce((actions, action) => {
 				if (action.data?.permissionKey) {
@@ -193,6 +223,14 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 				return [...actions, action];
 		  }, [])
 		: [];
+
+	if (context.enableInlineEditMode && itemData.actions['update']) {
+		formattedActions.unshift({
+			icon: 'fieldset',
+			label: Liferay.Language.get('inline-edit'),
+			target: 'inlineEdit',
+		});
+	}
 
 	if (!formattedActions || !formattedActions.length) {
 		return null;
@@ -331,6 +369,7 @@ ActionsDropdownRenderer.propTypes = {
 				'link',
 				'async',
 				'headless',
+				'inlineEdit',
 			]),
 		})
 	),

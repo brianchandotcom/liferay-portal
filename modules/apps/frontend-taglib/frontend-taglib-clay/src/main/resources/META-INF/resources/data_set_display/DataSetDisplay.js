@@ -14,7 +14,7 @@
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted} from 'frontend-js-react-web';
-import {openToast} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {
 	useCallback,
@@ -55,6 +55,7 @@ function DataSetDisplay({
 	bulkActions,
 	creationMenu,
 	currentURL,
+	enableInlineEditMode,
 	filters: filtersProp,
 	formId,
 	id,
@@ -76,28 +77,27 @@ function DataSetDisplay({
 	style,
 }) {
 	const wrapperRef = useRef(null);
-	const [dataLoading, setDataLoading] = useState(false);
 	const [componentLoading, setComponentLoading] = useState(false);
-	const [dataSetDisplaySupportSidePanelId] = useState(
-		sidePanelId || 'support-side-panel-' + getRandomId()
-	);
-
+	const [dataLoading, setDataLoading] = useState(false);
 	const [dataSetDisplaySupportModalId] = useState(
 		'support-modal-' + getRandomId()
 	);
-
-	const [selectedItemsValue, setSelectedItemsValue] = useState(
-		selectedItems || []
+	const [dataSetDisplaySupportSidePanelId] = useState(
+		sidePanelId || 'support-side-panel-' + getRandomId()
 	);
-	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
-	const [filters, updateFilters] = useState(filtersProp);
-	const [searchParam, updateSearchParam] = useState('');
-	const [sorting, updateSorting] = useState(sortingProp);
-	const [items, updateItems] = useState(itemsProp);
-	const [pageNumber, setPageNumber] = useState(1);
 	const [delta, setDelta] = useState(
 		pagination.initialDelta || pagination.deltas[0].label
 	);
+	const [filters, updateFilters] = useState(filtersProp);
+	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
+	const [items, updateItems] = useState(itemsProp);
+	const [modifiedItems, updateModifiedItems] = useState({});
+	const [pageNumber, setPageNumber] = useState(1);
+	const [searchParam, updateSearchParam] = useState('');
+	const [selectedItemsValue, setSelectedItemsValue] = useState(
+		selectedItems || []
+	);
+	const [sorting, updateSorting] = useState(sortingProp);
 	const [total, setTotal] = useState(0);
 	const [{activeView, views}, dispatch] = useContext(ViewsContext);
 
@@ -423,10 +423,82 @@ function DataSetDisplay({
 		});
 	}
 
+	function updateItem(itemKey, property, value = null) {
+		const formattedProperty = Array.isArray(property)
+			? property[0]
+			: property;
+
+		updateModifiedItems((modifiedItems) => {
+			return {
+				...modifiedItems,
+				[itemKey]: {
+					...modifiedItems[itemKey],
+					[formattedProperty]: value,
+				},
+			};
+		});
+	}
+
+	function toggleItemInlineEdit(itemKey) {
+		updateModifiedItems(({[itemKey]: foundItem, ...modifiedItems}) => {
+			if (foundItem) {
+				return modifiedItems;
+			}
+			else {
+				return {
+					...modifiedItems,
+					[itemKey]: {},
+				};
+			}
+		});
+	}
+
+	function applyItemInlineUpdates(itemKey) {
+		const itemToBeUpdated = items.find(
+			(item) => item[selectedItemsKey] === itemKey
+		);
+
+		return fetch(itemToBeUpdated.actions.update.href, {
+			body: JSON.stringify(modifiedItems[itemKey]),
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			method: itemToBeUpdated.actions.update.method,
+		})
+			.then((response) => {
+				if (!response.ok) {
+					return response
+						.json()
+						.then((jsonResponse) =>
+							Promise.reject(new Error(jsonResponse.title))
+						);
+				}
+
+				toggleItemInlineEdit(itemKey);
+
+				return refreshData({
+					message: Liferay.Language.get('item-successfully-updated'),
+					showSuccessNotification: true,
+				});
+			})
+			.catch((error) => {
+				logError(error);
+				openToast({
+					message: error.message,
+					type: 'danger',
+				});
+
+				throw error;
+			});
+	}
+
 	return (
 		<DataSetDisplayContext.Provider
 			value={{
 				actionParameterName,
+				applyItemInlineUpdates,
+				enableInlineEditMode,
 				executeAsyncItemAction,
 				formId,
 				formRef,
@@ -436,6 +508,7 @@ function DataSetDisplay({
 				itemsActions,
 				loadData: refreshData,
 				modalId: dataSetDisplaySupportModalId,
+				modifiedItems,
 				namespace,
 				nestedItemsKey,
 				nestedItemsReferenceKey,
@@ -450,7 +523,9 @@ function DataSetDisplay({
 				sidePanelId: dataSetDisplaySupportSidePanelId,
 				sorting,
 				style,
+				toggleItemInlineEdit,
 				updateDataSetItems,
+				updateItem,
 				updateSearchParam,
 				updateSorting,
 			}}
@@ -494,7 +569,7 @@ function DataSetDisplay({
 }
 
 DataSetDisplay.propTypes = {
-	apURL: PropTypes.string,
+	apiURL: PropTypes.string,
 	bulkActions: PropTypes.array,
 	creationMenu: PropTypes.shape({
 		primaryItems: PropTypes.array,
@@ -547,6 +622,7 @@ DataSetDisplay.propTypes = {
 
 DataSetDisplay.defaultProps = {
 	bulkActions: [],
+	enableInlineEditMode: true,
 	filters: [],
 	items: null,
 	itemsActions: null,

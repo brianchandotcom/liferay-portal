@@ -113,14 +113,15 @@ const fluidDataSetDisplayProps = {
 	views: [
 		{
 			contentRenderer: 'table',
-			icon: 'table',
 			label: 'Table',
+			name: 'table',
 			schema: {
 				fields: [
 					{
 						contentRenderer: 'image',
 						fieldName: 'img',
-						label: '',
+						hideColumnLabel: true,
+						label: 'Thumbnail',
 					},
 					{
 						contentRenderer: 'actionLink',
@@ -131,22 +132,26 @@ const fluidDataSetDisplayProps = {
 					{
 						actionId: 'edit',
 						contentRenderer: 'actionLink',
-						label: '',
+						hideColumnLabel: true,
+						label: 'Edit action',
 					},
 					{
 						actionId: 'delete',
 						contentRenderer: 'actionLink',
-						label: '',
+						hideColumnLabel: true,
+						label: 'Delete Action',
 					},
 					{
 						actionId: 'alert',
 						contentRenderer: 'actionLink',
-						label: '',
+						hideColumnLabel: true,
+						label: 'Alert',
 					},
 					{
 						actionId: 'select',
 						contentRenderer: 'actionLink',
-						label: '',
+						hideColumnLabel: true,
+						label: 'Select',
 					},
 					{
 						contentRenderer: 'tooltipSummary',
@@ -188,11 +193,12 @@ const fluidDataSetDisplayProps = {
 					},
 				],
 			},
+			thumbnail: 'table',
 		},
 		{
 			contentRenderer: 'cards',
-			icon: 'documents-and-media',
 			label: 'Cards',
+			name: 'cards',
 			schema: {
 				description: 'name',
 				href: 'productPage',
@@ -201,6 +207,7 @@ const fluidDataSetDisplayProps = {
 				stickerProps: 'type',
 				title: 'skuId',
 			},
+			thumbnail: 'documents-and-media',
 		},
 		{
 			component: (props) => {
@@ -221,10 +228,10 @@ const fluidDataSetDisplayProps = {
 					</>
 				);
 			},
-			icon: 'merge',
-			id: 'custom-table',
 			label: "Hey you don't know me",
+			name: 'custom-table',
 			schema: {},
+			thumbnail: 'merge',
 		},
 	],
 };
@@ -546,7 +553,7 @@ const productsDataSetDisplayProps = {
 		{
 			id: 'blbl',
 			label: 'Custom Filter',
-			moduleUrl: '/blblasd/asd/basdkj',
+			moduleURL: '/blblasd/asd/basdkj',
 		},
 		{
 			id: 'createDate',
@@ -660,19 +667,22 @@ const productsDataSetDisplayProps = {
 	views: [
 		{
 			contentRenderer: 'table',
-			icon: 'table',
 			label: 'Table',
 			schema: {
 				fields: [
 					{
 						contentRenderer: 'image',
 						fieldName: 'thumbnail',
-						labelKey: ['name', 'LANG'],
+						hideColumnLabel: true,
+						label: 'Thumbnail',
 					},
 					{
 						actionId: 'view',
 						contentRenderer: 'actionLink',
 						fieldName: ['name', 'LANG'],
+						inlineEditSettings: {
+							type: 'text',
+						},
 						label: 'Name',
 						sortable: true,
 					},
@@ -696,6 +706,9 @@ const productsDataSetDisplayProps = {
 					{
 						contentRenderer: 'date',
 						fieldName: 'createDate',
+						inlineEditSettings: {
+							type: 'datetime',
+						},
 						label: 'Created Date',
 						sortable: true,
 					},
@@ -717,34 +730,144 @@ const productsDataSetDisplayProps = {
 					},
 				],
 			},
+			thumbnail: 'table',
 		},
 	],
 };
 
-datasetDisplayLauncher(
-	ordersDataSetDisplayProps,
-	document.getElementById('orders-dataset-display-root')
-);
+const priceListsDataSetDisplayProps = {
+	activeViewSettings: {},
+	apiURL: '/o/headless-commerce-admin-pricing/v2.0/price-lists',
+	id: 'tableTest',
+	itemsActions: [
+		{
+			href: '/page/{id}',
+			icon: 'view',
+			id: 'view',
+			label: 'View',
+			permissionKey: 'get',
+		},
+		{
+			href:
+				'/o/headless-commerce-admin-catalog/v1.0/products/{productId}',
+			icon: 'trash',
+			id: 'delete',
+			label: 'Delete',
+			method: 'delete',
+			permissionKey: 'delete',
+			target: 'async',
+		},
+	],
+	pageSize: 5,
+	pagination: {
+		deltas: [
+			{
+				label: 5,
+			},
+			{
+				label: 10,
+			},
+			{
+				label: 20,
+			},
+			{
+				label: 30,
+			},
+			{
+				label: 50,
+			},
+			{
+				href:
+					'http://localhost:8080/group/test-1/pending-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet_delta=75',
+				label: 75,
+			},
+		],
+		initialDelta: 10,
+	},
+	selectedItemsKey: 'id',
+	showPagination: true,
+	sidePanelId: 'sidePanelTestId',
+	spritemap: './assets/clay/icons.svg',
+	views: [
+		{
+			contentRenderer: 'table',
+			label: 'Table',
+			schema: {
+				fields: [
+					{
+						actionId: 'view',
+						contentRenderer: 'actionLink',
+						fieldName: 'name',
+						inlineEditSettings: {
+							type: 'text',
+						},
+						label: 'Name',
+						sortable: true,
+					},
+					{
+						contentRenderer: 'date',
+						fieldName: 'createDate',
+						inlineEditSettings: {
+							type: 'datetime',
+						},
+						label: 'Created Date',
+						sortable: true,
+					},
+					{
+						contentRenderer: 'date',
+						fieldName: 'displayDate',
+						inlineEditSettings: {
+							type: 'datetime',
+						},
+						label: 'Display Date',
+						sortable: true,
+					},
+					{
+						contentRenderer: 'status',
+						fieldName: 'workflowStatusInfo',
+						label: 'Status',
+					},
+					{
+						contentRenderer: 'boolean',
+						fieldName: 'active',
+						label: 'Active',
+					},
+				],
+			},
+			thumbnail: 'table',
+		},
+	],
+};
+
+// datasetDisplayLauncher(
+// 	ordersDataSetDisplayProps,
+// 	document.getElementById('orders-dataset-display-root')
+// );
+
+// datasetDisplayLauncher(
+// 	productsDataSetDisplayProps,
+// 	document.getElementById('products-dataset-display-root')
+// );
 
 datasetDisplayLauncher(
-	productsDataSetDisplayProps,
-	document.getElementById('products-dataset-display-root')
+	priceListsDataSetDisplayProps,
+	document.getElementById('price-list-dataset-display-root')
 );
 
-datasetDisplayLauncher(
-	fluidDataSetDisplayProps,
-	document.getElementById('fluid-dataset-display-root')
-);
+// datasetDisplayLauncher(
+// 	fluidDataSetDisplayProps,
+// 	document.getElementById('fluid-dataset-display-root')
+// );
 
-datasetDisplayLauncher(
-	selectableTableProps,
-	document.getElementById('selectable-dataset-display-root')
-);
+// datasetDisplayLauncher(
+// 	selectableTableProps,
+// 	document.getElementById('selectable-dataset-display-root')
+// );
 
-datasetDisplayLauncher(
-	emailsDataSetDisplayProps,
-	document.getElementById('emails-dataset-display-root')
-);
+// datasetDisplayLauncher(
+// 	emailsDataSetDisplayProps,
+// 	document.getElementById('emails-dataset-display-root')
+// );
 
 sidePanelLauncher('sidePanel', 'side-panel-root', {
 	containerSelector: '.container',

@@ -45,11 +45,22 @@ window.Liferay = {
 	on: (name, fn) => {
 		window.addEventListener(name, fn);
 	},
-	staticEnvHeaders: new Headers({
+};
+
+window.defaultFetch = fetch;
+
+window.fetch = (resource, {headers, ...init}) => {
+	headers = new Headers({
 		Accept: 'application/json',
 		Authorization: `Basic ${window.btoa('test@liferay.com:test')}`,
 		'Content-Type': 'application/json',
-	}),
+	});
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	return window.defaultFetch(resource, {
+		...init,
+		headers,
+	});
 };
 
 window.themeDisplay = window.Liferay.ThemeDisplay;

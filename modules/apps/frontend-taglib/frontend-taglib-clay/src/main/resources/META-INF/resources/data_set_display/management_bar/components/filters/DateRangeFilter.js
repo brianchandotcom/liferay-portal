@@ -48,10 +48,10 @@ function DateRangeFilter({
 	value: valueProp,
 }) {
 	const [fromValue, setFromValue] = useState(
-		valueProp && valueProp.from && formatDateObject(valueProp.from)
+		valueProp?.from && formatDateObject(valueProp.from)
 	);
 	const [toValue, setToValue] = useState(
-		valueProp && valueProp.to && formatDateObject(valueProp.to)
+		valueProp?.to && formatDateObject(valueProp.to)
 	);
 
 	let actionType = 'edit';

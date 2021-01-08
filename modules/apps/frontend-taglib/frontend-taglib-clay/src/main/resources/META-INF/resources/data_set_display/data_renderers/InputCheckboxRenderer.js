@@ -12,11 +12,24 @@
  * details.
  */
 
-import {ClayRadio} from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-function RadioRenderer(props) {
-	return <ClayRadio {...props} />;
+function InputCheckboxRenderer({updateItem, value}) {
+	return (
+		<ClayCheckbox
+			checked={Boolean(value)}
+			onChange={(event) => {
+				updateItem(event.target.checked);
+			}}
+		/>
+	);
 }
 
-export default RadioRenderer;
+InputCheckboxRenderer.propTypes = {
+	updateItem: PropTypes.func,
+	value: PropTypes.bool,
+};
+
+export default InputCheckboxRenderer;

@@ -18,7 +18,10 @@ import {
 	generateInstanceId,
 } from 'dynamic-data-mapping-form-renderer';
 
-import {getDefaultFieldName} from '../../../util/fieldSupport.es';
+import {
+	getDefaultFieldName,
+	localizeField,
+} from '../../../util/fieldSupport.es';
 import {sub} from '../../../util/strings.es';
 import {getFieldLocalizedValue} from '../util/fields.es';
 import {
@@ -60,6 +63,7 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 	const {
 		availableLanguageIds,
 		defaultLanguageId,
+		editingLanguageId,
 		fieldNameGenerator,
 		generateFieldNameUsingFieldLabel,
 	} = props;
@@ -148,9 +152,16 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 		);
 	}
 
-	duplicatedField.settingsContext = updateSettingsContextInstanceId(
-		duplicatedField
-	);
+	const settingsContext = updateSettingsContextInstanceId(duplicatedField);
+
+	const settingsVisitor = new PagesVisitor(settingsContext.pages);
+
+	duplicatedField.settingsContext = {
+		...settingsContext,
+		pages: settingsVisitor.mapFields((field) =>
+			localizeField(field, defaultLanguageId, editingLanguageId)
+		),
+	};
 
 	return updateField(
 		props,

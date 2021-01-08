@@ -30,8 +30,17 @@ export default (state, action) => {
 				return {
 					...action.payload,
 					pages: visitor.mapFields(
-						({localizedValue, localizedValueEdited}) => {
-							let value;
+						({
+							localizable,
+							localizedValue,
+							localizedValueEdited,
+							value,
+						}) => {
+							if (!localizable) {
+								return {value};
+							}
+
+							let _value;
 
 							const defaultValue =
 								localizedValue[defaultSiteLanguageId];
@@ -48,20 +57,20 @@ export default (state, action) => {
 											editingLanguageId
 										]
 									) {
-										value = defaultValue;
+										_value = defaultValue;
 									}
 									else {
-										value =
+										_value =
 											localizedValue[editingLanguageId];
 									}
 								}
 								else if (defaultValue) {
-									value = defaultValue;
+									_value = defaultValue;
 								}
 							}
 
 							return {
-								value,
+								value: _value,
 							};
 						},
 						true,

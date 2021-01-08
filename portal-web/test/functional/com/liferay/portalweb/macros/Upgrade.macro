@@ -2068,7 +2068,9 @@ definition {
 		}
 
 		task ("Navigate to page in edit mode") {
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Fragment Content Page",
+				siteName = "Test Site Name");
 
 			Pause(locator1 = "10000");
 		}

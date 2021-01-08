@@ -377,6 +377,7 @@ public class DDMStructureLocalServiceImpl
 		// Structure
 
 		User user = userLocalService.getUser(userId);
+
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 		String structureKey = String.valueOf(counterLocalService.increment());

@@ -104,6 +104,11 @@ definition {
 
 		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
 
+		AssertCssValue(
+			locator1 = "//body",
+			locator2 = "background-color",
+			value1 = "rgba(255, 165, 0, 1)");
+
 		takeScreenshot();
 	}
 
@@ -136,6 +141,11 @@ definition {
 			siteName = "Guest");
 
 		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
+
+		AssertCssValue(
+			locator1 = "//body",
+			locator2 = "background-color",
+			value1 = "rgba(255, 165, 0, 1)");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -177,6 +187,11 @@ definition {
 			siteName = "Guest");
 
 		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
+
+		AssertCssValue(
+			locator1 = "//body",
+			locator2 = "background-color",
+			value1 = "rgba(255, 165, 0, 1)");
 
 		takeScreenshot();
 
@@ -309,6 +324,11 @@ definition {
 			siteName = "Guest");
 
 		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_HOME_PAGE_PNG");
+
+		AssertCssValue(
+			locator1 = "//body",
+			locator2 = "background-color",
+			value1 = "rgba(255, 165, 0, 1)");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

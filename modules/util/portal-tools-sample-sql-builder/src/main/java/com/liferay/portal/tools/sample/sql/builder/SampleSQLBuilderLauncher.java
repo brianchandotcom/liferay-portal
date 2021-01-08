@@ -15,29 +15,26 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.petra.process.ClassPathUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.SystemProperties;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 
 import java.lang.reflect.Method;
 
-import java.net.JarURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.util.stream.Stream;
 
 /**
  * @author Lily Chi
@@ -86,82 +83,42 @@ public class SampleSQLBuilderLauncher {
 			ClassLoader classLoader, Set<URL> urls)
 		throws Exception {
 
-		File tempDir = new File(SystemProperties.get(SystemProperties.TMP_DIR));
+		Path tempDirPath = Files.createTempDirectory(
+			SampleSQLBuilderLauncher.class.getName());
 
-		URL libDirURL = classLoader.getResource("lib");
+		URL url = classLoader.getResource("lib");
 
-		JarURLConnection jarURLConnection =
-			(JarURLConnection)libDirURL.openConnection();
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				url.toURI(), Collections.emptyMap())) {
 
-		JarFile jarFile = jarURLConnection.getJarFile();
+			Stream<Path> pathStream = Files.list(fileSystem.getPath("/lib"));
 
-		_unJar(jarFile, tempDir);
+			pathStream.map(
+				path -> {
+					Path fileNamePath = path.getFileName();
 
-		jarFile.close();
+					Path targetPath = Paths.get(
+						tempDirPath.toString(), fileNamePath.toString());
 
-		File libDir = new File(tempDir, "lib");
-
-		for (File file : libDir.listFiles()) {
-			String fileName = file.getName();
-
-			if (fileName.endsWith(".jar")) {
-				Path path = file.toPath();
-
-				URI uri = path.toUri();
-
-				urls.add(uri.toURL());
-			}
-		}
-	}
-
-	private static void _unJar(JarFile jarFile, File destDir) throws Exception {
-		Enumeration<JarEntry> jarEntryEnumeration = jarFile.entries();
-
-		if (!destDir.exists()) {
-			destDir.mkdirs();
-		}
-
-		byte[] bytes = new byte[1024];
-
-		while (jarEntryEnumeration.hasMoreElements()) {
-			JarEntry jarEntry = jarEntryEnumeration.nextElement();
-
-			String name = jarEntry.getName();
-
-			if (name.endsWith(".jar")) {
-				File destFile = new File(
-					StringBundler.concat(
-						destDir.getAbsoluteFile(), File.separator,
-						jarEntry.getName()));
-
-				if (jarEntry.isDirectory() && !destFile.exists()) {
-					destFile.mkdirs();
-				}
-				else {
-					File destFileParent = destFile.getParentFile();
-
-					if (!destFileParent.exists()) {
-						destFileParent.mkdirs();
+					try {
+						Files.copy(path, targetPath);
+					}
+					catch (IOException ioException) {
 					}
 
-					try (BufferedInputStream bufferedInputStream =
-							new BufferedInputStream(
-								jarFile.getInputStream(jarEntry));
-						BufferedOutputStream bufferedOutputStream =
-							new BufferedOutputStream(
-								new FileOutputStream(destFile))) {
+					return targetPath;
+				}
+			).forEach(
+				path -> {
+					URI uri = path.toUri();
 
-						int length = bufferedInputStream.read(
-							bytes, 0, bytes.length);
-
-						while (length != -1) {
-							bufferedOutputStream.write(bytes, 0, length);
-							length = bufferedInputStream.read(
-								bytes, 0, bytes.length);
-						}
+					try {
+						urls.add(uri.toURL());
+					}
+					catch (MalformedURLException malformedURLException) {
 					}
 				}
-			}
+			);
 		}
 	}
 

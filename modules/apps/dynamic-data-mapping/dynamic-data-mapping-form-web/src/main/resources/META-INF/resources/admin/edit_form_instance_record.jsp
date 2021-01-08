@@ -66,7 +66,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 		</div>
 
 		<react:component
-			module="<%= ddmFormAdminDisplayContext.getModuleName() %>"
+			module="admin/js/index.es"
 			props="<%= ddmFormAdminDisplayContext.getDDMFormReactData(renderRequest, false) %>"
 		/>
 	</aui:form>

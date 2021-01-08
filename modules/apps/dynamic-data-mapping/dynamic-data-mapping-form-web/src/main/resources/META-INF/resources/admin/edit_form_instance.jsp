@@ -150,7 +150,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		id='<%= liferayPortletResponse.getNamespace() + "settings" %>'
 	>
 		<react:component
-			module="<%= ddmFormAdminDisplayContext.getModuleName() %>"
+			module="admin/js/index.es"
 			props="<%= ddmFormAdminDisplayContext.getSerializeSettingsFormReactData(pageContext) %>"
 		/>
 	</clay:container-fluid>

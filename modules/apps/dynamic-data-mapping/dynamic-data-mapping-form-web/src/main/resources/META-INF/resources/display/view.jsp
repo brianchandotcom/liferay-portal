@@ -181,7 +181,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							id='<%= ddmFormDisplayContext.getContainerId() + "container" %>'
 						>
 							<react:component
-								module="<%= ddmFormDisplayContext.getModuleName() %>"
+								module="admin/js/index.es"
 								props="<%= ddmFormDisplayContext.getDDMFormReactData() %>"
 							/>
 

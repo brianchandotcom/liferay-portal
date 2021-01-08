@@ -265,17 +265,18 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public String getDisplayName() {
-		String displayName = super.getDisplayName();
+		StringBuilder sb = new StringBuilder(super.getDisplayName());
 
 		String jenkinsJobVariant = getParameterValue("JENKINS_JOB_VARIANT");
 
 		if ((getParentBuild() != null) && (jenkinsJobVariant != null) &&
 			!jenkinsJobVariant.isEmpty()) {
 
-			displayName += "/" + getParameterValue("JENKINS_JOB_VARIANT");
+			sb.append("/");
+			sb.append(jenkinsJobVariant);
 		}
 
-		return displayName;
+		return sb.toString();
 	}
 
 	public AxisBuild getDownstreamAxisBuild(String axisName) {

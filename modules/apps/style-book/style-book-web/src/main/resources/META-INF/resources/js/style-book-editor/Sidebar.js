@@ -24,9 +24,28 @@ export default function Sidebar() {
 	return (
 		<div className="style-book-editor__sidebar">
 			<Toolbar />
+			<ThemeInformation />
 			{config.frontendTokenDefinition.frontendTokenCategories && (
 				<SidebarContent />
 			)}
+		</div>
+	);
+}
+
+function ThemeInformation() {
+	return (
+		<div className="pb-0 pt-3 px-3">
+			<p className="small text-secondary">
+				{Liferay.Language.get(
+					'this-token-definition-belongs-to-the-theme-set-for-public-pages'
+				)}
+			</p>
+			<p className="mb-0 small">
+				<span className="font-weight-semi-bold">
+					{`${Liferay.Language.get('theme')}: `}
+				</span>
+				{config.themeName}
+			</p>
 		</div>
 	);
 }

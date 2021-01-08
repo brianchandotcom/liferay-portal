@@ -79,14 +79,15 @@ const StyleBookEditor = ({
 
 export default function ({
 	frontendTokenDefinition = [],
+	frontendTokensValues = {},
 	initialPreviewLayout,
+	layoutsTreeURL,
 	namespace,
 	publishURL,
-	layoutsTreeURL,
 	redirectURL,
 	saveDraftURL,
 	styleBookEntryId,
-	frontendTokensValues = {},
+	themeName,
 } = {}) {
 	initializeConfig({
 		frontendTokenDefinition,
@@ -97,6 +98,7 @@ export default function ({
 		redirectURL,
 		saveDraftURL,
 		styleBookEntryId,
+		themeName,
 	});
 
 	return (

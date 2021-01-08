@@ -1,8 +1,8 @@
 dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":apps:archived:oauth-api")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-sql-dsl-api")
-	testCompile project(":dxp:apps:oauth:oauth-api")
 
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

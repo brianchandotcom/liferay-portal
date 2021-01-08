@@ -2,7 +2,7 @@ task runGradleTest
 task untarOverrideTestScript(type: Copy)
 
 runGradleTest {
-	dependsOn createDockerContainer, untarOverrideTestScript
+	dependsOn createDockerContainer, "inspectCustomImage", untarOverrideTestScript
 
 	doLast {
 		File overrideTestScript = new File(buildDir, "override_test.sh");

@@ -1,4 +1,5 @@
 import com.bmuschko.gradle.docker.tasks.container.DockerCopyFileFromContainer
+import com.bmuschko.gradle.docker.tasks.image.DockerInspectImage
 
 buildscript {
 	dependencies {
@@ -8,6 +9,11 @@ buildscript {
 
 apply plugin: "com.liferay.workspace"
 
+gradle.liferayWorkspace {
+	dockerImageId = "create_docker_container_image"
+	dockerContainerId = "create_docker_container_container"
+}
+
 gradle.projectsEvaluated {
 	Project rootProject = gradle.rootProject
 
@@ -15,8 +21,14 @@ gradle.projectsEvaluated {
 		dependsOn "createDockerContainer"
 
 		compressed = true
-		containerId = gradle.liferayWorkspace.dockerContainerId
+		containerId = "create_docker_container_container"
 		hostPath = rootProject.buildDir.path
 		remotePath = "/home/liferay/configs/local/scripts/override_test.sh"
+	}
+
+	rootProject.tasks.register("inspectCustomImage", DockerInspectImage) {
+		dependsOn "buildDockerImage"
+
+		imageId = "create_docker_container_image"
 	}
 }

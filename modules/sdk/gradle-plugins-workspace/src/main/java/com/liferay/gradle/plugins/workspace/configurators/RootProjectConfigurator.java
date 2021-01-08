@@ -1375,24 +1375,33 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private void _configureWorkspaceExtension(
 		Project project, WorkspaceExtension workspaceExtension) {
 
-		workspaceExtension.setDockerContainerId(project.getName() + "-liferay");
+		String dockerContainerId = workspaceExtension.getDockerContainerId();
 
-		Object version = project.getVersion();
-
-		if (Objects.equals(version, "unspecified")) {
-			String dockerImageLiferay =
-				workspaceExtension.getDockerImageLiferay();
-
-			int index = dockerImageLiferay.indexOf(":");
-
-			version = dockerImageLiferay.substring(index + 1);
-		}
-		else {
-			version = project.getVersion();
+		if (dockerContainerId == null) {
+			workspaceExtension.setDockerContainerId(
+				project.getName() + "-liferay");
 		}
 
-		workspaceExtension.setDockerImageId(
-			String.format("%s-liferay:%s", project.getName(), version));
+		String dockerImageId = workspaceExtension.getDockerImageId();
+
+		if (dockerImageId == null) {
+			Object version = project.getVersion();
+
+			if (Objects.equals(version, "unspecified")) {
+				String dockerImageLiferay =
+					workspaceExtension.getDockerImageLiferay();
+
+				int index = dockerImageLiferay.indexOf(":");
+
+				version = dockerImageLiferay.substring(index + 1);
+			}
+			else {
+				version = project.getVersion();
+			}
+
+			workspaceExtension.setDockerImageId(
+				String.format("%s-liferay:%s", project.getName(), version));
+		}
 	}
 
 	private void _createTouchFile(File dir) throws IOException {

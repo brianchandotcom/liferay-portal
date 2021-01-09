@@ -118,7 +118,7 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
-	public JournalArticle getPreviousVersion(
+	public JournalArticle getPreviousVersionedModel(
 		JournalArticle currentJournalArticle) {
 
 		boolean found = false;

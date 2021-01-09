@@ -218,7 +218,8 @@ public class GetEntryRenderDataMVCResourceCommand
 					CTCollectionThreadLocal.setCTCollectionId(
 						rightCtCollectionId)) {
 
-				leftModel = ctDisplayRenderer.getPreviousVersion(rightModel);
+				leftModel = ctDisplayRenderer.getPreviousVersionedModel(
+					rightModel);
 			}
 
 			if (leftModel != null) {

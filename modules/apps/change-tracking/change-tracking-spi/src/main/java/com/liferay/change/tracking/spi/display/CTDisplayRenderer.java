@@ -84,7 +84,7 @@ public interface CTDisplayRenderer<T> {
 		throw new UnsupportedOperationException();
 	}
 
-	public default T getPreviousVersion(T model) throws PortalException {
+	public default T getPreviousVersionedModel(T model) throws PortalException {
 		throw new UnsupportedOperationException();
 	}
 

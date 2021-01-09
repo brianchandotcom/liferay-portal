@@ -936,52 +936,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return buildFailureElements.toArray(new Element[0]);
 	}
 
-	protected Element getCompanionBranchDetailsElement() {
-		String baseGitRepositoryName = getBaseGitRepositoryName();
-		String branchName = getBranchName();
-
-		String companionGitRepositoryName = baseGitRepositoryName;
-
-		if (branchName.equals("master")) {
-			companionGitRepositoryName = companionGitRepositoryName + "-ee";
-		}
-
-		if (branchName.endsWith("-private")) {
-			companionGitRepositoryName = baseGitRepositoryName.substring(
-				0, baseGitRepositoryName.indexOf("-ee"));
-		}
-
-		String companionUsername = getCompanionUsername();
-
-		String companionBranchURL = JenkinsResultsParserUtil.combine(
-			"https://github.com/", companionUsername, "/",
-			companionGitRepositoryName, "/tree/", getCompanionBranchName());
-
-		String companionGitRepositorySHA = getCompanionGitRepositorySHA();
-
-		String companionGitRepositoryCommitURL =
-			JenkinsResultsParserUtil.combine(
-				"https://github.com/", companionUsername, "/",
-				companionGitRepositoryName, "/commit/",
-				companionGitRepositorySHA);
-
-		Element companionBranchDetailsElement = Dom4JUtil.getNewElement(
-			"p", null, "Branch Name: ",
-			Dom4JUtil.getNewAnchorElement(
-				companionBranchURL, getCompanionBranchName()));
-
-		if (companionGitRepositorySHA != null) {
-			Dom4JUtil.addToElement(
-				companionBranchDetailsElement, Dom4JUtil.getNewElement("br"),
-				"Branch GIT ID: ",
-				Dom4JUtil.getNewAnchorElement(
-					companionGitRepositoryCommitURL,
-					companionGitRepositorySHA));
-		}
-
-		return companionBranchDetailsElement;
-	}
-
 	protected Element getDownstreamGitHubMessageElement() {
 		String status = getStatus();
 
@@ -1598,27 +1552,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 				"summary", null, "Click here for more details."),
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
 			getBaseBranchDetailsElement());
-
-		String branchName = getBranchName();
-		String companionBranchLabel = "Copied in Private Modules Branch:";
-
-		if (branchName.endsWith("-private")) {
-			companionBranchLabel = "Built off of Portal Core Branch:";
-		}
-
-		if (!branchName.startsWith("ee-") &&
-			getBaseGitRepositoryName().contains("liferay-portal")) {
-
-			try {
-				Dom4JUtil.addToElement(
-					detailsElement,
-					Dom4JUtil.getNewElement("h4", null, companionBranchLabel),
-					getCompanionBranchDetailsElement());
-			}
-			catch (Exception exception) {
-				exception.printStackTrace();
-			}
-		}
 
 		Dom4JUtil.addToElement(
 			detailsElement, getJobSummaryElement(), getMoreDetailsElement());

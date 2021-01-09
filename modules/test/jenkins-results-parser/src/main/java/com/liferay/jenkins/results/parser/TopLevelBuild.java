@@ -1553,6 +1553,13 @@ public abstract class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
 			getBaseBranchDetailsElement());
 
+		if (UpstreamFailureUtil.isUpstreamComparisonAvailable()) {
+			Dom4JUtil.addToElement(
+				detailsElement,
+				Dom4JUtil.getNewElement("h4", null, "Upstream Comparison:"),
+				getUpstreamComparisonDetailsElement());
+		}
+
 		Dom4JUtil.addToElement(
 			detailsElement, getJobSummaryElement(), getMoreDetailsElement());
 
@@ -1579,6 +1586,37 @@ public abstract class TopLevelBuild extends BaseBuild {
 		}
 
 		return upstreamBranchSHA;
+	}
+
+	protected Element getUpstreamComparisonDetailsElement() {
+		String upstreamJobFailuresSHA =
+			UpstreamFailureUtil.getUpstreamJobFailuresSHA(this);
+
+		String upstreamCommitURL =
+			"https://github.com/liferay/" + getBaseGitRepositoryName() +
+				"/commit/" + upstreamJobFailuresSHA;
+
+		Element upstreamComparisonDetailsElement = Dom4JUtil.getNewElement(
+			"p", null, "Branch GIT ID: ",
+			Dom4JUtil.getNewAnchorElement(
+				upstreamCommitURL, upstreamJobFailuresSHA));
+
+		int buildNumber = UpstreamFailureUtil.getUpstreamJobFailuresBuildNumber(
+			this);
+
+		String buildURL =
+			UpstreamFailureUtil.getUpstreamJobFailuresJobURL(this) + "/" +
+				buildNumber;
+
+		Dom4JUtil.addToElement(
+			upstreamComparisonDetailsElement, Dom4JUtil.getNewElement("br"),
+			"Jenkins Build URL: ",
+			Dom4JUtil.getNewAnchorElement(
+				buildURL,
+				"Acceptance Upstream DXP (" + getBranchName() + ") #" +
+					buildNumber));
+
+		return upstreamComparisonDetailsElement;
 	}
 
 	protected void sendBuildMetrics(String message) {

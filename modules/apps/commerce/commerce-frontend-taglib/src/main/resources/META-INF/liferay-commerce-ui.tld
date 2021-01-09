@@ -71,11 +71,6 @@
 		<body-content>empty</body-content>
 	</tag>
 	<tag>
-		<name>commerce-quantity-selector</name>
-		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.QuantitySelectorTag</tag-class>
-		<body-content>empty</body-content>
-	</tag>
-	<tag>
 		<name>compare-checkbox</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.CompareCheckboxTag</tag-class>
 		<body-content>empty</body-content>

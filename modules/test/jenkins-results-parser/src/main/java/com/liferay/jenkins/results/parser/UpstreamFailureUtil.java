@@ -74,6 +74,46 @@ public class UpstreamFailureUtil {
 		return upstreamFailures;
 	}
 
+	public static int getUpstreamJobFailuresBuildNumber(
+		TopLevelBuild topLevelBuild) {
+
+		try {
+			JSONObject upstreamJobFailuresJSONObject =
+				getUpstreamJobFailuresJSONObject(topLevelBuild);
+
+			System.out.println(upstreamJobFailuresJSONObject);
+
+			return upstreamJobFailuresJSONObject.getInt("buildNumber");
+		}
+		catch (JSONException jsonException) {
+			System.out.println(
+				"Unable to get upstream acceptance failure data");
+
+			jsonException.printStackTrace();
+
+			return 0;
+		}
+	}
+
+	public static String getUpstreamJobFailuresJobURL(
+		TopLevelBuild topLevelBuild) {
+
+		try {
+			JSONObject upstreamJobFailuresJSONObject =
+				getUpstreamJobFailuresJSONObject(topLevelBuild);
+
+			return upstreamJobFailuresJSONObject.getString("jobURL");
+		}
+		catch (JSONException jsonException) {
+			System.out.println(
+				"Unable to get upstream acceptance failure data");
+
+			jsonException.printStackTrace();
+
+			return "";
+		}
+	}
+
 	public static JSONObject getUpstreamJobFailuresJSONObject(
 		TopLevelBuild topLevelBuild) {
 

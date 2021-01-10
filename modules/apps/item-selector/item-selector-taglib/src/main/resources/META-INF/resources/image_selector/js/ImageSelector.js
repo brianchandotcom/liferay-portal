@@ -19,6 +19,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import BrowseImage from './BrowseImage';
 import ChangeImageControls from './ChangeImageControls';
+import ErrorAlert from './ErrorAlert';
 import ProgressWrapper from './ProgressWrapper';
 
 const CSS_DROP_ACTIVE = 'drop-active';
@@ -52,6 +53,7 @@ const ImageSelector = ({
 	const [fileName, setFileName] = useState('');
 	const [progressValue, setProgressValue] = useState(0);
 	const [progressData, setProgressData] = useState();
+	const [errorMessage, setErrorMessage] = useState('');
 
 	const rootNodeRef = useRef(null);
 
@@ -167,6 +169,7 @@ const ImageSelector = ({
 
 				//TODO error
 
+				setErrorMessage('error');
 			}
 
 			Liferay.fire(fireEvent, {
@@ -285,6 +288,15 @@ const ImageSelector = ({
 				progressData={progressData}
 				progressValue={progressValue}
 			/>
+
+			{errorMessage && (
+				<ErrorAlert
+					handleClick={handleSelectFileClick}
+					itemSelectorEventName={itemSelectorEventName}
+					itemSelectorURL={itemSelectorURL}
+					message={errorMessage}
+				/>
+			)}
 		</div>
 	);
 };

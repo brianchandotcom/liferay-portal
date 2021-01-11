@@ -10,8 +10,8 @@ buildscript {
 apply plugin: "com.liferay.workspace"
 
 gradle.liferayWorkspace {
-	dockerImageId = "create_docker_container_image"
 	dockerContainerId = "create_docker_container_container"
+	dockerImageId = "create_docker_container_image"
 }
 
 gradle.projectsEvaluated {

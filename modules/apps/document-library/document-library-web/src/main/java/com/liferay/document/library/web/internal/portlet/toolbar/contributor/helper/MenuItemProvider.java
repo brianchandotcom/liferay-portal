@@ -465,6 +465,7 @@ public class MenuItemProvider {
 			portletURL.setWindowState(portletRequest.getWindowState());
 		}
 		catch (WindowStateException windowStateException) {
+			_log.error(windowStateException, windowStateException);
 		}
 
 		return portletURL;

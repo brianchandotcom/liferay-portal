@@ -26,7 +26,7 @@ import {
 	usePage,
 } from 'dynamic-data-mapping-form-renderer';
 import moment from 'moment';
-import React, {useMemo} from 'react';
+import React, {useLayoutEffect, useMemo} from 'react';
 
 const convertInputValue = (fieldType, value) => {
 	if (fieldType === 'date') {
@@ -165,6 +165,20 @@ function FieldBase({
 		fieldDetails += requiredText;
 	}
 
+	useLayoutEffect(() => {
+		const errorContainer = document.querySelector('.form-feedback-group');
+
+		if (errorContainer) {
+			const errorInput = errorContainer.parentElement.querySelector(
+				'.form-control'
+			);
+
+			if (errorInput) {
+				errorInput.focus();
+			}
+		}
+	});
+
 	return (
 		<ClayTooltipProvider>
 			<div
@@ -242,7 +256,7 @@ function FieldBase({
 						) : (
 							<>
 								<label
-									aria-labelledby={fieldDetailsId}
+									aria-describedby={fieldDetailsId}
 									className={classNames({
 										'ddm-empty': !showLabel && !required,
 										'ddm-label': showLabel || required,
@@ -294,11 +308,10 @@ function FieldBase({
 
 				{fieldDetails && (
 					<span
-						aria-hidden="false"
+						className="sr-only"
 						dangerouslySetInnerHTML={{
 							__html: fieldDetails,
 						}}
-						hidden
 						id={fieldDetailsId}
 					/>
 				)}

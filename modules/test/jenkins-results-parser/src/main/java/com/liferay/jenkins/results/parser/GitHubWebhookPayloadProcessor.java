@@ -1718,31 +1718,24 @@ public class GitHubWebhookPayloadProcessor {
 
 		addTestPullRequestQueryString(pullRequestTesterQueryString);
 
-		boolean gitHubWebhookPullRequestMirroring = Boolean.parseBoolean(
-			_jenkinsBuildProperties.getProperty(
-				"github.webhook.pullrequest.mirroring",
-				Boolean.FALSE.toString()));
+		String masterURL;
 
-		if (gitHubWebhookPullRequestMirroring) {
-			String masterURL;
-
-			try {
-				masterURL = LoadBalancerUtil.getMostAvailableMasterURL(
-					"base.invocation.url", "http://test-1.liferay.com");
-			}
-			catch (Exception exception) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Setting base invocation URL to " +
-							"http://test-1.liferay.com because load balancer " +
-								"threw an exception");
-				}
-
-				masterURL = "http://test-1.liferay.com";
-			}
-
-			invokePullRequestTester(masterURL, pullRequestTesterParameters);
+		try {
+			masterURL = LoadBalancerUtil.getMostAvailableMasterURL(
+				"base.invocation.url", "http://test-1.liferay.com");
 		}
+		catch (Exception exception) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Setting base invocation URL to " +
+						"http://test-1.liferay.com because load balancer " +
+							"threw an exception");
+			}
+
+			masterURL = "http://test-1.liferay.com";
+		}
+
+		invokePullRequestTester(masterURL, pullRequestTesterParameters);
 	}
 
 	private List<String> _getCIEnabledBranchNames(String repositoryName) {

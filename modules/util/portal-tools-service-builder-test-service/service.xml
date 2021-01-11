@@ -95,6 +95,30 @@
 
 		<column lazy="false" name="blob" type="Blob" />
 	</entity>
+	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntry">
+
+		<!-- PK fields -->
+
+		<column name="ercCompanyEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
+	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry">
+
+		<!-- PK fields -->
+
+		<column name="ercGroupEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+	</entity>
 	<entity local-service="true" name="FinderWhereClauseEntry" remote-service="false">
 
 		<!-- PK fields -->

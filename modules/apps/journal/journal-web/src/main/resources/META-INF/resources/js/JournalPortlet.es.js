@@ -19,6 +19,8 @@ import {LocaleChangedHandler} from './LocaleChangedHandler.es';
 
 const ACTION_INPUT_NAME = 'javax-portlet-action';
 
+const ALERT_CONTAINER_CLASS = 'journal-alert-container';
+
 const BUTTON_ROW_CLASS = '.journal-article-button-row';
 
 const SIDEBAR_VISIBLE_CLASS = 'contextual-sidebar-visible';
@@ -179,14 +181,20 @@ class JournalPortlet extends PortletBase {
 		event.preventDefault();
 
 		if (!this._validTitle()) {
-			this._showAlert(
-				Liferay.Util.sub(
-					Liferay.Language.get(
-						'please-enter-a-valid-title-for-the-default-language-x'
-					),
-					this.defaultLanguageId.replace('_', '-')
-				)
+			const alertContainer = document.querySelector(
+				`.${ALERT_CONTAINER_CLASS}`
 			);
+
+			if (!alertContainer) {
+				this._showAlert(
+					Liferay.Util.sub(
+						Liferay.Language.get(
+							'please-enter-a-valid-title-for-the-default-language-x'
+						),
+						this.defaultLanguageId.replace('_', '-')
+					)
+				);
+			}
 
 			event.stopImmediatePropagation();
 
@@ -323,15 +331,12 @@ class JournalPortlet extends PortletBase {
 	 * @private
 	 */
 	_showAlert(message) {
-		let alertContainer = document.querySelector('.journal-alert-container');
+		const alertContainer = document.createElement('div');
+		alertContainer.classList.add(ALERT_CONTAINER_CLASS);
 
-		if (!alertContainer) {
-			alertContainer = document.createElement('div');
+		const content = document.querySelector('.article-content-content');
 
-			const content = document.querySelector('.article-content-content');
-
-			content.prepend(alertContainer);
-		}
+		content.prepend(alertContainer);
 
 		openToast({
 			autoClose: false,

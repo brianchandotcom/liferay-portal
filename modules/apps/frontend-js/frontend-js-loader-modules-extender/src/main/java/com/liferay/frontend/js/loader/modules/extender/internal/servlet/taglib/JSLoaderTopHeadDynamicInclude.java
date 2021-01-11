@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -32,6 +33,7 @@ import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import java.util.Map;
 
@@ -60,11 +62,17 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
+		if (!_isStale()) {
+			_writeResponse(httpServletResponse, _objectValuePair.getValue());
 
-		printWriter.println("<script data-senna-track=\"temporary\" type=\"");
-		printWriter.print(ContentTypes.TEXT_JAVASCRIPT);
-		printWriter.print("\">window.__CONFIG__=");
+			return;
+		}
+
+		StringWriter stringWriter = new StringWriter();
+
+		stringWriter.write("<script data-senna-track=\"temporary\" type=\"");
+		stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
+		stringWriter.write("\">window.__CONFIG__=");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -94,15 +102,22 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 			"waitTimeout", _details.waitTimeout() * 1000
 		);
 
-		printWriter.print(loaderConfigJSONObject.toString());
+		stringWriter.write(loaderConfigJSONObject.toString());
 
-		printWriter.print(";</script>");
+		stringWriter.write(";</script>");
 
-		printWriter.println("<script data-senna-track=\"permanent\" src=\"");
-		printWriter.print(_servletContext.getContextPath());
-		printWriter.print("/loader.js\" type=\"");
-		printWriter.print(ContentTypes.TEXT_JAVASCRIPT);
-		printWriter.print("\"></script>");
+		stringWriter.write("<script data-senna-track=\"permanent\" src=\"");
+		stringWriter.write(_servletContext.getContextPath());
+		stringWriter.write("/loader.js\" type=\"");
+		stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
+		stringWriter.write("\"></script>");
+
+		String loaderConfig = stringWriter.toString();
+
+		_objectValuePair = new ObjectValuePair<>(
+			_lastModified, loaderConfig);
+
+		_writeResponse(httpServletResponse, loaderConfig);
 	}
 
 	@Override
@@ -116,6 +131,8 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 	protected void activate(Map<String, Object> properties) {
 		_details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
+
+		_lastModified = System.currentTimeMillis();
 	}
 
 	private JSONObject _getDefaultURLParamsJSONObject(
@@ -156,10 +173,30 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		return themeDisplay.getCDNBaseURL();
 	}
 
+	private boolean _isStale() {
+		if (_lastModified > _objectValuePair.getKey()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _writeResponse(
+			HttpServletResponse httpServletResponse, String content)
+		throws IOException {
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		printWriter.println(content);
+	}
+
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile Details _details;
+	private volatile long _lastModified;
+	private volatile ObjectValuePair<Long, String> _objectValuePair =
+		new ObjectValuePair<>(0L, null);
 
 	@Reference
 	private Portal _portal;

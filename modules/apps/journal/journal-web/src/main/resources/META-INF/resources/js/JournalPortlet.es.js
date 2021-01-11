@@ -342,6 +342,7 @@ class JournalPortlet extends PortletBase {
 			autoClose: false,
 			container: alertContainer,
 			message,
+			onClose: () => alertContainer.remove(),
 			type: 'danger',
 		});
 	}

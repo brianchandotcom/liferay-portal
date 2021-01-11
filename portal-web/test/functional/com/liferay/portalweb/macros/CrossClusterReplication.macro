@@ -44,6 +44,25 @@ definition {
 		SystemSettings.saveConfiguration();
 
 		echo("##");
+		echo("## Local Cluster Index List");
+		echo("##");
+
+		var localClusterIndexList = JSONCurlUtil.get("http://localhost:9202/_cat/indices?h=index");
+
+		echo("##");
+		echo("## Remote Cluster Index List");
+		echo("##");
+
+		var remoteClusterIndexList = JSONCurlUtil.get("http://localhost:9200/_cat/indices?h=index");
+		var remoteClusterIndexList = RegexUtil.replace("${remoteClusterIndexList}", "\n", ",");
+
+		for (var indexName : list "${remoteClusterIndexList}") {
+			if ((!(contains("${indexName}", "."))) && (!(contains("${indexName}", "ilm-history"))) && (!(contains("${localClusterIndexList}", "${indexName}")))) {
+				fail("Failed to create a follower index for ${indexName}.");
+			}
+		}
+
+		echo("##");
 		echo("## Local Cluster Health");
 		echo("##");
 

@@ -422,6 +422,20 @@ gradle.beforeProject {
 			buildCSS {
 				rtlExcludedPathRegexps = [".+"]
 			}
+
+			if (FileUtil.exists(project, "package.json")) {
+				File packageJSONFile = project.file("package.json")
+
+				if (packageJSONFile.text.contains("liferay-npm-scripts build")) {
+					buildCSS {
+						enabled = false
+					}
+
+					copyCSS {
+						enabled = false
+					}
+				}
+			}
 		}
 
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {

@@ -39,8 +39,16 @@ public class Parameter {
 		return _schema;
 	}
 
+	public boolean isDeprecated() {
+		return _deprecated;
+	}
+
 	public boolean isRequired() {
 		return _required;
+	}
+
+	public void setDeprecated(boolean deprecated) {
+		_deprecated = deprecated;
 	}
 
 	public void setExample(String example) {
@@ -67,6 +75,7 @@ public class Parameter {
 		_schema = schema;
 	}
 
+	private boolean _deprecated;
 	private String _example;
 	private String _in;
 	private String _name;

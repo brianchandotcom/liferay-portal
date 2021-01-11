@@ -47,6 +47,14 @@ public class Operation {
 		return _tags;
 	}
 
+	public boolean isDeprecated() {
+		return _deprecated;
+	}
+
+	public void setDeprecated(boolean deprecated) {
+		_deprecated = deprecated;
+	}
+
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -71,6 +79,7 @@ public class Operation {
 		_tags = tags;
 	}
 
+	private boolean _deprecated;
 	private String _description;
 	private String _operationId;
 	private List<Parameter> _parameters = new ArrayList<>();

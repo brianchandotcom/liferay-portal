@@ -135,10 +135,27 @@ public class ResourceOpenAPIParser {
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
-		if (operation.getDescription() != null) {
-			methodAnnotations.add(
-				"@Operation(description=\"" + operation.getDescription() +
-					"\")");
+		if ((operation.getDescription() != null) || operation.isDeprecated()) {
+			StringBuilder sb = new StringBuilder("@Operation(");
+
+			if (operation.isDeprecated()) {
+				methodAnnotations.add("@Deprecated");
+				sb.append("deprecated=true");
+			}
+
+			if (operation.getDescription() != null) {
+				if (operation.isDeprecated()) {
+					sb.append(", ");
+				}
+
+				sb.append("description=\"");
+				sb.append(operation.getDescription());
+				sb.append("\"");
+			}
+
+			sb.append(")");
+
+			methodAnnotations.add(sb.toString());
 		}
 
 		if (operation.getTags() != null) {
@@ -322,6 +339,11 @@ public class ResourceOpenAPIParser {
 				"@Parameter(in = ParameterIn.%s, name = \"%s\"",
 				StringUtil.toUpperCase(parameter.getIn()),
 				parameter.getName()));
+
+		if (parameter.isDeprecated()) {
+			sb.append(
+				String.format(", deprecated = %s", parameter.isDeprecated()));
+		}
 
 		if (parameter.getExample() != null) {
 			sb.append(
@@ -803,6 +825,10 @@ public class ResourceOpenAPIParser {
 				sb.append("@DefaultValue(\"");
 				sb.append(defaultValue);
 				sb.append("\")");
+			}
+
+			if (parameter.isDeprecated()) {
+				sb.append("@Deprecated");
 			}
 
 			if (parameter.isRequired()) {

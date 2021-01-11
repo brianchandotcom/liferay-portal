@@ -78,6 +78,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonFilter("Liferay.Vulcan")
 <#if schema.requiredPropertySchemaNames?has_content>
 	@Schema(
+		<#if schema.deprecated>
+			deprecated = ${schema.deprecated?c},
+		</#if>
 		requiredProperties =
 			{
 				<#list schema.requiredPropertySchemaNames as requiredProperty>
@@ -87,7 +90,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 					</#if>
 				</#list>
 			}
-
 		<#if schema.description??>
 			, description = "${schema.description}"
 		</#if>
@@ -119,12 +121,17 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 
 		@Schema(
+			<#if propertySchema.deprecated>
+				deprecated = ${propertySchema.deprecated?c}
+			</#if>
 			<#if propertySchema.description??>
+				<#if propertySchema.deprecated>
+					,
+				</#if>
 				description = "${propertySchema.description}"
 			</#if>
-
 			<#if propertySchema.example??>
-				<#if propertySchema.description??>
+				<#if propertySchema.description?? || propertySchema.deprecated>
 					,
 				</#if>
 

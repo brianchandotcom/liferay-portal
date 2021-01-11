@@ -51,11 +51,11 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		return _accountGroupLocalService.addAccountGroup(
-			themeDisplay.getUserId(), name, description);
+			themeDisplay.getUserId(), description, name);
 	}
 
 	@Override
@@ -89,11 +89,11 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		long accountGroupId = ParamUtil.getLong(
 			actionRequest, "accountGroupId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		_accountGroupLocalService.updateAccountGroup(
-			accountGroupId, name, description);
+			accountGroupId, description, name);
 	}
 
 	@Reference

@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 public class AccountGroupTestUtil {
 
 	public static AccountGroup addAccountGroup(
-			AccountGroupLocalService accountGroupLocalService, String name,
-			String description)
+			AccountGroupLocalService accountGroupLocalService,
+			String description, String name)
 		throws Exception {
 
 		return accountGroupLocalService.addAccountGroup(
-			TestPropsValues.getUserId(), name, description);
+			TestPropsValues.getUserId(), description, name);
 	}
 
 }

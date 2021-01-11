@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.item.selector.taglib.internal.util.DLPortletToolbarContributorRegistryUtil;
+import com.liferay.item.selector.taglib.internal.portlet.toolbar.contributor.DLPortletToolbarContributorRegistryUtil;
 import com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag;
 import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
 import com.liferay.petra.string.StringPool;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.taglib.internal.util;
+package com.liferay.item.selector.taglib.internal.portlet.toolbar.contributor;
 
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributor;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;

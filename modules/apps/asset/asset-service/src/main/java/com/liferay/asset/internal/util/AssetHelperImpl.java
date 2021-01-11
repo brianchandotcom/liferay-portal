@@ -29,6 +29,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -572,22 +573,7 @@ public class AssetHelperImpl implements AssetHelper {
 		return assetSearcher;
 	}
 
-	private boolean _getDDMFormFieldLocalizable(String sortField)
-		throws Exception {
-
-		String[] sortFields = StringUtil.split(
-			sortField, DDMIndexer.DDM_FIELD_SEPARATOR);
-
-		long ddmStructureId = GetterUtil.getLong(sortFields[2]);
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			ddmStructureId);
-
-		return GetterUtil.getBoolean(
-			ddmStructure.getFieldProperty(sortFields[3], "localizable"));
-	}
-
-	private String _getDDMFormFieldType(String sortField) throws Exception {
+	private DDMFormField _getDDMFormField(String sortField) throws Exception {
 		String[] sortFields = sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR);
 
 		long ddmStructureId = GetterUtil.getLong(sortFields[2]);
@@ -596,7 +582,21 @@ public class AssetHelperImpl implements AssetHelper {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			ddmStructureId);
 
-		return ddmStructure.getFieldType(fieldName);
+		return ddmStructure.getDDMFormField(fieldName);
+	}
+
+	private boolean _getDDMFormFieldLocalizable(String sortField)
+		throws Exception {
+
+		DDMFormField ddmFormField = _getDDMFormField(sortField);
+
+		return GetterUtil.getBoolean(ddmFormField.getProperty("localizable"));
+	}
+
+	private String _getDDMFormFieldType(String sortField) throws Exception {
+		DDMFormField ddmFormField = _getDDMFormField(sortField);
+
+		return ddmFormField.getType();
 	}
 
 	private String _getDDMFormFieldTypeOrderByCol(

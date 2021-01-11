@@ -75,7 +75,9 @@ public class PageSettingsUtil {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 
-		if (layoutSEOEntry == null) {
+		if ((layoutSEOEntry == null) ||
+			(layoutSEOEntry.getDDMStorageId() == 0)) {
+
 			return null;
 		}
 

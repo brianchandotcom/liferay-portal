@@ -46,7 +46,7 @@ public class AccountGroupLocalServiceImpl
 
 	@Override
 	public AccountGroup addAccountGroup(
-			long userId, String name, String description)
+			long userId, String description, String name)
 		throws PortalException {
 
 		long accountGroupId = counterLocalService.increment();
@@ -133,7 +133,7 @@ public class AccountGroupLocalServiceImpl
 
 	@Override
 	public AccountGroup updateAccountGroup(
-			long accountGroupId, String name, String description)
+			long accountGroupId, String description, String name)
 		throws PortalException {
 
 		AccountGroup accountGroup = accountGroupPersistence.fetchByPrimaryKey(

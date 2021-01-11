@@ -87,7 +87,7 @@ public class ClaySamplePortlet extends MVCPortlet {
 			new MultiselectDisplayContext();
 
 		renderRequest.setAttribute(
-			ClaySamplePortletKeys.MULTI_SELECT_DISPLAY_CONTEXT,
+			ClaySamplePortletKeys.MULTISELECT_DISPLAY_CONTEXT,
 			multiselectDisplayContext);
 
 		NavigationBarsDisplayContext navigationBarsDisplayContext =

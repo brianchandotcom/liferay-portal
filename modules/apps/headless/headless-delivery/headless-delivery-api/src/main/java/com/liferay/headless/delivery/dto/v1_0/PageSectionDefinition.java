@@ -53,7 +53,7 @@ public class PageSectionDefinition implements Serializable {
 		return ObjectMapperUtil.readValue(PageSectionDefinition.class, json);
 	}
 
-	@Schema
+	@Schema(deprecated = true)
 	public String getBackgroundColor() {
 		return backgroundColor;
 	}
@@ -116,6 +116,7 @@ public class PageSectionDefinition implements Serializable {
 	protected FragmentImage backgroundFragmentImage;
 
 	@Schema(
+		deprecated = true,
 		description = "Deprecated as of Athanasius (7.3.x), replaced by backgroundFragmentImage"
 	)
 	@Valid

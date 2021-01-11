@@ -56,6 +56,7 @@ public class PageColumnDefinition implements Serializable {
 	}
 
 	@Schema(
+		deprecated = true,
 		description = "Deprecated as of Athanasius (7.3.x), replaced by columnViewports"
 	)
 	@Valid

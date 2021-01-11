@@ -88,6 +88,7 @@ public class FragmentFieldBackgroundImage implements Serializable {
 	protected FragmentImage backgroundFragmentImage;
 
 	@Schema(
+		deprecated = true,
 		description = "Deprecated as of Athanasius (7.3.x), replaced by backgroundFragmentImage"
 	)
 	@Valid

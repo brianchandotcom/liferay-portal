@@ -225,6 +225,7 @@ public class PageRowDefinition implements Serializable {
 	protected Boolean reverseOrder;
 
 	@Schema(
+		deprecated = true,
 		description = "Deprecated as of Athanasius (7.3.x), replaced by rowViewports"
 	)
 	@Valid

@@ -55,7 +55,7 @@ public class FragmentLink implements Serializable {
 		return ObjectMapperUtil.readValue(FragmentLink.class, json);
 	}
 
-	@Schema
+	@Schema(deprecated = true)
 	@Valid
 	public Object getHref() {
 		return href;
@@ -83,7 +83,7 @@ public class FragmentLink implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object href;
 
-	@Schema
+	@Schema(deprecated = true)
 	@Valid
 	public Target getTarget() {
 		return target;

@@ -755,14 +755,12 @@ public class AssetHelperImpl implements AssetHelper {
 				_getDDMFormFieldTypeOrderByCol(
 					ddmFormField, sortField,
 					_getDDMFormFieldLocalizable(sortField), sortType, locale),
-				!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX),
-				orderByType);
+				false, orderByType);
 		}
 
 		return SortFactoryUtil.getSort(
 			AssetEntry.class, _getSortType(sortField),
-			_getOrderByCol(sortField, locale),
-			!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX), orderByType);
+			_getOrderByCol(sortField, locale), true, orderByType);
 	}
 
 	private int _getSortType(String fieldType) {

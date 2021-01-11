@@ -256,6 +256,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			runSQL(
 				StringBundler.concat(
 					"update PortletPreferences set preferences = replace(",
+					preferencesExpression, ", '#p_p_id_", oldRootPortletId,
+					"', '#p_p_id_", newRootPortletId, "') where portletId = '",
+					newRootPortletId, "'"));
+
+			runSQL(
+				StringBundler.concat(
+					"update PortletPreferences set preferences = replace(",
 					preferencesExpression, ", '#portlet_", oldRootPortletId,
 					"', '#portlet_", newRootPortletId, "') where portletId = '",
 					newRootPortletId, "'"));
@@ -264,11 +271,27 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				runSQL(
 					StringBundler.concat(
 						"update PortletPreferences set preferences = replace(",
+						preferencesExpression, ", '#p_p_id_", oldRootPortletId,
+						"_INSTANCE_', '#p_p_id_", newRootPortletId,
+						"_INSTANCE_') where portletId like '", newRootPortletId,
+						"_INSTANCE_%'"));
+
+				runSQL(
+					StringBundler.concat(
+						"update PortletPreferences set preferences = replace(",
 						preferencesExpression, ", '#portlet_", oldRootPortletId,
 						"_INSTANCE_', '#portlet_", newRootPortletId,
 						"_INSTANCE_') where portletId like '", newRootPortletId,
 						"_INSTANCE_%'"));
 			}
+
+			runSQL(
+				StringBundler.concat(
+					"update PortletPreferences set preferences = replace(",
+					preferencesExpression, ", '#p_p_id_", oldRootPortletId,
+					"_USER_', '#p_p_id_", newRootPortletId,
+					"_USER_') where portletId like '", newRootPortletId,
+					"_USER_%'"));
 
 			runSQL(
 				StringBundler.concat(
@@ -314,7 +337,11 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					}
 
 					String newValue = StringUtil.replace(
-						value, "#portlet_" + oldRootPortletId,
+						value, "#p_p_id_" + oldRootPortletId,
+						"#p_p_id_" + newRootPortletId);
+
+					newValue = StringUtil.replace(
+						newValue, "#portlet_" + oldRootPortletId,
 						"#portlet_" + newRootPortletId);
 
 					if (Objects.equals(value, newValue)) {

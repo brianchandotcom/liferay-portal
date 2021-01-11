@@ -559,6 +559,8 @@ components:
                     type: string
                 defaultRenderedPage:
                     $ref: "#/components/schemas/RenderedPage"
+                experience:
+                    $ref: "#/components/schemas/Experience"
                 friendlyUrlPath:
                     description:
                         A relative URL to the content page's rendered content.
@@ -1329,6 +1331,28 @@ components:
                     writeOnly: true
             required:
                 - name
+            type: object
+        Experience:
+            description:
+                # @review
+                Represents a customized experience for a given page.
+            properties:
+                key:
+                    description:
+                        the key of the experience
+                    type: string
+                name:
+                    description:
+                        the name of the experience
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                segments:
+                    items:
+                        $ref: "../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Segment"
+                    type: array
             type: object
         Fragment:
             properties:
@@ -7732,6 +7756,44 @@ paths:
                     description:
                         ""
             tags: ["ContentPage"]
+    "/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences":
+        get:
+            # @review
+            description:
+                Retrieves the experiences of a given Content Page
+            operationId: getSiteContentPageFriendlyUrlPathExperiencesPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Experience"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Experience"
+                                type: array
+                    description:
+                        ""
+            tags: [ "Experience" ]
     "/sites/{siteId}/content-pages/{friendlyUrlPath}/rendered-page":
         get:
             description:

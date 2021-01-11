@@ -149,8 +149,8 @@ for (int i = 0; i < 8; i++) {
 	inputName="multiSelectInput1"
 	label="Multiselect 1"
 	locator="<%= multiselectDisplayContext.getLocator() %>"
-	selectedItems="<%= multiselectDisplayContext.getCustomSelectedItems() %>"
-	sourceItems="<%= multiselectDisplayContext.getCustomSourceItems() %>"
+	selectedItems="<%= multiselectDisplayContext.getSelectedItemsWithCustomProperties() %>"
+	sourceItems="<%= multiselectDisplayContext.getSourceItemsWithCustomProperties() %>"
 />
 
 <clay:multiselect

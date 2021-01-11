@@ -25,56 +25,6 @@ import java.util.List;
  */
 public class MultiselectDisplayContext {
 
-	public List<MultiselectItem> getCustomSelectedItems() {
-		if (_customSelectedItems != null) {
-			return _customSelectedItems;
-		}
-
-		_customSelectedItems = MultiselectItemListBuilder.add(
-			multiselectItem -> {
-				multiselectItem.put("data", "1");
-				multiselectItem.put("name", "one");
-			}
-		).add(
-			multiselectItem -> {
-				multiselectItem.put("data", "2");
-				multiselectItem.put("name", "two");
-			}
-		).build();
-
-		return _customSelectedItems;
-	}
-
-	public List<MultiselectItem> getCustomSourceItems() {
-		if (_customSourceItems != null) {
-			return _customSourceItems;
-		}
-
-		_customSourceItems = MultiselectItemListBuilder.add(
-			multiselectItem -> {
-				multiselectItem.put("data", "1");
-				multiselectItem.put("name", "one");
-			}
-		).add(
-			multiselectItem -> {
-				multiselectItem.put("data", "2");
-				multiselectItem.put("name", "two");
-			}
-		).add(
-			multiselectItem -> {
-				multiselectItem.put("data", "3");
-				multiselectItem.put("name", "three");
-			}
-		).add(
-			multiselectItem -> {
-				multiselectItem.put("data", "4");
-				multiselectItem.put("name", "four");
-			}
-		).build();
-
-		return _customSourceItems;
-	}
-
 	public MultiselectLocator getLocator() {
 		if (_locator != null) {
 			return _locator;
@@ -108,6 +58,26 @@ public class MultiselectDisplayContext {
 		return _selectedItems;
 	}
 
+	public List<MultiselectItem> getSelectedItemsWithCustomProperties() {
+		if (_selectedItemsWithCustomProperties != null) {
+			return _selectedItemsWithCustomProperties;
+		}
+
+		_selectedItemsWithCustomProperties = MultiselectItemListBuilder.add(
+			multiselectItem -> {
+				multiselectItem.put("data", "1");
+				multiselectItem.put("name", "one");
+			}
+		).add(
+			multiselectItem -> {
+				multiselectItem.put("data", "2");
+				multiselectItem.put("name", "two");
+			}
+		).build();
+
+		return _selectedItemsWithCustomProperties;
+	}
+
 	public List<MultiselectItem> getSourceItems() {
 		if (_sourceItems != null) {
 			return _sourceItems;
@@ -138,14 +108,34 @@ public class MultiselectDisplayContext {
 		return _sourceItems;
 	}
 
-	public void setCustomSelectedItems(
-		List<MultiselectItem> customSelectedItems) {
+	public List<MultiselectItem> getSourceItemsWithCustomProperties() {
+		if (_sourceItemsWithCustomProperties != null) {
+			return _sourceItemsWithCustomProperties;
+		}
 
-		_customSelectedItems = customSelectedItems;
-	}
+		_sourceItemsWithCustomProperties = MultiselectItemListBuilder.add(
+			multiselectItem -> {
+				multiselectItem.put("data", "1");
+				multiselectItem.put("name", "one");
+			}
+		).add(
+			multiselectItem -> {
+				multiselectItem.put("data", "2");
+				multiselectItem.put("name", "two");
+			}
+		).add(
+			multiselectItem -> {
+				multiselectItem.put("data", "3");
+				multiselectItem.put("name", "three");
+			}
+		).add(
+			multiselectItem -> {
+				multiselectItem.put("data", "4");
+				multiselectItem.put("name", "four");
+			}
+		).build();
 
-	public void setCustomSourceItems(List<MultiselectItem> customSourceItems) {
-		_customSourceItems = customSourceItems;
+		return _sourceItemsWithCustomProperties;
 	}
 
 	public void setLocator(MultiselectLocator locator) {
@@ -156,14 +146,26 @@ public class MultiselectDisplayContext {
 		_selectedItems = selectedItems;
 	}
 
+	public void setSelectedItemsWithCustomProperties(
+		List<MultiselectItem> selectedItemsWithCustomProperties) {
+
+		_selectedItemsWithCustomProperties = selectedItemsWithCustomProperties;
+	}
+
 	public void setSourceItems(List<MultiselectItem> sourceItems) {
 		_sourceItems = sourceItems;
 	}
 
-	private List<MultiselectItem> _customSelectedItems;
-	private List<MultiselectItem> _customSourceItems;
+	public void setSourceItemsWithCustomProperties(
+		List<MultiselectItem> sourceItemsWithCustomProperties) {
+
+		_sourceItemsWithCustomProperties = sourceItemsWithCustomProperties;
+	}
+
 	private MultiselectLocator _locator;
 	private List<MultiselectItem> _selectedItems;
+	private List<MultiselectItem> _selectedItemsWithCustomProperties;
 	private List<MultiselectItem> _sourceItems;
+	private List<MultiselectItem> _sourceItemsWithCustomProperties;
 
 }

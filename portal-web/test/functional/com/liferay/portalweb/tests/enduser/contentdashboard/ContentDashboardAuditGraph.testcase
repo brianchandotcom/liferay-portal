@@ -186,7 +186,7 @@ definition {
 
 	@description = "Validate if the filters are saved after swapping vocabularies"
 	@priority = "5"
-	test AuditGraphSaveFiltersAfterSwapping{
+	test AuditGraphSaveFiltersAfterSwapping {
 		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

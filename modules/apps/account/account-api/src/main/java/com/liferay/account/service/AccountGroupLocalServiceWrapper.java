@@ -52,11 +52,11 @@ public class AccountGroupLocalServiceWrapper
 
 	@Override
 	public com.liferay.account.model.AccountGroup addAccountGroup(
-			long userId, String name, String description)
+			long userId, String description, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountGroupLocalService.addAccountGroup(
-			userId, name, description);
+			userId, description, name);
 	}
 
 	/**
@@ -379,11 +379,11 @@ public class AccountGroupLocalServiceWrapper
 
 	@Override
 	public com.liferay.account.model.AccountGroup updateAccountGroup(
-			long accountGroupId, String name, String description)
+			long accountGroupId, String description, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountGroupLocalService.updateAccountGroup(
-			accountGroupId, name, description);
+			accountGroupId, description, name);
 	}
 
 	@Override

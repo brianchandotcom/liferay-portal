@@ -55,10 +55,10 @@ public class AccountGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.account.model.AccountGroup addAccountGroup(
-			long userId, String name, String description)
+			long userId, String description, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().addAccountGroup(userId, name, description);
+		return getService().addAccountGroup(userId, description, name);
 	}
 
 	/**
@@ -359,11 +359,11 @@ public class AccountGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.account.model.AccountGroup updateAccountGroup(
-			long accountGroupId, String name, String description)
+			long accountGroupId, String description, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAccountGroup(
-			accountGroupId, name, description);
+			accountGroupId, description, name);
 	}
 
 	public static AccountGroupLocalService getService() {

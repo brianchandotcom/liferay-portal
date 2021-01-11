@@ -77,7 +77,7 @@ public interface AccountGroupLocalService
 	public AccountGroup addAccountGroup(AccountGroup accountGroup);
 
 	public AccountGroup addAccountGroup(
-			long userId, String name, String description)
+			long userId, String description, String name)
 		throws PortalException;
 
 	/**
@@ -297,7 +297,7 @@ public interface AccountGroupLocalService
 	public AccountGroup updateAccountGroup(AccountGroup accountGroup);
 
 	public AccountGroup updateAccountGroup(
-			long accountGroupId, String name, String description)
+			long accountGroupId, String description, String name)
 		throws PortalException;
 
 }

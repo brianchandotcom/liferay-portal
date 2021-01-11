@@ -23,8 +23,12 @@ import java.util.Set;
 /**
  * @author Peter Yoo
  */
-public class PluginsGitRepositoryJob
+public abstract class PluginsGitRepositoryJob
 	extends GitRepositoryJob implements PortalTestClassJob {
+
+	public String getBranchName() {
+		return _branchName;
+	}
 
 	@Override
 	public Set<String> getDistTypes() {
@@ -58,9 +62,11 @@ public class PluginsGitRepositoryJob
 	}
 
 	protected PluginsGitRepositoryJob(
-		String jobName, BuildProfile buildProfile) {
+		String jobName, BuildProfile buildProfile, String branchName) {
 
 		super(jobName, buildProfile);
+
+		_branchName = branchName;
 
 		getGitWorkingDirectory();
 
@@ -79,8 +85,6 @@ public class PluginsGitRepositoryJob
 
 		jobPropertiesFiles.add(
 			new File(portalGitRepositoryDir, "test.properties"));
-
-		readJobProperties();
 
 		portalGitWorkingDirectory =
 			(PortalGitWorkingDirectory)
@@ -111,5 +115,7 @@ public class PluginsGitRepositoryJob
 
 	protected Properties buildProperties;
 	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
+
+	private final String _branchName;
 
 }

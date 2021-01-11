@@ -229,7 +229,10 @@ lportal_BS
 
 		<sequential>
 			<if>
-				<isset property="env.JENKINS_HOME" />
+				<or>
+					<equals arg1="${test.batch.full.setup}" arg2="true" />
+					<isset property="env.JENKINS_HOME" />
+				</or>
 				<then>
 					<var name="database.type" unset="true" />
 
@@ -3172,7 +3175,10 @@ log.sanitizer.enabled=false</echo>
 					<prepare-test-environment />
 				</then>
 				<elseif>
-					<isset property="env.JENKINS_HOME" />
+					<or>
+						<equals arg1="${test.batch.full.setup}" arg2="true" />
+						<isset property="env.JENKINS_HOME" />
+					</or>
 					<then>
 						<prepare-test-build />
 					</then>

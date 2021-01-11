@@ -172,7 +172,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 				fullHierarchyDDMForm.getDDMFormFields()) {
 
 			fieldNameVariableNameMap.put(
-				ddmFormField.getName(), ddmFormField.getName());
+				ddmFormField.getName(), ddmFormField.getFieldReference());
 
 			collectNestedFieldNameVariableName(
 				ddmFormField, fieldNameVariableNameMap);

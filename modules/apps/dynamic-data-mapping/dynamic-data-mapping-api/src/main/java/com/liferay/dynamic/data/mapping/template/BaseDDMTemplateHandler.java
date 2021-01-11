@@ -96,7 +96,7 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 			fieldNameVariableNameMap.put(
 				childDDMFormField.getName(),
 				parentVariableName + StringPool.PERIOD +
-					childDDMFormField.getName());
+					childDDMFormField.getFieldReference());
 
 			collectNestedFieldNameVariableName(
 				childDDMFormField, fieldNameVariableNameMap);
@@ -145,7 +145,7 @@ public abstract class BaseDDMTemplateHandler extends BaseTemplateHandler {
 				fullHierarchyDDMForm.getDDMFormFields()) {
 
 			fieldNameVariableNameMap.put(
-				ddmFormField.getName(), ddmFormField.getName());
+				ddmFormField.getName(), ddmFormField.getFieldReference());
 
 			collectNestedFieldNameVariableName(
 				ddmFormField, fieldNameVariableNameMap);

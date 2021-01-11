@@ -144,6 +144,19 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 	function <portlet:namespace />saveDDMStructure() {
 		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
 			function (dataLayoutBuilder) {
+				const nameInput = document.getElementById(
+					'<portlet:namespace />name'
+				);
+
+				if (!nameInput.value) {
+					Liferay.Util.openToast({
+						message:
+							'<liferay-ui:message key="please-enter-a-valid-name" />',
+						title: '<liferay-ui:message key="error" />',
+						type: 'danger',
+					});
+				}
+
 				var description = <portlet:namespace />getInputLocalizedValues(
 					'description'
 				);

@@ -260,23 +260,10 @@ function getTabs(
 		...config.styleBooks,
 	];
 
-	const tabs = [
-		{
-			icon: 'magic',
-			label: Liferay.Language.get('style-book'),
-			options: styleBooks.map((styleBook) => ({
-				...styleBook,
-				isActive:
-					selectedStyleBook.styleBookEntryId ===
-					styleBook.styleBookEntryId,
-				onClick: () => onSelectStyleBook(styleBook.styleBookEntryId),
-			})),
-			type: OPTIONS_TYPES.styleBook,
-		},
-	];
+	const tabs = [];
 
 	if (config.layoutType !== LAYOUT_TYPES.master) {
-		tabs.splice(0, 0, {
+		tabs.push({
 			disabled: config.layoutType === LAYOUT_TYPES.master,
 			icon: 'page',
 			label: Liferay.Language.get('master'),
@@ -288,6 +275,19 @@ function getTabs(
 			type: OPTIONS_TYPES.master,
 		});
 	}
+
+	tabs.push({
+		icon: 'magic',
+		label: Liferay.Language.get('style-book'),
+		options: styleBooks.map((styleBook) => ({
+			...styleBook,
+			isActive:
+				selectedStyleBook.styleBookEntryId ===
+				styleBook.styleBookEntryId,
+			onClick: () => onSelectStyleBook(styleBook.styleBookEntryId),
+		})),
+		type: OPTIONS_TYPES.styleBook,
+	});
 
 	return tabs;
 }

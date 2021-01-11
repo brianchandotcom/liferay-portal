@@ -30,9 +30,9 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -664,12 +664,14 @@ public class AssetHelperImpl implements AssetHelper {
 					ddmFormField.getType(),
 					DDMFormFieldTypeConstants.NUMERIC)) {
 
-			sortType = Sort.DOUBLE_TYPE;
-		}
-		else if (Objects.equals(
-					ddmFormField.getType(), DDMFormFieldType.INTEGER)) {
+			if (Objects.equals(
+					ddmFormField.getDataType(), FieldConstants.INTEGER)) {
 
-			sortType = Sort.INT_TYPE;
+				sortType = Sort.INT_TYPE;
+			}
+			else {
+				sortType = Sort.DOUBLE_TYPE;
+			}
 		}
 
 		return sortType;

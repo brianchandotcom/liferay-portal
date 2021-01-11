@@ -56,10 +56,7 @@
 							"key": "BASIC_COMPONENT-heading"
 						},
 						"fragmentConfig": {
-							"headingLevel": "h1",
-							"marginBottom": "3",
-							"textAlign": "left",
-							"textColor": "white"
+							"headingLevel": "h1"
 						},
 						"fragmentFields": [
 							{
@@ -120,7 +117,12 @@
 									}
 								}
 							}
-						]
+						],
+						"fragmentStyle": {
+							"marginBottom": "3",
+							"textAlign": "left",
+							"textColor": "white"
+						}
 					},
 					"type": "Fragment"
 				},
@@ -129,11 +131,6 @@
 						"fragment": {
 							"collectionName": "Basic Components",
 							"key": "BASIC_COMPONENT-paragraph"
-						},
-						"fragmentConfig": {
-							"marginBottom": "3",
-							"textAlign": "left",
-							"textColor": "white"
 						},
 						"fragmentFields": [
 							{
@@ -194,7 +191,12 @@
 									}
 								}
 							}
-						]
+						],
+						"fragmentStyle": {
+							"marginBottom": "3",
+							"textAlign": "left",
+							"textColor": "white"
+						}
 					},
 					"type": "Fragment"
 				}

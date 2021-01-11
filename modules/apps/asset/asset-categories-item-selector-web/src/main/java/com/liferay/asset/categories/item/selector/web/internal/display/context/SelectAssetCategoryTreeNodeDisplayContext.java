@@ -103,7 +103,7 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 					getAssetCategoryTreeNodeId());
 
 			if (assetCategory != null) {
-				return assetCategory.getName();
+				return assetCategory.getTitle(_themeDisplay.getLocale());
 			}
 		}
 		else if (assetCategoryTreeNodeType.equals(
@@ -114,7 +114,7 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 					getAssetCategoryTreeNodeId());
 
 			if (assetVocabulary != null) {
-				return assetVocabulary.getName();
+				return assetVocabulary.getTitle(_themeDisplay.getLocale());
 			}
 		}
 

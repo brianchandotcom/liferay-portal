@@ -34,6 +34,16 @@ public class BatchAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 
 		Build build = getBuild();
 
+		if (build == null) {
+			return failedTestResults;
+		}
+
+		String result = build.getResult();
+
+		if (!result.equals("UNSTABLE") && !result.equals("SUCCESS")) {
+			return failedTestResults;
+		}
+
 		for (TestResult testResult : build.getTestResults(null)) {
 			if (testResult.isFailing() && !isIgnorableTestResult(testResult)) {
 				failedTestResults.add(testResult);
@@ -46,6 +56,10 @@ public class BatchAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 	@Override
 	public SpiraTestCaseRun.Status getSpiraTestCaseRunStatus() {
 		AxisBuild axisBuild = getAxisBuild();
+
+		if (axisBuild == null) {
+			return SpiraTestCaseRun.Status.FAILED;
+		}
 
 		String result = axisBuild.getResult();
 

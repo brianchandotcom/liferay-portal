@@ -303,4 +303,38 @@
 			<finder-column name="groupId" />
 		</finder>
 	</entity>
+	<entity external-reference-code="company" local-service="true" name="CompanyScopedEntry">
+
+		<!-- PK fields -->
+
+		<column name="CompanyScopedEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
+	<entity external-reference-code="true" local-service="true" name="DefaultScopedEntry">
+
+		<!-- PK fields -->
+
+		<column name="DefaultScopedEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
+	<entity external-reference-code="group" local-service="true" name="GroupScopedEntry">
+
+		<!-- PK fields -->
+
+		<column name="GroupScopedEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+	</entity>
 </service-builder>

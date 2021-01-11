@@ -21,8 +21,7 @@ exports[`Field Text has a helptext 1`] = `
       Type something
     </span>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       Type something
@@ -39,7 +38,7 @@ exports[`Field Text has a label 1`] = `
     data-field-name="textField"
   >
     <label
-      aria-labelledby="textField_fieldDetails"
+      aria-describedby="textField_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -52,8 +51,7 @@ exports[`Field Text has a label 1`] = `
       value=""
     />
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       label
@@ -187,7 +185,7 @@ exports[`Field Text renders Label if showLabel is true 1`] = `
     data-field-name="textField"
   >
     <label
-      aria-labelledby="textField_fieldDetails"
+      aria-describedby="textField_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -200,8 +198,7 @@ exports[`Field Text renders Label if showLabel is true 1`] = `
       value=""
     />
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       text

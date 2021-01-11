@@ -55,8 +55,7 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
       Type something
     </span>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       Type something
@@ -73,7 +72,7 @@ exports[`Field DocumentLibrary has a label 1`] = `
     data-field-name="textField"
   >
     <label
-      aria-labelledby="textField_fieldDetails"
+      aria-describedby="textField_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -120,8 +119,7 @@ exports[`Field DocumentLibrary has a label 1`] = `
       />
     </div>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       label
@@ -458,7 +456,7 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
     data-field-name="textField"
   >
     <label
-      aria-labelledby="textField_fieldDetails"
+      aria-describedby="textField_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -505,8 +503,7 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
       />
     </div>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="textField_fieldDetails"
     >
       text

@@ -45,8 +45,7 @@ exports[`KeyValue has a helptext 1`] = `
       Type something
     </span>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="keyValue_fieldDetails"
     >
       Type something
@@ -63,7 +62,7 @@ exports[`KeyValue has a label 1`] = `
     data-field-name="keyValue"
   >
     <label
-      aria-labelledby="keyValue_fieldDetails"
+      aria-describedby="keyValue_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -100,8 +99,7 @@ exports[`KeyValue has a label 1`] = `
       />
     </div>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="keyValue_fieldDetails"
     >
       label
@@ -335,7 +333,7 @@ exports[`KeyValue renders Label if showLabel is true 1`] = `
     data-field-name="keyValue"
   >
     <label
-      aria-labelledby="keyValue_fieldDetails"
+      aria-describedby="keyValue_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -372,8 +370,7 @@ exports[`KeyValue renders Label if showLabel is true 1`] = `
       />
     </div>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="keyValue_fieldDetails"
     >
       text

@@ -35,8 +35,7 @@ exports[`Field Checkbox has a helptext 1`] = `
       Type something
     </span>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="undefined_fieldDetails"
     >
       Type something

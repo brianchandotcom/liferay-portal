@@ -21,8 +21,7 @@ exports[`Field Numeric has a helptext 1`] = `
       Type something
     </span>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="numericField_fieldDetails"
     >
       Type something
@@ -58,7 +57,7 @@ exports[`Field Numeric has a label 1`] = `
     data-field-name="numericField"
   >
     <label
-      aria-labelledby="numericField_fieldDetails"
+      aria-describedby="numericField_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -71,8 +70,7 @@ exports[`Field Numeric has a label 1`] = `
       value=""
     />
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="numericField_fieldDetails"
     >
       label
@@ -186,7 +184,7 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
     data-field-name="numericField"
   >
     <label
-      aria-labelledby="numericField_fieldDetails"
+      aria-describedby="numericField_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -199,8 +197,7 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
       value=""
     />
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="numericField_fieldDetails"
     >
       Numeric Field

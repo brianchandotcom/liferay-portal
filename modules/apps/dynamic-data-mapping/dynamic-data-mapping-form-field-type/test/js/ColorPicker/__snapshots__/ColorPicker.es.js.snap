@@ -118,8 +118,7 @@ exports[`Field Color Picker renders field with helptext 1`] = `
       Helptext
     </span>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="colorPicker_fieldDetails"
     >
       Helptext
@@ -136,7 +135,7 @@ exports[`Field Color Picker renders field with label 1`] = `
     data-field-name="colorPicker"
   >
     <label
-      aria-labelledby="colorPicker_fieldDetails"
+      aria-describedby="colorPicker_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -193,8 +192,7 @@ exports[`Field Color Picker renders field with label 1`] = `
       Helptext
     </span>
     <span
-      aria-hidden="false"
-      hidden=""
+      class="sr-only"
       id="colorPicker_fieldDetails"
     >
       label

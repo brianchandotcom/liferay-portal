@@ -334,6 +334,7 @@ class JournalPortlet extends PortletBase {
 		}
 
 		openToast({
+			autoClose: false,
 			container: alertContainer,
 			message,
 			type: 'danger',

@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONFLICTING_CHANGES_DIFF_IFRAME</td>
-	<td>//iframe[contains(@title,'view_diff')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONFLICTING_CHANGES_DIFF_IFRAME_TITLE</td>
 	<td>//div[contains(@class,'modal-header')]/div[@class='modal-title' and contains(.,'${key_iframeTitle}')]</td>
 	<td></td>

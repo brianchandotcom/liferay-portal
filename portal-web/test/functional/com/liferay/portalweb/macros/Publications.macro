@@ -219,8 +219,6 @@ definition {
 		AssertElementPresent(
 			key_iframeTitle = "${entryTitle}",
 			locator1 = "Publications#CONFLICTING_CHANGES_DIFF_IFRAME_TITLE");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "Publications#CONFLICTING_CHANGES_DIFF_IFRAME");
 	}
 
 	macro publishPublication {

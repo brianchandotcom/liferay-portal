@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Crypto Hash Provider SPI
+Bundle-SymbolicName: com.liferay.portal.crypto.hash.provider.spi
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.crypto.hash.provider.spi,\
+	com.liferay.portal.crypto.hash.provider.spi.factory,\
+	com.liferay.portal.crypto.hash.provider.spi.salt

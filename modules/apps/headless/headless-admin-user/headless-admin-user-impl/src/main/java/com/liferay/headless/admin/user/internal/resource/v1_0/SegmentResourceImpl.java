@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.SegmentDTOConverter;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
@@ -127,24 +128,15 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 		return context;
 	}
 
-	private Segment _toSegment(SegmentsEntry segmentsEntry) {
-		return new Segment() {
-			{
-				active = segmentsEntry.isActive();
-				criteria = segmentsEntry.getCriteria();
-				dateCreated = segmentsEntry.getCreateDate();
-				dateModified = segmentsEntry.getModifiedDate();
-				id = segmentsEntry.getSegmentsEntryId();
-				name = segmentsEntry.getName(
-					segmentsEntry.getDefaultLanguageId());
-				siteId = segmentsEntry.getGroupId();
-				source = segmentsEntry.getSource();
-			}
-		};
+	private Segment _toSegment(SegmentsEntry segmentsEntry) throws Exception {
+		return _segmentDTOConverter.toDTO(segmentsEntry);
 	}
 
 	@javax.ws.rs.core.Context
 	private HttpHeaders _httpHeaders;
+
+	@Reference
+	private SegmentDTOConverter _segmentDTOConverter;
 
 	@Reference
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;

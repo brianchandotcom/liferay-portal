@@ -50,7 +50,7 @@ else {
 editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 %>
 
-<aui:form action="<%= editDDMStructureURL.toString() %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveDDMStructure();" %>'>
+<aui:form action="<%= editDDMStructureURL.toString() %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="dataDefinition" type="hidden" />
@@ -169,5 +169,18 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 				});
 			}
 		);
+	}
+
+	const form = document.getElementById('<portlet:namespace />fm');
+
+	if (form) {
+		form.addEventListener('submit', <portlet:namespace />saveDDMStructure);
+
+		Liferay.once('destroyPortlet', function () {
+			form.removeEventListener(
+				'submit',
+				<portlet:namespace />saveDDMStructure
+			);
+		});
 	}
 </aui:script>

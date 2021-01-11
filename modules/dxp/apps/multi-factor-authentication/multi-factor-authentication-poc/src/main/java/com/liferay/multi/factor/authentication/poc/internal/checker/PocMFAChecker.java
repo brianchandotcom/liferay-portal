@@ -15,6 +15,7 @@
 package com.liferay.multi.factor.authentication.poc.internal.checker;
 
 import com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration;
+import com.liferay.multi.factor.authentication.poc.internal.constants.MFAPocWebKeys;
 import com.liferay.multi.factor.authentication.spi.checker.browser.BrowserMFAChecker;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -69,7 +70,7 @@ public class PocMFAChecker implements BrowserMFAChecker {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession(false);
 
-		if (httpSession.getAttribute("mfaPoc") != null) {
+		if (httpSession.getAttribute(MFAPocWebKeys.MFA_POC) != null) {
 			return true;
 		}
 
@@ -93,7 +94,7 @@ public class PocMFAChecker implements BrowserMFAChecker {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
-		httpSession.setAttribute("mfaPoc", mfaPoc);
+		httpSession.setAttribute(MFAPocWebKeys.MFA_POC, mfaPoc);
 
 		return true;
 	}

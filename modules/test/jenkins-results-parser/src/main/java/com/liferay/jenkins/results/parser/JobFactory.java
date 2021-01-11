@@ -158,6 +158,24 @@ public class JobFactory {
 			return pluginsAcceptancePullRequestJob;
 		}
 
+		if (jobName.equals("test-plugins-release")) {
+			PluginsReleaseJob pluginsReleaseJob = new PluginsReleaseJob(
+				jobName, testSuiteName, buildProfile, branchName);
+
+			_jobs.put(jobKey, pluginsReleaseJob);
+
+			return pluginsReleaseJob;
+		}
+
+		if (jobName.equals("test-plugins-upstream")) {
+			PluginsUpstreamJob pluginsUpstreamJob = new PluginsUpstreamJob(
+				jobName, testSuiteName, buildProfile, branchName);
+
+			_jobs.put(jobKey, pluginsUpstreamJob);
+
+			return pluginsUpstreamJob;
+		}
+
 		if (jobName.startsWith("test-portal-acceptance-pullrequest(")) {
 			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
 				new PortalAcceptancePullRequestJob(

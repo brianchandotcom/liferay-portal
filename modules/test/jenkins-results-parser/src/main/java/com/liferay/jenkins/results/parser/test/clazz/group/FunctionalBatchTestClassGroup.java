@@ -19,6 +19,8 @@ import com.google.common.collect.Lists;
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PluginsTestSuiteJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.poshi.core.PoshiContext;
@@ -297,6 +299,21 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private String _getTestBaseDirName() {
+		Job job = getJob();
+
+		if (job instanceof PluginsTestSuiteJob) {
+			PluginsTestSuiteJob pluginsTestSuiteJob = (PluginsTestSuiteJob)job;
+
+			File pluginTestBaseDir = pluginsTestSuiteJob.getPluginTestBaseDir();
+
+			try {
+				return pluginTestBaseDir.getCanonicalPath();
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
 		String testBaseDirName = System.getenv("test.base.dir.name");
 
 		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {

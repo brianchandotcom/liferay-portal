@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>CURRENT_DISPLAY_STYLE</td>
-	<td>//ul[@class='navbar-nav']//li[contains(@class,'nav-item lfr-portal-tooltip')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//button[contains(@class,'dropdown-toggle nav-link nav-link-monospaced btn btn-unstyled')]</td>
 	<td></td>
 </tr>
 </tbody>

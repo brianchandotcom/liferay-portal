@@ -21,7 +21,7 @@ const DISCOUNT_RULES_PATH = '/discount-accounts';
 const VERSION = 'v2.0';
 
 function resolvePath(basePath = '', discountId = '', discountAccountId = '') {
-	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}/${DISCOUNT_RULES_PATH}/${discountAccountId}`;
+	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}${DISCOUNT_RULES_PATH}/${discountAccountId}`;
 }
 
 export default (basePath) => ({

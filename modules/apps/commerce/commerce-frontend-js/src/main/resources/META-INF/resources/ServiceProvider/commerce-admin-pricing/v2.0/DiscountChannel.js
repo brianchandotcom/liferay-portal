@@ -21,7 +21,7 @@ const DISCOUNT_RULES_PATH = '/discount-channels';
 const VERSION = 'v2.0';
 
 function resolvePath(basePath = '', discountId = '', discountChannelId = '') {
-	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}/${DISCOUNT_RULES_PATH}/${discountChannelId}`;
+	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}${DISCOUNT_RULES_PATH}/${discountChannelId}`;
 }
 
 export default (basePath) => ({

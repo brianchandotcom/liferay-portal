@@ -25,7 +25,7 @@ function resolvePath(
 	priceModifierId = '',
 	priceModifierProductGroupId = ''
 ) {
-	return `${basePath}${VERSION}${PRICE_MODIFIERS_PATH}/${priceModifierId}/${PRICE_MODIFIER_RULES_PATH}/${priceModifierProductGroupId}`;
+	return `${basePath}${VERSION}${PRICE_MODIFIERS_PATH}/${priceModifierId}${PRICE_MODIFIER_RULES_PATH}/${priceModifierProductGroupId}`;
 }
 
 export default (basePath) => ({

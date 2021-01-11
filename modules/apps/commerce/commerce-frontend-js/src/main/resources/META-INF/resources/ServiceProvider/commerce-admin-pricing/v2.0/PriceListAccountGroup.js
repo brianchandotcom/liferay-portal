@@ -25,7 +25,7 @@ function resolvePath(
 	priceListId = '',
 	priceListAccountGroupId = ''
 ) {
-	return `${basePath}${VERSION}${PRICE_LISTS_PATH}/${priceListId}/${PRICE_LIST_RULES_PATH}/${priceListAccountGroupId}`;
+	return `${basePath}${VERSION}${PRICE_LISTS_PATH}/${priceListId}${PRICE_LIST_RULES_PATH}/${priceListAccountGroupId}`;
 }
 
 export default (basePath) => ({

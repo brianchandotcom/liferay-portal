@@ -25,7 +25,7 @@ function resolvePath(
 	discountId = '',
 	discountProductGroupId = ''
 ) {
-	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}/${DISCOUNT_RULES_PATH}/${discountProductGroupId}`;
+	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}${DISCOUNT_RULES_PATH}/${discountProductGroupId}`;
 }
 
 export default (basePath) => ({

@@ -21,7 +21,7 @@ const DISCOUNT_RULES_PATH = '/discount-rules';
 const VERSION = 'v2.0';
 
 function resolvePath(basePath = '', discountId = '') {
-	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}/${DISCOUNT_RULES_PATH}`;
+	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}${DISCOUNT_RULES_PATH}`;
 }
 
 function resolveRulePath(basePath = '', discountRuleId = '') {

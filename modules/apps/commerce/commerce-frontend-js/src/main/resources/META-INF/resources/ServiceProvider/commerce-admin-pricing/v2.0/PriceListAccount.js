@@ -21,7 +21,7 @@ const PRICE_LIST_RULES_PATH = '/price-list-accounts';
 const VERSION = 'v2.0';
 
 function resolvePath(basePath = '', priceListId = '', priceListAccountId = '') {
-	return `${basePath}${VERSION}${PRICE_LISTS_PATH}/${priceListId}/${PRICE_LIST_RULES_PATH}/${priceListAccountId}`;
+	return `${basePath}${VERSION}${PRICE_LISTS_PATH}/${priceListId}${PRICE_LIST_RULES_PATH}/${priceListAccountId}`;
 }
 
 export default (basePath) => ({

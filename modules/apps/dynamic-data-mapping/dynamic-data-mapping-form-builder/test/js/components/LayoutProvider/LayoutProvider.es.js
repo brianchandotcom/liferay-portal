@@ -606,15 +606,32 @@ describe('LayoutProvider', () => {
 
 								const visitor = new PagesVisitor(pages);
 
-								newPages = visitor.mapFields((field) => ({
-									...field,
+								newPages = visitor.mapFields((field) => {
+									const newField = {
+										...field,
 
-									// Overrides the fieldName because it is generated when a field is duplicated,
-									// toMatchSnapshot has problems with deep arrays so we override it here to
-									// avoid this.
+										// Overrides the fieldName because it is generated when a field is duplicated,
+										// toMatchSnapshot has problems with deep arrays so we override it here to
+										// avoid this.
 
-									instanceId: 'Any<String>',
-								}));
+										instanceId: 'Any<String>',
+									};
+
+									const {
+										defaultLanguageId,
+										localizedValue,
+									} = newField;
+
+									if (
+										defaultLanguageId &&
+										newField.fieldName !== 'label'
+									) {
+										localizedValue[defaultLanguageId] =
+											'Any<String>';
+									}
+
+									return newField;
+								});
 							}
 
 							const name = `name${fieldIndex}${columnIndex}${rowIndex}${pageIndex}`;

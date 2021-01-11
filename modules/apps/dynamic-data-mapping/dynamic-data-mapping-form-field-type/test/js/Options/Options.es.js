@@ -563,7 +563,23 @@ describe('Options', () => {
 				name="options"
 				onChange={jest.fn()}
 				spritemap={spritemap}
-				value={optionsValue}
+				value={{
+					...optionsValue,
+					pt_BR: [
+						{
+							id: 'option1',
+							label: 'Option 1',
+							reference: 'Option1',
+							value: 'Option1',
+						},
+						{
+							id: 'option2',
+							label: 'Option 2',
+							reference: 'Option2',
+							value: 'Option2',
+						},
+					],
+				}}
 			/>
 		);
 

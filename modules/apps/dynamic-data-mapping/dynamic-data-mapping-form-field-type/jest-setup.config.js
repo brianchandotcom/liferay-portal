@@ -64,6 +64,7 @@ window.Liferay.PortletKeys = {
 window.themeDisplay = {
 	...window.themeDisplay,
 	getDefaultLanguageId: () => 'en_US',
+	getLanguageId: () => 'en_US',
 	getLayoutRelativeControlPanelURL: () => 'layoutRelativeControlPanelURL',
 	getLayoutRelativeURL: () => 'getLayoutRelativeURL',
 	getScopeGroupId: () => 'scopeGroupId',

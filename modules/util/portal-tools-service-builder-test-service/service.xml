@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="bigDecimalEntryId" primary="true" type="long" />
+		<column name="bigDecimalEntryId" primary="true" type="long"/>
 
 		<!-- Audit fields -->
 
@@ -302,5 +302,29 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+	</entity>
+	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntity">
+
+		<!-- PK fields -->
+
+		<column name="ercCompanyEntityId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
+	<entity external-reference-code="group" local-service="true" name="ERCGroupEntity">
+
+		<!-- PK fields -->
+
+		<column name="ercGroupEntityId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
 	</entity>
 </service-builder>

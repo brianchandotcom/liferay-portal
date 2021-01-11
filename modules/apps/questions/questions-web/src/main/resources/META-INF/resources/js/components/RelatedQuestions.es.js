@@ -47,7 +47,7 @@ export default withRouter(
 				{data && !!data.messageBoardThreads.items.length && (
 					<>
 						<h2 className="c-mt-5 font-weight-light h3 text-secondary">
-							Related Questions
+							{Liferay.Language.get('related-questions')}
 						</h2>
 
 						<hr />

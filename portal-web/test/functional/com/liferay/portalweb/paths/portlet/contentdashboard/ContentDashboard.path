@@ -98,6 +98,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_TEXT</td>
+	<td>//*[contains(@class, 'label-section')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIRST_CHECKBOX_TAGS</td>
 	<td>//*[contains(@title,'Select') and contains(@value,'tag1')]</td>
 	<td></td>
@@ -180,6 +185,11 @@
 <tr>
 	<td>SELECT_TAGS_BUTTON</td>
 	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SWAP_VOCABULARIES_BUTTON</td>
+	<td>//*[contains(@class,'btn-sm btn-outline-secondary') and contains(@type,'submit')]</td>
 	<td></td>
 </tr>
 <tr>

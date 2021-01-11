@@ -184,6 +184,48 @@ definition {
 			value1 = "Content per Audience");
 	}
 
+	@description = "Validate if the filters are saved after swapping vocabularies"
+	@priority = "5"
+	test AuditGraphSaveFiltersAfterSwapping{
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Audience 1",
+			vocabularyName = "Audience",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+		WebContent.selectCategory(
+			categoryName = "Stage 1",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "Stage");
+
+		PortletEntry.publish();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByAuthorTable(filterOption = "Author");
+
+		ContentDashboard.swapVocabularies();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FILTER_TEXT",
+			value1 = "Author:Test Test");
+	}
+
 	@description = "When the user unchecks all of the checkboxes of the content audit graph, all bars in the graph disappear and a message is shown: No Stage Categories selected. Select any stage category from the checkboxes in the legend above."
 	@priority = "5"
 	test AuditGraphUncheckCheckbox {

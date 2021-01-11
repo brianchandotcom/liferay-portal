@@ -322,6 +322,10 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro swapVocabularies {
+		Click(locator1 = "ContentDashboard#SWAP_VOCABULARIES_BUTTON");
+	}
+
 	macro tearDown {
 		Category.openCategoriesAdmin(siteURLKey = "global");
 

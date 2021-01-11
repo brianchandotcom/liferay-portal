@@ -52,91 +52,105 @@ export default withRouter(
 
 						<hr />
 
-						<div className="questions-container row">
-							{data.messageBoardThreads.items
-								.filter(
-									(otherQuestion) =>
-										otherQuestion.id !== question.id
-								)
-								.map((relatedQuestion) => (
-									<div
-										className="col-lg-3 col-md-4 col-sm-6 p-3 position-relative"
-										key={relatedQuestion.id}
-									>
-										<div className="align-items-center d-flex justify-content-between stretched-link-layer">
-											<SectionLabel
-												section={
-													relatedQuestion.messageBoardSection
-												}
-											/>
-
-											<QuestionBadge
-												className="text-secondary"
-												symbol={
-													normalizeRating(
-														question.aggregateRating
-													) < 0
-														? 'caret-bottom'
-														: 'caret-top'
-												}
-												value={normalizeRating(
-													relatedQuestion.aggregateRating
-												)}
-											/>
-										</div>
-
-										<Link
-											className="c-mt-2 d-block questions-title stretched-link text-reset"
-											to={`/questions/${sectionTitle}/${relatedQuestion.friendlyUrlPath}`}
+						{data.messageBoardThreads.items && (
+							<div className="questions-container row">
+								{data.messageBoardThreads.items
+									.filter(
+										(otherQuestion) =>
+											otherQuestion.id !== question.id
+									)
+									.map((relatedQuestion) => (
+										<div
+											className="col-lg-3 col-md-4 col-sm-6 p-3 position-relative"
+											key={relatedQuestion.id}
 										>
-											<h3
-												className={classNames(
-													'h2',
-													'stretched-link-layer',
-													{
-														'question-seen':
-															relatedQuestion.seen,
+											<div className="align-items-center d-flex justify-content-between stretched-link-layer">
+												<SectionLabel
+													section={
+														relatedQuestion.messageBoardSection
 													}
-												)}
-											>
-												{relatedQuestion.headline}
+												/>
 
-												{!!relatedQuestion.locked && (
-													<span className="c-ml-2">
-														<ClayIcon symbol="lock" />
-													</span>
-												)}
-											</h3>
-										</Link>
-
-										<div className="c-mt-3 small stretched-link-layer">
-											<UserIcon
-												fullName={
-													relatedQuestion.creator.name
-												}
-												portraitURL={
-													relatedQuestion.creator
-														.image
-												}
-												size="sm"
-												userId={String(
-													relatedQuestion.creator.id
-												)}
-											/>
-
-											<span className="c-ml-2 font-weight-bold">
-												{relatedQuestion.creator.name}
-											</span>
-
-											<span className="text-secondary">
-												{' - ' +
-													dateToInternationalHuman(
-														relatedQuestion.dateModified
+												<QuestionBadge
+													className="text-secondary"
+													symbol={
+														normalizeRating(
+															question.aggregateRating
+														) < 0
+															? 'caret-bottom'
+															: 'caret-top'
+													}
+													value={normalizeRating(
+														relatedQuestion.aggregateRating
 													)}
-											</span>
+												/>
+											</div>
+
+											<Link
+												className="c-mt-2 d-block questions-title stretched-link text-reset"
+												to={`/questions/${sectionTitle}/${relatedQuestion.friendlyUrlPath}`}
+											>
+												<h3
+													className={classNames(
+														'h2',
+														'stretched-link-layer',
+														{
+															'question-seen':
+																relatedQuestion.seen,
+														}
+													)}
+												>
+													{relatedQuestion.headline}
+
+													{!!relatedQuestion.locked && (
+														<span className="c-ml-2">
+															<ClayIcon symbol="lock" />
+														</span>
+													)}
+												</h3>
+											</Link>
+
+											<div className="c-mt-3 small stretched-link-layer">
+												<UserIcon
+													fullName={
+														relatedQuestion.creator
+															.name
+													}
+													portraitURL={
+														relatedQuestion.creator
+															.image
+													}
+													size="sm"
+													userId={String(
+														relatedQuestion.creator
+															.id
+													)}
+												/>
+
+												<span className="c-ml-2 font-weight-bold">
+													{
+														relatedQuestion.creator
+															.name
+													}
+												</span>
+
+												<span className="text-secondary">
+													{' - ' +
+														dateToInternationalHuman(
+															relatedQuestion.dateModified
+														)}
+												</span>
+											</div>
 										</div>
-									</div>
-								))}
+									))}
+							</div>
+						)}
+						<div className="d-flex justify-content-center">
+							<h2 className="c-my-5 font-weight-light h3 text-secondary">
+								{Liferay.Language.get(
+									'no-related-questions-found'
+								)}
+							</h2>
 						</div>
 					</>
 				)}

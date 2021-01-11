@@ -85,14 +85,14 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				href="<%= rowHREF %>"
 				name="name"
-				value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+				value="<%= HtmlUtil.escape(ddmStructure.getName(locale, true)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200"
 				name="description"
 				truncate="<%= true %>"
-				value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>"
+				value="<%= HtmlUtil.escape(ddmStructure.getDescription(locale, true)) %>"
 			/>
 
 			<%

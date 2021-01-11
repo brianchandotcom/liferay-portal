@@ -285,6 +285,17 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
+	public String getName(Locale locale, boolean useDefault) {
+		String name = super.getName(locale, useDefault);
+
+		if (Validator.isNull(name)) {
+			return super.getName(getDefaultLanguageId(), useDefault);
+		}
+
+		return name;
+	}
+
+	@Override
 	public List<String> getRootFieldNames() {
 		DDMForm ddmForm = getFullHierarchyDDMForm();
 

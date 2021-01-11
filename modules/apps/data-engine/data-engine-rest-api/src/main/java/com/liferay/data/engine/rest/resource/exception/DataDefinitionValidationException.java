@@ -156,6 +156,11 @@ public class DataDefinitionValidationException extends RuntimeException {
 	public static class MustSetOptionsForField
 		extends DataDefinitionValidationException {
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+		 * 			#MustSetOptionsForField(String, String)}
+		 */
+		@Deprecated
 		public MustSetOptionsForField(String fieldName) {
 			super(
 				String.format(

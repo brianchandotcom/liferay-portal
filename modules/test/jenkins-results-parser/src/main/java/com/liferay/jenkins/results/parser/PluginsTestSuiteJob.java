@@ -16,13 +16,13 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Michael Hashimoto
  */
-public abstract class PluginsTestSuiteJob extends PluginsGitRepositoryJob {
+public abstract class PluginsTestSuiteJob
+	extends PluginsGitRepositoryJob implements TestSuiteJob {
 
 	public String getPluginName() {
 		return _pluginName;
@@ -36,6 +36,11 @@ public abstract class PluginsTestSuiteJob extends PluginsGitRepositoryJob {
 			pluginsGitWorkingDirectory.getWorkingDirectory(),
 			JenkinsResultsParserUtil.combine(
 				"portlets/", getPluginName(), "/test/functional"));
+	}
+
+	@Override
+	public String getTestSuiteName() {
+		return getPluginName();
 	}
 
 	protected PluginsTestSuiteJob(
@@ -52,24 +57,10 @@ public abstract class PluginsTestSuiteJob extends PluginsGitRepositoryJob {
 
 	@Override
 	protected Set<String> getRawBatchNames() {
-		Set<String> rawBatchNames = new HashSet<>();
-
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), "test.batch.names", getJobName());
-
-		if ((testBatchNames == null) || testBatchNames.isEmpty()) {
-			return rawBatchNames;
-		}
-
-		for (String testBatchName : testBatchNames.split(",")) {
-			if (!testBatchName.startsWith("plugins-functional")) {
-				continue;
-			}
-
-			rawBatchNames.add(testBatchName);
-		}
-
-		return rawBatchNames;
+		return getSetFromString(
+			JenkinsResultsParserUtil.getProperty(
+				getJobProperties(), "test.batch.names", getJobName(),
+				getTestSuiteName()));
 	}
 
 	private final String _pluginName;

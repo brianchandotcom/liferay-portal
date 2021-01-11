@@ -298,7 +298,15 @@ public class SpiraResultImporter {
 									new Date(start))));
 
 						try {
-							return axisBuild.getTestResults(null);
+							String result = axisBuild.getResult();
+
+							if (result.equals("UNSTABLE") ||
+								result.equals("SUCCESS")) {
+
+								return axisBuild.getTestResults(null);
+							}
+
+							return new ArrayList<>();
 						}
 						catch (Exception exception) {
 							throw new RuntimeException(exception);

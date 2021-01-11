@@ -23,6 +23,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUti
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.YAMLUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Content;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
@@ -44,9 +45,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -153,6 +157,14 @@ public class OpenAPIParserUtil {
 			return Collections.emptyList();
 		}
 
+		Map<String, Schema> schemas = Optional.ofNullable(
+			openAPIYAML.getComponents()
+		).map(
+			Components::getSchemas
+		).orElse(
+			new HashMap<>()
+		);
+
 		Set<String> externalReferences = new HashSet<>();
 
 		for (Map.Entry<String, PathItem> entry1 : pathItems.entrySet()) {
@@ -163,7 +175,7 @@ public class OpenAPIParserUtil {
 
 				if (requestBody != null) {
 					_getExternalReferences(
-						requestBody.getContent(), externalReferences);
+						requestBody.getContent(), externalReferences, schemas);
 				}
 
 				Map<ResponseCode, Response> responses =
@@ -171,7 +183,7 @@ public class OpenAPIParserUtil {
 
 				for (Response response : responses.values()) {
 					_getExternalReferences(
-						response.getContent(), externalReferences);
+						response.getContent(), externalReferences, schemas);
 				}
 			}
 		}
@@ -449,25 +461,68 @@ public class OpenAPIParserUtil {
 	}
 
 	private static void _getExternalReferences(
-		Map<String, Content> contents, Set<String> externalReferences) {
+		Map<String, Content> contents, Set<String> externalReferences,
+		Map<String, Schema> schemas) {
 
 		if (contents == null) {
 			return;
 		}
 
 		for (Content content : contents.values()) {
-			Schema schema = content.getSchema();
+			Schema contentSchema = content.getSchema();
 
-			if (schema == null) {
+			if (contentSchema == null) {
 				continue;
 			}
 
-			String reference = _getReference(schema);
+			Queue<Map<String, Schema>> queue = new LinkedList<>();
 
-			if ((reference != null) &&
-				!reference.contains("#/components/schemas/")) {
+			queue.add(Collections.singletonMap("content", contentSchema));
 
-				externalReferences.add(reference);
+			Map<String, Schema> map = null;
+			Set<String> visited = new HashSet<>();
+
+			while ((map = queue.poll()) != null) {
+				for (Map.Entry<String, Schema> entry : map.entrySet()) {
+					if (visited.contains(entry.getKey())) {
+						continue;
+					}
+
+					Schema schema = entry.getValue();
+
+					String reference = _getReference(schema);
+
+					if (reference != null) {
+						if (reference.contains("#/components/schemas/")) {
+							String referenceName = getReferenceName(reference);
+
+							Schema referenceSchema = schemas.get(referenceName);
+
+							if (referenceSchema != null) {
+								queue.add(
+									Collections.singletonMap(
+										referenceName, referenceSchema));
+								visited.add(entry.getKey());
+							}
+						}
+						else {
+							externalReferences.add(reference);
+						}
+					}
+					else if (schema.getAllOfSchemas() != null) {
+						List<Schema> allOfSchemas = schema.getAllOfSchemas();
+
+						queue.add(
+							Collections.singletonMap(
+								"allOf" + entry.getKey(), allOfSchemas.get(0)));
+
+						visited.add(entry.getKey());
+					}
+					else if (schema.getPropertySchemas() != null) {
+						queue.add(schema.getPropertySchemas());
+						visited.add(entry.getKey());
+					}
+				}
 			}
 		}
 	}

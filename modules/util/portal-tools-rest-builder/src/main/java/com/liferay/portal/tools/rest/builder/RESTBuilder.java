@@ -214,7 +214,7 @@ public class RESTBuilder {
 				openAPIYAML);
 
 			Map<String, Schema> allExternalSchemas =
-				OpenAPIUtil.getAllExternalSchemas(allSchemas, openAPIYAML);
+				OpenAPIUtil.getAllExternalSchemas(openAPIYAML);
 
 			context.put("allExternalSchemas", allExternalSchemas);
 

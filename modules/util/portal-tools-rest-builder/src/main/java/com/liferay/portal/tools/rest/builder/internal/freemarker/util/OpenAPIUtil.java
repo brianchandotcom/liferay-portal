@@ -76,7 +76,7 @@ public class OpenAPIUtil {
 	}
 
 	public static Map<String, Schema> getAllExternalSchemas(
-			Map<String, Schema> allSchemas, OpenAPIYAML openAPIYAML)
+			OpenAPIYAML openAPIYAML)
 		throws Exception {
 
 		Map<String, Schema> allExternalSchemas = new HashMap<>();
@@ -153,13 +153,6 @@ public class OpenAPIUtil {
 		}
 
 		return allExternalSchemas;
-	}
-
-	public static Map<String, Schema> getAllExternalSchemas(
-			OpenAPIYAML openAPIYAML)
-		throws Exception {
-
-		return getAllExternalSchemas(getAllSchemas(openAPIYAML), openAPIYAML);
 	}
 
 	public static Map<String, Schema> getAllSchemas(OpenAPIYAML openAPIYAML) {

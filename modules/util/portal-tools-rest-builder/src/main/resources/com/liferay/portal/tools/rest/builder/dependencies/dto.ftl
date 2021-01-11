@@ -4,6 +4,12 @@ package ${configYAML.apiPackagePath}.dto.${escapedVersion};
 	import ${configYAML.apiPackagePath}.constant.${escapedVersion}.${globalEnumSchemaName};
 </#list>
 
+<#list allExternalSchemas?keys as externalSchemaName>
+	<#if javaDataTypeMap?keys?seq_contains(externalSchemaName)>
+		import ${javaDataTypeMap[externalSchemaName]};
+	</#if>
+</#list>
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;

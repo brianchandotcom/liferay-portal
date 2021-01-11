@@ -122,6 +122,25 @@ public class AssetTagStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long tagId)
+		throws Exception {
+
+		AssetTag existingTag = fetchMissingReference(uuid, groupId);
+
+		if (existingTag == null) {
+			return;
+		}
+
+		Map<Long, Long> tagIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				AssetTag.class);
+
+		tagIds.put(tagId, existingTag.getTagId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, AssetTag assetTag)
 		throws Exception {

@@ -87,6 +87,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TimeZone;
@@ -593,14 +594,8 @@ public class AssetHelperImpl implements AssetHelper {
 		return GetterUtil.getBoolean(ddmFormField.getProperty("localizable"));
 	}
 
-	private String _getDDMFormFieldType(String sortField) throws Exception {
-		DDMFormField ddmFormField = _getDDMFormField(sortField);
-
-		return ddmFormField.getType();
-	}
-
 	private String _getDDMFormFieldTypeOrderByCol(
-		String sortField, String fieldType, boolean fieldLocalizable,
+		DDMFormField ddmFormField, String sortField, boolean fieldLocalizable,
 		int sortType, Locale locale) {
 
 		StringBundler sb = new StringBundler(5);
@@ -644,7 +639,8 @@ public class AssetHelperImpl implements AssetHelper {
 
 		String suffix = "String";
 
-		if (!fieldType.equals(DDMFormFieldTypeConstants.DATE) &&
+		if (!Objects.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.DATE) &&
 			((sortType == Sort.DOUBLE_TYPE) || (sortType == Sort.FLOAT_TYPE) ||
 			 (sortType == Sort.INT_TYPE) || (sortType == Sort.LONG_TYPE))) {
 
@@ -656,16 +652,23 @@ public class AssetHelperImpl implements AssetHelper {
 		return Field.getSortableFieldName(sb.toString());
 	}
 
-	private int _getDDMFormFieldTypeSortType(String fieldType) {
+	private int _getDDMFormFieldTypeSortType(DDMFormField ddmFormField) {
 		int sortType = Sort.STRING_TYPE;
 
-		if (fieldType.equals(DDMFormFieldTypeConstants.DATE)) {
+		if (Objects.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.DATE)) {
+
 			sortType = Sort.LONG_TYPE;
 		}
-		else if (fieldType.equals(DDMFormFieldTypeConstants.NUMERIC)) {
+		else if (Objects.equals(
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.NUMERIC)) {
+
 			sortType = Sort.DOUBLE_TYPE;
 		}
-		else if (fieldType.equals(DDMFormFieldType.INTEGER)) {
+		else if (Objects.equals(
+					ddmFormField.getType(), DDMFormFieldType.INTEGER)) {
+
 			sortType = Sort.INT_TYPE;
 		}
 
@@ -743,14 +746,14 @@ public class AssetHelperImpl implements AssetHelper {
 		throws Exception {
 
 		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
-			String ddmFormFieldType = _getDDMFormFieldType(sortField);
+			DDMFormField ddmFormField = _getDDMFormField(sortField);
 
-			int sortType = _getDDMFormFieldTypeSortType(ddmFormFieldType);
+			int sortType = _getDDMFormFieldTypeSortType(ddmFormField);
 
 			return SortFactoryUtil.getSort(
 				AssetEntry.class, sortType,
 				_getDDMFormFieldTypeOrderByCol(
-					sortField, ddmFormFieldType,
+					ddmFormField, sortField,
 					_getDDMFormFieldLocalizable(sortField), sortType, locale),
 				!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX),
 				orderByType);

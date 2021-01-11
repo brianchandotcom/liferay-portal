@@ -353,6 +353,17 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutFriendlyURL getLayoutFriendlyURL(
+			long groupId, boolean privateLayout, String friendlyURL,
+			String languageId)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchLayoutFriendlyURLException {
+
+		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(
+			groupId, privateLayout, friendlyURL, languageId);
+	}
+
+	@Override
 	public LayoutFriendlyURL getLayoutFriendlyURL(long plid, String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

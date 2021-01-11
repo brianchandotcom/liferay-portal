@@ -14,8 +14,8 @@
 
 package com.liferay.adaptive.media.journal.web.internal.exportimport.content.processor;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -126,8 +126,10 @@ public class AMJournalArticleExportImportContentProcessor
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			if (Objects.equals(
-					ddmFormField.getType(), DDMFormFieldType.TEXT_HTML) ||
-				Objects.equals(ddmFormField.getType(), "text_area")) {
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.RICH_TEXT) ||
+				Objects.equals(
+					ddmFormField.getType(), DDMFormFieldTypeConstants.TEXT)) {
 
 				return true;
 			}

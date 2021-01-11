@@ -15,7 +15,7 @@
 package com.liferay.journal.internal.exportimport.content.processor;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
@@ -53,7 +53,7 @@ public class ImageExportDDMFormFieldValueTransformer
 
 	@Override
 	public String getFieldType() {
-		return DDMFormFieldType.IMAGE;
+		return DDMFormFieldTypeConstants.IMAGE;
 	}
 
 	@Override

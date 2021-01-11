@@ -16,7 +16,6 @@ package com.liferay.journal.internal.exportimport.content.processor;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -30,6 +29,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
@@ -463,8 +463,9 @@ public class JournalArticleExportImportContentProcessor
 			Document document = SAXReaderUtil.read(content);
 
 			XPath xPath = SAXReaderUtil.createXPath(
-				"//dynamic-element[@type='" + DDMFormFieldType.JOURNAL_ARTICLE +
-					"']");
+				"//dynamic-element[@type='" +
+					JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE +
+						"']");
 
 			List<Node> ddmJournalArticleNodes = xPath.selectNodes(document);
 

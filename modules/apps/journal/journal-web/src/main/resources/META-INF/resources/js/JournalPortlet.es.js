@@ -184,7 +184,7 @@ class JournalPortlet extends PortletBase {
 					Liferay.Language.get(
 						'please-enter-a-valid-title-for-the-default-language-x'
 					),
-					this.defaultLanguageId
+					this.defaultLanguageId.replace('_', '-')
 				)
 			);
 

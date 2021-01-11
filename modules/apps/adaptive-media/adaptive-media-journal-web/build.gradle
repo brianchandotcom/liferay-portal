@@ -4,6 +4,7 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-content-transformer-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-field-type-api")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":core:petra:petra-function")

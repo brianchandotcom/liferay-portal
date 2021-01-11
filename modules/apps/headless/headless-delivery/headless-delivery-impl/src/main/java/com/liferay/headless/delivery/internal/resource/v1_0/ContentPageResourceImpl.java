@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -55,7 +54,6 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.taglib.util.ThemeUtil;
 
 import java.util.Collections;
-import java.util.Optional;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -160,27 +158,11 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 			contextAcceptLanguage.getPreferredLocale());
 
 		LayoutFriendlyURL layoutFriendlyURL =
-			_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURL(
 				groupId, false, StringPool.FORWARD_SLASH + friendlyUrlPath,
 				languageId);
 
-		return Optional.ofNullable(
-			layoutFriendlyURL
-		).map(
-			existingLayoutFriendlyURL -> _layoutLocalService.fetchLayout(
-				existingLayoutFriendlyURL.getPlid())
-		).orElseThrow(
-			() -> {
-				StringBuilder sb = new StringBuilder(6);
-
-				sb.append("No public layout exists with friendly URL path ");
-				sb.append(friendlyUrlPath);
-				sb.append(" and language ID ");
-				sb.append(languageId);
-
-				return new NoSuchLayoutException(sb.toString());
-			}
-		);
+		return _layoutLocalService.getLayout(layoutFriendlyURL.getPlid());
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {

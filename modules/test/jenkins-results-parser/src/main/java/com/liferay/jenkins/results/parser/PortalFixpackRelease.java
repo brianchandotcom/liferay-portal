@@ -209,7 +209,7 @@ public class PortalFixpackRelease {
 
 	private static final Pattern _fixpackFileNamePattern = Pattern.compile(
 		"liferay-fix-pack-(de|dxp|portal)-(?<portalFixpackVersion>\\d+)-" +
-			"(?<portalBuildVersion>\\d+)(-build\\d*)?.zip");
+			"(?<portalBuildVersion>\\d+)(-build\\d*)?(-src)?.zip");
 	private static final Pattern _fixpackURLPattern = Pattern.compile(
 		"https?://.+/(?<fixpackFileName>[^/]+.zip)");
 

@@ -42,7 +42,7 @@ page import="java.util.List" %>
 
 <%
 CardsDisplayContext cardsDisplayContext = (CardsDisplayContext)request.getAttribute(ClaySamplePortletKeys.CARDS_DISPLAY_CONTEXT);
-MultiselectDisplayContext multiselectDisplayContext = (MultiselectDisplayContext)request.getAttribute(ClaySamplePortletKeys.MULTI_SELECT_DISPLAY_CONTEXT);
+MultiselectDisplayContext multiselectDisplayContext = (MultiselectDisplayContext)request.getAttribute(ClaySamplePortletKeys.MULTISELECT_DISPLAY_CONTEXT);
 DropdownsDisplayContext dropdownsDisplayContext = (DropdownsDisplayContext)request.getAttribute(ClaySamplePortletKeys.DROPDOWNS_DISPLAY_CONTEXT);
 ManagementToolbarsDisplayContext managementToolbarsDisplayContext = (ManagementToolbarsDisplayContext)request.getAttribute(ClaySamplePortletKeys.MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT);
 NavigationBarsDisplayContext navigationBarsDisplayContext = (NavigationBarsDisplayContext)request.getAttribute(ClaySamplePortletKeys.NAVIGATION_BARS_DISPLAY_CONTEXT);

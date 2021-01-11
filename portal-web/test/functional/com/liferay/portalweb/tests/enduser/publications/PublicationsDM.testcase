@@ -141,8 +141,9 @@ definition {
 
 		Publications.viewPublicationsDiff(
 			columnName = "Title",
-			columnValueInPublication = "WC WebContent Title Edit",
-			entryTitle = "WC WebContent Title Edit",
+			columnValueInProduction = "DM Document 2 Title Edit",
+			columnValueInPublication = "DM Document Title Edit",
+			diffRemovedValue = "2",
 			publicationsName = "Publication Name");
 
 		IFrame.closeFrame();

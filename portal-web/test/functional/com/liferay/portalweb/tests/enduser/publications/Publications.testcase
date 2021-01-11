@@ -220,13 +220,6 @@ definition {
 		Publications.viewPublicationsDiff(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
-			entryTitle = "WC WebContent Title 2 Edit",
-			publicationsName = "Publication 2 Name");
-
-		Publications.viewPublicationsDiff(
-			columnName = "ct-collection-id",
-			columnValueInPublication = "2",
-			entryTitle = "WC WebContent Title 2 Edit",
 			publicationsName = "Publication 2 Name");
 
 		IFrame.closeFrame();

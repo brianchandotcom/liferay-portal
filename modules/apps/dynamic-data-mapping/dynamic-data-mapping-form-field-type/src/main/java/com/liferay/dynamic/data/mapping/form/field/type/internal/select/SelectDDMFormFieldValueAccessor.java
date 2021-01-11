@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.select;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -44,7 +45,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Renato Rego
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=select",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.SELECT,
 	service = {
 		DDMFormFieldValueAccessor.class, SelectDDMFormFieldValueAccessor.class
 	}

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueEditingAware;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,7 +34,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Rodrigo Paulino
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=numeric",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.NUMERIC,
 	service = DDMFormFieldValueLocalizer.class
 )
 public class NumericDDMFormFieldValueLocalizer

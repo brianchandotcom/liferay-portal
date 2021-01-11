@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=checkbox",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX,
 	service = {
 		CheckboxDDMFormFieldValueAccessor.class, DDMFormFieldValueAccessor.class
 	}

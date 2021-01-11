@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.radio;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -33,7 +34,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=radio",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.RADIO,
 	service = {
 		DDMFormFieldValueAccessor.class, RadioDDMFormFieldValueAccessor.class
 	}

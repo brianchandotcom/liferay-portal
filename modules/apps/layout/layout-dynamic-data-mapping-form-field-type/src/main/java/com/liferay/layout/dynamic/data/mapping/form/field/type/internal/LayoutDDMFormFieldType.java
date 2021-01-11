@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 		"ddm.form.field.type.display.order:Integer=11",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=link",
 		"ddm.form.field.type.label=link-to-layout-field-label",
-		"ddm.form.field.type.name=link_to_layout",
+		"ddm.form.field.type.name=" + LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT,
 		"ddm.form.field.type.scope=layout"
 	},
 	service = DDMFormFieldType.class
@@ -57,7 +58,7 @@ public class LayoutDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "link_to_layout";
+		return LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT;
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,7 +25,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Pedro Queiroz
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=document_library",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
 	service = DDMFormFieldValueRequestParameterRetriever.class
 )
 public class DocumentLibraryDDMFormFieldValueRequestParameterRetriever

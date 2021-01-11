@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=7",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=integer",
 		"ddm.form.field.type.label=numeric-field-type-label",
-		"ddm.form.field.type.name=numeric",
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.NUMERIC,
 		"ddm.form.field.type.scope=app-builder,forms"
 	},
 	service = DDMFormFieldType.class
@@ -52,7 +53,7 @@ public class NumericDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "numeric";
+		return DDMFormFieldTypeConstants.NUMERIC;
 	}
 
 }

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.image;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,7 +32,8 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=8",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=picture",
 		"ddm.form.field.type.label=image-field-type-label",
-		"ddm.form.field.type.name=image", "ddm.form.field.type.scope=forms"
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.IMAGE,
+		"ddm.form.field.type.scope=forms"
 	},
 	service = DDMFormFieldType.class
 )
@@ -52,7 +54,7 @@ public class ImageDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "image";
+		return DDMFormFieldTypeConstants.IMAGE;
 	}
 
 }

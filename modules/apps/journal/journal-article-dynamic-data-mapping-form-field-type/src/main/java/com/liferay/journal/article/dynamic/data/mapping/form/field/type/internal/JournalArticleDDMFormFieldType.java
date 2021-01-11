@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 
+import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 		"ddm.form.field.type.group=basic",
 		"ddm.form.field.type.icon=web-content",
 		"ddm.form.field.type.label=journal-article",
-		"ddm.form.field.type.name=journal_article",
+		"ddm.form.field.type.name=" + JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
 		"ddm.form.field.type.scope=journal"
 	},
 	service = DDMFormFieldType.class
@@ -58,7 +59,7 @@ public class JournalArticleDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "journal_article";
+		return JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE;
 	}
 
 	@Override

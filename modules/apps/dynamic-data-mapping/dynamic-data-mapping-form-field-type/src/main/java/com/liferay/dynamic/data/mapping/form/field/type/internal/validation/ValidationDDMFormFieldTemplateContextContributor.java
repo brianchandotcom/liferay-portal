@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.validation;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.json.JSONException;
@@ -34,7 +35,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=validation",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.VALIDATION,
 	service = {
 		DDMFormFieldTemplateContextContributor.class,
 		ValidationDDMFormFieldTemplateContextContributor.class

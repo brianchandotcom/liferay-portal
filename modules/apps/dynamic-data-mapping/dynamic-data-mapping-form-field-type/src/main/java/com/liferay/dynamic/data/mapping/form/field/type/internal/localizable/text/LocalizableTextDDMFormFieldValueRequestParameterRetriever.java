@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.localizable.text;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,7 +25,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Carolina Barbosa
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=localizable_text",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.LOCALIZABLE_TEXT,
 	service = DDMFormFieldValueRequestParameterRetriever.class
 )
 public class LocalizableTextDDMFormFieldValueRequestParameterRetriever

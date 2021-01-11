@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.multi
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic",
 		"ddm.form.field.type.icon=check-circle-full",
 		"ddm.form.field.type.label=checkbox-multiple-field-type-label",
-		"ddm.form.field.type.name=checkbox_multiple",
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
 		"ddm.form.field.type.scope=app-builder,forms"
 	},
 	service = DDMFormFieldType.class
@@ -54,7 +55,7 @@ public class CheckboxMultipleDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "checkbox_multiple";
+		return DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE;
 	}
 
 }

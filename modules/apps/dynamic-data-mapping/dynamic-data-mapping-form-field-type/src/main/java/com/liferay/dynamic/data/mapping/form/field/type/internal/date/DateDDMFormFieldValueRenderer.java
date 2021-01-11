@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.date;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.StringPool;
@@ -33,7 +34,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=date",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DATE,
 	service = {
 		DateDDMFormFieldValueRenderer.class, DDMFormFieldValueRenderer.class
 	}

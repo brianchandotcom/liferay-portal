@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.captcha;
 
 import com.liferay.captcha.taglib.servlet.taglib.CaptchaTag;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -39,7 +40,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Basto
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=captcha",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CAPTCHA,
 	service = {
 		CaptchaDDMFormFieldTemplateContextContributor.class,
 		DDMFormFieldTemplateContextContributor.class

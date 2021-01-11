@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.key.value;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"ddm.form.field.type.icon=icon-font",
-		"ddm.form.field.type.name=key_value", "ddm.form.field.type.system=true"
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.KEY_VALUE,
+		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
 )
@@ -47,7 +49,7 @@ public class KeyValueDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "key_value";
+		return DDMFormFieldTypeConstants.KEY_VALUE;
 	}
 
 }

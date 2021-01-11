@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.rich.text;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=8",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=textbox",
 		"ddm.form.field.type.label=rich-text-field-type-label",
-		"ddm.form.field.type.name=rich_text", "ddm.form.field.type.scope=forms"
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.RICH_TEXT,
+		"ddm.form.field.type.scope=forms"
 	},
 	service = DDMFormFieldType.class
 )
@@ -52,7 +54,7 @@ public class RichTextDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "rich_text";
+		return DDMFormFieldTypeConstants.RICH_TEXT;
 	}
 
 }

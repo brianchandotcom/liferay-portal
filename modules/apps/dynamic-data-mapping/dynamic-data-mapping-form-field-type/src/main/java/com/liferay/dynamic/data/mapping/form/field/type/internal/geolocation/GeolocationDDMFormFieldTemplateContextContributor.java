@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.geolocation;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -42,7 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=geolocation",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.GEOLOCATION,
 	service = {
 		DDMFormFieldTemplateContextContributor.class,
 		GeolocationDDMFormFieldTemplateContextContributor.class

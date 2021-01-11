@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.fieldset;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -49,7 +50,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Lancha
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=fieldset",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.FIELDSET,
 	service = {
 		DDMFormFieldTemplateContextContributor.class,
 		FieldSetDDMFormFieldTemplateContextContributor.class

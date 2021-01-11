@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=checkbox",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.COLOR,
 	service = DDMFormFieldValueRequestParameterRetriever.class
 )
 public class CheckboxDDMFormFieldValueRequestParameterRetriever

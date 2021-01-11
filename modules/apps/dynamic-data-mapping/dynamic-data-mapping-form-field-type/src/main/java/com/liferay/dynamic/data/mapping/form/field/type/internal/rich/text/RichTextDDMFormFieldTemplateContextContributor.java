@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.rich.text;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -37,7 +38,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Marko Cikos
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=rich_text",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.RICH_TEXT,
 	service = {
 		DDMFormFieldTemplateContextContributor.class,
 		RichTextDDMFormFieldTemplateContextContributor.class

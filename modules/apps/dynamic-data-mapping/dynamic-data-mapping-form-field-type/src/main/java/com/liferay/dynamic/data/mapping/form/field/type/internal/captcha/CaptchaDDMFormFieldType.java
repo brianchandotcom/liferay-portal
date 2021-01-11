@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.captcha;
 
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Captcha",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-captcha",
-		"ddm.form.field.type.name=captcha", "ddm.form.field.type.system=true"
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CAPTCHA,
+		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
 )
@@ -40,7 +42,7 @@ public class CaptchaDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "captcha";
+		return DDMFormFieldTypeConstants.CAPTCHA;
 	}
 
 }

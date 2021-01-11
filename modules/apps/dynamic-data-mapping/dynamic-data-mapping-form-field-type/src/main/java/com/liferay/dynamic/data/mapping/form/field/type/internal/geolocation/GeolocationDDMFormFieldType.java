@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.geolocation;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=10",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=globe",
 		"ddm.form.field.type.label=geolocation-field-type-label",
-		"ddm.form.field.type.name=geolocation",
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.GEOLOCATION,
 		"ddm.form.field.type.scope=forms"
 	},
 	service = DDMFormFieldType.class
@@ -53,7 +54,7 @@ public class GeolocationDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "geolocation";
+		return DDMFormFieldTypeConstants.GEOLOCATION;
 	}
 
 }

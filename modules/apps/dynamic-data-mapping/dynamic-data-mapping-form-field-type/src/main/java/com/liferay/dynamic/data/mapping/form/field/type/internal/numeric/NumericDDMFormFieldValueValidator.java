@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,7 +32,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=numeric",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.NUMERIC,
 	service = DDMFormFieldValueValidator.class
 )
 public class NumericDDMFormFieldValueValidator

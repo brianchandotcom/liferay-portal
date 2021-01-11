@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.radio;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
@@ -26,7 +27,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Renato Rego
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=radio",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.RADIO,
 	service = DDMFormFieldValueRenderer.class
 )
 public class RadioDDMFormFieldValueRenderer

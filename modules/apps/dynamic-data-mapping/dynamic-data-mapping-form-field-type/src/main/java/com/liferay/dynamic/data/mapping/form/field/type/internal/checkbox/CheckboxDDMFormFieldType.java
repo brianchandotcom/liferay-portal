@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic",
 		"ddm.form.field.type.icon=check-circle",
 		"ddm.form.field.type.label=checkbox-field-type-label",
-		"ddm.form.field.type.name=checkbox", "ddm.form.field.type.system=true"
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX,
+		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class
 )
@@ -52,7 +54,7 @@ public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "checkbox";
+		return DDMFormFieldTypeConstants.CHECKBOX;
 	}
 
 }

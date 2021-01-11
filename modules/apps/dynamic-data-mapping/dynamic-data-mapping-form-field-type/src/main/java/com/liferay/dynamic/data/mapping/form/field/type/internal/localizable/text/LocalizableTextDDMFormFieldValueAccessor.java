@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.localizable.text;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONException;
@@ -33,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carolina Barbosa
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=localizable_text",
+	immediate = true,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.LOCALIZABLE_TEXT,
 	service = {
 		DDMFormFieldValueAccessor.class,
 		LocalizableTextDDMFormFieldValueAccessor.class

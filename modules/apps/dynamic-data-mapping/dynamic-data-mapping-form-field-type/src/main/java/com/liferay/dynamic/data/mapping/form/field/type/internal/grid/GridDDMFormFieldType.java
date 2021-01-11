@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.grid;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,7 +32,8 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.display.order:Integer=5",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=table2",
 		"ddm.form.field.type.label=grid-field-type-label",
-		"ddm.form.field.type.name=grid", "ddm.form.field.type.scope=forms"
+		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.GRID,
+		"ddm.form.field.type.scope=forms"
 	},
 	service = DDMFormFieldType.class
 )
@@ -51,7 +53,7 @@ public class GridDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "grid";
+		return DDMFormFieldTypeConstants.GRID;
 	}
 
 }

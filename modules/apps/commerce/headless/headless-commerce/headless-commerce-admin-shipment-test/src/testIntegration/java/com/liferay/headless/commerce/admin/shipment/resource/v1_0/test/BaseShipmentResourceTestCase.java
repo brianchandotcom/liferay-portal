@@ -609,6 +609,7 @@ public abstract class BaseShipmentResourceTestCase {
 
 		Shipment randomPatchShipment = randomPatchShipment();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Shipment patchShipment = shipmentResource.patchShipment(
 			postShipment.getId(), randomPatchShipment);
 

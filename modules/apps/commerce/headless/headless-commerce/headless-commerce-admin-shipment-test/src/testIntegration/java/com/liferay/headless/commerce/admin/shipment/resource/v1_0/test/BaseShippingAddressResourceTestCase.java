@@ -283,6 +283,7 @@ public abstract class BaseShippingAddressResourceTestCase {
 		ShippingAddress randomPatchShippingAddress =
 			randomPatchShippingAddress();
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ShippingAddress patchShippingAddress =
 			shippingAddressResource.patchShipmentShippingAddress(
 				null, randomPatchShippingAddress);

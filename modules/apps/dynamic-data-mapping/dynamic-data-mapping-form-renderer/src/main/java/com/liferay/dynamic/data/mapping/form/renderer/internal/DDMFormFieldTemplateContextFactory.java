@@ -721,15 +721,15 @@ public class DDMFormFieldTemplateContextFactory {
 					ddmFormFieldValueAccessor.getValue(
 						ddmFormFieldValue, availableLocale);
 
-				if ((ddmFormFieldValueAccessorValue != null) &&
-					!(ddmFormFieldValueAccessorValue instanceof BigDecimal)) {
-
+				if (!(ddmFormFieldValueAccessorValue instanceof BigDecimal)) {
 					localizedValue = ddmFormFieldValueAccessor.getValue(
 						ddmFormFieldValue, availableLocale);
 				}
 			}
 
-			localizedValues.put(languageId, localizedValue);
+			localizedValues.put(
+				languageId,
+				GetterUtil.getObject(localizedValue, StringPool.BLANK));
 		}
 
 		ddmFormFieldTemplateContext.put("localizedValue", localizedValues);

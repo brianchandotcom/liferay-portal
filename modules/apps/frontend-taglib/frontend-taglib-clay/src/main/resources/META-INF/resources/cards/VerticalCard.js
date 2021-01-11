@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import React, {useMemo, useState} from 'react';
 
-import getDataAttributes from './get_data_attributes';
+import getDataAttributes from '../get_data_attributes';
 
 export default function VerticalCard({
 	actions,

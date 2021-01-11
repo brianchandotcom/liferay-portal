@@ -15,7 +15,7 @@
 import {ClayCardWithUser} from '@clayui/card';
 import React, {useState} from 'react';
 
-import getDataAttributes from './get_data_attributes';
+import getDataAttributes from '../get_data_attributes';
 
 export default function UserCard({
 	actions,

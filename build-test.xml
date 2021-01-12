@@ -8994,11 +8994,7 @@ portal.security.manager.strategy=liferay</echo>
 		</if>
 
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
-				<equals arg1="${app.server.type}" arg2="websphere" />
-				<equals arg1="${javascript.fast.load}" arg2="false" />
-			</or>
+			<equals arg1="${javascript.fast.load}" arg2="false" />
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 

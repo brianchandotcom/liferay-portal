@@ -442,26 +442,49 @@ definition {
 	}
 
 	macro viewPublicationsDiff {
-		if (contains("${entryTitle}", "modified")) {
+		AssertTextEquals(
+			key_displayItem = "Unified",
+			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+			value1 = "Unified");
+
+		var key_columnName = "${columnName}";
+
+		if (isSet(diffAddedValue)) {
 			AssertTextEquals.assertPartialText(
-				key_publicationsName = "Production",
-				locator1 = "Publications#PUBLICATION_NAME_IN_DIFF",
-				value1 = "Production");
+				locator1 = "Publications#DIFF_ADDED_VALUE",
+				value1 = "${diffAddedValue}");
+		}
+
+		if (isSet(diffRemovedValue)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Publications#DIFF_REMOVED_VALUE",
+				value1 = "${diffRemovedValue}");
+		}
+
+		Publications.changeDiffDisplayItem(displayItem = "Production");
+
+		AssertTextEquals(
+			key_displayItem = "Production",
+			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+			value1 = "Production");
+
+		if (isSet(columnValueInProduction)) {
+			key_columnValueInProduction = "${columnValueInProduction}";
 
 			AssertTextEquals.assertPartialText(
-				key_publicationsName = "${publicationsName}",
-				locator1 = "Publications#PUBLICATION_NAME_IN_DIFF",
-				value1 = "${publicationsName}");
+				locator1 = "Publications#COLUMN_VALUE_IN_PRODUCTION",
+				value1 = "${columnValueInProduction}");
+		}
 
-			var key_columnName = "${columnName}";
-			var key_columnValueInProduction = "${columnValueInProduction}";
-			var key_columnValueInPublication = "${columnValueInPublication}";
+		Publications.changeDiffDisplayItem(displayItem = "Publication: ${publicationsName}");
 
-			if (isSet(columnValueInProduction)) {
-				AssertTextEquals.assertPartialText(
-					locator1 = "Publications#COLUMN_VALUE_IN_PRODUCTION",
-					value1 = "${columnValueInProduction}");
-			}
+		AssertTextEquals(
+			key_displayItem = "${publicationsName}",
+			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+			value1 = "${publicationsName}");
+
+		if (isSet(columnValueInPublication)) {
+			key_columnValueInPublication = "${columnValueInPublication}";
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Publications#COLUMN_VALUE_IN_PUBLICATION",

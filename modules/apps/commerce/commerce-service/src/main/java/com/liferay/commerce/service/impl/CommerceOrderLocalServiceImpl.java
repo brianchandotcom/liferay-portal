@@ -30,6 +30,7 @@ import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTimesEx
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
+import com.liferay.commerce.discount.validator.helper.CommerceDiscountValidatorHelper;
 import com.liferay.commerce.exception.CommerceOrderAccountLimitException;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderDateException;
@@ -386,6 +387,9 @@ public class CommerceOrderLocalServiceImpl
 			CommerceDiscount commerceDiscount =
 				_commerceDiscountLocalService.getActiveCommerceDiscount(
 					commerceOrder.getCompanyId(), couponCode, true);
+
+			_commerceDiscountValidatorHelper.checkValid(
+				commerceContext, commerceDiscount);
 
 			long commerceAccountId = 0;
 
@@ -2325,6 +2329,9 @@ public class CommerceOrderLocalServiceImpl
 	@ServiceReference(type = CommerceDiscountUsageEntryLocalService.class)
 	private CommerceDiscountUsageEntryLocalService
 		_commerceDiscountUsageEntryLocalService;
+
+	@ServiceReference(type = CommerceDiscountValidatorHelper.class)
+	private CommerceDiscountValidatorHelper _commerceDiscountValidatorHelper;
 
 	@ServiceReference(type = CommerceOrderConfiguration.class)
 	private CommerceOrderConfiguration _commerceOrderConfiguration;

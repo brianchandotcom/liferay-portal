@@ -126,7 +126,7 @@ const RuleEditorModalContent = ({
 					onChange={(rule) => {
 						ruleRef.current = rule;
 					}}
-					onValidator={setInvalidRule}
+					onValidator={(value) => setInvalidRule(!value)}
 					operatorsByType={functionsMetadata}
 					pages={transformedPages}
 					roles={roles}

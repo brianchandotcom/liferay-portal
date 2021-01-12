@@ -51,7 +51,7 @@ export const FormsRuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 					};
 					localDataStorage.rule = ruleRef.current;
 				}}
-				onValidator={setDisabled}
+				onValidator={(value) => setDisabled(!value)}
 				rule={rule ?? localDataStorage.rule}
 				{...otherProps}
 			/>

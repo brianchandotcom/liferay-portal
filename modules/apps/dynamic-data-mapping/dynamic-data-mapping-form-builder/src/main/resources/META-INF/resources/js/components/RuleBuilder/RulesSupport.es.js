@@ -337,6 +337,24 @@ const findRuleByFieldName = (fieldName, pages, rules) => {
 	);
 };
 
+const isOperandValid = (operand) =>
+	operand && Boolean(operand.type) && Boolean(operand.value);
+
+const isConditionsValid = (conditions) =>
+	conditions
+		.map(({operator, operands: [left, right]}) => {
+			if (['is-empty', 'not-is-empty'].includes(operator)) {
+				return isOperandValid(left);
+			}
+
+			return (
+				Boolean(operator) &&
+				isOperandValid(left) &&
+				isOperandValid(right)
+			);
+		})
+		.every((result) => result === true);
+
 const findInvalidRule = (pages, rule) => {
 	return findRuleByFieldName('', pages, [rule]);
 };
@@ -374,6 +392,7 @@ export default {
 	formatRules,
 	getFieldOptions,
 	getFieldType,
+	isConditionsValid,
 	replaceFieldNameByFieldLabel,
 	syncActions,
 };

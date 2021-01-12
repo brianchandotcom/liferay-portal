@@ -284,6 +284,35 @@ public class ContentFieldUtil {
 				};
 			}
 			else if (Objects.equals(
+						DDMFormFieldType.SELECT, ddmFormField.getType()) ||
+					 Objects.equals(
+						 ddmFormField.getType(),
+						 DDMFormFieldType.CHECKBOX_MULTIPLE)) {
+
+				List<String> options = JSONUtil.toStringList(
+					JSONFactoryUtil.createJSONArray(valueString));
+
+				DDMFormFieldOptions ddmFormFieldOptions =
+					ddmFormField.getDDMFormFieldOptions();
+
+				Stream<String> optionsStream = options.stream();
+
+				List<String> values = optionsStream.map(
+					ddmFormFieldOptions::getOptionLabels
+				).map(
+					localizedValue -> localizedValue.getString(locale)
+				).collect(
+					Collectors.toList()
+				);
+
+				return new ContentFieldValue() {
+					{
+						data = String.valueOf(
+							JSONFactoryUtil.createJSONArray(values));
+					}
+				};
+			}
+			else if (Objects.equals(
 						DDMFormFieldType.RADIO, ddmFormField.getType())) {
 
 				DDMFormFieldOptions ddmFormFieldOptions =

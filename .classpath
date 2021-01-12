@@ -166,6 +166,7 @@
 	<classpathentry kind="lib" path="lib/portal/commons-validator.jar"/>
 	<classpathentry kind="lib" path="lib/portal/concurrent.jar"/>
 	<classpathentry kind="lib" path="lib/portal/crypt.jar"/>
+	<classpathentry kind="lib" path="lib/portal/curvesapi.jar"/>
 	<classpathentry kind="lib" path="lib/portal/daisydiff.jar"/>
 	<classpathentry kind="lib" path="lib/portal/displaytag.jar"/>
 	<classpathentry kind="lib" path="lib/portal/dom4j.jar"/>

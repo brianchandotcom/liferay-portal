@@ -129,6 +129,7 @@
 /portal/commons-validator.jar
 /portal/concurrent.jar
 /portal/crypt.jar
+/portal/curvesapi.jar
 /portal/daisydiff.jar
 /portal/displaytag.jar
 /portal/dom4j.jar

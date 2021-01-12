@@ -26,16 +26,16 @@ import java.util.List;
 public class MultiselectDisplayContext {
 
 	public MultiselectLocator getMultiselectLocator() {
-		if (_locator != null) {
-			return _locator;
+		if (_multiselectLocator != null) {
+			return _multiselectLocator;
 		}
 
-		_locator = new MultiselectLocator();
+		_multiselectLocator = new MultiselectLocator();
 
-		_locator.setLabel("name");
-		_locator.setValue("data");
+		_multiselectLocator.setLabel("name");
+		_multiselectLocator.setValue("data");
 
-		return _locator;
+		return _multiselectLocator;
 	}
 
 	public List<MultiselectItem> getSelectedItems() {
@@ -138,8 +138,8 @@ public class MultiselectDisplayContext {
 		return _sourceItemsWithCustomProperties;
 	}
 
-	public void setMultiselectLocator(MultiselectLocator locator) {
-		_locator = locator;
+	public void setMultiselectLocator(MultiselectLocator multiselectLocator) {
+		_multiselectLocator = multiselectLocator;
 	}
 
 	public void setSelectedItems(List<MultiselectItem> selectedItems) {
@@ -162,7 +162,7 @@ public class MultiselectDisplayContext {
 		_sourceItemsWithCustomProperties = sourceItemsWithCustomProperties;
 	}
 
-	private MultiselectLocator _locator;
+	private MultiselectLocator _multiselectLocator;
 	private List<MultiselectItem> _selectedItems;
 	private List<MultiselectItem> _selectedItemsWithCustomProperties;
 	private List<MultiselectItem> _sourceItems;

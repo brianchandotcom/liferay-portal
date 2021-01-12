@@ -170,6 +170,44 @@ export class Tokenizer {
 	static isOperator(char) {
 		return OPERATORS.includes(char);
 	}
+
+	static isValid(str) {
+		const tokens = Tokenizer.tokenize(str);
+
+		const leftParentheses = tokens.filter(
+			({type}) => type === Token.LEFT_PARENTHESIS
+		);
+		const rightParentheses = tokens.filter(
+			({type}) => type === Token.RIGHT_PARENTHESIS
+		);
+		const isTokensValid = tokens
+			.map(({type}, index) => {
+				if (type === Token.OPERATOR) {
+
+					// Checks if there are any token on the left and right side
+					// of the operator.
+
+					return (
+						Boolean(tokens[index - 1]) && Boolean(tokens[index + 1])
+					);
+				}
+
+				if (type === Token.FUNCTION) {
+
+					// Checks if there is any Token after the
+					// Token.LEFT_PARENTHESIS.
+
+					return Boolean(tokens[index + 2]);
+				}
+
+				return true;
+			})
+			.every((result) => result === true);
+
+		return (
+			leftParentheses.length === rightParentheses.length && isTokensValid
+		);
+	}
 }
 
 export default Tokenizer;

@@ -465,7 +465,7 @@ export function Editor({
 		};
 
 		onValidator(
-			!RulesSupport.fieldNameBelongsToAction(actions, '', fields) &&
+			RulesSupport.isActionsValid(actions) &&
 				RulesSupport.isConditionsValid(newRule.conditions)
 		);
 		onChange(newRule);

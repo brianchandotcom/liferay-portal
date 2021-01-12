@@ -14,11 +14,10 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
-import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
+import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
-import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -92,8 +91,9 @@ public class EditCommercePriceListQualifiersMVCActionCommand
 		}
 
 		if (Objects.equals(channelQualifiers, "all")) {
-			_commerceChannelRelService.deleteCommerceChannelRels(
-				CommercePriceList.class.getName(), commercePriceListId);
+			_commercePriceListChannelRelService.
+				deleteCommercePriceListChannelRelsByCommercePriceListId(
+					commercePriceListId);
 		}
 	}
 
@@ -132,11 +132,12 @@ public class EditCommercePriceListQualifiersMVCActionCommand
 	}
 
 	@Reference
-	private CommerceChannelRelService _commerceChannelRelService;
-
-	@Reference
 	private CommercePriceListAccountRelService
 		_commercePriceListAccountRelService;
+
+	@Reference
+	private CommercePriceListChannelRelService
+		_commercePriceListChannelRelService;
 
 	@Reference
 	private CommercePriceListCommerceAccountGroupRelService

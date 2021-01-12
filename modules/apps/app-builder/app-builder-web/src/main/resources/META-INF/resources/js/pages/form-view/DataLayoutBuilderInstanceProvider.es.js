@@ -36,9 +36,11 @@ export default ({children, dataLayoutBuilder}) => {
 	const {defaultLanguageId} = dataDefinition;
 
 	const deleteDefinitionField = useDeleteDefinitionField({dataLayoutBuilder});
-	const deleteDefinitionFieldModal = useDeleteDefinitionFieldModal((event) => {
-		deleteDefinitionField(event);
-	});
+	const deleteDefinitionFieldModal = useDeleteDefinitionFieldModal(
+		(event) => {
+			deleteDefinitionField(event);
+		}
+	);
 	const duplicateField = useDuplicateField({dataLayoutBuilder});
 	const saveAsFieldset = useSaveAsFieldset({dataLayoutBuilder});
 

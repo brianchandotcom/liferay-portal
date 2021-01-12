@@ -81,7 +81,18 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public String getTestCasePropertiesContent() {
-		return null;
+		return "";
+	}
+
+	@Override
+	public List<TestClassGroup.TestClass> getTestClasses() {
+		List<TestClassGroup.TestClass> testClasses = new ArrayList<>();
+
+		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
+			testClasses.addAll(axisTestClassGroup.getTestClasses());
+		}
+
+		return testClasses;
 	}
 
 	protected SegmentTestClassGroup(

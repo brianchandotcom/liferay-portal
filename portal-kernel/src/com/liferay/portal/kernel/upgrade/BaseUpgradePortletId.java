@@ -355,10 +355,10 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					String smallValue = null;
 
 					if (newValue.length() > smallValueMaxLength) {
-						largeValue = value;
+						largeValue = newValue;
 					}
 					else {
-						smallValue = value;
+						smallValue = newValue;
 					}
 
 					updatePreparedStatement.setString(1, largeValue);

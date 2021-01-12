@@ -166,15 +166,15 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		String testBaseDirName = System.getenv("test.base.dir.name");
 
-		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testBaseDirName)) {
 			testBaseDirName = System.getenv("env.TEST_BASE_DIR_NAME");
 		}
 
-		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testBaseDirName)) {
 			testBaseDirName = System.getenv("TEST_BASE_DIR_NAME");
 		}
 
-		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testBaseDirName)) {
 			return null;
 		}
 
@@ -184,12 +184,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return null;
 		}
 
-		try {
-			return testBaseDir.getCanonicalPath();
-		}
-		catch (IOException ioException) {
-			return null;
-		}
+		return JenkinsResultsParserUtil.getCanonicalPath(testBaseDir);
 	}
 
 	@Override

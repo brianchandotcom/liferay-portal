@@ -105,7 +105,7 @@
 			},
 			{
 				"actionIds": [
-					"MANAGE_COMMERCE_SHIPMENTS",
+					"MANAGE_COMMERCE_SHIPMENTS"
 				],
 				"resource": "com.liferay.commerce.shipment"
 			},

@@ -26,6 +26,17 @@
 		<field name="groupId" type="long" />
 		<field name="blob" type="Blob" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.ERCCompanyEntity">
+		<field name="externalReferenceCode" type="String" />
+		<field name="ercCompanyEntityId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.ERCGroupEntity">
+		<field name="externalReferenceCode" type="String" />
+		<field name="ercGroupEntityId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry">
 		<field name="finderWhereClauseEntryId" type="long" />
 		<field name="name" type="String" />

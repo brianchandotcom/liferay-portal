@@ -28,6 +28,19 @@ create table DSLQueryStatusEntry (
 	statusDate DATE null
 );
 
+create table ERCCompanyEntity (
+	externalReferenceCode VARCHAR(75) null,
+	ercCompanyEntityId LONG not null primary key,
+	companyId LONG
+);
+
+create table ERCGroupEntity (
+	externalReferenceCode VARCHAR(75) null,
+	ercGroupEntityId LONG not null primary key,
+	companyId LONG,
+	groupId LONG
+);
+
 create table EagerBlobEntry (
 	uuid_ VARCHAR(75) null,
 	eagerBlobEntryId LONG not null primary key,

@@ -736,6 +736,40 @@ definition {
 
 	@description = "Validate if the user can open de Info side panel of a web content"
 	@priority = "5"
+	test ContentDashboardSaveFiltersAfterEditing {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByAuthorTable(filterOption = "Author");
+
+		ContentDashboard.editWebContent(webContentTitle = "WC Title");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FILTER_TEXT",
+			value1 = "Author:Test Test");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title Edited");
+	}
+
+	@description = "Validate if the user can open de Info side panel of a web content"
+	@priority = "5"
 	test ContentDashboardViewInfoPanel {
 		property portal.acceptance = "true";
 

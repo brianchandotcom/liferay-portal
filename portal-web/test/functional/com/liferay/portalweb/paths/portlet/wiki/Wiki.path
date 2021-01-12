@@ -83,7 +83,7 @@
 <!--CHILD_PAGE-->
 <tr>
 	<td>CHILD_PAGE_HEADER</td>
-	<td>//div[@class='sidenav-content']/h4</td>
+	<td>//div[@class='sidenav-content']//h4</td>
 	<td></td>
 </tr>
 <tr>

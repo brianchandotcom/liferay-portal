@@ -560,12 +560,9 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 		Layout firstLayout = layouts.get(0);
 
-		if ((!firstLayout.isTypeContent() &&
-			 (wrapLayout(firstLayout) == firstLayout)) ||
-			(firstLayout.isTypeContent() &&
-			 !LayoutStagingUtil.isBranchingLayoutSet(
-				 firstLayout.getGroup(), firstLayout.isPrivateLayout()))) {
+		Layout wrappedFirstLayout = wrapLayout(firstLayout);
 
+		if (wrappedFirstLayout == firstLayout) {
 			return layouts;
 		}
 
@@ -596,12 +593,6 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		List<Layout> wrappedLayouts = new ArrayList<>(layouts.size());
 
 		for (Layout layout : layouts) {
-			if (layout.isTypeContent()) {
-				wrappedLayouts.add(layout);
-
-				continue;
-			}
-
 			Layout wrappedLayout = wrapLayout(layout);
 
 			if (showIncomplete ||

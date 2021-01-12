@@ -706,6 +706,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 			type = "ddm-journal-article";
 		}
+		else if (Objects.equals(ddmFieldType, "link_to_layout")) {
+			type = "ddm-link-to-page";
+		}
 		else if (Objects.equals(
 					ddmFieldType, DDMFormFieldTypeConstants.NUMERIC)) {
 

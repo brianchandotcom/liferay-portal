@@ -312,11 +312,11 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				"PortletPreferenceValue inner join PortletPreferences on ",
 				"PortletPreferences.portletPreferencesId = ",
 				"PortletPreferenceValue.portletPreferencesId where ",
-				"PortletPreferences.portletId = '", newRootPortletId,
+				"(PortletPreferences.portletId = '", newRootPortletId,
 				"' or PortletPreferences.portletId like '", newRootPortletId,
 				"_INSTANCE_%' or PortletPreferences.portletId like '",
-				newRootPortletId,
-				"_USER_%' and PortletPreferenceValue.name = 'portletSetupCss'");
+				newRootPortletId, "_USER_%') and PortletPreferenceValue.name ",
+				"= 'portletSetupCss'");
 
 			String updateSQL =
 				"update PortletPreferenceValue set largeValue = ?, " +

@@ -2152,8 +2152,7 @@ public class GitHubWebhookPayloadProcessor {
 					!_gauntletUsernames.contains(login)) {
 
 					String message =
-						"You do not have permission to run the test " +
-							"gauntlet";
+						"You do not have permission to run the test gauntlet";
 
 					if (_log.isInfoEnabled()) {
 						_log.info(message);

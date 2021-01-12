@@ -27,13 +27,18 @@ expect {
 }
 
 expect {
-	"check - List pending or running upgrades\r\r\n   scope: upgrade" {}
+	"check - List pending upgrades\r\r\n   scope: upgrade" {}
 	timeout {send_user "No available command upgrade:check";exit 2}
 }
 
 expect {
 	"show - Show all verify processes for a specific verify process name\r\r\n   scope: verify" {}
 	timeout {send_user "No available command verify:show";exit 2}
+}
+
+expect {
+	"checkAll - List latest execution result for all verify processes\r\r\n   scope: verify" {}
+	timeout {send_user "No available command upgrade:check";exit 2}
 }
 
 expect {
@@ -57,7 +62,7 @@ expect {
 }
 
 expect {
-	"check - List pending or running upgrades" {send "help upgrade:execute\r"}
+	"check - List pending upgrades" {send "help upgrade:execute\r"}
 	timeout {send_user "No help output for command upgrade:check";exit 2}
 }
 

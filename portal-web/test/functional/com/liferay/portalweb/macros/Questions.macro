@@ -171,6 +171,14 @@ definition {
 
 			Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 		}
+
+		if (isSet(tagLocatorList)) {
+			for (var tagLocator : list "${tagLocatorList}") {
+				Questions.addTags(tagLocator = "${tagLocator}");
+			}
+		}
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 	}
 
 	macro changeDisplayStyle {

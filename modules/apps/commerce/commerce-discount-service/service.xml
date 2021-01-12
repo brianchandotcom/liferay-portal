@@ -284,6 +284,7 @@
 		<exception>CommerceDiscountRuleType</exception>
 		<exception>CommerceDiscountTarget</exception>
 		<exception>CommerceDiscountTitle</exception>
+		<exception>CommerceDiscountValidator</exception>
 		<exception>DuplicateCommerceDiscount</exception>
 	</exceptions>
 </service-builder>

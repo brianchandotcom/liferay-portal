@@ -66,6 +66,18 @@ public class CommercePriceListChannelRelServiceImpl
 	}
 
 	@Override
+	public void deleteCommercePriceListChannelRelsByCommercePriceListId(
+			long commercePriceListId)
+		throws PortalException {
+
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(), commercePriceListId, ActionKeys.UPDATE);
+
+		commercePriceListChannelRelLocalService.
+			deleteCommercePriceListChannelRels(commercePriceListId);
+	}
+
+	@Override
 	public CommercePriceListChannelRel fetchCommercePriceListChannelRel(
 			long commerceChannelId, long commercePriceListId)
 		throws PortalException {

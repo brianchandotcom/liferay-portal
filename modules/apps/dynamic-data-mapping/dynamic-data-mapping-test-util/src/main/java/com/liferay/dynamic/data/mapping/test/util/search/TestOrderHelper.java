@@ -22,10 +22,10 @@ import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetEntryQueryTestUtil;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -74,7 +74,7 @@ public abstract class TestOrderHelper {
 		testOrderByDDMField(
 			new String[] {"false", "true", "false", "true"},
 			new String[] {"false", "false", "true", "true"},
-			FieldConstants.BOOLEAN, DDMFormFieldType.CHECKBOX);
+			FieldConstants.BOOLEAN, DDMFormFieldTypeConstants.CHECKBOX);
 	}
 
 	public void testOrderByDDMBooleanFieldRepeatable() throws Exception {
@@ -85,42 +85,46 @@ public abstract class TestOrderHelper {
 			new String[] {
 				"false|false", "false|false", "true|true", "true|true"
 			},
-			FieldConstants.BOOLEAN, DDMFormFieldType.CHECKBOX);
+			FieldConstants.BOOLEAN, DDMFormFieldTypeConstants.CHECKBOX);
 	}
 
 	public void testOrderByDDMDateField() throws Exception {
 		testOrderByDDMField(
 			new String[] {"20160417192501", "20160417192510", "20160417192503"},
 			new String[] {"20160417192501", "20160417192503", "20160417192510"},
-			FieldConstants.DATE, DDMFormFieldType.DATE);
+			FieldConstants.DATE, DDMFormFieldTypeConstants.DATE);
 	}
 
 	public void testOrderByDDMIntegerField() throws Exception {
 		testOrderByDDMField(
 			new String[] {"1", "10", "3", "2"},
 			new String[] {"1", "2", "3", "10"}, FieldConstants.INTEGER,
-			DDMFormFieldType.INTEGER);
+			DDMFormFieldTypeConstants.NUMERIC);
 	}
 
 	public void testOrderByDDMIntegerFieldRepeatable() throws Exception {
 		testOrderByDDMFieldRepeatable(
 			new String[] {"50", "707|25", "1|99|42"},
 			new String[] {"1|99|42", "707|25", "50"}, FieldConstants.INTEGER,
-			DDMFormFieldType.INTEGER);
+			DDMFormFieldTypeConstants.NUMERIC);
 	}
 
 	public void testOrderByDDMNumberField() throws Exception {
 		testOrderByDDMField(
-			new String[] {"3", "3.14", "12.34", "2.72", "1.41", "23.45", "20"},
-			new String[] {"1.41", "2.72", "3", "3.14", "12.34", "20", "23.45"},
-			FieldConstants.NUMBER, DDMFormFieldType.NUMBER);
+			new String[] {
+				"3.0", "3.14", "12.34", "2.72", "1.41", "23.45", "20.0"
+			},
+			new String[] {
+				"1.41", "2.72", "3.0", "3.14", "12.34", "20.0", "23.45"
+			},
+			FieldConstants.DOUBLE, DDMFormFieldTypeConstants.NUMERIC);
 	}
 
 	public void testOrderByDDMNumberFieldRepeatable() throws Exception {
 		testOrderByDDMFieldRepeatable(
 			new String[] {"20|12.34", "16.0", "3.14"},
-			new String[] {"3.14", "20|12.34", "16.0"}, FieldConstants.NUMBER,
-			DDMFormFieldType.NUMBER);
+			new String[] {"3.14", "20|12.34", "16.0"}, FieldConstants.DOUBLE,
+			DDMFormFieldTypeConstants.NUMERIC);
 	}
 
 	public void testOrderByDDMRadioField() throws Exception {
@@ -143,7 +147,7 @@ public abstract class TestOrderHelper {
 		testOrderByDDMFieldRepeatable(
 			new String[] {"B", "X|Y", "D|A|C|Z"},
 			new String[] {"D|A|C|Z", "B", "X|Y"}, "string",
-			DDMFormFieldType.TEXT);
+			DDMFormFieldTypeConstants.TEXT);
 	}
 
 	protected static String[] toJsonArrays(String... strings) {
@@ -327,7 +331,7 @@ public abstract class TestOrderHelper {
 	}
 
 	protected void setDDMFormFieldOptions(DDMForm ddmForm) {
-		if (!_type.equals(DDMFormFieldType.RADIO)) {
+		if (!_type.equals(DDMFormFieldTypeConstants.RADIO)) {
 			return;
 		}
 
@@ -400,7 +404,7 @@ public abstract class TestOrderHelper {
 		testOrderByDDMRadioField(
 			new String[] {"a", "D", "c", "B"},
 			new String[] {"a", "B", "c", "D"}, FieldConstants.STRING, indexType,
-			DDMFormFieldType.RADIO);
+			DDMFormFieldTypeConstants.RADIO);
 	}
 
 	protected void testOrderByDDMRadioField(
@@ -438,7 +442,7 @@ public abstract class TestOrderHelper {
 				"a" + dummyText, "B" + dummyText, "c" + dummyText,
 				"D" + dummyText
 			},
-			FieldConstants.STRING, indexType, DDMFormFieldType.TEXT);
+			FieldConstants.STRING, indexType, DDMFormFieldTypeConstants.TEXT);
 	}
 
 	private String _dataType;

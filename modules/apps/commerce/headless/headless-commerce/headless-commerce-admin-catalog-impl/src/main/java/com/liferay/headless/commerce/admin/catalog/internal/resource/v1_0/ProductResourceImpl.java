@@ -194,7 +194,8 @@ public class ProductResourceImpl
 		return _productHelper.getProductsPage(
 			contextCompany.getCompanyId(), search, filter, pagination, sorts,
 			document -> _toProduct(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	@Override

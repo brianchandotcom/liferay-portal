@@ -31,6 +31,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,7 +47,8 @@ public class ProductHelper {
 			long companyId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts,
 			UnsafeFunction<Document, Product, Exception>
-				transformUnsafeFunction)
+				transformUnsafeFunction,
+			Locale preferredLocale)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -72,6 +74,10 @@ public class ProductHelper {
 
 					searchContext.setAttribute(
 						Field.STATUS, WorkflowConstants.STATUS_ANY);
+
+					if (preferredLocale != null) {
+						searchContext.setLocale(preferredLocale);
+					}
 				}
 
 			},

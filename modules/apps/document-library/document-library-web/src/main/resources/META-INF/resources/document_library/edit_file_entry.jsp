@@ -601,18 +601,18 @@ renderResponse.setTitle(headerTitle);
 			<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
 		}
 
-		var data = {
+		Liferay.Util.setFormValues(form, {
 			<%= Constants.CMD %>:
 				'<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>',
-		};
+		});
 
 		if (draft) {
-			data.workflowAction = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
+			Liferay.Util.setFormValues(form, {
+				workflowAction: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
+			});
 		}
 
-		Liferay.Util.postForm(form, {
-			data: data,
-		});
+		submitForm(form);
 	}
 
 	function <portlet:namespace />showVersionDetailsDialog() {

@@ -328,6 +328,14 @@ definition {
 			checkedOut = "true",
 			dmDocumentTitle = "Untitled",
 			userName = "Test Test");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		for (var menuItem : list "Edit,Edit in Google Sheets,Checkin") {
+			LexiconEntry.viewNoEntryMenuItem(
+				menuItem = "${menuItem}",
+				rowEntry = "Untitled");
+		}
 	}
 
 	@description = "This test ensures a Google Doc title can be changed through the editor"

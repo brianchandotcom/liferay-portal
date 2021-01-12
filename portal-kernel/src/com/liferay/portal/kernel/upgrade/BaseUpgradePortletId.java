@@ -337,12 +337,15 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					}
 
 					String newValue = StringUtil.replace(
-						value, "#p_p_id_" + oldRootPortletId,
-						"#p_p_id_" + newRootPortletId);
-
-					newValue = StringUtil.replace(
-						newValue, "#portlet_" + oldRootPortletId,
-						"#portlet_" + newRootPortletId);
+						value,
+						new String[] {
+							"#p_p_id_" + oldRootPortletId,
+							"#portlet_" + oldRootPortletId
+						},
+						new String[] {
+							"#p_p_id_" + newRootPortletId,
+							"#portlet_" + newRootPortletId
+						});
 
 					if (Objects.equals(value, newValue)) {
 						continue;

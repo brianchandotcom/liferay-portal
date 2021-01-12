@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 import java.io.StringReader;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -39,11 +38,9 @@ public class BuildFactory {
 
 		String axisVariable = matcher.group("axisVariable");
 
-		Map<String, String> buildParameters =
-			JenkinsResultsParserUtil.getBuildParameters(url);
-
 		if (axisVariable != null) {
-			String jobVariant = buildParameters.get("JOB_VARIANT");
+			String jobVariant = JenkinsResultsParserUtil.getBuildParameter(
+				url, "JOB_VARIANT");
 
 			if ((jobVariant != null) && jobVariant.contains("cucumber")) {
 				return new CucumberAxisBuild(url, (BatchBuild)parentBuild);
@@ -82,15 +79,15 @@ public class BuildFactory {
 			return new FreestyleBatchBuild(url, (TopLevelBuild)parentBuild);
 		}
 
-		String axisVariables = buildParameters.get("AXIS_VARIABLES");
+		for (String batchToken : _TOKENS_BATCH) {
+			if (jobName.contains(batchToken)) {
+				if (jobName.contains("qa-websites")) {
+					return new QAWebsitesBatchBuild(
+						url, (TopLevelBuild)parentBuild);
+				}
 
-		if ((axisVariables != null) && !axisVariables.isEmpty()) {
-			if (jobName.contains("qa-websites")) {
-				return new QAWebsitesBatchBuild(
-					url, (TopLevelBuild)parentBuild);
+				return new BatchBuild(url, (TopLevelBuild)parentBuild);
 			}
-
-			return new BatchBuild(url, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("root-cause-analysis-tool")) {
@@ -190,12 +187,16 @@ public class BuildFactory {
 			"((?<buildNumber>\\d+)|buildWithParameters\\?" +
 				"(?<queryString>.*))/?");
 
+	private static final String[] _TOKENS_BATCH = {
+		"-batch", "-chrome", "-dist", "-edge", "-firefox", "-ie11", "-safari"
+	};
+
 	private static final MultiPattern _buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/?",
 			_BUILD_URL_SUFFIX_REGEX),
 		JenkinsResultsParserUtil.combine(
-			".*?Test/+[^/]+/+test-[0-9]-[0-9]{1,2}/", "(?<jobName>[^/]+)/?",
-			_BUILD_URL_SUFFIX_REGEX));
+			".*?Test/+[^/]+/+(?<master>test-[0-9]-[0-9]{1,2})/",
+			"(?<jobName>[^/]+)/?", _BUILD_URL_SUFFIX_REGEX));
 
 }

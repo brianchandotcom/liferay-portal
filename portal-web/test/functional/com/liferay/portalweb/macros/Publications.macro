@@ -49,6 +49,12 @@ definition {
 		Button.clickCancel();
 	}
 
+	macro changeDiffDisplayItem {
+		Click(locator1 = "Publications#CURRENT_DIFF_DISPLAY_ICON");
+
+		MenuItem.click(menuItem = "${displayItem}");
+	}
+
 	macro createNewPublication {
 		if ("${gotoManagePublications}" == "true") {
 			ApplicationsMenu.gotoPortlet(

@@ -12,7 +12,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="title" type="String">
-			<hint name="max-length">150</hint>
+			<hint name="max-length">255</hint>
 			<sanitize content-type="text/plain" modes="ALL" />
 			<validator name="required" />
 		</field>

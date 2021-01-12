@@ -2329,29 +2329,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.mobile.device.detection.fiftyonedegrees.jar!commons-io.jar</file-name>
-				<version>1.4</version>
-				<project-name>Apache Commons IO Bundle</project-name>
-				<project-url>http://commons.apache.org/io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.mobile.device.detection.fiftyonedegrees.jar!device-detection-core.jar</file-name>
-				<version>3.2.14.2</version>
-				<project-name>com.51degrees:device-detection-core</project-name>
-				<licenses>
-					<license>
-						<license-name>Mozilla Public License, Version 2.0</license-name>
-						<license-url>http://www.mozilla.org/MPL/2.0/</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.odata.impl.jar!netty-buffer.jar</file-name>
 				<version>4.1.50.Final</version>
 				<project-name>Netty/Buffer</project-name>

@@ -331,7 +331,6 @@ com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil#startWorkflowInst
 com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil#startWorkflowInstance(long,long,long,String,long,T,ServiceContext,Map<String, Serializable>)
 com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil#startWorkflowInstance(long,long,String,long,T,ServiceContext)
 com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil#startWorkflowInstance(long,long,String,long,T,ServiceContext,Map<String, Serializable>)
-com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal.FiftyOneDegreesEngineProxy#getDevice(HttpServletRequest)
 com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter#isKeepFileVersionLabel(long,boolean,ServiceContext)
 com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter#updateStatus(long,long,int,ServiceContext,Map<String, Serializable>)
 com.liferay.portal.repository.capabilities.WorkflowSupport#addFileEntry(long,FileEntry,ServiceContext)

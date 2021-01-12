@@ -516,6 +516,11 @@ public interface CommerceDiscountLocalService
 	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
 		long companyId, String commerceDiscountTargetType);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getValidCommerceDiscountsCount(
+		long commerceAccountId, long[] commerceAccountGroupIds,
+		long commerceChannelId, long commerceDiscountId);
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceDiscount incrementCommerceDiscountNumberOfUse(
 			long commerceDiscountId)

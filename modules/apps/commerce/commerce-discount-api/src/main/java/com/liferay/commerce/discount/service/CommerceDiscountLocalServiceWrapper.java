@@ -780,6 +780,16 @@ public class CommerceDiscountLocalServiceWrapper
 	}
 
 	@Override
+	public int getValidCommerceDiscountsCount(
+		long commerceAccountId, long[] commerceAccountGroupIds,
+		long commerceChannelId, long commerceDiscountId) {
+
+		return _commerceDiscountLocalService.getValidCommerceDiscountsCount(
+			commerceAccountId, commerceAccountGroupIds, commerceChannelId,
+			commerceDiscountId);
+	}
+
+	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscount
 			incrementCommerceDiscountNumberOfUse(long commerceDiscountId)
 		throws com.liferay.portal.kernel.exception.PortalException {

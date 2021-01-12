@@ -735,6 +735,15 @@ public class CommerceDiscountLocalServiceUtil {
 			companyId, commerceDiscountTargetType);
 	}
 
+	public static int getValidCommerceDiscountsCount(
+		long commerceAccountId, long[] commerceAccountGroupIds,
+		long commerceChannelId, long commerceDiscountId) {
+
+		return getService().getValidCommerceDiscountsCount(
+			commerceAccountId, commerceAccountGroupIds, commerceChannelId,
+			commerceDiscountId);
+	}
+
 	public static com.liferay.commerce.discount.model.CommerceDiscount
 			incrementCommerceDiscountNumberOfUse(long commerceDiscountId)
 		throws com.liferay.portal.kernel.exception.PortalException {

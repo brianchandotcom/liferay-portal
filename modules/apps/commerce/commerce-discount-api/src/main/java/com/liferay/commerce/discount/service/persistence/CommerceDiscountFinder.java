@@ -29,6 +29,10 @@ public interface CommerceDiscountFinder {
 	public int countByCommercePricingClassId(
 		long commercePricingClassId, String title, boolean inlineSQLHelper);
 
+	public int countByValidCommerceDiscount(
+		long commerceAccountId, long[] commerceAccountGroupIds,
+		long commerceChannelId, long commerceDiscountId);
+
 	public java.util.List<com.liferay.commerce.discount.model.CommerceDiscount>
 		findByCommercePricingClassId(
 			long commercePricingClassId, String title, int start, int end);

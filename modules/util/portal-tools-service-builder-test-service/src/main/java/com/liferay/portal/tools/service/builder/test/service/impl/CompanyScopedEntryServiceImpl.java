@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.CompanyScopedE
 public class CompanyScopedEntryServiceImpl
 	extends CompanyScopedEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.CompanyScopedEntryServiceUtil</code> to access the company scoped entry remote service.
 	 */
+
 }

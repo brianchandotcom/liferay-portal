@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.GroupScopedEnt
 public class GroupScopedEntryServiceImpl
 	extends GroupScopedEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.GroupScopedEntryServiceUtil</code> to access the group scoped entry remote service.
 	 */
+
 }

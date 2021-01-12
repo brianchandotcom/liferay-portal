@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.DefaultScopedE
 public class DefaultScopedEntryLocalServiceImpl
 	extends DefaultScopedEntryLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.portal.tools.service.builder.test.service.DefaultScopedEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.DefaultScopedEntryLocalServiceUtil</code>.
 	 */
+
 }

@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.DefaultScopedE
 public class DefaultScopedEntryServiceImpl
 	extends DefaultScopedEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.DefaultScopedEntryServiceUtil</code> to access the default scoped entry remote service.
 	 */
+
 }

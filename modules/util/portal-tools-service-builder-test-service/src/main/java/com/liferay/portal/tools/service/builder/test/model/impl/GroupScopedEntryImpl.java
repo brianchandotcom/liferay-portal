@@ -25,7 +25,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
  */
 public class GroupScopedEntryImpl extends GroupScopedEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a group scoped entry model instance should use the {@link com.liferay.portal.tools.service.builder.test.model.GroupScopedEntry} interface instead.

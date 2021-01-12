@@ -25,7 +25,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
  */
 public class DefaultScopedEntryImpl extends DefaultScopedEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a default scoped entry model instance should use the {@link com.liferay.portal.tools.service.builder.test.model.DefaultScopedEntry} interface instead.

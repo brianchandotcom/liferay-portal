@@ -145,7 +145,7 @@
 </tr>
 <tr>
 	<td>CONTENT_VIDEO_LINK_IMAGE</td>
-	<td>//img[contains(@class,'video')]</td>
+	<td>//img[contains(@src,'data:image/gif')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -74,6 +74,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIFF_ADDED_VALUE</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-added')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIFF_REMOVED_VALUE</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td//span[contains(@class,'diff-html-removed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISABLED_PUBLISH_BUTTON</td>
 	<td>//*[contains(@class,'btn')][normalize-space(text())='Publish']</td>
 	<td></td>

@@ -3,7 +3,7 @@
 }
 
 .assignments-cell-editor {
-	max-height: 35vh;
+	max-height: 500px;
 	overflow: auto;
 
 	.checkbox {
@@ -15,6 +15,8 @@
 		}
 
 		.celleditor-label-checkbox {
+			margin-left: 15px;
+			margin-top: 4px;
 			min-height: 16px;
 		}
 	}
@@ -315,8 +317,14 @@
 	width: 100% !important;
 }
 
-.portal-popup .notifications-cell-editor {
-	top: 178px !important;
+@media only screen and (min-height: 720px) and (max-height: 860px) {
+	.portal-popup .basecelleditor {
+		top: 60px !important;
+	}
+}
+
+.portal-popup .basecelleditor {
+	top: 176px !important;
 }
 
 .property-builder-disabled {

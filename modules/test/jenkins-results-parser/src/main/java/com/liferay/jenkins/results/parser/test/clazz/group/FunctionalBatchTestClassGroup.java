@@ -20,7 +20,7 @@ import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.PluginsTestSuiteJob;
+import com.liferay.jenkins.results.parser.PluginsGitRepositoryJob;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.poshi.core.PoshiContext;
@@ -148,6 +148,50 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		setSegmentTestClassGroups();
 	}
 
+	protected String getTestBaseDirName() {
+		Job job = getJob();
+
+		if (job instanceof PluginsGitRepositoryJob) {
+			PluginsGitRepositoryJob pluginsGitRepositoryJob =
+				(PluginsGitRepositoryJob)job;
+
+			File pluginTestBaseDir =
+				pluginsGitRepositoryJob.getPluginTestBaseDir();
+
+			if ((pluginTestBaseDir != null) && pluginTestBaseDir.exists()) {
+				return JenkinsResultsParserUtil.getCanonicalPath(
+					pluginTestBaseDir);
+			}
+		}
+
+		String testBaseDirName = System.getenv("test.base.dir.name");
+
+		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+			testBaseDirName = System.getenv("env.TEST_BASE_DIR_NAME");
+		}
+
+		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+			testBaseDirName = System.getenv("TEST_BASE_DIR_NAME");
+		}
+
+		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
+			return null;
+		}
+
+		File testBaseDir = new File(testBaseDirName);
+
+		if (!testBaseDir.exists() || !testBaseDir.isDirectory()) {
+			return null;
+		}
+
+		try {
+			return testBaseDir.getCanonicalPath();
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+	}
+
 	@Override
 	protected void setAxisTestClassGroups() {
 		if (!axisTestClassGroups.isEmpty()) {
@@ -251,7 +295,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 			Map<String, String> parameters = new HashMap<>();
 
-			String testBaseDirName = _getTestBaseDirName();
+			String testBaseDirName = getTestBaseDirName();
 
 			if (testBaseDirName != null) {
 				parameters.put("test.base.dir.name", testBaseDirName);
@@ -295,50 +339,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
-		}
-	}
-
-	private String _getTestBaseDirName() {
-		Job job = getJob();
-
-		if (job instanceof PluginsTestSuiteJob) {
-			PluginsTestSuiteJob pluginsTestSuiteJob = (PluginsTestSuiteJob)job;
-
-			File pluginTestBaseDir = pluginsTestSuiteJob.getPluginTestBaseDir();
-
-			try {
-				return pluginTestBaseDir.getCanonicalPath();
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-		}
-
-		String testBaseDirName = System.getenv("test.base.dir.name");
-
-		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
-			testBaseDirName = System.getenv("env.TEST_BASE_DIR_NAME");
-		}
-
-		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
-			testBaseDirName = System.getenv("TEST_BASE_DIR_NAME");
-		}
-
-		if ((testBaseDirName == null) || !testBaseDirName.isEmpty()) {
-			return null;
-		}
-
-		File testBaseDir = new File(testBaseDirName);
-
-		if (!testBaseDir.exists() || !testBaseDir.isDirectory()) {
-			return null;
-		}
-
-		try {
-			return testBaseDir.getCanonicalPath();
-		}
-		catch (IOException ioException) {
-			return null;
 		}
 	}
 

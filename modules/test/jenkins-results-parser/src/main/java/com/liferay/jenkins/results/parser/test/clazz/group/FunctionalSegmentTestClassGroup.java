@@ -114,6 +114,15 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		sb.append(JenkinsResultsParserUtil.join(" ", axisGroupNames));
 		sb.append("\n");
 
+		String testBaseDirName =
+			_parentFunctionalBatchTestClassGroup.getTestBaseDirName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testBaseDirName)) {
+			sb.append("TEST_BASE_DIR_NAME=");
+			sb.append(testBaseDirName);
+			sb.append("\n");
+		}
+
 		return sb.toString();
 	}
 

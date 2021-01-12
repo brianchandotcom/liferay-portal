@@ -1604,9 +1604,17 @@ definition {
 	macro uploadVideo {
 		Click(locator1 = "WCEditWebContent#VIDEO_BUTTON");
 
-		ItemSelector.addVideoFromURL(
-			navTab = "${navTab}",
-			videoSourceURL = "${dmDocumentURL}");
+		if ("${navTab}" == "URL") {
+			ItemSelector.addVideoFromURL(
+				navTab = "${navTab}",
+				videoSourceURL = "${dmDocumentURL}");
+		}
+		else if ("${navTab}" == "Documents and Media") {
+			ItemSelector.addVideoFromDM(
+				navTab = "${navTab}",
+				videoShortcutPreview = "${videoShortcutPreview}",
+				videoShortcutTitle = "${videoShortcutTitle}");
+		}
 
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = "content",

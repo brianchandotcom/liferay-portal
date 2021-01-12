@@ -381,32 +381,10 @@
 		line-height: 1.5;
 		position: relative;
 
-		.panel-title > .panel-toggler {
-			&:not(.collapsed) {
-				font-weight: 700;
-				padding-left: 24px;
-			}
-
-			&:hover {
-				text-decoration: none;
-			}
-
-			&:before {
-				bottom: 4px;
-				left: 8px;
-				right: 8px;
-				top: 4px;
-			}
-
-			.category-name,
-			.depot-type,
-			.site-name,
-			.user-name {
-				color: $product-menu-panel-title-color;
-			}
-
+		.panel-title {
 			.depot-type,
 			.site-name {
+				color: $product-menu-panel-title-color;
 				line-height: 1.25;
 			}
 
@@ -414,6 +392,10 @@
 				font-size: 0.75rem;
 				font-weight: normal;
 				text-transform: uppercase;
+			}
+
+			.site-name {
+				text-transform: none;
 			}
 		}
 	}

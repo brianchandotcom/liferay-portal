@@ -21,6 +21,7 @@ import com.liferay.blogs.internal.upgrade.v1_1_1.UpgradeUrlTitle;
 import com.liferay.blogs.internal.upgrade.v1_1_2.UpgradeBlogsImages;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsEntryTable;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsStatsUserTable;
+import com.liferay.blogs.internal.upgrade.v2_1_0.UpgradeTitle;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -88,6 +89,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register("2.1.0", "2.1.1", new UpgradeTitle());
 	}
 
 	@Reference

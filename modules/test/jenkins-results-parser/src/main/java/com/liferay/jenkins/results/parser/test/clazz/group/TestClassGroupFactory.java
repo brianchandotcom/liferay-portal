@@ -76,6 +76,7 @@ public class TestClassGroupFactory {
 			}
 			else if (batchName.startsWith("functional-") ||
 					 batchName.startsWith("modules-functional-") ||
+					 batchName.startsWith("plugins-functional-") ||
 					 batchName.startsWith("subrepository-functional-")) {
 
 				batchTestClassGroup = new FunctionalBatchTestClassGroup(

@@ -45,6 +45,7 @@ jest.mock(
 				},
 			],
 			portletNamespace: 'ContentPageEditorPortlet',
+			styleBookEnabled: true,
 			styleBooks: [
 				{
 					name: 'Pablo Style',

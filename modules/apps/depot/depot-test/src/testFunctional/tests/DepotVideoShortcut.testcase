@@ -226,6 +226,8 @@ definition {
 	@description = "This ensures that a depot video shortcut can be used through Related Assets on a connected site."
 	@priority = "3"
 	test ViewInRelatedAssets {
+		property test.name.skip.portal.instance = "DepotVideoShortcut#ViewInRelatedAssets"
+
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
 			siteName = "Site Name");

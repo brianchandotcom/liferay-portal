@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionCustomizer;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.dao.orm.SessionWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -60,6 +61,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Assert;
@@ -325,7 +327,7 @@ public class DataGuardTestRule
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			try (Closeable closeable = _installTransactionExecutor(
+			try (Closeable closeable1 = _installTransactionExecutor(
 					registry.getSymbolicName(clazz.getClassLoader()))) {
 
 				TransactionInvokerUtil.invoke(
@@ -333,12 +335,18 @@ public class DataGuardTestRule
 					() -> {
 						basePersistence.clearCache();
 
-						List<BaseModel<?>> baseModels =
-							ReflectionTestUtil.invoke(
-								basePersistence, "findAll", new Class<?>[0]);
+						try (Closeable closeable2 =
+								_removeSessionFactoryVerifier(
+									basePersistence)) {
 
-						if (!baseModels.isEmpty()) {
-							dataMap.put(entry.getKey(), baseModels);
+							List<BaseModel<?>> baseModels =
+								ReflectionTestUtil.invoke(
+									basePersistence, "findAll",
+									new Class<?>[0]);
+
+							if (!baseModels.isEmpty()) {
+								dataMap.put(entry.getKey(), baseModels);
+							}
 						}
 
 						return null;
@@ -490,6 +498,34 @@ public class DataGuardTestRule
 		};
 	}
 
+	private Closeable _removeSessionFactoryVerifier(
+		BasePersistence<?> basePersistence) {
+
+		SessionFactory originalSessionFactory =
+			ReflectionTestUtil.getFieldValue(
+				basePersistence, "_sessionFactory");
+
+		Class<?> clazz = originalSessionFactory.getClass();
+
+		if (!Objects.equals(
+				clazz.getName(),
+				"com.liferay.portal.dao.orm.hibernate." +
+					"VerifySessionFactoryWrapper")) {
+
+			return () -> {
+			};
+		}
+
+		SessionFactory sessionFactory = ReflectionTestUtil.getFieldValue(
+			originalSessionFactory, "_sessionFactoryImpl");
+
+		ReflectionTestUtil.setFieldValue(
+			basePersistence, "_sessionFactory", sessionFactory);
+
+		return () -> ReflectionTestUtil.setFieldValue(
+			basePersistence, "_sessionFactory", originalSessionFactory);
+	}
+
 	private void _smartDelete(
 			PersistedModelLocalService persistedModelLocalService,
 			Class<?> modelClass, PersistedModel persistedModel)
@@ -536,18 +572,24 @@ public class DataGuardTestRule
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			try (Closeable closeable = _installTransactionExecutor(
+			try (Closeable closeable1 = _installTransactionExecutor(
 					registry.getSymbolicName(
 						persistenceClass.getClassLoader()))) {
 
 				TransactionInvokerUtil.invoke(
 					_transactionConfig,
 					() -> {
-						Session session = basePersistence.getCurrentSession();
+						try (Closeable closeable2 =
+								_removeSessionFactoryVerifier(
+									basePersistence)) {
 
-						session.delete(persistedModel);
+							Session session =
+								basePersistence.getCurrentSession();
 
-						return null;
+							session.delete(persistedModel);
+
+							return null;
+						}
 					});
 
 				Indexer<PersistedModel> indexer =

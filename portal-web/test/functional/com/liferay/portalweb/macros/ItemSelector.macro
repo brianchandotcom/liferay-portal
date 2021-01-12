@@ -98,7 +98,9 @@ definition {
 		}
 
 		if (isSet(videoShortcutPreview)) {
-			Click(locator1 = "Icon#EYE_PREVIEW");
+			Click(
+				key_cardTitle = "${videoShortcutTitle}",
+				locator1 = "Icon#EYE_PREVIEW_SPECIFIC");
 
 			AssertVisible(
 				key_videoShortcutPreview = "${videoShortcutPreview}",

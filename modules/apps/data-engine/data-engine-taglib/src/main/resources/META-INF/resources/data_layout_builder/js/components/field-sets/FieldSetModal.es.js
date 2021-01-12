@@ -153,17 +153,15 @@ const ModalContent = ({
 	}, [fieldSet]);
 
 	useEffect(() => {
-		if (contentType === 'app-builder') {
-			dispatch({
-				payload: {
-					config: {
-						...appConfig,
-						allowFieldSets: false,
-					},
+		dispatch({
+			payload: {
+				config: {
+					...appConfig,
+					allowFieldSets: false,
 				},
-				type: UPDATE_CONFIG,
-			});
-		}
+			},
+			type: UPDATE_CONFIG,
+		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [contentType, dispatch]);
 

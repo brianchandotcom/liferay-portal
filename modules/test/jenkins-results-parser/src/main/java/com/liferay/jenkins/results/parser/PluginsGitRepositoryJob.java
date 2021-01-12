@@ -56,6 +56,8 @@ public abstract class PluginsGitRepositoryJob
 		return gitWorkingDirectory;
 	}
 
+	public abstract File getPluginTestBaseDir();
+
 	@Override
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return portalGitWorkingDirectory;

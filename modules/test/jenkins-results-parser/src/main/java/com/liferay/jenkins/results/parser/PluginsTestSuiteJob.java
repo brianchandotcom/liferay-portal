@@ -28,6 +28,7 @@ public abstract class PluginsTestSuiteJob
 		return _pluginName;
 	}
 
+	@Override
 	public File getPluginTestBaseDir() {
 		GitWorkingDirectory pluginsGitWorkingDirectory =
 			getGitWorkingDirectory();

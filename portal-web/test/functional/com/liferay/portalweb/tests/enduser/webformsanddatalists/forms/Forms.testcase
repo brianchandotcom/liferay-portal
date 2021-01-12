@@ -2655,7 +2655,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "3",
+			fieldPositionNumber = "4",
 			fieldType = "Single Selection");
 
 		var fieldSingleSelectionField = FormFields.getFieldName();
@@ -2674,7 +2674,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "4",
+			fieldPositionNumber = "5",
 			fieldType = "Date");
 
 		var fieldDateField = FormFields.getFieldName();
@@ -2684,7 +2684,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "5",
+			fieldPositionNumber = "6",
 			fieldType = "Multiple Selection");
 
 		var fieldMultipleSelectionField = FormFields.getFieldName();

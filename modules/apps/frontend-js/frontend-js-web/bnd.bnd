@@ -6,7 +6,6 @@ Liferay-JS-Resources-Top-Head:\
 	/liferay/events.js,\
 	/liferay/lazy_load.js,\
 	/liferay/liferay.js,\
-	/liferay/webpack_federation.js,\
 	\
 	/liferay/global.bundle.js,\
 	/liferay/portlet.js,\

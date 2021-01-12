@@ -9,7 +9,6 @@
 		"**/liferay/lazy_load.js",
 		"**/liferay/liferay.js",
 		"**/liferay/portlet.js",
-		"**/liferay/webpack_federation.js",
 		"**/liferay/workflow.js",
 		"**/loader/config.js"
 	]

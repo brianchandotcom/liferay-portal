@@ -26,62 +26,157 @@ const OBJECT_VIEW_LEVEL = 'object-view-level';
 
 const VIEW_LEVEL = {
 	[FORM_VIEW_LEVEL]: {
+		fn: (...params) => {
+			setRequiredAtFormViewLevel(true)(...params);
+
+			setRequiredAtObjectViewLevel(false)(...params);
+		},
 		label: Liferay.Language.get('only-for-this-form'),
 	},
 	[OBJECT_VIEW_LEVEL]: {
-		disabled: true,
-		label: Liferay.Language.get('for-all-forms-of-this-object'),
+		fn: (...params) => {
+			setRequiredAtObjectViewLevel(true)(...params);
+		},
+		label: Liferay.Language.get('for-all-forms-using-this-field'),
 	},
 };
 
-function getRequiredAtFormViewLevel(dataLayoutFields, fieldName) {
-	return dataLayoutFields[fieldName]?.required ?? false;
+/**
+ * Return the formatted state
+ * @param {object} state
+ */
+function getFormattedState({
+	dataDefinition: {dataDefinitionFields},
+	dataLayout: {dataLayoutFields},
+	focusedField: {fieldName},
+}) {
+	return {
+		dataDefinitionFields,
+		dataLayoutFields,
+		fieldName,
+	};
 }
 
-export default ({AppContext, dataLayoutBuilder}) => {
-	const popoverRef = useRef(null);
-	const triggerRef = useRef(null);
-	const [showPopover, setShowPopover] = useState(false);
-	const [selectedViewLevel, setSelectedViewLevel] = useState(FORM_VIEW_LEVEL);
-	const [
-		{
-			dataLayout: {dataLayoutFields},
-			focusedField: {fieldName},
-		},
-		dispatch,
-	] = useContext(AppContext);
+/**
+ * Define an initial value to toggled state
+ * @param {object} state
+ */
+function initialToggledValue(state) {
+	if (
+		isRequiredAtObjectViewLevel(state) ||
+		isRequiredAtFormViewLevel(state)
+	) {
+		return true;
+	}
 
-	const requiredAtFormViewLevel = getRequiredAtFormViewLevel(
-		dataLayoutFields,
-		fieldName
-	);
+	return false;
+}
 
-	function setRequireAtFormViewLevel(toggle) {
+/**
+ * Define an initial value to viewSelected state
+ * @param {object} state
+ */
+function initialViewSelectedValue(state) {
+	if (isRequiredAtObjectViewLevel(state)) {
+		return OBJECT_VIEW_LEVEL;
+	}
 
-		// Mark as required within an edited field in the data engine
+	return FORM_VIEW_LEVEL;
+}
 
+/**
+ * Check if the field has a required parameter
+ * @param {object} field
+ */
+function isRequiredField(field) {
+	return field?.required ?? false;
+}
+
+/**
+ * Check if it is required at form view level
+ * @param {object} state
+ */
+function isRequiredAtFormViewLevel({dataLayoutFields, fieldName}) {
+	return isRequiredField(dataLayoutFields[fieldName]);
+}
+
+/**
+ * Check if it is required at object view level
+ * @param {object} state
+ */
+function isRequiredAtObjectViewLevel({dataDefinitionFields, fieldName}) {
+	const field = dataDefinitionFields.find(({name}) => name === fieldName);
+
+	return isRequiredField(field);
+}
+
+/**
+ * Set required at form view level
+ * @param {boolean} required
+ */
+function setRequiredAtFormViewLevel(required) {
+	return ({dataLayoutFields, fieldName}, dispatch) => {
 		dispatch({
 			payload: {
 				dataLayoutFields: {
 					...dataLayoutFields,
 					[fieldName]: {
 						...dataLayoutFields[fieldName],
-						required: toggle,
+						required,
 					},
 				},
 			},
 			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_FIELDS,
 		});
+	};
+}
 
-		// Mark as required within an edited field in the form builder
+/**
+ * Set required at object view level
+ * @param {boolean} required
+ */
+function setRequiredAtObjectViewLevel(required) {
+	return ({dataDefinitionFields, fieldName}, dispatch) => {
+		dispatch({
+			payload: {
+				dataDefinitionFields: dataDefinitionFields.map((field) => {
+					if (field.name === fieldName) {
+						return {
+							...field,
+							required,
+						};
+					}
 
-		dataLayoutBuilder.dispatch('fieldEdited', {
-			fieldName,
-			propertyName: 'required',
-			propertyValue: toggle,
+					return field;
+				}),
+			},
+			type: DataLayoutBuilderActions.UPDATE_DATA_DEFINITION_FIELDS,
 		});
-	}
+	};
+}
 
+export default ({AppContext, dataLayoutBuilder}) => {
+	const [state, dispatch] = useContext(AppContext);
+	const popoverRef = useRef(null);
+	const triggerRef = useRef(null);
+	const [showPopover, setShowPopover] = useState(false);
+
+	const formattedState = getFormattedState(state);
+
+	const [viewSelected, setViewSelected] = useState(
+		initialViewSelectedValue(formattedState)
+	);
+	const [toggled, setToggle] = useState(initialToggledValue(formattedState));
+
+	/**
+	 * Set require callback function
+	 * @param {function} fn
+	 */
+	const setRequireCallbackFn = (fn) => fn(formattedState, dispatch);
+
+	/**
+	 * UseEffect to click outside and close the popover
+	 */
 	useEffect(() => {
 		const handler = ({target}) => {
 			const outside = isClickOutside(
@@ -100,20 +195,52 @@ export default ({AppContext, dataLayoutBuilder}) => {
 		return () => window.removeEventListener('click', handler);
 	}, [popoverRef, triggerRef]);
 
+	useEffect(() => {
+		setToggle(initialToggledValue(formattedState));
+		setViewSelected(initialViewSelectedValue(formattedState));
+
+		if (!initialToggledValue(formattedState)) {
+			setShowPopover(false);
+		}
+	}, [formattedState]);
+
 	return (
 		<div className="d-flex form-renderer-required-field justify-content-between">
 			<ClayForm.Group className="form-renderer-required-field__toggle">
 				<ClayToggle
 					label={Liferay.Language.get('required-field')}
-					onToggle={setRequireAtFormViewLevel}
-					toggled={requiredAtFormViewLevel}
+					onToggle={(toggle) => {
+						setToggle(toggle);
+
+						dataLayoutBuilder.dispatch('fieldEdited', {
+							fieldName: state.focusedField.fieldName,
+							propertyName: 'required',
+							propertyValue: toggle,
+						});
+
+						if (toggle) {
+							setViewSelected(FORM_VIEW_LEVEL);
+
+							setRequireCallbackFn(
+								VIEW_LEVEL[FORM_VIEW_LEVEL].fn
+							);
+						}
+						else {
+							setRequireCallbackFn((...params) => {
+								setRequiredAtFormViewLevel(false)(...params);
+
+								setRequiredAtObjectViewLevel(false)(...params);
+							});
+						}
+					}}
+					toggled={toggled}
 				/>
 			</ClayForm.Group>
 
 			<ClayTooltipProvider>
 				<ClayButtonWithIcon
 					borderless
-					disabled={!requiredAtFormViewLevel}
+					disabled={!toggled}
 					displayType="secondary"
 					onClick={() => setShowPopover(!showPopover)}
 					ref={triggerRef}
@@ -133,14 +260,18 @@ export default ({AppContext, dataLayoutBuilder}) => {
 			>
 				<div className="mt-2">
 					<ClayRadioGroup
-						onSelectedValueChange={setSelectedViewLevel}
-						selectedValue={selectedViewLevel}
+						onSelectedValueChange={(newValue) => {
+							setViewSelected(newValue);
+
+							setRequireCallbackFn(VIEW_LEVEL[newValue].fn);
+						}}
+						selectedValue={viewSelected}
 					>
 						{Object.keys(VIEW_LEVEL).map((key) => (
 							<ClayRadio
 								key={key}
+								label={VIEW_LEVEL[key].label}
 								value={key}
-								{...VIEW_LEVEL[key]}
 							/>
 						))}
 					</ClayRadioGroup>

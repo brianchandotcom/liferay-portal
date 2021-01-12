@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "init.js",
 	"name": "frontend-js-spa-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

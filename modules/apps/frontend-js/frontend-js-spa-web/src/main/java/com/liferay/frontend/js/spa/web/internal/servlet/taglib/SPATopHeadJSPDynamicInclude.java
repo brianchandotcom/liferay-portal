@@ -14,8 +14,9 @@
 
 package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper.SPAHelper;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -101,16 +102,29 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			"validStatusCodes", _spaHelper.getValidStatusCodesJSONArray()
 		);
 
-		String initModuleName = _npmResolver.resolveModuleName(
-			"frontend-js-spa-web/init");
+		StringBundler javascriptSB = new StringBundler(3);
+
+		javascriptSB.append("window.setTimeout(function() {");
+
+		javascriptSB.append("window[");
+		javascriptSB.append("Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')]('");
+		javascriptSB.append("frontend-js-spa-web");
+		javascriptSB.append("').then((frontendJsSpaWebInit) => {");
+
+		javascriptSB.append("frontendJsSpaWebInit.default(");
+		javascriptSB.append(configJSONObject.toJSONString());
+		javascriptSB.append(");");
+
+		javascriptSB.append("});");
+
+		javascriptSB.append("},0);");
 
 		ScriptData initScriptData = new ScriptData();
 
 		initScriptData.append(
 			null,
-			"frontendJsSpaWebInit.default(" + configJSONObject.toJSONString() +
-				")",
-			initModuleName + " as frontendJsSpaWebInit",
+			javascriptSB.toString(),
+			StringPool.BLANK,
 			ScriptData.ModulesType.ES6);
 
 		initScriptData.writeTo(httpServletResponse.getWriter());
@@ -142,9 +156,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Props _props;

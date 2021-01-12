@@ -74,8 +74,9 @@ public class TestClassGroupFactory {
 				batchTestClassGroup = new CucumberBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
-			else if (batchName.contains("functional-") ||
-					 batchName.contains("subrepository-functional-")) {
+			else if (batchName.startsWith("functional-") ||
+					 batchName.startsWith("modules-functional-") ||
+					 batchName.startsWith("subrepository-functional-")) {
 
 				batchTestClassGroup = new FunctionalBatchTestClassGroup(
 					batchName, portalTestClassJob);
@@ -105,6 +106,10 @@ public class TestClassGroupFactory {
 			}
 			else if (batchName.startsWith("plugins-compile-")) {
 				batchTestClassGroup = new PluginsBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+			else if (batchName.startsWith("plugins-gulp-")) {
+				batchTestClassGroup = new PluginsGulpBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("js-test-") ||
@@ -171,6 +176,12 @@ public class TestClassGroupFactory {
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
 			return new PluginsSegmentTestClassGroup(
 				(PluginsBatchTestClassGroup)batchTestClassGroup);
+		}
+		else if (batchTestClassGroup instanceof
+					PluginsGulpBatchTestClassGroup) {
+
+			return new PluginsGulpSegmentTestClassGroup(
+				(PluginsGulpBatchTestClassGroup)batchTestClassGroup);
 		}
 
 		return new SegmentTestClassGroup(batchTestClassGroup);

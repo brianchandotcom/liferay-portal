@@ -107,18 +107,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalTestClassJob);
 
-		Properties portalReleaseProperties =
-			JenkinsResultsParserUtil.getProperties(
-				new File(
-					portalGitWorkingDirectory.getWorkingDirectory(),
-					"release.properties"));
-
 		_pluginsGitWorkingDirectory =
-			(PluginsGitWorkingDirectory)
-				GitWorkingDirectoryFactory.newGitWorkingDirectory(
-					portalGitWorkingDirectory.getUpstreamBranchName(),
-					JenkinsResultsParserUtil.getProperty(
-						portalReleaseProperties, "lp.plugins.dir"));
+			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();
 
 		excludesPathMatchers.addAll(
 			getPathMatchers(

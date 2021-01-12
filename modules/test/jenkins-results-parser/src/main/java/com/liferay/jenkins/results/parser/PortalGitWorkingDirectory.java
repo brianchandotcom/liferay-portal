@@ -211,6 +211,23 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return npmModuleDirsList;
 	}
 
+	public PluginsGitWorkingDirectory getPluginsGitWorkingDirectory() {
+		String lpPluginsDir = JenkinsResultsParserUtil.getProperty(
+			getReleaseProperties(), "lp.plugins.dir");
+
+		GitWorkingDirectory pluginsGitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				getUpstreamBranchName(), new File(lpPluginsDir),
+				"liferay-plugins-ee");
+
+		if (pluginsGitWorkingDirectory instanceof PluginsGitWorkingDirectory) {
+			return (PluginsGitWorkingDirectory)pluginsGitWorkingDirectory;
+		}
+
+		throw new RuntimeException(
+			"Could not find a plugins git working directory");
+	}
+
 	public Properties getReleaseProperties() {
 		if (_releaseProperties != null) {
 			return _releaseProperties;

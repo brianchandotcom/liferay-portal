@@ -84,6 +84,54 @@
 				(LOWER(CommerceDiscount.title) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.countByValidDiscount">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommerceDiscount.commerceDiscountId) AS COUNT_VALUE
+			FROM
+				CommerceDiscount
+			LEFT JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CDiscountCAccountGroupRel ON
+					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
+			WHERE
+				(CommerceDiscount.commerceDiscountId = ?) AND
+				(
+					(
+						(CommerceDiscountAccountRel.commerceAccountId = ?) AND
+						(CommerceChannelRel.commerceChannelId = ?)
+					) OR
+					(
+						(CommerceDiscountAccountRel.commerceAccountId = ?) AND
+						(CommerceChannelRel.commerceChannelRelId IS NULL)
+					) OR
+					(
+						(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IN ([$ACCOUNT_GROUP_IDS$])) AND
+						(CommerceChannelRel.commerceChannelId = ?)
+					) OR
+					(
+						(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IN ([$ACCOUNT_GROUP_IDS$])) AND
+						(CommerceChannelRel.commerceChannelRelId IS NULL)
+					) OR
+					(
+						(CommerceDiscountAccountRel.commerceAccountId IS NULL) AND
+						(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IS NULL) AND
+						(CommerceChannelRel.commerceChannelId = ?)
+					) OR
+					(
+						(CommerceDiscountAccountRel.commerceDiscountAccountRelId IS NULL) AND
+						(CDiscountCAccountGroupRel.cDiscountCAccountGroupRelId IS NULL) AND
+						(CommerceChannelRel.commerceChannelRelId IS NULL)
+					)
+				)
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountFinder.findByCommercePricingClassId">
 		<![CDATA[
 			SELECT

@@ -19,7 +19,9 @@ import com.liferay.mentions.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -28,11 +30,14 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -69,12 +74,18 @@ public class MentionsPortletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_company = CompanyTestUtil.addCompany();
+
+		User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
+
+		_group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), adminUser.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 	}
 
 	@Test
 	public void testServletResponseWithoutQuery() throws Exception {
-		_users.add(UserTestUtil.addUser("example", _group.getGroupId()));
+		_users.add(_addUser("example", _group.getGroupId()));
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -96,7 +107,7 @@ public class MentionsPortletTest {
 			mockHttpServletResponse.getContentAsString());
 
 		int companyUsersCount = _userLocalService.getCompanyUsersCount(
-			TestPropsValues.getCompanyId());
+			_company.getCompanyId());
 
 		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
 
@@ -110,7 +121,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithQueryWithFullScreenName()
 		throws Exception {
 
-		_users.add(UserTestUtil.addUser("example", _group.getGroupId()));
+		_users.add(_addUser("example", _group.getGroupId()));
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -143,7 +154,7 @@ public class MentionsPortletTest {
 	public void testServletResponseWithQueryWithPartialScreenName()
 		throws Exception {
 
-		_users.add(UserTestUtil.addUser("example", _group.getGroupId()));
+		_users.add(_addUser("example", _group.getGroupId()));
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -173,7 +184,7 @@ public class MentionsPortletTest {
 
 	@Test
 	public void testServletResponseWithQueryWithWildard() throws Exception {
-		_users.add(UserTestUtil.addUser("example", _group.getGroupId()));
+		_users.add(_addUser("example", _group.getGroupId()));
 
 		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
 
@@ -195,7 +206,7 @@ public class MentionsPortletTest {
 			mockHttpServletResponse.getContentAsString());
 
 		int companyUsersCount = _userLocalService.getCompanyUsersCount(
-			TestPropsValues.getCompanyId());
+			_company.getCompanyId());
 
 		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
 
@@ -229,9 +240,21 @@ public class MentionsPortletTest {
 			mockHttpServletResponse.getContentAsString());
 
 		int companyUsersCount = _userLocalService.getCompanyUsersCount(
-			TestPropsValues.getCompanyId());
+			_company.getCompanyId());
 
 		Assert.assertEquals(companyUsersCount - 1, jsonArray.length());
+	}
+
+	private User _addUser(String screenName, long... groupIds)
+		throws Exception {
+
+		User adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
+
+		return UserTestUtil.addUser(
+			_company.getCompanyId(), adminUser.getUserId(), screenName,
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), groupIds,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _assertAnyJSONObject(
@@ -271,10 +294,14 @@ public class MentionsPortletTest {
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setUser(
+			UserTestUtil.getAdminUser(_company.getCompanyId()));
 
 		return themeDisplay;
 	}
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

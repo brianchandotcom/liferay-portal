@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.react.renderer.internal;
 
+import com.liferay.frontend.js.loader.support.JSLoaderSupport;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -40,7 +41,8 @@ public class ReactRendererUtil {
 
 	public static void renderReact(
 			ComponentDescriptor componentDescriptor, Map<String, Object> props,
-			HttpServletRequest httpServletRequest, Portal portal, Writer writer)
+			HttpServletRequest httpServletRequest,
+			JSLoaderSupport jsLoaderSupport, Portal portal, Writer writer)
 		throws IOException {
 
 		String placeholderId = StringUtil.randomId();
@@ -49,7 +51,7 @@ public class ReactRendererUtil {
 
 		_renderJavaScript(
 			componentDescriptor, props, httpServletRequest, placeholderId,
-			portal, writer);
+			jsLoaderSupport, portal, writer);
 	}
 
 	private static Map<String, Object> _prepareProps(
@@ -106,7 +108,7 @@ public class ReactRendererUtil {
 	private static void _renderJavaScript(
 			ComponentDescriptor componentDescriptor, Map<String, Object> props,
 			HttpServletRequest httpServletRequest, String placeholderId,
-			Portal portal, Writer writer)
+			JSLoaderSupport jsLoaderSupport, Portal portal, Writer writer)
 		throws IOException {
 
 		StringBundler dependenciesSB = new StringBundler(7);
@@ -126,12 +128,9 @@ public class ReactRendererUtil {
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		StringBundler javascriptSB = new StringBundler(14);
+		StringBundler javascriptSB = new StringBundler(11);
 
-		javascriptSB.append("window[");
-		javascriptSB.append("Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')]('");
-		javascriptSB.append("portal-template-react-renderer-impl");
-		javascriptSB.append("').then(({render}) => {render(renderFunction");
+		javascriptSB.append("render(renderFunction");
 		javascriptSB.append(placeholderId);
 		javascriptSB.append(".default, ");
 
@@ -156,15 +155,18 @@ public class ReactRendererUtil {
 
 		javascriptSB.append(", '");
 		javascriptSB.append(placeholderId);
-		javascriptSB.append("');});");
+		javascriptSB.append("');");
+
+		String scriptBody = jsLoaderSupport.getScriptBody(
+			"portal-template-react-renderer-impl", "{render}",
+			javascriptSB.toString());
 
 		if (componentDescriptor.isPositionInLine()) {
 			ScriptData scriptData = new ScriptData();
 
 			scriptData.append(
-				portal.getPortletId(httpServletRequest),
-				javascriptSB.toString(), dependenciesSB.toString(),
-				ScriptData.ModulesType.ES6);
+				portal.getPortletId(httpServletRequest), scriptBody,
+				dependenciesSB.toString(), ScriptData.ModulesType.ES6);
 
 			scriptData.writeTo(writer);
 		}
@@ -180,9 +182,8 @@ public class ReactRendererUtil {
 			}
 
 			scriptData.append(
-				portal.getPortletId(httpServletRequest),
-				javascriptSB.toString(), dependenciesSB.toString(),
-				ScriptData.ModulesType.ES6);
+				portal.getPortletId(httpServletRequest), scriptBody,
+				dependenciesSB.toString(), ScriptData.ModulesType.ES6);
 		}
 	}
 

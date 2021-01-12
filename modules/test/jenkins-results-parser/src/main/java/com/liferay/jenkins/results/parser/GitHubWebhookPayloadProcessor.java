@@ -2408,7 +2408,7 @@ public class GitHubWebhookPayloadProcessor {
 	private static class PayloadJSONObject extends JSONObject {
 
 		public PayloadJSONObject(String source) {
-			super(source);
+			super(_cleanupSource(source));
 		}
 
 		public PullRequest getPullRequest() {
@@ -2497,6 +2497,45 @@ public class GitHubWebhookPayloadProcessor {
 			}
 
 			return getAction();
+		}
+
+		private static String _cleanupSource(String source) {
+			StringBuilder sb = new StringBuilder();
+
+			while (!source.isEmpty()) {
+				int start = source.indexOf("\"");
+
+				if (start == -1) {
+					sb.append(source);
+
+					source = "";
+
+					continue;
+				}
+
+				sb.append(source.substring(0, start));
+
+				int end = source.indexOf("\"", start + 1);
+
+				if (end == -1) {
+					throw new IllegalArgumentException(
+						"Unterminated quote found after index " + start);
+				}
+
+				String quotedString = source.substring(start, end + 1);
+
+				if (quotedString.contains("\n")) {
+					quotedString = quotedString.replaceAll("\n", "");
+
+					System.out.println("quotedString:\n" + quotedString);
+				}
+
+				sb.append(quotedString);
+
+				source = source.substring(end + 1);
+			}
+
+			return sb.toString();
 		}
 
 		private String _getStringByPath(JSONObject jsonObject, String path) {

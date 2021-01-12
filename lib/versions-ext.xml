@@ -1560,6 +1560,16 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/curvesapi.jar</file-name>
+				<version>1.06</version>
+				<project-name>curvesapi</project-name>
+				<project-url>https://github.com/virtuald/curvesapi</project-url>
+				<licenses>
+					<license-name>BSD Style License</license-name>
+					<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/daisydiff.jar</file-name>
 				<version>1.2.0-atlassian-hosted.LIFERAY-PATCHED-1</version>
 				<project-name>DaisyDiff</project-name>

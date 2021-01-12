@@ -34,6 +34,7 @@ import com.liferay.portal.search.internal.analysis.SimpleKeywordTokenizer;
 import com.liferay.portal.search.internal.analysis.SubstringFieldQueryBuilder;
 import com.liferay.portal.search.internal.expando.ExpandoFieldQueryBuilderFactory;
 import com.liferay.portal.search.internal.expando.ExpandoQueryContributorHelper;
+import com.liferay.portal.search.internal.expando.ExpandoQueryContributorHelperImpl;
 import com.liferay.portal.search.internal.query.FieldQueryFactoryImpl;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
@@ -47,7 +48,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -276,9 +276,13 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 	protected ExpandoQueryContributorHelper
 		createExpandoQueryContributorHelper() {
 
-		return new ExpandoQueryContributorHelper(
-			createExpandoBridgeFactory(), createExpandoBridgeIndexer(),
-			createExpandoColumnLocalService(), null);
+		return new ExpandoQueryContributorHelperImpl() {
+			{
+				setExpandoBridgeFactory(createExpandoBridgeFactory());
+				setExpandoBridgeIndexer(createExpandoBridgeIndexer());
+				setExpandoColumnLocalService(createExpandoColumnLocalService());
+			}
+		};
 	}
 
 	protected UnicodeProperties createUnicodeProperties(int indexType) {
@@ -306,16 +310,10 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 		ExpandoQueryContributorHelper expandoQueryContributorHelper =
 			createExpandoQueryContributorHelper();
 
-		expandoQueryContributorHelper.setAndSearch(searchContext.isAndSearch());
-		expandoQueryContributorHelper.setBooleanQuery(booleanQuery);
-		expandoQueryContributorHelper.setClassNamesStream(
-			Stream.of(_CLASS_NAME_KEYWORD, _CLASS_NAME_TEXT));
-		expandoQueryContributorHelper.setCompanyId(
-			searchContext.getCompanyId());
-		expandoQueryContributorHelper.setKeywords(keywords);
-		expandoQueryContributorHelper.setLocale(searchContext.getLocale());
-
-		expandoQueryContributorHelper.contribute();
+		expandoQueryContributorHelper.contribute(
+			keywords, booleanQuery,
+			Arrays.asList(_CLASS_NAME_KEYWORD, _CLASS_NAME_TEXT),
+			searchContext);
 
 		Hits hits = search(searchContext, booleanQuery);
 

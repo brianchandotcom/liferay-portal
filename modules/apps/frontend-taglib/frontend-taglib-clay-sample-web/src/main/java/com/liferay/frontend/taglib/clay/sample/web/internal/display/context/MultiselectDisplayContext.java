@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class MultiselectDisplayContext {
 
-	public MultiselectLocator getLocator() {
+	public MultiselectLocator getMultiselectLocator() {
 		if (_locator != null) {
 			return _locator;
 		}
@@ -138,7 +138,7 @@ public class MultiselectDisplayContext {
 		return _sourceItemsWithCustomProperties;
 	}
 
-	public void setLocator(MultiselectLocator locator) {
+	public void setMultiselectLocator(MultiselectLocator locator) {
 		_locator = locator;
 	}
 

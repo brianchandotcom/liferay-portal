@@ -63,6 +63,9 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Sort;
@@ -732,16 +735,60 @@ public class StructuredContentResourceImpl
 	private DDMFormField _getDDMFormField(
 		DDMStructure ddmStructure, String name) {
 
-		try {
-			return ddmStructure.getDDMFormField(name);
+		DDMFormField ddmFormField = _getDDMFormField(
+			ddmStructure.getDDMFormFields(true), name);
+
+		if (ddmFormField != null) {
+			return ddmFormField;
 		}
-		catch (Exception exception) {
-			throw new BadRequestException(
-				StringBundler.concat(
-					"Unable to get content field value for \"", name,
-					"\" for content structure ", ddmStructure.getStructureId()),
-				exception);
+
+		if (ddmStructure.getParentStructureId() != -1) {
+			try {
+				DDMStructure parentDDMStructure =
+					_ddmStructureService.getStructure(
+						ddmStructure.getParentStructureId());
+
+				ddmFormField = _getDDMFormField(
+					parentDDMStructure.getDDMFormFields(true), name);
+
+				if (ddmFormField != null) {
+					return ddmFormField;
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(portalException, portalException);
+				}
+			}
 		}
+
+		throw new BadRequestException(
+			StringBundler.concat(
+				"Unable to get content field value for \"", name,
+				"\" for content structure ", ddmStructure.getStructureId()));
+	}
+
+	private DDMFormField _getDDMFormField(
+		List<DDMFormField> ddmFormFields, String name) {
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			if (name.equals(ddmFormField.getName())) {
+				return ddmFormField;
+			}
+			else if (name.equals(ddmFormField.getFieldReference())) {
+				return ddmFormField;
+			}
+			else {
+				DDMFormField nestedDDMFormField = _getDDMFormField(
+					ddmFormField.getNestedDDMFormFields(), name);
+
+				if (nestedDDMFormField != null) {
+					return null;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private String _getDDMTemplateKey(DDMStructure ddmStructure) {
@@ -1066,6 +1113,9 @@ public class StructuredContentResourceImpl
 				ddmFormValuesValidationException);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StructuredContentResourceImpl.class);
 
 	@Reference
 	private Aggregations _aggregations;

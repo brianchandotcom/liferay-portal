@@ -38,6 +38,7 @@ const convertInputValue = (fieldType, value) => {
 	}
 	else if (
 		fieldType === 'document_library' ||
+		fieldType === 'geolocation' ||
 		fieldType === 'grid' ||
 		fieldType === 'image'
 	) {

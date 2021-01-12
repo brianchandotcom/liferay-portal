@@ -86,6 +86,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -309,6 +310,7 @@ public abstract class BaseContentTemplateResourceTestCase {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testGetAssetLibraryContentTemplatesPageWithFilterStringEquals()
 		throws Exception {
@@ -630,6 +632,7 @@ public abstract class BaseContentTemplateResourceTestCase {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testGetSiteContentTemplatesPageWithFilterStringEquals()
 		throws Exception {

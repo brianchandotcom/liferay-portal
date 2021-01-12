@@ -92,7 +92,7 @@
 <!--PAGE_CONTROLS-->
 <tr>
     <td>PAGE_CONTROLS_ELLIPSIS_ICON</td>
-    <td>xpath=(//div[@class='form-builder-controls-trigger'] | //div[contains(@class,'dropdown-action')])[${key_formPageNumber}]</td>
+    <td>xpath=(//div[@class="page"])[${key_formPageNumber}]//div[contains(@class,'paginated-builder-dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
     <td></td>
 </tr>
 <tr>

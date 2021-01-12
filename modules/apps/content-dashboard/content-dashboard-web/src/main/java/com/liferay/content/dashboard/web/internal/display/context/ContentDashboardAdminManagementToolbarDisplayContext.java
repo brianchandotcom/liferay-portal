@@ -263,23 +263,15 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		List<Long> authorIds =
 			_contentDashboardAdminDisplayContext.getAuthorIds();
 
-		for (Long authorId : authorIds) {
+		if (ListUtil.isNotEmpty(authorIds)) {
+			Stream<Long> authorIdsStream = authorIds.stream();
+
 			labelItemListWrapper.add(
 				labelItem -> {
 					PortletURL portletURL = PortletURLUtil.clone(
 						currentURLObj, liferayPortletResponse);
 
-					Stream<Long> stream = authorIds.stream();
-
-					portletURL.setParameter(
-						"authorIds",
-						stream.filter(
-							id -> id != authorId
-						).map(
-							String::valueOf
-						).toArray(
-							String[]::new
-						));
+					portletURL.setParameter("authorIds", (String)null);
 
 					labelItem.putData(
 						"removeLabelURL",
@@ -290,15 +282,20 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 						StringBundler.concat(
 							LanguageUtil.get(httpServletRequest, "author"),
 							StringPool.COLON,
-							LanguageUtil.get(
-								httpServletRequest,
-								Optional.ofNullable(
+							authorIdsStream.map(
+								authorId -> Optional.ofNullable(
 									_userLocalService.fetchUser(authorId)
 								).map(
 									User::getFullName
 								).orElse(
 									StringPool.BLANK
-								))));
+								)
+							).map(
+								String::valueOf
+							).collect(
+								Collectors.joining(
+									StringPool.COMMA + StringPool.SPACE)
+							)));
 				});
 		}
 

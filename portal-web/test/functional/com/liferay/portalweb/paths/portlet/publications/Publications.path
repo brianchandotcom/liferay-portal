@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>COLUMN_VALUE_IN_PRODUCTION</td>
-	<td>//td[contains(@class,'publications-diff-td')][1]//td[contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInProduction}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COLUMN_VALUE_IN_PUBLICATION</td>
-	<td>//td[contains(@class,'publications-diff-td')][2]//td[contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInPublication}')]</td>
+	<td>//td[contains(@class,'publications-key-td') and contains(.,'${key_columnName}')]//following-sibling::td[contains(.,'${key_columnValueInPublication}')]</td>
 	<td></td>
 </tr>
 <tr>

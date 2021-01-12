@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.ERCGroupEntity
 public class ERCGroupEntityLocalServiceImpl
 	extends ERCGroupEntityLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.portal.tools.service.builder.test.service.ERCGroupEntityLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.ERCGroupEntityLocalServiceUtil</code>.
 	 */
+
 }

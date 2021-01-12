@@ -8,7 +8,7 @@ create table BlogsEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	title VARCHAR(150) null,
+	title VARCHAR(255) null,
 	subtitle STRING null,
 	urlTitle VARCHAR(255) null,
 	description STRING null,

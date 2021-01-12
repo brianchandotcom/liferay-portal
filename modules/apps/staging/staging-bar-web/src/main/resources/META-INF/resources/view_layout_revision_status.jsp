@@ -41,7 +41,15 @@ if (layoutRevision.isApproved()) {
 
 			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage="<%= _getStatusMessage(layoutRevision, GetterUtil.getLong(liveLayoutRevisionId)) %>" />
+			<%
+			int status = layoutRevision.getStatus();
+
+			if (layout.isTypeContent()) {
+				status = WorkflowConstants.STATUS_APPROVED;
+			}
+			%>
+
+			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" statusMessage="<%= _getStatusMessage(layoutRevision, GetterUtil.getLong(liveLayoutRevisionId)) %>" />
 		</div>
 	</div>
 </span>

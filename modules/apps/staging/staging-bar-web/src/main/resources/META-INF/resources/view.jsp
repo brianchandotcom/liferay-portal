@@ -157,7 +157,7 @@ if (liveLayout != null) {
 											</clay:col>
 
 											<clay:col>
-												<c:if test="<%= !layoutRevision.isIncomplete() %>">
+												<c:if test="<%= !layoutRevision.isIncomplete() && !layout.isTypeContent() %>">
 													<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 												</c:if>
 											</clay:col>

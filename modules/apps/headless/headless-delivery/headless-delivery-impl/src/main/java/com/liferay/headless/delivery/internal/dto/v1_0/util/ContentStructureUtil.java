@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -84,13 +85,19 @@ public class ContentStructureUtil {
 	public static String toDataType(DDMFormField ddmFormField) {
 		String type = ddmFormField.getType();
 
-		if (DDMFormFieldType.DOCUMENT_LIBRARY.equals(type)) {
+		if (DDMFormFieldType.DOCUMENT_LIBRARY.equals(type) ||
+			Objects.equals("document_library", type)) {
+
 			return "document";
 		}
-		else if (DDMFormFieldType.JOURNAL_ARTICLE.equals(type)) {
+		else if (DDMFormFieldType.JOURNAL_ARTICLE.equals(type) ||
+				 Objects.equals("journal_article", type)) {
+
 			return "structuredContent";
 		}
-		else if (DDMFormFieldType.LINK_TO_PAGE.equals(type)) {
+		else if (DDMFormFieldType.LINK_TO_PAGE.equals(type) ||
+				 Objects.equals("link_to_layout", type)) {
+
 			return "url";
 		}
 		else if (DDMFormFieldType.RADIO.equals(type)) {

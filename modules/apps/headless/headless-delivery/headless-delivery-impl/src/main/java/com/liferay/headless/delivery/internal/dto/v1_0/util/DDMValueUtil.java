@@ -76,14 +76,18 @@ public class DDMValueUtil {
 			Map<String, ContentFieldValue> localizedContentFieldValues =
 				contentField.getContentFieldValue_i18n();
 
-			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
+			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType()) ||
+				Objects.equals("date", ddmFormField.getType())) {
+
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
 					DDMValueUtil::_toLocalizedDateString, preferredLocale);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.DOCUMENT_LIBRARY,
-						ddmFormField.getType())) {
+						ddmFormField.getType()) ||
+					 Objects.equals(
+						 ddmFormField.getType(), "document_library")) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -93,7 +97,8 @@ public class DDMValueUtil {
 					preferredLocale);
 			}
 			else if (Objects.equals(
-						DDMFormFieldType.IMAGE, ddmFormField.getType())) {
+						DDMFormFieldType.IMAGE, ddmFormField.getType()) ||
+					 Objects.equals("image", ddmFormField.getType())) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -103,7 +108,9 @@ public class DDMValueUtil {
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.JOURNAL_ARTICLE,
-						ddmFormField.getType())) {
+						ddmFormField.getType()) ||
+					 Objects.equals(
+						 ddmFormField.getType(), "journal_article")) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -115,7 +122,8 @@ public class DDMValueUtil {
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
-						ddmFormField.getType())) {
+						ddmFormField.getType()) ||
+					 Objects.equals("link_to_layout", ddmFormField.getType())) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -136,7 +144,8 @@ public class DDMValueUtil {
 		}
 
 		if (Objects.equals(
-				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
+				DDMFormFieldType.GEOLOCATION, ddmFormField.getType()) ||
+			Objects.equals("geolocation", ddmFormField.getType())) {
 
 			Geo geo = contentFieldValue.getGeo();
 

@@ -51,11 +51,14 @@ import java.text.ParseException;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.UriInfo;
@@ -150,7 +153,9 @@ public class ContentFieldUtil {
 			Optional<UriInfo> uriInfoOptional =
 				dtoConverterContext.getUriInfoOptional();
 
-			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
+			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType()) ||
+				Objects.equals("date", ddmFormField.getType())) {
+
 				return new ContentFieldValue() {
 					{
 						data = _toDateString(locale, valueString);
@@ -159,7 +164,9 @@ public class ContentFieldUtil {
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.DOCUMENT_LIBRARY,
-						ddmFormField.getType())) {
+						ddmFormField.getType()) ||
+					 Objects.equals(
+						 ddmFormField.getType(), "document_library")) {
 
 				FileEntry fileEntry = _getFileEntry(dlAppService, valueString);
 
@@ -177,7 +184,8 @@ public class ContentFieldUtil {
 				};
 			}
 			else if (Objects.equals(
-						DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
+						DDMFormFieldType.GEOLOCATION, ddmFormField.getType()) ||
+					 Objects.equals("geolocation", ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -194,7 +202,8 @@ public class ContentFieldUtil {
 				};
 			}
 			else if (Objects.equals(
-						DDMFormFieldType.IMAGE, ddmFormField.getType())) {
+						DDMFormFieldType.IMAGE, ddmFormField.getType()) ||
+					 Objects.equals("image", ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -229,7 +238,9 @@ public class ContentFieldUtil {
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.JOURNAL_ARTICLE,
-						ddmFormField.getType())) {
+						ddmFormField.getType()) ||
+					 Objects.equals(
+						 ddmFormField.getType(), "journal_article")) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -260,7 +271,8 @@ public class ContentFieldUtil {
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
-						ddmFormField.getType())) {
+						ddmFormField.getType()) ||
+					 Objects.equals("link_to_layout", ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);

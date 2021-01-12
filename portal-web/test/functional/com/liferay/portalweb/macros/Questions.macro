@@ -345,6 +345,8 @@ definition {
 		Questions.changeDisplayStyle(displayStyle = "${displayStyleOption}");
 
 		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro fillName {

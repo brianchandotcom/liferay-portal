@@ -43,8 +43,6 @@ definition {
 			displayStyleOption = "Question",
 			menuItem = "Category",
 			nameField = "question AddQuestionCategory");
-
-		Alert.viewSuccessMessage();
 	}
 
 }

@@ -83,8 +83,6 @@ definition {
 			imageFileName = "Document_2.jpeg",
 			titleField = "Title AddQuestionWithTheALImage");
 
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
-
 		Questions.gotoDetails(
 			questionTabField = "Questions",
 			questionTitle = "Title AddQuestionWithTheALImage");
@@ -118,8 +116,6 @@ definition {
 			imageFileName = "Document_1.svg",
 			titleField = "Title AddQuestionWithTheImage");
 
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
-
 		Questions.gotoDetails(
 			questionTabField = "Questions",
 			questionTitle = "Title AddQuestionWithTheImage");
@@ -143,14 +139,8 @@ definition {
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
+			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5,Tag6",
 			titleField = "Title AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
-
-		Questions.addTags(tagLocator = "Tag1");
-		Questions.addTags(tagLocator = "Tag2");
-		Questions.addTags(tagLocator = "Tag3");
-		Questions.addTags(tagLocator = "Tag4");
-		Questions.addTags(tagLocator = "Tag5");
-		Questions.addTags(tagLocator = "Tag6");
 
 		AssertElementPresent(
 			key_errorMessage = "This is an invalid tag.",
@@ -179,15 +169,8 @@ definition {
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Body AddQuestionWithTheMaximumTags",
+			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5",
 			titleField = "Title AddQuestionWithTheMaximumTags");
-
-		Questions.addTags(tagLocator = "Tag1");
-		Questions.addTags(tagLocator = "Tag2");
-		Questions.addTags(tagLocator = "Tag3");
-		Questions.addTags(tagLocator = "Tag4");
-		Questions.addTags(tagLocator = "Tag5");
-
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		AssertElementPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
 
@@ -369,8 +352,6 @@ definition {
 			titleField = "Title Anonymous User Ask questions",
 			userEmailAddress = "test@liferay.com");
 
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
-
 		AssertTextEquals(
 			key_questionTitle = "Title Anonymous User Ask questions",
 			locator1 = "Questions#QUESTIONS_TITLE",
@@ -529,8 +510,6 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Body AddQuestion",
 			titleField = "Title AddQuestion");
-
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		Questions.configureLandingPageTopicNavigation(toggleValue = "enable");
 
@@ -917,8 +896,6 @@ definition {
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Content AddQuestion",
 			titleField = "Title AddQuestion");
-
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

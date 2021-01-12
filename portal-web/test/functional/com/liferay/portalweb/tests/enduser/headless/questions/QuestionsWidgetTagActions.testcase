@@ -256,11 +256,8 @@ definition {
 		for (var num : list "1,2") {
 			Questions.askQuestionFillingTheMandatoryFields(
 				contentField = "${num}- Body ValidateTagsOccurrences",
+				tagLocatorList = "tag1",
 				titleField = "${num}- Title ValidateTagsOccurrences");
-
-			Questions.addTags(tagLocator = "tag1");
-
-			Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 		}
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -283,11 +280,8 @@ definition {
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "Content AddQuestion",
+			tagLocatorList = "Tag1",
 			titleField = "Title AddQuestion");
-
-		Questions.addTags(tagLocator = "Tag1");
-
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 

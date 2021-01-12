@@ -2261,7 +2261,13 @@ definition {
 	}
 
 	macro viewVideoViaWCD {
-		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_VIDEO");
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		AssertElementPresent(
+			key_videoShortcutTitle = "${videoShortcutTitle}",
+			locator1 = "WCD#WEB_CONTENT_VIDEO");
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro viewWCViewableByPermissions {

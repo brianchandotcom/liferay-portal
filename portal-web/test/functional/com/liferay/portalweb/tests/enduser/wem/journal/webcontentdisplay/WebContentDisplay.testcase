@@ -274,14 +274,6 @@ definition {
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");
 
-		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.mp4");
-
-		DMNavigator.gotoURLDetail();
-
-		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
@@ -291,8 +283,9 @@ definition {
 			webContentTitle = "WC WebContent Title");
 
 		WebContent.uploadVideo(
-			dmDocumentURL = "${dmDocumentURL}",
-			navTab = "URL");
+			navTab = "Documents and Media",
+			videoShortcutPreview = "Document_1.mp4",
+			videoShortcutTitle = "Document_1.mp4");
 
 		PortletEntry.publish();
 
@@ -304,7 +297,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		WebContent.viewVideoViaWCD();
+		WebContent.viewVideoViaWCD(videoShortcutTitle = "Document_1.mp4");
 	}
 
 	@priority = "5"

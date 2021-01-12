@@ -16,6 +16,12 @@ create table CacheDisabledEntry (
 	name VARCHAR(75) null
 );
 
+create table CompanyScopedEntry (
+	externalReferenceCode VARCHAR(75) null,
+	CompanyScopedEntryId LONG not null primary key,
+	companyId LONG
+);
+
 create table DSLQueryEntry (
 	dslQueryEntryId LONG not null primary key,
 	name VARCHAR(75) null
@@ -26,6 +32,12 @@ create table DSLQueryStatusEntry (
 	dslQueryEntryId LONG,
 	status VARCHAR(75) null,
 	statusDate DATE null
+);
+
+create table DefaultScopedEntry (
+	externalReferenceCode VARCHAR(75) null,
+	DefaultScopedEntryId LONG not null primary key,
+	companyId LONG
 );
 
 create table EagerBlobEntry (
@@ -39,6 +51,13 @@ create table FinderWhereClauseEntry (
 	finderWhereClauseEntryId LONG not null primary key,
 	name VARCHAR(75) null,
 	nickname VARCHAR(75) null
+);
+
+create table GroupScopedEntry (
+	externalReferenceCode VARCHAR(75) null,
+	GroupScopedEntryId LONG not null primary key,
+	companyId LONG,
+	groupId LONG
 );
 
 create table LVEntries_BigDecimalEntries (

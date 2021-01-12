@@ -10,6 +10,12 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.CacheDisabledEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.CacheDisabledEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.CacheDisabledEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.CacheDisabledEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.CompanyScopedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.CompanyScopedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.CompanyScopedEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.CompanyScopedEntryService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.CompanyScopedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.CompanyScopedEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.DefaultScopedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.DefaultScopedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.DefaultScopedEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.DefaultScopedEntryService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.DefaultScopedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.DefaultScopedEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.DSLQueryEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.DSLQueryEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.DSLQueryEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.DSLQueryEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.DSLQueryStatusEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.DSLQueryStatusEntryLocalService" />
@@ -19,6 +25,9 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.FinderWhereClauseEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.FinderWhereClauseEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.FinderWhereClauseEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.FinderWhereClauseEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.GroupScopedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.GroupScopedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.GroupScopedEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.GroupScopedEntryService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.GroupScopedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.GroupScopedEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence" />

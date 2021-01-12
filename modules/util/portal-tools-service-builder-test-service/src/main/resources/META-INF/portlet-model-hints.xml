@@ -10,6 +10,16 @@
 		<field name="cacheDisabledEntryId" type="long" />
 		<field name="name" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.CompanyScopedEntry">
+		<field name="externalReferenceCode" type="String" />
+		<field name="CompanyScopedEntryId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.DefaultScopedEntry">
+		<field name="externalReferenceCode" type="String" />
+		<field name="DefaultScopedEntryId" type="long" />
+		<field name="companyId" type="long" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry">
 		<field name="dslQueryEntryId" type="long" />
 		<field name="name" type="String" />
@@ -30,6 +40,12 @@
 		<field name="finderWhereClauseEntryId" type="long" />
 		<field name="name" type="String" />
 		<field name="nickname" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.GroupScopedEntry">
+		<field name="externalReferenceCode" type="String" />
+		<field name="GroupScopedEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="groupId" type="long" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry">
 		<field name="uuid" type="String" />

@@ -17,7 +17,7 @@
 		"@clayui/table": "3.1.0",
 		"@clayui/tabs": "3.3.2",
 		"@clayui/tooltip": "3.4.2",
-		"axios": "0.18.1",
+		"axios": "0.21.1",
 		"classnames": "2.2.6",
 		"custom-event-polyfill": "1.0.6",
 		"dom4": "^2.1.5",

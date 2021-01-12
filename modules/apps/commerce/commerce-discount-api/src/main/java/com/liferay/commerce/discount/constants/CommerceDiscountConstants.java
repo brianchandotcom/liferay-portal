@@ -92,4 +92,10 @@ public class CommerceDiscountConstants {
 
 	public static final String[] TYPES = {TYPE_PERCENTAGE, TYPE_FIXED_AMOUNT};
 
+	public static final String VALIDATOR_TYPE_POST_QUALIFICATION =
+		"post-qualification";
+
+	public static final String VALIDATOR_TYPE_PRE_QUALIFICATION =
+		"pre-qualification";
+
 }

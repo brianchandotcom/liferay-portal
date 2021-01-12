@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import java.net.URL;
 
@@ -54,45 +56,59 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		if (!_isStale()) {
+			_writeResponse(httpServletResponse, _objectValuePair.getValue());
+
+			return;
+		}
+
 		Collection<JSBundleConfigTracker.JSConfig> jsConfigs =
 			_jsBundleConfigTracker.getJSConfigs();
 
-		if (!jsConfigs.isEmpty()) {
-			PrintWriter printWriter = httpServletResponse.getWriter();
+		StringWriter stringWriter = new StringWriter();
 
-			printWriter.println("<script data-senna-track=\"temporary\" ");
-			printWriter.print("type=\"");
-			printWriter.print(ContentTypes.TEXT_JAVASCRIPT);
-			printWriter.print("\">");
+		if (!jsConfigs.isEmpty()) {
+			stringWriter.write("<script data-senna-track=\"temporary\" ");
+			stringWriter.write("type=\"");
+			stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
+			stringWriter.write("\">");
 
 			for (JSBundleConfigTracker.JSConfig jsConfig : jsConfigs) {
 				URL url = jsConfig.getURL();
 
 				try (InputStream inputStream = url.openStream()) {
-					printWriter.println("try {");
+					stringWriter.write("try {");
 
 					ServletContext servletContext =
 						jsConfig.getServletContext();
 
-					printWriter.print(
+					stringWriter.write(
 						StringBundler.concat(
 							"var MODULE_PATH='", _portal.getPathProxy(),
 							servletContext.getContextPath(), "';"));
 
-					printWriter.print(
+					stringWriter.write(
 						StringUtil.removeSubstring(
 							StringUtil.read(inputStream),
 							"//# sourceMappingURL=config.js.map"));
 
-					printWriter.print("} catch(error) {console.error(error);}");
+					stringWriter.write(
+						"} catch(error) {console.error(error);}");
 				}
 				catch (Exception exception) {
 					_log.error("Unable to open resource", exception);
 				}
 			}
 
-			printWriter.print("</script>");
+			stringWriter.write("</script>");
 		}
+
+		String bundleConfig = stringWriter.toString();
+
+		_objectValuePair = new ObjectValuePair<>(
+			_jsBundleConfigTracker.getLastModified(), bundleConfig);
+
+		_writeResponse(httpServletResponse, bundleConfig);
 	}
 
 	@Override
@@ -112,10 +128,31 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
+	private boolean _isStale() {
+		if (_jsBundleConfigTracker.getLastModified() >
+				_objectValuePair.getKey()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _writeResponse(
+			HttpServletResponse httpServletResponse, String content)
+		throws IOException {
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		printWriter.println(content);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSBundleConfigTopHeadDynamicInclude.class);
 
 	private JSBundleConfigTracker _jsBundleConfigTracker;
+	private volatile ObjectValuePair<Long, String> _objectValuePair =
+		new ObjectValuePair<>(0L, null);
 
 	@Reference
 	private Portal _portal;

@@ -15,20 +15,25 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.RenderedPage;
+import com.liferay.headless.delivery.internal.resource.v1_0.BaseContentPageResourceImpl;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.portal.events.ServicePreAction;
-import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Jürgen Kappler
@@ -40,10 +45,7 @@ public class RenderedPageUtil {
 			LayoutPageTemplateEntryLocalService
 				layoutPageTemplateEntryLocalService,
 			Portal portal)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = _getThemeDisplay(
-			dtoConverterContext.getHttpServletRequest(), layout);
+		throws PortalException {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry(
@@ -54,8 +56,7 @@ public class RenderedPageUtil {
 
 		return new RenderedPage() {
 			{
-				renderedPageURL = portal.getLayoutRelativeURL(
-					layout, themeDisplay);
+				renderedPageURL = _getJaxRsLink(dtoConverterContext, layout);
 
 				setMasterPageId(
 					() -> {
@@ -97,6 +98,48 @@ public class RenderedPageUtil {
 		};
 	}
 
+	private static String _getJaxRsLink(
+			DTOConverterContext dtoConverterContext, Layout layout)
+		throws PortalException {
+
+		Optional<UriInfo> uriInfoOptional =
+			dtoConverterContext.getUriInfoOptional();
+
+		UriInfo uriInfo = uriInfoOptional.get();
+
+		if (uriInfo == null) {
+			return null;
+		}
+
+		List<Object> arguments = new ArrayList<>();
+
+		String methodName = "getSiteContentPageRenderedPage";
+
+		String friendlyURL = layout.getFriendlyURL(
+			dtoConverterContext.getLocale());
+
+		arguments.add(layout.getGroupId());
+		arguments.add(friendlyURL.substring(1));
+
+		long segmentsExperienceId = GetterUtil.getLong(
+			dtoConverterContext.getAttribute("segmentsExperienceId"));
+
+		if (segmentsExperienceId != SegmentsEntryConstants.ID_DEFAULT) {
+			methodName =
+				"getSiteContentPageExperienceExperienceKeyRenderedPage";
+
+			SegmentsExperience segmentsExperience =
+				SegmentsExperienceLocalServiceUtil.getSegmentsExperience(
+					segmentsExperienceId);
+
+			arguments.add(segmentsExperience.getSegmentsExperienceKey());
+		}
+
+		return JaxRsLinkUtil.getJaxRsLink(
+			"headless-delivery", BaseContentPageResourceImpl.class, methodName,
+			uriInfo, arguments.toArray(new Object[0]));
+	}
+
 	private static LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
 		Layout layout,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
@@ -126,34 +169,6 @@ public class RenderedPageUtil {
 
 		return layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 			masterLayout.getClassPK());
-	}
-
-	private static ThemeDisplay _getThemeDisplay(
-			HttpServletRequest httpServletRequest, Layout layout)
-		throws Exception {
-
-		ServicePreAction servicePreAction = new ServicePreAction();
-
-		HttpServletResponse httpServletResponse =
-			new DummyHttpServletResponse();
-
-		servicePreAction.servicePre(
-			httpServletRequest, httpServletResponse, false);
-
-		ThemeServicePreAction themeServicePreAction =
-			new ThemeServicePreAction();
-
-		themeServicePreAction.run(httpServletRequest, httpServletResponse);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setScopeGroupId(layout.getGroupId());
-		themeDisplay.setSiteGroupId(layout.getGroupId());
-
-		return themeDisplay;
 	}
 
 }

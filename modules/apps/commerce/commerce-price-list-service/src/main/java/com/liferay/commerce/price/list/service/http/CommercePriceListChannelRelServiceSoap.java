@@ -105,6 +105,22 @@ public class CommercePriceListChannelRelServiceSoap {
 		}
 	}
 
+	public static void deleteCommercePriceListChannelRelsByCommercePriceListId(
+			long commercePriceListId)
+		throws RemoteException {
+
+		try {
+			CommercePriceListChannelRelServiceUtil.
+				deleteCommercePriceListChannelRelsByCommercePriceListId(
+					commercePriceListId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static
 		com.liferay.commerce.price.list.model.CommercePriceListChannelRelSoap
 				fetchCommercePriceListChannelRel(

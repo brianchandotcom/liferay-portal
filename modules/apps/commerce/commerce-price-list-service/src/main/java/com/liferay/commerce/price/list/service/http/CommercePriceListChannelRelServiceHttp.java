@@ -136,6 +136,43 @@ public class CommercePriceListChannelRelServiceHttp {
 		}
 	}
 
+	public static void deleteCommercePriceListChannelRelsByCommercePriceListId(
+			HttpPrincipal httpPrincipal, long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePriceListChannelRelServiceUtil.class,
+				"deleteCommercePriceListChannelRelsByCommercePriceListId",
+				_deleteCommercePriceListChannelRelsByCommercePriceListIdParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePriceListId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static
 		com.liferay.commerce.price.list.model.CommercePriceListChannelRel
 				fetchCommercePriceListChannelRel(
@@ -147,7 +184,7 @@ public class CommercePriceListChannelRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceListChannelRelServiceUtil.class,
 				"fetchCommercePriceListChannelRel",
-				_fetchCommercePriceListChannelRelParameterTypes2);
+				_fetchCommercePriceListChannelRelParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceChannelId, commercePriceListId);
@@ -192,7 +229,7 @@ public class CommercePriceListChannelRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceListChannelRelServiceUtil.class,
 				"getCommercePriceListChannelRel",
-				_getCommercePriceListChannelRelParameterTypes3);
+				_getCommercePriceListChannelRelParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListChannelRelId);
@@ -236,7 +273,7 @@ public class CommercePriceListChannelRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceListChannelRelServiceUtil.class,
 				"getCommercePriceListChannelRels",
-				_getCommercePriceListChannelRelsParameterTypes4);
+				_getCommercePriceListChannelRelsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId);
@@ -285,7 +322,7 @@ public class CommercePriceListChannelRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceListChannelRelServiceUtil.class,
 				"getCommercePriceListChannelRels",
-				_getCommercePriceListChannelRelsParameterTypes5);
+				_getCommercePriceListChannelRelsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId, start, end, orderByComparator);
@@ -330,7 +367,7 @@ public class CommercePriceListChannelRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceListChannelRelServiceUtil.class,
 				"getCommercePriceListChannelRels",
-				_getCommercePriceListChannelRelsParameterTypes6);
+				_getCommercePriceListChannelRelsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId, name, start, end);
@@ -366,7 +403,7 @@ public class CommercePriceListChannelRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceListChannelRelServiceUtil.class,
 				"getCommercePriceListChannelRelsCount",
-				_getCommercePriceListChannelRelsCountParameterTypes7);
+				_getCommercePriceListChannelRelsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId);
@@ -406,7 +443,7 @@ public class CommercePriceListChannelRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceListChannelRelServiceUtil.class,
 				"getCommercePriceListChannelRelsCount",
-				_getCommercePriceListChannelRelsCountParameterTypes8);
+				_getCommercePriceListChannelRelsCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId, name);
@@ -445,32 +482,35 @@ public class CommercePriceListChannelRelServiceHttp {
 			long.class
 		};
 	private static final Class<?>[]
-		_fetchCommercePriceListChannelRelParameterTypes2 = new Class[] {
+		_deleteCommercePriceListChannelRelsByCommercePriceListIdParameterTypes2 =
+			new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchCommercePriceListChannelRelParameterTypes3 = new Class[] {
 			long.class, long.class
 		};
 	private static final Class<?>[]
-		_getCommercePriceListChannelRelParameterTypes3 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[]
-		_getCommercePriceListChannelRelsParameterTypes4 = new Class[] {
+		_getCommercePriceListChannelRelParameterTypes4 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
 		_getCommercePriceListChannelRelsParameterTypes5 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_getCommercePriceListChannelRelsParameterTypes6 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getCommercePriceListChannelRelsParameterTypes6 = new Class[] {
+		_getCommercePriceListChannelRelsParameterTypes7 = new Class[] {
 			long.class, String.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getCommercePriceListChannelRelsCountParameterTypes7 = new Class[] {
+		_getCommercePriceListChannelRelsCountParameterTypes8 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_getCommercePriceListChannelRelsCountParameterTypes8 = new Class[] {
+		_getCommercePriceListChannelRelsCountParameterTypes9 = new Class[] {
 			long.class, String.class
 		};
 

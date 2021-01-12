@@ -57,6 +57,14 @@ public class CommercePriceListChannelRelServiceUtil {
 			commercePriceListChannelRelId);
 	}
 
+	public static void deleteCommercePriceListChannelRelsByCommercePriceListId(
+			long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteCommercePriceListChannelRelsByCommercePriceListId(
+			commercePriceListId);
+	}
+
 	public static
 		com.liferay.commerce.price.list.model.CommercePriceListChannelRel
 				fetchCommercePriceListChannelRel(

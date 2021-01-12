@@ -56,6 +56,16 @@ public class CommercePriceListChannelRelServiceWrapper
 	}
 
 	@Override
+	public void deleteCommercePriceListChannelRelsByCommercePriceListId(
+			long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_commercePriceListChannelRelService.
+			deleteCommercePriceListChannelRelsByCommercePriceListId(
+				commercePriceListId);
+	}
+
+	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceListChannelRel
 			fetchCommercePriceListChannelRel(
 				long commerceChannelId, long commercePriceListId)

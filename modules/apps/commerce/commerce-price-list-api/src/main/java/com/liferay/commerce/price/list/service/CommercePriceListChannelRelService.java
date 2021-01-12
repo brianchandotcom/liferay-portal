@@ -70,6 +70,10 @@ public interface CommercePriceListChannelRelService extends BaseService {
 			long commercePriceListChannelRelId)
 		throws PortalException;
 
+	public void deleteCommercePriceListChannelRelsByCommercePriceListId(
+			long commercePriceListId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceListChannelRel fetchCommercePriceListChannelRel(
 			long commerceChannelId, long commercePriceListId)

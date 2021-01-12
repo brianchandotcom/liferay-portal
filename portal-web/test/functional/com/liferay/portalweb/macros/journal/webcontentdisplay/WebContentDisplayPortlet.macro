@@ -432,9 +432,13 @@ definition {
 			locator1 = "AssetRelatedAssets#ASSET_TITLE",
 			value1 = "${relatedAssetTitle}");
 
-		Type.typeEditor(
-			locator1 = "Comments#COMMENT_FIELD",
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		Type(
+			locator1 = "CKEditor#BODY",
 			value1 = "Hello!");
+
+		SelectFrame(value1 = "relative=top");
 
 		AssertClick(
 			locator1 = "Button#REPLY",

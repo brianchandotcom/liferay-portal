@@ -231,6 +231,8 @@ Array [
                             Object {
                               "fields": Array [
                                 Object {
+                                  "defaultLanguageId": "en_US",
+                                  "editingLanguageId": "en_US",
                                   "fieldName": "label",
                                   "instanceId": "Any<String>",
                                   "localizable": true,
@@ -251,21 +253,43 @@ Array [
                                   "value": "copy-of-x",
                                 },
                                 Object {
+                                  "defaultLanguageId": "en_US",
+                                  "editingLanguageId": "en_US",
                                   "fieldName": "name",
                                   "instanceId": "Any<String>",
+                                  "localizedValue": Object {
+                                    "en_US": "Any<String>",
+                                  },
                                   "value": "Liferay",
                                 },
                                 Object {
+                                  "defaultLanguageId": "en_US",
+                                  "editingLanguageId": "en_US",
                                   "fieldName": "required",
                                   "instanceId": "Any<String>",
+                                  "localizedValue": Object {
+                                    "en_US": "Any<String>",
+                                  },
+                                  "value": undefined,
                                 },
                                 Object {
+                                  "defaultLanguageId": "en_US",
+                                  "editingLanguageId": "en_US",
                                   "fieldName": "type",
                                   "instanceId": "Any<String>",
+                                  "localizedValue": Object {
+                                    "en_US": "Any<String>",
+                                  },
+                                  "value": undefined,
                                 },
                                 Object {
+                                  "defaultLanguageId": "en_US",
+                                  "editingLanguageId": "en_US",
                                   "fieldName": "validation",
                                   "instanceId": "Any<String>",
+                                  "localizedValue": Object {
+                                    "en_US": "Any<String>",
+                                  },
                                   "validation": Object {
                                     "fieldName": "Any<String>",
                                   },

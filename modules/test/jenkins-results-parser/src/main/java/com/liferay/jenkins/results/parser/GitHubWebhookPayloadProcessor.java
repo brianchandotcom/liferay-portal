@@ -47,21 +47,19 @@ import org.json.JSONObject;
 public class GitHubWebhookPayloadProcessor {
 
 	public GitHubWebhookPayloadProcessor(String payloadJSONSource) {
-		_payloadJSONObject = new PayloadJSONObject(payloadJSONSource);
-
-		Class<?> clazz = getClass();
+		JenkinsResultsParserUtil.setBuildProperties(
+			_URLS_JENKINS_BUILD_PROPERTIES);
 
 		try {
-			_jenkinsProperties.load(
-				clazz.getResourceAsStream("/jenkins.properties"));
+			_jenkinsBuildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to load jenkins.properties", ioException);
+				"Unable to get build properties", ioException);
 		}
 
-		JenkinsResultsParserUtil.setBuildProperties(
-			_URLS_JENKINS_BUILD_PROPERTIES);
+		_payloadJSONObject = new PayloadJSONObject(payloadJSONSource);
 	}
 
 	public void addTestPullRequestQueryString(String queryString) {
@@ -266,75 +264,38 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	public boolean isGitHubAutopullEnabled() {
-		String gitHubAutopullEnabled = _jenkinsProperties.getProperty(
-			"github.autopull.enabled");
-
-		if (!isBlank(gitHubAutopullEnabled) &&
-			gitHubAutopullEnabled.equals("true")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isGitHubCacheEnabled() {
-		String gitHubCacheEnabled = _jenkinsProperties.getProperty(
-			"github.cache.enabled");
-
-		if (!isBlank(gitHubCacheEnabled) && gitHubCacheEnabled.equals("true")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isGitHubMirrorEnabled() {
-		String gitHubMirrorEnabled = _jenkinsProperties.getProperty(
-			"github.mirror.enabled");
-
-		if (!isBlank(gitHubMirrorEnabled) &&
-			gitHubMirrorEnabled.equals("true")) {
-
-			return true;
-		}
-
-		return false;
+		return Boolean.valueOf(
+			_jenkinsBuildProperties.getProperty(
+				"github.webhook.pullrequest.autopull.enabled",
+				Boolean.FALSE.toString()));
 	}
 
 	public boolean isGitHubPostEnabled() {
-		String gitHubPostEnabled = _jenkinsProperties.getProperty(
-			"github.post.enabled");
+		return Boolean.valueOf(
+			_jenkinsBuildProperties.getProperty(
+				"github.webhook.pullrequest.post.enabled",
+				Boolean.FALSE.toString()));
+	}
 
-		if (!isBlank(gitHubPostEnabled) && gitHubPostEnabled.equals("true")) {
-			return true;
-		}
-
-		return false;
+	public boolean isGitHubRepositorySyncEnabled() {
+		return Boolean.valueOf(
+			_jenkinsBuildProperties.getProperty(
+				"github.webhook.repository.sync.enabled",
+				Boolean.FALSE.toString()));
 	}
 
 	public boolean isGitHubSubrepoSyncEnabled() {
-		String gitHubSubrepoSyncEnabled = _jenkinsProperties.getProperty(
-			"github.subrepo.sync.enabled");
-
-		if (!isBlank(gitHubSubrepoSyncEnabled) &&
-			gitHubSubrepoSyncEnabled.equals("true")) {
-
-			return true;
-		}
-
-		return false;
+		return Boolean.valueOf(
+			_jenkinsBuildProperties.getProperty(
+				"github.webhook.subrepository.sync.enabled",
+				Boolean.FALSE.toString()));
 	}
 
 	public boolean isJenkinsJobEnabled() {
-		String jenkinsJobEnabled = _jenkinsProperties.getProperty(
-			"jenkins.job.enabled");
-
-		if (!isBlank(jenkinsJobEnabled) && jenkinsJobEnabled.equals("true")) {
-			return true;
-		}
-
-		return false;
+		return Boolean.valueOf(
+			_jenkinsBuildProperties.getProperty(
+				"github.webhook.pullrequest.jenkins.job.enabled",
+				Boolean.FALSE.toString()));
 	}
 
 	public boolean isValidAutopull(String repo) {
@@ -373,7 +334,7 @@ public class GitHubWebhookPayloadProcessor {
 
 		if (_payloadJSONObject.isPusher()) {
 			syncAutopull();
-			syncMirror();
+			syncRepository();
 			syncSubrepo();
 		}
 
@@ -1355,8 +1316,8 @@ public class GitHubWebhookPayloadProcessor {
 			}
 		}
 
-		String gitHubWebSubrepoHostname = _jenkinsProperties.getProperty(
-			"github.web.subrepo.hostname");
+		String gitHubWebSubrepoHostname = _jenkinsBuildProperties.getProperty(
+			"github.webhook.pullrequest.web.subrepo.hostname");
 
 		try {
 			jsonObject.put("remove", "true");
@@ -1477,7 +1438,7 @@ public class GitHubWebhookPayloadProcessor {
 				}
 			}
 
-			String jenkinsAdminUserToken = _jenkinsProperties.getProperty(
+			String jenkinsAdminUserToken = _jenkinsBuildProperties.getProperty(
 				"jenkins.admin.user.token");
 
 			try {
@@ -1531,20 +1492,20 @@ public class GitHubWebhookPayloadProcessor {
 			return;
 		}
 
-		String jenkinsAccessToken = _jenkinsProperties.getProperty(
-			"jenkins.access.token");
+		String jenkinsAuthenticationToken = _jenkinsBuildProperties.getProperty(
+			"jenkins.authentication.token");
 
 		List<String> urls = new ArrayList<>();
 
 		urls.add(
 			JenkinsResultsParserUtil.combine(
 				"http://test-1-0/job/merge-central-subrepository(", branch,
-				")/buildWithParameters?token=", jenkinsAccessToken));
+				")/buildWithParameters?token=", jenkinsAuthenticationToken));
 		urls.add(
 			JenkinsResultsParserUtil.combine(
 				"http://test-1-0/job/merge-central-subrepository(",
 				getCompanionBranchName(branch), ")/buildWithParameters?token=",
-				jenkinsAccessToken));
+				jenkinsAuthenticationToken));
 
 		for (String url : urls) {
 			if (isGitHubAutopullEnabled()) {
@@ -1565,8 +1526,8 @@ public class GitHubWebhookPayloadProcessor {
 		}
 	}
 
-	protected void syncMirror() {
-		if (!isGitHubMirrorEnabled()) {
+	protected void syncRepository() {
+		if (!isGitHubRepositorySyncEnabled()) {
 			return;
 		}
 
@@ -1586,7 +1547,7 @@ public class GitHubWebhookPayloadProcessor {
 		String repo = _payloadJSONObject.getStringByPath("repository/name");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Sync mirror repo: " + repo);
+			_log.info("Sync repo: " + repo);
 		}
 
 		JSONObject jsonObject = new JSONObject();
@@ -1596,13 +1557,13 @@ public class GitHubWebhookPayloadProcessor {
 		String sha = _payloadJSONObject.getString("after");
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Sync mirror sha: " + sha);
+			_log.info("Sync sha: " + sha);
 		}
 
 		jsonObject.put("sha", sha);
 
-		String gitHubWebMirrorHostname = _jenkinsProperties.getProperty(
-			"github.web.mirror.hostname");
+		String gitHubWebMirrorHostname = _jenkinsBuildProperties.getProperty(
+			"github.webhook.repository.sync.web.hostname");
 
 		try {
 			processURL(
@@ -1667,12 +1628,14 @@ public class GitHubWebhookPayloadProcessor {
 		jsonObject.put("pullRequestNumber", "0");
 
 		String command = "push";
-		String propertyName = "github.web.subrepo.hostname";
+		String propertyName =
+			"github.webhook.subrepository.sync.subrepo.web.hostname";
 		String subrepo = "all";
 
 		if (isBotPush(_payloadJSONObject)) {
 			command = "release";
-			propertyName = "github.web.release.hostname";
+			propertyName =
+				"github.webhook.subrepository.sync.release.web.hostname";
 			subrepo = getSubrepoPath(_payloadJSONObject);
 		}
 
@@ -1688,7 +1651,7 @@ public class GitHubWebhookPayloadProcessor {
 			_log.info("Sync subrepo argument: " + subrepo);
 		}
 
-		String gitHubWebSubrepoHostname = _jenkinsProperties.getProperty(
+		String gitHubWebSubrepoHostname = _jenkinsBuildProperties.getProperty(
 			propertyName);
 
 		try {
@@ -2466,8 +2429,7 @@ public class GitHubWebhookPayloadProcessor {
 		"remote = .*/([^\\.]*)\\.git");
 	private Pattern _gitrepoSHAPattern = Pattern.compile(
 		"commit = ([0-9a-f]{40})");
-	private Properties _jenkinsBuildProperties;
-	private Properties _jenkinsProperties = new Properties();
+	private final Properties _jenkinsBuildProperties;
 	private List<String> _jiraProjectKeys;
 	private Pattern _passingTestSuiteStatusDescriptionPattern = Pattern.compile(
 		"\"ci:test:(?<testSuiteName>[^\"]+)\"\\s*has PASSED.");

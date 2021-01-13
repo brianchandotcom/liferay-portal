@@ -101,8 +101,8 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps2 = connection.prepareStatement(
-				"INSERT INTO DDMStructure VALUES (1,0,?,?,?,?,?,?,?,?,?" +
-					",?,0,?,?,'1.0',?,'',?,'default',1,NULL)")) {
+				"INSERT INTO DDMStructure VALUES (1, 0, ?, ?, ?, ?, ?, ?, ?, " +
+					"?, ?, ?, 0, ?, ?, '1.0', ?, '', ?, 'default', 1, NULL)")) {
 
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryMetadata.class);
@@ -147,8 +147,8 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"INSERT INTO DDMStructureLayout VALUES (0,0,?,?,?,?,?,?,?,?,?" +
-					",?,?,?,'',?)")) {
+				"INSERT INTO DDMStructureLayout VALUES (0, 0, ?, ?, ?, ?, ?, " +
+					"?, ?, ?, ?, ?, ?, ?, '', ?)")) {
 
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryMetadata.class);
@@ -185,7 +185,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"INSERT INTO DDMStructureLink VALUES (0,0,?,?,?,?,?)")) {
+				"INSERT INTO DDMStructureLink VALUES (0, 0, ?, ?, ?, ?, ?)")) {
 
 			ps.setLong(1, increment());
 			ps.setLong(2, companyId);
@@ -203,8 +203,8 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"INSERT INTO DDMStructureVersion VALUES (0,0,?,?,?,?,?,?,?," +
-					"'1.0',0,?,'',?,'default',0,0,?,?,?)")) {
+				"INSERT INTO DDMStructureVersion VALUES (0, 0, ?, ?, ?, ?, ?" +
+					", ?, ?, '1.0', 0, ?, '', ? , 'default', 0, 0, ?, ?, ?)")) {
 
 			long structureVersionId = increment();
 

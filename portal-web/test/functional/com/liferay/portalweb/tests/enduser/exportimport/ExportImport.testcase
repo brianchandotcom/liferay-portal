@@ -1741,7 +1741,7 @@ definition {
 	@description = "This is a use case for LPS-97544 and LPS-90886."
 	@priority = "3"
 	test ImportStagedSiteWithCircularReference {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 

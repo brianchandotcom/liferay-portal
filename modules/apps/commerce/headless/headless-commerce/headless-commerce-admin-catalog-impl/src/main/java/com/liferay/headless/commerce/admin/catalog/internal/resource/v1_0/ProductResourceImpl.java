@@ -67,6 +67,7 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -303,29 +304,23 @@ public class ProductResourceImpl
 	}
 
 	private Map<String, Map<String, String>> _getActions(
-		CommerceCatalog commerceCatalog) {
+		CPDefinition cpDefinition) {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			addAction(
-				"UPDATE", commerceCatalog.getCommerceCatalogId(),
-				"deleteProduct", commerceCatalog.getUserId(),
-				"com.liferay.commerce.product.model.CommerceCatalog",
-				commerceCatalog.getGroupId())
+				"UPDATE", cpDefinition.getCPDefinitionId(), "deleteProduct",
+				_cpDefinitionModelResourcePermission)
 		).put(
 			"get",
 			addAction(
-				"VIEW", commerceCatalog.getCommerceCatalogId(), "getProduct",
-				commerceCatalog.getUserId(),
-				"com.liferay.commerce.product.model.CommerceCatalog",
-				commerceCatalog.getGroupId())
+				"VIEW", cpDefinition.getCPDefinitionId(), "getProduct",
+				_cpDefinitionModelResourcePermission)
 		).put(
 			"update",
 			addAction(
-				"UPDATE", commerceCatalog.getCommerceCatalogId(),
-				"patchProduct", commerceCatalog.getUserId(),
-				"com.liferay.commerce.product.model.CommerceCatalog",
-				commerceCatalog.getGroupId())
+				"UPDATE", cpDefinition.getCPDefinitionId(), "patchProduct",
+				_cpDefinitionModelResourcePermission)
 		).build();
 	}
 
@@ -372,12 +367,10 @@ public class ProductResourceImpl
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
 
-		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
-
 		return _productDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				_getActions(commerceCatalog), _dtoConverterRegistry,
+				_getActions(cpDefinition), _dtoConverterRegistry,
 				cpDefinitionId, contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser));
 	}
@@ -799,6 +792,12 @@ public class ProductResourceImpl
 
 	@Reference
 	private CPDefinitionLinkService _cpDefinitionLinkService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"
+	)
+	private ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

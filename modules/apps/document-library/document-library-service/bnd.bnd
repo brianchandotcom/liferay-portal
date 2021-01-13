@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library Service
 Bundle-SymbolicName: com.liferay.document.library.service
 Bundle-Version: 6.0.0
-Liferay-Require-SchemaVersion: 3.2.0
+Liferay-Require-SchemaVersion: 3.2.1
 Liferay-Service: true
 -dsannotations-options: inherit

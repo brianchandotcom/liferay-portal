@@ -1409,6 +1409,31 @@ public abstract class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewAnchorElement(getJenkinsReportURL(), "here"), ".");
 	}
 
+	protected Element getReevaluationDetailsElement(int upstreamBuildNumber) {
+		String upstreamBuildURL =
+			getAcceptanceUpstreamJobURL() + "/" + upstreamBuildNumber;
+
+		Element growURLElement = Dom4JUtil.getNewAnchorElement(
+			"https://grow.liferay.com/share" +
+				"/CI+liferay-continuous-integration+GitHub+Commands#" +
+					"General-Commands",
+			"reevaluation");
+
+		String buildID = JenkinsResultsParserUtil.getBuildID(
+			getBuildURL(), getTestSuiteName());
+
+		Element preElement = Dom4JUtil.getNewElement(
+			"pre", null, "ci:reevaluate:" + buildID);
+
+		return Dom4JUtil.getNewElement(
+			"p", null, "This pull is eligible for ", growURLElement,
+			". When this ",
+			Dom4JUtil.getNewAnchorElement(upstreamBuildURL, "upstream build"),
+			" has completed, using the following CI command will compare ",
+			"this pull request result against a more recent upstream result:",
+			preElement);
+	}
+
 	protected Element getResourceFileContentAsElement(
 		String tagName, Element parentElement, String resourceName) {
 

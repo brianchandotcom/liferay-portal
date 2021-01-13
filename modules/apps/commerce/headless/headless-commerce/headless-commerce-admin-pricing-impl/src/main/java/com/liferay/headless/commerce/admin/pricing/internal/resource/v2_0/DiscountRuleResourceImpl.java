@@ -26,7 +26,7 @@ import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountRuleRes
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -172,34 +172,23 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 			CommerceDiscountRule commerceDiscountRule)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			_serviceContextHelper.getServiceContext();
-
-		CommerceDiscount commerceDiscount =
-			_commerceDiscountService.getCommerceDiscount(
-				commerceDiscountRule.getCommerceDiscountId());
-
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			addAction(
-				"UPDATE", commerceDiscount.getCommerceDiscountId(),
-				"deleteDiscountRule", commerceDiscountRule.getUserId(),
-				"com.liferay.commerce.discount.model.CommerceDiscount",
-				serviceContext.getScopeGroupId())
+				"UPDATE", commerceDiscountRule.getCommerceDiscountRuleId(),
+				"deleteDiscountRule",
+				_commerceDiscountRuleModelResourcePermission)
 		).put(
 			"get",
 			addAction(
-				"VIEW", commerceDiscount.getCommerceDiscountId(),
-				"getDiscountRule", commerceDiscountRule.getUserId(),
-				"com.liferay.commerce.discount.model.CommerceDiscount",
-				serviceContext.getScopeGroupId())
+				"VIEW", commerceDiscountRule.getCommerceDiscountRuleId(),
+				"getDiscountRule", _commerceDiscountRuleModelResourcePermission)
 		).put(
 			"update",
 			addAction(
-				"UPDATE", commerceDiscount.getCommerceDiscountId(),
-				"patchDiscountRule", commerceDiscountRule.getUserId(),
-				"com.liferay.commerce.discount.model.CommerceDiscount",
-				serviceContext.getScopeGroupId())
+				"UPDATE", commerceDiscountRule.getCommerceDiscountRuleId(),
+				"patchDiscountRule",
+				_commerceDiscountRuleModelResourcePermission)
 		).build();
 	}
 
@@ -243,6 +232,12 @@ public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 
 		return discountRules;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.discount.model.CommerceDiscountRule)"
+	)
+	private ModelResourcePermission<CommerceDiscountRule>
+		_commerceDiscountRuleModelResourcePermission;
 
 	@Reference
 	private CommerceDiscountRuleService _commerceDiscountRuleService;

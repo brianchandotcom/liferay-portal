@@ -456,6 +456,18 @@ public class CountryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.portal.kernel.model.Country> searchCountries(
+				long companyId, Boolean active, String keywords, int start,
+				int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.kernel.model.Country> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCountries(
+			companyId, active, keywords, start, end, orderByComparator);
+	}
+
 	public static com.liferay.portal.kernel.model.Country updateActive(
 			long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryLocalization;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -350,6 +351,12 @@ public interface CountryLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<Country> searchCountries(
+			long companyId, Boolean active, String keywords, int start, int end,
+			OrderByComparator<Country> orderByComparator)
 		throws PortalException;
 
 	public Country updateActive(long countryId, boolean active)

@@ -418,22 +418,24 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	</macrodef>
 
 	<macrodef name="prepare-additional-elasticsearch-bundles">
-		<sequential>
-			<var name="elasticsearch.node.number" value="0" />
+		<attribute name="total.bundles" />
 
-			<antelope:repeat count="${elasticsearch.cluster.size}">
+		<sequential>
+			<var name="elasticsearch.bundle.counter" value="0" />
+
+			<antelope:repeat count="@{total.bundles}">
 				<math
 					datatype="int"
-					operand1="${elasticsearch.node.number}"
+					operand1="${elasticsearch.bundle.counter}"
 					operand2="1"
 					operation="+"
-					result="elasticsearch.node.number"
+					result="elasticsearch.bundle.counter"
 				/>
 
-				<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
+				<delete dir="${elasticsearch.dir}-${elasticsearch.bundle.counter}" />
 
 				<copy
-					todir="${elasticsearch.dir}-${elasticsearch.node.number}"
+					todir="${elasticsearch.dir}-${elasticsearch.bundle.counter}"
 				>
 					<fileset
 						dir="${elasticsearch.dir}"
@@ -446,7 +448,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					type="both"
 				>
 					<fileset
-						dir="${elasticsearch.dir}-${elasticsearch.node.number}"
+						dir="${elasticsearch.dir}-${elasticsearch.bundle.counter}"
 					/>
 				</chmod>
 			</antelope:repeat>
@@ -687,7 +689,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 			<configure-portal-remote-elasticsearch-osgi-properties />
 
-			<prepare-additional-elasticsearch-bundles />
+			<prepare-additional-elasticsearch-bundles total.bundles="${elasticsearch.cluster.size}" />
 
 			<var name="elasticsearch.node.number" value="1" />
 			<var name="elasticsearch.port.number" value="9200" />

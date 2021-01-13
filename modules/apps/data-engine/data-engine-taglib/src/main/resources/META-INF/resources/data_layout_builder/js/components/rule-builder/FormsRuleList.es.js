@@ -103,7 +103,7 @@ const Operand = ({field, left, type, value}) => {
 					(option) => value === option.value
 				)?.label;
 			case 'field':
-				return field.label;
+				return field?.label;
 			case 'list':
 				return value;
 			case 'json':

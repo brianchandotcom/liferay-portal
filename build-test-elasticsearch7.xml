@@ -10,9 +10,15 @@ path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-elasticsearch-monitoring-property">
+		<sequential>
+			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.monitoring.collection.enabled: true</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-elasticsearch-pki-realm-settings">
 		<sequential>
-			<echo append="true" file="${elasticsearch.dir}-1/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.client_authentication: required
+			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.client_authentication: required
 xpack.security.transport.ssl.client_authentication: required
 xpack:
   security:
@@ -22,7 +28,7 @@ xpack:
           pki1:
             order: 0</echo>
 
-			<echo append="true" file="${elasticsearch.dir}-1/config/role_mapping.yml">${line.separator}superuser:
+			<echo append="true" file="${elasticsearch.dir}/config/role_mapping.yml">${line.separator}superuser:
   - "CN=liferay.com,OU=Search,DC=liferay,DC=com"
 kibana_system:
   - "CN=liferay.com,OU=Search,DC=liferay,DC=com"</echo>
@@ -121,14 +127,14 @@ server.rewriteBasePath: false</echo>
 	<macrodef name="configure-kibana-x-pack-pki-security-properties">
 		<sequential>
 			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}
-elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca.crt" ]
-elasticsearch.ssl.certificate: ${elasticsearch.dir}-1/config/certs/elastic-certificates.crt
-elasticsearch.ssl.key: ${elasticsearch.dir}-1/config/certs/elastic-certificates.key
+elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca.crt" ]
+elasticsearch.ssl.certificate: ${elasticsearch.dir}/config/certs/elastic-certificates.crt
+elasticsearch.ssl.key: ${elasticsearch.dir}/config/certs/elastic-certificates.key
 elasticsearch.ssl.verificationMode: certificate
-server.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca.crt" ]
-server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/elastic-certificates.crt
+server.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca.crt" ]
+server.ssl.certificate: ${elasticsearch.dir}/config/certs/elastic-certificates.crt
 server.ssl.enabled: true
-server.ssl.key: ${elasticsearch.dir}-1/config/certs/elastic-certificates.key
+server.ssl.key: ${elasticsearch.dir}/config/certs/elastic-certificates.key
 xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000
 elasticsearch.ssl.alwaysPresentCertificate: true</echo>
@@ -145,11 +151,11 @@ elasticsearch.ssl.alwaysPresentCertificate: true</echo>
 	<macrodef name="configure-kibana-x-pack-security-properties">
 		<sequential>
 			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.password: "${elastic.xpack.elastic.user.password}"
-elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}-1/config/certs/ca.crt" ]
+elasticsearch.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca.crt" ]
 elasticsearch.username: "elastic"
-server.ssl.certificate: ${elasticsearch.dir}-1/config/certs/elastic-certificates.crt
+server.ssl.certificate: ${elasticsearch.dir}/config/certs/elastic-certificates.crt
 server.ssl.enabled: true
-server.ssl.key: ${elasticsearch.dir}-1/config/certs/elastic-certificates.key
+server.ssl.key: ${elasticsearch.dir}/config/certs/elastic-certificates.key
 xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
 xpack.security.sessionTimeout: 600000</echo>
 
@@ -190,18 +196,18 @@ transport.port: 9500-9600</echo>
 				replace="\\\\="
 			/>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-remote.config">active="true"
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-xpack.config">active="true"
 authenticationEnabled="true"
 connectionId="xpack"
 httpSSLEnabled="true"
 networkHostAddresses=["https://localhost:9200"]
 password="${osgi.config.elastic.user.password}"
 truststorePassword="liferay"
-truststorePath="${elasticsearch.dir}-1/config/certs/elastic-certificates.p12"
+truststorePath="${elasticsearch.dir}/config/certs/elastic-certificates.p12"
 truststoreType="pkcs12"
 username="elastic"</echo>
 		</sequential>
@@ -209,7 +215,7 @@ username="elastic"</echo>
 
 	<macrodef name="configure-portal-x-pack-pki-osgi-properties">
 		<sequential>
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}remoteClusterConnectionId="xpack"</echo>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}remoteClusterConnectionId="pki"</echo>
 
 			<propertyregex
 				defaultValue="${elastic.xpack.elastic.user.password}"
@@ -220,17 +226,17 @@ username="elastic"</echo>
 				replace="\\\\="
 			/>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-remote.config">active="true"
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-pki.config">active="true"
 authenticationEnabled="false"
-connectionId="xpack"
+connectionId="pki"
 httpSSLEnabled="true"
 networkHostAddresses=["https://localhost:9200"]
 truststorePassword="liferay"
-truststorePath="${elasticsearch.dir}-1/config/certs/elastic-certificates.p12"
+truststorePath="${elasticsearch.dir}/config/certs/elastic-certificates.p12"
 truststoreType="pkcs12"</echo>
 		</sequential>
 	</macrodef>
@@ -300,10 +306,10 @@ truststoreType="pkcs12"</echo>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.bat">
-${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
 
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
-${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}-1/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
+${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${elasticsearch.dir}/config/certs/elastic-certificates.jks -Djavax.net.ssl.trustStorePassword=liferay"</echo>
 				</then>
 				<else>
 					<echo>Set setenv.bat and setenv.sh manually before attempting to connect with portal.</echo>
@@ -531,7 +537,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<if>
 				<os family="unix" />
 				<then>
-					<exec dir="${elasticsearch.dir}-1/bin" executable="/bin/bash" outputproperty="elastic.xpack.user.passwords">
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" outputproperty="elastic.xpack.user.passwords">
 						<arg value="-c" />
 						<arg value="./elasticsearch-setup-passwords auto --batch" />
 					</exec>
@@ -539,7 +545,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				<elseif>
 					<os family="windows" />
 					<then>
-						<exec dir="${elasticsearch.dir}-1/bin" executable="cmd" outputproperty="elastic.xpack.user.passwords">
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd" outputproperty="elastic.xpack.user.passwords">
 							<arg value="/c" />
 							<arg value="elasticsearch-setup-passwords auto --batch" />
 						</exec>
@@ -645,6 +651,62 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<configure-portal-remote-elasticsearch-osgi-properties />
 
 			<antcall target="start-elasticsearch-node" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-elasticsearch-with-xpack">
+		<sequential>
+			<unzip-elasticsearch />
+
+			<prepare-elasticsearch-analyzers />
+
+			<configure-elasticsearch-properties />
+
+			<configure-portal-remote-elasticsearch-osgi-properties />
+
+			<configure-elasticsearch-monitoring-property />
+
+			<generate-x-pack-security-certificates />
+
+			<get-testcase-property property.name="remote.elasticsearch.pki.authentication.enabled" />
+
+			<if>
+				<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
+				<then>
+					<configure-elasticsearch-x-pack-pki-security-properties />
+				</then>
+				<else>
+					<configure-elasticsearch-x-pack-security-properties />
+				</else>
+			</if>
+
+			<configure-portal-x-pack-security-truststore />
+
+			<antcall target="start-elasticsearch-node" />
+
+			<set-x-pack-user-passwords />
+
+			<start-x-pack-trial />
+
+			<if>
+				<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
+				<then>
+					<sleep seconds="10" />
+
+					<antcall target="stop-elasticsearch" />
+
+					<configure-elasticsearch-pki-realm-settings />
+
+					<antcall target="start-elasticsearch-node" />
+
+					<configure-portal-x-pack-pki-osgi-properties />
+				</then>
+				<else>
+					<configure-portal-x-pack-osgi-properties />
+				</else>
+			</if>
+
+			<antcall target="start-kibana" />
 		</sequential>
 	</macrodef>
 
@@ -938,8 +1000,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			result="elasticsearch.master-eligible.nodes.quorum"
 		/>
 
-		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}
-xpack.monitoring.collection.enabled: true</echo>
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}</echo>
 	</target>
 
 	<target name="prepare-additional-elasticsearch-dirs">
@@ -1163,13 +1224,22 @@ xpack.monitoring.collection.enabled: true</echo>
 	<target name="start-elasticsearch">
 		<lstopwatch action="start" name="start.elasticsearch" />
 
+		<get-testcase-property property.name="elastic.xpack.enabled" />
 		<get-testcase-property property.name="elasticsearch.ltr.enabled" />
 
 		<condition else="true" property="start.standard.elasticsearch" value="false">
 			<or>
+				<isset property="elastic.xpack.enabled" />
 				<isset property="elasticsearch.ltr.enabled" />
 			</or>
 		</condition>
+
+		<if>
+			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+			<then>
+				<start-elasticsearch-with-xpack />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${elasticsearch.ltr.enabled}" arg2="true" />
@@ -1186,28 +1256,6 @@ xpack.monitoring.collection.enabled: true</echo>
 				<prepare-elasticsearch-analyzers />
 
 				<configure-elasticsearch-properties />
-
-				<get-testcase-property property.name="elastic.xpack.enabled" />
-				<get-testcase-property property.name="remote.elasticsearch.pki.authentication.enabled" />
-
-				<if>
-					<equals arg1="${elastic.xpack.enabled}" arg2="true" />
-					<then>
-						<generate-x-pack-security-certificates />
-
-						<if>
-							<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
-							<then>
-								<configure-elasticsearch-x-pack-pki-security-properties />
-							</then>
-							<else>
-								<configure-elasticsearch-x-pack-security-properties />
-							</else>
-						</if>
-
-						<configure-portal-x-pack-security-truststore />
-					</then>
-				</if>
 
 				<configure-portal-remote-elasticsearch-osgi-properties />
 
@@ -1247,41 +1295,6 @@ xpack.monitoring.collection.enabled: true</echo>
 				</if>
 
 				<if>
-					<equals arg1="${elastic.xpack.enabled}" arg2="true" />
-					<then>
-						<sleep seconds="30" />
-
-						<set-x-pack-user-passwords />
-
-						<start-x-pack-trial />
-
-						<if>
-							<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
-							<then>
-								<sleep seconds="10" />
-
-								<antcall target="stop-elasticsearch" />
-
-								<configure-elasticsearch-pki-realm-settings />
-
-								<antcall target="start-elasticsearch-node" />
-
-								<sleep seconds="10" />
-
-								<configure-portal-x-pack-pki-osgi-properties />
-							</then>
-							<else>
-								<configure-portal-x-pack-osgi-properties />
-							</else>
-						</if>
-
-						<antcall target="start-kibana" />
-
-						<lstopwatch action="total" name="start.elasticsearch" />
-					</then>
-				</if>
-
-				<if>
 					<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
 					<then>
 						<start-ccr-trial />
@@ -1289,6 +1302,8 @@ xpack.monitoring.collection.enabled: true</echo>
 				</if>
 			</then>
 		</if>
+
+		<lstopwatch action="total" name="start.elasticsearch" />
 	</target>
 
 	<target name="start-elasticsearch-node">

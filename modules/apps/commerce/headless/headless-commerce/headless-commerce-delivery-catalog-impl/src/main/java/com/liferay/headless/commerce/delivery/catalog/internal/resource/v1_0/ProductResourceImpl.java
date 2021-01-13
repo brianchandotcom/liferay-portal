@@ -112,21 +112,20 @@ public class ProductResourceImpl
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
+		long[] commerceAccountGroupIds =
+			_commerceAccountHelper.getCommerceAccountGroupIds(
+				_getAccountId(accountId, commerceChannel));
+
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
+			).put(
+				"commerceAccountGroupIds", commerceAccountGroupIds
 			).put(
 				"commerceChannelGroupId", commerceChannel.getGroupId()
 			).build();
 
 		searchContext.setAttributes(attributes);
-
-		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				_getAccountId(accountId, commerceChannel));
-
-		searchContext.setAttribute(
-			"commerceAccountGroupIds", commerceAccountGroupIds);
 
 		searchContext.setCompanyId(companyId);
 

@@ -113,7 +113,7 @@ export default withRouter(
 							/>
 						</div>
 
-						<div className="c-mb-4 c-mb-md-0 c-ml-3 col-lg-8 col-md-6 col-sm-12 col-xl-9">
+						<div className="c-mb-4 c-mb-md-0 c-ml-3 col-lg-11 col-md-10 col-sm-12 col-xl-11">
 							{showAsAnswer && (
 								<p
 									className="c-mb-0 font-weight-bold text-success"
@@ -135,88 +135,99 @@ export default withRouter(
 							<div className="c-mt-2">
 								<ArticleBodyRenderer {...answer} />
 							</div>
-							{editable && (
-								<ClayButton.Group
-									className="font-weight-bold text-secondary"
-									spaced={true}
-								>
-									{answer.actions['reply-to-message'] && (
-										<ClayButton
-											className="text-reset"
-											displayType="unstyled"
-											onClick={() =>
-												setShowNewComment(true)
-											}
+							<div className="d-flex justify-content-between">
+								<div>
+									{editable && (
+										<ClayButton.Group
+											className="font-weight-bold text-secondary"
+											spaced={true}
 										>
-											{Liferay.Language.get('reply')}
-										</ClayButton>
-									)}
-
-									{answer.actions.delete && (
-										<ClayButton
-											className="text-reset"
-											displayType="unstyled"
-											onClick={() => {
-												deleteMessage({
-													variables: {
-														messageBoardMessageId:
-															answer.id,
-													},
-												});
-											}}
-										>
-											{Liferay.Language.get('delete')}
-										</ClayButton>
-									)}
-
-									{canMarkAsAnswer && (
-										<ClayButton
-											className="text-reset"
-											data-testid="mark-as-answer-button"
-											displayType="unstyled"
-											onClick={() => {
-												markAsAnswerMessageBoardMessage(
-													{
-														variables: {
-															messageBoardMessageId:
-																answer.id,
-															showAsAnswer: !showAsAnswer,
-														},
+											{answer.actions[
+												'reply-to-message'
+											] && (
+												<ClayButton
+													className="text-reset"
+													displayType="unstyled"
+													onClick={() =>
+														setShowNewComment(true)
 													}
-												);
-											}}
-										>
-											{Liferay.Language.get(
-												showAsAnswer
-													? 'Unmark as answer'
-													: 'Mark as answer'
+												>
+													{Liferay.Language.get(
+														'reply'
+													)}
+												</ClayButton>
 											)}
-										</ClayButton>
-									)}
 
-									{/* this is an extra double check, remove it without creating 2 clay-group-item */}
-									{answer.actions.replace && (
-										<ClayButton
-											className="text-reset"
-											displayType="unstyled"
-										>
-											<Link
-												className="text-reset"
-												to={`${url}/answers/${answer.friendlyUrlPath}/edit`}
-											>
-												{Liferay.Language.get('edit')}
-											</Link>
-										</ClayButton>
-									)}
-								</ClayButton.Group>
-							)}
-						</div>
+											{answer.actions.delete && (
+												<ClayButton
+													className="text-reset"
+													displayType="unstyled"
+													onClick={() => {
+														deleteMessage({
+															variables: {
+																messageBoardMessageId:
+																	answer.id,
+															},
+														});
+													}}
+												>
+													{Liferay.Language.get(
+														'delete'
+													)}
+												</ClayButton>
+											)}
 
-						<div className="c-ml-md-auto c-ml-sm-2 c-mr-lg-2 c-mr-md-4 c-mr-xl-2">
-							<UserRow
-								creator={answer.creator}
-								statistics={answer.creatorStatistics}
-							/>
+											{canMarkAsAnswer && (
+												<ClayButton
+													className="text-reset"
+													data-testid="mark-as-answer-button"
+													displayType="unstyled"
+													onClick={() => {
+														markAsAnswerMessageBoardMessage(
+															{
+																variables: {
+																	messageBoardMessageId:
+																		answer.id,
+																	showAsAnswer: !showAsAnswer,
+																},
+															}
+														);
+													}}
+												>
+													{Liferay.Language.get(
+														showAsAnswer
+															? 'Unmark as answer'
+															: 'Mark as answer'
+													)}
+												</ClayButton>
+											)}
+
+											{/* this is an extra double check, remove it without creating 2 clay-group-item */}
+											{answer.actions.replace && (
+												<ClayButton
+													className="text-reset"
+													displayType="unstyled"
+												>
+													<Link
+														className="text-reset"
+														to={`${url}/answers/${answer.friendlyUrlPath}/edit`}
+													>
+														{Liferay.Language.get(
+															'edit'
+														)}
+													</Link>
+												</ClayButton>
+											)}
+										</ClayButton.Group>
+									)}
+								</div>
+								<div className="c-ml-md-auto c-ml-sm-2 c-mr-lg-2 c-mr-md-4 c-mr-xl-2">
+									<UserRow
+										creator={answer.creator}
+										statistics={answer.creatorStatistics}
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

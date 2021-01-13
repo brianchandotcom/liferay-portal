@@ -12,7 +12,8 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {waitForElementToBeRemoved} from '@testing-library/dom';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -22,7 +23,8 @@ import DLVideoExternalShortcutDLFilePicker from '../src/main/resources/META-INF/
 window.onFilePickCallback = jest.fn();
 
 const defaultProps = {
-	getDLVideoExternalShortcutFieldsURL: 'getDLVideoExternalShortcutFieldsURL',
+	getDLVideoExternalShortcutFieldsURL:
+		'http://localhost/getDLVideoExternalShortcutFieldsURL',
 	namespace: 'namespace',
 	onFilePickCallback: 'onFilePickCallback',
 };
@@ -80,6 +82,41 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 			expect(
 				document.querySelector('iframe[data-video-liferay]')
 			).toBeInTheDocument();
+		});
+	});
+
+	describe('when there is a valid server response', () => {
+		it('updates the video preview the response markup from the server', async () => {
+			jest.useFakeTimers();
+			fetch.mockResponseOnce(
+				JSON.stringify({
+					DESCRIPTION: 'DESCRIPTION',
+					HTML: '<iframe data-video-liferay></iframe>',
+					THUMBNAIL_URL: 'https://thumbnail-url',
+					TITLE: 'VIDEO TITLE',
+					URL: 'https://video-url.com',
+				})
+			);
+
+			const result = renderComponent(defaultProps);
+			const url = result.getByLabelText('video-url');
+
+			fireEvent.change(url, {
+				target: {value: 'https://video-url.com'},
+			});
+
+			jest.advanceTimersByTime(500);
+
+			await waitForElementToBeRemoved(() =>
+				document.querySelector('span.loading-animation')
+			);
+
+			expect(
+				document.querySelector('iframe[data-video-liferay]')
+			).toBeInTheDocument();
+
+			fetch.resetMocks();
+			jest.clearAllTimers();
 		});
 	});
 });

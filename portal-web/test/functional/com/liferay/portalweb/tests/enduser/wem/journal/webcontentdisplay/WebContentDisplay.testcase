@@ -484,7 +484,12 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateFile = "wc_template.ftl",
+			templateName = "WC Template Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
@@ -500,9 +505,11 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			textBox = "${content}",
 			webContentTitle = "WC WebContent Title");
 
-		AssertElementPresent(locator1 = "//div[contains(@class,journal-content-article)]//dt[normalize-space(text())='Text']/following-sibling::dd[normalize-space(text())='WC WebContent Text']");
+		AssertTextEquals(
+			locator1 = "//div[contains(@class,journal-content-article)]//h1[contains(@class,'text')]",
+			value1 = "WC WebContent Text");
 
-		var actual = selenium.getHtmlNodeText("//div[contains(@class,journal-content-article)]//dt[normalize-space(text())='Text Box']/following-sibling::dd");
+		var actual = selenium.getHtmlNodeText("//div[contains(@class,journal-content-article)]//h2[contains(@class,'text-box')]");
 
 		TestUtils.assertEquals(
 			actual = "${actual}",

@@ -423,29 +423,8 @@ public class JournalConverterImpl implements JournalConverter {
 				DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
 				ddmFormField.getType())) {
 
-			DDMFormFieldOptions ddmFormFieldOptions =
-				(DDMFormFieldOptions)ddmFormField.getProperty("options");
-
-			Map<String, LocalizedValue> options =
-				ddmFormFieldOptions.getOptions();
-
-			if (options.size() == 1) {
-				if (GetterUtil.getBoolean(dynamicContentElement.getText())) {
-					Set<Map.Entry<String, LocalizedValue>> entrySet =
-						options.entrySet();
-
-					Iterator<Map.Entry<String, LocalizedValue>> iterator =
-						entrySet.iterator();
-
-					Map.Entry<String, LocalizedValue> entry = iterator.next();
-
-					return JSONUtil.putAll(
-						entry.getKey()
-					).toJSONString();
-				}
-
-				return StringPool.BLANK;
-			}
+			return _getCheckboxMultipleValue(
+				ddmFormField, dynamicContentElement);
 		}
 
 		if (Objects.equals(
@@ -779,6 +758,36 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return type;
+	}
+
+	private Serializable _getCheckboxMultipleValue(
+		DDMFormField ddmFormField, Element dynamicContentElement) {
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			(DDMFormFieldOptions)ddmFormField.getProperty("options");
+
+		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
+
+		if (options.size() == 1) {
+			if (GetterUtil.getBoolean(dynamicContentElement.getText())) {
+				Set<Map.Entry<String, LocalizedValue>> entrySet =
+					options.entrySet();
+
+				Iterator<Map.Entry<String, LocalizedValue>> iterator =
+					entrySet.iterator();
+
+				Map.Entry<String, LocalizedValue> entry = iterator.next();
+
+				return JSONUtil.putAll(
+					entry.getKey()
+				).toJSONString();
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return FieldConstants.getSerializable(
+			ddmFormField.getDataType(), dynamicContentElement.getText());
 	}
 
 	private String _getFileEntryValue(

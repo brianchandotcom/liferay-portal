@@ -29,12 +29,13 @@ public class RegionTable {
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"regionId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"countryId", Types.BIGINT}, {"active_", Types.BOOLEAN},
-		{"name", Types.VARCHAR}, {"position", Types.DOUBLE},
-		{"regionCode", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"defaultLanguageId", Types.VARCHAR}, {"regionId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"countryId", Types.BIGINT},
+		{"active_", Types.BOOLEAN}, {"name", Types.VARCHAR},
+		{"position", Types.DOUBLE}, {"regionCode", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -44,6 +45,8 @@ static {
 TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
 
@@ -71,7 +74,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table Region (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,active_ BOOLEAN,name VARCHAR(75) null,position DOUBLE,regionCode VARCHAR(75) null,lastPublishDate DATE null)";
+"create table Region (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,regionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,active_ BOOLEAN,name VARCHAR(75) null,position DOUBLE,regionCode VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Region";
 

@@ -68,6 +68,7 @@ import com.liferay.trash.TrashHelper;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -380,8 +381,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			Serializable serializable = getFieldValue(
-				ddmFormField, dynamicContentElement, dynamicElementElement,
-				defaultLocale);
+				ddmFormField, dynamicContentElement, defaultLocale);
 
 			ddmField.addValue(locale, serializable);
 		}
@@ -417,7 +417,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 	protected Serializable getFieldValue(
 		DDMFormField ddmFormField, Element dynamicContentElement,
-		Element dynamicElementElement, Locale defaultLocale) {
+		Locale defaultLocale) {
 
 		if (Objects.equals(
 				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
@@ -450,15 +450,32 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		if (Objects.equals(
-				dynamicElementElement.attributeValue("type"), "boolean")) {
+				DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
+				ddmFormField.getType())) {
 
-			if (GetterUtil.getBoolean(dynamicContentElement.getText())) {
-				return JSONUtil.putAll(
-					dynamicElementElement.attributeValue("name")
-				).toJSONString();
+			DDMFormFieldOptions ddmFormFieldOptions =
+				(DDMFormFieldOptions)ddmFormField.getProperty("options");
+
+			Map<String, LocalizedValue> options =
+				ddmFormFieldOptions.getOptions();
+
+			if (options.size() == 1) {
+				if (GetterUtil.getBoolean(dynamicContentElement.getText())) {
+					Set<Map.Entry<String, LocalizedValue>> entrySet =
+						options.entrySet();
+
+					Iterator<Map.Entry<String, LocalizedValue>> iterator =
+						entrySet.iterator();
+
+					Map.Entry<String, LocalizedValue> entry = iterator.next();
+
+					return JSONUtil.putAll(
+						entry.getKey()
+					).toJSONString();
+				}
+
+				return StringPool.BLANK;
 			}
-
-			return StringPool.BLANK;
 		}
 
 		return FieldConstants.getSerializable(

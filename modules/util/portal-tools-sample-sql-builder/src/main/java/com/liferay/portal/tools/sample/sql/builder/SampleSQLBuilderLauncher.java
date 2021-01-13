@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import java.lang.reflect.Method;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -93,7 +92,7 @@ public class SampleSQLBuilderLauncher {
 
 			Stream<Path> pathStream = Files.list(fileSystem.getPath("/lib"));
 
-			pathStream.map(
+			pathStream.forEach(
 				path -> {
 					Path fileNamePath = path.getFileName();
 
@@ -102,23 +101,14 @@ public class SampleSQLBuilderLauncher {
 
 					try {
 						Files.copy(path, targetPath);
+
+						URI uri = targetPath.toUri();
+
+						urls.add(uri.toURL());
 					}
 					catch (IOException ioException) {
 					}
-
-					return targetPath;
-				}
-			).forEach(
-				path -> {
-					URI uri = path.toUri();
-
-					try {
-						urls.add(uri.toURL());
-					}
-					catch (MalformedURLException malformedURLException) {
-					}
-				}
-			);
+				});
 		}
 	}
 

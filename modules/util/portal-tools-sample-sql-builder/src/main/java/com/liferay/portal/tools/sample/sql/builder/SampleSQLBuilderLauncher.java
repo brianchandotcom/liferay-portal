@@ -70,15 +70,6 @@ public class SampleSQLBuilderLauncher {
 			ClassPathUtil.getClassPathURLs(
 				ClassPathUtil.getJVMClassPath(true)));
 
-		_populateBundledClassPath(classLoader, urls);
-
-		return urls.toArray(new URL[0]);
-	}
-
-	private static void _populateBundledClassPath(
-			ClassLoader classLoader, Set<URL> urls)
-		throws Exception {
-
 		Path tempDirPath = Files.createTempDirectory(
 			SampleSQLBuilderLauncher.class.getName());
 
@@ -107,6 +98,8 @@ public class SampleSQLBuilderLauncher {
 					}
 				});
 		}
+
+		return urls.toArray(new URL[0]);
 	}
 
 }

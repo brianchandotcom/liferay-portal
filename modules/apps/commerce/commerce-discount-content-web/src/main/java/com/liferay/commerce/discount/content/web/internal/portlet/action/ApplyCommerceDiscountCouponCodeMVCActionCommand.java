@@ -19,6 +19,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.discount.constants.CommerceDiscountPortletKeys;
 import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
 import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTimesException;
+import com.liferay.commerce.discount.exception.CommerceDiscountValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -78,7 +79,12 @@ public class ApplyCommerceDiscountCouponCodeMVCActionCommand
 					commerceContext);
 			}
 			catch (CommerceDiscountCouponCodeException |
-				   CommerceDiscountLimitationTimesException exception) {
+				   CommerceDiscountLimitationTimesException |
+				   CommerceDiscountValidatorException exception) {
+
+				if (exception instanceof CommerceDiscountValidatorException) {
+					throw exception;
+				}
 
 				SessionErrors.add(actionRequest, exception.getClass());
 

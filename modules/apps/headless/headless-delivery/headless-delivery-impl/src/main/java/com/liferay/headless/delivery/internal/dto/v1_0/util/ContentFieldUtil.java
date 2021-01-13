@@ -183,9 +183,23 @@ public class ContentFieldUtil {
 					}
 				};
 			}
+			else if (Objects.equals("geolocation", ddmFormField.getType())) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				return new ContentFieldValue() {
+					{
+						geo = new Geo() {
+							{
+								latitude = jsonObject.getDouble("lat");
+								longitude = jsonObject.getDouble("lng");
+							}
+						};
+					}
+				};
+			}
 			else if (Objects.equals(
-						DDMFormFieldType.GEOLOCATION, ddmFormField.getType()) ||
-					 Objects.equals("geolocation", ddmFormField.getType())) {
+						DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);

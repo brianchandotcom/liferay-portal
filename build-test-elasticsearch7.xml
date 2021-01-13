@@ -64,6 +64,15 @@ cluster.name: LiferayElasticsearchCluster</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-elasticsearch-second-cluster-properties">
+		<sequential>
+			<echo file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
+cluster.name: LiferayElasticsearchClusterTwo
+http.port: 9202
+transport.port: 9500-9600</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-elasticsearch-x-pack-pki-security-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.enabled: true
@@ -187,15 +196,6 @@ xpack.security.sessionTimeout: 600000</echo>
 				<replacetoken><![CDATA[elasticsearch.hosts: "http://localhost:9200"]]></replacetoken>
 				<replacevalue><![CDATA[elasticsearch.hosts: "https://localhost:9200"]]></replacevalue>
 			</replace>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="configure-local-cluster-properties">
-		<sequential>
-			<echo file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
-cluster.name: LiferayElasticsearchClusterTwo
-http.port: 9202
-transport.port: 9500-9600</echo>
 		</sequential>
 	</macrodef>
 
@@ -758,6 +758,40 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-elasticsearch-with-multiple-connections">
+		<sequential>
+			<unzip-elasticsearch />
+
+			<prepare-elasticsearch-analyzers />
+
+			<configure-elasticsearch-properties />
+
+			<configure-portal-remote-elasticsearch-osgi-properties />
+
+			<prepare-additional-elasticsearch-bundles total.bundles="2" />
+
+			<configure-elasticsearch-second-cluster-properties />
+
+			<antcall target="start-elasticsearch-node">
+				<param name="elasticsearch.bundle.number" value="1" />
+			</antcall>
+
+			<antcall target="start-elasticsearch-node">
+				<param name="elasticsearch.bundle.number" value="2" />
+				<param name="elasticsearch.port" value="9202" />
+			</antcall>
+
+			<get-testcase-property property.name="osgi.app.includes" />
+
+			<if>
+				<contains string="${osgi.app.includes}" substring="portal-search-elasticsearch-cross-cluster-replication" />
+				<then>
+					<start-ccr-trial />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-elasticsearch-with-xpack">
 		<sequential>
 			<unzip-elasticsearch />
@@ -1176,11 +1210,11 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<echo>${curl.output.company.index}</echo>
 		<echo></echo>
 
-		<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
+		<get-testcase-property property.name="elasticsearch.multiple.connections" />
 
 		<if>
 			<and>
-				<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
+				<equals arg1="${elasticsearch.multiple.connections}" arg2="true" />
 				<not>
 					<contains string="${test.name.skip.portal.instance}" substring="Smoke" />
 				</not>
@@ -1275,12 +1309,14 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 		<get-testcase-property property.name="elasticsearch.cluster.size" />
 		<get-testcase-property property.name="elasticsearch.ltr.enabled" />
+		<get-testcase-property property.name="elasticsearch.multiple.connections" />
 
 		<condition else="true" property="start.standard.elasticsearch" value="false">
 			<or>
 				<isset property="elastic.xpack.enabled" />
 				<isset property="elasticsearch.cluster.size" />
 				<isset property="elasticsearch.ltr.enabled" />
+				<isset property="elasticsearch.multiple.connections" />
 			</or>
 		</condition>
 
@@ -1306,6 +1342,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</if>
 
 		<if>
+			<equals arg1="${elasticsearch.multiple.connections}" arg2="true" />
+			<then>
+				<start-elasticsearch-with-multiple-connections />
+			</then>
+		</if>
+
+		<if>
 			<istrue value="${start.standard.elasticsearch}" />
 			<then>
 				<unzip-elasticsearch />
@@ -1316,32 +1359,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 				<configure-portal-remote-elasticsearch-osgi-properties />
 
-				<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
-
-				<if>
-					<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-					<then>
-						<antcall target="prepare-additional-elasticsearch-dirs">
-							<param name="remote.elasticsearch.cluster.size" value="2" />
-						</antcall>
-
-						<configure-local-cluster-properties />
-
-						<antcall target="start-elasticsearch-node">
-							<param name="remote.elasticsearch.cluster.size" value="2" />
-						</antcall>
-					</then>
-					<else>
-						<antcall target="start-elasticsearch-node" />
-					</else>
-				</if>
-
-				<if>
-					<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-					<then>
-						<start-ccr-trial />
-					</then>
-				</if>
+				<antcall target="start-elasticsearch-node" />
 			</then>
 		</if>
 
@@ -1406,16 +1424,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</waitfor>
 
 		<print-file file.name="${elasticsearch.start.dir}/logs/LiferayElasticsearchCluster.log" />
-
-		<if>
-			<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-			<then>
-				<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-					<http url="http://localhost:9202/" />
-				</waitfor>
-				<print-file file.name="${elasticsearch.start.dir}-2/logs/LiferayElasticsearchClusterTwo.log" />
-			</then>
-		</if>
 
 		<lstopwatch action="total" name="start.elasticsearch.node" />
 

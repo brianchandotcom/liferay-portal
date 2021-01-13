@@ -409,8 +409,8 @@ definition {
 	}
 
 	test MultipleConnectionsSmokeTest {
+		property elasticsearch.multiple.connections = "true";
 		property portal.upstream = "quarantine";
-		property remote.elasticsearch.clusters.enabled = "true";
 		property remote.elasticsearch.enabled = "true";
 
 		OSGiConfig.deployOSGiConfigs(

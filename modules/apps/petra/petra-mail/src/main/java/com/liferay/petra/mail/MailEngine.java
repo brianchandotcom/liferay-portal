@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -43,7 +44,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -564,6 +568,28 @@ public class MailEngine {
 			int batchSize)
 		throws MailEngineException {
 
+		if ((_DATA_LIMIT_MAX_MAIL_PERIOD > 0) &&
+			(_DATA_LIMIT_MAX_MAIL_COUNT > 0)) {
+
+			long currentTime = System.currentTimeMillis();
+
+			if (((currentTime - _lastResetTime.get()) / 1000) >
+					_DATA_LIMIT_MAX_MAIL_PERIOD) {
+
+				_mailCounts.clear();
+
+				_lastResetTime.set(currentTime);
+			}
+
+			AtomicLong mailCount = _mailCounts.computeIfAbsent(
+				CompanyThreadLocal.getCompanyId(), id -> new AtomicLong());
+
+			if (mailCount.incrementAndGet() > _DATA_LIMIT_MAX_MAIL_COUNT) {
+				throw new MailEngineException(
+					"Unable to exceed maximum number of allowed mails");
+			}
+		}
+
 		try {
 			boolean smtpAuth = GetterUtil.getBoolean(
 				_getSMTPProperty(session, "auth"));
@@ -653,6 +679,12 @@ public class MailEngine {
 
 	private static final int _BATCH_SIZE = 0;
 
+	private static final long _DATA_LIMIT_MAX_MAIL_COUNT = GetterUtil.getLong(
+		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_MAIL_COUNT));
+
+	private static final long _DATA_LIMIT_MAX_MAIL_PERIOD = GetterUtil.getLong(
+		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_MAIL_PERIOD));
+
 	private static final String _MULTIPART_TYPE_ALTERNATIVE = "alternative";
 
 	private static final String _MULTIPART_TYPE_MIXED = "mixed";
@@ -662,5 +694,9 @@ public class MailEngine {
 	private static final String _TEXT_PLAIN = "text/plain;charset=\"UTF-8\"";
 
 	private static final Log _log = LogFactoryUtil.getLog(MailEngine.class);
+
+	private static final AtomicLong _lastResetTime = new AtomicLong();
+	private static final Map<Long, AtomicLong> _mailCounts =
+		new ConcurrentHashMap<>();
 
 }

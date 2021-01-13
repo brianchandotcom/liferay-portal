@@ -661,6 +661,12 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_DL_STORAGE_SIZE =
 		"data.limit.max.dl.storage.size";
 
+	public static final String DATA_LIMIT_MAX_MAIL_COUNT =
+		"data.limit.max.mail.count";
+
+	public static final String DATA_LIMIT_MAX_MAIL_PERIOD =
+		"data.limit.max.mail.period";
+
 	public static final String DATA_LIMIT_MAX_ORGANIZATION_COUNT =
 		"data.limit.max.organization.count";
 

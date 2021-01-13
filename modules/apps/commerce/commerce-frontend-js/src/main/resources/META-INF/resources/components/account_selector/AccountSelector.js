@@ -94,11 +94,15 @@ function AccountSelector(props) {
 	const ordersListWrapperRef = useRef();
 
 	useEffect(() => {
-		function handleOrderUpdated({id, orderStatusInfo}) {
+		function handleOrderUpdated({orderId, orderStatusInfo}) {
 			updateCurrentOrder((current) => {
-				if ((!current && id) || (current && !id) || current.id !== id) {
+				if (
+					(!current && orderId) ||
+					(current && !orderId) ||
+					current.id !== orderId
+				) {
 					return {
-						id,
+						orderId,
 						orderStatusInfo,
 					};
 				}
@@ -152,7 +156,7 @@ function AccountSelector(props) {
 													className="border-right order-id"
 													size="auto"
 												>
-													{currentOrder.id}
+													{currentOrder.orderId}
 												</Col>
 												<Col className="order-label">
 													{
@@ -166,7 +170,7 @@ function AccountSelector(props) {
 											<Row>
 												<Col className="no-account-selected-placeholder">
 													{Liferay.Language.get(
-														'no-order-selected'
+														'there-is-no-order-selected'
 													)}
 												</Col>
 											</Row>
@@ -247,7 +251,7 @@ function AccountSelector(props) {
 								infiniteScrollMode={true}
 								inputName="account-search"
 								inputPlaceholder={Liferay.Language.get(
-									'search-account'
+									'search-accounts'
 								)}
 								itemsKey="id"
 								itemsLabel="name"
@@ -346,7 +350,7 @@ AccountSelector.propTypes = {
 		name: PropTypes.string,
 	}),
 	currentOrder: PropTypes.shape({
-		id: PropTypes.number,
+		orderId: PropTypes.number,
 		orderStatusInfo: PropTypes.shape({
 			label_i18n: PropTypes.string,
 		}),

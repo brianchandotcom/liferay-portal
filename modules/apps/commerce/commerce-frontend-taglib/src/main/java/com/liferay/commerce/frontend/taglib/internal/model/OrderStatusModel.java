@@ -23,6 +23,7 @@ public class OrderStatusModel {
 	public OrderStatusModel(int code, String label, String localizedLabel) {
 		_code = code;
 		_label = label;
+
 		_label_i18n = localizedLabel;
 	}
 

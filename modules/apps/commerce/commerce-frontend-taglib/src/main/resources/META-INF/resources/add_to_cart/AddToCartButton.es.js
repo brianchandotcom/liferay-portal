@@ -150,13 +150,12 @@ class AddToCartButton extends Component {
 	}
 
 	_handleOrderChange(evt) {
-		if (this.orderId === evt.id) {
+		if (this.orderId === evt.orderId) {
 			return;
 		}
 
-		this.orderId = evt.id;
+		this.orderId = evt.orderId;
 		this.quantity = 0;
-		this._resetInputQuantity();
 	}
 
 	_handleAccountChange({id}) {
@@ -211,7 +210,7 @@ class AddToCartButton extends Component {
 					}
 
 					Liferay.fire(CURRENT_ORDER_UPDATED, {
-						id: jsonResponse.orderId,
+						orderId: jsonResponse.orderId,
 						orderStatusInfo: jsonResponse.orderStatusInfo,
 					});
 

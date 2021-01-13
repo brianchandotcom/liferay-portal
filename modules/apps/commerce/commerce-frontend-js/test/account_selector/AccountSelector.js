@@ -214,7 +214,7 @@ describe('AccountSelector', () => {
 						name: 'My Account Name',
 					}}
 					currentOrder={{
-						id: 34234,
+						orderId: 34234,
 						orderStatusInfo: {
 							label_i18n: 'Completed',
 						},

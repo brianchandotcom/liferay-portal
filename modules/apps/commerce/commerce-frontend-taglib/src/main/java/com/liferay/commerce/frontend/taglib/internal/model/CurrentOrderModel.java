@@ -20,20 +20,20 @@ package com.liferay.commerce.frontend.taglib.internal.model;
  */
 public class CurrentOrderModel {
 
-	public CurrentOrderModel(long id, OrderStatusModel orderStatusInfo) {
-		_id = id;
+	public CurrentOrderModel(long orderId, OrderStatusModel orderStatusInfo) {
+		_orderId = orderId;
 		_orderStatusInfo = orderStatusInfo;
 	}
 
-	public long getId() {
-		return _id;
+	public long getOrderId() {
+		return _orderId;
 	}
 
 	public OrderStatusModel getOrderStatusInfo() {
 		return _orderStatusInfo;
 	}
 
-	private final long _id;
+	private final long _orderId;
 	private final OrderStatusModel _orderStatusInfo;
 
 }

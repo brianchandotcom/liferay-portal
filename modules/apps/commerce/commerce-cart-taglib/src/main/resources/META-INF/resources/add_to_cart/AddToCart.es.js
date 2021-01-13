@@ -77,7 +77,7 @@ class AddToCart extends Component {
 			.then((response) => response.json())
 			.then((jsonresponse) => {
 				if (jsonresponse.success) {
-					Liferay.fire('commerce:productAddedToCart', jsonresponse);
+					Liferay.fire('current-order-updated', jsonresponse);
 
 					instance._showNotification(
 						jsonresponse.successMessage,

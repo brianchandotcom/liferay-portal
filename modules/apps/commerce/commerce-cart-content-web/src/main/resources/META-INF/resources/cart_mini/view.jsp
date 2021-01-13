@@ -286,7 +286,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</aui:script>
 
 	<aui:script>
-		Liferay.after('commerce:productAddedToCart', function (event) {
+		Liferay.after('current-order-updated', function (event) {
 			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 		});
 	</aui:script>

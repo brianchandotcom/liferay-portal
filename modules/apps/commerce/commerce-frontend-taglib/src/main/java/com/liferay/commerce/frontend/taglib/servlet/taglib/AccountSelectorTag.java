@@ -200,7 +200,8 @@ public class AccountSelectorTag extends IncludeTag {
 				CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "editCommerceOrder");
+				ActionRequest.ACTION_NAME,
+				"/commerce_open_order_content/edit_commerce_order");
 			portletURL.setParameter(Constants.CMD, "setCurrent");
 			portletURL.setParameter("commerceOrderId", "{id}");
 

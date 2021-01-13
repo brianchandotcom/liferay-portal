@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.SearchMapUtil;
@@ -48,7 +49,7 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	public void testSearchByKeywords() throws Exception {
 		Group group = userSearchFixture.addGroup();
 
-		String tag = RandomTestUtil.randomString();
+		String tag = randomString();
 
 		User user = addUser(group, tag);
 
@@ -63,15 +64,15 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	public void testSearchByKeywordsIgnoresInactiveSites() throws Exception {
 		Group group1 = userSearchFixture.addGroup();
 
-		String prefix = RandomTestUtil.randomString();
+		String prefix = randomString();
 
-		String tag1 = prefix + " " + RandomTestUtil.randomString();
+		String tag1 = prefix + " " + randomString();
 
 		User user1 = addUser(group1, tag1);
 
 		Group group2 = userSearchFixture.addGroup();
 
-		String tag2 = prefix + " " + RandomTestUtil.randomString();
+		String tag2 = prefix + " " + randomString();
 
 		User user2 = addUser(group2, tag2);
 
@@ -86,6 +87,11 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		assertSearchGroupIdsUnset(
 			prefix, Collections.<String, String>emptyMap());
+	}
+
+	protected static String randomString() {
+		return RandomTestUtil.randomString(
+			NumericStringRandomizerBumper.INSTANCE);
 	}
 
 	protected void assertSearchGroupIdsUnset(

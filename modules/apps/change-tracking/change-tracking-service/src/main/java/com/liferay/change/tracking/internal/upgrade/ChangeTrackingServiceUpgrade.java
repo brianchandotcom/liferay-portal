@@ -24,10 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
-@Component(
-	immediate = true,
-	service = {ChangeTrackingServiceUpgrade.class, UpgradeStepRegistrator.class}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class ChangeTrackingServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override

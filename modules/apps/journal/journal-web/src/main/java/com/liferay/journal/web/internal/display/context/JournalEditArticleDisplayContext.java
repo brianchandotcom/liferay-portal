@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -187,8 +186,6 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public Map<String, Object> getComponentContext() {
-		String defaultArticleLanguageId = getDefaultArticleLanguageId();
-
 		return HashMapBuilder.<String, Object>put(
 			"articleId", getArticleId()
 		).put(
@@ -198,7 +195,7 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"contentTitle", "titleMapAsXML"
 		).put(
-			"defaultLanguageId", defaultArticleLanguageId
+			"defaultLanguageId", getDefaultArticleLanguageId()
 		).build();
 	}
 

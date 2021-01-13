@@ -11,9 +11,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-package com.liferay.portal.kernel.exception;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+package com.liferay.portal.kernel.exception;
 
 /**
  * @author Brian Wing Shun Chan

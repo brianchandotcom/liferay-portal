@@ -25,7 +25,7 @@ package com.liferay.portal.model.impl;
  */
 public class RegionLocalizationImpl extends RegionLocalizationBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a region localization model instance should use the {@link com.liferay.portal.kernel.model.RegionLocalization} interface instead.

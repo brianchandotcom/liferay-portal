@@ -192,7 +192,7 @@ public class JournalEditArticleDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"articleId", getArticleId()
 		).put(
-			"availableLocales", Arrays.asList(defaultArticleLanguageId)
+			"availableLocales", _article.getAvailableLanguageIds()
 		).put(
 			"classNameId", String.valueOf(getClassNameId())
 		).put(

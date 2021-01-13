@@ -132,7 +132,6 @@ public class UpgradeDDLFormPortletId extends BaseUpgradePortletId {
 
 				dynamicQuery.add(junction);
 			});
-		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(
 			(PortletPreferences portletPreference) -> updatePortletPreferences(
 				portletPreference, oldRootPortletId, newRootPortletId));

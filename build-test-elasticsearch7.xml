@@ -3,6 +3,13 @@
 <project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="configure-elasticsearch-ltr-properties">
+		<sequential>
+			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.ml.enabled: false
+path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-elasticsearch-pki-realm-settings">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}-1/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.client_authentication: required
@@ -25,8 +32,7 @@ kibana_system:
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
-cluster.name: LiferayElasticsearchCluster
-xpack.ml.enabled: false</echo>
+cluster.name: LiferayElasticsearchCluster</echo>
 		</sequential>
 	</macrodef>
 
@@ -161,8 +167,7 @@ xpack.security.sessionTimeout: 600000</echo>
 			<echo file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
 cluster.name: LiferayElasticsearchClusterTwo
 http.port: 9202
-transport.port: 9500-9600
-xpack.ml.enabled: false</echo>
+transport.port: 9500-9600</echo>
 		</sequential>
 	</macrodef>
 
@@ -604,6 +609,45 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-elasticsearch-with-ltr">
+		<sequential>
+			<configure-elasticsearch79-ltr-test-properties />
+
+			<unzip-elasticsearch />
+
+			<prepare-elasticsearch-analyzers />
+
+			<configure-elasticsearch-ltr-properties />
+
+			<prepare-elasticsearch-ltr />
+
+			<if>
+				<not>
+					<available file="${liferay.home}/data/elasticsearch7/repo" type="dir" />
+				</not>
+				<then>
+					<mkdir dir="${liferay.home}/data/elasticsearch7/repo" />
+				</then>
+			</if>
+
+			<chmod
+				maxparallel="10"
+				perm="a+rwx"
+				type="both"
+			>
+				<fileset
+					dir="${liferay.home}/data/elasticsearch7/repo"
+				/>
+			</chmod>
+
+			<configure-elasticsearch-properties />
+
+			<configure-portal-remote-elasticsearch-osgi-properties />
+
+			<antcall target="start-elasticsearch-node" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-x-pack-trial">
 		<sequential>
 			<exec executable="curl" outputproperty="curl.output.trial">
@@ -858,7 +902,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 		<antcall target="restore-backup">
 			<param name="backup.index" value="${backup.index}" />
-
 			<param name="elasticsearch.port" value="${elasticsearch.port}" />
 		</antcall>
 
@@ -1122,178 +1165,161 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<get-testcase-property property.name="elasticsearch.ltr.enabled" />
 
+		<condition else="true" property="start.standard.elasticsearch" value="false">
+			<or>
+				<isset property="elasticsearch.ltr.enabled" />
+			</or>
+		</condition>
+
 		<if>
 			<equals arg1="${elasticsearch.ltr.enabled}" arg2="true" />
 			<then>
-				<configure-elasticsearch79-ltr-test-properties />
+				<start-elasticsearch-with-ltr />
 			</then>
 		</if>
 
-		<unzip-elasticsearch />
-
-		<prepare-elasticsearch-analyzers />
-
 		<if>
-			<equals arg1="${elasticsearch.ltr.enabled}" arg2="true" />
+			<istrue value="${start.standard.elasticsearch}" />
 			<then>
-				<prepare-elasticsearch-ltr />
+				<unzip-elasticsearch />
 
-				<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
+				<prepare-elasticsearch-analyzers />
+
+				<configure-elasticsearch-properties />
+
+				<get-testcase-property property.name="elastic.xpack.enabled" />
+				<get-testcase-property property.name="remote.elasticsearch.pki.authentication.enabled" />
+
+				<if>
+					<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+					<then>
+						<generate-x-pack-security-certificates />
+
+						<if>
+							<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
+							<then>
+								<configure-elasticsearch-x-pack-pki-security-properties />
+							</then>
+							<else>
+								<configure-elasticsearch-x-pack-security-properties />
+							</else>
+						</if>
+
+						<configure-portal-x-pack-security-truststore />
+					</then>
+				</if>
+
+				<configure-portal-remote-elasticsearch-osgi-properties />
+
+				<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
 				<if>
 					<not>
-						<available file="${liferay.home}/data/elasticsearch7/repo" type="dir" />
+						<isset property="remote.elasticsearch.cluster.size" />
 					</not>
 					<then>
-						<mkdir dir="${liferay.home}/data/elasticsearch7/repo" />
+						<property name="remote.elasticsearch.cluster.size" value="1" />
 					</then>
 				</if>
 
-				<chmod
-					maxparallel="10"
-					perm="a+rwx"
-					type="both"
-				>
-					<fileset
-						dir="${liferay.home}/data/elasticsearch7/repo"
-					/>
-				</chmod>
-			</then>
-		</if>
+				<antcall target="configure-elasticsearch-cluster-properties" />
 
-		<configure-elasticsearch-properties />
-
-		<get-testcase-property property.name="elastic.xpack.enabled" />
-		<get-testcase-property property.name="remote.elasticsearch.pki.authentication.enabled" />
-
-		<if>
-			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
-			<then>
-				<generate-x-pack-security-certificates />
+				<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
 
 				<if>
-					<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
+					<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
 					<then>
-						<configure-elasticsearch-x-pack-pki-security-properties />
+						<antcall target="prepare-additional-elasticsearch-dirs">
+							<param name="remote.elasticsearch.cluster.size" value="2" />
+						</antcall>
+
+						<configure-local-cluster-properties />
+
+						<antcall target="start-elasticsearch-node">
+							<param name="remote.elasticsearch.cluster.size" value="2" />
+						</antcall>
 					</then>
 					<else>
-						<configure-elasticsearch-x-pack-security-properties />
-					</else>
-				</if>
-
-				<configure-portal-x-pack-security-truststore />
-			</then>
-		</if>
-
-		<configure-portal-remote-elasticsearch-osgi-properties />
-
-		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
-
-		<if>
-			<not>
-				<isset property="remote.elasticsearch.cluster.size" />
-			</not>
-			<then>
-				<property name="remote.elasticsearch.cluster.size" value="1" />
-			</then>
-		</if>
-
-		<antcall target="configure-elasticsearch-cluster-properties" />
-
-		<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
-
-		<if>
-			<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-			<then>
-				<antcall target="prepare-additional-elasticsearch-dirs">
-					<param name="remote.elasticsearch.cluster.size" value="2" />
-				</antcall>
-
-				<configure-local-cluster-properties />
-
-				<antcall target="start-elasticsearch-node">
-					<param name="remote.elasticsearch.cluster.size" value="2" />
-				</antcall>
-			</then>
-			<else>
-				<antcall target="prepare-additional-elasticsearch-dirs" />
-
-				<antcall target="start-elasticsearch-node" />
-			</else>
-		</if>
-
-		<if>
-			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
-			<then>
-				<sleep seconds="30" />
-
-				<set-x-pack-user-passwords />
-
-				<start-x-pack-trial />
-
-				<if>
-					<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
-					<then>
-						<sleep seconds="10" />
-
-						<antcall target="stop-elasticsearch" />
-
-						<configure-elasticsearch-pki-realm-settings />
+						<antcall target="prepare-additional-elasticsearch-dirs" />
 
 						<antcall target="start-elasticsearch-node" />
-
-						<sleep seconds="10" />
-
-						<configure-portal-x-pack-pki-osgi-properties />
-					</then>
-					<else>
-						<configure-portal-x-pack-osgi-properties />
 					</else>
 				</if>
 
-				<antcall target="start-kibana" />
+				<if>
+					<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+					<then>
+						<sleep seconds="30" />
 
-				<lstopwatch action="total" name="start.elasticsearch" />
-			</then>
-			<else>
-				<waitfor maxwait="120" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-					<http url="http://localhost:9200/" />
-				</waitfor>
+						<set-x-pack-user-passwords />
 
-				<lstopwatch action="total" name="start.elasticsearch" />
+						<start-x-pack-trial />
 
-				<var name="elasticsearch.node.number" value="0" />
+						<if>
+							<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
+							<then>
+								<sleep seconds="10" />
 
-				<antelope:repeat count="${remote.elasticsearch.cluster.size}">
-					<math
-						datatype="int"
-						operand1="${elasticsearch.node.number}"
-						operand2="1"
-						operation="+"
-						result="elasticsearch.node.number"
-					/>
+								<antcall target="stop-elasticsearch" />
 
-					<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
+								<configure-elasticsearch-pki-realm-settings />
 
-					<if>
-						<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-						<then>
-							<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-								<http url="http://localhost:9202/" />
-							</waitfor>
-							<print-file file.name="${elasticsearch.dir}-2/logs/LiferayElasticsearchClusterTwo.log" />
-						</then>
-					</if>
-				</antelope:repeat>
+								<antcall target="start-elasticsearch-node" />
 
-				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
-			</else>
-		</if>
+								<sleep seconds="10" />
 
-		<if>
-			<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-			<then>
-				<start-ccr-trial />
+								<configure-portal-x-pack-pki-osgi-properties />
+							</then>
+							<else>
+								<configure-portal-x-pack-osgi-properties />
+							</else>
+						</if>
+
+						<antcall target="start-kibana" />
+
+						<lstopwatch action="total" name="start.elasticsearch" />
+					</then>
+					<else>
+						<waitfor maxwait="120" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+							<http url="http://localhost:9200/" />
+						</waitfor>
+
+						<lstopwatch action="total" name="start.elasticsearch" />
+
+						<var name="elasticsearch.node.number" value="0" />
+
+						<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+							<math
+								datatype="int"
+								operand1="${elasticsearch.node.number}"
+								operand2="1"
+								operation="+"
+								result="elasticsearch.node.number"
+							/>
+
+							<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
+
+							<if>
+								<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
+								<then>
+									<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+										<http url="http://localhost:9202/" />
+									</waitfor>
+									<print-file file.name="${elasticsearch.dir}-2/logs/LiferayElasticsearchClusterTwo.log" />
+								</then>
+							</if>
+						</antelope:repeat>
+
+						<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
+					</else>
+				</if>
+
+				<if>
+					<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
+					<then>
+						<start-ccr-trial />
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>

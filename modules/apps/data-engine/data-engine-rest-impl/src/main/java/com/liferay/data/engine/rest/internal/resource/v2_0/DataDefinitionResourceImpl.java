@@ -1024,6 +1024,14 @@ public class DataDefinitionResourceImpl
 	private void _removeFieldsFromDataLayout(
 		DataLayout dataLayout, String[] fieldNames) {
 
+		Map<String, Object> dataLayoutFields = dataLayout.getDataLayoutFields();
+
+		Set<String> dataLayoutFieldsNames = dataLayoutFields.keySet();
+
+		dataLayoutFieldsNames.removeIf(
+			dataLayoutFieldsName -> ArrayUtil.contains(
+				fieldNames, dataLayoutFieldsName));
+
 		Stream<DataLayoutPage> dataLayoutPages = Arrays.stream(
 			dataLayout.getDataLayoutPages());
 

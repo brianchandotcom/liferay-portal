@@ -2801,7 +2801,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>locator</name>
+			<name>multiselectLocator</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

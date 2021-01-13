@@ -67,9 +67,9 @@ public class MultiselectTag extends BaseContainerTag {
 		return _label;
 	}
 
-	public MultiselectLocator getLocator() {
-		if (_locator != null) {
-			return _locator;
+	public MultiselectLocator getMultiselectLocator() {
+		if (_multiselectLocator != null) {
+			return _multiselectLocator;
 		}
 
 		return new MultiselectLocator();
@@ -142,8 +142,8 @@ public class MultiselectTag extends BaseContainerTag {
 	public void setLabelLocator() {
 	}
 
-	public void setLocator(MultiselectLocator locator) {
-		_locator = locator;
+	public void setMultiselectLocator(MultiselectLocator multiselectLocator) {
+		_multiselectLocator = multiselectLocator;
 	}
 
 	public void setSelectedItems(List<MultiselectItem> selectedItems) {
@@ -173,7 +173,7 @@ public class MultiselectTag extends BaseContainerTag {
 		_inputName = null;
 		_inputValue = null;
 		_label = null;
-		_locator = null;
+		_multiselectLocator = null;
 		_selectedItems = null;
 		_sourceItems = null;
 		_valid = true;
@@ -195,8 +195,8 @@ public class MultiselectTag extends BaseContainerTag {
 		props.put("isValid", _valid);
 		props.put("label", _label);
 
-		if (_locator != null) {
-			props.put("locator", _locator);
+		if (_multiselectLocator != null) {
+			props.put("multiselectLocator", _multiselectLocator);
 		}
 
 		props.put("selectedItems", _selectedItems);
@@ -242,11 +242,11 @@ public class MultiselectTag extends BaseContainerTag {
 		List<MultiselectItem> selectedItems = getSelectedItems();
 
 		if (!ListUtil.isEmpty(selectedItems)) {
-			MultiselectLocator locator = getLocator();
+			MultiselectLocator multiselectLocator = getMultiselectLocator();
 
 			for (MultiselectItem selectedItem : selectedItems) {
 				String selectedItemLabel = selectedItem.get(
-					locator.get("label"));
+					multiselectLocator.get("label"));
 
 				LabelTag labelTag = new LabelTag();
 
@@ -259,7 +259,8 @@ public class MultiselectTag extends BaseContainerTag {
 				jspWriter.write(selectedItemLabel);
 				jspWriter.write("\" ");
 				jspWriter.write("value=\"");
-				jspWriter.write(selectedItem.get(locator.get("value")));
+				jspWriter.write(
+					selectedItem.get(multiselectLocator.get("value")));
 				jspWriter.write("\" />");
 			}
 		}
@@ -349,7 +350,7 @@ public class MultiselectTag extends BaseContainerTag {
 	private String _inputName;
 	private String _inputValue;
 	private String _label;
-	private MultiselectLocator _locator;
+	private MultiselectLocator _multiselectLocator;
 	private List<MultiselectItem> _selectedItems;
 	private List<MultiselectItem> _sourceItems;
 	private boolean _valid = true;

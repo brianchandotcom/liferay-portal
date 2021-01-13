@@ -148,7 +148,7 @@ for (int i = 0; i < 8; i++) {
 	id="multiselect-1"
 	inputName="multiSelectInput1"
 	label="Multiselect 1"
-	locator="<%= multiselectDisplayContext.getMultiselectLocator() %>"
+	multiselectLocator="<%= multiselectDisplayContext.getMultiselectLocator() %>"
 	selectedItems="<%= multiselectDisplayContext.getSelectedItemsWithCustomProperties() %>"
 	sourceItems="<%= multiselectDisplayContext.getSourceItemsWithCustomProperties() %>"
 />

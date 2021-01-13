@@ -30,7 +30,7 @@ export default function Multiselect({
 	isValid,
 	label,
 	locale: _locale,
-	locator,
+	multiselectLocator,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
 	selectedItems: _selectedItems = [],
@@ -58,7 +58,7 @@ export default function Multiselect({
 						inputValue={inputValue}
 						isValid={isValid}
 						items={selectedItems}
-						locator={locator}
+						locator={multiselectLocator}
 						onChange={setInputValue}
 						onItemsChange={setSelectedItems}
 						sourceItems={sourceItems}

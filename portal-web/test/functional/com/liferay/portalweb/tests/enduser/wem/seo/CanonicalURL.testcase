@@ -230,7 +230,9 @@ definition {
 
 		User.logoutPG();
 
-		Page.assertCanonicalURL(portalURL = "${portalURL}");
+		Page.assertCanonicalURL(
+			locale = "en",
+			portalURL = "${portalURL}");
 
 		Navigator.openSpecificURL(url = "${portalURL}/zh/");
 

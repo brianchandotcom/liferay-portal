@@ -72,6 +72,7 @@ export const createCommentQuery = gql`
 			creator {
 				name
 			}
+			dateModified
 			id
 		}
 	}
@@ -436,6 +437,7 @@ export const getMessagesQuery = gql`
 					postsNumber
 					rank
 				}
+				dateModified
 				encodingFormat
 				friendlyUrlPath
 				id
@@ -448,6 +450,7 @@ export const getMessagesQuery = gql`
 							image
 							name
 						}
+						dateModified
 						encodingFormat
 						id
 						showAsAnswer

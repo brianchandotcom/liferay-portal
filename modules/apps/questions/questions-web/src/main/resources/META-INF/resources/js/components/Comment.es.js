@@ -15,12 +15,15 @@
 import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {deleteMessageQuery} from '../utils/client.es';
+import lang from '../utils/lang.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 
 export default ({comment, commentChange, editable = true}) => {
+	const [dateModified, setDateModified] = useState('');
+
 	const [deleteMessage] = useMutation(deleteMessageQuery, {
 		onCompleted() {
 			if (commentChange) {
@@ -28,6 +31,10 @@ export default ({comment, commentChange, editable = true}) => {
 			}
 		},
 	});
+
+	useEffect(() => {
+		setDateModified(new Date(comment.dateModified).toLocaleDateString());
+	}, [comment.dateModified]);
 
 	return (
 		<div className="c-my-3 questions-reply row">
@@ -39,6 +46,11 @@ export default ({comment, commentChange, editable = true}) => {
 			</div>
 
 			<div className="col-10 col-lg-11">
+				<span className="text-secondary">
+					{lang.sub(Liferay.Language.get('replied-x'), [
+						dateModified,
+					])}
+				</span>
 				<div className="c-mb-0">
 					<ArticleBodyRenderer
 						{...comment}

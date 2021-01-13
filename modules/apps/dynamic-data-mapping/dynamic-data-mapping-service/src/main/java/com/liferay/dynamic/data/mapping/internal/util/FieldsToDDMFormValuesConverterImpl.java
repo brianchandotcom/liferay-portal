@@ -226,6 +226,7 @@ public class FieldsToDDMFormValuesConverterImpl
 			Number number = (Number)fieldValue;
 
 			if (number instanceof Double || number instanceof Float) {
+				numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
 				numberFormat.setMinimumFractionDigits(1);
 			}
 

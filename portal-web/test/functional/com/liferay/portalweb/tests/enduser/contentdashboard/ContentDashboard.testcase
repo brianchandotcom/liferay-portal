@@ -753,7 +753,7 @@ definition {
 
 		ContentDashboard.filterByAuthorTable(filterOption = "Author");
 
-		ContentDashboard.editWebContent(webContentTitle = "WC Title");
+		ContentDashboard.editWebContent(webContentTitle = "WC Title Edited");
 
 		AssertTextPresent(
 			locator1 = "ContentDashboard#FILTER_TEXT",
@@ -761,7 +761,7 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContent.viewTitle(webContentTitle = "WC Title");
+		WebContent.viewTitle(webContentTitle = "WC Title Edited");
 
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",

@@ -15,8 +15,11 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.petra.process.ClassPathUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.lang.reflect.Method;
@@ -41,12 +44,16 @@ import java.util.stream.Stream;
 public class SampleSQLBuilderLauncher {
 
 	public static void main(String[] args) throws Exception {
+		ToolDependencies.wireBasic();
+
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
+		File tempDir = FileUtil.createTempFolder();
+
 		ClassLoader classLoader = new URLClassLoader(
-			_getDependencies(contextClassLoader), null);
+			_getDependencies(contextClassLoader, tempDir.toPath()), null);
 
 		Class<?> clazz = classLoader.loadClass(
 			"com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilder");
@@ -60,18 +67,18 @@ public class SampleSQLBuilderLauncher {
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
+
+			FileUtil.deltree(tempDir);
 		}
 	}
 
-	private static URL[] _getDependencies(ClassLoader classLoader)
+	private static URL[] _getDependencies(
+			ClassLoader classLoader, Path tempDirPath)
 		throws Exception {
 
 		Set<URL> urls = SetUtil.fromArray(
 			ClassPathUtil.getClassPathURLs(
 				ClassPathUtil.getJVMClassPath(true)));
-
-		Path tempDirPath = Files.createTempDirectory(
-			SampleSQLBuilderLauncher.class.getName());
 
 		URL url = classLoader.getResource("lib");
 

@@ -145,6 +145,8 @@ definition {
 
 	@summary = "Click on '${templateName}' ellipsis > '${item}'"
 	macro gotoTemplateEllipsisItem {
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
 		if ("${item}" == "Permissions") {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 		}

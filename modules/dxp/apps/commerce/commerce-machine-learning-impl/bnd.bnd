@@ -2,5 +2,14 @@ Bundle-Name: Liferay Commerce Machine Learning Implementation
 Bundle-SymbolicName: com.liferay.commerce.machine.learning.impl
 Bundle-Version: 5.0.0
 Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
+Provide-Capability:\
+	liferay.resource.bundle;\
+		bundle.symbolic.name=com.liferay.dispatch.web;\
+		liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.machine.learning.impl),(bundle.symbolic.name=com.liferay.dispatch.web)";\
+		resource.bundle.base.name="content.Language";\
+		resource.bundle.base.name="content.Language";\
+		service.ranking:Long="2";\
+		servlet.context.name=dispatch-web
 Web-ContextPath: /commerce-machine-learning-impl
 -dsannotations-options: inherit

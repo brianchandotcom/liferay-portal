@@ -1026,11 +1026,11 @@ public class DataDefinitionResourceImpl
 
 		Map<String, Object> dataLayoutFields = dataLayout.getDataLayoutFields();
 
-		Set<String> dataLayoutFieldsNames = dataLayoutFields.keySet();
+		Set<String> dataLayoutFieldNames = dataLayoutFields.keySet();
 
-		dataLayoutFieldsNames.removeIf(
-			dataLayoutFieldsName -> ArrayUtil.contains(
-				fieldNames, dataLayoutFieldsName));
+		dataLayoutFieldNames.removeIf(
+			dataLayoutFieldName -> ArrayUtil.contains(
+				fieldNames, dataLayoutFieldName));
 
 		Stream<DataLayoutPage> dataLayoutPages = Arrays.stream(
 			dataLayout.getDataLayoutPages());

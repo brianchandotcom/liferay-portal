@@ -88,10 +88,11 @@ definition {
 			Button.click(button = "Save");
 
 			if (isSet(customImage)) {
-				AssertTextEquals(
+				var uploadFileName = StringUtil.extractFirst("${uploadFileName}", ".");
+
+				AssertElementPresent.assertVisible(
 					key_dmDocumentURL = "${uploadFileName}",
-					locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT",
-					value1 = "${uploadFileName}");
+					locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_INPUT");
 			}
 		}
 	}

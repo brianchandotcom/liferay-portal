@@ -20,6 +20,10 @@ package com.liferay.commerce.product.constants;
  */
 public class CPConstants {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String C_PRODUCT_VERSIONING_SERVICE_NAME =
 		"com.liferay.commerce.product.versioning";
 
@@ -29,6 +33,10 @@ public class CPConstants {
 	public static final String CHANNEL_RESOURCE_NAME =
 		"com.liferay.commerce.channel";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String CP_OPTION_SERVICE_NAME =
 		"com.liferay.commerce.product.option";
 
@@ -58,6 +66,12 @@ public class CPConstants {
 	public static final String SEPARATOR_PRODUCT_URL = "/p/";
 
 	public static final String SERVICE_NAME = "com.liferay.commerce.product";
+
+	public static final String SERVICE_NAME_C_PRODUCT_VERSIONING =
+		"com.liferay.commerce.product.versioning";
+
+	public static final String SERVICE_NAME_CP_OPTION =
+		"com.liferay.commerce.product.option";
 
 	public static final String TAX_RESOURCE_NAME = "com.liferay.commerce.tax";
 

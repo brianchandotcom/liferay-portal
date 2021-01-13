@@ -1327,59 +1327,51 @@ xpack.monitoring.collection.enabled: true</echo>
 	<target name="start-elasticsearch-node">
 		<lstopwatch action="start" name="start.elasticsearch.node" />
 
-		<var name="elasticsearch.node.number" value="0" />
+		<condition else="${elasticsearch.dir}" property="elasticsearch.start.dir" value="${elasticsearch.dir}-${elasticsearch.bundle.number}">
+			<isset property="elasticsearch.bundle.number" />
+		</condition>
 
 		<get-java-jdk-home />
 
-		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
-			<math
-				datatype="int"
-				operand1="${elasticsearch.node.number}"
-				operand2="1"
-				operation="+"
-				result="elasticsearch.node.number"
-			/>
-
-			<if>
-				<os family="mac" />
+		<if>
+			<os family="mac" />
+			<then>
+				<exec dir="${elasticsearch.start.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="./elasticsearch -d -v -p pid-elasticsearch" />
+				</exec>
+			</then>
+			<elseif>
+				<and>
+					<isset property="env.JENKINS_HOME" />
+					<os family="unix" />
+				</and>
 				<then>
-					<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
+					<exec dir="${elasticsearch.start.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -v -p pid-elasticsearch'" />
+					</exec>
+				</then>
+			</elseif>
+			<elseif>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.start.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
 						<arg value="./elasticsearch -d -v -p pid-elasticsearch" />
 					</exec>
 				</then>
-				<elseif>
-					<and>
-						<isset property="env.JENKINS_HOME" />
-						<os family="unix" />
-					</and>
-					<then>
-						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
-							<arg value="-c" />
-							<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -v -p pid-elasticsearch'" />
-						</exec>
-					</then>
-				</elseif>
-				<elseif>
-					<os family="unix" />
-					<then>
-						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
-							<arg value="-c" />
-							<arg value="./elasticsearch -d -v -p pid-elasticsearch" />
-						</exec>
-					</then>
-				</elseif>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
-							<arg value="/c" />
-							<arg value="elasticsearch -d -v -p pid-elasticsearch" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-		</antelope:repeat>
+			</elseif>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="${elasticsearch.start.dir}/bin" executable="cmd" spawn="true">
+						<arg value="/c" />
+						<arg value="elasticsearch -d -v -p pid-elasticsearch" />
+					</exec>
+				</then>
+			</elseif>
+		</if>
 
 		<lstopwatch action="total" name="start.elasticsearch.node" />
 	</target>

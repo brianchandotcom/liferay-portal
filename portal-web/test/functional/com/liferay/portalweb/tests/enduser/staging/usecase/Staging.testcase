@@ -565,6 +565,69 @@ definition {
 		Staging.viewAddButtonExists();
 	}
 
+	@description = "This is a use case for LPS-124180."
+	@priority = "4"
+	test PublishChildPageWithoutItsParentPage {
+		property test.name.skip.portal.instance = "Staging#PublishChildPageWithoutItsParentPage";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Child Page",
+			parentLayoutName = "Staging Test Page");
+
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Export/Import",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Publish Parent Pages by Default");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Page.gotoChildPagePG(
+			childPageName = "Child Page",
+			pageName = "Staging Test Page");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(checkPageName = "Child Page");
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.viewNoSpecificPG(portletName = "Web Content Display");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Page.gotoChildPagePG(
+			childPageName = "Child Page",
+			pageName = "Staging Test Page");
+
+		Portlet.viewPG(portletName = "Web Content Display");
+	}
+
 	@description = "This is a use case for LPS-88045."
 	@priority = "3"
 	test PublishChildSiteViaRemoteStagingWithParentStructure {

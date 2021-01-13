@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.RegionLocalization;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -217,6 +219,10 @@ public interface RegionLocalService
 	public Region fetchRegionByUuidAndCompanyId(String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RegionLocalization fetchRegionLocalization(
+		long regionId, String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -266,6 +272,14 @@ public interface RegionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Region getRegionByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RegionLocalization getRegionLocalization(
+			long regionId, String languageId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<RegionLocalization> getRegionLocalizations(long regionId);
 
 	/**
 	 * Returns a range of all the regions.
@@ -333,5 +347,13 @@ public interface RegionLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Region updateRegion(Region region);
+
+	public RegionLocalization updateRegionLocalization(
+			Region region, String languageId, String title)
+		throws PortalException;
+
+	public List<RegionLocalization> updateRegionLocalizations(
+			Region region, Map<String, String> titleMap)
+		throws PortalException;
 
 }

@@ -43,6 +43,7 @@ public class RegionWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("regionId", getRegionId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -71,6 +72,12 @@ public class RegionWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
 		}
 
 		Long regionId = (Long)attributes.get("regionId");
@@ -156,6 +163,11 @@ public class RegionWrapper
 		return model.getActive();
 	}
 
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return model.getAvailableLanguageIds();
+	}
+
 	/**
 	 * Returns the company ID of this region.
 	 *
@@ -184,6 +196,21 @@ public class RegionWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the default language ID of this region.
+	 *
+	 * @return the default language ID of this region
+	 */
+	@Override
+	public String getDefaultLanguageId() {
+		return model.getDefaultLanguageId();
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToTitleMap() {
+		return model.getLanguageIdToTitleMap();
 	}
 
 	/**
@@ -264,6 +291,26 @@ public class RegionWrapper
 	@Override
 	public long getRegionId() {
 		return model.getRegionId();
+	}
+
+	@Override
+	public String getTitle() {
+		return model.getTitle();
+	}
+
+	@Override
+	public String getTitle(String languageId) {
+		return model.getTitle(languageId);
+	}
+
+	@Override
+	public String getTitle(String languageId, boolean useDefault) {
+		return model.getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public String getTitleMapAsXML() {
+		return model.getTitleMapAsXML();
 	}
 
 	/**
@@ -359,6 +406,16 @@ public class RegionWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the default language ID of this region.
+	 *
+	 * @param defaultLanguageId the default language ID of this region
+	 */
+	@Override
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		model.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**

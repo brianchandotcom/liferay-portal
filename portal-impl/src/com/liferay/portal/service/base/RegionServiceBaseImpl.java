@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.persistence.AddressPersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
+import com.liferay.portal.kernel.service.persistence.RegionLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -348,6 +349,26 @@ public abstract class RegionServiceBaseImpl
 	}
 
 	/**
+	 * Returns the region localization persistence.
+	 *
+	 * @return the region localization persistence
+	 */
+	public RegionLocalizationPersistence getRegionLocalizationPersistence() {
+		return regionLocalizationPersistence;
+	}
+
+	/**
+	 * Sets the region localization persistence.
+	 *
+	 * @param regionLocalizationPersistence the region localization persistence
+	 */
+	public void setRegionLocalizationPersistence(
+		RegionLocalizationPersistence regionLocalizationPersistence) {
+
+		this.regionLocalizationPersistence = regionLocalizationPersistence;
+	}
+
+	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -536,6 +557,9 @@ public abstract class RegionServiceBaseImpl
 
 	@BeanReference(type = OrganizationFinder.class)
 	protected OrganizationFinder organizationFinder;
+
+	@BeanReference(type = RegionLocalizationPersistence.class)
+	protected RegionLocalizationPersistence regionLocalizationPersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.UserLocalService.class

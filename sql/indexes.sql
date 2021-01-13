@@ -392,6 +392,8 @@ create index IX_11FB3E42 on Region (countryId, active_);
 create unique index IX_A2635F5C on Region (countryId, regionCode[$COLUMN_LENGTH:75$]);
 create index IX_60C0214E on Region (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create unique index IX_A149763D on RegionLocalization (regionId, languageId[$COLUMN_LENGTH:75$]);
+
 create unique index IX_8BD6BCA7 on Release_ (servletContextName[$COLUMN_LENGTH:75$]);
 
 create unique index IX_60C8634C on Repository (groupId, name[$COLUMN_LENGTH:200$], portletId[$COLUMN_LENGTH:200$]);

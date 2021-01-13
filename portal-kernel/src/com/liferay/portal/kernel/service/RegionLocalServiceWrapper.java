@@ -253,6 +253,14 @@ public class RegionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.RegionLocalization
+		fetchRegionLocalization(long regionId, java.lang.String languageId) {
+
+		return _regionLocalService.fetchRegionLocalization(
+			regionId, languageId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -333,6 +341,21 @@ public class RegionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _regionLocalService.getRegionByUuidAndCompanyId(uuid, companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.RegionLocalization
+			getRegionLocalization(long regionId, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionLocalService.getRegionLocalization(regionId, languageId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.RegionLocalization>
+		getRegionLocalizations(long regionId) {
+
+		return _regionLocalService.getRegionLocalizations(regionId);
 	}
 
 	/**
@@ -442,6 +465,27 @@ public class RegionLocalServiceWrapper
 		com.liferay.portal.kernel.model.Region region) {
 
 		return _regionLocalService.updateRegion(region);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.RegionLocalization
+			updateRegionLocalization(
+				com.liferay.portal.kernel.model.Region region,
+				java.lang.String languageId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionLocalService.updateRegionLocalization(
+			region, languageId, title);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.RegionLocalization>
+			updateRegionLocalizations(
+				com.liferay.portal.kernel.model.Region region,
+				java.util.Map<java.lang.String, java.lang.String> titleMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionLocalService.updateRegionLocalizations(region, titleMap);
 	}
 
 	@Override

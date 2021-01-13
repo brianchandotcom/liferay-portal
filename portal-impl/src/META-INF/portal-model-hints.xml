@@ -1248,6 +1248,7 @@
 	<model name="com.liferay.portal.kernel.model.Region">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="regionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -1266,6 +1267,14 @@
 			<validator name="required" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.kernel.model.RegionLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="regionLocalizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="regionId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="title" type="String" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.Release">
 		<field name="mvccVersion" type="long" />

@@ -35,6 +35,7 @@ public class RegionSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setRegionId(model.getRegionId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -113,6 +114,14 @@ public class RegionSoap implements Serializable {
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
+	}
+
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
 	}
 
 	public long getRegionId() {
@@ -217,6 +226,7 @@ public class RegionSoap implements Serializable {
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _defaultLanguageId;
 	private long _regionId;
 	private long _companyId;
 	private long _userId;

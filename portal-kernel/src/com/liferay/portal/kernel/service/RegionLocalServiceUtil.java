@@ -249,6 +249,12 @@ public class RegionLocalServiceUtil {
 		return getService().fetchRegionByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static com.liferay.portal.kernel.model.RegionLocalization
+		fetchRegionLocalization(long regionId, String languageId) {
+
+		return getService().fetchRegionLocalization(regionId, languageId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -323,6 +329,20 @@ public class RegionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getRegionByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.model.RegionLocalization
+			getRegionLocalization(long regionId, String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getRegionLocalization(regionId, languageId);
+	}
+
+	public static java.util.List
+		<com.liferay.portal.kernel.model.RegionLocalization>
+			getRegionLocalizations(long regionId) {
+
+		return getService().getRegionLocalizations(regionId);
 	}
 
 	/**
@@ -423,6 +443,25 @@ public class RegionLocalServiceUtil {
 		com.liferay.portal.kernel.model.Region region) {
 
 		return getService().updateRegion(region);
+	}
+
+	public static com.liferay.portal.kernel.model.RegionLocalization
+			updateRegionLocalization(
+				com.liferay.portal.kernel.model.Region region,
+				String languageId, String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateRegionLocalization(region, languageId, title);
+	}
+
+	public static java.util.List
+		<com.liferay.portal.kernel.model.RegionLocalization>
+				updateRegionLocalizations(
+					com.liferay.portal.kernel.model.Region region,
+					java.util.Map<String, String> titleMap)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateRegionLocalizations(region, titleMap);
 	}
 
 	public static RegionLocalService getService() {

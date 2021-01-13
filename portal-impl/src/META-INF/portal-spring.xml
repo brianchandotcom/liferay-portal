@@ -195,6 +195,7 @@
 	<bean class="com.liferay.portal.service.impl.RegionLocalServiceImpl" id="com.liferay.portal.kernel.service.RegionLocalService" />
 	<bean class="com.liferay.portal.service.impl.RegionServiceImpl" id="com.liferay.portal.kernel.service.RegionService" />
 	<bean class="com.liferay.portal.service.persistence.impl.RegionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RegionPersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.RegionLocalizationPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RegionLocalizationPersistence" />
 	<bean class="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.ReleasePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ReleasePersistence" />
 	<bean class="com.liferay.portal.service.impl.RepositoryLocalServiceImpl" id="com.liferay.portal.kernel.service.RepositoryLocalService" />

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -87,6 +88,21 @@ public interface RegionModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the default language ID of this region.
+	 *
+	 * @return the default language ID of this region
+	 */
+	@AutoEscape
+	public String getDefaultLanguageId();
+
+	/**
+	 * Sets the default language ID of this region.
+	 *
+	 * @param defaultLanguageId the default language ID of this region
+	 */
+	public void setDefaultLanguageId(String defaultLanguageId);
 
 	/**
 	 * Returns the region ID of this region.
@@ -291,5 +307,17 @@ public interface RegionModel
 	 * @param lastPublishDate the last publish date of this region
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
+
+	public String[] getAvailableLanguageIds();
+
+	public String getTitle();
+
+	public String getTitle(String languageId);
+
+	public String getTitle(String languageId, boolean useDefault);
+
+	public String getTitleMapAsXML();
+
+	public Map<String, String> getLanguageIdToTitleMap();
 
 }

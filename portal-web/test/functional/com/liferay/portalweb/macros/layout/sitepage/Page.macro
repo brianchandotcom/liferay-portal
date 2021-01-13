@@ -80,13 +80,13 @@ definition {
 		if ("${locale}" == "zh") {
 			var zhAlternate = '''" hreflang="zh-CN" rel="alternate" />''';
 
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/zh${zhAlternate}","");
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/zh/web/guest${zhAlternate}","");
 		}
 
 		else if ("${locale}" == "es") {
 			var esAlternate = '''" hreflang="es-ES" rel="alternate" />''';
 
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/es${esAlternate}","");
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/es/web/guest${esAlternate}","");
 		}
 
 		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
@@ -104,20 +104,29 @@ definition {
 		var HTML = '''<link data-senna-track="temporary" href="''';
 		var HTML2 = '''" rel="canonical" />''';
 
-		if (isSet(pageName)) {
-			var portalURL = StringUtil.add("${portalURL}", "/${pageName}","");
-
-			var portalURL = StringUtil.lowerCase("${portalURL}");
-			var portalURL = StringUtil.replace("${portalURL}", " ", "-");
+		if (isSet(customCanonicalURL)) {
+			var portalURL = "${customCanonicalURL}";
 		}
 
-		if (isSet(locale)) {
-			var pageSource = StringUtil.add("${HTML}", "${portalURL}/${locale}${HTML2}","");
+		else if (isSet(locale)) {
+			var portalURL = "${portalURL}/${locale}/web/guest";
+		}
+		else {
+			var portalURL = "${portalURL}/web/guest";
+		}
+
+		if (isSet(pageName)) {
+			var pageName = StringUtil.lowerCase("${pageName}");
+			var pageNameURL = StringUtil.replace("${pageName}", " ", "-");
+
+			var pageSource = StringUtil.add("${HTML}", "${portalURL}/${pageNameURL}${HTML2}","");
 		}
 
 		else {
 			var pageSource = StringUtil.add("${HTML}", "${portalURL}${HTML2}","");
 		}
+
+		AssertHTMLSourceTextPresent(value1 = "${pageSource}");
 	}
 
 	macro assertNodePortPG {

@@ -200,7 +200,7 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 	padding-right: 0;
 	padding-top: (
 		(
-				$management-bar-height - 1.5rem -
+				$management-bar-height - 0.65rem -
 					$management-bar-border-bottom-width -
 					$management-bar-border-top-width
 			) / 2
@@ -208,7 +208,7 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 
 	@media (min-width: 768px) {
 		padding-bottom: 18px;
-		padding-top: 18px;
+		padding-top: 24px;
 	}
 }
 
@@ -632,7 +632,7 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 }
 
 .management-bar-header .form-inline input[type='checkbox'] {
-	margin-left: -1.25rem;
+	margin-left: 1.25rem;
 }
 
 @media (min-width: 768px) {

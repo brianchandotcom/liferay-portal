@@ -41,7 +41,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div class="<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>" id="<%= liferayPortletResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>">
+<div class="<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>" id="<%= liferayPortletResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : ("infoPanelId" + StringPool.UNDERLINE + fileEntry.getFileEntryId())) %>">
 	<c:if test="<%= portletTitleBasedNavigation %>">
 		<liferay-util:include page="/document_library/file_entry_upper_tbar.jsp" servletContext="<%= application %>" />
 	</c:if>
@@ -100,6 +100,7 @@ if (portletTitleBasedNavigation) {
 				<div class="file-entry-actions">
 					<liferay-frontend:management-bar-sidenav-toggler-button
 						label="info"
+						sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" + StringPool.UNDERLINE + fileEntry.getFileEntryId() %>'
 					/>
 
 					<%

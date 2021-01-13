@@ -26,11 +26,14 @@ String iconCssClass = (String)request.getAttribute("liferay-frontend:management-
 String id = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:id");
 String label = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:label");
 String position = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:position");
+String sidenavId = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:sidenavId");
 String type = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:type");
 String typeMobile = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:typeMobile");
 String width = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:width");
 
-String sidenavId = liferayPortletResponse.getNamespace() + "infoPanelId";
+if (Validator.isNull(sidenavId)) {
+	sidenavId = liferayPortletResponse.getNamespace() + "infoPanelId";
+}
 
 if (Validator.isNull(href)) {
 	href = "#" + sidenavId;

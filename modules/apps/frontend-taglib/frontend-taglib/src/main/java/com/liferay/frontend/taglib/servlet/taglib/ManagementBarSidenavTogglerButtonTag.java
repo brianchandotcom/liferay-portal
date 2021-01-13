@@ -29,6 +29,10 @@ public class ManagementBarSidenavTogglerButtonTag
 		return _position;
 	}
 
+	public String getSidenavId() {
+		return _sidenavId;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -50,6 +54,10 @@ public class ManagementBarSidenavTogglerButtonTag
 		_position = position;
 	}
 
+	public void setSidenavId(String sidenavId) {
+		_sidenavId = sidenavId;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -68,6 +76,7 @@ public class ManagementBarSidenavTogglerButtonTag
 
 		_href = null;
 		_position = null;
+		_sidenavId = null;
 		_type = null;
 		_typeMobile = null;
 		_width = null;
@@ -90,6 +99,7 @@ public class ManagementBarSidenavTogglerButtonTag
 
 		setNamespacedAttribute(httpServletRequest, "href", _href);
 		setNamespacedAttribute(httpServletRequest, "position", _position);
+		setNamespacedAttribute(httpServletRequest, "sidenavId", _sidenavId);
 		setNamespacedAttribute(httpServletRequest, "type", _type);
 		setNamespacedAttribute(httpServletRequest, "typeMobile", _typeMobile);
 		setNamespacedAttribute(httpServletRequest, "width", _width);
@@ -105,6 +115,7 @@ public class ManagementBarSidenavTogglerButtonTag
 
 	private String _href;
 	private String _position;
+	private String _sidenavId;
 	private String _type;
 	private String _typeMobile;
 	private String _width;

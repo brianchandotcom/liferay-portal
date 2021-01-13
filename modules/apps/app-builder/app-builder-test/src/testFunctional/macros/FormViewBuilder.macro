@@ -245,6 +245,16 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editDisabledFieldSetEntry {
+		var key_RowNumber = "${rowNumber}";
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
+
+		Click(
+			key_selectAction = "${selectAction}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+	}
+
 	macro editFieldInObject {
 		Click(
 			key_fieldName = "${fieldName}",
@@ -384,6 +394,10 @@ definition {
 
 	macro openSidebar() {
 		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR");
+	}
+
+	macro propagateChange {
+		Click(locator1 = "FormViewBuilder#PROPAGATE_CHANGES");
 	}
 
 	macro ruleSave {

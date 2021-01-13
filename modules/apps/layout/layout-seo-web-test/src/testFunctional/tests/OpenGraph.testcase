@@ -320,14 +320,14 @@ definition {
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
 			contentType = "Document",
-			displayPageName = "Display Page Template Name",
+			displayPageName = "Display Page Template Name Test",
 			subType = "Basic Document");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+			pageTemplateName = "Display Page Template Name Test");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -383,7 +383,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name Test");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
@@ -406,7 +406,7 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "Document_1.jpg");
 
-		WebContent.editDisplayPage(pageName = "Display Page Template Name");
+		WebContent.editDisplayPage(pageName = "Display Page Template Name Test");
 
 		PortletEntry.publish();
 

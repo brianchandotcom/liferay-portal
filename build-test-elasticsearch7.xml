@@ -1479,62 +1479,41 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	</target>
 
 	<target name="stop-elasticsearch">
-		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
+		<condition else="${elasticsearch.dir}" property="elasticsearch.stop.dir" value="${elasticsearch.dir}-${elasticsearch.bundle.number}">
+			<isset property="elasticsearch.bundle.number" />
+		</condition>
 
 		<if>
-			<not>
-				<isset property="remote.elasticsearch.cluster.size" />
-			</not>
+			<os family="unix" />
 			<then>
-				<property name="remote.elasticsearch.cluster.size" value="1" />
+				<loadfile
+					property="pid-elasticsearch"
+					srcFile="${elasticsearch.stop.dir}/pid-elasticsearch"
+				>
+					<filterchain>
+						<linecontainsregexp>
+							<regexp pattern="[0-9]*" />
+						</linecontainsregexp>
+					</filterchain>
+				</loadfile>
+
+				<exec dir="${elasticsearch.stop.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="kill ${pid-elasticsearch}" />
+				</exec>
 			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="${elasticsearch.stop.dir}/bin" executable="cmd" spawn="true">
+						<arg value="/c" />
+						<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
+					</exec>
+				</then>
+			</elseif>
 		</if>
 
-		<var name="elasticsearch.node.number" value="0" />
-
-		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
-			<math
-				datatype="int"
-				operand1="${elasticsearch.node.number}"
-				operand2="1"
-				operation="+"
-				result="elasticsearch.node.number"
-			/>
-
-			<if>
-				<os family="unix" />
-				<then>
-					<loadfile
-						property="pid-elasticsearch"
-						srcFile="${elasticsearch.dir}-${elasticsearch.node.number}/pid-elasticsearch"
-					>
-						<filterchain>
-							<linecontainsregexp>
-								<regexp pattern="[0-9]*" />
-							</linecontainsregexp>
-						</filterchain>
-					</loadfile>
-
-					<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="kill ${pid-elasticsearch}" />
-					</exec>
-
-					<var name="pid-elasticsearch" unset="true" />
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
-							<arg value="/c" />
-							<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-
-			<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
-		</antelope:repeat>
+		<print-files dir="${elasticsearch.stop.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 
 		<condition property="kibana.running">
 			<socket port="5601" server="localhost" />
@@ -1548,42 +1527,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				<antcall target="stop-kibana" />
 			</then>
 		</if>
-	</target>
-
-	<target name="stop-elasticsearch-local-cluster">
-		<if>
-			<os family="unix" />
-			<then>
-				<loadfile
-					property="pid-elasticsearch"
-					srcFile="${elasticsearch.dir}-2/pid-elasticsearch"
-				>
-					<filterchain>
-						<linecontainsregexp>
-							<regexp pattern="[0-9]*" />
-						</linecontainsregexp>
-					</filterchain>
-				</loadfile>
-
-				<exec dir="${elasticsearch.dir}-2/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="kill ${pid-elasticsearch}" />
-				</exec>
-
-				<var name="pid-elasticsearch" unset="true" />
-			</then>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<exec dir="${elasticsearch.dir}-2/bin" executable="cmd" spawn="true">
-						<arg value="/c" />
-						<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
-					</exec>
-				</then>
-			</elseif>
-		</if>
-
-		<print-files dir="${elasticsearch.stop.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 	</target>
 
 	<target name="stop-kibana">

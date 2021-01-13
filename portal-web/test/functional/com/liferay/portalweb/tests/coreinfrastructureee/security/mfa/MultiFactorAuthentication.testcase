@@ -1048,9 +1048,9 @@ definition {
 	test UseCustomMFAVerifier {
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#UseCustomMFAVerifier";
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.multi.factor.authentication.poc.jar");
+		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.multi.factor.authentication.sample.jar");
 
-		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.multi.factor.authentication.poc_1.0.0");
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.multi.factor.authentication.sample_1.0.0");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
@@ -1061,7 +1061,7 @@ definition {
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
-			configurationName = "MFA POC Configuration",
+			configurationName = "MFA Sample Configuration",
 			configurationScope = "Virtual Instance Scope");
 
 		AssertTextEquals(

@@ -11,17 +11,17 @@
 <!--CUSTOM_MFA_VERIFICATION-->
 <tr>
 	<td>CUSTOM_MFA_TITLE</td>
-	<td>//h3[contains(.,'Please, write something for This MFA POC')]</td>
+	<td>//h3[contains(.,'Please, write something for this MFA Sample')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CUSTOM_MFA_DESCRIPTION</td>
-	<td>//label[contains(.,'Write something for This POC')]</td>
+	<td>//label[contains(.,'Write something for this Sample')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CUSTOM_MFA_VERIFY_FIELD</td>
-	<td>//input[contains(@name,'mfaPoc')]</td>
+	<td>//input[contains(@name,'mfaSample')]</td>
 	<td></td>
 </tr>
 <tr>

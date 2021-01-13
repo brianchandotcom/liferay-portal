@@ -3035,6 +3035,38 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="print-files">
+		<attribute name="dir" />
+		<attribute default="" name="exclude" />
+		<attribute name="include" />
+
+		<sequential>
+			<for param="file.name">
+				<fileset
+					dir="@{dir}"
+					excludes="@{exclude}"
+					includes="@{include}"
+				/>
+				<sequential>
+					<echo></echo>
+					<echo>##</echo>
+					<echo>## @{file.name}</echo>
+					<echo>##</echo>
+					<echo></echo>
+
+					<loadfile
+						property="file.content"
+						srcFile="@{file.name}"
+					/>
+
+					<echo>${file.content}</echo>
+
+					<var name="file.content" unset="true" />
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="print-gc-logs">
 		<attribute name="tomcat.gc.log" />
 		<attribute name="tsant.gc.log" />

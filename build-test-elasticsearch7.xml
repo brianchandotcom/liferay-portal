@@ -1423,7 +1423,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<http url="http://localhost:${elasticsearch.port}/" />
 		</waitfor>
 
-		<print-file file.name="${elasticsearch.start.dir}/logs/LiferayElasticsearchCluster.log" />
+		<print-files dir="${elasticsearch.start.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 
 		<lstopwatch action="total" name="start.elasticsearch.node" />
 
@@ -1583,7 +1583,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</elseif>
 		</if>
 
-		<print-file file.name="${elasticsearch.dir}-2/logs/LiferayElasticsearchClusterTwo.log" />
+		<print-files dir="${elasticsearch.stop.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 	</target>
 
 	<target name="stop-kibana">

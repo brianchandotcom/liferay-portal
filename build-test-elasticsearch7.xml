@@ -1120,10 +1120,10 @@ xpack.monitoring.collection.enabled: true</echo>
 	<target name="start-elasticsearch">
 		<lstopwatch action="start" name="start.elasticsearch" />
 
-		<get-testcase-property property.name="remote.elasticsearch.ltr.enabled" />
+		<get-testcase-property property.name="elasticsearch.ltr.enabled" />
 
 		<if>
-			<equals arg1="${remote.elasticsearch.ltr.enabled}" arg2="true" />
+			<equals arg1="${elasticsearch.ltr.enabled}" arg2="true" />
 			<then>
 				<configure-elasticsearch79-ltr-test-properties />
 			</then>
@@ -1134,7 +1134,7 @@ xpack.monitoring.collection.enabled: true</echo>
 		<prepare-elasticsearch-analyzers />
 
 		<if>
-			<equals arg1="${remote.elasticsearch.ltr.enabled}" arg2="true" />
+			<equals arg1="${elasticsearch.ltr.enabled}" arg2="true" />
 			<then>
 				<prepare-elasticsearch-ltr />
 

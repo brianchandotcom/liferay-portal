@@ -748,10 +748,10 @@ definition {
 
 	@priority = "5"
 	test LearningToRankSmoke {
+		property elasticsearch.ltr.enabled = "true";
 		property osgi.app.includes = "portal-search-learning-to-rank";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
-		property remote.elasticsearch.ltr.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#LearningToRankSmoke";
 
 		AntCommand(

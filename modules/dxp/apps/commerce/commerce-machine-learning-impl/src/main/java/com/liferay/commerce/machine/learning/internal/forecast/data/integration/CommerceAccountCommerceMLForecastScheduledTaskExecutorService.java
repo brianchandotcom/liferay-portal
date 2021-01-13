@@ -24,12 +24,14 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Riccardo Ferrari
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	enabled = false, immediate = true,
 	property = "data.integration.service.executor.key=" + CommerceAccountCommerceMLForecastProcessType.KEY,
 	service = ScheduledTaskExecutorService.class
 )
+@Deprecated
 public class CommerceAccountCommerceMLForecastScheduledTaskExecutorService
 	extends BaseCommerceMLForecastScheduledTaskExecutorService {
 

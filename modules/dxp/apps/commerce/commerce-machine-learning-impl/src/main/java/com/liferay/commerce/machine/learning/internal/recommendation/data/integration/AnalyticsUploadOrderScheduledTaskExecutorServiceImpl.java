@@ -30,12 +30,14 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	enabled = false, immediate = true,
 	property = "data.integration.service.executor.key=" + AnalyticsUploadOrderProcessType.KEY,
 	service = ScheduledTaskExecutorService.class
 )
+@Deprecated
 public class AnalyticsUploadOrderScheduledTaskExecutorServiceImpl
 	implements ScheduledTaskExecutorService {
 

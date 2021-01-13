@@ -21,6 +21,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Riccardo Ferrari
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	enabled = false, immediate = true,
@@ -30,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ProcessType.class
 )
+@Deprecated
 public class AnalyticsDownloadProductContentCommerceMLRecommendationProcessType
 	extends BaseProcessType {
 

@@ -22,7 +22,9 @@ import java.io.InputStream;
 
 /**
  * @author Riccardo Ferrari
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public interface CommerceMLGatewayClient {
 
 	public File downloadCommerceMLJobResult(

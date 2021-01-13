@@ -33,11 +33,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	enabled = false, immediate = true,
 	service = CommerceMLForecastScheduledTaskExecutorService.class
 )
+@Deprecated
 public class CommerceMLForecastScheduledTaskExecutorService {
 
 	public void executeScheduledTask(

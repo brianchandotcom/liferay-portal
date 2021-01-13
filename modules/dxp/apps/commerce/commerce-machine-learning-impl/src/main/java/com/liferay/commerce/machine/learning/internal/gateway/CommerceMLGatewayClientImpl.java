@@ -56,12 +56,14 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	configurationPid = "com.liferay.commerce.machine.learning.internal.configuration.CommerceMLConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
 	immediate = true, service = CommerceMLGatewayClient.class
 )
+@Deprecated
 public class CommerceMLGatewayClientImpl implements CommerceMLGatewayClient {
 
 	@Override

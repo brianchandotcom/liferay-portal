@@ -20,7 +20,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import DLVideoExternalShortcutDLFilePicker from '../src/main/resources/META-INF/resources/js/DLVideoExternalShortcutDLFilePicker';
 
-window.onFilePickCallback = jest.fn();
+global.onFilePickCallback = jest.fn();
 
 const defaultProps = {
 	getDLVideoExternalShortcutFieldsURL:
@@ -86,26 +86,22 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 	});
 
 	describe('when there is a valid server response', () => {
-		let result;
-		let url;
+		const responseFields = {
+			DESCRIPTION: 'DESCRIPTION',
+			HTML: '<iframe data-video-liferay></iframe>',
+			THUMBNAIL_URL: 'https://thumbnail-url',
+			TITLE: 'VIDEO TITLE',
+			URL: 'https://video-url.com',
+		};
 
 		beforeEach(async () => {
 			jest.useFakeTimers();
 
-			fetch.mockResponseOnce(
-				JSON.stringify({
-					DESCRIPTION: 'DESCRIPTION',
-					HTML: '<iframe data-video-liferay></iframe>',
-					THUMBNAIL_URL: 'https://thumbnail-url',
-					TITLE: 'VIDEO TITLE',
-					URL: 'https://video-url.com',
-				})
-			);
+			fetch.mockResponseOnce(JSON.stringify(responseFields));
 
-			result = renderComponent(defaultProps);
-			url = result.getByLabelText('video-url');
+			const {getByLabelText} = renderComponent(defaultProps);
 
-			fireEvent.change(url, {
+			fireEvent.change(getByLabelText('video-url'), {
 				target: {value: 'https://video-url.com'},
 			});
 
@@ -118,7 +114,7 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 
 		afterEach(() => {
 			jest.clearAllTimers();
-			jest.restoreAllMocks();
+			jest.clearAllMocks();
 		});
 
 		afterAll(() => {
@@ -132,10 +128,16 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 			);
 		});
 
-		it('updates the video preview the response markup from the server', () => {
+		it('updates the video preview with the response markup from the server', () => {
 			expect(
 				document.querySelector('iframe[data-video-liferay]')
 			).toBeInTheDocument();
+		});
+
+		it('calls the onFilePickCallback with the responseFields', () => {
+			expect(window.onFilePickCallback).toHaveBeenCalledWith(
+				responseFields
+			);
 		});
 	});
 });

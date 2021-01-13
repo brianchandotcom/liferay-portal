@@ -32,6 +32,7 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -242,24 +243,21 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			addAction(
-				"UPDATE", commercePriceModifier.getCommercePriceListId(),
-				"deletePriceModifier", commercePriceModifier.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceModifier.getGroupId())
+				"UPDATE", commercePriceModifier.getCommercePriceModifierId(),
+				"deletePriceModifier",
+				_commercePriceModifierModelResourcePermission)
 		).put(
 			"get",
 			addAction(
-				"VIEW", commercePriceModifier.getCommercePriceListId(),
-				"getPriceModifier", commercePriceModifier.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceModifier.getGroupId())
+				"VIEW", commercePriceModifier.getCommercePriceModifierId(),
+				"getPriceModifier",
+				_commercePriceModifierModelResourcePermission)
 		).put(
 			"update",
 			addAction(
-				"UPDATE", commercePriceModifier.getCommercePriceListId(),
-				"patchPriceModifier", commercePriceModifier.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceModifier.getGroupId())
+				"UPDATE", commercePriceModifier.getCommercePriceModifierId(),
+				"patchPriceModifier",
+				_commercePriceModifierModelResourcePermission)
 		).build();
 	}
 
@@ -417,6 +415,12 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.pricing.model.CommercePriceModifier)"
+	)
+	private ModelResourcePermission<CommercePriceModifier>
+		_commercePriceModifierModelResourcePermission;
 
 	@Reference
 	private CommercePriceModifierRelService _commercePriceModifierRelService;

@@ -19,7 +19,6 @@ import com.liferay.commerce.talend.job.deployer.salesforce.configuration.Salesfo
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.URL;
 
@@ -46,8 +45,8 @@ import org.osgi.service.component.annotations.Modified;
 public class SalesforceTalendJobFileProvider implements TalendJobFileProvider {
 
 	@Override
-	public List<InputStream> getJobFileInputStreams() throws IOException {
-		List<InputStream> inputStreams = new ArrayList<>();
+	public List<URL> getJobFileURLs() throws IOException {
+		List<URL> urls = new ArrayList<>();
 
 		Bundle bundle = _bundleContext.getBundle();
 
@@ -59,13 +58,11 @@ public class SalesforceTalendJobFileProvider implements TalendJobFileProvider {
 
 		if (enumeration != null) {
 			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
-
-				inputStreams.add(url.openStream());
+				urls.add(enumeration.nextElement());
 			}
 		}
 
-		return inputStreams;
+		return urls;
 	}
 
 	@Activate

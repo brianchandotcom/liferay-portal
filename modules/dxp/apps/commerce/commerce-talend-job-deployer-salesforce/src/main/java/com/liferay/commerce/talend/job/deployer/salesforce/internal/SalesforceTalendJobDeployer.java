@@ -14,25 +14,26 @@
 
 package com.liferay.commerce.talend.job.deployer.salesforce.internal;
 
-import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
-import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLocalService;
-import com.liferay.commerce.data.integration.talend.TalendProcessTypeHelper;
 import com.liferay.commerce.talend.job.deployer.TalendJobFileProvider;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.repository.DispatchFileRepository;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.Enumeration;
+import java.net.URL;
+
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,74 +50,47 @@ public class SalesforceTalendJobDeployer {
 
 	@Activate
 	protected void activate() throws Exception {
-		List<InputStream> inputStreams =
-			_talendJobFileProvider.getJobFileInputStreams();
+		List<URL> jobFileURLs = _talendJobFileProvider.getJobFileURLs();
 
-		for (InputStream inputStream : inputStreams) {
+		for (URL jobFileURL : jobFileURLs) {
+			String fileName = StringUtil.extractLast(
+				jobFileURL.getFile(), StringPool.FORWARD_SLASH);
+
 			try {
-				File tempFile = FileUtil.createTempFile(inputStream);
+				long[] companyIds = _portal.getCompanyIds();
 
-				ZipFile zipFile = new ZipFile(tempFile);
+				for (long companyId : companyIds) {
+					long userId = _userLocalService.getDefaultUserId(companyId);
 
-				Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+					DispatchTrigger dispatchTrigger =
+						_dispatchTriggerLocalService.fetchDispatchTrigger(
+							companyId, fileName);
 
-				while (enumeration.hasMoreElements()) {
-					try {
-						ZipEntry zipEntry = enumeration.nextElement();
+					if (dispatchTrigger == null) {
+						UnicodeProperties typeSettingsUnicodeProperties =
+							_getDefaultTypeSettingsUnicodeProperties(
+								jobFileURL.openStream());
 
-						long[] companyIds = _portal.getCompanyIds();
-
-						for (long companyId : companyIds) {
-							String fileName = zipEntry.getName();
-
-							if (!fileName.endsWith(".zip")) {
-								continue;
-							}
-
-							long userId = _userLocalService.getDefaultUserId(
-								companyId);
-
-							CommerceDataIntegrationProcess
-								commerceDataIntegrationProcess =
-									_commerceDataIntegrationProcessLocalService.
-										fetchCommerceDataIntegrationProcess(
-											companyId, fileName);
-
-							if (commerceDataIntegrationProcess == null) {
-								UnicodeProperties
-									typeSettingsUnicodeProperties =
-										_getDefaultTypeSettingsUnicodeProperties(
-											zipFile.getInputStream(zipEntry));
-
-								commerceDataIntegrationProcess =
-									_commerceDataIntegrationProcessLocalService.
-										addCommerceDataIntegrationProcess(
-											userId, fileName, _TALEND,
-											typeSettingsUnicodeProperties,
-											false);
-							}
-
-							String contentType = MimeTypesUtil.getContentType(
-								zipEntry.getName());
-
-							_talendProcessTypeHelper.addFileEntry(
-								companyId, userId,
-								commerceDataIntegrationProcess.
-									getCommerceDataIntegrationProcessId(),
-								fileName, zipEntry.getSize(), contentType,
-								zipFile.getInputStream(zipEntry));
-						}
+						dispatchTrigger =
+							_dispatchTriggerLocalService.addDispatchTrigger(
+								userId, _TALEND, typeSettingsUnicodeProperties,
+								fileName, false);
 					}
-					catch (Exception exception) {
-						ZipEntry zipEntry = enumeration.nextElement();
 
-						_log.error(
-							"Failed to deploy job " + zipEntry.getName(),
-							exception);
-					}
+					File tempFile = FileUtil.createTempFile(
+						jobFileURL.openStream());
+
+					String contentType = MimeTypesUtil.getContentType(
+						jobFileURL.getFile());
+
+					_dispatchFileRepository.addFileEntry(
+						userId, dispatchTrigger.getDispatchTriggerId(),
+						fileName, tempFile.length(), contentType,
+						jobFileURL.openStream());
 				}
 			}
 			catch (Exception exception) {
+				_log.error("Failed to deploy job " + fileName);
 				_log.error(exception, exception);
 			}
 		}
@@ -146,23 +120,22 @@ public class SalesforceTalendJobDeployer {
 
 	private static final String _DEFAULT_PROPERTIES = "**\\Default.properties";
 
-	private static final String _TALEND = "TALEND";
+	private static final String _TALEND = "talend";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SalesforceTalendJobDeployer.class);
 
 	@Reference
-	private CommerceDataIntegrationProcessLocalService
-		_commerceDataIntegrationProcessLocalService;
+	private DispatchFileRepository _dispatchFileRepository;
+
+	@Reference
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Reference
 	private Portal _portal;
 
 	@Reference
 	private TalendJobFileProvider _talendJobFileProvider;
-
-	@Reference
-	private TalendProcessTypeHelper _talendProcessTypeHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

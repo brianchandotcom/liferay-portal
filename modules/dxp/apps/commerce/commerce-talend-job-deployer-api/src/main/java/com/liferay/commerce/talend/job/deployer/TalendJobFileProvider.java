@@ -15,7 +15,8 @@
 package com.liferay.commerce.talend.job.deployer;
 
 import java.io.IOException;
-import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.List;
 
@@ -24,6 +25,6 @@ import java.util.List;
  */
 public interface TalendJobFileProvider {
 
-	public List<InputStream> getJobFileInputStreams() throws IOException;
+	public List<URL> getJobFileURLs() throws IOException;
 
 }

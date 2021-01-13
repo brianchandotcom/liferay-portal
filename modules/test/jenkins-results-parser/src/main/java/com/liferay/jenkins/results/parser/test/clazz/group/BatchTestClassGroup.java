@@ -336,6 +336,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return null;
 	}
 
+	protected String getJobName() {
+		return portalTestClassJob.getJobName();
+	}
+
 	protected List<PathMatcher> getPathMatchers(
 		String relativeGlobs, File workingDirectory) {
 

@@ -227,8 +227,9 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private String _getDefaultTestBatchRunPropertyQuery(String testSuiteName) {
-		return getFirstPropertyValue(
-			"test.batch.run.property.query", batchName, testSuiteName);
+		return JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.batch.run.property.query", batchName,
+			testSuiteName, getJobName());
 	}
 
 	private List<File> _getFunctionalRequiredModuleDirs(List<File> moduleDirs) {

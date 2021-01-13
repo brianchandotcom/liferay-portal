@@ -172,8 +172,9 @@ public interface NodeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -237,8 +238,9 @@ public interface NodeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -298,8 +300,9 @@ public interface NodeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes/batch",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes/batch");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -361,8 +364,10 @@ public interface NodeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes/{nodeId}",
-				processId, nodeId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/nodes/{nodeId}");
+
+			httpInvoker.pathParameter("processId", processId);
+			httpInvoker.pathParameter("nodeId", nodeId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

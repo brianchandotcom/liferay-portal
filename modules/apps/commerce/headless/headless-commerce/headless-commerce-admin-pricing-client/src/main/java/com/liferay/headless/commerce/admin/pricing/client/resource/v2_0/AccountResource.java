@@ -161,8 +161,9 @@ public interface AccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/discount-accounts/{discountAccountId}/account",
-				discountAccountId);
+						"/o/headless-commerce-admin-pricing/v2.0/discount-accounts/{discountAccountId}/account");
+
+			httpInvoker.pathParameter("discountAccountId", discountAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -225,8 +226,9 @@ public interface AccountResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-list-accounts/{priceListAccountId}/account",
-				priceListAccountId);
+						"/o/headless-commerce-admin-pricing/v2.0/price-list-accounts/{priceListAccountId}/account");
+
+			httpInvoker.pathParameter("priceListAccountId", priceListAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

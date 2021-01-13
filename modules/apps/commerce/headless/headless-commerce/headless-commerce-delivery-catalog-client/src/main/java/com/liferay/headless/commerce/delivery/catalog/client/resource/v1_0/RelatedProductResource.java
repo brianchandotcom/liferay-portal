@@ -176,8 +176,10 @@ public interface RelatedProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/related-products",
-				channelId, productId);
+						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/related-products");
+
+			httpInvoker.pathParameter("channelId", channelId);
+			httpInvoker.pathParameter("productId", productId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

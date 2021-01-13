@@ -277,8 +277,9 @@ public interface WorkflowDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-definitions/by-name/{name}",
-				name);
+						"/o/headless-admin-workflow/v1.0/workflow-definitions/by-name/{name}");
+
+			httpInvoker.pathParameter("name", name);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

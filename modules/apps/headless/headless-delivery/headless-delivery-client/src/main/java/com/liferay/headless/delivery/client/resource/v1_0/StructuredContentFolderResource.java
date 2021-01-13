@@ -343,8 +343,9 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders",
-				assetLibraryId);
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -414,8 +415,9 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders",
-				assetLibraryId);
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -476,8 +478,9 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders/batch",
-				assetLibraryId);
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/structured-content-folders/batch");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -571,8 +574,9 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -641,8 +645,9 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -703,8 +708,9 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders/batch",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/structured-content-folders/batch");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -794,7 +800,10 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders",
+						"/o/headless-delivery/v1.0/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders");
+
+			httpInvoker.pathParameter(
+				"parentStructuredContentFolderId",
 				parentStructuredContentFolderId);
 
 			httpInvoker.userNameAndPassword(
@@ -866,7 +875,10 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders",
+						"/o/headless-delivery/v1.0/structured-content-folders/{parentStructuredContentFolderId}/structured-content-folders");
+
+			httpInvoker.pathParameter(
+				"parentStructuredContentFolderId",
 				parentStructuredContentFolderId);
 
 			httpInvoker.userNameAndPassword(
@@ -932,8 +944,10 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}",
-				structuredContentFolderId);
+						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}");
+
+			httpInvoker.pathParameter(
+				"structuredContentFolderId", structuredContentFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1056,8 +1070,10 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}",
-				structuredContentFolderId);
+						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}");
+
+			httpInvoker.pathParameter(
+				"structuredContentFolderId", structuredContentFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1127,8 +1143,10 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}",
-				structuredContentFolderId);
+						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}");
+
+			httpInvoker.pathParameter(
+				"structuredContentFolderId", structuredContentFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1197,8 +1215,10 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}",
-				structuredContentFolderId);
+						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}");
+
+			httpInvoker.pathParameter(
+				"structuredContentFolderId", structuredContentFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1327,8 +1347,10 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/subscribe",
-				structuredContentFolderId);
+						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/subscribe");
+
+			httpInvoker.pathParameter(
+				"structuredContentFolderId", structuredContentFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1396,8 +1418,10 @@ public interface StructuredContentFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/unsubscribe",
-				structuredContentFolderId);
+						"/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/unsubscribe");
+
+			httpInvoker.pathParameter(
+				"structuredContentFolderId", structuredContentFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

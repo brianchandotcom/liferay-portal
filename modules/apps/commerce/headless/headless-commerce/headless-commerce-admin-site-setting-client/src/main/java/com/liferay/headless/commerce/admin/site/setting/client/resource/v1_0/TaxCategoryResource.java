@@ -210,8 +210,9 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/taxCategory",
-				groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/taxCategory");
+
+			httpInvoker.pathParameter("groupId", groupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -278,8 +279,9 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/taxCategory",
-				groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/taxCategory");
+
+			httpInvoker.pathParameter("groupId", groupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -327,8 +329,9 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -385,8 +388,9 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -445,8 +449,9 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -499,8 +504,9 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -559,8 +565,9 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/taxCategory/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

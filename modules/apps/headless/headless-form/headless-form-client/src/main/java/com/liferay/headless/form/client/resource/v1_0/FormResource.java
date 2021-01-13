@@ -176,8 +176,9 @@ public interface FormResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/headless-form/v1.0/forms/{formId}",
-				formId);
+					_builder._port + "/o/headless-form/v1.0/forms/{formId}");
+
+			httpInvoker.pathParameter("formId", formId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -243,8 +244,9 @@ public interface FormResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-form/v1.0/forms/{formId}/evaluate-context",
-				formId);
+						"/o/headless-form/v1.0/forms/{formId}/evaluate-context");
+
+			httpInvoker.pathParameter("formId", formId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -316,8 +318,9 @@ public interface FormResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-form/v1.0/forms/{formId}/form-document",
-				formId);
+						"/o/headless-form/v1.0/forms/{formId}/form-document");
+
+			httpInvoker.pathParameter("formId", formId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -386,8 +389,9 @@ public interface FormResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-form/v1.0/sites/{siteId}/forms",
-				siteId);
+						"/o/headless-form/v1.0/sites/{siteId}/forms");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

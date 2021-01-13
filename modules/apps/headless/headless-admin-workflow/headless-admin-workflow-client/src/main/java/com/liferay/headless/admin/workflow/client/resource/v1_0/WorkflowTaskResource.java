@@ -351,8 +351,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks",
-				workflowInstanceId);
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks");
+
+			httpInvoker.pathParameter("workflowInstanceId", workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -431,8 +432,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-me",
-				workflowInstanceId);
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-me");
+
+			httpInvoker.pathParameter("workflowInstanceId", workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -515,8 +517,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-user",
-				workflowInstanceId);
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/workflow-tasks/assigned-to-user");
+
+			httpInvoker.pathParameter("workflowInstanceId", workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1329,8 +1332,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1399,8 +1403,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-me",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-me");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1470,8 +1475,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-role",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-role");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1541,8 +1547,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-user",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-user");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1609,8 +1616,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/change-transition",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/change-transition");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1673,8 +1681,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-assignable-users");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1744,8 +1753,9 @@ public interface WorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/update-due-date",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/update-due-date");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

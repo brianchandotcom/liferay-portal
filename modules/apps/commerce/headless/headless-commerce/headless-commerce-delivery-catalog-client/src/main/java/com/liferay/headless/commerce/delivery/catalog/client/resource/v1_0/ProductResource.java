@@ -190,8 +190,9 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products",
-				channelId);
+						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products");
+
+			httpInvoker.pathParameter("channelId", channelId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -258,8 +259,10 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}",
-				channelId, productId);
+						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}");
+
+			httpInvoker.pathParameter("channelId", channelId);
+			httpInvoker.pathParameter("productId", productId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -168,8 +168,9 @@ public interface AssigneeResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assignable-users",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assignable-users");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

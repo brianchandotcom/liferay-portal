@@ -205,8 +205,9 @@ public interface ContentStructureResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-structures",
-				assetLibraryId);
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-structures");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -268,8 +269,9 @@ public interface ContentStructureResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/content-structures/{contentStructureId}",
-				contentStructureId);
+						"/o/headless-delivery/v1.0/content-structures/{contentStructureId}");
+
+			httpInvoker.pathParameter("contentStructureId", contentStructureId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -357,8 +359,9 @@ public interface ContentStructureResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-structures",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-structures");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

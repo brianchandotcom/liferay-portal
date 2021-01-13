@@ -271,8 +271,9 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collection",
-				dataDefinitionId);
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collection");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -351,8 +352,9 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections",
-				dataDefinitionId);
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -422,8 +424,9 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections",
-				dataDefinitionId);
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -484,8 +487,9 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections/batch",
-				dataDefinitionId);
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-record-collections/batch");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -547,8 +551,10 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}",
-				dataRecordCollectionId);
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}");
+
+			httpInvoker.pathParameter(
+				"dataRecordCollectionId", dataRecordCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -670,8 +676,10 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}",
-				dataRecordCollectionId);
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}");
+
+			httpInvoker.pathParameter(
+				"dataRecordCollectionId", dataRecordCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -740,8 +748,10 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}",
-				dataRecordCollectionId);
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}");
+
+			httpInvoker.pathParameter(
+				"dataRecordCollectionId", dataRecordCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -870,8 +880,10 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions",
-				dataRecordCollectionId);
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions");
+
+			httpInvoker.pathParameter(
+				"dataRecordCollectionId", dataRecordCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -946,8 +958,10 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions",
-				dataRecordCollectionId);
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions");
+
+			httpInvoker.pathParameter(
+				"dataRecordCollectionId", dataRecordCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1012,8 +1026,10 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions/by-current-user",
-				dataRecordCollectionId);
+						"/o/data-engine/v2.0/data-record-collections/{dataRecordCollectionId}/permissions/by-current-user");
+
+			httpInvoker.pathParameter(
+				"dataRecordCollectionId", dataRecordCollectionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1079,8 +1095,11 @@ public interface DataRecordCollectionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/sites/{siteId}/data-record-collections/by-data-record-collection-key/{dataRecordCollectionKey}",
-				siteId, dataRecordCollectionKey);
+						"/o/data-engine/v2.0/sites/{siteId}/data-record-collections/by-data-record-collection-key/{dataRecordCollectionKey}");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter(
+				"dataRecordCollectionKey", dataRecordCollectionKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

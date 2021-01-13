@@ -193,8 +193,9 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -253,8 +254,9 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -316,8 +318,9 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -372,8 +375,9 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -434,8 +438,9 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -508,8 +513,9 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate",
-				groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate");
+
+			httpInvoker.pathParameter("groupId", groupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -578,8 +584,9 @@ public interface AvailabilityEstimateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate",
-				groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate");
+
+			httpInvoker.pathParameter("groupId", groupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

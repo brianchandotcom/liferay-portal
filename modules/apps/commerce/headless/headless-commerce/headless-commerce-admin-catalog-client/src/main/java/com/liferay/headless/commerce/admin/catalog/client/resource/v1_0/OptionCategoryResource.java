@@ -385,8 +385,9 @@ public interface OptionCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/{id}",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -443,8 +444,9 @@ public interface OptionCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/batch",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -503,8 +505,9 @@ public interface OptionCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/{id}",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -557,8 +560,9 @@ public interface OptionCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/{id}",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/optionCategories/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

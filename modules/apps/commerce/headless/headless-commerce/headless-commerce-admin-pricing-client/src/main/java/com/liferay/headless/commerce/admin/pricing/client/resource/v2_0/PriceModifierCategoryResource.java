@@ -219,8 +219,10 @@ public interface PriceModifierCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}",
-				priceModifierCategoryId);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}");
+
+			httpInvoker.pathParameter(
+				"priceModifierCategoryId", priceModifierCategoryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -352,8 +354,10 @@ public interface PriceModifierCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-categories",
-				externalReferenceCode);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-categories");
+
+			httpInvoker.pathParameter(
+				"externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -424,8 +428,10 @@ public interface PriceModifierCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-categories",
-				externalReferenceCode);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/by-externalReferenceCode/{externalReferenceCode}/price-modifier-categories");
+
+			httpInvoker.pathParameter(
+				"externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -512,8 +518,9 @@ public interface PriceModifierCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/price-modifier-categories",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/price-modifier-categories");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -581,8 +588,9 @@ public interface PriceModifierCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/price-modifier-categories",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/{id}/price-modifier-categories");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -643,8 +651,9 @@ public interface PriceModifierCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/price-modifier-categories/batch",
-				id);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifiers/price-modifier-categories/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

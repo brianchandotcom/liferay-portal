@@ -346,8 +346,9 @@ public interface WorkflowInstanceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}",
-				workflowInstanceId);
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}");
+
+			httpInvoker.pathParameter("workflowInstanceId", workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -409,8 +410,9 @@ public interface WorkflowInstanceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}",
-				workflowInstanceId);
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}");
+
+			httpInvoker.pathParameter("workflowInstanceId", workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -477,8 +479,9 @@ public interface WorkflowInstanceResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/change-transition",
-				workflowInstanceId);
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/change-transition");
+
+			httpInvoker.pathParameter("workflowInstanceId", workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

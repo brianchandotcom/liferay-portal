@@ -237,8 +237,9 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/sites/by-friendly-url-path/{friendlyUrlPath}",
-				friendlyUrlPath);
+						"/o/headless-admin-user/v1.0/sites/by-friendly-url-path/{friendlyUrlPath}");
+
+			httpInvoker.pathParameter("friendlyUrlPath", friendlyUrlPath);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -296,8 +297,9 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/sites/{siteId}",
-				siteId);
+						"/o/headless-admin-user/v1.0/sites/{siteId}");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

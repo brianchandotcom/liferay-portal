@@ -172,8 +172,9 @@ public interface SegmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/sites/{siteId}/segments",
-				siteId);
+						"/o/headless-admin-user/v1.0/sites/{siteId}/segments");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -238,8 +239,10 @@ public interface SegmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/sites/{siteId}/user-accounts/{userAccountId}/segments",
-				siteId, userAccountId);
+						"/o/headless-admin-user/v1.0/sites/{siteId}/user-accounts/{userAccountId}/segments");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter("userAccountId", userAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

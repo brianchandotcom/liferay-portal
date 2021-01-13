@@ -392,8 +392,9 @@ public interface SpecificationResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -450,8 +451,9 @@ public interface SpecificationResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -510,8 +512,9 @@ public interface SpecificationResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -564,8 +567,9 @@ public interface SpecificationResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/specifications/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

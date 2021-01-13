@@ -271,8 +271,9 @@ public interface ProcessMetricResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/metrics",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/metrics");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

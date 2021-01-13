@@ -261,8 +261,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords",
-				assetLibraryId);
+						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -327,8 +328,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords",
-				assetLibraryId);
+						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -389,8 +391,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/batch",
-				assetLibraryId);
+						"/o/headless-admin-taxonomy/v1.0/asset-libraries/{assetLibraryId}/keywords/batch");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -528,8 +531,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}",
-				keywordId);
+						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}");
+
+			httpInvoker.pathParameter("keywordId", keywordId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -644,8 +648,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}",
-				keywordId);
+						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}");
+
+			httpInvoker.pathParameter("keywordId", keywordId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -709,8 +714,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}",
-				keywordId);
+						"/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}");
+
+			httpInvoker.pathParameter("keywordId", keywordId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -853,8 +859,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords",
-				siteId);
+						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -918,8 +925,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords",
-				siteId);
+						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -978,8 +986,9 @@ public interface KeywordResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/batch",
-				siteId);
+						"/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords/batch");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

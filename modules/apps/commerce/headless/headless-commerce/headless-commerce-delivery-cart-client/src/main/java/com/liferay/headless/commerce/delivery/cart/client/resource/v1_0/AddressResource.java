@@ -157,8 +157,9 @@ public interface AddressResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/billing-address",
-				cartId);
+						"/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/billing-address");
+
+			httpInvoker.pathParameter("cartId", cartId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -219,8 +220,9 @@ public interface AddressResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/shipping-address",
-				cartId);
+						"/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/shipping-address");
+
+			httpInvoker.pathParameter("cartId", cartId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

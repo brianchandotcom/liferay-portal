@@ -165,8 +165,9 @@ public interface FormStructureResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-form/v1.0/form-structures/{formStructureId}",
-				formStructureId);
+						"/o/headless-form/v1.0/form-structures/{formStructureId}");
+
+			httpInvoker.pathParameter("formStructureId", formStructureId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -236,8 +237,9 @@ public interface FormStructureResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-form/v1.0/sites/{siteId}/form-structures",
-				siteId);
+						"/o/headless-form/v1.0/sites/{siteId}/form-structures");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

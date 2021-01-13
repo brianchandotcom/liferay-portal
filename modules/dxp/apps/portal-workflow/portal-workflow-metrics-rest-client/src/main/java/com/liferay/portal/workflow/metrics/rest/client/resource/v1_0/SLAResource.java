@@ -213,8 +213,9 @@ public interface SLAResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/slas",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/slas");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -276,8 +277,9 @@ public interface SLAResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/slas",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/slas");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -337,8 +339,9 @@ public interface SLAResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/slas/batch",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/slas/batch");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -397,8 +400,9 @@ public interface SLAResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/slas/{slaId}",
-				slaId);
+						"/o/portal-workflow-metrics/v1.0/slas/{slaId}");
+
+			httpInvoker.pathParameter("slaId", slaId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -455,8 +459,9 @@ public interface SLAResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch",
-				slaId);
+						"/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch");
+
+			httpInvoker.pathParameter("slaId", slaId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -514,8 +519,9 @@ public interface SLAResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/slas/{slaId}",
-				slaId);
+						"/o/portal-workflow-metrics/v1.0/slas/{slaId}");
+
+			httpInvoker.pathParameter("slaId", slaId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -576,8 +582,9 @@ public interface SLAResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/slas/{slaId}",
-				slaId);
+						"/o/portal-workflow-metrics/v1.0/slas/{slaId}");
+
+			httpInvoker.pathParameter("slaId", slaId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -636,8 +643,9 @@ public interface SLAResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch",
-				slaId);
+						"/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch");
+
+			httpInvoker.pathParameter("slaId", slaId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

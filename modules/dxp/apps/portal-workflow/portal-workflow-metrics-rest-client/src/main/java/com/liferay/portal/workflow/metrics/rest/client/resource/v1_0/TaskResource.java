@@ -202,8 +202,9 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -267,8 +268,9 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -328,8 +330,9 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/batch",
-				processId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/batch");
+
+			httpInvoker.pathParameter("processId", processId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -391,8 +394,10 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}",
-				processId, taskId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}");
+
+			httpInvoker.pathParameter("processId", processId);
+			httpInvoker.pathParameter("taskId", taskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -454,8 +459,10 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}",
-				processId, taskId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}");
+
+			httpInvoker.pathParameter("processId", processId);
+			httpInvoker.pathParameter("taskId", taskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -519,8 +526,10 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}",
-				processId, taskId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}");
+
+			httpInvoker.pathParameter("processId", processId);
+			httpInvoker.pathParameter("taskId", taskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -585,8 +594,10 @@ public interface TaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}/complete",
-				processId, taskId);
+						"/o/portal-workflow-metrics/v1.0/processes/{processId}/tasks/{taskId}/complete");
+
+			httpInvoker.pathParameter("processId", processId);
+			httpInvoker.pathParameter("taskId", taskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

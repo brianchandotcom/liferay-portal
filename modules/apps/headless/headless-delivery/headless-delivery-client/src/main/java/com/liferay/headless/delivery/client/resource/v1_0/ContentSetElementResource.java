@@ -209,8 +209,10 @@ public interface ContentSetElementResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-sets/by-key/{key}/content-set-elements",
-				assetLibraryId, key);
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-sets/by-key/{key}/content-set-elements");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
+			httpInvoker.pathParameter("key", key);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -283,8 +285,10 @@ public interface ContentSetElementResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-sets/by-uuid/{uuid}/content-set-elements",
-				assetLibraryId, uuid);
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-sets/by-uuid/{uuid}/content-set-elements");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
+			httpInvoker.pathParameter("uuid", uuid);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -356,8 +360,9 @@ public interface ContentSetElementResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/content-sets/{contentSetId}/content-set-elements",
-				contentSetId);
+						"/o/headless-delivery/v1.0/content-sets/{contentSetId}/content-set-elements");
+
+			httpInvoker.pathParameter("contentSetId", contentSetId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -430,8 +435,10 @@ public interface ContentSetElementResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-sets/by-key/{key}/content-set-elements",
-				siteId, key);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-sets/by-key/{key}/content-set-elements");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter("key", key);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -504,8 +511,10 @@ public interface ContentSetElementResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-sets/by-uuid/{uuid}/content-set-elements",
-				siteId, uuid);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-sets/by-uuid/{uuid}/content-set-elements");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter("uuid", uuid);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

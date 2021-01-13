@@ -167,8 +167,9 @@ public interface WebUrlResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/organizations/{organizationId}/web-urls",
-				organizationId);
+						"/o/headless-admin-user/v1.0/organizations/{organizationId}/web-urls");
+
+			httpInvoker.pathParameter("organizationId", organizationId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -230,8 +231,9 @@ public interface WebUrlResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/web-urls",
-				userAccountId);
+						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/web-urls");
+
+			httpInvoker.pathParameter("userAccountId", userAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -290,8 +292,9 @@ public interface WebUrlResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/web-urls/{webUrlId}",
-				webUrlId);
+						"/o/headless-admin-user/v1.0/web-urls/{webUrlId}");
+
+			httpInvoker.pathParameter("webUrlId", webUrlId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

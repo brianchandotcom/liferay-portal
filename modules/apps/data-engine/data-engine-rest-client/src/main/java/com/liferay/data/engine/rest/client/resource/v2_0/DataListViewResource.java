@@ -220,8 +220,9 @@ public interface DataListViewResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views",
-				dataDefinitionId);
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -303,8 +304,9 @@ public interface DataListViewResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views",
-				dataDefinitionId);
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -371,8 +373,9 @@ public interface DataListViewResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views",
-				dataDefinitionId);
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -433,8 +436,9 @@ public interface DataListViewResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views/batch",
-				dataDefinitionId);
+						"/o/data-engine/v2.0/data-definitions/{dataDefinitionId}/data-list-views/batch");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -494,8 +498,9 @@ public interface DataListViewResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-list-views/{dataListViewId}",
-				dataListViewId);
+						"/o/data-engine/v2.0/data-list-views/{dataListViewId}");
+
+			httpInvoker.pathParameter("dataListViewId", dataListViewId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -613,8 +618,9 @@ public interface DataListViewResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-list-views/{dataListViewId}",
-				dataListViewId);
+						"/o/data-engine/v2.0/data-list-views/{dataListViewId}");
+
+			httpInvoker.pathParameter("dataListViewId", dataListViewId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -679,8 +685,9 @@ public interface DataListViewResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v2.0/data-list-views/{dataListViewId}",
-				dataListViewId);
+						"/o/data-engine/v2.0/data-list-views/{dataListViewId}");
+
+			httpInvoker.pathParameter("dataListViewId", dataListViewId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -171,8 +171,9 @@ public interface EmailAddressResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/email-addresses/{emailAddressId}",
-				emailAddressId);
+						"/o/headless-admin-user/v1.0/email-addresses/{emailAddressId}");
+
+			httpInvoker.pathParameter("emailAddressId", emailAddressId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -236,8 +237,9 @@ public interface EmailAddressResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/organizations/{organizationId}/email-addresses",
-				organizationId);
+						"/o/headless-admin-user/v1.0/organizations/{organizationId}/email-addresses");
+
+			httpInvoker.pathParameter("organizationId", organizationId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -300,8 +302,9 @@ public interface EmailAddressResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/email-addresses",
-				userAccountId);
+						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/email-addresses");
+
+			httpInvoker.pathParameter("userAccountId", userAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

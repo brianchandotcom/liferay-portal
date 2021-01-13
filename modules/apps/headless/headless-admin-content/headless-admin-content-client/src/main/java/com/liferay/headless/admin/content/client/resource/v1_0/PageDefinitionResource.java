@@ -147,8 +147,9 @@ public interface PageDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-content/v1.0/sites/{siteId}/page-definitions/preview",
-				siteId);
+						"/o/headless-admin-content/v1.0/sites/{siteId}/page-definitions/preview");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

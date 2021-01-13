@@ -177,8 +177,9 @@ public interface TransitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/next-transitions",
-				workflowInstanceId);
+						"/o/headless-admin-workflow/v1.0/workflow-instances/{workflowInstanceId}/next-transitions");
+
+			httpInvoker.pathParameter("workflowInstanceId", workflowInstanceId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -250,8 +251,9 @@ public interface TransitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/next-transitions",
-				workflowTaskId);
+						"/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/next-transitions");
+
+			httpInvoker.pathParameter("workflowTaskId", workflowTaskId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

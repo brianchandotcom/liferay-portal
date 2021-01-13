@@ -233,8 +233,9 @@ public interface TaxCategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-channel/v1.0/tax-categories/{id}",
-				id);
+						"/o/headless-commerce-admin-channel/v1.0/tax-categories/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -188,8 +188,9 @@ public interface ProductOptionValueResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -256,8 +257,9 @@ public interface ProductOptionValueResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -318,8 +320,9 @@ public interface ProductOptionValueResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues/batch",
-				id);
+						"/o/headless-commerce-admin-catalog/v1.0/productOptions/{id}/productOptionValues/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

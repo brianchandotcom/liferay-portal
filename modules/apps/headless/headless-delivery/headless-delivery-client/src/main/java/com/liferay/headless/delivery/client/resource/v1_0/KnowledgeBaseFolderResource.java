@@ -242,8 +242,10 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}",
-				knowledgeBaseFolderId);
+						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}");
+
+			httpInvoker.pathParameter(
+				"knowledgeBaseFolderId", knowledgeBaseFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -364,8 +366,10 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}",
-				knowledgeBaseFolderId);
+						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}");
+
+			httpInvoker.pathParameter(
+				"knowledgeBaseFolderId", knowledgeBaseFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -434,8 +438,10 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}",
-				knowledgeBaseFolderId);
+						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}");
+
+			httpInvoker.pathParameter(
+				"knowledgeBaseFolderId", knowledgeBaseFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -504,8 +510,10 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}",
-				knowledgeBaseFolderId);
+						"/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}");
+
+			httpInvoker.pathParameter(
+				"knowledgeBaseFolderId", knowledgeBaseFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -637,8 +645,10 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
-				parentKnowledgeBaseFolderId);
+						"/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders");
+
+			httpInvoker.pathParameter(
+				"parentKnowledgeBaseFolderId", parentKnowledgeBaseFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -708,8 +718,10 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders",
-				parentKnowledgeBaseFolderId);
+						"/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders");
+
+			httpInvoker.pathParameter(
+				"parentKnowledgeBaseFolderId", parentKnowledgeBaseFolderId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -780,8 +792,9 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -848,8 +861,9 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -910,8 +924,9 @@ public interface KnowledgeBaseFolderResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders/batch",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders/batch");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

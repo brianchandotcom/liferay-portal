@@ -163,8 +163,9 @@ public interface CategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/discount-categories/{discountCategoryId}/category",
-				discountCategoryId);
+						"/o/headless-commerce-admin-pricing/v2.0/discount-categories/{discountCategoryId}/category");
+
+			httpInvoker.pathParameter("discountCategoryId", discountCategoryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -230,8 +231,10 @@ public interface CategoryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}/category",
-				priceModifierCategoryId);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-categories/{priceModifierCategoryId}/category");
+
+			httpInvoker.pathParameter(
+				"priceModifierCategoryId", priceModifierCategoryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

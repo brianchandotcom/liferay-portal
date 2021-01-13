@@ -217,8 +217,9 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit",
-				groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit");
+
+			httpInvoker.pathParameter("groupId", groupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -285,8 +286,9 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit",
-				groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/measurementUnit");
+
+			httpInvoker.pathParameter("groupId", groupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -335,8 +337,9 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -393,8 +396,9 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -453,8 +457,9 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -507,8 +512,9 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -567,8 +573,9 @@ public interface MeasurementUnitResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/measurementUnit/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

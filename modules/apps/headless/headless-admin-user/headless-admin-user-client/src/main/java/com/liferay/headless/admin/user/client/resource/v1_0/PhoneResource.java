@@ -167,8 +167,9 @@ public interface PhoneResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/organizations/{organizationId}/phones",
-				organizationId);
+						"/o/headless-admin-user/v1.0/organizations/{organizationId}/phones");
+
+			httpInvoker.pathParameter("organizationId", organizationId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -227,8 +228,9 @@ public interface PhoneResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/phones/{phoneId}",
-				phoneId);
+						"/o/headless-admin-user/v1.0/phones/{phoneId}");
+
+			httpInvoker.pathParameter("phoneId", phoneId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -290,8 +292,9 @@ public interface PhoneResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/phones",
-				userAccountId);
+						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}/phones");
+
+			httpInvoker.pathParameter("userAccountId", userAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

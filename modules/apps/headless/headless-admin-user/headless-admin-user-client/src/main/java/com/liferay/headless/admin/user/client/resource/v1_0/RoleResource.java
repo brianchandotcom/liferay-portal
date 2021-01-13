@@ -274,8 +274,9 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/roles/{roleId}",
-				roleId);
+						"/o/headless-admin-user/v1.0/roles/{roleId}");
+
+			httpInvoker.pathParameter("roleId", roleId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -340,8 +341,10 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}",
-				roleId, userAccountId);
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}");
+
+			httpInvoker.pathParameter("roleId", roleId);
+			httpInvoker.pathParameter("userAccountId", userAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -408,8 +411,10 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}",
-				roleId, userAccountId);
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}");
+
+			httpInvoker.pathParameter("roleId", roleId);
+			httpInvoker.pathParameter("userAccountId", userAccountId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -474,8 +479,11 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}",
-				roleId, userAccountId, organizationId);
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}");
+
+			httpInvoker.pathParameter("roleId", roleId);
+			httpInvoker.pathParameter("userAccountId", userAccountId);
+			httpInvoker.pathParameter("organizationId", organizationId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -542,8 +550,11 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}",
-				roleId, userAccountId, organizationId);
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/organization/{organizationId}");
+
+			httpInvoker.pathParameter("roleId", roleId);
+			httpInvoker.pathParameter("userAccountId", userAccountId);
+			httpInvoker.pathParameter("organizationId", organizationId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -608,8 +619,11 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}",
-				roleId, userAccountId, siteId);
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}");
+
+			httpInvoker.pathParameter("roleId", roleId);
+			httpInvoker.pathParameter("userAccountId", userAccountId);
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -676,8 +690,11 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}",
-				roleId, userAccountId, siteId);
+						"/o/headless-admin-user/v1.0/roles/{roleId}/association/user-account/{userAccountId}/site/{siteId}");
+
+			httpInvoker.pathParameter("roleId", roleId);
+			httpInvoker.pathParameter("userAccountId", userAccountId);
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

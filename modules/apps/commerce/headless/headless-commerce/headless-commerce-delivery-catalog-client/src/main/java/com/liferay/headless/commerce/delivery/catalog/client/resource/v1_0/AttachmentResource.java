@@ -176,8 +176,10 @@ public interface AttachmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/attachments",
-				channelId, productId);
+						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/attachments");
+
+			httpInvoker.pathParameter("channelId", channelId);
+			httpInvoker.pathParameter("productId", productId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -248,8 +250,10 @@ public interface AttachmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/images",
-				channelId, productId);
+						"/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/images");
+
+			httpInvoker.pathParameter("channelId", channelId);
+			httpInvoker.pathParameter("productId", productId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

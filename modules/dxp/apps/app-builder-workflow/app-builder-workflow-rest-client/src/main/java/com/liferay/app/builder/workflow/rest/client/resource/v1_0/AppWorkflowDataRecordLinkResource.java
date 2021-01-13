@@ -166,8 +166,9 @@ public interface AppWorkflowDataRecordLinkResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows/data-record-links",
-				appId);
+						"/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows/data-record-links");
+
+			httpInvoker.pathParameter("appId", appId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

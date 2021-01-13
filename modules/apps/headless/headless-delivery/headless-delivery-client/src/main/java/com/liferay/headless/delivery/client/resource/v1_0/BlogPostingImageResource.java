@@ -204,8 +204,9 @@ public interface BlogPostingImageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/blog-posting-images/{blogPostingImageId}",
-				blogPostingImageId);
+						"/o/headless-delivery/v1.0/blog-posting-images/{blogPostingImageId}");
+
+			httpInvoker.pathParameter("blogPostingImageId", blogPostingImageId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -324,8 +325,9 @@ public interface BlogPostingImageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/blog-posting-images/{blogPostingImageId}",
-				blogPostingImageId);
+						"/o/headless-delivery/v1.0/blog-posting-images/{blogPostingImageId}");
+
+			httpInvoker.pathParameter("blogPostingImageId", blogPostingImageId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -413,8 +415,9 @@ public interface BlogPostingImageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -490,8 +493,9 @@ public interface BlogPostingImageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -557,8 +561,9 @@ public interface BlogPostingImageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images/batch",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/blog-posting-images/batch");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

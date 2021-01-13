@@ -409,8 +409,9 @@ public interface ChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-channel/v1.0/channels/{channelId}",
-				channelId);
+						"/o/headless-commerce-admin-channel/v1.0/channels/{channelId}");
+
+			httpInvoker.pathParameter("channelId", channelId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -525,8 +526,9 @@ public interface ChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-channel/v1.0/channels/{channelId}",
-				channelId);
+						"/o/headless-commerce-admin-channel/v1.0/channels/{channelId}");
+
+			httpInvoker.pathParameter("channelId", channelId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -590,8 +592,9 @@ public interface ChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-channel/v1.0/channels/{channelId}",
-				channelId);
+						"/o/headless-commerce-admin-channel/v1.0/channels/{channelId}");
+
+			httpInvoker.pathParameter("channelId", channelId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -655,8 +658,9 @@ public interface ChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-channel/v1.0/channels/{channelId}",
-				channelId);
+						"/o/headless-commerce-admin-channel/v1.0/channels/{channelId}");
+
+			httpInvoker.pathParameter("channelId", channelId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

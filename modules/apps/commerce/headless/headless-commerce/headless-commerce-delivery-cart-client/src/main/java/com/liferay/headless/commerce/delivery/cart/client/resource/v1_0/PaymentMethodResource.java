@@ -156,8 +156,9 @@ public interface PaymentMethodResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/payment-methods",
-				cartId);
+						"/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/payment-methods");
+
+			httpInvoker.pathParameter("cartId", cartId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

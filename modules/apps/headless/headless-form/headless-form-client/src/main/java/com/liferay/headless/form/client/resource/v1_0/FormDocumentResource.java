@@ -164,8 +164,9 @@ public interface FormDocumentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-form/v1.0/form-documents/{formDocumentId}",
-				formDocumentId);
+						"/o/headless-form/v1.0/form-documents/{formDocumentId}");
+
+			httpInvoker.pathParameter("formDocumentId", formDocumentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -284,8 +285,9 @@ public interface FormDocumentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-form/v1.0/form-documents/{formDocumentId}",
-				formDocumentId);
+						"/o/headless-form/v1.0/form-documents/{formDocumentId}");
+
+			httpInvoker.pathParameter("formDocumentId", formDocumentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

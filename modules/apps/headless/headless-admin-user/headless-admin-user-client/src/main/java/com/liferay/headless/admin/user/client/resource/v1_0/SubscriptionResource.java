@@ -250,8 +250,9 @@ public interface SubscriptionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/my-user-account/subscriptions/{subscriptionId}",
-				subscriptionId);
+						"/o/headless-admin-user/v1.0/my-user-account/subscriptions/{subscriptionId}");
+
+			httpInvoker.pathParameter("subscriptionId", subscriptionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -313,8 +314,9 @@ public interface SubscriptionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/my-user-account/subscriptions/{subscriptionId}",
-				subscriptionId);
+						"/o/headless-admin-user/v1.0/my-user-account/subscriptions/{subscriptionId}");
+
+			httpInvoker.pathParameter("subscriptionId", subscriptionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

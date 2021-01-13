@@ -220,8 +220,9 @@ public interface ContentPageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -286,8 +287,10 @@ public interface ContentPageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages/private/{friendlyUrlPath}",
-				siteId, friendlyUrlPath);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages/private/{friendlyUrlPath}");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter("friendlyUrlPath", friendlyUrlPath);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -352,8 +355,10 @@ public interface ContentPageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages/private/{friendlyUrlPath}/rendered-page",
-				siteId, friendlyUrlPath);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages/private/{friendlyUrlPath}/rendered-page");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter("friendlyUrlPath", friendlyUrlPath);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -418,8 +423,10 @@ public interface ContentPageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages/public/{friendlyUrlPath}",
-				siteId, friendlyUrlPath);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages/public/{friendlyUrlPath}");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter("friendlyUrlPath", friendlyUrlPath);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -484,8 +491,10 @@ public interface ContentPageResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages/public/{friendlyUrlPath}/rendered-page",
-				siteId, friendlyUrlPath);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-pages/public/{friendlyUrlPath}/rendered-page");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter("friendlyUrlPath", friendlyUrlPath);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

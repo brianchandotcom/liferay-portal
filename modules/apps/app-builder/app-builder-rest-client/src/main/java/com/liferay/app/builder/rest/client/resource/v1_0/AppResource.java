@@ -326,8 +326,9 @@ public interface AppResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/app-builder/v1.0/apps/{appId}",
-				appId);
+					_builder._port + "/o/app-builder/v1.0/apps/{appId}");
+
+			httpInvoker.pathParameter("appId", appId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -439,8 +440,9 @@ public interface AppResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/app-builder/v1.0/apps/{appId}",
-				appId);
+					_builder._port + "/o/app-builder/v1.0/apps/{appId}");
+
+			httpInvoker.pathParameter("appId", appId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -500,8 +502,9 @@ public interface AppResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/app-builder/v1.0/apps/{appId}",
-				appId);
+					_builder._port + "/o/app-builder/v1.0/apps/{appId}");
+
+			httpInvoker.pathParameter("appId", appId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -607,8 +610,9 @@ public interface AppResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/app-builder/v1.0/apps/{appId}/deploy",
-				appId);
+					_builder._port + "/o/app-builder/v1.0/apps/{appId}/deploy");
+
+			httpInvoker.pathParameter("appId", appId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -658,8 +662,9 @@ public interface AppResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/app-builder/v1.0/apps/{appId}/undeploy",
-				appId);
+						"/o/app-builder/v1.0/apps/{appId}/undeploy");
+
+			httpInvoker.pathParameter("appId", appId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -744,8 +749,9 @@ public interface AppResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps",
-				dataDefinitionId);
+						"/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -809,8 +815,9 @@ public interface AppResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps",
-				dataDefinitionId);
+						"/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps");
+
+			httpInvoker.pathParameter("dataDefinitionId", dataDefinitionId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -893,8 +900,9 @@ public interface AppResource {
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + "/o/app-builder/v1.0/sites/{siteId}/apps",
-				siteId);
+					_builder._port + "/o/app-builder/v1.0/sites/{siteId}/apps");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

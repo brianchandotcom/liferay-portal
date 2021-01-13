@@ -255,8 +255,10 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers",
-				externalReferenceCode);
+						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers");
+
+			httpInvoker.pathParameter(
+				"externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -323,8 +325,10 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers",
-				externalReferenceCode);
+						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers");
+
+			httpInvoker.pathParameter(
+				"externalReferenceCode", externalReferenceCode);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -378,8 +382,11 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}",
-				externalReferenceCode, userId);
+						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}");
+
+			httpInvoker.pathParameter(
+				"externalReferenceCode", externalReferenceCode);
+			httpInvoker.pathParameter("userId", userId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -444,8 +451,11 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}",
-				externalReferenceCode, userId);
+						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}");
+
+			httpInvoker.pathParameter(
+				"externalReferenceCode", externalReferenceCode);
+			httpInvoker.pathParameter("userId", userId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -503,8 +513,11 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}",
-				externalReferenceCode, userId);
+						"/o/headless-commerce-admin-account/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/accountMembers/{userId}");
+
+			httpInvoker.pathParameter(
+				"externalReferenceCode", externalReferenceCode);
+			httpInvoker.pathParameter("userId", userId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -575,8 +588,9 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers",
-				id);
+						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -641,8 +655,9 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers",
-				id);
+						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -703,8 +718,9 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/batch",
-				id);
+						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -755,8 +771,10 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/{userId}",
-				id, userId);
+						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/{userId}");
+
+			httpInvoker.pathParameter("id", id);
+			httpInvoker.pathParameter("userId", userId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -818,8 +836,10 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/{userId}",
-				id, userId);
+						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/{userId}");
+
+			httpInvoker.pathParameter("id", id);
+			httpInvoker.pathParameter("userId", userId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -874,8 +894,10 @@ public interface AccountMemberResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/{userId}",
-				id, userId);
+						"/o/headless-commerce-admin-account/v1.0/accounts/{id}/accountMembers/{userId}");
+
+			httpInvoker.pathParameter("id", id);
+			httpInvoker.pathParameter("userId", userId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

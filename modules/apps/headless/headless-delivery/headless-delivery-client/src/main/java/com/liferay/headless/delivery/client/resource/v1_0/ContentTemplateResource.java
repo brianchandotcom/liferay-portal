@@ -206,8 +206,9 @@ public interface ContentTemplateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-templates",
-				assetLibraryId);
+						"/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/content-templates");
+
+			httpInvoker.pathParameter("assetLibraryId", assetLibraryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -293,8 +294,9 @@ public interface ContentTemplateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-templates",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-templates");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -357,8 +359,10 @@ public interface ContentTemplateResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/content-templates/{contentTemplateId}",
-				siteId, contentTemplateId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/content-templates/{contentTemplateId}");
+
+			httpInvoker.pathParameter("siteId", siteId);
+			httpInvoker.pathParameter("contentTemplateId", contentTemplateId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

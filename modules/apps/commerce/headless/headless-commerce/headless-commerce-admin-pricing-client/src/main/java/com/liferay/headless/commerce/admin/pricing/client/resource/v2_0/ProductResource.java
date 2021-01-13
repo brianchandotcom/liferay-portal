@@ -167,8 +167,9 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/discount-products/{discountProductId}/product",
-				discountProductId);
+						"/o/headless-commerce-admin-pricing/v2.0/discount-products/{discountProductId}/product");
+
+			httpInvoker.pathParameter("discountProductId", discountProductId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -231,8 +232,9 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/product",
-				priceEntryId);
+						"/o/headless-commerce-admin-pricing/v2.0/price-entries/{priceEntryId}/product");
+
+			httpInvoker.pathParameter("priceEntryId", priceEntryId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -298,8 +300,10 @@ public interface ProductResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-products/{priceModifierProductId}/product",
-				priceModifierProductId);
+						"/o/headless-commerce-admin-pricing/v2.0/price-modifier-products/{priceModifierProductId}/product");
+
+			httpInvoker.pathParameter(
+				"priceModifierProductId", priceModifierProductId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

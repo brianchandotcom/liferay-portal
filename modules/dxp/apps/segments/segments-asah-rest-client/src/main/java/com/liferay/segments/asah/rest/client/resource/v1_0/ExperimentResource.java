@@ -163,8 +163,9 @@ public interface ExperimentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/segments-asah/v1.0/experiments/{experimentId}",
-				experimentId);
+						"/o/segments-asah/v1.0/experiments/{experimentId}");
+
+			httpInvoker.pathParameter("experimentId", experimentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -280,8 +281,9 @@ public interface ExperimentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/segments-asah/v1.0/experiments/{experimentId}",
-				experimentId);
+						"/o/segments-asah/v1.0/experiments/{experimentId}");
+
+			httpInvoker.pathParameter("experimentId", experimentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

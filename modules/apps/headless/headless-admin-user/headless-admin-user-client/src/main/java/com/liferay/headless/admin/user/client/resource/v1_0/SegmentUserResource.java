@@ -165,8 +165,9 @@ public interface SegmentUserResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-admin-user/v1.0/segments/{segmentId}/user-accounts",
-				segmentId);
+						"/o/headless-admin-user/v1.0/segments/{segmentId}/user-accounts");
+
+			httpInvoker.pathParameter("segmentId", segmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

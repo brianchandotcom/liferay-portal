@@ -211,8 +211,9 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse",
-				groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse");
+
+			httpInvoker.pathParameter("groupId", groupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -279,8 +280,9 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse",
-				groupId);
+						"/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse");
+
+			httpInvoker.pathParameter("groupId", groupId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -328,8 +330,9 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -386,8 +389,9 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -446,8 +450,9 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -500,8 +505,9 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -560,8 +566,9 @@ public interface WarehouseResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}/batch",
-				id);
+						"/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}/batch");
+
+			httpInvoker.pathParameter("id", id);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

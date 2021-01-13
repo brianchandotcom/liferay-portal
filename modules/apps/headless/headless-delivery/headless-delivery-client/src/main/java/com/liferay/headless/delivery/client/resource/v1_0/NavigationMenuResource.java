@@ -209,8 +209,9 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}",
-				navigationMenuId);
+						"/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}");
+
+			httpInvoker.pathParameter("navigationMenuId", navigationMenuId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -328,8 +329,9 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}",
-				navigationMenuId);
+						"/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}");
+
+			httpInvoker.pathParameter("navigationMenuId", navigationMenuId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -394,8 +396,9 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}",
-				navigationMenuId);
+						"/o/headless-delivery/v1.0/navigation-menus/{navigationMenuId}");
+
+			httpInvoker.pathParameter("navigationMenuId", navigationMenuId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -523,8 +526,9 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -589,8 +593,9 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -650,8 +655,9 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus/batch",
-				siteId);
+						"/o/headless-delivery/v1.0/sites/{siteId}/navigation-menus/batch");
+
+			httpInvoker.pathParameter("siteId", siteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

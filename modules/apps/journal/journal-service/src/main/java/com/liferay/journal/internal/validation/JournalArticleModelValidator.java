@@ -487,6 +487,10 @@ public class JournalArticleModelValidator
 
 			Image image = _imageLocalService.fetchImage(smallImageId);
 
+			if (image != null) {
+				smallImageBytes = image.getTextObj();
+			}
+
 			if ((image == null) || (smallImageBytes == null)) {
 				throw new NoSuchImageException(
 					"Small image ID " + smallImageId);

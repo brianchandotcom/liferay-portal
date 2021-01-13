@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.commerce.discount.api
 Bundle-Version: 8.0.0
 Export-Package:\
 	com.liferay.commerce.discount.application.strategy,\
+	com.liferay.commerce.discount.configuration,\
 	com.liferay.commerce.discount.constants,\
 	com.liferay.commerce.discount.exception,\
 	com.liferay.commerce.discount.model,\

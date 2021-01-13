@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 import java.util.List;
@@ -86,6 +88,9 @@ public interface Build {
 	public Element getGitHubMessageElement();
 
 	public Element getGitHubMessageUpstreamJobFailureElement();
+
+	public Map<String, String> getInjectedEnvironmentVariablesMap()
+		throws IOException;
 
 	public String getInvocationURL();
 

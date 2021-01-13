@@ -604,6 +604,29 @@ public abstract class BaseBuild implements Build {
 		return upstreamJobFailureMessageElement;
 	}
 
+	public Map<String, String> getInjectedEnvironmentVariablesMap()
+		throws IOException {
+
+		String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
+			getBuildURL());
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			localBuildURL + "/injectedEnvVars/api/json", false);
+
+		JSONObject envMapJSONObject = jsonObject.getJSONObject("envMap");
+
+		Set<String> envMapJSONObjectKeySet = envMapJSONObject.keySet();
+
+		Map<String, String> injectedEnvironmentVariablesMap = new HashMap<>();
+
+		for (String key : envMapJSONObjectKeySet) {
+			injectedEnvironmentVariablesMap.put(
+				key, envMapJSONObject.getString(key));
+		}
+
+		return injectedEnvironmentVariablesMap;
+	}
+
 	@Override
 	public String getInvocationURL() {
 		String jobURL = getJobURL();
@@ -2743,29 +2766,6 @@ public abstract class BaseBuild implements Build {
 		boolean showCommonFailuresCount) {
 
 		return getGitHubMessageJobResultsElement();
-	}
-
-	protected Map<String, String> getInjectedEnvironmentVariablesMap()
-		throws IOException {
-
-		String localBuildURL = JenkinsResultsParserUtil.getLocalURL(
-			getBuildURL());
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			localBuildURL + "/injectedEnvVars/api/json", false);
-
-		JSONObject envMapJSONObject = jsonObject.getJSONObject("envMap");
-
-		Set<String> envMapJSONObjectKeySet = envMapJSONObject.keySet();
-
-		Map<String, String> injectedEnvironmentVariablesMap = new HashMap<>();
-
-		for (String key : envMapJSONObjectKeySet) {
-			injectedEnvironmentVariablesMap.put(
-				key, envMapJSONObject.getString(key));
-		}
-
-		return injectedEnvironmentVariablesMap;
 	}
 
 	protected String getJenkinsReportBuildInfoCellElementTagName() {

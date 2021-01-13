@@ -193,7 +193,10 @@ function FieldsDropdown({items, onFieldSelected = () => {}, ...otherProps}) {
 }
 
 const Calculator = forwardRef(
-	({expression: initialExpression, fields, functions, onChange}, ref) => {
+	(
+		{expression: initialExpression, fields, functions, onChange, options},
+		ref
+	) => {
 		const [expression, setExpression] = useState(initialExpression);
 
 		const {
@@ -204,8 +207,8 @@ const Calculator = forwardRef(
 			showOnlyRepeatableFields,
 		} = useMemo(() => getStateBasedOnExpression(expression), [expression]);
 
-		const repeatableFields = useMemo(() => getRepeatableFields(fields), [
-			fields,
+		const repeatableFields = useMemo(() => getRepeatableFields(options), [
+			options,
 		]);
 
 		const value = useMemo(() => {
@@ -221,7 +224,7 @@ const Calculator = forwardRef(
 
 		const dropdownItems = showOnlyRepeatableFields
 			? repeatableFields
-			: fields;
+			: options;
 
 		const updateExpression = (newExpression) => {
 			setExpression(newExpression);

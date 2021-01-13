@@ -41,11 +41,15 @@ const ActionContentCalculate = ({
 		link: location.origin + functionsURL,
 	});
 
-	const options = useMemo(() => {
-		return fields.filter(
-			({fieldName, type}) => type === 'numeric' && fieldName !== target
-		);
-	}, [fields, target]);
+	const numericFields = useMemo(
+		() => fields.filter(({type}) => type === 'numeric'),
+		[fields]
+	);
+
+	const options = useMemo(
+		() => numericFields.filter(({fieldName}) => fieldName !== target),
+		[numericFields, target]
+	);
 
 	if (!resource) {
 		return null;
@@ -54,7 +58,7 @@ const ActionContentCalculate = ({
 	return (
 		<Calculator
 			expression={expression}
-			fields={options}
+			fields={numericFields}
 			functions={resource}
 			onChange={(newExpression) =>
 				onChange({
@@ -64,6 +68,7 @@ const ActionContentCalculate = ({
 					type: ACTIONS_TYPES.CHANGE_ACTION_CALCULATE,
 				})
 			}
+			options={options}
 		/>
 	);
 };

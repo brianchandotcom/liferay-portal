@@ -83,6 +83,7 @@ const defaultProps = (fieldsList = fields) => {
 			},
 		],
 		index: 0,
+		options: fieldsList,
 	};
 };
 

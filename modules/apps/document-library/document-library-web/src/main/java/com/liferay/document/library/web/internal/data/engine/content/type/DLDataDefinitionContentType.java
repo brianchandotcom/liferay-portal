@@ -42,6 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DLDataDefinitionContentType implements DataDefinitionContentType {
 
 	@Override
+	public boolean allowEmptyDataDefinition() {
+		return true;
+	}
+
+	@Override
 	public boolean allowInvalidAvailableLocalesForProperty() {
 		return true;
 	}

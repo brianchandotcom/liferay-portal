@@ -32,6 +32,7 @@ export default (state, action) => {
 			const visitor = new PagesVisitor(newPages ?? state.pages);
 
 			let firstInvalidFieldLabel = null;
+			let firstInvalidFieldInput = null;
 
 			const pages = visitor.mapFields(
 				(
@@ -51,6 +52,9 @@ export default (state, action) => {
 						firstInvalidFieldLabel == null
 					) {
 						firstInvalidFieldLabel = field.label;
+						firstInvalidFieldInput = document.querySelector(
+							`[name='${field.name}']`
+						);
 					}
 
 					return {
@@ -61,6 +65,10 @@ export default (state, action) => {
 				true,
 				true
 			);
+
+			if (firstInvalidFieldInput) {
+				firstInvalidFieldInput.focus();
+			}
 
 			return {
 				forceAriaUpdate: Date.now(),

@@ -26,7 +26,7 @@ import {
 	usePage,
 } from 'dynamic-data-mapping-form-renderer';
 import moment from 'moment';
-import React, {useLayoutEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 
 const convertInputValue = (fieldType, value) => {
 	if (fieldType === 'date') {
@@ -164,20 +164,6 @@ function FieldBase({
 	else if (required) {
 		fieldDetails += requiredText;
 	}
-
-	useLayoutEffect(() => {
-		const errorContainer = document.querySelector('.form-feedback-group');
-
-		if (errorContainer) {
-			const errorInput = errorContainer.parentElement.querySelector(
-				'.form-control'
-			);
-
-			if (errorInput) {
-				errorInput.focus();
-			}
-		}
-	});
 
 	return (
 		<ClayTooltipProvider>

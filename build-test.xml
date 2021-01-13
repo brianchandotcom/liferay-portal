@@ -8331,7 +8331,7 @@ ${update.properties}</echo>
 	</target>
 
 	<target name="prepare-lcs-portal-bundle">
-		<antcall target="prepare-portal-ext-properties" />
+		<antcall if:set="env.JENKINS_HOME" target="prepare-portal-ext-properties" />
 
 		<antcall inheritAll="false" target="rebuild-database" />
 

@@ -2759,6 +2759,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (portalToolName.startsWith("com.liferay.portal.tools.") &&
 			portalToolName.endsWith(".builder")) {
 
+			String projectName = portalToolName.substring(12);
+
+			projectName = projectName.replace('.', '-');
+
+			File dir = new File(portalRootDir, "modules/util/" + projectName);
+
+			if (!dir.exists()) {
+				return;
+			}
+
 			int length = portalToolName.length();
 
 			String taskNameSuffix = portalToolName.substring(25, length - 8);

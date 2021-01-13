@@ -14,51 +14,18 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author André de Oliveira
  */
 public class SearchBarPortletDisplayContext {
 
-	public SearchBarPortletDisplayContext(HttpServletRequest httpServletRequest)
-		throws ConfigurationException {
-
-		_httpServletRequest = httpServletRequest;
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		_searchBarPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				SearchBarPortletInstanceConfiguration.class);
-	}
-
 	public String getCurrentSiteSearchScopeParameterString() {
 		return _currentSiteSearchScopeParameterString;
 	}
 
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
-			return _displayStyleGroupId;
-		}
-
-		_displayStyleGroupId =
-			_searchBarPortletInstanceConfiguration.displayStyleGroupId();
-
-		if (_displayStyleGroupId <= 0) {
-			_displayStyleGroupId = _themeDisplay.getScopeGroupId();
-		}
-
 		return _displayStyleGroupId;
 	}
 
@@ -67,7 +34,7 @@ public class SearchBarPortletDisplayContext {
 	}
 
 	public String getInputPlaceholder() {
-		return LanguageUtil.get(_httpServletRequest, "search-...");
+		return _inputPlaceholder;
 	}
 
 	public String getKeywords() {
@@ -108,6 +75,10 @@ public class SearchBarPortletDisplayContext {
 		return _destinationUnreachable;
 	}
 
+	public boolean isDisplayWarningIgnoredConfiguration() {
+		return _displayWarningIgnoredConfiguration;
+	}
+
 	public boolean isEmptySearchEnabled() {
 		return _emptySearchEnabled;
 	}
@@ -145,6 +116,17 @@ public class SearchBarPortletDisplayContext {
 		_destinationUnreachable = destinationUnreachable;
 	}
 
+	public void setDisplayStyleGroupId(long displayStyleGroupId) {
+		_displayStyleGroupId = displayStyleGroupId;
+	}
+
+	public void setDisplayWarningIgnoredConfiguration(
+		boolean displayWarningIgnoredConfiguration) {
+
+		_displayWarningIgnoredConfiguration =
+			displayWarningIgnoredConfiguration;
+	}
+
 	public void setEmptySearchEnabled(boolean emptySearchEnabled) {
 		_emptySearchEnabled = emptySearchEnabled;
 	}
@@ -154,6 +136,10 @@ public class SearchBarPortletDisplayContext {
 
 		_everythingSearchScopeParameterString =
 			searchScopeEverythingParameterString;
+	}
+
+	public void setInputPlaceholder(String inputPlaceholder) {
+		_inputPlaceholder = inputPlaceholder;
 	}
 
 	public void setKeywords(String keywords) {
@@ -188,6 +174,14 @@ public class SearchBarPortletDisplayContext {
 		_scopeParameterValue = scopeParameterValue;
 	}
 
+	public void setSearchBarPortletInstanceConfiguration(
+		SearchBarPortletInstanceConfiguration
+			searchBarPortletInstanceConfiguration) {
+
+		_searchBarPortletInstanceConfiguration =
+			searchBarPortletInstanceConfiguration;
+	}
+
 	public void setSearchURL(String searchURL) {
 		_searchURL = searchURL;
 	}
@@ -208,9 +202,10 @@ public class SearchBarPortletDisplayContext {
 	private String _currentSiteSearchScopeParameterString;
 	private boolean _destinationUnreachable;
 	private long _displayStyleGroupId;
+	private boolean _displayWarningIgnoredConfiguration;
 	private boolean _emptySearchEnabled;
 	private String _everythingSearchScopeParameterString;
-	private final HttpServletRequest _httpServletRequest;
+	private String _inputPlaceholder;
 	private String _keywords;
 	private String _keywordsParameterName;
 	private boolean _letTheUserChooseTheSearchScope;
@@ -218,11 +213,10 @@ public class SearchBarPortletDisplayContext {
 	private boolean _renderNothing;
 	private String _scopeParameterName;
 	private String _scopeParameterValue;
-	private final SearchBarPortletInstanceConfiguration
+	private SearchBarPortletInstanceConfiguration
 		_searchBarPortletInstanceConfiguration;
 	private String _searchURL;
 	private boolean _selectedCurrentSiteSearchScope;
 	private boolean _selectedEverythingSearchScope;
-	private final ThemeDisplay _themeDisplay;
 
 }

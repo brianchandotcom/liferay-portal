@@ -17,18 +17,22 @@ package com.liferay.portal.search.web.internal.search.bar.portlet;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
+import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
 
 import java.util.Optional;
 
@@ -54,16 +58,33 @@ public class SearchBarPortletDisplayBuilder {
 
 	public SearchBarPortletDisplayContext build() throws PortletException {
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			createSearchBarPortletDisplayContext();
+			new SearchBarPortletDisplayContext();
+
+		HttpServletRequest httpServletRequest = getHttpServletRequest(
+			_renderRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		SearchBarPortletInstanceConfiguration
+			searchBarPortletInstanceConfiguration =
+				getSearchBarPortletInstanceConfiguration(
+					themeDisplay.getPortletDisplay());
 
 		searchBarPortletDisplayContext.setAvailableEverythingSearchScope(
 			isAvailableEverythingSearchScope());
 		searchBarPortletDisplayContext.setCurrentSiteSearchScopeParameterString(
 			SearchScope.THIS_SITE.getParameterString());
+		searchBarPortletDisplayContext.setDisplayStyleGroupId(
+			getDisplayStyleGroupId(
+				searchBarPortletInstanceConfiguration, themeDisplay));
 		searchBarPortletDisplayContext.setEmptySearchEnabled(
 			_emptySearchEnabled);
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
 			SearchScope.EVERYTHING.getParameterString());
+		searchBarPortletDisplayContext.setInputPlaceholder(
+			LanguageUtil.get(httpServletRequest, "search-..."));
 		searchBarPortletDisplayContext.setKeywords(getKeywords());
 		searchBarPortletDisplayContext.setKeywordsParameterName(
 			_keywordsParameterName);
@@ -81,6 +102,8 @@ public class SearchBarPortletDisplayBuilder {
 			_scopeParameterName);
 		searchBarPortletDisplayContext.setScopeParameterValue(
 			getScopeParameterValue());
+		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
+			searchBarPortletInstanceConfiguration);
 
 		setSelectedSearchScope(searchBarPortletDisplayContext);
 
@@ -191,18 +214,6 @@ public class SearchBarPortletDisplayBuilder {
 		return StringPool.SLASH.concat(s);
 	}
 
-	protected SearchBarPortletDisplayContext
-		createSearchBarPortletDisplayContext() {
-
-		try {
-			return new SearchBarPortletDisplayContext(
-				getHttpServletRequest(_renderRequest));
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
-
 	protected Layout fetchLayoutByFriendlyURL(
 		long groupId, String friendlyURL) {
 
@@ -226,6 +237,21 @@ public class SearchBarPortletDisplayBuilder {
 		}
 
 		return getLayoutFriendlyURL(layout);
+	}
+
+	protected long getDisplayStyleGroupId(
+		SearchBarPortletInstanceConfiguration
+			searchBarPortletInstanceConfiguration,
+		ThemeDisplay themeDisplay) {
+
+		long displayStyleGroupId =
+			searchBarPortletInstanceConfiguration.displayStyleGroupId();
+
+		if (displayStyleGroupId <= 0) {
+			displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		return displayStyleGroupId;
 	}
 
 	protected HttpServletRequest getHttpServletRequest(
@@ -275,6 +301,19 @@ public class SearchBarPortletDisplayBuilder {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	protected SearchBarPortletInstanceConfiguration
+		getSearchBarPortletInstanceConfiguration(
+			PortletDisplay portletDisplay) {
+
+		try {
+			return portletDisplay.getPortletInstanceConfiguration(
+				SearchBarPortletInstanceConfiguration.class);
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
 	}
 
 	protected SearchScope getSearchScope() {

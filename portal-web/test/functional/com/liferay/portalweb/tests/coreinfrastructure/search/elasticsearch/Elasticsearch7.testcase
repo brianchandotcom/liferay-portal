@@ -351,12 +351,12 @@ definition {
 	}
 
 	@priority = "5"
-	test ElasticsearchRemoteClusterSmokeTest {
+	test ElasticsearchClusteringSmokeTest {
+		property elasticsearch.cluster.size = "2";
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
-		property remote.elasticsearch.cluster.size = "2";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchRemoteClusterSmokeTest";
+		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchClusteringSmokeTest";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(
 			nodePort = "9200",

@@ -3,6 +3,28 @@
 <project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="configure-elasticsearch-clustering-properties">
+		<sequential>
+			<math
+				datatype="int"
+				operand1="${elasticsearch.cluster.size}"
+				operand2="2"
+				operation="/"
+				result="elasticsearch.master-eligible.nodes.quorum"
+			/>
+
+			<math
+				datatype="int"
+				operand1="${elasticsearch.master-eligible.nodes.quorum}"
+				operand2="1"
+				operation="+"
+				result="elasticsearch.master-eligible.nodes.quorum"
+			/>
+
+			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-elasticsearch-ltr-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.ml.enabled: false
@@ -395,6 +417,44 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-additional-elasticsearch-bundles">
+		<sequential>
+			<var name="elasticsearch.node.number" value="0" />
+
+			<antelope:repeat count="${elasticsearch.cluster.size}">
+				<math
+					datatype="int"
+					operand1="${elasticsearch.node.number}"
+					operand2="1"
+					operation="+"
+					result="elasticsearch.node.number"
+				/>
+
+				<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
+
+				<copy
+					todir="${elasticsearch.dir}-${elasticsearch.node.number}"
+				>
+					<fileset
+						dir="${elasticsearch.dir}"
+					/>
+				</copy>
+
+				<chmod
+					maxparallel="10"
+					perm="a+rwx"
+					type="both"
+				>
+					<fileset
+						dir="${elasticsearch.dir}-${elasticsearch.node.number}"
+					/>
+				</chmod>
+			</antelope:repeat>
+
+			<delete dir="${elasticsearch.dir}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-elasticsearch-analyzers">
 		<sequential>
 			<lstopwatch action="start" name="prepare.elasticsearch.analyzers" />
@@ -612,6 +672,48 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					<fail>Trial license failed to activate on local cluster.</fail>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-elasticsearch-with-clustering">
+		<sequential>
+			<unzip-elasticsearch />
+
+			<prepare-elasticsearch-analyzers />
+
+			<configure-elasticsearch-properties />
+
+			<configure-elasticsearch-clustering-properties />
+
+			<configure-portal-remote-elasticsearch-osgi-properties />
+
+			<prepare-additional-elasticsearch-bundles />
+
+			<var name="elasticsearch.node.number" value="1" />
+			<var name="elasticsearch.port.number" value="9200" />
+
+			<antelope:repeat count="${elasticsearch.cluster.size}">
+				<antcall target="start-elasticsearch-node">
+					<param name="elasticsearch.bundle.number" value="${elasticsearch.node.number}" />
+					<param name="elasticsearch.port" value="${elasticsearch.port.number}" />
+				</antcall>
+
+				<math
+					datatype="int"
+					operand1="${elasticsearch.node.number}"
+					operand2="1"
+					operation="+"
+					result="elasticsearch.node.number"
+				/>
+
+				<math
+					datatype="int"
+					operand1="${elasticsearch.port.number}"
+					operand2="1"
+					operation="+"
+					result="elasticsearch.port.number"
+				/>
+			</antelope:repeat>
 		</sequential>
 	</macrodef>
 
@@ -983,62 +1085,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<echo>Finished adding LTR linear regression model.</echo>
 	</target>
 
-	<target name="configure-elasticsearch-cluster-properties">
-		<math
-			datatype="int"
-			operand1="${remote.elasticsearch.cluster.size}"
-			operand2="2"
-			operation="/"
-			result="elasticsearch.master-eligible.nodes.quorum"
-		/>
-
-		<math
-			datatype="int"
-			operand1="${elasticsearch.master-eligible.nodes.quorum}"
-			operand2="1"
-			operation="+"
-			result="elasticsearch.master-eligible.nodes.quorum"
-		/>
-
-		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}</echo>
-	</target>
-
-	<target name="prepare-additional-elasticsearch-dirs">
-		<var name="elasticsearch.node.number" value="0" />
-
-		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
-			<math
-				datatype="int"
-				operand1="${elasticsearch.node.number}"
-				operand2="1"
-				operation="+"
-				result="elasticsearch.node.number"
-			/>
-
-			<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
-
-			<copy
-				todir="${elasticsearch.dir}-${elasticsearch.node.number}"
-			>
-				<fileset
-					dir="${elasticsearch.dir}"
-				/>
-			</copy>
-
-			<chmod
-				maxparallel="10"
-				perm="a+rwx"
-				type="both"
-			>
-				<fileset
-					dir="${elasticsearch.dir}-${elasticsearch.node.number}"
-				/>
-			</chmod>
-		</antelope:repeat>
-
-		<delete dir="${elasticsearch.dir}" />
-	</target>
-
 	<target name="print-elasticsearch-indices">
 		<get-testcase-property property.name="test.name.skip.portal.instance" />
 
@@ -1225,11 +1271,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<lstopwatch action="start" name="start.elasticsearch" />
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
+		<get-testcase-property property.name="elasticsearch.cluster.size" />
 		<get-testcase-property property.name="elasticsearch.ltr.enabled" />
 
 		<condition else="true" property="start.standard.elasticsearch" value="false">
 			<or>
 				<isset property="elastic.xpack.enabled" />
+				<isset property="elasticsearch.cluster.size" />
 				<isset property="elasticsearch.ltr.enabled" />
 			</or>
 		</condition>
@@ -1238,6 +1286,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
 				<start-elasticsearch-with-xpack />
+			</then>
+		</if>
+
+		<if>
+			<isset property="elasticsearch.cluster.size" />
+			<then>
+				<start-elasticsearch-with-clustering />
 			</then>
 		</if>
 
@@ -1259,19 +1314,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 				<configure-portal-remote-elasticsearch-osgi-properties />
 
-				<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
-
-				<if>
-					<not>
-						<isset property="remote.elasticsearch.cluster.size" />
-					</not>
-					<then>
-						<property name="remote.elasticsearch.cluster.size" value="1" />
-					</then>
-				</if>
-
-				<antcall target="configure-elasticsearch-cluster-properties" />
-
 				<get-testcase-property property.name="remote.elasticsearch.clusters.enabled" />
 
 				<if>
@@ -1288,8 +1330,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 						</antcall>
 					</then>
 					<else>
-						<antcall target="prepare-additional-elasticsearch-dirs" />
-
 						<antcall target="start-elasticsearch-node" />
 					</else>
 				</if>

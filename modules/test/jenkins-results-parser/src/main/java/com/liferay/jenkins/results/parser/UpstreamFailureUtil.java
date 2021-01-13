@@ -95,6 +95,30 @@ public class UpstreamFailureUtil {
 		}
 	}
 
+	public static int getUpstreamJobFailuresBuildNumber(
+		TopLevelBuild topLevelBuild, String sha) {
+
+		int buildNumber = _getLastUpstreamBuildNumber(topLevelBuild);
+
+		int oldestBuildNumber = Math.max(0, buildNumber - 10);
+
+		String jobURL = getUpstreamJobFailuresJobURL(topLevelBuild);
+
+		while (buildNumber > oldestBuildNumber) {
+			String upstreamBranchSHA =
+				JenkinsResultsParserUtil.getBuildParameter(
+					jobURL + "/" + buildNumber, "PORTAL_GIT_COMMIT");
+
+			if (upstreamBranchSHA.equals(sha)) {
+				return buildNumber;
+			}
+
+			buildNumber--;
+		}
+
+		return 0;
+	}
+
 	public static String getUpstreamJobFailuresJobURL(
 		TopLevelBuild topLevelBuild) {
 
@@ -293,6 +317,23 @@ public class UpstreamFailureUtil {
 					false);
 
 			return lastCompletedBuildJSONObject.getInt("number");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private static int _getLastUpstreamBuildNumber(
+		TopLevelBuild topLevelBuild) {
+
+		try {
+			JSONObject lastBuildJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					topLevelBuild.getAcceptanceUpstreamJobURL() +
+						"/lastBuild/api/json?tree=number",
+					false);
+
+			return lastBuildJSONObject.getInt("number");
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

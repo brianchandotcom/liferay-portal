@@ -54,6 +54,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Marco Leo
@@ -266,7 +267,8 @@ public class CPAttachmentFileEntriesDisplayContext
 	}
 
 	public String renderOptions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			PageContext pageContext, RenderRequest renderRequest,
+			RenderResponse renderResponse)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
@@ -279,7 +281,8 @@ public class CPAttachmentFileEntriesDisplayContext
 		}
 
 		return _ddmHelper.renderCPAttachmentFileEntryOptions(
-			getCPDefinitionId(), json, renderRequest, renderResponse,
+			getCPDefinitionId(), json, pageContext, renderRequest,
+			renderResponse,
 			_cpInstanceHelper.getCPDefinitionOptionRelsMap(
 				getCPDefinitionId(), true, false));
 	}

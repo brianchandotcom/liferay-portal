@@ -11,6 +11,7 @@ definition {
 
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_fieldName = "${fieldName}";
+		var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
 
 		if (isSet(fieldLocation)) {
 			DragAndDrop.javaScriptDragAndDropToObject(
@@ -60,6 +61,18 @@ definition {
 					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 			}
 		}
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Type(
+			key_fieldLabel = "Field Reference",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldReference}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Field Reference",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldReference}");
 
 		Click(locator1 = "Sidebar#BACK");
 	}
@@ -153,6 +166,7 @@ definition {
 
 		for (var fieldName : list "${fieldNameList}") {
 			var key_fieldName = "${fieldName}";
+			var fieldReference = StringUtil.replace("${fieldName}", " ", "");
 
 			DoubleClick(locator1 = "Sidebar#ADD_FIELD_NAME");
 
@@ -184,6 +198,18 @@ definition {
 					optionValue = "Option 1",
 					rowNumber = "1");
 			}
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Type(
+				key_fieldLabel = "Field Reference",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldReference}");
+
+			AssertTextEquals(
+				key_fieldLabel = "Field Reference",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldReference}");
 
 			Click(locator1 = "Sidebar#BACK");
 		}

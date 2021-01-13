@@ -104,7 +104,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Canonical URL Test Page");
 
-		Page.assertCanonicalURL(portalURL = "http://mycustomizedurl.com/mydesiredurl");
+		Page.assertCanonicalURL(customCanonicalURL = "http://mycustomizedurl.com/mydesiredurl");
 	}
 
 	@description = "This ensures that canonical URLs can be set for each active language during page creation."
@@ -148,15 +148,15 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/en/web/site-name/test-page");
 
-		Page.assertCanonicalURL(portalURL = "localhost:8080/english-canonical-url");
+		Page.assertCanonicalURL(customCanonicalURL = "localhost:8080/english-canonical-url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/es/web/site-name/test-page");
 
-		Page.assertCanonicalURL(portalURL = "localhost:8080/spain-canonical-url");
+		Page.assertCanonicalURL(customCanonicalURL = "localhost:8080/spain-canonical-url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/zh/web/site-name/test-page");
 
-		Page.assertCanonicalURL(portalURL = "localhost:8080/chinese-canonical-url");
+		Page.assertCanonicalURL(customCanonicalURL = "localhost:8080/chinese-canonical-url");
 	}
 
 	@priority = "5"
@@ -230,9 +230,7 @@ definition {
 
 		User.logoutPG();
 
-		Page.assertCanonicalURL(
-			locale = "en",
-			portalURL = "${portalURL}");
+		Page.assertCanonicalURL(portalURL = "${portalURL}");
 
 		Navigator.openSpecificURL(url = "${portalURL}/zh/");
 

@@ -17,7 +17,7 @@ package com.liferay.commerce.machine.learning.internal.recommendation.data.integ
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
 import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLocalService;
 import com.liferay.commerce.data.integration.service.ScheduledTaskExecutorService;
-import com.liferay.commerce.machine.learning.internal.data.integration.BatchEngineTaskItemDelegateResourceMapper;
+import com.liferay.commerce.machine.learning.internal.batch.BatchEngineTaskItemDelegateResourceMapper;
 import com.liferay.commerce.machine.learning.internal.data.integration.BatchScheduledTaskExecutorService;
 import com.liferay.commerce.machine.learning.internal.recommendation.data.integration.process.type.BatchProductContentCommerceMLRecommendationProcessType;
 import com.liferay.headless.commerce.admin.catalog.constants.v1_0.ProductBatchEngineTaskItemDelegateConstants;

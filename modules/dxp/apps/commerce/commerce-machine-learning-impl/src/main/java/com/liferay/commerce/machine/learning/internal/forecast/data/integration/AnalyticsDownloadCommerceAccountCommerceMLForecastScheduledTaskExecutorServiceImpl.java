@@ -15,8 +15,8 @@
 package com.liferay.commerce.machine.learning.internal.forecast.data.integration;
 
 import com.liferay.commerce.data.integration.service.ScheduledTaskExecutorService;
+import com.liferay.commerce.machine.learning.internal.batch.BatchEngineTaskItemDelegateResourceMapper;
 import com.liferay.commerce.machine.learning.internal.data.integration.AnalyticsScheduledTaskExecutorService;
-import com.liferay.commerce.machine.learning.internal.data.integration.BatchEngineTaskItemDelegateResourceMapper;
 import com.liferay.commerce.machine.learning.internal.forecast.data.integration.process.type.AnalyticsDownloadCommerceAccountCommerceMLForecastProcessType;
 import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountForecast;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -27,6 +27,7 @@ import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProces
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog;
 import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLocalService;
 import com.liferay.commerce.data.integration.service.CommerceDataIntegrationProcessLogLocalService;
+import com.liferay.commerce.machine.learning.internal.batch.BatchEngineTaskItemDelegateResourceMapper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

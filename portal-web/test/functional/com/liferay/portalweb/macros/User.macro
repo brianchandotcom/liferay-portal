@@ -2017,7 +2017,9 @@ definition {
 			password = "${password}",
 			userEmailAddress = "${userEmailAddress}");
 
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IN_NAVIGATION_USER_PERSONAL_BAR_PORTLET")) {
+			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+		}
 	}
 
 	@description = "Log into Liferay Portal as ${userEmailAddress} using the password ${password} with CAS authentication enabled."

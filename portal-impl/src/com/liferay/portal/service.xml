@@ -2123,6 +2123,12 @@
 		<column name="regionCode" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
+		<!-- Localized entity -->
+
+		<localized-entity>
+			<localized-column name="title" />
+		</localized-entity>
+
 		<!-- Order -->
 
 		<order by="asc">

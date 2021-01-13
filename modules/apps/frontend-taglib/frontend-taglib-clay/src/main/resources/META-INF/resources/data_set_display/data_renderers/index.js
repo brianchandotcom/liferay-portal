@@ -35,15 +35,18 @@ const dataRenderers = {
 	date: DateRenderer,
 	default: DefaultRenderer,
 	image: ImageRenderer,
-	inputCheckbox: InputCheckboxRenderer,
-	inputDate: InputDateTimeRenderer,
-	inputText: InputTextRenderer,
 	label: LabelRenderer,
 	link: LinkRenderer,
 	list: ListRenderer,
 	quantitySelector: QuantitySelectorRenderer,
 	status: StatusRenderer,
 	tooltipSummary: TooltipSummaryRenderer,
+};
+
+export const inputRenderers = {
+	checkbox: InputCheckboxRenderer,
+	dateTime: InputDateTimeRenderer,
+	text: InputTextRenderer,
 };
 
 export default dataRenderers;

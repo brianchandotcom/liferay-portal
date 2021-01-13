@@ -12,8 +12,18 @@
  * details.
  */
 
-import dataRenderers from '../data_renderers/index';
+import dataRenderers, {inputRenderers} from '../data_renderers/index';
 import {getJsModule} from './modules';
+
+export function getInputRendererById(id) {
+	const inputRenderer = inputRenderers[id];
+
+	if (!inputRenderer) {
+		throw new Error(`No input renderer found with id "${id}"`);
+	}
+
+	return inputRenderer;
+}
 
 export function getDataRendererById(id) {
 	const dataRenderer = dataRenderers[id];

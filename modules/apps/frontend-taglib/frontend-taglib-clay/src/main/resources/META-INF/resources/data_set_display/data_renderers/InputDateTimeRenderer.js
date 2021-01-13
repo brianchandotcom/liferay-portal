@@ -26,15 +26,15 @@ function getDateTimeString(date) {
 		'-' +
 		('0' + dateInstance.getDate()).slice(-2) +
 		'T' +
-		dateInstance.getHours() +
+		('0' + dateInstance.getHours()).slice(-2) +
 		':' +
-		dateInstance.getMinutes();
+		('0' + dateInstance.getMinutes()).slice(-2);
 
 	return dateTimeString;
 }
 
 function InputDateTimeRenderer({updateItem, value}) {
-	const date = getDateTimeString(value);
+	const formattedDate = value ? getDateTimeString(value) : '';
 
 	return (
 		<ClayInput.Group small>
@@ -45,7 +45,7 @@ function InputDateTimeRenderer({updateItem, value}) {
 						updateItem(newDate.toISOString());
 					}}
 					type="datetime-local"
-					value={date}
+					value={formattedDate}
 				/>
 			</ClayInput.GroupItem>
 		</ClayInput.Group>
@@ -54,7 +54,7 @@ function InputDateTimeRenderer({updateItem, value}) {
 
 InputDateTimeRenderer.propTypes = {
 	updateItem: PropType.func.isRequired,
-	value: PropType.string.isRequired,
+	value: PropType.string,
 };
 
 export default InputDateTimeRenderer;

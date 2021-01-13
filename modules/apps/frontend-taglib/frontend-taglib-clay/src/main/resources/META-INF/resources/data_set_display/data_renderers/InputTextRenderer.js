@@ -31,7 +31,7 @@ function InputTextRenderer({options = {}, updateItem, value}) {
 					onChange={(event) => {
 						updateItem(event.target.value);
 					}}
-					value={value}
+					value={value ?? ''}
 					{...inputProps}
 				/>
 			</ClayInput.GroupItem>
@@ -50,7 +50,7 @@ InputTextRenderer.propTypes = {
 		prependText: PropType.string,
 	}),
 	updateItem: PropType.func.isRequired,
-	value: PropType.string.isRequired,
+	value: PropType.string,
 };
 
 export default InputTextRenderer;

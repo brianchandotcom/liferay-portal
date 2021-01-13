@@ -609,6 +609,7 @@ const productsDataSetDisplayProps = {
 		},
 	],
 	id: 'tableTest',
+	inlineEditingSettings: true,
 	itemsActions: [
 		{
 			href: '/page/{id}',
@@ -680,9 +681,6 @@ const productsDataSetDisplayProps = {
 						actionId: 'view',
 						contentRenderer: 'actionLink',
 						fieldName: ['name', 'LANG'],
-						inlineEditSettings: {
-							type: 'text',
-						},
 						label: 'Name',
 						sortable: true,
 					},
@@ -707,7 +705,7 @@ const productsDataSetDisplayProps = {
 						contentRenderer: 'date',
 						fieldName: 'createDate',
 						inlineEditSettings: {
-							type: 'datetime',
+							type: 'dateTime',
 						},
 						label: 'Created Date',
 						sortable: true,
@@ -738,7 +736,18 @@ const productsDataSetDisplayProps = {
 const priceListsDataSetDisplayProps = {
 	activeViewSettings: {},
 	apiURL: '/o/headless-commerce-admin-pricing/v2.0/price-lists',
+	enableInlineEditMode: false,
 	id: 'tableTest',
+	inlineAddingSettings: {
+		apiURL: '/o/fake-new-inline-item-endpoint',
+		defaultBodyContent: {
+			testKey: 'testValue',
+		},
+		method: 'POST',
+	},
+	inlineEditingSettings: {
+		alwaysOn: true,
+	},
 	itemsActions: [
 		{
 			href: '/page/{id}',
@@ -808,7 +817,7 @@ const priceListsDataSetDisplayProps = {
 						contentRenderer: 'date',
 						fieldName: 'createDate',
 						inlineEditSettings: {
-							type: 'datetime',
+							type: 'dateTime',
 						},
 						label: 'Created Date',
 						sortable: true,
@@ -817,7 +826,7 @@ const priceListsDataSetDisplayProps = {
 						contentRenderer: 'date',
 						fieldName: 'displayDate',
 						inlineEditSettings: {
-							type: 'datetime',
+							type: 'dateTime',
 						},
 						label: 'Display Date',
 						sortable: true,
@@ -830,6 +839,9 @@ const priceListsDataSetDisplayProps = {
 					{
 						contentRenderer: 'boolean',
 						fieldName: 'active',
+						inlineEditSettings: {
+							type: 'checkbox',
+						},
 						label: 'Active',
 					},
 				],
@@ -839,35 +851,35 @@ const priceListsDataSetDisplayProps = {
 	],
 };
 
-// datasetDisplayLauncher(
-// 	ordersDataSetDisplayProps,
-// 	document.getElementById('orders-dataset-display-root')
-// );
+datasetDisplayLauncher(
+	ordersDataSetDisplayProps,
+	document.getElementById('orders-dataset-display-root')
+);
 
-// datasetDisplayLauncher(
-// 	productsDataSetDisplayProps,
-// 	document.getElementById('products-dataset-display-root')
-// );
+datasetDisplayLauncher(
+	productsDataSetDisplayProps,
+	document.getElementById('products-dataset-display-root')
+);
 
 datasetDisplayLauncher(
 	priceListsDataSetDisplayProps,
 	document.getElementById('price-list-dataset-display-root')
 );
 
-// datasetDisplayLauncher(
-// 	fluidDataSetDisplayProps,
-// 	document.getElementById('fluid-dataset-display-root')
-// );
+datasetDisplayLauncher(
+	fluidDataSetDisplayProps,
+	document.getElementById('fluid-dataset-display-root')
+);
 
-// datasetDisplayLauncher(
-// 	selectableTableProps,
-// 	document.getElementById('selectable-dataset-display-root')
-// );
+datasetDisplayLauncher(
+	selectableTableProps,
+	document.getElementById('selectable-dataset-display-root')
+);
 
-// datasetDisplayLauncher(
-// 	emailsDataSetDisplayProps,
-// 	document.getElementById('emails-dataset-display-root')
-// );
+datasetDisplayLauncher(
+	emailsDataSetDisplayProps,
+	document.getElementById('emails-dataset-display-root')
+);
 
 sidePanelLauncher('sidePanel', 'side-panel-root', {
 	containerSelector: '.container',

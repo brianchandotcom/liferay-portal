@@ -42,6 +42,7 @@ import {
 import {
 	delay,
 	executeAsyncAction,
+	getCurrentItemUpdates,
 	getRandomId,
 	loadData,
 } from './utilities/index';
@@ -55,10 +56,11 @@ function DataSetDisplay({
 	bulkActions,
 	creationMenu,
 	currentURL,
-	enableInlineEditMode,
 	filters: filtersProp,
 	formId,
 	id,
+	inlineAddingSettings,
+	inlineEditingSettings,
 	items: itemsProp,
 	itemsActions,
 	namespace,
@@ -91,7 +93,7 @@ function DataSetDisplay({
 	const [filters, updateFilters] = useState(filtersProp);
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [items, updateItems] = useState(itemsProp);
-	const [modifiedItems, updateModifiedItems] = useState({});
+	const [itemsChanges, updateItemsChanges] = useState({});
 	const [pageNumber, setPageNumber] = useState(1);
 	const [searchParam, updateSearchParam] = useState('');
 	const [selectedItemsValue, setSelectedItemsValue] = useState(
@@ -196,8 +198,7 @@ function DataSetDisplay({
 			setSelectedItemsValue(
 				selectedItemsValue.filter((element) => element !== value)
 			);
-		}
-		else {
+		} else {
 			setSelectedItemsValue(selectedItemsValue.concat(value));
 		}
 	}
@@ -428,29 +429,78 @@ function DataSetDisplay({
 			? property[0]
 			: property;
 
-		updateModifiedItems((modifiedItems) => {
-			return {
-				...modifiedItems,
-				[itemKey]: {
-					...modifiedItems[itemKey],
-					[formattedProperty]: value,
-				},
-			};
+		const itemChanges = getCurrentItemUpdates(
+			items,
+			itemsChanges,
+			selectedItemsKey,
+			itemKey,
+			formattedProperty,
+			value
+		);
+
+		updateItemsChanges({
+			...itemsChanges,
+			[itemKey]: itemChanges,
 		});
 	}
 
 	function toggleItemInlineEdit(itemKey) {
-		updateModifiedItems(({[itemKey]: foundItem, ...modifiedItems}) => {
-			if (foundItem) {
-				return modifiedItems;
-			}
-			else {
-				return {
-					...modifiedItems,
-					[itemKey]: {},
-				};
-			}
+		updateItemsChanges(({[itemKey]: foundItem, ...itemsChanges}) => {
+			return foundItem
+				? itemsChanges
+				: {
+						...itemsChanges,
+						[itemKey]: {},
+				  };
 		});
+	}
+
+	function createInlineItem() {
+		const defaultBody = inlineAddingSettings.defaultBodyContent || {};
+
+		return fetch(inlineAddingSettings.apiURL, {
+			body: JSON.stringify({
+				...defaultBody,
+				...itemsChanges[0],
+			}),
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			method: inlineAddingSettings.method || 'POST',
+		})
+			.then((response) => {
+				if (!isMounted()) {
+					return;
+				}
+
+				if (!response.ok) {
+					return response
+						.json()
+						.then((jsonResponse) =>
+							Promise.reject(new Error(jsonResponse.title))
+						);
+				}
+
+				updateItemsChanges((itemsChanges) => ({
+					...itemsChanges,
+					[0]: {},
+				}));
+
+				return refreshData({
+					message: Liferay.Language.get('item-successfully-created'),
+					showSuccessNotification: true,
+				});
+			})
+			.catch((error) => {
+				logError(error);
+				openToast({
+					message: error.message,
+					type: 'danger',
+				});
+
+				throw error;
+			});
 	}
 
 	function applyItemInlineUpdates(itemKey) {
@@ -458,8 +508,13 @@ function DataSetDisplay({
 			(item) => item[selectedItemsKey] === itemKey
 		);
 
+		const defaultBody = inlineEditingSettings.defaultBodyContent || {};
+
 		return fetch(itemToBeUpdated.actions.update.href, {
-			body: JSON.stringify(modifiedItems[itemKey]),
+			body: JSON.stringify({
+				...defaultBody,
+				...itemsChanges[itemKey],
+			}),
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
@@ -467,6 +522,10 @@ function DataSetDisplay({
 			method: itemToBeUpdated.actions.update.method,
 		})
 			.then((response) => {
+				if (!isMounted()) {
+					return;
+				}
+
 				if (!response.ok) {
 					return response
 						.json()
@@ -498,17 +557,19 @@ function DataSetDisplay({
 			value={{
 				actionParameterName,
 				applyItemInlineUpdates,
-				enableInlineEditMode,
+				createInlineItem,
 				executeAsyncItemAction,
 				formId,
 				formRef,
 				highlightItems,
 				highlightedItemsValue,
 				id,
+				inlineAddingSettings,
+				inlineEditingSettings,
 				itemsActions,
+				itemsChanges,
 				loadData: refreshData,
 				modalId: dataSetDisplaySupportModalId,
-				modifiedItems,
 				namespace,
 				nestedItemsKey,
 				nestedItemsReferenceKey,
@@ -576,9 +637,23 @@ DataSetDisplay.propTypes = {
 		secondaryItems: PropTypes.array,
 	}),
 	currentURL: PropTypes.string,
+	enableInlineAddModeSetting: PropTypes.shape({
+		defaultBodyContent: PropTypes.object,
+	}),
 	filters: PropTypes.array,
 	formId: PropTypes.string,
 	id: PropTypes.string.isRequired,
+	inlineAddingSettings: PropTypes.shape({
+		apiURL: PropTypes.string.isRequired,
+		defaultBodyContent: PropTypes.object,
+	}),
+	inlineEditingSettings: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.shape({
+			alwaysOn: PropTypes.bool,
+			defaultBodyContent: PropTypes.object,
+		}),
+	]),
 	items: PropTypes.array,
 	itemsActions: PropTypes.array,
 	namespace: PropTypes.string,
@@ -622,8 +697,8 @@ DataSetDisplay.propTypes = {
 
 DataSetDisplay.defaultProps = {
 	bulkActions: [],
-	enableInlineEditMode: true,
 	filters: [],
+	inlineEditingSettings: null,
 	items: null,
 	itemsActions: null,
 	pagination: {

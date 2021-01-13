@@ -18,28 +18,15 @@ import React, {useContext, useEffect, useState} from 'react';
 import DataSetDisplayContext from '../../DataSetDisplayContext';
 import CommentRenderer from '../../data_renderers/CommentRenderer';
 import DefaultRenderer from '../../data_renderers/DefaultRenderer';
-import InputCheckboxRenderer from '../../data_renderers/InputCheckboxRenderer';
-import InputDateRenderer from '../../data_renderers/InputDateTimeRenderer';
-import InputTextRenderer from '../../data_renderers/InputTextRenderer';
 import {
 	getDataRendererById,
 	getDataRendererByURL,
+	getInputRendererById,
 } from '../../utilities/dataRenderers';
 
 function InlineEditInputRenderer({type, value, ...otherProps}) {
-	const {modifiedItems, updateItem} = useContext(DataSetDisplayContext);
-	let InputRenderer;
-
-	switch (type) {
-		case 'datetime':
-			InputRenderer = InputDateRenderer;
-			break;
-		case 'checkbox':
-			InputRenderer = InputCheckboxRenderer;
-			break;
-		default:
-			InputRenderer = InputTextRenderer;
-	}
+	const {itemsChanges, updateItem} = useContext(DataSetDisplayContext);
+	const InputRenderer = getInputRendererById(type);
 
 	let inputValue = value;
 
@@ -48,10 +35,11 @@ function InlineEditInputRenderer({type, value, ...otherProps}) {
 		: otherProps.options.fieldName;
 
 	if (
-		modifiedItems[otherProps.itemId] &&
-		modifiedItems[otherProps.itemId][formattedFieldName]
+		itemsChanges[otherProps.itemId] &&
+		typeof itemsChanges[otherProps.itemId][formattedFieldName] !==
+			'undefined'
 	) {
-		inputValue = modifiedItems[otherProps.itemId][formattedFieldName];
+		inputValue = itemsChanges[otherProps.itemId][formattedFieldName];
 	}
 
 	return (
@@ -81,6 +69,8 @@ function TableCell({
 	view,
 }) {
 	let dataRenderer = DefaultRenderer;
+
+	const {inlineEditingSettings} = useContext(DataSetDisplayContext);
 
 	if (view.contentRenderer) {
 		dataRenderer = getDataRendererById(view.contentRenderer);
@@ -115,7 +105,10 @@ function TableCell({
 		}
 	}, [currentView, loading]);
 
-	if (itemInlineChanges && inlineEditSettings) {
+	if (
+		inlineEditSettings &&
+		(itemInlineChanges || inlineEditingSettings?.alwaysOn)
+	) {
 		return (
 			<ClayTable.Cell>
 				<InlineEditInputRenderer

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
@@ -20,10 +21,12 @@ import React, {useContext} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
 import ActionsDropdownRenderer from '../../data_renderers/ActionsDropdownRenderer';
+import {getInputRendererById} from '../../utilities/dataRenderers';
 import {getValueFromItem} from '../../utilities/index';
 import ViewsContext from '../ViewsContext';
 import TableCell from './TableCell';
 import TableHeadRow from './TableHeadRow';
+import TableInlineAddingRow from './TableInlineAddingRow';
 
 function getItemFields(
 	item,
@@ -71,7 +74,8 @@ export const getVisibleFields = (fields, visibleFieldNames) => {
 function Table({items, itemsActions, schema, style}) {
 	const {
 		highlightedItemsValue,
-		modifiedItems,
+		inlineAddingSettings,
+		itemsChanges,
 		nestedItemsKey,
 		nestedItemsReferenceKey,
 		selectItems,
@@ -110,6 +114,12 @@ function Table({items, itemsActions, schema, style}) {
 					visibleFields={visibleFields}
 				/>
 				<ClayTable.Body>
+					{inlineAddingSettings && (
+						<TableInlineAddingRow
+							fields={visibleFields}
+							selectable={selectable}
+						/>
+					)}
 					{items.map((item) => {
 						const itemId = item[selectedItemsKey];
 						const nestedItems =
@@ -152,7 +162,7 @@ function Table({items, itemsActions, schema, style}) {
 										visibleFields,
 										itemId,
 										itemsActions,
-										modifiedItems[itemId]
+										itemsChanges[itemId]
 									)}
 									<ClayTable.Cell className="data-set-item-actions-wrapper">
 										{(showActionItems || item.actions) && (

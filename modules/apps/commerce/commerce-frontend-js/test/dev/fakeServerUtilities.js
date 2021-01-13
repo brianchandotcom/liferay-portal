@@ -444,11 +444,17 @@ function defineServerResponses(app) {
 		});
 	});
 
+	app.post('/o/fake-new-inline-item-endpoint', (_, res) => {
+		setTimeout(() => {
+			return res.json({});
+		}, 500);
+	});
+
 	let timeoutOn = false;
 	let processEnded = false;
 	let success = false;
 
-	app.delete('/o/fake-bulk-action/v1.0/products/0/batch', (req, res) => {
+	app.delete('/o/fake-bulk-action/v1.0/products/0/batch', (_, res) => {
 		if (!timeoutOn) {
 			timeoutOn = true;
 			success = !success;

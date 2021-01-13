@@ -20,7 +20,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
-
+import {useIsMounted} from 'frontend-js-react-web';
 import DataSetDisplayContext from '../DataSetDisplayContext';
 import {ACTION_ITEM_TARGETS} from '../utilities/actionItems/constants';
 import {formatActionURL} from '../utilities/index';
@@ -61,16 +61,14 @@ export function handleAction(
 
 		if (target === MODAL_PERMISSIONS) {
 			openPermissionsModal(url);
-		}
-		else {
+		} else {
 			openModal({
 				size: resolveModalSize(target),
 				title,
 				url,
 			});
 		}
-	}
-	else if (target === 'sidePanel') {
+	} else if (target === 'sidePanel') {
 		event.preventDefault();
 
 		highlightItems([itemId]);
@@ -79,8 +77,7 @@ export function handleAction(
 			title,
 			url,
 		});
-	}
-	else if (target === 'async' || target === 'headless') {
+	} else if (target === 'async' || target === 'headless') {
 		event.preventDefault();
 
 		setLoading(true);
@@ -97,18 +94,15 @@ export function handleAction(
 			.catch((_) => {
 				setLoading(false);
 			});
-	}
-	else if (target === 'inlineEdit') {
+	} else if (target === 'inlineEdit') {
 		event.preventDefault();
 
 		toggleItemInlineEdit(itemId);
-	}
-	else if (target === 'blank') {
+	} else if (target === 'blank') {
 		event.preventDefault();
 
 		window.open(url);
-	}
-	else if (onClick) {
+	} else if (onClick) {
 		event.preventDefault();
 
 		event.target.setAttribute('onClick', onClick);
@@ -175,26 +169,50 @@ function ActionItem({
 
 function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	const context = useContext(DataSetDisplayContext);
-	const [active, setActive] = useState(false);
+	const [menuActive, setMenuActive] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const alwaysOn = context.inlineEditingSettings?.alwaysOn;
+	const isMounted = useIsMounted();
 
-	if (context.modifiedItems[itemId]) {
-		return (
-			<div className="d-flex">
-				<ClayButtonWithIcon
-					className="mr-1"
-					displayType="secondary"
-					onClick={() => context.toggleItemInlineEdit(itemId)}
-					small
-					symbol="times-small"
-				/>
-				<ClayButtonWithIcon
-					onClick={() => context.applyItemInlineUpdates(itemId)}
-					small
-					symbol="check"
-				/>
-			</div>
-		);
+	const saveButton = loading ? (
+		<ClayButton disabled monospaced small>
+			<ClayLoadingIndicator small />
+		</ClayButton>
+	) : (
+		<ClayButtonWithIcon
+			disabled={
+				!context.itemsChanges[itemId] ||
+				!Object.keys(context.itemsChanges[itemId]).length
+			}
+			monospaced
+			onClick={() => {
+				setLoading(true);
+				context.applyItemInlineUpdates(itemId).finally(() => {
+					if (isMounted()) {
+						setLoading(false);
+					}
+				});
+			}}
+			small
+			symbol="check"
+		/>
+	);
+
+	const inlineCommands = (
+		<div className="d-flex">
+			<ClayButtonWithIcon
+				className="mr-1"
+				displayType="secondary"
+				onClick={() => context.toggleItemInlineEdit(itemId)}
+				small
+				symbol="times-small"
+			/>
+			{saveButton}
+		</div>
+	);
+
+	if (!alwaysOn && context.itemsChanges[itemId]) {
+		return inlineCommands;
 	}
 
 	const formattedActions = actions
@@ -211,8 +229,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 									],
 								},
 							];
-						}
-						else {
+						} else {
 							return [...actions, action];
 						}
 					}
@@ -224,7 +241,15 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		  }, [])
 		: [];
 
-	if (context.enableInlineEditMode && itemData.actions['update']) {
+	if (alwaysOn && (!formattedActions || !formattedActions.length)) {
+		return <div className="d-flex">{saveButton}</div>;
+	}
+
+	if (
+		!alwaysOn &&
+		context.inlineEditingSettings &&
+		itemData.actions?.update
+	) {
 		formattedActions.unshift({
 			icon: 'fieldset',
 			label: Liferay.Language.get('inline-edit'),
@@ -236,7 +261,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		return null;
 	}
 
-	if (formattedActions.length === 1) {
+	if (!alwaysOn && formattedActions.length === 1) {
 		const [action] = formattedActions;
 		const {data: actionData} = action;
 
@@ -292,7 +317,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		);
 	}
 
-	if (loading) {
+	if (loading && !alwaysOn) {
 		return (
 			<ClayButton
 				className="btn-sm"
@@ -319,7 +344,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 			return (
 				<ActionItem
 					{...item}
-					closeMenu={() => setActive(false)}
+					closeMenu={() => setMenuActive(false)}
 					handleAction={handleAction}
 					href={item.href && formatActionURL(item.href, itemData)}
 					itemId={itemId}
@@ -331,22 +356,24 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		});
 
 	return (
-		<ClayDropDown
-			active={active}
-			onActiveChange={setActive}
-			trigger={
-				<ClayButton
-					className="component-action dropdown-toggle"
-					displayType="unstyled"
-				>
-					<ClayIcon symbol="ellipsis-v" />
-				</ClayButton>
-			}
-		>
-			<ClayDropDown.ItemList>
-				{renderItems(formattedActions)}
-			</ClayDropDown.ItemList>
-		</ClayDropDown>
+		<div className="d-flex">
+			{alwaysOn && inlineCommands}
+			<ClayDropDown
+				active={menuActive}
+				onActiveChange={setMenuActive}
+				trigger={
+					<ClayButtonWithIcon
+						className="component-action dropdown-toggle ml-1"
+						displayType="unstyled"
+						symbol="ellipsis-v"
+					/>
+				}
+			>
+				<ClayDropDown.ItemList>
+					{renderItems(formattedActions)}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		</div>
 	);
 }
 

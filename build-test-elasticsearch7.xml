@@ -1355,8 +1355,12 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</elseif>
 		</if>
 
+		<condition else="9200" property="elasticsearch.port" value="${elasticsearch.port}">
+			<isset property="elasticsearch.port" />
+		</condition>
+
 		<waitfor maxwait="120" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-			<http url="http://localhost:9200/" />
+			<http url="http://localhost:${elasticsearch.port}/" />
 		</waitfor>
 
 		<print-file file.name="${elasticsearch.start.dir}/logs/LiferayElasticsearchCluster.log" />
@@ -1371,9 +1375,9 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</then>
 		</if>
 
-		<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
-
 		<lstopwatch action="total" name="start.elasticsearch.node" />
+
+		<fail if="elasticsearch.server.not.started" message="Elasticsearch server on port ${elasticsearch.port} failed to initialize." />
 	</target>
 
 	<target name="start-kibana">

@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 /**
@@ -31,9 +30,7 @@ public class AppReleaseFunctionalBatchTestClassGroup
 			return propertyQuery;
 		}
 
-		return JenkinsResultsParserUtil.getProperty(
-			portalTestClassJob.getJobProperties(),
-			"test.batch.run.property.query", getJobName());
+		return super.getRelevantTestBatchRunPropertyQuery();
 	}
 
 	protected AppReleaseFunctionalBatchTestClassGroup(

@@ -53,9 +53,16 @@ public class PortalAppReleaseJob extends BaseJob implements PortalTestClassJob {
 
 	@Override
 	protected Set<String> getRawBatchNames() {
+		BuildProfile buildProfile = getBuildProfile();
+
+		if (buildProfile == null) {
+			buildProfile = BuildProfile.PORTAL;
+		}
+
 		return getSetFromString(
 			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names", getJobName()));
+				getJobProperties(), "test.batch.names", getJobName(),
+				buildProfile.toString()));
 	}
 
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;

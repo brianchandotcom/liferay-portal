@@ -20,8 +20,8 @@ import DLVideoExternalShortcutPreview from './components/DLVideoExternalShortcut
 import {useDLVideoExternalShortcutFields} from './utils/hooks';
 
 const DLVideoExternalShortcutDLFilePicker = ({
-	dlVideoExternalShortcutHTML,
-	dlVideoExternalShortcutURL,
+	dlVideoExternalShortcutHTML = '',
+	dlVideoExternalShortcutURL = '',
 	getDLVideoExternalShortcutFieldsURL,
 	namespace,
 	onFilePickCallback,

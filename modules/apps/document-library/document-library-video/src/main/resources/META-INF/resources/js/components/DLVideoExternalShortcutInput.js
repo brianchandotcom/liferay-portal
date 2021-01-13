@@ -18,7 +18,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const DLVideoExternalShortcutPreview = ({labelTooltip, onChange, url}) => {
+const DLVideoExternalShortcutPreview = ({labelTooltip, onChange, url = ''}) => {
 	const inputName = 'dlVideoExternalShortcutURLInput';
 
 	return (

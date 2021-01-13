@@ -1554,6 +1554,94 @@ definition {
 			fieldValue = "Task 3");
 	}
 
+	@description = "Automate LPS-122714 Edit and Propagate Changes in Translations of fieldsets"
+	@priority = "5"
+	test PropagateChangeInTranslatedFieldSet {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setUpFieldSet(
+			fieldLabel = "Name",
+			fieldSetName = "Field Set English",
+			fieldType = "Text");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set English");
+
+		FormViewBuilder.setName(formViewName = "Translated Form");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object 2",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Field Set English");
+
+		Click(locator1 = "FormViewBuilder#RULE_BUILDER_GO_BACK");
+
+		FormViewBuilder.goToFieldsetsTab();
+
+		FormViewBuilder.editDisabledFieldSetEntry(
+			rowNumber = "1",
+			selectAction = "Edit");
+
+		FormViewBuilder.switchLocalizationForFieldSets(
+			localizationName = "pt-BR",
+			statusName = "Not Translated",
+			symbolName = "en-US");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Field Set Brazil");
+
+		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
+
+		FormViewBuilder.propagateChange();
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		FormViewBuilder.setName(formViewName = "Translated Form 2");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "Translated Form 2");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		FormViewBuilder.gotoFirstFieldset(fieldLabel = "Name");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Field Set Brazil");
+
+		FormViewBuilder.validateObjectFieldName(fieldName = "Field Set Brazil");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.openItem(itemName = "my custom object");
+
+		AppBuilderAdmin.openItem(itemName = "Translated Form");
+
+		FormViewBuilder.switchLocalization(
+			localizationName = "pt-BR",
+			symbolName = "en-US");
+
+		FormViewBuilder.validateObjectFieldName(fieldName = "Field Set Brazil");
+	}
+
 	@description = "Publish my app as a widget and submit entry"
 	@priority = "5"
 	test PublishAppAsWidgetAndSubmitEntry {

@@ -138,16 +138,38 @@ public class JUnitTestResult extends BaseTestResult {
 
 		Build build = getBuild();
 
-		Map<String, String> startPropertiesTempMap =
-			build.getStartPropertiesTempMap();
+		Map<String, String> propertiesMap = null;
 
-		return JenkinsResultsParserUtil.combine(
-			logBaseURL, "/",
-			startPropertiesTempMap.get("TOP_LEVEL_MASTER_HOSTNAME"), "/",
-			startPropertiesTempMap.get("TOP_LEVEL_START_TIME"), "/",
-			startPropertiesTempMap.get("TOP_LEVEL_JOB_NAME"), "/",
-			startPropertiesTempMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
-			build.getJobVariant(), "/", getAxisNumber());
+		try {
+			propertiesMap = build.getStartPropertiesTempMap();
+		}
+		catch (RuntimeException runtimeException) {
+			String message = runtimeException.getMessage();
+
+			if (!message.contains(
+					"Unable to find properties for start.properties")) {
+
+				throw runtimeException;
+			}
+
+			try {
+				propertiesMap = build.getInjectedEnvironmentVariablesMap();
+			}
+			catch (IOException ioException) {
+				System.out.println("Unable to generate Testray log URL");
+			}
+		}
+
+		if (propertiesMap != null) {
+			return JenkinsResultsParserUtil.combine(
+				logBaseURL, "/", propertiesMap.get("TOP_LEVEL_MASTER_HOSTNAME"),
+				"/", propertiesMap.get("TOP_LEVEL_START_TIME"), "/",
+				propertiesMap.get("TOP_LEVEL_JOB_NAME"), "/",
+				propertiesMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
+				build.getJobVariant(), "/", getAxisNumber());
+		}
+
+		return build.getBuildURL();
 	}
 
 	@Override

@@ -209,9 +209,10 @@ public class DLEditFileShortcutDisplayContextTest {
 				).build());
 
 		Mockito.when(
-			_language.get(
+			_language.format(
 				Mockito.any(HttpServletRequest.class),
-				Mockito.eq("shortcut-to-x"), Mockito.anyString())
+				Mockito.eq("shortcut-to-x"), Mockito.anyString(),
+				Mockito.anyBoolean())
 		).thenReturn(
 			"Short Cut To X"
 		);

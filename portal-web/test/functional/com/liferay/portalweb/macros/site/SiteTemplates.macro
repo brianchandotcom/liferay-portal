@@ -197,9 +197,11 @@ definition {
 			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
 			value1 = "${siteTemplateName}");
 
-		LexiconEntry.gotoEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Disable Propagation",
 			rowEntry = "${siteTemplateName}");
+
+		AssertConfirm(value1 = "Are you sure you want to disable propagation? Connected sites might not have triggered the propagation yet.");
 
 		Alert.viewSuccessMessage();
 	}

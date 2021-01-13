@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.upgrade.v7_4_x.util.RegionTable;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.PreparedStatement;
@@ -55,62 +54,16 @@ public class UpgradeRegion extends UpgradeProcess {
 			}
 		}
 
-		if (!hasColumn("Region", "companyId")) {
-			alter(
-				RegionTable.class,
-				new AlterTableAddColumn("companyId", "LONG"));
-		}
-
 		if (defaultCompanyId > 0) {
 			runSQL(
 				"update Region set companyId = " + defaultCompanyId +
 					" where companyId is null");
 		}
 
-		if (!hasColumn("Region", "userId")) {
-			alter(RegionTable.class, new AlterTableAddColumn("userId", "LONG"));
-		}
-
 		if (defaultUserId > 0) {
 			runSQL(
 				"update Region set userId = " + defaultUserId +
 					" where userId is null");
-		}
-
-		if (!hasColumn("Region", "userName")) {
-			alter(
-				RegionTable.class,
-				new AlterTableAddColumn("userName", "VARCHAR(75) null"));
-		}
-
-		if (!hasColumn("Region", "createDate")) {
-			alter(
-				RegionTable.class,
-				new AlterTableAddColumn("createDate", "DATE null"));
-		}
-
-		if (!hasColumn("Region", "modifiedDate")) {
-			alter(
-				RegionTable.class,
-				new AlterTableAddColumn("modifiedDate", "DATE null"));
-		}
-
-		if (!hasColumn("Region", "position")) {
-			alter(
-				RegionTable.class,
-				new AlterTableAddColumn("position", "DOUBLE"));
-		}
-
-		if (!hasColumn("Region", "lastPublishDate")) {
-			alter(
-				RegionTable.class,
-				new AlterTableAddColumn("lastPublishDate", "DATE null"));
-		}
-
-		if (!hasColumn("Region", "uuid_")) {
-			alter(
-				RegionTable.class,
-				new AlterTableAddColumn("uuid_", "VARCHAR(75) null"));
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {

@@ -808,7 +808,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		return _configurationProvider.getConfiguration(
 			CPOptionConfiguration.class,
-			new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
+			new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
 	}
 
 	private boolean _hasCPDefinitionSKUContributorCPDefinitionOptionRel(

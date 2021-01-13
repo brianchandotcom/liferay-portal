@@ -214,9 +214,9 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("select PortletPreferences.portletPreferencesId from ");
-		sb.append("PortletPreferences inner join PortletPreferenceValue on ");
-		sb.append("PortletPreferenceValue.portletPreferencesId = ");
+		sb.append("select distinct PortletPreferences.portletPreferencesId ");
+		sb.append("from PortletPreferences inner join PortletPreferenceValue ");
+		sb.append("on PortletPreferenceValue.portletPreferencesId = ");
 		sb.append("PortletPreferences.portletPreferencesId where portletId = ");
 		sb.append("'");
 		sb.append(oldRootPortletId);

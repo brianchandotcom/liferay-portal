@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.internal.upgrade.v2_1_0;
+package com.liferay.blogs.internal.upgrade.v2_1_1;
 
-import com.liferay.blogs.internal.upgrade.v2_1_0.util.BlogsEntryTable;
+import com.liferay.blogs.internal.upgrade.v2_1_1.util.BlogsEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**

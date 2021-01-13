@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.internal.upgrade.v2_1_0.util;
+package com.liferay.blogs.internal.upgrade.v2_1_1.util;
 
 import java.sql.Types;
 

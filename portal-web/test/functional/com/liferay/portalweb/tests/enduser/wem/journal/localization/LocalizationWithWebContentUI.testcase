@@ -28,9 +28,6 @@ definition {
 		}
 	}
 
-	// Ignore for LPS-123122
-
-	@ignore = "true"
 	@priority = "5"
 	test AddLocalizedWebContentViaSourceEditor {
 		property portal.acceptance = "true";
@@ -126,9 +123,6 @@ definition {
 			value1 = "Space Program 大学生涯教育 地球から、宇宙の果てへ");
 	}
 
-	// Ignore for LPS-123076
-
-	@ignore = "true"
 	@priority = "5"
 	test AddWCWithTranslation {
 		property portal.acceptance = "true";

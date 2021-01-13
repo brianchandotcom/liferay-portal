@@ -411,10 +411,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-70386."
-
-	// Ignore for LPS-123122
-
-	@ignore = "true"
 	@priority = "5"
 	test AddWebContentWithPortletURL {
 		property portal.acceptance = "true";

@@ -63,6 +63,7 @@ public class AccountMemberDTOConverter
 				accountId = commerceAccountUserRel.getCommerceAccountId();
 				accountRoles = _getAccountRoles(
 					commerceAccountUserRel, dtoConverterContext);
+				email = user.getEmailAddress();
 				name = user.getFullName();
 				userId = user.getUserId();
 			}

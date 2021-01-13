@@ -977,7 +977,7 @@ public class CPTestUtil {
 
 		return ConfigurationProviderUtil.getConfiguration(
 			CPOptionConfiguration.class,
-			new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
+			new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
 	}
 
 	private static CPInstance _getRandomApprovedCPInstance(

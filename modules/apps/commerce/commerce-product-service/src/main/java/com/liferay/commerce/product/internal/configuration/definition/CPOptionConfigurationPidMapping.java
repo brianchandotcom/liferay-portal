@@ -34,7 +34,7 @@ public class CPOptionConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return CPConstants.CP_OPTION_SERVICE_NAME;
+		return CPConstants.SERVICE_NAME_CP_OPTION;
 	}
 
 }

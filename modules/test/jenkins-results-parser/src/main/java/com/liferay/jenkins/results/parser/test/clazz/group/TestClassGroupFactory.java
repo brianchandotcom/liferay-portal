@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalAWSJob;
+import com.liferay.jenkins.results.parser.PortalAppReleaseJob;
 import com.liferay.jenkins.results.parser.PortalEnvironmentJob;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
@@ -63,7 +64,11 @@ public class TestClassGroupFactory {
 
 		BatchTestClassGroup batchTestClassGroup = null;
 
-		if (job instanceof PortalEnvironmentJob) {
+		if (job instanceof PortalAppReleaseJob) {
+			batchTestClassGroup = new AppReleaseFunctionalBatchTestClassGroup(
+				batchName, (PortalAppReleaseJob)job);
+		}
+		else if (job instanceof PortalEnvironmentJob) {
 			batchTestClassGroup = new EnvironmentFunctionalBatchTestClassGroup(
 				batchName, (PortalEnvironmentJob)job);
 		}

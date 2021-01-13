@@ -36,12 +36,12 @@ public class UpgradeRegion extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQLTemplate("update-7.3.0-7.4.0-region.sql", false);
 
-		long defaultCompanyId = 0;
 		String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.US);
-		long defaultUserId = 0;
+		long companyId = 0;
+		long userId = 0;
 
 		String sql = StringBundler.concat(
-			"select User_.companyId, User_.languageId, User_.userId from ",
+			"select User_.companyId, User_.userId, User_.languageId from ",
 			"User_ join Company on User_.companyId = Company.companyId where ",
 			"User_.defaultUser = [$TRUE$] and Company.webId = ",
 			StringUtil.quote(PropsValues.COMPANY_DEFAULT_WEB_ID));
@@ -51,9 +51,9 @@ public class UpgradeRegion extends UpgradeProcess {
 			ResultSet rs = ps.executeQuery()) {
 
 			if (rs.next()) {
-				defaultCompanyId = rs.getLong(1);
-				defaultLanguageId = rs.getString(2);
-				defaultUserId = rs.getLong(3);
+				defaultLanguageId = rs.getString(3);
+				companyId = rs.getLong(1);
+				userId = rs.getLong(2);
 			}
 		}
 
@@ -62,15 +62,15 @@ public class UpgradeRegion extends UpgradeProcess {
 				StringUtil.quote(defaultLanguageId) +
 					" where defaultLanguageId is null");
 
-		if (defaultCompanyId > 0) {
+		if (companyId > 0) {
 			runSQL(
-				"update Region set companyId = " + defaultCompanyId +
+				"update Region set companyId = " + companyId +
 					" where companyId is null");
 		}
 
-		if (defaultUserId > 0) {
+		if (userId > 0) {
 			runSQL(
-				"update Region set userId = " + defaultUserId +
+				"update Region set userId = " + userId +
 					" where userId is null");
 		}
 

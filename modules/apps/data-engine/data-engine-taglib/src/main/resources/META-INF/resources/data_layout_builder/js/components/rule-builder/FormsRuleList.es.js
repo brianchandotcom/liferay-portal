@@ -186,7 +186,10 @@ const ActionCalculate = ({expression, fields, target}) => (
 		<b>
 			{Lang.subComp(Liferay.Language.get('calculate-field-x-as-x'), [
 				<ClayLabelCustom displayType="secondary" key={expression} large>
-					{expression}
+					{RulesSupport.replaceFieldNameByFieldLabel(
+						expression,
+						fields
+					) ?? expression}
 				</ClayLabelCustom>,
 				<ClayLabelCustom displayType="secondary" key={target} large>
 					{fields.find(({value}) => value === target)?.label ??

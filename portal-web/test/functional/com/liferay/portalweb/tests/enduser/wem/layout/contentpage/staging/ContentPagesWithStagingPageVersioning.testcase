@@ -31,15 +31,9 @@ definition {
 		}
 
 		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
-				layoutName = "Test Content Page Name",
-				site = "false",
-				type = "content");
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name Staging");
+			ContentPages.addPage(pageName = "Test Content Page Name");
 		}
 
 		task ("Add a Title fragment to the content page") {

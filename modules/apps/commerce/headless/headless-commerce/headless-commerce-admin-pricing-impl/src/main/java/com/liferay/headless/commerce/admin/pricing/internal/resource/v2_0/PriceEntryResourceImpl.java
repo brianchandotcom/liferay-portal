@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -259,30 +260,21 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 			CommercePriceEntry commercePriceEntry)
 		throws Exception {
 
-		CommercePriceList commercePriceList =
-			commercePriceEntry.getCommercePriceList();
-
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
 			addAction(
-				"UPDATE", commercePriceList.getCommercePriceListId(),
-				"deletePriceEntry", commercePriceEntry.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceList.getGroupId())
+				"UPDATE", commercePriceEntry.getCommercePriceEntryId(),
+				"deletePriceEntry", _commercePriceEntryModelResourcePermission)
 		).put(
 			"get",
 			addAction(
-				"VIEW", commercePriceList.getCommercePriceListId(),
-				"getPriceEntry", commercePriceEntry.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceList.getGroupId())
+				"VIEW", commercePriceEntry.getCommercePriceEntryId(),
+				"getPriceEntry", _commercePriceEntryModelResourcePermission)
 		).put(
 			"update",
 			addAction(
-				"UPDATE", commercePriceList.getCommercePriceListId(),
-				"patchPriceEntry", commercePriceEntry.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceList.getGroupId())
+				"UPDATE", commercePriceEntry.getCommercePriceEntryId(),
+				"patchPriceEntry", _commercePriceEntryModelResourcePermission)
 		).build();
 	}
 
@@ -468,6 +460,12 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 	}
 
 	private static final EntityModel _entityModel = new PriceEntryEntityModel();
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceEntry)"
+	)
+	private ModelResourcePermission<CommercePriceEntry>
+		_commercePriceEntryModelResourcePermission;
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;

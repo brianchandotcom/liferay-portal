@@ -186,12 +186,13 @@ public class UpgradeDDLFormPortletId extends BaseUpgradePortletId {
 				"</preference></portlet-preferences>");
 
 		newPreferences = StringUtil.replace(
-			newPreferences, "#p_p_id_" + oldRootPortletId,
-			"#p_p_id_" + newRootPortletId);
-
-		newPreferences = StringUtil.replace(
-			newPreferences, "#portlet_" + oldRootPortletId,
-			"#portlet_" + newRootPortletId);
+			newPreferences,
+			new String[] {
+				"#p_p_id_" + oldRootPortletId, "#portlet_" + oldRootPortletId
+			},
+			new String[] {
+				"#p_p_id_" + newRootPortletId, "#portlet_" + newRootPortletId
+			});
 
 		_portletPreferencesLocalService.updatePreferences(
 			portletPreferences.getOwnerId(), portletPreferences.getOwnerType(),

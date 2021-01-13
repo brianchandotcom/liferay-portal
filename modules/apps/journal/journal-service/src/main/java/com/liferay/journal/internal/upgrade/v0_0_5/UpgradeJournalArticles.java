@@ -140,12 +140,13 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 		newPortletPreferences.setValue("paginationType", "none");
 
 		portletSetupCss = StringUtil.replace(
-			portletSetupCss, "#p_p_id_" + oldRootPortletId,
-			"#p_p_id_" + newRootPortletId);
-
-		portletSetupCss = StringUtil.replace(
-			portletSetupCss, "#portlet_" + oldRootPortletId,
-			"#portlet_" + newRootPortletId);
+			portletSetupCss,
+			new String[] {
+				"#p_p_id_" + oldRootPortletId, "#portlet_" + oldRootPortletId
+			},
+			new String[] {
+				"#p_p_id_" + newRootPortletId, "#portlet_" + newRootPortletId
+			});
 
 		newPortletPreferences.setValue("portletSetupCss", portletSetupCss);
 

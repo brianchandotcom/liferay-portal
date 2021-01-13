@@ -21,6 +21,7 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-api")
 	compileOnly project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-order-api")
+	compileOnly project(":apps:dispatch:dispatch-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:petra:petra-json-web-service-client")
 	compileOnly project(":apps:portal-search:portal-search-api")

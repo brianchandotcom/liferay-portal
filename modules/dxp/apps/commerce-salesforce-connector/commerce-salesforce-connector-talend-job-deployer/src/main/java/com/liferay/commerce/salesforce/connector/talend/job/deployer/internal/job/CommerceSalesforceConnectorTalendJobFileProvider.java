@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.commerce.talend.job.deployer.salesforce.internal.job;
+package com.liferay.commerce.salesforce.connector.talend.job.deployer.internal.job;
 
+import com.liferay.commerce.salesforce.connector.talend.job.deployer.configuration.CommerceSalesforceConnectorTalendJobConfiguration;
 import com.liferay.commerce.talend.job.deployer.TalendJobFileProvider;
-import com.liferay.commerce.talend.job.deployer.salesforce.configuration.SalesforceTalendJobConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.io.IOException;
@@ -38,11 +38,12 @@ import org.osgi.service.component.annotations.Modified;
  * @author Danny Situ
  */
 @Component(
-	configurationPid = "com.liferay.commerce.talend.job.deployer.configuration.SalesforceTalendJobConfiguration",
+	configurationPid = "com.liferay.commerce.salesforce.connector.talend.job.deployer.configuration.CommerceSalesforceConnectorTalendJobConfiguration",
 	enabled = false, immediate = true, property = "service.ranking:Integer=1",
 	service = TalendJobFileProvider.class
 )
-public class SalesforceTalendJobFileProvider implements TalendJobFileProvider {
+public class CommerceSalesforceConnectorTalendJobFileProvider
+	implements TalendJobFileProvider {
 
 	@Override
 	public List<URL> getJobFileURLs() throws IOException {
@@ -51,7 +52,8 @@ public class SalesforceTalendJobFileProvider implements TalendJobFileProvider {
 		Bundle bundle = _bundleContext.getBundle();
 
 		String talendJobFilePath =
-			_salesforceTalendJobConfiguration.salesforceTalendJobFilePath();
+			_commerceSalesforceConnectorTalendJobConfiguration.
+				salesforceTalendJobFilePath();
 
 		Enumeration<URL> enumeration = bundle.findEntries(
 			talendJobFilePath, "*.zip", true);
@@ -72,18 +74,20 @@ public class SalesforceTalendJobFileProvider implements TalendJobFileProvider {
 
 		_bundleContext = bundleContext;
 
-		_salesforceTalendJobConfiguration = ConfigurableUtil.createConfigurable(
-			SalesforceTalendJobConfiguration.class, properties);
+		_commerceSalesforceConnectorTalendJobConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CommerceSalesforceConnectorTalendJobConfiguration.class,
+				properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_bundleContext = null;
-		_salesforceTalendJobConfiguration = null;
+		_commerceSalesforceConnectorTalendJobConfiguration = null;
 	}
 
 	private BundleContext _bundleContext;
-	private volatile SalesforceTalendJobConfiguration
-		_salesforceTalendJobConfiguration;
+	private volatile CommerceSalesforceConnectorTalendJobConfiguration
+		_commerceSalesforceConnectorTalendJobConfiguration;
 
 }

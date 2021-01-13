@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Commerce Salesforce Connector Talend Job Deployer
+Bundle-SymbolicName: com.liferay.commerce.salesforce.connector.talend.job.deployer
+Bundle-Version: 4.0.0
+Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang),(bundle.symbolic.name=com.liferay.commerce.salesforce.connector.talend.job.deployer.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /commerce-salesforce-connector-talend-job-deployer

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.talend.job.deployer.salesforce.configuration;
+package com.liferay.commerce.salesforce.connector.talend.job.deployer.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,11 +26,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.talend.job.deployer.salesforce.configuration.SalesforceTalendJobConfiguration",
+	id = "com.liferay.commerce.salesforce.connector.talend.job.deployer.configuration.CommerceSalesforceConnectorTalendJobConfiguration",
 	localization = "content/Language",
 	name = "salesforce-talend-job-deployer-configuration-name"
 )
-public interface SalesforceTalendJobConfiguration {
+public interface CommerceSalesforceConnectorTalendJobConfiguration {
 
 	@Meta.AD(deflt = "5000", name = "cache-size", required = false)
 	public int cacheSize();

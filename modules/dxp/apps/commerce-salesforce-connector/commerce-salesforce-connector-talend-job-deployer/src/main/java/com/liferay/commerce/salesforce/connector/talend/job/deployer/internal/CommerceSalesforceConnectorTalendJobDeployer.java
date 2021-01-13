@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.talend.job.deployer.salesforce.internal;
+package com.liferay.commerce.salesforce.connector.talend.job.deployer.internal;
 
 import com.liferay.commerce.talend.job.deployer.TalendJobFileProvider;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -44,9 +44,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = SalesforceTalendJobDeployer.class
+	service = CommerceSalesforceConnectorTalendJobDeployer.class
 )
-public class SalesforceTalendJobDeployer {
+public class CommerceSalesforceConnectorTalendJobDeployer {
 
 	@Activate
 	protected void activate() throws Exception {
@@ -123,7 +123,7 @@ public class SalesforceTalendJobDeployer {
 	private static final String _TALEND = "talend";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SalesforceTalendJobDeployer.class);
+		CommerceSalesforceConnectorTalendJobDeployer.class);
 
 	@Reference
 	private DispatchFileRepository _dispatchFileRepository;

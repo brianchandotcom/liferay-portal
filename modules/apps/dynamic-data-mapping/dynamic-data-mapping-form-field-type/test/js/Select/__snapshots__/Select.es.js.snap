@@ -47,11 +47,11 @@ exports[`Select calls onChange callback when an item is selected using multisele
                 type="button"
               >
                 <svg
-                  class="lexicon-icon lexicon-icon-times"
+                  class="lexicon-icon lexicon-icon-times-small"
                   role="presentation"
                 >
                   <use
-                    xlink:href="#times"
+                    xlink:href="#times-small"
                   />
                 </svg>
               </button>

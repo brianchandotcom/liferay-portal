@@ -15,7 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.PortalAppReleaseJob;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 /**
  * @author Michael Hashimoto
@@ -37,9 +37,9 @@ public class AppReleaseFunctionalBatchTestClassGroup
 	}
 
 	protected AppReleaseFunctionalBatchTestClassGroup(
-		String batchName, PortalAppReleaseJob portalAppReleaseJob) {
+		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalAppReleaseJob);
+		super(batchName, portalTestClassJob);
 	}
 
 }

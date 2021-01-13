@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PluginsExtraAppsJob;
 import com.liferay.jenkins.results.parser.PortalAWSJob;
 import com.liferay.jenkins.results.parser.PortalAppReleaseJob;
 import com.liferay.jenkins.results.parser.PortalEnvironmentJob;
@@ -64,18 +65,21 @@ public class TestClassGroupFactory {
 
 		BatchTestClassGroup batchTestClassGroup = null;
 
-		if (job instanceof PortalAppReleaseJob) {
-			batchTestClassGroup = new AppReleaseFunctionalBatchTestClassGroup(
-				batchName, (PortalAppReleaseJob)job);
-		}
-		else if (job instanceof PortalEnvironmentJob) {
+		if (job instanceof PortalEnvironmentJob) {
 			batchTestClassGroup = new EnvironmentFunctionalBatchTestClassGroup(
 				batchName, (PortalEnvironmentJob)job);
 		}
 		else if (job instanceof PortalTestClassJob) {
 			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
-			if (batchName.contains("cucumber-")) {
+			if (job instanceof PluginsExtraAppsJob ||
+				job instanceof PortalAppReleaseJob) {
+
+				batchTestClassGroup =
+					new AppReleaseFunctionalBatchTestClassGroup(
+						batchName, portalTestClassJob);
+			}
+			else if (batchName.contains("cucumber-")) {
 				batchTestClassGroup = new CucumberBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}

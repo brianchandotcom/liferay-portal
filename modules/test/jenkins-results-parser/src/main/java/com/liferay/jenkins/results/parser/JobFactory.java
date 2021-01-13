@@ -158,6 +158,15 @@ public class JobFactory {
 			return pluginsAcceptancePullRequestJob;
 		}
 
+		if (jobName.equals("test-plugins-extraapps")) {
+			PluginsExtraAppsJob pluginsExtraAppsJob = new PluginsExtraAppsJob(
+				jobName, buildProfile, branchName);
+
+			_jobs.put(jobKey, pluginsExtraAppsJob);
+
+			return pluginsExtraAppsJob;
+		}
+
 		if (jobName.equals("test-plugins-marketplaceapp")) {
 			PluginsMarketplaceAppJob pluginsMarketplaceAppJob =
 				new PluginsMarketplaceAppJob(

@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/layout": "3.2.0",
+		"@clayui/layout": "3.3.0",
 		"dom-align": "1.10.4",
 		"frontend-js-web": "*",
 		"incremental-dom-string": "0.0.2",

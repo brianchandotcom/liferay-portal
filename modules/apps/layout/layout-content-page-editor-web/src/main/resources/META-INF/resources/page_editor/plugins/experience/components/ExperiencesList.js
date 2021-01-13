@@ -40,7 +40,7 @@ const ExperiencesList = ({
 			{experiences.map((experience, i) => {
 				const active =
 					experience.segmentsExperienceId === activeExperienceId;
-				const lockedDecreasePriority = experiences.length - 2 === i;
+				const lockedDecreasePriority = experiences.length - 1 === i;
 				const lockedIncreasePriority = i === 0;
 
 				const editable =

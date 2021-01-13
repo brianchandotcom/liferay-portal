@@ -353,8 +353,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		ddmField.setName(name);
 
-		String dataType = ddmStructure.getFieldDataType(name);
-		String type = ddmStructure.getFieldType(name);
+		DDMFormField ddmFormField = ddmStructure.getDDMFormField(name);
 
 		Set<String> missingLanguageIds = SetUtil.fromArray(
 			availableLanguageIds);
@@ -381,7 +380,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			Serializable serializable = getFieldValue(
-				dataType, type, dynamicContentElement, dynamicElementElement,
+				ddmFormField, dynamicContentElement, dynamicElementElement,
 				defaultLocale);
 
 			ddmField.addValue(locale, serializable);
@@ -417,30 +416,36 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	protected Serializable getFieldValue(
-		String dataType, String type, Element dynamicContentElement,
+		DDMFormField ddmFormField, Element dynamicContentElement,
 		Element dynamicElementElement, Locale defaultLocale) {
 
-		if (Objects.equals(DDMFormFieldTypeConstants.DOCUMENT_LIBRARY, type) ||
-			Objects.equals(DDMFormFieldTypeConstants.IMAGE, type)) {
+		if (Objects.equals(
+				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
+				ddmFormField.getType()) ||
+			Objects.equals(
+				DDMFormFieldTypeConstants.IMAGE, ddmFormField.getType())) {
 
 			return _getFileEntryValue(defaultLocale, dynamicContentElement);
 		}
 
 		if (Objects.equals(
 				JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
-				type)) {
+				ddmFormField.getType())) {
 
 			return _getJournalArticleValue(
 				defaultLocale, dynamicContentElement);
 		}
 
 		if (Objects.equals(
-				LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT, type)) {
+				LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT,
+				ddmFormField.getType())) {
 
 			return _getLinkToLayoutValue(defaultLocale, dynamicContentElement);
 		}
 
-		if (Objects.equals(DDMFormFieldTypeConstants.SELECT, type)) {
+		if (Objects.equals(
+				DDMFormFieldTypeConstants.SELECT, ddmFormField.getType())) {
+
 			return _getSelectValue(dynamicContentElement);
 		}
 
@@ -457,7 +462,7 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		return FieldConstants.getSerializable(
-			dataType, dynamicContentElement.getText());
+			ddmFormField.getDataType(), dynamicContentElement.getText());
 	}
 
 	protected String[] splitFieldsDisplayValue(Field fieldsDisplayField) {

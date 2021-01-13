@@ -671,8 +671,6 @@ definition {
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "start-elasticsearch-node -Delasticsearch.bundle.number=1");
 
-		Pause(locator1 = "30000");
-
 		AntCommand(
 			locator1 = "build-test-elasticsearch7.xml",
 			value1 = "stop-elasticsearch-local-cluster");

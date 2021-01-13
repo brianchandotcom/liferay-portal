@@ -1279,39 +1279,6 @@ xpack.monitoring.collection.enabled: true</echo>
 
 						<lstopwatch action="total" name="start.elasticsearch" />
 					</then>
-					<else>
-						<waitfor maxwait="120" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-							<http url="http://localhost:9200/" />
-						</waitfor>
-
-						<lstopwatch action="total" name="start.elasticsearch" />
-
-						<var name="elasticsearch.node.number" value="0" />
-
-						<antelope:repeat count="${remote.elasticsearch.cluster.size}">
-							<math
-								datatype="int"
-								operand1="${elasticsearch.node.number}"
-								operand2="1"
-								operation="+"
-								result="elasticsearch.node.number"
-							/>
-
-							<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
-
-							<if>
-								<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
-								<then>
-									<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-										<http url="http://localhost:9202/" />
-									</waitfor>
-									<print-file file.name="${elasticsearch.dir}-2/logs/LiferayElasticsearchClusterTwo.log" />
-								</then>
-							</if>
-						</antelope:repeat>
-
-						<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
-					</else>
 				</if>
 
 				<if>
@@ -1372,6 +1339,24 @@ xpack.monitoring.collection.enabled: true</echo>
 				</then>
 			</elseif>
 		</if>
+
+		<waitfor maxwait="120" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+			<http url="http://localhost:9200/" />
+		</waitfor>
+
+		<print-file file.name="${elasticsearch.start.dir}/logs/LiferayElasticsearchCluster.log" />
+
+		<if>
+			<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
+			<then>
+				<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+					<http url="http://localhost:9202/" />
+				</waitfor>
+				<print-file file.name="${elasticsearch.start.dir}-2/logs/LiferayElasticsearchClusterTwo.log" />
+			</then>
+		</if>
+
+		<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
 
 		<lstopwatch action="total" name="start.elasticsearch.node" />
 	</target>

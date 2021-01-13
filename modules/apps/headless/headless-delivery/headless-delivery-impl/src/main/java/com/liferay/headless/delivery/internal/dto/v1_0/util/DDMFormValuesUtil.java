@@ -157,7 +157,7 @@ public class DDMFormValuesUtil {
 				_toDDMFormFieldValue(
 					Collections.emptyList(), ddmFormField, dlAppService,
 					groupId, journalArticleService, layoutLocalService, locale,
-					_toValue(ddmFormField, locale)));
+					_toPredefinedValue(ddmFormField, locale)));
 		}
 
 		return TransformUtil.transform(
@@ -171,7 +171,9 @@ public class DDMFormValuesUtil {
 					journalArticleService, layoutLocalService, locale)));
 	}
 
-	private static Value _toValue(DDMFormField ddmFormField, Locale locale) {
+	private static Value _toPredefinedValue(
+		DDMFormField ddmFormField, Locale locale) {
+
 		if (Objects.equals(
 				DDMFormFieldType.SEPARATOR, ddmFormField.getType())) {
 
@@ -183,10 +185,16 @@ public class DDMFormValuesUtil {
 		String valueString = localizedValue.getString(
 			localizedValue.getDefaultLocale());
 
+		if (valueString.equals("[]")) {
+			valueString = "";
+		}
+
 		if (ddmFormField.isLocalizable()) {
+			String finalValueString = valueString;
+
 			return new LocalizedValue(locale) {
 				{
-					addString(locale, valueString);
+					addString(locale, finalValueString);
 				}
 			};
 		}

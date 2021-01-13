@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
@@ -27,9 +28,13 @@ import com.liferay.headless.delivery.dto.v1_0.Geo;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -38,17 +43,23 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.ParseException;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
 
@@ -121,6 +132,54 @@ public class DDMValueUtil {
 					preferredLocale);
 			}
 			else if (Objects.equals(
+						DDMFormFieldType.RADIO, ddmFormField.getType()) ||
+					 Objects.equals(
+						 DDMFormFieldType.SELECT, ddmFormField.getType()) ||
+					 Objects.equals(
+						 DDMFormFieldType.CHECKBOX_MULTIPLE,
+						 ddmFormField.getType())) {
+
+				return _toLocalizedValue(
+					contentFieldValue, localizedContentFieldValues,
+					(localizedContentFieldValue, locale) -> {
+						try {
+							String data = localizedContentFieldValue.getData();
+
+							List<String> values = new ArrayList<>();
+
+							if (!ddmFormField.isMultiple() &&
+								!Objects.equals(
+									DDMFormFieldType.CHECKBOX_MULTIPLE,
+									ddmFormField.getType())) {
+
+								values.add(data);
+							}
+							else {
+								values.addAll(
+									JSONUtil.toStringList(
+										JSONFactoryUtil.createJSONArray(data)));
+							}
+
+							List<String> collect = _transformValuesToKeys(
+								ddmFormField, locale, values);
+
+							if ((collect.size() == 1) &&
+								DDMFormFieldType.RADIO.equals(
+									ddmFormField.getType())) {
+
+								return collect.get(0);
+							}
+
+							return JSONUtil.toString(
+								JSONFactoryUtil.createJSONArray(collect));
+						}
+						catch (JSONException jsonException) {
+							return null;
+						}
+					},
+					preferredLocale);
+			}
+			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
 						ddmFormField.getType()) ||
 					 Objects.equals("link_to_layout", ddmFormField.getType())) {
@@ -130,7 +189,28 @@ public class DDMValueUtil {
 					(localizedContentFieldValue, locale) ->
 						_toLocalizedLinkToPage(
 							localizedContentFieldValue, groupId,
-							layoutLocalService),
+							layoutLocalService, locale),
+					preferredLocale);
+			}
+			else if (Objects.equals(
+						DDMFormFieldType.GEOLOCATION, ddmFormField.getType()) ||
+					 Objects.equals("geolocation", ddmFormField.getType())) {
+
+				Geo geo = contentFieldValue.getGeo();
+
+				if (Objects.isNull(geo) || Objects.isNull(geo.getLatitude()) ||
+					Objects.isNull(geo.getLongitude())) {
+
+					throw new BadRequestException("Invalid geo " + geo);
+				}
+
+				return _toLocalizedValue(
+					contentFieldValue, localizedContentFieldValues,
+					(localizedContentFieldValue, locale) -> JSONUtil.put(
+						"lat", geo.getLatitude()
+					).put(
+						"lng", geo.getLongitude()
+					).toString(),
 					preferredLocale);
 			}
 			else {
@@ -141,26 +221,6 @@ public class DDMValueUtil {
 							localizedContentFieldValue.getData()),
 					preferredLocale);
 			}
-		}
-
-		if (Objects.equals(
-				DDMFormFieldType.GEOLOCATION, ddmFormField.getType()) ||
-			Objects.equals("geolocation", ddmFormField.getType())) {
-
-			Geo geo = contentFieldValue.getGeo();
-
-			if (Objects.isNull(geo) || Objects.isNull(geo.getLatitude()) ||
-				Objects.isNull(geo.getLongitude())) {
-
-				throw new BadRequestException("Invalid geo " + geo);
-			}
-
-			return new UnlocalizedValue(
-				JSONUtil.put(
-					"latitude", geo.getLatitude()
-				).put(
-					"longitude", geo.getLongitude()
-				).toString());
 		}
 
 		return new UnlocalizedValue(
@@ -194,6 +254,43 @@ public class DDMValueUtil {
 		}
 
 		return layout;
+	}
+
+	private static String _getLayoutBreadcrumb(Layout layout, Locale locale) {
+		try {
+			List<Layout> ancestors = layout.getAncestors();
+
+			StringBundler sb = new StringBundler((4 * ancestors.size()) + 5);
+
+			if (layout.isPrivateLayout()) {
+				sb.append(LanguageUtil.get(locale, "private-pages"));
+			}
+			else {
+				sb.append(LanguageUtil.get(locale, "public-pages"));
+			}
+
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
+
+			Collections.reverse(ancestors);
+
+			for (Layout ancestor : ancestors) {
+				sb.append(HtmlUtil.escape(ancestor.getName(locale)));
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.GREATER_THAN);
+				sb.append(StringPool.SPACE);
+			}
+
+			sb.append(HtmlUtil.escape(layout.getName(locale)));
+
+			return sb.toString();
+		}
+		catch (PortalException portalException) {
+			throw new BadRequestException(
+				"No page found with friendly URL " + layout.getName(),
+				portalException);
+		}
 	}
 
 	private static String _toJSON(
@@ -321,7 +418,7 @@ public class DDMValueUtil {
 
 	private static String _toLocalizedLinkToPage(
 		ContentFieldValue contentFieldValue, long groupId,
-		LayoutLocalService layoutLocalService) {
+		LayoutLocalService layoutLocalService, Locale locale) {
 
 		String valueString = StringPool.BLANK;
 
@@ -330,11 +427,15 @@ public class DDMValueUtil {
 				groupId, layoutLocalService, contentFieldValue.getLink());
 
 			valueString = JSONUtil.put(
-				"groupId", layout.getGroupId()
+				"groupId", String.valueOf(layout.getGroupId())
+			).put(
+				"id", layout.getUuid()
 			).put(
 				"label", layout.getFriendlyURL()
 			).put(
 				"layoutId", layout.getLayoutId()
+			).put(
+				"name", _getLayoutBreadcrumb(layout, locale)
 			).put(
 				"privateLayout", layout.isPrivateLayout()
 			).toString();
@@ -374,6 +475,44 @@ public class DDMValueUtil {
 		);
 
 		return localizedValue;
+	}
+
+	private static List<String> _transformValuesToKeys(
+		DDMFormField ddmFormField, Locale locale, List<String> values) {
+
+		Stream<String> stream = values.stream();
+
+		return stream.map(
+			value -> {
+				DDMFormFieldOptions ddmFormFieldOptions =
+					ddmFormField.getDDMFormFieldOptions();
+
+				Map<String, LocalizedValue> options =
+					ddmFormFieldOptions.getOptions();
+
+				Set<Map.Entry<String, LocalizedValue>> entrySet =
+					options.entrySet();
+
+				Stream<Map.Entry<String, LocalizedValue>> entryStream =
+					entrySet.stream();
+
+				return entryStream.filter(
+					entry -> {
+						LocalizedValue localizedValue = entry.getValue();
+
+						return Objects.equals(
+							localizedValue.getString(locale), value);
+					}
+				).map(
+					Map.Entry::getKey
+				).findFirst(
+				).orElse(
+					""
+				);
+			}
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 }

@@ -16,13 +16,12 @@ package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
 import java.io.IOException;
-
-import java.lang.reflect.Method;
 
 import java.net.URI;
 import java.net.URL;
@@ -55,15 +54,12 @@ public class SampleSQLBuilderLauncher {
 		ClassLoader classLoader = new URLClassLoader(
 			_getDependencies(contextClassLoader, tempDir.toPath()), null);
 
-		Class<?> clazz = classLoader.loadClass(
-			"com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilder");
-
-		Method method = clazz.getMethod("main", String[].class);
-
 		currentThread.setContextClassLoader(classLoader);
 
 		try {
-			method.invoke(null, new Object[] {args});
+			InstanceFactory.newInstance(
+				classLoader,
+				"com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilder");
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

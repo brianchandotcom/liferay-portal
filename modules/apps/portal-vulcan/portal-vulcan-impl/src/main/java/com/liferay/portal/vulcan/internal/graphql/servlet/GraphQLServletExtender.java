@@ -1235,12 +1235,12 @@ public class GraphQLServletExtender {
 				graphQLObjectTypeBuilder, configurations, ServletData::getQuery,
 				processingElementsContainer, servletDatas);
 
-			graphQLSchemaBuilder.mutation(mutationBuilder.build());
-			graphQLSchemaBuilder.query(graphQLObjectTypeBuilder.build());
-
 			_registerInterfaces(
 				processingElementsContainer, graphQLObjectTypeBuilder,
 				graphQLSchemaBuilder);
+
+			graphQLSchemaBuilder.query(graphQLObjectTypeBuilder.build());
+			graphQLSchemaBuilder.mutation(mutationBuilder.build());
 
 			GraphQLConfiguration.Builder graphQLConfigurationBuilder =
 				GraphQLConfiguration.with(graphQLSchemaBuilder.build());

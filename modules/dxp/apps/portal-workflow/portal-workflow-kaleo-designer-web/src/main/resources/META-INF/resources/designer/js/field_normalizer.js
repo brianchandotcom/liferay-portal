@@ -138,7 +138,7 @@ AUI.add(
 
 				data.forEach((item1, index1) => {
 					A.each(item1, (item2, index2) => {
-						if (isNotEmptyValue(item2)) {
+						if (index2 === 'name' || isNotEmptyValue(item2)) {
 							_put(actions, index2, item2, index1);
 						}
 					});

@@ -101,9 +101,9 @@ public class DLEditFileShortcutDisplayContext {
 		FileShortcut fileShortcut = _getFileShortcut();
 
 		if (fileShortcut != null) {
-			return _language.get(
+			return _language.format(
 				_liferayPortletRequest.getHttpServletRequest(), "shortcut-to-x",
-				fileShortcut.getToTitle());
+				fileShortcut.getToTitle(), false);
 		}
 
 		return _language.get(

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project basedir="." name="portal-test-gogo-shell" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." name="portal-test-gogo-shell" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if">
 	<import file="build-test.xml" />
 
 	<target name="enable-access-to-gogo-shell-command">

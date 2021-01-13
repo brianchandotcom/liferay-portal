@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.poc.internal.configuration;
+package com.liferay.multi.factor.authentication.sample.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,10 +26,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration",
-	localization = "content/Language", name = "mfa-poc-configuration-name"
+	id = "com.liferay.multi.factor.authentication.sample.internal.configuration.MFASampleConfiguration",
+	localization = "content/Language", name = "mfa-sample-configuration-name"
 )
-public interface MFAPocConfiguration {
+public interface MFASampleConfiguration {
 
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();

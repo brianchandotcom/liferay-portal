@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.poc.internal.checker;
+package com.liferay.multi.factor.authentication.sample.internal.checker;
 
-import com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration;
-import com.liferay.multi.factor.authentication.poc.internal.constants.MFAPocWebKeys;
+import com.liferay.multi.factor.authentication.sample.internal.configuration.MFASampleConfiguration;
+import com.liferay.multi.factor.authentication.sample.internal.constants.MFASampleWebKeys;
 import com.liferay.multi.factor.authentication.spi.checker.browser.BrowserMFAChecker;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -43,10 +43,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marta Medio
  */
 @Component(
-	configurationPid = "com.liferay.multi.factor.authentication.poc.internal.configuration.MFAPocConfiguration.scoped",
+	configurationPid = "com.liferay.multi.factor.authentication.sample.internal.configuration.MFASampleConfiguration.scoped",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, service = {}
 )
-public class PocMFAChecker implements BrowserMFAChecker {
+public class SampleBrowserMFAChecker implements BrowserMFAChecker {
 
 	@Override
 	public void includeBrowserVerification(
@@ -56,7 +56,7 @@ public class PocMFAChecker implements BrowserMFAChecker {
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/mfa_poc_checker/verify_browser.jsp");
+				"/mfa_sample_checker/verify_browser.jsp");
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
@@ -70,7 +70,7 @@ public class PocMFAChecker implements BrowserMFAChecker {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession(false);
 
-		if (httpSession.getAttribute(MFAPocWebKeys.MFA_POC) != null) {
+		if (httpSession.getAttribute(MFASampleWebKeys.MFA_SAMPLE) != null) {
 			return true;
 		}
 
@@ -83,9 +83,9 @@ public class PocMFAChecker implements BrowserMFAChecker {
 			HttpServletResponse httpServletResponse, long userId)
 		throws Exception {
 
-		String mfaPoc = ParamUtil.getString(httpServletRequest, "mfaPoc");
+		String mfaSample = ParamUtil.getString(httpServletRequest, "mfaSample");
 
-		if (Validator.isBlank(mfaPoc)) {
+		if (Validator.isBlank(mfaSample)) {
 			return false;
 		}
 
@@ -94,7 +94,7 @@ public class PocMFAChecker implements BrowserMFAChecker {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
-		httpSession.setAttribute(MFAPocWebKeys.MFA_POC, mfaPoc);
+		httpSession.setAttribute(MFASampleWebKeys.MFA_SAMPLE, mfaSample);
 
 		return true;
 	}
@@ -103,11 +103,11 @@ public class PocMFAChecker implements BrowserMFAChecker {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		MFAPocConfiguration mfaPocConfiguration =
+		MFASampleConfiguration mfaSampleConfiguration =
 			ConfigurableUtil.createConfigurable(
-				MFAPocConfiguration.class, properties);
+				MFASampleConfiguration.class, properties);
 
-		if (!mfaPocConfiguration.enabled()) {
+		if (!mfaSampleConfiguration.enabled()) {
 			return;
 		}
 
@@ -130,7 +130,7 @@ public class PocMFAChecker implements BrowserMFAChecker {
 	private ServiceRegistration<?> _serviceRegistration;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.multi.factor.authentication.poc)"
+		target = "(osgi.web.symbolicname=com.liferay.multi.factor.authentication.sample)"
 	)
 	private ServletContext _servletContext;
 

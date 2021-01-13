@@ -12,13 +12,13 @@
  *
  */
 
-package com.liferay.multi.factor.authentication.poc.internal.constants;
+package com.liferay.multi.factor.authentication.sample.internal.constants;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class MFAPocWebKeys {
+public class MFASampleWebKeys {
 
-	public static final String MFA_POC = "MFA_POC";
+	public static final String MFA_SAMPLE = "MFA_SAMPLE";
 
 }

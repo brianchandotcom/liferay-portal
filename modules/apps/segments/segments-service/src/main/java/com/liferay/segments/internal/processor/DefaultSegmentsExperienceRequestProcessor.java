@@ -53,7 +53,9 @@ public class DefaultSegmentsExperienceRequestProcessor
 
 		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
 
-		return stream.mapToLong(
+		return stream.filter(
+			segmentsExperience -> segmentsExperience.getPriority() >= 0
+		).mapToLong(
 			SegmentsExperienceModel::getSegmentsExperienceId
 		).toArray();
 	}
@@ -72,7 +74,9 @@ public class DefaultSegmentsExperienceRequestProcessor
 
 		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
 
-		return stream.mapToLong(
+		return stream.filter(
+			segmentsExperience -> segmentsExperience.getPriority() >= 0
+		).mapToLong(
 			SegmentsExperienceModel::getSegmentsExperienceId
 		).toArray();
 	}

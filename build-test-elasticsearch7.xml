@@ -481,16 +481,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 						dir="${elasticsearch.dir}"
 					/>
 				</copy>
-
-				<chmod
-					maxparallel="10"
-					perm="a+rwx"
-					type="both"
-				>
-					<fileset
-						dir="${elasticsearch.dir}-${elasticsearch.bundle.counter}"
-					/>
-				</chmod>
 			</antelope:repeat>
 
 			<delete dir="${elasticsearch.dir}" />
@@ -500,16 +490,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	<macrodef name="prepare-elasticsearch-analyzers">
 		<sequential>
 			<lstopwatch action="start" name="prepare.elasticsearch.analyzers" />
-
-			<chmod
-				maxparallel="10"
-				perm="a+rwx"
-				type="both"
-			>
-				<fileset
-					dir="${elasticsearch.dir}"
-				/>
-			</chmod>
 
 			<if>
 				<not>
@@ -957,6 +937,16 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					/>
 				</then>
 			</if>
+
+			<chmod
+				maxparallel="10"
+				perm="a+rwx"
+				type="both"
+			>
+				<fileset
+					dir="${elasticsearch.dir}"
+				/>
+			</chmod>
 		</sequential>
 	</macrodef>
 
@@ -1314,6 +1304,16 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<condition else="${elasticsearch.dir}" property="elasticsearch.start.dir" value="${elasticsearch.dir}-${elasticsearch.bundle.number}">
 			<isset property="elasticsearch.bundle.number" />
 		</condition>
+
+		<chmod
+			maxparallel="10"
+			perm="a+rwx"
+			type="both"
+		>
+			<fileset
+				dir="${elasticsearch.start.dir}"
+			/>
+		</chmod>
 
 		<get-java-jdk-home />
 

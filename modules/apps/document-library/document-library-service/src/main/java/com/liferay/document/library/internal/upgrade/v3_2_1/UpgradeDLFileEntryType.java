@@ -42,7 +42,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 					"select companyId, fileEntryTypeId, fileEntryTypeKey, ",
 					"groupId, name, userId, userName from DLFileEntryType ",
 					"where (dataDefinitionId IS NULL OR dataDefinitionId = 0) ",
-					"and fileEntryTypeKey != \"BASIC-DOCUMENT\""));
+					"and fileEntryTypeKey != 'BASIC-DOCUMENT'"));
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update DLFileEntryType set dataDefinitionId = ? where " +

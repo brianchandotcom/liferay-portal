@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.headless.delivery.resource.v1_0.ExperienceResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
@@ -118,6 +119,8 @@ public class ServletDataImpl implements ServletData {
 			_documentResourceComponentServiceObjects);
 		Query.setDocumentFolderResourceComponentServiceObjects(
 			_documentFolderResourceComponentServiceObjects);
+		Query.setExperienceResourceComponentServiceObjects(
+			_experienceResourceComponentServiceObjects);
 		Query.setKnowledgeBaseArticleResourceComponentServiceObjects(
 			_knowledgeBaseArticleResourceComponentServiceObjects);
 		Query.setKnowledgeBaseAttachmentResourceComponentServiceObjects(
@@ -254,6 +257,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContentTemplateResource>
 		_contentTemplateResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ExperienceResource>
+		_experienceResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<LanguageResource>

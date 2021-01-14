@@ -14,14 +14,11 @@
 
 package com.liferay.headless.delivery.resource.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.ContentPage;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.headless.delivery.dto.v1_0.Experience;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Locale;
 
@@ -44,30 +41,13 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface ContentPageResource {
+public interface ExperienceResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<ContentPage> getSiteContentPagesPage(
-			Long siteId, String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public ContentPage getSiteContentPage(Long siteId, String friendlyUrlPath)
-		throws Exception;
-
-	public ContentPage getSiteContentPageExperienceExperienceKey(
-			Long siteId, String friendlyUrlPath, String experienceKey)
-		throws Exception;
-
-	public String getSiteContentPageExperienceExperienceKeyRenderedPage(
-			Long siteId, String friendlyUrlPath, String experienceKey)
-		throws Exception;
-
-	public String getSiteContentPageRenderedPage(
+	public Page<Experience> getSiteContentPageFriendlyUrlPathExperiencesPage(
 			Long siteId, String friendlyUrlPath)
 		throws Exception;
 
@@ -105,7 +85,7 @@ public interface ContentPageResource {
 	@ProviderType
 	public interface Builder {
 
-		public ContentPageResource build();
+		public ExperienceResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

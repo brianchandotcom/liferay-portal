@@ -601,6 +601,102 @@ public abstract class BaseContentPageResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteContentPageExperienceExperienceKey()
+		throws Exception {
+
+		ContentPage postContentPage =
+			testGetSiteContentPageExperienceExperienceKey_addContentPage();
+
+		ContentPage getContentPage =
+			contentPageResource.getSiteContentPageExperienceExperienceKey(
+				postContentPage.getSiteId(),
+				postContentPage.getFriendlyUrlPath(), null);
+
+		assertEquals(postContentPage, getContentPage);
+		assertValid(getContentPage);
+	}
+
+	protected ContentPage
+			testGetSiteContentPageExperienceExperienceKey_addContentPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSiteContentPageExperienceExperienceKey()
+		throws Exception {
+
+		ContentPage contentPage = testGraphQLContentPage_addContentPage();
+
+		Assert.assertTrue(
+			equals(
+				contentPage,
+				ContentPageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"contentPageExperienceExperienceKey",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" + contentPage.getSiteId() +
+												"\"");
+										put(
+											"friendlyUrlPath",
+											"\"" +
+												contentPage.
+													getFriendlyUrlPath() +
+														"\"");
+										put("experienceKey", null);
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/contentPageExperienceExperienceKey"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteContentPageExperienceExperienceKeyNotFound()
+		throws Exception {
+
+		String irrelevantFriendlyUrlPath =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantExperienceKey =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"contentPageExperienceExperienceKey",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"friendlyUrlPath",
+									irrelevantFriendlyUrlPath);
+								put("experienceKey", irrelevantExperienceKey);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testGetSiteContentPageExperienceExperienceKeyRenderedPage()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSiteContentPageRenderedPage() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -737,10 +833,8 @@ public abstract class BaseContentPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"defaultRenderedPage", additionalAssertFieldName)) {
-
-				if (contentPage.getDefaultRenderedPage() == null) {
+			if (Objects.equals("experience", additionalAssertFieldName)) {
+				if (contentPage.getExperience() == null) {
 					valid = false;
 				}
 
@@ -789,8 +883,8 @@ public abstract class BaseContentPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("renderedPages", additionalAssertFieldName)) {
-				if (contentPage.getRenderedPages() == null) {
+			if (Objects.equals("renderedPage", additionalAssertFieldName)) {
+				if (contentPage.getRenderedPage() == null) {
 					valid = false;
 				}
 
@@ -1037,12 +1131,10 @@ public abstract class BaseContentPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"defaultRenderedPage", additionalAssertFieldName)) {
-
+			if (Objects.equals("experience", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getDefaultRenderedPage(),
-						contentPage2.getDefaultRenderedPage())) {
+						contentPage1.getExperience(),
+						contentPage2.getExperience())) {
 
 					return false;
 				}
@@ -1117,10 +1209,10 @@ public abstract class BaseContentPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("renderedPages", additionalAssertFieldName)) {
+			if (Objects.equals("renderedPage", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getRenderedPages(),
-						contentPage2.getRenderedPages())) {
+						contentPage1.getRenderedPage(),
+						contentPage2.getRenderedPage())) {
 
 					return false;
 				}
@@ -1403,7 +1495,7 @@ public abstract class BaseContentPageResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("defaultRenderedPage")) {
+		if (entityFieldName.equals("experience")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1441,7 +1533,7 @@ public abstract class BaseContentPageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("renderedPages")) {
+		if (entityFieldName.equals("renderedPage")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

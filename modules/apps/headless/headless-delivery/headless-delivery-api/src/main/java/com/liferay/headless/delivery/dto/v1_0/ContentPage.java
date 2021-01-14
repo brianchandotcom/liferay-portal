@@ -306,21 +306,20 @@ public class ContentPage implements Serializable {
 
 	@Schema
 	@Valid
-	public RenderedPage getDefaultRenderedPage() {
-		return defaultRenderedPage;
+	public Experience getExperience() {
+		return experience;
 	}
 
-	public void setDefaultRenderedPage(RenderedPage defaultRenderedPage) {
-		this.defaultRenderedPage = defaultRenderedPage;
+	public void setExperience(Experience experience) {
+		this.experience = experience;
 	}
 
 	@JsonIgnore
-	public void setDefaultRenderedPage(
-		UnsafeSupplier<RenderedPage, Exception>
-			defaultRenderedPageUnsafeSupplier) {
+	public void setExperience(
+		UnsafeSupplier<Experience, Exception> experienceUnsafeSupplier) {
 
 		try {
-			defaultRenderedPage = defaultRenderedPageUnsafeSupplier.get();
+			experience = experienceUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -332,7 +331,7 @@ public class ContentPage implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RenderedPage defaultRenderedPage;
+	protected Experience experience;
 
 	@Schema(
 		description = "A relative URL to the content page's rendered content."
@@ -515,24 +514,22 @@ public class ContentPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSettings pageSettings;
 
-	@Schema(
-		description = "A list of rendered pages, which results from using the template and the appropriate viewport to process the page and return HTML."
-	)
+	@Schema
 	@Valid
-	public RenderedPage[] getRenderedPages() {
-		return renderedPages;
+	public RenderedPage getRenderedPage() {
+		return renderedPage;
 	}
 
-	public void setRenderedPages(RenderedPage[] renderedPages) {
-		this.renderedPages = renderedPages;
+	public void setRenderedPage(RenderedPage renderedPage) {
+		this.renderedPage = renderedPage;
 	}
 
 	@JsonIgnore
-	public void setRenderedPages(
-		UnsafeSupplier<RenderedPage[], Exception> renderedPagesUnsafeSupplier) {
+	public void setRenderedPage(
+		UnsafeSupplier<RenderedPage, Exception> renderedPageUnsafeSupplier) {
 
 		try {
-			renderedPages = renderedPagesUnsafeSupplier.get();
+			renderedPage = renderedPageUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -542,11 +539,9 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "A list of rendered pages, which results from using the template and the appropriate viewport to process the page and return HTML."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected RenderedPage[] renderedPages;
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected RenderedPage renderedPage;
 
 	@Schema(
 		description = "The ID of the site to which this content page is scoped."
@@ -917,14 +912,14 @@ public class ContentPage implements Serializable {
 			sb.append("\"");
 		}
 
-		if (defaultRenderedPage != null) {
+		if (experience != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"defaultRenderedPage\": ");
+			sb.append("\"experience\": ");
 
-			sb.append(String.valueOf(defaultRenderedPage));
+			sb.append(String.valueOf(experience));
 		}
 
 		if (friendlyUrlPath != null) {
@@ -1005,24 +1000,14 @@ public class ContentPage implements Serializable {
 			sb.append(String.valueOf(pageSettings));
 		}
 
-		if (renderedPages != null) {
+		if (renderedPage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"renderedPages\": ");
+			sb.append("\"renderedPage\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < renderedPages.length; i++) {
-				sb.append(String.valueOf(renderedPages[i]));
-
-				if ((i + 1) < renderedPages.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(renderedPage));
 		}
 
 		if (siteId != null) {

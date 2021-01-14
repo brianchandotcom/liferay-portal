@@ -16,7 +16,6 @@ package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.ContentPage;
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
-import com.liferay.headless.delivery.client.dto.v1_0.RenderedPage;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -186,14 +185,14 @@ public class ContentPageSerDes {
 			sb.append("\"");
 		}
 
-		if (contentPage.getDefaultRenderedPage() != null) {
+		if (contentPage.getExperience() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"defaultRenderedPage\": ");
+			sb.append("\"experience\": ");
 
-			sb.append(String.valueOf(contentPage.getDefaultRenderedPage()));
+			sb.append(String.valueOf(contentPage.getExperience()));
 		}
 
 		if (contentPage.getFriendlyUrlPath() != null) {
@@ -274,24 +273,14 @@ public class ContentPageSerDes {
 			sb.append(String.valueOf(contentPage.getPageSettings()));
 		}
 
-		if (contentPage.getRenderedPages() != null) {
+		if (contentPage.getRenderedPage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"renderedPages\": ");
+			sb.append("\"renderedPage\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < contentPage.getRenderedPages().length; i++) {
-				sb.append(String.valueOf(contentPage.getRenderedPages()[i]));
-
-				if ((i + 1) < contentPage.getRenderedPages().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(String.valueOf(contentPage.getRenderedPage()));
 		}
 
 		if (contentPage.getSiteId() != null) {
@@ -490,13 +479,11 @@ public class ContentPageSerDes {
 				liferayToJSONDateFormat.format(contentPage.getDatePublished()));
 		}
 
-		if (contentPage.getDefaultRenderedPage() == null) {
-			map.put("defaultRenderedPage", null);
+		if (contentPage.getExperience() == null) {
+			map.put("experience", null);
 		}
 		else {
-			map.put(
-				"defaultRenderedPage",
-				String.valueOf(contentPage.getDefaultRenderedPage()));
+			map.put("experience", String.valueOf(contentPage.getExperience()));
 		}
 
 		if (contentPage.getFriendlyUrlPath() == null) {
@@ -548,13 +535,12 @@ public class ContentPageSerDes {
 				"pageSettings", String.valueOf(contentPage.getPageSettings()));
 		}
 
-		if (contentPage.getRenderedPages() == null) {
-			map.put("renderedPages", null);
+		if (contentPage.getRenderedPage() == null) {
+			map.put("renderedPage", null);
 		}
 		else {
 			map.put(
-				"renderedPages",
-				String.valueOf(contentPage.getRenderedPages()));
+				"renderedPage", String.valueOf(contentPage.getRenderedPage()));
 		}
 
 		if (contentPage.getSiteId() == null) {
@@ -689,12 +675,10 @@ public class ContentPageSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "defaultRenderedPage")) {
-
+			else if (Objects.equals(jsonParserFieldName, "experience")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setDefaultRenderedPage(
-						RenderedPageSerDes.toDTO((String)jsonParserFieldValue));
+					contentPage.setExperience(
+						ExperienceSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
@@ -737,16 +721,10 @@ public class ContentPageSerDes {
 						PageSettingsSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "renderedPages")) {
+			else if (Objects.equals(jsonParserFieldName, "renderedPage")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setRenderedPages(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> RenderedPageSerDes.toDTO((String)object)
-						).toArray(
-							size -> new RenderedPage[size]
-						));
+					contentPage.setRenderedPage(
+						RenderedPageSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

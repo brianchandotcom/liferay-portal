@@ -24,6 +24,7 @@ import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.dto.v1_0.Experience;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
@@ -50,6 +51,7 @@ import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.headless.delivery.resource.v1_0.ExperienceResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
@@ -180,6 +182,14 @@ public class Query {
 
 		_documentFolderResourceComponentServiceObjects =
 			documentFolderResourceComponentServiceObjects;
+	}
+
+	public static void setExperienceResourceComponentServiceObjects(
+		ComponentServiceObjects<ExperienceResource>
+			experienceResourceComponentServiceObjects) {
+
+		_experienceResourceComponentServiceObjects =
+			experienceResourceComponentServiceObjects;
 	}
 
 	public static void setKnowledgeBaseArticleResourceComponentServiceObjects(
@@ -647,7 +657,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPage(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, defaultRenderedPage, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, renderedPages, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPage(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, experience, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, renderedPage, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a specific public content page of a site"
@@ -662,6 +672,51 @@ public class Query {
 			this::_populateResourceContext,
 			contentPageResource -> contentPageResource.getSiteContentPage(
 				Long.valueOf(siteKey), friendlyUrlPath));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPageExperienceExperienceKey(experienceKey: ___, friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, experience, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, renderedPage, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves a specific public content page of a site for a given experience"
+	)
+	public ContentPage contentPageExperienceExperienceKey(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath,
+			@GraphQLName("experienceKey") String experienceKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentPageResource ->
+				contentPageResource.getSiteContentPageExperienceExperienceKey(
+					Long.valueOf(siteKey), friendlyUrlPath, experienceKey));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPageExperienceExperienceKeyRenderedPage(experienceKey: ___, friendlyUrlPath: ___, siteKey: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the rendered content of a given public page for a given experience."
+	)
+	public String contentPageExperienceExperienceKeyRenderedPage(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath,
+			@GraphQLName("experienceKey") String experienceKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_contentPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			contentPageResource ->
+				contentPageResource.
+					getSiteContentPageExperienceExperienceKeyRenderedPage(
+						Long.valueOf(siteKey), friendlyUrlPath, experienceKey));
 	}
 
 	/**
@@ -1206,6 +1261,28 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						documentFolderResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPageFriendlyUrlPathExperiences(friendlyUrlPath: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the experiences of a given Content Page"
+	)
+	public ExperiencePage contentPageFriendlyUrlPathExperiences(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_experienceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			experienceResource -> new ExperiencePage(
+				experienceResource.
+					getSiteContentPageFriendlyUrlPathExperiencesPage(
+						Long.valueOf(siteKey), friendlyUrlPath)));
 	}
 
 	/**
@@ -4011,6 +4088,44 @@ public class Query {
 
 	}
 
+	@GraphQLName("ExperiencePage")
+	public class ExperiencePage {
+
+		public ExperiencePage(Page experiencePage) {
+			actions = experiencePage.getActions();
+
+			facets = experiencePage.getFacets();
+
+			items = experiencePage.getItems();
+			lastPage = experiencePage.getLastPage();
+			page = experiencePage.getPage();
+			pageSize = experiencePage.getPageSize();
+			totalCount = experiencePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<Experience> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("KnowledgeBaseArticlePage")
 	public class KnowledgeBaseArticlePage {
 
@@ -4905,6 +5020,19 @@ public class Query {
 		documentFolderResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(ExperienceResource experienceResource)
+		throws Exception {
+
+		experienceResource.setContextAcceptLanguage(_acceptLanguage);
+		experienceResource.setContextCompany(_company);
+		experienceResource.setContextHttpServletRequest(_httpServletRequest);
+		experienceResource.setContextHttpServletResponse(_httpServletResponse);
+		experienceResource.setContextUriInfo(_uriInfo);
+		experienceResource.setContextUser(_user);
+		experienceResource.setGroupLocalService(_groupLocalService);
+		experienceResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			KnowledgeBaseArticleResource knowledgeBaseArticleResource)
 		throws Exception {
@@ -5145,6 +5273,8 @@ public class Query {
 		_documentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DocumentFolderResource>
 		_documentFolderResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ExperienceResource>
+		_experienceResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseArticleResource>
 		_knowledgeBaseArticleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<KnowledgeBaseAttachmentResource>

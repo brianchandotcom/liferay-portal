@@ -14,10 +14,9 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.ContentPage;
-import com.liferay.headless.delivery.resource.v1_0.ContentPageResource;
+import com.liferay.headless.delivery.dto.v1_0.Experience;
+import com.liferay.headless.delivery.resource.v1_0.ExperienceResource;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -62,8 +61,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -74,176 +71,49 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseContentPageResourceImpl
-	implements ContentPageResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<ContentPage> {
+public abstract class BaseExperienceResourceImpl
+	implements ExperienceResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<Experience> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Operation(description = "Retrieves the public content pages of the site")
+	@Operation(
+		description = "Retrieves the experiences of a given Content Page"
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.QUERY, name = "search"),
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
+			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath")
 		}
 	)
-	@Path("/sites/{siteId}/content-pages")
+	@Path("/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "ContentPage")})
-	public Page<ContentPage> getSiteContentPagesPage(
+	@Tags(value = {@Tag(name = "Experience")})
+	public Page<Experience> getSiteContentPageFriendlyUrlPathExperiencesPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context com.liferay.portal.vulcan.aggregation.Aggregation
-				aggregation,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
+				String friendlyUrlPath)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
 	}
 
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/{friendlyUrlPath}'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Operation(
-		description = "Retrieves a specific public content page of a site"
-	)
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath")
-		}
-	)
-	@Path("/sites/{siteId}/content-pages/{friendlyUrlPath}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "ContentPage")})
-	public ContentPage getSiteContentPage(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
-				String friendlyUrlPath)
-		throws Exception {
-
-		return new ContentPage();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences/{experienceKey}'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Operation(
-		description = "Retrieves a specific public content page of a site for a given experience"
-	)
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath"),
-			@Parameter(in = ParameterIn.PATH, name = "experienceKey")
-		}
-	)
-	@Path(
-		"/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences/{experienceKey}"
-	)
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "ContentPage")})
-	public ContentPage getSiteContentPageExperienceExperienceKey(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
-				String friendlyUrlPath,
-			@NotNull @Parameter(hidden = true) @PathParam("experienceKey")
-				String experienceKey)
-		throws Exception {
-
-		return new ContentPage();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences/{experienceKey}/rendered-page'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Operation(
-		description = "Retrieves the rendered content of a given public page for a given experience."
-	)
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath"),
-			@Parameter(in = ParameterIn.PATH, name = "experienceKey")
-		}
-	)
-	@Path(
-		"/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences/{experienceKey}/rendered-page"
-	)
-	@Produces("text/html")
-	@Tags(value = {@Tag(name = "ContentPage")})
-	public String getSiteContentPageExperienceExperienceKeyRenderedPage(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
-				String friendlyUrlPath,
-			@NotNull @Parameter(hidden = true) @PathParam("experienceKey")
-				String experienceKey)
-		throws Exception {
-
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/{friendlyUrlPath}/rendered-page'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Operation(
-		description = "Retrieves the rendered content of a given public page."
-	)
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath")
-		}
-	)
-	@Path("/sites/{siteId}/content-pages/{friendlyUrlPath}/rendered-page")
-	@Produces("text/html")
-	@Tags(value = {@Tag(name = "ContentPage")})
-	public String getSiteContentPageRenderedPage(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
-				String friendlyUrlPath)
-		throws Exception {
-
-		return StringPool.BLANK;
-	}
-
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<ContentPage> contentPages,
+			java.util.Collection<Experience> experiences,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<ContentPage> contentPages,
+			java.util.Collection<Experience> experiences,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -264,14 +134,12 @@ public abstract class BaseContentPageResourceImpl
 	}
 
 	@Override
-	public Page<ContentPage> read(
+	public Page<Experience> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteContentPagesPage(
-			(Long)parameters.get("siteId"), search, null, filter, pagination,
-			sorts);
+		return null;
 	}
 
 	@Override
@@ -298,7 +166,7 @@ public abstract class BaseContentPageResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<ContentPage> contentPages,
+			java.util.Collection<Experience> experiences,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}

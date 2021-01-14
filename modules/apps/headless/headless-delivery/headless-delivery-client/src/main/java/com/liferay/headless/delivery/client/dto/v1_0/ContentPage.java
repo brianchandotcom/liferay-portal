@@ -206,27 +206,26 @@ public class ContentPage implements Cloneable, Serializable {
 
 	protected Date datePublished;
 
-	public RenderedPage getDefaultRenderedPage() {
-		return defaultRenderedPage;
+	public Experience getExperience() {
+		return experience;
 	}
 
-	public void setDefaultRenderedPage(RenderedPage defaultRenderedPage) {
-		this.defaultRenderedPage = defaultRenderedPage;
+	public void setExperience(Experience experience) {
+		this.experience = experience;
 	}
 
-	public void setDefaultRenderedPage(
-		UnsafeSupplier<RenderedPage, Exception>
-			defaultRenderedPageUnsafeSupplier) {
+	public void setExperience(
+		UnsafeSupplier<Experience, Exception> experienceUnsafeSupplier) {
 
 		try {
-			defaultRenderedPage = defaultRenderedPageUnsafeSupplier.get();
+			experience = experienceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected RenderedPage defaultRenderedPage;
+	protected Experience experience;
 
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
@@ -356,26 +355,26 @@ public class ContentPage implements Cloneable, Serializable {
 
 	protected PageSettings pageSettings;
 
-	public RenderedPage[] getRenderedPages() {
-		return renderedPages;
+	public RenderedPage getRenderedPage() {
+		return renderedPage;
 	}
 
-	public void setRenderedPages(RenderedPage[] renderedPages) {
-		this.renderedPages = renderedPages;
+	public void setRenderedPage(RenderedPage renderedPage) {
+		this.renderedPage = renderedPage;
 	}
 
-	public void setRenderedPages(
-		UnsafeSupplier<RenderedPage[], Exception> renderedPagesUnsafeSupplier) {
+	public void setRenderedPage(
+		UnsafeSupplier<RenderedPage, Exception> renderedPageUnsafeSupplier) {
 
 		try {
-			renderedPages = renderedPagesUnsafeSupplier.get();
+			renderedPage = renderedPageUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected RenderedPage[] renderedPages;
+	protected RenderedPage renderedPage;
 
 	public Long getSiteId() {
 		return siteId;

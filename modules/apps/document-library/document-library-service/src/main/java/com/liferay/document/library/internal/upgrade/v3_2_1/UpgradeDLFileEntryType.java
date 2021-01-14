@@ -110,7 +110,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps2 = connection.prepareStatement(
-				"INSERT INTO DDMStructure VALUES (1, 0, ?, ?, ?, ?, ?, ?, ?, " +
+				"INSERT INTO DDMStructure VALUES (0, 0, ?, ?, ?, ?, ?, ?, ?, " +
 					"?, ?, ?, 0, ?, ?, '1.0', ?, '', ?, 'default', 1, NULL)")) {
 
 			long classNameId = PortalUtil.getClassNameId(

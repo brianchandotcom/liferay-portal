@@ -70,7 +70,7 @@ definition {
 			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "${fieldReference}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertValue(
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
@@ -141,7 +141,7 @@ definition {
 			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "${fieldReference}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertValue(
 			key_fieldLabel = "Field Reference",
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
@@ -225,7 +225,7 @@ definition {
 				locator1 = "Sidebar#TEXT_INPUT",
 				value1 = "${fieldReference}");
 
-			AssertTextEquals(
+			AssertTextEquals.assertValue(
 				key_fieldLabel = "Field Reference",
 				key_fieldName = "fieldReference",
 				locator1 = "Sidebar#TEXT_INPUT",

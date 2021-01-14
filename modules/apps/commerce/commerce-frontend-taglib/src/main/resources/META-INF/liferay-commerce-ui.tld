@@ -131,6 +131,41 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>add-to-wish-list</name>
+		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.AddToWishListTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>commerceAccountId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cpDefinitionId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inWishList</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>large</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>skuId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>spritemap</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>commerce-product-details-modal</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.ProductDetailsModalTag</tag-class>
 		<body-content>empty</body-content>

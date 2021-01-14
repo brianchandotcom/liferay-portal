@@ -149,8 +149,8 @@ for (int i = 0; i < 8; i++) {
 	inputName="multiSelectInput1"
 	label="Multiselect 1"
 	multiselectLocator="<%= multiselectDisplayContext.getMultiselectLocator() %>"
-	selectedItems="<%= multiselectDisplayContext.getSelectedItemsWithCustomProperties() %>"
-	sourceItems="<%= multiselectDisplayContext.getSourceItemsWithCustomProperties() %>"
+	selectedMultiselectItems="<%= multiselectDisplayContext.getSelectedMultiselectItemsWithCustomProperties() %>"
+	sourceMultiselectItems="<%= multiselectDisplayContext.getSourceMultiselectItemsWithCustomProperties() %>"
 />
 
 <clay:multiselect
@@ -159,6 +159,6 @@ for (int i = 0; i < 8; i++) {
 	inputName="multiSelectInput2"
 	label="Multiselect with custom menu renderer"
 	propsTransformer="js/ClaySampleMultiselectPropsTransformer"
-	selectedItems="<%= multiselectDisplayContext.getSelectedItems() %>"
-	sourceItems="<%= multiselectDisplayContext.getSourceItems() %>"
+	selectedMultiselectItems="<%= multiselectDisplayContext.getSelectedMultiselectItems() %>"
+	sourceMultiselectItems="<%= multiselectDisplayContext.getSourceMultiselectItems() %>"
 />

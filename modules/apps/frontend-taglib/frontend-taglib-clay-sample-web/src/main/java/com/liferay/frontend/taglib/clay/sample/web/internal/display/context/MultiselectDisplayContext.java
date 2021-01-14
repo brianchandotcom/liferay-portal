@@ -38,12 +38,12 @@ public class MultiselectDisplayContext {
 		return _multiselectLocator;
 	}
 
-	public List<MultiselectItem> getSelectedItems() {
-		if (_selectedItems != null) {
-			return _selectedItems;
+	public List<MultiselectItem> getSelectedMultiselectItems() {
+		if (_selectedMultiselectItems != null) {
+			return _selectedMultiselectItems;
 		}
 
-		_selectedItems = MultiselectItemListBuilder.add(
+		_selectedMultiselectItems = MultiselectItemListBuilder.add(
 			multiselectItem -> {
 				multiselectItem.setLabel("one");
 				multiselectItem.setValue("1");
@@ -55,35 +55,38 @@ public class MultiselectDisplayContext {
 			}
 		).build();
 
-		return _selectedItems;
+		return _selectedMultiselectItems;
 	}
 
-	public List<MultiselectItem> getSelectedItemsWithCustomProperties() {
-		if (_selectedItemsWithCustomProperties != null) {
-			return _selectedItemsWithCustomProperties;
+	public List<MultiselectItem>
+		getSelectedMultiselectItemsWithCustomProperties() {
+
+		if (_selectedMultiselectItemsWithCustomProperties != null) {
+			return _selectedMultiselectItemsWithCustomProperties;
 		}
 
-		_selectedItemsWithCustomProperties = MultiselectItemListBuilder.add(
-			multiselectItem -> {
-				multiselectItem.put("data", "1");
-				multiselectItem.put("name", "one");
-			}
-		).add(
-			multiselectItem -> {
-				multiselectItem.put("data", "2");
-				multiselectItem.put("name", "two");
-			}
-		).build();
+		_selectedMultiselectItemsWithCustomProperties =
+			MultiselectItemListBuilder.add(
+				multiselectItem -> {
+					multiselectItem.put("data", "1");
+					multiselectItem.put("name", "one");
+				}
+			).add(
+				multiselectItem -> {
+					multiselectItem.put("data", "2");
+					multiselectItem.put("name", "two");
+				}
+			).build();
 
-		return _selectedItemsWithCustomProperties;
+		return _selectedMultiselectItemsWithCustomProperties;
 	}
 
-	public List<MultiselectItem> getSourceItems() {
-		if (_sourceItems != null) {
-			return _sourceItems;
+	public List<MultiselectItem> getSourceMultiselectItems() {
+		if (_sourceMultiselectItems != null) {
+			return _sourceMultiselectItems;
 		}
 
-		_sourceItems = MultiselectItemListBuilder.add(
+		_sourceMultiselectItems = MultiselectItemListBuilder.add(
 			multiselectItem -> {
 				multiselectItem.setLabel("one");
 				multiselectItem.setValue("1");
@@ -105,67 +108,74 @@ public class MultiselectDisplayContext {
 			}
 		).build();
 
-		return _sourceItems;
+		return _sourceMultiselectItems;
 	}
 
-	public List<MultiselectItem> getSourceItemsWithCustomProperties() {
-		if (_sourceItemsWithCustomProperties != null) {
-			return _sourceItemsWithCustomProperties;
+	public List<MultiselectItem>
+		getSourceMultiselectItemsWithCustomProperties() {
+
+		if (_sourceMultiselectItemsWithCustomProperties != null) {
+			return _sourceMultiselectItemsWithCustomProperties;
 		}
 
-		_sourceItemsWithCustomProperties = MultiselectItemListBuilder.add(
-			multiselectItem -> {
-				multiselectItem.put("data", "1");
-				multiselectItem.put("name", "one");
-			}
-		).add(
-			multiselectItem -> {
-				multiselectItem.put("data", "2");
-				multiselectItem.put("name", "two");
-			}
-		).add(
-			multiselectItem -> {
-				multiselectItem.put("data", "3");
-				multiselectItem.put("name", "three");
-			}
-		).add(
-			multiselectItem -> {
-				multiselectItem.put("data", "4");
-				multiselectItem.put("name", "four");
-			}
-		).build();
+		_sourceMultiselectItemsWithCustomProperties =
+			MultiselectItemListBuilder.add(
+				multiselectItem -> {
+					multiselectItem.put("data", "1");
+					multiselectItem.put("name", "one");
+				}
+			).add(
+				multiselectItem -> {
+					multiselectItem.put("data", "2");
+					multiselectItem.put("name", "two");
+				}
+			).add(
+				multiselectItem -> {
+					multiselectItem.put("data", "3");
+					multiselectItem.put("name", "three");
+				}
+			).add(
+				multiselectItem -> {
+					multiselectItem.put("data", "4");
+					multiselectItem.put("name", "four");
+				}
+			).build();
 
-		return _sourceItemsWithCustomProperties;
+		return _sourceMultiselectItemsWithCustomProperties;
 	}
 
 	public void setMultiselectLocator(MultiselectLocator multiselectLocator) {
 		_multiselectLocator = multiselectLocator;
 	}
 
-	public void setSelectedItems(List<MultiselectItem> selectedItems) {
-		_selectedItems = selectedItems;
+	public void setSelectedMultiselectItems(
+		List<MultiselectItem> selectedItems) {
+
+		_selectedMultiselectItems = selectedItems;
 	}
 
-	public void setSelectedItemsWithCustomProperties(
-		List<MultiselectItem> selectedItemsWithCustomProperties) {
+	public void setSelectedMultiselectItemsWithCustomProperties(
+		List<MultiselectItem> selectedMultiselectItemsWithCustomProperties) {
 
-		_selectedItemsWithCustomProperties = selectedItemsWithCustomProperties;
+		_selectedMultiselectItemsWithCustomProperties =
+			selectedMultiselectItemsWithCustomProperties;
 	}
 
-	public void setSourceItems(List<MultiselectItem> sourceItems) {
-		_sourceItems = sourceItems;
+	public void setSourceMultiselectItems(List<MultiselectItem> sourceItems) {
+		_sourceMultiselectItems = sourceItems;
 	}
 
-	public void setSourceItemsWithCustomProperties(
-		List<MultiselectItem> sourceItemsWithCustomProperties) {
+	public void setSourceMultiselectItemsWithCustomProperties(
+		List<MultiselectItem> sourceMultiselectItemsWithCustomProperties) {
 
-		_sourceItemsWithCustomProperties = sourceItemsWithCustomProperties;
+		_sourceMultiselectItemsWithCustomProperties =
+			sourceMultiselectItemsWithCustomProperties;
 	}
 
 	private MultiselectLocator _multiselectLocator;
-	private List<MultiselectItem> _selectedItems;
-	private List<MultiselectItem> _selectedItemsWithCustomProperties;
-	private List<MultiselectItem> _sourceItems;
-	private List<MultiselectItem> _sourceItemsWithCustomProperties;
+	private List<MultiselectItem> _selectedMultiselectItems;
+	private List<MultiselectItem> _selectedMultiselectItemsWithCustomProperties;
+	private List<MultiselectItem> _sourceMultiselectItems;
+	private List<MultiselectItem> _sourceMultiselectItemsWithCustomProperties;
 
 }

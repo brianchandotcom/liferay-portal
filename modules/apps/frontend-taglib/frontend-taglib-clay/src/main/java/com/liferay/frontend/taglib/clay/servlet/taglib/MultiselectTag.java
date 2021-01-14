@@ -75,12 +75,12 @@ public class MultiselectTag extends BaseContainerTag {
 		return new MultiselectLocator();
 	}
 
-	public List<MultiselectItem> getSelectedItems() {
-		return _selectedItems;
+	public List<MultiselectItem> getSelectedMultiselectItems() {
+		return _selectedMultiselectItems;
 	}
 
-	public List<MultiselectItem> getSourceItems() {
-		return _sourceItems;
+	public List<MultiselectItem> getSourceMultiselectItems() {
+		return _sourceMultiselectItems;
 	}
 
 	public boolean isDisabled() {
@@ -146,12 +146,16 @@ public class MultiselectTag extends BaseContainerTag {
 		_multiselectLocator = multiselectLocator;
 	}
 
-	public void setSelectedItems(List<MultiselectItem> selectedItems) {
-		_selectedItems = selectedItems;
+	public void setSelectedMultiselectItems(
+		List<MultiselectItem> selectedMultiselectItems) {
+
+		_selectedMultiselectItems = selectedMultiselectItems;
 	}
 
-	public void setSourceItems(List<MultiselectItem> sourceItems) {
-		_sourceItems = sourceItems;
+	public void setSourceMultiselectItems(
+		List<MultiselectItem> sourceMultiselectItems) {
+
+		_sourceMultiselectItems = sourceMultiselectItems;
 	}
 
 	/**
@@ -174,8 +178,8 @@ public class MultiselectTag extends BaseContainerTag {
 		_inputValue = null;
 		_label = null;
 		_multiselectLocator = null;
-		_selectedItems = null;
-		_sourceItems = null;
+		_selectedMultiselectItems = null;
+		_sourceMultiselectItems = null;
 		_valid = true;
 	}
 
@@ -199,8 +203,8 @@ public class MultiselectTag extends BaseContainerTag {
 			props.put("multiselectLocator", _multiselectLocator);
 		}
 
-		props.put("selectedItems", _selectedItems);
-		props.put("sourceItems", _sourceItems);
+		props.put("selectedItems", _selectedMultiselectItems);
+		props.put("sourceItems", _sourceMultiselectItems);
 
 		return super.prepareProps(props);
 	}
@@ -239,12 +243,13 @@ public class MultiselectTag extends BaseContainerTag {
 		jspWriter.write("form-control-tag-group input-group\"><div class=\"");
 		jspWriter.write("input-group-item\">");
 
-		List<MultiselectItem> selectedItems = getSelectedItems();
+		List<MultiselectItem> selectedMultiselectItems =
+			getSelectedMultiselectItems();
 
-		if (!ListUtil.isEmpty(selectedItems)) {
+		if (!ListUtil.isEmpty(selectedMultiselectItems)) {
 			MultiselectLocator multiselectLocator = getMultiselectLocator();
 
-			for (MultiselectItem selectedItem : selectedItems) {
+			for (MultiselectItem selectedItem : selectedMultiselectItems) {
 				String selectedItemLabel = selectedItem.get(
 					multiselectLocator.get("label"));
 
@@ -289,7 +294,9 @@ public class MultiselectTag extends BaseContainerTag {
 
 		jspWriter.write(" /></div>");
 
-		if (!_disabled && !_disabledClearAll && !selectedItems.isEmpty()) {
+		if (!_disabled && !_disabledClearAll &&
+			!selectedMultiselectItems.isEmpty()) {
+
 			jspWriter.write("<div class=\"input-group-item ");
 			jspWriter.write("input-group-item-shrink\">");
 
@@ -351,8 +358,8 @@ public class MultiselectTag extends BaseContainerTag {
 	private String _inputValue;
 	private String _label;
 	private MultiselectLocator _multiselectLocator;
-	private List<MultiselectItem> _selectedItems;
-	private List<MultiselectItem> _sourceItems;
+	private List<MultiselectItem> _selectedMultiselectItems;
+	private List<MultiselectItem> _sourceMultiselectItems;
 	private boolean _valid = true;
 
 }

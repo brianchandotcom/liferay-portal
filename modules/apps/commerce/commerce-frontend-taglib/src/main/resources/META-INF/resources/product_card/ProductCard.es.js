@@ -20,6 +20,24 @@ import Soy, {Config} from 'metal-soy';
 
 import template from './ProductCard.soy';
 
+const CookieUtil = {
+	COOKIE_SCOPE: 'COMMERCE_COMPARE_cpDefinitionIds_',
+
+	getValue(groupId) {
+		const [, value] = document.cookie.split(
+			`${this.COOKIE_SCOPE}${groupId}=`
+		);
+
+		return !value ? null : value.split(';')[0];
+	},
+
+	setValue(groupId, value) {
+		const cookieValue = `${this.COOKIE_SCOPE}${groupId}=${value};`;
+
+		document.cookie = `${cookieValue};path=/;`;
+	},
+};
+
 function liferayNavigation(url) {
 	if (Liferay.SPA) {
 		Liferay.SPA.app.navigate(url);
@@ -62,25 +80,22 @@ class ProductCard extends Component {
 	}
 
 	_handleRemoveProduct() {
-		const formData = new FormData();
+		const value = CookieUtil.getValue(this.commerceChannelGroupId);
 
-		formData.append(
-			this.compareContentNamespace + 'cpDefinitionId',
-			this.productId
+		const cpDefinitionIds = value ? value.split(':') : [];
+
+		const index = cpDefinitionIds.indexOf(this.productId);
+
+		if (index !== -1) {
+			cpDefinitionIds.splice(index, 1);
+		}
+
+		CookieUtil.setValue(
+			this.commerceChannelGroupId,
+			cpDefinitionIds.join(':')
 		);
-		formData.append(
-			this.compareContentNamespace + this.productId + 'Compare',
-			false
-		);
 
-		return fetch(this.editCompareProductActionURL, {
-			body: formData,
-			method: 'POST',
-		}).then(() => {
-			liferayNavigation(window.location.href);
-
-			return Liferay.SPA;
-		});
+		liferayNavigation(window.location.href);
 	}
 
 	_handleWishListButtonClick() {
@@ -135,6 +150,10 @@ ProductCard.STATE = {
 			name: Config.string().required(),
 		})
 	),
+	commerceChannelGroupId: Config.oneOfType([
+		Config.string(),
+		Config.number(),
+	]),
 	compareContentNamespace: Config.string(),
 	compareState: Config.shapeOf({
 		checkboxVisible: Config.bool(),
@@ -148,7 +167,6 @@ ProductCard.STATE = {
 	deleteButtonVisible: Config.bool(),
 	description: Config.string(),
 	detailsLink: Config.string(),
-	editCompareProductActionURL: Config.string(),
 	minQuantity: Config.number(),
 	name: Config.string().required(),
 	orderId: Config.oneOfType([Config.string(), Config.number()]),

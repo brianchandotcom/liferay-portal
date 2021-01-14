@@ -20,7 +20,7 @@ dependencies {
 processResources {
 	into("META-INF") {
 		from {
-			//FileUtil.get(project, "insert link for talend job download here")
+			FileUtil.get(project, "https://repository.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/etl/etl-talend-context-printer-sample/1.0/etl-talend-context-printer-sample-1.0.zip")
 		}
 	}
 }

@@ -311,6 +311,15 @@ public class SegmentsExperiencePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_C_LtP() throws Exception {
+		_persistence.countByG_C_C_LtP(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_LtP(0L, 0L, 0L, 0);
+	}
+
+	@Test
 	public void testCountByG_C_C_A() throws Exception {
 		_persistence.countByG_C_C_A(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

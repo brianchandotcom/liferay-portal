@@ -38,6 +38,98 @@
 					"name": "BigDecimal"
 				}
 			},
+			"Localized1": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"description_i18n": {
+						"additionalProperties": {
+							"type": "string"
+						},
+						"description": "Example of property name which is approved by Liferay and conversion to Avro indexed record is supported",
+						"type": "object"
+					},
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "Localized"
+				}
+			},
+			"Localized2": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"nestedI18n": {
+						"$ref": "#/components/schemas/Localized1",
+						"description": "Example of property which nests object with i18n property and conversion to Avro indexed record is supported"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "Localized"
+				}
+			},
+			"LocalizedInvalid1": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"property_i18n_suffix": {
+						"additionalProperties": {
+							"type": "string"
+						},
+						"description": "Example of property name which would break conversion to Avro indexed record",
+						"type": "object"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "LocalizedInvalid1"
+				}
+			},
+			"LocalizedInvalid2": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"property_i18n": {
+						"$ref": "#/components/schemas/Localized1",
+						"description": "Example of property with valid _i18n usage and wrong type that would break conversion to Avro indexed record"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "LocalizedInvalid2"
+				}
+			},
 			"Timestamp": {
 				"properties": {
 					"id": {
@@ -177,6 +269,134 @@
 				},
 				"tags": [
 					"BigDecimal"
+				]
+			}
+		},
+		"/v1.0/i18n/{id}": {
+			"get": {
+				"operationId": "getLocalized",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Localized1"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Localized1"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Localized"
+				]
+			}
+		},
+		"/v1.0/i18n_invalid_1/{id}": {
+			"get": {
+				"operationId": "getLocalized",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LocalizedInvalid1"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/LocalizedInvalid1"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Localized",
+					"Invalid"
+				]
+			}
+		},
+		"/v1.0/i18n_invalid_2/{id}": {
+			"get": {
+				"operationId": "getLocalizedInvalid2",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LocalizedInvalid2"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/LocalizedInvalid2"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Localized",
+					"Invalid"
+				]
+			}
+		},
+		"/v1.0/i18n_nested": {
+			"get": {
+				"operationId": "getNested",
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Localized2"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Localized",
+					"Nested"
 				]
 			}
 		},

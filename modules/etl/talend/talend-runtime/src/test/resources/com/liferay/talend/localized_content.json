@@ -1,0 +1,16 @@
+{
+	"description": "Valid application of _i18n Liferay pattern in OpenAPI",
+	"description_i18n": {
+		"en_US": "Application of i18n pattern",
+		"hr_HR": "Uporaba i18n predloska"
+	},
+	"id": 19770709,
+	"nestedI18n": {
+		"description": "Acceptable structure because parent name does not contain _i18n",
+		"description_i18n": {
+			"en_US": "i18n pattern within nested",
+			"hr_HR": "i18n predlozak u ugnjezdenom polju"
+		},
+		"id": 19970709
+	}
+}

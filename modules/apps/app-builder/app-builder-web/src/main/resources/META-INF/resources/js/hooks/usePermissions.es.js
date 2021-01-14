@@ -20,11 +20,12 @@ import {
 } from '../pages/entry/PermissionsContext.es';
 
 export default function usePermissions() {
-	const actionIds = useContext(PermissionsContext);
+	const {actionIds, isLoading} = useContext(PermissionsContext);
 
 	return {
 		add: actionIds.includes(ACTIONS.ADD_DATA_RECORD),
 		delete: actionIds.includes(ACTIONS.DELETE_DATA_RECORD),
+		isLoading,
 		update: actionIds.includes(ACTIONS.UPDATE_DATA_RECORD),
 		view: actionIds.includes(ACTIONS.VIEW_DATA_RECORD),
 	};

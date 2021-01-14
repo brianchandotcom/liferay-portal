@@ -31,6 +31,44 @@ import org.junit.Test;
 public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 
 	@Test
+	public void testToIndexedRecordI18nProperty() {
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/i18n/{id}", OASConstants.OPERATION_GET,
+				readObject("openapi_data_types.json"));
+
+		IndexedRecord indexedRecord =
+			jsonObjectIndexedRecordConverter.toIndexedRecord(
+				readObject("localized_content.json"));
+
+		Object object = indexedRecord.get(1);
+
+		Assert.assertEquals(
+			"{\"en_US\":\"Application of i18n pattern\"," +
+				"\"hr_HR\":\"Uporaba i18n predloska\"}",
+			object);
+	}
+
+	@Test
+	public void testToIndexedRecordI18nPropertyNested() {
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/i18n_nested", OASConstants.OPERATION_GET,
+				readObject("openapi_data_types.json"));
+
+		IndexedRecord indexedRecord =
+			jsonObjectIndexedRecordConverter.toIndexedRecord(
+				readObject("localized_content.json"));
+
+		Object object = indexedRecord.get(3);
+
+		Assert.assertEquals(
+			"{\"en_US\":\"i18n pattern within nested\"," +
+				"\"hr_HR\":\"i18n predlozak u ugnjezdenom polju\"}",
+			object);
+	}
+
+	@Test
 	public void testToIndexedRecordIfBigDecimalPropertyPresent() {
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
 			getJsonObjectIndexedRecordConverter(
@@ -114,6 +152,28 @@ public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 
 		Assert.assertEquals(
 			"Display date field value", 1320144300000L, displayDate);
+	}
+
+	@Test(expected = ConverterException.class)
+	public void testToIndexedRecordInvalidI18nProperty1() {
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/i18n_invalid_1/{id}", OASConstants.OPERATION_GET,
+				readObject("openapi_data_types.json"));
+
+		jsonObjectIndexedRecordConverter.toIndexedRecord(
+			readObject("localized_content.json"));
+	}
+
+	@Test(expected = ConverterException.class)
+	public void testToIndexedRecordInvalidI18nProperty2() {
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/i18n_invalid_2/{id}", OASConstants.OPERATION_GET,
+				readObject("openapi_data_types.json"));
+
+		jsonObjectIndexedRecordConverter.toIndexedRecord(
+			readObject("localized_content.json"));
 	}
 
 	@Test(expected = ConverterException.class)

@@ -18,8 +18,8 @@ import miniCompareLauncher from '../../../src/main/resources/META-INF/resources/
 import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 
 miniCompareLauncher('miniCompare', 'mini-compare-root', {
+	commerceChannelGroupId: 1234,
 	compareProductsURL: '#',
-	editCompareProductActionURL: '#',
 	itemsLimit: 4,
 	portletNamespace: 'portletNamespace',
 	spritemap: './assets/icons.svg',

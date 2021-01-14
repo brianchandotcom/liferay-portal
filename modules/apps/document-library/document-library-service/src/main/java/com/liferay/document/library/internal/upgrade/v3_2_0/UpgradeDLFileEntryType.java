@@ -31,6 +31,7 @@ import java.sql.ResultSet;
 
 /**
  * @author Adolfo Pérez
+ * @author Alejandro Tardín
  */
 public class UpgradeDLFileEntryType
 	extends com.liferay.portal.upgrade.v7_3_x.UpgradeDLFileEntryType {
@@ -41,10 +42,11 @@ public class UpgradeDLFileEntryType
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select companyId, fileEntryTypeId, fileEntryTypeKey, ",
-					"groupId, name, userId, userName from DLFileEntryType ",
-					"where (dataDefinitionId IS NULL OR dataDefinitionId = 0) ",
-					"and fileEntryTypeKey != 'BASIC-DOCUMENT'"));
+					"select userId, userName, companyId, groupId, ",
+					"fileEntryTypeId, fileEntryTypeKey, name from ",
+					"DLFileEntryType where (dataDefinitionId is null or ",
+					"dataDefinitionId = 0) and fileEntryTypeKey != ",
+					"'BASIC-DOCUMENT'"));
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update DLFileEntryType set dataDefinitionId = ? where " +
@@ -66,19 +68,19 @@ public class UpgradeDLFileEntryType
 					rs.getString("name"), ddmStructureDefinition);
 
 				_insertDDMStructureLink(
-					rs.getLong("companyId"), rs.getLong("fileEntryTypeId"),
-					ddmStructureId);
+					rs.getLong("companyId"), ddmStructureId,
+					rs.getLong("fileEntryTypeId"));
 
 				long ddmStructureVersionId = _insertDDMStructureVersion(
-					rs.getLong("groupId"), rs.getLong("companyId"),
 					rs.getLong("userId"), rs.getString("userName"),
-					rs.getString("name"), ddmStructureId,
+					rs.getLong("companyId"), rs.getLong("groupId"),
+					ddmStructureId, rs.getString("name"),
 					ddmStructureDefinition);
 
 				_insertDDMStructureLayout(
-					rs.getLong("groupId"), rs.getLong("companyId"),
 					rs.getLong("userId"), rs.getString("userName"),
-					rs.getString("name"), ddmStructureId, ddmStructureVersionId,
+					rs.getLong("groupId"), rs.getLong("companyId"),
+					ddmStructureId, rs.getString("name"), ddmStructureVersionId,
 					ddmStructureLayoutDefinition);
 
 				ResourceLocalServiceUtil.addResources(
@@ -106,8 +108,8 @@ public class UpgradeDLFileEntryType
 		throws Exception {
 
 		try (PreparedStatement ps2 = connection.prepareStatement(
-				"INSERT INTO DDMStructure VALUES (0, 0, ?, ?, ?, ?, ?, ?, ?, " +
-					"?, ?, ?, 0, ?, ?, '1.0', ?, '', ?, 'default', 1, NULL)")) {
+				"insert into DDMStructure values (0, 0, ?, ?, ?, ?, ?, ?, ?, " +
+					"?, ?, ?, 0, ?, ?, '1.0', ?, '', ?, 'default', 1, null)")) {
 
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryMetadata.class);
@@ -143,13 +145,13 @@ public class UpgradeDLFileEntryType
 	}
 
 	private void _insertDDMStructureLayout(
-			long groupId, long companyId, long userId, String userName,
-			String name, long ddmStructureId, long ddmStructureVersionId,
+			long userId, String userName, long groupId, long companyId,
+			long ddmStructureId, String name, long ddmStructureVersionId,
 			String ddmStructureLayoutDefinition)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"INSERT INTO DDMStructureLayout VALUES (0, 0, ?, ?, ?, ?, ?, " +
+				"insert into DDMStructureLayout values (0, 0, ?, ?, ?, ?, ?, " +
 					"?, ?, ?, ?, ?, ?, ?, '', ?)")) {
 
 			long classNameId = PortalUtil.getClassNameId(
@@ -179,29 +181,29 @@ public class UpgradeDLFileEntryType
 	}
 
 	private void _insertDDMStructureLink(
-			long companyId, long dlFileEntryTypeId, long structureId)
+			long companyId, long ddmStructureId, long dlFileEntryTypeId)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"INSERT INTO DDMStructureLink VALUES (0, 0, ?, ?, ?, ?, ?)")) {
+				"insert into DDMStructureLink values (0, 0, ?, ?, ?, ?, ?)")) {
 
 			ps.setLong(1, increment());
 			ps.setLong(2, companyId);
 			ps.setLong(3, PortalUtil.getClassNameId(DLFileEntryType.class));
 			ps.setLong(4, dlFileEntryTypeId);
-			ps.setLong(5, structureId);
+			ps.setLong(5, ddmStructureId);
 
 			ps.executeUpdate();
 		}
 	}
 
 	private long _insertDDMStructureVersion(
-			long groupId, long companyId, long userId, String userName,
-			String name, long ddmStructureId, String ddmStructureDefinition)
+			long userId, String userName, long companyId, long groupId,
+			long ddmStructureId, String name, String ddmStructureDefinition)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"INSERT INTO DDMStructureVersion VALUES (0, 0, ?, ?, ?, ?, ?" +
+				"insert into DDMStructureVersion values (0, 0, ?, ?, ?, ?, ?" +
 					", ?, ?, '1.0', 0, ?, '', ? , 'default', 0, 0, ?, ?, ?)")) {
 
 			long structureVersionId = increment();

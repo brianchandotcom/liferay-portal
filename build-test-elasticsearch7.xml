@@ -1476,36 +1476,44 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</condition>
 
 		<if>
-			<os family="unix" />
+			<available file="${elasticsearch.stop.dir}/pid-elasticsearch" />
 			<then>
-				<loadfile
-					property="pid-elasticsearch"
-					srcFile="${elasticsearch.stop.dir}/pid-elasticsearch"
-				>
-					<filterchain>
-						<linecontainsregexp>
-							<regexp pattern="[0-9]*" />
-						</linecontainsregexp>
-					</filterchain>
-				</loadfile>
+				<if>
+					<os family="unix" />
+					<then>
+						<loadfile
+							property="pid-elasticsearch"
+							srcFile="${elasticsearch.stop.dir}/pid-elasticsearch"
+						>
+							<filterchain>
+								<linecontainsregexp>
+									<regexp pattern="[0-9]*" />
+								</linecontainsregexp>
+							</filterchain>
+						</loadfile>
 
-				<exec dir="${elasticsearch.stop.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="kill ${pid-elasticsearch}" />
-				</exec>
+						<exec dir="${elasticsearch.stop.dir}/bin" executable="/bin/bash">
+							<arg value="-c" />
+							<arg value="kill ${pid-elasticsearch}" />
+						</exec>
+					</then>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${elasticsearch.stop.dir}/bin" executable="cmd" spawn="true">
+								<arg value="/c" />
+								<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
+							</exec>
+						</then>
+					</elseif>
+				</if>
+
+				<print-files dir="${elasticsearch.stop.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 			</then>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<exec dir="${elasticsearch.stop.dir}/bin" executable="cmd" spawn="true">
-						<arg value="/c" />
-						<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
-					</exec>
-				</then>
-			</elseif>
+			<else>
+				<echo>The Elasticsearch server in ${elasticsearch.stop.dir} has already been stopped</echo>
+			</else>
 		</if>
-
-		<print-files dir="${elasticsearch.stop.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 
 		<condition property="kibana.running">
 			<socket port="5601" server="localhost" />

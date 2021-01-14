@@ -5345,7 +5345,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-testcase-property property.name="elasticsearch.cluster.size" />
 			<get-testcase-property property.name="elasticsearch.multiple.connections" />
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
-			<get-testcase-property property.name="test.name.skip.portal.instance" />
 
 			<condition else="true" property="stop.standard.elasticsearch" value="false">
 				<or>
@@ -5388,20 +5387,21 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<equals arg1="${elasticsearch.multiple.connections}" arg2="true" />
 						<then>
-							<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch">
-								<property name="elasticsearch.bundle.number" value="1" />
-							</ant>
+							<var name="elasticsearch.cluster.number" value="1" />
 
-							<if>
-								<not>
-									<contains string="${test.name.skip.portal.instance}" substring="#Smoke" />
-								</not>
-								<then>
-									<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch">
-										<property name="elasticsearch.bundle.number" value="2" />
-									</ant>
-								</then>
-							</if>
+							<antelope:repeat count="2">
+								<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch">
+									<property name="elasticsearch.bundle.number" value="${elasticsearch.cluster.number}" />
+								</ant>
+
+								<math
+									datatype="int"
+									operand1="${elasticsearch.cluster.number}"
+									operand2="1"
+									operation="+"
+									result="elasticsearch.cluster.number"
+								/>
+							</antelope:repeat>
 						</then>
 					</if>
 				</then>

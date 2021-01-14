@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.forecast.dispatch;
+package com.liferay.commerce.machine.learning.internal.forecast.dispatch.executor;
 
 import com.liferay.commerce.machine.learning.internal.batch.BatchEngineTaskItemDelegateResourceMapper;
-import com.liferay.commerce.machine.learning.internal.dispatch.AnalyticsDispatchTaskExecutor;
+import com.liferay.commerce.machine.learning.internal.dispatch.executor.AnalyticsDispatchTaskExecutor;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;

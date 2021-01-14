@@ -12,15 +12,15 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.dispatch;
+package com.liferay.commerce.machine.learning.internal.dispatch.executor;
 
 import com.liferay.commerce.machine.learning.internal.batch.BatchEngineTaskItemDelegateResourceMapper;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.headless.commerce.admin.order.constants.v1_0.OrderBatchEngineTaskItemDelegateConstants;
-import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.catalog.constants.v1_0.ProductBatchEngineTaskItemDelegateConstants;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
@@ -34,15 +34,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"dispatch.task.executor.name=" + AnalyticsUploadOrderDispatchTaskExecutor.KEY,
-		"dispatch.task.executor.type=" + AnalyticsUploadOrderDispatchTaskExecutor.KEY
+		"dispatch.task.executor.name=" + AnalyticsUploadProductDispatchTaskExecutor.KEY,
+		"dispatch.task.executor.type=" + AnalyticsUploadProductDispatchTaskExecutor.KEY
 	},
 	service = DispatchTaskExecutor.class
 )
-public class AnalyticsUploadOrderDispatchTaskExecutor
+public class AnalyticsUploadProductDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
 
-	public static final String KEY = "analytics-upload-order";
+	public static final String KEY = "analytics-upload-product";
 
 	@Override
 	public void doExecute(
@@ -63,8 +63,8 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 	private static final BatchEngineTaskItemDelegateResourceMapper[]
 		_EXPORT_RESOURCE_NAMES = {
 			new BatchEngineTaskItemDelegateResourceMapper(
-				Order.class.getName(), null,
-				OrderBatchEngineTaskItemDelegateConstants.COMMERCE_ML_ORDER)
+				Product.class.getName(), null,
+				ProductBatchEngineTaskItemDelegateConstants.COMMERCE_ML_PRODUCT)
 		};
 
 	@Reference

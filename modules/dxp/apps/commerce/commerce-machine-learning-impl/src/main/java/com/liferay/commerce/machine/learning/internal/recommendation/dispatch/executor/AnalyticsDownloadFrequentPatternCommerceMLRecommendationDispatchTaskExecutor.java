@@ -12,16 +12,17 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.dispatch;
+package com.liferay.commerce.machine.learning.internal.recommendation.dispatch.executor;
 
 import com.liferay.commerce.machine.learning.internal.batch.BatchEngineTaskItemDelegateResourceMapper;
+import com.liferay.commerce.machine.learning.internal.dispatch.executor.AnalyticsDispatchTaskExecutor;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.headless.commerce.admin.catalog.constants.v1_0.ProductBatchEngineTaskItemDelegateConstants;
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
+import com.liferay.headless.commerce.machine.learning.dto.v1_0.FrequentPatternRecommendation;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.IOException;
 
@@ -34,15 +35,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"dispatch.task.executor.name=" + AnalyticsUploadProductDispatchTaskExecutor.KEY,
-		"dispatch.task.executor.type=" + AnalyticsUploadProductDispatchTaskExecutor.KEY
+		"dispatch.task.executor.name=" + AnalyticsDownloadFrequentPatternCommerceMLRecommendationDispatchTaskExecutor.KEY,
+		"dispatch.task.executor.type=" + AnalyticsDownloadFrequentPatternCommerceMLRecommendationDispatchTaskExecutor.KEY
 	},
 	service = DispatchTaskExecutor.class
 )
-public class AnalyticsUploadProductDispatchTaskExecutor
-	extends BaseDispatchTaskExecutor {
+public class
+	AnalyticsDownloadFrequentPatternCommerceMLRecommendationDispatchTaskExecutor
+		extends BaseDispatchTaskExecutor {
 
-	public static final String KEY = "analytics-upload-product";
+	public static final String KEY =
+		"analytics-download-frequent-pattern-commerce-ml-recommendation";
 
 	@Override
 	public void doExecute(
@@ -50,22 +53,36 @@ public class AnalyticsUploadProductDispatchTaskExecutor
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws IOException, PortalException {
 
-		_analyticsDispatchTaskExecutor.uploadResources(
+		BatchEngineTaskItemDelegateResourceMapper
+			batchEngineTaskItemDelegateResourceMapper =
+				new BatchEngineTaskItemDelegateResourceMapper(
+					FrequentPatternRecommendation.class.getName(),
+					HashMapBuilder.put(
+						"antecedentIds", "antecedentIds"
+					).put(
+						"antecedentIdsLength", "antecedentIdsLength"
+					).put(
+						"createDate", "createDate"
+					).put(
+						"jobId", "jobId"
+					).put(
+						"recommendedEntryClassPK", "recommendedProductId"
+					).put(
+						"score", "score"
+					).build(),
+					null);
+
+		_analyticsDispatchTaskExecutor.downloadResources(
 			dispatchTrigger, dispatchTaskExecutorOutput,
-			_EXPORT_RESOURCE_NAMES);
+			new BatchEngineTaskItemDelegateResourceMapper[] {
+				batchEngineTaskItemDelegateResourceMapper
+			});
 	}
 
 	@Override
 	public String getName() {
 		return KEY;
 	}
-
-	private static final BatchEngineTaskItemDelegateResourceMapper[]
-		_EXPORT_RESOURCE_NAMES = {
-			new BatchEngineTaskItemDelegateResourceMapper(
-				Product.class.getName(), null,
-				ProductBatchEngineTaskItemDelegateConstants.COMMERCE_ML_PRODUCT)
-		};
 
 	@Reference
 	private AnalyticsDispatchTaskExecutor _analyticsDispatchTaskExecutor;

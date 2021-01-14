@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.dispatch;
+package com.liferay.commerce.machine.learning.internal.dispatch.executor;
 
 import com.liferay.analytics.message.sender.client.AnalyticsBatchClient;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;

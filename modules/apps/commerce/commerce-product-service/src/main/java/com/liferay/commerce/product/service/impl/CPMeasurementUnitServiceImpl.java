@@ -172,6 +172,7 @@ public class CPMeasurementUnitServiceImpl
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				CPMeasurementUnitServiceImpl.class,
-				"_portletResourcePermission", CPConstants.RESOURCE_NAME);
+				"_portletResourcePermission",
+				CPConstants.RESOURCE_NAME_PRODUCT);
 
 }

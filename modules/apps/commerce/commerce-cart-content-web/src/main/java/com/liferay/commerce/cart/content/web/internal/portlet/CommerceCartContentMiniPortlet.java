@@ -128,7 +128,9 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 	@Reference
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
-	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	@Reference(
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
+	)
 	private PortletResourcePermission _commerceProductPortletResourcePermission;
 
 	@Reference

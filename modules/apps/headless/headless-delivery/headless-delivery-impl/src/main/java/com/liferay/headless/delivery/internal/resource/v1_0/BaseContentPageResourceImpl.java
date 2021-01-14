@@ -85,7 +85,7 @@ public abstract class BaseContentPageResourceImpl
 	 */
 	@Override
 	@GET
-	@Operation(description = "Retrieves the content pages of the site")
+	@Operation(description = "Retrieves the public content pages of the site")
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
@@ -114,63 +114,7 @@ public abstract class BaseContentPageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/private/{friendlyUrlPath}'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Operation(
-		description = "Retrieves a specific private content page of a site"
-	)
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath")
-		}
-	)
-	@Path("/sites/{siteId}/content-pages/private/{friendlyUrlPath}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "ContentPage")})
-	public ContentPage getSiteContentPagePrivateFriendlyUrlPath(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
-				String friendlyUrlPath)
-		throws Exception {
-
-		return new ContentPage();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/private/{friendlyUrlPath}/rendered-page'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Operation(description = "Retrieves the rendered content of a given page.")
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath")
-		}
-	)
-	@Path(
-		"/sites/{siteId}/content-pages/private/{friendlyUrlPath}/rendered-page"
-	)
-	@Produces("text/html")
-	@Tags(value = {@Tag(name = "ContentPage")})
-	public String getSiteContentPagePrivateFriendlyUrlPathRenderedPage(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
-				String friendlyUrlPath)
-		throws Exception {
-
-		return StringPool.BLANK;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/public/{friendlyUrlPath}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/{friendlyUrlPath}'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
@@ -183,10 +127,10 @@ public abstract class BaseContentPageResourceImpl
 			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath")
 		}
 	)
-	@Path("/sites/{siteId}/content-pages/public/{friendlyUrlPath}")
+	@Path("/sites/{siteId}/content-pages/{friendlyUrlPath}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ContentPage")})
-	public ContentPage getSiteContentPagePublicFriendlyUrlPath(
+	public ContentPage getSiteContentPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
 				String friendlyUrlPath)
@@ -198,23 +142,23 @@ public abstract class BaseContentPageResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/public/{friendlyUrlPath}/rendered-page'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/content-pages/{friendlyUrlPath}/rendered-page'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Operation(description = "Retrieves the rendered content of a given page.")
+	@Operation(
+		description = "Retrieves the rendered content of a given public page."
+	)
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
 			@Parameter(in = ParameterIn.PATH, name = "friendlyUrlPath")
 		}
 	)
-	@Path(
-		"/sites/{siteId}/content-pages/public/{friendlyUrlPath}/rendered-page"
-	)
+	@Path("/sites/{siteId}/content-pages/{friendlyUrlPath}/rendered-page")
 	@Produces("text/html")
 	@Tags(value = {@Tag(name = "ContentPage")})
-	public String getSiteContentPagePublicFriendlyUrlPathRenderedPage(
+	public String getSiteContentPageRenderedPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
 				String friendlyUrlPath)

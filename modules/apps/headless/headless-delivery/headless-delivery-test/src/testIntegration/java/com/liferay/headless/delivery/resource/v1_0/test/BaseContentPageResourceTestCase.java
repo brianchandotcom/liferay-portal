@@ -527,23 +527,17 @@ public abstract class BaseContentPageResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteContentPagePrivateFriendlyUrlPath()
-		throws Exception {
+	public void testGetSiteContentPage() throws Exception {
+		ContentPage postContentPage = testGetSiteContentPage_addContentPage();
 
-		ContentPage postContentPage =
-			testGetSiteContentPagePrivateFriendlyUrlPath_addContentPage();
-
-		ContentPage getContentPage =
-			contentPageResource.getSiteContentPagePrivateFriendlyUrlPath(
-				postContentPage.getSiteId(),
-				postContentPage.getFriendlyUrlPath());
+		ContentPage getContentPage = contentPageResource.getSiteContentPage(
+			postContentPage.getSiteId(), postContentPage.getFriendlyUrlPath());
 
 		assertEquals(postContentPage, getContentPage);
 		assertValid(getContentPage);
 	}
 
-	protected ContentPage
-			testGetSiteContentPagePrivateFriendlyUrlPath_addContentPage()
+	protected ContentPage testGetSiteContentPage_addContentPage()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -551,9 +545,7 @@ public abstract class BaseContentPageResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteContentPagePrivateFriendlyUrlPath()
-		throws Exception {
-
+	public void testGraphQLGetSiteContentPage() throws Exception {
 		ContentPage contentPage = testGraphQLContentPage_addContentPage();
 
 		Assert.assertTrue(
@@ -563,7 +555,7 @@ public abstract class BaseContentPageResourceTestCase {
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(
 							new GraphQLField(
-								"contentPagePrivateFriendlyUrlPath",
+								"contentPage",
 								new HashMap<String, Object>() {
 									{
 										put(
@@ -579,14 +571,11 @@ public abstract class BaseContentPageResourceTestCase {
 									}
 								},
 								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/contentPagePrivateFriendlyUrlPath"))));
+						"JSONObject/data", "Object/contentPage"))));
 	}
 
 	@Test
-	public void testGraphQLGetSiteContentPagePrivateFriendlyUrlPathNotFound()
-		throws Exception {
-
+	public void testGraphQLGetSiteContentPageNotFound() throws Exception {
 		String irrelevantFriendlyUrlPath =
 			"\"" + RandomTestUtil.randomString() + "\"";
 
@@ -595,7 +584,7 @@ public abstract class BaseContentPageResourceTestCase {
 			JSONUtil.getValueAsString(
 				invokeGraphQLQuery(
 					new GraphQLField(
-						"contentPagePrivateFriendlyUrlPath",
+						"contentPage",
 						new HashMap<String, Object>() {
 							{
 								put(
@@ -612,99 +601,7 @@ public abstract class BaseContentPageResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteContentPagePrivateFriendlyUrlPathRenderedPage()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testGetSiteContentPagePublicFriendlyUrlPath() throws Exception {
-		ContentPage postContentPage =
-			testGetSiteContentPagePublicFriendlyUrlPath_addContentPage();
-
-		ContentPage getContentPage =
-			contentPageResource.getSiteContentPagePublicFriendlyUrlPath(
-				postContentPage.getSiteId(),
-				postContentPage.getFriendlyUrlPath());
-
-		assertEquals(postContentPage, getContentPage);
-		assertValid(getContentPage);
-	}
-
-	protected ContentPage
-			testGetSiteContentPagePublicFriendlyUrlPath_addContentPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSiteContentPagePublicFriendlyUrlPath()
-		throws Exception {
-
-		ContentPage contentPage = testGraphQLContentPage_addContentPage();
-
-		Assert.assertTrue(
-			equals(
-				contentPage,
-				ContentPageSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"contentPagePublicFriendlyUrlPath",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" + contentPage.getSiteId() +
-												"\"");
-										put(
-											"friendlyUrlPath",
-											"\"" +
-												contentPage.
-													getFriendlyUrlPath() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/contentPagePublicFriendlyUrlPath"))));
-	}
-
-	@Test
-	public void testGraphQLGetSiteContentPagePublicFriendlyUrlPathNotFound()
-		throws Exception {
-
-		String irrelevantFriendlyUrlPath =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"contentPagePublicFriendlyUrlPath",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"friendlyUrlPath",
-									irrelevantFriendlyUrlPath);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	@Test
-	public void testGetSiteContentPagePublicFriendlyUrlPathRenderedPage()
-		throws Exception {
-
+	public void testGetSiteContentPageRenderedPage() throws Exception {
 		Assert.assertTrue(false);
 	}
 
@@ -886,14 +783,6 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("pageSettings", additionalAssertFieldName)) {
 				if (contentPage.getPageSettings() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("privatePage", additionalAssertFieldName)) {
-				if (contentPage.getPrivatePage() == null) {
 					valid = false;
 				}
 
@@ -1228,17 +1117,6 @@ public abstract class BaseContentPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("privatePage", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						contentPage1.getPrivatePage(),
-						contentPage2.getPrivatePage())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("renderedPages", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						contentPage1.getRenderedPages(),
@@ -1563,11 +1441,6 @@ public abstract class BaseContentPageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("privatePage")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("renderedPages")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1664,7 +1537,6 @@ public abstract class BaseContentPageResourceTestCase {
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				privatePage = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());

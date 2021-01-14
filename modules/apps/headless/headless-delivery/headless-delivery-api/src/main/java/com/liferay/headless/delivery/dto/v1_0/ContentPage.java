@@ -515,34 +515,6 @@ public class ContentPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSettings pageSettings;
 
-	@Schema
-	public Boolean getPrivatePage() {
-		return privatePage;
-	}
-
-	public void setPrivatePage(Boolean privatePage) {
-		this.privatePage = privatePage;
-	}
-
-	@JsonIgnore
-	public void setPrivatePage(
-		UnsafeSupplier<Boolean, Exception> privatePageUnsafeSupplier) {
-
-		try {
-			privatePage = privatePageUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean privatePage;
-
 	@Schema(
 		description = "A list of rendered pages, which results from using the template and the appropriate viewport to process the page and return HTML."
 	)
@@ -1031,16 +1003,6 @@ public class ContentPage implements Serializable {
 			sb.append("\"pageSettings\": ");
 
 			sb.append(String.valueOf(pageSettings));
-		}
-
-		if (privatePage != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"privatePage\": ");
-
-			sb.append(privatePage);
 		}
 
 		if (renderedPages != null) {

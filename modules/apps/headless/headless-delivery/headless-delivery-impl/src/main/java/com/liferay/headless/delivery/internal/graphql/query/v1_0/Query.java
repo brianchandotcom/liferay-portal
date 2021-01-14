@@ -618,7 +618,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPages(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves the content pages of the site")
+	@GraphQLField(
+		description = "Retrieves the public content pages of the site"
+	)
 	public ContentPagePage contentPages(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
@@ -645,55 +647,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPagePrivateFriendlyUrlPath(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, defaultRenderedPage, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, privatePage, renderedPages, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(
-		description = "Retrieves a specific private content page of a site"
-	)
-	public ContentPage contentPagePrivateFriendlyUrlPath(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_contentPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			contentPageResource ->
-				contentPageResource.getSiteContentPagePrivateFriendlyUrlPath(
-					Long.valueOf(siteKey), friendlyUrlPath));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPagePrivateFriendlyUrlPathRenderedPage(friendlyUrlPath: ___, siteKey: ___){}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(
-		description = "Retrieves the rendered content of a given page."
-	)
-	public String contentPagePrivateFriendlyUrlPathRenderedPage(
-			@GraphQLName("siteKey") @NotEmpty String siteKey,
-			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_contentPageResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			contentPageResource ->
-				contentPageResource.
-					getSiteContentPagePrivateFriendlyUrlPathRenderedPage(
-						Long.valueOf(siteKey), friendlyUrlPath));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPagePublicFriendlyUrlPath(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, defaultRenderedPage, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, privatePage, renderedPages, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPage(friendlyUrlPath: ___, siteKey: ___){actions, aggregateRating, availableLanguages, creator, customFields, dateCreated, dateModified, datePublished, defaultRenderedPage, friendlyUrlPath, friendlyUrlPath_i18n, id, keywords, pageDefinition, pageSettings, renderedPages, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, title, title_i18n, uuid, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves a specific public content page of a site"
 	)
-	public ContentPage contentPagePublicFriendlyUrlPath(
+	public ContentPage contentPage(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
 		throws Exception {
@@ -701,20 +660,19 @@ public class Query {
 		return _applyComponentServiceObjects(
 			_contentPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			contentPageResource ->
-				contentPageResource.getSiteContentPagePublicFriendlyUrlPath(
-					Long.valueOf(siteKey), friendlyUrlPath));
+			contentPageResource -> contentPageResource.getSiteContentPage(
+				Long.valueOf(siteKey), friendlyUrlPath));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPagePublicFriendlyUrlPathRenderedPage(friendlyUrlPath: ___, siteKey: ___){}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentPageRenderedPage(friendlyUrlPath: ___, siteKey: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieves the rendered content of a given page."
+		description = "Retrieves the rendered content of a given public page."
 	)
-	public String contentPagePublicFriendlyUrlPathRenderedPage(
+	public String contentPageRenderedPage(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("friendlyUrlPath") String friendlyUrlPath)
 		throws Exception {
@@ -723,9 +681,8 @@ public class Query {
 			_contentPageResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			contentPageResource ->
-				contentPageResource.
-					getSiteContentPagePublicFriendlyUrlPathRenderedPage(
-						Long.valueOf(siteKey), friendlyUrlPath));
+				contentPageResource.getSiteContentPageRenderedPage(
+					Long.valueOf(siteKey), friendlyUrlPath));
 	}
 
 	/**

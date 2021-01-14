@@ -56,19 +56,10 @@ public interface ContentPageResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public ContentPage getSiteContentPagePrivateFriendlyUrlPath(
-			Long siteId, String friendlyUrlPath)
+	public ContentPage getSiteContentPage(Long siteId, String friendlyUrlPath)
 		throws Exception;
 
-	public String getSiteContentPagePrivateFriendlyUrlPathRenderedPage(
-			Long siteId, String friendlyUrlPath)
-		throws Exception;
-
-	public ContentPage getSiteContentPagePublicFriendlyUrlPath(
-			Long siteId, String friendlyUrlPath)
-		throws Exception;
-
-	public String getSiteContentPagePublicFriendlyUrlPathRenderedPage(
+	public String getSiteContentPageRenderedPage(
 			Long siteId, String friendlyUrlPath)
 		throws Exception;
 

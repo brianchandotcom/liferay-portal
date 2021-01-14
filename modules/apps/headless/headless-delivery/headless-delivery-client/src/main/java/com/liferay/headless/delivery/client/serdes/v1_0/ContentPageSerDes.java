@@ -274,16 +274,6 @@ public class ContentPageSerDes {
 			sb.append(String.valueOf(contentPage.getPageSettings()));
 		}
 
-		if (contentPage.getPrivatePage() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"privatePage\": ");
-
-			sb.append(contentPage.getPrivatePage());
-		}
-
 		if (contentPage.getRenderedPages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -558,14 +548,6 @@ public class ContentPageSerDes {
 				"pageSettings", String.valueOf(contentPage.getPageSettings()));
 		}
 
-		if (contentPage.getPrivatePage() == null) {
-			map.put("privatePage", null);
-		}
-		else {
-			map.put(
-				"privatePage", String.valueOf(contentPage.getPrivatePage()));
-		}
-
 		if (contentPage.getRenderedPages() == null) {
 			map.put("renderedPages", null);
 		}
@@ -753,11 +735,6 @@ public class ContentPageSerDes {
 				if (jsonParserFieldValue != null) {
 					contentPage.setPageSettings(
 						PageSettingsSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "privatePage")) {
-				if (jsonParserFieldValue != null) {
-					contentPage.setPrivatePage((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "renderedPages")) {

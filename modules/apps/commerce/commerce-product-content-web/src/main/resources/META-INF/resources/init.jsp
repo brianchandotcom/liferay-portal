@@ -19,7 +19,9 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
 taglib uri="http://liferay.com/tld/commerce-product" prefix="liferay-commerce-product" %><%@
+taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -32,7 +34,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.account.model.CommerceAccount" %><%@
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.context.CommerceContext" %><%@
+page import="com.liferay.commerce.frontend.model.CPContentListEntryModel" %><%@
+page import="com.liferay.commerce.frontend.model.CPContentModel" %><%@
 page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
+page import="com.liferay.commerce.product.catalog.CPMedia" %><%@
 page import="com.liferay.commerce.product.catalog.CPSku" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
@@ -56,6 +61,7 @@ page import="com.liferay.commerce.product.content.web.internal.portlet.CPContent
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPPublisherPortlet" %><%@
 page import="com.liferay.commerce.product.data.source.CPDataSource" %><%@
 page import="com.liferay.commerce.product.data.source.CPDataSourceResult" %><%@
+page import="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
 page import="com.liferay.commerce.product.model.CPOptionCategory" %><%@
 page import="com.liferay.commerce.product.model.CPSpecificationOption" %><%@

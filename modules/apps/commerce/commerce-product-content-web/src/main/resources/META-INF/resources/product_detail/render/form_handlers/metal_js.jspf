@@ -24,39 +24,6 @@
 	var CP_CONTENT_WEB_PORTLET_KEY =
 		'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';
 
-	function initialiseOrderDetails() {
-		var addToCartButton = Liferay.component('<%= addToCartId %>');
-
-		if (addToCartButton) {
-			addToCartButton.disabled = true;
-		}
-	}
-
-	function updateAddToCart(cpInstance, formValues) {
-		var productExists = cpInstance.cpInstanceExist;
-		var cpInstanceId = cpInstance.cpInstanceId;
-
-		Liferay.fire(
-			eventsDefinitions.CURRENT_PRODUCT_STATUS_CHANGED,
-			productExists
-				? {
-						addToCartId: '<%= addToCartId %>',
-						productId: cpInstanceId,
-						options: JSON.stringify(formValues),
-						quantity: 0,
-						settings: {
-							maxQuantity: 1000,
-							minQuantity: 1,
-							multipleQuantities: 1,
-						},
-				  }
-				: {
-						addToCartId: '<%= addToCartId %>',
-						productId: null,
-				  }
-		);
-	}
-
 	function updateGallery(formFields) {
 		var formData = new FormData();
 		formData.append(
@@ -91,35 +58,46 @@
 			});
 	}
 
-	function updateProductFields(productData) {
-		document.querySelector('[data-text-cp-instance-sku]').innerHTML =
-			Liferay.Util.escape(productData.sku) || '';
-		document.querySelector(
-			'[data-text-cp-instance-manufacturer-part-number]'
-		).innerHTML = Liferay.Util.escape(productData.manufacturerPartNumber) || '';
-		document.querySelector('[data-text-cp-instance-gtin]').innerHTML =
-			Liferay.Util.escape(productData.gtin) || '';
+	function fillField(fieldElement) {
+		if (fieldElement.jsonData && fieldElement instanceof HTMLElement) {
+			const textElement = fieldElement.querySelector('span:nth-child(2)');
 
+			if (textElement) {
+				textElement.innerText = Liferay.Util.escape(fieldElement.jsonData);
+
+				fieldElement.classList.remove('hide');
+			}
+		}
+	}
+
+	function updateProductFields(productData) {
 		var availabilityEstimateContainer = document.querySelector(
 			'[data-text-cp-instance-availability-estimate]'
 		);
-		var availabilityContainer = document.querySelector(
-			'[data-text-cp-instance-availability]'
+		var gtinContainer = document.querySelector('[data-text-cp-instance-gtin]');
+		var mpnContainer = document.querySelector(
+			'[data-text-cp-instance-manufacturer-part-number]'
 		);
+		var skuContainer = document.querySelector('[data-text-cp-instance-sku]');
 		var stockQuantityContainer = document.querySelector(
 			'[data-text-cp-instance-stock-quantity]'
 		);
 
-		if (
-			availabilityEstimateContainer &&
-			availabilityContainer &&
-			stockQuantityContainer
-		) {
-			availabilityContainer.innerHTML = productData.availability || '';
-			availabilityEstimateContainer.innerHTML =
-				productData.availabilityEstimate || '';
-			stockQuantityContainer.innerHTML = productData.stockQuantity || '';
-		}
+		availabilityEstimateContainer.jsonData = productData.availabilityEstimate;
+		gtinContainer.jsonData = productData.gtin;
+		mpnContainer.jsonData = productData.manufacturerPartNumber;
+		skuContainer.jsonData = productData.sku;
+
+		[
+			availabilityEstimateContainer,
+			gtinContainer,
+			mpnContainer,
+			skuContainer,
+		].forEach(fillField);
+
+		stockQuantityContainer.innerHTML = productData.stockQuantity
+			? productData.stockQuantity + Liferay.Language.get('in-stock')
+			: '';
 
 		document.querySelector(
 			'[data-text-cp-instance-subscription-info]'
@@ -217,7 +195,6 @@
 		var cpInstance = productsData.cpInstance;
 		var formFields = productsData.formFields;
 
-		updateAddToCart(cpInstance, formFields);
 		updateGallery(formFields);
 		updateProductFields(cpInstance);
 	}
@@ -225,14 +202,11 @@
 	Liferay.componentReady('ProductOptions' + cpDefinitionId).then(function (
 		DDMFormInstance
 	) {
-		initialiseOrderDetails();
-
 		if (DDMFormInstance) {
 			var FormHandler = DDMFormHandler.default;
 
 			var FormHandlerConfiguration = {
 				actionURL: '<%= checkCPInstanceURL %>',
-				addToCartId: '<%= addToCartId %>',
 				cpDefinitionId: '<%= cpDefinitionId %>',
 				DDMFormInstance: DDMFormInstance,
 				portletId: CP_CONTENT_WEB_PORTLET_KEY,

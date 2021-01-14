@@ -104,6 +104,9 @@ public interface CPContentHelper {
 	public String getImageURL(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception;
 
+	public String getStockQuantity(HttpServletRequest httpServletRequest)
+		throws Exception;
+
 	public String getStockQuantityLabel(HttpServletRequest httpServletRequest)
 		throws Exception;
 
@@ -120,6 +123,11 @@ public interface CPContentHelper {
 
 	public boolean hasCPDefinitionSpecificationOptionValues(long cpDefinitionId)
 		throws PortalException;
+
+	public boolean isInWishList(
+			CPSku cpSku, CPCatalogEntry cpCatalogEntry,
+			ThemeDisplay themeDisplay)
+		throws Exception;
 
 	public void renderCPType(
 			HttpServletRequest httpServletRequest,

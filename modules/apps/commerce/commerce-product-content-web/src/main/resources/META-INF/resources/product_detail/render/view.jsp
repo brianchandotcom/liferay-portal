@@ -25,7 +25,15 @@ CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 
 long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
-String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
+CPContentModel cpContentModel = (CPContentModel)request.getAttribute("cpContentModel");
+
+String hideClass = "hide";
+long skuId = 0;
+
+if (cpSku != null) {
+	hideClass = StringPool.BLANK;
+	skuId = cpSku.getCPInstanceId();
+}
 %>
 
 <div class="mb-5 product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
@@ -34,29 +42,65 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 			<commerce-ui:gallery CPDefinitionId="<%= cpDefinitionId %>" />
 		</div>
 
-		<div class="col-12 col-md-6">
-			<header class="product-header">
-				<commerce-ui:compare-checkbox
-					CPDefinitionId="<%= cpDefinitionId %>"
-					label="<%= LanguageUtil.get(resourceBundle, "compare") %>"
-				/>
+		<div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+			<header>
+				<div class="availability d-flex mb-4">
+					<div>
+						<commerce-ui:availability-label
+							lowStock="<%= cpContentModel.isLowStock() %>"
+							stockQuantity="<%= cpContentModel.getStockQuantity() %>"
+							willUpdate="<%= true %>"
+						/>
+					</div>
 
-				<h3 class="product-header-tagline" data-text-cp-instance-sku>
-					<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getSku()) %>
-				</h3>
+					<div class="col stock-quantity text-truncate-inline <%= hideClass %>">
+						<span class="text-truncate" data-text-cp-instance-stock-quantity>
+
+							<%
+							if (cpSku != null) {
+							%>
+
+								<%= LanguageUtil.format(request, "x-in-stock", cpContentHelper.getStockQuantity(request)) %>
+
+							<%
+							}
+							%>
+
+						</span>
+					</div>
+				</div>
+
+				<p class="my-2 <%= hideClass %>" data-text-cp-instance-sku>
+					<span class="font-weight-semi-bold">
+						<%= LanguageUtil.get(request, "sku") %>
+					</span>
+					<span>
+						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getSku()) %>
+					</span>
+				</p>
 
 				<h2 class="product-header-title"><%= HtmlUtil.escape(cpCatalogEntry.getName()) %></h2>
 
-				<h4 class="product-header-subtitle" data-text-cp-instance-manufacturer-part-number>
-					<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getManufacturerPartNumber()) %>
-				</h4>
+				<p class="my-2 <%= hideClass %>" data-text-cp-instance-manufacturer-part-number>
+					<span class="font-weight-semi-bold">
+						<%= LanguageUtil.get(request, "mpn") %>
+					</span>
+					<span>
+						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getManufacturerPartNumber()) %>
+					</span>
+				</p>
 
-				<h4 class="product-header-subtitle" data-text-cp-instance-gtin>
-					<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getGtin()) %>
-				</h4>
+				<p class="my-2 <%= hideClass %>" data-text-cp-instance-gtin>
+					<span class="font-weight-semi-bold">
+						<%= LanguageUtil.get(request, "gtin") %>
+					</span>
+					<span>
+						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getGtin()) %>
+					</span>
+				</p>
 			</header>
 
-			<p class="mt-3 procuct-description"><%= cpCatalogEntry.getDescription() %></p>
+			<p class="mt-3 product-description"><%= cpCatalogEntry.getDescription() %></p>
 
 			<h4 class="commerce-subscription-info mt-3 w-100">
 				<c:if test="<%= cpSku != null %>">
@@ -72,19 +116,15 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 			<div class="product-detail-options">
 				<%= cpContentHelper.renderOptions(renderRequest, renderResponse) %>
 
-				<%@ include file="/render/form_handlers/metal_js.jspf" %>
+				<%@ include file="/product_detail/render/form_handlers/metal_js.jspf" %>
 			</div>
 
 			<c:choose>
 				<c:when test="<%= cpSku != null %>">
-					<div class="availability mt-1"><%= cpContentHelper.getAvailabilityLabel(request) %></div>
 					<div class="availability-estimate mt-1"><%= cpContentHelper.getAvailabilityEstimateLabel(request) %></div>
-					<div class="mt-1 stock-quantity"><%= cpContentHelper.getStockQuantityLabel(request) %></div>
 				</c:when>
 				<c:otherwise>
-					<div class="availability mt-1" data-text-cp-instance-availability></div>
 					<div class="availability-estimate mt-1" data-text-cp-instance-availability-estimate></div>
-					<div class="stock-quantity mt-1" data-text-cp-instance-stock-quantity></div>
 				</c:otherwise>
 			</c:choose>
 
@@ -102,13 +142,36 @@ String addToCartId = PortalUtil.generateRandomKey(request, "add-to-cart");
 				/>
 			</c:if>
 
-			<div class="mt-3 product-detail-actions">
-				<div class="autofit-col">
-					<commerce-ui:add-to-cart
-						CPInstanceId="<%= (cpSku == null) ? 0 : cpSku.getCPInstanceId() %>"
-						id="<%= addToCartId %>"
-					/>
-				</div>
+			<div class="align-items-center d-flex mt-3 product-detail-actions">
+				<commerce-ui:add-to-order
+					channelId="<%= cpContentModel.getChannelId() %>"
+					commerceAccountId="<%= cpContentModel.getAccountId() %>"
+					currencyCode="<%= cpContentModel.getCurrencyCode() %>"
+					disabled="<%= skuId == 0 %>"
+					inCart="<%= cpContentModel.isInCart() %>"
+					options='<%= "[]" %>'
+					orderId="<%= cpContentModel.getOrderId() %>"
+					skuId="<%= skuId %>"
+					spritemap="<%= cpContentModel.getSpritemap() %>"
+					stockQuantity="<%= cpContentModel.getStockQuantity() %>"
+					willUpdate="<%= true %>"
+				/>
+
+				<commerce-ui:add-to-wish-list
+					commerceAccountId="<%= cpContentModel.getAccountId() %>"
+					cpDefinitionId="<%= cpDefinitionId %>"
+					inWishList="<%= cpContentModel.isInWishList() %>"
+					large="<%= true %>"
+					skuId="<%= skuId %>"
+					spritemap="<%= cpContentModel.getSpritemap() %>"
+				/>
+			</div>
+
+			<div class="mt-3">
+				<commerce-ui:compare-checkbox
+					CPDefinitionId="<%= cpDefinitionId %>"
+					label="<%= LanguageUtil.get(resourceBundle, "compare") %>"
+				/>
 			</div>
 		</div>
 	</div>

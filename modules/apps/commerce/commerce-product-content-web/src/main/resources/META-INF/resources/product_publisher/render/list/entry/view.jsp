@@ -16,22 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-CPDataSourceResult cpDataSourceResult = (CPDataSourceResult)request.getAttribute(CPWebKeys.CP_DATA_SOURCE_RESULT);
-%>
-
-<div class="product-card-tiles">
-
-	<%
-	for (CPCatalogEntry cpCatalogEntry : cpDataSourceResult.getCPCatalogEntries()) {
-	%>
-
-		<liferay-commerce-product:product-list-entry-renderer
-			CPCatalogEntry = "<%= cpCatalogEntry %>"
-		/>
-
-	<%
-	}
-	%>
-
+<div class="cp-renderer">
+	<commerce-ui:product-card
+		cpContentListEntryModel='<%= (CPContentListEntryModel)request.getAttribute("cpContentListEntryModel") %>'
+	/>
 </div>

@@ -3,6 +3,46 @@
 <project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="build-test.xml" />
 
+	<macrodef name="check-elasticsearch-security">
+		<attribute name="authentication.type" />
+
+		<sequential>
+			<if>
+				<equals arg1="@{authentication.type}" arg2="basic" />
+				<then>
+					<exec executable="curl" outputproperty="curl.elasticsearch.check.output">
+						<arg value="-ku" />
+						<arg value="elastic:${elastic.xpack.elastic.user.password}" />
+						<arg value="https://localhost:9200" />
+					</exec>
+				</then>
+				<elseif>
+					<equals arg1="@{authentication.type}" arg2="PKI" />
+					<then>
+						<exec executable="curl" outputproperty="curl.elasticsearch.check.output">
+							<arg value="--cert" />
+							<arg value="${elasticsearch.dir}/config/certs/elastic-certificates.crt" />
+							<arg value="--key" />
+							<arg value="${elasticsearch.dir}/config/certs/elastic-certificates.key" />
+							<arg value="-k" />
+							<arg value="https://localhost:9200" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+
+			<echo>${curl.elasticsearch.check.output}</echo>
+
+			<fail message="Unable to reach Elasticsearch server using @{authentication.type} authentication">
+				<condition>
+					<not>
+						<contains string="${curl.elasticsearch.check.output}" substring="cluster_name" />
+					</not>
+				</condition>
+			</fail>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-elasticsearch-clustering-properties">
 		<sequential>
 			<math
@@ -652,14 +692,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				regexp="(PASSWORD elastic = )(\S*)"
 				select="\2"
 			/>
-
-			<exec executable="curl" outputproperty="curl.output">
-				<arg value="https://localhost:9200" />
-				<arg value="-ku" />
-				<arg value="elastic:${elastic.xpack.elastic.user.password}" />
-			</exec>
-
-			<echo>${curl.output}</echo>
 		</sequential>
 	</macrodef>
 
@@ -848,10 +880,14 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				<then>
 					<start-elastic-trial authentication.type="PKI" />
 
+					<check-elasticsearch-security authentication.type="PKI" />
+
 					<configure-portal-x-pack-pki-osgi-properties />
 				</then>
 				<else>
 					<start-elastic-trial authentication.type="basic" />
+
+					<check-elasticsearch-security authentication.type="basic" />
 
 					<configure-portal-x-pack-osgi-properties />
 				</else>

@@ -41,7 +41,7 @@ public class CommerceChannelPortletResourcePermissionDefinition
 
 	@Override
 	public String getResourceName() {
-		return CPConstants.CHANNEL_RESOURCE_NAME;
+		return CPConstants.RESOURCE_NAME_CHANNEL;
 	}
 
 }

@@ -11,7 +11,6 @@
 		<suppress checks="BNDExportsCheck" files="commerce-application-list/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="commerce-initializer-util/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="commerce-media-impl/bnd\.bnd" />
-		<suppress checks="BNDExportsCheck" files="commerce-price-list-web/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="commerce-product-definitions-web/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="commerce-product-service/bnd\.bnd" />
 		<suppress checks="BNDExportsCheck" files="commerce-product-type-simple/bnd\.bnd" />
@@ -81,7 +80,6 @@
 		<suppress checks="JSONPackageJSONCheck" files="commerce-theme-minium/commerce-theme-minium-impl/package\.json" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-minium/commerce-theme-minium/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-speedwell/commerce-theme-speedwell/src/WEB-INF/liferay-plugin-package\.properties" />
-		<suppress checks="StringMethodsCheck" files="commerce-discount-web/src/main/java/com/liferay/commerce/discount/web/internal/display/context/CommerceDiscountDisplayContext\.java" />
 		<suppress checks="XMLCustomSQLStylingCheck" files="commerce-inventory-service/src/main/resources/META-INF/custom-sql/default\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="commerce-account-service/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="commerce-currency-service/service\.xml" />

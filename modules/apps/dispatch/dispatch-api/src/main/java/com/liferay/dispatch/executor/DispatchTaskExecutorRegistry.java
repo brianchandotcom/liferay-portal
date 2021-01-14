@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.executor;
 
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -23,7 +24,7 @@ public interface DispatchTaskExecutorRegistry {
 
 	public DispatchTaskExecutor getDispatchTaskExecutor(String type);
 
-	public String getDispatchTaskExecutorName(String type);
+	public String getDispatchTaskExecutorName(Locale locale, String type);
 
 	public Set<String> getDispatchTaskExecutorTypes();
 

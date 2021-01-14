@@ -32,6 +32,7 @@ import java.text.Format;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.portlet.PortletURL;
@@ -57,9 +58,11 @@ public class DispatchTriggerDisplayContext {
 			_dispatchRequestHelper.getLocale());
 	}
 
-	public String getDispatchTaskExecutorName(String dispatchTaskExecutorType) {
+	public String getDispatchTaskExecutorName(
+		Locale locale, String dispatchTaskExecutorType) {
+
 		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorName(
-			dispatchTaskExecutorType);
+			locale, dispatchTaskExecutorType);
 	}
 
 	public Set<String> getDispatchTaskExecutorTypes() {

@@ -1371,7 +1371,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<arg value="kibana" />
 		</exec>
 
+		<waitfor maxwait="60" maxwaitunit="second" timeoutproperty="kibana.server.not.started">
+			<socket port="5601" server="localhost" />
+		</waitfor>
+
 		<lstopwatch action="total" name="start.kibana" />
+
+		<fail if="kibana.server.not.started" message="Kibana failed to start on port 5601." />
 	</target>
 
 	<target name="stop-elasticsearch">

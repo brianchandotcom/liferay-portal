@@ -60,12 +60,9 @@ page import="com.liferay.commerce.product.model.CPInstance" %><%@
 page import="com.liferay.commerce.product.model.CPOptionCategory" %><%@
 page import="com.liferay.commerce.product.model.CPSpecificationOption" %><%@
 page import="com.liferay.commerce.product.type.CPType" %><%@
-page import="com.liferay.commerce.product.util.CPCompareHelperUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
@@ -92,6 +89,4 @@ page import="java.util.Set" %>
 
 <%
 String languageId = LanguageUtil.getLanguageId(locale);
-
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>

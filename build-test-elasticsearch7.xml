@@ -664,45 +664,38 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-ccr-trial">
+	<macrodef name="start-elastic-trial">
+		<attribute default="9200" name="elasticsearch.port" />
+		<attribute default="false" name="security.enabled" />
+
 		<sequential>
-			<exec executable="curl" outputproperty="curl.output.trial.remote.cluster">
-				<arg value="-H" />
-				<arg value="Content-Type:application/json" />
-				<arg value="-X" />
-				<arg value="POST" />
-				<arg value="http://localhost:9200/_license/start_trial?acknowledge=true" />
-			</exec>
-
-			<echo>${curl.output.trial.remote.cluster}</echo>
-
 			<if>
-				<contains string="${curl.output.trial.remote.cluster}" substring="&quot;trial_was_started&quot;:true" />
+				<istrue value="@{security.enabled}" />
 				<then>
-					<echo>Trial license activated on remote cluster.</echo>
+					<exec executable="curl" outputproperty="curl.elastic.trial.output">
+						<arg value="-X POST" />
+						<arg value="https://localhost:@{elasticsearch.port}/_license/start_trial?acknowledge=true" />
+						<arg value="-ku" />
+						<arg value="elastic:${elastic.xpack.elastic.user.password}" />
+					</exec>
 				</then>
 				<else>
-					<fail>Trial license failed to activate on remote cluster.</fail>
+					<exec executable="curl" outputproperty="curl.elastic.trial.output">
+						<arg value="-X POST" />
+						<arg value="http://localhost:@{elasticsearch.port}/_license/start_trial?acknowledge=true" />
+					</exec>
 				</else>
 			</if>
 
-			<exec executable="curl" outputproperty="curl.output.trial.local.cluster">
-				<arg value="-H" />
-				<arg value="Content-Type:application/json" />
-				<arg value="-X" />
-				<arg value="POST" />
-				<arg value="http://localhost:9202/_license/start_trial?acknowledge=true" />
-			</exec>
-
-			<echo>${curl.output.trial.local.cluster}</echo>
+			<echo>${curl.elastic.trial.output}</echo>
 
 			<if>
-				<contains string="${curl.output.trial.local.cluster}" substring="&quot;trial_was_started&quot;:true" />
+				<contains string="${curl.elastic.trial.output}" substring="&quot;trial_was_started&quot;:true" />
 				<then>
-					<echo>Trial license activated on local cluster.</echo>
+					<echo>Trial license activated on Elasticsearch port @{elasticsearch.port}.</echo>
 				</then>
 				<else>
-					<fail>Trial license failed to activate on local cluster.</fail>
+					<fail>Trial license failed to activate on Elasticsearch port @{elasticsearch.port}.</fail>
 				</else>
 			</if>
 		</sequential>
@@ -799,7 +792,9 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<if>
 				<contains string="${osgi.app.includes}" substring="portal-search-elasticsearch-cross-cluster-replication" />
 				<then>
-					<start-ccr-trial />
+					<start-elastic-trial />
+
+					<start-elastic-trial elasticsearch.port="9202" />
 
 					<configure-portal-ccr-osgi-properties />
 				</then>
@@ -836,7 +831,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 			<set-x-pack-user-passwords />
 
-			<start-x-pack-trial />
+			<start-elastic-trial security.enabled="true" />
 
 			<if>
 				<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
@@ -857,33 +852,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</if>
 
 			<antcall target="start-kibana" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="start-x-pack-trial">
-		<sequential>
-			<exec executable="curl" outputproperty="curl.output.trial">
-				<arg value="-k" />
-				<arg value="-X POST" />
-				<arg value="-ku" />
-				<arg value="elastic:${elastic.xpack.elastic.user.password}" />
-				<arg value="https://localhost:9200/_license/start_trial?acknowledge=true&amp;pretty" />
-			</exec>
-
-			<echo>${curl.output.trial}</echo>
-
-			<if>
-				<and>
-					<contains string="${curl.output}" substring="You Know, for Search" />
-					<contains string="${curl.output.trial}" substring="&quot;trial_was_started&quot; : true" />
-				</and>
-				<then>
-					<echo>Elasticsearch started with X-Pack Security.</echo>
-				</then>
-				<else>
-					<fail>Elasticsearch failed to start with X-Pack Security.</fail>
-				</else>
-			</if>
 		</sequential>
 	</macrodef>
 

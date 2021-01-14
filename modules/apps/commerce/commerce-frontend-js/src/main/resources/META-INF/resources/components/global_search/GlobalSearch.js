@@ -49,48 +49,48 @@ const composeDataUpdate = (
 	updateLoader
 ) => {
 	return promise
-		.then((res) => {
-			if (!isMounted()) {
-				return;
+		.then((response) => {
+			if (isMounted()) {
+				updateData(response.items);
+				updateCounter(response.totalCount);
 			}
-			updateData(res.items);
-			updateCounter(res.totalCount);
 		})
-		.catch((e) => {
-			showErrorNotification(e.message);
+		.catch((error) => {
+			showErrorNotification(error.message);
 			updateData(null);
 			updateCounter(null);
 		})
 		.finally(() => {
-			if (!isMounted()) {
-				return;
+			if (isMounted()) {
+				updateLoader(false);
 			}
-			updateLoader(false);
 		});
 };
 
 function GlobalSearch(props) {
-	const [query, updateQuery] = useState('');
 	const isMounted = useIsMounted();
+
 	const inputRef = useRef(null);
 	const dropdownRef = useRef(null);
+
 	const [accountsLoading, updateAccountsLoading] = useState(false);
 	const [accounts, updateAccounts] = useState(null);
 	const [accountsCount, updateAccountsCount] = useState(null);
-	const [debouncedGetAccounts, updateDebouncedGetAccounts] = useState(null);
-	const [ordersLoading, updateOrdersLoading] = useState(false);
-	const [orders, updateOrders] = useState(null);
-	const [ordersCount, updateOrdersCount] = useState(null);
-	const [debouncedGetOrders, updateDebouncedGetOrders] = useState(null);
-	const [productsLoading, updateProductsLoading] = useState(false);
-	const [products, updateProducts] = useState(null);
-	const [productsCount, updateProductsCount] = useState(null);
-	const [debouncedGetProducts, updateDebouncedGetProducts] = useState(null);
 	const [active, setActive] = useState(false);
+	const [debouncedGetAccounts, updateDebouncedGetAccounts] = useState(null);
+	const [debouncedGetOrders, updateDebouncedGetOrders] = useState(null);
+	const [debouncedGetProducts, updateDebouncedGetProducts] = useState(null);
 	const [ids] = useState({
 		input: 'global-search-input' + getRandomId(),
 		menu: 'global-search-menu' + getRandomId(),
 	});
+	const [orders, updateOrders] = useState(null);
+	const [ordersCount, updateOrdersCount] = useState(null);
+	const [ordersLoading, updateOrdersLoading] = useState(false);
+	const [products, updateProducts] = useState(null);
+	const [productsCount, updateProductsCount] = useState(null);
+	const [productsLoading, updateProductsLoading] = useState(false);
+	const [query, updateQuery] = useState('');
 
 	useEffect(() => {
 		updateDebouncedGetAccounts(() =>
@@ -183,9 +183,12 @@ function GlobalSearch(props) {
 	}, [query, getProducts, getAccounts, getOrders]);
 
 	useEffect(() => {
-		function handleClick(e) {
+		function handleClick(event) {
 			if (
-				!(e.target.closest(`#${ids.menu}`) || e.target.id === ids.input)
+				!(
+					event.target.closest(`#${ids.menu}`) ||
+					event.target.id === ids.input
+				)
 			) {
 				setActive(false);
 			}
@@ -207,7 +210,7 @@ function GlobalSearch(props) {
 		<ClayIconSpriteContext.Provider value={props.spritemap}>
 			<ClayInput
 				id={ids.input}
-				onChange={(e) => updateQuery(e.target.value)}
+				onChange={(event) => updateQuery(event.target.value)}
 				onClick={() => {
 					if (query) {
 						setActive(true);

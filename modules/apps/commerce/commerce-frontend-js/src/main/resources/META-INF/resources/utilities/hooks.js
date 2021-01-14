@@ -41,14 +41,19 @@ export function usePersistentState(key, initialState = null) {
 		() => JSON.parse(localStorage.getItem(key)) || initialState
 	);
 	useEffect(() => {
-		if (
-			typeof persistentState === 'undefined' ||
-			persistentState === null
-		) {
-			localStorage.removeItem(key);
+		try {
+			if (
+				typeof persistentState === 'undefined' ||
+				persistentState === null
+			) {
+				localStorage.removeItem(key);
+			}
+			else {
+				localStorage.setItem(key, JSON.stringify(persistentState));
+			}
 		}
-		else {
-			localStorage.setItem(key, JSON.stringify(persistentState));
+		catch {
+			return;
 		}
 	}, [key, persistentState]);
 

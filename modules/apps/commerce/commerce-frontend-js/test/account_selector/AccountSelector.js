@@ -12,7 +12,7 @@
  * details.
  */
 
-import '../test_utilities/polyfills';
+import '../utils/polyfills';
 
 import '@testing-library/jest-dom/extend-expect';
 import {
@@ -26,11 +26,8 @@ import React from 'react';
 
 import ServiceProvider from '../../src/main/resources/META-INF/resources/ServiceProvider/index';
 import AccountSelector from '../../src/main/resources/META-INF/resources/components/account_selector/AccountSelector';
-import {
-	accountTemplate,
-	getAccounts,
-} from '../test_utilities/fake_data/accounts';
-import {getOrders} from '../test_utilities/fake_data/orders';
+import {accountTemplate, getAccounts} from '../utils/fake_data/accounts';
+import {getOrders} from '../utils/fake_data/orders';
 
 const ACCOUNTS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminAccountAPI('v1')
 	.baseURL;
@@ -50,6 +47,7 @@ describe('AccountSelector', () => {
 
 	afterEach(() => {
 		fetchMock.restore();
+		cleanup();
 	});
 
 	describe('When no account is selected', () => {
@@ -224,10 +222,6 @@ describe('AccountSelector', () => {
 					spritemap="./assets/icons.svg"
 				/>
 			);
-		});
-
-		afterEach(() => {
-			cleanup();
 		});
 
 		it('must displays the current account name, order ID and order status localized label', () => {

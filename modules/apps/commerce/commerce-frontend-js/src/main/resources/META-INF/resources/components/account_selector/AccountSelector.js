@@ -28,6 +28,7 @@ import {
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
 } from '../../utilities/eventsDefinitions';
+import {showErrorNotification} from '../../utilities/notifications';
 import Autocomplete from './../autocomplete/Autocomplete';
 import OrdersTable from './OrdersTable';
 
@@ -71,14 +72,16 @@ function updateRemoteCurrentAccount(id, url, refresh) {
 	return fetch(formattedURL, {
 		body: formData,
 		method: 'POST',
-	}).then(() => {
-		if (refresh) {
-			window.location.reload();
-		}
-		else {
-			Liferay.fire(CURRENT_ACCOUNT_UPDATED, {id});
-		}
-	});
+	})
+		.then(() => {
+			if (refresh) {
+				window.location.reload();
+			}
+			else {
+				Liferay.fire(CURRENT_ACCOUNT_UPDATED, {id});
+			}
+		})
+		.catch(showErrorNotification);
 }
 
 function AccountSelector(props) {

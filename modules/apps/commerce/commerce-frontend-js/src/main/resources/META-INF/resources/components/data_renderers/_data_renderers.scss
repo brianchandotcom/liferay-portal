@@ -5,26 +5,26 @@
 
 	&.awaiting-pickup,
 	&.in-progress,
+	&.on-hold,
 	&.partially-refunded,
 	&.partially-shipped,
 	&.pending,
 	&.processing,
-	&.on-hold,
 	&.shipped {
 		border-color: $warning-secondary;
 		color: $warning-primary;
 	}
 
-	&.disputed,
 	&.cancelled,
-	&.declined {
+	&.declined,
+	&.disputed {
 		border-color: $danger-secondary;
 		color: $danger-primary;
 	}
 
+	&.completed,
 	&.refunded,
-	&.subscription,
-	&.completed {
+	&.subscription {
 		border-color: $success-secondary;
 		color: $success-primary;
 	}

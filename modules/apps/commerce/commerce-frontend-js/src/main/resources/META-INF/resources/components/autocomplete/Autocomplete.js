@@ -238,7 +238,7 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 						);
 					}
 				}}
-				scrollCompleted={Boolean(!items || items.length === totalCount)}
+				scrollCompleted={!items || items.length === totalCount}
 			>
 				{results}
 			</InfiniteScroller>
@@ -257,17 +257,17 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 						value={currentValue || ''}
 					/>
 					<ClayAutocomplete.Input
-						onChange={(e) => {
+						onChange={(event) => {
 							updateSelectedItem(null);
 							updatePage(1);
-							setQuery(e.target.value);
+							setQuery(event.target.value);
 						}}
 						onFocus={(_e) => {
 							setActive(true);
 							setInitialised(true);
 						}}
 						onKeyUp={(e) => {
-							setActive(Boolean(e.keyCode !== 27));
+							setActive(e.keyCode !== 27);
 						}}
 						placeholder={props.inputPlaceholder}
 						ref={inputNode}

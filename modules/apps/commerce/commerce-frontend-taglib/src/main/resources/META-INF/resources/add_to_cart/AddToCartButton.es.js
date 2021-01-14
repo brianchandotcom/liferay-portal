@@ -234,7 +234,13 @@ class AddToCartButton extends Component {
 					}
 				}
 			})
-			.catch(console.error);
+			.catch((error) => {
+				const errorMessage =
+					`Request code: ${error.statusCode.toString()}` ||
+					'API error';
+
+				showNotification(errorMessage, 'danger');
+			});
 	}
 
 	_resetInputQuantity() {

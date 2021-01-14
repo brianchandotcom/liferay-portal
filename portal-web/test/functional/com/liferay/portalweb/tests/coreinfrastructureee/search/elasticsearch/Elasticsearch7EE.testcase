@@ -979,12 +979,12 @@ definition {
 
 	@priority = "5"
 	test XPackPkiAuthenticationSmokeTest {
+		property elastic.pki.authentication.enabled = "true";
 		property elastic.xpack.enabled = "true";
 		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
-		property remote.elasticsearch.pki.authentication.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPKISmokeTest";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPkiAuthenticationSmokeTest";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

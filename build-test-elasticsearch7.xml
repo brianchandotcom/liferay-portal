@@ -811,10 +811,8 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 			<generate-x-pack-security-certificates />
 
-			<get-testcase-property property.name="remote.elasticsearch.pki.authentication.enabled" />
-
 			<if>
-				<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
+				<equals arg1="${elastic.pki.authentication.enabled}" arg2="true" />
 				<then>
 					<configure-elasticsearch-x-pack-pki-security-properties />
 				</then>
@@ -832,7 +830,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<start-elastic-trial security.enabled="true" />
 
 			<if>
-				<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
+				<equals arg1="${elastic.pki.authentication.enabled}" arg2="true" />
 				<then>
 					<sleep seconds="10" />
 
@@ -1287,6 +1285,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<if>
 			<isset property="env.JENKINS_HOME" />
 			<then>
+				<get-testcase-property property.name="elastic.pki.authentication.enabled" />
 				<get-testcase-property property.name="elastic.xpack.enabled" />
 				<get-testcase-property property.name="elasticsearch.ccr.enabled" />
 				<get-testcase-property property.name="elasticsearch.cluster.size" />
@@ -1297,6 +1296,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 		<local name="setup.type" />
 
+		<property if:true="${elastic.pki.authentication.enabled}" name="setup.type" value="elastic.xpack.enabled" />
 		<property if:true="${elastic.xpack.enabled}" name="setup.type" value="elastic.xpack.enabled" />
 		<property if:true="${elasticsearch.ccr.enabled}" name="setup.type" value="elasticsearch.multiple.connections" />
 		<property if:set="elasticsearch.cluster.size" name="setup.type" value="elasticsearch.cluster.size" />
@@ -1393,29 +1393,19 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 		<unzip-kibana />
 
-		<if>
-			<isset property="env.JENKINS_HOME" />
-			<then>
-				<get-testcase-property property.name="elastic.xpack.enabled" />
-				<get-testcase-property property.name="remote.elasticsearch.pki.authentication.enabled" />
-			</then>
-		</if>
+		<configure-kibana-properties />
 
 		<if>
-			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+			<equals arg1="${elastic.pki.authentication.enabled}" arg2="true" />
 			<then>
-				<configure-kibana-properties />
-
-				<if>
-					<equals arg1="${remote.elasticsearch.pki.authentication.enabled}" arg2="true" />
-					<then>
-						<configure-kibana-x-pack-pki-security-properties />
-					</then>
-					<else>
-						<configure-kibana-x-pack-security-properties />
-					</else>
-				</if>
+				<configure-kibana-x-pack-pki-security-properties />
 			</then>
+			<elseif>
+				<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+				<then>
+					<configure-kibana-x-pack-security-properties />
+				</then>
+			</elseif>
 		</if>
 
 		<if>

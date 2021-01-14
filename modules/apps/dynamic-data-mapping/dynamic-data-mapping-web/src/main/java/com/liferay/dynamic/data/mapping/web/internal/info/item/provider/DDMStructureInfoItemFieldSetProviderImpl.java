@@ -15,10 +15,10 @@
 package com.liferay.dynamic.data.mapping.web.internal.info.item.provider;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.field.InfoFieldSet;
@@ -94,12 +94,11 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 	}
 
 	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {
-		DDMFormFieldType.CHECKBOX, DDMFormFieldType.DATE,
-		DDMFormFieldType.DECIMAL, DDMFormFieldType.IMAGE,
-		DDMFormFieldType.INTEGER, DDMFormFieldType.NUMBER,
-		DDMFormFieldType.TEXT_HTML, DDMFormFieldType.RADIO,
-		DDMFormFieldType.SELECT, DDMFormFieldType.TEXT,
-		DDMFormFieldType.TEXT_AREA, "image", "numeric", "rich_text"
+		DDMFormFieldTypeConstants.CHECKBOX,
+		DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
+		DDMFormFieldTypeConstants.DATE, DDMFormFieldTypeConstants.NUMERIC,
+		DDMFormFieldTypeConstants.IMAGE, DDMFormFieldTypeConstants.TEXT,
+		DDMFormFieldTypeConstants.RICH_TEXT, DDMFormFieldTypeConstants.SELECT
 	};
 
 	@Reference

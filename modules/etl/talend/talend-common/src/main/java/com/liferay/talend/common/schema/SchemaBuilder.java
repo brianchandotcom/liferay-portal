@@ -346,6 +346,12 @@ public class SchemaBuilder {
 				JsonObject referenceSchemaJsonObject = _extractSchemaJsonObject(
 					referenceSchemaName, apiSpecJsonObject);
 
+				if (referenceSchemaJsonObject.isEmpty()) {
+					throw new OASException(
+						"Unable to locate referenced schema " +
+							referenceSchemaName);
+				}
+
 				_processSchemaJsonObject(
 					propertyEntry.getKey(), referenceSchemaJsonObject, index,
 					previousFieldNames, schemaFields, apiSpecJsonObject);

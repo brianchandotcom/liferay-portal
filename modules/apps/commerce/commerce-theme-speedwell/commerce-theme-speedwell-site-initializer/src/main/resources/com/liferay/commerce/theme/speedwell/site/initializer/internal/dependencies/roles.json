@@ -5,7 +5,7 @@
 				"actionIds": [
 					"MANAGE_AVAILABLE_ACCOUNTS"
 				],
-				"resource": "90"
+				"resource": "com.liferay.commerce.account"
 			},
 			{
 				"actionIds": [

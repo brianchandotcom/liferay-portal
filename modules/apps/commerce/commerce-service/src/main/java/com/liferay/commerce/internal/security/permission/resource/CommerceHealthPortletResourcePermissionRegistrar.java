@@ -40,12 +40,12 @@ public class CommerceHealthPortletResourcePermissionRegistrar {
 	protected void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("resource.name", CommerceConstants.HEALTH_RESOURCE_NAME);
+		properties.put("resource.name", CommerceConstants.RESOURCE_NAME_HEALTH);
 
 		_serviceRegistration = bundleContext.registerService(
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
-				CommerceConstants.HEALTH_RESOURCE_NAME,
+				CommerceConstants.RESOURCE_NAME_HEALTH,
 				new CommerceServicePortletResourcePermissionLogic()),
 			properties);
 	}

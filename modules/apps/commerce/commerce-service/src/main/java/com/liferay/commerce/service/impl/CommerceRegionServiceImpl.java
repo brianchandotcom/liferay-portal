@@ -170,6 +170,6 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				CommerceRegionServiceImpl.class, "_portletResourcePermission",
-				CommerceConstants.ADDRESS_RESOURCE_NAME);
+				CommerceConstants.RESOURCE_NAME_ADDRESS);
 
 }

@@ -41,12 +41,12 @@ public class CommerceShipmentPortletResourcePermissionRegistrar {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(
-			"resource.name", CommerceConstants.SHIPMENT_RESOURCE_NAME);
+			"resource.name", CommerceConstants.RESOURCE_NAME_SHIPMENT);
 
 		_serviceRegistration = bundleContext.registerService(
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
-				CommerceConstants.SHIPMENT_RESOURCE_NAME,
+				CommerceConstants.RESOURCE_NAME_SHIPMENT,
 				new CommerceServicePortletResourcePermissionLogic()),
 			properties);
 	}

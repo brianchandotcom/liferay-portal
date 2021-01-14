@@ -137,7 +137,7 @@ public class CommerceChannelDisplayContext
 				CommerceShippingTaxConfiguration.class,
 				new GroupServiceSettingsLocator(
 					commerceChannel.getGroupId(),
-					CommerceConstants.TAX_SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_TAX));
 
 		return _cpTaxCategoryLocalService.fetchCPTaxCategory(
 			commerceShippingTaxConfiguration.taxCategoryId());
@@ -409,7 +409,7 @@ public class CommerceChannelDisplayContext
 				CommerceOrderCheckoutConfiguration.class,
 				new GroupServiceSettingsLocator(
 					commerceChannel.getGroupId(),
-					CommerceConstants.ORDER_SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_ORDER));
 
 		return commerceOrderCheckoutConfiguration.guestCheckoutEnabled();
 	}
@@ -422,7 +422,7 @@ public class CommerceChannelDisplayContext
 				CommerceOrderFieldsConfiguration.class,
 				new GroupServiceSettingsLocator(
 					commerceChannel.getGroupId(),
-					CommerceConstants.ORDER_SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_ORDER));
 
 		return commerceOrderFieldsConfiguration.showPurchaseOrderNumber();
 	}
@@ -462,7 +462,7 @@ public class CommerceChannelDisplayContext
 				CommerceOrderFieldsConfiguration.class,
 				new GroupServiceSettingsLocator(
 					commerceChannel.getGroupId(),
-					CommerceConstants.ORDER_FIELDS_SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_ORDER_FIELDS));
 
 		return _commerceOrderFieldsConfiguration;
 	}

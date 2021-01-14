@@ -122,6 +122,6 @@ public class CommerceAvailabilityEstimateServiceImpl
 			PortletResourcePermissionFactory.getInstance(
 				CommerceAvailabilityEstimateServiceImpl.class,
 				"_portletResourcePermission",
-				CommerceConstants.AVAILABILITY_RESOURCE_NAME);
+				CommerceConstants.RESOURCE_NAME_AVAILABILITY);
 
 }

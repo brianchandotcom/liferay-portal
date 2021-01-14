@@ -244,7 +244,7 @@ public class CommerceSubscriptionEntryServiceImpl
 			PortletResourcePermissionFactory.getInstance(
 				CommerceSubscriptionEntryServiceImpl.class,
 				"_portletResourcePermission",
-				CommerceConstants.SUBSCRIPTION_RESOURCE_NAME);
+				CommerceConstants.RESOURCE_NAME_SUBSCRIPTION);
 
 	@ServiceReference(type = CommerceChannelLocalService.class)
 	private CommerceChannelLocalService _commerceChannelLocalService;

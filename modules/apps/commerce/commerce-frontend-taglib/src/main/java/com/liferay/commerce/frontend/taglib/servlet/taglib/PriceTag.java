@@ -347,7 +347,7 @@ public class PriceTag extends IncludeTag {
 			configurationProvider.getConfiguration(
 				CommercePriceConfiguration.class,
 				new SystemSettingsLocator(
-					CommerceConstants.PRICE_SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_PRICE));
 
 		_displayDiscountLevels =
 			commercePriceConfiguration.displayDiscountLevels();

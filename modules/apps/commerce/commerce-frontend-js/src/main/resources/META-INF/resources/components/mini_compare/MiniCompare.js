@@ -16,10 +16,10 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classnames from 'classnames';
-import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import CookieUtils from '../../utilities/cookies';
 import {
 	ADD_ITEM_TO_COMPARE,
 	COMPARE_IS_AVAILABLE,
@@ -28,19 +28,27 @@ import {
 	REMOVE_ITEM_FROM_COMPARE,
 } from '../../utilities/eventsDefinitions';
 
-function toggleRemoteStatus(id, toggle, actionUrl, nameSpace) {
-	const formData = new FormData();
+const cookieUtils = new CookieUtils('COMMERCE_COMPARE_cpDefinitionIds_');
 
-	formData.append(nameSpace + 'cpDefinitionId', id);
-	formData.append(nameSpace + id + 'Compare', toggle);
-	formData.append('p_auth', Liferay.authToken);
+function toggleStatus(commerceChannelGroupId, id, toggle) {
+	const value = cookieUtils.getValue(commerceChannelGroupId);
 
-	return fetch(actionUrl, {
-		body: formData,
-		credentials: 'include',
-		headers: new Headers({'x-csrf-token': Liferay.authToken}),
-		method: 'post',
-	});
+	const cpDefinitionIds = value ? value.split(':') : [];
+
+	if (toggle) {
+		if (!cpDefinitionIds.includes(id)) {
+			cpDefinitionIds.push(id);
+		}
+	}
+	else {
+		const index = cpDefinitionIds.indexOf(id);
+
+		if (index !== -1) {
+			cpDefinitionIds.splice(index, 1);
+		}
+	}
+
+	cookieUtils.setValue(commerceChannelGroupId, cpDefinitionIds.join(':'));
 }
 
 function Item(props) {
@@ -66,6 +74,11 @@ function Item(props) {
 function MiniCompare(props) {
 	const [items, updateItems] = useState(props.items);
 
+	cookieUtils.setValue(
+		props.commerceChannelGroupId,
+		items.map((item) => item.id).join(':')
+	);
+
 	useEffect(() => {
 		function toggleItem({id, thumbnail}) {
 			const newItem = {
@@ -75,12 +88,8 @@ function MiniCompare(props) {
 
 			return updateItems((items) => {
 				const included = items.find((el) => el.id === id);
-				toggleRemoteStatus(
-					id,
-					!included,
-					props.editCompareProductActionURL,
-					props.portletNamespace
-				);
+
+				toggleStatus(props.commerceChannelGroupId, id, !included);
 
 				return included
 					? items.filter((i) => i.id !== id)
@@ -96,7 +105,7 @@ function MiniCompare(props) {
 			Liferay.detach(REMOVE_ITEM_FROM_COMPARE, toggleItem);
 		};
 	}, [
-		props.editCompareProductActionURL,
+		props.commerceChannelGroupId,
 		props.itemsLimit,
 		props.portletNamespace,
 	]);
@@ -131,11 +140,10 @@ function MiniCompare(props) {
 											(v) => v.id !== currentItem.id
 										)
 									);
-									toggleRemoteStatus(
+									toggleStatus(
+										props.commerceChannelGroupId,
 										currentItem.id,
-										false,
-										props.editCompareProductActionURL,
-										props.portletNamespace
+										false
 									);
 									Liferay.fire(
 										ITEM_REMOVED_FROM_COMPARE,
@@ -154,8 +162,8 @@ function MiniCompare(props) {
 }
 
 MiniCompare.propTypes = {
+	commerceChannelGroupId: PropTypes.number,
 	compareProductsURL: PropTypes.string.isRequired,
-	editCompareProductActionURL: PropTypes.string.isRequired,
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.oneOfType([PropTypes.number, PropTypes.string])

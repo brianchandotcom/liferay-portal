@@ -1,15 +1,16 @@
 $color-fg: #5c5e5e;
 $color-fg-alt: #7f848d;
+$color-fg-alt-light: #dadada;
 $color-bg: #fff;
 $color-bg-medium: #fcfcfc;
 $color-bg-alt: #f7f7f8;
 $color-bg-dark: #34373e;
-$color-border: #eceef1;
+$color-border: #e6e7e7;
 $color-shadow: rgba(92, 94, 94, 0.14);
-$color-disabled: #c9daff;
+$color-disabled: #dbe6ff;
 
 $color-theme: #4c84ff;
-$color-theme-dark: #3260c5;
+$color-theme-dark: #255cd6;
 $color-theme-light: #c9daff;
 $color-theme-transparent: rgba($color-theme, 0.067);
 
@@ -17,9 +18,15 @@ $color-modal-mask: rgba(52, 55, 62, 0.6);
 
 $color-mood-default: $color-theme;
 $color-mood-good: #4bc286;
-$color-mood-warning: #fdd186;
+$color-mood-good-text: #2bbb72;
+$color-mood-neutral: #ffb68d;
+$color-mood-neutral-text: #ee8e58;
 $color-mood-bad: #ec676a;
+$color-mood-bad-text: #f97578;
 $color-mood-bad-bg: #fef7f7;
+$color-mood-warning: #ffb68d;
+
+$font-weight-semi-bold: 500;
 
 $placeholder-colors: (
 	#9be2bd,
@@ -51,6 +58,7 @@ $content-max-width: 1440px;
 $transition: ease 200ms;
 $micro-transition: ease 100ms;
 
+$border-radius: 8px;
 $standard-radius: 8px;
 
 //breakpoints

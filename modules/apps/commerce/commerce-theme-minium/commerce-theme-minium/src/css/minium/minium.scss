@@ -8,7 +8,6 @@
 @import 'overrides/account_selector';
 @import 'overrides/base';
 @import 'overrides/button';
-@import 'overrides/card';
 @import 'overrides/checkout_page';
 @import 'overrides/compare_checkbox';
 @import 'overrides/dataset-display';
@@ -70,10 +69,14 @@
 @import './components/bom';
 @import './components/price';
 @import 'components/account_management';
+@import 'components/add_to_cart';
+@import 'components/add_to_wish_list';
 @import 'components/added_input_item';
 @import 'components/autocomplete_input';
+@import 'components/label';
 @import 'components/main_link';
 @import 'components/mini_cart';
+@import 'components/product_card';
 @import 'components/product_compare_checkbox';
 @import 'components/product_detail';
 @import 'components/product_header';

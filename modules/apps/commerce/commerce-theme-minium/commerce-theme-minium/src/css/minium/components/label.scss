@@ -1,0 +1,18 @@
+#minium .label {
+	border-radius: 3px;
+
+	&-danger {
+		border-color: $color-mood-bad;
+		color: $color-mood-bad-text;
+	}
+
+	&-success {
+		border-color: $color-mood-good;
+		color: $color-mood-good-text;
+	}
+
+	&-warning {
+		border-color: $color-mood-neutral;
+		color: $color-mood-neutral-text;
+	}
+}

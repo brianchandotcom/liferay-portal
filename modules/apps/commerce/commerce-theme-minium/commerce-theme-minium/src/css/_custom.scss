@@ -63,7 +63,7 @@ html {
 		}
 	}
 
-	input[type='checkbox'] {
+	input[type='checkbox']:not(.compare-checkbox-input) {
 		-webkit-appearance: none;
 		background: #fff;
 		border: 2px solid rgba(157, 158, 158, 0.5);

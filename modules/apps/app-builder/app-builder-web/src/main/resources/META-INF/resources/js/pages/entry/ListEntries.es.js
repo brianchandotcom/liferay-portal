@@ -23,7 +23,6 @@ import useEntriesActions from '../../hooks/useEntriesActions.es';
 import usePermissions from '../../hooks/usePermissions.es';
 import useQuery from '../../hooks/useQuery.es';
 import {getLocalizedUserPreferenceValue} from '../../utils/lang.es';
-import NoPermissionEntry from './NoPermissionEntry.es';
 import {buildEntries, getStatusLabel, navigateToEditPage} from './utils.es';
 
 export default function ListEntries({history}) {
@@ -43,7 +42,7 @@ export default function ListEntries({history}) {
 		dataDefinition,
 		dataListView: {fieldNames},
 		isLoading,
-	} = useDataListView(dataListViewId, dataDefinitionId, permissions.view);
+	} = useDataListView(dataListViewId, dataDefinitionId);
 
 	const formColumns = [
 		...columns.map(({value, ...column}) => ({
@@ -77,10 +76,6 @@ export default function ListEntries({history}) {
 		},
 		appId
 	);
-
-	if (!permissions.view) {
-		return <NoPermissionEntry />;
-	}
 
 	return (
 		<Loading isLoading={isLoading}>

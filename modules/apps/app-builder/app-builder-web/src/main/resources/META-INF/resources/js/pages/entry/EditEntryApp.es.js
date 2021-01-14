@@ -25,10 +25,13 @@ export default ({appTab, ...props}) => {
 	const defaultLanguageId = getStorageLanguageId(appId);
 	const [userLanguageId, setUserLanguageId] = useState(defaultLanguageId);
 
-	props.userLanguageId = userLanguageId;
+	const newProps = {
+		...props,
+		userLanguageId,
+	};
 
 	return (
-		<AppContextProvider {...props}>
+		<AppContextProvider {...newProps}>
 			<PermissionsContextProvider dataDefinitionId={dataDefinitionId}>
 				<PortalEntry
 					dataDefinitionId={props.dataDefinitionId}
@@ -36,7 +39,7 @@ export default ({appTab, ...props}) => {
 					userLanguageId={userLanguageId}
 				/>
 
-				<EditPage module={appTab.editEntryPoint} props={props} />
+				<EditPage module={appTab.editEntryPoint} props={newProps} />
 			</PermissionsContextProvider>
 		</AppContextProvider>
 	);

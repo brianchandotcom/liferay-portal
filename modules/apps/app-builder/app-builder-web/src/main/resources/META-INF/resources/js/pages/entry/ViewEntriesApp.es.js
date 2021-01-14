@@ -27,7 +27,10 @@ export default function ({appTab, ...props}) {
 	const [userLanguageId, setUserLanguageId] = useState(defaultLanguageId);
 	const [showAppName, setShowAppName] = useState(false);
 
-	props.userLanguageId = userLanguageId;
+	const newProps = {
+		...props,
+		userLanguageId,
+	};
 
 	const ListPage = (props) => {
 		useEffect(() => {
@@ -47,7 +50,7 @@ export default function ({appTab, ...props}) {
 
 	return (
 		<div className="app-builder-root">
-			<AppContextProvider {...props}>
+			<AppContextProvider {...newProps}>
 				<PermissionsContextProvider dataDefinitionId={dataDefinitionId}>
 					<PortalEntry
 						dataDefinitionId={dataDefinitionId}

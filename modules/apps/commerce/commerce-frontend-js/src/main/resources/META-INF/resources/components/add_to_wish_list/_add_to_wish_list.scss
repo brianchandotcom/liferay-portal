@@ -1,0 +1,30 @@
+.add-to-wish-list {
+	.btn-sm {
+		margin-right: -0.5rem;
+		padding: 0.5rem;
+	}
+
+	.text-truncate-inline {
+		padding-right: 0.5rem;
+		position: relative;
+
+		&::after {
+			background-color: var(--btn-secondary-border-color);
+			content: '';
+			height: 100%;
+			position: absolute;
+			right: 0;
+			width: 1px;
+		}
+	}
+
+	.wish-list-icon {
+		margin-left: 0.5rem;
+
+		.rtl &,
+		[dir='rtl'] & {
+			margin-left: auto;
+			margin-right: 0.5rem;
+		}
+	}
+}

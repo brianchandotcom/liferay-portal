@@ -1478,25 +1478,25 @@ public class CommerceDiscountV2Test {
 		).given(
 			"A discount with a rule on the cart total"
 		).when(
-			"The price of the product is discovered without and open order"
+			"The price of the product is discovered without an open order"
 		).then(
 			"The discount is not applied"
 		);
 
-		CommerceCatalog catalog =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.addCommerceCatalog(
 				RandomTestUtil.randomString(), _commerceCurrency.getCode(),
 				LocaleUtil.US.getDisplayLanguage(), null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			catalog.getGroupId());
+			commerceCatalog.getGroupId());
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
-				catalog.getGroupId());
+				commerceCatalog.getGroupId());
 
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(

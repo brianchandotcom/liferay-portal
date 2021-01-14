@@ -168,11 +168,10 @@ public class LiferayBatchFileProperties
 
 		form.setHidden(true);
 
-		Widget
-		Widget.widget = form.getWidget(
+		Widget widget = form.getWidget(
 			liferayBatchFileReferenceProperties.getName());
 
-		Widget.widget.setVisible();
+		widget.setVisible();
 	}
 
 	@Override

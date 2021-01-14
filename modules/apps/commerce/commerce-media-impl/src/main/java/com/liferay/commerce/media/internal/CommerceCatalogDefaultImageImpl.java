@@ -73,7 +73,7 @@ public class CommerceCatalogDefaultImageImpl
 				PortletFileRepositoryUtil.addPortletFileEntry(
 					groupId, PrincipalThreadLocal.getUserId(),
 					CommerceCatalogDefaultImageImpl.class.getName(), 0,
-					CPConstants.SERVICE_NAME,
+					CPConstants.SERVICE_NAME_PRODUCT,
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					fileEntry.getContentStream(), uniqueFileName,
 					fileEntry.getMimeType(), true);

@@ -34,7 +34,7 @@ public class CProductVersionConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return CPConstants.SERVICE_NAME_C_PRODUCT_VERSIONING;
+		return CPConstants.SERVICE_NAME_CP_VERSIONING;
 	}
 
 }

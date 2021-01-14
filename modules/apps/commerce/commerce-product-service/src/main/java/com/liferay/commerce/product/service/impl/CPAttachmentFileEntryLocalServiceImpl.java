@@ -350,7 +350,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		serviceContext.setAddGuestPermissions(true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			groupId, CPConstants.SERVICE_NAME, serviceContext);
+			groupId, CPConstants.SERVICE_NAME_PRODUCT, serviceContext);
 
 		Folder classNameFolder = PortletFileRepositoryUtil.addPortletFolder(
 			userId, repository.getRepositoryId(),
@@ -867,8 +867,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			groupId, folder.getFolderId(), fileEntry.getFileName());
 
 		FileEntry newFileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, className, classPK, CPConstants.SERVICE_NAME,
-			folder.getFolderId(), fileEntry.getContentStream(), uniqueFileName,
+			groupId, userId, className, classPK,
+			CPConstants.SERVICE_NAME_PRODUCT, folder.getFolderId(),
+			fileEntry.getContentStream(), uniqueFileName,
 			fileEntry.getMimeType(), true);
 
 		TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());

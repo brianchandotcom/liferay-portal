@@ -158,113 +158,6 @@ public class SchemaBuilder {
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
-	private Schema.Field _getDesignField(
-		String fieldName, JsonObject propertyJsonObject) {
-
-		Schema.Field designField = new Schema.Field(
-			fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
-			(Object)null);
-
-		OASType oasType = OASType.fromDefinition(
-			propertyJsonObject.getString(OASConstants.TYPE));
-
-		if (oasType == OASType.ARRAY) {
-			designField.addProp(
-				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_ARRAY);
-
-			return designField;
-		}
-
-		String openAPIFormatDefinition = null;
-
-		if (propertyJsonObject.containsKey(OASConstants.FORMAT)) {
-			openAPIFormatDefinition = propertyJsonObject.getString(
-				OASConstants.FORMAT);
-		}
-		else if ((oasType == OASType.OBJECT) &&
-				 propertyJsonObject.containsKey(
-					 OASConstants.ADDITIONAL_PROPERTIES)) {
-
-			designField.addProp(
-				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_OBJECT);
-
-			JsonObject additionalPropertiesJsonObject =
-				propertyJsonObject.getJsonObject(
-					OASConstants.ADDITIONAL_PROPERTIES);
-
-			if (additionalPropertiesJsonObject.containsKey(OASConstants.TYPE)) {
-				openAPIFormatDefinition =
-					additionalPropertiesJsonObject.getString(OASConstants.TYPE);
-			}
-		}
-
-		OASFormat oasFormat = OASFormat.fromOpenAPITypeAndFormat(
-			oasType, openAPIFormatDefinition);
-
-		if (oasFormat == OASFormat.BIGDECIMAL) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._decimal()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.BOOLEAN) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._boolean()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.BINARY) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._bytes()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.DATE) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._date()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.DATE_TIME) {
-			designField = new Schema.Field(
-				fieldName,
-				AvroUtils.wrapAsNullable(AvroUtils._logicalTimestamp()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.DICTIONARY) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
-				(Object)null);
-
-			designField.addProp("oas.dictionary", "true");
-			designField.addProp(
-				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_DICTIONARY);
-		}
-		else if (oasFormat == OASFormat.DOUBLE) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._double()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.FLOAT) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._float()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.INT32) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._int()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.INT64) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._long()), null,
-				(Object)null);
-		}
-		else if (oasFormat == OASFormat.STRING) {
-			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
-				(Object)null);
-		}
-
-		return designField;
-	}
-
 	private Schema _getSchema(String schemaName, JsonObject oasJsonObject) {
 		if (StringUtil.isEmpty(schemaName)) {
 			throw TalendRuntimeException.createUnexpectedException(
@@ -303,6 +196,113 @@ public class SchemaBuilder {
 		return _getSchema(
 			extractEndpointSchemaName(endpoint, operation, apiSpecJsonObject),
 			apiSpecJsonObject);
+	}
+
+	private Schema.Field _getSchemaField(
+		String fieldName, JsonObject propertyJsonObject) {
+
+		Schema.Field schemaField = new Schema.Field(
+			fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
+			(Object)null);
+
+		OASType oasType = OASType.fromDefinition(
+			propertyJsonObject.getString(OASConstants.TYPE));
+
+		if (oasType == OASType.ARRAY) {
+			schemaField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_ARRAY);
+
+			return schemaField;
+		}
+
+		String openAPIFormatDefinition = null;
+
+		if (propertyJsonObject.containsKey(OASConstants.FORMAT)) {
+			openAPIFormatDefinition = propertyJsonObject.getString(
+				OASConstants.FORMAT);
+		}
+		else if ((oasType == OASType.OBJECT) &&
+				 propertyJsonObject.containsKey(
+					 OASConstants.ADDITIONAL_PROPERTIES)) {
+
+			schemaField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_OBJECT);
+
+			JsonObject additionalPropertiesJsonObject =
+				propertyJsonObject.getJsonObject(
+					OASConstants.ADDITIONAL_PROPERTIES);
+
+			if (additionalPropertiesJsonObject.containsKey(OASConstants.TYPE)) {
+				openAPIFormatDefinition =
+					additionalPropertiesJsonObject.getString(OASConstants.TYPE);
+			}
+		}
+
+		OASFormat oasFormat = OASFormat.fromOpenAPITypeAndFormat(
+			oasType, openAPIFormatDefinition);
+
+		if (oasFormat == OASFormat.BIGDECIMAL) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._decimal()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.BOOLEAN) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._boolean()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.BINARY) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._bytes()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.DATE) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._date()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.DATE_TIME) {
+			schemaField = new Schema.Field(
+				fieldName,
+				AvroUtils.wrapAsNullable(AvroUtils._logicalTimestamp()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.DICTIONARY) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
+				(Object)null);
+
+			schemaField.addProp("oas.dictionary", "true");
+			schemaField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_DICTIONARY);
+		}
+		else if (oasFormat == OASFormat.DOUBLE) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._double()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.FLOAT) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._float()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.INT32) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._int()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.INT64) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._long()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.STRING) {
+			schemaField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
+				(Object)null);
+		}
+
+		return schemaField;
 	}
 
 	private boolean _isExtensionField(String name) {
@@ -374,14 +374,14 @@ public class SchemaBuilder {
 
 			previousFieldNames.add(fieldName);
 
-			Schema.Field designField = _getDesignField(
+			Schema.Field schemaField = _getSchemaField(
 				fieldName, propertyJsonValue.asJsonObject());
 
 			if (required.contains(fieldName)) {
-				designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+				schemaField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
 			}
 
-			schemaFields.add(designField);
+			schemaFields.add(schemaField);
 		}
 	}
 

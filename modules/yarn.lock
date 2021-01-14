@@ -1170,10 +1170,10 @@
     "@clayui/shared" "^3.4.0"
     classnames "^2.2.6"
 
-"@clayui/panel@3.3.3":
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.3.3.tgz#e3f06c6a0cf22093428195e65b78d426857c7819"
-  integrity sha512-NkRUAIARGLE8ZdCVcDdxPgPu0Gwdkdnx3yZC/qF0RrgUhq2I/FsUe/aOEoR1zpsm+LRUkoOFC8uixNjIDp/6IA==
+"@clayui/panel@3.3.4":
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.3.4.tgz#eb87c01ea7e3498ba246c5564204c01d78747fea"
+  integrity sha512-aNJugQ3KEzDlXBsCZ344bAAgjnEuuE3IBDkweKHY9zNHBCLp4kIcO2/dlc1GrYs4E0ZenNUwi88QeACu77nENQ==
   dependencies:
     "@clayui/icon" "^3.1.0"
     "@clayui/shared" "^3.4.0"

@@ -10,7 +10,7 @@
 		"@clayui/link": "3.2.0",
 		"@clayui/modal": "3.8.3",
 		"@clayui/navigation-bar": "3.3.3",
-		"@clayui/panel": "3.3.3",
+		"@clayui/panel": "3.3.4",
 		"@clayui/tabs": "3.3.3",
 		"graphiql": "1.2.0",
 		"graphql": "^15.0.0",

@@ -594,6 +594,18 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
+	<macrodef name="set-up-standard-elasticsearch">
+		<sequential>
+			<unzip-elasticsearch />
+
+			<prepare-elasticsearch-analyzers />
+
+			<configure-elasticsearch-properties />
+
+			<configure-portal-remote-elasticsearch-osgi-properties />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-x-pack-user-passwords">
 		<sequential>
 			<if>
@@ -679,15 +691,9 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="start-elasticsearch-with-clustering">
 		<sequential>
-			<unzip-elasticsearch />
-
-			<prepare-elasticsearch-analyzers />
-
-			<configure-elasticsearch-properties />
+			<set-up-standard-elasticsearch />
 
 			<configure-elasticsearch-clustering-properties />
-
-			<configure-portal-remote-elasticsearch-osgi-properties />
 
 			<prepare-additional-elasticsearch-bundles total.bundles="${elasticsearch.cluster.size}" />
 
@@ -723,9 +729,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<sequential>
 			<configure-elasticsearch79-ltr-test-properties />
 
-			<unzip-elasticsearch />
-
-			<prepare-elasticsearch-analyzers />
+			<set-up-standard-elasticsearch />
 
 			<configure-elasticsearch-ltr-properties />
 
@@ -750,23 +754,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				/>
 			</chmod>
 
-			<configure-elasticsearch-properties />
-
-			<configure-portal-remote-elasticsearch-osgi-properties />
-
 			<antcall target="start-elasticsearch-node" />
 		</sequential>
 	</macrodef>
 
 	<macrodef name="start-elasticsearch-with-multiple-connections">
 		<sequential>
-			<unzip-elasticsearch />
-
-			<prepare-elasticsearch-analyzers />
-
-			<configure-elasticsearch-properties />
-
-			<configure-portal-remote-elasticsearch-osgi-properties />
+			<set-up-standard-elasticsearch />
 
 			<prepare-additional-elasticsearch-bundles total.bundles="2" />
 
@@ -794,13 +788,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="start-elasticsearch-with-xpack">
 		<sequential>
-			<unzip-elasticsearch />
-
-			<prepare-elasticsearch-analyzers />
-
-			<configure-elasticsearch-properties />
-
-			<configure-portal-remote-elasticsearch-osgi-properties />
+			<set-up-standard-elasticsearch />
 
 			<configure-elasticsearch-monitoring-property />
 
@@ -1351,13 +1339,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<if>
 			<istrue value="${start.standard.elasticsearch}" />
 			<then>
-				<unzip-elasticsearch />
-
-				<prepare-elasticsearch-analyzers />
-
-				<configure-elasticsearch-properties />
-
-				<configure-portal-remote-elasticsearch-osgi-properties />
+				<set-up-standard-elasticsearch />
 
 				<antcall target="start-elasticsearch-node" />
 			</then>

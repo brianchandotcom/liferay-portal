@@ -12,9 +12,17 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.github.webhook;
 
+import com.liferay.jenkins.results.parser.GitCommit;
+import com.liferay.jenkins.results.parser.GitHubRemoteGitRepository;
+import com.liferay.jenkins.results.parser.JenkinsMaster;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
+import com.liferay.jenkins.results.parser.JenkinsStopBuildUtil;
+import com.liferay.jenkins.results.parser.LoadBalancerUtil;
+import com.liferay.jenkins.results.parser.MultiPattern;
+import com.liferay.jenkins.results.parser.PullRequest;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

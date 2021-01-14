@@ -243,6 +243,11 @@
 				var oldSuccess = options.success || function () {};
 				callbacks.push(function (data) {
 					var fn = options.replaceTarget ? 'replaceWith' : 'html';
+
+					// Validate `data` through `HTML encoding` when passed `data` is passed 
+ 					// to `html()`, as suggested in https://github.com/jquery-form/form/issues/464
+					fn == 'html' ? data = $.parseHTML($("<div>").text(data).html()) : '';
+
 					$(options.target)[fn](data).each(oldSuccess, arguments);
 				});
 			}
@@ -1076,8 +1081,12 @@
 				var parseJSON =
 					$.parseJSON ||
 					function (s) {
-						/*jslint evil:true */
-						return window['eval']('(' + s + ')');
+
+						// Arise an error resolvable including jquery instead of 
+						// making a new function using unsanitized inputs
+
+						window.console.error('jquery.parseJSON is undefined');
+						return null;
 					};
 
 				var httpData = function (xhr, type, s) {

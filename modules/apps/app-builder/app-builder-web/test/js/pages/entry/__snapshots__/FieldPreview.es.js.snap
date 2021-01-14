@@ -175,7 +175,7 @@ exports[`EditEntry renders FieldPreview for Section 1`] = `
       </span>
     </button>
     <div
-      class="panel-collapse collapse"
+      class="panel-collapse"
       role="tabpanel"
     >
       <div

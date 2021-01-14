@@ -189,7 +189,7 @@ public class JournalEditArticleDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"articleId", getArticleId()
 		).put(
-			"availableLocales", _article.getAvailableLanguageIds()
+			"availableLocales", _getAvailableLanguageIds()
 		).put(
 			"classNameId", String.valueOf(getClassNameId())
 		).put(
@@ -661,6 +661,14 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		return false;
+	}
+
+	private String[] _getAvailableLanguageIds() {
+		if (_article == null) {
+			return new String[] {getDefaultArticleLanguageId()};
+		}
+
+		return _article.getAvailableLanguageIds();
 	}
 
 	private DDMFormValuesFactory _getDDMFormValuesFactory() {

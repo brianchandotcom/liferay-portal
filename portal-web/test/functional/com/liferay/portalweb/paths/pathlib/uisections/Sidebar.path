@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>TEXT_INPUT</td>
+    <td>//div[contains(@data-field-name,'${key_fieldName}')]//label[normalize-space(text())='${key_fieldLabel}']//following-sibling::input[@type='text']</td>
+    <td></td>
+</tr>
+<tr>
     <td>OPTION_INPUT</td>
     <td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'ddm-field-text')])[${index}]</td>
     <td></td>

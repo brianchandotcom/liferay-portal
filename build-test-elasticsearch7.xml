@@ -924,165 +924,165 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<delete dir="${elasticsearch.dir}" />
 
 			<if>
-				<and>
-					<not>
-						<available file="${app.server.parent.dir}/${elasticsearch.tar.name.mac}" />
-					</not>
-					<os family="mac" />
-				</and>
+				<os family="mac" />
 				<then>
-					<mirrors-get
-						dest="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
-						skipChecksum="true"
-						src="${elasticsearch.tar.url.mac}"
-					/>
+					<if>
+						<not>
+							<available file="${app.server.parent.dir}/${elasticsearch.tar.name.mac}" />
+						</not>
+						<then>
+							<mirrors-get
+								dest="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
+								skipChecksum="true"
+								src="${elasticsearch.tar.url.mac}"
+							/>
+						</then>
+					</if>
+
 					<untar
 						compression="gzip"
 						dest="${app.server.parent.dir}"
 						src="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
 					/>
 				</then>
-				<elseif>
-					<and>
+			</if>
+
+			<if>
+				<os family="unix" />
+				<then>
+					<if>
 						<not>
 							<available file="${app.server.parent.dir}/${elasticsearch.tar.name.linux}" />
 						</not>
-						<os family="unix" />
-					</and>
-					<then>
-						<mirrors-get
-							dest="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
-							skipChecksum="true"
-							src="${elasticsearch.tar.url.linux}"
-						/>
-						<untar
-							compression="gzip"
-							dest="${app.server.parent.dir}"
-							src="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
-						/>
-					</then>
-				</elseif>
-				<elseif>
-					<and>
+						<then>
+							<mirrors-get
+								dest="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
+								skipChecksum="true"
+								src="${elasticsearch.tar.url.linux}"
+							/>
+						</then>
+					</if>
+
+					<untar
+						compression="gzip"
+						dest="${app.server.parent.dir}"
+						src="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
+					/>
+				</then>
+			</if>
+
+			<if>
+				<os family="windows" />
+				<then>
+					<if>
 						<not>
 							<available file="${app.server.parent.dir}/${elasticsearch.zip.name.windows}" />
 						</not>
-						<os family="windows" />
-					</and>
-					<then>
-						<mirrors-get
-							dest="${app.server.parent.dir}/${elasticsearch.zip.name.windows}"
-							skipChecksum="true"
-							src="${elasticsearch.zip.url.windows}"
-						/>
-						<unzip
-							dest="${app.server.parent.dir}"
-							src="${app.server.parent.dir}/${elasticsearch.zip.name.windows}"
-						/>
-					</then>
-				</elseif>
+						<then>
+							<mirrors-get
+								dest="${app.server.parent.dir}/${elasticsearch.zip.name.windows}"
+								skipChecksum="true"
+								src="${elasticsearch.zip.url.windows}"
+							/>
+						</then>
+					</if>
+
+					<unzip
+						dest="${app.server.parent.dir}"
+						src="${app.server.parent.dir}/${elasticsearch.zip.name.windows}"
+					/>
+				</then>
 			</if>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="unzip-kibana">
 		<sequential>
-			<delete file="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}" />
-
-			<delete file="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}" />
-
-			<delete file="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}" />
-
-			<if>
-				<and>
-					<not>
-						<available file="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}" />
-					</not>
-					<os family="mac" />
-				</and>
-				<then>
-					<mirrors-get
-						dest="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}"
-						skipChecksum="true"
-						src="${elastic.kibana.tar.url.mac}"
-					/>
-
-					<exec dir="${app.server.parent.dir}" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="tar -zxf ${elastic.kibana.tar.name.mac}" />
-					</exec>
-				</then>
-				<elseif>
-					<and>
-						<not>
-							<available file="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}" />
-						</not>
-						<os family="unix" />
-					</and>
-					<then>
-						<mirrors-get
-							dest="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}"
-							skipChecksum="true"
-							src="${elastic.kibana.tar.url.linux}"
-						/>
-
-						<untar
-							compression="gzip"
-							dest="${app.server.parent.dir}"
-							src="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}"
-						/>
-					</then>
-				</elseif>
-				<elseif>
-					<and>
-						<not>
-							<available file="${app.server.parent.dir}/${elastic.kibana.zip.name}" />
-						</not>
-						<os family="windows" />
-					</and>
-					<then>
-						<mirrors-get
-							dest="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}"
-							skipChecksum="true"
-							src="${elastic.kibana.zip.url.windows}"
-						/>
-
-						<unzip
-							dest="${app.server.parent.dir}"
-							src="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}"
-						/>
-					</then>
-				</elseif>
-			</if>
-
 			<delete dir="${elastic.kibana.dir}" />
 
 			<if>
 				<os family="mac" />
 				<then>
+					<if>
+						<not>
+							<available file="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}" />
+						</not>
+						<then>
+							<mirrors-get
+								dest="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}"
+								skipChecksum="true"
+								src="${elastic.kibana.tar.url.mac}"
+							/>
+						</then>
+					</if>
+
+					<exec dir="${app.server.parent.dir}" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="tar -zxf ${elastic.kibana.tar.name.mac}" />
+					</exec>
+
 					<move
 						file="${app.server.parent.dir}/kibana-${elasticsearch.version}-darwin-x86_64"
 						tofile="${elastic.kibana.dir}"
 					/>
 				</then>
-				<elseif>
-					<os family="unix" />
-					<then>
-						<move
-							file="${app.server.parent.dir}/kibana-${elasticsearch.version}-linux-x86_64"
-							tofile="${elastic.kibana.dir}"
-						/>
-					</then>
-				</elseif>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<move
-							file="${app.server.parent.dir}/kibana-${elasticsearch.version}-windows-x86"
-							tofile="${elastic.kibana.dir}"
-						/>
-					</then>
-				</elseif>
+			</if>
+
+			<if>
+				<os family="unix" />
+				<then>
+					<if>
+						<not>
+							<available file="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}" />
+						</not>
+						<then>
+							<mirrors-get
+								dest="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}"
+								skipChecksum="true"
+								src="${elastic.kibana.tar.url.linux}"
+							/>
+						</then>
+					</if>
+
+					<untar
+						compression="gzip"
+						dest="${app.server.parent.dir}"
+						src="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}"
+					/>
+
+					<move
+						file="${app.server.parent.dir}/kibana-${elasticsearch.version}-linux-x86_64"
+						tofile="${elastic.kibana.dir}"
+					/>
+				</then>
+			</if>
+
+			<if>
+				<os family="windows" />
+				<then>
+					<if>
+						<not>
+							<available file="${app.server.parent.dir}/${elastic.kibana.zip.name}" />
+						</not>
+						<then>
+							<mirrors-get
+								dest="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}"
+								skipChecksum="true"
+								src="${elastic.kibana.zip.url.windows}"
+							/>
+						</then>
+					</if>
+
+					<unzip
+						dest="${app.server.parent.dir}"
+						src="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}"
+					/>
+
+					<move
+						file="${app.server.parent.dir}/kibana-${elasticsearch.version}-windows-x86"
+						tofile="${elastic.kibana.dir}"
+					/>
+				</then>
 			</if>
 
 			<chmod

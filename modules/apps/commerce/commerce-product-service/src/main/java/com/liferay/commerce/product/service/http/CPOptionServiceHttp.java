@@ -430,6 +430,49 @@ public class CPOptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPOption
+			updateCPOptionExternalReferenceCode(
+				HttpPrincipal httpPrincipal, long cpOptionId,
+				String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPOptionServiceUtil.class,
+				"updateCPOptionExternalReferenceCode",
+				_updateCPOptionExternalReferenceCodeParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpOptionId, externalReferenceCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPOption)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPOption upsertCPOption(
 			HttpPrincipal httpPrincipal,
 			java.util.Map<java.util.Locale, String> nameMap,
@@ -442,7 +485,7 @@ public class CPOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CPOptionServiceUtil.class, "upsertCPOption",
-				_upsertCPOptionParameterTypes9);
+				_upsertCPOptionParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, nameMap, descriptionMap, ddmFormFieldTypeName,
@@ -513,7 +556,11 @@ public class CPOptionServiceHttp {
 			boolean.class, boolean.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _upsertCPOptionParameterTypes9 =
+	private static final Class<?>[]
+		_updateCPOptionExternalReferenceCodeParameterTypes9 = new Class[] {
+			long.class, String.class
+		};
+	private static final Class<?>[] _upsertCPOptionParameterTypes10 =
 		new Class[] {
 			java.util.Map.class, java.util.Map.class, String.class,
 			boolean.class, boolean.class, boolean.class, String.class,

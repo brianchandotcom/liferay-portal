@@ -134,6 +134,16 @@ public class CPOptionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPOption
+			updateCPOptionExternalReferenceCode(
+				long cpOptionId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionService.updateCPOptionExternalReferenceCode(
+			cpOptionId, externalReferenceCode);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPOption upsertCPOption(
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,

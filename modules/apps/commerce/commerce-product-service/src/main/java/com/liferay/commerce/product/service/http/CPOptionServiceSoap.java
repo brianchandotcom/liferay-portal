@@ -238,6 +238,26 @@ public class CPOptionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionSoap
+			updateCPOptionExternalReferenceCode(
+				long cpOptionId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPOption returnValue =
+				CPOptionServiceUtil.updateCPOptionExternalReferenceCode(
+					cpOptionId, externalReferenceCode);
+
+			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPOptionSoap
 			upsertCPOption(
 				String[] nameMapLanguageIds, String[] nameMapValues,
 				String[] descriptionMapLanguageIds,

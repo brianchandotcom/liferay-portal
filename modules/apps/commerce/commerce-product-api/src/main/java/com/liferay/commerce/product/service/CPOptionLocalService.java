@@ -354,6 +354,11 @@ public interface CPOptionLocalService
 			String key, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CPOption updateCPOptionExternalReferenceCode(
+			long cpOptionId, String externalReferenceCode)
+		throws PortalException;
+
 	public CPOption upsertCPOption(
 			long userId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,

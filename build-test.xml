@@ -5366,7 +5366,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<isset property="elasticsearch.cluster.size" />
 						<then>
-							<var name="elasticsearch.node.number" value="1" />
+							<var name="elasticsearch.node.number" value="2" />
 
 							<antelope:repeat count="${elasticsearch.cluster.size}">
 								<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch">
@@ -5377,7 +5377,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									datatype="int"
 									operand1="${elasticsearch.node.number}"
 									operand2="1"
-									operation="+"
+									operation="-"
 									result="elasticsearch.node.number"
 								/>
 							</antelope:repeat>
@@ -5387,7 +5387,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<equals arg1="${elasticsearch.multiple.connections}" arg2="true" />
 						<then>
-							<var name="elasticsearch.cluster.number" value="1" />
+							<var name="elasticsearch.cluster.number" value="2" />
 
 							<antelope:repeat count="2">
 								<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch">
@@ -5398,7 +5398,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									datatype="int"
 									operand1="${elasticsearch.cluster.number}"
 									operand2="1"
-									operation="+"
+									operation="-"
 									result="elasticsearch.cluster.number"
 								/>
 							</antelope:repeat>

@@ -48,6 +48,11 @@ public interface CPCompareContentHelper {
 	public String getCompareProductsURL(ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	public List<CPCatalogEntry> getCPCatalogEntries(
+			long groupId, long commerceAccountId,
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
 	public Set<String> getCPDefinitionOptionRelNames(
 			CPDataSourceResult cpDataSourceResult, Locale locale)
 		throws PortalException;

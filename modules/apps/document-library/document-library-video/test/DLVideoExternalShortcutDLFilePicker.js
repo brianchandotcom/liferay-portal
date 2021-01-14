@@ -121,7 +121,7 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 			jest.useRealTimers();
 		});
 
-		it('sends a GET request to the server with dlVideoExternalShortcutURL param', () => {
+		it('sends a GET request to the server with supported URL', () => {
 			expect(fetch).toHaveBeenCalledWith(
 				'http://localhost/getDLVideoExternalShortcutFieldsURL?namespacedlVideoExternalShortcutURL=https%3A%2F%2Fvideo-url.com',
 				expect.anything()
@@ -138,6 +138,54 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 			expect(window.onFilePickCallback).toHaveBeenCalledWith(
 				responseFields
 			);
+		});
+	});
+
+	describe('when there is a invalid server response', () => {
+		let result;
+
+		beforeEach(async () => {
+			jest.useFakeTimers();
+			fetch.mockResponseOnce('');
+
+			result = renderComponent(defaultProps);
+			const {getByLabelText} = result;
+
+			fireEvent.change(getByLabelText('video-url'), {
+				target: {value: 'https://unsupported-video-url.com'},
+			});
+
+			jest.advanceTimersByTime(500);
+
+			await waitForElementToBeRemoved(() =>
+				document.querySelector('span.loading-animation')
+			);
+		});
+
+		afterEach(() => {
+			jest.clearAllTimers();
+			jest.clearAllMocks();
+		});
+
+		afterAll(() => {
+			jest.useRealTimers();
+		});
+
+		it('sends a GET request to the server with unsupported URL', () => {
+			expect(fetch).toHaveBeenCalledWith(
+				'http://localhost/getDLVideoExternalShortcutFieldsURL?namespacedlVideoExternalShortcutURL=https%3A%2F%2Funsupported-video-url.com',
+				expect.anything()
+			);
+		});
+
+		it('updates the video preview with error', () => {
+			expect(
+				result.getByText('sorry,-this-platform-is-not-supported')
+			).toBeInTheDocument();
+		});
+
+		it('not calls the onFilePickCallback', () => {
+			expect(window.onFilePickCallback).not.toBeCalled();
 		});
 	});
 });

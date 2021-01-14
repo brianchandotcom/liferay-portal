@@ -17,7 +17,7 @@ package com.liferay.commerce.machine.learning.internal.data.integration;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog;
-import com.liferay.commerce.machine.learning.internal.batch.BatchEngineTaskItemDelegateResourceMapper;
+import com.liferay.commerce.machine.learning.internal.batch.engine.mapper.BatchEngineTaskItemDelegateResourceMapper;
 import com.liferay.commerce.machine.learning.internal.gateway.CommerceMLGatewayClient;
 import com.liferay.commerce.machine.learning.internal.gateway.CommerceMLJobState;
 import com.liferay.commerce.machine.learning.internal.gateway.constants.CommerceMLJobStateConstants;

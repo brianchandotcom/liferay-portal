@@ -57,6 +57,11 @@ public class ServletDataImpl implements ServletData {
 		return new Query();
 	}
 
+	@Override
+	public String getGraphQLNamespace() {
+		return "admin";
+	}
+
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PageDefinitionResource>
 		_pageDefinitionResourceComponentServiceObjects;

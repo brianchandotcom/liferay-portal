@@ -7,4 +7,5 @@ application:
 author: "Javier Gamarra"
 clientDir: "../headless-admin-content-client/src/main/java"
 generateBatch: false
+graphQLNamespace: "admin"
 testDir: "../headless-admin-content-test/src/testIntegration/java"

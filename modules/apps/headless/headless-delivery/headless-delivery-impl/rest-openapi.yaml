@@ -557,8 +557,6 @@ components:
                         The content page's most recent publication date.
                     format: date-time
                     type: string
-                defaultRenderedPage:
-                    $ref: "#/components/schemas/RenderedPage"
                 experience:
                     $ref: "#/components/schemas/Experience"
                 friendlyUrlPath:
@@ -587,14 +585,8 @@ components:
                     $ref: "#/components/schemas/PageDefinition"
                 pageSettings:
                     $ref: "#/components/schemas/PageSettings"
-                renderedPages:
-                    description:
-                        A list of rendered pages, which results from using the template and the appropriate viewport to
-                        process the page and return HTML.
-                    items:
-                        $ref: "#/components/schemas/RenderedPage"
-                    readOnly: true
-                    type: array
+                renderedPage:
+                    $ref: "#/components/schemas/RenderedPage"
                 siteId:
                     description:
                         The ID of the site to which this content page is scoped.

@@ -114,6 +114,32 @@
 	}
 }
 
+.skeleton {
+	border-color: transparent !important;
+	overflow: hidden;
+	position: relative;
+
+	&::after {
+		animation: skeleton-glow 1s ease-in-out alternate-reverse infinite;
+		content: '';
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	@keyframes skeleton-glow {
+		from {
+			background-color: $gray-300;
+		}
+
+		to {
+			background-color: lighten($gray-300, 50%);
+		}
+	}
+}
+
 .sorting-icons-wrapper {
 	.sorting-icon {
 		&:nth-child(2) {

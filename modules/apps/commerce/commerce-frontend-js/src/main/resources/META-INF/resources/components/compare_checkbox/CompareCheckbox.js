@@ -57,7 +57,7 @@ function CompareCheckbox(props) {
 		[props.itemId, updateParent]
 	);
 
-	function handleCheckboxClick(_e) {
+	function handleCheckboxClick() {
 		setInCompare((v) => {
 			Liferay.fire(v ? ADD_ITEM_TO_COMPARE : REMOVE_ITEM_FROM_COMPARE, {
 				id: props.itemId,
@@ -81,15 +81,14 @@ function CompareCheckbox(props) {
 	}, [disableCompare, enableCompare, removeFromCompare]);
 
 	return (
-		<label className="compare-checkbox" disabled={disabled}>
-			<ClayCheckbox
-				aria-label={props.label || null}
-				checked={inCompare}
-				disabled={disabled && !inCompare}
-				label={props.label || null}
-				onChange={handleCheckboxClick}
-			/>
-		</label>
+		<ClayCheckbox
+			aria-label={props.label || null}
+			checked={inCompare}
+			className={'compare-checkbox-component'}
+			disabled={disabled && !inCompare}
+			label={props.label || null}
+			onChange={handleCheckboxClick}
+		/>
 	);
 }
 

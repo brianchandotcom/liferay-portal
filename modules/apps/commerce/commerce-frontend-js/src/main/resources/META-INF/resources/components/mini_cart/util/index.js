@@ -33,11 +33,11 @@ export function collectDiscountLevels(price) {
 	}, []);
 }
 
-export function parseOptions(stringifiedJSON) {
+export function parseOptions(jsonString) {
 	let options;
 
 	try {
-		options = JSON.parse(stringifiedJSON);
+		options = JSON.parse(jsonString);
 	}
 	catch (ignore) {
 		options = '';

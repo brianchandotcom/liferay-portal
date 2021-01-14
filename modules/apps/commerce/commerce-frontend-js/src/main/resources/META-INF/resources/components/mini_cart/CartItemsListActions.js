@@ -19,6 +19,7 @@ import React, {useContext, useState} from 'react';
 
 import {PRODUCT_REMOVED_FROM_CART} from '../../utilities/eventsDefinitions';
 import {liferayNavigate} from '../../utilities/index';
+import {ALL} from '../add_to_cart/constants';
 import MiniCartContext from './MiniCartContext';
 import {REMOVE_ALL_ITEMS, VIEW_DETAILS} from './util/constants';
 
@@ -42,15 +43,13 @@ function CartItemsListActions({numberOfItems}) {
 	const flushCart = () => {
 		setIsUpdating(true);
 
-		CartResource.updateCartById(orderId, {...cartState, cartItems: []})
+		CartResource.updateCartById(orderId, {cartItems: []})
 			.then(() => updateCartModel({orderId}))
 			.then(() => {
 				setIsAsking(false);
 				setIsUpdating(false);
 
-				Liferay.fire(PRODUCT_REMOVED_FROM_CART, {
-					skuId: 'all',
-				});
+				Liferay.fire(PRODUCT_REMOVED_FROM_CART, {skuId: ALL});
 			});
 	};
 

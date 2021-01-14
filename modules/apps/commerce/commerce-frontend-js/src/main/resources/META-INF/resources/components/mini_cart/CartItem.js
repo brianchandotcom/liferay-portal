@@ -133,7 +133,6 @@ function CartItem({item: cartItem}) {
 					...cartItem,
 					quantity,
 				})
-					.catch(showErrors)
 					.then(({quantity: updatedQuantity, ...updatedItem}) => {
 						setItemQuantity(updatedQuantity);
 
@@ -159,8 +158,9 @@ function CartItem({item: cartItem}) {
 
 						return Promise.resolve();
 					})
-					.then(() => updateCartModel(orderId))
-					.then(() => setIsUpdating(false));
+					.then(() => updateCartModel({orderId}))
+					.then(() => setIsUpdating(false))
+					.catch(showErrors);
 			}
 
 			return Promise.resolve();

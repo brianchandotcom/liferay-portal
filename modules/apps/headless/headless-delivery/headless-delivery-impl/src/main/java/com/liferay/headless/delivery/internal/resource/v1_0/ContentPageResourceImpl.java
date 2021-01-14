@@ -23,12 +23,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
@@ -36,6 +41,7 @@ import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,10 +51,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.taglib.util.ThemeUtil;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 
 import javax.servlet.ServletContext;
@@ -117,16 +123,51 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Override
 	public Page<ContentPage> getSiteContentPagesPage(
-		Long siteId, String search, Aggregation aggregation, Filter filter,
-		Pagination pagination, Sort[] sorts) {
+			Long siteId, String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-		List<Layout> layouts = _layoutService.getLayouts(
-			siteId, LayoutConstants.TYPE_CONTENT);
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
 
-		return Page.of(
-			TransformUtil.transform(
-				layouts,
-				layout -> _toContentPage(layout, "getSiteContentPagesPage")));
+				booleanFilter.add(
+					new TermFilter(Field.GROUP_ID, String.valueOf(siteId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter, Layout.class, search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				searchContext.setAttribute(Field.TITLE, search);
+				searchContext.setAttribute(
+					Field.TYPE,
+					new String[] {
+						LayoutConstants.TYPE_COLLECTION,
+						LayoutConstants.TYPE_CONTENT
+					});
+
+				Group group = groupLocalService.getGroup(siteId);
+
+				searchContext.setCompanyId(group.getCompanyId());
+
+				searchContext.setGroupIds(new long[] {siteId});
+				searchContext.setKeywords(search);
+			},
+			sorts,
+			document -> {
+				long plid = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				return _toContentPage(
+					_layoutLocalService.getLayout(plid),
+					"getSiteContentPagesPage");
+			});
 	}
 
 	private Layout _getLayout(

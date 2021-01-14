@@ -1,168 +1,142 @@
 .criteria-sidebar-root {
 	background-color: $white;
-	border: 1px solid $mainLighten74;
-	border-top-width: 0;
+	border-left: 1px solid $mainLighten74;
 	display: flex;
-	flex-flow: column;
+	flex-direction: column;
 	height: 100%;
 	position: absolute;
 	right: 0;
 	width: $sidebarWidth;
 
-	.properties-list {
-		list-style: none;
-		margin: 0;
-		overflow-y: auto;
-		padding: 0;
-		will-change: max-height, min-height;
+	.sidebar-header,
+	.sidebar-collapse-header,
+	.empty-message {
+		font-weight: 600;
+	}
 
-		&:not(.active) {
-			animation: disappear 0.25s ease-in-out;
-			animation-fill-mode: forwards;
-			height: 0;
-		}
+	.sidebar-header,
+	.sidebar-search,
+	.sidebar-collapse-header,
+	.empty-message {
+		padding: 1rem 1.5rem;
+	}
+
+	.sidebar-collapse,
+	.sidebar-collapse-groups,
+	.empty-message {
+		height: 100%;
+		position: relative;
+	}
+
+	.sidebar-collapse-groups {
+		display: flex;
+		flex-flow: column nowrap;
+		margin-bottom: 0;
+		padding-left: 0;
+	}
+
+	.sidebar-collapse-item {
+		display: flex;
+		flex-direction: column;
+		transition: flex-grow $segmentsTransition;
+		will-change: flex-grow;
 
 		&.active {
-			animation: appear 0.25s ease-in-out;
+			flex-grow: 1;
 		}
-
-		.criteria-sidebar-item-root {
-			align-items: center;
-			border-left: 3px solid $white;
-			display: flex;
-			font-size: 14px;
-			margin: 4px 0;
-			padding: 8px 16px 8px 8px;
-			transition: border-color 0.2s ease-in-out;
-			will-change: border-color;
-
-			.criteria-sidebar-item-type {
-				margin: 0 8px;
-			}
-
-			.lexicon-icon-drag {
-				color: $mainLighten52;
-				opacity: 0;
-				transition: opacity 0.2s ease-in-out;
-				will-change: opacity;
-			}
-
-			&:hover .lexicon-icon-drag {
-				opacity: 1;
-			}
-
-			&.dragging {
-				opacity: 0.4;
-			}
-
-			&:active {
-				cursor: grabbing;
-			}
-
-			&:hover {
-				border-left: 3px solid $chartBlue;
-				cursor: grab;
-
-				@include generatePropertyGroupLoop(
-					$propertyGroupsColors,
-					'border-left-color',
-					'color--'
-				);
-			}
-		}
-
-		.empty-message {
-			align-items: center;
-			display: flex;
-			font-weight: 600;
-			height: 100%;
-			justify-content: center;
-			padding: 16px 24px;
-		}
-	}
-
-	.sidebar-header {
-		font-size: 16px;
-		font-weight: 600;
-		padding: 16px 24px;
-	}
-
-	.sidebar-collapse-header-root {
-		cursor: pointer;
-		padding: 16px 24px 0;
 	}
 
 	.sidebar-collapse-header {
-		border-color: $mainLighten52;
-		border-style: solid;
-		border-width: 0 0 1px;
 		color: $main;
+		display: flex;
 		font-size: 0.875rem;
-		font-weight: 600;
-		line-height: 1.2;
-		margin-bottom: 0.3rem;
-		padding-bottom: 0.5rem;
-		padding-top: 0.5rem;
+		justify-content: space-between;
+		position: relative;
+		text-decoration: none;
 		text-transform: uppercase;
 		word-wrap: break-word;
-	}
 
-	.sidebar-collapse {
-		height: 100%;
-		position: relative;
-
-		.sidebar-collapse-groups {
-			bottom: 0;
-			display: flex;
-			flex-flow: column nowrap;
-			left: 0;
-			position: absolute;
-			right: 0;
-			top: 0;
-
-			> li {
-				display: flex;
-				flex-basis: auto;
-				flex-direction: column;
-				max-height: 100%;
-				overflow-y: hidden;
-				position: relative;
-			}
+		.badge {
+			margin-left: auto;
+			margin-right: 0.8rem;
 		}
-	}
 
-	.collapse-icon {
 		.lexicon-icon {
-			transform: rotate(0);
-			transition: transform 0.2s ease-in-out;
+			transition: transform $segmentsTransition;
+			will-change: transform;
 
 			&.active {
 				transform: rotate(90deg);
 			}
 		}
+
+		&:after {
+			border-top: 1px solid $mainLighten52;
+			bottom: 0;
+			content: '';
+			left: 1.5rem;
+			position: absolute;
+			right: 1.5rem;
+		}
 	}
 
-	.sidebar-search {
-		padding: 16px 24px;
-	}
-}
-
-@keyframes appear {
-	0% {
-		max-height: 0;
+	.properties-list {
+		flex-basis: 0;
+		flex-grow: 1;
+		overflow-y: auto;
+		padding-left: 0;
 	}
 
-	100% {
-		max-height: 100vh;
-	}
-}
+	.criteria-sidebar-item-root {
+		align-items: center;
+		background-color: $white;
+		border-left: 3px solid transparent;
+		display: flex;
+		font-size: 0.875rem;
+		margin: 0.25rem 0;
+		padding: 0.5rem 1rem 0.5rem 0.5rem;
+		transition: $segmentsTransition;
+		transition-property: border-color, opacity;
+		will-change: border-color, opacity;
 
-@keyframes disappear {
-	0% {
-		min-height: 100vh;
+		.lexicon-icon-drag {
+			color: $mainLighten52;
+			opacity: 0;
+			transition: opacity $segmentsTransition;
+			will-change: opacity;
+		}
+
+		&:hover .lexicon-icon-drag {
+			opacity: 1;
+		}
+
+		&.dragging {
+			opacity: 0.4;
+		}
+
+		&:active {
+			cursor: grabbing;
+		}
+
+		&:hover {
+			border-color: $chartBlue;
+			cursor: grab;
+
+			@include generatePropertyGroupLoop(
+				$propertyGroupsColors,
+				'border-left-color',
+				'color--'
+			);
+		}
 	}
 
-	100% {
-		min-height: 0;
+	.criteria-sidebar-item-type {
+		margin: 0 0.5rem;
+	}
+
+	.empty-message {
+		align-items: center;
+		display: flex;
+		justify-content: center;
 	}
 }

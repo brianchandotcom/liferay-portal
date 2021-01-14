@@ -88,7 +88,7 @@ const CriteriaSidebarCollapse = ({
 	const _handleClick = (key, editing) => () => onCollapseClick(key, editing);
 
 	return (
-		<ul className="list-unstyled sidebar-collapse-groups">
+		<ul className="sidebar-collapse-groups">
 			{propertyGroups.map((propertyGroup) => {
 				const key = propertyGroup.propertyKey;
 
@@ -105,73 +105,72 @@ const CriteriaSidebarCollapse = ({
 					active,
 				});
 
-				const propertyListClasses = getCN(
-					'properties-list',
+				const sidebarCollapseListClasses = getCN(
+					'sidebar-collapse-item',
+					`sidebar-collapse-${propertyGroup.propertyKey}`,
 					activeClasses
 				);
 
 				return (
-					<li
-						className={`sidebar-collapse-${propertyGroup.propertyKey}`}
-						key={key}
-					>
-						<div
-							className="sidebar-collapse-header-root"
+					<li className={sidebarCollapseListClasses} key={key}>
+						<a
+							className="sidebar-collapse-header"
 							onClick={_handleClick(key, active)}
 						>
-							<a className="d-flex justify-content-between sidebar-collapse-header">
-								{propertyGroup.name}
+							{propertyGroup.name}
 
-								{searchValue && (
-									<ClayBadge
-										className="ml-auto mr-2"
-										displayType="secondary"
-										label={filteredProperties.length}
-									/>
-								)}
-
-								<span className="collapse-icon">
-									<ClayIcon
-										className={activeClasses}
-										symbol="angle-right"
-									/>
-								</span>
-							</a>
-						</div>
-						<ul className={propertyListClasses}>
-							{active && filteredProperties.length === 0 && (
-								<li className="empty-message">
-									{Liferay.Language.get(
-										'no-results-were-found'
-									)}
-								</li>
+							{searchValue && (
+								<ClayBadge
+									displayType="secondary"
+									label={filteredProperties.length}
+								/>
 							)}
 
-							{active &&
-								filteredProperties.length > 0 &&
-								filteredProperties.map(
-									({label, name, options, type}) => {
-										const defaultValue = getDefaultValue({
-											label,
-											name,
-											options,
-											type,
-										});
+							<span>
+								<ClayIcon
+									className={activeClasses}
+									symbol="angle-right"
+								/>
+							</span>
+						</a>
 
-										return (
-											<CriteriaSidebarItem
-												className={`color--${key}`}
-												defaultValue={defaultValue}
-												key={name}
-												label={label}
-												name={name}
-												propertyKey={key}
-												type={type}
-											/>
-										);
-									}
+						{active && (
+							<ul className="properties-list">
+								{filteredProperties.length === 0 && (
+									<li className="empty-message">
+										{Liferay.Language.get(
+											'no-results-were-found'
+										)}
+									</li>
 								)}
-						</ul>
+
+								{filteredProperties.length > 0 &&
+									filteredProperties.map(
+										({label, name, options, type}) => {
+											const defaultValue = getDefaultValue(
+												{
+													label,
+													name,
+													options,
+													type,
+												}
+											);
+
+											return (
+												<CriteriaSidebarItem
+													className={`color--${key}`}
+													defaultValue={defaultValue}
+													key={name}
+													label={label}
+													name={name}
+													propertyKey={key}
+													type={type}
+												/>
+											);
+										}
+									)}
+							</ul>
+						)}
 					</li>
 				);
 			})}

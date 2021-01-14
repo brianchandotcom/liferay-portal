@@ -132,10 +132,10 @@
 						"layoutColumnPos": 0,
 						"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_speedwell",
 						"portletPreferences": {
-							"cpContentListRendererKey": "list-minium",
-							"grouped--cpTypeListEntryRendererKey": "list-entry-minium",
-							"simple--cpTypeListEntryRendererKey": "list-entry-minium",
-							"virtual--cpTypeListEntryRendererKey": "list-entry-minium"
+							"cpContentListRendererKey": "list-default",
+							"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+							"simple--cpTypeListEntryRendererKey": "list-entry-default",
+							"virtual--cpTypeListEntryRendererKey": "list-entry-default"
 						}
 					},
 					{
@@ -478,13 +478,13 @@
 				"layoutColumnPos": 1,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet_INSTANCE_speedwell",
 				"portletPreferences": {
-					"cpContentListRendererKey": "list-minium",
+					"cpContentListRendererKey": "list-default",
 					"dataSource": "assetCategoriesAndTagsDataSource",
-					"grouped--cpTypeListEntryRendererKey": "list-entry-minium",
+					"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 					"renderSelection": "custom",
 					"selectionStyle": "dataSource",
-					"simple--cpTypeListEntryRendererKey": "list-entry-minium",
-					"virtual--cpTypeListEntryRendererKey": "list-entry-minium"
+					"simple--cpTypeListEntryRendererKey": "list-entry-default",
+					"virtual--cpTypeListEntryRendererKey": "list-entry-default"
 				}
 			},
 			{

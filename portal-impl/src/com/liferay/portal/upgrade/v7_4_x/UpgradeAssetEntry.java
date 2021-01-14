@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -27,20 +28,23 @@ public class UpgradeAssetEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String inClause = StringPool.BLANK;
+		StringBundler sb = new StringBundler();
 
 		for (String className : _CLASS_NAMES) {
 			long classNameId = _getClassNameId(
 				_CLASS_NAME_MBDISCUSSION + StringPool.UNDERLINE + className);
 
 			if (classNameId != 0) {
-				inClause += classNameId + ",";
+				sb.append(classNameId);
+				sb.append(StringPool.COMMA);
 			}
 		}
 
-		if (inClause.equals(StringPool.BLANK)) {
+		if (sb.length() == 0) {
 			return;
 		}
+
+		String inClause = sb.toString();
 
 		runSQL(
 			"delete from AssetEntry where classNameId in (" +

@@ -43,6 +43,10 @@ public class ConfigYAML {
 		return _clientMavenGroupId;
 	}
 
+	public String getGraphQLNamespace() {
+		return _graphQLNamespace;
+	}
+
 	public String getImplDir() {
 		return _implDir;
 	}
@@ -153,6 +157,10 @@ public class ConfigYAML {
 		_generateREST = generateREST;
 	}
 
+	public void setGraphQLNamespace(String graphQLNamespace) {
+		_graphQLNamespace = graphQLNamespace;
+	}
+
 	public void setImplDir(String implDir) {
 		_implDir = implDir;
 	}
@@ -186,6 +194,7 @@ public class ConfigYAML {
 	private boolean _generateBatch = true;
 	private boolean _generateGraphQL = true;
 	private boolean _generateREST = true;
+	private String _graphQLNamespace;
 	private String _implDir = "src/main/java";
 	private String _licenseName = "Apache 2.0";
 	private String _licenseURL =

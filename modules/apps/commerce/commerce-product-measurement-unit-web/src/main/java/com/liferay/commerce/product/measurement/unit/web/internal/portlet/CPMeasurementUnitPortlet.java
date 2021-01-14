@@ -79,7 +79,9 @@ public class CPMeasurementUnitPortlet extends MVCPortlet {
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;
 
-	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	@Reference(
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
+	)
 	private PortletResourcePermission _portletResourcePermission;
 
 }

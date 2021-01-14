@@ -110,7 +110,9 @@ public class ViewCPOptionCategoriesMVCRenderCommand
 	@Reference
 	private Portal _portal;
 
-	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	@Reference(
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
+	)
 	private PortletResourcePermission _portletResourcePermission;
 
 }

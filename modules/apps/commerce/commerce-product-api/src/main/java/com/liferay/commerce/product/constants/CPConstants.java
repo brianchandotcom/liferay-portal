@@ -67,6 +67,10 @@ public class CPConstants {
 		"select", "radio"
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
 
 	public static final String RESOURCE_NAME_CATALOG =
@@ -74,6 +78,9 @@ public class CPConstants {
 
 	public static final String RESOURCE_NAME_CHANNEL =
 		"com.liferay.commerce.channel";
+
+	public static final String RESOURCE_NAME_PRODUCT =
+		"com.liferay.commerce.product";
 
 	public static final String SEPARATOR_ASSET_CATEGORY_URL = "/g/";
 

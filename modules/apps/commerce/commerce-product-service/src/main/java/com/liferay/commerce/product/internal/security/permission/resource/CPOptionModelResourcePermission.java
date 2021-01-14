@@ -87,7 +87,9 @@ public class CPOptionModelResourcePermission
 	@Reference
 	protected CPOptionPermission cpOptionPermission;
 
-	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	@Reference(
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
+	)
 	private PortletResourcePermission _portletResourcePermission;
 
 }

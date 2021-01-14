@@ -480,7 +480,8 @@ public class CPAttachmentFileEntryServiceImpl
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				CPAttachmentFileEntryServiceImpl.class,
-				"_portletResourcePermission", CPConstants.RESOURCE_NAME);
+				"_portletResourcePermission",
+				CPConstants.RESOURCE_NAME_PRODUCT);
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;

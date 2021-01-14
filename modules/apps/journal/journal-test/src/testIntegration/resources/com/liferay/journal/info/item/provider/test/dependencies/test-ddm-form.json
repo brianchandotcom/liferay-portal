@@ -7,6 +7,8 @@
 	"fields": [
 		{
 			"dataType": "string",
+			"displayStyle": "singleline",
+			"fieldReference": "DDM_Text",
 			"indexType": "keyword",
 			"label": {
 				"en_US": "Text"
@@ -26,16 +28,22 @@
 			"type": "text"
 		},
 		{
-			"dataType": "boolean",
+			"dataType": "string",
+			"fieldReference": "boolean",
 			"indexType": "keyword",
 			"label": {
 				"en_US": "Boolean"
 			},
 			"localizable": false,
 			"name": "boolean",
-			"predefinedValue": {
-				"en_US": "false"
-			},
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"value": "Option"
+				}
+			],
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
@@ -43,11 +51,12 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "checkbox"
+			"type": "checkbox_multiple"
 		},
 		{
 			"dataType": "image",
 			"fieldNamespace": "ddm",
+			"fieldReference": "image",
 			"indexType": "text",
 			"label": {
 				"en_US": "Image"
@@ -64,11 +73,12 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "ddm-image"
+			"type": "image"
 		},
 		{
 			"dataType": "integer",
 			"fieldNamespace": "ddm",
+			"fieldReference": "integer",
 			"indexType": "keyword",
 			"label": {
 				"en_US": "Integer"
@@ -85,10 +95,12 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "ddm-integer"
+			"type": "numeric"
 		},
 		{
 			"dataType": "string",
+			"displayStyle": "multiline",
+			"fieldReference": "TextBox",
 			"indexType": "text",
 			"label": {
 				"en_US": "Text Box"
@@ -105,11 +117,12 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "textarea"
+			"type": "text"
 		},
 		{
-			"dataType": "html",
+			"dataType": "string",
 			"fieldNamespace": "ddm",
+			"fieldReference": "HTML",
 			"indexType": "text",
 			"label": {
 				"en_US": "HTML"
@@ -126,7 +139,7 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "ddm-text-html"
+			"type": "rich_text"
 		}
 	],
 	"successPage": {

@@ -199,9 +199,28 @@ xpack.security.sessionTimeout: 600000</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-portal-ccr-osgi-properties">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">logExceptionsOnly=&quot;true&quot;
+productionModeEnabled=&quot;true&quot;</echo>
+
+			<configure-portal-second-connection-osgi-properties connection.name="localcluster" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-portal-remote-elasticsearch-osgi-properties">
 		<sequential>
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}productionModeEnabled="true"</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-portal-second-connection-osgi-properties">
+		<attribute name="connection.name" />
+
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-@{connection.name}.config">active=&quot;true&quot;
+connectionId=&quot;@{connection.name}&quot;
+networkHostAddresses=[&quot;http://localhost:9202&quot;]</echo>
 		</sequential>
 	</macrodef>
 
@@ -781,7 +800,12 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				<contains string="${osgi.app.includes}" substring="portal-search-elasticsearch-cross-cluster-replication" />
 				<then>
 					<start-ccr-trial />
+
+					<configure-portal-ccr-osgi-properties />
 				</then>
+				<else>
+					<configure-portal-second-connection-osgi-properties connection.name="connection2" />
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

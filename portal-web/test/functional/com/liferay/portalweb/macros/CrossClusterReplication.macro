@@ -17,14 +17,6 @@ definition {
 	}
 
 	macro setupCrossClusterReplication {
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
-			OSGiConfigs = "productionModeEnabled=&quot;true&quot;,logExceptionsOnly=&quot;true&quot;");
-
-		OSGiConfig.deployOSGiConfigs(
-			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
-			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -39,7 +31,7 @@ definition {
 
 		FormFields.editTextMultiline(
 			fieldName = "ccrLocalClusterConnectionConfigurations",
-			fieldValue = "localhost:8080,ccr");
+			fieldValue = "localhost:8080,localcluster");
 
 		SystemSettings.saveConfiguration();
 	}

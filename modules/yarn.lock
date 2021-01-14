@@ -1613,10 +1613,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@36.9.0":
-  version "36.9.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-36.9.0.tgz#c9dc3b39c9da43590701fa08fe236474af61bd3b"
-  integrity sha512-oH4Xa7qW4zGGZJUwC1FtW5tWGYE53rwlD+yQiTp9EBo2VoFFphTbIUwj8Yeh9UqwLcuLig9KDzJXJ2HbGEWs4Q==
+"@liferay/npm-scripts@36.11.0":
+  version "36.11.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-36.11.0.tgz#866418b1bd89adf612342608a37dd059a8b5889c"
+  integrity sha512-sgxfrrUbPk0+vP9ILIpm/fj3M0xHfIFI3jgS9pTKri2RC6pDMUSn/q44tqzgAD6a8Xo6wF/uRqkgkxKLb670Mw==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1665,6 +1665,7 @@
     metal-tools-soy "4.3.2"
     mini-css-extract-plugin "0.11.2"
     minimist "^1.2.0"
+    path-browserify "^1.0.1"
     prettier "^2.1.2"
     react "*"
     react-dom "*"
@@ -11698,6 +11699,11 @@ path-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.0.tgz#a0b870729aae214005b7d5032ec2cbbb0fb4451a"
   integrity sha1-oLhwcpquIUAFt9UDLsLLuw+0RRo=
+
+path-browserify@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-1.0.1.tgz#d98454a9c3753d5790860f16f68867b9e46be1fd"
+  integrity sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==
 
 path-dirname@^1.0.0:
   version "1.0.2"

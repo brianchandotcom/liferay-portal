@@ -35,14 +35,15 @@ public class OASExplorerTest extends BaseTestCase {
 		Set<String> entitySchemaNames = oasExplorer.getEntitySchemaNames(
 			readObject("openapi.json"));
 
-		Assert.assertThat(entitySchemaNames, Matchers.hasSize(16));
+		Assert.assertThat(entitySchemaNames, Matchers.hasSize(17));
 
 		Assert.assertThat(
 			entitySchemaNames,
 			Matchers.hasItems(
 				"Attachment", "Category", "Option", "OptionCategory",
 				"ProductOption", "ProductShippingConfiguration",
-				"ProductSubscriptionConfiguration", "Sku", "Specification"));
+				"ProductSubscriptionConfiguration", "SchemaBuilderBreaker",
+				"Sku", "Specification"));
 	}
 
 }

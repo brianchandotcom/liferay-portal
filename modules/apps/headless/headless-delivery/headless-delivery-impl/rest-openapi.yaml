@@ -7825,6 +7825,37 @@ paths:
                     description:
                         ""
             tags: [ "ContentPage" ]
+    "/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences/{experienceKey}/rendered-page":
+        get:
+            description:
+                Retrieves the rendered content of a given public page for a given experience.
+            operationId: getSiteContentPageExperienceExperienceKeyRenderedPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: experienceKey
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: [ "ContentPage" ]
     "/sites/{siteId}/content-pages/{friendlyUrlPath}/rendered-page":
         get:
             description:

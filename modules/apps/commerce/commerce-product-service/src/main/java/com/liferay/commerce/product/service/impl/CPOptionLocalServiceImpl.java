@@ -236,6 +236,19 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		return cpOptionPersistence.update(cpOption);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPOption updateCPOptionExternalReferenceCode(
+			long cpOptionId, String externalReferenceCode)
+		throws PortalException {
+
+		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
+
+		cpOption.setExternalReferenceCode(externalReferenceCode);
+
+		return cpOptionPersistence.update(cpOption);
+	}
+
 	@Override
 	public CPOption upsertCPOption(
 			long userId, Map<Locale, String> nameMap,

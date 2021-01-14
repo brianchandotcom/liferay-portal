@@ -145,6 +145,18 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	}
 
 	@Override
+	public CPOption updateCPOptionExternalReferenceCode(
+			long cpOptionId, String externalReferenceCode)
+		throws PortalException {
+
+		_cpOptionModelResourcePermission.check(
+			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
+
+		return cpOptionLocalService.updateCPOptionExternalReferenceCode(
+			cpOptionId, externalReferenceCode);
+	}
+
+	@Override
 	public CPOption upsertCPOption(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, boolean facetable, boolean required,

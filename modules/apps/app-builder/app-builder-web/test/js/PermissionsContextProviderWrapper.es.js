@@ -31,8 +31,13 @@ export default function PermissionsContextProviderWrapper({
 	children,
 	actionIds = defaultActionIds,
 }) {
+	const state = {
+		actionIds,
+		isLoading: false
+	}
+
 	return (
-		<PermissionsContext.Provider value={actionIds}>
+		<PermissionsContext.Provider value={state}>
 			{children}
 		</PermissionsContext.Provider>
 	);

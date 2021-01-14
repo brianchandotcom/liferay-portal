@@ -66,12 +66,14 @@ definition {
 
 		Type(
 			key_fieldLabel = "Field Reference",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "${fieldReference}");
 
 		AssertTextEquals(
 			key_fieldLabel = "Field Reference",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "${fieldReference}");
 
 		Click(locator1 = "Sidebar#BACK");
@@ -203,12 +205,14 @@ definition {
 
 			Type(
 				key_fieldLabel = "Field Reference",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				key_fieldName = "fieldReference",
+				locator1 = "Sidebar#TEXT_INPUT",
 				value1 = "${fieldReference}");
 
 			AssertTextEquals(
 				key_fieldLabel = "Field Reference",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				key_fieldName = "fieldReference",
+				locator1 = "Sidebar#TEXT_INPUT",
 				value1 = "${fieldReference}");
 
 			Click(locator1 = "Sidebar#BACK");

@@ -629,15 +629,7 @@ public class JournalConverterUtilTest {
 	protected List<String> getValues(
 		Map<Locale, List<String>> valuesMap, Locale locale) {
 
-		List<String> values = valuesMap.get(locale);
-
-		if (values == null) {
-			values = new ArrayList<>();
-
-			valuesMap.put(locale, values);
-		}
-
-		return values;
+		return valuesMap.computeIfAbsent(locale, key -> new ArrayList<>());
 	}
 
 	protected String read(String fileName) throws Exception {
@@ -666,13 +658,8 @@ public class JournalConverterUtilTest {
 
 		String name = dynamicElementElement.attributeValue("name");
 
-		Map<Locale, List<String>> valuesMap = fieldsMap.get(name);
-
-		if (valuesMap == null) {
-			valuesMap = new HashMap<>();
-
-			fieldsMap.put(name, valuesMap);
-		}
+		Map<Locale, List<String>> valuesMap = fieldsMap.computeIfAbsent(
+			name, key -> new HashMap<>());
 
 		List<Element> dynamicContentElements = dynamicElementElement.elements(
 			"dynamic-content");

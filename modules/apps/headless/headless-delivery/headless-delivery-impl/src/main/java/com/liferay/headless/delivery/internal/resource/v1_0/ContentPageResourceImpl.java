@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.ContentPage;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.ContentPageDTOConverter;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentPageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.ContentPageResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -51,6 +53,8 @@ import java.util.Optional;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -69,6 +73,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ContentPageResource.class
 )
 public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
 
 	@Override
 	public ContentPage getSiteContentPagePrivateFriendlyUrlPath(
@@ -245,6 +254,9 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 		return document.html();
 	}
+
+	private static final EntityModel _entityModel =
+		new ContentPageEntityModel();
 
 	@Reference
 	private ContentPageDTOConverter _contentPageDTOConverter;

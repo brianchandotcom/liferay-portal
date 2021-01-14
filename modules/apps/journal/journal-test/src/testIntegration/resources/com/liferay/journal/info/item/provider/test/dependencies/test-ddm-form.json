@@ -3,6 +3,7 @@
 		"en_US"
 	],
 	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
 	"fields": [
 		{
 			"dataType": "string",

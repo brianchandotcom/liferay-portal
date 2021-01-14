@@ -12,27 +12,26 @@
  * details.
  */
 
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
-export const LoadingComponent = () => (
-	<div className="align-items-center d-flex loading-wrapper w-100">
-		<ClayLoadingIndicator />
-	</div>
-);
+import {LoadingComponent} from '../../components/loading/Loading.es';
+import usePermissions from '../../hooks/usePermissions.es';
+import NoPermissionEntry from './NoPermissionEntry.es';
 
-export const withLoading = (Component) => {
-	const Wrapper = (props) => {
-		const {isLoading, ...restProps} = props;
+export default function PermissionTunnel({children, permissionType}) {
+	const {isLoading, ...permissions} = usePermissions();
+	const withPermission = Array.isArray(permissionType)
+		? permissionType.some((key) => permissions[key])
+		: permissions[permissionType];
 
-		if (isLoading) {
-			return <LoadingComponent />;
+	if (isLoading) {
+		return <LoadingComponent />;
+	}
+	else {
+		if (withPermission) {
+			return children;
 		}
 
-		return <Component {...restProps} />;
-	};
-
-	return Wrapper;
-};
-
-export const Loading = withLoading(({children}) => <>{children}</>);
+		return <NoPermissionEntry />;
+	}
+}

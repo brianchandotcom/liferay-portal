@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPOptionException;
+import com.liferay.commerce.product.exception.NoSuchCPOptionValueException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionService;
@@ -25,7 +26,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.O
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionValueResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -40,17 +40,21 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Alessio Antonio Rendina
@@ -63,6 +67,38 @@ import javax.ws.rs.core.UriInfo;
 )
 public class OptionValueResourceImpl
 	extends BaseOptionValueResourceImpl implements NestedFieldSupport {
+
+	@Override
+	public Response deleteOptionValue(@NotNull Long id) throws Exception {
+		_cpOptionValueService.deleteCPOptionValue(id);
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
+	public Response deleteOptionValueByExternalReferenceCode(
+			@NotNull String externalReferenceCode)
+		throws Exception {
+
+		CPOptionValue cpOptionValue =
+			_cpOptionValueService.fetchByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (cpOptionValue == null) {
+			throw new NoSuchCPOptionValueException(
+				"Unable to find Option Value with externalReferenceCode: " +
+					externalReferenceCode);
+		}
+
+		_cpOptionValueService.deleteCPOptionValue(
+			cpOptionValue.getCPOptionValueId());
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
 
 	@Override
 	public Page<OptionValue> getOptionByExternalReferenceCodeOptionValuesPage(
@@ -109,6 +145,65 @@ public class OptionValueResourceImpl
 	}
 
 	@Override
+	public OptionValue getOptionValue(@NotNull Long id) throws Exception {
+		return _toOptionValue(id);
+	}
+
+	@Override
+	public OptionValue getOptionValueByExternalReferenceCode(
+			@NotNull String externalReferenceCode)
+		throws Exception {
+
+		CPOptionValue cpOptionValue =
+			_cpOptionValueService.fetchByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (cpOptionValue == null) {
+			throw new NoSuchCPOptionValueException(
+				"Unable to find Option Value with externalReferenceCode: " +
+					externalReferenceCode);
+		}
+
+		return _toOptionValue(cpOptionValue.getCPOptionValueId());
+	}
+
+	@Override
+	public Response patchOptionValue(@NotNull Long id, OptionValue optionValue)
+		throws Exception {
+
+		CPOptionValue cpOptionValue = _cpOptionValueService.getCPOptionValue(
+			id);
+
+		_upsertOptionValue(cpOptionValue.getCPOption(), optionValue);
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
+	public Response patchOptionValueByExternalReferenceCode(
+			@NotNull String externalReferenceCode, OptionValue optionValue)
+		throws Exception {
+
+		CPOptionValue cpOptionValue =
+			_cpOptionValueService.fetchByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (cpOptionValue == null) {
+			throw new NoSuchCPOptionValueException(
+				"Unable to find Option Value with externalReferenceCode: " +
+					externalReferenceCode);
+		}
+
+		_upsertOptionValue(cpOptionValue.getCPOption(), optionValue);
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
+	}
+
+	@Override
 	public OptionValue postOptionByExternalReferenceCodeOptionValue(
 			String externalReferenceCode, OptionValue optionValue)
 		throws Exception {
@@ -133,38 +228,17 @@ public class OptionValueResourceImpl
 			_cpOptionService.getCPOption(id), optionValue);
 	}
 
-	private Map<String, Map<String, String>> _getActions(long cpOptionValueId) throws NoSuchMethodException, PortalException {
-		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete",
-			_addAction(
-				ActionKeys.DELETE, cpOptionValueId,
-				contextUriInfo, "deleteOptionValue", getClass())
-
-		).put(
-			"get",
-			_addAction(
-				ActionKeys.VIEW, cpOptionValueId,
-				contextUriInfo, "getOptionValue", getClass())
-
-		).put(
-			"update",
-			_addAction(
-				ActionKeys.UPDATE, cpOptionValueId,
-				contextUriInfo, "patchOptionValue", getClass())
-		).build();
-	}
-
 	private Map<String, String> _addAction(
-		String actionId, long cpOptionValueId, UriInfo uriInfo,
-		String methodName, Class<?> clazz)
-		throws NoSuchMethodException, PortalException {
+			String actionId, long cpOptionValueId, UriInfo uriInfo,
+			String methodName, Class<?> clazz)
+		throws Exception {
 
-		CPOptionValue cpOptionValue =
-			_cpOptionValueService.getCPOptionValue(cpOptionValueId);
+		CPOptionValue cpOptionValue = _cpOptionValueService.getCPOptionValue(
+			cpOptionValueId);
 
 		if (!_cpOptionValueModelResourcePermission.contains(
-			PermissionThreadLocal.getPermissionChecker(), cpOptionValue.getCPOptionId(),
-			actionId)) {
+				PermissionThreadLocal.getPermissionChecker(),
+				cpOptionValue.getCPOptionId(), actionId)) {
 
 			return null;
 		}
@@ -185,8 +259,29 @@ public class OptionValueResourceImpl
 		).build();
 	}
 
+	private Map<String, Map<String, String>> _getActions(long cpOptionValueId)
+		throws Exception {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			_addAction(
+				ActionKeys.DELETE, cpOptionValueId, contextUriInfo,
+				"deleteOptionValue", getClass())
+		).put(
+			"get",
+			_addAction(
+				ActionKeys.VIEW, cpOptionValueId, contextUriInfo,
+				"getOptionValue", getClass())
+		).put(
+			"update",
+			_addAction(
+				ActionKeys.UPDATE, cpOptionValueId, contextUriInfo,
+				"patchOptionValue", getClass())
+		).build();
+	}
+
 	private String _getHttpMethodName(Class<?> clazz, Method method)
-		throws NoSuchMethodException {
+		throws Exception {
 
 		Class<?> superClass = clazz.getSuperclass();
 
@@ -235,13 +330,12 @@ public class OptionValueResourceImpl
 	}
 
 	private OptionValue _toOptionValue(Long cpOptionValueId) throws Exception {
-
 		return _optionValueDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				null,/*_getActions(cpOptionValueId)*/ _dtoConverterRegistry, cpOptionValueId,
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
+				_getActions(cpOptionValueId), _dtoConverterRegistry,
+				cpOptionValueId, contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser));
 	}
 
 	private List<OptionValue> _toOptionValues(
@@ -275,22 +369,22 @@ public class OptionValueResourceImpl
 	@Reference
 	private CPOptionService _cpOptionService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"
+	)
+	private ModelResourcePermission<CPOption>
+		_cpOptionValueModelResourcePermission;
+
 	@Reference
 	private CPOptionValueService _cpOptionValueService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private OptionValueDTOConverter _optionValueDTOConverter;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"
-	)
-	private ModelResourcePermission<CPOption>
-		_cpOptionValueModelResourcePermission;
 
 }

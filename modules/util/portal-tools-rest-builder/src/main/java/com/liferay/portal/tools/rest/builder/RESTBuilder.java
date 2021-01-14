@@ -1675,8 +1675,12 @@ public class RESTBuilder {
 				int z = yamlString.indexOf(':', y);
 
 				String propertyName = entry2.getKey();
+
+				int schemaNamePos = Math.max(
+					reference.lastIndexOf('#'), reference.lastIndexOf('/'));
+
 				String schemaVarName = freeMarkerTool.getSchemaVarName(
-					reference.substring(reference.lastIndexOf('/') + 1));
+					reference.substring(schemaNamePos + 1));
 
 				if (Objects.equals(propertySchema.getType(), "array")) {
 					String plural = TextFormatter.formatPlural(schemaVarName);

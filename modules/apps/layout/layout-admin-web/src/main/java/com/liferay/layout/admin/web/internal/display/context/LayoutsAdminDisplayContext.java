@@ -1049,6 +1049,48 @@ public class LayoutsAdminDisplayContext {
 		return _groupDisplayContextHelper.getStagingGroupId();
 	}
 
+	public String getStyleBookWarningMessage() throws WindowStateException {
+		LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+			getSelGroupId(), false);
+
+		String themeId = _getThemeId();
+
+		if (Validator.isNull(themeId) ||
+			Objects.equals(publicLayoutSet.getThemeId(), themeId) ||
+			((_selLayout == null) && !_selLayoutSet.isPrivateLayout())) {
+
+			return StringPool.BLANK;
+		}
+
+		if (_selLayout != null) {
+			return LanguageUtil.get(
+				httpServletRequest,
+				"this-page-is-using-a-different-theme-than-the-one-set-for-" +
+					"public-pages");
+		}
+
+		PortletURL editLayoutSetURL = _liferayPortletResponse.createRenderURL();
+
+		editLayoutSetURL.setParameter(
+			"mvcRenderCommandName", "/layout_admin/edit_layout_set");
+		editLayoutSetURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(httpServletRequest));
+		editLayoutSetURL.setParameter("backURL", _backURL);
+		editLayoutSetURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		editLayoutSetURL.setParameter(
+			"privateLayout", Boolean.FALSE.toString());
+		editLayoutSetURL.setWindowState(LiferayWindowState.MAXIMIZED);
+
+		return LanguageUtil.format(
+			httpServletRequest,
+			"private-pages-is-using-a-different-theme-than-the-one-set-for-x-" +
+				"public-pages-x",
+			new String[] {
+				"<a href =\"" + editLayoutSetURL.toString() + "\">", "</a>"
+			});
+	}
+
 	public String getTabs1() {
 		if (_tabs1 != null) {
 			return _tabs1;
@@ -1757,6 +1799,27 @@ public class LayoutsAdminDisplayContext {
 			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 	}
 
+	private String _getThemeId() {
+		if (_themeId != null) {
+			return _themeId;
+		}
+
+		String themeId = ParamUtil.getString(httpServletRequest, "themeId");
+
+		if (Validator.isNull(themeId)) {
+			if (_selLayout == null) {
+				themeId = _selLayoutSet.getThemeId();
+			}
+			else {
+				themeId = _selLayout.getThemeId();
+			}
+		}
+
+		_themeId = themeId;
+
+		return _themeId;
+	}
+
 	private boolean _isLiveGroup() {
 		if (_liveGroup != null) {
 			return _liveGroup;
@@ -1820,5 +1883,6 @@ public class LayoutsAdminDisplayContext {
 	private Long _selPlid;
 	private final StagingGroupHelper _stagingGroupHelper;
 	private String _tabs1;
+	private String _themeId;
 
 }

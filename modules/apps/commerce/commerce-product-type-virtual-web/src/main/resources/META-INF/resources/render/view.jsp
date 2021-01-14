@@ -129,7 +129,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 
 				<div class="row">
 					<div class="col-md-12">
-						<liferay-commerce:compare-product CPDefinitionId="<%= cpDefinitionId %>" />
+						<commerce-ui:compare-checkbox CPDefinitionId="<%= cpDefinitionId %>" />
 					</div>
 				</div>
 

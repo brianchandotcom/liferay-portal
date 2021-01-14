@@ -106,7 +106,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 
 				<div class="row">
 					<div class="col-md-12">
-						<liferay-commerce:compare-product CPDefinitionId="<%= cpDefinitionId %>" />
+						<commerce-ui:compare-checkbox CPDefinitionId="<%= cpDefinitionId %>" />
 					</div>
 				</div>
 

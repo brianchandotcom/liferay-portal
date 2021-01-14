@@ -87,9 +87,6 @@ public class ContentPageDTOConverter
 				dateCreated = layout.getCreateDate();
 				dateModified = layout.getModifiedDate();
 				datePublished = layout.getPublishDate();
-				defaultRenderedPage = RenderedPageUtil.getRenderedPage(
-					dtoConverterContext, layout,
-					_layoutPageTemplateEntryLocalService, _portal);
 				friendlyUrlPath = layout.getFriendlyURL(
 					dtoConverterContext.getLocale());
 				friendlyUrlPath_i18n = LocalizedMapUtil.getI18nMap(
@@ -103,6 +100,9 @@ public class ContentPageDTOConverter
 				pageSettings = PageSettingsUtil.getPageSettings(
 					_dlAppService, _dlURLHelper, dtoConverterContext,
 					_layoutSEOEntryLocalService, layout, _storageEngineManager);
+				renderedPage = RenderedPageUtil.getRenderedPage(
+					dtoConverterContext, layout,
+					_layoutPageTemplateEntryLocalService, _portal);
 				siteId = layout.getGroupId();
 				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(

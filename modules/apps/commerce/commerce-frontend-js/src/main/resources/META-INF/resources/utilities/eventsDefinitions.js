@@ -19,6 +19,8 @@ export const CHANGE_ACCOUNT = 'accountSelected';
 export const CHANGE_ORDER = 'orderSelected';
 export const CLOSE_MODAL = 'close-modal';
 export const CLOSE_SIDE_PANEL = 'close-side-panel';
+export const COMPARE_IS_AVAILABLE = 'compareIsAvailable';
+export const COMPARE_IS_UNAVAILABLE = 'compareIsUnavailable';
 export const CP_INSTANCE_CHANGED = 'product-instance-changed';
 export const CURRENT_ACCOUNT_UPDATED = 'current-account-updated';
 export const CURRENT_ORDER_UPDATED = 'current-order-updated';
@@ -36,8 +38,6 @@ export const PRODUCT_REMOVED = 'productRemovedFromCart';
 export const PRODUCT_REMOVED_FROM_CART = 'product-removed-from-cart';
 export const SIDE_PANEL_CLOSED = 'side-panel-closed';
 export const UPDATE_DATASET_DISPLAY = 'update-dataset-display';
-export const COMPARE_IS_AVAILABLE = 'compareIsAvailable';
-export const COMPARE_IS_UNAVAILABLE = 'compareIsUnavailable';
 export const ITEM_REMOVED_FROM_COMPARE = 'itemRemovedFromCompare';
 export const ADD_ITEM_TO_COMPARE = 'addItemToCompare';
 export const REMOVE_ITEM_FROM_COMPARE = 'removeItemFromCompare';
@@ -50,9 +50,9 @@ export default {
 	CHANGE_ORDER,
 	CLOSE_MODAL,
 	CLOSE_SIDE_PANEL,
-	CP_INSTANCE_CHANGED,
-    COMPARE_IS_AVAILABLE,
+	COMPARE_IS_AVAILABLE,
 	COMPARE_IS_UNAVAILABLE,
+	CP_INSTANCE_CHANGED,
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
 	CURRENT_PRODUCT_STATUS_CHANGED,

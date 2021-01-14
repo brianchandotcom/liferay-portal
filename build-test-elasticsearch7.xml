@@ -38,25 +38,6 @@ path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-elasticsearch-pki-realm-settings">
-		<sequential>
-			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.http.ssl.client_authentication: required
-xpack.security.transport.ssl.client_authentication: required
-xpack:
-  security:
-    authc:
-      realms:
-        pki:
-          pki1:
-            order: 0</echo>
-
-			<echo append="true" file="${elasticsearch.dir}/config/role_mapping.yml">${line.separator}superuser:
-  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"
-kibana_system:
-  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
@@ -78,14 +59,28 @@ transport.port: 9500-9600</echo>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.enabled: true
 xpack.security.http.ssl.certificate: certs/elastic-certificates.crt
 xpack.security.http.ssl.certificate_authorities : [ "certs/ca.crt" ]
+xpack.security.http.ssl.client_authentication: required
 xpack.security.http.ssl.enabled: true
 xpack.security.http.ssl.key: certs/elastic-certificates.key
 xpack.security.http.ssl.verification_mode: certificate
 xpack.security.transport.ssl.certificate: certs/elastic-certificates.crt
 xpack.security.transport.ssl.certificate_authorities : [ "certs/ca.crt" ]
+xpack.security.transport.ssl.client_authentication: required
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.key: certs/elastic-certificates.key
-xpack.security.transport.ssl.verification_mode: certificate</echo>
+xpack.security.transport.ssl.verification_mode: certificate
+xpack:
+  security:
+    authc:
+      realms:
+        pki:
+          pki1:
+            order: 0</echo>
+
+			<echo append="true" file="${elasticsearch.dir}/config/role_mapping.yml">${line.separator}superuser:
+  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"
+kibana_system:
+  - "CN=liferay.com,OU=Search,DC=liferay,DC=com"</echo>
 		</sequential>
 	</macrodef>
 
@@ -665,12 +660,12 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	</macrodef>
 
 	<macrodef name="start-elastic-trial">
+		<attribute default="" name="authentication.type" />
 		<attribute default="9200" name="elasticsearch.port" />
-		<attribute default="false" name="security.enabled" />
 
 		<sequential>
 			<if>
-				<istrue value="@{security.enabled}" />
+				<equals arg1="@{authentication.type}" arg2="basic" />
 				<then>
 					<exec executable="curl" outputproperty="curl.elastic.trial.output">
 						<arg value="-X POST" />
@@ -679,6 +674,21 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 						<arg value="elastic:${elastic.xpack.elastic.user.password}" />
 					</exec>
 				</then>
+				<elseif>
+					<equals arg1="@{authentication.type}" arg2="PKI" />
+					<then>
+						<exec executable="curl" outputproperty="curl.elastic.trial.output">
+							<arg value="-X POST" />
+							<arg value="https://localhost:@{elasticsearch.port}/_license/start_trial?acknowledge=true" />
+							<arg value="--cert" />
+							<arg value="${elasticsearch.dir}/config/certs/elastic-certificates.crt" />
+							<arg value="--key" />
+							<arg value="${elasticsearch.dir}/config/certs/elastic-certificates.key" />
+							<arg value="-ku" />
+							<arg value="elastic:${elastic.xpack.elastic.user.password}" />
+						</exec>
+					</then>
+				</elseif>
 				<else>
 					<exec executable="curl" outputproperty="curl.elastic.trial.output">
 						<arg value="-X POST" />
@@ -827,22 +837,16 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 			<set-x-pack-user-passwords />
 
-			<start-elastic-trial security.enabled="true" />
-
 			<if>
 				<equals arg1="${elastic.pki.authentication.enabled}" arg2="true" />
 				<then>
-					<sleep seconds="10" />
-
-					<antcall target="stop-elasticsearch" />
-
-					<configure-elasticsearch-pki-realm-settings />
-
-					<antcall target="start-elasticsearch-node" />
+					<start-elastic-trial authentication.type="PKI" />
 
 					<configure-portal-x-pack-pki-osgi-properties />
 				</then>
 				<else>
+					<start-elastic-trial authentication.type="basic" />
+
 					<configure-portal-x-pack-osgi-properties />
 				</else>
 			</if>

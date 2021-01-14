@@ -28,7 +28,7 @@ public class UpgradeAssetEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(_CLASS_NAMES.length * 2);
 
 		for (String className : _CLASS_NAMES) {
 			long classNameId = _getClassNameId(
@@ -44,11 +44,11 @@ public class UpgradeAssetEntry extends UpgradeProcess {
 			return;
 		}
 
-		String inClause = sb.toString();
+		sb.setIndex(sb.index() - 1);
 
 		runSQL(
-			"delete from AssetEntry where classNameId in (" +
-				inClause.substring(0, inClause.length() - 1) + ")");
+			"delete from AssetEntry where classNameId in (" + sb.toString() +
+				")");
 	}
 
 	private long _getClassNameId(String className) throws Exception {

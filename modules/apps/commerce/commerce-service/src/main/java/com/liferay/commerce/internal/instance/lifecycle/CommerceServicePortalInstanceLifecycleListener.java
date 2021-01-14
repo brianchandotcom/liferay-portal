@@ -14,14 +14,9 @@
 
 package com.liferay.commerce.internal.instance.lifecycle;
 
-import com.liferay.commerce.account.service.CommerceAccountService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommerceRegionService;
+import com.liferay.commerce.constants.CommerceSAPConstants;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -85,7 +80,8 @@ public class CommerceServicePortalInstanceLifecycleListener
 
 	@Activate
 	protected void activate() {
-		Stream<String[]> stream = Arrays.stream(_SAP_ENTRY_OBJECT_ARRAYS);
+		Stream<String[]> stream = Arrays.stream(
+			CommerceSAPConstants.SAP_ENTRY_OBJECT_ARRAYS);
 
 		_scopeAliasesList = stream.map(
 			sapEntryObjectArray -> StringUtil.replaceFirst(
@@ -104,7 +100,9 @@ public class CommerceServicePortalInstanceLifecycleListener
 					"content.Language", clazz.getClassLoader()),
 				LanguageResources.PORTAL_RESOURCE_BUNDLE_LOADER);
 
-		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
+		for (String[] sapEntryObjectArray :
+				CommerceSAPConstants.SAP_ENTRY_OBJECT_ARRAYS) {
+
 			String sapEntryName = sapEntryObjectArray[0];
 
 			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
@@ -124,53 +122,6 @@ public class CommerceServicePortalInstanceLifecycleListener
 				titleMap, new ServiceContext());
 		}
 	}
-
-	private static final String _CLASS_NAME_COMMERCE_CART_RESOURCE =
-		"com.liferay.commerce.frontend.internal.cart.CommerceCartResource";
-
-	private static final String
-		_CLASS_NAME_COMMERCE_HEADLESS_CART_ITEM_RESOURCE =
-			"com.liferay.headless.commerce.delivery.cart.internal.resource." +
-				"v1_0.CartItemResourceImpl";
-
-	private static final String _CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE =
-		"com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0." +
-			"CartResourceImpl";
-
-	private static final String _CLASS_NAME_COMMERCE_SEARCH_RESOURCE =
-		"com.liferay.commerce.frontend.internal.search.CommerceSearchResource";
-
-	private static final String _SAP_ENTRY_NAME = "COMMERCE_DEFAULT";
-
-	private static final String[][] _SAP_ENTRY_OBJECT_ARRAYS = {
-		{
-			_SAP_ENTRY_NAME,
-			StringBundler.concat(
-				CommerceAccountService.class.getName(), "#getCommerceAccount\n",
-				CommerceCountryService.class.getName(),
-				"#getBillingCommerceCountriesByChannelId\n",
-				CommerceCountryService.class.getName(),
-				"#getCommerceCountries\n",
-				CommerceCountryService.class.getName(),
-				"#getShippingCommerceCountriesByChannelId\n",
-				CommerceOrderItemService.class.getName(),
-				"#getCommerceOrderItem\n",
-				CommerceOrderItemService.class.getName(),
-				"#getCommerceOrderItems\n",
-				CommerceOrderItemService.class.getName(),
-				"#getCommerceOrderItemsQuantity\n",
-				CommerceOrderItemService.class.getName(),
-				"#upsertCommerceOrderItem\n",
-				CommerceOrderService.class.getName(), "#addCommerceOrder\n",
-				CommerceOrderService.class.getName(), "#fetchCommerceOrder\n",
-				CommerceOrderService.class.getName(), "#getCommerceOrder\n",
-				CommerceRegionService.class.getName(), "#getCommerceRegions\n",
-				_CLASS_NAME_COMMERCE_CART_RESOURCE, "*\n",
-				_CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE, "*\n",
-				_CLASS_NAME_COMMERCE_HEADLESS_CART_ITEM_RESOURCE, "*\n",
-				_CLASS_NAME_COMMERCE_SEARCH_RESOURCE)
-		}
-	};
 
 	@Reference
 	private SAPEntryLocalService _sapEntryLocalService;

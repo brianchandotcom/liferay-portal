@@ -15,6 +15,7 @@
 package com.liferay.talend.common.schema;
 
 import com.liferay.talend.BaseTestCase;
+import com.liferay.talend.common.oas.OASException;
 import com.liferay.talend.common.oas.constants.OASConstants;
 
 import java.util.List;
@@ -100,6 +101,13 @@ public class SchemaBuilderTest extends BaseTestCase {
 		Assert.assertFalse(
 			AvroUtils.isSchemaEmpty(
 				_getSchema(endpoint, OASConstants.OPERATION_PATCH)));
+	}
+
+	@Test(expected = OASException.class)
+	public void testInferSchemaNonexistingSchema() {
+		String endpoint = "/v1.0/schema_builder_breaker";
+
+		_getSchema(endpoint, OASConstants.OPERATION_GET);
 	}
 
 	@Test

@@ -585,8 +585,6 @@ components:
                     $ref: "#/components/schemas/PageDefinition"
                 pageSettings:
                     $ref: "#/components/schemas/PageSettings"
-                privatePage:
-                    type: boolean
                 renderedPages:
                     description:
                         A list of rendered pages, which results from using the template and the appropriate viewport to
@@ -7649,7 +7647,7 @@ paths:
         get:
             # @review
             description:
-                Retrieves the content pages of the site
+                Retrieves the public content pages of the site
             operationId: getSiteContentPagesPage
             parameters:
                 - in: path
@@ -7700,72 +7698,12 @@ paths:
                     description:
                         ""
             tags: ["ContentPage"]
-    "/sites/{siteId}/content-pages/private/{friendlyUrlPath}":
-        get:
-            # @review
-            description:
-                Retrieves a specific private content page of a site
-            operationId: getSiteContentPagePrivateFriendlyUrlPath
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: friendlyUrlPath
-                  required: true
-                  schema:
-                      type: string
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ContentPage"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ContentPage"
-                    description:
-                        ""
-            tags: ["ContentPage"]
-    "/sites/{siteId}/content-pages/private/{friendlyUrlPath}/rendered-page":
-        get:
-            description:
-                Retrieves the rendered content of a given page.
-            operationId: getSiteContentPagePrivateFriendlyUrlPathRenderedPage
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: friendlyUrlPath
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        text/html:
-                            schema:
-                                type: string
-                    description:
-                        ""
-            tags: [ "ContentPage" ]
-    "/sites/{siteId}/content-pages/public/{friendlyUrlPath}":
+    "/sites/{siteId}/content-pages/{friendlyUrlPath}":
         get:
             # @review
             description:
                 Retrieves a specific public content page of a site
-            operationId: getSiteContentPagePublicFriendlyUrlPath
+            operationId: getSiteContentPage
             parameters:
                 - in: path
                   name: siteId
@@ -7794,11 +7732,11 @@ paths:
                     description:
                         ""
             tags: ["ContentPage"]
-    "/sites/{siteId}/content-pages/public/{friendlyUrlPath}/rendered-page":
+    "/sites/{siteId}/content-pages/{friendlyUrlPath}/rendered-page":
         get:
             description:
-                Retrieves the rendered content of a given page.
-            operationId: getSiteContentPagePublicFriendlyUrlPathRenderedPage
+                Retrieves the rendered content of a given public page.
+            operationId: getSiteContentPageRenderedPage
             parameters:
                 - in: path
                   name: siteId

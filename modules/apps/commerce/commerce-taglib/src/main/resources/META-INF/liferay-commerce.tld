@@ -6,17 +6,6 @@
 	<short-name>liferay-commerce</short-name>
 	<uri>http://liferay.com/tld/commerce</uri>
 	<tag>
-		<name>compare-product</name>
-		<tag-class>com.liferay.commerce.taglib.servlet.taglib.CompareProductTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>CPDefinitionId</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>long</type>
-		</attribute>
-	</tag>
-	<tag>
 		<name>order-transitions</name>
 		<tag-class>com.liferay.commerce.taglib.servlet.taglib.OrderTransitionsTag</tag-class>
 		<body-content>JSP</body-content>

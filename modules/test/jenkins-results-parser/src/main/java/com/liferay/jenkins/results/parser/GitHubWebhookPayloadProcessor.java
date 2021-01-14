@@ -2413,8 +2413,13 @@ public class GitHubWebhookPayloadProcessor {
 
 		public PullRequest getPullRequest() {
 			if (_pullRequest == null) {
-				_pullRequest = new PullRequest(
-					getStringByPath("issue/pull_request/html_url"));
+				String path = "issue/pull/pull_request/html_url";
+
+				if (!has("issue")) {
+					path = "pull_request/_links/html/href";
+				}
+
+				_pullRequest = new PullRequest(getStringByPath(path));
 			}
 
 			return _pullRequest;

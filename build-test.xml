@@ -5342,30 +5342,21 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-remote-search-engine">
 		<sequential>
-			<get-testcase-property property.name="elasticsearch.cluster.size" />
-			<get-testcase-property property.name="elasticsearch.multiple.connections" />
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
-			<condition else="true" property="stop.standard.elasticsearch" value="false">
-				<or>
-					<isset property="elasticsearch.cluster.size" />
-					<isset property="elasticsearch.multiple.connections" />
-				</or>
-			</condition>
-
 			<if>
-				<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
+				<istrue value="${remote.elasticsearch.enabled}" />
 				<then>
-					<if>
-						<istrue value="${stop.standard.elasticsearch}" />
-						<then>
-							<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
-						</then>
-					</if>
+					<get-testcase-property property.name="elasticsearch.cluster.size" />
+					<get-testcase-property property.name="elasticsearch.multiple.connections" />
 
-					<if>
-						<isset property="elasticsearch.cluster.size" />
-						<then>
+					<local name="stop.type" />
+
+					<property if:set="elasticsearch.cluster.size" name="stop.type" value="elasticsearch.cluster.size" />
+					<property if:true="${elasticsearch.multiple.connections}" name="stop.type" value="elasticsearch.multiple.connections" />
+
+					<switch value="${stop.type}">
+						<case value="elasticsearch.cluster.size">
 							<var name="elasticsearch.node.number" value="2" />
 
 							<antelope:repeat count="${elasticsearch.cluster.size}">
@@ -5381,12 +5372,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									result="elasticsearch.node.number"
 								/>
 							</antelope:repeat>
-						</then>
-					</if>
-
-					<if>
-						<equals arg1="${elasticsearch.multiple.connections}" arg2="true" />
-						<then>
+						</case>
+						<case value="elasticsearch.multiple.connections">
 							<var name="elasticsearch.cluster.number" value="2" />
 
 							<antelope:repeat count="2">
@@ -5402,15 +5389,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									result="elasticsearch.cluster.number"
 								/>
 							</antelope:repeat>
+						</case>
+						<default>
+							<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+						</default>
+					</switch>
+
+					<if>
+						<socket port="5601" server="localhost" />
+						<then>
+							<ant antfile="build-test-elasticsearch7.xml" target="stop-kibana" />
 						</then>
 					</if>
-				</then>
-			</if>
-
-			<if>
-				<socket port="5601" server="localhost" />
-				<then>
-					<ant antfile="build-test-elasticsearch7.xml" target="stop-kibana" />
 				</then>
 			</if>
 		</sequential>

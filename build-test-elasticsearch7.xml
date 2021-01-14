@@ -461,9 +461,26 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<attribute name="total.bundles" />
 
 		<sequential>
-			<var name="elasticsearch.bundle.counter" value="0" />
+			<delete dir="${elasticsearch.dir}-1" />
 
-			<antelope:repeat count="@{total.bundles}">
+			<move
+				file="${elasticsearch.dir}"
+				tofile="${elasticsearch.dir}-1"
+			/>
+
+			<var name="elasticsearch.bundle.copy.count" value="0" />
+
+			<math
+				datatype="int"
+				operand1="@{total.bundles}"
+				operand2="1"
+				operation="-"
+				result="elasticsearch.bundle.copy.count"
+			/>
+
+			<var name="elasticsearch.bundle.counter" value="1" />
+
+			<antelope:repeat count="${elasticsearch.bundle.copy.count}">
 				<math
 					datatype="int"
 					operand1="${elasticsearch.bundle.counter}"
@@ -478,12 +495,10 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					todir="${elasticsearch.dir}-${elasticsearch.bundle.counter}"
 				>
 					<fileset
-						dir="${elasticsearch.dir}"
+						dir="${elasticsearch.dir}-1"
 					/>
 				</copy>
 			</antelope:repeat>
-
-			<delete dir="${elasticsearch.dir}" />
 		</sequential>
 	</macrodef>
 

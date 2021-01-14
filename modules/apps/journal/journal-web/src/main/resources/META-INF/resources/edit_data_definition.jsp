@@ -123,7 +123,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 	servletContext="<%= application %>"
 />
 
-<aui:script>
+<aui:script sandbox="<%= true %>">
 	function <portlet:namespace />getInputLocalizedValues(field) {
 		var inputLocalized = Liferay.component('<portlet:namespace />' + field);
 		var localizedValues = {};

@@ -76,7 +76,7 @@ public class EditCommerceShipmentItemMVCRenderCommand
 	private Portal _portal;
 
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.SHIPMENT_RESOURCE_NAME + ")"
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_SHIPMENT + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

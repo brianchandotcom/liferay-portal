@@ -290,6 +290,6 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				CommerceCountryServiceImpl.class, "_portletResourcePermission",
-				CommerceConstants.ADDRESS_RESOURCE_NAME);
+				CommerceConstants.RESOURCE_NAME_ADDRESS);
 
 }

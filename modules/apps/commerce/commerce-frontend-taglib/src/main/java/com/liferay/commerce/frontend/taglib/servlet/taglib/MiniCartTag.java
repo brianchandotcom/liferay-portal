@@ -222,7 +222,7 @@ public class MiniCartTag extends IncludeTag {
 				_configurationProvider.getConfiguration(
 					CommercePriceConfiguration.class,
 					new SystemSettingsLocator(
-						CommerceConstants.PRICE_SERVICE_NAME));
+						CommerceConstants.SERVICE_NAME_PRICE));
 
 			return commercePriceConfiguration.displayDiscountLevels();
 		}

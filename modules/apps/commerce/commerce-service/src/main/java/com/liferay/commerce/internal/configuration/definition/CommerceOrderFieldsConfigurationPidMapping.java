@@ -34,7 +34,7 @@ public class CommerceOrderFieldsConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return CommerceConstants.ORDER_FIELDS_SERVICE_NAME;
+		return CommerceConstants.SERVICE_NAME_ORDER_FIELDS;
 	}
 
 }

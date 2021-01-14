@@ -128,7 +128,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					_configurationProvider.getConfiguration(
 						CommercePriceConfiguration.class,
 						new SystemSettingsLocator(
-							CommerceConstants.PRICE_SERVICE_NAME));
+							CommerceConstants.SERVICE_NAME_PRICE));
 
 				jsonObject.put(
 					"displayDiscountLevels",

@@ -228,7 +228,7 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 				CommerceOrderCheckoutConfiguration.class,
 				new GroupServiceSettingsLocator(
 					commerceChannel.getGroupId(),
-					CommerceConstants.ORDER_SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_ORDER));
 
 		if (!commerceOrderCheckoutConfiguration.guestCheckoutEnabled()) {
 			return true;

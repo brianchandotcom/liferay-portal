@@ -21,33 +21,67 @@ package com.liferay.commerce.constants;
  */
 public class CommerceConstants {
 
-	public static final String ADDRESS_RESOURCE_NAME =
-		"com.liferay.commerce.address";
-
-	public static final String AVAILABILITY_RESOURCE_NAME =
-		"com.liferay.commerce.availability";
-
-	public static final String HEALTH_RESOURCE_NAME =
-		"com.liferay.commerce.health";
-
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String ORDER_FIELDS_SERVICE_NAME =
 		"com.liferay.commerce.order.fields";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String ORDER_SERVICE_NAME =
 		"com.liferay.commerce.order";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String PRICE_SERVICE_NAME =
 		"com.liferay.commerce.price";
 
-	public static final String SHIPMENT_RESOURCE_NAME =
+	public static final String RESOURCE_NAME_ADDRESS =
+		"com.liferay.commerce.address";
+
+	public static final String RESOURCE_NAME_AVAILABILITY =
+		"com.liferay.commerce.availability";
+
+	public static final String RESOURCE_NAME_HEALTH =
+		"com.liferay.commerce.health";
+
+	public static final String RESOURCE_NAME_SHIPMENT =
 		"com.liferay.commerce.shipment";
 
+	public static final String RESOURCE_NAME_SUBSCRIPTION =
+		"com.liferay.commerce.subscription";
+
+	public static final String SERVICE_NAME_ORDER =
+		"com.liferay.commerce.order";
+
+	public static final String SERVICE_NAME_ORDER_FIELDS =
+		"com.liferay.commerce.order.fields";
+
+	public static final String SERVICE_NAME_PRICE =
+		"com.liferay.commerce.price";
+
+	public static final String SERVICE_NAME_SHIPPING =
+		"com.liferay.commerce.shipping";
+
+	public static final String SERVICE_NAME_TAX = "com.liferay.commerce.tax";
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String SHIPPING_SERVICE_NAME =
 		"com.liferay.commerce.shipping";
 
-	public static final String SUBSCRIPTION_RESOURCE_NAME =
-		"com.liferay.commerce.subscription";
-
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String TAX_SERVICE_NAME = "com.liferay.commerce.tax";
 
 }

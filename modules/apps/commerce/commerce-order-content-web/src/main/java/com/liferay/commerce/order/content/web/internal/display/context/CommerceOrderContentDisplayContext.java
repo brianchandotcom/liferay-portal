@@ -542,7 +542,7 @@ public class CommerceOrderContentDisplayContext {
 					CommerceOrderFieldsConfiguration.class,
 					new GroupServiceSettingsLocator(
 						_cpRequestHelper.getChannelGroupId(),
-						CommerceConstants.ORDER_SERVICE_NAME));
+						CommerceConstants.SERVICE_NAME_ORDER));
 
 			return commerceOrderFieldsConfiguration.showPurchaseOrderNumber();
 		}

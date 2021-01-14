@@ -2064,7 +2064,7 @@ public class CommerceOrderLocalServiceImpl
 				CommerceOrderFieldsConfiguration.class,
 				new GroupServiceSettingsLocator(
 					channelGroupId,
-					CommerceConstants.ORDER_FIELDS_SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_ORDER_FIELDS));
 
 		if ((commerceOrderFieldsConfiguration.accountCartMaxAllowed() > 0) &&
 			(pendingCommerceOrdersCount >=

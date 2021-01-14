@@ -415,7 +415,7 @@ public class CommerceShipmentServiceImpl
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				CommerceShipmentServiceImpl.class, "_portletResourcePermission",
-				CommerceConstants.SHIPMENT_RESOURCE_NAME);
+				CommerceConstants.RESOURCE_NAME_SHIPMENT);
 
 	@ServiceReference(type = CommerceChannelService.class)
 	private CommerceChannelService _commerceChannelService;

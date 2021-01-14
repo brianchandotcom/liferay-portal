@@ -110,7 +110,7 @@ public class CommerceSubscriptionEntryPortlet extends MVCPortlet {
 	private Portal _portal;
 
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.SUBSCRIPTION_RESOURCE_NAME + ")"
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_SUBSCRIPTION + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

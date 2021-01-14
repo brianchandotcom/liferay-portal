@@ -165,7 +165,7 @@ public class CommerceTaxCalculationImpl implements CommerceTaxCalculation {
 				CommerceShippingTaxConfiguration.class,
 				new GroupServiceSettingsLocator(
 					commerceOrder.getGroupId(),
-					CommerceConstants.TAX_SERVICE_NAME));
+					CommerceConstants.SERVICE_NAME_TAX));
 
 		List<CommerceTaxValue> commerceTaxValues = _getCommerceTaxValues(
 			commerceOrder.getGroupId(), commerceOrder.getBillingAddressId(),

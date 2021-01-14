@@ -462,7 +462,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			_configurationProvider.getConfiguration(
 				CommerceOrderCheckoutConfiguration.class,
 				new GroupServiceSettingsLocator(
-					groupId, CommerceConstants.ORDER_SERVICE_NAME));
+					groupId, CommerceConstants.SERVICE_NAME_ORDER));
 
 		return commerceOrderCheckoutConfiguration.guestCheckoutEnabled();
 	}

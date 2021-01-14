@@ -863,7 +863,7 @@ public class CommerceOrderTest {
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				_commerceChannel.getGroupId(),
-				CommerceConstants.ORDER_FIELDS_SERVICE_NAME));
+				CommerceConstants.SERVICE_NAME_ORDER_FIELDS));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

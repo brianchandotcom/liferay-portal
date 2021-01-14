@@ -125,7 +125,7 @@ public class CommerceSubscriptionEntryPaymentsScreenNavigationCategory
 	private JSPRenderer _jspRenderer;
 
 	@Reference(
-		target = "(resource.name=" + CommerceConstants.SUBSCRIPTION_RESOURCE_NAME + ")"
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_SUBSCRIPTION + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

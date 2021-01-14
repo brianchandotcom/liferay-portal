@@ -63,10 +63,18 @@ public class SegmentsExperienceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		int lowestPriority = _getLowestPriority(
+			serviceContext.getScopeGroupId(), classNameId,
+			_getPublishedLayoutClassPK(classPK));
+
+		if ((lowestPriority - 1) ==
+				SegmentsExperienceConstants.PRIORITY_DEFAULT) {
+
+			lowestPriority = lowestPriority - 1;
+		}
+
 		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap,
-			getSegmentsExperiencesCount(
-				serviceContext.getScopeGroupId(), classNameId, classPK),
+			segmentsEntryId, classNameId, classPK, nameMap, lowestPriority - 1,
 			active, serviceContext);
 	}
 
@@ -486,6 +494,19 @@ public class SegmentsExperienceLocalServiceImpl
 
 		return Optional.ofNullable(
 			segmentsExperiencePersistence.fetchByG_C_C_First(
+				groupId, classNameId, classPK, null)
+		).map(
+			SegmentsExperience::getPriority
+		).orElse(
+			SegmentsExperienceConstants.PRIORITY_DEFAULT
+		);
+	}
+
+	private int _getLowestPriority(
+		long groupId, long classNameId, long classPK) {
+
+		return Optional.ofNullable(
+			segmentsExperiencePersistence.fetchByG_C_C_Last(
 				groupId, classNameId, classPK, null)
 		).map(
 			SegmentsExperience::getPriority

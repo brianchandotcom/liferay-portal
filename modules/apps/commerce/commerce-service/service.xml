@@ -445,20 +445,20 @@
 
 		<!-- Finder methods -->
 
+		<finder name="BookedQuantityId" return-type="CommerceOrderItem">
+			<finder-column name="bookedQuantityId" />
+		</finder>
 		<finder name="CommerceOrderId" return-type="Collection">
 			<finder-column name="commerceOrderId" />
-		</finder>
-		<finder name="CProductId" return-type="Collection">
-			<finder-column name="CProductId" />
 		</finder>
 		<finder name="CPInstanceId" return-type="Collection">
 			<finder-column name="CPInstanceId" />
 		</finder>
+		<finder name="CProductId" return-type="Collection">
+			<finder-column name="CProductId" />
+		</finder>
 		<finder name="ParentCommerceOrderItemId" return-type="Collection">
 			<finder-column name="parentCommerceOrderItemId" />
-		</finder>
-		<finder name="BookedQuantityId" return-type="CommerceOrderItem">
-			<finder-column name="bookedQuantityId" />
 		</finder>
 		<finder name="C_I" return-type="Collection">
 			<finder-column name="commerceOrderId" />

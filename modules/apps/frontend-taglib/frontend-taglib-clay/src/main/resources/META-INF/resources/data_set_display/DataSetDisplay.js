@@ -78,9 +78,11 @@ function DataSetDisplay({
 	sorting: sortingProp,
 	style,
 }) {
+	const {apiURL} = useContext(AppContext);
+
 	const wrapperRef = useRef(null);
 	const [componentLoading, setComponentLoading] = useState(false);
-	const [dataLoading, setDataLoading] = useState(false);
+	const [dataLoading, setDataLoading] = useState(!!apiURL);
 	const [dataSetDisplaySupportModalId] = useState(
 		'support-modal-' + getRandomId()
 	);
@@ -112,8 +114,6 @@ function DataSetDisplay({
 	} = activeView;
 
 	const selectable = !!(bulkActions?.length && selectedItemsKey);
-
-	const {apiURL} = useContext(AppContext);
 
 	const requestData = useCallback(() => {
 		const activeFiltersOdataStrings = filters.reduce(
@@ -198,7 +198,8 @@ function DataSetDisplay({
 			setSelectedItemsValue(
 				selectedItemsValue.filter((element) => element !== value)
 			);
-		} else {
+		}
+		else {
 			setSelectedItemsValue(selectedItemsValue.concat(value));
 		}
 	}
@@ -240,8 +241,8 @@ function DataSetDisplay({
 				}
 
 				if (isMounted()) {
-					setDataLoading(false);
 					updateDataSetItems(data);
+					setDataLoading(false);
 
 					Liferay.fire(DATASET_DISPLAY_UPDATED, {id});
 				}
@@ -278,8 +279,8 @@ function DataSetDisplay({
 
 		requestData().then((data) => {
 			if (isMounted()) {
-				setDataLoading(false);
 				updateDataSetItems(data);
+				setDataLoading(false);
 			}
 		});
 	}, [isMounted, requestData, setDataLoading]);
@@ -348,7 +349,9 @@ function DataSetDisplay({
 					readOnly
 					value={selectedItemsValue.join(',')}
 				/>
-				{(items?.length ?? 0) || overrideEmptyResultView ? (
+				{items.length ||
+				overrideEmptyResultView ||
+				inlineAddingSettings ? (
 					<CurrentViewComponent
 						dataSetDisplayContext={DataSetDisplayContext}
 						items={items}

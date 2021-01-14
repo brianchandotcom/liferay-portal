@@ -17,10 +17,11 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useIsMounted} from 'frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
-import {useIsMounted} from 'frontend-js-react-web';
+
 import DataSetDisplayContext from '../DataSetDisplayContext';
 import {ACTION_ITEM_TARGETS} from '../utilities/actionItems/constants';
 import {formatActionURL} from '../utilities/index';
@@ -61,14 +62,16 @@ export function handleAction(
 
 		if (target === MODAL_PERMISSIONS) {
 			openPermissionsModal(url);
-		} else {
+		}
+		else {
 			openModal({
 				size: resolveModalSize(target),
 				title,
 				url,
 			});
 		}
-	} else if (target === 'sidePanel') {
+	}
+	else if (target === 'sidePanel') {
 		event.preventDefault();
 
 		highlightItems([itemId]);
@@ -77,7 +80,8 @@ export function handleAction(
 			title,
 			url,
 		});
-	} else if (target === 'async' || target === 'headless') {
+	}
+	else if (target === 'async' || target === 'headless') {
 		event.preventDefault();
 
 		setLoading(true);
@@ -94,15 +98,18 @@ export function handleAction(
 			.catch((_) => {
 				setLoading(false);
 			});
-	} else if (target === 'inlineEdit') {
+	}
+	else if (target === 'inlineEdit') {
 		event.preventDefault();
 
 		toggleItemInlineEdit(itemId);
-	} else if (target === 'blank') {
+	}
+	else if (target === 'blank') {
 		event.preventDefault();
 
 		window.open(url);
-	} else if (onClick) {
+	}
+	else if (onClick) {
 		event.preventDefault();
 
 		event.target.setAttribute('onClick', onClick);
@@ -229,7 +236,8 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 									],
 								},
 							];
-						} else {
+						}
+						else {
 							return [...actions, action];
 						}
 					}

@@ -284,8 +284,8 @@ const emailsDataSetDisplayProps = {
 	views: [
 		{
 			contentRenderer: 'emailsList',
-			icon: 'email',
 			label: 'Email',
+			thumbnail: 'email',
 		},
 	],
 };
@@ -328,12 +328,12 @@ const selectableTableProps = {
 	views: [
 		{
 			contentRenderer: 'selectableTable',
-			icon: 'table',
 			label: 'Table',
 			schema: {
 				firstColumnLabel: 'Country',
 				firstColumnName: 'countryName',
 			},
+			thumbnail: 'table',
 		},
 	],
 };

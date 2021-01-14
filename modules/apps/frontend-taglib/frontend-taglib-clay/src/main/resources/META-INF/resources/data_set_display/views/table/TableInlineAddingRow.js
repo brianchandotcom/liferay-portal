@@ -15,11 +15,11 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTable from '@clayui/table';
+import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useState} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
 import {getInputRendererById} from '../../utilities/dataRenderers';
-import {useIsMounted} from 'frontend-js-react-web';
 
 function TableInlineAddingRow({fields, selectable}) {
 	const {

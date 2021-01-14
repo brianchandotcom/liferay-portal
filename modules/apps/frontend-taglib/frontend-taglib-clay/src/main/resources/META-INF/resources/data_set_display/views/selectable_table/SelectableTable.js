@@ -86,7 +86,6 @@ function SelectableTable({items: itemsProp, schema, style}) {
 								<ClayTable.Cell
 									className="table-cell-expand-smaller"
 									headingCell
-									headingTitle
 									key={columnField.name}
 								>
 									<ClayCheckbox

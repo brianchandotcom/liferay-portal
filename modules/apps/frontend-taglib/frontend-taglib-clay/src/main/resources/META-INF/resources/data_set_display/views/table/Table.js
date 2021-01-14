@@ -12,7 +12,6 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
@@ -21,7 +20,6 @@ import React, {useContext} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
 import ActionsDropdownRenderer from '../../data_renderers/ActionsDropdownRenderer';
-import {getInputRendererById} from '../../utilities/dataRenderers';
 import {getValueFromItem} from '../../utilities/index';
 import ViewsContext from '../ViewsContext';
 import TableCell from './TableCell';

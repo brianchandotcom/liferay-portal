@@ -42,7 +42,9 @@ function InputDateTimeRenderer({updateItem, value}) {
 				<ClayInput
 					onChange={(event) => {
 						const newDate = new Date(event.target.value);
-						updateItem(newDate.toISOString());
+						const formattedDateString =
+							newDate.toISOString().split('.')[0] + 'Z';
+						updateItem(formattedDateString);
 					}}
 					type="datetime-local"
 					value={formattedDate}

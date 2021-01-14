@@ -46,7 +46,8 @@ export function getData(apiURL, query) {
 export function getSchemaString(object, path) {
 	if (!Array.isArray(path)) {
 		return object[path];
-	} else {
+	}
+	else {
 		return path.reduce((acc, path) => acc[path], object);
 	}
 }
@@ -54,7 +55,8 @@ export function getSchemaString(object, path) {
 export function liferayNavigate(url) {
 	if (Liferay.SPA) {
 		Liferay.SPA.app.navigate(url);
-	} else {
+	}
+	else {
 		window.location.href = url;
 	}
 }
@@ -214,20 +216,29 @@ export function getCurrentItemUpdates(
 		(item) => item[selectedItemsKey] === itemKey
 	);
 
-	if (!itemsChanges[itemKey]) {
+	const itemChanges = itemsChanges[itemKey];
+
+	if (!itemChanges) {
 		return {
 			[property]: value,
 		};
 	}
 
 	if (itemChanged && itemChanged[property] === value) {
-		const {[property]: _, ...otherProps} = itemsChanges[itemKey];
+		const filteredProperties = Object.entries(itemChanges).reduce(
+			(properties, [propertyKey, propertyValue]) => {
+				return propertyKey !== property
+					? {...properties, [propertyKey]: propertyValue}
+					: properties;
+			},
+			{}
+		);
 
-		return otherProps;
+		return filteredProperties;
 	}
 
 	return {
-		...itemsChanges[itemKey],
+		...itemChanges,
 		[property]: value,
 	};
 }

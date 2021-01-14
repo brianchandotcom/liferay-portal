@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -181,62 +182,77 @@ export default function PageDesignOptionsSidebar() {
 	);
 }
 
-const OptionList = ({options = [], icon}) => (
-	<ul className="list-unstyled mt-3">
-		{options.map(
-			({imagePreviewURL, isActive, name, onClick, subtitle}, index) => (
-				<li key={index}>
-					<ClayCard
-						aria-label={name}
-						className={classNames({
-							'page-editor__sidebar__design-options__tab-card--active': isActive,
-						})}
-						displayType="file"
-						onClick={() => {
-							if (!isActive) {
-								onClick();
-							}
-						}}
-						selectable
-					>
-						<ClayCard.AspectRatio
-							className="card-item-first"
-							containerAspectRatio="16/9"
+const OptionList = ({options = [], icon, type}) => {
+	if (type === OPTIONS_TYPES.styleBook && !config.styleBookEnabled) {
+		return (
+			<ClayAlert className="mt-3" displayType="info">
+				{Liferay.Language.get(
+					'this-page-is-using-a-different-theme-than-the-one-set-for-public-pages'
+				)}
+			</ClayAlert>
+		);
+	}
+
+	return (
+		<ul className="list-unstyled mt-3">
+			{options.map(
+				(
+					{imagePreviewURL, isActive, name, onClick, subtitle},
+					index
+				) => (
+					<li key={index}>
+						<ClayCard
+							aria-label={name}
+							className={classNames({
+								'page-editor__sidebar__design-options__tab-card--active': isActive,
+							})}
+							displayType="file"
+							onClick={() => {
+								if (!isActive) {
+									onClick();
+								}
+							}}
+							selectable
 						>
-							{imagePreviewURL ? (
-								<img
-									alt="thumbnail"
-									className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
-									src={imagePreviewURL}
-								/>
-							) : (
-								<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
-									<ClayIcon symbol={icon} />
-								</div>
-							)}
-						</ClayCard.AspectRatio>
-						<ClayCard.Body>
-							<ClayCard.Row>
-								<div className="autofit-col autofit-col-expand">
-									<section className="autofit-section">
-										<ClayCard.Description displayType="title">
-											{name}
-										</ClayCard.Description>
-										{subtitle && (
-											<ClayCard.Description displayType="subtitle">
-												{subtitle}
+							<ClayCard.AspectRatio
+								className="card-item-first"
+								containerAspectRatio="16/9"
+							>
+								{imagePreviewURL ? (
+									<img
+										alt="thumbnail"
+										className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+										src={imagePreviewURL}
+									/>
+								) : (
+									<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+										<ClayIcon symbol={icon} />
+									</div>
+								)}
+							</ClayCard.AspectRatio>
+							<ClayCard.Body>
+								<ClayCard.Row>
+									<div className="autofit-col autofit-col-expand">
+										<section className="autofit-section">
+											<ClayCard.Description displayType="title">
+												{name}
 											</ClayCard.Description>
-										)}
-									</section>
-								</div>
-							</ClayCard.Row>
-						</ClayCard.Body>
-					</ClayCard>
-				</li>
-			)
-		)}
-	</ul>
-);
+											{subtitle && (
+												<ClayCard.Description displayType="subtitle">
+													{subtitle}
+												</ClayCard.Description>
+											)}
+										</section>
+									</div>
+								</ClayCard.Row>
+							</ClayCard.Body>
+						</ClayCard>
+					</li>
+				)
+			)}
+		</ul>
+	);
+};
 
 function getTabs(
 	masterLayoutPlid,
@@ -264,7 +280,6 @@ function getTabs(
 
 	if (config.layoutType !== LAYOUT_TYPES.master) {
 		tabs.push({
-			disabled: config.layoutType === LAYOUT_TYPES.master,
 			icon: 'page',
 			label: Liferay.Language.get('master'),
 			options: config.masterLayouts.map((masterLayout) => ({

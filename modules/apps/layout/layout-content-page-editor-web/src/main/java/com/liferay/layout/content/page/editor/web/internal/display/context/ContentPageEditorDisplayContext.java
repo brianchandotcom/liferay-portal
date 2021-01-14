@@ -524,6 +524,24 @@ public class ContentPageEditorDisplayContext {
 				"siteNavigationMenuItemSelectorURL",
 				_getSiteNavigationMenuItemSelectorURL()
 			).put(
+				"styleBookEnabled",
+				() -> {
+					LayoutSet publicLayoutSet =
+						LayoutSetLocalServiceUtil.fetchLayoutSet(
+							themeDisplay.getSiteGroupId(), false);
+
+					Layout layout = themeDisplay.getLayout();
+
+					if (Objects.equals(
+							layout.getThemeId(),
+							publicLayoutSet.getThemeId())) {
+
+						return true;
+					}
+
+					return false;
+				}
+			).put(
 				"styleBookEntryId",
 				() -> {
 					Layout layout = themeDisplay.getLayout();

@@ -645,4 +645,5 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 .management-bar-secondary-bar {
 	background-color: #f0f5ff;
 	border-bottom: 1px solid $primary;
+	position: absolute;
 }

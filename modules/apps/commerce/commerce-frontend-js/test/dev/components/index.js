@@ -19,6 +19,11 @@ module.exports = [
 		page: 'add-to-cart.html',
 	},
 	{
+		entry: 'AddToWishList',
+		name: 'Add To Wish List',
+		page: 'add-to-wish-list.html',
+	},
+	{
 		entry: 'Autocomplete',
 		name: 'Autocomplete',
 		page: 'autocomplete.html',

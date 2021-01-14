@@ -38,7 +38,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -55,10 +54,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -138,24 +133,12 @@ public class MiniumCPContentListEntryRenderer
 		String portletName = portletDisplay.getPortletName();
 
 		if (portletName.equals(CPPortletKeys.CP_COMPARE_CONTENT_WEB)) {
-			PortletURL editCompareProductActionURL =
-				PortletURLFactoryUtil.create(
-					httpServletRequest, CPPortletKeys.CP_COMPARE_CONTENT_WEB,
-					PortletRequest.ACTION_PHASE);
-
-			editCompareProductActionURL.setParameter(
-				ActionRequest.ACTION_NAME,
-				"/cp_compare_content_web/edit_compare_product");
-
 			context.put("compareCheckboxVisible", false);
 			context.put(
 				"compareContentNamespace",
 				_portal.getPortletNamespace(
 					CPPortletKeys.CP_COMPARE_CONTENT_WEB));
 			context.put("deleteButtonVisible", true);
-			context.put(
-				"editCompareProductActionURL",
-				editCompareProductActionURL.toString());
 		}
 		else {
 			long commerceAccountId = 0;

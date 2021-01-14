@@ -43,9 +43,6 @@ public interface CPCompareContentHelper {
 			CPDataSourceResult cpDataSourceResult)
 		throws PortalException;
 
-	public String getClearCompareProductsURL(
-		RenderRequest renderRequest, RenderResponse renderResponse);
-
 	public String getCompareContentPortletNamespace();
 
 	public String getCompareProductsURL(ThemeDisplay themeDisplay)
@@ -75,9 +72,6 @@ public interface CPCompareContentHelper {
 
 	public String getDimensionCPMeasurementUnitName(
 		long groupId, Locale locale);
-
-	public String getEditCompareProductActionURL(
-		HttpServletRequest httpServletRequest);
 
 	public int getProductsLimit(PortletDisplay portletDisplay)
 		throws PortalException;

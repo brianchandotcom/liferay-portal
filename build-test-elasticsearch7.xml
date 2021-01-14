@@ -1378,7 +1378,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<property name="elasticsearch.port" unless:set="elasticsearch.port" value="9200" />
 
 		<waitfor maxwait="120" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-			<http url="http://localhost:${elasticsearch.port}/" />
+			<socket port="${elasticsearch.port}" server="localhost" />
 		</waitfor>
 
 		<print-files dir="${elasticsearch.start.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />

@@ -28,27 +28,33 @@ if (commerceAccount != null) {
 	commerceAccountId = GetterUtil.getLong(commerceAccount.getCommerceAccountId());
 }
 
-HttpServletRequest originalHttpServletRequest = PortalUtil.getOriginalServletRequest(request);
-
-List<CPCatalogEntry> cpCatalogEntries = CPCompareHelperUtil.getCPCatalogEntries(commerceContext.getCommerceChannelGroupId(), commerceAccountId, originalHttpServletRequest.getSession());
+List<CPCatalogEntry> cpCatalogEntries = cpCompareContentHelper.getCPCatalogEntries(commerceContext.getCommerceChannelGroupId(), commerceAccountId, request);
 %>
 
 <div id="mini-compare-root"></div>
 
 <aui:script require="commerce-frontend-js/components/mini_compare/entry as MiniCompare">
 	MiniCompare.default('mini-compare', 'mini-compare-root', {
+		commerceChannelGroupId:
+			'<%= commerceContext.getCommerceChannelGroupId() %>',
 		compareProductsURL:
 			'<%= cpCompareContentHelper.getCompareProductsURL(themeDisplay) %>',
-		editCompareProductActionURL:
-			'<%= cpCompareContentHelper.getEditCompareProductActionURL(request) %>',
-		items: <%= jsonSerializer.serializeDeep(cpCatalogEntries) %>.map(function (
-			item
-		) {
-			return {
-				id: item.CPDefinitionId,
-				thumbnail: item.defaultImageFileUrl,
-			};
-		}),
+		items: [
+
+			<%
+			for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
+			%>
+
+				{
+					id: '<%= cpCatalogEntry.getCPDefinitionId() %>',
+					thumbnail: '<%= cpCatalogEntry.getDefaultImageFileUrl() %>',
+				},
+
+			<%
+			}
+			%>
+
+		],
 		itemsLimit: <%= cpCompareContentHelper.getProductsLimit(portletDisplay) %>,
 		portletNamespace:
 			'<%= cpCompareContentHelper.getCompareContentPortletNamespace() %>',

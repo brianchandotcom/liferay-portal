@@ -172,7 +172,9 @@ public class CPDefinitionAttachmentsScreenNavigationCategory
 	@Reference
 	private JSPRenderer _jspRenderer;
 
-	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	@Reference(
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
+	)
 	private PortletResourcePermission _portletResourcePermission;
 
 }

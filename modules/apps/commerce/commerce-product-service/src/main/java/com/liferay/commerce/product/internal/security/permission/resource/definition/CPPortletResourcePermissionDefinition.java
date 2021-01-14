@@ -46,7 +46,7 @@ public class CPPortletResourcePermissionDefinition
 
 	@Override
 	public String getResourceName() {
-		return CPConstants.RESOURCE_NAME;
+		return CPConstants.RESOURCE_NAME_PRODUCT;
 	}
 
 	@Reference

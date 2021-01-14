@@ -20,6 +20,14 @@ import '@testing-library/jest-dom/extend-expect';
 
 import DLVideoExternalShortcutURLItemSelectorView from '../src/main/resources/META-INF/resources/js/DLVideoExternalShortcutURLItemSelectorView';
 
+const liferayOpenerfireMock = jest.fn();
+
+Liferay.Util.getOpener = jest.fn(() => ({
+	Liferay: {
+		fire: liferayOpenerfireMock,
+	},
+}));
+
 const defaultProps = {
 	eventName: 'eventName',
 	getDLVideoExternalShortcutFieldsURL: '/getDLVideoExternalShortcutFieldsURL',
@@ -92,6 +100,24 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 
 			expect(add).toBeInTheDocument();
 			expect(add).toBeEnabled();
+		});
+
+		it('adding a video url calls fire event in the opener', () => {
+			const add = result.getByRole('button');
+
+			fireEvent.click(add);
+
+			expect(Liferay.Util.getOpener).toHaveBeenCalled();
+
+			expect(liferayOpenerfireMock).toHaveBeenCalledWith(
+				defaultProps.eventName,
+				{
+					data: {
+						returnType: defaultProps.returnType,
+						value: responseFields.HTML,
+					},
+				}
+			);
 		});
 	});
 });

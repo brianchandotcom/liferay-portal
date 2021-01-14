@@ -230,7 +230,34 @@ public class JsonObjectIndexedRecordConverter {
 			return name;
 		}
 
+		if (_isI18nFieldName(name) && !_isI18nFieldNameNested(name)) {
+			return name;
+		}
+
 		return name.replaceFirst("_", ">");
+	}
+
+	private boolean _isI18nFieldName(String name) {
+		int idx = name.indexOf("_i18n");
+
+		if (idx < 0) {
+			return false;
+		}
+
+		if (name.lastIndexOf("_") == idx) {
+			return true;
+		}
+
+		throw new ConverterException(
+			"Unsupported usage of _i18n in OpenAPI schema property name");
+	}
+
+	private boolean _isI18nFieldNameNested(String name) {
+		if (name.indexOf("_") < name.indexOf("_i18n")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static Logger _logger = LoggerFactory.getLogger(

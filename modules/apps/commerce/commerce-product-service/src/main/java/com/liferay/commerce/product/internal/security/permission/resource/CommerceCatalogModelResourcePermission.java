@@ -90,7 +90,7 @@ public class CommerceCatalogModelResourcePermission
 	protected CommerceCatalogPermission commerceCatalogPermission;
 
 	@Reference(
-		target = "(resource.name=" + CPConstants.CATALOG_RESOURCE_NAME + ")"
+		target = "(resource.name=" + CPConstants.RESOURCE_NAME_CATALOG + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

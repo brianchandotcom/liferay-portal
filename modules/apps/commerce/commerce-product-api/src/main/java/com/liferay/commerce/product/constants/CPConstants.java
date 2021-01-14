@@ -27,9 +27,17 @@ public class CPConstants {
 	public static final String C_PRODUCT_VERSIONING_SERVICE_NAME =
 		"com.liferay.commerce.product.versioning";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String CATALOG_RESOURCE_NAME =
 		"com.liferay.commerce.catalog";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String CHANNEL_RESOURCE_NAME =
 		"com.liferay.commerce.channel";
 
@@ -60,6 +68,12 @@ public class CPConstants {
 	};
 
 	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
+
+	public static final String RESOURCE_NAME_CATALOG =
+		"com.liferay.commerce.catalog";
+
+	public static final String RESOURCE_NAME_CHANNEL =
+		"com.liferay.commerce.channel";
 
 	public static final String SEPARATOR_ASSET_CATEGORY_URL = "/g/";
 

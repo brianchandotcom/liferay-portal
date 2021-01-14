@@ -41,7 +41,7 @@ public class CommerceCatalogPortletResourcePermissionDefinition
 
 	@Override
 	public String getResourceName() {
-		return CPConstants.CATALOG_RESOURCE_NAME;
+		return CPConstants.RESOURCE_NAME_CATALOG;
 	}
 
 }

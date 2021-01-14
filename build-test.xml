@@ -3131,7 +3131,21 @@ ${tomcat-gc-log}
 
 	<macrodef name="print-search-indices">
 		<sequential>
-			<ant antfile="build-test-elasticsearch7.xml" target="print-elasticsearch-indices" />
+			<get-testcase-property property.name="remote.elasticsearch.enabled" />
+
+			<condition else="9201" property="elasticsearch.port" value="9200">
+				<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
+			</condition>
+
+			<ant antfile="build-test-elasticsearch7.xml" target="print-elasticsearch-indices">
+				<property name="elasticsearch.port" value="${elasticsearch.port}" />
+			</ant>
+
+			<get-testcase-property property.name="elasticsearch.multiple.connections" />
+
+			<ant antfile="build-test-elasticsearch7.xml" if:true="${elasticsearch.multiple.connections}" target="print-elasticsearch-indices">
+				<property name="elasticsearch.port" value="9202" />
+			</ant>
 		</sequential>
 	</macrodef>
 

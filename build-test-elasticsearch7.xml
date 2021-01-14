@@ -1129,12 +1129,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			select="\1"
 		/>
 
-		<get-testcase-property property.name="remote.elasticsearch.enabled" />
-
-		<condition else="9201" property="elasticsearch.port" value="9200">
-			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
-		</condition>
-
 		<property name="company.index.query">
 			<![CDATA[
 				{
@@ -1180,54 +1174,24 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 		<echo></echo>
 		<echo>##</echo>
-		<echo>## Elasticsearch Liferay Company Index</echo>
+		<echo>## Elasticsearch Liferay Company Index on Port ${elasticsearch.port}</echo>
 		<echo>##</echo>
 		<echo></echo>
 		<echo>${curl.output.company.index}</echo>
 		<echo></echo>
 
-		<get-testcase-property property.name="elasticsearch.multiple.connections" />
+		<exec executable="curl" outputproperty="curl.output.elasticsearch.indices">
+			<arg value="localhost:${elasticsearch.port}/_cat/indices" />
+			<arg value="-s" />
+		</exec>
 
-		<if>
-			<and>
-				<equals arg1="${elasticsearch.multiple.connections}" arg2="true" />
-				<not>
-					<contains string="${test.name.skip.portal.instance}" substring="Smoke" />
-				</not>
-			</and>
-			<then>
-				<exec executable="curl" outputproperty="curl.output.local.cluster.company.index">
-					<arg value="-H" />
-					<arg value="Content-Type: application/json" />
-					<arg value="localhost:9202/liferay-${companyId}/_search?pretty" />
-					<arg value="-d" />
-					<arg value="${company.index.query}" />
-				</exec>
-
-				<echo></echo>
-				<echo>##</echo>
-				<echo>## Local Elasticsearch Cluster Liferay Company Index</echo>
-				<echo>##</echo>
-				<echo></echo>
-				<echo>${curl.output.local.cluster.company.index}</echo>
-				<echo></echo>
-
-				<exec executable="curl" outputproperty="curl.output.local.cluster.indices">
-					<arg value="-X" />
-					<arg value="GET" />
-					<arg value="localhost:9202/_cat/indices?h=idx" />
-					<arg value="-s" />
-				</exec>
-
-				<echo></echo>
-				<echo>##</echo>
-				<echo>## Local Elasticsearch Cluster Indices</echo>
-				<echo>##</echo>
-				<echo></echo>
-				<echo>${curl.output.local.cluster.indices}</echo>
-				<echo></echo>
-			</then>
-		</if>
+		<echo></echo>
+		<echo>##</echo>
+		<echo>## All Elasticsearch Indices on Port ${elasticsearch.port}</echo>
+		<echo>##</echo>
+		<echo></echo>
+		<echo>${curl.output.elasticsearch.indices}</echo>
+		<echo></echo>
 	</target>
 
 	<target name="restore-backup">

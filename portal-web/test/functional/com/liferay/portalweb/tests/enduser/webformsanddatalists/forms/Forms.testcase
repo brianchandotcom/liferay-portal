@@ -3348,6 +3348,14 @@ definition {
 
 		Form.closeSidebar();
 
+		Form.gotoAddField(
+			fieldPositionNumber = "13",
+			fieldType = "Color");
+
+		var colorFieldName = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
 		Form.save();
 
 		ProductMenu.gotoPortlet(
@@ -3431,6 +3439,10 @@ definition {
 			navTab = "Documents and Media",
 			uploadFileName = "Document_1.jpg");
 
+		FormFields.editColor(
+			colorSwatchItem = "2BA676",
+			fieldLabel = "Color");
+
 		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
@@ -3501,6 +3513,11 @@ definition {
 		FormFields.viewTextField(
 			fieldLabel = "Value",
 			fieldName = "${fieldNumericField}");
+
+		FormsAdmin.viewColorEntry(
+			fieldLabel = "Color",
+			fieldName = "${colorFieldName}",
+			fieldValue = "2BA676");
 	}
 
 	@priority = "5"

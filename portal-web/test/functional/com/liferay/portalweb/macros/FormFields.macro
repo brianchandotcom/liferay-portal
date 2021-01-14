@@ -75,6 +75,16 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editColor {
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "FormFields#COLOR_PICKER");
+
+		Click(
+			key_colorSwatchItem = "${colorSwatchItem}",
+			locator1 = "FormFields#COLOR_SWATCH_ITEM");
+	}
+
 	macro editDate {
 		Type(
 			key_fieldName = "${fieldName}",
@@ -489,6 +499,21 @@ definition {
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#CHECKBOX");
+	}
+
+	macro viewColorLabel {
+		AssertTextEquals.assertText(
+			key_fieldLabel = "${fieldLabel}",
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#LABEL",
+			value1 = "${fieldLabel}");
+	}
+
+	macro viewColorValue {
+		AssertTextEquals(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#COLOR_FIELD",
+			value1 = "${fieldValue}");
 	}
 
 	macro viewDateField {

@@ -142,6 +142,18 @@ definition {
 		AssertElementPresent(locator1 = "FormFields#CHECKBOX");
 	}
 
+	macro viewColorEntry {
+		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
+
+		FormFields.viewColorLabel(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}");
+
+		FormFields.viewColorValue(
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}");
+	}
+
 	macro viewDateEntry {
 		FormsAdmin.viewCannotEditFormEntries();
 

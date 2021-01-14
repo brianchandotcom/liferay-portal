@@ -79,6 +79,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--COLOR-->
+<tr>
+	<td>COLOR_FIELD</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'color-picker')]//div[contains(@class,'color')]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_PICKER</td>
+	<td>//label[normalize-space(text())='${key_fieldLabel}']/following-sibling::div[contains(@class,'color-picker')]//button[contains(@class,'clay-color-btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_SWATCH_ITEM</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[contains(@class,'color')][@*='${key_colorSwatchItem}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DATE-->
 <tr>
 	<td>DATE_FIELD</td>

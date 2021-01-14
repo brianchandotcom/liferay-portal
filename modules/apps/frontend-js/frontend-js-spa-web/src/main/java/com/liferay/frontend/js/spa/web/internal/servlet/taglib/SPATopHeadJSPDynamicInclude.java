@@ -101,7 +101,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			"validStatusCodes", _spaHelper.getValidStatusCodesJSONArray()
 		);
 
-		StringBundler javascriptSB = new StringBundler();
+		StringBundler javascriptSB = new StringBundler(3);
 
 		javascriptSB.append("frontendJsSpaWebInit.default(");
 		javascriptSB.append(configJSONObject.toJSONString());

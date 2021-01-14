@@ -40,9 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 public class ReactRendererUtil {
 
 	public static void renderReact(
-		ComponentDescriptor componentDescriptor, Map<String, Object> props,
-		HttpServletRequest httpServletRequest,
-		JSLoaderSupport jsLoaderSupport, Portal portal, Writer writer)
+			ComponentDescriptor componentDescriptor, Map<String, Object> props,
+			HttpServletRequest httpServletRequest,
+			JSLoaderSupport jsLoaderSupport, Portal portal, Writer writer)
 		throws IOException {
 
 		String placeholderId = StringUtil.randomId();
@@ -106,9 +106,9 @@ public class ReactRendererUtil {
 	}
 
 	private static void _renderJavaScript(
-		ComponentDescriptor componentDescriptor, Map<String, Object> props,
-		HttpServletRequest httpServletRequest, String placeholderId,
-		JSLoaderSupport jsLoaderSupport, Portal portal, Writer writer)
+			ComponentDescriptor componentDescriptor, Map<String, Object> props,
+			HttpServletRequest httpServletRequest, String placeholderId,
+			JSLoaderSupport jsLoaderSupport, Portal portal, Writer writer)
 		throws IOException {
 
 		StringBundler dependenciesSB = new StringBundler(7);
@@ -128,7 +128,7 @@ public class ReactRendererUtil {
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		StringBundler javascriptSB = new StringBundler(14);
+		StringBundler javascriptSB = new StringBundler(11);
 
 		javascriptSB.append("render(renderFunction");
 		javascriptSB.append(placeholderId);

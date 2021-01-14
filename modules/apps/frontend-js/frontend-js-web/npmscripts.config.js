@@ -14,13 +14,13 @@
 
 module.exports = {
 	bridges: [
-		"lodash.escape",
-		"lodash.groupby",
-		"lodash.isequal",
-		"lodash.memoize",
-		"lodash.unescape",
-		"svg4everybody",
-		"uuid",
+		'lodash.escape',
+		'lodash.groupby',
+		'lodash.isequal',
+		'lodash.memoize',
+		'lodash.unescape',
+		'svg4everybody',
+		'uuid',
 	],
 	federation: true,
 	preset: '@liferay/npm-scripts/src/presets/standard',

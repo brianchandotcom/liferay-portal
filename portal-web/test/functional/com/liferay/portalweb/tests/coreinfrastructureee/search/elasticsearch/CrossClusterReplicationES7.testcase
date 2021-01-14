@@ -1,6 +1,7 @@
 @component-name = "portal-search-ee"
 definition {
 
+	property elasticsearch.ccr.enabled = "true";
 	property elasticsearch.multiple.connections = "true";
 	property osgi.app.includes = "portal-search-elasticsearch-cross-cluster-replication";
 	property portal.release = "true";

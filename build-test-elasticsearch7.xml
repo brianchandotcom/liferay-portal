@@ -787,10 +787,8 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				<param name="elasticsearch.port" value="9202" />
 			</antcall>
 
-			<get-testcase-property property.name="osgi.app.includes" />
-
 			<if>
-				<contains string="${osgi.app.includes}" substring="portal-search-elasticsearch-cross-cluster-replication" />
+				<istrue value="${elasticsearch.ccr.enabled}" />
 				<then>
 					<start-elastic-trial />
 
@@ -1290,6 +1288,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<isset property="env.JENKINS_HOME" />
 			<then>
 				<get-testcase-property property.name="elastic.xpack.enabled" />
+				<get-testcase-property property.name="elasticsearch.ccr.enabled" />
 				<get-testcase-property property.name="elasticsearch.cluster.size" />
 				<get-testcase-property property.name="elasticsearch.ltr.enabled" />
 				<get-testcase-property property.name="elasticsearch.multiple.connections" />
@@ -1299,6 +1298,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<local name="setup.type" />
 
 		<property if:true="${elastic.xpack.enabled}" name="setup.type" value="elastic.xpack.enabled" />
+		<property if:true="${elasticsearch.ccr.enabled}" name="setup.type" value="elasticsearch.multiple.connections" />
 		<property if:set="elasticsearch.cluster.size" name="setup.type" value="elasticsearch.cluster.size" />
 		<property if:true="${elasticsearch.ltr.enabled}" name="setup.type" value="elasticsearch.ltr.enabled" />
 		<property if:true="${elasticsearch.multiple.connections}" name="setup.type" value="elasticsearch.multiple.connections" />

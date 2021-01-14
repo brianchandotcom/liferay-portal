@@ -28,12 +28,13 @@ import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
-import com.liferay.commerce.product.util.CPCompareHelperUtil;
+import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -53,6 +54,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CPCompareContentMiniDisplayContext {
 
 	public CPCompareContentMiniDisplayContext(
+			CPCompareHelper cpCompareHelper,
 			CPContentListEntryRendererRegistry
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
@@ -61,6 +63,7 @@ public class CPCompareContentMiniDisplayContext {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		_cpCompareHelper = cpCompareHelper;
 		_cpContentListEntryRendererRegistry =
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
@@ -88,10 +91,13 @@ public class CPCompareContentMiniDisplayContext {
 				PortalUtil.getOriginalServletRequest(httpServletRequest);
 
 			_cpDefinitionIds = new ArrayList<>(
-				CPCompareHelperUtil.getCPDefinitionIds(
+				_cpCompareHelper.getCPDefinitionIds(
 					commerceContext.getCommerceChannelGroupId(),
 					commerceAccount.getCommerceAccountId(),
-					originalHttpServletRequest.getSession()));
+					CookieKeys.getCookie(
+						originalHttpServletRequest,
+						_cpCompareHelper.getCPDefinitionIdsCookieKey(
+							commerceContext.getCommerceChannelGroupId()))));
 		}
 		else {
 			_cpDefinitionIds = new ArrayList<>();
@@ -276,6 +282,7 @@ public class CPCompareContentMiniDisplayContext {
 
 	private final CPCompareContentMiniPortletInstanceConfiguration
 		_cpCompareContentMiniPortletInstanceConfiguration;
+	private final CPCompareHelper _cpCompareHelper;
 	private final CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 	private final CPContentListRendererRegistry _cpContentListRendererRegistry;

@@ -23,7 +23,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.util.CPCompareHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -58,12 +58,12 @@ public class CompareCheckboxTag extends IncludeTag {
 				commerceAccountId = commerceAccount.getCommerceAccountId();
 			}
 
-			HttpServletRequest originalHttpServletRequest =
-				PortalUtil.getOriginalServletRequest(request);
-
 			List<Long> cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(
 				commerceContext.getCommerceChannelGroupId(), commerceAccountId,
-				originalHttpServletRequest.getSession());
+				CookieKeys.getCookie(
+					request,
+					CPCompareHelperUtil.getCPDefinitionIdsCookieKey(
+						commerceContext.getCommerceChannelGroupId())));
 
 			_inCompare = cpDefinitionIds.contains(_cpDefinitionId);
 		}

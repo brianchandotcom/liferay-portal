@@ -28,7 +28,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.util.CPContentHelper;
-import com.liferay.commerce.product.util.CPCompareHelperUtil;
+import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -147,12 +148,12 @@ public class MiniumCPContentListEntryRenderer
 				commerceAccountId = commerceAccount.getCommerceAccountId();
 			}
 
-			HttpServletRequest originalHttpServletRequest =
-				_portal.getOriginalServletRequest(httpServletRequest);
-
-			List<Long> cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(
+			List<Long> cpDefinitionIds = _cpCompareHelper.getCPDefinitionIds(
 				commerceContext.getCommerceChannelGroupId(), commerceAccountId,
-				originalHttpServletRequest.getSession());
+				CookieKeys.getCookie(
+					httpServletRequest,
+					_cpCompareHelper.getCPDefinitionIdsCookieKey(
+						commerceContext.getCommerceChannelGroupId())));
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -189,6 +190,9 @@ public class MiniumCPContentListEntryRenderer
 			_portal.getPortalURL(httpServletRequest) +
 				"/o/commerce-ui/cart-item");
 		context.put("categories", null);
+		context.put(
+			"commerceChannelGroupId",
+			commerceContext.getCommerceChannelGroupId());
 		context.put("description", cpCatalogEntry.getShortDescription());
 		context.put(
 			"detailsLink",
@@ -331,6 +335,9 @@ public class MiniumCPContentListEntryRenderer
 
 	@Reference
 	private CommerceWishListService _commerceWishListService;
+
+	@Reference
+	private CPCompareHelper _cpCompareHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

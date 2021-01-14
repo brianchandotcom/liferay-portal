@@ -14,19 +14,19 @@
 
 package com.liferay.commerce.product.internal.util;
 
-import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,30 +38,15 @@ import org.osgi.service.component.annotations.Reference;
 public class CPCompareHelperImpl implements CPCompareHelper {
 
 	@Override
-	public void addCompareProduct(
-			long groupId, long commerceAccountId, long cpDefinitionId,
-			HttpSession httpSession)
-		throws PortalException {
-
-		List<Long> cpDefinitionIds = getCPDefinitionIds(
-			groupId, commerceAccountId, httpSession);
-
-		if (!cpDefinitionIds.contains(cpDefinitionId)) {
-			cpDefinitionIds.add(cpDefinitionId);
-		}
-
-		setCPDefinitionIds(groupId, cpDefinitionIds, httpSession);
-	}
-
-	@Override
 	public List<CPCatalogEntry> getCPCatalogEntries(
-			long groupId, long commerceAccountId, HttpSession httpSession)
+			long groupId, long commerceAccountId,
+			String cpDefinitionIdsCookieValue)
 		throws PortalException {
 
-		List<Long> cpDefinitionIds = (List<Long>)httpSession.getAttribute(
-			_getSessionAttributeKey(groupId));
+		List<Long> cpDefinitionIds = _getCpDefinitionIds(
+			cpDefinitionIdsCookieValue);
 
-		if (cpDefinitionIds == null) {
+		if (cpDefinitionIds.isEmpty()) {
 			return new ArrayList<>();
 		}
 
@@ -92,12 +77,13 @@ public class CPCompareHelperImpl implements CPCompareHelper {
 	}
 
 	public List<Long> getCPDefinitionIds(
-		long groupId, long commerceAccountId, HttpSession httpSession) {
+		long groupId, long commerceAccountId,
+		String cpDefinitionIdsCookieValue) {
 
-		List<Long> cpDefinitionIds = (List<Long>)httpSession.getAttribute(
-			_getSessionAttributeKey(groupId));
+		List<Long> cpDefinitionIds = _getCpDefinitionIds(
+			cpDefinitionIdsCookieValue);
 
-		if (cpDefinitionIds == null) {
+		if (cpDefinitionIds.isEmpty()) {
 			return new ArrayList<>();
 		}
 
@@ -124,44 +110,21 @@ public class CPCompareHelperImpl implements CPCompareHelper {
 			}
 		}
 
-		setCPDefinitionIds(groupId, activeCPDefinitionIds, httpSession);
-
 		return activeCPDefinitionIds;
 	}
 
 	@Override
-	public void removeCompareProduct(
-			long groupId, long commerceAccountId, long cpDefinitionId,
-			HttpSession httpSession)
-		throws PortalException {
-
-		List<Long> cpDefinitionIds = getCPDefinitionIds(
-			groupId, commerceAccountId, httpSession);
-
-		if (cpDefinitionIds.contains(cpDefinitionId)) {
-			cpDefinitionIds.remove(cpDefinitionId);
-		}
-
-		setCPDefinitionIds(groupId, cpDefinitionIds, httpSession);
+	public String getCPDefinitionIdsCookieKey(long commerceChannelGroupId) {
+		return "COMMERCE_COMPARE_cpDefinitionIds_" + commerceChannelGroupId;
 	}
 
-	@Override
-	public void setCPDefinitionIds(
-		long groupId, List<Long> cpDefinitionIds, HttpSession httpSession) {
-
-		httpSession.setAttribute(
-			_getSessionAttributeKey(groupId), cpDefinitionIds);
-	}
-
-	private String _getSessionAttributeKey(long groupId) {
-		return "LIFERAY_SHARED_CP_DEFINITION_IDS_" + groupId;
+	private List<Long> _getCpDefinitionIds(String cookieValue) {
+		return ListUtil.fromArray(
+			StringUtil.split(cookieValue, StringPool.COLON, -1L));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPCompareHelperImpl.class);
-
-	@Reference
-	private CommerceAccountService _commerceAccountService;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

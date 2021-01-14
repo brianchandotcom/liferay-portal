@@ -19,6 +19,7 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,7 +49,7 @@ public class CPCompareContentConfigurationAction
 		try {
 			CPCompareContentDisplayContext cpCompareContentDisplayContext =
 				new CPCompareContentDisplayContext(
-					_cpContentListEntryRendererRegistry,
+					_cpCompareHelper, _cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDefinitionHelper,
 					_cpTypeServicesTracker, httpServletRequest);
 
@@ -74,6 +75,9 @@ public class CPCompareContentConfigurationAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPCompareContentConfigurationAction.class);
+
+	@Reference
+	private CPCompareHelper _cpCompareHelper;
 
 	@Reference
 	private CPContentListEntryRendererRegistry

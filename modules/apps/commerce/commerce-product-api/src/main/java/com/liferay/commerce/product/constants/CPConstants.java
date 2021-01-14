@@ -86,13 +86,20 @@ public class CPConstants {
 
 	public static final String SEPARATOR_PRODUCT_URL = "/p/";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static final String SERVICE_NAME = "com.liferay.commerce.product";
-
-	public static final String SERVICE_NAME_C_PRODUCT_VERSIONING =
-		"com.liferay.commerce.product.versioning";
 
 	public static final String SERVICE_NAME_CP_OPTION =
 		"com.liferay.commerce.product.option";
+
+	public static final String SERVICE_NAME_CP_VERSIONING =
+		"com.liferay.commerce.product.versioning";
+
+	public static final String SERVICE_NAME_PRODUCT =
+		"com.liferay.commerce.product";
 
 	public static final String TAX_RESOURCE_NAME = "com.liferay.commerce.tax";
 

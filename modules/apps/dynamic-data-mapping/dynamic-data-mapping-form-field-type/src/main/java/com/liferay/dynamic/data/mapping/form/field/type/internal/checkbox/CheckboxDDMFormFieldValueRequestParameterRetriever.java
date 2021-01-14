@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.COLOR,
+	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX,
 	service = DDMFormFieldValueRequestParameterRetriever.class
 )
 public class CheckboxDDMFormFieldValueRequestParameterRetriever

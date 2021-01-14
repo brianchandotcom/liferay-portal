@@ -1,4 +1,3 @@
-<%@ page import="com.liferay.commerce.product.options.web.internal.frontend.CommerceOptionDataSetConstants" %>
 
 <%--
 /**
@@ -130,15 +129,3 @@ long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 		</div>
 	</div>
 </aui:form>
-
-<liferay-frontend:component
-	context='<%=
-			HashMapBuilder.<String, Object>put(
-				"editOptionURL", editOptionURL
-			).put(
-				"windowState", LiferayWindowState.MAXIMIZED.toString()
-			).put(
-				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
-			).build()
-		%>'
-	module="js/add_option"/>

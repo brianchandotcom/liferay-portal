@@ -49,11 +49,19 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 						"fileEntryTypeId = ? "));
 			ResultSet rs = ps1.executeQuery()) {
 
+			String ddmStructureDefinition = StringUtil.read(
+				UpgradeDLFileEntryType.class.getResourceAsStream(
+					"dependencies/ddm-structure.json"));
+
+			String ddmStructureLayoutDefinition = StringUtil.read(
+				UpgradeDLFileEntryType.class.getResourceAsStream(
+					"dependencies/ddm-structure-layout.json"));
+
 			while (rs.next()) {
 				long ddmStructureId = _insertDDMStructure(
 					rs.getLong("groupId"), rs.getLong("companyId"),
 					rs.getLong("userId"), rs.getString("userName"),
-					rs.getString("name"));
+					rs.getString("name"), ddmStructureDefinition);
 
 				_insertDDMStructureLink(
 					rs.getLong("companyId"), rs.getLong("fileEntryTypeId"),
@@ -62,13 +70,14 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 				long ddmStructureVersionId = _insertDDMStructureVersion(
 					rs.getLong("groupId"), rs.getLong("companyId"),
 					rs.getLong("userId"), rs.getString("userName"),
-					rs.getString("name"), ddmStructureId);
+					rs.getString("name"), ddmStructureId,
+					ddmStructureDefinition);
 
 				_insertDDMStructureLayout(
 					rs.getLong("groupId"), rs.getLong("companyId"),
 					rs.getLong("userId"), rs.getString("userName"),
-					rs.getString("name"), ddmStructureId,
-					ddmStructureVersionId);
+					rs.getString("name"), ddmStructureId, ddmStructureVersionId,
+					ddmStructureLayoutDefinition);
 
 				ResourceLocalServiceUtil.addResources(
 					rs.getLong("companyId"), rs.getLong("groupId"),
@@ -97,7 +106,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 	private long _insertDDMStructure(
 			long groupId, long companyId, long userId, String userName,
-			String name)
+			String name, String ddmStructureDefinition)
 		throws Exception {
 
 		try (PreparedStatement ps2 = connection.prepareStatement(
@@ -129,11 +138,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 			ps2.setString(12, String.valueOf(ddmStructureId));
 			ps2.setString(13, name);
-			ps2.setString(
-				14,
-				StringUtil.read(
-					UpgradeDLFileEntryType.class.getResourceAsStream(
-						"dependencies/ddm-structure.json")));
+			ps2.setString(14, ddmStructureDefinition);
 
 			ps2.executeUpdate();
 
@@ -143,7 +148,8 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 	private void _insertDDMStructureLayout(
 			long groupId, long companyId, long userId, String userName,
-			String name, long ddmStructureId, long ddmStructureVersionId)
+			String name, long ddmStructureId, long ddmStructureVersionId,
+			String ddmStructureLayoutDefinition)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -170,11 +176,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 			ps.setString(10, String.valueOf(ddmStructureId));
 			ps.setLong(11, ddmStructureVersionId);
 			ps.setString(12, name);
-			ps.setString(
-				13,
-				StringUtil.read(
-					UpgradeDLFileEntryType.class.getResourceAsStream(
-						"dependencies/ddm-structure-layout.json")));
+			ps.setString(13, ddmStructureLayoutDefinition);
 
 			ps.executeUpdate();
 		}
@@ -199,7 +201,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 	private long _insertDDMStructureVersion(
 			long groupId, long companyId, long userId, String userName,
-			String name, long ddmStructureId)
+			String name, long ddmStructureId, String ddmStructureDefinition)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -221,11 +223,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 
 			ps.setLong(7, ddmStructureId);
 			ps.setString(8, name);
-			ps.setString(
-				9,
-				StringUtil.read(
-					UpgradeDLFileEntryType.class.getResourceAsStream(
-						"dependencies/ddm-structure.json")));
+			ps.setString(9, ddmStructureDefinition);
 
 			ps.setLong(10, userId);
 			ps.setString(11, userName);

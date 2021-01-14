@@ -137,6 +137,55 @@ definition {
 			value1 = "Content per Stage");
 	}
 
+	@description = "When one or more web contents have not an assigned category in the Vocab1 or in the Vocab2, but they have at least one assigned category in one of them, these contents are represented by a "No [VocabularyName] Category" label in the X axis (assets with no category in the Vocab2), or a "No [VocabularyName] Category" checkbox above the chart (assets with no category in the Vocab1)"
+	@priority = "5"
+	test AuditGraphNoContentsForEachCategory {
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Audience 1",
+			vocabularyName = "Audience",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC Title");
+		
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithCategoryCP(
+			categoryName = "Stage 1",
+			vocabularyName = "Stage",
+			webContentContent = "Web Content Content",
+			webContentTitle = "WC Title 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+			value1 = "No Audience",
+			xAxisCategoryName = "No Audience");
+
+		AssertTextPresent(
+			auditGraphCheckboxName = "No Stage Category",
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
+			value1 = "No Stage Category");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title 2");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title 2");
+	}
+
 	@description = "When there are not contents with Stage's categories, the X axis will show just one bar per each one of Audience's categories representing the total number of contents labeled with those categories"
 	@priority = "5"
 	test AuditGraphNoContentsForStage {

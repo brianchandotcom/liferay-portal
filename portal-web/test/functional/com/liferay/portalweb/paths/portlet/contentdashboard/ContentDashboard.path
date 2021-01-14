@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>AUDIT_GRAPH_CATEGORY_CHECKBOX</td>
-	<td>//*[contains(@class, 'inline-item-after') and contains(text(),'Stage 1')]</td>
+	<td>//*[contains(@class, 'inline-item-after') and contains(text(),'${auditGraphCheckboxName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -199,7 +199,7 @@
 </tr>
 <tr>
 	<td>X_AXIS_VOCABULARY_NAME</td>
-	<td>//button[contains(@class, 'recharts-layer recharts-cartesian-axis-tick') and contains(text(),'${xAxisCategoryName}')]</td>
+	<td>//*[contains(@class, 'recharts-layer recharts-cartesian-axis-tick')]//*[contains(text(), '${xAxisCategoryName}')]</td>
 	<td></td>
 </tr>
 </tbody>

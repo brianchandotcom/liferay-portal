@@ -93,6 +93,17 @@ const AppContent = ({
 							sidebarOpen,
 							sidebarPanelId,
 						})}
+						currentPanelId={state.sidebarPanelId}
+						onChange={({sidebarOpen, sidebarPanelId}) =>
+							dispatch({
+								payload: {
+									sidebarOpen,
+									sidebarPanelId,
+								},
+								type: 'SWITCH_SIDEBAR_PANEL',
+							})
+						}
+						open={state.sidebarOpen}
 						panels={panels}
 						sidebarPanels={sidebarPanels}
 						variant={sidebarVariant}

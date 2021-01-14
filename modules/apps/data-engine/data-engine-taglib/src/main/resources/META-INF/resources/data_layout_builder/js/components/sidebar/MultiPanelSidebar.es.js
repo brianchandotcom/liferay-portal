@@ -37,14 +37,13 @@ const swallow = [(value) => value, (_error) => undefined];
 
 export default function MultiPanelSidebar({
 	createPlugin,
+	currentPanelId,
+	onChange,
+	open,
 	panels,
 	sidebarPanels,
 	variant = 'dark',
 }) {
-	const [{sidebarOpen, sidebarPanelId}, setSidebarState] = useState({
-		sidebarOpen: true,
-		sidebarPanelId: 'fields',
-	});
 	const [hasError, setHasError] = useStateSafe(false);
 	const isMounted = useIsMounted();
 	const load = useLoad();
@@ -103,11 +102,11 @@ export default function MultiPanelSidebar({
 
 		if (sideNavigation) {
 			const onCloseSidebar = () => {
-				if (sidebarOpen) {
+				if (open) {
 					changeAlertClassName('data-engine-form-builder-messages');
 				}
 
-				setSidebarState({
+				onChange({
 					sidebarOpen: false,
 					sidebarPanelId: null,
 				});
@@ -126,20 +125,20 @@ export default function MultiPanelSidebar({
 				sideNavigationListener.removeListener();
 			};
 		}
-	}, [sidebarOpen]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [open]);
 
 	const handleClick = (panel) => {
-		const open =
-			panel.sidebarPanelId === sidebarPanelId ? !sidebarOpen : true;
+		const isOpen = panel.sidebarPanelId === currentPanelId ? !open : true;
 		const productMenuToggle = document.querySelector(
 			'.product-menu-toggle'
 		);
 
-		if (productMenuToggle && !sidebarOpen) {
+		if (productMenuToggle && !open) {
 			Liferay.SideNavigation.hide(productMenuToggle);
 		}
 
-		if (open) {
+		if (isOpen) {
 			changeAlertClassName(
 				'data-engine-form-builder-messages data-engine-form-builder-messages--collapsed'
 			);
@@ -148,8 +147,8 @@ export default function MultiPanelSidebar({
 			changeAlertClassName('data-engine-form-builder-messages');
 		}
 
-		setSidebarState({
-			sidebarOpen: open,
+		onChange({
+			sidebarOpen: isOpen,
 			sidebarPanelId: panel.sidebarPanelId,
 		});
 	};
@@ -183,7 +182,7 @@ export default function MultiPanelSidebar({
 								const panel = sidebarPanels[panelId];
 
 								const active =
-									sidebarOpen && sidebarPanelId === panelId;
+									open && currentPanelId === panelId;
 								const {
 									icon,
 									isLink,
@@ -252,7 +251,7 @@ export default function MultiPanelSidebar({
 				</nav>
 				<div
 					className={classNames('multi-panel-sidebar-content', {
-						'multi-panel-sidebar-content-open': sidebarOpen,
+						'multi-panel-sidebar-content-open': open,
 					})}
 				>
 					{hasError ? (
@@ -261,7 +260,7 @@ export default function MultiPanelSidebar({
 								block
 								displayType="secondary"
 								onClick={() => {
-									setSidebarState({
+									onChange({
 										sidebarOpen: false,
 										sidebarPanelId:
 											panels[0] && panels[0][0],
@@ -288,7 +287,7 @@ export default function MultiPanelSidebar({
 									className={classNames({
 										'd-none':
 											panel.sidebarPanelId !==
-											sidebarPanelId,
+											currentPanelId,
 									})}
 									key={panel.sidebarPanelId}
 								>

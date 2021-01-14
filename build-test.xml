@@ -5406,6 +5406,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 				</then>
 			</if>
+
+			<if>
+				<socket port="5601" server="localhost" />
+				<then>
+					<ant antfile="build-test-elasticsearch7.xml" target="stop-kibana" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

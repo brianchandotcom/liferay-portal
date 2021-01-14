@@ -1474,19 +1474,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				<echo>The Elasticsearch server in ${elasticsearch.stop.dir} has already been stopped</echo>
 			</else>
 		</if>
-
-		<condition property="kibana.running">
-			<socket port="5601" server="localhost" />
-		</condition>
-
-		<if>
-			<equals arg1="${kibana.running}" arg2="true" />
-			<then>
-				<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
-
-				<antcall target="stop-kibana" />
-			</then>
-		</if>
 	</target>
 
 	<target name="stop-kibana">
@@ -1510,5 +1497,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				</exec>
 			</then>
 		</if>
+
+		<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
 	</target>
 </project>

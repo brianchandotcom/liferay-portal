@@ -86,39 +86,19 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 	}
 
 	@Override
-	public ContentPage getSiteContentPagePrivateFriendlyUrlPath(
-			Long siteId, String friendlyUrlPath)
+	public ContentPage getSiteContentPage(Long siteId, String friendlyUrlPath)
 		throws Exception {
 
 		return _toContentPage(
-			_getLayout(siteId, true, friendlyUrlPath),
-			"getSiteContentPagePrivateFriendlyUrlPath");
+			_getLayout(siteId, friendlyUrlPath), "getSiteContentPage");
 	}
 
 	@Override
-	public String getSiteContentPagePrivateFriendlyUrlPathRenderedPage(
+	public String getSiteContentPageRenderedPage(
 			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
-		return _toHTML(friendlyUrlPath, true, siteId);
-	}
-
-	@Override
-	public ContentPage getSiteContentPagePublicFriendlyUrlPath(
-			Long siteId, String friendlyUrlPath)
-		throws Exception {
-
-		return _toContentPage(
-			_getLayout(siteId, false, friendlyUrlPath),
-			"getSiteContentPagePublicFriendlyUrlPath");
-	}
-
-	@Override
-	public String getSiteContentPagePublicFriendlyUrlPathRenderedPage(
-			Long siteId, String friendlyUrlPath)
-		throws Exception {
-
-		return _toHTML(friendlyUrlPath, false, siteId);
+		return _toHTML(friendlyUrlPath, siteId);
 	}
 
 	@Override
@@ -152,6 +132,9 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 						LayoutConstants.TYPE_CONTENT
 					});
 
+				searchContext.setAttribute(
+					"privateLayout", Boolean.FALSE.toString());
+
 				Group group = groupLocalService.getGroup(siteId);
 
 				searchContext.setCompanyId(group.getCompanyId());
@@ -170,8 +153,7 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 			});
 	}
 
-	private Layout _getLayout(
-			Long groupId, boolean privateLayout, String friendlyUrlPath)
+	private Layout _getLayout(long groupId, String friendlyUrlPath)
 		throws Exception {
 
 		String languageId = LocaleUtil.toLanguageId(
@@ -179,8 +161,8 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 		LayoutFriendlyURL layoutFriendlyURL =
 			_layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
-				groupId, privateLayout,
-				StringPool.FORWARD_SLASH + friendlyUrlPath, languageId);
+				groupId, false, StringPool.FORWARD_SLASH + friendlyUrlPath,
+				languageId);
 
 		return Optional.ofNullable(
 			layoutFriendlyURL
@@ -191,16 +173,7 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 			() -> {
 				StringBuilder sb = new StringBuilder(6);
 
-				sb.append("No ");
-
-				if (privateLayout) {
-					sb.append("private ");
-				}
-				else {
-					sb.append("public ");
-				}
-
-				sb.append("layout exists with friendly URL path ");
+				sb.append("No public layout exists with friendly URL path ");
 				sb.append(friendlyUrlPath);
 				sb.append(" and language ID ");
 				sb.append(languageId);
@@ -255,11 +228,10 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 			layout);
 	}
 
-	private String _toHTML(
-			String friendlyUrlPath, boolean privateLayout, Long groupId)
+	private String _toHTML(String friendlyUrlPath, long groupId)
 		throws Exception {
 
-		Layout layout = _getLayout(groupId, privateLayout, friendlyUrlPath);
+		Layout layout = _getLayout(groupId, friendlyUrlPath);
 
 		contextHttpServletRequest = DynamicServletRequest.addQueryString(
 			contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);

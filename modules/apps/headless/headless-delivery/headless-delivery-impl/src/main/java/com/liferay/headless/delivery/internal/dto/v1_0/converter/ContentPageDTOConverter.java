@@ -103,7 +103,6 @@ public class ContentPageDTOConverter
 				pageSettings = PageSettingsUtil.getPageSettings(
 					_dlAppService, _dlURLHelper, dtoConverterContext,
 					_layoutSEOEntryLocalService, layout, _storageEngineManager);
-				privatePage = layout.isPrivateLayout();
 				siteId = layout.getGroupId();
 				taxonomyCategoryBriefs = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(

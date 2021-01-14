@@ -99,4 +99,10 @@ public class CommerceHealthStatusConstants {
 	public static final String PRICING_COMMERCE_HEALTH_STATUS_KEY =
 		"pricing.commerce.health.status.key";
 
+	public static final String SAP_COMMERCE_HEALTH_STATUS_DESCRIPTION =
+		"service.access.policy.commerce.health.status.description";
+
+	public static final String SAP_COMMERCE_HEALTH_STATUS_KEY =
+		"service.access.policy.commerce.health.status.key";
+
 }

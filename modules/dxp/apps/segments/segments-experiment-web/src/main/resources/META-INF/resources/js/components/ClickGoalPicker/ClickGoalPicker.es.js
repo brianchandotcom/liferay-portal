@@ -53,6 +53,8 @@ const THROTTLE_INTERVAL_MS = 100;
 
 const DispatchContext = React.createContext();
 
+const OVERLAY_TARGET_CLASS = 'lfr-segments-experiment-click-goal-target';
+
 /**
  * Top-level entry point for displaying, selecting, editing and removing click
  * goal targets.
@@ -376,9 +378,11 @@ function OverlayContainer({allowEdit, root}) {
 
 	const handleMouseUp = useCallback(
 		(event) => {
-			if (mousedownRef.current === true) {
-				event.preventDefault();
-				stopImmediatePropagation(event);
+			const overlayTarget = event.target.closest(
+				`.${OVERLAY_TARGET_CLASS}`
+			);
+
+			if (mousedownRef.current === true && !overlayTarget) {
 				dispatch({type: 'deactivate'});
 			}
 
@@ -515,7 +519,7 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 
 	return (
 		<div
-			className="lfr-segments-experiment-click-goal-target"
+			className={OVERLAY_TARGET_CLASS}
 			style={{
 				alignItems: align === 'left' ? 'flex-start' : 'flex-end',
 				left: align === 'left' ? spaceOnLeft : null,

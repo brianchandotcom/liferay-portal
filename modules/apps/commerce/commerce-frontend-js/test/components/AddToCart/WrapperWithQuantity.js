@@ -96,7 +96,7 @@ describe('WrapperWithQuantity', () => {
 
 		it('renders with the correct default class names', () => {
 			const DEFAULT_CLASSES = [
-				'add-to-cart',
+				'add-to-cart-wrapper',
 				'align-items-center',
 				'd-flex',
 			];
@@ -124,7 +124,7 @@ describe('WrapperWithQuantity', () => {
 
 		it('renders a select element and a button element in column, if button is block-styled', () => {
 			const DEFAULT_CLASSES = [
-				'add-to-cart',
+				'add-to-cart-wrapper',
 				'align-items-center',
 				'd-flex',
 			];

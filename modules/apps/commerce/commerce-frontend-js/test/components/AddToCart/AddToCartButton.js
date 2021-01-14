@@ -34,6 +34,7 @@ describe('AddToCartButton', () => {
 		},
 		cpInstance: {
 			skuId: 12345,
+			stockQuantity: 10,
 		},
 	};
 
@@ -219,7 +220,7 @@ describe('AddToCartButton', () => {
 
 			const cpInstance = {
 				...INITIAL_PROPS.cpInstance,
-				isInCart: true,
+				inCart: true,
 			};
 
 			const {container} = render(
@@ -240,7 +241,7 @@ describe('AddToCartButton', () => {
 		it("renders a disabled Button element if no 'accountId' is provided", () => {
 			const cpInstance = {
 				...INITIAL_PROPS.cpInstance,
-				isInCart: true,
+				inCart: true,
 			};
 
 			const {getByRole} = render(
@@ -262,6 +263,7 @@ describe('AddToCartButton', () => {
 				accountId: 12345,
 				options: '[]',
 				quantity: 1,
+				stockQuantity: 10,
 			},
 		};
 
@@ -347,7 +349,7 @@ describe('AddToCartButton', () => {
 				...INTERACTION_PROPS,
 				cpInstance: {
 					...INTERACTION_PROPS.cpInstance,
-					isInCart: true,
+					inCart: true,
 				},
 			};
 
@@ -377,7 +379,7 @@ describe('AddToCartButton', () => {
 				...INTERACTION_PROPS,
 				cpInstance: {
 					...INTERACTION_PROPS.cpInstance,
-					isInCart: true,
+					inCart: true,
 				},
 			};
 
@@ -399,9 +401,19 @@ describe('AddToCartButton', () => {
 				'present in the order, updates the local cpInstance and renders ' +
 				"the button with the 'is-added' class name",
 			async () => {
+				const itemsContaining = {
+					items: [
+						{
+							skuId: INTERACTION_PROPS.cpInstance.skuId,
+						},
+					],
+				};
+
 				ServiceProvider.DeliveryCartAPI(
 					'v1'
-				).getItemById = jest.fn().mockReturnValue(Promise.resolve());
+				).getItemsByCartId = jest
+					.fn()
+					.mockReturnValue(Promise.resolve(itemsContaining));
 
 				let resetCBTrigger;
 
@@ -413,25 +425,31 @@ describe('AddToCartButton', () => {
 
 				const props = {
 					...INTERACTION_PROPS,
-					cpInstance: {
-						...INTERACTION_PROPS.cpInstance,
+					orderId: 123,
+					settings: {
+						willUpdate: true,
 					},
 				};
 
-				const outerCPInstanceId = 7777;
+				const outerCPInstance = {
+					cpInstance: {
+						skuId: INTERACTION_PROPS.cpInstance.skuId,
+						stockQuantity: 10,
+					},
+				};
 
 				const {getByRole} = render(<AddToCartButton {...props} />);
 
 				await act(async () => {
-					resetCBTrigger({cpInstanceId: outerCPInstanceId});
+					resetCBTrigger(outerCPInstance);
 				});
 
 				await wait(() => {
 					const element = getByRole('button');
 
 					expect(
-						ServiceProvider.DeliveryCartAPI('v1').getItemById
-					).toHaveBeenCalledWith(outerCPInstanceId);
+						ServiceProvider.DeliveryCartAPI('v1').getItemsByCartId
+					).toHaveBeenCalledWith(props.orderId);
 					expect(element.classList.contains('is-added')).toBe(true);
 				});
 			}
@@ -442,9 +460,19 @@ describe('AddToCartButton', () => {
 				'present in the order, updates the local cpInstance and renders ' +
 				"the button without the 'is-added' class name",
 			async () => {
+				const itemsNotContaining = {
+					items: [
+						{
+							skuId: 'meh',
+						},
+					],
+				};
+
 				ServiceProvider.DeliveryCartAPI(
 					'v1'
-				).getItemById = jest.fn().mockReturnValue(Promise.reject());
+				).getItemsByCartId = jest
+					.fn()
+					.mockReturnValue(Promise.resolve(itemsNotContaining));
 
 				let resetCBTrigger;
 
@@ -456,25 +484,31 @@ describe('AddToCartButton', () => {
 
 				const props = {
 					...INTERACTION_PROPS,
-					cpInstance: {
-						...INTERACTION_PROPS.cpInstance,
+					orderId: 123,
+					settings: {
+						willUpdate: true,
 					},
 				};
 
-				const outerCPInstanceId = 7777;
+				const outerCPInstance = {
+					cpInstance: {
+						skuId: INTERACTION_PROPS.cpInstance.skuId,
+						stockQuantity: 10,
+					},
+				};
 
 				const {getByRole} = render(<AddToCartButton {...props} />);
 
 				await act(async () => {
-					resetCBTrigger({cpInstanceId: outerCPInstanceId});
+					resetCBTrigger(outerCPInstance);
 				});
 
 				await wait(() => {
 					const element = getByRole('button');
 
 					expect(
-						ServiceProvider.DeliveryCartAPI('v1').getItemById
-					).toHaveBeenCalledWith(outerCPInstanceId);
+						ServiceProvider.DeliveryCartAPI('v1').getItemsByCartId
+					).toHaveBeenCalledWith(props.orderId);
 					expect(element.classList.contains('is-added')).toBe(false);
 				});
 			}

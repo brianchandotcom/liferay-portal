@@ -108,8 +108,15 @@ public class UpgradeDLFileEntryType
 		throws Exception {
 
 		try (PreparedStatement ps2 = connection.prepareStatement(
-				"insert into DDMStructure values (0, 0, ?, ?, ?, ?, ?, ?, ?, " +
-					"?, ?, ?, 0, ?, ?, '1.0', ?, '', ?, 'default', 1, null)")) {
+				StringBundler.concat(
+					"insert into DDMStructure (mvccVersion, ctCollectionId, ",
+					"uuid_, structureId, groupId, companyId, userId, ",
+					"userName, versionUserId, versionUserName, createDate, ",
+					"modifiedDate, parentStructureId, classNameId, ",
+					"structureKey, version, name, description, definition, ",
+					"storageType, type_, lastPublishDate) values (0, 0, ?, ?, ",
+					"?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, '1.0', ?, '', ?, ",
+					"'default', 1, null)"))) {
 
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryMetadata.class);
@@ -151,8 +158,13 @@ public class UpgradeDLFileEntryType
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"insert into DDMStructureLayout values (0, 0, ?, ?, ?, ?, ?, " +
-					"?, ?, ?, ?, ?, ?, ?, '', ?)")) {
+				StringBundler.concat(
+					"insert into DDMStructureLayout (mvccVersion, ",
+					"ctCollectionId, uuid_, structureLayoutId, groupId, ",
+					"companyId, userId, userName, createDate, modifiedDate, ",
+					"classNameId, structureLayoutKey, structureVersionId, ",
+					"name, description, definition) values (0, 0, ?, ?, ?, ?, ",
+					"?, ?, ?, ?, ?, ?, ?, ?, '', ?)"))) {
 
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryMetadata.class);
@@ -185,7 +197,10 @@ public class UpgradeDLFileEntryType
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"insert into DDMStructureLink values (0, 0, ?, ?, ?, ?, ?)")) {
+				StringBundler.concat(
+					"insert into DDMStructureLink (mvccVersion, ",
+					"ctCollectionId, structureLinkId, companyId, classNameId, ",
+					"classPK, structureId) values (0, 0, ?, ?, ?, ?, ?)"))) {
 
 			ps.setLong(1, increment());
 			ps.setLong(2, companyId);
@@ -203,8 +218,15 @@ public class UpgradeDLFileEntryType
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"insert into DDMStructureVersion values (0, 0, ?, ?, ?, ?, ?" +
-					", ?, ?, '1.0', 0, ?, '', ? , 'default', 0, 0, ?, ?, ?)")) {
+				StringBundler.concat(
+					"insert into DDMStructureVersion (mvccVersion, ",
+					"ctCollectionId, structureVersionId, groupId, companyId, ",
+					"userId, userName, createDate, structureId, version, ",
+					"parentStructureId, name, description, definition, ",
+					"storageType, type_, status, statusByUserId, ",
+					"statusByUserName, statusDate) values (0, 0, ?, ?, ?, ?, ",
+					"?, ?, ?, '1.0', 0, ?, '', ? , 'default', 0, 0, ?, ?, ",
+					"?)"))) {
 
 			long structureVersionId = increment();
 

@@ -102,10 +102,8 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 			expect(add).toBeEnabled();
 		});
 
-		it('adding a video url calls fire event in the opener', () => {
-			const add = result.getByRole('button');
-
-			fireEvent.click(add);
+		it('adding a video url calls fire an event in the opener', () => {
+			fireEvent.submit(result.getByRole('form'));
 
 			expect(Liferay.Util.getOpener).toHaveBeenCalled();
 

@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -37,17 +36,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -91,30 +85,26 @@ public class JournalConverterUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMXML();
-
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
 
 		_group = GroupTestUtil.addGroup();
 
-		_ddmStructureTestHelper = new DDMStructureTestHelper(
-			PortalUtil.getClassNameId(JournalArticle.class), _group);
-
-		_classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
 
 		String definition = read("test-ddm-structure-all-fields.xml");
 
 		DDMForm ddmForm = deserialize(definition);
 
-		_ddmStructure = _ddmStructureTestHelper.addStructure(
-			_classNameId, null, "Test Structure", ddmForm,
-			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+		_ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class), null,
+			"Test Structure", ddmForm, StorageType.DEFAULT.getValue(),
+			DDMStructureConstants.TYPE_DEFAULT);
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_ddmXML = registry.getService(
-			registry.getServiceReference(DDMXML.class));
 		_journalConverter = registry.getService(
 			registry.getServiceReference(JournalConverter.class));
 	}
@@ -457,45 +447,6 @@ public class JournalConverterUtilTest {
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
-	protected Field getBooleanField(long ddmStructureId) {
-		Field field = new Field();
-
-		field.setDDMStructureId(ddmStructureId);
-		field.setName("boolean");
-
-		List<Serializable> enValues = new ArrayList<>();
-
-		enValues.add(true);
-		enValues.add(false);
-
-		field.addValues(_enLocale, enValues);
-
-		return field;
-	}
-
-	protected Field getDocumentLibraryField(
-		FileEntry fileEntry, long ddmStructureId) {
-
-		Field docLibraryField = new Field();
-
-		docLibraryField.setDDMStructureId(ddmStructureId);
-		docLibraryField.setName("document_library");
-
-		JSONObject jsonObject = JSONUtil.put(
-			"groupId", fileEntry.getGroupId()
-		).put(
-			"title", fileEntry.getTitle()
-		).put(
-			"uuid", fileEntry.getUuid()
-		).put(
-			"version", fileEntry.getVersion()
-		);
-
-		docLibraryField.addValue(_enLocale, jsonObject.toString());
-
-		return docLibraryField;
-	}
-
 	protected Field getFieldsDisplayField(long ddmStructureId, String value) {
 		Field fieldsDisplayField = new Field();
 
@@ -524,65 +475,6 @@ public class JournalConverterUtilTest {
 		}
 
 		return fieldsMap;
-	}
-
-	protected Map<String, Layout> getLayoutsMap() throws Exception {
-		User user = TestPropsValues.getUser();
-
-		return LinkedHashMapBuilder.<String, Layout>put(
-			_PRIVATE_LAYOUT, LayoutTestUtil.addLayout(_group, true)
-		).put(
-			_PRIVATE_USER_LAYOUT,
-			LayoutTestUtil.addLayout(user.getGroupId(), true)
-		).put(
-			_PUBLIC_LAYOUT, LayoutTestUtil.addLayout(_group, false)
-		).put(
-			_PUBLIC_USER_LAYOUT,
-			LayoutTestUtil.addLayout(user.getGroupId(), false)
-		).build();
-	}
-
-	protected Field getLinkToLayoutField(
-		long ddmStructureId, Map<String, Layout> layoutsMap) {
-
-		Field field = new Field();
-
-		field.setDDMStructureId(ddmStructureId);
-		field.setDefaultLocale(_enLocale);
-		field.setName("link_to_layout");
-
-		List<Serializable> enValues = new ArrayList<>();
-
-		for (Layout layout : layoutsMap.values()) {
-			enValues.add(getLinkToLayoutFieldValue(layout, _enLocale, false));
-			enValues.add(getLinkToLayoutFieldValue(layout, _enLocale, true));
-		}
-
-		field.addValues(_enLocale, enValues);
-
-		return field;
-	}
-
-	protected String getLinkToLayoutFieldValue(
-		Layout layout, Locale locale, boolean includeGroupId) {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (includeGroupId) {
-			jsonObject.put(
-				"groupId", layout.getGroupId()
-			).put(
-				"label", layout.getName(locale)
-			);
-		}
-
-		jsonObject.put(
-			"layoutId", layout.getLayoutId()
-		).put(
-			"privateLayout", layout.isPrivateLayout()
-		);
-
-		return jsonObject.toString();
 	}
 
 	protected Field getListField(long ddmStructureId) {
@@ -759,39 +651,6 @@ public class JournalConverterUtilTest {
 		return StringUtil.read(inputStream);
 	}
 
-	protected String replaceLinksToLayoutsParameters(
-			String content, Map<String, Layout> layoutsMap)
-		throws Exception {
-
-		Layout privateLayout = layoutsMap.get(_PRIVATE_LAYOUT);
-		Layout privateUserLayout = layoutsMap.get(_PRIVATE_USER_LAYOUT);
-		Layout publicLayout = layoutsMap.get(_PUBLIC_LAYOUT);
-		Layout publicUserLayout = layoutsMap.get(_PUBLIC_USER_LAYOUT);
-
-		return StringUtil.replace(
-			content,
-			new String[] {
-				"[$GROUP_ID$]", "[$GROUP_ID_USER$]", "[$LAYOUT_ID_PRIVATE$]",
-				"[$LAYOUT_ID_PRIVATE_USER$]", "[$LAYOUT_ID_PUBLIC$]",
-				"[$LAYOUT_ID_PUBLIC_USER$]"
-			},
-			new String[] {
-				String.valueOf(privateLayout.getGroupId()),
-				String.valueOf(privateUserLayout.getGroupId()),
-				String.valueOf(privateLayout.getLayoutId()),
-				String.valueOf(privateUserLayout.getLayoutId()),
-				String.valueOf(publicLayout.getLayoutId()),
-				String.valueOf(publicUserLayout.getLayoutId())
-			});
-	}
-
-	protected void setUpDDMXML() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmXML = registry.getService(
-			registry.getServiceReference(DDMXML.class));
-	}
-
 	protected void udpateFieldsMap(
 		Element dynamicElementElement,
 		Map<String, Map<Locale, List<String>>> fieldsMap) {
@@ -838,25 +697,10 @@ public class JournalConverterUtilTest {
 		}
 	}
 
-	protected void validateDDMXSD(String xsd) throws Exception {
-		_ddmXML.validateXML(xsd);
-	}
-
-	private static final String _PRIVATE_LAYOUT = "privateLayout";
-
-	private static final String _PRIVATE_USER_LAYOUT = "privateUserLayout";
-
-	private static final String _PUBLIC_LAYOUT = "publicLayout";
-
-	private static final String _PUBLIC_USER_LAYOUT = "publicUserLayout";
-
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private static DDMFormDeserializer _xsdDDMFormDeserializer;
 
-	private long _classNameId;
 	private DDMStructure _ddmStructure;
-	private DDMStructureTestHelper _ddmStructureTestHelper;
-	private DDMXML _ddmXML;
 	private Locale _enLocale;
 
 	@DeleteAfterTestRun

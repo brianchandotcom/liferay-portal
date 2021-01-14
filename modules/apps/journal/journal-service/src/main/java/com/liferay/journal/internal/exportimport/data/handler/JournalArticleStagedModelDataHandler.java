@@ -650,6 +650,18 @@ public class JournalArticleStagedModelDataHandler
 			autoArticleId = false;
 		}
 
+		String externalReferenceCode = article.getExternalReferenceCode();
+
+		JournalArticle articleByERC =
+			_journalArticleLocalService.
+				fetchLatestArticleByExternalReferenceCode(
+					portletDataContext.getScopeGroupId(),
+					externalReferenceCode);
+
+		if (articleByERC != null) {
+			externalReferenceCode = newArticleId;
+		}
+
 		String content = article.getContent();
 
 		content =
@@ -941,13 +953,13 @@ public class JournalArticleStagedModelDataHandler
 					importedArticle = _journalArticleLocalService.addArticle(
 						userId, portletDataContext.getScopeGroupId(), folderId,
 						article.getClassNameId(), ddmStructureId, articleId,
-						autoArticleId, article.getVersion(),
-						article.getTitleMap(), article.getDescriptionMap(),
-						friendlyURLMap, article.getContent(),
-						parentDDMStructureKey, parentDDMTemplateKey,
-						article.getLayoutUuid(), displayDateMonth,
-						displayDateDay, displayDateYear, displayDateHour,
-						displayDateMinute, expirationDateMonth,
+						autoArticleId, externalReferenceCode,
+						article.getVersion(), article.getTitleMap(),
+						article.getDescriptionMap(), friendlyURLMap,
+						article.getContent(), parentDDMStructureKey,
+						parentDDMTemplateKey, article.getLayoutUuid(),
+						displayDateMonth, displayDateDay, displayDateYear,
+						displayDateHour, displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -959,13 +971,14 @@ public class JournalArticleStagedModelDataHandler
 				else {
 					importedArticle = _journalArticleLocalService.updateArticle(
 						userId, existingArticle.getGroupId(), folderId,
-						existingArticle.getArticleId(), article.getVersion(),
-						article.getTitleMap(), article.getDescriptionMap(),
-						friendlyURLMap, article.getContent(),
-						parentDDMStructureKey, parentDDMTemplateKey,
-						article.getLayoutUuid(), displayDateMonth,
-						displayDateDay, displayDateYear, displayDateHour,
-						displayDateMinute, expirationDateMonth,
+						existingArticle.getArticleId(),
+						existingArticleVersion.getExternalReferenceCode(),
+						article.getVersion(), article.getTitleMap(),
+						article.getDescriptionMap(), friendlyURLMap,
+						article.getContent(), parentDDMStructureKey,
+						parentDDMTemplateKey, article.getLayoutUuid(),
+						displayDateMonth, displayDateDay, displayDateYear,
+						displayDateHour, displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -989,9 +1002,9 @@ public class JournalArticleStagedModelDataHandler
 				importedArticle = _journalArticleLocalService.addArticle(
 					userId, portletDataContext.getScopeGroupId(), folderId,
 					article.getClassNameId(), ddmStructureId, articleId,
-					autoArticleId, article.getVersion(), article.getTitleMap(),
-					article.getDescriptionMap(), friendlyURLMap,
-					article.getContent(), parentDDMStructureKey,
+					autoArticleId, externalReferenceCode, article.getVersion(),
+					article.getTitleMap(), article.getDescriptionMap(),
+					friendlyURLMap, article.getContent(), parentDDMStructureKey,
 					parentDDMTemplateKey, article.getLayoutUuid(),
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,

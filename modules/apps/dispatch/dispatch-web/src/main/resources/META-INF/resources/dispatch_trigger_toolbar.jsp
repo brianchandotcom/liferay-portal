@@ -53,7 +53,7 @@ DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDi
 				</liferay-portlet:renderURL>
 
 				<liferay-frontend:add-menu-item
-					title="<%= LanguageUtil.get(request, dispatchTriggerDisplayContext.getDispatchTaskExecutorName(dispatchTaskExecutorType)) %>"
+					title="<%= dispatchTriggerDisplayContext.getDispatchTaskExecutorName(locale, dispatchTaskExecutorType) %>"
 					url="<%= addDispatchTriggerURL %>"
 				/>
 

@@ -337,48 +337,30 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="generate-x-pack-security-certificates">
 		<sequential>
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./elasticsearch-certutil ca --pem --out ${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg value="elasticsearch-certutil ca --pem --out ${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
+			<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" osfamily="unix">
+				<arg value="-c" />
+				<arg value="./elasticsearch-certutil ca --pem --out ${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
+			</exec>
+
+			<exec dir="${elasticsearch.dir}/bin" executable="cmd" osfamily="windows">
+				<arg value="/c" />
+				<arg value="elasticsearch-certutil ca --pem --out ${elasticsearch.dir}/bin/elastic-stack-ca.zip" />
+			</exec>
 
 			<unzip
 				dest="${elasticsearch.dir}/bin"
 				src="${elasticsearch.dir}/bin/elastic-stack-ca.zip"
 			/>
 
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-key ${elasticsearch.dir}/bin/ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-key ${elasticsearch.dir}/bin/ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
+			<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" osfamily="unix">
+				<arg value="-c" />
+				<arg value="./elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-key ${elasticsearch.dir}/bin/ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
+			</exec>
+
+			<exec dir="${elasticsearch.dir}/bin" executable="cmd" osfamily="windows">
+				<arg value="/c" />
+				<arg value="elasticsearch-certutil cert --ca-cert ${elasticsearch.dir}/bin/ca/ca.crt --ca-key ${elasticsearch.dir}/bin/ca/ca.key --pem --ip 127.0.0.1 --dns localhost --name &quot;CN=liferay.com,OU=Search,DC=liferay,DC=com&quot; --out ${elasticsearch.dir}/bin/elastic-certificates.zip" />
+			</exec>
 
 			<unzip
 				dest="${elasticsearch.dir}/bin"
@@ -629,24 +611,15 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				</then>
 			</if>
 
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="y&#x0A;">
-						<arg value="-c" />
-						<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="y&#x0A;">
-							<arg value="/c" />
-							<arg value="elasticsearch-plugin install file:///${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
+			<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" inputstring="y&#x0A;" osfamily="unix">
+				<arg value="-c" />
+				<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
+			</exec>
+
+			<exec dir="${elasticsearch.dir}/bin" executable="cmd" inputstring="y&#x0A;" osfamily="windows">
+				<arg value="/c" />
+				<arg value="elasticsearch-plugin install file:///${elasticsearch.dir}/${elasticsearch.ltr.zip.name}" />
+			</exec>
 
 			<lstopwatch action="total" name="prepare.elasticsearch.ltr" />
 		</sequential>
@@ -666,24 +639,15 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 	<macrodef name="set-x-pack-user-passwords">
 		<sequential>
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" outputproperty="elastic.xpack.user.passwords">
-						<arg value="-c" />
-						<arg value="./elasticsearch-setup-passwords auto --batch" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd" outputproperty="elastic.xpack.user.passwords">
-							<arg value="/c" />
-							<arg value="elasticsearch-setup-passwords auto --batch" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
+			<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash" osfamily="unix" outputproperty="elastic.xpack.user.passwords">
+				<arg value="-c" />
+				<arg value="./elasticsearch-setup-passwords auto --batch" />
+			</exec>
+
+			<exec dir="${elasticsearch.dir}/bin" executable="cmd" osfamily="windows" outputproperty="elastic.xpack.user.passwords">
+				<arg value="/c" />
+				<arg value="elasticsearch-setup-passwords auto --batch" />
+			</exec>
 
 			<propertyregex
 				input="${elastic.xpack.user.passwords}"
@@ -1353,45 +1317,16 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 		<get-java-jdk-home />
 
-		<if>
-			<os family="mac" />
-			<then>
-				<exec dir="${elasticsearch.start.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="./elasticsearch -d -v -p pid-elasticsearch" />
-				</exec>
-			</then>
-			<elseif>
-				<and>
-					<isset property="env.JENKINS_HOME" />
-					<os family="unix" />
-				</and>
-				<then>
-					<exec dir="${elasticsearch.start.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -v -p pid-elasticsearch'" />
-					</exec>
-				</then>
-			</elseif>
-			<elseif>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.start.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./elasticsearch -d -v -p pid-elasticsearch" />
-					</exec>
-				</then>
-			</elseif>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<exec dir="${elasticsearch.start.dir}/bin" executable="cmd" spawn="true">
-						<arg value="/c" />
-						<arg value="elasticsearch -d -v -p pid-elasticsearch" />
-					</exec>
-				</then>
-			</elseif>
-		</if>
+		<exec dir="${elasticsearch.start.dir}/bin" executable="/bin/bash" osfamily="unix">
+			<arg value="-c" />
+			<arg if:set="env.JENKINS_HOME" value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'" />
+			<arg unless:set="env.JENKINS_HOME" value="./elasticsearch -d -p pid-elasticsearch" />
+		</exec>
+
+		<exec dir="${elasticsearch.start.dir}/bin" executable="cmd" osfamily="windows" spawn="true">
+			<arg value="/c" />
+			<arg value="elasticsearch -d -p pid-elasticsearch" />
+		</exec>
 
 		<property name="elasticsearch.port" unless:set="elasticsearch.port" value="9200" />
 
@@ -1426,24 +1361,15 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</elseif>
 		</if>
 
-		<if>
-			<os family="unix" />
-			<then>
-				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="./kibana --allow-root &gt; kibana.log 2&gt;&amp;1 &amp;" />
-				</exec>
-			</then>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<exec dir="${elastic.kibana.dir}/bin" executable="cmd">
-						<arg value="/c" />
-						<arg value="kibana" />
-					</exec>
-				</then>
-			</elseif>
-		</if>
+		<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash" osfamily="unix">
+			<arg value="-c" />
+			<arg value="./kibana --allow-root &gt; kibana.log 2&gt;&amp;1 &amp;" />
+		</exec>
+
+		<exec dir="${elastic.kibana.dir}/bin" executable="cmd" osfamily="windows">
+			<arg value="/c" />
+			<arg value="kibana" />
+		</exec>
 
 		<lstopwatch action="total" name="start.kibana" />
 	</target>
@@ -1456,35 +1382,15 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<if>
 			<available file="${elasticsearch.stop.dir}/pid-elasticsearch" />
 			<then>
-				<if>
-					<os family="unix" />
-					<then>
-						<loadfile
-							property="pid-elasticsearch"
-							srcFile="${elasticsearch.stop.dir}/pid-elasticsearch"
-						>
-							<filterchain>
-								<linecontainsregexp>
-									<regexp pattern="[0-9]*" />
-								</linecontainsregexp>
-							</filterchain>
-						</loadfile>
+				<exec dir="${elasticsearch.stop.dir}" executable="/bin/bash" osfamily="unix">
+					<arg value="-c" />
+					<arg value="pkill -F pid-elasticsearch" />
+				</exec>
 
-						<exec dir="${elasticsearch.stop.dir}/bin" executable="/bin/bash">
-							<arg value="-c" />
-							<arg value="kill ${pid-elasticsearch}" />
-						</exec>
-					</then>
-					<elseif>
-						<os family="windows" />
-						<then>
-							<exec dir="${elasticsearch.stop.dir}/bin" executable="cmd" spawn="true">
-								<arg value="/c" />
-								<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
-							</exec>
-						</then>
-					</elseif>
-				</if>
+				<exec dir="${elasticsearch.stop.dir}/bin" executable="cmd" osfamily="windows" spawn="true">
+					<arg value="/c" />
+					<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
+				</exec>
 
 				<print-files dir="${elasticsearch.stop.dir}/logs/" exclude="*_*" include="LiferayElasticsearchCluster*.log" />
 			</then>
@@ -1495,26 +1401,10 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	</target>
 
 	<target name="stop-kibana">
-		<if>
-			<os family="unix" />
-			<then>
-				<loadfile
-					property="pid-kibana"
-					srcFile="${elastic.kibana.dir}/bin/pid-kibana"
-				>
-					<filterchain>
-						<linecontainsregexp>
-							<regexp pattern="[0-9]*" />
-						</linecontainsregexp>
-					</filterchain>
-				</loadfile>
-
-				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="kill ${pid-kibana}" />
-				</exec>
-			</then>
-		</if>
+		<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash" osfamily="unix">
+			<arg value="-c" />
+			<arg value="pkill -F pid-kibana" />
+		</exec>
 
 		<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
 	</target>

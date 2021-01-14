@@ -151,7 +151,7 @@ definition {
 			vocabularyName = "Audience",
 			webContentContent = "Web Content Content",
 			webContentTitle = "WC Title");
-		
+
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithCategoryCP(

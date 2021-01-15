@@ -21,6 +21,7 @@ import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.util.CPCompareHelperUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -104,7 +105,7 @@ public class CompareCheckboxTag extends IncludeTag {
 		_cpDefinitionId = 0;
 		_disabled = false;
 		_inCompare = false;
-		_label = "";
+		_label = StringPool.BLANK;
 		_pictureUrl = null;
 	}
 
@@ -135,7 +136,7 @@ public class CompareCheckboxTag extends IncludeTag {
 	private long _cpDefinitionId;
 	private boolean _disabled;
 	private boolean _inCompare;
-	private String _label = "";
+	private String _label = StringPool.BLANK;
 	private String _pictureUrl;
 
 }

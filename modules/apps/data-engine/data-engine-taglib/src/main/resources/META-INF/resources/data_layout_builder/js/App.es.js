@@ -34,6 +34,7 @@ const parseProps = ({
 	...props
 }) => ({
 	...props,
+	context: {...props.context, defaultLanguageId: props.defaultLanguageId},
 	dataDefinitionId: Number(dataDefinitionId),
 	dataLayoutId: Number(dataLayoutId),
 	fieldTypesModules: fieldTypesModules.split(','),

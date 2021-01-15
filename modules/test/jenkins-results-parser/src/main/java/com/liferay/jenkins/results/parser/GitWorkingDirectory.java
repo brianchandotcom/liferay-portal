@@ -2549,7 +2549,7 @@ public class GitWorkingDirectory {
 
 		List<LocalGitCommit> localGitCommits = new ArrayList<>(num);
 
-		String gitLog = _log(start, num, file, "%H %ct %s", sha);
+		String gitLog = _log(start, num, file, _gitLogEntityFormat, sha);
 
 		gitLog = gitLog.replaceAll("Finished executing Bash commands.", "");
 
@@ -2627,6 +2627,7 @@ public class GitWorkingDirectory {
 		"fatal: bad object (?<badRef>.+/HEAD)");
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*)\\s*");
+	private static final String _gitLogEntityFormat = "%H %ct %ae %s";
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(
 		"(?<sha>[0-9a-f]{40}) (?<commitTime>\\d+) (?<message>.*)");
 	private static final Map<String, List<File>> _modifiedFilesMap =

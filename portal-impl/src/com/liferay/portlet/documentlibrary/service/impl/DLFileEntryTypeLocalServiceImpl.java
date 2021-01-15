@@ -434,6 +434,10 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByG_F(groupId, fileEntryTypeKey);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
 		throws PortalException {

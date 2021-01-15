@@ -580,6 +580,10 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().getFileEntryType(groupId, fileEntryTypeKey);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFileEntryType>
 				getFileEntryTypes(long ddmStructureId)

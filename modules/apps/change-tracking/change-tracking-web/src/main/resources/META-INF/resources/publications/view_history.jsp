@@ -127,10 +127,30 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 						cssClass="table-cell-expand-smaller"
 						name="status"
 					>
-						<clay:label
-							displayType="<%= viewHistoryDisplayContext.getStatusStyle(status) %>"
-							label="<%= viewHistoryDisplayContext.getStatusLabel(status) %>"
-						/>
+						<c:choose>
+							<c:when test="<%= status == BackgroundTaskConstants.STATUS_IN_PROGRESS %>">
+								<liferay-portlet:resourceURL id="/change_tracking/get_publication_status" var="dataURL">
+									<portlet:param name="ctProcessId" value="<%= String.valueOf(ctProcess.getCtProcessId()) %>" />
+								</liferay-portlet:resourceURL>
+
+								<react:component
+									module="publications/js/ProgressBar"
+									props='<%=
+										HashMapBuilder.<String, Object>put(
+											"dataURL", dataURL
+										).put(
+											"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+										).build()
+									%>'
+								/>
+							</c:when>
+							<c:otherwise>
+								<clay:label
+									displayType="<%= viewHistoryDisplayContext.getStatusStyle(status) %>"
+									label="<%= viewHistoryDisplayContext.getStatusLabel(status) %>"
+								/>
+							</c:otherwise>
+						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>

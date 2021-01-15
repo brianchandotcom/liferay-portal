@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.renderer;
 
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DDMFormRenderingContext {
 
 	public DDMFormRenderingContext() {
+		setContainerId(_getDefaultContainerId());
 		setReturnFullContext(true);
 	}
 
@@ -187,6 +189,10 @@ public class DDMFormRenderingContext {
 
 	public void setViewMode(boolean viewMode) {
 		_properties.put("viewMode", viewMode);
+	}
+
+	private String _getDefaultContainerId() {
+		return "ddmForm".concat(StringUtil.randomString());
 	}
 
 	private String _cancelLabel;

@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.web.internal.info.field.converter;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.info.field.InfoField;
@@ -101,19 +100,6 @@ public class DDMFormFieldInfoFieldConverterImpl
 		}
 
 		if (Objects.equals(
-				ddmFormField.getType(), DDMFormFieldType.TEXT_AREA)) {
-
-			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
-		}
-
-		if (Objects.equals(
-				ddmFormField.getType(), DDMFormFieldType.TEXT_HTML)) {
-
-			finalStep.attribute(TextInfoFieldType.HTML, true);
-			finalStep.attribute(TextInfoFieldType.MULTILINE, true);
-		}
-
-		if (Objects.equals(
 				ddmFormField.getType(), DDMFormFieldTypeConstants.RICH_TEXT)) {
 
 			finalStep.attribute(TextInfoFieldType.HTML, true);
@@ -150,11 +136,8 @@ public class DDMFormFieldInfoFieldConverterImpl
 
 			return ImageInfoFieldType.INSTANCE;
 		}
-		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.DECIMAL) ||
-				 Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER) ||
-				 Objects.equals(
-					 ddmFormFieldType, DDMFormFieldTypeConstants.NUMERIC) ||
-				 Objects.equals(ddmFormFieldType, DDMFormFieldType.NUMBER)) {
+		else if (Objects.equals(
+					ddmFormFieldType, DDMFormFieldTypeConstants.NUMERIC)) {
 
 			return NumberInfoFieldType.INSTANCE;
 		}

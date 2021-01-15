@@ -45,13 +45,12 @@ export default function ({namespace, editOptionURL, windowState, cpOptionId, def
 				};
 
 
-			formattedData.key = document.getElementById(namespace + 'key').value;
-			formattedData.name[defaultLanguageId] = document.getElementById(namespace + 'name').value;
+			formattedData.key = keyInput.value;
+			formattedData.name[defaultLanguageId] = nameInput.value;
 			formattedData.id = cpOptionId
 
 			AdminCatalogResource.createOptionValue(cpOptionId, formattedData)
 				.then(function (cp) {
-					debugger;
 					const redirectURL = new Liferay.PortletURL.createURL(
 						editOptionURL
 					);

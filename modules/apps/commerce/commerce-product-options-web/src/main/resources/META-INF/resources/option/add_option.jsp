@@ -47,7 +47,6 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 		<portlet:param name="mvcRenderCommandName" value="/commerce_product_options/edit_cp_option" />
 	</portlet:renderURL>
 
-
 	<liferay-frontend:component
 		componentId='<%= liferayPortletResponse.getNamespace() + "add_option" %>'
 		context='<%=
@@ -61,5 +60,4 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 		%>'
 		module="js/add_option"
 	/>
-
 </commerce-ui:modal-content>

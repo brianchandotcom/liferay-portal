@@ -14,57 +14,17 @@
 
 import slugify from 'commerce-frontend-js/utilities/slugify'
 import {debounce} from 'frontend-js-web';
-import * as modalUtils from 'commerce-frontend-js/utilities/modals/index';
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 
 export default function ({namespace}) {
-	var form = document.getElementById('#'+namespace + 'fm');
 
-	var keyInput = form.querySelector('#' +namespace+ 'key');
-	var nameInput = form.querySelector('#' +namespace + 'name');
+	const form = document.getElementById(namespace + 'fm');
+	const keyInput = form.querySelector('#' +namespace+ 'key');
+	const nameInput = form.querySelector('#' +namespace + 'name');
 
-	var handleOnNameInput = function (event) {
-		keyInput.value = slugify.default(nameInput.value);
+	const handleOnNameInput = function (event) {
+		keyInput.value = slugify(nameInput.value);
 	};
 
 	nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
 
-	var AdminCatalogResource = ServiceProvider.AdminCatalogAPI('v1');
-	Liferay.provide(
-		window,
-		namespace+'apiSubmit',
-		function () {
-			modalUtils.isSubmitting();
-			const formattedData =
-				{
-					fieldType : '',
-					key : '',
-					name: {}
-				};
-
-			formattedData.fieldType = document.getElementById(namespace+'DDMFormFieldTypeName').value;
-
-			formattedData.key = document.getElementById(namespace+'key').value;
-
-			formattedData.name[defaultLanguageId] = document.getElementById(namespace+'name').value;
-
-			AdminCatalogResource.createOption(formattedData)
-				.then(function (cpOption) {
-					const redirectURL = new Liferay.PortletURL.createURL(
-						editOptionURL
-					);
-
-					redirectURL.setParameter(
-						'p_p_state',
-						windowState
-					);
-
-					redirectURL.setParameter('cpOptionId', cpOption.id);
-
-					modalUtils.closeAndRedirect(redirectURL);
-				})
-				.catch(modalUtils.onSubmitFail);
-		},
-		['liferay-portlet-url']
-	);
 }

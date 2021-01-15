@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -54,24 +52,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteCPOptions(long cpOptionId, ActionRequest actionRequest)
-		throws Exception {
-
-		long[] deleteCPOptionIds = null;
-
-		if (cpOptionId > 0) {
-			deleteCPOptionIds = new long[] {cpOptionId};
-		}
-		else {
-			deleteCPOptionIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteCPOptionIds"), 0L);
-		}
-
-		for (long deleteCPOptionId : deleteCPOptionIds) {
-			_cpOptionService.deleteCPOption(deleteCPOptionId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -82,12 +62,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
 		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCPOptions(cpOptionId, actionRequest);
-			}
-			else if (cmd.equals(Constants.ADD) ||
-					 cmd.equals(Constants.UPDATE)) {
-
+			if (cmd.equals(Constants.UPDATE)) {
 				updateCPOption(cpOptionId, actionRequest);
 			}
 		}
@@ -124,26 +99,9 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPOption.class.getName(), actionRequest);
 
-		CPOption cpOption = null;
-
-		if (cpOptionId <= 0) {
-
-			// Add commerce product option
-
-			cpOption = _cpOptionService.addCPOption(
-				nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
-				required, skuContributor, key, serviceContext);
-		}
-		else {
-
-			// Update commerce product option
-
-			cpOption = _cpOptionService.updateCPOption(
-				cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
-				facetable, required, skuContributor, key, serviceContext);
-		}
-
-		return cpOption;
+		return _cpOptionService.updateCPOption(
+			cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
+			facetable, required, skuContributor, key, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -151,8 +109,5 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPOptionService _cpOptionService;
-
-	@Reference
-	private Portal _portal;
 
 }

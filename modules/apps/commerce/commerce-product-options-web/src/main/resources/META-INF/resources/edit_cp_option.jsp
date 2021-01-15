@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -115,6 +114,7 @@ long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 					>
 						<clay:headless-data-set-display
 							apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/options/" + cpOptionId + "/optionValues" %>'
+							clayDataSetActionDropdownItems="<%= cpOptionDisplayContext.getOptionValueClayDataSetActionDropdownItems() %>"
 							creationMenu="<%= cpOptionDisplayContext.getOptionValueCreationMenu(cpOptionId) %>"
 							id="<%= CommerceOptionDataSetConstants.COMMERCE_DATA_SET_KEY_OPTION_VALUES %>"
 							itemsPerPage="<%= 10 %>"
@@ -129,3 +129,7 @@ long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 		</div>
 	</div>
 </aui:form>
+
+<liferay-frontend:component
+	module="js/edit_option"
+/>

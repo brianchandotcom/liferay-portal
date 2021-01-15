@@ -39,16 +39,17 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"editOptionURL", editOptionURL
-			).put(
-				"windowState", LiferayWindowState.MAXIMIZED.toString()
-			).put(
-				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
-			).put(
 				"cpOptionId", cpOptionId
 			).put(
 				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
+			).put(
+				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
+			).put(
+				"editOptionURL", editOptionURL
+			).put(
+				"windowState", LiferayWindowState.MAXIMIZED.toString()
 			).build()
 		%>'
-		module="js/add_option_value"/>
+		module="js/add_option_value"
+	/>
 </commerce-ui:modal-content>

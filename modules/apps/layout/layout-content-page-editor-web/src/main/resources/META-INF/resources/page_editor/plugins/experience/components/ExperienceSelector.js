@@ -64,14 +64,8 @@ function getUpdateExperiencePriorityTargets(
 	const targetExperience = orderedExperiences[targetIndex];
 
 	return {
-		subtarget: {
-			priority: targetExperience.priority,
-			segmentsExperienceId: subtargetExperience.segmentsExperienceId,
-		},
-		target: {
-			priority: subtargetExperience.priority,
-			segmentsExperienceId: targetExperience.segmentsExperienceId,
-		},
+		priority: subtargetExperience.priority,
+		segmentsExperienceId: targetExperience.segmentsExperienceId,
 	};
 }
 
@@ -260,32 +254,22 @@ const ExperienceSelector = ({
 	};
 
 	const decreasePriority = (id) => {
-		const {subtarget, target} = getUpdateExperiencePriorityTargets(
+		const target = getUpdateExperiencePriorityTargets(
 			experiences,
 			id,
 			'down'
 		);
 
-		dispatch(
-			updateExperiencePriority({
-				subtarget,
-				target,
-			})
-		);
+		dispatch(updateExperiencePriority(target));
 	};
 	const increasePriority = (id) => {
-		const {subtarget, target} = getUpdateExperiencePriorityTargets(
+		const target = getUpdateExperiencePriorityTargets(
 			experiences,
 			id,
 			'up'
 		);
 
-		dispatch(
-			updateExperiencePriority({
-				subtarget,
-				target,
-			})
-		);
+		dispatch(updateExperiencePriority(target));
 	};
 
 	return (

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {CREATE_SEGMENTS_EXPERIENCE} from '../actions/types';
+import {CREATE_SEGMENTS_EXPERIENCE} from './types';
 
 export default function createExperience({
 	fragmentEntryLinks,

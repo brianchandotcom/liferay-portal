@@ -12,47 +12,114 @@
  * details.
  */
 
-import {render} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {FormsRuleList} from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rule-builder/FormsRuleList.es';
 
-const DEFAULT_PROPS = {
-	fields: [
-		{
-			fieldName: 'Text27344750',
-			label: 'Text27344750',
-		},
-		{
-			fieldName: 'Text27344751',
-			label: 'Text27344751',
-		},
-	],
-	keywords: '',
-	onDelete: () => {},
-	onEdit: () => {},
-	rules: [
-		{
-			actions: [
-				{
-					action: 'enable',
-					label: 'Text27344750',
-					target: 'Text27344750',
-				},
-			],
-			conditions: [],
-			logicalOperator: 'OR',
-			name: {
-				en_US: 'teste rulers',
-			},
-		},
-	],
+const DEFAULT_ACTIONS = {
+	action: 'enable',
+	target: 'Text27344751',
 };
+
+const createRule = (
+	conditions = [],
+	actions = [DEFAULT_ACTIONS],
+	logicalOperator = 'OR'
+) => {
+	return {
+		actions,
+		conditions,
+		logicalOperator,
+	};
+};
+
+const defaultProps = (rules = []) => {
+	return {
+		fields: [
+			{
+				fieldName: 'Text27344750',
+				label: 'Foo',
+				value: 'Text27344750',
+			},
+			{
+				fieldName: 'Text27344751',
+				label: 'Bar',
+				value: 'Text27344751',
+			},
+			{
+				fieldName: 'Text27344752',
+				label: 'Baz',
+				value: 'Text27344752',
+			},
+			{
+				fieldName: 'Select27344753',
+				label: 'Select',
+				options: [
+					{
+						label: 'Baz',
+						reference: 'Option59797628',
+						value: 'Option59797628',
+					},
+				],
+				value: 'Select27344753',
+			},
+			{
+				columns: [
+					{
+						label: 'bar',
+						reference: 'Option73752233',
+						value: 'Option73752233',
+					},
+				],
+				fieldName: 'Grid27344754',
+				label: 'Grid',
+				rows: [
+					{
+						label: 'foo',
+						reference: 'Option60238589',
+						value: 'Option60238589',
+					},
+				],
+				value: 'Grid27344754',
+			},
+		],
+		keywords: '',
+		onDelete: () => {},
+		onEdit: () => {},
+		rules,
+	};
+};
+
+expect.extend({
+	toRule(received, rule) {
+		const ruleNormalized = rule.replace(/ /g, '');
+		const pass = received === ruleNormalized;
+
+		if (pass) {
+			return {
+				message: () =>
+					`expected ${received} not to equal by ${ruleNormalized}`,
+				pass: true,
+			};
+		}
+		else {
+			return {
+				message: () =>
+					`expected ${received} to be equal by ${ruleNormalized}`,
+				pass: false,
+			};
+		}
+	},
+});
 
 describe('RuleList', () => {
 	describe('basic component render', () => {
-		it('mounts component on empty state without data', () => {
+		afterEach(cleanup);
+
+		it('renders the empty state when there are no rules', () => {
 			const {container} = render(<FormsRuleList />);
+
 			expect(
 				container.querySelector('.sheet-text > .text-default').innerHTML
 			).toBe(
@@ -60,317 +127,205 @@ describe('RuleList', () => {
 			);
 		});
 
-		it('mounts with operands type field', () => {
-			const primaryOperand = {
-				label: 'Text',
+		it('list the condition by comparing the field value with the foo value then enable Bar', () => {
+			const leftOperand = {
 				repeatable: false,
 				source: 0,
 				type: 'field',
 				value: 'Text27344750',
 			};
-			const secondaryOperand = {
+			const rightOperand = {
 				type: 'string',
-				value: '123',
+				value: 'foo',
 			};
-			const {baseElement} = render(
+
+			const {container} = render(
 				<FormsRuleList
-					{...DEFAULT_PROPS}
-					rules={[
-						{
-							...DEFAULT_PROPS.rules[0],
-							conditions: [
-								{
-									operands: [
-										{
-											...primaryOperand,
-										},
-										{
-											...secondaryOperand,
-										},
-									],
-									operator: 'equals-to',
-								},
-							],
-						},
-					]}
+					{...defaultProps([
+						createRule([
+							{
+								operands: [leftOperand, rightOperand],
+								operator: 'equals-to',
+							},
+						]),
+					])}
 				/>
 			);
 
-			expect(baseElement.textContent).toMatch(
-				`if ${primaryOperand.type} ${primaryOperand.value} is-equal-to value ${secondaryOperand.value}`.replace(
-					/ /g,
-					''
-				)
+			expect(
+				container.querySelector(
+					'.list-group .list-group-item .autofit-col'
+				).textContent
+			).toRule(
+				`if field Foo is-equal-to value ${rightOperand.value} enable Bar`
 			);
 		});
 
-		it('mounts with two operands type field', () => {
-			const primaryOperand = {
-				label: 'Text',
+		it('list the condition by comparing the field value with the field Bar and then show Baz', () => {
+			const leftOperand = {
 				repeatable: false,
 				source: 0,
 				type: 'field',
 				value: 'Text27344750',
 			};
 
-			const secondaryOperand = {
-				label: 'Text',
+			const rightOperand = {
 				repeatable: false,
 				source: 0,
 				type: 'field',
 				value: 'Text27344751',
 			};
 
-			const {baseElement} = render(
+			const {container} = render(
 				<FormsRuleList
-					{...DEFAULT_PROPS}
-					rules={[
-						{
-							...DEFAULT_PROPS.rules[0],
-							conditions: [
+					{...defaultProps([
+						createRule(
+							[
 								{
-									operands: [
-										{
-											...primaryOperand,
-										},
-										{
-											...secondaryOperand,
-										},
-									],
+									operands: [leftOperand, rightOperand],
 									operator: 'equals-to',
 								},
 							],
-						},
-					]}
+							[
+								{
+									action: 'show',
+									target: 'Text27344752',
+								},
+							]
+						),
+					])}
 				/>
 			);
 
-			expect(baseElement.textContent).toMatch(
-				`if ${primaryOperand.type} ${primaryOperand.value} is-equal-to ${secondaryOperand.type} ${secondaryOperand.value}`.replace(
-					/ /g,
-					''
-				)
-			);
+			expect(
+				container.querySelector(
+					'.list-group .list-group-item .autofit-col'
+				).textContent
+			).toRule('if field Foo is-equal-to field Bar show Baz');
 		});
 
-		it('mounts with operands type user', () => {
-			const primaryOperand = {
+		it('list the condition by comparing the User value with the Guest value and then require Foo', () => {
+			const leftOperand = {
 				label: 'user',
 				repeatable: false,
 				type: 'user',
 				value: 'user',
 			};
 
-			const secondaryOperand = {
+			const rightOperand = {
 				label: 'Guest',
 				type: 'list',
 				value: 'Guest',
 			};
 
-			const {baseElement} = render(
+			const {container} = render(
 				<FormsRuleList
-					{...DEFAULT_PROPS}
-					rules={[
-						{
-							...DEFAULT_PROPS.rules[0],
-							conditions: [
+					{...defaultProps([
+						createRule(
+							[
 								{
-									operands: [
-										{
-											...primaryOperand,
-										},
-										{
-											...secondaryOperand,
-										},
-									],
+									operands: [leftOperand, rightOperand],
 									operator: 'belongs-to',
 								},
 							],
-						},
-					]}
-				/>
-			);
-
-			expect(baseElement.textContent).toMatch(
-				`if ${primaryOperand.type} ${primaryOperand.value} belongs-to list ${secondaryOperand.value}`.replace(
-					/ /g,
-					''
-				)
-			);
-		});
-
-		it('mounts with operands type list', () => {
-			const primaryOperand = {
-				label: 'Text',
-				left: {
-					field: {
-						options: [
-							{
-								label: 'text',
-								value: '1',
-							},
-						],
-					},
-				},
-				repeatable: false,
-				source: 0,
-				type: 'list',
-				value: '1',
-			};
-
-			const secondaryOperand = {
-				type: 'list',
-				value: '1',
-			};
-
-			const {baseElement} = render(
-				<FormsRuleList
-					{...DEFAULT_PROPS}
-					rules={[
-						{
-							...DEFAULT_PROPS.rules[0],
-							conditions: [
+							[
 								{
-									operands: [
-										{
-											...primaryOperand,
-										},
-										{
-											...secondaryOperand,
-										},
-									],
-									operator: 'belongs-to',
+									action: 'require',
+									target: 'Text27344750',
 								},
-							],
-						},
-					]}
+							]
+						),
+					])}
 				/>
 			);
 
-			expect(baseElement.textContent).toMatch(
-				`if user user belongs-to ${secondaryOperand.type} ${secondaryOperand.value}`.replace(
-					/ /g,
-					''
-				)
-			);
+			expect(
+				container.querySelector(
+					'.list-group .list-group-item .autofit-col'
+				).textContent
+			).toRule('if user user belongs-to list Guest require Foo');
 		});
 
-		it('mounts with operands type JSON', () => {
-			const primaryOperand = {
-				label: 'Text',
-				left: {
-					field: {
-						columns: [
-							{
-								label: 'text',
-								value: 123,
-							},
-						],
-						rows: [
-							{
-								label: 'text',
-								value: 'a',
-							},
-						],
-					},
-				},
+		it('list the condition by comparing the Grid value with the foo:bar value and then show Foo', () => {
+			const leftOperand = {
 				repeatable: false,
 				source: 0,
-				type: 'json',
-				value: '{"a":123}',
+				type: 'field',
+				value: 'Grid27344754',
 			};
 
-			const secondaryOperand = {
+			const rightOperand = {
 				type: 'json',
-				value: '{}',
+				value: '{"Option60238589":"Option73752233"}',
 			};
 
-			const {baseElement} = render(
+			const {container} = render(
 				<FormsRuleList
-					{...DEFAULT_PROPS}
-					rules={[
-						{
-							...DEFAULT_PROPS.rules[0],
-							conditions: [
+					{...defaultProps([
+						createRule(
+							[
 								{
-									operands: [
-										{
-											...primaryOperand,
-										},
-										{
-											...secondaryOperand,
-										},
-									],
+									operands: [leftOperand, rightOperand],
 									operator: 'equals-to',
 								},
 							],
-						},
-					]}
+							[
+								{
+									action: 'show',
+									target: 'Text27344750',
+								},
+							]
+						),
+					])}
 				/>
 			);
 
-			expect(baseElement.textContent).toMatch(
-				`if value ${primaryOperand.left.field.columns[0].label}:${primaryOperand.left.field.rows[0].label}`.replace(
-					/ /g,
-					''
-				)
-			);
+			expect(
+				container.querySelector(
+					'.list-group .list-group-item .autofit-col'
+				).textContent
+			).toRule('if field Grid is-equal-to value foo:bar show Foo');
 		});
 
-		it('mounts with operands type option', () => {
-			const primaryOperand = {
-				label: 'Text',
-				left: {
-					field: {
-						options: [
-							{
-								label: 'text',
-								value: '1',
-							},
-						],
-					},
-				},
+		it('list the condition by comparing the Select field value with the Baz selected value and then show Bar', () => {
+			const leftOperand = {
 				repeatable: false,
 				source: 0,
+				type: 'field',
+				value: 'Select27344753',
+			};
+
+			const rightOperand = {
 				type: 'option',
-				value: '1',
+				value: 'Option59797628',
 			};
 
-			const secondaryOperand = {
-				type: 'string',
-				value: '1',
-			};
-
-			const {baseElement} = render(
+			const {container} = render(
 				<FormsRuleList
-					{...DEFAULT_PROPS}
-					rules={[
-						{
-							...DEFAULT_PROPS.rules[0],
-							conditions: [
+					{...defaultProps([
+						createRule(
+							[
 								{
-									operands: [
-										{
-											...primaryOperand,
-										},
-										{
-											...secondaryOperand,
-										},
-									],
-									operator: 'belongs-to',
+									operands: [leftOperand, rightOperand],
+									operator: 'equals-to',
 								},
 							],
-						},
-					]}
+							[
+								{
+									action: 'show',
+									target: 'Text27344751',
+								},
+							]
+						),
+					])}
 				/>
 			);
 
-			expect(baseElement.textContent).toMatch(
-				`if value ${primaryOperand.left.field.options[0].label} belongs-to value ${secondaryOperand.value}`.replace(
-					/ /g,
-					''
-				)
-			);
+			expect(
+				container.querySelector(
+					'.list-group .list-group-item .autofit-col'
+				).textContent
+			).toRule('if field Select is-equal-to value Baz show Bar');
 		});
 	});
 });

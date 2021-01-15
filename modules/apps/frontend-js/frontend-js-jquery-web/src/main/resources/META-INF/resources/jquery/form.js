@@ -16,7 +16,7 @@
 
 	/*!
 	 * jQuery Form Plugin
-	 * version: 3.51.0-2014.06.20
+	 * version: 3.51.0.LIFERAY-PATCHED-ISSUE-586
 	 * Requires jQuery v1.5 or later
 	 * Copyright (c) 2014 M. Alsup
 	 * Examples and documentation at: http://malsup.com/jquery/form/

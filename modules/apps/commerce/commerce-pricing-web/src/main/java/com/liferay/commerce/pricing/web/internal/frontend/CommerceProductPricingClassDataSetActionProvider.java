@@ -103,7 +103,7 @@ public class CommerceProductPricingClassDataSetActionProvider
 
 		portletURL.setParameter(
 			"mvcRenderCommandName",
-			"/cp_definitions/edit_commerce_pricing_class");
+			"/cp_definitions/edit_cp_definition_pricing_class");
 		portletURL.setParameter(
 			"commercePricingClassId", String.valueOf(pricingClassId));
 

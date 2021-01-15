@@ -44,7 +44,7 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 		/>
 
 		<liferay-portlet:renderURL var="addAttachmentFileEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="/asset_categories_admin/edit_asset_category_cp_attachment_file_entry" />
+			<portlet:param name="mvcRenderCommandName" value="/commerce_product_asset_categories/edit_asset_category_cp_attachment_file_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="categoryId" value="<%= String.valueOf(assetCategory.getCategoryId()) %>" />
 		</liferay-portlet:renderURL>

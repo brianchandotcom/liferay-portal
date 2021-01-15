@@ -43,7 +43,7 @@ portletDisplay.setURLBack(categoryRedirectURL.toString());
 renderResponse.setTitle(category.getTitle(locale));
 %>
 
-<portlet:actionURL name="/asset_categories_admin/edit_asset_category_friendly_url" var="editCategoryURL">
+<portlet:actionURL name="/commerce_product_asset_categories/edit_asset_category_friendly_url" var="editCategoryURL">
 </portlet:actionURL>
 
 <aui:form action="<%= editCategoryURL %>" name="fm">

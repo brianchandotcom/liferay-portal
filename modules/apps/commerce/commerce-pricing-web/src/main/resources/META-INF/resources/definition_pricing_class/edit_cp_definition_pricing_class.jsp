@@ -22,7 +22,7 @@ CPDefinitionPricingClassDisplayContext cpDefinitionPricingClassDisplayContext = 
 CommercePricingClass commercePricingClass = cpDefinitionPricingClassDisplayContext.getCommercePricingClass();
 %>
 
-<portlet:actionURL name="/cp_definitions/edit_commerce_pricing_class" var="editCommercePricingClassActionURL" />
+<portlet:actionURL name="/cp_definitions/edit_cp_definition_pricing_class" var="editCommercePricingClassActionURL" />
 
 <commerce-ui:side-panel-content
 	title='<%= LanguageUtil.get(request, "edit-product-group") %>'

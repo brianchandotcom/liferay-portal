@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
-		"mvc.command.name=/asset_categories_admin/upload_temp_asset_category_attachment"
+		"mvc.command.name=/commerce_product_asset_categories/upload_temp_asset_category_attachment"
 	},
 	service = MVCActionCommand.class
 )

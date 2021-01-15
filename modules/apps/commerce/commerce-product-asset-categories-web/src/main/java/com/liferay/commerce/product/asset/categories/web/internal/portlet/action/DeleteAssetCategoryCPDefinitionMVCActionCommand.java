@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
-		"mvc.command.name=/asset_categories_admin/delete_asset_category_dp_definition"
+		"mvc.command.name=/commerce_product_asset_categories/delete_asset_category_cp_definition"
 	},
 	service = MVCActionCommand.class
 )

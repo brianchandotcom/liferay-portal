@@ -33,7 +33,7 @@ long categoryId = ParamUtil.getLong(request, "categoryId");
 
 <liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
 
-<portlet:actionURL name="/asset_categories_admin/upload_temp_asset_category_attachment" var="uploadCoverImageURL">
+<portlet:actionURL name="/commerce_product_asset_categories/upload_temp_asset_category_attachment" var="uploadCoverImageURL">
 	<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
 </portlet:actionURL>
 

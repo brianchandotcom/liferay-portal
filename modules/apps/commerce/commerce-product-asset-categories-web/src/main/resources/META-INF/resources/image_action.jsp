@@ -30,7 +30,7 @@ CPAttachmentFileEntry cpAttachmentFileEntry = (CPAttachmentFileEntry)row.getObje
 	showWhenSingleIcon="<%= true %>"
 >
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="/asset_categories_admin/edit_asset_category_cp_attachment_file_entry" />
+		<portlet:param name="mvcRenderCommandName" value="/commerce_product_asset_categories/edit_asset_category_cp_attachment_file_entry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="categoryId" value="<%= String.valueOf(cpAttachmentFileEntry.getClassPK()) %>" />
 		<portlet:param name="cpAttachmentFileEntryId" value="<%= String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()) %>" />
@@ -41,7 +41,7 @@ CPAttachmentFileEntry cpAttachmentFileEntry = (CPAttachmentFileEntry)row.getObje
 		url="<%= editURL %>"
 	/>
 
-	<portlet:actionURL name="/asset_categories_admin/edit_asset_category_cp_attachment_file_entry" var="deleteURL">
+	<portlet:actionURL name="/commerce_product_asset_categories/edit_asset_category_cp_attachment_file_entry" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="cpAttachmentFileEntryId" value="<%= String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()) %>" />

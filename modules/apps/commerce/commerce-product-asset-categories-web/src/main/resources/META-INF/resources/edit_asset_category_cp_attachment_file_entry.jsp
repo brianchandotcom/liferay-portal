@@ -29,7 +29,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(request, "add-image") : cpAttachmentFileEntry.getTitle(languageId));
 %>
 
-<portlet:actionURL name="/asset_categories_admin/edit_asset_category_cp_attachment_file_entry" var="editAssetCategoryCPAttachmentFileEntryActionURL" />
+<portlet:actionURL name="/commerce_product_asset_categories/edit_asset_category_cp_attachment_file_entry" var="editAssetCategoryCPAttachmentFileEntryActionURL" />
 
 <aui:form action="<%= editAssetCategoryCPAttachmentFileEntryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? Constants.ADD : Constants.UPDATE %>" />

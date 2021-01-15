@@ -310,15 +310,6 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	public void process() {
-		try {
-			_jenkinsBuildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build properties", ioException);
-		}
-
 		if (_payloadJSONObject.isPusher()) {
 			syncAutopull();
 			syncRepository();
@@ -378,17 +369,6 @@ public class GitHubWebhookPayloadProcessor {
 				throw new IllegalArgumentException(
 					method.toString() + " method should not have a body");
 			}
-
-			String prefix = "&";
-
-			if (url.contains("?")) {
-				prefix = "?";
-			}
-
-			url = JenkinsResultsParserUtil.combine(
-				url, prefix, "token=",
-				_jenkinsBuildProperties.getProperty(
-					"jenkins.authentication.token"));
 		}
 
 		try {

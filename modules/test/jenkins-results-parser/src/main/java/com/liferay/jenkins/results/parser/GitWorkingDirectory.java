@@ -1420,8 +1420,9 @@ public class GitWorkingDirectory {
 		return getRebasedLocalGitBranch(
 			pullRequest.getLocalSenderBranchName(),
 			pullRequest.getSenderBranchName(), pullRequest.getSenderRemoteURL(),
-			pullRequest.getSenderSHA(), pullRequest.getUpstreamBranchName(),
-			pullRequest.getLiferayRemoteBranchSHA());
+			pullRequest.getSenderSHA(),
+			pullRequest.getUpstreamRemoteGitBranchName(),
+			pullRequest.getUpstreamBranchSHA());
 	}
 
 	public LocalGitBranch getRebasedLocalGitBranch(

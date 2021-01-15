@@ -468,7 +468,7 @@ public class AutoCloseUtil {
 
 		String gitRepositoryBranchAutoClosePropertyName =
 			propertyNameTemplate.replace(
-				"?", "-" + pullRequest.getUpstreamBranchName());
+				"?", "-" + pullRequest.getUpstreamRemoteGitBranchName());
 
 		Properties localLiferayJenkinsEEBuildProperties =
 			JenkinsResultsParserUtil.getLocalLiferayJenkinsEEBuildProperties();
@@ -538,7 +538,7 @@ public class AutoCloseUtil {
 				"test.branch.names.auto.close[", gitHubRemoteGitRepositoryName,
 				"]"));
 
-		String branchName = pullRequest.getUpstreamBranchName();
+		String branchName = pullRequest.getUpstreamRemoteGitBranchName();
 
 		if (testBranchNamesAutoClose == null) {
 			if (debug) {
@@ -579,7 +579,7 @@ public class AutoCloseUtil {
 
 		for (String criticalTestBranch : criticalTestBranches) {
 			if (criticalTestBranch.equals(
-					pullRequest.getUpstreamBranchName())) {
+					pullRequest.getUpstreamRemoteGitBranchName())) {
 
 				return true;
 			}

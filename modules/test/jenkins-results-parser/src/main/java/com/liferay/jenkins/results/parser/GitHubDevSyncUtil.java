@@ -84,7 +84,7 @@ public class GitHubDevSyncUtil {
 		return _createCacheLocalGitBranch(
 			localGitRepository, pullRequest.getReceiverUsername(),
 			pullRequest.getSenderBranchName(), pullRequest.getSenderUsername(),
-			pullRequest.getSenderSHA(), pullRequest.getLiferayRemoteBranchSHA(),
+			pullRequest.getSenderSHA(), pullRequest.getUpstreamBranchSHA(),
 			synchronize);
 	}
 
@@ -161,8 +161,7 @@ public class GitHubDevSyncUtil {
 	public static String getCacheBranchName(PullRequest pullRequest) {
 		return getCacheBranchName(
 			pullRequest.getReceiverUsername(), pullRequest.getSenderUsername(),
-			pullRequest.getSenderSHA(),
-			pullRequest.getLiferayRemoteBranchSHA());
+			pullRequest.getSenderSHA(), pullRequest.getUpstreamBranchSHA());
 	}
 
 	public static String getCacheBranchName(RemoteGitRef remoteGitRef) {

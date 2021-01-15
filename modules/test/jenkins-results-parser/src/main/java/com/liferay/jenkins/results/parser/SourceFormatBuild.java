@@ -60,7 +60,7 @@ public class SourceFormatBuild
 
 	@Override
 	public String getBranchName() {
-		return _pullRequest.getUpstreamBranchName();
+		return _pullRequest.getUpstreamRemoteGitBranchName();
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class SourceFormatBuild
 
 		@Override
 		public String getUpstreamBranchName() {
-			return _pullRequest.getUpstreamBranchName();
+			return _pullRequest.getUpstreamRemoteGitBranchName();
 		}
 
 		@Override

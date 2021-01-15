@@ -297,22 +297,6 @@ public class PullRequest {
 		return _labels;
 	}
 
-	public String getLiferayRemoteBranchSHA() {
-		RemoteGitBranch liferayRemoteGitBranch = getLiferayRemoteGitBranch();
-
-		return liferayRemoteGitBranch.getSHA();
-	}
-
-	public RemoteGitBranch getLiferayRemoteGitBranch() {
-		if (_liferayRemoteGitBranch == null) {
-			_liferayRemoteGitBranch = GitUtil.getRemoteGitBranch(
-				getUpstreamBranchName(), new File("."),
-				"git@github.com:liferay/" + getGitRepositoryName());
-		}
-
-		return _liferayRemoteGitBranch;
-	}
-
 	public String getLocalSenderBranchName() {
 		return JenkinsResultsParserUtil.combine(
 			getSenderUsername(), "-", getNumber(), "-", getSenderBranchName());
@@ -415,16 +399,26 @@ public class PullRequest {
 		return _jsonObject.getString("title");
 	}
 
-	public String getUpstreamBranchName() {
+	public String getUpstreamBranchSHA() {
+		RemoteGitBranch upstreamRemoteGitBranch = getUpstreamRemoteGitBranch();
+
+		return upstreamRemoteGitBranch.getSHA();
+	}
+
+	public RemoteGitBranch getUpstreamRemoteGitBranch() {
+		if (_liferayRemoteGitBranch == null) {
+			_liferayRemoteGitBranch = GitUtil.getRemoteGitBranch(
+				getUpstreamRemoteGitBranchName(), new File("."),
+				"git@github.com:liferay/" + getGitRepositoryName());
+		}
+
+		return _liferayRemoteGitBranch;
+	}
+
+	public String getUpstreamRemoteGitBranchName() {
 		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
 
 		return baseJSONObject.getString("ref");
-	}
-
-	public String getUpstreamBranchSHA() {
-		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
-
-		return baseJSONObject.getString("sha");
 	}
 
 	public String getURL() {

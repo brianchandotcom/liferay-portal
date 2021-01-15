@@ -34,10 +34,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.dom4j.Element;
 
@@ -103,7 +101,7 @@ public class PoshiRunner {
 		List<String> testNames = Arrays.asList(
 			PropsValues.TEST_NAME.split("\\s*,\\s*"));
 
-		PoshiContext.readFiles(_getTestClassFileIncludes(testNames));
+		PoshiContext.readFiles();
 
 		for (String testName : testNames) {
 			PoshiValidation.validate(testName);
@@ -246,21 +244,6 @@ public class PoshiRunner {
 
 	@Rule
 	public RetryTestRule retryTestRule = new RetryTestRule();
-
-	private static String[] _getTestClassFileIncludes(List<String> testNames) {
-		Set<String> testClassFileGlobsSet = new HashSet<>();
-
-		for (String testName : testNames) {
-			String testClassName =
-				PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
-					testName);
-
-			testClassFileGlobsSet.add("**/" + testClassName + ".prose");
-			testClassFileGlobsSet.add("**/" + testClassName + ".testcase");
-		}
-
-		return testClassFileGlobsSet.toArray(new String[0]);
-	}
 
 	private void _runCommand() throws Exception {
 		_poshiLogger.logNamespacedClassCommandName(

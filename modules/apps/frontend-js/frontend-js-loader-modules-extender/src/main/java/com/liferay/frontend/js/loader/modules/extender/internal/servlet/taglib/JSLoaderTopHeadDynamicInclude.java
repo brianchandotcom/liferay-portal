@@ -105,10 +105,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write("',");
 
 		printWriter.write("waitTimeout:");
-		printWriter.write(_details.waitTimeout() * 1000);
-		printWriter.write(",");
-
-		printWriter.write("}");
+		printWriter.write(String.valueOf(_details.waitTimeout() * 1000));
 
 		printWriter.write("};</script>");
 
@@ -134,7 +131,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	private String _getDefaultURLParams(ThemeDisplay themeDisplay) {
 		if (themeDisplay.isThemeJsFastLoad()) {
-			return null;
+			return "null";
 		}
 
 		return "{languageId:'" + themeDisplay.getLanguageId() + "'}";

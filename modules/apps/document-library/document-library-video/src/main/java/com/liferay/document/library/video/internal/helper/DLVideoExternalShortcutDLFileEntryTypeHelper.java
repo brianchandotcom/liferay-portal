@@ -129,9 +129,9 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 		serviceContext.setUserId(defaultUserId);
 
 		_dlFileEntryTypeLocalService.addFileEntryType(
-			defaultUserId, _company.getGroupId(),
+			defaultUserId, _company.getGroupId(), ddmStructureId,
 			DLVideoConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap, descriptionMap,
-			new long[] {ddmStructureId}, serviceContext);
+			serviceContext);
 	}
 
 	private Map<Locale, String> _updateDescriptionMap(

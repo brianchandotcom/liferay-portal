@@ -172,6 +172,14 @@ public class AddSegmentsExperienceMVCActionCommand
 
 				segmentsEntryId = segmentsExperience.getSegmentsEntryId();
 			}
+
+			return _segmentsExperienceService.appendSegmentsExperience(
+				segmentsEntryId, classNameId, classPK,
+				HashMapBuilder.put(
+					LocaleUtil.getSiteDefault(),
+					ParamUtil.getString(actionRequest, "name")
+				).build(),
+				active, serviceContext);
 		}
 
 		return _segmentsExperienceService.addSegmentsExperience(

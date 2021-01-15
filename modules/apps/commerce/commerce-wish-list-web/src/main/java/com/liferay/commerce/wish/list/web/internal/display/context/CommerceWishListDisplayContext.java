@@ -14,7 +14,11 @@
 
 package com.liferay.commerce.wish.list.web.internal.display.context;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -82,6 +86,45 @@ public class CommerceWishListDisplayContext {
 			httpServletRequest);
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			httpServletRequest);
+	}
+
+	public long getCommerceAccountId() throws PortalException {
+		CommerceContext commerceContext =
+			_commerceWishListRequestHelper.getCommerceContext();
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		return commerceAccount.getCommerceAccountId();
+	}
+
+	public long getCommerceChannelId() throws PortalException {
+		CommerceContext commerceContext =
+			_commerceWishListRequestHelper.getCommerceContext();
+
+		return commerceContext.getCommerceChannelId();
+	}
+
+	public String getCommerceCurrencyCode() throws PortalException {
+		CommerceContext commerceContext =
+			_commerceWishListRequestHelper.getCommerceContext();
+
+		CommerceCurrency commerceCurrency =
+			commerceContext.getCommerceCurrency();
+
+		return commerceCurrency.getCode();
+	}
+
+	public long getCommerceOrderId() throws PortalException {
+		CommerceContext commerceContext =
+			_commerceWishListRequestHelper.getCommerceContext();
+
+		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
+		if (commerceOrder != null) {
+			return commerceOrder.getCommerceOrderId();
+		}
+
+		return 0;
 	}
 
 	public CommerceWishList getCommerceWishList() throws PortalException {

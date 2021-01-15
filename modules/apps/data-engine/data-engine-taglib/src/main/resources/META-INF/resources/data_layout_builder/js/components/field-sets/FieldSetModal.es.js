@@ -224,7 +224,8 @@ const ModalContent = ({
 							type="text"
 							value={
 								name[editingLanguageId] ||
-								name[defaultLanguageId]
+								name[defaultLanguageId] ||
+								''
 							}
 						/>
 					</ClayInput.GroupItem>

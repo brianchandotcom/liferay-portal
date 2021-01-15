@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_MENU</td>
-	<td>//*[contains(@class, 'd-flex') and contains(@class, 'justify-content-between') and contains(@class, 'sidebar-collapse-header') and contains(text(),'Organization')]</td>
+	<td>//a[contains(@class, 'sidebar-collapse-header') and contains(text(),'Organization')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>SESSION_MENU</td>
-	<td>//*[contains(@class, 'd-flex') and contains(@class, 'justify-content-between') and contains(@class, 'sidebar-collapse-header') and contains(text(),'Session')]</td>
+	<td>//a[contains(@class, 'sidebar-collapse-header') and contains(text(),'Session')]</td>
 	<td></td>
 </tr>
 <tr>

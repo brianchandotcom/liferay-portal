@@ -43,6 +43,8 @@ import java.io.InputStream;
 
 import java.util.Collections;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -51,6 +53,18 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ContentTemplateResourceTest
 	extends BaseContentTemplateResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetAssetLibraryContentTemplatesPageWithFilterStringEquals() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetSiteContentTemplatesPageWithFilterStringEquals() {
+	}
 
 	@Override
 	protected ContentTemplate

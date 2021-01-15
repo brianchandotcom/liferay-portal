@@ -30,7 +30,6 @@ import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import java.util.Map;
 
@@ -59,67 +58,65 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		stringWriter.write("<script data-senna-track=\"temporary\" type=\"");
-		stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
-		stringWriter.write("\">window.__CONFIG__=");
+		printWriter.write("<script data-senna-track=\"temporary\" type=\"");
+		printWriter.write(ContentTypes.TEXT_JAVASCRIPT);
+		printWriter.write("\">window.__CONFIG__=");
+
+		printWriter.write("{");
+
+		printWriter.write("basePath:'',");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		stringWriter.write("{");
+		printWriter.write("combine:");
+		printWriter.write(Boolean.toString(themeDisplay.isThemeJsFastLoad()));
+		printWriter.write(",");
 
-		stringWriter.write("basePath:'',");
+		printWriter.write("defaultURLParams:");
+		printWriter.write(_getDefaultURLParams(themeDisplay));
+		printWriter.write(",");
 
-		stringWriter.write("combine:");
-		stringWriter.write(Boolean.toString(themeDisplay.isThemeJsFastLoad()));
-		stringWriter.write(",");
+		printWriter.write("explainResolutions:");
+		printWriter.write(Boolean.toString(_details.explainResolutions()));
+		printWriter.write(",");
 
-		stringWriter.write("defaultURLParams:");
-		stringWriter.write(_getDefaultURLParams(themeDisplay));
-		stringWriter.write(",");
+		printWriter.write("exposeGlobal:");
+		printWriter.write(Boolean.toString(_details.exposeGlobal()));
+		printWriter.write(",");
 
-		stringWriter.write("explainResolutions:");
-		stringWriter.write(Boolean.toString(_details.explainResolutions()));
-		stringWriter.write(",");
+		printWriter.write("logLevel:'");
+		printWriter.write(_details.logLevel());
+		printWriter.write("',");
 
-		stringWriter.write("exposeGlobal:");
-		stringWriter.write(Boolean.toString(_details.exposeGlobal()));
-		stringWriter.write(",");
+		printWriter.write("namespace:'Liferay',");
 
-		stringWriter.write("logLevel:'");
-		stringWriter.write(_details.logLevel());
-		stringWriter.write("',");
+		printWriter.write("reportMismatchedAnonymousModules:'warn',");
 
-		stringWriter.write("namespace:'Liferay',");
+		printWriter.write("resolvePath:'");
+		printWriter.write(_getResolvePath(httpServletRequest));
+		printWriter.write("',");
 
-		stringWriter.write("reportMismatchedAnonymousModules:'warn',");
+		printWriter.write("url:'");
+		printWriter.write(_getURL(httpServletRequest, themeDisplay));
+		printWriter.write("',");
 
-		stringWriter.write("resolvePath:'");
-		stringWriter.write(_getResolvePath(httpServletRequest));
-		stringWriter.write("',");
+		printWriter.write("waitTimeout:");
+		printWriter.write(_details.waitTimeout() * 1000);
+		printWriter.write(",");
 
-		stringWriter.write("url:'");
-		stringWriter.write(_getURL(httpServletRequest, themeDisplay));
-		stringWriter.write("',");
+		printWriter.write("}");
 
-		stringWriter.write("waitTimeout:");
-		stringWriter.write(_details.waitTimeout() * 1000);
-		stringWriter.write(",");
+		printWriter.write("};</script>");
 
-		stringWriter.write("}");
-
-		stringWriter.write("};</script>");
-
-		stringWriter.write("<script data-senna-track=\"permanent\" src=\"");
-		stringWriter.write(_servletContext.getContextPath());
-		stringWriter.write("/loader.js\" type=\"");
-		stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
-		stringWriter.write("\"></script>");
-
-		_writeResponse(httpServletResponse, stringWriter.toString());
+		printWriter.write("<script data-senna-track=\"permanent\" src=\"");
+		printWriter.write(_servletContext.getContextPath());
+		printWriter.write("/loader.js\" type=\"");
+		printWriter.write(ContentTypes.TEXT_JAVASCRIPT);
+		printWriter.write("\"></script>");
 	}
 
 	@Override
@@ -169,15 +166,6 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		}
 
 		return themeDisplay.getCDNBaseURL();
-	}
-
-	private void _writeResponse(
-			HttpServletResponse httpServletResponse, String content)
-		throws IOException {
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		printWriter.println(content);
 	}
 
 	@Reference

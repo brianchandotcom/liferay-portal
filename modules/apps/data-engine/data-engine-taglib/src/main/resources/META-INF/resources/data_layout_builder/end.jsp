@@ -75,6 +75,8 @@
 			).put(
 				"contentType", contentType
 			).put(
+				"contentTypeConfig", contentTypeConfigJSONObject
+			).put(
 				"context", dataLayoutJSONObject
 			).put(
 				"dataDefinitionId", dataDefinitionId

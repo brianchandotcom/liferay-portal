@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -51,6 +52,9 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.taglib.util.ThemeUtil;
 
 import java.util.Collections;
@@ -88,7 +92,17 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 		throws Exception {
 
 		return _toContentPage(
-			_getLayout(siteId, friendlyUrlPath), "getSiteContentPage");
+			_getLayout(siteId, friendlyUrlPath), "getSiteContentPage", null);
+	}
+
+	@Override
+	public ContentPage getSiteContentPageExperienceExperienceKey(
+			Long siteId, String friendlyUrlPath, String experienceKey)
+		throws Exception {
+
+		return _toContentPage(
+			_getLayout(siteId, friendlyUrlPath), "getSiteContentPage",
+			experienceKey);
 	}
 
 	@Override
@@ -147,7 +161,7 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 				return _toContentPage(
 					_layoutLocalService.getLayout(plid),
-					"getSiteContentPagesPage");
+					"getSiteContentPagesPage", null);
 			});
 	}
 
@@ -191,10 +205,11 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 		return themeDisplay;
 	}
 
-	private ContentPage _toContentPage(Layout layout, String methodName)
+	private ContentPage _toContentPage(
+			Layout layout, String methodName, String segmentsExperienceKey)
 		throws Exception {
 
-		return _contentPageDTOConverter.toDTO(
+		DefaultDTOConverterContext dtoConverterContext =
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
@@ -206,8 +221,24 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 				).build(),
 				_dtoConverterRegistry, contextHttpServletRequest,
 				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
-				contextUriInfo, contextUser),
-			layout);
+				contextUriInfo, contextUser);
+
+		dtoConverterContext.setAttribute(
+			"segmentsExperienceId", SegmentsEntryConstants.ID_DEFAULT);
+
+		if (Validator.isNotNull(segmentsExperienceKey)) {
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceService.fetchSegmentsExperience(
+					layout.getGroupId(), segmentsExperienceKey);
+
+			if (segmentsExperience != null) {
+				dtoConverterContext.setAttribute(
+					"segmentsExperienceId",
+					segmentsExperience.getSegmentsExperienceId());
+			}
+		}
+
+		return _contentPageDTOConverter.toDTO(dtoConverterContext, layout);
 	}
 
 	private String _toHTML(String friendlyUrlPath, long groupId)
@@ -267,5 +298,8 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private SegmentsExperienceService _segmentsExperienceService;
 
 }

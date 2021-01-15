@@ -28,6 +28,7 @@ import {
 	containsField,
 	isDataLayoutEmpty,
 } from '../../utils/dataLayoutVisitor.es';
+import {errorToast} from '../../utils/toast.es';
 import TranslationManager from '../translation-manager/TranslationManager.es';
 import useCreateFieldSet from './actions/useCreateFieldSet.es';
 import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
@@ -59,11 +60,25 @@ const ModalContent = ({
 		state: {dataDefinition, dataLayout},
 	} = childrenContext;
 
+	const onEditingLanguageIdChange = useCallback(
+		(editingLanguageId) => {
+			setEditingLanguageId(editingLanguageId);
+
+			dispatch({
+				payload: editingLanguageId,
+				type: UPDATE_EDITING_LANGUAGE_ID,
+			});
+		},
+		[dispatch]
+	);
+
 	const actionProps = {
 		availableLanguageIds: dataDefinition?.availableLanguageIds,
 		childrenContext,
 		defaultLanguageId,
+		editingLanguageId,
 		fieldSet,
+		onEditingLanguageIdChange,
 	};
 
 	const createFieldSet = useCreateFieldSet(actionProps);
@@ -106,10 +121,12 @@ const ModalContent = ({
 				onPropagate: () => saveFieldSet(name),
 			})
 				.then(onClose)
-				.catch(onClose);
+				.catch(({message}) => errorToast(message));
 		}
 		else {
-			createFieldSet(name).then(onClose).catch(onClose);
+			createFieldSet(name)
+				.then(onClose)
+				.catch(({message}) => errorToast(message));
 		}
 	};
 
@@ -120,18 +137,6 @@ const ModalContent = ({
 				container.style.zIndex = zIndex;
 			});
 	};
-
-	const onEditingLanguageIdChange = useCallback(
-		(editingLanguageId) => {
-			setEditingLanguageId(editingLanguageId);
-
-			dispatch({
-				payload: editingLanguageId,
-				type: UPDATE_EDITING_LANGUAGE_ID,
-			});
-		},
-		[dispatch]
-	);
 
 	useEffect(() => {
 		onEditingLanguageIdChange(defaultLanguageId);

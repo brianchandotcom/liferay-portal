@@ -27,7 +27,14 @@ import {
 } from '../../../utils/normalizers.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
-export default ({availableLanguageIds, childrenContext, fieldSet}) => {
+export default ({
+	availableLanguageIds,
+	childrenContext,
+	defaultLanguageId,
+	editingLanguageId,
+	fieldSet,
+	onEditingLanguageIdChange: setEditingLanguageId,
+}) => {
 	const [context, dispatch] = useContext(AppContext);
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const {dataDefinition, dataLayout, fieldSets} = context;
@@ -48,6 +55,17 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 			dataDefinitionFields,
 			name,
 		};
+
+		if (
+			editingLanguageId !== defaultLanguageId &&
+			!newDataDefinition.name[defaultLanguageId]
+		) {
+			setEditingLanguageId(defaultLanguageId);
+
+			return Promise.reject(
+				new Error(Liferay.Language.get('please-enter-a-valid-title'))
+			);
+		}
 
 		if (!allowInvalidAvailableLocalesForProperty) {
 			newDataDefinition = normalizeDataDefinition(

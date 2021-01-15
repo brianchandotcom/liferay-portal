@@ -1204,6 +1204,37 @@ definition {
 		DMDocumentType.viewNoAvailableActionsViaDocumentTypesPG();
 	}
 
+	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
+	@priority = "5"
+	test ValidateFileNameRestrictions {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = '''\\\///.jpg''',
+			dmDocumentTitle = "DM Document Title",
+			validateFileNameRestriction = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentFileName = '''<>.txt''',
+			dmDocumentTitle = "DM Document Title",
+			validateFileNameRestriction = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentFileName = ''':"?.doc''',
+			dmDocumentTitle = "DM Document Title",
+			validateFileNameRestriction = "true");
+	}
+
 	@description = "This test covers LPS-93031. It ensures that the document still can be viewed after the author is deleted."
 	@priority = "4"
 	test ViewDocumentAfterDeletingAuthor {

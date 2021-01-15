@@ -12,10 +12,12 @@
  * details.
  */
 
+import LabelField from '../components/form-renderer-custom-fields/LabelField.es';
 import RepeatableField from '../components/form-renderer-custom-fields/RepeatableField.es';
 import RequiredField from '../components/form-renderer-custom-fields/RequiredField.es';
 
 export default {
+	label: LabelField,
 	repeatable: RepeatableField,
 	required: RequiredField,
 };

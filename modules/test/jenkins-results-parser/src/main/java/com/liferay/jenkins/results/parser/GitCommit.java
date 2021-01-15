@@ -30,6 +30,8 @@ public interface GitCommit {
 
 	public Date getCommitDate();
 
+	public String getEmailAddress();
+
 	public String getGitRepositoryName();
 
 	public String getMessage();

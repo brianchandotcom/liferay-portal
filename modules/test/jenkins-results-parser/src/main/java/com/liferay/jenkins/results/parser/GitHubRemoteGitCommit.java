@@ -66,10 +66,10 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 	}
 
 	protected GitHubRemoteGitCommit(
-		String gitHubUsername, String gitRepositoryName, String message,
-		String sha, Type type, long commitTime) {
+		String emailAddress, String gitHubUsername, String gitRepositoryName,
+		String message, String sha, Type type, long commitTime) {
 
-		super(gitRepositoryName, message, sha, type, commitTime);
+		super(emailAddress, gitRepositoryName, message, sha, type, commitTime);
 
 		_gitHubUsername = gitHubUsername;
 	}

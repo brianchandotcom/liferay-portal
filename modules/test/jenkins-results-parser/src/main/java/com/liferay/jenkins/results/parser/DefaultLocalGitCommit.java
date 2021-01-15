@@ -20,10 +20,11 @@ package com.liferay.jenkins.results.parser;
 public class DefaultLocalGitCommit extends BaseLocalGitCommit {
 
 	protected DefaultLocalGitCommit(
-		GitWorkingDirectory gitWorkingDirectory, String message, String sha,
-		GitCommit.Type type, long commitTime) {
+		String emailAddress, GitWorkingDirectory gitWorkingDirectory,
+		String message, String sha, GitCommit.Type type, long commitTime) {
 
-		super(gitWorkingDirectory, message, sha, type, commitTime);
+		super(
+			emailAddress, gitWorkingDirectory, message, sha, type, commitTime);
 	}
 
 }

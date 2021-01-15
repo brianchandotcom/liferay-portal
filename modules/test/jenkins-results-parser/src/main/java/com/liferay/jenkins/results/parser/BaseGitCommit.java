@@ -52,6 +52,11 @@ public abstract class BaseGitCommit implements GitCommit {
 	}
 
 	@Override
+	public String getEmailAddress() {
+		return _emailAddress;
+	}
+
+	@Override
 	public String getGitRepositoryName() {
 		return _gitRepositoryName;
 	}
@@ -83,6 +88,7 @@ public abstract class BaseGitCommit implements GitCommit {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("commitTime", _commitTime);
+		jsonObject.put("emailAddress", _emailAddress);
 		jsonObject.put("message", _message);
 		jsonObject.put("sha", _sha);
 
@@ -90,9 +96,10 @@ public abstract class BaseGitCommit implements GitCommit {
 	}
 
 	protected BaseGitCommit(
-		String gitRepositoryName, String message, String sha,
-		GitCommit.Type type, long commitTime) {
+		String emailAddress, String gitRepositoryName, String message,
+		String sha, GitCommit.Type type, long commitTime) {
 
+		_emailAddress = emailAddress;
 		_gitRepositoryName = gitRepositoryName;
 		_message = message;
 		_sha = sha;
@@ -101,6 +108,7 @@ public abstract class BaseGitCommit implements GitCommit {
 	}
 
 	private final long _commitTime;
+	private final String _emailAddress;
 	private final String _gitRepositoryName;
 	private final String _message;
 	private final String _sha;

@@ -82,6 +82,7 @@ public abstract class BaseWorkspaceGitRepository
 
 			_historicalLocalGitCommits.add(
 				GitCommitFactory.newLocalGitCommit(
+					commitJSONObject.getString("emailAddress"),
 					gitWorkingDirectory, commitJSONObject.getString("message"),
 					commitJSONObject.getString("sha"),
 					commitJSONObject.getLong("commitTime")));

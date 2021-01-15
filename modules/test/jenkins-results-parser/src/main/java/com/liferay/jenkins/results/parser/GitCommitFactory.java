@@ -46,9 +46,9 @@ public class GitCommitFactory {
 				committerJSONObject.getString("date"));
 
 			GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
-				gitHubUsername, gitRepositoryName, message,
-				jsonObject.getString("sha"), _getGitCommitType(message),
-				date.getTime());
+				committerJSONObject.getString("email"), gitHubUsername,
+				gitRepositoryName, message, jsonObject.getString("sha"),
+				_getGitCommitType(message), date.getTime());
 
 			_gitHubRemoteGitCommits.put(
 				jsonObject.getString("url"), remoteGitCommit);
@@ -82,12 +82,12 @@ public class GitCommitFactory {
 	}
 
 	public static LocalGitCommit newLocalGitCommit(
-		GitWorkingDirectory gitWorkingDirectory, String message, String sha,
-		long commitTime) {
+		String emailAddress, GitWorkingDirectory gitWorkingDirectory,
+		String message, String sha, long commitTime) {
 
 		return new DefaultLocalGitCommit(
-			gitWorkingDirectory, message, sha, _getGitCommitType(message),
-			commitTime);
+			emailAddress, gitWorkingDirectory, message, sha,
+			_getGitCommitType(message), commitTime);
 	}
 
 	private static GitCommit.Type _getGitCommitType(String message) {

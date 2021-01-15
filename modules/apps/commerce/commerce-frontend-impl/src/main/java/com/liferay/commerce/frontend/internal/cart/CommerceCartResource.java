@@ -201,8 +201,8 @@ public class CommerceCartResource {
 
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.upsertCommerceOrderItem(
-					commerceOrder.getCommerceOrderId(), cpInstanceId, quantity,
-					0, options, commerceContext, serviceContext);
+					commerceOrder.getCommerceOrderId(), cpInstanceId, options,
+					quantity, 0, commerceContext, serviceContext);
 
 			cart = _commerceCartResourceUtil.getCart(
 				commerceOrderItem.getCommerceOrderId(),

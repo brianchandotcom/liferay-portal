@@ -116,7 +116,7 @@ public class CartItemResourceImpl
 		return _toCartItem(
 			_commerceOrderItemService.upsertCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
-				cartItem.getQuantity(), 0, cartItem.getOptions(),
+				cartItem.getOptions(), cartItem.getQuantity(), 0,
 				commerceContext, serviceContext));
 	}
 

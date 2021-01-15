@@ -508,7 +508,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		_commerceOrderItemService.upsertCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			GetterUtil.get(cartItem.getQuantity(), 1), 0, cartItem.getOptions(),
+			cartItem.getOptions(), GetterUtil.get(cartItem.getQuantity(), 1), 0,
 			commerceContext, serviceContext);
 	}
 

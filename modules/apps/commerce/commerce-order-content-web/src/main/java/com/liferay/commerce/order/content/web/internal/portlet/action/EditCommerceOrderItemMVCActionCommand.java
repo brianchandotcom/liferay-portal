@@ -105,8 +105,8 @@ public class EditCommerceOrderItemMVCActionCommand
 						CommerceOrderItem.class.getName(), actionRequest);
 
 				_commerceOrderItemService.updateCommerceOrderItem(
-					commerceOrderItem.getCommerceOrderItemId(), quantity,
-					commerceOrderItem.getJson(), commerceContext,
+					commerceOrderItem.getCommerceOrderItemId(),
+					commerceOrderItem.getJson(), quantity, commerceContext,
 					serviceContext);
 			}
 			else if (cmd.equals(Constants.RESET)) {

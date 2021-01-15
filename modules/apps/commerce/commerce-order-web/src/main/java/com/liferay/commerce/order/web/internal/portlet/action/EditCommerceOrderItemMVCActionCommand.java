@@ -80,7 +80,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		for (long cpInstanceId : cpInstanceIds) {
 			_commerceOrderItemService.addCommerceOrderItem(
-				commerceOrderId, cpInstanceId, 1, 0, null, commerceContext,
+				commerceOrderId, cpInstanceId, null, 1, 0, commerceContext,
 				serviceContext);
 		}
 	}
@@ -199,7 +199,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemUnitPrice(
-					commerceOrderItemId, price, quantity);
+					commerceOrderItemId, quantity, price);
 		}
 
 		int requestedDeliveryDateMonth = ParamUtil.getInteger(
@@ -213,8 +213,8 @@ public class EditCommerceOrderItemMVCActionCommand
 			actionRequest, "deliveryGroup");
 
 		_commerceOrderItemService.updateCommerceOrderItemInfo(
-			commerceOrderItem.getCommerceOrderItemId(), deliveryGroup,
-			commerceOrderItem.getShippingAddressId(),
+			commerceOrderItem.getCommerceOrderItemId(),
+			commerceOrderItem.getShippingAddressId(), deliveryGroup,
 			commerceOrderItem.getPrintedNote(), requestedDeliveryDateMonth,
 			requestedDeliveryDateDay, requestedDeliveryDateYear);
 	}

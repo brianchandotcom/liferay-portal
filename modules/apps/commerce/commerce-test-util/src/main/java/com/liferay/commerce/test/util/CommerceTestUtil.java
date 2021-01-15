@@ -384,7 +384,7 @@ public class CommerceTestUtil {
 				commerceOrder.getGroupId());
 
 		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
-			commerceOrderId, cpInstanceId, quantity, 0, null, commerceContext,
+			commerceOrderId, cpInstanceId, null, quantity, 0, commerceContext,
 			serviceContext);
 	}
 

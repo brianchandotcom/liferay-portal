@@ -118,8 +118,9 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.upsertCommerceOrderItem(
-					commerceOrder.getCommerceOrderId(), cpInstanceId, quantity,
-					0, ddmFormValues, commerceContext, serviceContext);
+					commerceOrder.getCommerceOrderId(), cpInstanceId,
+					ddmFormValues, quantity, 0, commerceContext,
+					serviceContext);
 
 			int commerceOrderItemsQuantity =
 				_commerceOrderItemService.getCommerceOrderItemsQuantity(

@@ -207,7 +207,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1, 0, null, _commerceContext,
+				cpInstance.getCPInstanceId(), null, 1, 0, _commerceContext,
 				_serviceContext);
 
 		List<CommerceOrderItem> commerceOrderItems =
@@ -271,8 +271,8 @@ public class CommerceOrderItemLocalServiceTest {
 				_commerceCurrency.getCommerceCurrencyId());
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			0, null, _commerceContext, _serviceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			null, 1, 0, _commerceContext, _serviceContext);
 	}
 
 	@Test(expected = CommerceOrderValidatorException.class)
@@ -320,8 +320,8 @@ public class CommerceOrderItemLocalServiceTest {
 				_commerceCurrency.getCommerceCurrencyId());
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			0, null, _commerceContext, _serviceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			null, 1, 0, _commerceContext, _serviceContext);
 	}
 
 	@Test
@@ -515,7 +515,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				bundleCPInstance.getCPInstanceId(), quantity, 0, null,
+				bundleCPInstance.getCPInstanceId(), null, quantity, 0,
 				_commerceContext, _serviceContext);
 
 		List<CommerceOrderItem> commerceOrderItems =
@@ -648,8 +648,8 @@ public class CommerceOrderItemLocalServiceTest {
 		}
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			0, null, _commerceContext, _serviceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			null, 1, 0, _commerceContext, _serviceContext);
 
 		commerceOrderItems = commerceOrder.getCommerceOrderItems();
 
@@ -659,7 +659,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrderItem commerceOrderItem3 =
 			_commerceOrderItemLocalService.upsertCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1, 0, "[]", _commerceContext,
+				cpInstance.getCPInstanceId(), "[]", 1, 0, _commerceContext,
 				_serviceContext);
 
 		commerceOrderItems = commerceOrder.getCommerceOrderItems();
@@ -1034,9 +1034,9 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				bundleCPInstance.getCPInstanceId(), quantity, 0,
-				"[" + testCommerceOptionValue.toJSON() + "]", _commerceContext,
-				_serviceContext);
+				bundleCPInstance.getCPInstanceId(),
+				"[" + testCommerceOptionValue.toJSON() + "]", quantity, 0,
+				_commerceContext, _serviceContext);
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
@@ -1181,8 +1181,8 @@ public class CommerceOrderItemLocalServiceTest {
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(),
-			bundleCPInstanceWithUnavailableChildSKU.getCPInstanceId(), 1, 1,
-			null, _commerceContext, _serviceContext);
+			bundleCPInstanceWithUnavailableChildSKU.getCPInstanceId(), null, 1,
+			1, _commerceContext, _serviceContext);
 
 		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
 			commerceOrder.getCommerceOrderId());
@@ -1250,7 +1250,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), optionSKU1.getCPInstanceId(),
-			nonbundleQuantity, 0, null, _commerceContext, _serviceContext);
+			null, nonbundleQuantity, 0, _commerceContext, _serviceContext);
 
 		BigDecimal option1Price = new BigDecimal("100");
 		BigDecimal option2Price = new BigDecimal("200");
@@ -1327,7 +1327,7 @@ public class CommerceOrderItemLocalServiceTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				bundleCPInstance.getCPInstanceId(), quantity, 0, null,
+				bundleCPInstance.getCPInstanceId(), null, quantity, 0,
 				_commerceContext, _serviceContext);
 
 		List<CommerceOrderItem> commerceOrderItems =

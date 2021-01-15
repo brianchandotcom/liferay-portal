@@ -278,7 +278,7 @@ public class CommerceOrderGenerator {
 
 				_commerceOrderItemLocalService.addCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(),
-					cpInstance.getCPInstanceId(), quantity, 0, null,
+					cpInstance.getCPInstanceId(), null, quantity, 0,
 					commerceContext, serviceContext);
 			}
 			catch (Exception exception) {

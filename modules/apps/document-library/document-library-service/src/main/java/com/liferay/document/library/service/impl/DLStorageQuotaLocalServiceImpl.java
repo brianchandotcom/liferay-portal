@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.service.impl;
 
+import com.liferay.document.library.exception.DLStorageQuotaExceededException;
 import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.document.library.service.base.DLStorageQuotaLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -75,7 +76,7 @@ public class DLStorageQuotaLocalServiceImpl
 		if ((currentStorageSize + increment) >
 				PropsValues.DATA_LIMIT_MAX_DL_STORAGE_SIZE) {
 
-			throw new PortalException(
+			throw new DLStorageQuotaExceededException(
 				"Unable to exceed maximum alowed document library storage " +
 					"size");
 		}

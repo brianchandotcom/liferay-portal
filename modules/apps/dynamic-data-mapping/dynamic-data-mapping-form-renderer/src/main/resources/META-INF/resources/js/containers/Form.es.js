@@ -250,7 +250,7 @@ Form.displayName = 'Form';
 const FormEditor = React.forwardRef(
 	(
 		{
-			onEvent,
+			onEvent = () => {},
 			activePage = 0,
 			defaultLanguageId = themeDisplay.getLanguageId(),
 			...otherProps

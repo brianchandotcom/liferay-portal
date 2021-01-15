@@ -256,14 +256,34 @@ const FormEditor = React.forwardRef(
 			...otherProps
 		},
 		ref
-	) => (
-		<FormProvider
-			onEvent={onEvent}
-			value={{...otherProps, activePage, defaultLanguageId}}
-		>
-			{(props) => <Form {...props} ref={ref} />}
-		</FormProvider>
-	)
+	) => {
+		const {containerId} = otherProps;
+
+		const defaultRef = useRef(null);
+
+		const reactComponentRef = ref ?? defaultRef;
+
+		useEffect(() => {
+			Liferay.component(
+				containerId,
+				{
+					reactComponentRef,
+				},
+				{
+					destroyOnNavigate: true,
+				}
+			);
+		}, [containerId, reactComponentRef]);
+
+		return (
+			<FormProvider
+				onEvent={onEvent}
+				value={{...otherProps, activePage, defaultLanguageId}}
+			>
+				{(props) => <Form {...props} ref={reactComponentRef} />}
+			</FormProvider>
+		);
+	}
 );
 
 FormEditor.displayName = 'FormEditor';

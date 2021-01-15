@@ -17,15 +17,12 @@ package com.liferay.frontend.js.loader.modules.extender.internal.servlet.taglib;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -62,12 +59,6 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (!_isStale()) {
-			_writeResponse(httpServletResponse, _objectValuePair.getValue());
-
-			return;
-		}
-
 		StringWriter stringWriter = new StringWriter();
 
 		stringWriter.write("<script data-senna-track=\"temporary\" type=\"");
@@ -78,33 +69,49 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		JSONObject loaderConfigJSONObject = JSONUtil.put(
-			"basePath", StringPool.BLANK
-		).put(
-			"combine", themeDisplay.isThemeJsFastLoad()
-		).put(
-			"defaultURLParams", _getDefaultURLParamsJSONObject(themeDisplay)
-		).put(
-			"explainResolutions", _details.explainResolutions()
-		).put(
-			"exposeGlobal", _details.exposeGlobal()
-		).put(
-			"logLevel", _details.logLevel()
-		).put(
-			"namespace", "Liferay"
-		).put(
-			"reportMismatchedAnonymousModules", "warn"
-		).put(
-			"resolvePath", _getResolvePath(httpServletRequest)
-		).put(
-			"url", _getURL(httpServletRequest, themeDisplay)
-		).put(
-			"waitTimeout", _details.waitTimeout() * 1000
-		);
+		stringWriter.write("{");
 
-		stringWriter.write(loaderConfigJSONObject.toString());
+		stringWriter.write("basePath:'',");
 
-		stringWriter.write(";</script>");
+		stringWriter.write("combine:");
+		stringWriter.write(Boolean.toString(themeDisplay.isThemeJsFastLoad()));
+		stringWriter.write(",");
+
+		stringWriter.write("defaultURLParams:");
+		stringWriter.write(_getDefaultURLParams(themeDisplay));
+		stringWriter.write(",");
+
+		stringWriter.write("explainResolutions:");
+		stringWriter.write(Boolean.toString(_details.explainResolutions()));
+		stringWriter.write(",");
+
+		stringWriter.write("exposeGlobal:");
+		stringWriter.write(Boolean.toString(_details.exposeGlobal()));
+		stringWriter.write(",");
+
+		stringWriter.write("logLevel:'");
+		stringWriter.write(_details.logLevel());
+		stringWriter.write("',");
+
+		stringWriter.write("namespace:'Liferay',");
+
+		stringWriter.write("reportMismatchedAnonymousModules:'warn',");
+
+		stringWriter.write("resolvePath:'");
+		stringWriter.write(_getResolvePath(httpServletRequest));
+		stringWriter.write("',");
+
+		stringWriter.write("url:'");
+		stringWriter.write(_getURL(httpServletRequest, themeDisplay));
+		stringWriter.write("',");
+
+		stringWriter.write("waitTimeout:");
+		stringWriter.write(_details.waitTimeout() * 1000);
+		stringWriter.write(",");
+
+		stringWriter.write("}");
+
+		stringWriter.write("};</script>");
 
 		stringWriter.write("<script data-senna-track=\"permanent\" src=\"");
 		stringWriter.write(_servletContext.getContextPath());
@@ -112,12 +119,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
 		stringWriter.write("\"></script>");
 
-		String loaderConfig = stringWriter.toString();
-
-		_objectValuePair = new ObjectValuePair<>(
-			_lastModified, loaderConfig);
-
-		_writeResponse(httpServletResponse, loaderConfig);
+		_writeResponse(httpServletResponse, stringWriter.toString());
 	}
 
 	@Override
@@ -131,18 +133,14 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 	protected void activate(Map<String, Object> properties) {
 		_details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
-
-		_lastModified = System.currentTimeMillis();
 	}
 
-	private JSONObject _getDefaultURLParamsJSONObject(
-		ThemeDisplay themeDisplay) {
-
+	private String _getDefaultURLParams(ThemeDisplay themeDisplay) {
 		if (themeDisplay.isThemeJsFastLoad()) {
 			return null;
 		}
 
-		return JSONUtil.put("languageId", themeDisplay.getLanguageId());
+		return "{languageId:'" + themeDisplay.getLanguageId() + "'}";
 	}
 
 	private String _getResolvePath(HttpServletRequest httpServletRequest) {
@@ -173,14 +171,6 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		return themeDisplay.getCDNBaseURL();
 	}
 
-	private boolean _isStale() {
-		if (_lastModified > _objectValuePair.getKey()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private void _writeResponse(
 			HttpServletResponse httpServletResponse, String content)
 		throws IOException {
@@ -194,9 +184,6 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile Details _details;
-	private volatile long _lastModified;
-	private volatile ObjectValuePair<Long, String> _objectValuePair =
-		new ObjectValuePair<>(0L, null);
 
 	@Reference
 	private Portal _portal;

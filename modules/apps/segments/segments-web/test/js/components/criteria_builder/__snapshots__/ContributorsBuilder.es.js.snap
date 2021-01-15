@@ -57,34 +57,28 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
           class="sidebar-collapse"
         >
           <ul
-            class="list-unstyled sidebar-collapse-groups"
+            class="sidebar-collapse-groups"
           >
             <li
-              class="sidebar-collapse-user"
+              class="sidebar-collapse-item sidebar-collapse-user active"
             >
-              <div
-                class="sidebar-collapse-header-root"
+              <a
+                class="sidebar-collapse-header"
               >
-                <a
-                  class="d-flex justify-content-between sidebar-collapse-header"
-                >
-                  User
-                  <span
-                    class="collapse-icon"
+                User
+                <span>
+                  <svg
+                    class="lexicon-icon lexicon-icon-angle-right active"
+                    role="presentation"
                   >
-                    <svg
-                      class="lexicon-icon lexicon-icon-angle-right active"
-                      role="presentation"
-                    >
-                      <use
-                        xlink:href="#angle-right"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              </div>
+                    <use
+                      xlink:href="#angle-right"
+                    />
+                  </svg>
+                </span>
+              </a>
               <ul
-                class="properties-list active"
+                class="properties-list"
               >
                 <li
                   class="criteria-sidebar-item-root color--user"
@@ -701,32 +695,23 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
               </ul>
             </li>
             <li
-              class="sidebar-collapse-user-organization"
+              class="sidebar-collapse-item sidebar-collapse-user-organization"
             >
-              <div
-                class="sidebar-collapse-header-root"
+              <a
+                class="sidebar-collapse-header"
               >
-                <a
-                  class="d-flex justify-content-between sidebar-collapse-header"
-                >
-                  User Organization
-                  <span
-                    class="collapse-icon"
+                User Organization
+                <span>
+                  <svg
+                    class="lexicon-icon lexicon-icon-angle-right"
+                    role="presentation"
                   >
-                    <svg
-                      class="lexicon-icon lexicon-icon-angle-right"
-                      role="presentation"
-                    >
-                      <use
-                        xlink:href="#angle-right"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-              <ul
-                class="properties-list"
-              />
+                    <use
+                      xlink:href="#angle-right"
+                    />
+                  </svg>
+                </span>
+              </a>
             </li>
           </ul>
         </div>
@@ -850,34 +835,28 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
           class="sidebar-collapse"
         >
           <ul
-            class="list-unstyled sidebar-collapse-groups"
+            class="sidebar-collapse-groups"
           >
             <li
-              class="sidebar-collapse-user"
+              class="sidebar-collapse-item sidebar-collapse-user active"
             >
-              <div
-                class="sidebar-collapse-header-root"
+              <a
+                class="sidebar-collapse-header"
               >
-                <a
-                  class="d-flex justify-content-between sidebar-collapse-header"
-                >
-                  User
-                  <span
-                    class="collapse-icon"
+                User
+                <span>
+                  <svg
+                    class="lexicon-icon lexicon-icon-angle-right active"
+                    role="presentation"
                   >
-                    <svg
-                      class="lexicon-icon lexicon-icon-angle-right active"
-                      role="presentation"
-                    >
-                      <use
-                        xlink:href="#angle-right"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              </div>
+                    <use
+                      xlink:href="#angle-right"
+                    />
+                  </svg>
+                </span>
+              </a>
               <ul
-                class="properties-list active"
+                class="properties-list"
               >
                 <li
                   class="criteria-sidebar-item-root color--user"
@@ -1494,32 +1473,23 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
               </ul>
             </li>
             <li
-              class="sidebar-collapse-user-organization"
+              class="sidebar-collapse-item sidebar-collapse-user-organization"
             >
-              <div
-                class="sidebar-collapse-header-root"
+              <a
+                class="sidebar-collapse-header"
               >
-                <a
-                  class="d-flex justify-content-between sidebar-collapse-header"
-                >
-                  User Organization
-                  <span
-                    class="collapse-icon"
+                User Organization
+                <span>
+                  <svg
+                    class="lexicon-icon lexicon-icon-angle-right"
+                    role="presentation"
                   >
-                    <svg
-                      class="lexicon-icon lexicon-icon-angle-right"
-                      role="presentation"
-                    >
-                      <use
-                        xlink:href="#angle-right"
-                      />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-              <ul
-                class="properties-list"
-              />
+                    <use
+                      xlink:href="#angle-right"
+                    />
+                  </svg>
+                </span>
+              </a>
             </li>
           </ul>
         </div>

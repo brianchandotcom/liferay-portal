@@ -522,34 +522,28 @@ exports[`SegmentEdit renders with given values 1`] = `
               class="sidebar-collapse"
             >
               <ul
-                class="list-unstyled sidebar-collapse-groups"
+                class="sidebar-collapse-groups"
               >
                 <li
-                  class="sidebar-collapse-first-test-values-group"
+                  class="sidebar-collapse-item sidebar-collapse-first-test-values-group active"
                 >
-                  <div
-                    class="sidebar-collapse-header-root"
+                  <a
+                    class="sidebar-collapse-header"
                   >
-                    <a
-                      class="d-flex justify-content-between sidebar-collapse-header"
-                    >
-                      First Test Values Group
-                      <span
-                        class="collapse-icon"
+                    First Test Values Group
+                    <span>
+                      <svg
+                        class="lexicon-icon lexicon-icon-angle-right active"
+                        role="presentation"
                       >
-                        <svg
-                          class="lexicon-icon lexicon-icon-angle-right active"
-                          role="presentation"
-                        >
-                          <use
-                            xlink:href="#angle-right"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                  </div>
+                        <use
+                          xlink:href="#angle-right"
+                        />
+                      </svg>
+                    </span>
+                  </a>
                   <ul
-                    class="properties-list active"
+                    class="properties-list"
                   >
                     <li
                       class="criteria-sidebar-item-root color--first-test-values-group"

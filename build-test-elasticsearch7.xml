@@ -43,28 +43,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-elasticsearch-clustering-properties">
-		<sequential>
-			<math
-				datatype="int"
-				operand1="${elasticsearch.cluster.size}"
-				operand2="2"
-				operation="/"
-				result="elasticsearch.master-eligible.nodes.quorum"
-			/>
-
-			<math
-				datatype="int"
-				operand1="${elasticsearch.master-eligible.nodes.quorum}"
-				operand2="1"
-				operation="+"
-				result="elasticsearch.master-eligible.nodes.quorum"
-			/>
-
-			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="configure-elasticsearch-ltr-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.ml.enabled: false
@@ -709,8 +687,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	<macrodef name="start-elasticsearch-with-clustering">
 		<sequential>
 			<set-up-standard-elasticsearch />
-
-			<configure-elasticsearch-clustering-properties />
 
 			<prepare-additional-elasticsearch-bundles total.bundles="${elasticsearch.cluster.size}" />
 

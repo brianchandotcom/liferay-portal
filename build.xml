@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project basedir="." default="compile" name="portal" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+<project basedir="." default="compile" name="portal" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant" xmlns:if="ant:if">
 	<import file="build-common.xml" />
 
 	<macrodef name="clean-liferay-home">
@@ -338,6 +338,8 @@ message.
 					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 					<arg value="-Dbuild.profile=${build.profile}" />
+					<arg if:true="${gradle.build.scan.enabled}" value="-Dgradle.build.scan.enabled=true" />
+					<arg if:set="gradle.build.scan.server.url" value="-Dgradle.build.scan.server.url=${gradle.build.scan.server.url}" />
 					<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 				</gradle-execute>
 

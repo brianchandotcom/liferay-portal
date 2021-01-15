@@ -1029,29 +1029,17 @@ information.
 										</then>
 										<elseif>
 											<and>
-												<equals arg1="${systemProp.gradle.build.scan.enabled}" arg2="true" />
-												<equals arg1="${systemProp.gradle.build.scan.server.url}" arg2="" />
+												<equals arg1="${gradle.build.scan.enabled}" arg2="true" />
 											</and>
 											<then>
 												<local name="task.output" />
 
 												<propertycopy from="${redirector.output.property}" name="task.output" />
 
-												<loadfile
-													property="build.scan.url.output"
-												>
-													<filterchain>
-														<linecontainsregexp>
-															<regexp pattern="^https://gradle.com/s/.*" />
-														</linecontainsregexp>
-													</filterchain>
-													<propertyresource name="task.output" />
-												</loadfile>
-
 												<if>
-													<isset property="build.scan.url.output" />
+													<contains string="${task.output}" substring="Publishing build scan" />
 													<then>
-														<echo>Publishing build scan: ${build.scan.url.output}.</echo>
+														<echo message="${task.output}" />
 													</then>
 												</if>
 											</then>

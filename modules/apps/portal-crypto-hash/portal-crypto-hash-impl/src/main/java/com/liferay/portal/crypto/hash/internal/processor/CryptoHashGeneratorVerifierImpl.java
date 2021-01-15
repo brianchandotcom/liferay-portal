@@ -140,8 +140,7 @@ public class CryptoHashGeneratorVerifierImpl
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
-		name = "CryptoHashProvider",
-		target = "(component.name=)"
+		name = "CryptoHashProvider", target = "(component.name=)"
 	)
 	private CryptoHashProvider _cryptoHashProvider;
 

@@ -19,10 +19,13 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -41,14 +44,24 @@ public class GitCommitFactory {
 		JSONObject committerJSONObject = commitJSONObject.getJSONObject(
 			"committer");
 
+		JSONArray modifiedJSONArray = jsonObject.getJSONArray("modified");
+
+		List<String> modifiedFilenamesList = new ArrayList<>(
+			modifiedJSONArray.length());
+
+		for (int i = 0; i < modifiedJSONArray.length(); i++) {
+			modifiedFilenamesList.add(modifiedJSONArray.getString(i));
+		}
+
 		try {
 			Date date = _gitHubDateFormat.parse(
 				committerJSONObject.getString("date"));
 
 			GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
 				committerJSONObject.getString("email"), gitHubUsername,
-				gitRepositoryName, message, jsonObject.getString("sha"),
-				_getGitCommitType(message), date.getTime());
+				gitRepositoryName, message, modifiedFilenamesList,
+				jsonObject.getString("sha"), _getGitCommitType(message),
+				date.getTime());
 
 			_gitHubRemoteGitCommits.put(
 				jsonObject.getString("url"), remoteGitCommit);

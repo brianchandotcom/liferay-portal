@@ -35,6 +35,10 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 			"/commit/", getSHA());
 	}
 
+	public List<String> getModifiedFilenames() {
+		return _modifiedFilenames;
+	}
+
 	public List<String> getStatusDescriptions() {
 		try {
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
@@ -97,11 +101,13 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 
 	protected GitHubRemoteGitCommit(
 		String emailAddress, String gitHubUsername, String gitRepositoryName,
-		String message, String sha, Type type, long commitTime) {
+		String message, List<String> modifiedFilenames, String sha, Type type,
+		long commitTime) {
 
 		super(emailAddress, gitRepositoryName, message, sha, type, commitTime);
 
 		_gitHubUsername = gitHubUsername;
+		_modifiedFilenames = modifiedFilenames;
 	}
 
 	protected String getGitHubStatusURL() {
@@ -110,5 +116,6 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 	}
 
 	private final String _gitHubUsername;
+	private final List<String> _modifiedFilenames;
 
 }

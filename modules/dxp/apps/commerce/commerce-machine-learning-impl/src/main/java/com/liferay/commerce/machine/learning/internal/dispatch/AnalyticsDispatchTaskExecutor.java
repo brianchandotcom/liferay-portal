@@ -207,7 +207,7 @@ public class AnalyticsDispatchTaskExecutor {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Batch Export process completed, uploading: " +
+					"BatchEngineExportTask completed, uploading: " +
 						batchEngineExportTask.getClassName());
 			}
 
@@ -275,7 +275,7 @@ public class AnalyticsDispatchTaskExecutor {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Batch Import process completed for entity: " +
+					"BatchEngineImportTask completed for entity: " +
 						batchEngineImportTask.getClassName());
 			}
 

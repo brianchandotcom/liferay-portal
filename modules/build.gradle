@@ -42,28 +42,6 @@ task portalYarnCheckFormat
 task portalYarnFormat
 task portalYarnInstall
 
-if (Boolean.getBoolean("gradle.build.scan.enabled")) {
-	apply plugin: "com.gradle.build-scan"
-
-	buildScan {
-		allowUntrustedServer = true
-		captureTaskInputFiles = true
-		server = System.getProperty("gradle.build.scan.server.url") ?: null
-
-		publishAlwaysIf true
-		tag System.getenv("JENKINS_HOME") ? "CI" : "LOCAL"
-
-		if (System.getProperty("gradle.build.scan.tag")) {
-			tag System.getProperty("gradle.build.scan.tag")
-		}
-
-		if (!System.getProperty("gradle.build.scan.server.url")) {
-			termsOfServiceAgree = "yes"
-			termsOfServiceUrl = "https://gradle.com/terms-of-service"
-		}
-	}
-}
-
 Set<File> bndPrintJarFiles = null
 
 if (Boolean.getBoolean("build.bnd.print.enabled")) {

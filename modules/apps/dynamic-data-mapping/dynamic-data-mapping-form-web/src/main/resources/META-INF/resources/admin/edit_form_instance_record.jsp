@@ -65,9 +65,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 			</c:if>
 		</div>
 
-		<react:component
-			module="admin/js/index.es"
-			props="<%= ddmFormAdminDisplayContext.getDDMFormReactData(renderRequest, false) %>"
-		/>
+		<%
+		Map<String, Object> ddmFormReactData = ddmFormAdminDisplayContext.getDDMFormReactData(renderRequest, false);
+
+		String containerId = StringPool.BLANK;
+
+		if (ddmFormReactData.containsKey("containerId")) {
+			containerId = (String)ddmFormReactData.get("containerId");
+		}
+		%>
+
+		<div id="<%= containerId %>">
+			<react:component
+				module="admin/js/index.es"
+				props="<%= ddmFormReactData %>"
+			/>
+		</div>
 	</aui:form>
 </clay:container-fluid>

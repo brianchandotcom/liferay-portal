@@ -77,9 +77,11 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 			</c:if>
 		</div>
 
-		<react:component
-			module="admin/js/index.es"
-			props="<%= ddmFormDisplayContext.getDDMFormReactData() %>"
-		/>
+		<div id=<%= ddmFormDisplayContext.getContainerId() %>>
+			<react:component
+				module="admin/js/index.es"
+				props="<%= ddmFormDisplayContext.getDDMFormReactData() %>"
+			/>
+		</div>
 	</aui:form>
 </clay:container-fluid>

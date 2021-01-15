@@ -250,7 +250,8 @@ const ModalContent = ({
 						</ClayButton>
 						<ClayButton
 							disabled={
-								!name[editingLanguageId] || dataLayoutIsEmpty
+								Object.keys(name).length == 0 ||
+								dataLayoutIsEmpty
 							}
 							onClick={onSave}
 						>

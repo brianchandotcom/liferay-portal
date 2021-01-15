@@ -130,6 +130,21 @@ definition {
 				locator1 = "Message#ERROR_FORM_VALIDATION",
 				value1 = "${validationError}");
 		}
+		else if (isSet(validateFileNameRestriction)) {
+			Button.clickPublish();
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "Please enter a file with a valid file name.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please enter a file with a valid file name.");
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "Please select the file again.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please select the file again.");
+		}
 		else {
 			PortletEntry.publish();
 		}

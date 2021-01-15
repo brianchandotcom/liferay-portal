@@ -184,6 +184,6 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				CPTaxCategoryServiceImpl.class, "_portletResourcePermission",
-				CPConstants.TAX_RESOURCE_NAME);
+				CPConstants.RESOURCE_NAME_TAX);
 
 }

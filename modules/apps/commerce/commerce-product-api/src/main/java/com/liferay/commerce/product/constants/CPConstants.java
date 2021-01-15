@@ -20,34 +20,6 @@ package com.liferay.commerce.product.constants;
  */
 public class CPConstants {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String C_PRODUCT_VERSIONING_SERVICE_NAME =
-		"com.liferay.commerce.product.versioning";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String CATALOG_RESOURCE_NAME =
-		"com.liferay.commerce.catalog";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String CHANNEL_RESOURCE_NAME =
-		"com.liferay.commerce.channel";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String CP_OPTION_SERVICE_NAME =
-		"com.liferay.commerce.product.option";
-
 	public static final String DAILY_SUBSCRIPTION_TYPE = "daily";
 
 	public static final String MONTHLY_SUBSCRIPTION_TYPE = "monthly";
@@ -67,12 +39,6 @@ public class CPConstants {
 		"select", "radio"
 	};
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
-
 	public static final String RESOURCE_NAME_CATALOG =
 		"com.liferay.commerce.catalog";
 
@@ -82,15 +48,11 @@ public class CPConstants {
 	public static final String RESOURCE_NAME_PRODUCT =
 		"com.liferay.commerce.product";
 
+	public static final String RESOURCE_NAME_TAX = "com.liferay.commerce.tax";
+
 	public static final String SEPARATOR_ASSET_CATEGORY_URL = "/g/";
 
 	public static final String SEPARATOR_PRODUCT_URL = "/p/";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static final String SERVICE_NAME = "com.liferay.commerce.product";
 
 	public static final String SERVICE_NAME_CP_OPTION =
 		"com.liferay.commerce.product.option";
@@ -100,8 +62,6 @@ public class CPConstants {
 
 	public static final String SERVICE_NAME_PRODUCT =
 		"com.liferay.commerce.product";
-
-	public static final String TAX_RESOURCE_NAME = "com.liferay.commerce.tax";
 
 	public static final String WEEKLY_SUBSCRIPTION_TYPE = "weekly";
 

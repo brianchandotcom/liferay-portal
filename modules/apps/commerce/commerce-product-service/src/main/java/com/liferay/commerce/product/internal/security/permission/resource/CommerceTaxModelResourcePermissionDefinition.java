@@ -41,7 +41,7 @@ public class CommerceTaxModelResourcePermissionDefinition
 
 	@Override
 	public String getResourceName() {
-		return CPConstants.TAX_RESOURCE_NAME;
+		return CPConstants.RESOURCE_NAME_TAX;
 	}
 
 }

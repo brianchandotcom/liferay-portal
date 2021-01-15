@@ -57,7 +57,7 @@ public class PoshiValidation {
 	}
 
 	public static void validate() throws Exception {
-		System.out.print("Running Poshi validation...");
+		System.out.println("Start poshi validation.");
 
 		long start = System.currentTimeMillis();
 
@@ -102,8 +102,9 @@ public class PoshiValidation {
 			_throwExceptions();
 		}
 
-		System.out.println(
-			" Completed in " + (System.currentTimeMillis() - start) + "ms.");
+		long duration = System.currentTimeMillis() - start;
+
+		System.out.println("Completed poshi validation in " + duration + "ms.");
 	}
 
 	public static void validate(String testName) throws Exception {

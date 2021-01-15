@@ -24,8 +24,10 @@ import com.liferay.poshi.core.prose.PoshiProseMatcher;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.MathUtil;
 import com.liferay.poshi.core.util.OSDetector;
+import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -460,31 +462,64 @@ public class PoshiContext {
 	}
 
 	public static void readFiles() throws Exception {
-		System.out.print("Reading Poshi files...");
-
-		long start = System.currentTimeMillis();
-
-		readFiles(POSHI_TEST_FILE_INCLUDES);
-
-		System.out.println(
-			" Completed in " + (System.currentTimeMillis() - start) + "ms.");
-	}
-
-	public static void readFiles(String[] testFileIncludes) throws Exception {
-		_readPoshiFiles(testFileIncludes);
-		_readSeleniumFiles();
-
-		PoshiScriptParserException.throwExceptions();
+		readFiles(null);
 	}
 
 	public static void readFiles(String[] includes, String... baseDirNames)
 		throws Exception {
 
-		_readPoshiFilesFromClassPath(includes, "testFunctional");
-		_readPoshiFiles(includes, baseDirNames);
+		System.out.println("Start reading poshi files.");
+
+		long start = System.currentTimeMillis();
+
+		if (includes == null) {
+			includes = POSHI_TEST_FILE_INCLUDES;
+		}
+
+		Set<String> poshiFileIncludes = new HashSet<>();
+
+		Collections.addAll(poshiFileIncludes, includes);
+		Collections.addAll(poshiFileIncludes, POSHI_SUPPORT_FILE_INCLUDES);
+
+		_readPoshiFilesFromClassPath(
+			poshiFileIncludes.toArray(new String[0]), "testFunctional");
+
+		if ((baseDirNames == null) || (baseDirNames.length == 0)) {
+			String testBaseDirName = PropsUtil.get("test.base.dir.name");
+
+			if ((testBaseDirName == null) || testBaseDirName.isEmpty()) {
+				throw new RuntimeException("Please set 'test.base.dir.name'");
+			}
+
+			baseDirNames = new String[] {testBaseDirName};
+		}
+
+		String testSubrepoDirs = PropsUtil.get("test.subrepo.dirs");
+
+		if ((testSubrepoDirs != null) && !testSubrepoDirs.isEmpty()) {
+			baseDirNames = ArrayUtils.addAll(
+				baseDirNames, StringUtil.split(testSubrepoDirs));
+		}
+
+		String testIncludeDirNames = PropsUtil.get("test.include.dir.names");
+
+		if ((testIncludeDirNames != null) && !testIncludeDirNames.isEmpty()) {
+			_readPoshiFiles(
+				POSHI_SUPPORT_FILE_INCLUDES,
+				StringUtil.split(testIncludeDirNames));
+		}
+
+		_readPoshiFiles(poshiFileIncludes.toArray(new String[0]), baseDirNames);
 		_readSeleniumFiles();
 
+		_initComponentCommandNamesMap();
+
 		PoshiScriptParserException.throwExceptions();
+
+		long duration = System.currentTimeMillis() - start;
+
+		System.out.println(
+			"Completed reading poshi files in " + duration + "ms.");
 	}
 
 	public static void setTestCaseNamespacedClassCommandName(
@@ -960,33 +995,6 @@ public class PoshiContext {
 		}
 	}
 
-	private static void _readPoshiFiles(String[] testFileIncludes)
-		throws Exception {
-
-		String[] poshiFileIncludes = ArrayUtils.addAll(
-			POSHI_SUPPORT_FILE_INCLUDES, testFileIncludes);
-
-		_readPoshiFilesFromClassPath(poshiFileIncludes, "testFunctional");
-
-		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
-			_readPoshiFiles(
-				POSHI_SUPPORT_FILE_INCLUDES,
-				PropsValues.TEST_INCLUDE_DIR_NAMES);
-		}
-
-		_readPoshiFiles(poshiFileIncludes, _TEST_BASE_DIR_NAME);
-
-		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
-			_readPoshiFiles(poshiFileIncludes, PropsValues.TEST_SUBREPO_DIRS);
-		}
-
-		_initComponentCommandNamesMap();
-
-		if (!_duplicateLocatorMessages.isEmpty()) {
-			throw _getDuplicateLocatorsException();
-		}
-	}
-
 	private static void _readPoshiFiles(
 			String[] includes, String... baseDirNames)
 		throws Exception {
@@ -994,6 +1002,10 @@ public class PoshiContext {
 		for (String baseDirName : baseDirNames) {
 			_storeRootElements(
 				_getPoshiURLs(includes, baseDirName), _DEFAULT_NAMESPACE);
+		}
+
+		if (!_duplicateLocatorMessages.isEmpty()) {
+			throw _getDuplicateLocatorsException();
 		}
 	}
 
@@ -1517,9 +1529,6 @@ public class PoshiContext {
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "LocalFile";
-
-	private static final String _TEST_BASE_DIR_NAME = FileUtil.getCanonicalPath(
-		PropsValues.TEST_BASE_DIR_NAME);
 
 	private static final Map<String, Element> _commandElements =
 		Collections.synchronizedMap(new HashMap<>());

@@ -3,6 +3,12 @@ definition {
 	macro addContent {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#GOOGLE_DOC");
 
+		if (IsElementPresent(locator1 = "GoogleDoc#DISMISS")) {
+			Click(locator1 = "GoogleDoc#DISMISS");
+
+			AssertElementPresent(locator1 = "GoogleDoc#INSERT_LINK_BUTTON");
+		}
+
 		if (isSet(insertLink)) {
 			Click(locator1 = "GoogleDoc#INSERT_LINK_BUTTON");
 

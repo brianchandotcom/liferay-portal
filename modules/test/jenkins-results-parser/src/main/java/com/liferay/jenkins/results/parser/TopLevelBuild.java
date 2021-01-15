@@ -1579,12 +1579,16 @@ public abstract class TopLevelBuild extends BaseBuild {
 		String result = getResult();
 
 		if (isCompareToUpstream()) {
+			String upstreamBranchSHA = getUpstreamBranchSHA();
+
 			int buildNumber =
 				UpstreamFailureUtil.getUpstreamJobFailuresBuildNumber(
-					this, getUpstreamBranchSHA());
+					this, upstreamBranchSHA);
 
 			if ((result != null) && !result.equals("SUCCESS") &&
-				(buildNumber != 0)) {
+				(buildNumber != 0) &&
+				!upstreamBranchSHA.equals(
+					UpstreamFailureUtil.getUpstreamJobFailuresSHA(this))) {
 
 				Dom4JUtil.addToElement(
 					detailsElement, Dom4JUtil.getNewElement("br"),

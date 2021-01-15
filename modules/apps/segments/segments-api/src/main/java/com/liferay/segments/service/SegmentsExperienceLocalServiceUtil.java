@@ -79,6 +79,18 @@ public class SegmentsExperienceLocalServiceUtil {
 		return getService().addSegmentsExperience(segmentsExperience);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperience
+			appendSegmentsExperience(
+				long segmentsEntryId, long classNameId, long classPK,
+				java.util.Map<java.util.Locale, String> nameMap, boolean active,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().appendSegmentsExperience(
+			segmentsEntryId, classNameId, classPK, nameMap, active,
+			serviceContext);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

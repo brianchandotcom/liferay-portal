@@ -63,6 +63,12 @@ public interface SegmentsExperienceService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public SegmentsExperience appendSegmentsExperience(
+			long segmentsEntryId, long classNameId, long classPK,
+			Map<Locale, String> nameMap, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public SegmentsExperience deleteSegmentsExperience(
 			long segmentsExperienceId)
 		throws PortalException;

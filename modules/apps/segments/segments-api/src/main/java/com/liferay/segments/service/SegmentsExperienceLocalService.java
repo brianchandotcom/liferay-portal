@@ -100,6 +100,12 @@ public interface SegmentsExperienceLocalService
 	public SegmentsExperience addSegmentsExperience(
 		SegmentsExperience segmentsExperience);
 
+	public SegmentsExperience appendSegmentsExperience(
+			long segmentsEntryId, long classNameId, long classPK,
+			Map<Locale, String> nameMap, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

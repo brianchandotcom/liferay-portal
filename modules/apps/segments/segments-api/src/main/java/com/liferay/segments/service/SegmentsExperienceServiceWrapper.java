@@ -47,6 +47,18 @@ public class SegmentsExperienceServiceWrapper
 	}
 
 	@Override
+	public SegmentsExperience appendSegmentsExperience(
+			long segmentsEntryId, long classNameId, long classPK,
+			java.util.Map<java.util.Locale, String> nameMap, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceService.appendSegmentsExperience(
+			segmentsEntryId, classNameId, classPK, nameMap, active,
+			serviceContext);
+	}
+
+	@Override
 	public SegmentsExperience deleteSegmentsExperience(
 			long segmentsExperienceId)
 		throws com.liferay.portal.kernel.exception.PortalException {

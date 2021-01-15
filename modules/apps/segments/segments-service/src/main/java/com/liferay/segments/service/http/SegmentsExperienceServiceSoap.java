@@ -95,6 +95,33 @@ public class SegmentsExperienceServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperienceSoap
+			appendSegmentsExperience(
+				long segmentsEntryId, long classNameId, long classPK,
+				String[] nameMapLanguageIds, String[] nameMapValues,
+				boolean active,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.segments.model.SegmentsExperience returnValue =
+				SegmentsExperienceServiceUtil.appendSegmentsExperience(
+					segmentsEntryId, classNameId, classPK, nameMap, active,
+					serviceContext);
+
+			return com.liferay.segments.model.SegmentsExperienceSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperienceSoap
 			deleteSegmentsExperience(long segmentsExperienceId)
 		throws RemoteException {
 

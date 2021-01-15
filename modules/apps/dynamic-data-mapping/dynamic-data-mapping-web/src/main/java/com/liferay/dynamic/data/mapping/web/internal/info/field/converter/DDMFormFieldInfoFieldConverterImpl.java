@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFie
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -77,7 +78,10 @@ public class DDMFormFieldInfoFieldConverterImpl
 			finalStep.attribute(SelectInfoFieldType.MULTIPLE, true);
 		}
 
-		if (Objects.equals(ddmFormField.getType(), DDMFormFieldType.DECIMAL)) {
+		if (Objects.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.NUMERIC) &&
+			Objects.equals(ddmFormField.getDataType(), FieldConstants.DOUBLE)) {
+
 			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}
 

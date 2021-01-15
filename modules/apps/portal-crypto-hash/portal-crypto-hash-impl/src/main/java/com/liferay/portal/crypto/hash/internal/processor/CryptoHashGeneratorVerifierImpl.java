@@ -94,7 +94,7 @@ public class CryptoHashGeneratorVerifierImpl
 					DummyCryptoHashPepperStorage)) {
 
 				Optional<String> optionalPepperId =
-					cryptoHashVerificationContext.getPepperId();
+					cryptoHashVerificationContext.getPepperIdOptional();
 
 				pepper = optionalPepperId.map(
 					_cryptoHashPepperStorage::getPepper
@@ -106,7 +106,7 @@ public class CryptoHashGeneratorVerifierImpl
 			// process salt
 
 			Optional<byte[]> optionalSalt =
-				cryptoHashVerificationContext.getSalt();
+				cryptoHashVerificationContext.getSaltOptional();
 
 			final CryptoHashProviderResponse hashProviderResponse =
 				cryptoHashProvider.generate(

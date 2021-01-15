@@ -41,11 +41,11 @@ public final class CryptoHashVerificationContext {
 		return _cryptoHashProviderProperties;
 	}
 
-	public Optional<String> getPepperId() {
+	public Optional<String> getPepperIdOptional() {
 		return Optional.ofNullable(_pepperId);
 	}
 
-	public Optional<byte[]> getSalt() {
+	public Optional<byte[]> getSaltOptional() {
 		return Optional.ofNullable(_salt);
 	}
 

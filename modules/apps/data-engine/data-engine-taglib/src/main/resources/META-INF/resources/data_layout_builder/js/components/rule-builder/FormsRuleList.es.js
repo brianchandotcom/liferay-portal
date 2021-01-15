@@ -268,6 +268,49 @@ const transformConditions = ({operator, operands: [left, right]}, fields) => {
 	};
 };
 
+const ConditionWithLogicalOperator = ({
+	condition,
+	hasLogicalOperator,
+	logicalOperator,
+}) => (
+	<>
+		<Condition {...condition} />
+		{hasLogicalOperator && (
+			<LogicalOperator
+				logicalOperator={LOGICAL_OPERATOR[logicalOperator]}
+			/>
+		)}
+	</>
+);
+
+const ActionWithLogicalOperator = ({
+	action,
+	dataProvider,
+	fields,
+	hasLogicalOperator,
+	pages,
+	...otherProps
+}) => {
+	const Action = ACTIONS[action];
+
+	return (
+		<>
+			<Action
+				action={action}
+				dataProvider={dataProvider}
+				fields={fields}
+				pages={pages}
+				{...otherProps}
+			/>
+			{hasLogicalOperator && (
+				<LogicalOperator logicalOperator={Liferay.Language.get('and')}>
+					{` , `}
+				</LogicalOperator>
+			)}
+		</>
+	);
+};
+
 const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 	const {actions} = rule;
 
@@ -296,51 +339,6 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 		[conditions]
 	);
 
-	const WrapperCondition = ({condition, hasLogicalOperator}) => {
-		return (
-			<>
-				<Condition {...condition} />
-				{hasLogicalOperator && (
-					<LogicalOperator
-						logicalOperator={
-							LOGICAL_OPERATOR[rule['logical-operator']]
-						}
-					/>
-				)}
-			</>
-		);
-	};
-
-	const WrapperAction = ({
-		action,
-		dataProvider,
-		fields,
-		hasLogicalOperator,
-		pages,
-		...otherProps
-	}) => {
-		const Action = ACTIONS[action];
-
-		return (
-			<>
-				<Action
-					action={action}
-					dataProvider={dataProvider}
-					fields={fields}
-					pages={pages}
-					{...otherProps}
-				/>
-				{hasLogicalOperator && (
-					<LogicalOperator
-						logicalOperator={Liferay.Language.get('and')}
-					>
-						{` , `}
-					</LogicalOperator>
-				)}
-			</>
-		);
-	};
-
 	return (
 		<ClayList.Item flex>
 			<ClayLayout.ContentCol expand>
@@ -349,15 +347,16 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 						{Liferay.Language.get('if')}
 					</b>
 					{conditions.map((condition, index) => (
-						<WrapperCondition
+						<ConditionWithLogicalOperator
 							condition={condition}
 							hasLogicalOperator={conditions.length - 1 > index}
 							key={index}
+							logicalOperator={rule['logical-operator']}
 						/>
 					))}
 					<br />
 					{actions.map(({action, ...otherProps}, index) => (
-						<WrapperAction
+						<ActionWithLogicalOperator
 							action={action}
 							dataProvider={dataProvider}
 							fields={fields}

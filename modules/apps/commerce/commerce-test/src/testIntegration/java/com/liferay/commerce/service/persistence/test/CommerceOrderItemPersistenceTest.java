@@ -450,17 +450,17 @@ public class CommerceOrderItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByBookedQuantityId() throws Exception {
+		_persistence.countByBookedQuantityId(RandomTestUtil.nextLong());
+
+		_persistence.countByBookedQuantityId(0L);
+	}
+
+	@Test
 	public void testCountByCommerceOrderId() throws Exception {
 		_persistence.countByCommerceOrderId(RandomTestUtil.nextLong());
 
 		_persistence.countByCommerceOrderId(0L);
-	}
-
-	@Test
-	public void testCountByCProductId() throws Exception {
-		_persistence.countByCProductId(RandomTestUtil.nextLong());
-
-		_persistence.countByCProductId(0L);
 	}
 
 	@Test
@@ -471,18 +471,18 @@ public class CommerceOrderItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCProductId() throws Exception {
+		_persistence.countByCProductId(RandomTestUtil.nextLong());
+
+		_persistence.countByCProductId(0L);
+	}
+
+	@Test
 	public void testCountByParentCommerceOrderItemId() throws Exception {
 		_persistence.countByParentCommerceOrderItemId(
 			RandomTestUtil.nextLong());
 
 		_persistence.countByParentCommerceOrderItemId(0L);
-	}
-
-	@Test
-	public void testCountByBookedQuantityId() throws Exception {
-		_persistence.countByBookedQuantityId(RandomTestUtil.nextLong());
-
-		_persistence.countByBookedQuantityId(0L);
 	}
 
 	@Test

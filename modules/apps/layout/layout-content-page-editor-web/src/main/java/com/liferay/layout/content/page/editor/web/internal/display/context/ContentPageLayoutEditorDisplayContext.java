@@ -372,6 +372,8 @@ public class ContentPageLayoutEditorDisplayContext
 				getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()),
 				themeDisplay.getPlid(), true);
 
+		boolean addedDefault = false;
+
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			availableSegmentsExperiences.put(
 				String.valueOf(segmentsExperience.getSegmentsExperienceId()),
@@ -400,32 +402,11 @@ public class ContentPageLayoutEditorDisplayContext
 				).build());
 		}
 
-		availableSegmentsExperiences.put(
-			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT),
-			HashMapBuilder.<String, Object>put(
-				"hasLockedSegmentsExperiment",
-				_hasDefaultSegmentsExperienceLockedSegmentsExperiment()
-			).put(
-				"name",
-				SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
-					themeDisplay.getLocale())
-			).put(
-				"priority", SegmentsExperienceConstants.PRIORITY_DEFAULT
-			).put(
-				"segmentsEntryId",
-				String.valueOf(SegmentsEntryConstants.ID_DEFAULT)
-			).put(
-				"segmentsExperienceId",
-				String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
-			).put(
-				"segmentsExperimentStatus",
-				_getSegmentsExperimentStatus(
-					SegmentsExperienceConstants.ID_DEFAULT)
-			).put(
-				"segmentsExperimentURL",
-				_getSegmentsExperimentURL(
-					layoutFullURL, SegmentsExperienceConstants.ID_DEFAULT)
-			).build());
+		if (!addedDefault) {
+			availableSegmentsExperiences.put(
+				String.valueOf(SegmentsExperienceConstants.ID_DEFAULT),
+				_getDefaultExperience(layoutFullURL));
+		}
 
 		return availableSegmentsExperiences;
 	}
@@ -446,6 +427,33 @@ public class ContentPageLayoutEditorDisplayContext
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private HashMap<String, Object> _getDefaultExperience(String layoutFullURL)
+		throws Exception {
+
+		return HashMapBuilder.<String, Object>put(
+			"hasLockedSegmentsExperiment",
+			_hasDefaultSegmentsExperienceLockedSegmentsExperiment()
+		).put(
+			"name",
+			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
+				themeDisplay.getLocale())
+		).put(
+			"priority", SegmentsExperienceConstants.PRIORITY_DEFAULT
+		).put(
+			"segmentsEntryId", String.valueOf(SegmentsEntryConstants.ID_DEFAULT)
+		).put(
+			"segmentsExperienceId",
+			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
+		).put(
+			"segmentsExperimentStatus",
+			_getSegmentsExperimentStatus(SegmentsExperienceConstants.ID_DEFAULT)
+		).put(
+			"segmentsExperimentURL",
+			_getSegmentsExperimentURL(
+				layoutFullURL, SegmentsExperienceConstants.ID_DEFAULT)
+		).build();
 	}
 
 	private String _getEditSegmentsEntryURL() throws Exception {

@@ -22,12 +22,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-const ChangeTrackingRenderView = ({
-	dataURL,
-	getCache,
-	spritemap,
-	updateCache,
-}) => {
+export default ({dataURL, getCache, spritemap, updateCache}) => {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
 	const CHANGE_TYPE_PRODUCTION = 'production';
@@ -766,6 +761,3 @@ const ChangeTrackingRenderView = ({
 		</table>
 	);
 };
-
-export default ChangeTrackingRenderView;
-export {ChangeTrackingRenderView};

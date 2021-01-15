@@ -20,12 +20,7 @@ import React, {useState} from 'react';
 
 import ChangeTrackingRenderView from './ChangeTrackingRenderView';
 
-const ChangeTrackingDiscardView = ({
-	ctEntriesJSONArray,
-	spritemap,
-	typeNames,
-	userInfo,
-}) => {
+export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
 	const [delta, setDelta] = useState(20);
 	const [page, setPage] = useState(1);
 	const [viewEntry, setViewEntry] = useState(null);
@@ -219,7 +214,3 @@ const ChangeTrackingDiscardView = ({
 		</>
 	);
 };
-
-export default function (props) {
-	return <ChangeTrackingDiscardView {...props} />;
-}

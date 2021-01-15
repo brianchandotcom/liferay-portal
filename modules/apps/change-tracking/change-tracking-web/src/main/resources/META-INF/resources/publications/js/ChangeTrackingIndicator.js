@@ -20,7 +20,7 @@ import React, {useState} from 'react';
 
 import PublicationsSearchContainer from './PublicationsSearchContainer';
 
-const ChangeTrackingIndicator = ({
+export default ({
 	checkoutDropdownItem,
 	createDropdownItem,
 	getSelectPublicationsURL,
@@ -282,7 +282,3 @@ const ChangeTrackingIndicator = ({
 		</>
 	);
 };
-
-export default function (props) {
-	return <ChangeTrackingIndicator {...props} />;
-}

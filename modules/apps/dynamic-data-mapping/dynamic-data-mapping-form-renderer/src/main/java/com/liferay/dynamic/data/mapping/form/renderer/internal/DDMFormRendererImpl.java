@@ -116,12 +116,18 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		Writer writer = new UnsyncStringWriter();
 
+		writer.append("<div id=\"");
+		writer.append(ddmFormRenderingContext.getContainerId());
+		writer.append("\">");
+
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
 				_npmResolver.resolveModuleName(_MODULE_NAME),
 				ddmFormRenderingContext.getContainerId()),
 			getReactData(ddmForm, ddmFormLayout, ddmFormRenderingContext),
 			ddmFormRenderingContext.getHttpServletRequest(), writer);
+
+		writer.append("</div>");
 
 		return writer.toString();
 	}

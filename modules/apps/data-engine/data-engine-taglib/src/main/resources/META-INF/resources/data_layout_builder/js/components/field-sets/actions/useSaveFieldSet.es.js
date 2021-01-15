@@ -32,6 +32,9 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const {dataDefinition, dataLayout, fieldSets} = context;
 	const {state: childrenState} = childrenContext;
+	const {
+		contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
+	} = dataLayoutBuilder.props;
 
 	return (name) => {
 		const {
@@ -39,18 +42,22 @@ export default ({availableLanguageIds, childrenContext, fieldSet}) => {
 			dataLayout: {dataLayoutPages},
 		} = childrenState;
 
-		const normalizedDataDefinition = normalizeDataDefinition(
-			{
-				...fieldSet,
-				availableLanguageIds,
-				dataDefinitionFields,
-				name,
-			},
-			fieldSet.defaultLanguageId
-		);
+		let newDataDefinition = {
+			...fieldSet,
+			availableLanguageIds,
+			dataDefinitionFields,
+			name,
+		};
+
+		if (!allowInvalidAvailableLocalesForProperty) {
+			newDataDefinition = normalizeDataDefinition(
+				newDataDefinition,
+				fieldSet.defaultLanguageId
+			);
+		}
 
 		const normalizedFieldSet = {
-			...normalizedDataDefinition,
+			...newDataDefinition,
 			defaultDataLayout: normalizeDataLayout(
 				{
 					...fieldSet.defaultDataLayout,

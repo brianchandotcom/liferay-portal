@@ -25,7 +25,11 @@ export default ({availableLanguageIds, childrenContext, defaultLanguageId}) => {
 	const [{fieldSets}, dispatch] = useContext(AppContext);
 	const {state: childrenState} = childrenContext;
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const {contentType, fieldSetContentType} = dataLayoutBuilder.props;
+	const {
+		contentType,
+		contentTypeConfig: {allowInvalidAvailableLocalesForProperty},
+		fieldSetContentType,
+	} = dataLayoutBuilder.props;
 
 	return (name) => {
 		const {
@@ -33,17 +37,21 @@ export default ({availableLanguageIds, childrenContext, defaultLanguageId}) => {
 			dataLayout: {dataLayoutPages},
 		} = childrenState;
 
-		const normalizedDataDefinition = normalizeDataDefinition(
-			{
-				availableLanguageIds,
-				dataDefinitionFields,
-				name,
-			},
-			defaultLanguageId
-		);
+		let dataDefinition = {
+			availableLanguageIds,
+			dataDefinitionFields,
+			name,
+		};
+
+		if (!allowInvalidAvailableLocalesForProperty) {
+			dataDefinition = normalizeDataDefinition(
+				dataDefinition,
+				defaultLanguageId
+			);
+		}
 
 		const fieldSet = {
-			...normalizedDataDefinition,
+			...dataDefinition,
 			defaultDataLayout: {
 				dataLayoutPages,
 				name,

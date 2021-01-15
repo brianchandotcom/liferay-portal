@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,6 +53,7 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -153,15 +153,8 @@ public class AddSegmentsExperienceMVCActionCommand
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
-
-		long segmentsEntryId = ParamUtil.getLong(
-			actionRequest, "segmentsEntryId");
-
 		if (segmentsExperiment != null) {
-			active = false;
-
-			segmentsEntryId = SegmentsEntryConstants.ID_DEFAULT;
+			long segmentsEntryId = SegmentsEntryConstants.ID_DEFAULT;
 
 			if (segmentsExperiment.getSegmentsExperienceId() !=
 					SegmentsExperienceConstants.ID_DEFAULT) {
@@ -175,20 +168,20 @@ public class AddSegmentsExperienceMVCActionCommand
 
 			return _segmentsExperienceService.appendSegmentsExperience(
 				segmentsEntryId, classNameId, classPK,
-				HashMapBuilder.put(
+				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(),
-					ParamUtil.getString(actionRequest, "name")
-				).build(),
-				active, serviceContext);
+					ParamUtil.getString(actionRequest, "name")),
+				false, serviceContext);
 		}
 
 		return _segmentsExperienceService.addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK,
-			HashMapBuilder.put(
+			ParamUtil.getLong(actionRequest, "segmentsEntryId"), classNameId,
+			classPK,
+			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
-				ParamUtil.getString(actionRequest, "name")
-			).build(),
-			active, serviceContext);
+				ParamUtil.getString(actionRequest, "name")),
+			ParamUtil.getBoolean(actionRequest, "active", true),
+			serviceContext);
 	}
 
 	private SegmentsExperimentRel _addSegmentsExperimentRel(

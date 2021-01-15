@@ -82,7 +82,7 @@ public class CPTaxCategoryPortlet extends MVCPortlet {
 	@Reference
 	private CPTaxCategoryService _cpTaxCategoryService;
 
-	@Reference(target = "(resource.name=" + CPConstants.TAX_RESOURCE_NAME + ")")
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME_TAX + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 }

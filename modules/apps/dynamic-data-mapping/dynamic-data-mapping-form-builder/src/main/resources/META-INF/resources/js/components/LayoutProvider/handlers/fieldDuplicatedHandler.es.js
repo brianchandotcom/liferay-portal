@@ -119,9 +119,15 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 
 				blacklist.push(newDuplicatedNestedField.fieldName);
 
+				let {rows = []} = duplicatedField;
+
+				if (typeof rows === 'string') {
+					rows = JSON.parse(rows);
+				}
+
 				const visitor = new PagesVisitor([
 					{
-						rows: duplicatedField.rows ?? [],
+						rows,
 					},
 				]);
 
@@ -200,7 +206,13 @@ export const duplicateField = (
 						nestedFields
 					);
 
-					let pages = [{rows: field.rows}];
+					let {rows} = field;
+
+					if (typeof rows === 'string') {
+						rows = JSON.parse(rows);
+					}
+
+					let pages = [{rows}];
 
 					const {rowIndex} = FormSupport.getFieldIndexes(
 						pages,

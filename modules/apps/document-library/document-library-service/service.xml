@@ -67,4 +67,7 @@
 			<finder-column name="companyId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>DLStorageQuotaExceeded</exception>
+	</exceptions>
 </service-builder>

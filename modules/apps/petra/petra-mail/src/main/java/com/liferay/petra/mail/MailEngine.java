@@ -395,6 +395,9 @@ public class MailEngine {
 				throw new MailEngineException(sendFailedException);
 			}
 		}
+		catch (MailEngineException mailEngineException) {
+			throw mailEngineException;
+		}
 		catch (Exception exception) {
 			throw new MailEngineException(exception);
 		}

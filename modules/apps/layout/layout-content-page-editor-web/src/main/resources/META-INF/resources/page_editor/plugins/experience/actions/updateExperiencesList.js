@@ -12,14 +12,13 @@
  * details.
  */
 
-import {UPDATE_SEGMENTS_EXPERIENCE_PRIORITY} from './types';
+import {UPDATE_SEGMENTS_EXPERIENCES_LIST} from './types';
 
-export default function updateExperiencePriority({subtarget, target}) {
+export default function updateExperiencesList(availableSegmentsExperiences) {
 	return {
 		payload: {
-			subtarget,
-			target,
+			availableSegmentsExperiences,
 		},
-		type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
+		type: UPDATE_SEGMENTS_EXPERIENCES_LIST,
 	};
 }

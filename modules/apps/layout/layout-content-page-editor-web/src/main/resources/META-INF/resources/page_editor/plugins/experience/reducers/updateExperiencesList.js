@@ -12,24 +12,17 @@
  * details.
  */
 
-import ExperienceService from '../../../app/services/ExperienceService';
-import updateExperiencesListAction from '../actions/updateExperiencesList';
+function updateExperiencesListReducer(state, payload) {
+	let nextState = state;
 
-export default function updateExperiencePriority({
-	priority,
-	segmentsExperienceId,
-}) {
-	return (dispatch) => {
-		return ExperienceService.updateExperiencePriority({
-			body: {
-				newPriority: priority,
-				segmentsExperienceId,
-			},
-			dispatch,
-		}).then(({availableSegmentsExperiences}) => {
-			return dispatch(
-				updateExperiencesListAction(availableSegmentsExperiences)
-			);
-		});
+	const availableSegmentsExperiences = payload;
+
+	nextState = {
+		...nextState,
+		...availableSegmentsExperiences,
 	};
+
+	return nextState;
 }
+
+export default updateExperiencesListReducer;

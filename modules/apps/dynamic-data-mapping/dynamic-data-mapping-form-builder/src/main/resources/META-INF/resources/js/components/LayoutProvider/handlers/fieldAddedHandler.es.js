@@ -42,8 +42,14 @@ export const addField = (
 						nestedFields
 					);
 
+					let {rows} = field;
+
+					if (typeof rows === 'string') {
+						rows = JSON.parse(rows);
+					}
+
 					const pages = FormSupport.addFieldToColumn(
-						[{rows: field.rows}],
+						[{rows}],
 						0,
 						rowIndex,
 						columnIndex,

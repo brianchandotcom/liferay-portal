@@ -15,6 +15,11 @@
 </tr>
 <!--GOOGLE_DOCS-->
 <tr>
+	<td>DISMISS</td>
+	<td>//div[contains(@class,'jfk-butterBar-shown')]/a[contains(.,'Dismiss')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE</td>
 	<td>//div/input[contains(@class,'docs-title-input')]</td>
 	<td></td>

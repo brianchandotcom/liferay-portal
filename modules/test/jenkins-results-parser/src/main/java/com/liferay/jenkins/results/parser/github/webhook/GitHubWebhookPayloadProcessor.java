@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser.github.webhook;
 import com.liferay.jenkins.results.parser.GitCommit;
 import com.liferay.jenkins.results.parser.GitHubRemoteGitCommit;
 import com.liferay.jenkins.results.parser.GitHubRemoteGitRepository;
-import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 import com.liferay.jenkins.results.parser.JenkinsStopBuildUtil;
@@ -684,50 +683,6 @@ public class GitHubWebhookPayloadProcessor {
 		}
 
 		return true;
-	}
-
-	protected void invokeCIStart(
-		JenkinsMaster jenkinsMaster, JSONObject payloadJSONObject) {
-
-		try {
-			String masterURL;
-
-			if (jenkinsMaster != null) {
-				masterURL = jenkinsMaster.getURL();
-			}
-			else {
-				try {
-					masterURL = JenkinsResultsParserUtil.combine(
-						LoadBalancerUtil.getMostAvailableMasterURL(
-							"base.invocation.url", "http://test-1.liferay.com"),
-						"/");
-				}
-				catch (Exception exception) {
-					masterURL = "http://test-1.liferay.com/";
-				}
-			}
-
-			masterURL += "job/liferay-ci-start/buildWithParameters";
-
-			String jenkinsAuthenticationToken =
-				JenkinsResultsParserUtil.getBuildProperty(
-					"jenkins.authentication.token");
-
-			String postString = JenkinsResultsParserUtil.combine(
-				"token=", jenkinsAuthenticationToken,
-				"&GITHUB_WEBHOOK_PAYLOAD=", payloadJSONObject.toString());
-
-			JenkinsResultsParserUtil.toString(masterURL, postString, null);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to invoke liferay-ci-start", exception);
-			}
-		}
-	}
-
-	protected void invokeCIStart(JSONObject payloadJSONObject) {
-		invokeCIStart(null, payloadJSONObject);
 	}
 
 	protected boolean isBlank(String string) {

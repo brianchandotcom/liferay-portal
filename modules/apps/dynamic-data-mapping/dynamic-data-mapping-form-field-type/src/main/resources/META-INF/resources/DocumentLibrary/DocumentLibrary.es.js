@@ -358,6 +358,14 @@ const Main = ({
 		document.getElementById('ddm-form-submit').disabled = disable;
 	};
 
+	const handleGuestUploadFileChanged = (errorMessage, event, value) => {
+		configureErrorMessage(errorMessage);
+
+		setCurrentValue(value);
+
+		onChange(event, value ? value : '{}');
+	};
+
 	const isExceededUploadRequestSizeLimit = (fileSize) => {
 		const uploadRequestSizeLimit =
 			Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
@@ -373,11 +381,7 @@ const Main = ({
 			[Liferay.Util.formatStorage(uploadRequestSizeLimit)]
 		);
 
-		configureErrorMessage(errorMessage);
-
-		setCurrentValue(null);
-
-		onChange({}, '{}');
+		handleGuestUploadFileChanged(errorMessage, {}, null);
 
 		return true;
 	};
@@ -413,18 +417,14 @@ const Main = ({
 				disableSubmitButton(false);
 
 				if (error) {
-					configureErrorMessage(error.message);
-
-					setCurrentValue(null);
-
-					onChange(event, '{}');
+					handleGuestUploadFileChanged(error.message, event, null);
 				}
 				else {
-					configureErrorMessage('');
-
-					setCurrentValue(JSON.stringify(file));
-
-					onChange(event, JSON.stringify(file));
+					handleGuestUploadFileChanged(
+						'',
+						event,
+						JSON.stringify(file)
+					);
 				}
 
 				setProgress(0);

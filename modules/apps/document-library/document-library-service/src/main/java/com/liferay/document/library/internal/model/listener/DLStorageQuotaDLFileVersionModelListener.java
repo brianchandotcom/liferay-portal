@@ -14,8 +14,10 @@
 
 package com.liferay.document.library.internal.model.listener;
 
+import com.liferay.document.library.exception.DLStorageQuotaExceededException;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.service.DLStorageQuotaLocalService;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -60,6 +62,11 @@ public class DLStorageQuotaDLFileVersionModelListener
 
 			_dlStorageQuotaLocalService.validateStorageQuota(
 				dlFileVersion.getCompanyId(), dlFileVersion.getSize());
+		}
+		catch (DLStorageQuotaExceededException
+					dlStorageQuotaExceededException) {
+
+			ReflectionUtil.throwException(dlStorageQuotaExceededException);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

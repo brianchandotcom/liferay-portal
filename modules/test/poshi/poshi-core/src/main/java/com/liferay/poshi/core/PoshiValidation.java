@@ -17,7 +17,6 @@ package com.liferay.poshi.core;
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
-import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
@@ -1590,7 +1589,7 @@ public class PoshiValidation {
 			Element element, String filePath, String className)
 		throws Exception {
 
-		if (PropsValues.IGNORE_ERRORS_UTIL_CLASSES) {
+		if (PoshiContext.ignoreUtilClassesErrors()) {
 			return;
 		}
 

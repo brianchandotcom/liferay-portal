@@ -418,6 +418,11 @@ public class PoshiContext {
 		return _rootElements.get("test-case#" + namespace + "." + className);
 	}
 
+	public static boolean ignoreUtilClassesErrors() {
+		return GetterUtil.getBoolean(
+			PropsUtil.get("ignore.errors.util.classes"));
+	}
+
 	public static boolean isCommandElement(
 		String classType, String classCommandName, String namespace) {
 

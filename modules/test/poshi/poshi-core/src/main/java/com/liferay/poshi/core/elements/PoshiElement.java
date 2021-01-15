@@ -910,7 +910,7 @@ public abstract class PoshiElement
 	}
 
 	protected boolean isValidUtilityClassName(String classCommandName) {
-		if (PropsValues.IGNORE_ERRORS_UTIL_CLASSES) {
+		if (PoshiContext.ignoreUtilClassesErrors()) {
 			return true;
 		}
 

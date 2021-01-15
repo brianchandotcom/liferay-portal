@@ -53,9 +53,6 @@ public class PropsValues {
 	public static final String IGNORE_ERRORS_FILE_NAME = PropsUtil.get(
 		"ignore.errors.file.name");
 
-	public static final Boolean IGNORE_ERRORS_UTIL_CLASSES =
-		GetterUtil.getBoolean(PropsUtil.get("ignore.errors.util.classes"));
-
 	public static final String LIFERAY_PORTAL_BRANCH = PropsUtil.get(
 		"liferay.portal.branch");
 

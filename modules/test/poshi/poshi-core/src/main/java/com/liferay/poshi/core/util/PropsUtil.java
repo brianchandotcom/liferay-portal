@@ -26,6 +26,10 @@ import java.util.Properties;
  */
 public class PropsUtil {
 
+	public static void clear() {
+		_propsUtil._props.clear();
+	}
+
 	public static String get(String key) {
 		return _propsUtil._get(key);
 	}
@@ -36,6 +40,18 @@ public class PropsUtil {
 
 	public static void set(String key, String value) {
 		_propsUtil._set(key, value);
+	}
+
+	public static void setProperties(Properties properties) {
+		for (String propertyName : properties.stringPropertyNames()) {
+			String propertyValue = properties.getProperty(propertyName);
+
+			if (propertyValue == null) {
+				continue;
+			}
+
+			set(propertyName, propertyValue);
+		}
 	}
 
 	private PropsUtil() {

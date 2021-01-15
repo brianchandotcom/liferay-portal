@@ -43,6 +43,11 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Override
+	public String getGraphQLNamespace() {
+		return "admin";
+	}
+
+	@Override
 	public Mutation getMutation() {
 		return new Mutation();
 	}
@@ -55,11 +60,6 @@ public class ServletDataImpl implements ServletData {
 	@Override
 	public Query getQuery() {
 		return new Query();
-	}
-
-	@Override
-	public String getGraphQLNamespace() {
-		return "admin";
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)

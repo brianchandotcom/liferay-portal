@@ -137,6 +137,7 @@ export default function FieldSets({keywords}) {
 			dropFieldSet({
 				availableLanguageIds: dataDefinition.availableLanguageIds,
 				dataLayoutBuilder,
+				defaultLanguageId: dataDefinition.defaultLanguageId,
 				fieldName,
 				fieldSet,
 				indexes: {

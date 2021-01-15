@@ -93,6 +93,10 @@ export default function fieldChange({
 
 			dispatch({payload: properties, type: EVENT_TYPES.FIELD_CHANGE});
 
+			if (fieldInstance.visible === false) {
+				return;
+			}
+
 			if (evaluable) {
 				evaluate(fieldName, {
 					defaultLanguageId,

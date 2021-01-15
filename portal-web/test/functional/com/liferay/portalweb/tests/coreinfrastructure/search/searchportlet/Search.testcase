@@ -2350,13 +2350,25 @@ definition {
 
 		Navigator.gotoPage(pageName = "${searchPage}");
 
-		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar");
+		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Search Page",
+			widgetName = "Search Bar");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "2",
 			groupName = "Guest",
 			layoutName = "Search Page",
 			widgetName = "Search Options");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Search Page",
+			widgetName = "Search Results");
 
 		Refresh();
 

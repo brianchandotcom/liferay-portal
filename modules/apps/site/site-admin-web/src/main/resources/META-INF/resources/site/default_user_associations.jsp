@@ -98,7 +98,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	/>
 </liferay-ui:search-container>
 
-<div class="button-holder">
+<div class="button-holder form-group">
 	<aui:button cssClass="modify-link" id="selectSiteRoleLink" value="select" />
 </div>
 

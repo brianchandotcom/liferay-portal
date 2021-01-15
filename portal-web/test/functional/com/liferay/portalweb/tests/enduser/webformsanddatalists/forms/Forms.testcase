@@ -4759,6 +4759,120 @@ definition {
 			fieldValue = "01/01/2016");
 	}
 
+	@description = "This is a use case for LPS-125499."
+	@priority = "2"
+	test UploadFileWithInvalidSizeAsGuestUser {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#UploadFileWithInvalidSizeAsGuestUser";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Upload");
+
+		var uploadFieldName = FormFields.getFieldName();
+
+		FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Upload Servlet Request",
+			configurationScope = "System Scope");
+
+		FormFields.editText(
+			fieldName = "maxSize",
+			fieldValue = "10485760");
+
+		SystemSettings.saveConfiguration();
+
+		SystemSettings.exitEditConfiguration();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Forms",
+			configurationName = "Forms",
+			configurationScope = "Site Scope");
+
+		FormFields.editText(
+			fieldName = "guestUploadMaximumFileSize",
+			fieldValue = "1");
+
+		SystemSettings.saveConfiguration();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewUploadFieldAsGuest(
+			fieldLabel = "Upload",
+			fieldName = "${uploadFieldName}");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "Document_1.mp4");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid file size no larger than 10.0MB.");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "large_file.pdf");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid file size no larger than 1 MB.");
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Upload Servlet Request",
+			configurationScope = "System Scope");
+
+		SystemSettings.resetConfiguration();
+
+		SystemSettings.exitEditConfiguration();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Forms",
+			configurationName = "Forms",
+			configurationScope = "Site Scope");
+
+		SystemSettings.resetConfiguration();
+	}
+
 	@description = "This is a use case for LPS-68182."
 	@priority = "3"
 	test ViewBlankLabelWhenAddingNewField {

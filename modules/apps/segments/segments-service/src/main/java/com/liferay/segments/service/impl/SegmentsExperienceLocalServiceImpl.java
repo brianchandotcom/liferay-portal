@@ -42,6 +42,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -118,6 +119,28 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperience, serviceContext);
 
 		return segmentsExperience;
+	}
+
+	@Override
+	public SegmentsExperience appendSegmentsExperience(
+			long segmentsEntryId, long classNameId, long classPK,
+			Map<Locale, String> nameMap, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		int highestPriority = _getHighestPriority(
+			serviceContext.getScopeGroupId(), classNameId,
+			_getPublishedLayoutClassPK(classPK));
+
+		if ((highestPriority + 1) ==
+				SegmentsExperienceConstants.PRIORITY_DEFAULT) {
+
+			highestPriority = highestPriority + 1;
+		}
+
+		return addSegmentsExperience(
+			segmentsEntryId, classNameId, classPK, nameMap, highestPriority + 1,
+			active, serviceContext);
 	}
 
 	@Override
@@ -456,6 +479,19 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperiment.getSegmentsExperimentId());
 		resourceLocalService.deleteResource(
 			segmentsExperiment, ResourceConstants.SCOPE_INDIVIDUAL);
+	}
+
+	private int _getHighestPriority(
+		long groupId, long classNameId, long classPK) {
+
+		return Optional.ofNullable(
+			segmentsExperiencePersistence.fetchByG_C_C_First(
+				groupId, classNameId, classPK, null)
+		).map(
+			SegmentsExperience::getPriority
+		).orElse(
+			SegmentsExperienceConstants.PRIORITY_DEFAULT
+		);
 	}
 
 	private long _getPublishedLayoutClassPK(long classPK) {

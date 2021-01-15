@@ -58,6 +58,8 @@ public abstract class PoshiRunnerTestCase extends TestCase {
 			PoshiContext.POSHI_SUPPORT_FILE_INCLUDES,
 			PoshiContext.POSHI_TEST_FILE_INCLUDES);
 
+		PoshiContext.clear();
+
 		PoshiContext.readFiles(poshiFileNames, testBaseDirName);
 
 		PoshiValidation.validate();

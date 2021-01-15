@@ -53,6 +53,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.taglib.util.ThemeUtil;
@@ -106,11 +107,19 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 	}
 
 	@Override
+	public String getSiteContentPageExperienceExperienceKeyRenderedPage(
+			Long siteId, String friendlyUrlPath, String experienceKey)
+		throws Exception {
+
+		return _toHTML(friendlyUrlPath, siteId, experienceKey);
+	}
+
+	@Override
 	public String getSiteContentPageRenderedPage(
 			Long siteId, String friendlyUrlPath)
 		throws Exception {
 
-		return _toHTML(friendlyUrlPath, siteId);
+		return _toHTML(friendlyUrlPath, siteId, null);
 	}
 
 	@Override
@@ -179,6 +188,18 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 		return _layoutLocalService.getLayout(layoutFriendlyURL.getPlid());
 	}
 
+	private SegmentsExperience _getSegmentsExperience(
+			Layout layout, String segmentsExperienceKey)
+		throws Exception {
+
+		if (Validator.isNull(segmentsExperienceKey)) {
+			return null;
+		}
+
+		return _segmentsExperienceService.fetchSegmentsExperience(
+			layout.getGroupId(), segmentsExperienceKey);
+	}
+
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
 		ServicePreAction servicePreAction = new ServicePreAction();
 
@@ -241,7 +262,8 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 		return _contentPageDTOConverter.toDTO(dtoConverterContext, layout);
 	}
 
-	private String _toHTML(String friendlyUrlPath, long groupId)
+	private String _toHTML(
+			String friendlyUrlPath, long groupId, String segmentsExperienceKey)
 		throws Exception {
 
 		Layout layout = _getLayout(groupId, friendlyUrlPath);
@@ -251,6 +273,15 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 		contextHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		SegmentsExperience segmentsExperience = _getSegmentsExperience(
+			layout, segmentsExperienceKey);
+
+		if (segmentsExperience != null) {
+			contextHttpServletRequest.setAttribute(
+				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
+				new long[] {segmentsExperience.getSegmentsExperienceId()});
+		}
 
 		layout.includeLayoutContent(
 			contextHttpServletRequest, contextHttpServletResponse);

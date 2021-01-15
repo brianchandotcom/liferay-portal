@@ -6000,12 +6000,6 @@ public class ServiceBuilder {
 		externalReferenceCodeScope = StringUtil.replace(
 			externalReferenceCodeScope, "false", "none");
 
-		if (!StringUtil.equals(externalReferenceCodeScope, "none")) {
-			externalReferenceCode = true;
-			externalReferenceCodeScope = StringUtil.replace(
-				externalReferenceCodeScope, "true", "company");
-		}
-
 		String finderClassName = "";
 
 		File originalFinderImplFile = new File(
@@ -6128,6 +6122,15 @@ public class ServiceBuilder {
 		List<Element> columnElements = entityElement.elements("column");
 
 		List<Element> derivedColumnElements = new ArrayList<>();
+
+		if (!StringUtil.equals(externalReferenceCodeScope, "none") &&
+			!columnElements.contains(
+				new EntityColumn(this, "externalReferenceCode"))) {
+
+			externalReferenceCode = true;
+			externalReferenceCodeScope = StringUtil.replace(
+				externalReferenceCodeScope, "true", "company");
+		}
 
 		if (mvccEnabled && !columnElements.isEmpty()) {
 			Element columnElement = DocumentHelper.createElement("column");

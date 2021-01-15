@@ -263,10 +263,12 @@ public class PullRequest {
 		}
 	}
 
+	public List<GitHubRemoteGitCommit> getGitHubRemoteCommits() {
+		return _gitHubRemoteGitCommits;
+	}
+
 	public GitHubRemoteGitCommit getGitHubRemoteGitCommit() {
-		return GitCommitFactory.newGitHubRemoteGitCommit(
-			getOwnerUsername(), getGitHubRemoteGitRepositoryName(),
-			getSenderSHA());
+		return _gitHubRemoteGitCommits.get(_gitHubRemoteGitCommits.size() - 1);
 	}
 
 	public GitHubRemoteGitRepository getGitHubRemoteGitRepository() {
@@ -507,6 +509,16 @@ public class PullRequest {
 
 			JSONArray commitsJSONArray = JenkinsResultsParserUtil.toJSONArray(
 				_jsonObject.getString("commits_url"));
+
+			_gitHubRemoteGitCommits = new ArrayList<>(
+				commitsJSONArray.length());
+
+			for (int i = 0; i < commitsJSONArray.length(); i++) {
+				_gitHubRemoteGitCommits.add(
+					GitCommitFactory.newGitHubRemoteGitCommit(
+						getSenderUsername(), getGitRepositoryName(),
+						commitsJSONArray.getJSONObject(i)));
+			}
 
 			JSONObject firstCommitJSONObject = commitsJSONArray.getJSONObject(
 				0);
@@ -861,6 +873,7 @@ public class PullRequest {
 	private String _ciMergeSHA = "";
 	private String _commonParentSHA;
 	private List<String> _filenames = new ArrayList<>();
+	private List<GitHubRemoteGitCommit> _gitHubRemoteGitCommits;
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
 	private String _gitHubRemoteGitRepositoryName;
 	private JSONObject _jsonObject;

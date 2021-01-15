@@ -113,21 +113,7 @@ public class GitHubWebhookPayloadProcessor {
 		}
 
 		sb.append("(");
-
-		String upstreamBranchName = pullRequest.getUpstreamBranchName();
-
-		GitHubRemoteGitRepository gitHubRemoteGitRepository =
-			pullRequest.getGitHubRemoteGitRepository();
-
-		if (gitHubRemoteGitRepository.isSubrepository() &&
-			(upstreamBranchName != null)) {
-
-			sb.append(upstreamBranchName);
-		}
-		else {
-			sb.append(pullRequest.getSenderBranchName());
-		}
-
+		sb.append(pullRequest.getUpstreamRemoteGitBranchName());
 		sb.append(")");
 
 		return sb.toString();
@@ -136,7 +122,8 @@ public class GitHubWebhookPayloadProcessor {
 	public List<String> getCITestAutoTestSuiteNames(PullRequest pullRequest) {
 		String ciTestAutoRecipientsProperty =
 			JenkinsResultsParserUtil.getCIProperty(
-				pullRequest.getUpstreamBranchName(), "ci.test.auto.recipients",
+				pullRequest.getUpstreamRemoteGitBranchName(),
+				"ci.test.auto.recipients",
 				pullRequest.getGitHubRemoteGitRepositoryName());
 
 		if ((ciTestAutoRecipientsProperty == null) ||
@@ -430,7 +417,7 @@ public class GitHubWebhookPayloadProcessor {
 			sb.append("https://raw.githubusercontent.com/liferay/");
 			sb.append(pullRequest.getGitHubRemoteGitRepositoryName());
 			sb.append("/");
-			sb.append(pullRequest.getUpstreamBranchName());
+			sb.append(pullRequest.getUpstreamRemoteGitBranchName());
 			sb.append("/");
 			sb.append(pullRequest.getCIMergeSubrepo());
 			sb.append("/.gitrepo");
@@ -489,7 +476,7 @@ public class GitHubWebhookPayloadProcessor {
 	protected List<String> getAllowedSenderUsernames(PullRequest pullRequest) {
 		String allowedSenderNamesProperty =
 			JenkinsResultsParserUtil.getCIProperty(
-				pullRequest.getUpstreamBranchName(),
+				pullRequest.getUpstreamRemoteGitBranchName(),
 				JenkinsResultsParserUtil.combine(
 					"allowed.sender.names[", pullRequest.getOwnerUsername(),
 					"]"),
@@ -570,7 +557,7 @@ public class GitHubWebhookPayloadProcessor {
 			return _jiraProjectKeys;
 		}
 
-		String branchName = pullRequest.getUpstreamBranchName();
+		String branchName = pullRequest.getUpstreamRemoteGitBranchName();
 
 		String repositoryName = pullRequest.getGitRepositoryName();
 
@@ -827,7 +814,7 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	protected boolean isTestablePullRequest(PullRequest pullRequest) {
-		String branchName = pullRequest.getUpstreamBranchName();
+		String branchName = pullRequest.getUpstreamRemoteGitBranchName();
 
 		String repositoryName = pullRequest.getGitRepositoryName();
 
@@ -1141,7 +1128,7 @@ public class GitHubWebhookPayloadProcessor {
 	protected void mergeSubrepo(PullRequest pullRequest, boolean force) {
 		String ownerUsername = pullRequest.getOwnerUsername();
 
-		String branchName = pullRequest.getUpstreamBranchName();
+		String branchName = pullRequest.getUpstreamRemoteGitBranchName();
 
 		String subrepoCentralMergePullRequestRecipientName =
 			getSubrepoCentralMergePullRequestRecipientName(branchName);
@@ -1922,7 +1909,7 @@ public class GitHubWebhookPayloadProcessor {
 
 			String ciTestAvailableSuites =
 				JenkinsResultsParserUtil.getCIProperty(
-					pullRequest.getUpstreamBranchName(),
+					pullRequest.getUpstreamRemoteGitBranchName(),
 					"ci.test.available.suites",
 					pullRequest.getGitHubRemoteGitRepositoryName());
 
@@ -1947,7 +1934,7 @@ public class GitHubWebhookPayloadProcessor {
 
 					String ciTestSuiteDescription =
 						JenkinsResultsParserUtil.getCIProperty(
-							pullRequest.getUpstreamBranchName(),
+							pullRequest.getUpstreamRemoteGitBranchName(),
 							JenkinsResultsParserUtil.combine(
 								"ci.test.suite.description[",
 								ciTestAvailableSuite, "]"),
@@ -2138,7 +2125,7 @@ public class GitHubWebhookPayloadProcessor {
 				if (testOptions.contains("nocompile")) {
 					String distPortalBundlesBuildURL =
 						JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
-							pullRequest.getUpstreamBranchName());
+							pullRequest.getUpstreamRemoteGitBranchName());
 
 					String message = null;
 
@@ -2233,7 +2220,7 @@ public class GitHubWebhookPayloadProcessor {
 		String pullRequestForwardDefaultReceiverUsername =
 			_jenkinsBuildProperties.getProperty(
 				"pull.request.forward.default.receiver.username");
-		String refName = pullRequest.getUpstreamBranchName();
+		String refName = pullRequest.getUpstreamRemoteGitBranchName();
 		String repositoryName = pullRequest.getGitHubRemoteGitRepositoryName();
 		String senderName = pullRequest.getSenderUsername();
 
@@ -2672,7 +2659,7 @@ public class GitHubWebhookPayloadProcessor {
 				_encode(_pullRequest.getSenderUsername()));
 			_appendParameter(
 				sb, "GITHUB_UPSTREAM_BRANCH_NAME",
-				_pullRequest.getUpstreamBranchName());
+				_pullRequest.getUpstreamRemoteGitBranchName());
 
 			if (!containsKey(_KEY_GITHUB_UPSTREAM_BRANCH_SHA)) {
 				_appendParameter(

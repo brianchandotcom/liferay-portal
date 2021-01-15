@@ -148,19 +148,27 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 					'<portlet:namespace />name'
 				);
 
-				if (!nameInput.value) {
+				var name = <portlet:namespace />getInputLocalizedValues('name');
+
+				if (
+					!nameInput.value ||
+					!name[
+						'<%= journalEditDDMStructuresDisplayContext.getDefaultLanguageId() %>'
+					]
+				) {
 					Liferay.Util.openToast({
 						message:
 							'<liferay-ui:message key="please-enter-a-valid-name" />',
 						title: '<liferay-ui:message key="error" />',
 						type: 'danger',
 					});
+
+					return;
 				}
 
 				var description = <portlet:namespace />getInputLocalizedValues(
 					'description'
 				);
-				var name = <portlet:namespace />getInputLocalizedValues('name');
 
 				var formData = dataLayoutBuilder.getFormData();
 

@@ -15,10 +15,12 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.service.SegmentsExperienceService;
 
 import javax.portlet.ActionRequest;
@@ -54,8 +56,14 @@ public class UpdateSegmentsExperiencePriorityMVCActionCommand
 		_segmentsExperienceService.updateSegmentsExperiencePriority(
 			segmentsExperienceId, newPriority);
 
-		return JSONFactoryUtil.createJSONObject();
+		return JSONUtil.put(
+			"availableSegmentExperiences",
+			SegmentsExperienceUtil.getAvailableSegmentsExperiences(
+				_portal.getHttpServletRequest(actionRequest)));
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

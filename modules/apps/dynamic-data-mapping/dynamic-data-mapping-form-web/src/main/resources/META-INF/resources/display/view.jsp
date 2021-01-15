@@ -178,7 +178,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 						<clay:container-fluid
 							cssClass="ddm-form-builder-app ddm-form-builder-app-not-ready"
-							id='<%= ddmFormDisplayContext.getContainerId() + "container" %>'
+							id="<%= ddmFormDisplayContext.getContainerId() %>"
 						>
 							<react:component
 								module="admin/js/index.es"
@@ -280,7 +280,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 					function <portlet:namespace />enableForm() {
 						var container = document.querySelector(
-							'#<%= ddmFormDisplayContext.getContainerId() %>container'
+							'#<%= ddmFormDisplayContext.getContainerId() %>'
 						);
 
 						container.classList.remove('ddm-form-builder-app-not-ready');

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -56,6 +57,12 @@ public class ExperienceResourceImpl extends BaseExperienceResourceImpl {
 			siteId, friendlyUrlPath);
 
 		return Page.of(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					"VIEW", "getSiteContentPageFriendlyUrlPathExperiencesPage",
+					"com.liferay.portal.kernel.model.Group", siteId)
+			).build(),
 			TransformUtil.transform(
 				segmentsExperiences,
 				segmentsExperience -> _toExperience(segmentsExperience)));

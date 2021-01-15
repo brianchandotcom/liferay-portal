@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadResponseHandler;
 
@@ -59,6 +61,14 @@ public class DDMUserPersonalFolderUploadResponseHandler
 		JSONObject fileJSONObject = jsonObject.getJSONObject("file");
 
 		fileJSONObject.put("url", _getURL(uploadPortletRequest, fileEntry));
+
+		if (SessionMessages.contains(
+				uploadPortletRequest,
+				_portal.getPortletId(uploadPortletRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) {
+
+			SessionMessages.clear(uploadPortletRequest);
+		}
 
 		return jsonObject;
 	}
@@ -96,5 +106,8 @@ public class DDMUserPersonalFolderUploadResponseHandler
 	@Reference
 	private ItemSelectorUploadResponseHandler
 		_itemSelectorUploadResponseHandler;
+
+	@Reference
+	private Portal _portal;
 
 }

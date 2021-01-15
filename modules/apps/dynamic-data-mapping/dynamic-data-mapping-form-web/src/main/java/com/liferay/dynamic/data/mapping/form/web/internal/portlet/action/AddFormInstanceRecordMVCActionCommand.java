@@ -53,8 +53,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletSession;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -128,17 +126,6 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		if (!SessionErrors.isEmpty(actionRequest)) {
 			return;
-		}
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		if (SessionMessages.contains(
-				httpServletRequest,
-				_portal.getPortletId(httpServletRequest) +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) {
-
-			SessionMessages.clear(httpServletRequest);
 		}
 
 		DDMFormInstanceSettings formInstanceSettings =

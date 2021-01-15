@@ -12,17 +12,25 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {LoadingComponent} from '../../components/loading/Loading.es';
 import usePermissions from '../../hooks/usePermissions.es';
 import NoPermissionEntry from './NoPermissionEntry.es';
 
-export default function PermissionTunnel({children, permissionType}) {
+export default function PermissionTunnel({
+	children,
+	onPermissionChange = () => {},
+	permissionType,
+}) {
 	const {isLoading, ...permissions} = usePermissions();
 	const withPermission = Array.isArray(permissionType)
 		? permissionType.some((key) => permissions[key])
 		: permissions[permissionType];
+
+	useEffect(() => {
+		onPermissionChange(withPermission);
+	}, [withPermission, onPermissionChange]);
 
 	if (isLoading) {
 		return <LoadingComponent />;

@@ -50,7 +50,7 @@ List<Long> dataLayoutIds = appBuilderAppPortletTabContext.getDataLayoutIds();
 							}
 							%>
 
-							<div class="hide" id="app-entry-taglib">
+							<div id="app-entry-taglib">
 								<aui:form name='<%= dataLayoutId + "_fm" %>'>
 									<liferay-data-engine:data-layout-renderer
 										containerId='<%= liferayPortletResponse.getNamespace() + "container" + dataLayoutId %>'

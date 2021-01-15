@@ -118,4 +118,49 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 			);
 		});
 	});
+
+	describe('when there is a invalid server response', () => {
+		let result;
+
+		beforeEach(async () => {
+			jest.useFakeTimers();
+			fetch.mockResponseOnce('');
+
+			result = renderComponent(defaultProps);
+			const {getByLabelText} = result;
+
+			fireEvent.change(getByLabelText('video-url'), {
+				target: {value: 'https://unsupported-video-url.com'},
+			});
+
+			jest.advanceTimersByTime(500);
+
+			await waitForElementToBeRemoved(() =>
+				document.querySelector('span.loading-animation')
+			);
+		});
+
+		afterEach(() => {
+			jest.clearAllTimers();
+			jest.clearAllMocks();
+		});
+
+		afterAll(() => {
+			jest.useRealTimers();
+		});
+
+		it('has an add button disabled', () => {
+			const add = result.getByRole('button');
+
+			expect(add).toBeInTheDocument();
+			expect(add).toBeDisabled();
+		});
+
+		it('trying submit the form not fires events in the opener', () => {
+			fireEvent.submit(result.getByRole('form'));
+
+			expect(Liferay.Util.getOpener).not.toHaveBeenCalled();
+			expect(liferayOpenerfireMock).not.toHaveBeenCalled();
+		});
+	});
 });

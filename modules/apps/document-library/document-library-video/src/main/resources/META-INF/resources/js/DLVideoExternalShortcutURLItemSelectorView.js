@@ -33,16 +33,22 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 		url,
 	});
 
+	const isDisabled = !fields || loading;
+
 	return (
 		<form
-			onSubmit={() =>
+			onSubmit={() => {
+				if (isDisabled) {
+					return;
+				}
+
 				Liferay.Util.getOpener().Liferay.fire(eventName, {
 					data: {
 						returnType,
 						value: fields.HTML,
 					},
-				})
-			}
+				});
+			}}
 		>
 			<DLVideoExternalShortcutInput
 				labelTooltip={Liferay.Language.get('internal-video-tooltip')}

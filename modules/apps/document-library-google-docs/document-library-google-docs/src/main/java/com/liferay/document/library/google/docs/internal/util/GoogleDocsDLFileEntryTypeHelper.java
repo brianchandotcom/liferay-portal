@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -61,11 +60,11 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			ddmStructure = _addGoogleDocsDDMStructure();
 		}
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			_dlFileEntryTypeLocalService.getFileEntryTypes(
-				ddmStructure.getStructureId());
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDataDefinitionFileEntryType(
+				_company.getGroupId(), ddmStructure.getStructureId());
 
-		if (dlFileEntryTypes.isEmpty()) {
+		if (dlFileEntryType == null) {
 			_addGoogleDocsDLFileEntryType(ddmStructure.getStructureId());
 		}
 	}

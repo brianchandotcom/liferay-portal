@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -64,11 +63,11 @@ public class DLVideoExternalShortcutDLFileEntryTypeHelper {
 			ddmStructure = _addDLVideoExternalShortcutDDMStructure();
 		}
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			_dlFileEntryTypeLocalService.getFileEntryTypes(
-				ddmStructure.getStructureId());
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDataDefinitionFileEntryType(
+				_company.getGroupId(), ddmStructure.getStructureId());
 
-		if (dlFileEntryTypes.isEmpty()) {
+		if (dlFileEntryType == null) {
 			_addDLVideoExternalShortcutDLFileEntryType(
 				ddmStructure.getStructureId());
 		}

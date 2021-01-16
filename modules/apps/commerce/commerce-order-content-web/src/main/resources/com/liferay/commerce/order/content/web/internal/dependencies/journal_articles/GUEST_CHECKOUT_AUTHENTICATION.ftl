@@ -1,18 +1,20 @@
 <#if commerceOrderHttpHelper.isGuestCheckoutEnabled(request)>
-	<#if themeDisplay.isSignedIn()>
 
-		<#-- Instant redirect, when the page is hit directly or refreshed -->
+	<#-- Instant redirect, when the page is hit directly or refreshed -->
 
-		<script>
+	<script>
+		if (Liferay.ThemeDisplay.isSignedIn()) {
 			window.location.replace("${commerceOrderHttpHelper.getCommerceCheckoutPortletURL(request)}");
-		</script>
+		}
+	</script>
 
-		<#-- Redirect for Senna (I.E. when you press "Go to Site"). This will cause a flash as the page has to fully load -->
+	<#-- Redirect for Senna (I.E. when you press "Go to Site"). This will cause a flash as the page has to fully load -->
 
-		<@liferay_aui.script>
+	<@liferay_aui.script>
+		if (Liferay.ThemeDisplay.isSignedIn()) {
 			window.location.replace("${commerceOrderHttpHelper.getCommerceCheckoutPortletURL(request)}");
-		</@>
-	</#if>
+		}
+	</@>
 
 	<#if validator.isNotNull(Title)>
 		<h3 style="font-weight: normal">${Title.getData()}</h3>

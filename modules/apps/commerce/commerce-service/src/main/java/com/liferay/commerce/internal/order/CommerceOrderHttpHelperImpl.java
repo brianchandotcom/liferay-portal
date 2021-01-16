@@ -215,7 +215,10 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		CommerceOrder commerceOrder = getCurrentCommerceOrder(
 			httpServletRequest);
 
-		if ((commerceOrder != null) && commerceOrder.isGuestOrder()) {
+		if ((commerceOrder != null) &&
+			(commerceOrder.getCommerceAccountId() ==
+				CommerceAccountConstants.ACCOUNT_ID_GUEST)) {
+
 			PortletURL checkoutPortletURL = portletURL;
 
 			Layout currentLayout = (Layout)httpServletRequest.getAttribute(

@@ -2964,7 +2964,9 @@ public class JournalArticleLocalServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, Date, Date, int, Date, int, int, 	OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -2979,6 +2981,22 @@ public class JournalArticleLocalServiceWrapper
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<JournalArticle> search(
+		long companyId, long groupId, java.util.List<Long> folderIds,
+		long classNameId, String keywords, Double version,
+		String ddmStructureKey, String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, java.util.Locale locale, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator) {
+
+		return _journalArticleLocalService.search(
+			companyId, groupId, folderIds, classNameId, keywords, version,
+			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
+			status, reviewDate, locale, start, end, orderByComparator);
 	}
 
 	/**
@@ -3046,7 +3064,9 @@ public class JournalArticleLocalServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, int, Date, Locale, boolean, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3063,6 +3083,24 @@ public class JournalArticleLocalServiceWrapper
 			title, description, content, ddmStructureKey, ddmTemplateKey,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<JournalArticle> search(
+		long companyId, long groupId, java.util.List<Long> folderIds,
+		long classNameId, String articleId, Double version, String title,
+		String description, String content, String ddmStructureKey,
+		String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		java.util.Locale locale, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator) {
+
+		return _journalArticleLocalService.search(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate, locale,
+			andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -3129,7 +3167,9 @@ public class JournalArticleLocalServiceWrapper
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, int, Date, Locale, boolean, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	@Override
 	public java.util.List<JournalArticle> search(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3146,6 +3186,24 @@ public class JournalArticleLocalServiceWrapper
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<JournalArticle> search(
+		long companyId, long groupId, java.util.List<Long> folderIds,
+		long classNameId, String articleId, Double version, String title,
+		String description, String content, String[] ddmStructureKeys,
+		String[] ddmTemplateKeys, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		java.util.Locale locale, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator) {
+
+		return _journalArticleLocalService.search(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, status, reviewDate, locale,
+			andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -3393,7 +3451,9 @@ public class JournalArticleLocalServiceWrapper
 	 * @param reviewDate the web content article's scheduled review date
 	 (optionally <code>null</code>)
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, Date, Date, int, Date, Locale)}
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3406,6 +3466,20 @@ public class JournalArticleLocalServiceWrapper
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 			status, reviewDate);
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long groupId, java.util.List<Long> folderIds,
+		long classNameId, String keywords, Double version,
+		String ddmStructureKey, String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, java.util.Locale locale) {
+
+		return _journalArticleLocalService.searchCount(
+			companyId, groupId, folderIds, classNameId, keywords, version,
+			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
+			status, reviewDate, locale);
 	}
 
 	/**
@@ -3453,7 +3527,9 @@ public class JournalArticleLocalServiceWrapper
 	 or just one field must match. Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, int, Date, Locale, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3467,6 +3543,22 @@ public class JournalArticleLocalServiceWrapper
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKey, ddmTemplateKey,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long groupId, java.util.List<Long> folderIds,
+		long classNameId, String articleId, Double version, String title,
+		String description, String content, String ddmStructureKey,
+		String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		java.util.Locale locale, boolean andOperator) {
+
+		return _journalArticleLocalService.searchCount(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate, locale,
+			andOperator);
 	}
 
 	/**
@@ -3516,7 +3608,9 @@ public class JournalArticleLocalServiceWrapper
 	 or just one field must match.  Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, int, Date, Locale, boolean)}
 	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 		long companyId, long groupId, java.util.List<Long> folderIds,
@@ -3530,6 +3624,22 @@ public class JournalArticleLocalServiceWrapper
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+	}
+
+	@Override
+	public int searchCount(
+		long companyId, long groupId, java.util.List<Long> folderIds,
+		long classNameId, String articleId, Double version, String title,
+		String description, String content, String[] ddmStructureKeys,
+		String[] ddmTemplateKeys, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+		java.util.Locale locale, boolean andOperator) {
+
+		return _journalArticleLocalService.searchCount(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, ddmStructureKeys, ddmTemplateKeys,
+			displayDateGT, displayDateLT, status, reviewDate, locale,
+			andOperator);
 	}
 
 	/**

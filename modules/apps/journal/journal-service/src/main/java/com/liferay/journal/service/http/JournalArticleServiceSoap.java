@@ -2097,7 +2097,9 @@ public class JournalArticleServiceSoap {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, Date, Date, int, Date, Locale, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] search(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String keywords, Double version, String ddmStructureKey,
@@ -2115,6 +2117,35 @@ public class JournalArticleServiceSoap {
 					keywords, version, ddmStructureKey, ddmTemplateKey,
 					displayDateGT, displayDateLT, status, reviewDate, start,
 					end, orderByComparator);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.journal.model.JournalArticleSoap[] search(
+			long companyId, long groupId, Long[] folderIds, long classNameId,
+			String keywords, Double version, String ddmStructureKey,
+			String ddmTemplateKey, java.util.Date displayDateGT,
+			java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+			String locale, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.journal.model.JournalArticle> orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.journal.model.JournalArticle>
+				returnValue = JournalArticleServiceUtil.search(
+					companyId, groupId, ListUtil.toList(folderIds), classNameId,
+					keywords, version, ddmStructureKey, ddmTemplateKey,
+					displayDateGT, displayDateLT, status, reviewDate,
+					LocaleUtil.fromLanguageId(locale), start, end,
+					orderByComparator);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
 				returnValue);
@@ -2188,7 +2219,9 @@ public class JournalArticleServiceSoap {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, int, Date, Locale, boolean, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] search(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String articleId, Double version, String title, String description,
@@ -2207,6 +2240,37 @@ public class JournalArticleServiceSoap {
 					articleId, version, title, description, content,
 					ddmStructureKey, ddmTemplateKey, displayDateGT,
 					displayDateLT, status, reviewDate, andOperator, start, end,
+					orderByComparator);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.journal.model.JournalArticleSoap[] search(
+			long companyId, long groupId, Long[] folderIds, long classNameId,
+			String articleId, Double version, String title, String description,
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			java.util.Date displayDateGT, java.util.Date displayDateLT,
+			int status, java.util.Date reviewDate, String locale,
+			boolean andOperator, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.journal.model.JournalArticle> orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.journal.model.JournalArticle>
+				returnValue = JournalArticleServiceUtil.search(
+					companyId, groupId, ListUtil.toList(folderIds), classNameId,
+					articleId, version, title, description, content,
+					ddmStructureKey, ddmTemplateKey, displayDateGT,
+					displayDateLT, status, reviewDate,
+					LocaleUtil.fromLanguageId(locale), andOperator, start, end,
 					orderByComparator);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
@@ -2283,7 +2347,9 @@ public class JournalArticleServiceSoap {
 	 articles
 	 * @return the range of matching web content articles ordered by the
 	 comparator
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, int, Date, Locale, boolean, int, int, OrderByComparator)}
 	 */
+	@Deprecated
 	public static com.liferay.journal.model.JournalArticleSoap[] search(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String articleId, Double version, String title, String description,
@@ -2302,6 +2368,37 @@ public class JournalArticleServiceSoap {
 					articleId, version, title, description, content,
 					ddmStructureKeys, ddmTemplateKeys, displayDateGT,
 					displayDateLT, status, reviewDate, andOperator, start, end,
+					orderByComparator);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.journal.model.JournalArticleSoap[] search(
+			long companyId, long groupId, Long[] folderIds, long classNameId,
+			String articleId, Double version, String title, String description,
+			String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
+			java.util.Date displayDateGT, java.util.Date displayDateLT,
+			int status, java.util.Date reviewDate, String locale,
+			boolean andOperator, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.journal.model.JournalArticle> orderByComparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.journal.model.JournalArticle>
+				returnValue = JournalArticleServiceUtil.search(
+					companyId, groupId, ListUtil.toList(folderIds), classNameId,
+					articleId, version, title, description, content,
+					ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+					displayDateLT, status, reviewDate,
+					LocaleUtil.fromLanguageId(locale), andOperator, start, end,
 					orderByComparator);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModels(
@@ -2353,7 +2450,9 @@ public class JournalArticleServiceSoap {
 	 * @param reviewDate the web content article's scheduled review date
 	 (optionally <code>null</code>)
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, Date, Date, int, Date, Locale)}
 	 */
+	@Deprecated
 	public static int searchCount(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String keywords, Double version, String ddmStructureKey,
@@ -2366,6 +2465,30 @@ public class JournalArticleServiceSoap {
 				companyId, groupId, ListUtil.toList(folderIds), classNameId,
 				keywords, version, ddmStructureKey, ddmTemplateKey,
 				displayDateGT, displayDateLT, status, reviewDate);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int searchCount(
+			long companyId, long groupId, Long[] folderIds, long classNameId,
+			String keywords, Double version, String ddmStructureKey,
+			String ddmTemplateKey, java.util.Date displayDateGT,
+			java.util.Date displayDateLT, int status, java.util.Date reviewDate,
+			String locale)
+		throws RemoteException {
+
+		try {
+			int returnValue = JournalArticleServiceUtil.searchCount(
+				companyId, groupId, ListUtil.toList(folderIds), classNameId,
+				keywords, version, ddmStructureKey, ddmTemplateKey,
+				displayDateGT, displayDateLT, status, reviewDate,
+				LocaleUtil.fromLanguageId(locale));
 
 			return returnValue;
 		}
@@ -2421,7 +2544,9 @@ public class JournalArticleServiceSoap {
 	 or just one field must match. Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, int, Date, Locale, boolean)}
 	 */
+	@Deprecated
 	public static int searchCount(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String articleId, Double version, String title, String description,
@@ -2436,6 +2561,32 @@ public class JournalArticleServiceSoap {
 				articleId, version, title, description, content,
 				ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
 				status, reviewDate, andOperator);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int searchCount(
+			long companyId, long groupId, Long[] folderIds, long classNameId,
+			String articleId, Double version, String title, String description,
+			String content, String ddmStructureKey, String ddmTemplateKey,
+			java.util.Date displayDateGT, java.util.Date displayDateLT,
+			int status, java.util.Date reviewDate, String locale,
+			boolean andOperator)
+		throws RemoteException {
+
+		try {
+			int returnValue = JournalArticleServiceUtil.searchCount(
+				companyId, groupId, ListUtil.toList(folderIds), classNameId,
+				articleId, version, title, description, content,
+				ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
+				status, reviewDate, LocaleUtil.fromLanguageId(locale),
+				andOperator);
 
 			return returnValue;
 		}
@@ -2493,7 +2644,9 @@ public class JournalArticleServiceSoap {
 	 or just one field must match.  Group, folder IDs, class name ID,
 	 and status must all match their values.
 	 * @return the number of matching web content articles
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, Locale, int, Date, boolean)}
 	 */
+	@Deprecated
 	public static int searchCount(
 			long companyId, long groupId, Long[] folderIds, long classNameId,
 			String articleId, Double version, String title, String description,
@@ -2508,6 +2661,32 @@ public class JournalArticleServiceSoap {
 				articleId, version, title, description, content,
 				ddmStructureKeys, ddmTemplateKeys, displayDateGT, displayDateLT,
 				status, reviewDate, andOperator);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int searchCount(
+			long companyId, long groupId, Long[] folderIds, long classNameId,
+			String articleId, Double version, String title, String description,
+			String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
+			java.util.Date displayDateGT, java.util.Date displayDateLT,
+			String locale, int status, java.util.Date reviewDate,
+			boolean andOperator)
+		throws RemoteException {
+
+		try {
+			int returnValue = JournalArticleServiceUtil.searchCount(
+				companyId, groupId, ListUtil.toList(folderIds), classNameId,
+				articleId, version, title, description, content,
+				ddmStructureKeys, ddmTemplateKeys, displayDateGT, displayDateLT,
+				LocaleUtil.fromLanguageId(locale), status, reviewDate,
+				andOperator);
 
 			return returnValue;
 		}

@@ -67,7 +67,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95340."
-	@priority = "5"
+	@priority = "4"
 	test AddUserAfterPublishContentPageWithAP {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -203,7 +203,7 @@ definition {
 			userLoginFullName = "test test");
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test AddUserEmailAddressAt {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -717,7 +717,7 @@ definition {
 			locator1 = "ProductMenu#PORTLET");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test ChangeUserPassword {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1558,7 +1558,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-121270."
-	@priority = "4"
+	@priority = "3"
 	test LoginUserWithProfileSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1622,7 +1622,7 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test SearchUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1649,7 +1649,7 @@ definition {
 		Search.clearSearchResult();
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test SearchUserFullName {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1676,7 +1676,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test SearchUserQuotes {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

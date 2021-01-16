@@ -184,7 +184,7 @@ definition {
 			value1 = "Anonymous Anonymous");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test AnonymizeEntryFromApplication {
 		User.logoutPG();
 

@@ -51,7 +51,7 @@ definition {
 		}
 	}
 
-	@priority = "3"
+	@priority = "4"
 	test AddBlockedEmailDomain {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -349,7 +349,7 @@ definition {
 		Accounts.viewAssignee(assigneeName = "Organization for Account");
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test AssignUserToAccountWithDomain {
 		AccountConfiguration.enableAccountEmailDomain();
 
@@ -458,7 +458,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test CancelAccountCreation {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -517,7 +517,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Back Icon Account");
 	}
 
-	@priority = "3"
+	@priority = "5"
 	test ChangeAddressType {
 		property portal.acceptance = "true";
 
@@ -599,7 +599,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test DeleteAccount {
 		property portal.acceptance = "true";
 
@@ -658,7 +658,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101315."
-	@priority = "4"
+	@priority = "3"
 	test DeleteInactiveAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -684,7 +684,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test EditAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -762,7 +762,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test FilterByType {
 		for (var accountType : list "Business,Person") {
 			ApplicationsMenu.gotoPortlet(
@@ -890,7 +890,7 @@ definition {
 		ManagementBar.viewNoSubheaderInFilterAndOrder(subheaderItem = "Filter by Navigation");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test PersonAccountSmoke {
 		for (var accountType : list "Business,Person") {
 			ApplicationsMenu.gotoPortlet(
@@ -942,7 +942,7 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
-	@priority = "4"
+	@priority = "3"
 	test RemoveDomain {
 		AccountConfiguration.enableAccountEmailDomain();
 
@@ -1034,7 +1034,7 @@ definition {
 			accountTaxID = "Z9870654786390342199899Y");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test UnassignOrganizationFromAccount {
 		property portal.acceptance = "true";
 

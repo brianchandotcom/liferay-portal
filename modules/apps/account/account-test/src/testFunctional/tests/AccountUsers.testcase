@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "This test assigns an existing user to account through the Users tab"
-	@priority = "5"
+	@priority = "4"
 	test AssignExistingUserToAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@description = "This test edits a user via Account Users portlet"
-	@priority = "4"
+	@priority = "5"
 	test EditAccountUser {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107598."
-	@priority = "4"
+	@priority = "3"
 	test FilterAccountUserInTheUsersAdminPortlet {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -297,7 +297,7 @@ definition {
 	}
 
 	@description = "This filters users by accounts, choosing a specific account to view"
-	@priority = "4"
+	@priority = "3"
 	test FilterByAccounts {
 		for (var accountType : list "Business,Person") {
 			ApplicationsMenu.gotoPortlet(
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@description = "This filters users that do not have any assigned account"
-	@priority = "4"
+	@priority = "3"
 	test FilterByNoAssignedAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -427,7 +427,7 @@ definition {
 	}
 
 	@description = "This filters users by status: active and inactive"
-	@priority = "4"
+	@priority = "3"
 	test FilterByStatus {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
@@ -518,7 +518,7 @@ definition {
 	}
 
 	@description = "This test removes a user from account via Users tab"
-	@priority = "4"
+	@priority = "5"
 	test RemoveUserFromAccount {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",

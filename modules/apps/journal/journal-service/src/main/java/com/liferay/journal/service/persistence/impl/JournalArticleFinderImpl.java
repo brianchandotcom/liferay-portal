@@ -75,6 +75,10 @@ public class JournalArticleFinderImpl
 	public static final String COUNT_BY_G_U_F_C =
 		JournalArticleFinder.class.getName() + ".countByG_U_F_C";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	public static final String COUNT_BY_C_G_F_C_A_V_T_D_C_S_T_D_R =
 		JournalArticleFinder.class.getName() +
 			".countByC_G_F_C_A_V_T_D_C_S_T_D_R";
@@ -118,10 +122,18 @@ public class JournalArticleFinderImpl
 	public static final String FIND_BY_G_U_F_C_L =
 		JournalArticleFinder.class.getName() + ".findByG_U_F_C_L";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	public static final String FIND_BY_C_G_F_C_A_V_T_D_C_S_T_D_R =
 		JournalArticleFinder.class.getName() +
 			".findByC_G_F_C_A_V_T_D_C_S_T_D_R";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public int countByKeywords(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -195,6 +207,10 @@ public class JournalArticleFinderImpl
 			groupId, folderIds, classNameId, queryDefinition, false);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public int countByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -213,6 +229,10 @@ public class JournalArticleFinderImpl
 			queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public int countByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -233,6 +253,10 @@ public class JournalArticleFinderImpl
 			queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public int countByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -249,6 +273,10 @@ public class JournalArticleFinderImpl
 			queryDefinition, false);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public int filterCountByKeywords(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -322,6 +350,10 @@ public class JournalArticleFinderImpl
 			groupId, folderIds, classNameId, queryDefinition, true);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public int filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -340,6 +372,10 @@ public class JournalArticleFinderImpl
 			queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public int filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -360,6 +396,10 @@ public class JournalArticleFinderImpl
 			queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public int filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -376,6 +416,10 @@ public class JournalArticleFinderImpl
 			queryDefinition, true);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> filterFindByKeywords(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -496,6 +540,10 @@ public class JournalArticleFinderImpl
 			groupId, folderIds, classNameId, locale, queryDefinition, true);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -514,6 +562,10 @@ public class JournalArticleFinderImpl
 			queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -534,6 +586,10 @@ public class JournalArticleFinderImpl
 			queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -587,6 +643,10 @@ public class JournalArticleFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> findByKeywords(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -835,6 +895,10 @@ public class JournalArticleFinderImpl
 			false);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -857,6 +921,10 @@ public class JournalArticleFinderImpl
 			queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -877,6 +945,10 @@ public class JournalArticleFinderImpl
 			queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	@Override
 	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
@@ -1138,6 +1210,10 @@ public class JournalArticleFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	protected int doCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String[] articleIds, Double version, String[] titles,
@@ -1816,6 +1892,10 @@ public class JournalArticleFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 */
+	@Deprecated
 	protected List<JournalArticle> doFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String[] articleIds, Double version, String[] titles,

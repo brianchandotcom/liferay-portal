@@ -1,0 +1,142 @@
+{
+	"components": {
+		"schemas": {
+			"Address": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"street": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "Address"
+				}
+			},
+			"Branch": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"parentBranch": {
+						"$ref": "#/components/schemas/Branch",
+						"description": "Example of property that refers to host schema that would allow only one level of object nesting"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "LocalizedInvalid2"
+				}
+			},
+			"Location": {
+				"properties": {
+					"address": {
+						"$ref": "#/components/schemas/Address"
+					},
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "Location"
+				}
+			},
+			"Organization": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"location": {
+						"$ref": "#/components/schemas/Location"
+					},
+					"property_i18n": {
+						"additionalProperties": {
+							"type": "string"
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "LocalizedInvalid1"
+				}
+			}
+		}
+	},
+	"info": {
+		"description": "Liferay Talend Test API",
+		"title": "Liferay Talend Test API",
+		"version": "v1.0"
+	},
+	"openapi": "3.0.1",
+	"paths": {
+		"/v1.0/cycle_reference": {
+			"get": {
+				"operationId": "getBranch",
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Branch"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Cycle",
+					"Reference"
+				]
+			}
+		},
+		"/v1.0/organization": {
+			"get": {
+				"operationId": "getOrganization",
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Organization"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Organization",
+					"Nested"
+				]
+			}
+		}
+	}
+}

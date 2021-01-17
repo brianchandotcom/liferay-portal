@@ -337,9 +337,7 @@ public class SchemaBuilder {
 
 			JsonObject propertyJsonObject = propertyJsonValue.asJsonObject();
 
-			if (propertyJsonObject.containsKey(OASConstants.REF) &&
-				(parentPropertyName == null)) {
-
+			if (propertyJsonObject.containsKey(OASConstants.REF)) {
 				String referenceSchemaName = _stripSchemaName(
 					propertyJsonObject.getString(OASConstants.REF));
 
@@ -350,6 +348,18 @@ public class SchemaBuilder {
 					throw new OASException(
 						"Unable to locate referenced schema " +
 							referenceSchemaName);
+				}
+
+				if (parentPropertyName != null) {
+					if (!parentPropertyName.contains(propertyEntry.getKey())) {
+						_processSchemaJsonObject(
+							parentPropertyName + "_" + propertyEntry.getKey(),
+							referenceSchemaJsonObject, index,
+							previousFieldNames, schemaFields,
+							apiSpecJsonObject);
+					}
+
+					continue;
 				}
 
 				_processSchemaJsonObject(

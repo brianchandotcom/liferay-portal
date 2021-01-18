@@ -116,7 +116,9 @@ public class ViewDisplayContext {
 					"translationEntryId",
 					String.valueOf(translationEntry.getTranslationEntryId()));
 
-				dropdownItem.setHref(deleteTranslationEntryURL);
+				dropdownItem.putData("action", "delete");
+				dropdownItem.putData(
+					"deleteURL", deleteTranslationEntryURL.toString());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
@@ -162,6 +164,10 @@ public class ViewDisplayContext {
 
 	public String getDefaultEventHandler() {
 		return "translationManagementToolbarDefaultEventHandler";
+	}
+
+	public String getElementsDefaultEventHandler() {
+		return "translationEntryDefaultEventHandler";
 	}
 
 	public String getLanguageIcon(TranslationEntry translationEntry) {

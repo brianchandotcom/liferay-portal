@@ -17,7 +17,10 @@ package com.liferay.document.library.internal.upgrade.v3_2_1;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -52,31 +55,22 @@ public class UpgradeDLFileEntryType
 						"fileEntryTypeId = ? "));
 			ResultSet rs = ps1.executeQuery()) {
 
-			String ddmStructureDefinition = StringUtil.read(
-				UpgradeDLFileEntryType.class.getResourceAsStream(
-					"dependencies/ddm-structure.json"));
-
-			String ddmStructureLayoutDefinition = StringUtil.read(
-				UpgradeDLFileEntryType.class.getResourceAsStream(
-					"dependencies/ddm-structure-layout.json"));
-
 			while (rs.next()) {
 				long ddmStructureId = _insertDDMStructure(
 					rs.getLong("groupId"), rs.getLong("companyId"),
 					rs.getLong("userId"), rs.getString("userName"),
-					rs.getString("name"), ddmStructureDefinition);
+					rs.getString("name"));
 
 				long ddmStructureVersionId = _insertDDMStructureVersion(
 					rs.getLong("userId"), rs.getString("userName"),
 					rs.getLong("companyId"), rs.getLong("groupId"),
-					ddmStructureId, rs.getString("name"),
-					ddmStructureDefinition);
+					ddmStructureId, rs.getString("name"));
 
 				_insertDDMStructureLayout(
 					rs.getLong("userId"), rs.getString("userName"),
 					rs.getLong("groupId"), rs.getLong("companyId"),
-					ddmStructureId, rs.getString("name"), ddmStructureVersionId,
-					ddmStructureLayoutDefinition);
+					ddmStructureId, rs.getString("name"),
+					ddmStructureVersionId);
 
 				ResourceLocalServiceUtil.addResources(
 					rs.getLong("companyId"), rs.getLong("groupId"),
@@ -105,7 +99,7 @@ public class UpgradeDLFileEntryType
 
 	private long _insertDDMStructure(
 			long groupId, long companyId, long userId, String userName,
-			String name, String ddmStructureDefinition)
+			String name)
 		throws Exception {
 
 		try (PreparedStatement ps2 = connection.prepareStatement(
@@ -144,7 +138,7 @@ public class UpgradeDLFileEntryType
 
 			ps2.setString(12, String.valueOf(ddmStructureId));
 			ps2.setString(13, name);
-			ps2.setString(14, ddmStructureDefinition);
+			ps2.setString(14, _DDM_STRUCTURE_DEFINITION);
 
 			ps2.executeUpdate();
 
@@ -154,8 +148,7 @@ public class UpgradeDLFileEntryType
 
 	private void _insertDDMStructureLayout(
 			long userId, String userName, long groupId, long companyId,
-			long ddmStructureId, String name, long ddmStructureVersionId,
-			String ddmStructureLayoutDefinition)
+			long ddmStructureId, String name, long ddmStructureVersionId)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -187,7 +180,7 @@ public class UpgradeDLFileEntryType
 			ps.setString(10, String.valueOf(ddmStructureId));
 			ps.setLong(11, ddmStructureVersionId);
 			ps.setString(12, name);
-			ps.setString(13, ddmStructureLayoutDefinition);
+			ps.setString(13, _DDM_STRUCTURE_LAYOUT_DEFINITION);
 
 			ps.executeUpdate();
 		}
@@ -195,7 +188,7 @@ public class UpgradeDLFileEntryType
 
 	private long _insertDDMStructureVersion(
 			long userId, String userName, long companyId, long groupId,
-			long ddmStructureId, String name, String ddmStructureDefinition)
+			long ddmStructureId, String name)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -224,7 +217,7 @@ public class UpgradeDLFileEntryType
 
 			ps.setLong(7, ddmStructureId);
 			ps.setString(8, name);
-			ps.setString(9, ddmStructureDefinition);
+			ps.setString(9, _DDM_STRUCTURE_DEFINITION);
 
 			ps.setLong(10, userId);
 			ps.setString(11, userName);
@@ -235,5 +228,46 @@ public class UpgradeDLFileEntryType
 			return structureVersionId;
 		}
 	}
+
+	private static final String _DDM_STRUCTURE_DEFINITION = JSONUtil.put(
+		"availableLanguageIds", JSONUtil.putAll("en_US")
+	).put(
+		"defaultLanguageId", "en_US"
+	).put(
+		"definitionSchemaVersion", "2.0"
+	).put(
+		"fields", JSONFactoryUtil.createJSONArray()
+	).put(
+		"successPage",
+		JSONUtil.put(
+			"body", JSONFactoryUtil.createJSONObject()
+		).put(
+			"enabled", false
+		).put(
+			"title", JSONFactoryUtil.createJSONObject()
+		)
+	).toString();
+
+	private static final String _DDM_STRUCTURE_LAYOUT_DEFINITION = JSONUtil.put(
+		"defaultLanguageId", "en_US"
+	).put(
+		"definitionSchemaVersion", "2.0"
+	).put(
+		"fields", JSONFactoryUtil.createJSONArray()
+	).put(
+		"pages",
+		JSONUtil.putAll(
+			JSONUtil.put(
+				"description", JSONUtil.put("en_US", StringPool.BLANK)
+			).put(
+				"enabled", false
+			).put(
+				"rows", JSONFactoryUtil.createJSONArray()
+			).put(
+				"title", JSONUtil.put("en_US", StringPool.BLANK)
+			))
+	).put(
+		"paginationMode", "single-page"
+	).toString();
 
 }

@@ -17,17 +17,23 @@ import {Config} from 'metal-state';
 
 class TranslationManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	deleteSelectedTranslationEntries() {
-		const form = this.one('#fm');
+		const message = Liferay.Language.get(
+			'are-you-sure-you-want-to-delete-the-selected-translations'
+		);
 
-		Liferay.Util.postForm(form, {
-			data: {
-				deleteEntryIds: Liferay.Util.listCheckedExcept(
-					form,
-					this.ns('allRowIds')
-				),
-			},
-			url: this.deleteTranslationEntriesURL,
-		});
+		if (confirm(message)) {
+			const form = this.one('#fm');
+
+			Liferay.Util.postForm(form, {
+				data: {
+					deleteEntryIds: Liferay.Util.listCheckedExcept(
+						form,
+						this.ns('allRowIds')
+					),
+				},
+				url: this.deleteTranslationEntriesURL,
+			});
+		}
 	}
 }
 

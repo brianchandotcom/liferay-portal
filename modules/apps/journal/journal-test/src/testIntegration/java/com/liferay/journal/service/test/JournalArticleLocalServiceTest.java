@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.exception.DuplicateArticleIdException;
+import com.liferay.journal.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -263,6 +264,18 @@ public class JournalArticleLocalServiceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			article.getArticleId(), true);
+	}
+
+	@Test(expected = DuplicateExternalReferenceCodeException.class)
+	public void testDuplicatedExternalReferenceCode() throws Exception {
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			article.getArticleId(), true, article.getExternalReferenceCode());
 	}
 
 	@Test

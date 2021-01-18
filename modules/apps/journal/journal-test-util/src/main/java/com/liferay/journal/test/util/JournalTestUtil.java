@@ -173,6 +173,23 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		return addArticle(
+			groupId, folderId, classNameId, articleId, autoArticleId, null,
+			titleMap, descriptionMap, contentMap, layoutUuid, defaultLocale,
+			displayDate, expirationDate, workflowEnabled, approved,
+			serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId, String articleId,
+			boolean autoArticleId, String externalReferenceCode,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> contentMap, String layoutUuid,
+			Locale defaultLocale, Date displayDate, Date expirationDate,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		String content = DDMStructureTestUtil.getSampleStructuredContent(
 			contentMap, LocaleUtil.toLanguageId(defaultLocale));
 
@@ -242,8 +259,9 @@ public class JournalTestUtil {
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
-			articleId, autoArticleId, JournalArticleConstants.VERSION_DEFAULT,
-			titleMap, descriptionMap, content, ddmStructure.getStructureKey(),
+			articleId, autoArticleId, externalReferenceCode,
+			JournalArticleConstants.VERSION_DEFAULT, titleMap, descriptionMap,
+			titleMap, content, ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey(), layoutUuid, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -317,6 +335,38 @@ public class JournalTestUtil {
 			_getLocalizedMap(RandomTestUtil.randomString()),
 			_getLocalizedMap(RandomTestUtil.randomString()), null,
 			LocaleUtil.getSiteDefault(), null, false, false, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, String articleId,
+			boolean autoArticleId, String externalReferenceCode)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addArticle(
+			groupId, folderId, articleId, autoArticleId, externalReferenceCode,
+			serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, String articleId,
+			boolean autoArticleId, String externalReferenceCode,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			groupId, folderId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			articleId, autoArticleId, externalReferenceCode,
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()), null,
+			LocaleUtil.getSiteDefault(), null, null, false, false,
+			serviceContext);
 	}
 
 	public static JournalArticle addArticle(
@@ -945,8 +995,9 @@ public class JournalTestUtil {
 
 		return JournalArticleLocalServiceUtil.updateArticle(
 			userId, article.getGroupId(), article.getFolderId(),
-			article.getArticleId(), article.getVersion(), titleMap,
-			article.getDescriptionMap(), content, article.getDDMStructureKey(),
+			article.getArticleId(), article.getExternalReferenceCode(),
+			article.getVersion(), titleMap, article.getDescriptionMap(),
+			titleMap, content, article.getDDMStructureKey(),
 			article.getDDMTemplateKey(), article.getLayoutUuid(),
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,

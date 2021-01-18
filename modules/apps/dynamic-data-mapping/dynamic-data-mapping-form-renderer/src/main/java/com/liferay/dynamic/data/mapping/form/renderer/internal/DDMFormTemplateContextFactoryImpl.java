@@ -81,7 +81,10 @@ public class DDMFormTemplateContextFactoryImpl
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(
 				ddmFormLayoutDDMFormField.getName());
 
-			ddmFormField.setRequired(ddmFormLayoutDDMFormField.isRequired());
+			if (!ddmFormField.isRequired()) {
+				ddmFormField.setRequired(
+					ddmFormLayoutDDMFormField.isRequired());
+			}
 		}
 
 		return doCreate(ddmForm, ddmFormLayout, ddmFormRenderingContext);

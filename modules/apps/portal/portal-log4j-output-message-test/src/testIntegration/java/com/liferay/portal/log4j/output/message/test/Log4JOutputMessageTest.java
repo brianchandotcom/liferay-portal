@@ -116,18 +116,18 @@ public class Log4JOutputMessageTest {
 						timeBasedRollingPolicy);
 				}
 			}
-			else if (appender instanceof ConsoleAppender) {
-				if (Objects.equals("CONSOLE", appender.getName())) {
-					ConsoleAppender consoleAppender = new ConsoleAppender();
+			else if ((appender instanceof ConsoleAppender) &&
+					 Objects.equals("CONSOLE", appender.getName())) {
 
-					consoleAppender.setLayout(appender.getLayout());
+				ConsoleAppender consoleAppender = new ConsoleAppender();
 
-					consoleAppender.activateOptions();
+				consoleAppender.setLayout(appender.getLayout());
 
-					consoleAppender.setWriter(_unsyncStringWriter);
+				consoleAppender.activateOptions();
 
-					logger.addAppender(consoleAppender);
-				}
+				consoleAppender.setWriter(_unsyncStringWriter);
+
+				logger.addAppender(consoleAppender);
 			}
 		}
 

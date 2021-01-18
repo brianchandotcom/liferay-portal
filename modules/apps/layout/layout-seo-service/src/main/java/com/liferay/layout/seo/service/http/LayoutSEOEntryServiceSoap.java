@@ -68,6 +68,27 @@ import java.util.Map;
 public class LayoutSEOEntryServiceSoap {
 
 	public static com.liferay.layout.seo.model.LayoutSEOEntrySoap
+			updateCustomMetaTags(
+				long groupId, boolean privateLayout, long layoutId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.layout.seo.model.LayoutSEOEntry returnValue =
+				LayoutSEOEntryServiceUtil.updateCustomMetaTags(
+					groupId, privateLayout, layoutId, serviceContext);
+
+			return com.liferay.layout.seo.model.LayoutSEOEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.seo.model.LayoutSEOEntrySoap
 			updateLayoutSEOEntry(
 				long groupId, boolean privateLayout, long layoutId,
 				boolean canonicalURLEnabled,

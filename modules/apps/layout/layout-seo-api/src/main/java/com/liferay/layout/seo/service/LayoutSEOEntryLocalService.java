@@ -322,6 +322,11 @@ public interface LayoutSEOEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public LayoutSEOEntry updateCustomMetaTags(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Updates the layout seo entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

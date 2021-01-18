@@ -43,6 +43,16 @@ public class LayoutSEOEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.layout.seo.model.LayoutSEOEntry updateCustomMetaTags(
+			long groupId, boolean privateLayout, long layoutId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutSEOEntryService.updateCustomMetaTags(
+			groupId, privateLayout, layoutId, serviceContext);
+	}
+
+	@Override
 	public com.liferay.layout.seo.model.LayoutSEOEntry updateLayoutSEOEntry(
 			long groupId, boolean privateLayout, long layoutId,
 			boolean canonicalURLEnabled,

@@ -60,6 +60,11 @@ public interface LayoutSEOEntryService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public LayoutSEOEntry updateCustomMetaTags(
+			long groupId, boolean privateLayout, long layoutId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long groupId, boolean privateLayout, long layoutId,
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,

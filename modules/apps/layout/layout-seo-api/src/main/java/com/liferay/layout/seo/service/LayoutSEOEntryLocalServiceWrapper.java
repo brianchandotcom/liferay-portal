@@ -409,6 +409,16 @@ public class LayoutSEOEntryLocalServiceWrapper
 		return _layoutSEOEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.layout.seo.model.LayoutSEOEntry updateCustomMetaTags(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutSEOEntryLocalService.updateCustomMetaTags(
+			userId, groupId, privateLayout, layoutId, serviceContext);
+	}
+
 	/**
 	 * Updates the layout seo entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

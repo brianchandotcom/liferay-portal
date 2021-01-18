@@ -48,6 +48,16 @@ public class LayoutSEOEntryServiceUtil {
 	}
 
 	public static com.liferay.layout.seo.model.LayoutSEOEntry
+			updateCustomMetaTags(
+				long groupId, boolean privateLayout, long layoutId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCustomMetaTags(
+			groupId, privateLayout, layoutId, serviceContext);
+	}
+
+	public static com.liferay.layout.seo.model.LayoutSEOEntry
 			updateLayoutSEOEntry(
 				long groupId, boolean privateLayout, long layoutId,
 				boolean canonicalURLEnabled,

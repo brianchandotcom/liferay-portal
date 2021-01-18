@@ -470,6 +470,48 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
+	macro setAddress {
+		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SECTION");
+
+		if (IsElementPresent(key_addressDataType = "${addressDataType}",key_text = "Set Default Address", locator1 = "Account#SET_ACCOUNT_DEFAULT_ADDRESS")) {
+			AssertClick(
+				key_addressDataType = "${addressDataType}",
+				key_text = "Set Default Address",
+				locator1 = "Account#SET_ACCOUNT_DEFAULT_ADDRESS",
+				value1 = "Set Default Address");
+		}
+		else {
+			AssertClick(
+				key_addressDataType = "${addressDataType}",
+				key_text = "Change",
+				locator1 = "Account#SET_ACCOUNT_DEFAULT_ADDRESS",
+				value1 = "Change");
+		}
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(
+			key_title = StringUtil.upperCaseFirstLetter("${addressDataType}"),
+			locator1 = "IFrame#MODAL_ANY");
+
+		AssertElementPresent(
+			key_addressDataType = StringUtil.upperCaseFirstLetter("${addressDataType}"),
+			key_filterScope = "Type: ${key_addressDataType}",
+			locator1 = "ManagementBar#FILTER_RESULTS_SCOPE");
+
+		Click(
+			key_addressName = "${addressName}",
+			locator1 = "Account#SELECT_ADDRESS_RADIO");
+
+		SelectFrameTop();
+
+		AssertClick(
+			locator1 = "Account#SAVE_BUTTON",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro tearDownCP {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",

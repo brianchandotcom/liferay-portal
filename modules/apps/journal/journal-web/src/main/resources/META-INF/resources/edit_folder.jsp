@@ -73,6 +73,7 @@ renderResponse.setTitle(title);
 
 <liferay-frontend:edit-form
 	action="<%= editFolderURL %>"
+	cssClass="container-form-lg"
 	method="post"
 	name="fm"
 >

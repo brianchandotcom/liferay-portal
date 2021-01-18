@@ -34,6 +34,7 @@ if (accountRole != null) {
 
 <liferay-frontend:edit-form
 	action="<%= editAccountRoleURL %>"
+	cssClass="container-form-lg"
 >
 	<portlet:renderURL var="redirect">
 		<portlet:param name="mvcPath" value="/account_entries_admin/edit_account_role.jsp" />

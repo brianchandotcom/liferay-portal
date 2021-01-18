@@ -39,6 +39,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 
 <liferay-frontend:edit-form
 	action="<%= editVocabularyURL %>"
+	cssClass="container-form-lg"
 	name="fm"
 	onSubmit='<%= liferayPortletResponse.getNamespace() + "confirmation(event);" %>'
 >

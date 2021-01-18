@@ -23,7 +23,7 @@ String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_ENTRY_N
 
 <liferay-portlet:actionURL name="/dispatch_talend/edit_dispatch_talend_job_archive" portletName="<%= DispatchPortletKeys.DISPATCH %>" var="editDispatchTalendJobArchiveActionURL" />
 
-<div class="closed container-view" id="<portlet:namespace />editDispatchTriggerId">
+<div class="closed container-fluid container-fluid-max-xl container-form-lg" id="<portlet:namespace />editDispatchTriggerId">
 	<div class="sheet">
 		<aui:form action="<%= editDispatchTalendJobArchiveActionURL %>" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

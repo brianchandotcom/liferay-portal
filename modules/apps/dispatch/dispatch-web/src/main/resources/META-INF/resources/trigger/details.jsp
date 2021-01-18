@@ -35,7 +35,7 @@ if (dispatchTrigger != null) {
 
 <portlet:actionURL name="/dispatch/edit_dispatch_trigger" var="editDispatchTriggerActionURL" />
 
-<div class="closed container-view" id="<portlet:namespace />editDispatchTriggerId">
+<div class="closed container-fluid container-fluid-max-xl container-form-lg" id="<portlet:namespace />editDispatchTriggerId">
 	<div class="sheet">
 		<liferay-ui:error exception="<%= NoSuchLogException.class %>" message="the-log-could-not-be-found" />
 		<liferay-ui:error exception="<%= NoSuchTriggerException.class %>" message="the-trigger-could-not-be-found" />

@@ -37,6 +37,7 @@ renderResponse.setTitle(assetTagsDisplayContext.getAssetTitle());
 
 <liferay-frontend:edit-form
 	action="<%= editTagURL %>"
+	cssClass="container-form-lg"
 	method="post"
 	name="fm"
 >

@@ -15,7 +15,6 @@
 package com.liferay.nested.portlets.web.internal.upgrade.v1_0_1;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -25,19 +24,11 @@ public class UpgradePortletPreferencesValue extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateSmallValue();
-	}
-
-	protected void updateSmallValue() throws Exception {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("update PortletPreferenceValue set smallValue = ");
-		sb.append("'1_2_1_columns_i' where name = 'layoutTemplateId' and ");
-		sb.append("smallValue = '1_2_1_columns' ");
-
-		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sb.toString());
-
-		runSQL(dbTypeToSQLMap);
+		runSQL(
+			StringBundler.concat(
+				"update PortletPreferenceValue set smallValue = ",
+				"'1_2_1_columns_i' where name = 'layoutTemplateId' and ",
+				"smallValue = '1_2_1_columns' "));
 	}
 
 }

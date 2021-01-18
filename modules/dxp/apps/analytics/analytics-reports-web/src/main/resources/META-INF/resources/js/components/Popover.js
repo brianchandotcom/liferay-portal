@@ -10,7 +10,7 @@
  */
 
 import ClayPopover from '@clayui/popover';
-import {Align} from 'metal-position';
+import {ALIGN_POSITIONS, align as alignElement} from 'frontend-js-web';
 import Proptypes from 'prop-types';
 import React, {useLayoutEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
@@ -30,7 +30,7 @@ const Popover = (props) => {
 
 const PopoverComponent = ({
 	anchor,
-	align = Align.Top,
+	align = ALIGN_POSITIONS.Top,
 	children,
 	position = 'top',
 	...rest
@@ -38,7 +38,7 @@ const PopoverComponent = ({
 	const popRef = useRef(null);
 
 	useLayoutEffect(() => {
-		Align.align(popRef.current, anchor, align, false);
+		alignElement(popRef.current, anchor, align, false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

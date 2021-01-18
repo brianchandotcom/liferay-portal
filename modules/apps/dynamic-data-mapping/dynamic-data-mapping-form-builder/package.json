@@ -7,7 +7,6 @@
 		"metal-drag-drop": "3.3.1",
 		"metal-events": "2.16.8",
 		"metal-jsx": "2.16.8",
-		"metal-position": "2.1.2",
 		"metal-state": "2.16.8"
 	},
 	"jest": {

@@ -60,6 +60,16 @@ export {default as createRenderURL} from './liferay/util/portlet_url/create_rend
 
 export {default as createResourceURL} from './liferay/util/portlet_url/create_resource_url.es';
 
+// Align API
+
+export {
+	ALIGN_POSITIONS,
+	align,
+	getAlignBestRegion,
+	getAlignRegion,
+	suggestAlignBestRegion,
+} from './liferay/align';
+
 // Session API
 
 export {getSessionValue, setSessionValue} from './liferay/util/session.es';

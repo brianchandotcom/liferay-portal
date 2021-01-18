@@ -13,7 +13,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import {Align} from 'metal-position';
+import {align} from 'frontend-js-web';
 import React from 'react';
 
 import Popover from '../../../../src/main/resources/META-INF/resources/js/components/popover/Popover.es';
@@ -22,6 +22,10 @@ const getTitle = () => <h1>Title</h1>;
 const getContent = () => <p>Content</p>;
 const getFooter = () => <span>Footer</span>;
 
+const alignMock = {
+	align,
+};
+
 describe('Popover', () => {
 	afterEach(() => {
 		cleanup();
@@ -29,7 +33,7 @@ describe('Popover', () => {
 	});
 
 	it('renders popover on top', () => {
-		jest.spyOn(Align, 'align').mockImplementation(() => 0);
+		jest.spyOn(alignMock, 'align').mockImplementation(() => 0);
 
 		const {container, queryByText} = render(
 			<Popover
@@ -49,7 +53,7 @@ describe('Popover', () => {
 	});
 
 	it('renders popover on the right with children', () => {
-		jest.spyOn(Align, 'align').mockImplementation(() => 2);
+		jest.spyOn(alignMock, 'align').mockImplementation(() => 2);
 
 		const {container, queryByText} = render(
 			<Popover
@@ -76,7 +80,7 @@ describe('Popover', () => {
 	});
 
 	it('renders popover with no ref', () => {
-		jest.spyOn(Align, 'align').mockImplementation(() => 0);
+		jest.spyOn(alignMock, 'align').mockImplementation(() => 0);
 
 		const {container, queryByText} = render(
 			<Popover title={getTitle} visible />

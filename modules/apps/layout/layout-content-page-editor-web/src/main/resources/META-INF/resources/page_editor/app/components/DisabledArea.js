@@ -14,7 +14,7 @@
 
 import ClayPopover from '@clayui/popover';
 import {useEventListener} from 'frontend-js-react-web';
-import {Align} from 'metal-position';
+import {ALIGN_POSITIONS, align, suggestAlignBestRegion} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useEffect,
@@ -40,14 +40,14 @@ const DEFAULT_WHITELIST = [
 ];
 
 const POPOVER_POSITIONS = {
-	[Align.Bottom]: 'bottom',
-	[Align.BottomLeft]: 'bottom',
-	[Align.BottomRight]: 'bottom',
-	[Align.Left]: 'left',
-	[Align.Right]: 'right',
-	[Align.Top]: 'top',
-	[Align.TopLeft]: 'top',
-	[Align.TopRight]: 'top',
+	[ALIGN_POSITIONS.Bottom]: 'bottom',
+	[ALIGN_POSITIONS.BottomLeft]: 'bottom',
+	[ALIGN_POSITIONS.BottomRight]: 'bottom',
+	[ALIGN_POSITIONS.Left]: 'left',
+	[ALIGN_POSITIONS.Right]: 'right',
+	[ALIGN_POSITIONS.Top]: 'top',
+	[ALIGN_POSITIONS.TopLeft]: 'top',
+	[ALIGN_POSITIONS.TopRight]: 'top',
 };
 const STATIC_POSITIONS = ['', 'static', 'relative'];
 
@@ -133,18 +133,18 @@ const DisabledArea = () => {
 
 	useLayoutEffect(() => {
 		if (popoverRef.current && currentElementClicked && show) {
-			const suggestedAlign = Align.suggestAlignBestRegion(
+			const suggestedAlign = suggestAlignBestRegion(
 				popoverRef.current,
 				currentElementClicked,
-				Align.TopCenter
+				ALIGN_POSITIONS.TopCenter
 			);
 
 			const bestPosition =
-				suggestedAlign.position !== Align.TopCenter
-					? Align.BottomCenter
-					: Align.TopCenter;
+				suggestedAlign.position !== ALIGN_POSITIONS.TopCenter
+					? ALIGN_POSITIONS.BottomCenter
+					: ALIGN_POSITIONS.TopCenter;
 
-			Align.align(
+			align(
 				popoverRef.current,
 				currentElementClicked,
 				bestPosition,

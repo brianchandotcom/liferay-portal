@@ -9,7 +9,6 @@
 		"@clayui/popover": "3.5.3",
 		"classnames": "2.2.6",
 		"frontend-js-web": "*",
-		"metal-position": "2.1.2",
 		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"

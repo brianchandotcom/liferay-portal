@@ -14,7 +14,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
-import {Align} from 'metal-position';
+import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
 import LayoutSelector from './LayoutSelector';
@@ -26,10 +26,10 @@ export default function PreviewInfoBar() {
 
 	useLayoutEffect(() => {
 		if (isShowPopover) {
-			Align.align(
+			align(
 				popoverRef.current,
 				helpIconRef.current,
-				Align.BottomRight,
+				ALIGN_POSITIONS.BottomRight,
 				false
 			);
 		}

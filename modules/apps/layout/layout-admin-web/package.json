@@ -16,7 +16,6 @@
 		"metal-component": "2.16.8",
 		"metal-drag-drop": "3.3.1",
 		"metal-events": "2.16.8",
-		"metal-position": "2.1.2",
 		"metal-state": "2.16.8",
 		"prop-types": "15.7.2",
 		"react": "16.12.0",

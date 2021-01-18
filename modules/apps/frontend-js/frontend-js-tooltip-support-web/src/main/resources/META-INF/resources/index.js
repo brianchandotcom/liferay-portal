@@ -14,8 +14,7 @@
 
 import ClayTooltip from '@clayui/tooltip';
 import {render, useTimeout} from 'frontend-js-react-web';
-import {delegate} from 'frontend-js-web';
-import {Align} from 'metal-position';
+import {ALIGN_POSITIONS as POSITIONS, align, delegate} from 'frontend-js-web';
 import React, {
 	useEffect,
 	useLayoutEffect,
@@ -202,11 +201,7 @@ const TooltipProvider = () => {
 	useLayoutEffect(() => {
 		if (state.target && tooltipRef.current) {
 			setAlignment(
-				Align.align(
-					tooltipRef.current,
-					state.target,
-					Align.BottomCenter
-				)
+				align(tooltipRef.current, state.target, POSITIONS.BottomCenter)
 			);
 		}
 	}, [state.target]);

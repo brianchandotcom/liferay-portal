@@ -17,8 +17,8 @@
 import '../FormPortal/FormPortal.es';
 
 import 'clay-icon';
+import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import Component from 'metal-component';
-import {Align} from 'metal-position';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -43,10 +43,10 @@ class Tooltip extends Component {
 	_handleTooltipRendered() {
 		const {tooltipSource, tooltipTarget} = this.refs;
 		const {element} = tooltipSource;
-		const suggestedPosition = Align.align(
+		const suggestedPosition = align(
 			element,
 			tooltipTarget,
-			Align.Right
+			ALIGN_POSITIONS.Right
 		);
 
 		this.position = POSITIONS[suggestedPosition];

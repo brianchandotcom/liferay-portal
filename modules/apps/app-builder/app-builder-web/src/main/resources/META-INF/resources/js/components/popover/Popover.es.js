@@ -13,21 +13,21 @@
  */
 
 import classNames from 'classnames';
-import {Align} from 'metal-position';
+import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import PopoverBase from './PopoverBase.es';
 
 const ALIGNMENTS_MAP = {
-	bottom: Align.Bottom,
-	'bottom-left': Align.BottomLeft,
-	'bottom-right': Align.BottomRight,
-	left: Align.Left,
-	right: Align.Right,
-	top: Align.Top,
-	'top-left': Align.TopLeft,
-	'top-right': Align.TopRight,
+	bottom: ALIGN_POSITIONS.Bottom,
+	'bottom-left': ALIGN_POSITIONS.BottomLeft,
+	'bottom-right': ALIGN_POSITIONS.BottomRight,
+	left: ALIGN_POSITIONS.Left,
+	right: ALIGN_POSITIONS.Right,
+	top: ALIGN_POSITIONS.Top,
+	'top-left': ALIGN_POSITIONS.TopLeft,
+	'top-right': ALIGN_POSITIONS.TopRight,
 };
 
 const POSITIONS = [
@@ -46,11 +46,7 @@ const getAlignPosition = (source, target, suggestedPosition) => {
 		suggestedPosition = 'top';
 	}
 
-	const position = Align.align(
-		source,
-		target,
-		ALIGNMENTS_MAP[suggestedPosition]
-	);
+	const position = align(source, target, ALIGNMENTS_MAP[suggestedPosition]);
 
 	return POSITIONS[position];
 };

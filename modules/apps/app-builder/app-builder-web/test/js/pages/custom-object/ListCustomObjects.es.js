@@ -26,6 +26,21 @@ import {RESPONSES} from '../../constants.es';
 const mockFetch = fetch;
 
 jest.mock('frontend-js-web', () => ({
+	ALIGN_POSITIONS: {
+		Bottom: 4,
+		BottomCenter: 4,
+		BottomLeft: 5,
+		BottomRight: 3,
+		Left: 6,
+		LeftCenter: 6,
+		Right: 2,
+		RightCenter: 2,
+		Top: 0,
+		TopCenter: 0,
+		TopLeft: 7,
+		TopRight: 1,
+	},
+	align: () => jest.fn(),
 	createResourceURL: jest.fn(() => 'http://resource_url?'),
 	debounce: jest.fn().mockResolvedValue(),
 	fetch: (...args) => mockFetch(...args),

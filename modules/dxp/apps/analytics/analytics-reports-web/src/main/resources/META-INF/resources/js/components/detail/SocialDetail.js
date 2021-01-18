@@ -11,7 +11,7 @@
 
 import ClayList from '@clayui/list';
 import className from 'classnames';
-import {Align} from 'metal-position';
+import {ALIGN_POSITIONS} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
@@ -121,7 +121,7 @@ export default function SocialDetail({
 				dataProvider={trafficVolumeDataProvider}
 				label={Liferay.Util.sub(Liferay.Language.get('traffic-volume'))}
 				languageTag={languageTag}
-				popoverAlign={Align.Bottom}
+				popoverAlign={ALIGN_POSITIONS.Bottom}
 				popoverHeader={Liferay.Language.get('traffic-volume')}
 				popoverMessage={Liferay.Language.get(
 					'traffic-volume-is-the-number-of-page-views-coming-from-one-channel'

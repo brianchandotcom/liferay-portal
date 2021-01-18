@@ -78,13 +78,13 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			httpServletRequest);
 	}
 
-	public Map<String, Object> getDDMFormReactData(RenderRequest renderRequest)
+	public Map<String, Object> getDDMFormContext(RenderRequest renderRequest)
 		throws Exception {
 
-		return getDDMFormReactData(renderRequest, true);
+		return getDDMFormContext(renderRequest, true);
 	}
 
-	public Map<String, Object> getDDMFormReactData(
+	public Map<String, Object> getDDMFormContext(
 			RenderRequest renderRequest, boolean readOnly)
 		throws Exception {
 
@@ -125,7 +125,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		DDMFormLayout formLayout = structureVersion.getDDMFormLayout();
 
-		return _ddmFormRenderer.getReactData(
+		return _ddmFormRenderer.getContext(
 			structureVersion.getDDMForm(), formLayout, formRenderingContext);
 	}
 

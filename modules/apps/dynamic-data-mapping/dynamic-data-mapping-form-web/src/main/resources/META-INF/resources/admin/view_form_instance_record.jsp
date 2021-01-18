@@ -42,6 +42,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 >
 	<react:component
 		module="admin/js/index.es"
-		props="<%= ddmFormAdminDisplayContext.getDDMFormReactData(renderRequest) %>"
+		props="<%= ddmFormAdminDisplayContext.getDDMFormContext(renderRequest) %>"
 	/>
 </clay:container-fluid>

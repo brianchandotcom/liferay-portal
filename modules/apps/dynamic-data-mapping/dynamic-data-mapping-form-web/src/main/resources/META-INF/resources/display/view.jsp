@@ -182,7 +182,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						>
 							<react:component
 								module="admin/js/index.es"
-								props="<%= ddmFormDisplayContext.getDDMFormReactData() %>"
+								props="<%= ddmFormDisplayContext.getDDMFormContext() %>"
 							/>
 
 							<aui:input name="empty" type="hidden" value="" />

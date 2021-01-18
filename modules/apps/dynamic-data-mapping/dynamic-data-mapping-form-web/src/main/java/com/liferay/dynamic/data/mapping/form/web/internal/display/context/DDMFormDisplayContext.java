@@ -180,7 +180,7 @@ public class DDMFormDisplayContext {
 		return _containerId;
 	}
 
-	public Map<String, Object> getDDMFormReactData() throws Exception {
+	public Map<String, Object> getDDMFormContext() throws Exception {
 		DDMFormInstance ddmFormInstance = getFormInstance();
 
 		if (ddmFormInstance == null) {
@@ -258,7 +258,7 @@ public class DDMFormDisplayContext {
 		ddmFormRenderingContext.setShowSubmitButton(isShowSubmitButton());
 		ddmFormRenderingContext.setSubmitLabel(getSubmitLabel());
 
-		return _ddmFormRenderer.getReactData(
+		return _ddmFormRenderer.getContext(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 

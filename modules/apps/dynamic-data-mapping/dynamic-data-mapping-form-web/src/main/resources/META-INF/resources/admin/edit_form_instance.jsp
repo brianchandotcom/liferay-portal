@@ -151,7 +151,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 	>
 		<react:component
 			module="admin/js/index.es"
-			props="<%= ddmFormAdminDisplayContext.getSerializeSettingsFormReactData(pageContext) %>"
+			props="<%= ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext) %>"
 		/>
 	</clay:container-fluid>
 </div>

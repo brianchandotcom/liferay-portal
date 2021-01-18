@@ -27,9 +27,6 @@ public class ClaySamplePortletKeys {
 	public static final String DROPDOWNS_DISPLAY_CONTEXT =
 		"DROPDOWNS_DISPLAY_CONTEXT";
 
-	public static final String MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT =
-		"MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT";
-
 	public static final String MULTISELECT_DISPLAY_CONTEXT =
 		"MULTISELECT_DISPLAY_CONTEXT";
 

@@ -14,21 +14,34 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha
  */
-public class ManagementToolbarsDisplayContext {
+public class ClaySampleManagementToolbarsDisplayContext
+	extends BaseManagementToolbarDisplayContext {
+
+	public ClaySampleManagementToolbarsDisplayContext(
+		HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse);
+	}
 
 	public List<DropdownItem> getActionDropdownItems() {
 		if (_actionDropdownItems != null) {
@@ -42,7 +55,6 @@ public class ManagementToolbarsDisplayContext {
 			}
 		).add(
 			dropdownItem -> {
-				dropdownItem.setHref("#download");
 				dropdownItem.setIcon("download");
 				dropdownItem.setLabel("Download");
 				dropdownItem.setQuickAction(true);
@@ -133,12 +145,12 @@ public class ManagementToolbarsDisplayContext {
 		return _filterDropdownItems;
 	}
 
-	public List<LabelItem> getFilterLabelItems() {
-		return LabelItemListBuilder.add(
-			labelItem -> labelItem.setLabel("Filter 1")
-		).add(
-			labelItem -> labelItem.setLabel("Filter 2")
-		).build();
+	public String getSearchActionURL() {
+		return "#search-action-url";
+	}
+
+	public Boolean getSupportsBulkActions() {
+		return true;
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
@@ -163,6 +175,10 @@ public class ManagementToolbarsDisplayContext {
 		};
 
 		return _viewTypeItems;
+	}
+
+	public Boolean isShowInfoButton() {
+		return true;
 	}
 
 	private List<DropdownItem> _actionDropdownItems;

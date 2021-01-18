@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -24,11 +26,11 @@ page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.contex
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleFileCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleHorizontalCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleImageCard" %><%@
+page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleManagementToolbarsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleNavigationCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleUserCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleVerticalCard" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext" %><%@
-page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ManagementToolbarsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.MultiselectDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %>
@@ -38,12 +40,13 @@ page import="java.util.List" %>
 
 <liferay-theme:defineObjects />
 
+<portlet:defineObjects />
+
 <%@ include file="/init-ext.jsp" %>
 
 <%
 CardsDisplayContext cardsDisplayContext = (CardsDisplayContext)request.getAttribute(ClaySamplePortletKeys.CARDS_DISPLAY_CONTEXT);
 DropdownsDisplayContext dropdownsDisplayContext = (DropdownsDisplayContext)request.getAttribute(ClaySamplePortletKeys.DROPDOWNS_DISPLAY_CONTEXT);
-ManagementToolbarsDisplayContext managementToolbarsDisplayContext = (ManagementToolbarsDisplayContext)request.getAttribute(ClaySamplePortletKeys.MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT);
 MultiselectDisplayContext multiselectDisplayContext = (MultiselectDisplayContext)request.getAttribute(ClaySamplePortletKeys.MULTISELECT_DISPLAY_CONTEXT);
 NavigationBarsDisplayContext navigationBarsDisplayContext = (NavigationBarsDisplayContext)request.getAttribute(ClaySamplePortletKeys.NAVIGATION_BARS_DISPLAY_CONTEXT);
 %>

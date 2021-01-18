@@ -1003,6 +1003,113 @@ definition {
 			fieldValue = "blocked.com");
 	}
 
+	@priority = "3"
+	test SetDefaultAddresses {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Set default address for account.",
+			accountName = "Account with Default Address");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressDescription = "Address of DL office.",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			phoneNumber = "+86 (0)411 88120855");
+
+		Accounts.addAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressDescription = "Address of Los Angeles (Global HQ) office.",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			addressType = "Billing",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		Accounts.addAddress(
+			addressCity = "Shibuya-ku",
+			addressCountry = "Japan",
+			addressDescription = "Address of Japan office.",
+			addressName = "Liferay Japan K. K.",
+			addressPostalCode = "150-0021",
+			addressRegion = "東京都",
+			addressStreet1 = "1F Faveur Ebisu,",
+			addressStreet2 = "1-26-7 Ebisu Nishi",
+			addressType = "Shipping",
+			phoneNumber = "+81 3-5456-5796");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account with Default Address");
+
+		Accounts.setAddress(
+			addressDataType = "shipping",
+			addressName = "Liferay Japan K. K.");
+
+		Accounts.viewAddress(
+			addressCity = "Shibuya-ku",
+			addressCountry = "Japan",
+			addressDataType = "shipping",
+			addressName = "Liferay Japan K. K.",
+			addressPostalCode = "150-0021",
+			addressRegion = "東京都",
+			addressStreet1 = "1F Faveur Ebisu,",
+			addressStreet2 = "1-26-7 Ebisu Nishi",
+			phoneNumber = "+81 3-5456-5796");
+
+		Accounts.setAddress(
+			addressDataType = "billing",
+			addressName = "Liferay, Inc.");
+
+		Accounts.viewAddress(
+			addressCity = "Diamond Bar",
+			addressCountry = "United States",
+			addressDataType = "billing",
+			addressName = "Liferay, Inc.",
+			addressPostalCode = "91765",
+			addressRegion = "California",
+			addressStreet1 = "1400 Montefino Ave",
+			phoneNumber = "+1-877-LIFERAY (1-877-543-3729)");
+
+		Accounts.setAddress(
+			addressDataType = "shipping",
+			addressName = "Liferay Dalian Software Co., Ltd.");
+
+		Accounts.setAddress(
+			addressDataType = "billing",
+			addressName = "Liferay Dalian Software Co., Ltd.");
+
+		for (var addressDataType : list "shipping,billing") {
+			Accounts.viewAddress(
+				addressCity = "Dalian",
+				addressCountry = "China",
+				addressDataType = "${addressDataType}",
+				addressName = "Liferay Dalian Software Co., Ltd.",
+				addressPostalCode = "116023",
+				addressRegion = "Liaoning",
+				addressStreet1 = "537 Huangpu Road Taide Building,",
+				addressStreet2 = "High-Tech Zone",
+				addressStreet3 = "1005",
+				phoneNumber = "+86 (0)411 88120855");
+		}
+	}
+
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";

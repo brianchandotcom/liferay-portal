@@ -396,7 +396,7 @@ definition {
 
 		MenuItem.click(menuItem = "Select a Publication");
 
-		SelectFrame(locator1 = "IFrame#SELECT_PUBLICATION");
+		SelectFrameTop(value1 = "relative=top");
 
 		var key_publicationsName = "${publicationsName}";
 

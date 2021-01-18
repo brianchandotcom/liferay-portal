@@ -81,6 +81,37 @@ public class LayoutSEOEntryLocalServiceImpl
 	}
 
 	@Override
+	public LayoutSEOEntry updateCustomMetaTags(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		if (layoutSEOEntry == null) {
+			return _addLayoutSEOEntry(
+				userId, groupId, privateLayout, layoutId, false,
+				Collections.emptyMap(), false, Collections.emptyMap(),
+				Collections.emptyMap(), 0, false, Collections.emptyMap(),
+				serviceContext);
+		}
+
+		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
+
+		DDMStructure ddmStructure = _getDDMStructure(
+			_groupLocalService.getGroup(groupId));
+
+		long ddmStorageId = _updateDDMStorage(
+			layoutSEOEntry.getCompanyId(), layoutSEOEntry.getDDMStorageId(),
+			ddmStructure.getStructureId(), serviceContext);
+
+		layoutSEOEntry.setDDMStorageId(ddmStorageId);
+
+		return layoutSEOEntryPersistence.update(layoutSEOEntry);
+	}
+
+	@Override
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
@@ -107,15 +138,6 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
 		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
-
-		DDMStructure ddmStructure = _getDDMStructure(
-			_groupLocalService.getGroup(groupId));
-
-		long ddmStorageId = _updateDDMStorage(
-			layoutSEOEntry.getCompanyId(), layoutSEOEntry.getDDMStorageId(),
-			ddmStructure.getStructureId(), serviceContext);
-
-		layoutSEOEntry.setDDMStorageId(ddmStorageId);
 
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);

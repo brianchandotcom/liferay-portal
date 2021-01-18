@@ -38,7 +38,7 @@ const chartFactory = ({
 			return (
 				<SimpleBarChart
 					data={toDataArray(options, values)}
-					totalEntries={sumTotalValues}
+					totalEntries={totalEntries}
 				/>
 			);
 

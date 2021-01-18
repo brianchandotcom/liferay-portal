@@ -36,7 +36,10 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 
 <c:if test="<%= ListUtil.isNotEmpty(screenNavigationCategories) && (screenNavigationCategories.size() > 1) %>">
 	<div class="page-header">
-		<div class="<%= headerContainerCssClass %>">
+		<c:if test="<%= Validator.isNotNull(headerContainerCssClass) %>">
+			<div class="<%= headerContainerCssClass %>">
+		</c:if>
+
 			<clay:navigation-bar
 				inverted="<%= inverted %>"
 				navigationItems='<%=
@@ -56,54 +59,69 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 					}
 				%>'
 			/>
-		</div>
+
+		<c:if test="<%= Validator.isNotNull(headerContainerCssClass) %>">
+			</div>
+		</c:if>
 	</div>
 </c:if>
 
 <c:if test="<%= (selectedScreenNavigationEntry != null) && ListUtil.isNotEmpty(screenNavigationEntries) %>">
-	<div class="<%= containerWrapperCssClass %>">
-		<clay:row>
-			<c:if test="<%= screenNavigationEntries.size() > 1 %>">
-				<div class="<%= navCssClass %>">
-					<nav class="<%= menubarCssClass %>">
-						<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="liferay-collapse" href="#<%= id %>" role="button">
-							<%= selectedScreenNavigationEntry.getLabel(locale) %>
+	<c:if test="<%= Validator.isNotNull(containerWrapperCssClass) %>">
+		<div class="<%= containerWrapperCssClass %>">
+	</c:if>
 
-							<aui:icon image="caret-bottom" markupView="lexicon" />
-						</a>
+		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
+			<div class="row">
+		</c:if>
 
-						<div class="collapse menubar-collapse" id="<%= id %>">
-							<ul class="nav nav-nested">
+		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
+			<div class="<%= navCssClass %>">
+				<nav class="<%= menubarCssClass %>">
+					<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="liferay-collapse" href="#<%= id %>" role="button">
+						<%= selectedScreenNavigationEntry.getLabel(locale) %>
 
-								<%
-								for (ScreenNavigationEntry<Object> screenNavigationEntry : screenNavigationEntries) {
-									PortletURL screenNavigationEntryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+						<aui:icon image="caret-bottom" markupView="lexicon" />
+					</a>
 
-									screenNavigationEntryURL.setParameter("screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey());
-									screenNavigationEntryURL.setParameter("screenNavigationEntryKey", screenNavigationEntry.getEntryKey());
-								%>
+					<div class="collapse menubar-collapse" id="<%= id %>">
+						<ul class="nav nav-nested">
 
-									<li class="nav-item">
-										<a class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>" href="<%= screenNavigationEntryURL %>"><%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %></a>
-									</li>
+							<%
+							for (ScreenNavigationEntry<Object> screenNavigationEntry : screenNavigationEntries) {
+								PortletURL screenNavigationEntryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-								<%
-								}
-								%>
+								screenNavigationEntryURL.setParameter("screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey());
+								screenNavigationEntryURL.setParameter("screenNavigationEntryKey", screenNavigationEntry.getEntryKey());
+							%>
 
-							</ul>
-						</div>
-					</nav>
-				</div>
-			</c:if>
+								<li class="nav-item">
+									<a class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>" href="<%= screenNavigationEntryURL %>"><%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %></a>
+								</li>
 
-			<div class="<%= (screenNavigationEntries.size() > 1) ? containerCssClass : fullContainerCssClass %>">
+							<%
+							}
+							%>
 
-				<%
-				selectedScreenNavigationEntry.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
-				%>
-
+						</ul>
+					</div>
+				</nav>
 			</div>
-		</clay:row>
-	</div>
+		</c:if>
+
+		<div class="<%= (screenNavigationEntries.size() > 1) ? containerCssClass : fullContainerCssClass %>">
+
+			<%
+			selectedScreenNavigationEntry.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
+			%>
+
+		</div>
+
+		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
+			</div>
+		</c:if>
+
+	<c:if test="<%= Validator.isNotNull(containerWrapperCssClass) %>">
+		</div>
+	</c:if>
 </c:if>

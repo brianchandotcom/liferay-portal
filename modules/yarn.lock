@@ -9429,10 +9429,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-ckeditor@4.14.1-liferay.15:
-  version "4.14.1-liferay.15"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.14.1-liferay.15.tgz#fab308dbcb637ce0cff9f2a8b294a7183cbd4c52"
-  integrity sha512-gRBUy13UZHZoCde6FQ425mERUZFq8uWruWL94d82af9rGFjwb/dlZBfi7OWxiycx/cTjaBBH21ShgtOAvBv8Og==
+liferay-ckeditor@4.14.1-liferay.16:
+  version "4.14.1-liferay.16"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.14.1-liferay.16.tgz#cae6421d684745de477cded2c3ff1458488e60a3"
+  integrity sha512-/R7KjFnyNEgW+PfgO2MW6gpvEHS7Has8b1FGGiPNJx2Kl4jifN8fYSp4LHQX6Xfaa1IZAhwKtaQ9ASUaUEIC5g==
 
 liferay-font-awesome@3.4.0:
   version "3.4.0"

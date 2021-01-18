@@ -16,8 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:success key="friendlyURLChanged" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChanged")) %>' timeout="<%= 20000 %>" translateMessage="<%= false %>" />
-
 <%
 JournalArticle article = journalDisplayContext.getArticle();
 
@@ -268,3 +266,19 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	module="js/JournalPortlet.es"
 	servletContext="<%= application %>"
 />
+
+<%
+String friendlyURLChanged = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChanged"));
+%>
+
+<c:if test="<%= Validator.isNotNull(friendlyURLChanged) %>">
+	<aui:script>
+		Liferay.Util.openToast({
+			message: '<%= friendlyURLChanged %>',
+			toastProps: {
+				autoClose: 20000,
+			},
+			type: 'warning',
+		});
+	</aui:script>
+</c:if>

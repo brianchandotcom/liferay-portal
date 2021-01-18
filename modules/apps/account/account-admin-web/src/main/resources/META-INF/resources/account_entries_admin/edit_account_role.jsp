@@ -54,9 +54,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "add-new-role
 %>
 
 <liferay-frontend:screen-navigation
-	containerWrapperCssClass=""
 	context="<%= accountRole %>"
-	headerContainerCssClass=""
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ROLE %>"
 	portletURL="<%= portletURL %>"
 />

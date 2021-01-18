@@ -49,7 +49,6 @@ renderResponse.setTitle(selLayout.getName(locale));
 	containerCssClass="col-lg-8"
 	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	context="<%= selLayout %>"
-	headerContainerCssClass=""
 	inverted="<%= true %>"
 	key="<%= LayoutScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_LAYOUT %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"

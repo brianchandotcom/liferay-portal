@@ -27,8 +27,6 @@ serverURL.setParameter("delta", String.valueOf(delta));
 %>
 
 <liferay-frontend:screen-navigation
-	containerWrapperCssClass=""
-	headerContainerCssClass=""
 	key="<%= ServerAdminNavigationEntryConstants.SCREEN_NAVIGATION_KEY_PROPERTIES %>"
 	portletURL="<%= serverURL %>"
 />

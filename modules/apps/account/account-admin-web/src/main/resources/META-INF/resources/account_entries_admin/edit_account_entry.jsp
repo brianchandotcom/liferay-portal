@@ -26,9 +26,7 @@ portletURL.setParameter("accountEntryId", String.valueOf(accountEntryDisplay.get
 %>
 
 <liferay-frontend:screen-navigation
-	containerWrapperCssClass=""
 	context="<%= accountEntryDisplay %>"
-	headerContainerCssClass=""
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY %>"
 	portletURL="<%= portletURL %>"
 />

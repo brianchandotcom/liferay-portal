@@ -1,3 +1,149 @@
+components:
+    schemas:
+        ContentAssociation:
+            description:
+                Describes the content that is tied to a Display Page Template
+            properties:
+                contentSubtype:
+                    description:
+                        The subtype of the content. i.e. the Structure name if it's a Structured Content.
+                    type: string
+                contentType:
+                    description:
+                        The type of the content, i.e. Structure Content, BlogsPosting, etc.
+                    type: string
+            type: object
+        DisplayPageTemplate:
+            description:
+                Represents a Display Page Template that has fields and is tied to a content type
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                availableLanguages:
+                    description:
+                        The list of languages the Display Page Template has a translation for.
+                    items:
+                        description:
+                            The list of languages the Display Page Template has a translation for.
+                        type: string
+                    readOnly: true
+                    type: array
+                creator:
+                    allOf:
+                        - $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    description:
+                        The Display Page Template's creator.
+                    readOnly: true
+                customFields:
+                    description:
+                        The custom fields associated to the page that renders the Display Page Template.
+                    items:
+                        $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#CustomField"
+                    type: array
+                dateCreated:
+                    description:
+                        The Display Page Template's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time any field of the Display Page Template was changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                displayPageTemplateKey:
+                    description:
+                        The Display Page Template's external key.
+                    type: string
+                displayPageTemplateSettings:
+                    $ref: "#/components/schemas/DisplayPageTemplateSettings"
+                    description:
+                        The Display Page Template's external key.
+                markedAsDefault:
+                    description:
+                        Specifies if the Display Page Template is the default one for the content type.
+                    type: boolean
+                pageDefinition:
+                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#PageDefinition"
+                siteId:
+                    description:
+                        The ID of the site to which this Page Template is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    description:
+                        The title of the Display Page Template
+                    type: string
+                uuid:
+                    description:
+                        A valid external identifier to reference this Display Page Template.
+                    readOnly: true
+                    type: string
+            required:
+                - title
+            type: object
+        DisplayPageTemplateSettings:
+            description:
+                Specific settings related to the display page
+            properties:
+                contentAssociation:
+                    $ref: "#/components/schemas/ContentAssociation"
+                openGraphSettingsMapping:
+                    $ref: "#/components/schemas/OpenGraphSettingsMapping"
+                seoSettingsMapping:
+                    $ref: "#/components/schemas/SEOSettingsMapping"
+            type: object
+        OpenGraphSettingsMapping:
+            description:
+                Specific settings related to Open Graph
+            properties:
+                descriptionMappingField:
+                    description:
+                        Field of the content type that will be used as the description
+                    type: string
+                imageAltMappingField:
+                    description:
+                        Field of the content type that will be used as the alt property of the image
+                    type: string
+                imageMappingField:
+                    description:
+                        Field of the content type that will be used as the image
+                    type: string
+                titleMappingField:
+                    description:
+                        Field of the content type that will be used as the title
+                    type: string
+            type: object
+        SEOSettingsMapping:
+            description:
+                Specific settings related to SEO
+            properties:
+                descriptionMappingField:
+                    description:
+                        Field of the content type that will be used as the description
+                    type: string
+                htmlTitleMappingField:
+                    description:
+                        Field of the content type that will be used as the HTML title
+                    type: string
+                robots:
+                    description:
+                        Robots of the page that renders the Display Page Template
+                    type: string
+                robots_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        Internationalized field of the robots of the page that renders the Display Page Template
+                    type: object
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

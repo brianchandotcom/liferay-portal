@@ -1664,7 +1664,6 @@ definition {
 	@description = "This is a use case for LPS-110701."
 	@priority = "3"
 	test PublishWebContentWithUnchangedReferencedContent {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Staging#PublishWebContentWithUnchangedReferencedContent";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -4191,8 +4190,6 @@ definition {
 	@description = "This is a use case for LPS-77935."
 	@priority = "4"
 	test ViewSimplePublicationAfterDeleteDocumentInGlobal {
-		property portal.upstream = "quarantine";
-
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "global");
 
 		ProductMenu.gotoPortlet(

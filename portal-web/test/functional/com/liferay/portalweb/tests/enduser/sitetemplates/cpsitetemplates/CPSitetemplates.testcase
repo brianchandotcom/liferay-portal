@@ -622,8 +622,6 @@ definition {
 	@description = "This is a use case for LPS-44550"
 	@priority = "4"
 	test SiteTemplateXSS {
-		property portal.upstream = "quarantine";
-
 		SiteTemplates.addCP(
 			siteTemplateActive = "Yes",
 			siteTemplateName = '''<script>alert(123);</script>''');

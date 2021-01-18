@@ -70,6 +70,10 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_tab = "Addresses",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
 	}
 
 	macro addAssignee {

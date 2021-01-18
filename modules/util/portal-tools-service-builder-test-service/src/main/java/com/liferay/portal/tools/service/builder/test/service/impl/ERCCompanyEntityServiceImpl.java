@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.ERCCompanyEnti
 public class ERCCompanyEntityServiceImpl
 	extends ERCCompanyEntityServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.ERCCompanyEntityServiceUtil</code> to access the erc company entity remote service.
 	 */
+
 }

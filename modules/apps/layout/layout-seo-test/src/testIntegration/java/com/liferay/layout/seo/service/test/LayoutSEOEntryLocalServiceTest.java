@@ -336,13 +336,9 @@ public class LayoutSEOEntryLocalServiceTest {
 					"dependencies/empty_custom_meta_tags_ddm_form_values.json"),
 				StandardCharsets.UTF_8));
 
-		layoutSEOEntry = _layoutSEOEntryLocalService.updateLayoutSEOEntry(
+		layoutSEOEntry = _layoutSEOEntryLocalService.updateCustomMetaTags(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			_layout.getLayoutId(), false,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(LocaleUtil.US, "description"),
-			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
-			Collections.singletonMap(LocaleUtil.US, "title"), serviceContext);
+			_layout.getLayoutId(), serviceContext);
 
 		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
 	}

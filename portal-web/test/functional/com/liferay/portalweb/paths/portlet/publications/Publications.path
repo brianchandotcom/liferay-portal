@@ -195,7 +195,7 @@
 </tr>
 <tr>
 	<td>SELECT_PUBLICATION_NAME</td>
-	<td>//a[contains(.,'${key_publicationsName}')]</td>
+	<td>//p[contains(.,'${key_publicationsName}') and contains(@class, 'list-group-title')]</td>
 	<td></td>
 </tr>
 </tbody>

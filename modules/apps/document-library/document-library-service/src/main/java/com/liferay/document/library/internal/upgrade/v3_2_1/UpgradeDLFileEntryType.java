@@ -61,6 +61,7 @@ public class UpgradeDLFileEntryType
 					rs.getLong("groupId"), rs.getLong("companyId"),
 					rs.getLong("userId"), rs.getString("userName"),
 					rs.getString("name"));
+
 				long ddmStructureVersionId = _addDDMStructureVersion(
 					rs.getLong("userId"), rs.getString("userName"),
 					rs.getLong("companyId"), rs.getLong("groupId"),
@@ -81,6 +82,7 @@ public class UpgradeDLFileEntryType
 					ddmStructureId, false, false, false);
 
 				ps2.setLong(1, ddmStructureId);
+
 				ps2.setLong(2, rs.getLong("fileEntryTypeId"));
 
 				ps2.addBatch();

@@ -657,6 +657,58 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test DeleteAddress {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Delete address for account.",
+			accountName = "Account Delete Address");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressDescription = "Address of DL office.",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			phoneNumber = "+86 (0)411 88120855");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Delete Address");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
+
+		LexiconEntry.delete(
+			menuItem = "Delete",
+			rowEntry = "Liferay Dalian Software Co., Ltd.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Delete Address");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Liferay Dalian Software Co., Ltd.");
+	}
+
 	@description = "This is a use case for LPS-101315."
 	@priority = "3"
 	test DeleteInactiveAccount {

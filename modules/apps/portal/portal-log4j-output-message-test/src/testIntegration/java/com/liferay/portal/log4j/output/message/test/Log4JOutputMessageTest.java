@@ -65,11 +65,10 @@ public class Log4JOutputMessageTest {
 
 		_tempLogDir.deleteOnExit();
 
-		RollingFileAppender textFileRollingFileAppender =
-			new RollingFileAppender();
-		RollingFileAppender xmlFileRollingFileAppender =
-			new RollingFileAppender();
-		ConsoleAppender consoleAppender = new ConsoleAppender();
+		Logger logger = _getLogger();
+
+		logger.setLevel(Level.TRACE);
+		logger.setAdditivity(false);
 
 		Logger rootLogger = Logger.getRootLogger();
 
@@ -83,6 +82,9 @@ public class Log4JOutputMessageTest {
 					(RollingFileAppender)appender;
 
 				if (Objects.equals("TEXT_FILE", appender.getName())) {
+					RollingFileAppender textFileRollingFileAppender =
+						new RollingFileAppender();
+
 					textFileRollingFileAppender.setLayout(
 						rollingFileAppender.getLayout());
 
@@ -97,6 +99,9 @@ public class Log4JOutputMessageTest {
 						timeBasedRollingPolicy);
 				}
 				else if (Objects.equals("XML_FILE", appender.getName())) {
+					RollingFileAppender xmlFileRollingFileAppender =
+						new RollingFileAppender();
+
 					xmlFileRollingFileAppender.setLayout(
 						rollingFileAppender.getLayout());
 
@@ -113,26 +118,18 @@ public class Log4JOutputMessageTest {
 			}
 			else if (appender instanceof ConsoleAppender) {
 				if (Objects.equals("CONSOLE", appender.getName())) {
+					ConsoleAppender consoleAppender = new ConsoleAppender();
+
 					consoleAppender.setLayout(appender.getLayout());
+
+					consoleAppender.activateOptions();
+
+					consoleAppender.setWriter(_unsyncStringWriter);
+
+					logger.addAppender(consoleAppender);
 				}
 			}
 		}
-
-		textFileRollingFileAppender.activateOptions();
-		xmlFileRollingFileAppender.activateOptions();
-
-		consoleAppender.activateOptions();
-
-		consoleAppender.setWriter(_unsyncStringWriter);
-
-		Logger logger = _getLogger();
-
-		logger.setLevel(Level.TRACE);
-		logger.setAdditivity(false);
-
-		logger.addAppender(consoleAppender);
-		logger.addAppender(textFileRollingFileAppender);
-		logger.addAppender(xmlFileRollingFileAppender);
 
 		_unsyncStringWriter.reset();
 	}

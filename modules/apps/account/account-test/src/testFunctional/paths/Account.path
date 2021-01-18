@@ -58,6 +58,26 @@
 	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//td[contains(.,'${key_rowEntryAccount}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_ADDRESSES_SECTION</td>
+	<td>//div[contains(@class,'section')]//span[normalize-space(text())='Default Account Addresses']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SET_ACCOUNT_DEFAULT_ADDRESS</td>
+	<td>//a[@data-type='${key_addressDataType}']//span[normalize-space(text())='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ADDRESS_RADIO</td>
+	<td>//input[contains(@name,'selectAddress')]//following-sibling::span[normalize-space()='${key_addressName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(@class,'btn')][normalize-space(text())='Save']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

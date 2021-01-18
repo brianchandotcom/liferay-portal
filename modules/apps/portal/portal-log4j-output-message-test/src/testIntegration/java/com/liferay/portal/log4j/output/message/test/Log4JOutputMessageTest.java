@@ -212,28 +212,11 @@ public class Log4JOutputMessageTest {
 
 		String[] outputLines = StringUtil.splitLines(actualOutput);
 
-		int outputLineIndex = 0;
-
-		for (int i = 0; i < outputLines.length; i++) {
-			String outputLine = outputLines[i];
-
-			if (outputLine.contains(
-					Log4JOutputMessageTest.class.getSimpleName())) {
-
-				outputLineIndex = i;
-
-				break;
-			}
-			else if (i == (outputLines.length - 1)) {
-				Assert.fail("The test output is not found: " + actualOutput);
-			}
-		}
-
 		Assert.assertTrue(
 			"The log output should have at least 1 line",
 			outputLines.length > 0);
 
-		String messageLine = outputLines[outputLineIndex];
+		String messageLine = outputLines[0];
 
 		// Date Format
 
@@ -309,11 +292,9 @@ public class Log4JOutputMessageTest {
 			Class<?> expectedThrowableClass = expectedThrowable.getClass();
 
 			Assert.assertEquals(
-				expectedThrowableClass.getName(),
-				outputLines[outputLineIndex + 1]);
+				expectedThrowableClass.getName(), outputLines[1]);
 
-			String actualFirstPrefixStackTraceElement =
-				outputLines[outputLineIndex + 2].trim();
+			String actualFirstPrefixStackTraceElement = outputLines[2].trim();
 
 			Assert.assertTrue(
 				"A throwable should be logged and the first stack should be " +

@@ -17,10 +17,20 @@
 
 import * as modalUtils from 'commerce-frontend-js/utilities/modals/index';
 import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
+import slugify from 'commerce-frontend-js/utilities/slugify'
+import {debounce} from 'frontend-js-web';
 
-export default function ({namespace,editOptionURL,windowState,defaultLanguageId}) {
+export default function ({namespace, editOptionURL, windowState, defaultLanguageId}) {
 
-	var AdminCatalogResource = ServiceProvider.AdminCatalogAPI('v1');
+	const form = document.getElementById(namespace + 'fm');
+	const keyInput = form.querySelector('#' + namespace + 'key');
+	const nameInput = form.querySelector('#' + namespace + 'name');
+	const handleOnNameInput = (event) => {
+		keyInput.value = slugify(nameInput.value);
+	};
+	nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
+
+	const AdminCatalogResource = ServiceProvider.AdminCatalogAPI('v1');
 
 	Liferay.provide(
 		window,
@@ -38,11 +48,7 @@ export default function ({namespace,editOptionURL,windowState,defaultLanguageId}
 
 			formattedData.key = document.getElementById(namespace+'key').value;
 
-			formattedData.name[
-			defaultLanguageId
-		] = document.getElementById(namespace+'name').value;
-
-			AdminCatalogResource.createOption
+			formattedData.name[defaultLanguageId] = document.getElementById(namespace+'name').value;
 
 			AdminCatalogResource.createOption(formattedData)
 				.then(function (cpOption) {

@@ -24,14 +24,12 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 CPOption cpOption = cpOptionDisplayContext.getCPOption();
 
 long cpOptionId = cpOptionDisplayContext.getCPOptionId();
-
-PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<portlet:actionURL name="editOption" var="editOptionActionURL" />
+<portlet:actionURL name="/commerce_product_options/edit_cp_option" var="editOptionActionURL" />
 
 <liferay-portlet:renderURL var="editCPOptionExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="editCPOptionExternalReferenceCode" />
+	<portlet:param name="mvcRenderCommandName" value="/commerce_product_options/edit_cp_option_external_reference_code" />
 	<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionId) %>" />
 </liferay-portlet:renderURL>
 
@@ -55,7 +53,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<div class="row">
 			<div class="col-12">
 				<commerce-ui:panel
-					title='<%= LanguageUtil.get(request, "details") %>'>
+					title='<%= LanguageUtil.get(request, "details") %>'
+				>
+
 					<%
 					List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFieldTypes();
 					%>
@@ -108,6 +108,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 						</aui:fieldset>
 					</c:if>
 				</commerce-ui:panel>
+
 				<c:if test="<%= cpOptionDisplayContext.hasValues(cpOption) %>">
 					<commerce-ui:panel
 						bodyClasses="p-0"
@@ -120,7 +121,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 							itemsPerPage="<%= 10 %>"
 							namespace="<%= liferayPortletResponse.getNamespace() %>"
 							pageNumber="<%= 1 %>"
-							portletURL="<%= portletURL %>"
+							portletURL="<%= renderResponse.createRenderURL() %>"
 							style="stacked"
 						/>
 					</commerce-ui:panel>
@@ -131,5 +132,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 </aui:form>
 
 <liferay-frontend:component
-	componentId='<%= liferayPortletResponse.getNamespace() + "edit_option" %>'
-	module="js/edit_option"/>
+	context='<%=
+			HashMapBuilder.<String, Object>put(
+				"editOptionURL", editOptionURL
+			).put(
+				"windowState", LiferayWindowState.MAXIMIZED.toString()
+			).put(
+				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
+			).build()
+		%>'
+	module="js/add_option"/>

@@ -1,3 +1,6 @@
+// commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/modals/index as ModalUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider
+
+
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,44 +15,43 @@
  * details.
  */
 
-import slugify from 'commerce-frontend-js/utilities/slugify'
-import {debounce} from 'frontend-js-web';
 import * as modalUtils from 'commerce-frontend-js/utilities/modals/index';
 import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
+import slugify from 'commerce-frontend-js/utilities/slugify'
+import {debounce} from 'frontend-js-web';
 
-export default function ({namespace}) {
-	var form = document.getElementById('#'+namespace + 'fm');
+export default function ({namespace, editOptionURL, windowState, cpOptionId, defaultLanguageId}) {
 
-	var keyInput = form.querySelector('#' +namespace+ 'key');
-	var nameInput = form.querySelector('#' +namespace + 'name');
-
-	var handleOnNameInput = function (event) {
-		keyInput.value = slugify.default(nameInput.value);
+	const form = document.getElementById(namespace + 'fm');
+	const keyInput = form.querySelector('#' + namespace + 'key');
+	const nameInput = form.querySelector('#' + namespace + 'name');
+	const handleOnNameInput = (event) => {
+		keyInput.value = slugify(nameInput.value);
 	};
-
 	nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
 
-	var AdminCatalogResource = ServiceProvider.AdminCatalogAPI('v1');
+	const AdminCatalogResource = ServiceProvider.AdminCatalogAPI('v1');
+
 	Liferay.provide(
 		window,
-		namespace+'apiSubmit',
+		namespace + 'apiSubmit',
 		function () {
 			modalUtils.isSubmitting();
 			const formattedData =
 				{
-					fieldType : '',
+					id: '',
 					key : '',
 					name: {}
 				};
 
-			formattedData.fieldType = document.getElementById(namespace+'DDMFormFieldTypeName').value;
 
-			formattedData.key = document.getElementById(namespace+'key').value;
+			formattedData.key = document.getElementById(namespace + 'key').value;
+			formattedData.name[defaultLanguageId] = document.getElementById(namespace + 'name').value;
+			formattedData.id = cpOptionId
 
-			formattedData.name[defaultLanguageId] = document.getElementById(namespace+'name').value;
-
-			AdminCatalogResource.createOption(formattedData)
-				.then(function (cpOption) {
+			AdminCatalogResource.createOptionValue(cpOptionId, formattedData)
+				.then(function (cp) {
+					debugger;
 					const redirectURL = new Liferay.PortletURL.createURL(
 						editOptionURL
 					);
@@ -58,8 +60,7 @@ export default function ({namespace}) {
 						'p_p_state',
 						windowState
 					);
-
-					redirectURL.setParameter('cpOptionId', cpOption.id);
+					redirectURL.setParameter('cpOptionId', cpOptionId);
 
 					modalUtils.closeAndRedirect(redirectURL);
 				})

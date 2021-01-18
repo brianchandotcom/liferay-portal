@@ -88,7 +88,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 </clay:container-fluid>
 
 <liferay-frontend:component
-	componentId="<%= viewDisplayContext.getDefaultEventHandler() %>"
+	componentId="<%= viewDisplayContext.getManagementToolbarDefaultEventHandler() %>"
 	context="<%= viewDisplayContext.getComponentContext() %>"
 	module="js/translate/TranslationManagementToolbarDefaultEventHandler.es"
 />

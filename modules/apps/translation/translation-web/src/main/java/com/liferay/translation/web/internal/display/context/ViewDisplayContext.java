@@ -162,7 +162,7 @@ public class ViewDisplayContext {
 		).build();
 	}
 
-	public String getDefaultEventHandler() {
+	public String getManagementToolbarDefaultEventHandler() {
 		return "translationManagementToolbarDefaultEventHandler";
 	}
 
@@ -284,7 +284,7 @@ public class ViewDisplayContext {
 		throws PortalException {
 
 		return new TranslationEntryManagementToolbarDisplayContext(
-			getDefaultEventHandler(), _httpServletRequest,
+			getManagementToolbarDefaultEventHandler(), _httpServletRequest,
 			_liferayPortletRequest, _liferayPortletResponse,
 			getSearchContainer());
 	}

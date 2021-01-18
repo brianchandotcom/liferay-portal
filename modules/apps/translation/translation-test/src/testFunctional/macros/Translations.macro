@@ -121,6 +121,12 @@ definition {
 		}
 	}
 
+	macro openTranslationAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_translation_web_internal_portlet_TranslationPortlet");
+	}
+
 	macro translateFields {
 		if (isSet(webContentTitle)) {
 			PortletEntry.inputTitle(title = "${webContentTitle}");
@@ -376,6 +382,24 @@ definition {
 					key_locale = "${noTargetLocale}",
 					locator1 = "Translation#DROPDOWN_MENU_ITEM");
 			}
+		}
+	}
+
+	macro viewTranslationEntry {
+		AssertTextEquals(
+			key_rowEntry = "${title}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "${title}");
+
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "${language}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3",
+			value1 = "${language}");
+
+		if (isSet(status)) {
+			LexiconEntry.viewEntryStatus(
+				rowEntry = "${title}",
+				rowStatus = "${status}");
 		}
 	}
 

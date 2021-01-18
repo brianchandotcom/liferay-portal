@@ -2181,16 +2181,11 @@ definition {
 
 		if (isSet(titleWithForbiddenCharacters)) {
 			var key_dmDocumentTitle = "${escapedDocumentTitle}";
+		}
 
-			AssertClick(
-				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-				value1 = "${dmDocumentTitle}");
-		}
-		else {
-			AssertClick(
-				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-				value1 = "${dmDocumentTitle}");
-		}
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTitle}");
 
 		DMDocument.expandInfo();
 

@@ -27,20 +27,17 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,11 +46,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Marcela Cunha
@@ -64,12 +59,14 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		DDMFormDeserializer ddmFormDeserializer,
 		DDMFormLayoutDeserializer ddmFormLayoutDeserializer,
 		DDMFormLayoutSerializer ddmFormLayoutSerializer,
-		DDMFormSerializer ddmFormSerializer) {
+		DDMFormSerializer ddmFormSerializer,
+		DDMDataDefinitionConverter ddmDataDefinitionConverter) {
 
 		_ddmFormDeserializer = ddmFormDeserializer;
 		_ddmFormLayoutDeserializer = ddmFormLayoutDeserializer;
 		_ddmFormLayoutSerializer = ddmFormLayoutSerializer;
 		_ddmFormSerializer = ddmFormSerializer;
+		_ddmDataDefinitionConverter = ddmDataDefinitionConverter;
 	}
 
 	@Override
@@ -116,75 +113,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				setVisibilityExpression(StringPool.BLANK);
 			}
 		};
-	}
-
-	private JSONArray _getOptionsJSONArray(JSONObject jsonObject) {
-		return JSONUtil.putAll(
-			JSONUtil.put(
-				"label", jsonObject.getJSONObject("label")
-			).put(
-				"value", jsonObject.getString("name")
-			));
-	}
-
-	private JSONObject _getPredefinedValueJSONObject(JSONObject jsonObject) {
-		JSONObject oldPredefinedValueJSONObject = jsonObject.getJSONObject(
-			"predefinedValue");
-
-		JSONObject newPredefinedValueJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		Iterator<String> iterator = oldPredefinedValueJSONObject.keys();
-
-		while (iterator.hasNext()) {
-			String languageKey = iterator.next();
-
-			String predefinedValue = oldPredefinedValueJSONObject.getString(
-				languageKey);
-
-			if (Objects.equals(predefinedValue, "true")) {
-				predefinedValue = jsonObject.getString("name");
-			}
-			else {
-				predefinedValue = StringPool.BLANK;
-			}
-
-			newPredefinedValueJSONObject.put(languageKey, predefinedValue);
-		}
-
-		return newPredefinedValueJSONObject;
-	}
-
-	private void _upgradeBooleanField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "string"
-		).put(
-			"options", _getOptionsJSONArray(jsonObject)
-		).put(
-			"predefinedValue", _getPredefinedValueJSONObject(jsonObject)
-		).put(
-			"type", "checkbox_multiple"
-		);
-	}
-
-	private void _upgradeColorField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "string"
-		).put(
-			"type", "color"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
-	private void _upgradeDateField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "date"
-		).put(
-			"type", "date"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
 	}
 
 	private String _upgradeDDMFormLayoutDefinition(String content)
@@ -302,31 +230,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
-	private void _upgradeDecimalField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "double"
-		).put(
-			"type", "numeric"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
-	private String _upgradeDefinition(long companyId, String definition)
-		throws Exception {
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(definition);
-
-		jsonObject.put(
-			"definitionSchemaVersion", "2.0"
-		).put(
-			"fields",
-			_upgradeFields(companyId, jsonObject.getJSONArray("fields"))
-		);
-
-		return jsonObject.toString();
-	}
-
 	private String _upgradeDefinition(
 			String definition, Long parentStructureId,
 			Long parentStructureLayoutId, Long structureId)
@@ -344,164 +247,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		ddmForm.addDDMFormField(_fieldSetMap.get(structureId));
 
 		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
-	}
-
-	private void _upgradeDocumentLibraryField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "document-library"
-		).put(
-			"type", "document_library"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
-	private JSONArray _upgradeFields(long companyId, JSONArray fieldsJSONArray)
-		throws Exception {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		if (fieldsJSONArray != null) {
-			for (int i = 0; i < fieldsJSONArray.length(); i++) {
-				JSONObject jsonObject = fieldsJSONArray.getJSONObject(i);
-
-				String type = jsonObject.getString("type");
-
-				if (StringUtil.equals(type, "checkbox")) {
-					_upgradeBooleanField(jsonObject);
-				}
-				else if (StringUtil.equals(type, "ddm-color")) {
-					_upgradeColorField(jsonObject);
-				}
-				else if (StringUtil.equals(type, "ddm-date")) {
-					_upgradeDateField(jsonObject);
-				}
-				else if (type.startsWith("ddm-decimal")) {
-					_upgradeDecimalField(jsonObject);
-				}
-				else if (type.startsWith("ddm-documentlibrary")) {
-					_upgradeDocumentLibraryField(jsonObject);
-				}
-				else if (type.startsWith("ddm-geolocation")) {
-					_upgradeGeolocation(jsonObject);
-				}
-				else if (type.startsWith("ddm-image")) {
-					_upgradeImageField(jsonObject);
-				}
-				else if (type.startsWith("ddm-integer")) {
-					_upgradeIntegerField(jsonObject);
-				}
-				else if (type.startsWith("ddm-journal-article")) {
-					_upgradeJournalArticleField(jsonObject);
-				}
-				else if (type.startsWith("ddm-link-to-page")) {
-					_upgradeLinkToPageField(jsonObject);
-				}
-				else if (type.startsWith("ddm-number")) {
-					_upgradeNumberField(jsonObject);
-				}
-				else if (StringUtil.equals(type, "ddm-separator")) {
-					_upgradeSeparatorField(jsonObject);
-				}
-				else if (type.startsWith("ddm-text-html")) {
-					_upgradeHTMLField(jsonObject);
-				}
-				else if (type.startsWith("ddm-")) {
-					jsonObject.put(
-						"dataType", "string"
-					).put(
-						"type", type.substring(4)
-					);
-				}
-				else if (StringUtil.equals(type, "select")) {
-					_upgradeSelectField(jsonObject);
-				}
-				else if (StringUtil.equals(type, "text")) {
-					_upgradeTextField(companyId, jsonObject);
-				}
-				else if (StringUtil.equals(type, "textarea")) {
-					_upgradeTextArea(companyId, jsonObject);
-				}
-
-				if (!StringUtil.equals(type, "separator") &&
-					Validator.isNull(jsonObject.getString("indexType"))) {
-
-					jsonObject.put("indexType", "none");
-				}
-
-				if (jsonObject.has("nestedFields")) {
-					jsonObject.put(
-						"nestedFields",
-						_upgradeFields(
-							companyId,
-							jsonObject.getJSONArray("nestedFields")));
-				}
-
-				jsonArray.put(jsonObject);
-			}
-		}
-
-		return jsonArray;
-	}
-
-	private void _upgradeGeolocation(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "geolocation"
-		).put(
-			"type", "geolocation"
-		);
-	}
-
-	private void _upgradeHTMLField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "string"
-		).put(
-			"type", "rich_text"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
-	private void _upgradeImageField(JSONObject jsonObject) {
-		jsonObject.put(
-			"type", "image"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
-	private void _upgradeIntegerField(JSONObject jsonObject) {
-		jsonObject.put(
-			"type", "numeric"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
-	private void _upgradeJournalArticleField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "journal-article"
-		).put(
-			"type", "journal_article"
-		);
-	}
-
-	private void _upgradeLinkToPageField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "link-to-page"
-		).put(
-			"type", "link_to_layout"
-		);
-	}
-
-	private void _upgradeNumberField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", "double"
-		).put(
-			"type", "numeric"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
 	}
 
 	private String _upgradeParentStructureDefinition(
@@ -536,28 +281,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return definition;
 	}
 
-	private void _upgradeSelectField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataSourceType", "[manual]"
-		).put(
-			"ddmDataProviderInstanceId", "[]"
-		).put(
-			"ddmDataProviderInstanceOutput", "[]"
-		).put(
-			"fieldNamespace", StringPool.BLANK
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
-	private void _upgradeSeparatorField(JSONObject jsonObject) {
-		jsonObject.put(
-			"dataType", StringPool.BLANK
-		).put(
-			"type", "separator"
-		);
-	}
-
 	private void _upgradeStructureDefinition() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select * from DDMStructure where classNameId = ? or " +
@@ -588,10 +311,15 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 							rs.getLong("structureId"));
 					}
 
+					long companyId = rs.getLong("companyId");
+
+					Locale locale = LocaleUtil.fromLanguageId(
+						UpgradeProcessUtil.getDefaultLanguageId(companyId));
+
 					ps2.setString(
 						1,
-						_upgradeDefinition(
-							rs.getLong("companyId"), definition));
+						_ddmDataDefinitionConverter.convert(
+							definition, locale));
 
 					ps2.setLong(2, rs.getLong("structureId"));
 					ps2.addBatch();
@@ -699,10 +427,15 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 							rs.getLong("structureId"));
 					}
 
+					long companyId = rs.getLong("companyId");
+
+					Locale locale = LocaleUtil.fromLanguageId(
+						UpgradeProcessUtil.getDefaultLanguageId(companyId));
+
 					ps2.setString(
 						1,
-						_upgradeDefinition(
-							rs.getLong("companyId"), definition));
+						_ddmDataDefinitionConverter.convert(
+							definition, locale));
 
 					ps2.setLong(2, rs.getLong("structureVersionId"));
 					ps2.addBatch();
@@ -713,92 +446,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeTextArea(long companyId, JSONObject jsonObject)
-		throws Exception {
-
-		jsonObject.put(
-			"autocomplete", false
-		).put(
-			"dataSourceType", "manual"
-		).put(
-			"ddmDataProviderInstanceId", "[]"
-		).put(
-			"ddmDataProviderInstanceOutput", "[]"
-		).put(
-			"displayStyle", "multiline"
-		).put(
-			"fieldNamespace", StringPool.BLANK
-		).put(
-			"options",
-			JSONUtil.put(
-				JSONUtil.put(
-					"label",
-					JSONUtil.put(
-						UpgradeProcessUtil.getDefaultLanguageId(companyId),
-						GetterUtil.getString("Option"))
-				).put(
-					"value", "Option"
-				))
-		).put(
-			"placeholder",
-			JSONUtil.put(
-				UpgradeProcessUtil.getDefaultLanguageId(companyId),
-				StringPool.BLANK)
-		).put(
-			"tooltip",
-			JSONUtil.put(
-				UpgradeProcessUtil.getDefaultLanguageId(companyId),
-				StringPool.BLANK)
-		).put(
-			"type", "text"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
-	private void _upgradeTextField(long companyId, JSONObject jsonObject)
-		throws Exception {
-
-		jsonObject.put(
-			"autocomplete", false
-		).put(
-			"dataSourceType", "manual"
-		).put(
-			"ddmDataProviderInstanceId", "[]"
-		).put(
-			"ddmDataProviderInstanceOutput", "[]"
-		).put(
-			"displayStyle", "singleline"
-		).put(
-			"fieldNamespace", StringPool.BLANK
-		).put(
-			"options",
-			JSONUtil.put(
-				JSONUtil.put(
-					"label",
-					JSONUtil.put(
-						UpgradeProcessUtil.getDefaultLanguageId(companyId),
-						GetterUtil.getString("Option"))
-				).put(
-					"value", "Option"
-				))
-		).put(
-			"placeholder",
-			JSONUtil.put(
-				UpgradeProcessUtil.getDefaultLanguageId(companyId),
-				StringPool.BLANK)
-		).put(
-			"tooltip",
-			JSONUtil.put(
-				UpgradeProcessUtil.getDefaultLanguageId(companyId),
-				StringPool.BLANK)
-		).put(
-			"type", "text"
-		).put(
-			"visibilityExpression", StringPool.BLANK
-		);
-	}
-
+	private final DDMDataDefinitionConverter _ddmDataDefinitionConverter;
 	private final DDMFormDeserializer _ddmFormDeserializer;
 	private final DDMFormLayoutDeserializer _ddmFormLayoutDeserializer;
 	private final DDMFormLayoutSerializer _ddmFormLayoutSerializer;

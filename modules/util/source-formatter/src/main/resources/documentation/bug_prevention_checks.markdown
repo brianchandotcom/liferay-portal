@@ -132,19 +132,19 @@ PersistenceCallCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds illegal per
 [PersistenceUpdateCheck](checks/persistence_update_check.markdown#persistenceupdatecheck) | .java | Checks that there are no stale references in service code from persistence updates. |
 PrimitiveWrapperInstantiationCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds cases where `new Type` is used for primitive types (use `Type.valueOf` instead). |
 PrincipalExceptionCheck | .java, .jsp, .jspf, .tag, .tpl or .vm | Finds calls to `PrincipalException.class.getName()` (use `PrincipalException.getNestedClasses()` instead). |
-PropertiesArchivedModulesCheck | .prettierignore or .properties | Finds `test.batch.class.names.includes` property value pointing to archived modules in `test.properties`. |
-PropertiesBuildIncludeDirsCheck | .prettierignore or .properties | Verifies property value of `build.include.dirs` in `build.properties`. |
-PropertiesImportedFilesContentCheck | .prettierignore or .properties | Performs several checks on `imported-files.properties` file. |
-[PropertiesLanguageKeysCheck](checks/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | .prettierignore or .properties | Checks that there is no HTML markup in language keys. |
-PropertiesLiferayPluginPackageFileCheck | .prettierignore or .properties | Performs several checks on `liferay-plugin-package.properties` file. |
-PropertiesLiferayPluginPackageLiferayVersionsCheck | .prettierignore or .properties | Validates the version in `liferay-plugin-package.properties` file. |
-PropertiesPortalFileCheck | .prettierignore or .properties | Performs several checks on `portal.properties` or `portal-*.properties` file. |
-PropertiesPortletFileCheck | .prettierignore or .properties | Performs several checks on `portlet.properties` file. |
-PropertiesReleaseBuildCheck | .prettierignore or .properties | Verifies that the information in `release.properties` matches the information in `ReleaseInfo.java`. |
-PropertiesServiceKeysCheck | .prettierignore or .properties | Finds usage of legacy properties in `service.properties`. |
-PropertiesSourceFormatterContentCheck | .prettierignore or .properties | Performs several checks on `source-formatter.properties` file. |
-PropertiesSourceFormatterFileCheck | .prettierignore or .properties | Performs several checks on `source-formatter.properties` file. |
-PropertiesVerifyPropertiesCheck | .prettierignore or .properties | Finds usage of legacy properties in `portal.properties` or `system.properties`. |
+PropertiesArchivedModulesCheck | .eslintignore, .prettierignore or .properties | Finds `test.batch.class.names.includes` property value pointing to archived modules in `test.properties`. |
+PropertiesBuildIncludeDirsCheck | .eslintignore, .prettierignore or .properties | Verifies property value of `build.include.dirs` in `build.properties`. |
+PropertiesImportedFilesContentCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `imported-files.properties` file. |
+[PropertiesLanguageKeysCheck](checks/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | .eslintignore, .prettierignore or .properties | Checks that there is no HTML markup in language keys. |
+PropertiesLiferayPluginPackageFileCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `liferay-plugin-package.properties` file. |
+PropertiesLiferayPluginPackageLiferayVersionsCheck | .eslintignore, .prettierignore or .properties | Validates the version in `liferay-plugin-package.properties` file. |
+PropertiesPortalFileCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `portal.properties` or `portal-*.properties` file. |
+PropertiesPortletFileCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `portlet.properties` file. |
+PropertiesReleaseBuildCheck | .eslintignore, .prettierignore or .properties | Verifies that the information in `release.properties` matches the information in `ReleaseInfo.java`. |
+PropertiesServiceKeysCheck | .eslintignore, .prettierignore or .properties | Finds usage of legacy properties in `service.properties`. |
+PropertiesSourceFormatterContentCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `source-formatter.properties` file. |
+PropertiesSourceFormatterFileCheck | .eslintignore, .prettierignore or .properties | Performs several checks on `source-formatter.properties` file. |
+PropertiesVerifyPropertiesCheck | .eslintignore, .prettierignore or .properties | Finds usage of legacy properties in `portal.properties` or `system.properties`. |
 ReferenceAnnotationCheck | .java | Performs several checks on classes with @Reference annotation. |
 [RequireThisCheck](https://checkstyle.sourceforge.io/config_coding.html#RequireThis) | .java | Checks that references to instance variables and methods of the present object are explicitly of the form 'this.varName' or 'this.methodName(args)' and that those references don't rely on the default behavior when 'this.' is absent. |
 [ResourceBundleCheck](checks/resource_bundle_check.markdown#resourcebundlecheck) | .java, .jsp, .jspf, .tag, .tpl or .vm | Checks that there are no calls to `java.util.ResourceBundle.getBundle`. |

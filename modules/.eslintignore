@@ -2,43 +2,43 @@
 ## Deprecated or Archived Modules
 ##
 
-	#
-	# Ignore apps that are no longer under active development.
-	#
-	apps/archived
-	apps/google-maps
-	apps/microblogs
+    #
+    # Ignore apps that are no longer under active development.
+    #
+    apps/archived
+    apps/google-maps
+    apps/microblogs
 
 ##
 ## Generated Files
 ##
 
-	#
-	# For the most part, these are artifacts of our installation and build
-	# processes and exist only as untracked files. A small number are committed
-	# to the repository, but as they are generated files the linter should
-	# not touch them.
-	#
-	*.soy.js
-	apps/frontend-editor/frontend-editor-tinymce-web
-	apps/frontend-js/frontend-js-jquery-web
-	build/**
-	classes/**
-	css/clay/**
-	node_modules/**
-	yarn-*.js
-	zippableResources/**
+    #
+    # For the most part, these are artifacts of our installation and build
+    # processes and exist only as untracked files. A small number are committed
+    # to the repository, but as they are generated files the linter should not
+    # touch them.
+    #
+    *.soy.js
+    apps/frontend-editor/frontend-editor-tinymce-web
+    apps/frontend-js/frontend-js-jquery-web
+    build/**
+    classes/**
+    css/clay/**
+    node_modules/**
+    yarn-*.js
+    zippableResources/**
 
 ##
 ## Sample Files
 ##
 
-	#
-	# The few files here are provided for example purposes and are not actively
-	# changed, so we exclude them from linting.
-	#
-	sdk/**
-	testIntegration/**
+    #
+    # The few files here are provided for example purposes and are not actively
+    # changed, so we exclude them from linting.
+    #
+    sdk/**
+    testIntegration/**
 
 ##
 ## Third-Party

@@ -385,6 +385,17 @@ definition {
 		}
 	}
 
+	macro viewTranslationDetails {
+		AssertElementPresent(
+			key_currentLocale = StringUtil.lowerCase("${currentTargetLocale}"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		Translations.viewTargetFields(
+			webContentContent = "${webContentContent}",
+			webContentDescription = "${webContentDescription}",
+			webContentTitle = "${webContentTitle}");
+	}
+
 	macro viewTranslationEntry {
 		AssertTextEquals(
 			key_rowEntry = "${title}",

@@ -80,6 +80,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSLATION_STATUS_TITLE</td>
+	<td>//div[contains(@id,'JournalPortlet_title')]//span[contains(text(),'${key_localizedLanguage}')]//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNSELECTED_LOCALE_ICON</td>
 	<td>//ul[@id='translationManager']//span[contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>

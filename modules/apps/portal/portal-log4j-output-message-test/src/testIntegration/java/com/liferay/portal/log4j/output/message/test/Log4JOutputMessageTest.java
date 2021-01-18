@@ -143,26 +143,12 @@ public class Log4JOutputMessageTest {
 
 	@Test
 	public void testConsoleOutput() {
-		_testConsoleOutput("TRACE", "TRACE message", null);
-		_testConsoleOutput("DEBUG", "DEBUG message", null);
-		_testConsoleOutput("INFO", "INFO message", null);
-		_testConsoleOutput("WARN", "WARN message", null);
-		_testConsoleOutput("ERROR", "ERROR message", null);
-		_testConsoleOutput("FATAL", "FATAL message", null);
-
-		_testConsoleOutput("TRACE", "TRACE message", new TestException());
-		_testConsoleOutput("DEBUG", "DEBUG message", new TestException());
-		_testConsoleOutput("INFO", "INFO message", new TestException());
-		_testConsoleOutput("WARN", "WARN message", new TestException());
-		_testConsoleOutput("ERROR", "ERROR message", new TestException());
-		_testConsoleOutput("FATAL", "FATAL message", new TestException());
-
-		_testConsoleOutput("TRACE", null, new TestException());
-		_testConsoleOutput("DEBUG", null, new TestException());
-		_testConsoleOutput("INFO", null, new TestException());
-		_testConsoleOutput("WARN", null, new TestException());
-		_testConsoleOutput("ERROR", null, new TestException());
-		_testConsoleOutput("FATAL", null, new TestException());
+		_testConsoleOutput("TRACE");
+		_testConsoleOutput("DEBUG");
+		_testConsoleOutput("INFO");
+		_testConsoleOutput("WARN");
+		_testConsoleOutput("ERROR");
+		_testConsoleOutput("FATAL");
 	}
 
 	@Test
@@ -504,14 +490,37 @@ public class Log4JOutputMessageTest {
 		}
 	}
 
-	private void _testConsoleOutput(
-		String level, String message, Throwable throwable) {
+	private void _testConsoleOutput(String level) {
+		String testMessage = level + " message";
 
-		_outputLog(level, message, throwable);
+		_outputLog(level, testMessage, null);
 
 		try {
 			_assertTextLog(
-				level, message, throwable, _unsyncStringWriter.toString());
+				level, testMessage, null, _unsyncStringWriter.toString());
+		}
+		finally {
+			_unsyncStringWriter.reset();
+		}
+
+		TestException testException = new TestException();
+
+		_outputLog(level, testMessage, testException);
+
+		try {
+			_assertTextLog(
+				level, testMessage, testException,
+				_unsyncStringWriter.toString());
+		}
+		finally {
+			_unsyncStringWriter.reset();
+		}
+
+		_outputLog(level, null, testException);
+
+		try {
+			_assertTextLog(
+				level, null, testException, _unsyncStringWriter.toString());
 		}
 		finally {
 			_unsyncStringWriter.reset();

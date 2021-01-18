@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.upgrade.v3_2_0;
+package com.liferay.document.library.internal.upgrade.v3_2_1;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -95,6 +95,12 @@ public class UpgradeDLFileEntryType
 
 			ps2.executeBatch();
 		}
+
+		String template = StringUtil.read(
+			UpgradeDLFileEntryType.class.getResourceAsStream(
+				"dependencies/update.sql"));
+
+		runSQLTemplateString(template, false);
 	}
 
 	private long _insertDDMStructure(

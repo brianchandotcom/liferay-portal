@@ -23,7 +23,7 @@ import com.liferay.document.library.internal.upgrade.v1_0_2.UpgradeDLFileShortcu
 import com.liferay.document.library.internal.upgrade.v1_1_0.UpgradeSchema;
 import com.liferay.document.library.internal.upgrade.v1_1_2.UpgradeDLFileEntryType;
 import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
-import com.liferay.document.library.internal.upgrade.v3_2_0.UpgradeDDMStructureLink;
+import com.liferay.document.library.internal.upgrade.v3_2_1.UpgradeDDMStructureLink;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
@@ -93,13 +93,16 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCTModel("DLFileVersionPreview"));
 
 		registry.register(
-			"3.1.0", "3.2.0", new UpgradeDDMStructureLink(),
-			new com.liferay.document.library.internal.upgrade.v3_2_0.
-				UpgradeDLFileEntryType(),
+			"3.1.0", "3.2.0",
 			new com.liferay.document.library.internal.upgrade.v3_2_0.
 				UpgradeSchema(),
 			new com.liferay.document.library.internal.upgrade.v3_2_0.
 				UpgradeStorageQuota());
+
+		registry.register(
+			"3.2.0", "3.2.1", new UpgradeDDMStructureLink(),
+			new com.liferay.document.library.internal.upgrade.v3_2_1.
+				UpgradeDLFileEntryType());
 	}
 
 	@Reference

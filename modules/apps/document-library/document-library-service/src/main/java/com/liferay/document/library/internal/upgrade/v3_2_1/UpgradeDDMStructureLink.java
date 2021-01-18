@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.upgrade.v3_2_0;
+package com.liferay.document.library.internal.upgrade.v3_2_1;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;

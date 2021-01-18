@@ -112,6 +112,18 @@ public class TranslationEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteTranslationEntries(
+		long classNameId, long classPK) {
+
+		getService().deleteTranslationEntries(classNameId, classPK);
+	}
+
+	public static void deleteTranslationEntries(
+		String className, long classPK) {
+
+		getService().deleteTranslationEntries(className, classPK);
+	}
+
 	/**
 	 * Deletes the translation entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

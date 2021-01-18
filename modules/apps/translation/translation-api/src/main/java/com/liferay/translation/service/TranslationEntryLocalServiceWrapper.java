@@ -116,6 +116,18 @@ public class TranslationEntryLocalServiceWrapper
 			persistedModel);
 	}
 
+	@Override
+	public void deleteTranslationEntries(long classNameId, long classPK) {
+		_translationEntryLocalService.deleteTranslationEntries(
+			classNameId, classPK);
+	}
+
+	@Override
+	public void deleteTranslationEntries(String className, long classPK) {
+		_translationEntryLocalService.deleteTranslationEntries(
+			className, classPK);
+	}
+
 	/**
 	 * Deletes the translation entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

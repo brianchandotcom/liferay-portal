@@ -402,6 +402,19 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
 	}
 
+	macro removeAddress {
+		Click(
+			key_addressDataType = "${addressDataType}",
+			locator1 = "Account#REMOVE_ACCOUNT_DEFAULT_ADDRESS");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			key_addressDataType = "${addressDataType}",
+			locator1 = "Account#ACCOUNT_ADDRESSES",
+			value1 = "Not Set");
+	}
+
 	macro removeDomain {
 		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
 

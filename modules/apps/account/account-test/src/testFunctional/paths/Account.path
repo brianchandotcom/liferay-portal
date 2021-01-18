@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE_ACCOUNT_DEFAULT_ADDRESS</td>
+	<td>//a[@data-type='${key_addressDataType}']/..//following-sibling::span//span[normalize-space(text())='Remove']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SET_ACCOUNT_DEFAULT_ADDRESS</td>
 	<td>//a[@data-type='${key_addressDataType}']//span[normalize-space(text())='${key_text}']</td>
 	<td></td>

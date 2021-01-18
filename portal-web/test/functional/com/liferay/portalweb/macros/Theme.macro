@@ -99,6 +99,15 @@ definition {
 		}
 	}
 
+	macro viewClassicThemeBackgroundColor {
+		AssertCssValue(
+			locator1 = "//body",
+			locator2 = "background-color",
+			value1 = "rgba(255, 255, 255, 1)");
+
+		takeScreenshot();
+	}
+
 	macro viewMaxPortletOption {
 		AssertTextEquals(
 			key_menuItem = "Maximize",
@@ -122,6 +131,15 @@ definition {
 		// Refresh step is a workaround for LPS-91762
 
 		Refresh();
+	}
+
+	macro viewTestThemeBackgroundColor {
+		AssertCssValue(
+			locator1 = "//body",
+			locator2 = "background-color",
+			value1 = "rgba(255, 165, 0, 1)");
+
+		takeScreenshot();
 	}
 
 }

@@ -5,6 +5,10 @@ create index IX_867C5A9 on BigDecimalEntry (bigDecimalValue);
 
 create unique index IX_1CF99E19 on CacheDisabledEntry (name[$COLUMN_LENGTH:75$]);
 
+create index IX_E3854685 on ERCCompanyEntity (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+
+create index IX_543D4245 on ERCGroupEntity (groupId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+
 create unique index IX_6E042099 on EagerBlobEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_420C1E47 on FinderWhereClauseEntry (name[$COLUMN_LENGTH:75$]);

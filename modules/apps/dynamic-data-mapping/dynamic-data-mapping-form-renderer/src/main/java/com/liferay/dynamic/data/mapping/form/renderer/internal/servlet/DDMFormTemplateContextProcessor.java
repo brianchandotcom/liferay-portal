@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -108,6 +109,7 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getBoolean("alphabeticalOrder"), ddmFormField);
 		setDDMFormFieldCollapsible(
 			jsonObject.getBoolean("collapsible"), ddmFormField);
+		setDDMFormFieldCustomProperties(jsonObject, ddmFormField);
 		setDDMFormFieldDataProviderSettings(
 			jsonObject.getLong("ddmDataProviderInstanceId"),
 			jsonObject.getString("ddmDataProviderInstanceOutput"),
@@ -269,6 +271,22 @@ public class DDMFormTemplateContextProcessor {
 		boolean collapsible, DDMFormField ddmFormField) {
 
 		ddmFormField.setProperty("collapsible", collapsible);
+	}
+
+	protected void setDDMFormFieldCustomProperties(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
+
+		Iterator<String> iterator = jsonObject.keys();
+
+		Map<String, Object> properties = ddmFormField.getProperties();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (!properties.containsKey(key) && !key.equals("dataSourceType")) {
+				ddmFormField.setProperty(key, jsonObject.get(key));
+			}
+		}
 	}
 
 	protected void setDDMFormFieldDataProviderSettings(

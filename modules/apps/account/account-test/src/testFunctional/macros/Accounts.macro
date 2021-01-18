@@ -593,6 +593,72 @@ definition {
 		}
 	}
 
+	macro viewAddress {
+		if ("${addressDataType}" == "billing") {
+			AssertElementPresent(
+				key_addressDataType = "${addressDataType}",
+				locator1 = "Account#ACCOUNT_ADDRESS_BILLING");
+		}
+		else {
+			AssertElementPresent(
+				key_addressDataType = "${addressDataType}",
+				locator1 = "Account#ACCOUNT_ADDRESS_SHIPPING");
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_addressDataType = "${addressDataType}",
+			locator1 = "Account#ACCOUNT_ADDRESSES",
+			value1 = "${addressName}");
+
+		AssertTextEquals.assertPartialText(
+			key_addressDataType = "${addressDataType}",
+			locator1 = "Account#ACCOUNT_ADDRESSES",
+			value1 = "${addressStreet1}");
+
+		AssertTextEquals.assertPartialText(
+			key_addressDataType = "${addressDataType}",
+			locator1 = "Account#ACCOUNT_ADDRESSES",
+			value1 = "${addressCountry}");
+
+		AssertTextEquals.assertPartialText(
+			key_addressDataType = "${addressDataType}",
+			locator1 = "Account#ACCOUNT_ADDRESSES",
+			value1 = "${addressCity}");
+
+		AssertTextEquals.assertPartialText(
+			key_addressDataType = "${addressDataType}",
+			locator1 = "Account#ACCOUNT_ADDRESSES",
+			value1 = "${addressPostalCode}");
+
+		if (isSet(addressRegion)) {
+			AssertTextEquals.assertPartialText(
+				key_addressDataType = "${addressDataType}",
+				locator1 = "Account#ACCOUNT_ADDRESSES",
+				value1 = "${addressRegion}");
+		}
+
+		if (isSet(addressStreet2)) {
+			AssertTextEquals.assertPartialText(
+				key_addressDataType = "${addressDataType}",
+				locator1 = "Account#ACCOUNT_ADDRESSES",
+				value1 = "${addressStreet2}");
+		}
+
+		if (isSet(addressStreet3)) {
+			AssertTextEquals.assertPartialText(
+				key_addressDataType = "${addressDataType}",
+				locator1 = "Account#ACCOUNT_ADDRESSES",
+				value1 = "${addressStreet3}");
+		}
+
+		if (isSet(phoneNumber)) {
+			AssertTextEquals.assertPartialText(
+				key_addressDataType = "${addressDataType}",
+				locator1 = "Account#ACCOUNT_ADDRESSES",
+				value1 = "${phoneNumber}");
+		}
+	}
+
 	macro viewAssignee {
 		AssertTextEquals.assertPartialText(
 			key_tableEntry = "${assigneeName}",

@@ -64,6 +64,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_ADDRESSES</td>
+	<td>//a[@data-type='${key_addressDataType}']/../../preceding-sibling::address</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_ADDRESS_BILLING</td>
+	<td>//a[@data-type='billing']/../../preceding-sibling::div[normalize-space(text())='Billing']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_ADDRESS_SHIPPING</td>
+	<td>//a[@data-type='shipping']/../../preceding-sibling::div[normalize-space(text())='Shipping']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SET_ACCOUNT_DEFAULT_ADDRESS</td>
 	<td>//a[@data-type='${key_addressDataType}']//span[normalize-space(text())='${key_text}']</td>
 	<td></td>

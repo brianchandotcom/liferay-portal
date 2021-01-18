@@ -39,6 +39,7 @@ import com.liferay.journal.exception.ArticleSmallImageNameException;
 import com.liferay.journal.exception.ArticleSmallImageSizeException;
 import com.liferay.journal.exception.ArticleTitleException;
 import com.liferay.journal.exception.DuplicateArticleIdException;
+import com.liferay.journal.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.journal.exception.InvalidDDMStructureException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleLocalization;
@@ -224,10 +225,11 @@ public class JournalArticleModelValidator
 
 	public void validate(
 			long companyId, long groupId, long classNameId, String articleId,
-			boolean autoArticleId, double version, Map<Locale, String> titleMap,
-			String content, String ddmStructureKey, String ddmTemplateKey,
-			Date displayDate, Date expirationDate, boolean smallImage,
-			String smallImageURL, File smallImageFile, byte[] smallImageBytes,
+			boolean autoArticleId, String externalReferenceCode, double version,
+			Map<Locale, String> titleMap, String content,
+			String ddmStructureKey, String ddmTemplateKey, Date displayDate,
+			Date expirationDate, boolean smallImage, String smallImageURL,
+			File smallImageFile, byte[] smallImageBytes,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -252,6 +254,23 @@ public class JournalArticleModelValidator
 
 				throw new DuplicateArticleIdException(sb.toString());
 			}
+		}
+
+		List<JournalArticle> articles = _journalArticlePersistence.findByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (!articles.isEmpty()) {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("{groupId=");
+			sb.append(groupId);
+			sb.append(", externalReferenceCode=");
+			sb.append(externalReferenceCode);
+			sb.append(", version=");
+			sb.append(version);
+			sb.append("}");
+
+			throw new DuplicateExternalReferenceCodeException(sb.toString());
 		}
 
 		validate(

@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 
 import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
@@ -31,22 +31,6 @@ export default ({appTab, ...props}) => {
 		userLanguageId,
 	};
 
-	const formTaglib = document.getElementById('app-entry-taglib');
-
-	const onPermissionChange = useCallback(
-		(withPermission) => {
-			if (formTaglib) {
-				if (withPermission) {
-					formTaglib.classList.remove('hide');
-				}
-				else {
-					formTaglib.classList.add('hide');
-				}
-			}
-		},
-		[formTaglib]
-	);
-
 	return (
 		<AppContextProvider {...newProps}>
 			<PermissionsContextProvider dataDefinitionId={dataDefinitionId}>
@@ -56,10 +40,7 @@ export default ({appTab, ...props}) => {
 					userLanguageId={userLanguageId}
 				/>
 
-				<PermissionTunnel
-					onPermissionChange={onPermissionChange}
-					permissionType={['add', 'update']}
-				>
+				<PermissionTunnel permissionType={['add', 'update']}>
 					<EditPage module={appTab.editEntryPoint} props={newProps} />
 				</PermissionTunnel>
 			</PermissionsContextProvider>

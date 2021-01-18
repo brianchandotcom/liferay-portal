@@ -1,0 +1,497 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"dataType": "string",
+			"fieldReference": "Boolean",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Boolean"
+			},
+			"localizable": true,
+			"name": "Boolean",
+			"options": [
+				{
+					"label": {
+						"en_US": "Boolean"
+					},
+					"value": "Boolean"
+				}
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "checkbox_multiple"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "Color",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Color"
+			},
+			"localizable": true,
+			"name": "Color",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "color",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "date",
+			"fieldNamespace": "",
+			"fieldReference": "Date",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Date"
+			},
+			"localizable": true,
+			"name": "Date",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "date",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "double",
+			"fieldNamespace": "",
+			"fieldReference": "Decimal",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Decimal"
+			},
+			"localizable": true,
+			"name": "Decimal",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "numeric",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "document-library",
+			"fieldNamespace": "",
+			"fieldReference": "DocumentsAndMedia",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Documents and Media"
+			},
+			"localizable": true,
+			"name": "DocumentsAndMedia",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "document_library",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "geolocation",
+			"fieldNamespace": "",
+			"fieldReference": "Geolocation",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Geolocation"
+			},
+			"localizable": false,
+			"name": "Geolocation",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "geolocation"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "HTML",
+			"indexType": "text",
+			"label": {
+				"en_US": "HTML"
+			},
+			"localizable": true,
+			"name": "HTML",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "rich_text",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "image",
+			"fieldNamespace": "",
+			"fieldReference": "Image",
+			"indexType": "text",
+			"label": {
+				"en_US": "Image"
+			},
+			"localizable": true,
+			"name": "Image",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "image",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "integer",
+			"fieldNamespace": "",
+			"fieldReference": "Integer",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Integer"
+			},
+			"localizable": true,
+			"name": "Integer",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "numeric",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "link-to-page",
+			"fieldNamespace": "",
+			"fieldReference": "LinkToPage",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Link to Page"
+			},
+			"localizable": true,
+			"name": "LinkToPage",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "link_to_layout"
+		},
+		{
+			"dataType": "double",
+			"fieldNamespace": "",
+			"fieldReference": "Number",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Number"
+			},
+			"localizable": true,
+			"name": "Number",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "numeric",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "radio",
+			"fieldReference": "Radio",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Radio"
+			},
+			"localizable": true,
+			"name": "Radio",
+			"options": [
+				{
+					"label": {
+						"en_US": "option 1"
+					},
+					"reference": "",
+					"value": "value 1"
+				},
+				{
+					"label": {
+						"en_US": "option 2"
+					},
+					"reference": "",
+					"value": "value 2"
+				},
+				{
+					"label": {
+						"en_US": "option 3"
+					},
+					"reference": "",
+					"value": "value 3"
+				}
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "radio"
+		},
+		{
+			"dataSourceType": "[manual]",
+			"dataType": "string",
+			"ddmDataProviderInstanceId": "[]",
+			"ddmDataProviderInstanceOutput": "[]",
+			"fieldNamespace": "",
+			"fieldReference": "Select",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Select"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Select",
+			"options": [
+				{
+					"label": {
+						"en_US": "option 1"
+					},
+					"reference": "",
+					"value": "value 1"
+				},
+				{
+					"label": {
+						"en_US": "option 2"
+					},
+					"reference": "",
+					"value": "value 2"
+				},
+				{
+					"label": {
+						"en_US": "option 3"
+					},
+					"reference": "",
+					"value": "value 3"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "[\"\"]"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "select",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "",
+			"fieldNamespace": "",
+			"fieldReference": "Separator",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Separator"
+			},
+			"localizable": true,
+			"name": "Separator",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"type": "separator"
+		},
+		{
+			"autocomplete": false,
+			"dataSourceType": "manual",
+			"dataType": "string",
+			"ddmDataProviderInstanceId": "[]",
+			"ddmDataProviderInstanceOutput": "[]",
+			"displayStyle": "singleline",
+			"fieldNamespace": "",
+			"fieldReference": "Text",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"value": "Option"
+				}
+			],
+			"placeholder": {
+				"en_US": ""
+			},
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"tooltip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"visibilityExpression": ""
+		},
+		{
+			"autocomplete": false,
+			"dataSourceType": "manual",
+			"dataType": "string",
+			"ddmDataProviderInstanceId": "[]",
+			"ddmDataProviderInstanceOutput": "[]",
+			"displayStyle": "multiline",
+			"fieldNamespace": "",
+			"fieldReference": "TextBox",
+			"indexType": "text",
+			"label": {
+				"en_US": "Text Box"
+			},
+			"localizable": true,
+			"name": "TextBox",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"value": "Option"
+				}
+			],
+			"placeholder": {
+				"en_US": ""
+			},
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"tooltip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "journal-article",
+			"fieldNamespace": "",
+			"fieldReference": "WebContent",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Web Content"
+			},
+			"localizable": true,
+			"name": "WebContent",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "journal_article"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

@@ -1,0 +1,55 @@
+{
+	"availableLanguageIds": [
+		"es_ES",
+		"en_US",
+		"de_DE"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"dataType": "string",
+			"fieldReference": "Boolean",
+			"indexType": "keyword",
+			"label": {
+				"de_DE": " Boolescher Wert",
+				"en_US": "Boolean",
+				"es_ES": "Booleano"
+			},
+			"localizable": true,
+			"name": "Boolean",
+			"options": [
+				{
+					"label": {
+						"de_DE": " Boolescher Wert",
+						"en_US": "Boolean",
+						"es_ES": "Booleano"
+					},
+					"value": "Boolean"
+				}
+			],
+			"predefinedValue": {
+				"de_DE": "",
+				"en_US": "Boolean",
+				"es_ES": "Boolean"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"de_DE": "",
+				"en_US": "",
+				"es_ES": ""
+			},
+			"type": "checkbox_multiple"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

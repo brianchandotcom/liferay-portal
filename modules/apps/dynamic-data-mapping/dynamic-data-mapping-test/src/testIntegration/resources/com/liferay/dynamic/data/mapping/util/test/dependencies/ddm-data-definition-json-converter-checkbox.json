@@ -1,0 +1,43 @@
+{
+	"availableLanguageIds": [
+		"es_ES",
+		"en_US",
+		"de_DE"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "boolean",
+			"indexType": "keyword",
+			"label": {
+				"de_DE": " Boolescher Wert",
+				"en_US": "Boolean",
+				"es_ES": "Booleano"
+			},
+			"localizable": true,
+			"name": "Boolean",
+			"predefinedValue": {
+				"de_DE": "false",
+				"en_US": "true",
+				"es_ES": "true"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"de_DE": "",
+				"en_US": "",
+				"es_ES": ""
+			},
+			"type": "checkbox"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

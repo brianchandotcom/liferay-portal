@@ -199,6 +199,39 @@ public class LayoutsSEODisplayContext {
 		).build();
 	}
 
+	public PortletURL getEditCustomMetaTagsURL() {
+		LiferayPortletURL liferayPortletURL =
+			_liferayPortletResponse.createLiferayPortletURL(
+				_liferayPortletRequest.getPlid(),
+				_liferayPortletRequest.getPortletName(),
+				PortletRequest.ACTION_PHASE, MimeResponse.Copy.ALL);
+
+		liferayPortletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/edit_custom_meta_tags");
+
+		liferayPortletURL.setParameter(
+			"mvcRenderCommandName",
+			_liferayPortletRequest.getParameter("mvcRenderCommandName"));
+		liferayPortletURL.setParameter(
+			"tabs1", _liferayPortletRequest.getParameter("tabs1"));
+		liferayPortletURL.setParameter(
+			"screenNavigationCategoryKey",
+			_liferayPortletRequest.getParameter("screenNavigationCategoryKey"));
+		liferayPortletURL.setParameter(
+			"screenNavigationEntryKey",
+			_liferayPortletRequest.getParameter("screenNavigationEntryKey"));
+		liferayPortletURL.setParameter(
+			"selPlid", _liferayPortletRequest.getParameter("selPlid"));
+		liferayPortletURL.setParameter(
+			"privateLayout",
+			_liferayPortletRequest.getParameter("privateLayout"));
+		liferayPortletURL.setParameter(
+			"displayStyle",
+			_liferayPortletRequest.getParameter("displayStyle"));
+
+		return liferayPortletURL;
+	}
+
 	public PortletURL getEditOpenGraphURL() {
 		LiferayPortletURL liferayPortletURL =
 			_liferayPortletResponse.createLiferayPortletURL(

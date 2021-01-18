@@ -28,7 +28,7 @@ if (Validator.isNull(backURL)) {
 }
 %>
 
-<aui:form action="<%= layoutsSEODisplayContext.getEditOpenGraphURL() %>" method="post" name="fm">
+<aui:form action="<%= layoutsSEODisplayContext.getEditCustomMetaTagsURL() %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= layoutsSEODisplayContext.getRedirectURL() %>" />
 	<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
 	<aui:input name="groupId" type="hidden" value="<%= layoutsSEODisplayContext.getGroupId() %>" />

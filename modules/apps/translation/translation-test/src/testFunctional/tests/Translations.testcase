@@ -135,6 +135,13 @@ definition {
 
 		PortletEntry.publish();
 
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
@@ -568,6 +575,13 @@ definition {
 			webContentTextBox = "Este es un cuadro de texto.",
 			webContentTitle = "WC WebContent Título");
 
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/es/group/guest/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
@@ -745,6 +759,13 @@ definition {
 			webContentContent = "WC WebContent Contenido",
 			webContentDescription = "WC WebContent Descripción",
 			webContentTitle = "WC WebContent Título");
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
 	}
 
 	@description = "This ensures that the translator can select which base language she wants to translate."
@@ -835,6 +856,20 @@ definition {
 			webContentContent = "wc webcontentコンテンツ",
 			webContentDescription = "wc webcontent記述",
 			webContentTitle = "wc webcontentタイトル");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Translation");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		Translations.viewTranslationEntry(
+			language = "ja-JP",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to ja-JP");
 	}
 
 	@description = "This ensures that the user can see translation options after move all available languages to current."

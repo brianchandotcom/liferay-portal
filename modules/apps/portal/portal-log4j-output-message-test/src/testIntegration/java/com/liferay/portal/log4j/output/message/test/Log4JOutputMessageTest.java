@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -552,8 +551,8 @@ public class Log4JOutputMessageTest {
 		throws Exception {
 
 		for (File logFile : _tempLogDir.listFiles()) {
-			try (FileWriter fileWriter = new FileWriter(logFile, false)) {
-				fileWriter.write("");
+			if (logFile.isFile()) {
+				logFile.delete();
 			}
 		}
 

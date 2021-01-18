@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormRendererImpl implements DDMFormRenderer {
 
 	@Override
-	public Map<String, Object> getReactData(
+	public Map<String, Object> getContext(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws Exception {
@@ -124,7 +124,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			new ComponentDescriptor(
 				_npmResolver.resolveModuleName(_MODULE_NAME),
 				ddmFormRenderingContext.getContainerId()),
-			getReactData(ddmForm, ddmFormLayout, ddmFormRenderingContext),
+			getContext(ddmForm, ddmFormLayout, ddmFormRenderingContext),
 			ddmFormRenderingContext.getHttpServletRequest(), writer);
 
 		writer.append("</div>");

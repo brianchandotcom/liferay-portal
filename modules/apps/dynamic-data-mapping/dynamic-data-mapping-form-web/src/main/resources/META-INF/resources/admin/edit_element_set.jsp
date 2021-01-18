@@ -110,7 +110,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 <div class="hide">
 	<react:component
 		module="admin/js/index.es"
-		props="<%= ddmFormAdminDisplayContext.getSerializeSettingsFormReactData(pageContext) %>"
+		props="<%= ddmFormAdminDisplayContext.getDDMFormSettingsContext(pageContext) %>"
 	/>
 </div>
 

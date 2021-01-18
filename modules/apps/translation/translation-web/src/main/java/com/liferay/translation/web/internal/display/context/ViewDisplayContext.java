@@ -162,10 +162,6 @@ public class ViewDisplayContext {
 		).build();
 	}
 
-	public String getManagementToolbarDefaultEventHandler() {
-		return "translationManagementToolbarDefaultEventHandler";
-	}
-
 	public String getElementsDefaultEventHandler() {
 		return "translationEntryDefaultEventHandler";
 	}
@@ -178,6 +174,10 @@ public class ViewDisplayContext {
 		return StringUtil.replace(
 			translationEntry.getLanguageId(), CharPool.UNDERLINE,
 			CharPool.DASH);
+	}
+
+	public String getManagementToolbarDefaultEventHandler() {
+		return "translationManagementToolbarDefaultEventHandler";
 	}
 
 	public SearchContainer<TranslationEntry> getSearchContainer()

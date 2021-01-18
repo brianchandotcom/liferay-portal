@@ -129,6 +129,7 @@ public class Log4JOutputMessageTest {
 		xmlFileRollingFileAppender.activateOptions();
 
 		consoleAppender.activateOptions();
+
 		consoleAppender.setWriter(_unsyncStringWriter);
 
 		Logger logger = _getLogger();

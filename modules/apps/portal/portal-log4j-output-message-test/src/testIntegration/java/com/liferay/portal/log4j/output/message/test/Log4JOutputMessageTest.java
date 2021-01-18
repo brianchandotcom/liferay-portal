@@ -21,6 +21,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log.LogWrapper;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -134,19 +136,23 @@ public class Log4JOutputMessageTest {
 		consoleAppender.activateOptions();
 		consoleAppender.setWriter(_unsyncStringWriter);
 
-		_logger.setLevel(Level.TRACE);
-		_logger.setAdditivity(false);
+		Logger logger = _getLogger();
 
-		_logger.addAppender(consoleAppender);
-		_logger.addAppender(textFileRollingFileAppender);
-		_logger.addAppender(xmlFileRollingFileAppender);
+		logger.setLevel(Level.TRACE);
+		logger.setAdditivity(false);
+
+		logger.addAppender(consoleAppender);
+		logger.addAppender(textFileRollingFileAppender);
+		logger.addAppender(xmlFileRollingFileAppender);
 
 		_unsyncStringWriter.reset();
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		_logger.removeAllAppenders();
+		Logger logger = _getLogger();
+
+		logger.removeAllAppenders();
 	}
 
 	@Test
@@ -195,6 +201,14 @@ public class Log4JOutputMessageTest {
 		_testFileOutput("WARN", null, new TestException());
 		_testFileOutput("ERROR", null, new TestException());
 		_testFileOutput("FATAL", null, new TestException());
+	}
+
+	private static Logger _getLogger() {
+		LogWrapper logWrapper = (LogWrapper)_log;
+
+		Log log = logWrapper.getWrappedLog();
+
+		return ReflectionTestUtil.getFieldValue(log, "_logger");
 	}
 
 	private void _assertTextLog(
@@ -588,8 +602,6 @@ public class Log4JOutputMessageTest {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		Log4JOutputMessageTest.class);
-	private static final Logger _logger = Logger.getLogger(
-		Log4JOutputMessageTest.class.getName());
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");

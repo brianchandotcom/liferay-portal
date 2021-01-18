@@ -49,7 +49,7 @@ public class ManifestHelperTask extends Task {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), with no replacement
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public void setAnalyze(boolean analyze) {

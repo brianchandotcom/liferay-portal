@@ -76,7 +76,7 @@ public class JournalArticleFinderImpl
 		JournalArticleFinder.class.getName() + ".countByG_U_F_C";
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String COUNT_BY_C_G_F_C_A_V_T_D_C_S_T_D_R =
@@ -123,7 +123,7 @@ public class JournalArticleFinderImpl
 		JournalArticleFinder.class.getName() + ".findByG_U_F_C_L";
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	public static final String FIND_BY_C_G_F_C_A_V_T_D_C_S_T_D_R =
@@ -131,7 +131,7 @@ public class JournalArticleFinderImpl
 			".findByC_G_F_C_A_V_T_D_C_S_T_D_R";
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -208,7 +208,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -230,7 +230,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -254,7 +254,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -274,7 +274,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -351,7 +351,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -373,7 +373,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -397,7 +397,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -417,7 +417,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -541,7 +541,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -563,7 +563,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -587,7 +587,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -644,7 +644,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -896,7 +896,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -922,7 +922,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -946,7 +946,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -1211,7 +1211,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	protected int doCountByC_G_F_C_A_V_T_D_C_S_T_D_R(
@@ -1902,7 +1902,7 @@ public class JournalArticleFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
 	protected List<JournalArticle> doFindByC_G_F_C_A_V_T_D_C_S_T_D_R(

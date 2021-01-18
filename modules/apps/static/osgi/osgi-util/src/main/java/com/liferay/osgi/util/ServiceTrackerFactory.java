@@ -78,7 +78,7 @@ public class ServiceTrackerFactory {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), with no replacement
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public static <T> ServiceTracker<T, T> create(Class<T> clazz) {
@@ -130,7 +130,7 @@ public class ServiceTrackerFactory {
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), with no replacement
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public static <T> ServiceTracker<T, T> open(Class<T> clazz) {

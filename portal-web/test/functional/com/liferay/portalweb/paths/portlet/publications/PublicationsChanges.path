@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_USER</td>
-	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_publicationsCategory}')]//following-sibling::tr[${publicationsOrder}]/td[1]/span[contains(@title,'${key_publicationsUser}')]</td>
+	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_publicationsCategory}')]//following-sibling::tr[${publicationsOrder}]/td[1]/div[contains(@title,'${key_publicationsUser}')]</td>
 	<td></td>
 </tr>
 <tr>

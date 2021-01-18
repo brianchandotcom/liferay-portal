@@ -160,34 +160,34 @@ public class CountryLocalServiceTest {
 			_addCountry(
 				"a3", "a33", true, keywords + RandomTestUtil.randomString()));
 
-		BaseModelSearchResult<Country> actualCountries =
+		_addCountry("a4", "a44", false, RandomTestUtil.randomString());
+
+		BaseModelSearchResult<Country> baseModelSearchResult =
 			_countryLocalService.searchCountries(
 				country.getCompanyId(), true, keywords, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				QueryUtil.ALL_POS,
+				OrderByComparatorFactoryUtil.create("Country", "name", true));
 
 		Assert.assertEquals(
-			actualCountries.toString(), expectedCountries.size(),
-			actualCountries.getLength());
+			expectedCountries.size(), baseModelSearchResult.getLength());
+
+		Assert.assertEquals(
+			expectedCountries, baseModelSearchResult.getBaseModels());
 
 		String localizedCountryName = RandomTestUtil.randomString();
 
 		_countryLocalService.updateCountryLocalization(
 			country, "de_DE", localizedCountryName);
 
-		BaseModelSearchResult<Country> baseModelSearchResult =
-			_countryLocalService.searchCountries(
-				country.getCompanyId(), true, localizedCountryName,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		baseModelSearchResult = _countryLocalService.searchCountries(
+			country.getCompanyId(), true, localizedCountryName,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, baseModelSearchResult.getLength());
 
-		List<Country> actualLocalizedCountries =
-			baseModelSearchResult.getBaseModels();
+		List<Country> countries = baseModelSearchResult.getBaseModels();
 
-		for (Country localizedCountry : actualLocalizedCountries) {
-			Assert.assertEquals(
-				country.getCountryId(), localizedCountry.getCountryId());
-		}
+		Assert.assertEquals(country, countries.get(0));
 	}
 
 	@Test
@@ -205,6 +205,9 @@ public class CountryLocalServiceTest {
 				"a4", "a44", true, keywords + RandomTestUtil.randomString()),
 			_addCountry(
 				"a5", "a55", true, keywords + RandomTestUtil.randomString()));
+
+		_addCountry(
+			"a6", "a66", false, keywords + RandomTestUtil.randomString());
 
 		Comparator<Country> comparator = Comparator.comparing(
 			Country::getName, String.CASE_INSENSITIVE_ORDER);

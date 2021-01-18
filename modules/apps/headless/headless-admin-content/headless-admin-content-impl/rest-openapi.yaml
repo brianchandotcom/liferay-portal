@@ -155,6 +155,47 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/sites/{siteId}/display-page-templates":
+        get:
+            # @review
+            description:
+                Retrieves the display page templates of a site
+            operationId: getSiteDisplayPageTemplatesPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DisplayPageTemplate"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/DisplayPageTemplate"
+                                type: array
+                    description:
+                        ""
+            tags: ["DisplayPageTemplate"]
     "/sites/{siteId}/page-definitions/preview":
         # @review
         post:

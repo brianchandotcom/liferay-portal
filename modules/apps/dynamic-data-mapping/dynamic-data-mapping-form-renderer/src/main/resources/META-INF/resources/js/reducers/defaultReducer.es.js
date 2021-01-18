@@ -48,6 +48,9 @@ export default (state, action) => {
 							if (localizedValue) {
 								if (localizedValue[editingLanguageId] != null) {
 									if (
+										Array.isArray(
+											localizedValue[editingLanguageId]
+										) &&
 										!localizedValue[editingLanguageId]
 											?.length &&
 										!localizedValueEdited?.[

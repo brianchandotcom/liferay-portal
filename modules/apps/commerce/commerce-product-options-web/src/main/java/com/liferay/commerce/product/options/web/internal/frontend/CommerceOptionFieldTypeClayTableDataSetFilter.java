@@ -16,6 +16,7 @@ package com.liferay.commerce.product.options.web.internal.frontend;
 
 import com.liferay.commerce.product.configuration.CPOptionConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.options.web.internal.frontend.constants.CommerceOptionDataSetConstants;
 import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
@@ -86,8 +87,8 @@ public class CommerceOptionFieldTypeClayTableDataSetFilter
 				CPOptionConfiguration.class,
 				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
 		}
-		catch (ConfigurationException e) {
-			e.printStackTrace();
+		catch (ConfigurationException configurationException) {
+			configurationException.printStackTrace();
 		}
 
 		String[] ddmFormFieldTypesAllowed =
@@ -125,9 +126,9 @@ public class CommerceOptionFieldTypeClayTableDataSetFilter
 	}
 
 	@Reference
-	protected ConfigurationProvider _configurationProvider;
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	protected DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 }

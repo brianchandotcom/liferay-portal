@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -48,12 +46,11 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionURL;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
-
 import javax.portlet.WindowStateException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -87,12 +84,14 @@ public class CPOptionDisplayContext {
 
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
+
 		LiferayPortletResponse liferayPortletResponse =
 			cpRequestHelper.getLiferayPortletResponse();
 
 		RenderURL renderURL = liferayPortletResponse.createRenderURL();
 
-		renderURL.setParameter("mvcRenderCommandName", "addCPOption");
+		renderURL.setParameter(
+			"mvcRenderCommandName", "/commerce_product_options/add_cp_option");
 		renderURL.setParameter("backURL", cpRequestHelper.getCurrentURL());
 		renderURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -151,9 +150,7 @@ public class CPOptionDisplayContext {
 			ddmFormFieldTypes, ddmFormFieldTypesAllowed);
 	}
 
-	public List<HeaderActionModel> getHeaderActionModels()
-		throws PortalException {
-
+	public List<HeaderActionModel> getHeaderActionModels() {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
 		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
@@ -165,19 +162,9 @@ public class CPOptionDisplayContext {
 
 		headerActionModels.add(cancelHeaderActionModel);
 
-		ActionURL actionURL = renderResponse.createActionURL();
-
-		actionURL.setParameter(ActionRequest.ACTION_NAME, "editOption");
-
-		String publishButtonLabel = "publish";
-
-		String additionalClasses = "btn-primary";
-
 		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
-			additionalClasses, renderResponse.getNamespace() + "fm",
-			actionURL.toString(),
-			renderResponse.getNamespace() + "publishButton",
-			publishButtonLabel);
+			"btn-primary", renderResponse.getNamespace() + "fm", null, null,
+			"publish");
 
 		headerActionModels.add(publishHeaderActionModel);
 
@@ -185,7 +172,7 @@ public class CPOptionDisplayContext {
 	}
 
 	public List<ClayDataSetActionDropdownItem>
-	getOptionClayDataSetActionDropdownItems()
+			getOptionClayDataSetActionDropdownItems()
 		throws PortalException {
 
 		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
@@ -193,9 +180,8 @@ public class CPOptionDisplayContext {
 		RenderURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "editOption");
-		portletURL.setParameter(
-			"redirect", cpRequestHelper.getCurrentURL());
+			"mvcRenderCommandName", "/commerce_product_options/edit_cp_option");
+		portletURL.setParameter("redirect", cpRequestHelper.getCurrentURL());
 		portletURL.setParameter("cpOptionId", "{id}");
 		portletURL.setParameter(
 			"screenNavigationCategoryKey",
@@ -207,25 +193,108 @@ public class CPOptionDisplayContext {
 		clayDataSetActionDropdownItems.add(
 			new ClayDataSetActionDropdownItem(
 				_getManagePriceListPermissionsURL(), null, "permissions",
-				LanguageUtil.get(cpRequestHelper.getRequest(), "permissions"), "get",
-				"permissions", "modal-permissions"));
+				LanguageUtil.get(cpRequestHelper.getRequest(), "permissions"),
+				"get", "permissions", "modal-permissions"));
 
 		return clayDataSetActionDropdownItems;
-
 	}
 
-	public boolean hasValues(CPOption cpOption){
-		return _hasDDMFormFieldTypeProperties(
-			cpOption.getDDMFormFieldTypeName()) &&
-			_isListFieldTypeDataDomain(
-				cpOption.getDDMFormFieldTypeName());
+	public CreationMenu getOptionValueCreationMenu(long cpOptionId)
+		throws Exception {
+
+		CreationMenu creationMenu = new CreationMenu();
+
+		LiferayPortletResponse liferayPortletResponse =
+			cpRequestHelper.getLiferayPortletResponse();
+
+		RenderURL renderURL = liferayPortletResponse.createRenderURL();
+
+		renderURL.setParameter(
+			"mvcRenderCommandName",
+			"/commerce_product_options/add_cp_option_value");
+		renderURL.setParameter("backURL", cpRequestHelper.getCurrentURL());
+		renderURL.setParameter("cpOptionId", String.valueOf(cpOptionId));
+		renderURL.setWindowState(LiferayWindowState.POP_UP);
+
+		creationMenu.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(renderURL.toString());
+				dropdownItem.setLabel("add-option-value-template");
+				dropdownItem.setTarget("modal");
+			});
+
+		return creationMenu;
+	}
+
+	public boolean hasValues(CPOption cpOption) {
+		if (_hasDDMFormFieldTypeProperties(
+				cpOption.getDDMFormFieldTypeName()) &&
+			_isListFieldTypeDataDomain(cpOption.getDDMFormFieldTypeName())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected List<ClayDataSetActionDropdownItem>
+		getClayDataSetActionDropdownItems(
+			String portletURL, boolean sidePanel) {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		ClayDataSetActionDropdownItem clayDataSetActionDropdownItem =
+			new ClayDataSetActionDropdownItem(
+				portletURL, "pencil", "edit",
+				LanguageUtil.get(cpRequestHelper.getRequest(), "edit"), "get",
+				null, null);
+
+		if (sidePanel) {
+			clayDataSetActionDropdownItem.setTarget("sidePanel");
+		}
+
+		clayDataSetActionDropdownItems.add(clayDataSetActionDropdownItem);
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(cpRequestHelper.getRequest(), "delete"),
+				"delete", "delete", "headless"));
+
+		return clayDataSetActionDropdownItems;
+	}
+
+	protected final CPRequestHelper cpRequestHelper;
+
+	private String _getManagePriceListPermissionsURL() throws PortalException {
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			cpRequestHelper.getRequest(),
+			"com_liferay_portlet_configuration_web_portlet_" +
+				"PortletConfigurationPortlet",
+			ActionRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
+		portletURL.setParameter("redirect", cpRequestHelper.getCurrentURL());
+		portletURL.setParameter("modelResource", CPOption.class.getName());
+		portletURL.setParameter("modelResourceDescription", "{name}");
+		portletURL.setParameter("resourcePrimKey", "{id}");
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
+		}
+
+		return portletURL.toString();
 	}
 
 	private boolean _hasDDMFormFieldTypeProperties(
 		String ddmFormFieldTypeName) {
 
 		if (_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
-			ddmFormFieldTypeName) == null) {
+				ddmFormFieldTypeName) == null) {
 
 			return false;
 		}
@@ -249,83 +318,6 @@ public class CPOptionDisplayContext {
 
 		return false;
 	}
-
-	protected List<ClayDataSetActionDropdownItem>
-	getClayDataSetActionDropdownItems(
-		String portletURL, boolean sidePanel) {
-
-		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
-			new ArrayList<>();
-
-		ClayDataSetActionDropdownItem clayDataSetActionDropdownItem =
-			new ClayDataSetActionDropdownItem(
-				portletURL, "pencil", "edit",
-				LanguageUtil.get(cpRequestHelper.getRequest(), "edit"), "get", null,
-				null);
-
-		if (sidePanel) {
-			clayDataSetActionDropdownItem.setTarget("sidePanel");
-		}
-
-		clayDataSetActionDropdownItems.add(clayDataSetActionDropdownItem);
-
-		clayDataSetActionDropdownItems.add(
-			new ClayDataSetActionDropdownItem(
-				null, "trash", "delete",
-				LanguageUtil.get(cpRequestHelper.getRequest(), "delete"), "delete",
-				"delete", "headless"));
-
-		return clayDataSetActionDropdownItems;
-	}
-
-	private String _getManagePriceListPermissionsURL() throws PortalException {
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			cpRequestHelper.getRequest(),
-			"com_liferay_portlet_configuration_web_portlet_" +
-			"PortletConfigurationPortlet",
-			ActionRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
-		portletURL.setParameter(
-			"redirect", cpRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"modelResource", CPOption.class.getName());
-		portletURL.setParameter("modelResourceDescription", "{name}");
-		portletURL.setParameter("resourcePrimKey", "{id}");
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			throw new PortalException(windowStateException);
-		}
-
-		return portletURL.toString();
-	}
-
-	public CreationMenu getOptionValueCreationMenu(long cpOptionId) throws Exception {
-		CreationMenu creationMenu = new CreationMenu();
-		LiferayPortletResponse liferayPortletResponse =
-			cpRequestHelper.getLiferayPortletResponse();
-
-		RenderURL renderURL = liferayPortletResponse.createRenderURL();
-
-		renderURL.setParameter("mvcRenderCommandName", "addCPOptionValue");
-		renderURL.setParameter("backURL", cpRequestHelper.getCurrentURL());
-		renderURL.setParameter("cpOptionId", String.valueOf(cpOptionId));
-		renderURL.setWindowState(LiferayWindowState.POP_UP);
-
-		creationMenu.addDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(renderURL.toString());
-				dropdownItem.setLabel("add-option-value-template");
-				dropdownItem.setTarget("modal");
-			});
-
-		return creationMenu;
-	}
-
-	protected final CPRequestHelper cpRequestHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPOptionDisplayContext.class);

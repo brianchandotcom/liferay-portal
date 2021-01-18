@@ -19,31 +19,24 @@ import com.liferay.commerce.product.exception.CPOptionKeyException;
 import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionService;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_OPTIONS,
-		"mvc.command.name=editOption"
+		"mvc.command.name=/commerce_product_options/edit_cp_option"
 	},
 	service = MVCActionCommand.class
 )
@@ -88,9 +81,6 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
 
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
-
 		try {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCPOptions(cpOptionId, actionRequest);
@@ -98,7 +88,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				CPOption cpOption = updateCPOption(cpOptionId, actionRequest);
+				updateCPOption(cpOptionId, actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -156,27 +146,11 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 		return cpOption;
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object object)
-		throws IOException {
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
-
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
-		ServletResponseUtil.write(httpServletResponse, object.toString());
-
-		httpServletResponse.flushBuffer();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditCPOptionMVCActionCommand.class);
 
 	@Reference
 	private CPOptionService _cpOptionService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

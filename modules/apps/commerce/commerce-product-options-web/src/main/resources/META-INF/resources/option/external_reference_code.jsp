@@ -22,7 +22,7 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 CPOption cpOption = cpOptionDisplayContext.getCPOption();
 %>
 
-<portlet:actionURL name="editCPOptionExternalReferenceCode" var="editCPOptionExternalReferenceCodeURL" />
+<portlet:actionURL name="/commerce_product_options/edit_cp_option_external_reference_code" var="editCPOptionExternalReferenceCodeURL" />
 
 <commerce-ui:modal-content>
 	<aui:form action="<%= editCPOptionExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">

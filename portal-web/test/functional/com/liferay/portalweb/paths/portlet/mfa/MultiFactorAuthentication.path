@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>EMAIL_OTP_LINK</td>
-	<td>//a[contains(.,'Use Email One-Time Password.')]</td>
+	<td>//a[contains(.,'Use Email One-Time Password')]</td>
 	<td></td>
 </tr>
 <!--EMAIL_OTP_CONFIGURATION-->

@@ -1112,11 +1112,11 @@ definition {
 
 		AssertClick(
 			locator1 = "MultiFactorAuthentication#MFA_CHECKER_LINK",
-			value1 = "Use Email One-Time Password.");
+			value1 = "Use Email One-Time Password");
 
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#MFA_CHECKER_LINK",
-			value1 = "Use Time-Based One-Time Password.");
+			value1 = "Use Time-Based One-Time Password");
 	}
 
 	@description = "This is a use case for LPS-89360"

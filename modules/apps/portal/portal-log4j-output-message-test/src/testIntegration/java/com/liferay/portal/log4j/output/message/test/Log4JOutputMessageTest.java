@@ -125,13 +125,13 @@ public class Log4JOutputMessageTest {
 
 				consoleAppender.activateOptions();
 
+				_unsyncStringWriter = new UnsyncStringWriter();
+
 				consoleAppender.setWriter(_unsyncStringWriter);
 
 				logger.addAppender(consoleAppender);
 			}
 		}
-
-		_unsyncStringWriter.reset();
 	}
 
 	@AfterClass
@@ -575,8 +575,7 @@ public class Log4JOutputMessageTest {
 	private static File _tempLogDir;
 	private static final Pattern _textFileNamePattern = Pattern.compile(
 		"liferay.\\d\\d\\d\\d-\\d\\d-\\d\\d.log");
-	private static final UnsyncStringWriter _unsyncStringWriter =
-		new UnsyncStringWriter();
+	private static UnsyncStringWriter _unsyncStringWriter;
 	private static final Pattern _xmlFileNamePattern = Pattern.compile(
 		"liferay.\\d\\d\\d\\d-\\d\\d-\\d\\d.xml");
 

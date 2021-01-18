@@ -14,6 +14,7 @@
 
 package com.liferay.translation.web.internal.portlet.action;
 
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
@@ -46,6 +47,7 @@ import com.liferay.translation.web.internal.display.context.TranslateDisplayCont
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -89,11 +91,20 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemLanguagesProvider.class, className);
 
-			InfoItemObjectProvider<Object> infoItemObjectProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemObjectProvider.class, className);
+			Object object = _getInfoItem(className, classPK);
 
-			Object object = infoItemObjectProvider.getInfoItem(classPK);
+			if (object == null) {
+				renderRequest.setAttribute(
+					TranslateDisplayContext.class.getName(),
+					new TranslateDisplayContext(
+						Collections.emptyList(), Collections.emptyList(),
+						className, classPK, null,
+						_portal.getLiferayPortletRequest(renderRequest),
+						_portal.getLiferayPortletResponse(renderResponse), null,
+						null, null, null, null, _translationInfoFieldChecker));
+
+				return "/translate.jsp";
+			}
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
 				infoItemLanguagesProvider.getAvailableLanguageIds(object));
@@ -182,6 +193,19 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return availableTargetLanguageIds.get(0);
+	}
+
+	private Object _getInfoItem(String className, long classPK) {
+		try {
+			InfoItemObjectProvider<Object> infoItemObjectProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className);
+
+			return infoItemObjectProvider.getInfoItem(classPK);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			return null;
+		}
 	}
 
 	private <T> InfoItemFieldValues _getSourceInfoItemFieldValues(

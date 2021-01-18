@@ -25,6 +25,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -212,6 +213,10 @@ public class TranslateDisplayContext {
 	}
 
 	public String getTitle() {
+		if (_sourceInfoItemFieldValues == null) {
+			return LanguageUtil.get(_themeDisplay.getLocale(), "translation");
+		}
+
 		InfoFieldValue<Object> infoFieldValue =
 			_sourceInfoItemFieldValues.getInfoFieldValue("title");
 

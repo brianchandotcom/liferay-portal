@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -78,17 +78,11 @@ public class Log4JOutputMessageTest {
 		while (enumeration.hasMoreElements()) {
 			Appender appender = enumeration.nextElement();
 
-			String name = appender.getName();
-
-			if (Validator.isNull(name)) {
-				continue;
-			}
-
 			if (appender instanceof FileAppender) {
 				RollingFileAppender rollingFileAppender =
 					(RollingFileAppender)appender;
 
-				if (name.equals("TEXT_FILE")) {
+				if (Objects.equals("TEXT_FILE", appender.getName())) {
 					textFileRollingFileAppender.setLayout(
 						rollingFileAppender.getLayout());
 
@@ -102,7 +96,7 @@ public class Log4JOutputMessageTest {
 					textFileRollingFileAppender.setRollingPolicy(
 						timeBasedRollingPolicy);
 				}
-				else if (name.equals("XML_FILE")) {
+				else if (Objects.equals("XML_FILE", appender.getName())) {
 					xmlFileRollingFileAppender.setLayout(
 						rollingFileAppender.getLayout());
 
@@ -118,7 +112,7 @@ public class Log4JOutputMessageTest {
 				}
 			}
 			else if (appender instanceof ConsoleAppender) {
-				if (name.equals("CONSOLE")) {
+				if (Objects.equals("CONSOLE", appender.getName())) {
 					consoleAppender.setLayout(appender.getLayout());
 				}
 			}

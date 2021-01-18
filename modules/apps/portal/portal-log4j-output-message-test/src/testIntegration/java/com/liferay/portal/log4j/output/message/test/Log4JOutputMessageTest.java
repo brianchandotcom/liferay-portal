@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
-import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.rolling.RollingFileAppender;
@@ -67,14 +66,11 @@ public class Log4JOutputMessageTest {
 
 		_tempLogDir.deleteOnExit();
 
-		Layout consoleLayout = null;
-		Layout textFileLayout = null;
-		Layout xmlFileLayout = null;
-
-		TimeBasedRollingPolicy textFileTimeBasedRollingPolicy =
-			new TimeBasedRollingPolicy();
-		TimeBasedRollingPolicy xmlFileTimeBasedRollingPolicy =
-			new TimeBasedRollingPolicy();
+		RollingFileAppender textFileRollingFileAppender =
+			new RollingFileAppender();
+		RollingFileAppender xmlFileRollingFileAppender =
+			new RollingFileAppender();
+		ConsoleAppender consoleAppender = new ConsoleAppender();
 
 		Logger rootLogger = Logger.getRootLogger();
 
@@ -94,44 +90,43 @@ public class Log4JOutputMessageTest {
 					(RollingFileAppender)appender;
 
 				if (name.equals("TEXT_FILE")) {
-					textFileLayout = rollingFileAppender.getLayout();
+					textFileRollingFileAppender.setLayout(
+						rollingFileAppender.getLayout());
 
-					textFileTimeBasedRollingPolicy.setFileNamePattern(
+					TimeBasedRollingPolicy timeBasedRollingPolicy =
+						new TimeBasedRollingPolicy();
+
+					timeBasedRollingPolicy.setFileNamePattern(
 						StringUtil.replace(tempLogDir.toString(), '\\', '/') +
 							"/liferay.%d{yyyy-MM-dd}.log");
+
+					textFileRollingFileAppender.setRollingPolicy(
+						timeBasedRollingPolicy);
 				}
 				else if (name.equals("XML_FILE")) {
-					xmlFileLayout = rollingFileAppender.getLayout();
+					xmlFileRollingFileAppender.setLayout(
+						rollingFileAppender.getLayout());
 
-					xmlFileTimeBasedRollingPolicy.setFileNamePattern(
+					TimeBasedRollingPolicy timeBasedRollingPolicy =
+						new TimeBasedRollingPolicy();
+
+					timeBasedRollingPolicy.setFileNamePattern(
 						StringUtil.replace(tempLogDir.toString(), '\\', '/') +
 							"/liferay.%d{yyyy-MM-dd}.xml");
+
+					xmlFileRollingFileAppender.setRollingPolicy(
+						timeBasedRollingPolicy);
 				}
 			}
 			else if (appender instanceof ConsoleAppender) {
 				if (name.equals("CONSOLE")) {
-					consoleLayout = appender.getLayout();
+					consoleAppender.setLayout(appender.getLayout());
 				}
 			}
 		}
 
-		RollingFileAppender textFileRollingFileAppender =
-			new RollingFileAppender();
-		RollingFileAppender xmlFileRollingFileAppender =
-			new RollingFileAppender();
-
-		textFileRollingFileAppender.setLayout(textFileLayout);
-		xmlFileRollingFileAppender.setLayout(xmlFileLayout);
-
-		textFileRollingFileAppender.setRollingPolicy(
-			textFileTimeBasedRollingPolicy);
-		xmlFileRollingFileAppender.setRollingPolicy(
-			xmlFileTimeBasedRollingPolicy);
-
 		textFileRollingFileAppender.activateOptions();
 		xmlFileRollingFileAppender.activateOptions();
-
-		ConsoleAppender consoleAppender = new ConsoleAppender(consoleLayout);
 
 		consoleAppender.activateOptions();
 		consoleAppender.setWriter(_unsyncStringWriter);

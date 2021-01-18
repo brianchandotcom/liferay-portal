@@ -108,6 +108,344 @@ definition {
 			value1 = "Approved");
 	}
 
+	@description = "This ensures that The translation in the web content remains after deleting the translation in approved status from the app."
+	@priority = "5"
+	test DeleteTranslation {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "Description",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Delete",
+			rowEntry = "Translation of WC WebContent Title to es-ES");
+
+		AssertElementNotPresent(
+			key_rowEntry = "Translation of WC WebContent Title to es-ES",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+	}
+
+	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in draft status from the app."
+	@priority = "4"
+	test DeleteTranslationInDraft {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "Description",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.saveAsDraft();
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Draft",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Delete",
+			rowEntry = "Translation of WC WebContent Title to es-ES");
+
+		AssertElementNotPresent(
+			key_rowEntry = "Translation of WC WebContent Title to es-ES",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		Click.clickNoMouseOver(
+			key_currentLocale = StringUtil.lowerCase("en-US"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		AssertTextEquals(
+			key_localizedLanguage = "es-ES",
+			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+			value1 = "Untranslated");
+	}
+
+	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in pending status from the app."
+	@priority = "4"
+	test DeleteTranslationInPending {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "Description",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		Workflow.openWorkflowAdmin(siteURLKey = "guest");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Translation");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
+			value1 = "Submit for Publication");
+
+		Alert.viewSuccessMessage();
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Pending",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Delete",
+			rowEntry = "Translation of WC WebContent Title to es-ES");
+
+		AssertElementNotPresent(
+			key_rowEntry = "Translation of WC WebContent Title to es-ES",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		Click.clickNoMouseOver(
+			key_currentLocale = StringUtil.lowerCase("en-US"),
+			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
+		AssertTextEquals(
+			key_localizedLanguage = "es-ES",
+			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+			value1 = "Untranslated");
+	}
+
+	@description = "This ensures that the translation can be edited under Translations app."
+	@priority = "5"
+	test EditTranslation {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "Description",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Translation of WC WebContent Title to es-ES");
+
+		Translations.viewTranslationDetails(
+			currentTargetLocale = "es-ES",
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido editar",
+			webContentDescription = "WC WebContent Descripción editar",
+			webContentTitle = "WC WebContent Título editar");
+
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Translation of WC WebContent Title to es-ES");
+
+		Translations.viewTranslationDetails(
+			currentTargetLocale = "es-ES",
+			webContentContent = "WC WebContent Contenido editar",
+			webContentDescription = "WC WebContent Descripción editar",
+			webContentTitle = "WC WebContent Título editar");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Contenido editar",
+			webContentDescription = "WC WebContent Descripción editar",
+			webContentTitle = "WC WebContent Título editar");
+	}
+
+	@description = "This ensures that the translation can be edited to a new language under Translations app."
+	@priority = "5"
+	test EditTranslationToNewLanguage {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "Description",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Translation of WC WebContent Title to es-ES");
+
+		Translations.viewTranslationDetails(
+			currentTargetLocale = "es-ES",
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "es-ES",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateFields(
+			webContentContent = "wc webcontentコンテンツ",
+			webContentDescription = "wc webcontent記述",
+			webContentTitle = "wc webcontentタイトル");
+
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Translation of WC WebContent Title to ja-JP");
+
+		Translations.viewTranslationDetails(
+			currentTargetLocale = "ja-JP",
+			webContentContent = "wc webcontentコンテンツ",
+			webContentDescription = "wc webcontent記述",
+			webContentTitle = "wc webcontentタイトル");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.changeLocale(locale = "ja-JP");
+
+		WebContent.viewCP(
+			webContentContent = "wc webcontentコンテンツ",
+			webContentDescription = "wc webcontent記述",
+			webContentTitle = "wc webcontentタイトル");
+	}
+
 	@description = "This ensures that translate side by side shows the latest values after editing the web content article."
 	@priority = "5"
 	test EditWCAfterSideBySideTranslation {

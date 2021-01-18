@@ -148,6 +148,17 @@ public class TranslationEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteTranslationEntries(long classNameId, long classPK) {
+		translationEntryPersistence.removeByC_C(classNameId, classPK);
+	}
+
+	@Override
+	public void deleteTranslationEntries(String className, long classPK) {
+		translationEntryLocalService.deleteTranslationEntries(
+			_portal.getClassNameId(className), classPK);
+	}
+
+	@Override
 	public TranslationEntry fetchTranslationEntry(
 		String className, long classPK, String languageId) {
 

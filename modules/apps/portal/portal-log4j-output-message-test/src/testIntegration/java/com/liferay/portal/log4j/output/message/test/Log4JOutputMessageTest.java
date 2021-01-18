@@ -183,6 +183,40 @@ public class Log4JOutputMessageTest {
 		return ReflectionTestUtil.getFieldValue(log, "_logger");
 	}
 
+	private void _assertFileContent(
+			String level, String message, Throwable throwable)
+		throws Exception {
+
+		for (File file : _tempLogDir.listFiles()) {
+			String fileName = file.getName();
+
+			if (fileName.endsWith(".log")) {
+				Matcher matcher = _textFileNamePattern.matcher(fileName);
+
+				Assert.assertTrue(
+					"Text log file name should match the pattern liferay." +
+						"yyyy-MM-dd.log, but actual name is " + fileName,
+					matcher.matches());
+
+				_assertTextLog(
+					level, message, throwable,
+					StreamUtil.toString(new FileInputStream(file)));
+			}
+			else {
+				Matcher matcher = _xmlFileNamePattern.matcher(fileName);
+
+				Assert.assertTrue(
+					"XML log file name should match the pattern liferay." +
+						"yyyy-MM-dd.xml, but actual name is " + fileName,
+					matcher.matches());
+
+				_assertXmlLog(
+					level, message, throwable,
+					StreamUtil.toString(new FileInputStream(file)));
+			}
+		}
+	}
+
 	private void _assertTextLog(
 		String expectedLevel, String expectedMessage,
 		Throwable expectedThrowable, String actualOutput) {
@@ -540,34 +574,7 @@ public class Log4JOutputMessageTest {
 		_outputLog(level, message, throwable);
 
 		try {
-			for (File file : _tempLogDir.listFiles()) {
-				String fileName = file.getName();
-
-				if (fileName.endsWith(".log")) {
-					Matcher matcher = _textFileNamePattern.matcher(fileName);
-
-					Assert.assertTrue(
-						"Text log file name should match the pattern liferay." +
-							"yyyy-MM-dd.log, but actual name is " + fileName,
-						matcher.matches());
-
-					_assertTextLog(
-						level, message, throwable,
-						StreamUtil.toString(new FileInputStream(file)));
-				}
-				else {
-					Matcher matcher = _xmlFileNamePattern.matcher(fileName);
-
-					Assert.assertTrue(
-						"XML log file name should match the pattern liferay." +
-							"yyyy-MM-dd.xml, but actual name is " + fileName,
-						matcher.matches());
-
-					_assertXmlLog(
-						level, message, throwable,
-						StreamUtil.toString(new FileInputStream(file)));
-				}
-			}
+			_assertFileContent(level, message, throwable);
 		}
 		finally {
 			_unsyncStringWriter.reset();

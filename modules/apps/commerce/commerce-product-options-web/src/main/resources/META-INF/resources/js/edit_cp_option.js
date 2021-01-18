@@ -12,7 +12,7 @@
  * details.
  */
 
-import slugify from 'commerce-frontend-js/utilities/slugify'
+import slugify from 'commerce-frontend-js/utilities/slugify';
 import {debounce} from 'frontend-js-web';
 
 export default function ({namespace}) {
@@ -21,7 +21,7 @@ export default function ({namespace}) {
 	const keyInput = form.querySelector('#' +namespace+ 'key');
 	const nameInput = form.querySelector('#' +namespace + 'name');
 
-	const handleOnNameInput = function (event) {
+	const handleOnNameInput = function () {
 		keyInput.value = slugify(nameInput.value);
 	};
 

@@ -258,6 +258,11 @@ public class OptionResourceImpl
 
 	private static final EntityModel _entityModel = new OptionEntityModel();
 
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"
+	)
+	private ModelResourcePermission<CPOption> _cpOptionModelResourcePermission;
+
 	@Reference
 	private CPOptionService _cpOptionService;
 
@@ -272,11 +277,5 @@ public class OptionResourceImpl
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"
-	)
-	private ModelResourcePermission<CPOption>
-		_cpOptionModelResourcePermission;
 
 }

@@ -49,10 +49,7 @@ public class CommerceOptionsClayTableDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField("key", "key");
 
-		ClayTableSchemaField typeField =
-			clayTableSchemaBuilder.addClayTableSchemaField("fieldType", "type");
-
-		typeField.setContentRenderer("localizedField");
+		clayTableSchemaBuilder.addClayTableSchemaField("fieldType", "type");
 
 		return clayTableSchemaBuilder.build();
 	}

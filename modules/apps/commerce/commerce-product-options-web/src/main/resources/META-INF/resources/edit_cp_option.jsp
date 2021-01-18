@@ -24,10 +24,10 @@ CPOption cpOption = cpOptionDisplayContext.getCPOption();
 long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 %>
 
-<portlet:actionURL name="/commerce_product_options/edit_cp_option" var="editOptionActionURL" />
+<portlet:actionURL name="/cp_options/edit_cp_option" var="editOptionActionURL" />
 
 <liferay-portlet:renderURL var="editCPOptionExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/commerce_product_options/edit_cp_option_external_reference_code" />
+	<portlet:param name="mvcRenderCommandName" value="/cp_options/edit_cp_option_external_reference_code" />
 	<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionId) %>" />
 </liferay-portlet:renderURL>
 
@@ -131,5 +131,5 @@ long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 </aui:form>
 
 <liferay-frontend:component
-	module="js/edit_option"
+	module="js/edit_cp_option"
 />

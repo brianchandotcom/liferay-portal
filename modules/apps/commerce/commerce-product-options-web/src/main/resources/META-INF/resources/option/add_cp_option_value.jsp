@@ -32,7 +32,7 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 	</aui:form>
 
 	<portlet:renderURL var="editOptionURL">
-		<portlet:param name="mvcRenderCommandName" value="/commerce_product_options/edit_cp_option" />
+		<portlet:param name="mvcRenderCommandName" value="/cp_options/edit_cp_option" />
 		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionId) %>" />
 	</portlet:renderURL>
 
@@ -50,6 +50,6 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 				"windowState", LiferayWindowState.MAXIMIZED.toString()
 			).build()
 		%>'
-		module="js/add_option_value"
+		module="js/add_cp_option_value"
 	/>
 </commerce-ui:modal-content>

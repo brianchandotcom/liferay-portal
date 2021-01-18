@@ -36,7 +36,7 @@ if (cpOptionValue != null) {
 }
 %>
 
-<portlet:actionURL name="/commerce_product_options/edit_cp_option_value" var="editProductOptionValueActionURL" />
+<portlet:actionURL name="/cp_options/edit_cp_option_value" var="editProductOptionValueActionURL" />
 
 <commerce-ui:side-panel-content
 	title='<%= LanguageUtil.format(request, "edit-x", cpOptionValue.getName(), false) %>'

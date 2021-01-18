@@ -6,9 +6,6 @@ Liferay-JS-Submodules-Bridge: commerce-product-options-web
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
-		resource.bundle.base.name="content.Language",\
-	soy;\
-		type="options-web";\
-		version:Version="${Bundle-Version}"
+		resource.bundle.base.name="content.Language"
 Web-ContextPath: /commerce-product-options-web
 -dsannotations-options: inherit

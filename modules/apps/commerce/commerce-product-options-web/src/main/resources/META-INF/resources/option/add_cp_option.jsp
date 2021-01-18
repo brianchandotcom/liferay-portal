@@ -44,11 +44,11 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 	</aui:form>
 
 	<portlet:renderURL var="editOptionURL">
-		<portlet:param name="mvcRenderCommandName" value="/commerce_product_options/edit_cp_option" />
+		<portlet:param name="mvcRenderCommandName" value="/cp_options/edit_cp_option" />
 	</portlet:renderURL>
 
 	<liferay-frontend:component
-		componentId='<%= liferayPortletResponse.getNamespace() + "add_option" %>'
+		componentId='<%= liferayPortletResponse.getNamespace() + "add_cp_option" %>'
 		context='<%=
 			HashMapBuilder.<String, Object>put(
 				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
@@ -58,6 +58,6 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 				"windowState", LiferayWindowState.MAXIMIZED.toString()
 			).build()
 		%>'
-		module="js/add_option"
+		module="js/add_cp_option"
 	/>
 </commerce-ui:modal-content>

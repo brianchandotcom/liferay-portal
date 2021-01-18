@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.CP_OPTIONS,
-		"mvc.command.name=/commerce_product_options/add_cp_option"
+		"mvc.command.name=/cp_options/add_cp_option"
 	},
 	service = MVCRenderCommand.class
 )
@@ -62,7 +62,7 @@ public class AddCPOptionMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(exception);
 		}
 
-		return "/option/add_option.jsp";
+		return "/option/add_cp_option.jsp";
 	}
 
 	@Reference

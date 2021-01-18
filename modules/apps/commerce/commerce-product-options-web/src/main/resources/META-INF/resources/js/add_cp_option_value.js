@@ -1,6 +1,3 @@
-// commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/modals/index as ModalUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider
-
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -15,10 +12,10 @@
  * details.
  */
 
-import * as modalUtils from 'commerce-frontend-js/utilities/modals/index';
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
-import slugify from 'commerce-frontend-js/utilities/slugify'
 import {debounce} from 'frontend-js-web';
+import * as modalUtils from 'commerce-frontend-js/utilities/modals/index';
+import slugify from 'commerce-frontend-js/utilities/slugify';
+import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 
 export default function ({namespace, editOptionURL, windowState, cpOptionId, defaultLanguageId}) {
 

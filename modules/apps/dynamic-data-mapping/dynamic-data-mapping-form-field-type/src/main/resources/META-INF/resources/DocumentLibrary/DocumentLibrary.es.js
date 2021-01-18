@@ -45,6 +45,18 @@ const CardItem = ({fileEntryTitle, fileEntryURL}) => {
 	);
 };
 
+const getValue = (value) => {
+	if (!value) {
+		return '';
+	}
+
+	if (typeof value === 'string') {
+		return value;
+	}
+
+	return JSON.stringify(value);
+};
+
 function transformFileEntryProperties({fileEntryTitle, fileEntryURL, value}) {
 	if (value && typeof value === 'string') {
 		try {
@@ -138,7 +150,7 @@ const DocumentLibrary = ({
 				name={name}
 				placeholder={placeholder}
 				type="hidden"
-				value={value || ''}
+				value={getValue(value)}
 			/>
 		</div>
 	);
@@ -213,7 +225,7 @@ const GuestUploadFile = ({
 				name={name}
 				placeholder={placeholder}
 				type="hidden"
-				value={value || ''}
+				value={getValue(value)}
 			/>
 
 			{progress !== 0 && <ClayProgressBar value={progress} />}

@@ -18,7 +18,6 @@ import com.liferay.frontend.js.loader.support.JSLoaderSupport;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -63,19 +62,6 @@ public class JSLoaderSupportImpl implements JSLoaderSupport {
 			writer,
 			getScriptBody(
 				javascriptModule, javascriptVariable, javascriptCode));
-	}
-
-	@Override
-	public void writeScript(
-		Writer writer, String javascriptModule, String javascriptVariable,
-		String javascriptCode, String template) {
-
-		_writeScriptData(
-			writer,
-			StringUtil.replace(
-				template, "[$JAVASCRIPT_CODE$]",
-				getScriptBody(
-					javascriptModule, javascriptVariable, javascriptCode)));
 	}
 
 	private void _writeScriptData(Writer writer, String content) {

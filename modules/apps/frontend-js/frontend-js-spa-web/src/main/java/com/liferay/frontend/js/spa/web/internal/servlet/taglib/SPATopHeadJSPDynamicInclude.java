@@ -109,8 +109,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 		_jsLoaderSupport.writeScript(
 			httpServletResponse.getWriter(), "frontend-js-spa-web",
-			"frontendJsSpaWebInit", javascriptSB.toString(),
-			"window.setTimeout(function() {[$JAVASCRIPT_CODE$]}, 0);");
+			"frontendJsSpaWebInit", javascriptSB.toString());
 	}
 
 	@Override

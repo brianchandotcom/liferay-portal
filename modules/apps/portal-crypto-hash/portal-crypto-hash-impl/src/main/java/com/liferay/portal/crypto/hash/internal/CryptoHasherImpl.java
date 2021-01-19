@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 public class CryptoHasherImpl implements CryptoHasher {
 
 	public CryptoHasherImpl() throws NoSuchAlgorithmException {
-		_cryptoHashProvider = new CryptoHashProvider(
+		_messageDigestCryptoHashProvider = new MessageDigestCryptoHashProvider(
 			"SHA-256",
 			HashMapBuilder.put(
 				"saltSize", 16
@@ -52,8 +52,8 @@ public class CryptoHasherImpl implements CryptoHasher {
 		String pepperId = null;
 
 		CryptoHashProviderResponse cryptoHashProviderResponse =
-			_cryptoHashProvider.generate(
-				pepper, _cryptoHashProvider.generateSalt(), input);
+			_messageDigestCryptoHashProvider.generate(
+				pepper, _messageDigestCryptoHashProvider.generateSalt(), input);
 
 		return new CryptoHashGenerationResponse(
 			cryptoHashProviderResponse.getHash(),
@@ -72,10 +72,11 @@ public class CryptoHasherImpl implements CryptoHasher {
 		for (CryptoHashVerificationContext cryptoHashVerificationContext :
 				cryptoHashVerificationContexts) {
 
-			CryptoHashProvider cryptoHashProvider = new CryptoHashProvider(
-				cryptoHashVerificationContext.getCryptoHashProviderName(),
-				cryptoHashVerificationContext.
-					getCryptoHashProviderProperties());
+			MessageDigestCryptoHashProvider messageDigestCryptoHashProvider =
+				new MessageDigestCryptoHashProvider(
+					cryptoHashVerificationContext.getCryptoHashProviderName(),
+					cryptoHashVerificationContext.
+						getCryptoHashProviderProperties());
 
 			// process salt
 
@@ -85,7 +86,7 @@ public class CryptoHasherImpl implements CryptoHasher {
 			byte[] pepper = null;
 
 			CryptoHashProviderResponse hashProviderResponse =
-				cryptoHashProvider.generate(
+				messageDigestCryptoHashProvider.generate(
 					pepper, optionalSalt.orElse(null), input);
 
 			input = hashProviderResponse.getHash();
@@ -115,11 +116,46 @@ public class CryptoHasherImpl implements CryptoHasher {
 		return false;
 	}
 
-	private final CryptoHashProvider _cryptoHashProvider;
+	private final MessageDigestCryptoHashProvider
+		_messageDigestCryptoHashProvider;
 
-	private static class CryptoHashProvider {
+	private static final class CryptoHashProviderResponse {
 
-		public CryptoHashProvider(
+		public CryptoHashProviderResponse(
+			byte[] hash, byte[] salt, String name, Map<String, ?> properties) {
+
+			_hash = hash;
+			_salt = salt;
+			_name = name;
+			_properties = properties;
+		}
+
+		public String getCryptoHashProviderName() {
+			return _name;
+		}
+
+		public Map<String, ?> getCryptoHashProviderProperties() {
+			return _properties;
+		}
+
+		public byte[] getHash() {
+			return _hash;
+		}
+
+		public byte[] getSalt() {
+			return _salt;
+		}
+
+		private final byte[] _hash;
+		private final String _name;
+		private final Map<String, ?> _properties;
+		private final byte[] _salt;
+
+	}
+
+	private static class MessageDigestCryptoHashProvider {
+
+		public MessageDigestCryptoHashProvider(
 				String cryptoHashProviderName,
 				Map<String, ?> cryptoHashProviderProperties)
 			throws NoSuchAlgorithmException {
@@ -169,40 +205,6 @@ public class CryptoHasherImpl implements CryptoHasher {
 		private final String _cryptoHashProviderName;
 		private final Map<String, ?> _cryptoHashProviderProperties;
 		private final MessageDigest _messageDigest;
-
-	}
-
-	private static final class CryptoHashProviderResponse {
-
-		public CryptoHashProviderResponse(
-			byte[] hash, byte[] salt, String name, Map<String, ?> properties) {
-
-			_hash = hash;
-			_salt = salt;
-			_name = name;
-			_properties = properties;
-		}
-
-		public String getCryptoHashProviderName() {
-			return _name;
-		}
-
-		public Map<String, ?> getCryptoHashProviderProperties() {
-			return _properties;
-		}
-
-		public byte[] getHash() {
-			return _hash;
-		}
-
-		public byte[] getSalt() {
-			return _salt;
-		}
-
-		private final byte[] _hash;
-		private final String _name;
-		private final Map<String, ?> _properties;
-		private final byte[] _salt;
 
 	}
 

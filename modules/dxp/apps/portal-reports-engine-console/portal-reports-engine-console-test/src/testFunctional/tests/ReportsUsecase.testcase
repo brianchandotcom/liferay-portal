@@ -23,6 +23,8 @@ definition {
 
 			ReportsAdmin.tearDownDefinitions();
 
+			ReportsAdmin.tearDownConfiguration();
+
 			ServerAdministration.tearDownMailServerSettings();
 
 			Page.tearDownCP();
@@ -230,14 +232,6 @@ definition {
 		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report From QA: reports_admin_template_source_sample_class_name.pdf");
 
 		Navigator.openSpecificURL(url = "${portalURL}");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Reports Admin");
-
-		ReportsAdmin.tearDownConfiguration();
 	}
 
 	@priority = "4"

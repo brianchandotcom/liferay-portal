@@ -322,7 +322,7 @@ Sincerely,<br />
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
-		Type(
+		Type.typeCodeMirrorEditorNoError(
 			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 			value1 = "${deliveryBody}");
 

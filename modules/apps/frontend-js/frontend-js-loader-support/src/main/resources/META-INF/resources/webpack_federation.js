@@ -68,7 +68,7 @@
 		script.src = url;
 		script.onload = () => onLoadHandler(containerRequest);
 
-		document.body.appendChild(script);
+		document.head.appendChild(script);
 
 		return containerRequest;
 	}

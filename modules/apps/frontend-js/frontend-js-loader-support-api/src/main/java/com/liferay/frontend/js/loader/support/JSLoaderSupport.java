@@ -29,8 +29,4 @@ public interface JSLoaderSupport {
 		Writer writer, String javascriptModule, String javascriptVariable,
 		String javascriptCode);
 
-	public void writeScript(
-		Writer writer, String javascriptModule, String javascriptVariable,
-		String javascriptCode, String template);
-
 }

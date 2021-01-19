@@ -4,7 +4,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 	<appender class="org.apache.log4j.rolling.RollingFileAppender" name="TEXT_FILE">
 		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
-			<param name="FileNamePattern" value="@liferay.home@/logs/liferay@spi.id@.%d{yyyy-MM-dd}.log" />
+			<param name="FileNamePattern" value="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.log" />
 		</rollingPolicy>
 
 		<layout class="org.apache.log4j.EnhancedPatternLayout">

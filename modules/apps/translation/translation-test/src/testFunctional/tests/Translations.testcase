@@ -165,7 +165,7 @@ definition {
 
 	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in draft status from the app."
 	@priority = "4"
-	test DeleteTranslationInDraft {
+	test DeleteDraftTranslation {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			description = "Description",
@@ -222,7 +222,7 @@ definition {
 
 	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in pending status from the app."
 	@priority = "4"
-	test DeleteTranslationInPending {
+	test DeletePendingTranslation {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			description = "Description",

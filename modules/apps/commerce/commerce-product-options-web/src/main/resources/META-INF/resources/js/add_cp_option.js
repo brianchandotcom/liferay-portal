@@ -12,17 +12,21 @@
  * details.
  */
 
-import {debounce} from 'frontend-js-web';
 import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 import * as modalUtils from 'commerce-frontend-js/utilities/modals/index';
 import slugify from 'commerce-frontend-js/utilities/slugify';
+import {debounce} from 'frontend-js-web';
 
-export default function ({namespace, editOptionURL, windowState, defaultLanguageId}) {
-
+export default function ({
+	defaultLanguageId,
+	editOptionURL,
+	namespace,
+	windowState,
+}) {
 	const form = document.getElementById(namespace + 'fm');
 	const keyInput = form.querySelector('#' + namespace + 'key');
 	const nameInput = form.querySelector('#' + namespace + 'name');
-	const handleOnNameInput = (event) => {
+	const handleOnNameInput = () => {
 		keyInput.value = slugify(nameInput.value);
 	};
 	nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
@@ -31,32 +35,28 @@ export default function ({namespace, editOptionURL, windowState, defaultLanguage
 
 	Liferay.provide(
 		window,
-		namespace+'apiSubmit',
-		function () {
+		namespace + 'apiSubmit',
+		() => {
 			modalUtils.isSubmitting();
-			const formattedData =
-				{
-					fieldType : '',
-					key : '',
-					name: {}
-				};
+			const formattedData = {
+				fieldType: '',
+				key: '',
+				name: {},
+			};
 
-			formattedData.fieldType = document.getElementById(namespace+'DDMFormFieldTypeName').value;
-
+			formattedData.fieldType = document.getElementById(
+				namespace + 'DDMFormFieldTypeName'
+			).value;
 			formattedData.key = keyInput.value;
-
 			formattedData.name[defaultLanguageId] = nameInput.value;
 
 			AdminCatalogResource.createOption(formattedData)
-				.then(function (cpOption) {
+				.then((cpOption) => {
 					const redirectURL = new Liferay.PortletURL.createURL(
 						editOptionURL
 					);
 
-					redirectURL.setParameter(
-						'p_p_state',
-						windowState
-					);
+					redirectURL.setParameter('p_p_state', windowState);
 
 					redirectURL.setParameter('cpOptionId', cpOption.id);
 

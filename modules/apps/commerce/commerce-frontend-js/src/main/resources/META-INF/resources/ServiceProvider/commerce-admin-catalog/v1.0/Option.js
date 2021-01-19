@@ -30,5 +30,6 @@ function resolveOptionValuesPath(basePath = '', optionId = '') {
 
 export default (basePath) => ({
 	createOption: (json) => AJAX.POST(resolveOptionsPath(basePath), json),
-	createOptionValue: (optionId, json) => AJAX.POST(resolveOptionValuesPath(basePath, optionId), json),
+	createOptionValue: (optionId, json) =>
+		AJAX.POST(resolveOptionValuesPath(basePath, optionId), json),
 });

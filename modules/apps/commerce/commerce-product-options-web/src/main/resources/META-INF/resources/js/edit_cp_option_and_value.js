@@ -16,15 +16,13 @@ import slugify from 'commerce-frontend-js/utilities/slugify';
 import {debounce} from 'frontend-js-web';
 
 export default function ({namespace}) {
-
 	const form = document.getElementById(namespace + 'fm');
-	const keyInput = form.querySelector('#' +namespace+ 'key');
-	const nameInput = form.querySelector('#' +namespace + 'name');
+	const keyInput = form.querySelector('#' + namespace + 'key');
+	const nameInput = form.querySelector('#' + namespace + 'name');
 
 	const handleOnNameInput = function () {
 		keyInput.value = slugify(nameInput.value);
 	};
 
 	nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
-
 }

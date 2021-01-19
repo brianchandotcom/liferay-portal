@@ -131,5 +131,5 @@ long cpOptionId = cpOptionDisplayContext.getCPOptionId();
 </aui:form>
 
 <liferay-frontend:component
-	module="js/edit_cp_option"
+	module="js/edit_cp_option_and_value"
 />

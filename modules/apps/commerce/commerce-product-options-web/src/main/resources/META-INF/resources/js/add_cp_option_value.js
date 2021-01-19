@@ -12,17 +12,22 @@
  * details.
  */
 
-import {debounce} from 'frontend-js-web';
+import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
 import * as modalUtils from 'commerce-frontend-js/utilities/modals/index';
 import slugify from 'commerce-frontend-js/utilities/slugify';
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
+import {debounce} from 'frontend-js-web';
 
-export default function ({namespace, editOptionURL, windowState, cpOptionId, defaultLanguageId}) {
-
+export default function ({
+	cpOptionId,
+	defaultLanguageId,
+	editOptionURL,
+	namespace,
+	windowState,
+}) {
 	const form = document.getElementById(namespace + 'fm');
 	const keyInput = form.querySelector('#' + namespace + 'key');
 	const nameInput = form.querySelector('#' + namespace + 'name');
-	const handleOnNameInput = (event) => {
+	const handleOnNameInput = () => {
 		keyInput.value = slugify(nameInput.value);
 	};
 	nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
@@ -32,30 +37,25 @@ export default function ({namespace, editOptionURL, windowState, cpOptionId, def
 	Liferay.provide(
 		window,
 		namespace + 'apiSubmit',
-		function () {
+		() => {
 			modalUtils.isSubmitting();
-			const formattedData =
-				{
-					id: '',
-					key : '',
-					name: {}
-				};
-
+			const formattedData = {
+				id: '',
+				key: '',
+				name: {},
+			};
 
 			formattedData.key = keyInput.value;
 			formattedData.name[defaultLanguageId] = nameInput.value;
-			formattedData.id = cpOptionId
+			formattedData.id = cpOptionId;
 
 			AdminCatalogResource.createOptionValue(cpOptionId, formattedData)
-				.then(function (cp) {
+				.then(() => {
 					const redirectURL = new Liferay.PortletURL.createURL(
 						editOptionURL
 					);
 
-					redirectURL.setParameter(
-						'p_p_state',
-						windowState
-					);
+					redirectURL.setParameter('p_p_state', windowState);
 					redirectURL.setParameter('cpOptionId', cpOptionId);
 
 					modalUtils.closeAndRedirect(redirectURL);

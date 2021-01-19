@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="bigDecimalEntryId" primary="true" type="long"/>
+		<column name="bigDecimalEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

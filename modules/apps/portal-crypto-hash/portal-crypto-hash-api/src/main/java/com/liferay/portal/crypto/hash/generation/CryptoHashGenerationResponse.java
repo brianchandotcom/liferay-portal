@@ -14,30 +14,25 @@
 
 package com.liferay.portal.crypto.hash.generation;
 
-import com.liferay.portal.crypto.hash.verification.CryptoHashVerificationContext;
-
 /**
  * @author Carlos Sierra Andrés
  */
 public final class CryptoHashGenerationResponse {
 
-	public CryptoHashGenerationResponse(
-		byte[] hash,
-		CryptoHashVerificationContext cryptoHashVerificationContext) {
-
+	public CryptoHashGenerationResponse(byte[] hash, byte[] salt) {
 		_hash = hash;
-		_cryptoHashVerificationContext = cryptoHashVerificationContext;
-	}
-
-	public CryptoHashVerificationContext getCryptoHashVerificationContext() {
-		return _cryptoHashVerificationContext;
+		_salt = salt;
 	}
 
 	public byte[] getHash() {
 		return _hash;
 	}
 
-	private final CryptoHashVerificationContext _cryptoHashVerificationContext;
+	public byte[] getSalt() {
+		return _salt;
+	}
+
 	private final byte[] _hash;
+	private final byte[] _salt;
 
 }

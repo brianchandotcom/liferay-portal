@@ -285,7 +285,7 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
+			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -294,7 +294,7 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Upload",
+			dmDocumentTypeFieldNames = "Image",
 			dmDocumentTypeName = "DM Document Type Name");
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
@@ -305,7 +305,9 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Type Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			documentsAndMediaField = "DM Document Title");
+			imageField = "DM Document Title",
+			imageFileName = "Document Title",
+			navTab = "Documents and Media");
 
 		JSONDocument.deleteFile(
 			dmDocumentTitle = "DM Document Title",

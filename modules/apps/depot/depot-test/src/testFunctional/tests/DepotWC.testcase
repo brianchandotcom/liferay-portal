@@ -125,7 +125,11 @@ definition {
 	@description = "This ensures that a web content folder can be edited in a depot."
 	@priority = "3"
 	test EditFolder {
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Edit Folder Depot");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Edit Folder Depot");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
@@ -246,17 +250,21 @@ definition {
 	@description = "This ensures that a web content can be expired in a depot."
 	@priority = "3"
 	test ExpireWebContent {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Expire WC Depot");
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "Test Depot Name",
+			groupName = "Test Expire WC Depot",
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Expire WC Depot");
 
 		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Expire WC Depot");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 

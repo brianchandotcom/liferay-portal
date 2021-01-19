@@ -40,7 +40,6 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.depot.model.DepotEntry"
-						cssClass="entry-display-style"
 						escapedModel="<%= true %>"
 						keyProperty="depotEntryId"
 						rowIdProperty="depotEntryId"

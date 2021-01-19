@@ -28,14 +28,8 @@ SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = (Sel
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.list.model.AssetListEntry"
-			cssClass="entry"
 			modelVar="assetListEntry"
 		>
-
-			<%
-			row.setCssClass("card-page-item card-page-item-asset entry-display-style " + row.getCssClass());
-			%>
-
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
 					verticalCard="<%= new CollectionsVerticalCard(assetListEntry, selectLayoutCollectionDisplayContext.getSelGroupId(), renderRequest, renderResponse) %>"

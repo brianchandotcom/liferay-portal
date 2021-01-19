@@ -39,7 +39,6 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 	>
 		<liferay-ui:search-container-row
 			className="Object"
-			cssClass="entry-display-style"
 			modelVar="object"
 		>
 

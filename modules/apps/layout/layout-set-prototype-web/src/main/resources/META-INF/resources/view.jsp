@@ -46,7 +46,6 @@
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.LayoutSetPrototype"
-			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="layoutSetPrototypeId"
 			modelVar="layoutSetPrototype"
@@ -106,7 +105,6 @@
 						<liferay-frontend:icon-vertical-card
 							actionJsp="/layout_set_prototype_action.jsp"
 							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
 							icon="site-template"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"

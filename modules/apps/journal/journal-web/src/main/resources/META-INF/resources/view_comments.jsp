@@ -22,7 +22,6 @@
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.message.boards.model.MBMessage"
-		cssClass="entry-display-style selectable"
 		modelVar="mbMessage"
 	>
 

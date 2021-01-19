@@ -19,10 +19,15 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -175,9 +180,26 @@ public class DefaultMapToDDMFormValuesConverterStrategy
 
 				LocalizedValue localizedValue = new LocalizedValue();
 
-				localizedValue.addString(
-					(Locale)GetterUtil.getObject(locale, defaultLocale),
-					String.valueOf(object));
+				if (object instanceof Map) {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						(Map)object);
+
+					localizedValue.addString(
+						(Locale)GetterUtil.getObject(locale, defaultLocale),
+						jsonObject.toString());
+				}
+				else if (object instanceof Object[]) {
+					JSONArray jsonArray = JSONUtil.putAll((Object[])object);
+
+					localizedValue.addString(
+						(Locale)GetterUtil.getObject(locale, defaultLocale),
+						jsonArray.toString());
+				}
+				else {
+					localizedValue.addString(
+						(Locale)GetterUtil.getObject(locale, defaultLocale),
+						String.valueOf(object));
+				}
 
 				ddmFormFieldValue.setValue(localizedValue);
 

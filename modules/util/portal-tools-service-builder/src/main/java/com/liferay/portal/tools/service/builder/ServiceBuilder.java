@@ -5992,13 +5992,13 @@ public class ServiceBuilder {
 				_packagePath, ".service.persistence.impl.", entityName,
 				"PersistenceImpl"));
 
-		boolean externalReferenceCode = false;
-
-		String externalReferenceCodeScope = GetterUtil.getString(
+		String externalReferenceCode = GetterUtil.getString(
 			entityElement.attributeValue("external-reference-code"), "none");
 
-		externalReferenceCodeScope = StringUtil.replace(
-			externalReferenceCodeScope, "false", "none");
+		externalReferenceCode = StringUtil.replace(
+			externalReferenceCode, "false", "none");
+		externalReferenceCode = StringUtil.replace(
+			externalReferenceCode, "true", "company");
 
 		String finderClassName = "";
 
@@ -6123,13 +6123,10 @@ public class ServiceBuilder {
 
 		List<Element> derivedColumnElements = new ArrayList<>();
 
-		if (!StringUtil.equals(externalReferenceCodeScope, "none") &&
-			!columnElements.contains(
+		if (columnElements.contains(
 				new EntityColumn(this, "externalReferenceCode"))) {
 
-			externalReferenceCode = true;
-			externalReferenceCodeScope = StringUtil.replace(
-				externalReferenceCodeScope, "true", "company");
+			externalReferenceCode = "none";
 		}
 
 		if (mvccEnabled && !columnElements.isEmpty()) {
@@ -6163,7 +6160,7 @@ public class ServiceBuilder {
 			derivedColumnElements.add(columnElement);
 		}
 
-		if (externalReferenceCode) {
+		if (!StringUtil.equals(externalReferenceCode, "none")) {
 			Element columnElement = DocumentHelper.createElement("column");
 
 			columnElement.addAttribute("name", "externalReferenceCode");
@@ -6475,11 +6472,11 @@ public class ServiceBuilder {
 			finderElements.add(0, finderElement);
 		}
 
-		if (externalReferenceCode) {
+		if (!StringUtil.equals(externalReferenceCode, "none")) {
 			Element finderElement = DocumentHelper.createElement("finder");
 
 			String scopeUpperCase = StringUtil.toUpperCase(
-				externalReferenceCodeScope);
+				externalReferenceCode);
 
 			char scopeId = scopeUpperCase.charAt(0);
 
@@ -6491,7 +6488,7 @@ public class ServiceBuilder {
 				"finder-column");
 
 			finderColumnElement.addAttribute(
-				"name", externalReferenceCodeScope + "Id");
+				"name", externalReferenceCode + "Id");
 
 			finderColumnElement = finderElement.addElement("finder-column");
 
@@ -6719,15 +6716,14 @@ public class ServiceBuilder {
 		Entity entity = new Entity(
 			this, _packagePath, _apiPackagePath, _portletShortName, entityName,
 			variableName, pluralName, pluralVariableName, humanName, tableName,
-			alias, uuid, uuidAccessor, externalReferenceCode,
-			externalReferenceCodeScope, localService, remoteService,
-			persistence, persistenceClassName, finderClassName, dataSource,
-			sessionFactory, txManager, cacheEnabled, changeTrackingEnabled,
-			dynamicUpdateEnabled, jsonEnabled, mvccEnabled, trashEnabled,
-			uadApplicationName, uadAutoDelete, uadOutputPath, uadPackagePath,
-			deprecated, pkEntityColumns, regularEntityColumns,
-			blobEntityColumns, collectionEntityColumns, entityColumns,
-			entityOrder, entityFinders, referenceEntities,
+			alias, uuid, uuidAccessor, externalReferenceCode, localService,
+			remoteService, persistence, persistenceClassName, finderClassName,
+			dataSource, sessionFactory, txManager, cacheEnabled,
+			changeTrackingEnabled, dynamicUpdateEnabled, jsonEnabled,
+			mvccEnabled, trashEnabled, uadApplicationName, uadAutoDelete,
+			uadOutputPath, uadPackagePath, deprecated, pkEntityColumns,
+			regularEntityColumns, blobEntityColumns, collectionEntityColumns,
+			entityColumns, entityOrder, entityFinders, referenceEntities,
 			unresolvedReferenceEntityNames, txRequiredMethodNames,
 			resourceActionModel);
 

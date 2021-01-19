@@ -484,9 +484,9 @@ import org.osgi.service.component.annotations.Reference;
 
 		<#if entity.hasExternalReferenceCode() && !entity.versionEntity??>
 			/**
-			 * Returns the ${entity.humanName} with the matching external reference code and ${entity.externalReferenceCodeScope}.
+			 * Returns the ${entity.humanName} with the matching external reference code and ${entity.externalReferenceCode}.
 			 *
-			 * @param ${entity.externalReferenceCodeScope}Id the primary key of the ${entity.externalReferenceCodeScope}
+			 * @param ${entity.externalReferenceCode}Id the primary key of the ${entity.externalReferenceCode}
 			 * @param externalReferenceCode the ${entity.humanName}'s external reference code
 			 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
 			<#list serviceBaseExceptions as exception>
@@ -494,8 +494,8 @@ import org.osgi.service.component.annotations.Reference;
 			</#list>
 			 */
 			@Override
-			public ${entity.name} fetch${entity.name}ByReferenceCode(long ${entity.externalReferenceCodeScope}Id, String externalReferenceCode) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-				return ${entity.variableName}Persistence.fetchBy${entity.externalReferenceCodeScope?cap_first[0..0]}_ERC(${entity.externalReferenceCodeScope}Id, externalReferenceCode);
+			public ${entity.name} fetch${entity.name}ByReferenceCode(long ${entity.externalReferenceCode}Id, String externalReferenceCode) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
+				return ${entity.variableName}Persistence.fetchBy${entity.externalReferenceCode?cap_first[0..0]}_ERC(${entity.externalReferenceCode}Id, externalReferenceCode);
 			}
 		</#if>
 

@@ -155,6 +155,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>ADD_FIELD_POSITION_1</td>
+    <td>//div[contains(@class,'ddm-target')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>ADD_IMAGE_DESCRIPTION</td>
     <td>xpath=(//div[contains(@class,'form-group') ]//input[@placeholder='Add image description.'])[${descriptionPosition}]</td>
     <td></td>

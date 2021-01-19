@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,7 +37,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
@@ -82,23 +82,7 @@ public class Log4JOutputMessageTest {
 				(Objects.equals("TEXT_FILE", appender.getName()) ||
 				 Objects.equals("XML_FILE", appender.getName()))) {
 
-				RollingFileAppender portalRollingFileAppender =
-					(RollingFileAppender)appender;
-
-				TimeBasedRollingPolicy portalTimeBasedRollingPolicy =
-					(TimeBasedRollingPolicy)
-						portalRollingFileAppender.getRollingPolicy();
-
-				String portalFileNamePattern =
-					portalTimeBasedRollingPolicy.getFileNamePattern();
-
-				portalFileNamePattern = StringUtil.extractLast(
-					portalFileNamePattern, StringPool.SLASH);
-
-				_setLoggerRollingFileAppender(
-					portalRollingFileAppender, logger,
-					StringUtil.replace(tempLogFileDir.toString(), '\\', '/') +
-						StringPool.SLASH + portalFileNamePattern);
+				_setLoggerRollingFileAppender(appender, logger, tempLogFileDir);
 			}
 			else if ((appender instanceof ConsoleAppender) &&
 					 Objects.equals("CONSOLE", appender.getName())) {
@@ -135,6 +119,23 @@ public class Log4JOutputMessageTest {
 		_testLogOutput("FATAL");
 	}
 
+	@Test
+	public void testPortalLogFileName() {
+		Matcher matcher = _textFileNamePattern.matcher(_portalTextLogFileName);
+
+		Assert.assertTrue(
+			"Text log file name should match the pattern liferay.yyyy-MM-dd." +
+				"log, but actual name is " + _portalTextLogFileName,
+			matcher.matches());
+
+		matcher = _xmlFileNamePattern.matcher(_portalXmlLogFileName);
+
+		Assert.assertTrue(
+			"XML log file name should match the pattern liferay.yyyy-MM-dd." +
+				"xml, but actual name is " + _portalXmlLogFileName,
+			matcher.matches());
+	}
+
 	private static Logger _getLogger() {
 		LogWrapper logWrapper = (LogWrapper)_log;
 
@@ -144,15 +145,29 @@ public class Log4JOutputMessageTest {
 	}
 
 	private static void _setLoggerRollingFileAppender(
-		RollingFileAppender portalRollingFileAppender, Logger logger,
-		String testFileNamePattern) {
+		Appender appender, Logger logger, File tempLogFileDir) {
 
-		RollingFileAppender testRollingFileAppender = new RollingFileAppender();
+		RollingFileAppender portalRollingFileAppender =
+			(RollingFileAppender)appender;
+
+		TimeBasedRollingPolicy portalTimeBasedRollingPolicy =
+			(TimeBasedRollingPolicy)
+				portalRollingFileAppender.getRollingPolicy();
+
+		String portalFileNamePattern =
+			portalTimeBasedRollingPolicy.getFileNamePattern();
+
+		portalFileNamePattern = StringUtil.extractLast(
+			portalFileNamePattern, StringPool.SLASH);
 
 		TimeBasedRollingPolicy testTimeBasedRollingPolicy =
 			new TimeBasedRollingPolicy();
 
-		testTimeBasedRollingPolicy.setFileNamePattern(testFileNamePattern);
+		testTimeBasedRollingPolicy.setFileNamePattern(
+			StringUtil.replace(tempLogFileDir.toString(), '\\', '/') +
+				StringPool.SLASH + portalFileNamePattern);
+
+		RollingFileAppender testRollingFileAppender = new RollingFileAppender();
 
 		testRollingFileAppender.setLayout(
 			portalRollingFileAppender.getLayout());
@@ -162,13 +177,21 @@ public class Log4JOutputMessageTest {
 
 		logger.addAppender(testRollingFileAppender);
 
+		String portalLogFileName = portalRollingFileAppender.getFile();
+
 		if (Objects.equals("TEXT_FILE", portalRollingFileAppender.getName())) {
 			_textLogFile = new File(testRollingFileAppender.getFile());
+
+			_portalTextLogFileName = StringUtil.extractLast(
+				portalLogFileName, StringPool.SLASH);
 		}
 		else if (Objects.equals(
 					portalRollingFileAppender.getName(), "XML_FILE")) {
 
 			_xmlLogFile = new File(testRollingFileAppender.getFile());
+
+			_portalXmlLogFileName = StringUtil.extractLast(
+				portalLogFileName, StringPool.SLASH);
 		}
 	}
 
@@ -176,23 +199,9 @@ public class Log4JOutputMessageTest {
 			String level, String message, Throwable throwable)
 		throws Exception {
 
-		Matcher matcher = _textFileNamePattern.matcher(_textLogFile.getName());
-
-		Assert.assertTrue(
-			"Text log file name should match the pattern liferay.yyyy-MM-dd." +
-				"log, but actual name is " + _textLogFile.getName(),
-			matcher.matches());
-
 		_assertTextLog(
 			level, message, throwable,
 			StreamUtil.toString(new FileInputStream(_textLogFile)));
-
-		matcher = _xmlFileNamePattern.matcher(_xmlLogFile.getName());
-
-		Assert.assertTrue(
-			"XML log file name should match the pattern liferay.yyyy-MM-dd." +
-				"xml, but actual name is " + _xmlLogFile.getName(),
-			matcher.matches());
 
 		_assertXmlLog(
 			level, message, throwable,
@@ -437,6 +446,12 @@ public class Log4JOutputMessageTest {
 				0, expectedLog4JLocationInfoFilePart.length()));
 	}
 
+	private void _clearUpFileContent(File logFile) throws Exception {
+		try (FileWriter fileWriter = new FileWriter(logFile, false)) {
+			fileWriter.write("");
+		}
+	}
+
 	private void _outputLog(String level, String message, Throwable throwable) {
 		if (level.equals("TRACE")) {
 			if ((message == null) && (throwable != null)) {
@@ -520,8 +535,8 @@ public class Log4JOutputMessageTest {
 		finally {
 			_unsyncStringWriter.reset();
 
-			FileUtils.writeStringToFile(_textLogFile, "", StringPool.UTF8);
-			FileUtils.writeStringToFile(_xmlLogFile, "", StringPool.UTF8);
+			_clearUpFileContent(_textLogFile);
+			_clearUpFileContent(_xmlLogFile);
 		}
 
 		TestException testException = new TestException();
@@ -538,8 +553,8 @@ public class Log4JOutputMessageTest {
 		finally {
 			_unsyncStringWriter.reset();
 
-			FileUtils.writeStringToFile(_textLogFile, "", StringPool.UTF8);
-			FileUtils.writeStringToFile(_xmlLogFile, "", StringPool.UTF8);
+			_clearUpFileContent(_textLogFile);
+			_clearUpFileContent(_xmlLogFile);
 		}
 
 		_outputLog(level, null, testException);
@@ -553,8 +568,8 @@ public class Log4JOutputMessageTest {
 		finally {
 			_unsyncStringWriter.reset();
 
-			FileUtils.writeStringToFile(_textLogFile, "", StringPool.UTF8);
-			FileUtils.writeStringToFile(_xmlLogFile, "", StringPool.UTF8);
+			_clearUpFileContent(_textLogFile);
+			_clearUpFileContent(_xmlLogFile);
 		}
 	}
 
@@ -565,6 +580,8 @@ public class Log4JOutputMessageTest {
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
+	private static String _portalTextLogFileName;
+	private static String _portalXmlLogFileName;
 	private static final Pattern _textFileNamePattern = Pattern.compile(
 		"liferay.\\d\\d\\d\\d-\\d\\d-\\d\\d.log");
 	private static File _textLogFile;

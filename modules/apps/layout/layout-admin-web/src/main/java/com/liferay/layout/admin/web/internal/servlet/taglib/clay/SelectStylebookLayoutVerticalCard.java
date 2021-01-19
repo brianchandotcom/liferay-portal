@@ -80,6 +80,11 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 		return false;
 	}
 
+	@Override
+	public Boolean isStickerShown() {
+		return false;
+	}
+
 	private final StyleBookEntry _styleBookEntry;
 	private final ThemeDisplay _themeDisplay;
 

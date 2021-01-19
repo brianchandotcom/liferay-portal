@@ -94,6 +94,11 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 		return false;
 	}
 
+	@Override
+	public Boolean isStickerShown() {
+		return false;
+	}
+
 	private final String _name;
 	private final ResourceBundle _resourceBundle;
 	private final StyleBookEntry _styleBookEntry;

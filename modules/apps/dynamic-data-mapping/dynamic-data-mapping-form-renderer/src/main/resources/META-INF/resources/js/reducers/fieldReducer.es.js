@@ -22,6 +22,7 @@ import {
 import {PagesVisitor} from '../util/visitors.es';
 
 export const createRepeatedField = (sourceField, repeatedIndex) => {
+	const fieldIsGrid = sourceField.type === 'grid';
 	const instanceId = generateInstanceId();
 
 	let localizedValue;
@@ -37,8 +38,20 @@ export const createRepeatedField = (sourceField, repeatedIndex) => {
 		);
 	}
 
+	const generateId = (length) => Math.random().toFixed(length).split('.')[1];
+
+	const createRepeatableOption = (options) =>
+		options.map((option) => ({
+			...option,
+			value: `${Liferay.Language.get('option')}${generateId(8)}`,
+		}));
+
 	return {
 		...sourceField,
+		...(fieldIsGrid && {
+			columns: createRepeatableOption(sourceField.columns),
+		}),
+		...(fieldIsGrid && {rows: createRepeatableOption(sourceField.rows)}),
 		instanceId,
 		localizedValue,
 		name: generateName(sourceField.name, {instanceId, repeatedIndex}),

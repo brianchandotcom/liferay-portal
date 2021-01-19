@@ -54,25 +54,19 @@ public class CryptoHasherTest {
 		CryptoHashGenerationResponse hashGenerationResponse2 =
 			_cryptoHasher.generate(hashGenerationResponse1.getHash());
 
-		CryptoHashVerificationContext[] cryptoHashVerificationContexts =
-			new CryptoHashVerificationContext[3];
-
-		cryptoHashVerificationContexts[0] =
-			hashGenerationResponse0.getCryptoHashVerificationContext();
-		cryptoHashVerificationContexts[1] =
-			hashGenerationResponse1.getCryptoHashVerificationContext();
-		cryptoHashVerificationContexts[2] =
-			hashGenerationResponse2.getCryptoHashVerificationContext();
-
 		Assert.assertTrue(
 			_cryptoHasher.verify(
 				_PASSWORD.getBytes(), hashGenerationResponse2.getHash(),
-				cryptoHashVerificationContexts));
+				hashGenerationResponse0.getCryptoHashVerificationContext(),
+				hashGenerationResponse1.getCryptoHashVerificationContext(),
+				hashGenerationResponse2.getCryptoHashVerificationContext()));
 
 		Assert.assertFalse(
 			_cryptoHasher.verify(
 				_WRONG_PASSWORD.getBytes(), hashGenerationResponse2.getHash(),
-				cryptoHashVerificationContexts));
+				hashGenerationResponse0.getCryptoHashVerificationContext(),
+				hashGenerationResponse1.getCryptoHashVerificationContext(),
+				hashGenerationResponse2.getCryptoHashVerificationContext()));
 	}
 
 	@Test

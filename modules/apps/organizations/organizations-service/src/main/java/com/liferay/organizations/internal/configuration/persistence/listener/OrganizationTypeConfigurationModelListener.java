@@ -17,7 +17,7 @@ package com.liferay.organizations.internal.configuration.persistence.listener;
 import com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -60,8 +60,7 @@ public class OrganizationTypeConfigurationModelListener
 
 	private ResourceBundle _getResourceBundle() {
 		return ResourceBundleUtil.getBundle(
-			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
-			getClass());
+			"content.Language", LocaleUtil.getMostRelevantLocale(), getClass());
 	}
 
 	private void _validateNameExists(String name) throws Exception {

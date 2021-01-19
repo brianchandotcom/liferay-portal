@@ -44,15 +44,6 @@ public class CryptoHasherTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGeneration() throws Exception {
-		CryptoHashGenerationResponse hashGenerationResponse =
-			_cryptoHasher.generate(_PASSWORD.getBytes());
-
-		Assert.assertArrayEquals(
-			hashGenerationResponse.getHash(), _PASSWORD_HASH);
-	}
-
-	@Test
 	public void testGenerationAndVerification() throws Exception {
 		CryptoHashGenerationResponse hashGenerationResponse0 =
 			_cryptoHasher.generate(_PASSWORD.getBytes());
@@ -154,9 +145,6 @@ public class CryptoHasherTest {
 	private static final String _MESSAGE_DIGEST_ALGO_1 = "SHA-256";
 
 	private static final String _PASSWORD = "password";
-
-	private static final byte[] _PASSWORD_HASH = _hexToBytes(
-		"5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
 
 	private static final byte[] _PASSWORD_HASH_WITH_SALT = _hexToBytes(
 		"ee765094649dcc6b5e89a91663cbeb80ecceed035e13201da471a97d30534f57" +

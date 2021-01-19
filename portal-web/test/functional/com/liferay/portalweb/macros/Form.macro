@@ -359,10 +359,18 @@ definition {
 			var key_fieldLocation = "${fieldPositionNumber}";
 		}
 
-		DragAndDrop.dragAndDropPortletToObject(
-			locator1 = "Form#ADD_FIELD_TYPE",
-			locator2 = "Form#ADD_FIELD_POSITION",
-			value1 = "${fieldType}");
+		if (isSet(local)) {
+			DragAndDrop.dragAndDropPortletToObject(
+				locator1 = "Form#ADD_FIELD_TYPE",
+				locator2 = "Form#ADD_FIELD_POSITION_1",
+				value1 = "${fieldType}");
+		}
+		else {
+			DragAndDrop.dragAndDropPortletToObject(
+				locator1 = "Form#ADD_FIELD_TYPE",
+				locator2 = "Form#ADD_FIELD_POSITION",
+				value1 = "${fieldType}");
+		}
 
 		if (isSet(localeBasic)) {
 			var key_localeBasic = "${localeBasic}";

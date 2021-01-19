@@ -89,6 +89,9 @@ public class SelectBasicTemplatesVerticalCard implements VerticalCard {
 		catch (Exception exception) {
 		}
 
+		data.put("role", "button");
+		data.put("tabIndex", "0");
+
 		return data;
 	}
 

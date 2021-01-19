@@ -109,6 +109,9 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 			}
 		}
 
+		data.put("role", "button");
+		data.put("tabIndex", "0");
+
 		return data;
 	}
 

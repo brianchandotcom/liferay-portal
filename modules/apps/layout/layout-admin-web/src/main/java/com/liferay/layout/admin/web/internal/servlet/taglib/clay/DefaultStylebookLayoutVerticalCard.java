@@ -58,6 +58,10 @@ public class DefaultStylebookLayoutVerticalCard implements VerticalCard {
 			"data-name", _name
 		).put(
 			"data-styleBookEntryId", "0"
+		).put(
+			"role", "button"
+		).put(
+			"tabIndex", "0"
 		).build();
 	}
 

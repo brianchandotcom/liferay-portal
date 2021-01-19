@@ -50,6 +50,10 @@ public class SelectThemeVerticalCard implements VerticalCard {
 	public Map<String, String> getDynamicAttributes() {
 		return HashMapBuilder.put(
 			"data-themeid", _theme.getThemeId()
+		).put(
+			"role", "button"
+		).put(
+			"tabIndex", "0"
 		).build();
 	}
 

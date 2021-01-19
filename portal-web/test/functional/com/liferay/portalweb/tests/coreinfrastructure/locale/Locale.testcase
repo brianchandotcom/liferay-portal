@@ -48,6 +48,7 @@ definition {
 
 		Form.gotoAddField(
 			fieldType = "Campo de texto",
+			local = "true",
 			localeBasic = "Básico",
 			localeElements = "Elementos");
 

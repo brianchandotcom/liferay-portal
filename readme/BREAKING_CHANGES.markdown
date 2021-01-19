@@ -440,3 +440,24 @@ away from Soy:
 > were the only people using this technology.
 
 ---------------------------------------
+### The spi.id property in log4j xml definition file has been removed
+- **Date:** 2021-Jan-19
+- **JIRA Ticket:** [LPS-125998](https://issues.liferay.com/browse/LPS-125998)
+
+#### What changed?
+
+The `spi.id` property in log4j xml definition file has been removed.
+
+#### Who is affected?
+
+Anyone is using `@spi.id@` in its custom log4j xml definition file.
+
+#### How should I update my code?
+
+Remove `@spi.id@` from log4j xml definition file.
+
+#### Why was this change made?
+
+The support of SPI has been removed by LPS-110758.
+
+---------------------------------------

@@ -97,7 +97,7 @@ dependencies {
 }
 
 writeReleases {
-	dependsOn configurations.compile
+	dependsOn configurations.compileInclude
 
 	doLast {
 		File releasesTxtFile = new File(processResources.destinationDir, "com/liferay/portal/tools/sample/sql/builder/dependencies/releases.txt")

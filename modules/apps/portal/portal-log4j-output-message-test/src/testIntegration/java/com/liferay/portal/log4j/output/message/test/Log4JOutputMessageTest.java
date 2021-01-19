@@ -97,6 +97,10 @@ public class Log4JOutputMessageTest {
 
 					textFileRollingFileAppender.setRollingPolicy(
 						timeBasedRollingPolicy);
+
+					textFileRollingFileAppender.activateOptions();
+
+					logger.addAppender(textFileRollingFileAppender);
 				}
 				else if (Objects.equals("XML_FILE", appender.getName())) {
 					RollingFileAppender xmlFileRollingFileAppender =
@@ -114,6 +118,10 @@ public class Log4JOutputMessageTest {
 
 					xmlFileRollingFileAppender.setRollingPolicy(
 						timeBasedRollingPolicy);
+
+					xmlFileRollingFileAppender.activateOptions();
+
+					logger.addAppender(xmlFileRollingFileAppender);
 				}
 			}
 			else if ((appender instanceof ConsoleAppender) &&

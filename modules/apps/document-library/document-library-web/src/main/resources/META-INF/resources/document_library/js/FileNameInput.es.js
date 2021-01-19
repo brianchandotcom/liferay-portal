@@ -14,6 +14,7 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -28,13 +29,28 @@ const RequiredMark = () => (
 	</>
 );
 
+const Feedback = ({message, warning}) => (
+	<ClayForm.FeedbackGroup>
+		<ClayForm.FeedbackItem>
+			{warning && <ClayIcon className="mr-1" symbol="warning-full" />}
+			{message}
+		</ClayForm.FeedbackItem>
+	</ClayForm.FeedbackGroup>
+);
+
 const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 	const inputId = portletNamespace + 'fileName';
 	const [inputValue, setInputValue] = useState(initialValue);
 	const valueChanged = initialValue != inputValue;
 
 	return (
-		<ClayForm.Group className={valueChanged ? 'has-warning' : ''}>
+		<ClayForm.Group
+			className={classNames({
+				'has-error': required && !inputValue,
+				'has-warning': valueChanged && inputValue,
+			})}
+			className={valueChanged ? 'has-warning' : ''}
+		>
 			<label htmlFor={inputId}>
 				{Liferay.Language.get('file-name')}
 
@@ -51,13 +67,18 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 				value={inputValue}
 			/>
 
-			{valueChanged && (
-				<ClayForm.FeedbackGroup>
-					<ClayForm.FeedbackItem>
-						<ClayIcon className="mr-1" symbol="warning-full" />
-						{Liferay.Language.get('warning-changing-file-name-will-affect-existing-links-to-this-document')}
-					</ClayForm.FeedbackItem>
-				</ClayForm.FeedbackGroup>
+			{required && !inputValue && (
+				<Feedback
+					message={Liferay.Language.get('this-field-is-required')}
+				/>
+			)}
+			{inputValue && valueChanged && (
+				<Feedback
+					message={Liferay.Language.get(
+						'warning-changing-file-name-will-affect-existing-links-to-this-document'
+					)}
+					warning
+				/>
 			)}
 		</ClayForm.Group>
 	);

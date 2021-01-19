@@ -827,7 +827,7 @@ definition {
 	test ConvertWidgetPageWithWebContentsToContentPage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456
+		// TODO LPS-123456 ConvertWidgetPageWithWebContentsToContentPage pending implementation
 
 	}
 

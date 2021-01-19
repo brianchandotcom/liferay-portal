@@ -87,7 +87,6 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.application.model.CommerceApplicationModel"
-				cssClass="entry-display-style"
 				keyProperty="commerceApplicationModelId"
 				modelVar="commerceApplicationModel"
 			>

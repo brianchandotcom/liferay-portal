@@ -76,7 +76,6 @@ cpAttachmentFileEntrySearchContainer.setResults(cpAttachmentFileEntries);
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.product.model.CPAttachmentFileEntry"
-				cssClass="entry-display-style"
 				keyProperty="CPAttachmentFileEntryId"
 				modelVar="cpAttachmentFileEntry"
 			>

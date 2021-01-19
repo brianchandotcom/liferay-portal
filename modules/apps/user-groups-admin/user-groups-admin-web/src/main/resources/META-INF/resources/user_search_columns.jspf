@@ -43,7 +43,6 @@
 			<liferay-frontend:user-vertical-card
 				actionJsp='<%= showActions ? "/user_action.jsp" : StringPool.BLANK %>'
 				actionJspServletContext="<%= application %>"
-				cssClass="entry-display-style"
 				resultRow="<%= row %>"
 				rowChecker="<%= userSearchContainer.getRowChecker() %>"
 				subtitle="<%= user2.getScreenName() %>"

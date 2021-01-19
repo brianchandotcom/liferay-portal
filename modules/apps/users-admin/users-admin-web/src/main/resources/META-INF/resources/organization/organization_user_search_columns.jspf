@@ -60,7 +60,6 @@
 					<liferay-frontend:icon-vertical-card
 						actionJsp="/organization_action.jsp"
 						actionJspServletContext="<%= application %>"
-						cssClass="entry-display-style"
 						icon="organizations"
 						resultRow="<%= row %>"
 						rowChecker="<%= organizationUserSearchContainer.getRowChecker() %>"
@@ -149,7 +148,6 @@
 					<liferay-frontend:user-vertical-card
 						actionJsp="/user_action.jsp"
 						actionJspServletContext="<%= application %>"
-						cssClass="entry-display-style"
 						resultRow="<%= row %>"
 						rowChecker="<%= organizationUserSearchContainer.getRowChecker() %>"
 						subtitle='<%= LanguageUtil.get(request, "user") %>'

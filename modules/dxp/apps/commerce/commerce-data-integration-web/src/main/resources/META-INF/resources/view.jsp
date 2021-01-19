@@ -45,7 +45,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					>
 						<liferay-ui:search-container-row
 							className="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess"
-							cssClass="entry-display-style"
 							keyProperty="CDataIntegrationProcessId"
 							modelVar="commerceDataIntegrationProcess"
 						>

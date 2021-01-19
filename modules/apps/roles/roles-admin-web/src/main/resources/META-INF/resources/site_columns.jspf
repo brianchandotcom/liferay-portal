@@ -40,7 +40,6 @@
 		<liferay-ui:search-container-column-text>
 			<liferay-frontend:icon-vertical-card
 				actionJspServletContext="<%= application %>"
-				cssClass="entry-display-style"
 				icon="sites"
 				resultRow="<%= row %>"
 				rowChecker="<%= groupSearchContainer.getRowChecker() %>"

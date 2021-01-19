@@ -52,7 +52,6 @@ renderResponse.setTitle(ddmDataProviderDisplayContext.getTitle());
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance"
-						cssClass="entry-display-style"
 						keyProperty="dataProviderInstanceId"
 						modelVar="dataProviderInstance"
 					>

@@ -91,7 +91,6 @@ SearchContainer<User> userSearchContainer = selectOrganizationUsersManagementToo
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:user-vertical-card
 							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
 							resultRow="<%= row %>"
 							rowChecker="<%= userSearchContainer.getRowChecker() %>"
 							subtitle="<%= user2.getScreenName() %>"

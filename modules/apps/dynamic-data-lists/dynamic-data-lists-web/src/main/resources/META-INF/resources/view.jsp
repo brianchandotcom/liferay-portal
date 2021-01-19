@@ -45,7 +45,6 @@ String displayStyle = ddlDisplayContext.getDisplayStyle();
 
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
-				cssClass="entry-display-style"
 				keyProperty="recordSetId"
 				modelVar="recordSet"
 			>

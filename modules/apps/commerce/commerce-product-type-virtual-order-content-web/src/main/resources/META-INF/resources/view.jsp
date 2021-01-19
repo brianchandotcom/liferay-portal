@@ -52,7 +52,6 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 					>
 						<liferay-ui:search-container-row
 							className="com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem"
-							cssClass="entry-display-style"
 							keyProperty="commerceVirtualOrderItemId"
 							modelVar="commerceVirtualOrderItem"
 						>

@@ -22,7 +22,6 @@
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowTask"
-		cssClass="entry-display-style"
 		modelVar="workflowTask"
 		stringKey="<%= true %>"
 	>

@@ -20,7 +20,6 @@
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowInstance"
-		cssClass="entry-display-style"
 		modelVar="workflowInstance"
 		stringKey="<%= true %>"
 	>

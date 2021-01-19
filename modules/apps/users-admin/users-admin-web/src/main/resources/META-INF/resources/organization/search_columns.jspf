@@ -53,7 +53,6 @@
 			<liferay-frontend:vertical-card
 				actionJsp="/organization_action.jsp"
 				actionJspServletContext="<%= application %>"
-				cssClass="entry-display-style"
 				imageUrl='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=" + organization.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(organization.getLogoId()) %>'
 				resultRow="<%= row %>"
 				rowChecker="<%= organizationSearchContainer.getRowChecker() %>"

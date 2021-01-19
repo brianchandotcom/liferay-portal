@@ -44,7 +44,6 @@
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMFormInstance"
-				cssClass="entry-display-style"
 				keyProperty="formInstanceId"
 				modelVar="formInstance"
 			>

@@ -83,7 +83,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.application.model.CommerceApplicationBrand"
-				cssClass="entry-display-style"
 				keyProperty="commerceApplicationBrandId"
 				modelVar="commerceApplicationBrand"
 			>

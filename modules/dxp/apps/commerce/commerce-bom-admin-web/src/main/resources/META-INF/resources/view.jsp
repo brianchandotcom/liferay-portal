@@ -102,7 +102,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "shop-by-diagram"));
 	>
 		<liferay-ui:search-container-row
 			className="Object"
-			cssClass="entry-display-style"
 			modelVar="object"
 		>
 

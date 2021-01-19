@@ -65,7 +65,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						<c:when test="<%= itemDescriptor.isCompact() %>">
 
 							<%
-							row.setCssClass("card-page-item card-page-item-directory entry entry-display-style " + row.getCssClass());
+							row.setCssClass("card-page-item card-page-item-directory entry " + row.getCssClass());
 							%>
 
 							<liferay-ui:search-container-column-text>
@@ -77,7 +77,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						<c:otherwise>
 
 							<%
-							row.setCssClass("card-page-item card-page-item-asset entry entry-display-style " + row.getCssClass());
+							row.setCssClass("card-page-item card-page-item-asset entry " + row.getCssClass());
 							%>
 
 							<liferay-ui:search-container-column-text>

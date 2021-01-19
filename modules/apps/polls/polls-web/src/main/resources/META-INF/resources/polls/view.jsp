@@ -35,7 +35,6 @@
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.polls.model.PollsQuestion"
-				cssClass="entry-display-style"
 				keyProperty="questionId"
 				modelVar="question"
 			>

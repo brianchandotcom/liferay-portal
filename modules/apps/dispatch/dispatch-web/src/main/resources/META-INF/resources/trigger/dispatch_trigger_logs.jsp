@@ -46,7 +46,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.dispatch.model.DispatchLog"
-						cssClass="entry-display-style"
 						keyProperty="dispatchLogId"
 						modelVar="dispatchLog"
 					>

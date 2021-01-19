@@ -82,7 +82,6 @@ PortletURL portletURL = commerceAccountAddressAdminDisplayContext.getPortletURL(
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.commerce.model.CommerceAddress"
-					cssClass="entry-display-style"
 					keyProperty="commerceAddressId"
 					modelVar="commerceAddress"
 				>

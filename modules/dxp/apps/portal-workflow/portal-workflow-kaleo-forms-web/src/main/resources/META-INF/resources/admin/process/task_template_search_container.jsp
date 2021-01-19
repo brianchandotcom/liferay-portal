@@ -51,7 +51,6 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair"
-			cssClass="entry-display-style"
 			modelVar="taskFormsPair"
 		>
 			<liferay-ui:search-container-row-parameter

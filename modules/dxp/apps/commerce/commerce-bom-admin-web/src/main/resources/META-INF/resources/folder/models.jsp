@@ -85,7 +85,6 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel"
-				cssClass="entry-display-style"
 				keyProperty="commerceBOMFolderApplicationRelId"
 				modelVar="commerceBOMFolderApplicationRel"
 			>

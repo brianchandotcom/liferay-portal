@@ -36,7 +36,6 @@ CommerceSubscriptionContentDisplayContext commerceSubscriptionContentDisplayCont
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.commerce.model.CommerceSubscriptionEntry"
-						cssClass="entry-display-style"
 						keyProperty="commerceSubscriptionEntryId"
 						modelVar="commerceSubscriptionEntry"
 					>

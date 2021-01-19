@@ -53,7 +53,6 @@
 		<c:when test='<%= displayStyle.equals("icon") %>'>
 			<liferay-ui:search-container-column-text>
 				<liferay-frontend:user-vertical-card
-					cssClass="entry-display-style"
 					resultRow="<%= row %>"
 					rowChecker="<%= memberSearchContainer.getRowChecker() %>"
 					subtitle="<%= user2.getScreenName() %>"

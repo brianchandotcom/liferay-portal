@@ -126,7 +126,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 					>
 						<liferay-ui:search-container-row
 							className="com.liferay.commerce.product.model.CPOptionCategory"
-							cssClass="entry-display-style"
 							keyProperty="CPOptionCategoryId"
 							modelVar="cpOptionCategory"
 						>

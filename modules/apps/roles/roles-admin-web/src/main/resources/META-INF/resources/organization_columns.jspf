@@ -50,7 +50,6 @@
 		<liferay-ui:search-container-column-text>
 			<liferay-frontend:icon-vertical-card
 				actionJspServletContext="<%= application %>"
-				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
 				rowChecker="<%= organizationSearchContainer.getRowChecker() %>"

@@ -97,7 +97,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.commerce.model.CommerceOrderItem"
-				cssClass="entry-display-style"
 				keyProperty="CommerceOrderItemId"
 				modelVar="commerceOrderItem"
 			>

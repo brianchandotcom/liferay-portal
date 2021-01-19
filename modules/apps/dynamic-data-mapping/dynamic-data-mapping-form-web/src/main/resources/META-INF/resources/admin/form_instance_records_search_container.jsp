@@ -50,7 +50,6 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord"
-				cssClass="entry-display-style selectable"
 				keyProperty="formInstanceRecordId"
 				modelVar="formInstanceRecord"
 			>

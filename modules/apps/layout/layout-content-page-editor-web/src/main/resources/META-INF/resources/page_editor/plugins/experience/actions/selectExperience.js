@@ -12,7 +12,7 @@
  * details.
  */
 
-import {SELECT_SEGMENTS_EXPERIENCE} from './types';
+import {SELECT_SEGMENTS_EXPERIENCE} from '../actions';
 
 export default function selectExperience({
 	portletIds = [],

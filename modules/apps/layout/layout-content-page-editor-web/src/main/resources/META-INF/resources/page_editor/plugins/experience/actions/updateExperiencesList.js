@@ -12,7 +12,7 @@
  * details.
  */
 
-import {UPDATE_SEGMENTS_EXPERIENCES_LIST} from './types';
+import {UPDATE_SEGMENTS_EXPERIENCES_LIST} from '../actions';
 
 export default function updateExperiencesList(availableSegmentsExperiences) {
 	return {

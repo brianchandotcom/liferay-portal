@@ -80,6 +80,36 @@ public class DMMDataDefinitionConverterTest {
 			_objectMapper.readTree(dataDefinition));
 	}
 
+	@Test
+	public void testConvertNestedFields() throws Exception {
+		String dataDefinition = _ddmDataDefinitionConverter.convert(
+			_read("ddm-data-definition-json-converter-nested-fields.json"),
+			LocaleUtil.US);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"ddm-data-definition-json-converter-nested-fields-" +
+						"expected-result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
+	@Test
+	public void testConvertRepeatableNestedFields() throws Exception {
+		String dataDefinition = _ddmDataDefinitionConverter.convert(
+			_read(
+				"ddm-data-definition-json-converter-repeatable-nested-" +
+					"fields.json"),
+			LocaleUtil.US);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"ddm-data-definition-json-converter-repeatable-nested-" +
+						"fields-expected-result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 

@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.handler;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
@@ -143,6 +144,14 @@ public class LayoutExceptionRequestHandler {
 					"you-cannot-select-more-than-one-category-for-x",
 					assetVocabularyTitle);
 			}
+		}
+		else if (portalException instanceof
+					DuplicateFriendlyURLEntryException) {
+
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"the-friendly-url-is-already-in-use.-please-enter-a-unique-" +
+					"friendly-url");
 		}
 		else if (portalException instanceof LayoutNameException) {
 			LayoutNameException layoutNameException =

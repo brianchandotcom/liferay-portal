@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CONTAINER</td>
-	<td>//div[contains(@class,'container-view')]</td>
+	<td>//div[contains(@class,'contextual-sidebar-content')]//div[contains(@class,'container-view')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -21,8 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -91,16 +89,10 @@ public class UpgradeDLFileEntryType
 			ps2.executeBatch();
 		}
 
-		try {
-			runSQL(
-				"create unique index IX_B6F21286 on DLFileEntryType " +
-					"(groupId, dataDefinitionId, ctCollectionId);");
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
-			}
-		}
+		runSQLTemplateString(
+			"create unique index IX_B6F21286 on DLFileEntryType (groupId, " +
+				"dataDefinitionId, ctCollectionId);",
+			false);
 	}
 
 	private long _addDDMStructure(
@@ -275,8 +267,5 @@ public class UpgradeDLFileEntryType
 	).put(
 		"paginationMode", "single-page"
 	).toString();
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeDLFileEntryType.class);
 
 }

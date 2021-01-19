@@ -116,8 +116,8 @@ public class AccountSelectorTag extends IncludeTag {
 
 				CurrentAccountModel currentAccountModel =
 					new CurrentAccountModel(
-						commerceAccount.getCommerceAccountId(),
-						commerceAccount.getName(), thumbnailUrl);
+						commerceAccount.getCommerceAccountId(), thumbnailUrl,
+						commerceAccount.getName());
 
 				httpServletRequest.setAttribute(
 					"liferay-commerce:account-selector:currentAccount",
@@ -143,19 +143,21 @@ public class AccountSelectorTag extends IncludeTag {
 					currentOrderModel);
 			}
 
-			String setCurrentAccountURL =
-				PortalUtil.getPortalURL(request) +
-					"/o/commerce-ui/set-current-account";
-
 			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:createNewOrderURL",
 				_getAddCommerceOrderURL(themeDisplay));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:selectOrderURL",
 				_getEditOrderURL(themeDisplay));
+
+			String setCurrentAccountURL =
+				PortalUtil.getPortalURL(request) +
+					"/o/commerce-ui/set-current-account";
+
 			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:setCurrentAccountURL",
 				setCurrentAccountURL);
+
 			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:spritemap", _spritemap);
 		}

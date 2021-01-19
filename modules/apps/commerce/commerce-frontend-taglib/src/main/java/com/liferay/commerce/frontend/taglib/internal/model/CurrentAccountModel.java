@@ -19,10 +19,10 @@ package com.liferay.commerce.frontend.taglib.internal.model;
  */
 public class CurrentAccountModel {
 
-	public CurrentAccountModel(long id, String name, String logoURL) {
+	public CurrentAccountModel(long id, String logoURL, String name) {
 		_id = id;
-		_name = name;
 		_logoURL = logoURL;
+		_name = name;
 	}
 
 	public long getId() {

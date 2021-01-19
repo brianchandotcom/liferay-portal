@@ -2350,7 +2350,7 @@ definition {
 
 			AssertElementPresent(
 				key_fieldFieldLabel = "${webContentImageFieldLabel}",
-				key_image = "${webContentImage}",
+				key_image = "/documents/",
 				locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 
 			if (isSet(webContentImageDescription)) {

@@ -19,6 +19,7 @@ import com.liferay.portal.crypto.hash.generation.CryptoHashGenerationResponse;
 import com.liferay.portal.crypto.hash.verification.CryptoHashVerificationContext;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -151,8 +152,8 @@ public class CryptoHasherImpl implements CryptoHasher {
 		}
 
 		public byte[] generateSalt() {
-			int saltSize = (Integer)_cryptoHashProviderProperties.get(
-				"saltSize");
+			int saltSize = MapUtil.getInteger(
+				_cryptoHashProviderProperties, "saltSize");
 
 			byte[] salt = new byte[saltSize];
 

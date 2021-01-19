@@ -306,7 +306,7 @@ definition {
 			dmDocumentTitle = "DM Type Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
 			imageField = "DM Document Title",
-			imageFileName = "Document Title",
+			imageFileName = "DM Document Title",
 			navTab = "Documents and Media");
 
 		JSONDocument.deleteFile(
@@ -1537,7 +1537,7 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
+			dmDocumentFile = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
@@ -1548,7 +1548,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
 
-		DataEngine.addFields(fieldNameList = "Upload,Link to Page,Image");
+		DataEngine.addFields(fieldNameList = "Link to Page,Image");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -1559,7 +1559,7 @@ definition {
 		WebContentTemplates.addCP(
 			structureName = "WC Structure Name",
 			templateDescription = "WC Template Description",
-			templateFieldNames = "Upload,Link to Page,Image",
+			templateFieldNames = "Link to Page,Image",
 			templateName = "WC Template Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
@@ -1567,14 +1567,13 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			dmDocumentTitle = "DM Document Title",
 			navTab = "Documents and Media",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentImage = "Document_1.jpg",
+			webContentImage = "DM Document Title",
 			webContentLinkToPage = "Test Page",
 			webContentTitle = "WC WebContent Title",
-			webContentUpload = "DM Document Title");
+			imageFileName = "DM Document Title");
 
 		PortletEntry.publish();
 
@@ -1582,10 +1581,6 @@ definition {
 
 		JSONDocument.deleteFile(
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name");
-
-		JSONDocument.deleteFile(
-			dmDocumentTitle = "Document_1.jpg",
 			groupName = "Site Name");
 
 		JSONLayout.deletePublicLayout(

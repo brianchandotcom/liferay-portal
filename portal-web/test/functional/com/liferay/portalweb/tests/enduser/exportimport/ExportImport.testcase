@@ -871,8 +871,6 @@ definition {
 	@description = "This is a use case for LPS-88331."
 	@priority = "3"
 	test ExportImportSiteWithNestedUploadField {
-		property portal.upstream = "quarantine";
-
 		JSONGroup.addGroup(groupName = "Site A");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-a");

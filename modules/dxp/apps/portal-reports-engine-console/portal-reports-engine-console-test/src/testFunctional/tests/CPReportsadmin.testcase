@@ -546,7 +546,6 @@ definition {
 
 	@priority = "4"
 	test ViewEmailNotificationDelivery {
-		property portal.upstream = "quarantine";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailNotificationDelivery";
 
@@ -560,8 +559,8 @@ definition {
 			portlet = "Server Administration");
 
 		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1"));
+			userName = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Navigator.openURL();
 
@@ -578,7 +577,7 @@ definition {
 			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
-			emailNotificationsAddress = PropsUtil.get("email.address.2"),
+			emailNotificationsAddress = PropsUtil.get("email.address.3"),
 			emailRecipientAddress = "test@liferay.com",
 			reportFormat = "pdf",
 			reportName = "Custom Report Name",
@@ -587,8 +586,8 @@ definition {
 		Pause(locator1 = "30000");
 
 		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2"));
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"));
 
 		Gmail.gotoHtmlMode();
 
@@ -625,11 +624,10 @@ definition {
 
 	@priority = "4"
 	test ViewEmailRecipientDelivery {
-		property portal.upstream = "quarantine";
+		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "CPReportsadmin#ViewEmailRecipientDelivery";
 
 		var portalURL = PropsUtil.get("portal.url");
-		property test.assert.javascript.errors = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -637,8 +635,8 @@ definition {
 			portlet = "Server Administration");
 
 		ServerAdministration.configureMailServerSettings(
-			userName = PropsUtil.get("email.address.1"),
-			userPassword = PropsUtil.get("email.password.1"));
+			userName = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Navigator.openURL();
 

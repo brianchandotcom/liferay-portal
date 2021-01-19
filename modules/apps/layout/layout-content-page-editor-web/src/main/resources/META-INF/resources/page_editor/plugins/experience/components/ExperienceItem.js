@@ -14,6 +14,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
@@ -114,6 +115,15 @@ const ExperienceItem = ({
 									{experience.hasLockedSegmentsExperiment && (
 										<ExperienceLockIcon />
 									)}
+
+									{experience.active && (
+										<ClayLabel
+											className="inline-item-after"
+											displayType="success"
+										>
+											{Liferay.Language.get('active')}
+										</ClayLabel>
+									)}
 								</span>
 
 								<span className="text-truncate">
@@ -125,7 +135,7 @@ const ExperienceItem = ({
 
 								{experience.segmentsExperimentStatus && (
 									<div>
-										<span className="font-weight-normal mr-1 text-secondary">
+										<span className="font-weight-normal inline-item-before text-secondary">
 											{Liferay.Language.get('ab-test')}
 										</span>
 
@@ -269,7 +279,7 @@ const ExperienceLockIcon = () => {
 	const [showtoolTip, setShowtoolTip] = React.useState(false);
 
 	return (
-		<span>
+		<span className="inline-item-after">
 			<ClayIcon
 				className="text-secondary"
 				onMouseEnter={() => setShowtoolTip(true)}

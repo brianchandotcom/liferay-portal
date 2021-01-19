@@ -29,7 +29,7 @@ import {
 	CREATE_SEGMENTS_EXPERIENCE,
 	DELETE_SEGMENTS_EXPERIENCE,
 	UPDATE_SEGMENTS_EXPERIENCE,
-	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
+	UPDATE_SEGMENTS_EXPERIENCES_LIST,
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions';
 import ExperienceToolbarSection from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/components/ExperienceToolbarSection';
 
@@ -309,7 +309,7 @@ describe('ExperienceToolbarSection', () => {
 
 		expect(mockDispatch).toHaveBeenCalledWith(
 			expect.objectContaining({
-				type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
+				type: UPDATE_SEGMENTS_EXPERIENCES_LIST,
 			})
 		);
 	});
@@ -366,7 +366,7 @@ describe('ExperienceToolbarSection', () => {
 		/**
 		 * Bottom Experience cannot be deprioritized
 		 */
-		expect(bottomExperiencePriorityButton.disabled).toBe(true);
+		expect(bottomExperiencePriorityButton.disabled).toBe(false);
 
 		userEvent.click(topExperiencePriorityButton);
 
@@ -385,7 +385,7 @@ describe('ExperienceToolbarSection', () => {
 
 		expect(mockDispatch).toHaveBeenCalledWith(
 			expect.objectContaining({
-				type: UPDATE_SEGMENTS_EXPERIENCE_PRIORITY,
+				type: UPDATE_SEGMENTS_EXPERIENCES_LIST,
 			})
 		);
 	});

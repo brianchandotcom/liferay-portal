@@ -943,6 +943,83 @@ definition {
 	}
 
 	@priority = "3"
+	test RemoveAddress {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Remove address for account.",
+			accountName = "Account Remove Address");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		Accounts.addAddress(
+			addressCity = "Dalian",
+			addressCountry = "China",
+			addressDescription = "Address of DL office.",
+			addressName = "Liferay Dalian Software Co., Ltd.",
+			addressPostalCode = "116023",
+			addressRegion = "Liaoning",
+			addressStreet1 = "537 Huangpu Road Taide Building,",
+			addressStreet2 = "High-Tech Zone",
+			addressStreet3 = "1005",
+			phoneNumber = "+86 (0)411 88120855");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Remove Address");
+
+		for (var addressDataType : list "shipping,billing") {
+			Accounts.setAddress(
+				addressDataType = "${addressDataType}",
+				addressName = "Liferay Dalian Software Co., Ltd.");
+
+			Accounts.viewAddress(
+				addressCity = "Dalian",
+				addressCountry = "China",
+				addressDataType = "${addressDataType}",
+				addressName = "Liferay Dalian Software Co., Ltd.",
+				addressPostalCode = "116023",
+				addressRegion = "Liaoning",
+				addressStreet1 = "537 Huangpu Road Taide Building,",
+				addressStreet2 = "High-Tech Zone",
+				addressStreet3 = "1005",
+				phoneNumber = "+86 (0)411 88120855");
+		}
+
+		Accounts.removeAddress(
+			accountName = "Account Remove Address",
+			addressDataType = "billing");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Remove Address");
+
+		Accounts.removeAddress(
+			accountName = "Account Remove Address",
+			addressDataType = "shipping");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoEntry(rowEntry = "Account Remove Address");
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Addresses");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Dalian Software Co., Ltd.");
+	}
+
+	@priority = "3"
 	test RemoveDomain {
 		AccountConfiguration.enableAccountEmailDomain();
 

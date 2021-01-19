@@ -15,7 +15,6 @@
 package com.liferay.portal.crypto.hash;
 
 import com.liferay.portal.crypto.hash.generation.CryptoHashGenerationResponse;
-import com.liferay.portal.crypto.hash.verification.CryptoHashVerificationContext;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -28,9 +27,7 @@ public interface CryptoHasher {
 
 	public CryptoHashGenerationResponse generate(byte[] input) throws Exception;
 
-	public boolean verify(
-			byte[] input, byte[] hash,
-			CryptoHashVerificationContext... cryptoHashVerificationContexts)
+	public boolean verify(byte[] input, byte[] hash, byte[] salt)
 		throws Exception;
 
 }

@@ -16,16 +16,10 @@ package com.liferay.portal.crypto.hash.internal;
 
 import com.liferay.portal.crypto.hash.CryptoHasher;
 import com.liferay.portal.crypto.hash.generation.CryptoHashGenerationResponse;
-import com.liferay.portal.crypto.hash.verification.CryptoHashVerificationContext;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,64 +31,26 @@ import org.osgi.service.component.annotations.Component;
 public class CryptoHasherImpl implements CryptoHasher {
 
 	public CryptoHasherImpl() throws NoSuchAlgorithmException {
-		_messageDigestCryptoHashProvider = new MessageDigestCryptoHashProvider(
-			"SHA-256",
-			HashMapBuilder.put(
-				"saltSize", 16
-			).build());
+		_messageDigestCryptoHashProvider =
+			new MessageDigestCryptoHashProvider();
 	}
 
 	@Override
 	public CryptoHashGenerationResponse generate(byte[] input)
 		throws Exception {
 
-		byte[] pepper = null;
-		String pepperId = null;
-
-		CryptoHashProviderResponse cryptoHashProviderResponse =
-			_messageDigestCryptoHashProvider.generate(
-				pepper, _messageDigestCryptoHashProvider.generateSalt(), input);
+		byte[] salt = _messageDigestCryptoHashProvider.generateSalt();
 
 		return new CryptoHashGenerationResponse(
-			cryptoHashProviderResponse.getHash(),
-			new CryptoHashVerificationContext(
-				pepperId, cryptoHashProviderResponse.getSalt(),
-				cryptoHashProviderResponse.getCryptoHashProviderName(),
-				cryptoHashProviderResponse.getCryptoHashProviderProperties()));
+			_messageDigestCryptoHashProvider.generate(salt, input), salt);
 	}
 
 	@Override
-	public boolean verify(
-			byte[] input, byte[] hash,
-			CryptoHashVerificationContext... cryptoHashVerificationContexts)
+	public boolean verify(byte[] input, byte[] hash, byte[] salt)
 		throws Exception {
 
-		for (CryptoHashVerificationContext cryptoHashVerificationContext :
-				cryptoHashVerificationContexts) {
-
-			MessageDigestCryptoHashProvider messageDigestCryptoHashProvider =
-				new MessageDigestCryptoHashProvider(
-					cryptoHashVerificationContext.getCryptoHashProviderName(),
-					cryptoHashVerificationContext.
-						getCryptoHashProviderProperties());
-
-			// process pepper
-
-			byte[] pepper = null;
-
-			// process salt
-
-			Optional<byte[]> optionalSalt =
-				cryptoHashVerificationContext.getSaltOptional();
-
-			CryptoHashProviderResponse hashProviderResponse =
-				messageDigestCryptoHashProvider.generate(
-					pepper, optionalSalt.orElse(null), input);
-
-			input = hashProviderResponse.getHash();
-		}
-
-		return _compare(input, hash);
+		return _compare(
+			_messageDigestCryptoHashProvider.generate(salt, input), hash);
 	}
 
 	/**
@@ -121,85 +77,27 @@ public class CryptoHasherImpl implements CryptoHasher {
 	private final MessageDigestCryptoHashProvider
 		_messageDigestCryptoHashProvider;
 
-	private static final class CryptoHashProviderResponse {
-
-		public CryptoHashProviderResponse(
-			byte[] hash, byte[] salt, String name, Map<String, ?> properties) {
-
-			_hash = hash;
-			_salt = salt;
-			_name = name;
-			_properties = properties;
-		}
-
-		public String getCryptoHashProviderName() {
-			return _name;
-		}
-
-		public Map<String, ?> getCryptoHashProviderProperties() {
-			return _properties;
-		}
-
-		public byte[] getHash() {
-			return _hash;
-		}
-
-		public byte[] getSalt() {
-			return _salt;
-		}
-
-		private final byte[] _hash;
-		private final String _name;
-		private final Map<String, ?> _properties;
-		private final byte[] _salt;
-
-	}
-
 	private static class MessageDigestCryptoHashProvider {
 
-		public MessageDigestCryptoHashProvider(
-				String cryptoHashProviderName,
-				Map<String, ?> cryptoHashProviderProperties)
+		public MessageDigestCryptoHashProvider()
 			throws NoSuchAlgorithmException {
 
-			_messageDigestCryptoHashProviderName = cryptoHashProviderName;
-			_messageDigestCryptoHashProviderProperties =
-				cryptoHashProviderProperties;
-
-			_messageDigest = MessageDigest.getInstance(cryptoHashProviderName);
+			_messageDigest = MessageDigest.getInstance("SHA-256");
 		}
 
-		public CryptoHashProviderResponse generate(
-			byte[] pepper, byte[] salt, byte[] input) {
+		public byte[] generate(byte[] salt, byte[] input) {
+			byte[] bytes = new byte[salt.length + input.length];
 
-			if (pepper == null) {
-				pepper = new byte[0];
-			}
+			System.arraycopy(salt, 0, bytes, 0, salt.length);
+			System.arraycopy(input, 0, bytes, salt.length, input.length);
 
-			if (salt == null) {
-				salt = new byte[0];
-			}
-
-			byte[] bytes = new byte[pepper.length + salt.length + input.length];
-
-			System.arraycopy(pepper, 0, bytes, 0, pepper.length);
-			System.arraycopy(salt, 0, bytes, pepper.length, salt.length);
-			System.arraycopy(
-				input, 0, bytes, pepper.length + salt.length, input.length);
-
-			return new CryptoHashProviderResponse(
-				_messageDigest.digest(bytes), salt,
-				_messageDigestCryptoHashProviderName,
-				_messageDigestCryptoHashProviderProperties);
+			return _messageDigest.digest(bytes);
 		}
 
 		public byte[] generateSalt() {
-			int saltSize = MapUtil.getInteger(
-				_messageDigestCryptoHashProviderProperties, "saltSize");
+			byte[] salt = new byte[16];
 
-			byte[] salt = new byte[saltSize];
-
-			for (int i = 0; i < saltSize; ++i) {
+			for (int i = 0; i < 16; ++i) {
 				salt[i] = SecureRandomUtil.nextByte();
 			}
 
@@ -207,8 +105,6 @@ public class CryptoHasherImpl implements CryptoHasher {
 		}
 
 		private final MessageDigest _messageDigest;
-		private final String _messageDigestCryptoHashProviderName;
-		private final Map<String, ?> _messageDigestCryptoHashProviderProperties;
 
 	}
 

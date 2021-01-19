@@ -214,8 +214,11 @@ xpack.security.sessionTimeout: 600000</echo>
 
 	<macrodef name="configure-portal-ccr-osgi-properties">
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">logExceptionsOnly=&quot;true&quot;
-productionModeEnabled=&quot;true&quot;</echo>
+			<replaceregexp
+				file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config"
+				match="(?&lt;=logExceptionsOnly=B?&quot;)false"
+				replace="true"
+			/>
 
 			<configure-portal-second-connection-osgi-properties connection.name="localcluster" />
 		</sequential>

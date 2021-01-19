@@ -184,8 +184,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		}
 	);
 
+	var addLayoutActionOptionQueryKeyDownHandler = delegate(
+		layoutPageTemplateEntries,
+		'keydown',
+		'.add-layout-action-option',
+		function (event) {
+			if (event.code === 'Space' || event.code === 'Enter') {
+				event.preventDefault();
+				event.delegateTarget.click();
+			}
+		}
+	);
+
 	function handleDestroyPortlet() {
 		addLayoutActionOptionQueryClickHandler.dispose();
+		addLayoutActionOptionQueryKeyDownHandler.dispose();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

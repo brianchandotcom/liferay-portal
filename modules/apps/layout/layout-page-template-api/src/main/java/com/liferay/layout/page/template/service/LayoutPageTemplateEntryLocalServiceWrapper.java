@@ -639,6 +639,16 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			layoutPageTemplateEntryId);
 	}
 
+	@Override
+	public LayoutPageTemplateEntry getLayoutPageTemplateEntry(
+			long groupId, String layoutPageTemplateEntryKey)
+		throws com.liferay.layout.page.template.exception.
+			NoSuchPageTemplateEntryException {
+
+		return _layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+			groupId, layoutPageTemplateEntryKey);
+	}
+
 	/**
 	 * Returns the layout page template entry matching the UUID and group.
 	 *

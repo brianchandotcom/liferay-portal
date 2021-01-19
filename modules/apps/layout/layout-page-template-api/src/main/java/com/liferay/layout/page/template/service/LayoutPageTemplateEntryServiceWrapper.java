@@ -482,6 +482,15 @@ public class LayoutPageTemplateEntryServiceWrapper
 				groupId, layoutPageTemplateCollectionId, type);
 	}
 
+	@Override
+	public LayoutPageTemplateEntry getLayoutPageTemplateEntry(
+			long groupId, String layoutPageTemplateEntryKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateEntryService.getLayoutPageTemplateEntry(
+			groupId, layoutPageTemplateEntryKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

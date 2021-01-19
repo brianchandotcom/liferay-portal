@@ -279,6 +279,11 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	public int getLayoutPageTemplateEntriesCountByType(
 		long groupId, long layoutPageTemplateCollectionId, int type);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry getLayoutPageTemplateEntry(
+			long groupId, String layoutPageTemplateEntryKey)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

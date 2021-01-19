@@ -86,7 +86,10 @@ export default function fieldChange({
 			// We want a synchronous update without waiting for an evaluation of
 			// the field.
 
-			dispatch({payload: editedPages, type: EVENT_TYPES.UPDATE_PAGES});
+			dispatch({
+				payload: editedPages,
+				type: EVENT_TYPES.UPDATE_PAGES,
+			});
 
 			// We triggered a dispatch of FIELD_CHANGE just to propagate the event to
 			// the upper layers.

@@ -56,7 +56,7 @@ const DLVideoExternalShortcutURLItemSelectorView = ({
 				url={url}
 			/>
 
-			<ClayButton disabled={!fields || loading} type="submit">
+			<ClayButton disabled={isDisabled} type="submit">
 				{Liferay.Language.get('add')}
 			</ClayButton>
 

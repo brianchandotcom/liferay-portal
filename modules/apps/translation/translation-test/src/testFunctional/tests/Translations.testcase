@@ -108,61 +108,6 @@ definition {
 			value1 = "Approved");
 	}
 
-	@description = "This ensures that The translation in the web content remains after deleting the translation in approved status from the app."
-	@priority = "5"
-	test DeleteTranslation {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			description = "Description",
-			groupName = "Guest",
-			title = "WC WebContent Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
-
-		Translations.changeTargetLocale(
-			currentTargetLocale = "ar-SA",
-			newTargetLocale = "es-ES");
-
-		Translations.viewBaseFields(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		Translations.translateFields(
-			webContentContent = "WC WebContent Contenido",
-			webContentDescription = "WC WebContent Descripción",
-			webContentTitle = "WC WebContent Título");
-
-		PortletEntry.publish();
-
-		Translations.openTranslationAdmin(siteURLKey = "guest");
-
-		Translations.viewTranslationEntry(
-			language = "es-ES",
-			status = "Approved",
-			title = "Translation of WC WebContent Title to es-ES");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Delete",
-			rowEntry = "Translation of WC WebContent Title to es-ES");
-
-		AssertElementNotPresent(
-			key_rowEntry = "Translation of WC WebContent Title to es-ES",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		PortletEntry.changeLocale(locale = "es-ES");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Contenido",
-			webContentDescription = "WC WebContent Descripción",
-			webContentTitle = "WC WebContent Título");
-	}
-
 	@description = "This ensures that the translation in the web content will not be retained after deleting the translation in draft status from the app."
 	@priority = "4"
 	test DeleteDraftTranslation {
@@ -285,6 +230,61 @@ definition {
 			key_localizedLanguage = "es-ES",
 			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 			value1 = "Untranslated");
+	}
+
+	@description = "This ensures that The translation in the web content remains after deleting the translation in approved status from the app."
+	@priority = "5"
+	test DeleteTranslation {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "Description",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.viewBaseFields(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		Translations.translateFields(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
+
+		PortletEntry.publish();
+
+		Translations.openTranslationAdmin(siteURLKey = "guest");
+
+		Translations.viewTranslationEntry(
+			language = "es-ES",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to es-ES");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Delete",
+			rowEntry = "Translation of WC WebContent Title to es-ES");
+
+		AssertElementNotPresent(
+			key_rowEntry = "Translation of WC WebContent Title to es-ES",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Contenido",
+			webContentDescription = "WC WebContent Descripción",
+			webContentTitle = "WC WebContent Título");
 	}
 
 	@description = "This ensures that the translation can be edited under Translations app."

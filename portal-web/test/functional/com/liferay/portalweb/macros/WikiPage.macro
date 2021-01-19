@@ -30,6 +30,8 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = "This page is empty. Edit it to add some text.");
 
+		AssertElementPresent.pauseAssertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(

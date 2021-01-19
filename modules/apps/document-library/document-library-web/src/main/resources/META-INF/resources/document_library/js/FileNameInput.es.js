@@ -55,7 +55,7 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 				<ClayForm.FeedbackGroup>
 					<ClayForm.FeedbackItem>
 						<ClayIcon className="mr-1" symbol="warning-full" />
-						{Liferay.Language.get('warning-change-file-name')}
+						{Liferay.Language.get('warning-changing-file-name-will-affect-existing-links-to-this-document')}
 					</ClayForm.FeedbackItem>
 				</ClayForm.FeedbackGroup>
 			)}

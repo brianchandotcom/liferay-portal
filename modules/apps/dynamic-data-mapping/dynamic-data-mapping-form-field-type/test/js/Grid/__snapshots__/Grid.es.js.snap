@@ -61,10 +61,11 @@ exports[`Grid has a label 1`] = `
                     <input
                       aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
-                      name="jehf"
+                      id="fieldId"
+                      name="undefined_jehf"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -144,10 +145,11 @@ exports[`Grid has a tip 1`] = `
                     <input
                       aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
-                      name="jehf"
+                      id="fieldId"
+                      name="undefined_jehf"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -233,10 +235,11 @@ exports[`Grid has an id 1`] = `
                     <input
                       aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
-                      name="jehf"
+                      id="fieldId"
+                      name="undefined_jehf"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -305,10 +308,11 @@ exports[`Grid is not editable 1`] = `
                       aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       disabled=""
-                      name="jehf"
+                      id="fieldId"
+                      name="undefined_jehf"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -382,10 +386,11 @@ exports[`Grid is not required 1`] = `
                     <input
                       aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
-                      name="jehf"
+                      id="fieldId"
+                      name="undefined_jehf"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -464,10 +469,11 @@ exports[`Grid renders Label if showLabel is true 1`] = `
                     <input
                       aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
-                      name="jehf"
+                      id="fieldId"
+                      name="undefined_jehf"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -552,10 +558,11 @@ exports[`Grid renders columns 1`] = `
                     <input
                       aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
-                      name="jehf"
+                      id="fieldId"
+                      name="undefined_jehf"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -573,10 +580,11 @@ exports[`Grid renders columns 1`] = `
                     <input
                       aria-label="row: row, column: col2"
                       class="custom-control-input form-builder-grid-field"
-                      name="jehf"
+                      id="fieldId"
+                      name="undefined_jehf"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -746,10 +754,11 @@ exports[`Grid renders rows 1`] = `
                     <input
                       aria-label="row: row1, column: col1"
                       class="custom-control-input form-builder-grid-field"
-                      name="fieldId"
+                      id="fieldId"
+                      name="undefined_fieldId"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"
@@ -777,10 +786,11 @@ exports[`Grid renders rows 1`] = `
                     <input
                       aria-label="row: row2, column: col1"
                       class="custom-control-input form-builder-grid-field"
-                      name="fieldId"
+                      id="fieldId"
+                      name="undefined_fieldId"
                       role="radio"
                       type="radio"
-                      value="fieldId"
+                      value=""
                     />
                     <span
                       class="custom-control-label"

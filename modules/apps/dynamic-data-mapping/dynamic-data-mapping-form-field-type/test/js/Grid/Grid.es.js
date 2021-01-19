@@ -212,6 +212,7 @@ describe('Grid', () => {
 						value: 'colFieldId2',
 					},
 				]}
+				name="name"
 				onBlur={handleFieldBlurred}
 				readOnly={false}
 				rows={[
@@ -229,7 +230,7 @@ describe('Grid', () => {
 		);
 
 		const radioInputElement = container.querySelector(
-			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
+			'input[value][type="radio"][name="name_rowFieldId1"]:not([value="colFieldId2"])'
 		);
 
 		fireEvent.blur(radioInputElement);
@@ -256,6 +257,7 @@ describe('Grid', () => {
 						value: 'colFieldId2',
 					},
 				]}
+				name="name"
 				onChange={handleFieldEdited}
 				readOnly={false}
 				rows={[
@@ -273,7 +275,7 @@ describe('Grid', () => {
 		);
 
 		const radioInputElement = container.querySelector(
-			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
+			'input[value][type="radio"][name="name_rowFieldId1"]:not([value="colFieldId2"])'
 		);
 
 		userEvent.click(radioInputElement);
@@ -300,6 +302,7 @@ describe('Grid', () => {
 						value: 'colFieldId2',
 					},
 				]}
+				name="name"
 				onFocus={handleFieldFocused}
 				readOnly={false}
 				rows={[
@@ -317,7 +320,7 @@ describe('Grid', () => {
 		);
 
 		const radioInputElement = container.querySelector(
-			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
+			'input[value][type="radio"][name="name_rowFieldId1"]:not([value="colFieldId2"])'
 		);
 
 		fireEvent.focus(radioInputElement);

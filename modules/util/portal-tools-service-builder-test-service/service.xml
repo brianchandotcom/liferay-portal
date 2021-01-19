@@ -303,21 +303,21 @@
 			<finder-column name="groupId" />
 		</finder>
 	</entity>
-	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntity">
+	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntry">
 
 		<!-- PK fields -->
 
-		<column name="ercCompanyEntityId" primary="true" type="long" />
+		<column name="ercCompanyEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
 	</entity>
-	<entity external-reference-code="group" local-service="true" name="ERCGroupEntity">
+	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry">
 
 		<!-- PK fields -->
 
-		<column name="ercGroupEntityId" primary="true" type="long" />
+		<column name="ercGroupEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

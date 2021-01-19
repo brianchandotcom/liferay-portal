@@ -342,7 +342,7 @@ definition {
 	@priority = "4"
 	test CheckOutGoogleSheet {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "GoogleDrive#CheckOutGoogleDoc";
+		property test.name.skip.portal.instance = "GoogleDrive#CheckOutGoogleSheet";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

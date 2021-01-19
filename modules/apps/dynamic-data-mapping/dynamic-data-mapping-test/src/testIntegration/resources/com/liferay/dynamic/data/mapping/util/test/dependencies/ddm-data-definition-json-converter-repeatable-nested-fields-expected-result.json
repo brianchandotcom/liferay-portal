@@ -1,0 +1,240 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"ddmStructureId": "",
+			"ddmStructureLayoutId": "",
+			"fieldReference": "TextFieldSet",
+			"label": {
+				"en_US": ""
+			},
+			"localizable": false,
+			"name": "TextFieldSet",
+			"nestedFields": [
+				{
+					"autocomplete": false,
+					"dataSourceType": "manual",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"fieldReference": "Text",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text"
+					},
+					"localizable": true,
+					"name": "Text",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"visibilityExpression": ""
+				},
+				{
+					"ddmStructureId": "",
+					"ddmStructureLayoutId": "",
+					"fieldReference": "HTMLFieldSet",
+					"label": {
+						"en_US": ""
+					},
+					"localizable": false,
+					"name": "HTMLFieldSet",
+					"nestedFields": [
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"fieldReference": "HTML",
+							"indexType": "text",
+							"label": {
+								"en_US": "HTML"
+							},
+							"localizable": true,
+							"name": "HTML",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "link-to-page",
+							"fieldNamespace": "",
+							"fieldReference": "LinkToPage",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Link to Page"
+							},
+							"localizable": true,
+							"name": "LinkToPage",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": true,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "link_to_layout"
+						}
+					],
+					"predefinedValue": {
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"HTML\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"LinkToPage\"]}]}]",
+					"showLabel": false,
+					"tip": {
+					},
+					"type": "fieldset",
+					"upgradedStructure": false
+				},
+				{
+					"dataType": "date",
+					"fieldNamespace": "",
+					"fieldReference": "Date",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Date"
+					},
+					"localizable": true,
+					"name": "Date",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "date",
+					"visibilityExpression": ""
+				},
+				{
+					"ddmStructureId": "",
+					"ddmStructureLayoutId": "",
+					"fieldReference": "ImageFieldSet",
+					"label": {
+						"en_US": ""
+					},
+					"localizable": false,
+					"name": "ImageFieldSet",
+					"nestedFields": [
+						{
+							"dataType": "image",
+							"fieldNamespace": "",
+							"fieldReference": "Image",
+							"indexType": "text",
+							"label": {
+								"en_US": "Image"
+							},
+							"localizable": true,
+							"name": "Image",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "image",
+							"visibilityExpression": ""
+						},
+						{
+							"dataType": "geolocation",
+							"fieldNamespace": "",
+							"fieldReference": "Geolocation",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Geolocation"
+							},
+							"localizable": false,
+							"name": "Geolocation",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "geolocation"
+						}
+					],
+					"predefinedValue": {
+					},
+					"readOnly": false,
+					"repeatable": true,
+					"required": false,
+					"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Image\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Geolocation\"]}]}]",
+					"showLabel": false,
+					"tip": {
+					},
+					"type": "fieldset",
+					"upgradedStructure": false
+				}
+			],
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"HTMLFieldSet\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Date\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"ImageFieldSet\"]}]}]",
+			"showLabel": false,
+			"tip": {
+			},
+			"type": "fieldset",
+			"upgradedStructure": false
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

@@ -1,0 +1,192 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"ddmStructureId": "",
+			"ddmStructureLayoutId": "",
+			"fieldReference": "TextFieldSet",
+			"label": {
+				"en_US": ""
+			},
+			"localizable": false,
+			"name": "TextFieldSet",
+			"nestedFields": [
+				{
+					"autocomplete": false,
+					"dataSourceType": "manual",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"fieldReference": "Text",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text"
+					},
+					"localizable": true,
+					"name": "Text",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"visibilityExpression": ""
+				},
+				{
+					"autocomplete": false,
+					"dataSourceType": "manual",
+					"dataType": "string",
+					"ddmDataProviderInstanceId": "[]",
+					"ddmDataProviderInstanceOutput": "[]",
+					"displayStyle": "singleline",
+					"fieldNamespace": "",
+					"fieldReference": "Text",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text"
+					},
+					"localizable": true,
+					"name": "Text",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option"
+							},
+							"value": "Option"
+						}
+					],
+					"placeholder": {
+						"en_US": ""
+					},
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"tooltip": {
+						"en_US": ""
+					},
+					"type": "text",
+					"visibilityExpression": ""
+				}
+			],
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Text\"]}]}]",
+			"showLabel": false,
+			"tip": {
+			},
+			"type": "fieldset",
+			"upgradedStructure": false
+		},
+		{
+			"ddmStructureId": "",
+			"ddmStructureLayoutId": "",
+			"fieldReference": "NumberFieldSet",
+			"label": {
+				"en_US": ""
+			},
+			"localizable": false,
+			"name": "NumberFieldSet",
+			"nestedFields": [
+				{
+					"dataType": "double",
+					"fieldNamespace": "",
+					"fieldReference": "Number",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Number"
+					},
+					"localizable": true,
+					"name": "Number",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "numeric",
+					"visibilityExpression": ""
+				},
+				{
+					"dataType": "double",
+					"fieldNamespace": "",
+					"fieldReference": "Number",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Number"
+					},
+					"localizable": true,
+					"name": "Number",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "numeric",
+					"visibilityExpression": ""
+				}
+			],
+			"predefinedValue": {
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Number\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Number\"]}]}]",
+			"showLabel": false,
+			"tip": {
+			},
+			"type": "fieldset",
+			"upgradedStructure": false
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

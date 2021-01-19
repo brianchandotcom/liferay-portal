@@ -1,0 +1,146 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text",
+			"nestedFields": [
+				{
+					"dataType": "html",
+					"fieldNamespace": "ddm",
+					"indexType": "text",
+					"label": {
+						"en_US": "HTML"
+					},
+					"localizable": true,
+					"name": "HTML",
+					"nestedFields": [
+						{
+							"dataType": "link-to-page",
+							"fieldNamespace": "ddm",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Link to Page"
+							},
+							"localizable": true,
+							"name": "LinkToPage",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": true,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-link-to-page"
+						}
+					],
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "ddm-text-html"
+				},
+				{
+					"dataType": "date",
+					"fieldNamespace": "ddm",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Date"
+					},
+					"localizable": true,
+					"name": "Date",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "ddm-date"
+				},
+				{
+					"dataType": "image",
+					"fieldNamespace": "ddm",
+					"indexType": "text",
+					"label": {
+						"en_US": "Image"
+					},
+					"localizable": true,
+					"name": "Image",
+					"nestedFields": [
+						{
+							"dataType": "geolocation",
+							"fieldNamespace": "ddm",
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Geolocation"
+							},
+							"localizable": false,
+							"name": "Geolocation",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "ddm-geolocation"
+						}
+					],
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": true,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US": ""
+					},
+					"type": "ddm-image"
+				}
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

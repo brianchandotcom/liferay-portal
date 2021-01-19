@@ -196,19 +196,34 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<%
 						Group fileEntryGroup = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
 
-						Group fileEntrySiteGroup = fileEntryGroup;
-
-						while ((fileEntrySiteGroup != null) && !fileEntrySiteGroup.isSite()) {
-							fileEntrySiteGroup = fileEntrySiteGroup.getParentGroup();
+						if (fileEntryGroup.isSite()) {
+							while ((fileEntryGroup != null) && !fileEntryGroup.isSite()) {
+								fileEntryGroup = fileEntryGroup.getParentGroup();
+							}
+						}
+						else if (fileEntryGroup.isDepot()) {
+							while ((fileEntryGroup != null) && !fileEntryGroup.isDepot()) {
+								fileEntryGroup = fileEntryGroup.getParentGroup();
+							}
 						}
 						%>
 
-						<c:if test="<%= fileEntrySiteGroup != null %>">
-							<dt class="sidebar-dt">
-								<liferay-ui:message key="target-site" />
-							</dt>
+						<c:if test="<%= fileEntryGroup != null %>">
+							<c:choose>
+								<c:when test="<%= fileEntryGroup.isSite() %>">
+									<dt class="sidebar-dt">
+										<liferay-ui:message key="target-site" />
+									</dt>
+								</c:when>
+								<c:when test="<%= fileEntryGroup.isDepot() %>">
+									<dt class="sidebar-dt">
+										<liferay-ui:message key="target-asset-library" />
+									</dt>
+								</c:when>
+							</c:choose>
+
 							<dd class="sidebar-dd">
-								<%= HtmlUtil.escape(fileEntrySiteGroup.getName(locale)) %>
+								<%= HtmlUtil.escape(fileEntryGroup.getName(locale)) %>
 							</dd>
 						</c:if>
 

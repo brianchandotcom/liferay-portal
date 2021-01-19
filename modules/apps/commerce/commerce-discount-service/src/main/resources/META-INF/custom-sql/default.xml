@@ -180,9 +180,14 @@
 			INNER JOIN
 				CommerceDiscountRel ON
 					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
 			WHERE
 				(CommerceDiscount.active_ = [$TRUE$]) AND
 				(CommerceDiscountAccountRel.commerceAccountId = ?) AND
+				(CommerceChannelRel.commerceChannelRelId IS NULL) AND
 				(
 					(
 						(CommerceDiscount.target = ?) AND
@@ -211,9 +216,14 @@
 			INNER JOIN
 				CommerceDiscountAccountRel ON
 					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
 			WHERE
 				(CommerceDiscount.active_ = [$TRUE$]) AND
 				(CommerceDiscountAccountRel.commerceAccountId = ?) AND
+				(CommerceChannelRel.commerceChannelRelId IS NULL) AND
 				(CommerceDiscount.target = ?)
 		]]>
 	</sql>
@@ -229,9 +239,14 @@
 			INNER JOIN
 				CommerceDiscountRel ON
 					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
 			WHERE
 				(CommerceDiscount.active_ = [$TRUE$]) AND
 				(CDiscountCAccountGroupRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])) AND
+				(CommerceChannelRel.commerceChannelRelId IS NULL) AND
 				(
 					(
 						(CommerceDiscount.target = ?) AND
@@ -260,9 +275,14 @@
 			INNER JOIN
 				CDiscountCAccountGroupRel ON
 					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceChannelRel ON
+					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
+					(CommerceChannelRel.classNameId = ?)
 			WHERE
 				(CommerceDiscount.active_ = [$TRUE$]) AND
 				(CDiscountCAccountGroupRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])) AND
+				(CommerceChannelRel.commerceChannelRelId IS NULL) AND
 				(CommerceDiscount.target = ?)
 		]]>
 	</sql>

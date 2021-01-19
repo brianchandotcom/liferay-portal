@@ -78,7 +78,7 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 			);
 		});
 
-		it('has a video preview with embebed iframe', () => {
+		it('has a video preview with embedded iframe', () => {
 			expect(
 				document.querySelector('iframe[data-video-liferay]')
 			).toBeInTheDocument();
@@ -141,7 +141,7 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 		});
 	});
 
-	describe('when there is a invalid server response', () => {
+	describe('when there is an invalid server response', () => {
 		let result;
 
 		beforeEach(async () => {
@@ -184,7 +184,7 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 			).toBeInTheDocument();
 		});
 
-		it('not calls the onFilePickCallback', () => {
+		it('does not call the onFilePickCallback', () => {
 			expect(window.onFilePickCallback).not.toBeCalled();
 		});
 	});

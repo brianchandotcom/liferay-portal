@@ -119,7 +119,7 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 		});
 	});
 
-	describe('when there is a invalid server response', () => {
+	describe('when there is an invalid server response', () => {
 		let result;
 
 		beforeEach(async () => {

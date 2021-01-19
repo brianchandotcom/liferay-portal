@@ -821,6 +821,16 @@ definition {
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
 
+	@description = "This is a test for LPS-125933. Check for possible not covered scenarios for Echo components in Data Engine"
+	@ignore = "true"
+	@priority = "3"
+	test ConvertWidgetPageWithWebContentsToContentPage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456
+
+	}
+
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
 	@priority = "5"
 	test EditConvertedContentPageWithDecorator {

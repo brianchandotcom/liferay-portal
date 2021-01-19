@@ -1152,8 +1152,6 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="install-portal-snapshots" />
 
-			<update-commerce-modules />
-
 			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 
 			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
@@ -3406,39 +3404,6 @@ log.sanitizer.enabled=false</echo>
 							CATALINA_OPTS="${CATALINA_OPTS} ${print.final.flags}"
 						]]>
 					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="update-commerce-modules">
-		<sequential>
-			<if>
-				<contains string="${env.CI_TEST_SUITE}" substring="commerce" />
-				<then>
-					<if>
-						<equals arg1="${build.profile}" arg2="dxp" />
-						<then>
-							<echo>Building Commerce with DXP profile.</echo>
-
-							<antcall inheritAll="false" target="setup-profile-dxp" />
-
-							<gradle-execute dir="${project.dir}/modules/apps/commerce" task="deploy">
-								<arg value="clean" />
-							</gradle-execute>
-
-							<gradle-execute dir="${project.dir}/modules/dxp/apps/commerce" task="deploy">
-								<arg value="clean" />
-							</gradle-execute>
-						</then>
-						<else>
-							<echo>Building Commerce.</echo>
-
-							<gradle-execute dir="${project.dir}/modules/apps/commerce" task="deploy">
-								<arg value="clean" />
-							</gradle-execute>
-						</else>
-					</if>
 				</then>
 			</if>
 		</sequential>

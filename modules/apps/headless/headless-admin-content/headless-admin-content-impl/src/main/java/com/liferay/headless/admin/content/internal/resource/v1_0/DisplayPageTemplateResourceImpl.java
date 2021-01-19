@@ -18,6 +18,7 @@ import com.liferay.headless.admin.content.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.content.internal.dto.v1_0.converter.DisplayPageTemplateDTOConverter;
 import com.liferay.headless.admin.content.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -47,6 +48,26 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class DisplayPageTemplateResourceImpl
 	extends BaseDisplayPageTemplateResourceImpl {
+
+	@Override
+	public DisplayPageTemplate getSiteDisplayPageTemplate(
+			Long siteId, String displayPageTemplateKey)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.getLayoutPageTemplateEntry(
+				siteId, displayPageTemplateKey);
+
+		if (layoutPageTemplateEntry.getType() !=
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+
+			throw new NoSuchPageTemplateEntryException(
+				"No Display Page Template exists with key: " +
+					displayPageTemplateKey);
+		}
+
+		return _toDisplayPageTemplate(layoutPageTemplateEntry);
+	}
 
 	@Override
 	public Page<DisplayPageTemplate> getSiteDisplayPageTemplatesPage(

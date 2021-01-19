@@ -30,9 +30,10 @@ const RequiredMark = () => (
 const FileNameInput = ({initialValue, portletNamespace, required, visible})  => {
 	const inputId = portletNamespace + 'fileName';
 	const [inputValue, setInputValue] = useState(initialValue);
+	const valueChanged = initialValue != inputValue;
 
 	return (
-		<ClayForm.Group>
+		<ClayForm.Group className={valueChanged ? 'has-warning' : ''}>
 			<label htmlFor={inputId}>
 				{Liferay.Language.get('file-name')}
 
@@ -48,6 +49,15 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible})  => 
 				value={inputValue}
 				required={required}
 			/>
+
+			{valueChanged && (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>
+						<ClayIcon className="mr-1" symbol="warning-full" />
+						{Liferay.Language.get('warning-change-file-name')}
+					</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			)}
 		</ClayForm.Group>
 	);
 }

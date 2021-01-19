@@ -20,7 +20,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,7 +34,6 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.Enumeration;
-import java.util.Map;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -142,21 +140,6 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 	}
 
 	private String _getURLContent(URL url) {
-		Map<String, String> variables = HashMapBuilder.put(
-			"@liferay.home@", _getLiferayHome()
-		).put(
-			"@spi.id@",
-			() -> {
-				String spiId = System.getProperty("spi.id");
-
-				if (spiId != null) {
-					return spiId;
-				}
-
-				return StringPool.BLANK;
-			}
-		).build();
-
 		String urlContent = null;
 
 		try (InputStream inputStream = url.openStream()) {
@@ -176,12 +159,8 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 			return null;
 		}
 
-		for (Map.Entry<String, String> variable : variables.entrySet()) {
-			urlContent = StringUtil.replace(
-				urlContent, variable.getKey(), variable.getValue());
-		}
-
-		return urlContent;
+		return StringUtil.replace(
+			urlContent, "@liferay.home@", _getLiferayHome());
 	}
 
 	private static final Logger _logger = Logger.getLogger(

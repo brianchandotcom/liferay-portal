@@ -102,20 +102,24 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 			expect(add).toBeEnabled();
 		});
 
-		it('adding a video url calls fire an event in the opener', () => {
-			fireEvent.submit(result.getByRole('form'));
+		describe('when the form is submitted', () => {
+			beforeEach(async () => {
+				fireEvent.submit(result.getByRole('form'));
+			});
 
-			expect(Liferay.Util.getOpener).toHaveBeenCalled();
+			it('fires an event in the opener', () => {
+				expect(Liferay.Util.getOpener).toHaveBeenCalled();
 
-			expect(liferayOpenerfireMock).toHaveBeenCalledWith(
-				defaultProps.eventName,
-				{
-					data: {
-						returnType: defaultProps.returnType,
-						value: responseFields.HTML,
-					},
-				}
-			);
+				expect(liferayOpenerfireMock).toHaveBeenCalledWith(
+					defaultProps.eventName,
+					{
+						data: {
+							returnType: defaultProps.returnType,
+							value: responseFields.HTML,
+						},
+					}
+				);
+			});
 		});
 	});
 
@@ -156,11 +160,15 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 			expect(add).toBeDisabled();
 		});
 
-		it('trying submit the form not fires events in the opener', () => {
-			fireEvent.submit(result.getByRole('form'));
+		describe('when the form is submitted', () => {
+			beforeEach(async () => {
+				fireEvent.submit(result.getByRole('form'));
+			});
 
-			expect(Liferay.Util.getOpener).not.toHaveBeenCalled();
-			expect(liferayOpenerfireMock).not.toHaveBeenCalled();
+			it('does not fire an event in the opener', () => {
+				expect(Liferay.Util.getOpener).not.toHaveBeenCalled();
+				expect(liferayOpenerfireMock).not.toHaveBeenCalled();
+			});
 		});
 	});
 });

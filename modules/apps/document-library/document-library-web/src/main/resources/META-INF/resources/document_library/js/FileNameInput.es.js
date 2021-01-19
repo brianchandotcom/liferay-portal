@@ -14,6 +14,7 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 const RequiredMark = () => (
@@ -61,5 +62,12 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible})  => 
 		</ClayForm.Group>
 	);
 }
+
+FileNameInput.propTypes = {
+	initialValue: PropTypes.string,
+	portletNamespace: PropTypes.string,
+	required: PropTypes.bool,
+	visible: PropTypes.bool,
+};
 
 export default FileNameInput;

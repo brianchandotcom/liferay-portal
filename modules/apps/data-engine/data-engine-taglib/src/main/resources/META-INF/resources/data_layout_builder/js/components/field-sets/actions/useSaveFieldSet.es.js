@@ -31,7 +31,6 @@ export default ({
 	availableLanguageIds,
 	childrenContext,
 	defaultLanguageId,
-	editingLanguageId,
 	fieldSet,
 	onEditingLanguageIdChange: setEditingLanguageId,
 }) => {
@@ -56,10 +55,7 @@ export default ({
 			name,
 		};
 
-		if (
-			editingLanguageId !== defaultLanguageId &&
-			!newDataDefinition.name[defaultLanguageId]
-		) {
+		if (!newDataDefinition.name[defaultLanguageId]) {
 			setEditingLanguageId(defaultLanguageId);
 
 			return Promise.reject(

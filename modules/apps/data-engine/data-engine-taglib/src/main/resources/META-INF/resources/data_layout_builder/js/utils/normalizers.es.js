@@ -161,9 +161,9 @@ export function normalizeDataLayout(
 	dataLayoutBuilder
 ) {
 	const {dataLayoutFields = {}} = dataLayout;
-	const {dataDefinitionFields} = dataDefinition;
 
 	if (dataDefinition?.dataDefinitionFields) {
+		const {dataDefinitionFields} = dataDefinition;
 		Object.keys(dataLayoutFields).forEach((field) => {
 			if (!dataDefinitionFields.find((item) => item.name === field)) {
 				delete dataLayoutFields[field];

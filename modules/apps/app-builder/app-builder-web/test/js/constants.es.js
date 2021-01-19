@@ -731,7 +731,9 @@ export const FORM_VIEW = {
 			...dataLayoutBuilder,
 			dispatch: jest.fn(),
 			dispatchAction: jest.fn(),
-			getDDMFormFieldSettingsContext: jest.fn(),
+			getDDMFormFieldSettingsContext: jest
+				.fn()
+				.mockImplementation(() => ({pages: []})),
 			getFieldTypes: () => {
 				return [
 					{

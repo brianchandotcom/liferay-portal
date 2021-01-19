@@ -67,6 +67,21 @@ public class DMMDataDefinitionConverterTest {
 			_objectMapper.readTree(dataDefinition));
 	}
 
+	@Test
+	public void testConvertCheckboxToCheckboxMultiple() throws Exception {
+		String dataDefinition = _ddmDataDefinitionConverter.convert(
+			_getFileAsString(
+				"ddm-data-definition-json-converter-checkbox.json"),
+			LocaleUtil.US);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_getFileAsString(
+					"ddm-data-definition-json-converter-checkbox-expected-" +
+						"result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
 	private String _getFileAsString(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 

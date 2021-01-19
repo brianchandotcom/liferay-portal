@@ -12,11 +12,36 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import {stringToSlug} from '../utils/utils.es';
+import {isWebCrawler, stringToSlug} from '../utils/utils.es';
 
 export default (props) => {
-	return <Link {...props} to={stringToSlug(props.to)} />;
+	const [isCrawler, setIsCrawler] = useState(false);
+
+	const onClick = (event) => {
+		event.preventDefault();
+		window.location.href = props.to;
+	};
+
+	useEffect(() => {
+		setIsCrawler(isWebCrawler());
+	}, []);
+
+	return (
+		<>
+			{isCrawler ? (
+				<a
+					className={props.className}
+					href={stringToSlug(props.to)}
+					onClick={onClick}
+				>
+					{props.children}
+				</a>
+			) : (
+				<Link {...props} to={stringToSlug(props.to)} />
+			)}
+		</>
+	);
 };

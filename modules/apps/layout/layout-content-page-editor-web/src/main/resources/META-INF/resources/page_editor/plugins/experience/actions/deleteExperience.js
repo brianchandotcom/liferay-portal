@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DELETE_SEGMENTS_EXPERIENCE} from './types';
+import {DELETE_SEGMENTS_EXPERIENCE} from '../actions';
 
 export default function deleteExperience({portletIds, segmentsExperienceId}) {
 	return {

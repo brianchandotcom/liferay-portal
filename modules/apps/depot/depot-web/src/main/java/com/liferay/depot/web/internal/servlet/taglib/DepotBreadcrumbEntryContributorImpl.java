@@ -75,7 +75,8 @@ public class DepotBreadcrumbEntryContributorImpl
 
 		if (Objects.equals(
 				ItemSelectorPortletKeys.ITEM_SELECTOR,
-				portletDisplay.getPortletName())) {
+				portletDisplay.getPortletName()) ||
+			themeDisplay.isStatePopUp()) {
 
 			return originalBreadcrumbEntries;
 		}

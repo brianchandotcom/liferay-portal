@@ -57,7 +57,7 @@ public class UpdateSegmentsExperiencePriorityMVCActionCommand
 			segmentsExperienceId, newPriority);
 
 		return JSONUtil.put(
-			"availableSegmentExperiences",
+			"availableSegmentsExperiences",
 			SegmentsExperienceUtil.getAvailableSegmentsExperiences(
 				_portal.getHttpServletRequest(actionRequest)));
 	}

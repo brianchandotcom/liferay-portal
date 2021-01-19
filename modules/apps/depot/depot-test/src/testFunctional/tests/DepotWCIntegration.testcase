@@ -342,8 +342,6 @@ definition {
 			fieldFieldLabel = "Web Content",
 			fieldName = "Web Content");
 
-		var fieldName = selenium.getAttribute("//div[@class='ddm-field' and contains(.,'Web Content')]@data-field-name");
-
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
@@ -357,10 +355,6 @@ definition {
 			templateDescription = "WC Template Description",
 			templateFieldNames = "Web Content",
 			templateName = "WC Template Name");
-
-		var templateScript = '''<#assign webContentData = jsonFactoryUtil.createJSONObject(${fieldName}.getData()) /> <a>${webContentData.title}</a>''';
-
-		WebContentTemplates.inputScript(templateScript = "${templateScript}");
 
 		DDLDataDefinition.save();
 

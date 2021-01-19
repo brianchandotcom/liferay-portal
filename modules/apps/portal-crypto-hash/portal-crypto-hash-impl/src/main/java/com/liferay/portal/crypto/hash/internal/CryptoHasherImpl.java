@@ -51,7 +51,7 @@ public class CryptoHasherImpl implements CryptoHasher {
 		byte[] pepper = null;
 		String pepperId = null;
 
-		final CryptoHashProviderResponse cryptoHashProviderResponse =
+		CryptoHashProviderResponse cryptoHashProviderResponse =
 			_cryptoHashProvider.generate(
 				pepper, _cryptoHashProvider.generateSalt(), input);
 
@@ -82,9 +82,11 @@ public class CryptoHasherImpl implements CryptoHasher {
 			Optional<byte[]> optionalSalt =
 				cryptoHashVerificationContext.getSaltOptional();
 
-			final CryptoHashProviderResponse hashProviderResponse =
+			byte[] pepper = null;
+
+			CryptoHashProviderResponse hashProviderResponse =
 				cryptoHashProvider.generate(
-					null, optionalSalt.orElse(null), input);
+					pepper, optionalSalt.orElse(null), input);
 
 			input = hashProviderResponse.getHash();
 		}

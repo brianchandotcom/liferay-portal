@@ -28,7 +28,6 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.PageSettingsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RenderedPageUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -86,7 +85,7 @@ public class ContentPageDTOConverter
 					_userLocalService.fetchUser(layout.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
-					JournalArticle.class.getName(), layout.getPlid(),
+					Layout.class.getName(), layout.getPlid(),
 					layout.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = layout.getCreateDate();
 				dateModified = layout.getModifiedDate();

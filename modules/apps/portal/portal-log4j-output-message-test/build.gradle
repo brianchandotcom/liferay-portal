@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "commons-io", name: "commons-io", version: "1.4"
 	testIntegrationCompile group: "log4j", name: "apache-log4j-extras", version: "1.2.17"
 	testIntegrationCompile group: "log4j", name: "log4j", version: "1.2.17"
 	testIntegrationCompile project(":core:petra:petra-io")

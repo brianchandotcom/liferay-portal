@@ -36,6 +36,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
@@ -61,9 +62,9 @@ public class Log4JOutputMessageTest {
 		Path tempLogDir = Files.createTempDirectory(
 			Log4JOutputMessageTest.class.getName());
 
-		_tempLogDir = tempLogDir.toFile();
+		File tempLogFileDir = tempLogDir.toFile();
 
-		_tempLogDir.deleteOnExit();
+		tempLogFileDir.deleteOnExit();
 
 		Logger logger = _getLogger();
 
@@ -77,52 +78,27 @@ public class Log4JOutputMessageTest {
 		while (enumeration.hasMoreElements()) {
 			Appender appender = enumeration.nextElement();
 
-			if (appender instanceof FileAppender) {
-				RollingFileAppender rollingFileAppender =
+			if ((appender instanceof FileAppender) &&
+				(Objects.equals("TEXT_FILE", appender.getName()) ||
+				 Objects.equals("XML_FILE", appender.getName()))) {
+
+				RollingFileAppender portalRollingFileAppender =
 					(RollingFileAppender)appender;
 
-				if (Objects.equals("TEXT_FILE", appender.getName())) {
-					RollingFileAppender textFileRollingFileAppender =
-						new RollingFileAppender();
+				TimeBasedRollingPolicy portalTimeBasedRollingPolicy =
+					(TimeBasedRollingPolicy)
+						portalRollingFileAppender.getRollingPolicy();
 
-					textFileRollingFileAppender.setLayout(
-						rollingFileAppender.getLayout());
+				String portalFileNamePattern =
+					portalTimeBasedRollingPolicy.getFileNamePattern();
 
-					TimeBasedRollingPolicy timeBasedRollingPolicy =
-						new TimeBasedRollingPolicy();
+				portalFileNamePattern = StringUtil.extractLast(
+					portalFileNamePattern, StringPool.SLASH);
 
-					timeBasedRollingPolicy.setFileNamePattern(
-						StringUtil.replace(tempLogDir.toString(), '\\', '/') +
-							"/liferay.%d{yyyy-MM-dd}.log");
-
-					textFileRollingFileAppender.setRollingPolicy(
-						timeBasedRollingPolicy);
-
-					textFileRollingFileAppender.activateOptions();
-
-					logger.addAppender(textFileRollingFileAppender);
-				}
-				else if (Objects.equals("XML_FILE", appender.getName())) {
-					RollingFileAppender xmlFileRollingFileAppender =
-						new RollingFileAppender();
-
-					xmlFileRollingFileAppender.setLayout(
-						rollingFileAppender.getLayout());
-
-					TimeBasedRollingPolicy timeBasedRollingPolicy =
-						new TimeBasedRollingPolicy();
-
-					timeBasedRollingPolicy.setFileNamePattern(
-						StringUtil.replace(tempLogDir.toString(), '\\', '/') +
-							"/liferay.%d{yyyy-MM-dd}.xml");
-
-					xmlFileRollingFileAppender.setRollingPolicy(
-						timeBasedRollingPolicy);
-
-					xmlFileRollingFileAppender.activateOptions();
-
-					logger.addAppender(xmlFileRollingFileAppender);
-				}
+				_setLoggerRollingFileAppender(
+					portalRollingFileAppender, logger,
+					StringUtil.replace(tempLogFileDir.toString(), '\\', '/') +
+						StringPool.SLASH + portalFileNamePattern);
 			}
 			else if ((appender instanceof ConsoleAppender) &&
 					 Objects.equals("CONSOLE", appender.getName())) {
@@ -150,37 +126,13 @@ public class Log4JOutputMessageTest {
 	}
 
 	@Test
-	public void testConsoleOutput() {
-		_testConsoleOutput("TRACE");
-		_testConsoleOutput("DEBUG");
-		_testConsoleOutput("INFO");
-		_testConsoleOutput("WARN");
-		_testConsoleOutput("ERROR");
-		_testConsoleOutput("FATAL");
-	}
-
-	@Test
-	public void testFileOutput() throws Exception {
-		_testFileOutput("TRACE", "TRACE message", null);
-		_testFileOutput("DEBUG", "DEBUG message", null);
-		_testFileOutput("INFO", "INFO message", null);
-		_testFileOutput("WARN", "WARN message", null);
-		_testFileOutput("ERROR", "ERROR message", null);
-		_testFileOutput("FATAL", "FATAL message", null);
-
-		_testFileOutput("TRACE", "TRACE message", new TestException());
-		_testFileOutput("DEBUG", "DEBUG message", new TestException());
-		_testFileOutput("INFO", "INFO message", new TestException());
-		_testFileOutput("WARN", "WARN message", new TestException());
-		_testFileOutput("ERROR", "ERROR message", new TestException());
-		_testFileOutput("FATAL", "FATAL message", new TestException());
-
-		_testFileOutput("TRACE", null, new TestException());
-		_testFileOutput("DEBUG", null, new TestException());
-		_testFileOutput("INFO", null, new TestException());
-		_testFileOutput("WARN", null, new TestException());
-		_testFileOutput("ERROR", null, new TestException());
-		_testFileOutput("FATAL", null, new TestException());
+	public void testLogOutput() throws Exception {
+		_testLogOutput("TRACE");
+		_testLogOutput("DEBUG");
+		_testLogOutput("INFO");
+		_testLogOutput("WARN");
+		_testLogOutput("ERROR");
+		_testLogOutput("FATAL");
 	}
 
 	private static Logger _getLogger() {
@@ -191,38 +143,60 @@ public class Log4JOutputMessageTest {
 		return ReflectionTestUtil.getFieldValue(log, "_logger");
 	}
 
+	private static void _setLoggerRollingFileAppender(
+		RollingFileAppender portalRollingFileAppender, Logger logger,
+		String testFileNamePattern) {
+
+		RollingFileAppender testRollingFileAppender = new RollingFileAppender();
+
+		TimeBasedRollingPolicy testTimeBasedRollingPolicy =
+			new TimeBasedRollingPolicy();
+
+		testTimeBasedRollingPolicy.setFileNamePattern(testFileNamePattern);
+
+		testRollingFileAppender.setLayout(
+			portalRollingFileAppender.getLayout());
+		testRollingFileAppender.setRollingPolicy(testTimeBasedRollingPolicy);
+
+		testRollingFileAppender.activateOptions();
+
+		logger.addAppender(testRollingFileAppender);
+
+		if (Objects.equals("TEXT_FILE", portalRollingFileAppender.getName())) {
+			_textLogFile = new File(testRollingFileAppender.getFile());
+		}
+		else if (Objects.equals(
+					portalRollingFileAppender.getName(), "XML_FILE")) {
+
+			_xmlLogFile = new File(testRollingFileAppender.getFile());
+		}
+	}
+
 	private void _assertFileContent(
 			String level, String message, Throwable throwable)
 		throws Exception {
 
-		for (File file : _tempLogDir.listFiles()) {
-			String fileName = file.getName();
+		Matcher matcher = _textFileNamePattern.matcher(_textLogFile.getName());
 
-			if (fileName.endsWith(".log")) {
-				Matcher matcher = _textFileNamePattern.matcher(fileName);
+		Assert.assertTrue(
+			"Text log file name should match the pattern liferay.yyyy-MM-dd." +
+				"log, but actual name is " + _textLogFile.getName(),
+			matcher.matches());
 
-				Assert.assertTrue(
-					"Text log file name should match the pattern liferay." +
-						"yyyy-MM-dd.log, but actual name is " + fileName,
-					matcher.matches());
+		_assertTextLog(
+			level, message, throwable,
+			StreamUtil.toString(new FileInputStream(_textLogFile)));
 
-				_assertTextLog(
-					level, message, throwable,
-					StreamUtil.toString(new FileInputStream(file)));
-			}
-			else {
-				Matcher matcher = _xmlFileNamePattern.matcher(fileName);
+		matcher = _xmlFileNamePattern.matcher(_xmlLogFile.getName());
 
-				Assert.assertTrue(
-					"XML log file name should match the pattern liferay." +
-						"yyyy-MM-dd.xml, but actual name is " + fileName,
-					matcher.matches());
+		Assert.assertTrue(
+			"XML log file name should match the pattern liferay.yyyy-MM-dd." +
+				"xml, but actual name is " + _xmlLogFile.getName(),
+			matcher.matches());
 
-				_assertXmlLog(
-					level, message, throwable,
-					StreamUtil.toString(new FileInputStream(file)));
-			}
-		}
+		_assertXmlLog(
+			level, message, throwable,
+			StreamUtil.toString(new FileInputStream(_xmlLogFile)));
 	}
 
 	private void _assertTextLog(
@@ -532,7 +506,7 @@ public class Log4JOutputMessageTest {
 		}
 	}
 
-	private void _testConsoleOutput(String level) {
+	private void _testLogOutput(String level) throws Exception {
 		String testMessage = level + " message";
 
 		_outputLog(level, testMessage, null);
@@ -540,9 +514,14 @@ public class Log4JOutputMessageTest {
 		try {
 			_assertTextLog(
 				level, testMessage, null, _unsyncStringWriter.toString());
+
+			_assertFileContent(level, testMessage, null);
 		}
 		finally {
 			_unsyncStringWriter.reset();
+
+			FileUtils.writeStringToFile(_textLogFile, "", StringPool.UTF8);
+			FileUtils.writeStringToFile(_xmlLogFile, "", StringPool.UTF8);
 		}
 
 		TestException testException = new TestException();
@@ -553,9 +532,14 @@ public class Log4JOutputMessageTest {
 			_assertTextLog(
 				level, testMessage, testException,
 				_unsyncStringWriter.toString());
+
+			_assertFileContent(level, testMessage, testException);
 		}
 		finally {
 			_unsyncStringWriter.reset();
+
+			FileUtils.writeStringToFile(_textLogFile, "", StringPool.UTF8);
+			FileUtils.writeStringToFile(_xmlLogFile, "", StringPool.UTF8);
 		}
 
 		_outputLog(level, null, testException);
@@ -563,29 +547,14 @@ public class Log4JOutputMessageTest {
 		try {
 			_assertTextLog(
 				level, null, testException, _unsyncStringWriter.toString());
+
+			_assertFileContent(level, null, testException);
 		}
 		finally {
 			_unsyncStringWriter.reset();
-		}
-	}
 
-	private void _testFileOutput(
-			String level, String message, Throwable throwable)
-		throws Exception {
-
-		for (File logFile : _tempLogDir.listFiles()) {
-			if (logFile.isFile()) {
-				logFile.delete();
-			}
-		}
-
-		_outputLog(level, message, throwable);
-
-		try {
-			_assertFileContent(level, message, throwable);
-		}
-		finally {
-			_unsyncStringWriter.reset();
+			FileUtils.writeStringToFile(_textLogFile, "", StringPool.UTF8);
+			FileUtils.writeStringToFile(_xmlLogFile, "", StringPool.UTF8);
 		}
 	}
 
@@ -596,12 +565,13 @@ public class Log4JOutputMessageTest {
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
-	private static File _tempLogDir;
 	private static final Pattern _textFileNamePattern = Pattern.compile(
 		"liferay.\\d\\d\\d\\d-\\d\\d-\\d\\d.log");
+	private static File _textLogFile;
 	private static UnsyncStringWriter _unsyncStringWriter;
 	private static final Pattern _xmlFileNamePattern = Pattern.compile(
 		"liferay.\\d\\d\\d\\d-\\d\\d-\\d\\d.xml");
+	private static File _xmlLogFile;
 
 	private class TestException extends Exception {
 	}

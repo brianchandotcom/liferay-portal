@@ -78,10 +78,12 @@ public class TranslationEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", translationEntryId=");
@@ -126,6 +128,7 @@ public class TranslationEntryCacheModel
 		TranslationEntryImpl translationEntryImpl = new TranslationEntryImpl();
 
 		translationEntryImpl.setMvccVersion(mvccVersion);
+		translationEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			translationEntryImpl.setUuid("");
@@ -211,6 +214,8 @@ public class TranslationEntryCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		translationEntryId = objectInput.readLong();
@@ -241,6 +246,8 @@ public class TranslationEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -307,6 +314,7 @@ public class TranslationEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long translationEntryId;
 	public long groupId;

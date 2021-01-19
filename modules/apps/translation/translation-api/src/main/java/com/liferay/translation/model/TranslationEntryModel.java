@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -40,8 +41,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface TranslationEntryModel
-	extends AttachedModel, BaseModel<TranslationEntry>, GroupedModel, MVCCModel,
-			ShardedModel, StagedAuditedModel, WorkflowedModel {
+	extends AttachedModel, BaseModel<TranslationEntry>,
+			CTModel<TranslationEntry>, GroupedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +56,7 @@ public interface TranslationEntryModel
 	 *
 	 * @return the primary key of this translation entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -61,6 +64,7 @@ public interface TranslationEntryModel
 	 *
 	 * @param primaryKey the primary key of this translation entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -78,6 +82,22 @@ public interface TranslationEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this translation entry.
+	 *
+	 * @return the ct collection ID of this translation entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this translation entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this translation entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this translation entry.

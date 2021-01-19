@@ -14,7 +14,10 @@
 
 package com.liferay.translation.service;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.translation.model.TranslationEntry;
 
 /**
  * Provides a wrapper for {@link TranslationEntryLocalService}.
@@ -34,12 +37,11 @@ public class TranslationEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.translation.model.TranslationEntry
-			addOrUpdateTranslationEntry(
-				long groupId, String languageId,
-				com.liferay.info.item.InfoItemReference infoItemReference,
-				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, String languageId,
+			com.liferay.info.item.InfoItemReference infoItemReference,
+			com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _translationEntryLocalService.addOrUpdateTranslationEntry(
@@ -48,11 +50,10 @@ public class TranslationEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.translation.model.TranslationEntry
-			addOrUpdateTranslationEntry(
-				long groupId, String className, long classPK, String content,
-				String contentType, String languageId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public TranslationEntry addOrUpdateTranslationEntry(
+			long groupId, String className, long classPK, String content,
+			String contentType, String languageId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _translationEntryLocalService.addOrUpdateTranslationEntry(
@@ -71,8 +72,8 @@ public class TranslationEntryLocalServiceWrapper
 	 * @return the translation entry that was added
 	 */
 	@Override
-	public com.liferay.translation.model.TranslationEntry addTranslationEntry(
-		com.liferay.translation.model.TranslationEntry translationEntry) {
+	public TranslationEntry addTranslationEntry(
+		TranslationEntry translationEntry) {
 
 		return _translationEntryLocalService.addTranslationEntry(
 			translationEntry);
@@ -97,9 +98,7 @@ public class TranslationEntryLocalServiceWrapper
 	 * @return the new translation entry
 	 */
 	@Override
-	public com.liferay.translation.model.TranslationEntry
-		createTranslationEntry(long translationEntryId) {
-
+	public TranslationEntry createTranslationEntry(long translationEntryId) {
 		return _translationEntryLocalService.createTranslationEntry(
 			translationEntryId);
 	}
@@ -140,8 +139,7 @@ public class TranslationEntryLocalServiceWrapper
 	 * @throws PortalException if a translation entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.translation.model.TranslationEntry
-			deleteTranslationEntry(long translationEntryId)
+	public TranslationEntry deleteTranslationEntry(long translationEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _translationEntryLocalService.deleteTranslationEntry(
@@ -159,9 +157,8 @@ public class TranslationEntryLocalServiceWrapper
 	 * @return the translation entry that was removed
 	 */
 	@Override
-	public com.liferay.translation.model.TranslationEntry
-		deleteTranslationEntry(
-			com.liferay.translation.model.TranslationEntry translationEntry) {
+	public TranslationEntry deleteTranslationEntry(
+		TranslationEntry translationEntry) {
 
 		return _translationEntryLocalService.deleteTranslationEntry(
 			translationEntry);
@@ -264,15 +261,13 @@ public class TranslationEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.translation.model.TranslationEntry fetchTranslationEntry(
-		long translationEntryId) {
-
+	public TranslationEntry fetchTranslationEntry(long translationEntryId) {
 		return _translationEntryLocalService.fetchTranslationEntry(
 			translationEntryId);
 	}
 
 	@Override
-	public com.liferay.translation.model.TranslationEntry fetchTranslationEntry(
+	public TranslationEntry fetchTranslationEntry(
 		String className, long classPK, String languageId) {
 
 		return _translationEntryLocalService.fetchTranslationEntry(
@@ -287,8 +282,8 @@ public class TranslationEntryLocalServiceWrapper
 	 * @return the matching translation entry, or <code>null</code> if a matching translation entry could not be found
 	 */
 	@Override
-	public com.liferay.translation.model.TranslationEntry
-		fetchTranslationEntryByUuidAndGroupId(String uuid, long groupId) {
+	public TranslationEntry fetchTranslationEntryByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _translationEntryLocalService.
 			fetchTranslationEntryByUuidAndGroupId(uuid, groupId);
@@ -361,8 +356,8 @@ public class TranslationEntryLocalServiceWrapper
 	 * @return the range of translation entries
 	 */
 	@Override
-	public java.util.List<com.liferay.translation.model.TranslationEntry>
-		getTranslationEntries(int start, int end) {
+	public java.util.List<TranslationEntry> getTranslationEntries(
+		int start, int end) {
 
 		return _translationEntryLocalService.getTranslationEntries(start, end);
 	}
@@ -375,7 +370,7 @@ public class TranslationEntryLocalServiceWrapper
 	 * @return the matching translation entries, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.translation.model.TranslationEntry>
+	public java.util.List<TranslationEntry>
 		getTranslationEntriesByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _translationEntryLocalService.
@@ -393,12 +388,11 @@ public class TranslationEntryLocalServiceWrapper
 	 * @return the range of matching translation entries, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.translation.model.TranslationEntry>
+	public java.util.List<TranslationEntry>
 		getTranslationEntriesByUuidAndCompanyId(
 			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.translation.model.TranslationEntry>
-					orderByComparator) {
+			com.liferay.portal.kernel.util.OrderByComparator<TranslationEntry>
+				orderByComparator) {
 
 		return _translationEntryLocalService.
 			getTranslationEntriesByUuidAndCompanyId(
@@ -423,8 +417,7 @@ public class TranslationEntryLocalServiceWrapper
 	 * @throws PortalException if a translation entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.translation.model.TranslationEntry getTranslationEntry(
-			long translationEntryId)
+	public TranslationEntry getTranslationEntry(long translationEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _translationEntryLocalService.getTranslationEntry(
@@ -440,8 +433,8 @@ public class TranslationEntryLocalServiceWrapper
 	 * @throws PortalException if a matching translation entry could not be found
 	 */
 	@Override
-	public com.liferay.translation.model.TranslationEntry
-			getTranslationEntryByUuidAndGroupId(String uuid, long groupId)
+	public TranslationEntry getTranslationEntryByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _translationEntryLocalService.
@@ -449,7 +442,7 @@ public class TranslationEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.translation.model.TranslationEntry updateStatus(
+	public TranslationEntry updateStatus(
 			long userId, long translationEntryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext,
 			java.util.Map<String, java.io.Serializable> workflowContext)
@@ -471,12 +464,31 @@ public class TranslationEntryLocalServiceWrapper
 	 * @return the translation entry that was updated
 	 */
 	@Override
-	public com.liferay.translation.model.TranslationEntry
-		updateTranslationEntry(
-			com.liferay.translation.model.TranslationEntry translationEntry) {
+	public TranslationEntry updateTranslationEntry(
+		TranslationEntry translationEntry) {
 
 		return _translationEntryLocalService.updateTranslationEntry(
 			translationEntry);
+	}
+
+	@Override
+	public CTPersistence<TranslationEntry> getCTPersistence() {
+		return _translationEntryLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<TranslationEntry> getModelClass() {
+		return _translationEntryLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<TranslationEntry>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _translationEntryLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

@@ -1,7 +1,8 @@
 create table TranslationEntry (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	translationEntryId LONG not null primary key,
+	translationEntryId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -16,5 +17,6 @@ create table TranslationEntry (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (translationEntryId, ctCollectionId)
 );

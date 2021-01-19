@@ -15,6 +15,7 @@
 package com.liferay.translation.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.translation.exception.NoSuchEntryException;
 import com.liferay.translation.model.TranslationEntry;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface TranslationEntryPersistence
-	extends BasePersistence<TranslationEntry> {
+	extends BasePersistence<TranslationEntry>, CTPersistence<TranslationEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

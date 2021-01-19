@@ -126,6 +126,8 @@ public class TranslationEntryPersistenceTest {
 
 		newTranslationEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newTranslationEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newTranslationEntry.setUuid(RandomTestUtil.randomString());
 
 		newTranslationEntry.setGroupId(RandomTestUtil.nextLong());
@@ -166,6 +168,9 @@ public class TranslationEntryPersistenceTest {
 		Assert.assertEquals(
 			existingTranslationEntry.getMvccVersion(),
 			newTranslationEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingTranslationEntry.getCtCollectionId(),
+			newTranslationEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingTranslationEntry.getUuid(), newTranslationEntry.getUuid());
 		Assert.assertEquals(
@@ -288,10 +293,10 @@ public class TranslationEntryPersistenceTest {
 
 	protected OrderByComparator<TranslationEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"TranslationEntry", "mvccVersion", true, "uuid", true,
-			"translationEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"TranslationEntry", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "translationEntryId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"contentType", true, "languageId", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
 			true);
@@ -600,6 +605,8 @@ public class TranslationEntryPersistenceTest {
 		TranslationEntry translationEntry = _persistence.create(pk);
 
 		translationEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		translationEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		translationEntry.setUuid(RandomTestUtil.randomString());
 

@@ -36,6 +36,9 @@ public class TranslationEntryTable extends BaseTable<TranslationEntryTable> {
 
 	public final Column<TranslationEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<TranslationEntryTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<TranslationEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<TranslationEntryTable, Long> translationEntryId =

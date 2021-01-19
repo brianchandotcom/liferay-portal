@@ -101,6 +101,12 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "${videoShortcutTitle}");
 
+		if (isSet(videoShortcutPreviousTitle)) {
+			AssertTextEquals(
+				locator1 = "TextInput#TITLE",
+				value1 = "${videoShortcutPreviousTitle}");
+		}
+
 		Type(
 			key_text = "Video URL",
 			locator1 = "TextInput#ANY",

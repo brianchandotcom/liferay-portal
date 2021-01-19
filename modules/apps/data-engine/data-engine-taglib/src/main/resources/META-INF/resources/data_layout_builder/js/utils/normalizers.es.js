@@ -12,6 +12,28 @@
  * details.
  */
 
+const getVisualPropertiesFromField = ({pages}) => {
+	const fieldProperties = {};
+
+	pages.forEach((page) =>
+		page.rows.forEach((row) =>
+			row.columns.forEach(({fields}) =>
+				fields
+					.filter(({visualProperty}) => visualProperty)
+					.forEach(
+						({fieldName, localizable, localizedValue, value}) => {
+							fieldProperties[fieldName] = localizable
+								? localizedValue
+								: value;
+						}
+					)
+			)
+		)
+	);
+
+	return fieldProperties;
+};
+
 /**
  * Normalize field
  * @param {Array} availableLanguageIds
@@ -128,20 +150,35 @@ export function normalizeDataDefinition(
  * Normalize Data Layout
  * @param {Object} dataLayout
  * @param {String?} defaultLanguageId
+ * @param {Object?} dataDefinition
+ * @param {Object} dataLayoutBuilder
  */
 
 export function normalizeDataLayout(
 	dataLayout,
 	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
-	dataDefinitionFieldNames
+	dataDefinition,
+	dataLayoutBuilder
 ) {
 	const {dataLayoutFields = {}} = dataLayout;
+	const {dataDefinitionFields} = dataDefinition;
 
-	if (dataDefinitionFieldNames) {
+	if (dataDefinition?.dataDefinitionFields) {
 		Object.keys(dataLayoutFields).forEach((field) => {
-			if (!dataDefinitionFieldNames.includes(field)) {
+			if (!dataDefinitionFields.find((item) => item.name === field)) {
 				delete dataLayoutFields[field];
 			}
+		});
+
+		dataDefinitionFields.forEach((definitionField) => {
+			dataLayoutFields[definitionField.name] = {
+				...dataLayoutFields[definitionField.name],
+				...getVisualPropertiesFromField(
+					dataLayoutBuilder.getDDMFormFieldSettingsContext(
+						definitionField
+					)
+				),
+			};
 		});
 	}
 

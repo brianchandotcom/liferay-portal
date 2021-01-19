@@ -30,7 +30,7 @@ summary.setHighlight(queryConfig.isHighlightEnabled());
 summary.setQueryTerms(hits.getQueryTerms());
 %>
 
-<div class="app-view-entry app-view-search-entry-taglib entry-display-style <%= MathUtil.isEven(index) ? "search" : "search alt" %>" data-title="<%= HtmlUtil.escapeAttribute(StringUtil.shorten(wikiPage.getTitle(), 60)) %>">
+<div class="app-view-entry app-view-search-entry-taglib <%= MathUtil.isEven(index) ? "search" : "search alt" %>" data-title="<%= HtmlUtil.escapeAttribute(StringUtil.shorten(wikiPage.getTitle(), 60)) %>">
 	<a class="entry-link" href="<%= HtmlUtil.escapeAttribute(rowURL) %>" title="<%= HtmlUtil.escapeAttribute(linkTitle) %>">
 		<div class="entry-metadata">
 			<span class="entry-title">

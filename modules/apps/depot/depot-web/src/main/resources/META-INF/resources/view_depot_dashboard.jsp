@@ -47,7 +47,7 @@ boolean panelsShown = false;
 				for (PanelApp panelApp : panelApps) {
 				%>
 
-					<li class="card-page-item card-page-item-asset entry-display-style">
+					<li class="card-page-item card-page-item-asset">
 						<clay:navigation-card
 							navigationCard="<%= depotAdminViewDepotDashboardDisplayContext.getDepotDashboardApplicationNavigationCard(panelApp, locale, !depotAdminViewDepotDashboardDisplayContext.isPrimaryPanelCategory(panelCategory)) %>"
 						/>

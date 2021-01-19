@@ -40,7 +40,7 @@ public class CryptoHasherImpl implements CryptoHasher {
 		_cryptoHashProvider = new CryptoHashProvider(
 			"SHA-256",
 			HashMapBuilder.put(
-				"saltSize", 0
+				"saltSize", 16
 			).build());
 	}
 

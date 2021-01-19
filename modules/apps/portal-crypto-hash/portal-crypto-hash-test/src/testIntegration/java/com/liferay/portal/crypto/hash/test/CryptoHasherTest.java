@@ -70,7 +70,7 @@ public class CryptoHasherTest {
 	}
 
 	@Test
-	public void testVerificationWithSalt() throws Exception {
+	public void testVerificationWithFixedHashAndSalt() throws Exception {
 		CryptoHashVerificationContext cryptoHashVerificationContext =
 			new CryptoHashVerificationContext(
 				null, _SALT_1.getBytes(), _MESSAGE_DIGEST_ALGO_1,

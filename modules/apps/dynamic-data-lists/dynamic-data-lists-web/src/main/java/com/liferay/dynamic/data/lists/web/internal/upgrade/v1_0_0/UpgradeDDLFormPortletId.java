@@ -132,7 +132,6 @@ public class UpgradeDDLFormPortletId extends BaseUpgradePortletId {
 
 				dynamicQuery.add(junction);
 			});
-		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(
 			(PortletPreferences portletPreference) -> updatePortletPreferences(
 				portletPreference, oldRootPortletId, newRootPortletId));
@@ -170,8 +169,9 @@ public class UpgradeDDLFormPortletId extends BaseUpgradePortletId {
 
 		portletPreferences.setPortletId(newPortletId);
 
-		_portletPreferencesLocalService.updatePortletPreferences(
-			portletPreferences);
+		portletPreferences =
+			_portletPreferencesLocalService.updatePortletPreferences(
+				portletPreferences);
 
 		String oldPreferences = PortletPreferencesFactoryUtil.toXML(
 			_portletPreferencesLocalService.getPreferences(
@@ -186,8 +186,13 @@ public class UpgradeDDLFormPortletId extends BaseUpgradePortletId {
 				"</preference></portlet-preferences>");
 
 		newPreferences = StringUtil.replace(
-			newPreferences, "#portlet_" + oldRootPortletId,
-			"#portlet_" + newRootPortletId);
+			newPreferences,
+			new String[] {
+				"#p_p_id_" + oldRootPortletId, "#portlet_" + oldRootPortletId
+			},
+			new String[] {
+				"#p_p_id_" + newRootPortletId, "#portlet_" + newRootPortletId
+			});
 
 		_portletPreferencesLocalService.updatePreferences(
 			portletPreferences.getOwnerId(), portletPreferences.getOwnerType(),

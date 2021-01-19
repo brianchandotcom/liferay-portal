@@ -140,8 +140,13 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 		newPortletPreferences.setValue("paginationType", "none");
 
 		portletSetupCss = StringUtil.replace(
-			portletSetupCss, "#portlet_" + oldRootPortletId,
-			"#portlet_" + newRootPortletId);
+			portletSetupCss,
+			new String[] {
+				"#p_p_id_" + oldRootPortletId, "#portlet_" + oldRootPortletId
+			},
+			new String[] {
+				"#p_p_id_" + newRootPortletId, "#portlet_" + newRootPortletId
+			});
 
 		newPortletPreferences.setValue("portletSetupCss", portletSetupCss);
 
@@ -209,9 +214,9 @@ public class UpgradeJournalArticles extends BaseUpgradePortletId {
 
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("select PortletPreferences.portletPreferencesId from ");
-		sb.append("PortletPreferences inner join PortletPreferenceValue on ");
-		sb.append("PortletPreferenceValue.portletPreferencesId = ");
+		sb.append("select distinct PortletPreferences.portletPreferencesId ");
+		sb.append("from PortletPreferences inner join PortletPreferenceValue ");
+		sb.append("on PortletPreferenceValue.portletPreferencesId = ");
 		sb.append("PortletPreferences.portletPreferencesId where portletId = ");
 		sb.append("'");
 		sb.append(oldRootPortletId);

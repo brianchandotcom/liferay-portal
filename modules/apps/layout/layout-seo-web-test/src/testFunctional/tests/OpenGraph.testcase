@@ -212,6 +212,8 @@ definition {
 	@description = "This test ensures that user can map the blogs with open graph meta tags for display pages."
 	@priority = "5"
 	test MapBlogsToDisplayPage {
+		property test.name.skip.portal.instance = "OpenGraph#MapBlogsToDisplayPage";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -314,6 +316,8 @@ definition {
 	@description = "This test ensures that user can map the document with open graph meta tags for display pages."
 	@priority = "5"
 	test MapDocumentToDisplayPage {
+		property test.name.skip.portal.instance = "OpenGraph#MapDocumentToDisplayPage";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -424,6 +428,8 @@ definition {
 	@description = "This test ensures that image meta tags are displayed with the site image and alt description in the HTML when the image fields are not mapped in the display page."
 	@priority = "5"
 	test MapSiteImageToDisplayPage {
+		property test.name.skip.portal.instance = "OpenGraph#MapSiteImageToDisplayPage";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
@@ -496,6 +502,8 @@ definition {
 	@description = "This test ensures that user can map the web content with open graph meta tags for display pages."
 	@priority = "5"
 	test MapWebContentToDisplayPage {
+		property test.name.skip.portal.instance = "OpenGraph#MapWebContentToDisplayPage";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

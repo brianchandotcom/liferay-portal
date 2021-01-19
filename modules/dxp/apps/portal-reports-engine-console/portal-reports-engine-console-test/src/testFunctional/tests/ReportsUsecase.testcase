@@ -131,11 +131,20 @@ definition {
 	@description = "This is a use case for LPS-51009."
 	@priority = "4"
 	test ViewReportEmailNewConfiguration {
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
+		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "ReportsUsecase#ViewReportEmailNewConfiguration";
 
 		var portalURL = PropsUtil.get("portal.url");
-		property test.smtp.server.enabled = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.configureMailServerSettings(
+			userName = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"));
 
 		Navigator.openURL();
 
@@ -146,7 +155,7 @@ definition {
 		ReportsAdmin.gotoConfiguration();
 
 		ReportsAdmin.configureEmailFrom(
-			emailFromAddress = "user1@liferay.com",
+			emailFromAddress = PropsUtil.get("email.address.2"),
 			emailFromName = "Liferay QA");
 
 		IFrame.closeFrame();
@@ -154,14 +163,7 @@ definition {
 		ReportsAdmin.gotoConfiguration();
 
 		ReportsAdmin.configureDeliveryEmail(
-			deliveryBody = '''
-Dear [$TO_NAME$],<br/><br/>
-
-Please review the attached report from your friends in QA!<br/><br />
-
-Thank You,<br/>
-[$FROM_NAME$]<br/>
-[$FROM_ADDRESS$]			<br/>''',
+			deliveryBody = '''Please review the attached report from your friends in QA!''',
 			deliverySubject = '''New Report From QA: [$REPORT_NAME$]''');
 
 		IFrame.closeFrame();
@@ -169,14 +171,7 @@ Thank You,<br/>
 		ReportsAdmin.gotoConfiguration();
 
 		ReportsAdmin.configureNotificationsEmail(
-			notificationBody = '''
-Dear [$TO_NAME$],<br/><br/>
-
-You have a new <a href="[$PAGE_URL$]">report</a> from your friends in QA.<br/><br/>
-
-Thanks,<br/>
-[$FROM_NAME$]<br/>
-[$FROM_ADDRESS$]			<br/>''',
+			notificationBody = '''You have a new <a href="[$PAGE_URL$]">report</a> from your friends in QA.''',
 			notificationSubject = '''New Report From QA: [$REPORT_NAME$]''');
 
 		Navigator.openURL();
@@ -194,24 +189,45 @@ Thanks,<br/>
 			templateFile = "reports_admin_template_source_sample_class_name.jrxml");
 
 		ReportsAdmin.addReportEntry(
-			emailNotificationsAddress = "user2@liferay.com",
-			emailRecipientAddress = "user3@liferay.com",
+			emailNotificationsAddress = PropsUtil.get("email.address.4"),
+			emailRecipientAddress = PropsUtil.get("email.address.3"),
 			reportFormat = "pdf",
 			reportsDefinitionName = "Reports Definition Name");
 
-		MockMock.viewMail(
-			asset = "New Report From QA: reports_admin_template_source_sample_class_name.pdf",
-			content = "You have a new",
-			recipient = "user2@liferay.com",
-			sender = "Liferay QA",
-			subject = "reports_admin_template_source_sample_class_name.pdf");
+		Pause(locator1 = "30000");
 
-		MockMock.viewMail(
-			asset = "New Report From QA: reports_admin_template_source_sample_class_name.pdf",
-			content = "Please review the attached report from your friends in QA!",
-			recipient = "user3@liferay.com",
-			sender = "Liferay QA",
-			subject = "reports_admin_template_source_sample_class_name.pdf");
+		Gmail.login(
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"));
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.viewMail(
+			emailFromUserName = "Liferay QA",
+			gmailAssetType = "New Report From QA: reports_admin_template_source_sample_class_name.pdf",
+			gmailMessageBody = "You have a new report from your friends in QA.",
+			gmailMessageTitle = "New Report From QA: reports_admin_template_source_sample_class_name.pdf");
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report From QA: reports_admin_template_source_sample_class_name.pdf");
+
+		Gmail.logoutAndLogin(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"));
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.viewMail(
+			emailFromUserName = "Liferay QA",
+			gmailAssetType = "New Report From QA: reports_admin_template_source_sample_class_name.pdf",
+			gmailMessageAttachment = "reports_admin_template_source_sample_class_name.pdf",
+			gmailMessageBody = "Please review the attached report from your friends in QA!",
+			gmailMessageTitle = "New Report From QA: reports_admin_template_source_sample_class_name.pdf");
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "New Report From QA: reports_admin_template_source_sample_class_name.pdf");
 
 		Navigator.openSpecificURL(url = "${portalURL}");
 

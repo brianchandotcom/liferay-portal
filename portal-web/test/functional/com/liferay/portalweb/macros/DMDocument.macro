@@ -107,6 +107,32 @@ definition {
 				value1 = "${documentsAndMediaField}");
 		}
 
+		if (isSet(imageField)) {
+			var key_fieldFieldLabel = "Image";
+
+			AssertClick(
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
+
+			if ("${navTab}" == "Documents and Media") {
+				if (isSet(imageFileName)) {
+					ItemSelector.selectDMImage(
+						imageFileName = "${imageField}",
+						navTab = "${navTab}");
+				}
+				else {
+					ItemSelector.uploadFile(
+						navTab = "${navTab}",
+						uploadFileName = "${imageField}");
+				}
+			}
+			else if ("${navTab}" == "Web Content Images") {
+				ItemSelector.uploadFile(
+					navTab = "${navTab}",
+					uploadFileName = "${imageField}");
+			}
+		}
+
 		if (isSet(textField)) {
 			var key_fieldLabel = "Text";
 

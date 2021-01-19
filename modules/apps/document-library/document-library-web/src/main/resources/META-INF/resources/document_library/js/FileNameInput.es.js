@@ -28,7 +28,7 @@ const RequiredMark = () => (
 	</>
 );
 
-const FileNameInput = ({initialValue, portletNamespace, required, visible})  => {
+const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 	const inputId = portletNamespace + 'fileName';
 	const [inputValue, setInputValue] = useState(initialValue);
 	const valueChanged = initialValue != inputValue;
@@ -46,9 +46,9 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible})  => 
 				id={inputId}
 				name={inputId}
 				onChange={({target: {value}}) => setInputValue(value)}
-				type={visible ? 'text' : hidden}
-				value={inputValue}
 				required={required}
+				type={visible ? 'text' : 'hidden'}
+				value={inputValue}
 			/>
 
 			{valueChanged && (
@@ -61,7 +61,7 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible})  => 
 			)}
 		</ClayForm.Group>
 	);
-}
+};
 
 FileNameInput.propTypes = {
 	initialValue: PropTypes.string,

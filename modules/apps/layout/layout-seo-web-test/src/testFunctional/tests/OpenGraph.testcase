@@ -56,7 +56,9 @@ definition {
 
 		var siteID = Site.getSiteId();
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		User.viewLoggedOutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -202,7 +204,9 @@ definition {
 
 		var siteID = Site.getSiteId();
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		User.viewLoggedOutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page-name");
 
@@ -302,7 +306,9 @@ definition {
 
 		PortletEntry.publish();
 
-		User.logoutPG();
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
+
+		User.viewLoggedOutPG();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/b/blogs-entry-title");
 

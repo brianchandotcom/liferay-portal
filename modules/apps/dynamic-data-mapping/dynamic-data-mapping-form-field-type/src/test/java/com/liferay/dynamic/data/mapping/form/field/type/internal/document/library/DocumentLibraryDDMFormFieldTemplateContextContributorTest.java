@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPers
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -524,7 +525,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 					}),
 				Mockito.eq(_GROUP_ID),
 				Mockito.eq(_PORTLET_NAMESPACE + "selectDocumentLibrary"),
-				Mockito.any(DDMUserPersonalFolderItemSelectorCriterion.class))
+				Mockito.any(DDMUserPersonalFolderItemSelectorCriterion.class),
+				Mockito.any(FileItemSelectorCriterion.class))
 		).thenReturn(
 			new MockLiferayPortletURL()
 		);

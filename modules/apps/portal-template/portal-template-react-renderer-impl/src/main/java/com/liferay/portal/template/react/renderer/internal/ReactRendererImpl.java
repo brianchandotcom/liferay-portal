@@ -14,7 +14,7 @@
 
 package com.liferay.portal.template.react.renderer.internal;
 
-import com.liferay.frontend.js.loader.support.JSLoaderSupport;
+import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
@@ -42,12 +42,12 @@ public class ReactRendererImpl implements ReactRenderer {
 		throws IOException {
 
 		ReactRendererUtil.renderReact(
-			componentDescriptor, data, httpServletRequest, _jsLoaderSupport,
+			componentDescriptor, data, httpServletRequest, _jsModuleLauncher,
 			_portal, writer);
 	}
 
 	@Reference
-	private JSLoaderSupport _jsLoaderSupport;
+	private JSModuleLauncher _jsModuleLauncher;
 
 	@Reference
 	private Portal _portal;

@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.loader.support.JSLoaderSupport;
+import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper.SPAHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -107,7 +107,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		javascriptSB.append(configJSONObject.toJSONString());
 		javascriptSB.append(");");
 
-		_jsLoaderSupport.writeScript(
+		_jsModuleLauncher.writeScript(
 			httpServletResponse.getWriter(), "frontend-js-spa-web",
 			"frontendJsSpaWebInit", javascriptSB.toString());
 	}
@@ -137,7 +137,7 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	private Html _html;
 
 	@Reference
-	private JSLoaderSupport _jsLoaderSupport;
+	private JSModuleLauncher _jsModuleLauncher;
 
 	@Reference
 	private Language _language;

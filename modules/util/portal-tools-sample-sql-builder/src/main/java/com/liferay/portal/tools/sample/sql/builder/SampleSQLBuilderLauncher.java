@@ -21,21 +21,20 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Lily Chi
@@ -78,27 +77,24 @@ public class SampleSQLBuilderLauncher {
 		URL url = classLoader.getResource("lib");
 
 		try (FileSystem fileSystem = FileSystems.newFileSystem(
-				url.toURI(), Collections.emptyMap())) {
+				url.toURI(), Collections.emptyMap());
+			DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				fileSystem.getPath("/lib"), "*.jar")) {
 
-			Stream<Path> pathStream = Files.list(fileSystem.getPath("/lib"));
+			Iterator<Path> iterator = directoryStream.iterator();
 
-			pathStream.forEach(
-				path -> {
-					Path fileNamePath = path.getFileName();
+			while (iterator.hasNext()) {
+				Path path = iterator.next();
 
-					Path targetPath = Paths.get(
-						tempDirPath.toString(), fileNamePath.toString());
+				Path targetPath = tempDirPath.resolve(
+					String.valueOf(path.getFileName()));
 
-					try {
-						Files.copy(path, targetPath);
+				Files.copy(path, targetPath);
 
-						URI uri = targetPath.toUri();
+				URI uri = targetPath.toUri();
 
-						urls.add(uri.toURL());
-					}
-					catch (IOException ioException) {
-					}
-				});
+				urls.add(uri.toURL());
+			}
 		}
 
 		return urls.toArray(new URL[0]);

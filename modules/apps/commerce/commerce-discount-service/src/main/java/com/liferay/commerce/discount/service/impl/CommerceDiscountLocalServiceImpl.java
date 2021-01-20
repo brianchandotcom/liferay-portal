@@ -642,6 +642,16 @@ public class CommerceDiscountLocalServiceImpl
 			companyId, commerceDiscountTargetType);
 	}
 
+	@Override
+	public int getValidCommerceDiscountsCount(
+		long commerceAccountId, long[] commerceAccountGroupIds,
+		long commerceChannelId, long commerceDiscountId) {
+
+		return commerceDiscountFinder.countByValidCommerceDiscount(
+			commerceAccountId, commerceAccountGroupIds, commerceChannelId,
+			commerceDiscountId);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceDiscount incrementCommerceDiscountNumberOfUse(

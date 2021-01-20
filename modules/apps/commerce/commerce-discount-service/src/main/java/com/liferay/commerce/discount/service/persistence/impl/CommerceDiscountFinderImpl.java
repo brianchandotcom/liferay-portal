@@ -49,6 +49,9 @@ public class CommerceDiscountFinderImpl
 		CommerceDiscountFinder.class.getName() +
 			".countByCommercePricingClassId";
 
+	public static final String COUNT_BY_VALID_DISCOUNT =
+		CommerceDiscountFinder.class.getName() + ".countByValidDiscount";
+
 	public static final String FIND_BY_COMMERCE_PRICING_CLASS_ID =
 		CommerceDiscountFinder.class.getName() +
 			".findByCommercePricingClassId";
@@ -149,6 +152,64 @@ public class CommerceDiscountFinderImpl
 			if (Validator.isNotNull(title)) {
 				queryPos.add(keywords, 2);
 			}
+
+			Iterator<Long> iterator = sqlQuery.iterate();
+
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countByValidCommerceDiscount(
+		long commerceAccountId, long[] commerceAccountGroupIds,
+		long commerceChannelId, long commerceDiscountId) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_VALID_DISCOUNT);
+
+			if ((commerceAccountGroupIds != null) &&
+				(commerceAccountGroupIds.length > 0)) {
+
+				sql = replaceQueryClassPKs(
+					sql, "[$ACCOUNT_GROUP_IDS$]", commerceAccountGroupIds);
+			}
+			else {
+				sql = replaceQueryClassPKs(
+					sql, "[$ACCOUNT_GROUP_IDS$]", new long[] {0});
+			}
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(
+				PortalUtil.getClassNameId(CommerceDiscount.class.getName()));
+			queryPos.add(commerceDiscountId);
+			queryPos.add(commerceAccountId);
+			queryPos.add(commerceChannelId);
+			queryPos.add(commerceAccountId);
+			queryPos.add(commerceChannelId);
+			queryPos.add(commerceChannelId);
 
 			Iterator<Long> iterator = sqlQuery.iterate();
 

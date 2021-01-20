@@ -763,17 +763,12 @@ definition {
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Image");
-
-		PageEditor.editFragmentImage(
-			fileName = "Document_1.png",
-			fragmentName = "Image",
-			id = "image");
+			collectionName = "Featured Content",
+			fragmentName = "Banner Center");
 
 		PageEditorMapping.gotoEditableFieldMapping(
-			fragmentName = "Image",
-			id = "image");
+			fragmentName = "Banner Center",
+			id = "banner-center");
 
 		PageEditorMapping.mapEditableFieldToAsset(
 			entryTitle = "WC WebContent Title",
@@ -794,7 +789,9 @@ definition {
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 
-			AssertElementPresent(locator1 = "WCD#WEB_CONTENT_IMAGE_PNG");
+			AssertElementPresent(
+				key_imageName = "Document_2.jpeg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
 	}
 

@@ -14,7 +14,6 @@
 
 module.exports = {
 	federation: {
-		bridges: ['senna'],
 		runLegacyBuild: false,
 	},
 	preset: '@liferay/npm-scripts/src/presets/standard',

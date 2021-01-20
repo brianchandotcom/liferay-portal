@@ -1,4 +1,4 @@
-@component-name = "portal-forms-and-workflow-ee"
+@component-name = "portal-workflow-ee"
 definition {
 
 	property portal.release = "true";

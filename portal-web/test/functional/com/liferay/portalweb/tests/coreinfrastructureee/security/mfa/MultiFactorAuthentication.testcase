@@ -1046,9 +1046,8 @@ definition {
 	@description = "This is a use case for LPS-101750"
 	@priority = "5"
 	test UseCustomMFAVerifier {
+		property osgi.modules.includes = "multi-factor-authentication-sample";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#UseCustomMFAVerifier";
-
-		FileInstall.deployFileOnServer(liferayDependencyJars = "com.liferay.multi.factor.authentication.sample.jar");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.multi.factor.authentication.sample_1.0.0");
 
@@ -1066,7 +1065,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#ORDER_FIELD",
-			value1 = "500");
+			value1 = "400");
 
 		MultiFactorAuthentication.configureOTP(
 			enableOTP = "true",

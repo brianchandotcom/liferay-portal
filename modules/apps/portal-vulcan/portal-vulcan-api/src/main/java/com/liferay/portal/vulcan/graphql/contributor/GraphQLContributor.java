@@ -19,6 +19,10 @@ package com.liferay.portal.vulcan.graphql.contributor;
  */
 public interface GraphQLContributor {
 
+	public default String getGraphQLNamespace() {
+		return null;
+	}
+
 	public default Object getMutation() {
 		return null;
 	}

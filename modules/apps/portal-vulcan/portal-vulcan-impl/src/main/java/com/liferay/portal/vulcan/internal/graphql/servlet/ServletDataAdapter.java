@@ -27,6 +27,11 @@ public class ServletDataAdapter implements ServletData {
 	}
 
 	@Override
+	public String getGraphQLNamespace() {
+		return _graphQLContributor.getGraphQLNamespace();
+	}
+
+	@Override
 	public Object getMutation() {
 		return _graphQLContributor.getMutation();
 	}

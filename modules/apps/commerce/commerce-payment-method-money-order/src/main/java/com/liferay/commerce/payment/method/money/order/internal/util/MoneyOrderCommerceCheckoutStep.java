@@ -128,8 +128,7 @@ public class MoneyOrderCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		MoneyOrderCheckoutStepDisplayContext
 			moneyOrderCheckoutStepDisplayContext =
 				new MoneyOrderCheckoutStepDisplayContext(
-					_commerceOrderService, _configurationProvider,
-					httpServletRequest);
+					_configurationProvider, httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,

@@ -14,16 +14,15 @@
 
 package com.liferay.commerce.payment.method.money.order.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.method.money.order.internal.configuration.MoneyOrderGroupServiceConfiguration;
 import com.liferay.commerce.payment.method.money.order.internal.constants.MoneyOrderCommercePaymentEngineMethodConstants;
-import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,13 +33,14 @@ import javax.servlet.http.HttpServletRequest;
 public class MoneyOrderCheckoutStepDisplayContext {
 
 	public MoneyOrderCheckoutStepDisplayContext(
-		CommerceOrderService commerceOrderService,
 		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest) {
 
-		_commerceOrderService = commerceOrderService;
 		_configurationProvider = configurationProvider;
 		_httpServletRequest = httpServletRequest;
+
+		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 	}
 
 	public String getMessage() throws PortalException {
@@ -52,41 +52,25 @@ public class MoneyOrderCheckoutStepDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		CommerceOrder commerceOrder = getCommerceOrder();
-
 		MoneyOrderGroupServiceConfiguration
 			moneyOrderGroupServiceConfiguration =
 				_configurationProvider.getConfiguration(
 					MoneyOrderGroupServiceConfiguration.class,
 					new GroupServiceSettingsLocator(
-						commerceOrder.getGroupId(),
+						_commerceOrder.getGroupId(),
 						MoneyOrderCommercePaymentEngineMethodConstants.
 							SERVICE_NAME));
 
-		LocalizedValuesMap localizedValuesMap =
-			moneyOrderGroupServiceConfiguration.message();
+		String messageAsLocalizedXML =
+			moneyOrderGroupServiceConfiguration.messageAsLocalizedXML();
 
-		_message = localizedValuesMap.get(themeDisplay.getLocale());
+		_message = LocalizationUtil.getLocalization(
+			messageAsLocalizedXML, themeDisplay.getLanguageId());
 
 		return _message;
 	}
 
-	protected CommerceOrder getCommerceOrder() throws PortalException {
-		if (_commerceOrder != null) {
-			return _commerceOrder;
-		}
-
-		long commerceOrderId = ParamUtil.getLong(
-			_httpServletRequest, "commerceOrderId");
-
-		_commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		return _commerceOrder;
-	}
-
-	private CommerceOrder _commerceOrder;
-	private final CommerceOrderService _commerceOrderService;
+	private final CommerceOrder _commerceOrder;
 	private final ConfigurationProvider _configurationProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private String _message;

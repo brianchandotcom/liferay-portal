@@ -17,15 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String messageXml = null;
-
 MoneyOrderGroupServiceConfiguration moneyOrderGroupServiceConfiguration = (MoneyOrderGroupServiceConfiguration)request.getAttribute(MoneyOrderGroupServiceConfiguration.class.getName());
 
-LocalizedValuesMap messageLocalizedValuesMap = moneyOrderGroupServiceConfiguration.message();
-
-if (messageLocalizedValuesMap != null) {
-	messageXml = LocalizationUtil.getXml(messageLocalizedValuesMap, "message");
-}
+String messageAsLocalizedXML = moneyOrderGroupServiceConfiguration.messageAsLocalizedXML();
 %>
 
 <portlet:actionURL name="/commerce_payment_methods/edit_money_order_commerce_payment_method_configuration" var="editCommercePaymentMethodActionURL" />
@@ -43,9 +37,9 @@ if (messageLocalizedValuesMap != null) {
 				<liferay-ui:input-localized
 					fieldPrefix="settings"
 					fieldPrefixSeparator="--"
-					name="message"
+					name="messageAsLocalizedXML"
 					type="editor"
-					xml="<%= messageXml %>"
+					xml="<%= messageAsLocalizedXML %>"
 				/>
 			</aui:field-wrapper>
 		</div>

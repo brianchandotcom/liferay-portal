@@ -149,8 +149,12 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 <c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 	<aui:script>
-		Liferay.Util.focusFormField(
-			document.getElementsByName('<portlet:namespace />keywords')[0]
+		Liferay.componentReady('<portlet:namespace />entriesManagementToolbar').then(
+			function () {
+				Liferay.Util.focusFormField(
+					document.getElementsByName('<portlet:namespace />keywords')[0]
+				);
+			}
 		);
 	</aui:script>
 </c:if>

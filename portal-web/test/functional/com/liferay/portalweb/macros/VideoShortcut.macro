@@ -120,17 +120,6 @@ definition {
 				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
 		}
 
-		if (isSet(extractedVideoShortcutTitleEdit)) {
-			var titleText = selenium.getElementValue("TextInput#TITLE");
-
-			if ("${extractedVideoShortcutTitleEdit}" == "${titleText}") {
-				echo("This is a correct title.");
-			}
-			else {
-				fail("FAIL!");
-			}
-		}
-
 		if (isSet(videoShortcutTitleEdit)) {
 			PortletEntry.inputTitle(title = "${videoShortcutTitleEdit}");
 		}

@@ -377,7 +377,6 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.editCP(
-			extractedVideoShortcutTitleEdit = "Liferay Digital Experience Platform",
 			videoShortcutDescriptionEdit = "Video Shortcut Description Edit",
 			videoShortcutPreview = "https://www.youtube.com",
 			videoShortcutPreviousTitle = "Test YouTube Video Name",

@@ -184,9 +184,9 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								module="admin/js/index.es"
 								props="<%= ddmFormDisplayContext.getDDMFormContext() %>"
 							/>
-
-							<aui:input name="empty" type="hidden" value="" />
 						</clay:container-fluid>
+
+						<aui:input name="empty" type="hidden" value="" />
 					</aui:form>
 				</div>
 

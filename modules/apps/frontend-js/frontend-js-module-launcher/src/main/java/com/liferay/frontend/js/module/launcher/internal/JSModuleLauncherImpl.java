@@ -17,6 +17,7 @@ package com.liferay.frontend.js.module.launcher.internal;
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -59,15 +60,21 @@ public class JSModuleLauncherImpl implements JSModuleLauncher {
 	}
 
 	@Override
-	public void writePortletScript(
-		Writer writer, String portletId, String javascriptModule,
-		String javascriptVariable, String javascriptCode) {
+	public void writeModuleInvocation(
+		Writer writer, String javascriptModule, String... parameters) {
+
+		StringBundler javascriptCodeSB = new StringBundler(3);
+
+		javascriptCodeSB.append("(__module__.default || __module__)(");
+		javascriptCodeSB.append(
+			StringUtil.merge(parameters, StringPool.COMMA_AND_SPACE));
+		javascriptCodeSB.append(");");
 
 		_writeScriptData(
 			writer,
 			_getScriptBody(
-				javascriptModule, javascriptVariable, javascriptCode),
-			portletId);
+				javascriptModule, "__module__", javascriptCodeSB.toString()),
+			null);
 	}
 
 	@Override

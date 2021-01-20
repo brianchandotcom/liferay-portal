@@ -32,9 +32,8 @@ public interface JSModuleLauncher {
 		HttpServletRequest httpServletRequest, String javascriptModule,
 		String javascriptVariable, String javascriptCode);
 
-	public void writePortletScript(
-		Writer writer, String portletId, String javascriptModule,
-		String javascriptVariable, String javascriptCode);
+	public void writeModuleInvocation(
+		Writer writer, String javascriptModule, String... parameters);
 
 	public void writeScript(
 		Writer writer, String javascriptModule, String javascriptVariable,

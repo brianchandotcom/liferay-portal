@@ -1010,6 +1010,162 @@ definition {
 			id = "element-text");
 	}
 
+	@description = "This case ensures a user can map the editable background image of a fragment to an existing image content."
+	@priority = "5"
+	test MapWebContentImageToFragmentBackground {
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Image",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			navTab = "Web Content Images",
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentImage = "Document_2.jpeg",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Featured Content",
+			fragmentName = "Banner Center");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Banner Center",
+			id = "banner-center");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WC WebContent Title",
+			navItem = "Web Content");
+
+		task ("Select mapping panel field.") {
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Image");
+
+			SelectFrame(value1 = "relative=top");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Assert the image field contains the mapped image.") {
+			PageEditor.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+			AssertElementPresent(
+				key_imageName = "Document_2.jpeg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+		}
+	}
+
+	@description = "This case ensures a user can map the layout of a fragment to an existing image content."
+	@priority = "5"
+	test MapWebContentImageToLayoutSection {
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Image",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			navTab = "Web Content Images",
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentImage = "Document_2.jpeg",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Container");
+
+		PageEditor.editLayoutContainer(
+			backgroundImage = "Mapping",
+			entryTitle = "WC WebContent Title",
+			navItem = "Web Content",
+			panel = "Styles");
+
+		task ("Assert the layout background field contains the mapped image.") {
+			PageEditor.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+			AssertElementPresent(
+				key_imageName = "Document_2.jpeg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+		}
+	}
+
 	@description = "This is a test for LPS-96794. Mapped Web Contents' state will appear in the sidebar in a Page Editor's edit mode."
 	@priority = "4"
 	test MapWebContentsToBannerFragment {

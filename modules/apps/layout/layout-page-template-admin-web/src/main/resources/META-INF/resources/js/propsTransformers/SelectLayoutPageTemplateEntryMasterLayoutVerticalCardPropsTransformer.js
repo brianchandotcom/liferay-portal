@@ -41,5 +41,16 @@ export default function SelectLayoutPageTemplateEntryMasterLayoutVerticalCardPro
 					'<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
 			});
 		},
+		onKeyDown: (event) => {
+			if (
+				event.nativeEvent.code === 'Enter' ||
+				event.nativeEvent.code === 'Space'
+			) {
+				event.preventDefault();
+				event.target.click();
+			}
+		},
+		role: 'button',
+		tabIndex: '0',
 	};
 }

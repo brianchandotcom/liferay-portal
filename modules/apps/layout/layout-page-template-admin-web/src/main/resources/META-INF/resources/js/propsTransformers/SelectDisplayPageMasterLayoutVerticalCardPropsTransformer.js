@@ -32,5 +32,16 @@ export default function SelectDisplayPageMasterLayoutVerticalCardPropsTransforme
 				title,
 			});
 		},
+		onKeyDown: (event) => {
+			if (
+				event.nativeEvent.code === 'Enter' ||
+				event.nativeEvent.code === 'Space'
+			) {
+				event.preventDefault();
+				event.target.click();
+			}
+		},
+		role: 'button',
+		tabIndex: '0',
 	};
 }

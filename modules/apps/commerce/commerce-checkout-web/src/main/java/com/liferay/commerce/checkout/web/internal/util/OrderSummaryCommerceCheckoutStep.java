@@ -271,7 +271,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 				commerceOrder.getCommerceOrderId());
 
 		if ((subscriptionCommerceOrderItemsCount > 0) &&
-			commercePaymentMethodKey.isEmpty()) {
+			commercePaymentMethodKey.isEmpty() &&
+			_commerceCheckoutStepHelper.
+				isActivePaymentMethodCommerceCheckoutStep(httpServletRequest)) {
 
 			throw new CommerceOrderPaymentMethodException();
 		}

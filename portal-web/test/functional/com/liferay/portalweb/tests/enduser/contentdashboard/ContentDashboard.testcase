@@ -406,7 +406,7 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
-	@description = "Validate if the user can filter by category"
+	@description = "Validate if the user can filter by category and subtype"
 	@priority = "5"
 	test ContentDashboardFilterByCategoryAndSubtype {
 		property portal.acceptance = "true";
@@ -520,6 +520,73 @@ definition {
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Name");
+	}
+
+	@description = "Validate if the user can filter by multiple tags"
+	@priority = "5"
+	test ContentDashboardFilterByMultipleTags {
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "tagnumber1,tagnumber2",
+			webContentContent = "Web Content With Tag1 and Tag2",
+			webContentTitle = "WC Title 1");
+		
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithTagCP(
+			tagNameList = "tagnumber1",
+			webContentContent = "Web Content With Tag1",
+			webContentTitle = "WC Title 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByTag(filterOption = "Tags", tagName = "tagnumber1");
+
+		ContentDashboard.filterByTag(filterOption = "Tags", tagName = "tagnumber2");
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title 1");
+
+		Tag.openTagsAdmin(siteURLKey = "test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			portlet = "Tags");
+
+		Tag.viewCP(tagName = "tagnumber1");
+
+		PortletEntry.deleteViaToolbar(rowEntries = "tagnumber1");
+
+		Alert.viewSuccessMessage();
+
+		Tag.viewCP(tagName = "tagnumber2");
+
+		PortletEntry.deleteViaToolbar(rowEntries = "tagnumber2");
+
+		Alert.viewSuccessMessage();
+
+		Portlet.viewEmptyMessage(message = "There are no tags.");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title 1");
+		
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title 2");
 	}
 
 	@description = "Validate if the user can filter by Site"
@@ -712,7 +779,7 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
-			tagNameList = "tag1,tag2",
+			tagNameList = "tag1",
 			webContentContent = "Web Content With Tag1 and Tag2",
 			webContentTitle = "Web Content Title");
 
@@ -723,14 +790,12 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByTag(filterOption = "Tags");
-
-		ContentDashboard.searchValue(webContentTitle = "Web Content Title");
+		ContentDashboard.filterByTag(filterOption = "Tags", tagName = "tag1");
 
 		Pause(locator1 = "3000");
 
 		AssertTextPresent(
-			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_TAGS",
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 			value1 = "Web Content Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -750,12 +815,6 @@ definition {
 		Tag.viewCP(tagName = "tag1");
 
 		PortletEntry.deleteViaToolbar(rowEntries = "tag1");
-
-		Alert.viewSuccessMessage();
-
-		Tag.viewCP(tagName = "tag2");
-
-		PortletEntry.deleteViaToolbar(rowEntries = "tag2");
 
 		Alert.viewSuccessMessage();
 

@@ -103,11 +103,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIRST_CHECKBOX_TAGS</td>
-	<td>//*[contains(@title,'Select') and contains(@value,'tag1')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIRST_ELEMENT_LISTED</td>
 	<td>(//*[contains(@class, 'text-truncate')])[4]</td>
 	<td></td>
@@ -173,23 +168,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SECOND_CHECKBOX_TAGS</td>
-	<td>//*[contains(@title,'Select') and contains(@value,'tag2')]</td>
+	<td>SEARCH_TAG_FIELD</td>
+	<td>//*[contains(@class,'form-control input-group-inset input-group-inset-after') and contains(@name,'AssetTagsSelector')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_AUTHOR_BUTTON</td>
-	<td>//button[contains(@class, 'btn btn-primary') and contains(text(),'Select')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_CATEGORY_BUTTON</td>
-	<td>//button[contains(@id, 'addButton')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_TAGS_BUTTON</td>
-	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Select')]</td>
+	<td>CHECKBOX_TAGS</td>
+	<td>//*[contains(@title,'Select') and contains(@value,'${tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

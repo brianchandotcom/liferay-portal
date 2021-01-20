@@ -52,7 +52,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertClickNoError(
-			locator1 = "ContentDashboard#SELECT_AUTHOR_BUTTON",
+			locator1 = "Button#SELECT",
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
@@ -90,7 +90,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertClickNoError(
-			locator1 = "ContentDashboard#SELECT_AUTHOR_BUTTON",
+			locator1 = "Button#SELECT",
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
@@ -128,7 +128,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertClickNoError(
-			locator1 = "ContentDashboard#SELECT_AUTHOR_BUTTON",
+			locator1 = "Button#SELECT",
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
@@ -160,7 +160,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertClickNoError(
-			locator1 = "ContentDashboard#SELECT_CATEGORY_BUTTON",
+			locator1 = "Button#SELECT",
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
@@ -281,15 +281,28 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		Click(locator1 = "ContentDashboard#FIRST_CHECKBOX_TAGS");
+		if (IsElementPresent(locator1 = "ContentDashboard#SEARCH_TAG_FIELD")) {
+			Click(locator1 = "ContentDashboard#SEARCH_TAG_FIELD");
 
-		Click(locator1 = "ContentDashboard#SECOND_CHECKBOX_TAGS");
+			Type(
+				locator1 = "ContentDashboard#SEARCH_TAG_FIELD",
+				value1 = "${tagName}");
+
+			KeyPress(
+				locator1 = "ContentDashboard#SEARCH_TAG_FIELD",
+				value1 = "\ENTER");
+
+			Click(locator1 = "ContentDashboard#CHECKBOX_TAGS");
+		}
+		else {
+			Click(locator1 = "ContentDashboard#CHECKBOX_TAGS");
+		}
 
 		SelectFrame(value1 = "relative=top");
 
-		Click(locator1 = "ContentDashboard#SELECT_TAGS_BUTTON");
-
-		Pause(locator1 = "3000");
+		AssertClickNoError(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
 	}

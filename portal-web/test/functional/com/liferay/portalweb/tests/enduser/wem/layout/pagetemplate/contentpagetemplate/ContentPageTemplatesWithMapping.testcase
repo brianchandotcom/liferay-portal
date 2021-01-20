@@ -71,4 +71,24 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98030. Can map the editable background image of a fragment to an existing image content in a content page template."
+	@ignore = "true"
+	@priority = "3"
+	test MapWebContentImageToBackgroundImageOfBannerCenter {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 MapWebContentImageToBannerCenter pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a content page template."
+	@ignore = "true"
+	@priority = "3"
+	test MapWebContentImageToBackgroundImageOfContainer {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 MapWebContentImageToContainer pending implementation
+
+	}
+
 }

@@ -646,6 +646,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101248. Can select a custom web content template as a "Template" for web content selected in Content Display when enable live."
+	@ignore = "true"
+	@priority = "2"
+	test SelectCustomWebContentTemplateViaContentDisplay {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 SelectCustomWebContentTemplateViaContentDisplay pending implementation
+
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments back in Staging site."
 	@priority = "3"
 	test UndoDeletedFragmentInStagingSite {

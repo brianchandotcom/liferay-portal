@@ -116,6 +116,16 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-101248. Cannot delete a web content template used in Content Display fragment."
+	@ignore = "true"
+	@priority = "2"
+	test CannotDeleteTemplateUsedInContentDisplay {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 CannotDeleteTemplateUsedInContentDisplay pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-116515. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."
 	@priority = "5"
 	test SaveChangesInExistingTemplateWhenDisableTemplateCreation {

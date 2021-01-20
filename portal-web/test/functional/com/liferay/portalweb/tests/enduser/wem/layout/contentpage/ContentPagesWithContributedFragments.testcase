@@ -1021,6 +1021,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101248. Display web content with all fields in Content Display."
+	@ignore = "true"
+	@priority = "2"
+	test DisplayWebContentWithAllFieldsInContentDisplay {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 DisplayWebContentWithAllFieldsInContentDisplay pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Any asset types."
 	@priority = "5"
 	test DynamicCollectionWithAnyAssetTypeIsAvailableInCollectionDisplay {
@@ -1961,6 +1971,26 @@ definition {
 			value1 = "This content maps from web content");
 	}
 
+	@description = "This is a test for LPS-101248. Can select web content template from Global site as a "Template" for Content Display fragment."
+	@ignore = "true"
+	@priority = "2"
+	test SelectWebContentTemplateFromGlobalSiteViaContentDisplay {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 SelectWebContentTemplateFromGlobalSiteViaContentDisplay pending implementation
+
+	}
+
+	@description = "This is a test for LPS-101248. Can select web content template from script file as a "Template" for Content Display fragment."
+	@ignore = "true"
+	@priority = "2"
+	test SelectWebContentTemplateFromScriptFileViaContentDisplay {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 SelectWebContentTemplateFromScriptFileViaContentDisplay pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-86141. The title of asset entries in selected collection should be shown as a list in the Collection Display."
 	@priority = "5"
 	test ShowTitleOfCollectionItemsInCollectionDisplay {
@@ -2613,6 +2643,16 @@ definition {
 
 			var n = ${n} + 1;
 		}
+	}
+
+	@description = "This is a test for LPS-101248. The available web content template options are grouped and listed in alphabetical order in Content Display. Additionally, the web content templates for other structrue and deleted ones shouldn't be available."
+	@ignore = "true"
+	@priority = "2"
+	test ViewAvailableWebContentTemplatesViaContentDisplay {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 ViewAvailableWebContentTemplatesViaContentDisplay pending implementation
+
 	}
 
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."

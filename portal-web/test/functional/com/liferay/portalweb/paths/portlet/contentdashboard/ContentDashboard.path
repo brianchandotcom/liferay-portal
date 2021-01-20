@@ -64,7 +64,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_NAME_ELEMENT</td>
-	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Category Name')]</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'${categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -168,6 +168,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_SUBTYPE_FIELD</td>
+	<td>//*[contains(@class,'form-control input-group-inset input-group-inset-after') and contains(@name,'ItemSelector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECOND_CHECKBOX_TAGS</td>
 	<td>//*[contains(@title,'Select') and contains(@value,'tag2')]</td>
 	<td></td>
@@ -185,6 +190,11 @@
 <tr>
 	<td>SELECT_TAGS_BUTTON</td>
 	<td>//*[contains(@class,'btn btn-primary') and contains(text(),'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBTYPE_ELEMENT_CHECKBOX</td>
+	<td>//*[contains(@type, 'checkbox') and contains(@title,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

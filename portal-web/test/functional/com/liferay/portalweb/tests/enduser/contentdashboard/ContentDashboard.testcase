@@ -387,7 +387,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		ContentDashboard.filterByCategory(filterOption = "Categories");
+		ContentDashboard.filterByCategory(filterOption = "Categories" categoryName = "Category Name");
 
 		Pause(locator1 = "3000");
 
@@ -404,6 +404,122 @@ definition {
 		Category.deleteCategoryByMenuCP(
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
+	}
+
+	@description = "Validate if the user can filter by category"
+	@priority = "5"
+	test ContentDashboardFilterByCategoryAndSubtype {
+		property portal.acceptance = "true";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Vocabulary Name");
+
+		var categoryId1 = JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category 1",
+			vocabularyName = "Vocabulary Name");
+
+		var categoryId2 = JSONCategory.addCategory(
+			groupName = "Test Site Name",
+			title = "Category 2",
+			vocabularyName = "Vocabulary Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "Subtype1");
+		
+		DataEngine.addFields(fieldNameList = "Link to Page");
+
+		WebContentStructures.saveCP(structureName = "Subtype1");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "Subtype2");
+		
+		DataEngine.addFields(fieldNameList = "Link to Page");
+
+		WebContentStructures.saveCP(structureName = "Subtype2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Subtype1");
+
+		WebContent.addWithStructureCP(
+			structureName = "Subtype1",
+			webContentTitle = "WC Title 1");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Subtype2");
+
+		WebContent.addWithStructureCP(
+			structureName = "Subtype2",
+			webContentTitle = "WC Title 2");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 1");
+
+		WebContent.selectCategory(
+			categoryName = "Category 1",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "Vocabulary Name");
+
+		WebContent.selectCategory(
+			categoryName = "Category 2",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "Vocabulary Name");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 2");
+
+		WebContent.selectCategory(
+			categoryName = "Category 1",
+			userSegmentDetailTitle = "${userSegmentDetailTitle}",
+			vocabularyName = "Vocabulary Name");
+
+		PortletEntry.publish();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "5000");
+
+		ContentDashboard.filterByCategory(filterOption = "Categories", categoryName = "Category 1");
+
+		ContentDashboard.filterBySubtype(filterOption = "Subtype", subtypeName = "Subtype1");
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title 1");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title 1");
+		
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title 2");
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Name");
 	}
 
 	@description = "Validate if the user can filter by Site"

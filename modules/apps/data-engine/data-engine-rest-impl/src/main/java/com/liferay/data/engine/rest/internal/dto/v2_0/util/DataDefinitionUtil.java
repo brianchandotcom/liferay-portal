@@ -293,6 +293,9 @@ public class DataDefinitionUtil {
 						HashMapBuilder.put(
 							"label", localizedValue.getString(locale)
 						).put(
+							"reference",
+							ddmFormFieldOptions.getOptionReference(optionValue)
+						).put(
 							"value", optionValue
 						).build());
 				}
@@ -302,6 +305,10 @@ public class DataDefinitionUtil {
 						ListUtil.toList(
 							HashMapBuilder.put(
 								"label", localizedValue.getString(locale)
+							).put(
+								"reference",
+								ddmFormFieldOptions.getOptionReference(
+									optionValue)
 							).put(
 								"value", optionValue
 							).build()));

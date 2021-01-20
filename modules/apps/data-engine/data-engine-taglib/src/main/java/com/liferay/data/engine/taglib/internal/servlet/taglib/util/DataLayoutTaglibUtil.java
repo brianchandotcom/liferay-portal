@@ -828,6 +828,10 @@ public class DataLayoutTaglibUtil {
 								"label",
 								localizedValue.getString(availableLocale)
 							).put(
+								"reference",
+								ddmFormFieldOptions.getOptionReference(
+									optionValue)
+							).put(
 								"value", optionValue
 							);
 						}));

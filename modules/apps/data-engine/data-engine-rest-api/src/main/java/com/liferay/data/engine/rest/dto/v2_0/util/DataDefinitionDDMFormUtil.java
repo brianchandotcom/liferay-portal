@@ -101,6 +101,10 @@ public class DataDefinitionDDMFormUtil {
 							jsonObject.getString("value"),
 							LocaleUtil.fromLanguageId(entry.getKey()),
 							jsonObject.getString("label"));
+
+						ddmFormFieldOptions.addOptionReference(
+							jsonObject.getString("value"),
+							jsonObject.getString("reference"));
 					}
 					catch (JSONException jsonException) {
 						if (_log.isDebugEnabled()) {
@@ -116,6 +120,11 @@ public class DataDefinitionDDMFormUtil {
 							MapUtil.getString((Map<String, ?>)option, "value"),
 							LocaleUtil.fromLanguageId(entry.getKey()),
 							MapUtil.getString((Map<String, ?>)option, "label"));
+
+						ddmFormFieldOptions.addOptionReference(
+							MapUtil.getString((Map<String, ?>)option, "value"),
+							MapUtil.getString(
+								(Map<String, ?>)option, "reference"));
 					}
 					else if (option instanceof String) {
 						try {
@@ -129,6 +138,12 @@ public class DataDefinitionDDMFormUtil {
 								LocaleUtil.fromLanguageId(entry.getKey()),
 								JSONUtil.getValueAsString(
 									optionJSONObject, "Object/label"));
+
+							ddmFormFieldOptions.addOptionReference(
+								JSONUtil.getValueAsString(
+									optionJSONObject, "Object/value"),
+								JSONUtil.getValueAsString(
+									optionJSONObject, "Object/reference"));
 						}
 						catch (JSONException jsonException) {
 							if (_log.isDebugEnabled()) {

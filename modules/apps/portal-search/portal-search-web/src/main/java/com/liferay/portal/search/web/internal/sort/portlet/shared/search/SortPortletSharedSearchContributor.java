@@ -96,8 +96,8 @@ public class SortPortletSharedSearchContributor
 		SortPortletPreferences sortPortletPreferences) {
 
 		List<String> fieldValues = getFieldValues(
-			portletSharedSearchSettings,
-			sortPortletPreferences.getParameterName());
+			sortPortletPreferences.getParameterName(),
+			portletSharedSearchSettings);
 
 		ThemeDisplay themeDisplay =
 			portletSharedSearchSettings.getThemeDisplay();
@@ -112,8 +112,8 @@ public class SortPortletSharedSearchContributor
 	}
 
 	protected List<String> getFieldValues(
-		PortletSharedSearchSettings portletSharedSearchSettings,
-		String parameterName) {
+		String parameterName,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		String[] fieldValues = portletSharedSearchSettings.getParameterValues(
 			parameterName);

@@ -107,6 +107,12 @@ definition {
 				value1 = "${videoShortcutPreviousTitle}");
 		}
 
+		if (isSet(videoShortcutPreviousDescription)) {
+			AssertTextEquals(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${videoShortcutPreviousDescription}");
+		}
+
 		Type(
 			key_text = "Video URL",
 			locator1 = "TextInput#ANY",

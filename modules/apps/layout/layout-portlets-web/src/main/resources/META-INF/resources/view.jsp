@@ -30,7 +30,6 @@ LayoutPortletsDisplayContext layoutPortletsDisplayContext = new LayoutPortletsDi
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Portlet"
-			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="portletId"
 			modelVar="portlet"

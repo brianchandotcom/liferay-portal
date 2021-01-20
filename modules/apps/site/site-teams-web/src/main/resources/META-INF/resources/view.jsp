@@ -36,7 +36,6 @@ SiteTeamsManagementToolbarDisplayContext siteTeamsManagementToolbarDisplayContex
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Team"
-			cssClass="selectable"
 			escapedModel="<%= true %>"
 			keyProperty="teamId"
 			modelVar="team"

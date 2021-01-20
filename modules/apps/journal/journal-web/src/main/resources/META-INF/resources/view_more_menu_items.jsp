@@ -49,7 +49,6 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
-			cssClass="selectable"
 			escapedModel="<%= true %>"
 			modelVar="ddmStructure"
 		>

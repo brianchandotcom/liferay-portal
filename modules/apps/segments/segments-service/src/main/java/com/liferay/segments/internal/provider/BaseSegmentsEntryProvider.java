@@ -253,7 +253,9 @@ public abstract class BaseSegmentsEntryProvider
 				}
 			}
 
-			if (!GetterUtil.getBoolean(context.get(Context.SIGNED_IN))) {
+			if (context.containsKey(Context.SIGNED_IN) &&
+				!GetterUtil.getBoolean(context.get(Context.SIGNED_IN))) {
+
 				return matchesContext;
 			}
 		}

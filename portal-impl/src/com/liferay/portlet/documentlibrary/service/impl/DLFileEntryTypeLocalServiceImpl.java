@@ -673,6 +673,26 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		for (Long fileEntryTypeId : fileEntryTypeIds) {
 			if (!originalFileEntryTypeIds.contains(fileEntryTypeId)) {
+				if (fileEntryTypeId ==
+						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {
+
+					continue;
+				}
+
+				DLFileEntryType dlFileEntryType =
+					DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+						fileEntryTypeId);
+
+				if (dlFileEntryType == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to find DLFileEntryType " +
+								fileEntryTypeId);
+					}
+
+					continue;
+				}
+
 				dlFolderPersistence.addDLFileEntryType(
 					dlFolder.getFolderId(), fileEntryTypeId);
 			}

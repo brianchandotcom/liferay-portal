@@ -43,6 +43,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-103784. If not giving the individual content's update permission, content author with Update Page Content permission could only go to the edit mode."
+	@ignore = "true"
+	@priority = "2"
+	test CannotEditAssetWithoutAssetUpdatePermission {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 CannotEditAssetWithoutAssetUpdatePermission pending implementation
+
+	}
+
 	@description = "This is a test for LPS-97182. If a page author does not have view permissions for an asset, it should not display for them."
 	@ignore = "true"
 	@priority = "2"

@@ -990,16 +990,12 @@ public class ResourceActionsImpl implements ResourceActions {
 			Set<String> groupDefaultActions =
 				portletResourceActionsBag.getGroupDefaultActions();
 
-			if (groupDefaultActions.isEmpty()) {
-				groupDefaultActions.add(ActionKeys.VIEW);
-			}
+			groupDefaultActions.add(ActionKeys.VIEW);
 
 			Set<String> guestDefaultActions =
 				portletResourceActionsBag.getGuestDefaultActions();
 
-			if (guestDefaultActions.isEmpty()) {
-				guestDefaultActions.add(ActionKeys.VIEW);
-			}
+			guestDefaultActions.add(ActionKeys.VIEW);
 
 			_checkPortletGuestUnsupportedActions(
 				portletResourceActionsBag.getGuestUnsupportedActions());

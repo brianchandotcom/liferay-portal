@@ -16,7 +16,6 @@ package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper.SPAHelper;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -101,15 +100,9 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			"validStatusCodes", _spaHelper.getValidStatusCodesJSONArray()
 		);
 
-		StringBundler javascriptSB = new StringBundler(3);
-
-		javascriptSB.append("frontendJsSpaWebInit.default(");
-		javascriptSB.append(configJSONObject.toJSONString());
-		javascriptSB.append(");");
-
-		_jsModuleLauncher.writeScript(
+		_jsModuleLauncher.writeModuleInvocation(
 			httpServletResponse.getWriter(), "frontend-js-spa-web",
-			"frontendJsSpaWebInit", javascriptSB.toString());
+			configJSONObject.toJSONString());
 	}
 
 	@Override

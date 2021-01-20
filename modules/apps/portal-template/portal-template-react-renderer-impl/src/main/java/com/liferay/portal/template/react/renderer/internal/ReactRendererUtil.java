@@ -154,9 +154,8 @@ public class ReactRendererUtil {
 		javascriptSB.append("');\n} catch (err) {console.error(err);}});");
 
 		if (componentDescriptor.isPositionInLine()) {
-			jsModuleLauncher.writePortletScript(
-				writer, portal.getPortletId(httpServletRequest),
-				"portal-template-react-renderer-impl", "{render}",
+			jsModuleLauncher.writeScript(
+				writer, "portal-template-react-renderer-impl", "{render}",
 				javascriptSB.toString());
 		}
 		else {

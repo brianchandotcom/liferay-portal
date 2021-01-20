@@ -37,9 +37,8 @@ public class AlertBottomDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		_jsModuleLauncher.writeScript(
-			httpServletResponse.getWriter(), "frontend-js-alert-support-web",
-			"AlertProvider", "AlertProvider.default()");
+		_jsModuleLauncher.writeModuleInvocation(
+			httpServletResponse.getWriter(), "frontend-js-alert-support-web");
 	}
 
 	@Override

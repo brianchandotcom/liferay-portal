@@ -32,8 +32,8 @@ public interface AssetPublisherWebConfiguration {
 	/**
 	 * Set the cron expression to schedule when CheckAssetEntryMessageListener
 	 * will run to check for new assets. Users will be notified via email of
-	 * new assets. If it is empty or invalid, the check interval field will be
-	 * used instead.
+	 * new assets. If it is empty or invalid, {@link #checkInterval()} is used
+	 * instead.
 	 *
 	 * @return cron expression to schedule when to check for new assets.
 	 */
@@ -46,8 +46,8 @@ public interface AssetPublisherWebConfiguration {
 	/**
 	 * Set the interval in hours on how often CheckAssetEntryMessageListener
 	 * will run to check for new assets. Users will be notified via email of
-	 * new assets. This interval will be ignored in case of configuring a valid
-	 * cron expression.
+	 * new assets. This field is ignored if {@link #checkCronExpression()} is
+	 * set to a valid value.
 	 *
 	 * @return interval in hours on how often to check for new assets.
 	 */

@@ -4,7 +4,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 	property portal.release = "true";
 	property testray.component.names = "Calendar";
-	property testray.main.component.name = "Upgrades Workflow";
+	property testray.main.component.name = "Upgrades Calendar";
 
 	setUp {
 		SignIn.signIn();

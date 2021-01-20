@@ -934,4 +934,14 @@ definition {
 			webContentTitle = "Web Content Title Edit Draft");
 	}
 
+	@description = "This is a test for LPS-109555. The error message should be shown when restore a document from recycle bin when it has the same name as existing document."
+	@ignore = "true"
+	@priority = "2"
+	test ViewErrorMessageWhenRestoreDocumentWithTheSameNameWithExistingOne {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 ViewErrorMessageWhenRestoreDocumentWithTheSameNameWithExistingOne pending implementation
+
+	}
+
 }

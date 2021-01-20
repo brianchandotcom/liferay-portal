@@ -43,6 +43,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-97182. If a page author does not have view permissions for an asset, it should not display for them."
+	@ignore = "true"
+	@priority = "2"
+	test CannotViewAssetInContentDisplayWithoutAssetViewPermission {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 CannotViewAssetInContentDisplayWithoutAssetViewPermission pending implementation
+
+	}
+
 	@description = "This is a test for LPS-103454. Content author having permission to update blog entry could see edit icon in the content page displaying the blog and could edit blog in editmode. "
 	@priority = "4"
 	test EditBlogsEntryWithBlogEntryUpdatePermission {

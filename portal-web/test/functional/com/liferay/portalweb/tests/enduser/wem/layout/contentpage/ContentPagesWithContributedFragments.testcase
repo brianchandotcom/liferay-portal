@@ -3467,6 +3467,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-97182. If you recycle bin the asset attached to a Content Display fragment and then restore it, it should re-appear in the Content Display fragment."
+	@ignore = "true"
+	@priority = "2"
+	test ViewRestoredAssetInContentDisplay {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 ViewRestoredAssetInContentDisplay pending implementation
+
+	}
+
 	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."
 	@priority = "5"
 	test ViewTitleListItemStyleInDifferentListStyles {

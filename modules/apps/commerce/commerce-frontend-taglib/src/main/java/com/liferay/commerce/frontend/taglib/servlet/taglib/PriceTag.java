@@ -403,9 +403,14 @@ public class PriceTag extends IncludeTag {
 	protected void setProductInfo() throws Exception {
 		CommerceAccount commerceAccount = _commerceContext.getCommerceAccount();
 
+		long commerceAccountId = 0;
+
+		if (commerceAccount != null) {
+			commerceAccountId = commerceAccount.getCommerceAccountId();
+		}
+
 		CPCatalogEntry cpCatalogEntry = cpDefinitionHelper.getCPCatalogEntry(
-			commerceAccount.getCommerceAccountId(),
-			_themeDisplay.getScopeGroupId(), _cpDefinitionId,
+			commerceAccountId, _themeDisplay.getScopeGroupId(), _cpDefinitionId,
 			_themeDisplay.getLocale());
 
 		if (_quantity <= 0) {

@@ -229,7 +229,7 @@ public class LabelTag extends BaseContainerTag {
 
 				IconTag iconTag = new IconTag();
 
-				iconTag.setSymbol("times");
+				iconTag.setSymbol("times-small");
 
 				iconTag.doTag(pageContext);
 

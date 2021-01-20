@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.data.integration;
+package com.liferay.commerce.machine.learning.internal.batch.engine.mapper;
 
 import java.util.Map;
 

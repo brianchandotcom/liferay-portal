@@ -7,14 +7,33 @@ definition {
 	}
 
 	macro gotoEditableFieldMapping {
-		PageEditor.clickEditableField(
-			contributed = "${contributed}",
-			fragmentName = "${fragmentName}",
-			id = "${id}");
+		if (contains("${fragmentName}", "Banner")) {
+			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+			var elementHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'${fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@data-lfr-background-image-id,'${id}')]");
+			var offSetY = MathUtil.product("25","${elementHeight}");
+			var offSetY = MathUtil.quotient("${offSetY}","100");
+
+			var elementWidth = selenium.getElementWidth("//div[contains(@class,'page-editor__topper__bar') and contains(.,'${fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@data-lfr-background-image-id,'${id}')]");
+			var offSetX = MathUtil.product("50","${elementWidth}");
+			var offSetX = MathUtil.quotient("${offSetX}","100");
+
+			Click.clickAt(
+				id = "${id}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#BACKGROUND_IMAGE_EDITABLE_FIELD",
+				value1 = "${offSetX},${offSetY}");
+		}
+		else {
+			PageEditor.clickEditableField(
+				contributed = "${contributed}",
+				fragmentName = "${fragmentName}",
+				id = "${id}");
+		}
 
 		PageEditor.gotoTab(tabName = "Selection");
 
-		if ((contains("${id}", "image")) || (contains("${id}", "img"))) {
+		if ((contains("${id}", "image")) || (contains("${id}", "img")) || (contains("${id}","banner-center"))) {
 			AssertClick(
 				key_navItem = "Image Source",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",

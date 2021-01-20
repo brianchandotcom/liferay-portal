@@ -279,7 +279,7 @@ function FieldBase({
 						/>
 					))}
 
-				{tip && (
+				{typeof tip === 'string' && (
 					<span aria-hidden="true" className="form-text">
 						{tip}
 					</span>

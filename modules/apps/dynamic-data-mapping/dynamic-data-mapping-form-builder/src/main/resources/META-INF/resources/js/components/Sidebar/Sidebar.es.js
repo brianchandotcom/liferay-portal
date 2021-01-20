@@ -1083,65 +1083,69 @@ class Sidebar extends Component {
 				id="accordion03"
 				role="tablist"
 			>
-				{group.map((key, index) => (
-					<div
-						class="panel panel-secondary"
-						key={`fields-group-${key}-${index}`}
-					>
-						<a
-							aria-controls="collapseTwo"
-							aria-expanded="true"
-							class="collapse-icon panel-header panel-header-link"
-							data-parent="#accordion03"
-							data-toggle="liferay-collapse"
-							href={`#ddm-field-types-${key}-body`}
-							id={`ddm-field-types-${key}-header`}
-							role="tab"
-						>
-							<span class="panel-title">
-								{fieldTypesGroup[key].label}
-							</span>
-							<span class="collapse-icon-closed">
-								<svg
-									aria-hidden="true"
-									class="lexicon-icon lexicon-icon-angle-right"
+				{group.map((key, index) => {
+					const fields = fieldTypesGroup[key].fields;
+
+					return (
+						!!fields.length && (
+							<div
+								class="panel panel-secondary"
+								key={`fields-group-${key}-${index}`}
+							>
+								<a
+									aria-controls="collapseTwo"
+									aria-expanded="true"
+									class="collapse-icon panel-header panel-header-link"
+									data-parent="#accordion03"
+									data-toggle="liferay-collapse"
+									href={`#ddm-field-types-${key}-body`}
+									id={`ddm-field-types-${key}-header`}
+									role="tab"
 								>
-									<use
-										xlink:href={`${spritemap}#angle-right`}
-									/>
-								</svg>
-							</span>
-							<span class="collapse-icon-open">
-								<svg
-									aria-hidden="true"
-									class="lexicon-icon lexicon-icon-angle-down"
+									<span class="panel-title">
+										{fieldTypesGroup[key].label}
+									</span>
+									<span class="collapse-icon-closed">
+										<svg
+											aria-hidden="true"
+											class="lexicon-icon lexicon-icon-angle-right"
+										>
+											<use
+												xlink:href={`${spritemap}#angle-right`}
+											/>
+										</svg>
+									</span>
+									<span class="collapse-icon-open">
+										<svg
+											aria-hidden="true"
+											class="lexicon-icon lexicon-icon-angle-down"
+										>
+											<use
+												xlink:href={`${spritemap}#angle-down`}
+											/>
+										</svg>
+									</span>
+								</a>
+								<div
+									aria-labelledby={`#ddm-field-types-${key}-header`}
+									class="panel-collapse show"
+									id={`ddm-field-types-${key}-body`}
+									role="tabpanel"
 								>
-									<use
-										xlink:href={`${spritemap}#angle-down`}
-									/>
-								</svg>
-							</span>
-						</a>
-						<div
-							aria-labelledby={`#ddm-field-types-${key}-header`}
-							class="panel-collapse show"
-							id={`ddm-field-types-${key}-body`}
-							role="tabpanel"
-						>
-							<div class="panel-body p-0 m-0 list-group">
-								{fieldTypesGroup[key].fields.map(
-									(fieldType) => (
-										<FieldTypeBox
-											fieldType={fieldType}
-											key={fieldType.name}
-											spritemap={spritemap}
-										/>
-									)
-								)}
+									<div class="panel-body p-0 m-0 list-group">
+										{fields.map((fieldType) => (
+											<FieldTypeBox
+												fieldType={fieldType}
+												key={fieldType.name}
+												spritemap={spritemap}
+											/>
+										))}
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				))}
+						)
+					);
+				})}
 			</div>
 		);
 	}

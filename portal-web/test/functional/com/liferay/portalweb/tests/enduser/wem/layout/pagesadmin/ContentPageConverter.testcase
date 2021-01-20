@@ -181,6 +181,34 @@ definition {
 		AssertElementPresent(locator1 = "//h1[contains(.,'Heading Example')]");
 	}
 
+	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, if getConvertibleLayoutPlid is invoked, an array with the plids of the widget pages that are convertible to content pages is returned."
+	@ignore = "true"
+	@priority = "2"
+	test ConvertMultipleWidgetPagesViaAPIAndViewLayoutPlids {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 ConvertMultipleWidgetPagesViaAPIAndViewLayoutPlids pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and some content pages and an api to convert bulk widget pages to content pages is executed, you should be able to convert the widget pages."
+	@ignore = "true"
+	@priority = "2"
+	test ConvertMultipleWidgetPagesWithContentPagesViaAPI {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 ConvertMultipleWidgetPagesWithContentPagesViaAPI pending implementation
+	}
+
+	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the content page has the original plid identifier."
+	@ignore = "true"
+	@priority = "2"
+	test ConvertWidgetPageAndVIewPlidIdentifier {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 ConvertWidgetPageAndVIewPlidIdentifier pending implementation
+	}
+
 	@description = "This is a test for LPS-98589. Multiple widgets with different application decorators survive content page conversion."
 	@priority = "5"
 	test ConvertWidgetPageDecoratorsToContentPage {
@@ -828,7 +856,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-123456 ConvertWidgetPageWithWebContentsToContentPage pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
@@ -1051,6 +1078,15 @@ definition {
 		PageEditor.viewFragment(fragmentName = "Web Content Display");
 
 		PageEditor.viewNoFragment(fragmentName = "Asset Publisher");
+	}
+
+	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, if convertLayouts is invoked, all convertibles widget pages in the site are converted to content pages."
+	@ignore = "true"
+	@priority = "2"
+	test ViewContentPagesAndNoWidgetPagePlidsAfterConverting {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 ViewContentPagesAndNoWidgetPagePlidsAfterConverting pending implementation
 	}
 
 }

@@ -1,0 +1,50 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the content page has the original plid identifier."
+	@ignore = "true"
+	@priority = "2"
+	test ViewContentPageInLiveAfterConvertingAndPublishingWidgetPage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 ViewContentPageInLiveAfterConvertingAndPublishingWidgetPage pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the content page has the original plid identifier."
+	@ignore = "true"
+	@priority = "2"
+	test ViewWidgetPageInLiveAfterConvertingWidgetPage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 ViewWidgetPageInLiveAfterConvertingWidgetPage pending implementation
+	}
+
+}

@@ -1367,6 +1367,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125933. Preview a Content Page with a Fragment Mapped to WC, a WCD, and an Assert Publisher."
+	@ignore = "true"
+	@priority = "3"
+	test PreviewContentPageViaMappedFragmentWithWCDAndAP {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 PreviewContentPageViaMappedFragmentWithWCDAndAP pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with multiple itemTypes, the Item Type label will be shown in mapping label."
 	@priority = "4"
 	test ViewItemTypeLabelMappedInCollectionWithMultipleItemTypes {

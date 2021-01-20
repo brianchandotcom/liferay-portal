@@ -191,6 +191,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125933. Create, read, update and delete a Template based on a Structure with all possible fields."
+	@ignore = "true"
+	@priority = "4"
+	test ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-116515. The creation of template is not allowed when disable template creation in Dynamic Data Mapping."
 	@priority = "4"
 	test ViewTemplateCreationFailureWhenDisableTemplateCreation {

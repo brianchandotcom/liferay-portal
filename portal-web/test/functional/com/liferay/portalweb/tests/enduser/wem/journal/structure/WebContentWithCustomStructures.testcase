@@ -2128,6 +2128,16 @@ definition {
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a test for LPS-125933. Create, read, update and delete a Web Content from a Structure with all possible fields and using a Template with all posible fields."
+	@ignore = "true"
+	@priority = "5"
+	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123456 ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields pending implementation
+
+	}
+
 	@description = "This is a use case for LRQA-61632. View structure field with predefined value."
 	@priority = "4"
 	test ViewFieldWithPredefinedValue {

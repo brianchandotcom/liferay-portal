@@ -17,15 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String messageXml = null;
-
 MoneyOrderGroupServiceConfiguration moneyOrderGroupServiceConfiguration = (MoneyOrderGroupServiceConfiguration)request.getAttribute(MoneyOrderGroupServiceConfiguration.class.getName());
 
-LocalizedValuesMap messageLocalizedValuesMap = moneyOrderGroupServiceConfiguration.message();
-
-if (messageLocalizedValuesMap != null) {
-	messageXml = LocalizationUtil.getXml(messageLocalizedValuesMap, "message");
-}
+String messageXml = moneyOrderGroupServiceConfiguration.message();
 %>
 
 <portlet:actionURL name="/commerce_payment_methods/edit_money_order_commerce_payment_method_configuration" var="editCommercePaymentMethodActionURL" />

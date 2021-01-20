@@ -129,7 +129,7 @@ public class ExperimentUtilTest {
 		long segmentsEntryId = RandomTestUtil.randomLong();
 
 		Mockito.when(
-			_segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId)
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId)
 		).thenReturn(
 			segmentsEntry
 		);
@@ -217,7 +217,7 @@ public class ExperimentUtilTest {
 		long segmentsEntryId = RandomTestUtil.randomLong();
 
 		Mockito.when(
-			_segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId)
+			_segmentsEntryLocalService.fetchSegmentsEntry(segmentsEntryId)
 		).thenReturn(
 			segmentsEntry
 		);

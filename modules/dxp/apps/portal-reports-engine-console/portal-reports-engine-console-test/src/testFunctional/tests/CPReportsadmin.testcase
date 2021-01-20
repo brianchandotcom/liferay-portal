@@ -670,7 +670,7 @@ definition {
 			emailFromUserName = "Joe Bloggs",
 			gmailAssetType = "New Report: reports_admin_template_source_sample_class_name.pdf",
 			gmailMessageAttachment = "reports_admin_template_source_sample_class_name.pdf",
-			gmailMessageBody = "You have a new report.",
+			gmailMessageBody = "Please review the attached report.",
 			gmailMessageTitle = "New Report: reports_admin_template_source_sample_class_name.pdf");
 
 		var key_gmailAssetType = "New Report: reports_admin_template_source_sample_class_name.pdf";

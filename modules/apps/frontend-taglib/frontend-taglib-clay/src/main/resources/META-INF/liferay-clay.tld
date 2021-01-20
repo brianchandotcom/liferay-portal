@@ -2230,7 +2230,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Deprecated as of 7.4.0, replaced by the attribute <![CDATA[<code>managementToolbar</code>]]>.</description>
 			<name>displayContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2268,6 +2268,12 @@
 		<attribute>
 			<description></description>
 			<name>itemsTotal</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>managementToolbar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

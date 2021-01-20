@@ -16,7 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.ManagementToolbarDefaults;
-import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.model.ManagementToolbar;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -74,8 +74,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		if ((_actionDropdownItems == null) && (_displayContext != null)) {
-			return _displayContext.getActionDropdownItems();
+		if ((_actionDropdownItems == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getActionDropdownItems();
 		}
 
 		return _actionDropdownItems;
@@ -86,8 +86,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	}
 
 	public String getClearResultsURL() {
-		if ((_clearResultsURL == null) && (_displayContext != null)) {
-			return _displayContext.getClearResultsURL();
+		if ((_clearResultsURL == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getClearResultsURL();
 		}
 
 		return _clearResultsURL;
@@ -98,28 +98,33 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	}
 
 	public CreationMenu getCreationMenu() {
-		if ((_creationMenu == null) && (_displayContext != null)) {
-			return _displayContext.getCreationMenu();
+		if ((_creationMenu == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getCreationMenu();
 		}
 
 		return _creationMenu;
 	}
 
-	public ManagementToolbarDisplayContext getDisplayContext() {
-		return _displayContext;
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #getManagementToolbar()}
+	 */
+	@Deprecated
+	public ManagementToolbar getDisplayContext() {
+		return getManagementToolbar();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
-		if ((_filterDropdownItems == null) && (_displayContext != null)) {
-			return _displayContext.getFilterDropdownItems();
+		if ((_filterDropdownItems == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getFilterDropdownItems();
 		}
 
 		return _filterDropdownItems;
 	}
 
 	public List<LabelItem> getFilterLabelItems() {
-		if ((_filterLabelItems == null) && (_displayContext != null)) {
-			return _displayContext.getFilterLabelItems();
+		if ((_filterLabelItems == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getFilterLabelItems();
 		}
 
 		return _filterLabelItems;
@@ -129,11 +134,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		String infoPanelId = _infoPanelId;
 
 		if (infoPanelId == null) {
-			if (_displayContext == null) {
+			if (_managementToolbar == null) {
 				return null;
 			}
 
-			infoPanelId = _displayContext.getInfoPanelId();
+			infoPanelId = _managementToolbar.getInfoPanelId();
 		}
 
 		return infoPanelId;
@@ -141,27 +146,31 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	public Integer getItemsTotal() {
 		if (_itemsTotal == null) {
-			if (_displayContext == null) {
+			if (_managementToolbar == null) {
 				return 0;
 			}
 
-			return _displayContext.getItemsTotal();
+			return _managementToolbar.getItemsTotal();
 		}
 
 		return _itemsTotal;
 	}
 
+	public ManagementToolbar getManagementToolbar() {
+		return _managementToolbar;
+	}
+
 	public String getNamespace() {
-		if ((_namespace == null) && (_displayContext != null)) {
-			return _displayContext.getNamespace();
+		if ((_namespace == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getNamespace();
 		}
 
 		return _namespace;
 	}
 
 	public String getSearchActionURL() {
-		if ((_searchActionURL == null) && (_displayContext != null)) {
-			return _displayContext.getSearchActionURL();
+		if ((_searchActionURL == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getSearchActionURL();
 		}
 
 		return _searchActionURL;
@@ -171,11 +180,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		String searchContainerId = _searchContainerId;
 
 		if (searchContainerId == null) {
-			if (_displayContext == null) {
+			if (_managementToolbar == null) {
 				return null;
 			}
 
-			searchContainerId = _displayContext.getSearchContainerId();
+			searchContainerId = _managementToolbar.getSearchContainerId();
 		}
 
 		return searchContainerId;
@@ -183,11 +192,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	public String getSearchFormMethod() {
 		if (_searchFormMethod == null) {
-			if (_displayContext == null) {
+			if (_managementToolbar == null) {
 				return ManagementToolbarDefaults.getSearchFormMethod();
 			}
 
-			return _displayContext.getSearchFormMethod();
+			return _managementToolbar.getSearchFormMethod();
 		}
 
 		return _searchFormMethod;
@@ -197,11 +206,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		String searchFormName = _searchFormName;
 
 		if (searchFormName == null) {
-			if (_displayContext == null) {
+			if (_managementToolbar == null) {
 				return null;
 			}
 
-			searchFormName = _displayContext.getSearchFormName();
+			searchFormName = _managementToolbar.getSearchFormName();
 		}
 
 		return searchFormName;
@@ -211,19 +220,19 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		String searchInputName = _searchInputName;
 
 		if (searchInputName == null) {
-			if (_displayContext == null) {
+			if (_managementToolbar == null) {
 				return ManagementToolbarDefaults.getSearchInputName();
 			}
 
-			searchInputName = _displayContext.getSearchInputName();
+			searchInputName = _managementToolbar.getSearchInputName();
 		}
 
 		return searchInputName;
 	}
 
 	public String getSearchValue() {
-		if ((_searchValue == null) && (_displayContext != null)) {
-			return _displayContext.getSearchValue();
+		if ((_searchValue == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getSearchValue();
 		}
 
 		return _searchValue;
@@ -235,35 +244,35 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	public Integer getSelectedItems() {
 		if (_selectedItems == null) {
-			if (_displayContext == null) {
+			if (_managementToolbar == null) {
 				return 0;
 			}
 
-			return _displayContext.getSelectedItems();
+			return _managementToolbar.getSelectedItems();
 		}
 
 		return _selectedItems;
 	}
 
 	public String getSortingOrder() {
-		if ((_sortingOrder == null) && (_displayContext != null)) {
-			return _displayContext.getSortingOrder();
+		if ((_sortingOrder == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getSortingOrder();
 		}
 
 		return _sortingOrder;
 	}
 
 	public String getSortingURL() {
-		if ((_sortingURL == null) && (_displayContext != null)) {
-			return _displayContext.getSortingURL();
+		if ((_sortingURL == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getSortingURL();
 		}
 
 		return _sortingURL;
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		if ((_viewTypeItems == null) && (_displayContext != null)) {
-			return _displayContext.getViewTypeItems();
+		if ((_viewTypeItems == null) && (_managementToolbar != null)) {
+			return _managementToolbar.getViewTypeItems();
 		}
 
 		return _viewTypeItems;
@@ -271,8 +280,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	public Boolean isDisabled() {
 		if (_disabled == null) {
-			if (_displayContext != null) {
-				return _displayContext.isDisabled();
+			if (_managementToolbar != null) {
+				return _managementToolbar.isDisabled();
 			}
 
 			return false;
@@ -282,16 +291,16 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	}
 
 	public Boolean isSelectable() {
-		if ((_selectable == null) && (_displayContext != null)) {
-			return _displayContext.isSelectable();
+		if ((_selectable == null) && (_managementToolbar != null)) {
+			return _managementToolbar.isSelectable();
 		}
 
 		return _selectable;
 	}
 
 	public Boolean isShowCreationMenu() {
-		if ((_showCreationMenu == null) && (_displayContext != null)) {
-			return _displayContext.isShowCreationMenu();
+		if ((_showCreationMenu == null) && (_managementToolbar != null)) {
+			return _managementToolbar.isShowCreationMenu();
 		}
 
 		return _showCreationMenu;
@@ -301,12 +310,12 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		Boolean showInfoButton = _showInfoButton;
 
 		if (showInfoButton == null) {
-			if (_displayContext == null) {
+			if (_managementToolbar == null) {
 				return ManagementToolbarDefaults.isShowInfoButton(
 					getInfoPanelId());
 			}
 
-			showInfoButton = _displayContext.isShowInfoButton();
+			showInfoButton = _managementToolbar.isShowInfoButton();
 		}
 
 		return showInfoButton;
@@ -318,8 +327,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	public Boolean isShowSearch() {
 		if (_showSearch == null) {
-			if (_displayContext != null) {
-				return _displayContext.isShowSearch();
+			if (_managementToolbar != null) {
+				return _managementToolbar.isShowSearch();
 			}
 
 			return true;
@@ -335,7 +344,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	public Boolean isSupportsBulkActions() {
 		if (_supportsBulkActions == null) {
 			if (_supportsBulkActions != null) {
-				return _displayContext.getSupportsBulkActions();
+				return _managementToolbar.getSupportsBulkActions();
 			}
 
 			return true;
@@ -376,10 +385,13 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		_disabled = disabled;
 	}
 
-	public void setDisplayContext(
-		ManagementToolbarDisplayContext displayContext) {
-
-		_displayContext = displayContext;
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *          #setManagementToolbar(ManagementToolbar)}
+	 */
+	@Deprecated
+	public void setDisplayContext(ManagementToolbar managementToolbar) {
+		setManagementToolbar(managementToolbar);
 	}
 
 	public void setFilterDropdownItems(List<DropdownItem> filterDropdownItems) {
@@ -396,6 +408,10 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	public void setItemsTotal(Integer itemsTotal) {
 		_itemsTotal = itemsTotal;
+	}
+
+	public void setManagementToolbar(ManagementToolbar managementToolbar) {
+		_managementToolbar = managementToolbar;
 	}
 
 	public void setNamespace(String namespace) {
@@ -509,11 +525,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		_contentRenderer = null;
 		_creationMenu = null;
 		_disabled = null;
-		_displayContext = null;
 		_filterDropdownItems = null;
 		_filterLabelItems = null;
 		_infoPanelId = null;
 		_itemsTotal = null;
+		_managementToolbar = null;
 		_namespace = null;
 		_searchActionURL = null;
 		_searchContainerId = null;
@@ -1095,11 +1111,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	private String _contentRenderer;
 	private CreationMenu _creationMenu;
 	private Boolean _disabled;
-	private ManagementToolbarDisplayContext _displayContext;
 	private List<DropdownItem> _filterDropdownItems;
 	private List<LabelItem> _filterLabelItems;
 	private String _infoPanelId;
 	private Integer _itemsTotal;
+	private ManagementToolbar _managementToolbar;
 	private String _namespace;
 	private String _searchActionURL;
 	private String _searchContainerId;

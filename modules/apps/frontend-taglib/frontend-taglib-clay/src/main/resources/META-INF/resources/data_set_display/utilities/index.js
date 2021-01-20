@@ -100,6 +100,64 @@ export function getValueFromItem(item, fieldName) {
 	return item[fieldName];
 }
 
+export function getValueDetailsFromItem(item, fieldName) {
+	if (!fieldName) {
+		return null;
+	}
+
+	let rootPropertyName = fieldName;
+	const valuePath = [];
+	let navigatedValue = item;
+
+	if (Array.isArray(fieldName)) {
+		rootPropertyName = fieldName[0];
+
+		fieldName.forEach((property) => {
+			let formattedProperty = property;
+
+			if (property === 'LANG') {
+				formattedProperty = navigatedValue[
+					Liferay.ThemeDisplay.getLanguageId()
+				]
+					? Liferay.ThemeDisplay.getLanguageId()
+					: Liferay.ThemeDisplay.getDefaultLanguageId();
+			}
+
+			valuePath.push(formattedProperty);
+
+			navigatedValue = navigatedValue[formattedProperty];
+		});
+	}
+	else {
+		valuePath.push(fieldName);
+		navigatedValue = navigatedValue[fieldName];
+	}
+
+	return {
+		rootPropertyName,
+		value: navigatedValue,
+		valuePath,
+	};
+}
+
+export function formatItemChanges(itemChanges) {
+	const formattedChanges = Object.values(itemChanges).reduce(
+		(changes, {value, valuePath}) => {
+			const nestedValue = valuePath.reduceRight((acc, item) => {
+				return {[item]: acc};
+			}, value);
+
+			return {
+				...changes,
+				...nestedValue,
+			};
+		},
+		{}
+	);
+
+	return formattedChanges;
+}
+
 export function executeAsyncAction(url, method = 'GET') {
 	return fetch(url, {
 		headers: {
@@ -210,7 +268,8 @@ export function getCurrentItemUpdates(
 	selectedItemsKey,
 	itemKey,
 	property,
-	value
+	value,
+	valuePath
 ) {
 	const itemChanged = items.find(
 		(item) => item[selectedItemsKey] === itemKey
@@ -220,11 +279,14 @@ export function getCurrentItemUpdates(
 
 	if (!itemChanges) {
 		return {
-			[property]: value,
+			[property]: {
+				value,
+				valuePath,
+			},
 		};
 	}
 
-	if (itemChanged && itemChanged[property] === value) {
+	if (itemChanged && getValueFromItem(itemChanged, valuePath) === value) {
 		const filteredProperties = Object.entries(itemChanges).reduce(
 			(properties, [propertyKey, propertyValue]) => {
 				return propertyKey !== property
@@ -239,6 +301,9 @@ export function getCurrentItemUpdates(
 
 	return {
 		...itemChanges,
-		[property]: value,
+		[property]: {
+			value,
+			valuePath,
+		},
 	};
 }

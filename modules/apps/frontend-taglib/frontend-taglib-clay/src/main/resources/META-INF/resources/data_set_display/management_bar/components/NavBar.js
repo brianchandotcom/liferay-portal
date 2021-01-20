@@ -18,15 +18,16 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
+import ViewsContext from '../../views/ViewsContext';
 import ActiveViewSelector from './ActiveViewSelector';
 import CreationMenu from './CreationMenu';
 import FiltersDropdown from './FiltersDropdown';
 import MainSearch from './MainSearch';
 import FiltersContext from './filters/FiltersContext';
 
-function NavBar({creationMenu, showSearch, views}) {
+function NavBar({creationMenu, showSearch}) {
 	const filtersState = useContext(FiltersContext);
-
+	const [{views}] = useContext(ViewsContext);
 	const [showMobile, setShowMobile] = useState(false);
 
 	return (
@@ -64,6 +65,7 @@ function NavBar({creationMenu, showSearch, views}) {
 						</ClayButton>
 					</ClayManagementToolbar.Item>
 				)}
+
 				{views?.length > 1 && (
 					<ClayManagementToolbar.Item>
 						<ActiveViewSelector views={views} />

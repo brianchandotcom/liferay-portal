@@ -32,7 +32,6 @@ function ManagementBar({
 	selectionType,
 	showSearch,
 	total,
-	views,
 }) {
 	const [filters, updateFilters] = useState(propFilters);
 
@@ -87,11 +86,7 @@ function ManagementBar({
 				/>
 			)}
 			{(!selectedItemsValue.length || selectionType === 'single') && (
-				<NavBar
-					creationMenu={creationMenu}
-					showSearch={showSearch}
-					views={views}
-				/>
+				<NavBar creationMenu={creationMenu} showSearch={showSearch} />
 			)}
 			<ActiveFiltersBar disabled={!!selectedItemsValue.length} />
 		</FiltersContext.Provider>
@@ -120,7 +115,6 @@ ManagementBar.propTypes = {
 	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
 	showSearch: PropTypes.bool,
 	total: PropTypes.number,
-	views: PropTypes.array.isRequired,
 };
 
 ManagementBar.defaultProps = {

@@ -228,7 +228,7 @@ const fluidDataSetDisplayProps = {
 					</>
 				);
 			},
-			label: "Hey you don't know me",
+			label: 'Custom table name',
 			name: 'custom-table',
 			schema: {},
 			thumbnail: 'merge',
@@ -551,9 +551,9 @@ const productsDataSetDisplayProps = {
 	],
 	filters: [
 		{
-			id: 'blbl',
+			id: 'customFilterId',
 			label: 'Custom Filter',
-			moduleURL: '/blblasd/asd/basdkj',
+			moduleURL: '/custom/filter/module/url',
 		},
 		{
 			id: 'createDate',
@@ -609,6 +609,13 @@ const productsDataSetDisplayProps = {
 		},
 	],
 	id: 'tableTest',
+	inlineAddingSettings: {
+		apiURL: '/o/fake-new-inline-item-endpoint',
+		defaultBodyContent: {
+			testKey: 'testValue',
+		},
+		method: 'POST',
+	},
 	inlineEditingSettings: true,
 	itemsActions: [
 		{
@@ -681,6 +688,9 @@ const productsDataSetDisplayProps = {
 						actionId: 'view',
 						contentRenderer: 'actionLink',
 						fieldName: ['name', 'LANG'],
+						inlineEditSettings: {
+							type: 'text',
+						},
 						label: 'Name',
 						sortable: true,
 					},

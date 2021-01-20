@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 function TableHeadCell({
 	contentRenderer,
@@ -30,10 +30,19 @@ function TableHeadCell({
 	sortingKey: sortingKeyProp,
 	updateSorting,
 }) {
-	const sortingKey =
-		sortingKeyProp || (Array.isArray(fieldName) ? fieldName[0] : fieldName);
+	const [sortingKey, updateSortingKey] = useState(null);
+	const [sortingMatch, updateSortingMatch] = useState(null);
 
-	const sortingMatch = sorting.find((element) => element.key === sortingKey);
+	useEffect(() => {
+		const newSortingKey =
+			sortingKeyProp ||
+			(Array.isArray(fieldName) ? fieldName[0] : fieldName);
+
+		updateSortingKey(newSortingKey);
+		updateSortingMatch(
+			sorting.find((element) => element.key === newSortingKey)
+		);
+	}, [fieldName, sorting, sortingKeyProp]);
 
 	function handleSortingCellClick(event) {
 		event.preventDefault();
@@ -63,12 +72,11 @@ function TableHeadCell({
 
 	return (
 		<ClayTable.Cell
-			className={classNames(
-				contentRenderer && `content-renderer-${contentRenderer}`,
-				expandableColumns
-					? expand && 'table-cell-expand-small'
-					: 'table-cell-expand-smaller'
-			)}
+			className={classNames({
+				'table-cell-expand-small': expandableColumns && expand,
+				'table-cell-expand-smaller': !expandableColumns,
+				[`content-renderer-${contentRenderer}`]: contentRenderer,
+			})}
 			headingCell
 			headingTitle
 		>
@@ -79,7 +87,7 @@ function TableHeadCell({
 					href="#"
 					onClick={handleSortingCellClick}
 				>
-					{(!hideColumnLabel && label) || ''}
+					{!hideColumnLabel && label}
 					<span className="inline-item inline-item-after sorting-icons-wrapper">
 						<ClayIcon
 							className={classNames(
@@ -100,7 +108,7 @@ function TableHeadCell({
 					</span>
 				</a>
 			) : (
-				(!hideColumnLabel && label) || ''
+				!hideColumnLabel && label
 			)}
 		</ClayTable.Cell>
 	);

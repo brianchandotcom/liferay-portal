@@ -15,7 +15,6 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import {AppContext} from '../../AppContext';
@@ -35,7 +34,8 @@ function ActiveViewSelector({views}) {
 			onActiveChange={setActive}
 			trigger={
 				<ClayButtonWithIcon
-					displayType="secondary"
+					className="nav-link nav-link-monospaced"
+					displayType="unstyled"
 					symbol={activeView.thumbnail}
 				/>
 			}
@@ -65,14 +65,5 @@ function ActiveViewSelector({views}) {
 		</ClayDropDown>
 	);
 }
-
-ActiveViewSelector.propTypes = {
-	views: PropTypes.arrayOf(
-		PropTypes.shape({
-			label: PropTypes.string.isRequired,
-			thumbnail: PropTypes.string.isRequired,
-		})
-	),
-};
 
 export default ActiveViewSelector;

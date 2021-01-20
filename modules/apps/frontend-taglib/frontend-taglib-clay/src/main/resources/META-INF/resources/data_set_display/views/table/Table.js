@@ -20,7 +20,7 @@ import React, {useContext} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
 import ActionsDropdownRenderer from '../../data_renderers/ActionsDropdownRenderer';
-import {getValueFromItem} from '../../utilities/index';
+import {getValueDetailsFromItem} from '../../utilities/index';
 import ViewsContext from '../ViewsContext';
 import TableCell from './TableCell';
 import TableHeadRow from './TableHeadRow';
@@ -33,25 +33,25 @@ function getItemFields(
 	itemsActions,
 	itemInlineChanges = null
 ) {
-	return fields.map((field, i) => {
-		const {actionDropdownItems, comments} = item;
-		const rawValue = getValueFromItem(item, field.fieldName);
-		const formattedValue = field.mapData
-			? field.mapData(rawValue)
-			: rawValue;
-		const comment = comments ? comments[field.fieldName] : null;
+	return fields.map((field) => {
+		const {actionDropdownItems} = item;
+		const {rootPropertyName, value, valuePath} = getValueDetailsFromItem(
+			item,
+			field.fieldName
+		);
 
 		return (
 			<TableCell
 				actions={itemsActions || actionDropdownItems}
-				comment={comment}
 				inlineEditSettings={field.inlineEditSettings}
 				itemData={item}
 				itemId={itemId}
 				itemInlineChanges={itemInlineChanges}
-				key={field.fieldName || i}
+				key={field.fieldName}
 				options={field}
-				value={formattedValue}
+				rootPropertyName={rootPropertyName}
+				value={value}
+				valuePath={valuePath}
 				view={{
 					contentRenderer: field.contentRenderer,
 					contentRendererModuleURL: field.contentRendererModuleURL,

@@ -22,13 +22,13 @@ function getDateTimeString(date) {
 	const dateTimeString =
 		dateInstance.getFullYear() +
 		'-' +
-		('0' + (dateInstance.getMonth() + 1)).slice(-2) +
+		`0${dateInstance.getMonth() + 1}`.slice(-2) +
 		'-' +
-		('0' + dateInstance.getDate()).slice(-2) +
+		`0${dateInstance.getDate()}`.slice(-2) +
 		'T' +
-		('0' + dateInstance.getHours()).slice(-2) +
+		`0${dateInstance.getHours()}`.slice(-2) +
 		':' +
-		('0' + dateInstance.getMinutes()).slice(-2);
+		`0${dateInstance.getMinutes()}`.slice(-2);
 
 	return dateTimeString;
 }

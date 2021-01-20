@@ -20,18 +20,24 @@ import {AppContext} from './AppContext';
 import DataSetDisplay from './DataSetDisplay';
 import ViewsContext, {viewsReducer} from './views/ViewsContext';
 
-const App = ({apiURL, appURL, portletId, ...props}) => {
-	const activeViewName = props.activeViewSettings?.name;
+const App = ({
+	activeViewSettings,
+	apiURL,
+	appURL,
+	portletId,
+	views,
+	...props
+}) => {
+	const activeViewName = activeViewSettings?.name;
 
 	const activeView = activeViewName
-		? props.views.find(({name}) => name === activeViewName)
-		: props.views[0];
+		? views.find(({name}) => name === activeViewName)
+		: views[0];
 	const [state, dispatch] = useThunk(
 		useReducer(viewsReducer, {
 			activeView,
-			views: props.views,
-			visibleFieldNames:
-				props.activeViewSettings?.visibleFieldNames || {},
+			views,
+			visibleFieldNames: activeViewSettings?.visibleFieldNames || {},
 		})
 	);
 
@@ -52,7 +58,16 @@ App.proptypes = {
 	apiURL: PropTypes.string,
 	appURL: PropTypes.string,
 	portletId: PropTypes.string,
-	views: PropTypes.any,
+	views: PropTypes.arrayOf(
+		PropTypes.shape({
+			component: PropTypes.any,
+			contentRenderer: PropTypes.string,
+			contentRendererModuleURL: PropTypes.string,
+			label: PropTypes.string,
+			schema: PropTypes.object,
+			thumbnail: PropTypes.string,
+		})
+	).isRequired,
 };
 
 export default (...data) => render(App, ...data);

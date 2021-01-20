@@ -42,6 +42,7 @@ import {
 import {
 	delay,
 	executeAsyncAction,
+	formatItemChanges,
 	getCurrentItemUpdates,
 	getRandomId,
 	loadData,
@@ -84,13 +85,14 @@ function DataSetDisplay({
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
 	const [dataSetDisplaySupportModalId] = useState(
-		'support-modal-' + getRandomId()
+		`support-modal-${getRandomId()}`
 	);
 	const [dataSetDisplaySupportSidePanelId] = useState(
-		sidePanelId || 'support-side-panel-' + getRandomId()
+		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
 	const [delta, setDelta] = useState(
-		pagination.initialDelta || pagination.deltas[0].label
+		showPagination &&
+			(pagination.initialDelta || pagination.deltas[0].label)
 	);
 	const [filters, updateFilters] = useState(filtersProp);
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
@@ -103,7 +105,7 @@ function DataSetDisplay({
 	);
 	const [sorting, updateSorting] = useState(sortingProp);
 	const [total, setTotal] = useState(0);
-	const [{activeView, views}, dispatch] = useContext(ViewsContext);
+	const [{activeView}, dispatch] = useContext(ViewsContext);
 
 	const {
 		component: CurrentViewComponent,
@@ -242,6 +244,7 @@ function DataSetDisplay({
 
 				if (isMounted()) {
 					updateDataSetItems(data);
+
 					setDataLoading(false);
 
 					Liferay.fire(DATASET_DISPLAY_UPDATED, {id});
@@ -280,6 +283,7 @@ function DataSetDisplay({
 		requestData().then((data) => {
 			if (isMounted()) {
 				updateDataSetItems(data);
+
 				setDataLoading(false);
 			}
 		});
@@ -333,7 +337,6 @@ function DataSetDisplay({
 				showSearch={showSearch}
 				sidePanelId={dataSetDisplaySupportSidePanelId}
 				total={items?.length ?? 0}
-				views={views}
 			/>
 		</div>
 	) : null;
@@ -427,18 +430,15 @@ function DataSetDisplay({
 		});
 	}
 
-	function updateItem(itemKey, property, value = null) {
-		const formattedProperty = Array.isArray(property)
-			? property[0]
-			: property;
-
+	function updateItem(itemKey, property, valuePath, value = null) {
 		const itemChanges = getCurrentItemUpdates(
 			items,
 			itemsChanges,
 			selectedItemsKey,
 			itemKey,
-			formattedProperty,
-			value
+			property,
+			value,
+			valuePath
 		);
 
 		updateItemsChanges({
@@ -459,12 +459,14 @@ function DataSetDisplay({
 	}
 
 	function createInlineItem() {
-		const defaultBody = inlineAddingSettings.defaultBodyContent || {};
+		const defaultBodyContent =
+			inlineAddingSettings.defaultBodyContent || {};
+		const newItemBodyContent = formatItemChanges(itemsChanges[0]);
 
 		return fetch(inlineAddingSettings.apiURL, {
 			body: JSON.stringify({
-				...defaultBody,
-				...itemsChanges[0],
+				...defaultBodyContent,
+				...newItemBodyContent,
 			}),
 			headers: {
 				Accept: 'application/json',
@@ -516,7 +518,7 @@ function DataSetDisplay({
 		return fetch(itemToBeUpdated.actions.update.href, {
 			body: JSON.stringify({
 				...defaultBody,
-				...itemsChanges[itemKey],
+				...formatItemChanges(itemsChanges[itemKey]),
 			}),
 			headers: {
 				Accept: 'application/json',
@@ -686,16 +688,6 @@ DataSetDisplay.propTypes = {
 		})
 	),
 	style: PropTypes.oneOf(['default', 'fluid', 'stacked']),
-	views: PropTypes.arrayOf(
-		PropTypes.shape({
-			component: PropTypes.any,
-			contentRenderer: PropTypes.string,
-			contentRendererModuleURL: PropTypes.string,
-			label: PropTypes.string,
-			schema: PropTypes.object,
-			thumbnail: PropTypes.string,
-		})
-	).isRequired,
 };
 
 DataSetDisplay.defaultProps = {

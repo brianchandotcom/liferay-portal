@@ -33,7 +33,12 @@ function CreationMenu({primaryItems}) {
 						<ClayDropDown
 							active={active}
 							onActiveChange={setActive}
-							trigger={<ClayButtonWithIcon symbol="plus" />}
+							trigger={
+								<ClayButtonWithIcon
+									className="nav-btn nav-btn-monospaced"
+									symbol="plus"
+								/>
+							}
 						>
 							<ClayDropDown.ItemList>
 								{primaryItems.map((item, i) => (
@@ -53,6 +58,7 @@ function CreationMenu({primaryItems}) {
 					) : (
 						<ClayTooltipProvider>
 							<ClayButtonWithIcon
+								className="nav-btn nav-btn-monospaced"
 								data-tooltip-align="top"
 								onClick={() =>
 									triggerAction(

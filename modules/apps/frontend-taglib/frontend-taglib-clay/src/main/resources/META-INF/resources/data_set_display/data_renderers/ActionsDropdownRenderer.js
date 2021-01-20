@@ -178,48 +178,52 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	const context = useContext(DataSetDisplayContext);
 	const [menuActive, setMenuActive] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const alwaysOn = context.inlineEditingSettings?.alwaysOn;
+	const inlineEditingAvailable =
+		context.inlineEditingSettings && itemData.actions?.update;
+	const inlineEditingAlwaysOn =
+		inlineEditingAvailable && context.inlineEditingSettings.alwaysOn;
 	const isMounted = useIsMounted();
+	const editModeActive = !!context.itemsChanges[itemId];
+	const itemChanges =
+		editModeActive && Object.keys(context.itemsChanges[itemId]).length
+			? context.itemsChanges[itemId]
+			: null;
 
-	const saveButton = loading ? (
-		<ClayButton disabled monospaced small>
-			<ClayLoadingIndicator small />
-		</ClayButton>
-	) : (
-		<ClayButtonWithIcon
-			disabled={
-				!context.itemsChanges[itemId] ||
-				!Object.keys(context.itemsChanges[itemId]).length
-			}
-			monospaced
-			onClick={() => {
-				setLoading(true);
-				context.applyItemInlineUpdates(itemId).finally(() => {
-					if (isMounted()) {
-						setLoading(false);
-					}
-				});
-			}}
-			small
-			symbol="check"
-		/>
-	);
-
-	const inlineCommands = (
+	const inlineEditingActions = (
 		<div className="d-flex">
 			<ClayButtonWithIcon
 				className="mr-1"
+				disabled={inlineEditingAlwaysOn && !itemChanges}
 				displayType="secondary"
 				onClick={() => context.toggleItemInlineEdit(itemId)}
 				small
 				symbol="times-small"
 			/>
-			{saveButton}
+			{loading ? (
+				<ClayButton disabled monospaced small>
+					<ClayLoadingIndicator small />
+				</ClayButton>
+			) : (
+				<ClayButtonWithIcon
+					disabled={!itemChanges}
+					monospaced
+					onClick={() => {
+						setLoading(true);
+						context.applyItemInlineUpdates(itemId).finally(() => {
+							if (isMounted()) {
+								setLoading(false);
+							}
+						});
+					}}
+					small
+					symbol="check"
+				/>
+			)}
 		</div>
 	);
 
-	if (!alwaysOn && context.itemsChanges[itemId]) {
-		return inlineCommands;
+	if (!inlineEditingAlwaysOn && editModeActive) {
+		return inlineEditingActions;
 	}
 
 	const formattedActions = actions
@@ -249,15 +253,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		  }, [])
 		: [];
 
-	if (alwaysOn && (!formattedActions || !formattedActions.length)) {
-		return <div className="d-flex">{saveButton}</div>;
-	}
-
-	if (
-		!alwaysOn &&
-		context.inlineEditingSettings &&
-		itemData.actions?.update
-	) {
+	if (inlineEditingAvailable && !inlineEditingAlwaysOn) {
 		formattedActions.unshift({
 			icon: 'fieldset',
 			label: Liferay.Language.get('inline-edit'),
@@ -269,7 +265,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		return null;
 	}
 
-	if (!alwaysOn && formattedActions.length === 1) {
+	if (!inlineEditingAlwaysOn && formattedActions.length === 1) {
 		const [action] = formattedActions;
 		const {data: actionData} = action;
 
@@ -325,14 +321,9 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		);
 	}
 
-	if (loading && !alwaysOn) {
+	if (loading && !inlineEditingAlwaysOn) {
 		return (
-			<ClayButton
-				className="btn-sm"
-				disabled
-				displayType="secondary"
-				monospaced
-			>
+			<ClayButton disabled displayType="secondary" monospaced small>
 				<ClayLoadingIndicator small />
 			</ClayButton>
 		);
@@ -364,14 +355,15 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		});
 
 	return (
-		<div className="d-flex">
-			{alwaysOn && inlineCommands}
+		<div className="d-flex justify-content-end">
+			{inlineEditingAlwaysOn && inlineEditingActions}
 			<ClayDropDown
 				active={menuActive}
 				onActiveChange={setMenuActive}
 				trigger={
 					<ClayButtonWithIcon
 						className="component-action dropdown-toggle ml-1"
+						disabled={loading}
 						displayType="unstyled"
 						symbol="ellipsis-v"
 					/>

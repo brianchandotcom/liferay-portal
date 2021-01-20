@@ -16,7 +16,6 @@ import ClayTable from '@clayui/table';
 import React, {useContext, useEffect, useState} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
-import CommentRenderer from '../../data_renderers/CommentRenderer';
 import DefaultRenderer from '../../data_renderers/DefaultRenderer';
 import {
 	getDataRendererById,
@@ -24,33 +23,40 @@ import {
 	getInputRendererById,
 } from '../../utilities/dataRenderers';
 
-function InlineEditInputRenderer({type, value, ...otherProps}) {
+function InlineEditInputRenderer({
+	itemId,
+	options,
+	rootPropertyName,
+	type,
+	value,
+	valuePath,
+	...otherProps
+}) {
+	const [InputRenderer, updateInputRenderer] = useState(() =>
+		getInputRendererById(type)
+	);
 	const {itemsChanges, updateItem} = useContext(DataSetDisplayContext);
-	const InputRenderer = getInputRendererById(type);
+
+	useEffect(() => {
+		updateInputRenderer(() => getInputRendererById(type));
+	}, [type]);
 
 	let inputValue = value;
 
-	const formattedFieldName = Array.isArray(otherProps.options.fieldName)
-		? otherProps.options.fieldName[0]
-		: otherProps.options.fieldName;
-
 	if (
-		itemsChanges[otherProps.itemId] &&
-		typeof itemsChanges[otherProps.itemId][formattedFieldName] !==
-			'undefined'
+		itemsChanges[itemId] &&
+		typeof itemsChanges[itemId][rootPropertyName] !== 'undefined'
 	) {
-		inputValue = itemsChanges[otherProps.itemId][formattedFieldName];
+		inputValue = itemsChanges[itemId][rootPropertyName].value;
 	}
 
 	return (
 		<InputRenderer
 			{...otherProps}
+			itemId={itemId}
+			options={options}
 			updateItem={(newValue) =>
-				updateItem(
-					otherProps.itemId,
-					otherProps.options.fieldName,
-					newValue
-				)
+				updateItem(itemId, rootPropertyName, valuePath, newValue)
 			}
 			value={inputValue}
 		/>
@@ -59,13 +65,14 @@ function InlineEditInputRenderer({type, value, ...otherProps}) {
 
 function TableCell({
 	actions,
-	comment,
 	inlineEditSettings,
 	itemData,
 	itemId,
 	itemInlineChanges,
 	options,
+	rootPropertyName,
 	value,
+	valuePath,
 	view,
 }) {
 	let dataRenderer = DefaultRenderer;
@@ -88,10 +95,7 @@ function TableCell({
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		if (loading) {
-			return;
-		}
-		if (currentView.contentRendererModuleURL) {
+		if (!loading && currentView.contentRendererModuleURL) {
 			setLoading(true);
 			getDataRendererByURL(currentView.contentRendererModuleURL).then(
 				(Component) => {
@@ -116,8 +120,10 @@ function TableCell({
 					itemData={itemData}
 					itemId={itemId}
 					options={options}
+					rootPropertyName={rootPropertyName}
 					type={inlineEditSettings.type}
 					value={value}
+					valuePath={valuePath}
 				/>
 			</ClayTable.Cell>
 		);
@@ -131,7 +137,9 @@ function TableCell({
 					itemData={itemData}
 					itemId={itemId}
 					options={options}
+					rootPropertyName={rootPropertyName}
 					value={value}
+					valuePath={valuePath}
 				/>
 			) : (
 				<span
@@ -139,7 +147,6 @@ function TableCell({
 					className="loading-animation loading-animation-sm"
 				/>
 			)}
-			{comment && <CommentRenderer>{comment}</CommentRenderer>}
 		</ClayTable.Cell>
 	);
 }

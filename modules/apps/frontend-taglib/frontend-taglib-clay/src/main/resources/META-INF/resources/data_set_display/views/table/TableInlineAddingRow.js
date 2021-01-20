@@ -30,6 +30,8 @@ function TableInlineAddingRow({fields, selectable}) {
 	} = useContext(DataSetDisplayContext);
 	const isMounted = useIsMounted();
 	const [loading, setLoading] = useState(false);
+	const itemHasChanged =
+		itemsChanges[0] && !!Object.keys(itemsChanges[0]).length;
 
 	return (
 		<ClayTable.Row>
@@ -45,55 +47,72 @@ function TableInlineAddingRow({fields, selectable}) {
 					);
 				}
 
-				const fieldName = Array.isArray(field.fieldName)
-					? field.fieldName[0]
-					: field.fieldName;
+				const valuePath = Array.isArray(field.fieldName)
+					? field.fieldName.map((property) =>
+							property === 'LANG'
+								? Liferay.ThemeDisplay.getDefaultLanguageId()
+								: property
+					  )
+					: [field.fieldName];
+
+				const rootPropertyName = valuePath[0];
+
+				const newItem = itemsChanges[0] || {};
 
 				return (
 					<ClayTable.Cell key={field.fieldName}>
 						{InputRenderer ? (
 							<InputRenderer
 								updateItem={(value) => {
-									updateItem(0, fieldName, value);
+									updateItem(
+										0,
+										rootPropertyName,
+										valuePath,
+										value
+									);
 								}}
 								value={
-									itemsChanges[0] &&
-									itemsChanges[0][fieldName]
+									newItem[rootPropertyName] &&
+									newItem[rootPropertyName].value
 								}
+								valuePath={rootPropertyName}
 							/>
 						) : null}
 					</ClayTable.Cell>
 				);
 			})}
 			<ClayTable.Cell className="data-set-item-actions-wrapper">
-				<ClayButtonWithIcon
-					className="mr-1"
-					displayType="secondary"
-					onClick={() => {
-						toggleItemInlineEdit(0);
-					}}
-					small
-					symbol="times-small"
-				/>
-				{loading ? (
-					<ClayButton disabled monospaced small>
-						<ClayLoadingIndicator small />
-					</ClayButton>
-				) : (
+				<div className="d-flex justify-content-end">
 					<ClayButtonWithIcon
-						disabled={loading}
+						className="mr-1"
+						disabled={!itemHasChanged}
+						displayType="secondary"
 						onClick={() => {
-							setLoading(true);
-							createInlineItem().finally(() => {
-								if (isMounted()) {
-									setLoading(false);
-								}
-							});
+							toggleItemInlineEdit(0);
 						}}
 						small
-						symbol="check"
+						symbol="times-small"
 					/>
-				)}
+					{loading ? (
+						<ClayButton disabled monospaced small>
+							<ClayLoadingIndicator small />
+						</ClayButton>
+					) : (
+						<ClayButtonWithIcon
+							disabled={loading || !itemHasChanged}
+							onClick={() => {
+								setLoading(true);
+								createInlineItem().finally(() => {
+									if (isMounted()) {
+										setLoading(false);
+									}
+								});
+							}}
+							small
+							symbol="check"
+						/>
+					)}
+				</div>
 			</ClayTable.Cell>
 		</ClayTable.Row>
 	);

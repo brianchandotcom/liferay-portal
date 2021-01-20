@@ -321,7 +321,7 @@ renderResponse.setTitle(headerTitle);
 					<aui:input label="title" name="title" />
 
 					<div>
-						<aui:input label="file-name" name="fileName" required="<%= (fileVersion != null) && Validator.isNotNull(fileVersion.getExtension()) %>" type='<%= dlEditFileEntryDisplayContext.isFileNameVisible() ? "text" : "hidden" %>' />
+						<aui:input label="file-name" name="fileName" type='<%= dlEditFileEntryDisplayContext.isFileNameVisible() ? "text" : "hidden" %>' />
 
 						<c:if test="<%= fileVersion != null %>">
 							<react:component
@@ -673,7 +673,6 @@ renderResponse.setTitle(headerTitle);
 		var formComponent = Liferay.Form.get('<portlet:namespace />fm');
 
 		formComponent.formValidator.validateField('<portlet:namespace />title');
-		formComponent.formValidator.validateField('<portlet:namespace />fileName');
 	}
 </script>
 

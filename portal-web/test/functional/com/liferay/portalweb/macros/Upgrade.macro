@@ -7,6 +7,8 @@ definition {
 			entryContent = "Alice's Adventures in Wonderland",
 			entryTitle = "Blogs Entry Title");
 
+		Pause(locator1 = "3000");
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-page");
 
 		AssertClick.assertTextClickAt(

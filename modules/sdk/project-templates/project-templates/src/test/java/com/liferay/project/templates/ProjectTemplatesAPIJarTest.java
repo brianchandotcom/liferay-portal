@@ -58,8 +58,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author Simon Jiang
  */
-public class ProjectTemplatesAPIJarTest
-	implements BaseProjectTemplatesTestCase {
+public class ProjectTemplatesAPIJarTest {
 
 	@Test
 	public void testReleaseApiJar() throws Exception {

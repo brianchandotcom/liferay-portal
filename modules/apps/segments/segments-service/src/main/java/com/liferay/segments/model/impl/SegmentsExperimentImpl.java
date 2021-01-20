@@ -99,6 +99,12 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 			SegmentsExperienceLocalServiceUtil.getSegmentsExperience(
 				getSegmentsExperienceId());
 
+		if (segmentsExperience.getSegmentsEntryId() ==
+				SegmentsEntryConstants.ID_DEFAULT) {
+
+			return SegmentsEntryConstants.getDefaultSegmentsEntryName(locale);
+		}
+
 		SegmentsEntry segmentsEntry =
 			SegmentsEntryLocalServiceUtil.getSegmentsEntry(
 				segmentsExperience.getSegmentsEntryId());

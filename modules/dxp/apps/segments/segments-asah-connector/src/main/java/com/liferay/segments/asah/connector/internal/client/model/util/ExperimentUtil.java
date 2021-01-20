@@ -154,11 +154,17 @@ public class ExperimentUtil {
 			experiment.setDXPExperienceName(segmentsExperience.getName(locale));
 
 			SegmentsEntry segmentsEntry =
-				segmentsEntryLocalService.getSegmentsEntry(
+				segmentsEntryLocalService.fetchSegmentsEntry(
 					segmentsExperience.getSegmentsEntryId());
 
-			experiment.setDXPSegmentId(segmentsEntry.getSegmentsEntryKey());
-			experiment.setDXPSegmentName(segmentsEntry.getName(locale));
+			if (segmentsEntry == null) {
+				experiment.setDXPSegmentId(SegmentsEntryConstants.KEY_DEFAULT);
+				experiment.setDXPSegmentName(defaultSegmentsEntryName);
+			}
+			else {
+				experiment.setDXPSegmentId(segmentsEntry.getSegmentsEntryKey());
+				experiment.setDXPSegmentName(segmentsEntry.getName(locale));
+			}
 		}
 
 		return experiment;

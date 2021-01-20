@@ -103,11 +103,11 @@ public class ProjectTemplatesAPIJarTest {
 
 		_assertTLDClasses("/taglib/tag/tei-class", classesPath, classes);
 
-		Set<Path> sevicesPaths = _getServicesPaths(classesDir.toPath());
+		Set<Path> servicesPaths = _getServicesPaths(classesDir.toPath());
 
-		Stream<Path> seviceFilesStream = sevicesPaths.stream();
+		Stream<Path> serviceFilesStream = servicesPaths.stream();
 
-		List<String> serviceClassNames = seviceFilesStream.map(
+		List<String> serviceClassNames = serviceFilesStream.map(
 			filePath -> {
 				try {
 					return Files.readAllLines(filePath);

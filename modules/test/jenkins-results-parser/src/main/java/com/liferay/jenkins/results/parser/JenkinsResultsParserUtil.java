@@ -101,6 +101,8 @@ import org.json.JSONObject;
  */
 public class JenkinsResultsParserUtil {
 
+	// Test comment
+
 	public static final String[] CACHED_REPOSITORIES = {
 		"liferay-jenkins-ee", "liferay-jenkins-results-parser-samples-ee",
 		"liferay-portal"

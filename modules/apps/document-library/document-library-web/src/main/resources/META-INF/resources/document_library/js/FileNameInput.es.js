@@ -49,7 +49,6 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 				'has-error': required && !inputValue,
 				'has-warning': valueChanged && inputValue,
 			})}
-			className={valueChanged ? 'has-warning' : ''}
 		>
 			<label htmlFor={inputId}>
 				{Liferay.Language.get('file-name')}

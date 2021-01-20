@@ -522,14 +522,12 @@ public class SegmentsExperienceLocalServiceImpl
 	private List<SegmentsExperience> _getSegmentExperiences(
 		SegmentsExperience segmentsExperience) {
 
-		List<SegmentsExperience> aboveSegmentsExperiences = new ArrayList<>(
+		List<SegmentsExperience> aboveSegmentsExperiences =
 			segmentsExperiencePersistence.findByG_C_C_GtP(
 				segmentsExperience.getGroupId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),
-				segmentsExperience.getPriority()));
-
-		Collections.reverse(aboveSegmentsExperiences);
+				segmentsExperience.getPriority());
 
 		List<SegmentsExperience> belowSegmentsExperiences =
 			segmentsExperiencePersistence.findByG_C_C_LtP(

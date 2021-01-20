@@ -26,6 +26,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -213,18 +214,38 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		List<? extends ContentDashboardItemType> contentDashboardItemTypes =
 			_contentDashboardAdminDisplayContext.getContentDashboardItemTypes();
 
-		if (ListUtil.isNotEmpty(contentDashboardItemTypes)) {
-			Stream<? extends ContentDashboardItemType>
-				contentDashboardItemTypesStream =
-					contentDashboardItemTypes.stream();
+		for (ContentDashboardItemType contentDashboardItemType :
+				contentDashboardItemTypes) {
 
 			labelItemListWrapper.add(
 				labelItem -> {
 					PortletURL portletURL = PortletURLUtil.clone(
 						currentURLObj, liferayPortletResponse);
 
+					InfoItemReference infoItemReference =
+						contentDashboardItemType.getInfoItemReference();
+					Stream<? extends ContentDashboardItemType> stream =
+						contentDashboardItemTypes.stream();
+
 					portletURL.setParameter(
-						"contentDashboardItemTypePayload", (String)null);
+						"contentDashboardItemTypePayload",
+						stream.filter(
+							curContentDashboardItemType -> {
+								InfoItemReference curInfoItemReference =
+									curContentDashboardItemType.
+										getInfoItemReference();
+
+								return !Objects.equals(
+									curInfoItemReference.getClassPK(),
+									infoItemReference.getClassPK());
+							}
+						).map(
+							curContentDashboardItemType ->
+								curContentDashboardItemType.toJSONString(
+									_locale)
+						).toArray(
+							String[]::new
+						));
 
 					labelItem.putData(
 						"removeLabelURL",
@@ -234,17 +255,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					labelItem.setLabel(
 						StringBundler.concat(
 							LanguageUtil.get(httpServletRequest, "subtype"),
-							StringPool.COLON,
-							contentDashboardItemTypesStream.map(
-								contentDashboardItemType ->
-									contentDashboardItemType.getFullLabel(
-										_locale)
-							).map(
-								String::valueOf
-							).collect(
-								Collectors.joining(
-									StringPool.COMMA + StringPool.SPACE)
-							)));
+							": ",
+							contentDashboardItemType.getFullLabel(_locale)));
 				});
 		}
 

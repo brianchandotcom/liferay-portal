@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_ASSET_EDIT</td>
+	<td>//a[contains(@class,'asset-title')][normalize-space(text())='${key_assetTitle}']/following-sibling::span//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

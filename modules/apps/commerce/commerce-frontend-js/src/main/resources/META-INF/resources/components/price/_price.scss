@@ -1,5 +1,5 @@
 .price-value {
-	font-weight: bold;
+	font-weight: 500;
 	margin-right: $spacer;
 
 	&:last-of-type {
@@ -7,12 +7,16 @@
 	}
 
 	&-big {
-		font-size: 18px;
+		font-size: 1.15rem;
 	}
 
 	&-discount,
 	&-final {
 		color: $danger-primary;
+
+		&:not(.hide) + .price-value {
+			text-decoration: line-through;
+		}
 	}
 
 	&-inactive {

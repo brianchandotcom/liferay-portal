@@ -60,11 +60,11 @@ if (!showDiscount) {
 
 <c:choose>
 	<c:when test="<%= displayOneLine %>">
+		<span class="price-value <%= (Validator.isNotNull(formattedFinalPrice) && formattedFinalPrice.equals(formattedPrice)) ? "" : "price-value-inactive mr-2" %>">
+			<%= formattedPrice %>
+		</span>
 		<span class="price-value price-value-final <%= (Validator.isNotNull(formattedFinalPrice) && !formattedFinalPrice.equals(formattedPrice)) ? "" : "hide" %>">
 			<%= formattedFinalPrice %>
-		</span>
-		<span class="price-value <%= (Validator.isNotNull(formattedFinalPrice) && formattedFinalPrice.equals(formattedPrice)) ? "" : "price-value-inactive" %>">
-			<%= formattedPrice %>
 		</span>
 	</c:when>
 	<c:otherwise>

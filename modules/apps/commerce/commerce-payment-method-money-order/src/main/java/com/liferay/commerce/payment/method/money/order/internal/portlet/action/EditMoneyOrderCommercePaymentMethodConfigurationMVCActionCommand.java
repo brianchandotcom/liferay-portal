@@ -18,6 +18,7 @@ import com.liferay.commerce.payment.method.money.order.internal.constants.MoneyO
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -25,10 +26,12 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -80,12 +83,25 @@ public class EditMoneyOrderCommercePaymentMethodConfigurationMVCActionCommand
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
+		String showMessagePage = ParamUtil.getString(
+			actionRequest, "settings--showMessagePage--");
+
+		modifiableSettings.setValue("showMessagePage", showMessagePage);
+
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
-			actionRequest, "settings--");
+			actionRequest, "settings--messageAsLocalizedXML_");
+
+		Map<String, String> messageMap = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
-			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+			messageMap.put(entry.getKey(), entry.getValue());
 		}
+
+		String messageAsLocalizedXML = LocalizationUtil.getXml(
+			messageMap, StringPool.BLANK, "messageAsLocalizedXML");
+
+		modifiableSettings.setValue(
+			"messageAsLocalizedXML", messageAsLocalizedXML);
 
 		modifiableSettings.store();
 	}

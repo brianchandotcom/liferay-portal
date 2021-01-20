@@ -386,8 +386,9 @@ public class PriceTag extends IncludeTag {
 
 				BigDecimal promoPrice = unitPromoPriceCommerceMoney.getPrice();
 
-				if (promoPrice.compareTo(unitPriceCommerceMoney.getPrice()) <
-						0) {
+				if ((promoPrice != null) &&
+					(promoPrice.compareTo(unitPriceCommerceMoney.getPrice()) <
+						0)) {
 
 					_formattedPromoPrice = unitPromoPriceCommerceMoney.format(
 						locale);

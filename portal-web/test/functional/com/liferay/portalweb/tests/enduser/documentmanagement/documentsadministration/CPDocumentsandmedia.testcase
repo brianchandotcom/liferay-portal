@@ -661,29 +661,6 @@ definition {
 			locationFieldName = "true");
 	}
 
-	@description = "This is a use case for LPS-60405."
-	@priority = "5"
-	test MoveDocumentToSameFolder {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.moveToFolderCP(
-			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "Home");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(
-			dmDocumentSize = "259 B",
-			dmDocumentTitle = "DM Document Title");
-	}
-
 	@priority = "4"
 	test MoveFolderToFolder {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

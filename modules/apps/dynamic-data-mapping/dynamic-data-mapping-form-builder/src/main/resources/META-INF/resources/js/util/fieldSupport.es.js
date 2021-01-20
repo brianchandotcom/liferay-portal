@@ -371,7 +371,10 @@ export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
 				...value,
 				[editingLanguageId]: [
 					...value[editingLanguageId].map((option) => {
-						if (option.edited) {
+						if (
+							typeof option.edited === 'undefined' ||
+							option.edited
+						) {
 							return option;
 						}
 

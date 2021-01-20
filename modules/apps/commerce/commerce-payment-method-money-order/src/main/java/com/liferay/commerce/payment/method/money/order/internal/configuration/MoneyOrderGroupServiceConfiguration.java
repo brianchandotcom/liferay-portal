@@ -17,7 +17,6 @@ package com.liferay.commerce.payment.method.money.order.internal.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Andrea Di Giorgi
@@ -33,7 +32,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 public interface MoneyOrderGroupServiceConfiguration {
 
 	@Meta.AD(name = "message", required = false)
-	public LocalizedValuesMap message();
+	public String message();
 
 	@Meta.AD(name = "show-message-page", required = false)
 	public boolean showMessagePage();

@@ -1294,13 +1294,25 @@ definition {
 			AssertElementPresent(locator1 = "//a[contains(@class,'btn')][contains(@href,'liferay.com')]");
 		}
 
-		ContentPages.clickPencil();
+		task ("Assert the mapped web content is shown in Contents panel") {
+			ContentPages.clickPencil();
 
-		PageEditor.gotoTab(tabName = "Contents");
+			PageEditor.gotoTab(tabName = "Contents");
 
-		AssertVisible(
-			key_webContentTitle = "liferay.com",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CONTENTS_LIST_TITLE");
+			AssertVisible(
+				key_webContentTitle = "liferay.com",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_CONTENTS_LIST_TITLE");
+		}
+
+		task ("Assert the actions of mapped web content in Contents panel") {
+			Click.waitForMenuToggleJSClick(
+				key_rowEntry = "liferay.com",
+				locator1 = "Icon#FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS");
+
+			for (var menuItem : list "Edit,Permissions,View Usages") {
+				MenuItem.viewVisible(menuItem = "${menuItem}");
+			}
+		}
 	}
 
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with multiple itemTypes, the Item Type label will be shown in mapping label."

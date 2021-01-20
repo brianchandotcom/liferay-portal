@@ -229,9 +229,9 @@ public abstract class BaseSegmentsEntryProvider
 			segmentsEntry, Criteria.Type.CONTEXT);
 
 		if (context != null) {
-			if (Validator.isNotNull(contextFilterString)) {
-				boolean matchesContext = false;
+			boolean matchesContext = false;
 
+			if (Validator.isNotNull(contextFilterString)) {
 				try {
 					matchesContext = oDataMatcher.matches(
 						contextFilterString, context);
@@ -254,7 +254,7 @@ public abstract class BaseSegmentsEntryProvider
 			}
 
 			if (!GetterUtil.getBoolean(context.get(Context.SIGNED_IN))) {
-				return false;
+				return matchesContext;
 			}
 		}
 

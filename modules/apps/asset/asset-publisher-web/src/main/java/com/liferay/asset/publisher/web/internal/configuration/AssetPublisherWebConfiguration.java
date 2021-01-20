@@ -30,9 +30,24 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AssetPublisherWebConfiguration {
 
 	/**
+	 * Set the cron expression to schedule when CheckAssetEntryMessageListener
+	 * will run to check for new assets. Users will be notified via email of
+	 * new assets. If it is empty or invalid, the check interval field will be
+	 * used instead.
+	 *
+	 * @return cron expression to schedule when to check for new assets.
+	 */
+	@Meta.AD(
+		deflt = "", description = "check-cron-expression-key-description",
+		name = "check-cron-expression", required = false
+	)
+	public String checkCronExpression();
+
+	/**
 	 * Set the interval in hours on how often CheckAssetEntryMessageListener
-	 * will run to check for new assets. Users will be notified via email of new
-	 * assets.
+	 * will run to check for new assets. Users will be notified via email of
+	 * new assets. This interval will be ignored in case of configuring a valid
+	 * cron expression.
 	 *
 	 * @return interval in hours on how often to check for new assets.
 	 */

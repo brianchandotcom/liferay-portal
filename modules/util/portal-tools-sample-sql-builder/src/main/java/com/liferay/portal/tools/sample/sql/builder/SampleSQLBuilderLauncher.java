@@ -58,8 +58,7 @@ public class SampleSQLBuilderLauncher {
 
 		try {
 			InstanceFactory.newInstance(
-				classLoader,
-				"com.liferay.portal.tools.sample.sql.builder.SampleSQLBuilder");
+				classLoader, SampleSQLBuilder.class.getName());
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

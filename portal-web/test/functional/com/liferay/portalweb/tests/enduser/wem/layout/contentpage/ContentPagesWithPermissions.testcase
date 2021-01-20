@@ -430,18 +430,34 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		ContentPages.clickPencil();
+		task ("Assert can access to web content editor via Asset Publisher in view mode") {
+			MouseOver(
+				key_assetTitle = "WC WebContent Title 3",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
-		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-			PageEditor.gotoTab(tabName = "Contents");
-
-			LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
-				menuItem = "Edit",
-				rowEntry = "${webContentTitle}");
+			Click.clickNoMouseOver(
+				key_assetTitle = "WC WebContent Title 3",
+				locator1 = "AP#SPECIFIC_ASSET_EDIT");
 
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+		}
+
+		task ("Assert can access to web content editor via Contents panel in edit mode") {
+			ContentPages.clickPencil();
+
+			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+				PageEditor.gotoTab(tabName = "Contents");
+
+				LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+					menuItem = "Edit",
+					rowEntry = "${webContentTitle}");
+
+				AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+				Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+			}
 		}
 	}
 

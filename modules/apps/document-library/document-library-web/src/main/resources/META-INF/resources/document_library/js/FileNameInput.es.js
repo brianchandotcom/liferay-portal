@@ -43,11 +43,14 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 	const [inputValue, setInputValue] = useState(initialValue);
 	const valueChanged = initialValue != inputValue;
 
+	const showWarning = required ? valueChanged && inputValue : valueChanged;
+	const showError = required && !inputValue;
+
 	return (
 		<ClayForm.Group
 			className={classNames({
-				'has-error': required && !inputValue,
-				'has-warning': valueChanged && inputValue,
+				'has-error': showError,
+				'has-warning': showWarning,
 			})}
 		>
 			<label htmlFor={inputId}>
@@ -66,12 +69,12 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 				value={inputValue}
 			/>
 
-			{required && !inputValue && (
+			{showError && (
 				<Feedback
 					message={Liferay.Language.get('this-field-is-required')}
 				/>
 			)}
-			{inputValue && valueChanged && (
+			{showWarning && (
 				<Feedback
 					message={Liferay.Language.get(
 						'warning-changing-file-name-will-affect-existing-links-to-this-document'

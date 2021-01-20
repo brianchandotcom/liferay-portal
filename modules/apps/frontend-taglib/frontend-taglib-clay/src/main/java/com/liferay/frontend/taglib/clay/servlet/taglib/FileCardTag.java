@@ -27,6 +27,14 @@ public class FileCardTag extends VerticalCardTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
+		if (getIcon() == null) {
+			setIcon("documents-and-media");
+		}
+
+		if (getStickerIcon() == null) {
+			setStickerIcon("document-default");
+		}
+
 		return super.doStartTag();
 	}
 

@@ -43,10 +43,6 @@ public class VerticalCardTag extends BaseCardTag {
 			setIcon("documents-and-media");
 		}
 
-		if (getStickerIcon() == null) {
-			setStickerIcon("document-default");
-		}
-
 		return super.doStartTag();
 	}
 
@@ -239,11 +235,18 @@ public class VerticalCardTag extends BaseCardTag {
 		if (_showSticker == null) {
 			VerticalCard verticalCard = getVerticalCard();
 
-			if (verticalCard != null) {
+			if ((verticalCard != null) &&
+				(verticalCard.isStickerShown() != null)) {
+
 				return verticalCard.isStickerShown();
 			}
+			else if (Validator.isNotNull(getStickerImageSrc()) ||
+					 Validator.isNotNull(getStickerIcon())) {
 
-			return true;
+				return true;
+			}
+
+			return false;
 		}
 
 		return _showSticker;

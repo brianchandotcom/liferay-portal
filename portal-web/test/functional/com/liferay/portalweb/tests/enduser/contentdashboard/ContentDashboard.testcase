@@ -387,7 +387,9 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		ContentDashboard.filterByCategory(filterOption = "Categories" categoryName = "Category Name");
+		ContentDashboard.filterByCategory(
+			categoryName = "Category Name",
+			filterOption = "Categories");
 
 		Pause(locator1 = "3000");
 
@@ -432,7 +434,7 @@ definition {
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
 			structureName = "Subtype1");
-		
+
 		DataEngine.addFields(fieldNameList = "Link to Page");
 
 		WebContentStructures.saveCP(structureName = "Subtype1");
@@ -444,7 +446,7 @@ definition {
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
 			structureName = "Subtype2");
-		
+
 		DataEngine.addFields(fieldNameList = "Link to Page");
 
 		WebContentStructures.saveCP(structureName = "Subtype2");
@@ -499,9 +501,13 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		ContentDashboard.filterByCategory(filterOption = "Categories", categoryName = "Category 1");
+		ContentDashboard.filterByCategory(
+			categoryName = "Category 1",
+			filterOption = "Categories");
 
-		ContentDashboard.filterBySubtype(filterOption = "Subtype", subtypeName = "Subtype1");
+		ContentDashboard.filterBySubtype(
+			filterOption = "Subtype",
+			subtypeName = "Subtype1");
 
 		Pause(locator1 = "3000");
 
@@ -512,7 +518,7 @@ definition {
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
 			title = "WC Title 1");
-		
+
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
 			title = "WC Title 2");
@@ -535,7 +541,7 @@ definition {
 			tagNameList = "tagnumber1,tagnumber2",
 			webContentContent = "Web Content With Tag1 and Tag2",
 			webContentTitle = "WC Title 1");
-		
+
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithTagCP(
@@ -550,9 +556,13 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByTag(filterOption = "Tags", tagName = "tagnumber1");
+		ContentDashboard.filterByTag(
+			filterOption = "Tags",
+			tagName = "tagnumber1");
 
-		ContentDashboard.filterByTag(filterOption = "Tags", tagName = "tagnumber2");
+		ContentDashboard.filterByTag(
+			filterOption = "Tags",
+			tagName = "tagnumber2");
 
 		Pause(locator1 = "3000");
 
@@ -583,7 +593,7 @@ definition {
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
 			title = "WC Title 1");
-		
+
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
 			title = "WC Title 2");
@@ -790,7 +800,9 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		ContentDashboard.filterByTag(filterOption = "Tags", tagName = "tag1");
+		ContentDashboard.filterByTag(
+			filterOption = "Tags",
+			tagName = "tag1");
 
 		Pause(locator1 = "3000");
 

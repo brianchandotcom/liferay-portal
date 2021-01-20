@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.sort.display.context;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -114,16 +113,7 @@ public class SortDisplayBuilder {
 			_language.get(
 				_portal.getHttpServletRequest(_renderRequest), label));
 		sortTermDisplayContext.setField(field);
-
-		boolean selected = false;
-
-		if (_selectedFields.contains(field) ||
-			(field.equals(StringPool.BLANK) && _selectedFields.isEmpty())) {
-
-			selected = true;
-		}
-
-		sortTermDisplayContext.setSelected(selected);
+		sortTermDisplayContext.setSelected(_selectedFields.contains(field));
 
 		return sortTermDisplayContext;
 	}

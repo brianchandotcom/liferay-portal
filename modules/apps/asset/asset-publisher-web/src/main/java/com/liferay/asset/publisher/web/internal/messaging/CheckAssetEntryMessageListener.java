@@ -16,6 +16,8 @@ package com.liferay.asset.publisher.web.internal.messaging;
 
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -59,9 +62,26 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			assetPublisherWebConfiguration.checkInterval(), TimeUnit.HOUR);
+		Trigger trigger = null;
+
+		String checkCronExpression =
+			assetPublisherWebConfiguration.checkCronExpression();
+
+		if (Validator.isNotNull(checkCronExpression)) {
+			try {
+				trigger = _triggerFactory.createTrigger(
+					className, className, null, null, checkCronExpression);
+			}
+			catch (RuntimeException runtimeException) {
+				_log.error(runtimeException, runtimeException);
+			}
+		}
+
+		if (trigger == null) {
+			trigger = _triggerFactory.createTrigger(
+				className, className, null, null,
+				assetPublisherWebConfiguration.checkInterval(), TimeUnit.HOUR);
+		}
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -79,6 +99,9 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		_assetEntriesCheckerUtil.checkAssetEntries();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CheckAssetEntryMessageListener.class);
 
 	@Reference
 	private AssetEntriesCheckerHelper _assetEntriesCheckerUtil;

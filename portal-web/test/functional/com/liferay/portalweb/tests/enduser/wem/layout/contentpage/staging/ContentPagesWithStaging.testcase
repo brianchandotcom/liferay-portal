@@ -333,6 +333,16 @@ definition {
 			value1 = "Most Viewed Assets");
 	}
 
+	@description = "This is a test for LPS-97189. Editing a web content in the contents panel in a content page editor survives staging."
+	@ignore = "true"
+	@priority = "2"
+	test EditWebContentViaContentsPanel {
+		property portal.upstream = "false";
+
+		// TODO LPS-123456 EditWebContentViaContentsPanel pending implementation
+
+	}
+
 	@description = "Published content pages should remain if staging is deactivated."
 	@priority = "4"
 	test DeactivateStagingAfterPublish {

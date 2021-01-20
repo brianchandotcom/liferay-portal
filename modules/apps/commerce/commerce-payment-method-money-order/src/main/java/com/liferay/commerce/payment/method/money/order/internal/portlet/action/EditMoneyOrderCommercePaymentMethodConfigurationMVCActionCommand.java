@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -80,12 +82,24 @@ public class EditMoneyOrderCommercePaymentMethodConfigurationMVCActionCommand
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
+		String showMessagePage = ParamUtil.getString(
+			actionRequest, "settings--showMessagePage--");
+
+		modifiableSettings.setValue("showMessagePage", showMessagePage);
+
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
-			actionRequest, "settings--");
+			actionRequest, "settings--message_");
+
+		Map<String, String> messageMap = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
-			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+			messageMap.put(entry.getKey(), entry.getValue());
 		}
+
+		String messageAsXML = LocalizationUtil.getXml(
+			messageMap, "", "message");
+
+		modifiableSettings.setValue("message", messageAsXML);
 
 		modifiableSettings.store();
 	}

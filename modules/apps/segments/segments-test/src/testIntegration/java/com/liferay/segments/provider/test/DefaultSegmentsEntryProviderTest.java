@@ -217,7 +217,7 @@ public class DefaultSegmentsEntryProviderTest {
 		_contextSegmentsCriteriaContributor.contribute(
 			criteria, "(languageId eq 'en')", Criteria.Conjunction.AND);
 
-		SegmentsTestUtil.addSegmentsEntry(
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria),
 			User.class.getName());
 
@@ -235,7 +235,8 @@ public class DefaultSegmentsEntryProviderTest {
 			_group.getGroupId(), User.class.getName(), defaultUser.getUserId(),
 			context);
 
-		Assert.assertArrayEquals(new long[0], segmentsEntryIds);
+		Assert.assertArrayEquals(
+			new long[] {segmentsEntry.getSegmentsEntryId()}, segmentsEntryIds);
 	}
 
 	@Test

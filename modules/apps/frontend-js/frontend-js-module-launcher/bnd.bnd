@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Frontend JS Module Launcher
+Bundle-SymbolicName: com.liferay.frontend.js.module.launcher
+Bundle-Version: 1.0.0
+Liferay-JS-Resources-Top-Head: /webpack_federation.js
+Web-ContextPath: /frontend-js-module-launcher

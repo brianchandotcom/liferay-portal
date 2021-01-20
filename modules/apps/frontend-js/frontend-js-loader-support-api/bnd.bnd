@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend JS Loader Support API
-Bundle-SymbolicName: com.liferay.frontend.js.loader.support.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.frontend.js.loader.support

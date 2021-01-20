@@ -862,18 +862,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	private void _checkPortletGroupDefaultActions(Set<String> actions) {
-		if (actions.isEmpty()) {
-			actions.add(ActionKeys.VIEW);
-		}
-	}
-
-	private void _checkPortletGuestDefaultActions(Set<String> actions) {
-		if (actions.isEmpty()) {
-			actions.add(ActionKeys.VIEW);
-		}
-	}
-
 	private void _checkPortletGuestUnsupportedActions(Set<String> actions) {
 		actions.add(ActionKeys.CONFIGURATION);
 		actions.add(ActionKeys.PERMISSIONS);
@@ -999,11 +987,19 @@ public class ResourceActionsImpl implements ResourceActions {
 				portletActions.add(ActionKeys.ACCESS_IN_CONTROL_PANEL);
 			}
 
-			_checkPortletGroupDefaultActions(
-				portletResourceActionsBag.getGroupDefaultActions());
+			Set<String> groupDefaultActions =
+				portletResourceActionsBag.getGroupDefaultActions();
 
-			_checkPortletGuestDefaultActions(
-				portletResourceActionsBag.getGuestDefaultActions());
+			if (groupDefaultActions.isEmpty()) {
+				groupDefaultActions.add(ActionKeys.VIEW);
+			}
+
+			Set<String> guestDefaultActions =
+				portletResourceActionsBag.getGuestDefaultActions();
+
+			if (guestDefaultActions.isEmpty()) {
+				guestDefaultActions.add(ActionKeys.VIEW);
+			}
 
 			_checkPortletGuestUnsupportedActions(
 				portletResourceActionsBag.getGuestUnsupportedActions());

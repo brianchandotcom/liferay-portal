@@ -1257,9 +1257,9 @@ definition {
 			value1 = "expired");
 	}
 
-	@description = "This is a test for LPS-96794. Mapped Web Content will appear in the sidebar in a Page Editor's edit mode."
+	@description = "This is a test for LPS-96794 and LPS-99686. Mapped Web Content will appear in the sidebar in a Page Editor's edit mode."
 	@priority = "5"
-	test MapWebContentURLToLinkFragment {
+	test MapWebContentTitleToLinkFragment {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(

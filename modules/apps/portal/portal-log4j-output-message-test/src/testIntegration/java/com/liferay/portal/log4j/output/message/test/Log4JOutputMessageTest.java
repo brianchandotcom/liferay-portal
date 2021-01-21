@@ -82,8 +82,42 @@ public class Log4JOutputMessageTest {
 				(Objects.equals("TEXT_FILE", appender.getName()) ||
 				 Objects.equals("XML_FILE", appender.getName()))) {
 
-				logger.addAppender(
-					_createFileAppender(appender, tempLogFileDir));
+				RollingFileAppender portalRollingFileAppender =
+					(RollingFileAppender)appender;
+
+				TimeBasedRollingPolicy portalTimeBasedRollingPolicy =
+					(TimeBasedRollingPolicy)
+						portalRollingFileAppender.getRollingPolicy();
+
+				String portalFileNamePattern =
+					portalTimeBasedRollingPolicy.getFileNamePattern();
+
+				TimeBasedRollingPolicy testTimeBasedRollingPolicy =
+					new TimeBasedRollingPolicy();
+
+				testTimeBasedRollingPolicy.setFileNamePattern(
+					StringBundler.concat(
+						StringUtil.replace(
+							tempLogFileDir.toString(), '\\', '/'),
+						StringPool.SLASH,
+						StringUtil.extractLast(
+							portalFileNamePattern, StringPool.SLASH)));
+
+				RollingFileAppender testRollingFileAppender =
+					new RollingFileAppender();
+
+				testRollingFileAppender.setLayout(
+					portalRollingFileAppender.getLayout());
+				testRollingFileAppender.setRollingPolicy(
+					testTimeBasedRollingPolicy);
+
+				testRollingFileAppender.activateOptions();
+
+				logger.addAppender(testRollingFileAppender);
+
+				_logFiles.put(
+					portalRollingFileAppender.getName(),
+					new File(testRollingFileAppender.getFile()));
 			}
 			else if ((appender instanceof ConsoleAppender) &&
 					 Objects.equals("CONSOLE", appender.getName())) {
@@ -118,44 +152,6 @@ public class Log4JOutputMessageTest {
 		_testLogOutput("WARN");
 		_testLogOutput("ERROR");
 		_testLogOutput("FATAL");
-	}
-
-	private static FileAppender _createFileAppender(
-		Appender appender, File tempLogFileDir) {
-
-		RollingFileAppender portalRollingFileAppender =
-			(RollingFileAppender)appender;
-
-		TimeBasedRollingPolicy portalTimeBasedRollingPolicy =
-			(TimeBasedRollingPolicy)
-				portalRollingFileAppender.getRollingPolicy();
-
-		String portalFileNamePattern =
-			portalTimeBasedRollingPolicy.getFileNamePattern();
-
-		TimeBasedRollingPolicy testTimeBasedRollingPolicy =
-			new TimeBasedRollingPolicy();
-
-		testTimeBasedRollingPolicy.setFileNamePattern(
-			StringBundler.concat(
-				StringUtil.replace(tempLogFileDir.toString(), '\\', '/'),
-				StringPool.SLASH,
-				StringUtil.extractLast(
-					portalFileNamePattern, StringPool.SLASH)));
-
-		RollingFileAppender testRollingFileAppender = new RollingFileAppender();
-
-		testRollingFileAppender.setLayout(
-			portalRollingFileAppender.getLayout());
-		testRollingFileAppender.setRollingPolicy(testTimeBasedRollingPolicy);
-
-		testRollingFileAppender.activateOptions();
-
-		_logFiles.put(
-			portalRollingFileAppender.getName(),
-			new File(testRollingFileAppender.getFile()));
-
-		return testRollingFileAppender;
 	}
 
 	private void _assertTextLog(

@@ -209,7 +209,7 @@ public class CommerceDiscountLocalServiceTest {
 	}
 
 	@Test
-	public void testRetrieveCorrectDiscountByHierarchy() throws Exception {
+	public void testGetCorrectDiscountByHierarchy() throws Exception {
 		frutillaRule.scenario(
 			"When multiple discounts are defined for the same target the " +
 				"highest in the hierarchy shall be taken"
@@ -292,7 +292,7 @@ public class CommerceDiscountLocalServiceTest {
 	}
 
 	@Test
-	public void testRetrieveOrderDiscountByHierarchy() throws Exception {
+	public void testGetOrderCommerceDiscountByHierarchy1() throws Exception {
 		frutillaRule.scenario(
 			"When multiple discounts are defined for the same target the " +
 				"highest in the hierarchy shall be taken"
@@ -452,7 +452,7 @@ public class CommerceDiscountLocalServiceTest {
 	}
 
 	@Test
-	public void testRetrieveOrderDiscountByHierarchy1() throws Exception {
+	public void testGetOrderCommerceDiscountByHierarchy2() throws Exception {
 		frutillaRule.scenario(
 			"A discount is qualified by an account and a channel is not " +
 				"applicable to the same account on another channel"
@@ -487,7 +487,7 @@ public class CommerceDiscountLocalServiceTest {
 	}
 
 	@Test
-	public void testRetrieveOrderDiscountByHierarchy2() throws Exception {
+	public void testGetOrderCommerceDiscountByHierarchy3() throws Exception {
 		frutillaRule.scenario(
 			"A discount is qualified by an account group and a channel is " +
 				"not applicable to the same account group on another channel"
@@ -526,7 +526,7 @@ public class CommerceDiscountLocalServiceTest {
 	}
 
 	@Test
-	public void testRetrieveProductDiscountByHierarchy1() throws Exception {
+	public void testGetProductCommerceDiscountByHierarchy1() throws Exception {
 		frutillaRule.scenario(
 			"A discount is qualified by an account and a channel is not " +
 				"applicable to the same account on another channel"
@@ -560,7 +560,7 @@ public class CommerceDiscountLocalServiceTest {
 	}
 
 	@Test
-	public void testRetrieveProductDiscountByHierarchy2() throws Exception {
+	public void testGetProductCommerceDiscountByHierarchy2() throws Exception {
 		frutillaRule.scenario(
 			"A discount is qualified by an account group and a channel is " +
 				"not applicable to the same account group on another channel"

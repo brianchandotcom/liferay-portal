@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPers
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
@@ -57,13 +58,16 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -270,6 +274,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			}
 		}
 
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
 		DDMUserPersonalFolderItemSelectorCriterion
 			ddmUserPersonalFolderItemSelectorCriterion =
 				new DDMUserPersonalFolderItemSelectorCriterion(
@@ -279,19 +285,29 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			setDesiredItemSelectorReturnTypes(
 				new FileEntryItemSelectorReturnType());
 
-		FileItemSelectorCriterion fileItemSelectorCriterion =
-			new FileItemSelectorCriterion();
+		itemSelectorCriteria.add(ddmUserPersonalFolderItemSelectorCriterion);
 
-		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
+		String portletNamespace =
+			ddmFormFieldRenderingContext.getPortletNamespace();
+
+		if (!StringUtil.startsWith(
+				portletNamespace,
+				portal.getPortletNamespace(
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM))) {
+
+			FileItemSelectorCriterion fileItemSelectorCriterion =
+				new FileItemSelectorCriterion();
+
+			fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				new FileEntryItemSelectorReturnType());
+
+			itemSelectorCriteria.add(fileItemSelectorCriterion);
+		}
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			group, groupId,
-			ddmFormFieldRenderingContext.getPortletNamespace() +
-				"selectDocumentLibrary",
-			ddmUserPersonalFolderItemSelectorCriterion,
-			fileItemSelectorCriterion);
+			group, groupId, portletNamespace + "selectDocumentLibrary",
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 
 		return itemSelectorURL.toString();
 	}

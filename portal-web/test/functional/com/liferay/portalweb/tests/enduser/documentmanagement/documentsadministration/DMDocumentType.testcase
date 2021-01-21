@@ -1,0 +1,62 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMDocumentType.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This ensures that the user can delete fields within a document type ."
+	@ignore = "true"
+	@priority = "3"
+	test DeleteFields {
+
+		// TODO LPS-126181 DeleteFields pending implementation
+
+	}
+
+	@description = "This ensures that the user can create a document using edited image field inside document type."
+	@ignore = "true"
+	@priority = "4"
+	test ViewDocumentwithEditedImageField {
+
+		// TODO LPS-126181 ViewDocumentwithEditedImageField pending implementation
+	}
+
+	@description = "This ensures that the user can create a document using edited text field inside document type."
+	@ignore = "true"
+	@priority = "4"
+	test ViewDocumentwithEditedTextField {
+
+		// TODO LPS-126181 ViewDocumentwithEditedTextField pending implementation
+	}
+
+	@description = "This ensures that the user can create a document using edited upload field inside document type."
+	@ignore = "true"
+	@priority = "4"
+	test ViewDocumentwithEditedUploadField {
+
+		// TODO LPS-126181 ViewDocumentwithEditedUploadField pending implementation
+	}
+
+}

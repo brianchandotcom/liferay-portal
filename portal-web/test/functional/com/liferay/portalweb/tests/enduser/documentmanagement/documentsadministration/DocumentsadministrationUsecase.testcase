@@ -1207,6 +1207,9 @@ definition {
 	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
 	@priority = "5"
 	test ValidateFileNameRestrictions {
+
+		// TODO LPS-126181 ValidateFileNameRestrictions pending implementation(14.07, 14.08 and 15.04)
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -1501,6 +1504,15 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This ensures that the user can create document viewable only by the owner."
+	@ignore = "true"
+	@priority = "4"
+	test ViewDocumentWithOwnerAccessOnly {
+
+		// TODO LPS-126181 ViewDocumentWithOwnerAccessOnly pending implementation
+
 	}
 
 	@priority = "5"

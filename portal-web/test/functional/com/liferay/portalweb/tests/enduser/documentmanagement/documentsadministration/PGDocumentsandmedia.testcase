@@ -1642,6 +1642,15 @@ definition {
 			value1 = "2 of 10 Selected");
 	}
 
+	@description = "This ensures that the user can create document with topics."
+	@ignore = "true"
+	@priority = "4"
+	test ViewDocumentWithTopic {
+
+		// TODO LPS-126181 ViewDocumentWithTopic pending implementation
+
+	}
+
 	@priority = "4"
 	test ViewOlderVersion {
 		JSONDocument.addFileWithUploadedFile(
@@ -1675,6 +1684,14 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.1");
+	}
+
+	@description = "This ensures that the user can create document with related assets."
+	@ignore = "true"
+	@priority = "3"
+	test ViewRelatedDocument {
+
+		// TODO LPS-126181 ViewRelatedDocument pending implementation
 	}
 
 	@priority = "5"

@@ -444,6 +444,36 @@ public class JournalArticleServiceSoap {
 	}
 
 	/**
+	 * Returns the latest web content article matching the group, external reference code,
+	 * and workflow status.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param externalReferenceCode the external reference code of the web content article
+	 * @return the latest matching web content article, or <code>null</code> if
+	 no matching web content article could be found
+	 */
+	public static com.liferay.journal.model.JournalArticleSoap
+			fetchLatestArticleByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.journal.model.JournalArticle returnValue =
+				JournalArticleServiceUtil.
+					fetchLatestArticleByExternalReferenceCode(
+						groupId, externalReferenceCode);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
 	 * Returns the web content article with the ID.
 	 *
 	 * @param id the primary key of the web content article
@@ -1664,6 +1694,36 @@ public class JournalArticleServiceSoap {
 			com.liferay.journal.model.JournalArticle returnValue =
 				JournalArticleServiceUtil.getLatestArticle(
 					groupId, className, classPK);
+
+			return com.liferay.journal.model.JournalArticleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * Returns the latest web content article matching the group, external reference code,
+	 * and workflow status.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param externalReferenceCode the external reference code of the web content article
+	 * @return the latest matching web content article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static com.liferay.journal.model.JournalArticleSoap
+			getLatestArticleByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.journal.model.JournalArticle returnValue =
+				JournalArticleServiceUtil.
+					getLatestArticleByExternalReferenceCode(
+						groupId, externalReferenceCode);
 
 			return com.liferay.journal.model.JournalArticleSoap.toSoapModel(
 				returnValue);

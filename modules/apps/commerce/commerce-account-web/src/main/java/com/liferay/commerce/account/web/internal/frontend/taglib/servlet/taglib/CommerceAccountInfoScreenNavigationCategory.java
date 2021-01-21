@@ -20,8 +20,6 @@ import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.web.internal.display.context.CommerceAccountDisplayContext;
 import com.liferay.commerce.account.web.internal.servlet.taglib.ui.constants.CommerceAccountScreenNavigationConstants;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -35,6 +33,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
@@ -115,10 +115,9 @@ public class CommerceAccountInfoScreenNavigationCategory
 		CommerceAccountDisplayContext commerceAccountDisplayContext =
 			new CommerceAccountDisplayContext(
 				_commerceAccountService, _commerceAddressService,
-				_commerceCountryService, _commerceRegionService,
-				_configurationProvider, httpServletRequest,
-				_modelResourcePermission, _userFileUploadsConfiguration,
-				_userLocalService);
+				_countryService, _regionService, _configurationProvider,
+				httpServletRequest, _modelResourcePermission,
+				_userFileUploadsConfiguration, _userLocalService);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceAccountDisplayContext);
@@ -144,13 +143,10 @@ public class CommerceAccountInfoScreenNavigationCategory
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
-	private CommerceRegionService _commerceRegionService;
-
-	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -159,6 +155,9 @@ public class CommerceAccountInfoScreenNavigationCategory
 		target = "(model.class.name=com.liferay.commerce.account.model.CommerceAccount)"
 	)
 	private ModelResourcePermission<CommerceAccount> _modelResourcePermission;
+
+	@Reference
+	private RegionService _regionService;
 
 	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
 

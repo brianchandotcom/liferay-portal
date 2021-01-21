@@ -395,10 +395,34 @@ public class PoshiGetterUtil {
 			return poshiProseDefinition.toElement();
 		}
 
+		return _preparePoshiXMLElement(url, addLineNumbers);
+	}
+
+	public static String getUtilityClassName(String simpleClassName) {
+		if (_utilityClassMap.containsKey(simpleClassName)) {
+			return _utilityClassMap.get(simpleClassName);
+		}
+
+		throw new IllegalArgumentException(
+			simpleClassName + " is not a valid simple class name");
+	}
+
+	public static boolean isValidUtilityClass(String className) {
+		if (_utilityClassMap.containsValue(className)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static Element _preparePoshiXMLElement(URL url, boolean addLineNumbers)
+		throws Exception {
+
 		BufferedReader bufferedReader = new BufferedReader(
 			new StringReader(FileUtil.read(url)));
 
 		boolean cdata = false;
+		String filePath = url.getFile();
 		String line = null;
 		int lineNumber = 1;
 		StringBuilder sb = new StringBuilder();
@@ -497,23 +521,6 @@ public class PoshiGetterUtil {
 		}
 
 		return document.getRootElement();
-	}
-
-	public static String getUtilityClassName(String simpleClassName) {
-		if (_utilityClassMap.containsKey(simpleClassName)) {
-			return _utilityClassMap.get(simpleClassName);
-		}
-
-		throw new IllegalArgumentException(
-			simpleClassName + " is not a valid simple class name");
-	}
-
-	public static boolean isValidUtilityClass(String className) {
-		if (_utilityClassMap.containsValue(className)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Pattern _namespacedClassCommandNamePattern =

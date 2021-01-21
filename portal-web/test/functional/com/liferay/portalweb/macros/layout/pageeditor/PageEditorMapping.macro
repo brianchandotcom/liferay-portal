@@ -7,7 +7,7 @@ definition {
 	}
 
 	macro gotoEditableFieldMapping {
-		if (contains("${fragmentName}", "Banner")) {
+		if (contains("${id}", "banner-center")) {
 			PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 
 			var elementHeight = selenium.getElementHeight("//div[contains(@class,'page-editor__topper__bar') and contains(.,'${fragmentName}')]//following-sibling::div[contains(@class,'page-editor__topper__content')]//div[contains(@data-lfr-background-image-id,'${id}')]");
@@ -33,7 +33,7 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Selection");
 
-		if ((contains("${id}", "image")) || (contains("${id}", "img")) || (contains("${id}","banner-center"))) {
+		if ((contains("${id}", "image")) || (contains("${id}", "img")) || (contains("${id}", "banner-center"))) {
 			AssertClick(
 				key_navItem = "Image Source",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",

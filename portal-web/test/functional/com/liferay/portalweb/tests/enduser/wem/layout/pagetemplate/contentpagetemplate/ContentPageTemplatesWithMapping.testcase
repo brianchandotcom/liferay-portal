@@ -117,15 +117,6 @@ definition {
 		// TODO LPS-98031 MapWebContentFieldWithURLToTextFragment pending implementation
 	}
 
-	@description = "This is a test for LPS-98030. Can map the editable background images of a fragment to an existing image content in a display page template."
-	@ignore = "true"
-	@priority = "2"
-	test MapWebContentImageToBackgoundImageOfBannerCenter {
-		property portal.upstream = "false";
-
-		// TODO LPS-98030 MapWebContentImageToBannerCenter pending implementation
-	}
-
 	@description = "This is a test for LPS-98030. Can map the editable background image of a fragment to an existing image content in a content page template."
 	@ignore = "true"
 	@priority = "3"
@@ -135,22 +126,13 @@ definition {
 		// TODO LPS-98030 MapWebContentImageToBannerCenter pending implementation
 	}
 
-	@description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a display page template."
+	@description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a content page template."
 	@ignore = "true"
-	@priority = "2"
+	@priority = "3"
 	test MapWebContentImageToBackgroundImageOfContainer {
 		property portal.upstream = "false";
 
 		// TODO LPS-98030 MapWebContentImageToContainer pending implementation
 	}
-
-	// @description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a content page template."
-	// @ignore = "true"
-	// @priority = "3"
-	// test MapWebContentImageToBackgroundImageOfContainer {
-	// 	property portal.upstream = "false";
-
-	// 	// TODO LPS-98030 MapWebContentImageToContainer pending implementation
-	// }
 
 }

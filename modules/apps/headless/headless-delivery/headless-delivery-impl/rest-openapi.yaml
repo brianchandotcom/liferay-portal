@@ -978,31 +978,7 @@ components:
                 geolocation, strings, etc.).
             properties:
                 customValue:
-                    properties:
-                        data:
-                            description:
-                                The field's content for simple types.
-                            type: object
-                        data_i18n:
-                            additionalProperties:
-                                type: string
-                            type: object
-                        geo:
-                            description:
-                                A point determined by latitude and longitude.
-                            properties:
-                                latitude:
-                                    description:
-                                        The latitude of a point in space.
-                                    format: double
-                                    type: number
-                                longitude:
-                                    description:
-                                        The longitude of a point in space.
-                                    format: double
-                                    type: number
-                            type: object
-                    type: object
+                    $ref: "#/components/schemas/CustomValue"
                 dataType:
                     description:
                         The field type (e.g., image, text, etc.).
@@ -1024,6 +1000,24 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+            type: object
+        CustomValue:
+            description:
+                ""
+            properties:
+                data:
+                    description:
+                        The field's content for simple types.
+                    type: object
+                data_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                geo:
+                    allOf:
+                        - $ref: "#/components/schemas/Geo"
+                    description:
+                        A point determined by latitude and longitude.
             type: object
         DisplayPageTemplate:
             description:
@@ -1610,6 +1604,21 @@ components:
             required:
                 - fragmentViewportStyle
                 - id
+            type: object
+        Geo:
+            description:
+                A point determined by latitude and longitude.
+            properties:
+                latitude:
+                    description:
+                        The latitude of a point in space.
+                    format: double
+                    type: number
+                longitude:
+                    description:
+                        The longitude of a point in space.
+                    format: double
+                    type: number
             type: object
         KnowledgeBaseArticle:
             description:

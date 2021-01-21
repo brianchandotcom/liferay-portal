@@ -380,8 +380,8 @@ public class PoshiGetterUtil {
 
 		String filePath = url.getFile();
 
-		if ((filePath.endsWith(".function") || filePath.endsWith(".macro") ||
-			 filePath.endsWith(".testcase"))) {
+		if (filePath.endsWith(".function") || filePath.endsWith(".macro") ||
+			filePath.endsWith(".testcase")) {
 
 			PoshiNode<?, ?> poshiNode = PoshiNodeFactory.newPoshiNodeFromFile(
 				url);
@@ -418,7 +418,8 @@ public class PoshiGetterUtil {
 		return false;
 	}
 
-	private static Element _preparePoshiXMLElement(URL url, boolean addLineNumbers)
+	private static Element _preparePoshiXMLElement(
+			URL url, boolean addLineNumbers)
 		throws Exception {
 
 		BufferedReader bufferedReader = new BufferedReader(

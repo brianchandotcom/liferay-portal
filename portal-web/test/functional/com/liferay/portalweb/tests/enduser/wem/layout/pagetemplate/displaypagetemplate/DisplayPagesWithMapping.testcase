@@ -30,6 +30,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98031. Map manual URL to image fragment."
+	@ignore = "true"
+	@priority = "4"
+	test MapManualURLToImageFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-98031 MapManualURLToImageFragment pending implementation
+
+	}
+
 	@description = "This is a test for LPS-98031."
 	@priority = "5"
 	test MapManualURLToLinkFragment {
@@ -60,6 +70,46 @@ definition {
 		task ("Assert editable has the specified URL mapped correctly") {
 			AssertVisible(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
 		}
+	}
+
+	@description = "This is a test for LPS-98031. Map manual URL to text fragment."
+	@ignore = "true"
+	@priority = "4"
+	test MapManualURLToTextFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-98031 MapManualURLToTextFragment pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
+	@ignore = "true"
+	@priority = "2"
+	test MapWebContentFieldWithURLToImageFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-98031 MapWebContentFieldWithURLToImageFragment pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
+	@ignore = "true"
+	@priority = "2"
+	test MapWebContentFieldWithURLToLinkFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-98031 MapWebContentFieldWithURLToLinkFragment pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
+	@ignore = "true"
+	@priority = "2"
+	test MapWebContentFieldWithURLToTextFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-98031 MapWebContentFieldWithURLToTextFragment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-98030. Can map the editable background images of a fragment to an existing image content in a display page template."

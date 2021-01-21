@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.talend.web.internal.process;
 
+import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessException;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
 
@@ -38,14 +39,17 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 	@Override
 	public Serializable call() throws ProcessException {
-		RuntimeException runtimeException = new RuntimeException();
+		TalendProcessException talendProcessException =
+			new TalendProcessException();
 
 		System.setSecurityManager(
 			new SecurityManager() {
 
 				@Override
 				public void checkExit(int status) {
-					throw runtimeException;
+					talendProcessException.setStatus(status);
+
+					throw talendProcessException;
 				}
 
 				@Override
@@ -69,7 +73,11 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 		catch (InvocationTargetException invocationTargetException) {
 			Throwable causeThrowable = invocationTargetException.getCause();
 
-			if (causeThrowable == runtimeException) {
+			if (causeThrowable == talendProcessException) {
+				if (talendProcessException.getStatus() > 0) {
+					throw talendProcessException;
+				}
+
 				return null;
 			}
 

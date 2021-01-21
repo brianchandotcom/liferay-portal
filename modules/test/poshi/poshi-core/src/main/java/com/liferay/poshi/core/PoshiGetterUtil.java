@@ -395,7 +395,9 @@ public class PoshiGetterUtil {
 			PoshiProseDefinition poshiProseDefinition =
 				new PoshiProseDefinition(url);
 
-			return poshiProseDefinition.toElement();
+			return _preparePoshiXMLElement(
+				url, Dom4JUtil.format(poshiProseDefinition.toElement()),
+				addLineNumbers);
 		}
 
 		throw new Exception("Unable to parse Poshi file: " + filePath);
@@ -422,8 +424,15 @@ public class PoshiGetterUtil {
 			URL url, boolean addLineNumbers)
 		throws Exception {
 
+		return _preparePoshiXMLElement(url, FileUtil.read(url), addLineNumbers);
+	}
+
+	private static Element _preparePoshiXMLElement(
+			URL url, String fileContent, boolean addLineNumbers)
+		throws Exception {
+
 		BufferedReader bufferedReader = new BufferedReader(
-			new StringReader(FileUtil.read(url)));
+			new StringReader(fileContent));
 
 		boolean cdata = false;
 		String filePath = url.getFile();

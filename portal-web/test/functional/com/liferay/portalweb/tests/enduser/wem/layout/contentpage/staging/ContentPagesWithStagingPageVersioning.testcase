@@ -23,35 +23,6 @@ definition {
 				pageVersioningEnabled = "true",
 				siteName = "Test Site Name");
 		}
-
-		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
-
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
-		}
-
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
-		task ("Add a Title fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title");
-		}
-
-		task ("Add a Rich Text fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Rich Text",
-				targetFragmentName = "Title");
-		}
-
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
-		}
 	}
 
 	tearDown {
@@ -65,71 +36,177 @@ definition {
 		}
 	}
 
-	@description = "With page versioning enabled, content pages only appear in live view after being published and should appear properly."
+	@description = "This is a test for LPS-125755. The Site Pages Variation is enabled on content page in view mode when enable page versioning."
 	@priority = "5"
 	test PublishContentPage {
 		property portal.acceptance = "true";
 
-		task ("Navigate to the content page in the staging site") {
+		task ("Add a public content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			ContentPages.addPage(pageName = "Public Content Page Name");
+		}
+
+		task ("Add a Heading fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the public content page in the staging site") {
 			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
+				pageName = "Public Content Page Name",
 				siteName = "Test Site Name Staging");
 		}
 
-		task ("Assert the Title fragment is present") {
+		task ("Assert the Heading fragment is shown") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+		}
+
+		task ("Assert Live item is not shown on navbar") {
+			AssertElementNotPresent(locator1 = "Staging#LIVE_BUTTON");
+		}
+
+		task ("Assert the Site Page Variation is shown in staging bar") {
 			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+				key_stagingVariationLabel = "Site Pages Variation",
+				locator1 = "Staging#STAGING_VARIATION_LABEL");
 		}
 
-		task ("Assert the Rich Text fragment is present") {
-			AssertVisible(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+		task ("Assert the Main Variation is selected in Site Pages Variation field") {
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
 		}
 
-		task ("Navigate to the URL of what the content page should be in the live site") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+		task ("Assert the workflow status is Approved") {
+			AssertTextEquals(
+				locator1 = "Staging#WORKFLOW_STATUS",
+				value1 = "Approved");
 		}
 
-		task ("Assert the content page does not yet exist in the live site") {
-			AssertTextPresent(value1 = "The requested resource could not be found.");
-		}
-
-		task ("Publish the content page to live") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name Staging");
-
+		task ("Switch Ready for Publish Process to Yes") {
 			Staging.markAsReadyForPublication();
+		}
 
+		task ("Assert the workflow status is Ready for Publish Process") {
+			Pause(locator1 = "3000");
+
+			AssertTextEquals(
+				locator1 = "Staging#WORKFLOW_STATUS",
+				value1 = "Ready for Publish Process");
+		}
+
+		task ("Publish to Live") {
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();
 		}
 
-		task ("Navigate to the content page in the live site") {
+		task ("Assert the workflow status is In Live") {
 			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				pageName = "Public Content Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertTextEquals(
+				locator1 = "Staging#WORKFLOW_STATUS",
+				value1 = "In Live");
 		}
 
-		task ("Assert the Title fragment is present") {
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+		task ("Navigate to the public content page in the live site") {
+			Click(locator1 = "Staging#LIVE_BUTTON");
 		}
 
-		task ("Assert the Rich Text fragment is present") {
+		task ("Assert the Heading fragment is shown") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+		}
+
+		task ("Add a private content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			ContentPages.addPrivatePage(pageName = "Private Content Page Name");
+		}
+
+		task ("Add a Button fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the private content page in the staging site") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/test-site-name-staging/private-content-page-name");
+		}
+
+		task ("Assert the Button fragment is shown") {
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+		}
+
+		task ("Assert Live item is not shown on navbar") {
+			AssertElementNotPresent(locator1 = "Staging#LIVE_BUTTON");
+		}
+
+		task ("Assert the Site Page Variation is shown in staging bar") {
 			AssertVisible(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+				key_stagingVariationLabel = "Site Pages Variation",
+				locator1 = "Staging#STAGING_VARIATION_LABEL");
+		}
+
+		task ("Assert the Main Variation is selected in Site Pages Variation field") {
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
+		}
+
+		task ("Assert the workflow status is Approved") {
+			AssertTextEquals(
+				locator1 = "Staging#WORKFLOW_STATUS",
+				value1 = "Approved");
+		}
+
+		task ("Switch Ready for Publish Process to Yes") {
+			Staging.markAsReadyForPublication();
+		}
+
+		task ("Assert the workflow status is Ready for Publish Process") {
+			Pause(locator1 = "3000");
+
+			AssertTextEquals(
+				locator1 = "Staging#WORKFLOW_STATUS",
+				value1 = "Ready for Publish Process");
+		}
+
+		task ("Publish to Live") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("Assert the workflow status is In Live") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/test-site-name-staging/private-content-page-name");
+
+			AssertTextEquals(
+				locator1 = "Staging#WORKFLOW_STATUS",
+				value1 = "In Live");
+		}
+
+		task ("Navigate to the private content page in the live site") {
+			Click(locator1 = "Staging#LIVE_BUTTON");
+		}
+
+		task ("Assert the Button fragment is shown") {
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
 		}
 	}
 

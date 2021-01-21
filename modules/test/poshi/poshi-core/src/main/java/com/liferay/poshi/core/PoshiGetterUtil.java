@@ -374,10 +374,13 @@ public class PoshiGetterUtil {
 	public static Element getRootElementFromURL(URL url, boolean addLineNumbers)
 		throws Exception {
 
+		if (Dom4JUtil.isValidDocument(url)) {
+			return _preparePoshiXMLElement(url, addLineNumbers);
+		}
+
 		String filePath = url.getFile();
 
-		if (!Dom4JUtil.isValidDocument(url) &&
-			(filePath.endsWith(".function") || filePath.endsWith(".macro") ||
+		if ((filePath.endsWith(".function") || filePath.endsWith(".macro") ||
 			 filePath.endsWith(".testcase"))) {
 
 			PoshiNode<?, ?> poshiNode = PoshiNodeFactory.newPoshiNodeFromFile(
@@ -395,7 +398,7 @@ public class PoshiGetterUtil {
 			return poshiProseDefinition.toElement();
 		}
 
-		return _preparePoshiXMLElement(url, addLineNumbers);
+		throw new Exception("Unable to parse Poshi file: " + filePath);
 	}
 
 	public static String getUtilityClassName(String simpleClassName) {

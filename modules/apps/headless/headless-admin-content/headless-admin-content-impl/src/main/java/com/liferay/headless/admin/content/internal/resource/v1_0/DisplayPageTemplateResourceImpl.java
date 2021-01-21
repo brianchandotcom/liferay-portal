@@ -23,9 +23,11 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -34,6 +36,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +77,23 @@ public class DisplayPageTemplateResourceImpl
 		Long siteId, Pagination pagination, Sort[] sorts) {
 
 		DynamicQuery dynamicQuery = _getDynamicQuery(siteId);
+
+		if (sorts != null) {
+			for (Sort sort : sorts) {
+				String fieldName = sort.getFieldName();
+
+				fieldName = StringUtil.removeSubstring(fieldName, "_sortable");
+
+				fieldName = _sortFieldNames.getOrDefault(fieldName, fieldName);
+
+				if (sort.isReverse()) {
+					dynamicQuery.addOrder(OrderFactoryUtil.desc(fieldName));
+				}
+				else {
+					dynamicQuery.addOrder(OrderFactoryUtil.asc(fieldName));
+				}
+			}
+		}
 
 		return Page.of(
 			HashMapBuilder.put(
@@ -126,6 +146,15 @@ public class DisplayPageTemplateResourceImpl
 				contextUser),
 			layoutPageTemplateEntry);
 	}
+
+	private static final Map<String, String> _sortFieldNames =
+		HashMapBuilder.put(
+			"dateCreated", "createDate"
+		).put(
+			"dateModified", "modifiedDate"
+		).put(
+			"title", "name"
+		).build();
 
 	@Reference
 	private DisplayPageTemplateDTOConverter _displayPageTemplateDTOConverter;

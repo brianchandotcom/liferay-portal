@@ -59,6 +59,8 @@ public interface Build {
 
 	public int getBuildNumber();
 
+	public Job.BuildProfile getBuildProfile();
+
 	public String getBuildURL();
 
 	public String getBuildURLRegex();

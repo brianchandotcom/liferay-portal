@@ -187,7 +187,7 @@ definition {
 	test ConvertMultipleWidgetPagesViaAPIAndViewLayoutPlids {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ConvertMultipleWidgetPagesViaAPIAndViewLayoutPlids pending implementation
+		// TODO LPS-98325 ConvertMultipleWidgetPagesViaAPIAndViewLayoutPlids pending implementation
 
 	}
 
@@ -197,7 +197,7 @@ definition {
 	test ConvertMultipleWidgetPagesWithContentPagesViaAPI {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ConvertMultipleWidgetPagesWithContentPagesViaAPI pending implementation
+		// TODO LPS-98325 ConvertMultipleWidgetPagesWithContentPagesViaAPI pending implementation
 	}
 
 	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the content page has the original plid identifier."
@@ -206,7 +206,7 @@ definition {
 	test ConvertWidgetPageAndVIewPlidIdentifier {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ConvertWidgetPageAndVIewPlidIdentifier pending implementation
+		// TODO LPS-98327 ConvertWidgetPageAndVIewPlidIdentifier pending implementation
 	}
 
 	@description = "This is a test for LPS-98589. Multiple widgets with different application decorators survive content page conversion."
@@ -855,7 +855,7 @@ definition {
 	test ConvertWidgetPageWithWebContentsToContentPage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
 	}
 
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."
@@ -1086,7 +1086,7 @@ definition {
 	test ViewContentPagesAndNoWidgetPagePlidsAfterConverting {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ViewContentPagesAndNoWidgetPagePlidsAfterConverting pending implementation
+		// TODO LPS-98325 ViewContentPagesAndNoWidgetPagePlidsAfterConverting pending implementation
 	}
 
 }

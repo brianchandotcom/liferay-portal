@@ -49,7 +49,7 @@ definition {
 	test CannotEditAssetWithoutAssetUpdatePermission {
 		property portal.upstream = "false";
 
-		// TODO LPS-123456 CannotEditAssetWithoutAssetUpdatePermission pending implementation
+		// TODO LPS-103784 CannotEditAssetWithoutAssetUpdatePermission pending implementation
 
 	}
 
@@ -59,7 +59,7 @@ definition {
 	test CannotViewAssetInContentDisplayWithoutAssetViewPermission {
 		property portal.upstream = "false";
 
-		// TODO LPS-123456 CannotViewAssetInContentDisplayWithoutAssetViewPermission pending implementation
+		// TODO LPS-97182 CannotViewAssetInContentDisplayWithoutAssetViewPermission pending implementation
 	}
 
 	@description = "This is a test for LPS-103454. Content author having permission to update blog entry could see edit icon in the content page displaying the blog and could edit blog in editmode. "

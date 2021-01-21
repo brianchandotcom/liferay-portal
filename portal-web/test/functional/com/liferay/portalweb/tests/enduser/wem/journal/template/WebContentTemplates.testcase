@@ -122,7 +122,7 @@ definition {
 	test CannotDeleteTemplateUsedInContentDisplay {
 		property portal.upstream = "false";
 
-		// TODO LPS-123456 CannotDeleteTemplateUsedInContentDisplay pending implementation
+		// TODO LPS-101248 CannotDeleteTemplateUsedInContentDisplay pending implementation
 
 	}
 
@@ -197,7 +197,7 @@ definition {
 	test ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure pending implementation
+		// TODO LPS-125933 ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure pending implementation
 
 	}
 

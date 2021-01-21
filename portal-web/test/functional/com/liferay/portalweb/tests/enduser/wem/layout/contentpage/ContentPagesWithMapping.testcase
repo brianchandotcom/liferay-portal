@@ -1373,7 +1373,7 @@ definition {
 	test PreviewContentPageViaMappedFragmentWithWCDAndAP {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 PreviewContentPageViaMappedFragmentWithWCDAndAP pending implementation
+		// TODO LPS-125933 PreviewContentPageViaMappedFragmentWithWCDAndAP pending implementation
 
 	}
 

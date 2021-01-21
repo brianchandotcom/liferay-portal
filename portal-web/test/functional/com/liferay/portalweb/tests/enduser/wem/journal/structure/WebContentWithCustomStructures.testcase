@@ -2134,7 +2134,7 @@ definition {
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields pending implementation
+		// TODO LPS-125933 ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields pending implementation
 
 	}
 

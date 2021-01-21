@@ -373,7 +373,7 @@ definition {
 	test EditWebContentViaContentsPanel {
 		property portal.upstream = "false";
 
-		// TODO LPS-123456 EditWebContentViaContentsPanel pending implementation
+		// TODO LPS-97189 EditWebContentViaContentsPanel pending implementation
 
 	}
 
@@ -383,7 +383,7 @@ definition {
 	test MapWebContentImageToBackgroundImageOfBannerCenter {
 		property portal.upstream = "false";
 
-		// TODO LPS-123456 MapWebContentImageToBannerCenter pending implementation
+		// TODO LPS-98030 MapWebContentImageToBannerCenter pending implementation
 	}
 
 	@description = "Content pages only appear in live view after being published and should appear properly."
@@ -651,7 +651,7 @@ definition {
 	test SelectCustomWebContentTemplateViaContentDisplay {
 		property portal.upstream = "false";
 
-		// TODO LPS-123456 SelectCustomWebContentTemplateViaContentDisplay pending implementation
+		// TODO LPS-101248 SelectCustomWebContentTemplateViaContentDisplay pending implementation
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments back in Staging site."

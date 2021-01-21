@@ -605,7 +605,7 @@ definition {
 	test ViewAndEditAsWellAsDeleteStructureWithTitleAndAllFields {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ViewAndEditAsWellAsDeleteStructureWithTitleAndAllFields pending implementation
+		// TODO LPS-125933 ViewAndEditAsWellAsDeleteStructureWithTitleAndAllFields pending implementation
 
 	}
 

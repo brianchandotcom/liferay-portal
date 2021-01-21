@@ -34,7 +34,7 @@ definition {
 	test ViewContentPageInLiveAfterConvertingAndPublishingWidgetPage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ViewContentPageInLiveAfterConvertingAndPublishingWidgetPage pending implementation
+		// TODO LPS-98327 ViewContentPageInLiveAfterConvertingAndPublishingWidgetPage pending implementation
 
 	}
 
@@ -44,7 +44,7 @@ definition {
 	test ViewWidgetPageInLiveAfterConvertingWidgetPage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123456 ViewWidgetPageInLiveAfterConvertingWidgetPage pending implementation
+		// TODO LPS-98327 ViewWidgetPageInLiveAfterConvertingWidgetPage pending implementation
 	}
 
 }

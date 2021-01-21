@@ -940,7 +940,7 @@ definition {
 	test ViewErrorMessageWhenRestoreDocumentWithTheSameNameWithExistingOne {
 		property portal.upstream = "false";
 
-		// TODO LPS-123456 ViewErrorMessageWhenRestoreDocumentWithTheSameNameWithExistingOne pending implementation
+		// TODO LPS-109555 ViewErrorMessageWhenRestoreDocumentWithTheSameNameWithExistingOne pending implementation
 
 	}
 

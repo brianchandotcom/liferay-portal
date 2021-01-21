@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSet
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
-import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,10 +40,7 @@ public class CommercePendingOrderItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
-
-		nameField.setContentRenderer("commerceTableCellNameWithError");
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
 

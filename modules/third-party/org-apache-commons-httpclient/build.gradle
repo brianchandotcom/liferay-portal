@@ -1,0 +1,22 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/commons/httpclient/protocol/SSLProtocolSocketFactory.java"
+
+	originalLibModuleName = "commons-httpclient"
+}

@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -235,6 +236,16 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		throws PortalException {
 
 		return countryLocalService.getCountryByNumber(companyId, number);
+	}
+
+	@Override
+	public BaseModelSearchResult<Country> searchCountries(
+			long companyId, Boolean active, String keywords, int start, int end,
+			OrderByComparator<Country> orderByComparator)
+		throws PortalException {
+
+		return countryLocalService.searchCountries(
+			companyId, active, keywords, start, end, orderByComparator);
 	}
 
 	@Override

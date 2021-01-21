@@ -107,6 +107,118 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125755. Can manage Site Pages Navigation on content page when enable page versioning."
+	@priority = "5"
+	test ManageSitePagesVariationInViewMode {
+		task ("Add a public content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			ContentPages.addPage(pageName = "Test Page Name");
+		}
+
+		task ("Add a Paragraph fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page in the staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Assert the Paragraph fragment is shown") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea.");
+		}
+
+		task ("Assert the Main Variation is selected in Site Pages Variation field") {
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
+		}
+
+		task ("Open Site Pages Variation modal") {
+			Staging.navigateToSitePageVariation();
+		}
+
+		task ("Assert actions of the Main Variation") {
+			LexiconEntry.openEntryMenu(rowEntry = "Main Variation");
+
+			for (var menuItem : list "Edit,Permissions,Merge") {
+				MenuItem.viewVisible(menuItem = "${menuItem}");
+			}
+
+			MenuItem.viewNotPresent(menuItem = "Delete");
+		}
+
+		task ("Rename the Main Variation") {
+			MenuItem.click(menuItem = "Edit");
+
+			Type(
+				locator1 = "StagingManageVariations#MANAGE_VARIATION",
+				value1 = "Default Variation");
+
+			Click(locator1 = "StagingManageVariations#UPDATE_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the Main Variation is renamed") {
+			LexiconEntry.viewEntryName(rowEntry = "Default Variation");
+		}
+
+		task ("Add a new site pages variation") {
+			Click(locator1 = "StagingManageVariations#ADD_SITE_PAGES_VARIATIONS_BUTTON");
+
+			Type(
+				locator1 = "StagingManageVariations#MANAGE_VARIATION",
+				value1 = "Test Site Pages Variation");
+
+			Click(locator1 = "StagingManageVariations#ADD");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert actions of the new site pages variation") {
+			LexiconEntry.openEntryMenu(rowEntry = "Test Site Pages Variation");
+
+			for (var menuItem : list "Edit,Permissions,Merge,Delete") {
+				MenuItem.viewVisible(menuItem = "${menuItem}");
+			}
+		}
+
+		task ("Delete the new site pages variation") {
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the new site pages variation is deleted") {
+			LexiconEntry.viewNoEntry(rowEntry = "Test Site Pages Variation");
+		}
+
+		task ("Assert the Default Variation is selected in Site Pages Variation field") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Default Variation");
+		}
+
+		task ("Assert the Paragraph fragment is shown") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "paragraph",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea.");
+		}
+	}
+
 	@description = "This is a test for LPS-125755. The Site Pages Variation is enabled on content page in view mode when enable page versioning."
 	@priority = "5"
 	test PublishContentPage {

@@ -15,6 +15,8 @@
 package com.liferay.commerce.model;
 
 import com.liferay.commerce.exception.CommerceGeocoderException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 
 /**
  * @author Andrea Di Giorgi
@@ -24,15 +26,15 @@ public interface CommerceGeocoder {
 
 	public default double[] getCoordinates(
 			long groupId, String street, String city, String zip,
-			String commerceRegionCode, String commerceCountryCode)
+			String regionCode, String countryA2)
 		throws CommerceGeocoderException {
 
 		return new double[] {0, 0};
 	}
 
 	public double[] getCoordinates(
-			String street, String city, String zip,
-			CommerceRegion commerceRegion, CommerceCountry commerceCountry)
+			String street, String city, String zip, Region region,
+			Country country)
 		throws CommerceGeocoderException;
 
 }

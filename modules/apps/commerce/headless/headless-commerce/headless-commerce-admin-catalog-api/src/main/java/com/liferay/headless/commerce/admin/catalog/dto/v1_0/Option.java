@@ -633,7 +633,8 @@ public class Option implements Serializable {
 	public static enum FieldType {
 
 		CHECKBOX("checkbox"), CHECKBOX_MULTIPLE("checkbox_multiple"),
-		DATE("date"), NUMERIC("numeric"), RADIO("radio"), SELECT("select");
+		DATE("date"), NUMERIC("numeric"), RADIO("radio"), SELECT("select"),
+		TEXT("text");
 
 		@JsonCreator
 		public static FieldType create(String value) {

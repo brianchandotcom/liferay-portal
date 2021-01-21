@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.log4j.output.message.test;
+package com.liferay.portal.log4j.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.io.StreamUtil;

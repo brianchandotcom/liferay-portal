@@ -34,7 +34,7 @@ public class CommerceWishListConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return CommerceWishListConstants.WISH_LIST_SERVICE_NAME;
+		return CommerceWishListConstants.SERVICE_NAME_WISH_LIST;
 	}
 
 }

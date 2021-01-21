@@ -21,7 +21,7 @@ public class CommerceWishListConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.commerce.wish.list";
 
-	public static final String WISH_LIST_SERVICE_NAME =
+	public static final String SERVICE_NAME_WISH_LIST =
 		"com.liferay.commerce.wish.list.service.name";
 
 }

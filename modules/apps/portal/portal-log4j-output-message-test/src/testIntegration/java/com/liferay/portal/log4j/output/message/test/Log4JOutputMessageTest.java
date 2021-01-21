@@ -157,15 +157,15 @@ public class Log4JOutputMessageTest {
 		String portalFileNamePattern =
 			portalTimeBasedRollingPolicy.getFileNamePattern();
 
-		portalFileNamePattern = StringUtil.extractLast(
-			portalFileNamePattern, StringPool.SLASH);
-
 		TimeBasedRollingPolicy testTimeBasedRollingPolicy =
 			new TimeBasedRollingPolicy();
 
 		testTimeBasedRollingPolicy.setFileNamePattern(
-			StringUtil.replace(tempLogFileDir.toString(), '\\', '/') +
-				StringPool.SLASH + portalFileNamePattern);
+			StringBundler.concat(
+				StringUtil.replace(tempLogFileDir.toString(), '\\', '/'),
+				StringPool.SLASH,
+				StringUtil.extractLast(
+					portalFileNamePattern, StringPool.SLASH)));
 
 		RollingFileAppender testRollingFileAppender = new RollingFileAppender();
 

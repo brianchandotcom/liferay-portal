@@ -20,6 +20,42 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
+	@description = "This is a test for LPS-125933. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@ignore = "true"
+	@priority = "5"
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher70 {
+		property portal.acceptance = "false";
+
+		// TODO LPS-125933 ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher70 pending implementation
+	}
+
+	@description = "This is a test for LPS-125933. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@ignore = "true"
+	@priority = "5"
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher71 {
+		property portal.acceptance = "false";
+
+		// TODO LPS-125933 ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher71 pending implementation
+	}
+
+	@description = "This is a test for LPS-125933. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@ignore = "true"
+	@priority = "5"
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher72 {
+		property portal.acceptance = "false";
+
+		// TODO LPS-125933 ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher72 pending implementation
+	}
+
+	@description = "This is a test for LPS-125933. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@ignore = "true"
+	@priority = "5"
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher73 {
+		property portal.acceptance = "false";
+
+		// TODO LPS-125933 ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher73 pending implementation
+	}
+
 	@description = "This is a use case for LPS-75561."
 	@priority = "5"
 	test ViewLayoutArchive625 {

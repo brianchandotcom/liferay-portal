@@ -35,9 +35,7 @@ public class DestinationAwaitClassTestRule
 	extends ClassTestRule<Set<CountDownLatch>> {
 
 	public static final DestinationAwaitClassTestRule INSTANCE =
-		new DestinationAwaitClassTestRule(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
-			DestinationNames.HOT_DEPLOY);
+		new DestinationAwaitClassTestRule(DestinationNames.HOT_DEPLOY);
 
 	public DestinationAwaitClassTestRule(String... destinationNames) {
 		_destinationNames = destinationNames;

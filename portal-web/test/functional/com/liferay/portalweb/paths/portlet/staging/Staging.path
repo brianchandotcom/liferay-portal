@@ -133,6 +133,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_VARIATION_LABEL</td>
+	<td>//div[contains(@class,'staging-variation-label')][normalize-space(text())='${key_stagingVariationLabel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGING_VIEW</td>
 	<td>//body[contains(@class,'local-staging')]</td>
 	<td></td>

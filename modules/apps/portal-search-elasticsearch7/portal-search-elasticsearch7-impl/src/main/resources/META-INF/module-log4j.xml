@@ -9,12 +9,4 @@
 	<category name="com.liferay.portal.search.elasticsearch7.internal.sidecar">
 		<priority value="INFO" />
 	</category>
-
-	<category name="com.liferay.portal.search.elasticsearch7.internal.sidecar.SidecarManager">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portal.search.elasticsearch7.internal.sidecar.UncompressUtil">
-		<priority value="ERROR" />
-	</category>
 </log4j:configuration>

@@ -12,15 +12,15 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.forecast.dispatch;
+package com.liferay.commerce.machine.learning.internal.recommendation.dispatch.executor;
 
 import com.liferay.commerce.machine.learning.internal.batch.engine.mapper.BatchEngineTaskItemDelegateResourceMapper;
-import com.liferay.commerce.machine.learning.internal.dispatch.AnalyticsDispatchTaskExecutor;
+import com.liferay.commerce.machine.learning.internal.dispatch.executor.helper.AnalyticsDispatchTaskExecutorHelper;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountCategoryForecast;
+import com.liferay.headless.commerce.machine.learning.dto.v1_0.ProductContentRecommendation;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -35,17 +35,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"dispatch.task.executor.name=" + AnalyticsDownloadAssetCategoryCommerceMLForecastDispatchTaskExecutor.KEY,
-		"dispatch.task.executor.type=" + AnalyticsDownloadAssetCategoryCommerceMLForecastDispatchTaskExecutor.KEY
+		"dispatch.task.executor.name=" + AnalyticsDownloadProductContentCommerceMLRecommendDispatchTaskExecutor.KEY,
+		"dispatch.task.executor.type=" + AnalyticsDownloadProductContentCommerceMLRecommendDispatchTaskExecutor.KEY
 	},
 	service = DispatchTaskExecutor.class
 )
 public class
-	AnalyticsDownloadAssetCategoryCommerceMLForecastDispatchTaskExecutor
+	AnalyticsDownloadProductContentCommerceMLRecommendDispatchTaskExecutor
 		extends BaseDispatchTaskExecutor {
 
 	public static final String KEY =
-		"analytics-download-asset-category-commerce-ml-forecast";
+		"analytics-download-product-content-commerce-ml-recommendation";
 
 	@Override
 	public void doExecute(
@@ -56,25 +56,23 @@ public class
 		BatchEngineTaskItemDelegateResourceMapper
 			batchEngineTaskItemDelegateResourceMapper =
 				new BatchEngineTaskItemDelegateResourceMapper(
-					AccountCategoryForecast.class.getName(),
+					ProductContentRecommendation.class.getName(),
 					HashMapBuilder.put(
-						"actual", "actual"
+						"createDate", "createDate"
 					).put(
-						"assetCategoryId", "category"
+						"entryClassPK", "productId"
 					).put(
-						"commerceAccountId", "account"
+						"jobId", "jobId"
 					).put(
-						"forecast", "forecast"
+						"rank", "rank"
 					).put(
-						"forecastLowerBound", "forecastLowerBound"
+						"recommendedEntryClassPK", "recommendedProductId"
 					).put(
-						"forecastUpperBound", "forecastUpperBound"
-					).put(
-						"timestamp", "timestamp"
+						"score", "score"
 					).build(),
 					null);
 
-		_analyticsDispatchTaskExecutor.downloadResources(
+		_analyticsDispatchTaskExecutorHelper.downloadResources(
 			dispatchTrigger, dispatchTaskExecutorOutput,
 			new BatchEngineTaskItemDelegateResourceMapper[] {
 				batchEngineTaskItemDelegateResourceMapper
@@ -87,6 +85,7 @@ public class
 	}
 
 	@Reference
-	private AnalyticsDispatchTaskExecutor _analyticsDispatchTaskExecutor;
+	private AnalyticsDispatchTaskExecutorHelper
+		_analyticsDispatchTaskExecutorHelper;
 
 }

@@ -12,15 +12,15 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.recommendation.dispatch;
+package com.liferay.commerce.machine.learning.internal.forecast.dispatch.executor;
 
 import com.liferay.commerce.machine.learning.internal.batch.engine.mapper.BatchEngineTaskItemDelegateResourceMapper;
-import com.liferay.commerce.machine.learning.internal.dispatch.AnalyticsDispatchTaskExecutor;
+import com.liferay.commerce.machine.learning.internal.dispatch.executor.helper.AnalyticsDispatchTaskExecutorHelper;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.headless.commerce.machine.learning.dto.v1_0.FrequentPatternRecommendation;
+import com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountCategoryForecast;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -35,17 +35,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"dispatch.task.executor.name=" + AnalyticsDownloadFrequentPatternCommerceMLRecommendationDispatchTaskExecutor.KEY,
-		"dispatch.task.executor.type=" + AnalyticsDownloadFrequentPatternCommerceMLRecommendationDispatchTaskExecutor.KEY
+		"dispatch.task.executor.name=" + AnalyticsDownloadAssetCategoryCommerceMLForecastDispatchTaskExecutor.KEY,
+		"dispatch.task.executor.type=" + AnalyticsDownloadAssetCategoryCommerceMLForecastDispatchTaskExecutor.KEY
 	},
 	service = DispatchTaskExecutor.class
 )
 public class
-	AnalyticsDownloadFrequentPatternCommerceMLRecommendationDispatchTaskExecutor
+	AnalyticsDownloadAssetCategoryCommerceMLForecastDispatchTaskExecutor
 		extends BaseDispatchTaskExecutor {
 
 	public static final String KEY =
-		"analytics-download-frequent-pattern-commerce-ml-recommendation";
+		"analytics-download-asset-category-commerce-ml-forecast";
 
 	@Override
 	public void doExecute(
@@ -56,23 +56,25 @@ public class
 		BatchEngineTaskItemDelegateResourceMapper
 			batchEngineTaskItemDelegateResourceMapper =
 				new BatchEngineTaskItemDelegateResourceMapper(
-					FrequentPatternRecommendation.class.getName(),
+					AccountCategoryForecast.class.getName(),
 					HashMapBuilder.put(
-						"antecedentIds", "antecedentIds"
+						"actual", "actual"
 					).put(
-						"antecedentIdsLength", "antecedentIdsLength"
+						"assetCategoryId", "category"
 					).put(
-						"createDate", "createDate"
+						"commerceAccountId", "account"
 					).put(
-						"jobId", "jobId"
+						"forecast", "forecast"
 					).put(
-						"recommendedEntryClassPK", "recommendedProductId"
+						"forecastLowerBound", "forecastLowerBound"
 					).put(
-						"score", "score"
+						"forecastUpperBound", "forecastUpperBound"
+					).put(
+						"timestamp", "timestamp"
 					).build(),
 					null);
 
-		_analyticsDispatchTaskExecutor.downloadResources(
+		_analyticsDispatchTaskExecutorHelper.downloadResources(
 			dispatchTrigger, dispatchTaskExecutorOutput,
 			new BatchEngineTaskItemDelegateResourceMapper[] {
 				batchEngineTaskItemDelegateResourceMapper
@@ -85,6 +87,7 @@ public class
 	}
 
 	@Reference
-	private AnalyticsDispatchTaskExecutor _analyticsDispatchTaskExecutor;
+	private AnalyticsDispatchTaskExecutorHelper
+		_analyticsDispatchTaskExecutorHelper;
 
 }

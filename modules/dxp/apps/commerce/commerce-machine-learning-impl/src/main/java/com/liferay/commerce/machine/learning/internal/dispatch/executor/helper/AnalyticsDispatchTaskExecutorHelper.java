@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.dispatch;
+package com.liferay.commerce.machine.learning.internal.dispatch.executor.helper;
 
 import com.liferay.analytics.message.sender.client.AnalyticsBatchClient;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
@@ -56,9 +56,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	service = AnalyticsDispatchTaskExecutor.class
+	service = AnalyticsDispatchTaskExecutorHelper.class
 )
-public class AnalyticsDispatchTaskExecutor {
+public class AnalyticsDispatchTaskExecutorHelper {
 
 	public void downloadResources(
 			DispatchTrigger dispatchTrigger,
@@ -315,7 +315,7 @@ public class AnalyticsDispatchTaskExecutor {
 	protected DispatchLogLocalService dispatchLogLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsDispatchTaskExecutor.class);
+		AnalyticsDispatchTaskExecutorHelper.class);
 
 	@Reference
 	private AnalyticsBatchClient _analyticsBatchClient;

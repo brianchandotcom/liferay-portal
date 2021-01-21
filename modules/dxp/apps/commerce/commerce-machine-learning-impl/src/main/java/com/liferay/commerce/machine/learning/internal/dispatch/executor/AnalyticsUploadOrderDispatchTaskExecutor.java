@@ -12,9 +12,10 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.dispatch;
+package com.liferay.commerce.machine.learning.internal.dispatch.executor;
 
 import com.liferay.commerce.machine.learning.internal.batch.engine.mapper.BatchEngineTaskItemDelegateResourceMapper;
+import com.liferay.commerce.machine.learning.internal.dispatch.executor.helper.AnalyticsDispatchTaskExecutorHelper;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
@@ -50,7 +51,7 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws IOException, PortalException {
 
-		_analyticsDispatchTaskExecutor.uploadResources(
+		_analyticsDispatchTaskExecutorHelper.uploadResources(
 			dispatchTrigger, dispatchTaskExecutorOutput,
 			_EXPORT_RESOURCE_NAMES);
 	}
@@ -68,6 +69,7 @@ public class AnalyticsUploadOrderDispatchTaskExecutor
 		};
 
 	@Reference
-	private AnalyticsDispatchTaskExecutor _analyticsDispatchTaskExecutor;
+	private AnalyticsDispatchTaskExecutorHelper
+		_analyticsDispatchTaskExecutorHelper;
 
 }

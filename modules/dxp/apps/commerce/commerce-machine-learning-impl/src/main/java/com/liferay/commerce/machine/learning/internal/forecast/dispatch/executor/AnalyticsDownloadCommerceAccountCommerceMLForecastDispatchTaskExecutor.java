@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.forecast.dispatch;
+package com.liferay.commerce.machine.learning.internal.forecast.dispatch.executor;
 
 import com.liferay.commerce.machine.learning.internal.batch.engine.mapper.BatchEngineTaskItemDelegateResourceMapper;
-import com.liferay.commerce.machine.learning.internal.dispatch.AnalyticsDispatchTaskExecutor;
+import com.liferay.commerce.machine.learning.internal.dispatch.executor.helper.AnalyticsDispatchTaskExecutorHelper;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
@@ -72,7 +72,7 @@ public class
 					).build(),
 					null);
 
-		_analyticsDispatchTaskExecutor.downloadResources(
+		_analyticsDispatchTaskExecutorHelper.downloadResources(
 			dispatchTrigger, dispatchTaskExecutorOutput,
 			new BatchEngineTaskItemDelegateResourceMapper[] {
 				batchEngineTaskItemDelegateResourceMapper
@@ -85,6 +85,7 @@ public class
 	}
 
 	@Reference
-	private AnalyticsDispatchTaskExecutor _analyticsDispatchTaskExecutor;
+	private AnalyticsDispatchTaskExecutorHelper
+		_analyticsDispatchTaskExecutorHelper;
 
 }

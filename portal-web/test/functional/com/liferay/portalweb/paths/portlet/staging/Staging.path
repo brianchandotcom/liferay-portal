@@ -193,6 +193,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//span[contains(@class,'workflow-status')][contains(@class,'label')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

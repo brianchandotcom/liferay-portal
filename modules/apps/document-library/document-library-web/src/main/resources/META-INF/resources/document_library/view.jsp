@@ -140,7 +140,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 									%>
 
 									<liferay-frontend:vertical-card
-										cssClass="display-icon entry-display-style"
+										cssClass="card-type-asset display-icon entry-display-style file-card form-check form-check-card"
 										imageUrl="<%= thumbnailSrc %>"
 										title="{title}"
 										url="<%= dlViewDisplayContext.getUploadURL() %>"

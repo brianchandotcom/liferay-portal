@@ -177,17 +177,29 @@ const editFocusedCustomObjectField = ({
 	};
 };
 
+/**
+ * Get unformatted definition field
+ * @param {object} dataDefinition
+ * @param {string} fieldName
+ */
+const getUnformattedDefinitionField = (dataDefinition, {fieldName}) => {
+	return getDataDefinitionField(dataDefinition, fieldName);
+};
+
+/**
+ * Get formatted definition field
+ * @param {object} dataLayoutBuilder
+ * @param {string} fieldName
+ */
+const getFormattedDefinitionField = (dataLayoutBuilder, field) => {
+	return dataLayoutBuilder.getDataDefinitionField(field);
+};
+
 const setDataDefinitionFields = (
 	dataLayoutBuilder,
 	dataDefinition,
 	dataLayout
 ) => {
-	function requiredField(fieldName) {
-		const field = getDataDefinitionField(dataDefinition, fieldName);
-
-		return field?.required ?? false;
-	}
-
 	const {dataDefinitionFields} = dataDefinition;
 	const {dataLayoutPages} = dataLayout;
 
@@ -197,17 +209,21 @@ const setDataDefinitionFields = (
 	const newFields = [];
 
 	visitor.mapFields((field) => {
-		const definitionField = dataLayoutBuilder.getDataDefinitionField(field);
+		const formattedDefinitionField = getFormattedDefinitionField(
+			dataLayoutBuilder,
+			field
+		);
 
-		newFields.push({
-			...definitionField,
-
-			// If you update the dataDefinitionField with the required from dataLayout,
-			// a field that is not required at the object level, it cannot receive
-			// the new required value
-
-			required: requiredField(field.fieldName),
-		});
+		if (dataLayoutBuilder.props.contentType === 'app-builder') {
+			newFields.push({
+				...formattedDefinitionField,
+				required: !!getUnformattedDefinitionField(dataDefinition, field)
+					?.required,
+			});
+		}
+		else {
+			newFields.push(formattedDefinitionField);
+		}
 	});
 
 	return newFields.concat(
@@ -227,28 +243,34 @@ const setDataLayout = (dataLayout, dataLayoutBuilder) => {
 		dataRules || []
 	);
 
-	const visitor = new PagesVisitor(pages);
+	if (dataLayoutBuilder.props.contentType === 'app-builder') {
+		const visitor = new PagesVisitor(pages);
+		const fields = [];
 
-	const fields = [];
+		visitor.mapFields((field) => {
+			const formattedDefinitionField = getFormattedDefinitionField(
+				dataLayoutBuilder,
+				field
+			);
 
-	visitor.mapFields((field) => {
-		const definitionField = dataLayoutBuilder.getDataDefinitionField(field);
+			fields.push(formattedDefinitionField);
+		});
 
-		fields.push(definitionField);
-	});
+		return {
+			...layout,
+			dataLayoutFields: fields.reduce((allFields, field) => {
+				return {
+					...allFields,
+					[field.name]: {
+						...dataLayoutFields[field.name],
+						required: !!field?.required,
+					},
+				};
+			}, {}),
+		};
+	}
 
-	return {
-		...layout,
-		dataLayoutFields: fields.reduce((allFields, field) => {
-			return {
-				...allFields,
-				[field.name]: {
-					...dataLayoutFields[field.name],
-					required: field?.required ?? false,
-				},
-			};
-		}, {}),
-	};
+	return layout;
 };
 
 const createReducer = (dataLayoutBuilder) => {

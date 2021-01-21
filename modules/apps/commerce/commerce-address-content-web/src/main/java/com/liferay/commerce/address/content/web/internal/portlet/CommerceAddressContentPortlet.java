@@ -19,12 +19,12 @@ import com.liferay.commerce.address.content.web.internal.display.context.Commerc
 import com.liferay.commerce.address.content.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -74,8 +74,7 @@ public class CommerceAddressContentPortlet extends MVCPortlet {
 			CommerceAddressDisplayContext commerceAddressDisplayContext =
 				new CommerceAddressDisplayContext(
 					_actionHelper, _commerceAccountHelper,
-					_commerceAddressService, _commerceCountryService,
-					_commerceRegionService,
+					_commerceAddressService, _countryService, _regionService,
 					_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -101,12 +100,12 @@ public class CommerceAddressContentPortlet extends MVCPortlet {
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private CountryService _countryService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RegionService _regionService;
 
 }

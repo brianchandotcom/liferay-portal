@@ -21,11 +21,11 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.exception.NoSuchAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,8 +59,7 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 			CommerceAddressDisplayContext commerceAddressDisplayContext =
 				new CommerceAddressDisplayContext(
 					_actionHelper, _commerceAccountHelper,
-					_commerceAddressService, _commerceCountryService,
-					_commerceRegionService,
+					_commerceAddressService, _countryService, _regionService,
 					_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -104,12 +103,12 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private CountryService _countryService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RegionService _regionService;
 
 }

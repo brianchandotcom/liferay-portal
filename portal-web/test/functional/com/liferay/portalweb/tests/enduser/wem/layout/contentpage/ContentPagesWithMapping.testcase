@@ -1275,14 +1275,17 @@ definition {
 			collectionName = "Featured Content",
 			fragmentName = "Banner Center");
 
-		PageEditorEditableLink.gotoEditableFieldLink(
+		PageEditorMapping.gotoEditableFieldMapping(
 			fragmentName = "Banner Center",
 			id = "link");
 
-		PageEditorEditableLink.mapURLToAsset(
+		PageEditorMapping.mapEditableFieldToAsset(
 			entryTitle = "liferay.com",
-			field = "Title",
 			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
 
 		PageEditor.clickPublish();
 
@@ -1290,8 +1293,11 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		task ("Assert editable has the specified URL mapped correctly") {
-			AssertElementPresent(locator1 = "//a[contains(@class,'btn')][contains(@href,'liferay.com')]");
+		task ("Assert mapped content is shown in link editable field") {
+			AssertVisible(
+				key_append = "[contains(@data-lfr-editable-id,'link')][normalize-space(text())='liferay.com']",
+				key_URL = "",
+				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
 		task ("Assert the mapped web content is shown in Contents panel") {

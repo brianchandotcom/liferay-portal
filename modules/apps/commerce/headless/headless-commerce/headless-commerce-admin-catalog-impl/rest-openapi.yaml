@@ -363,6 +363,7 @@ components:
                         - numeric
                         - radio
                         - select
+                        - text
                     example: select
                     type: string
                 id:

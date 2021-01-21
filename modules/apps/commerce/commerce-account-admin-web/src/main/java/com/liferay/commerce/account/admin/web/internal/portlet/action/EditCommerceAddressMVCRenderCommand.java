@@ -19,10 +19,10 @@ import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -55,8 +55,7 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 				new CommerceAccountAddressAdminDisplayContext(
 					_commerceAccountModelResourcePermission,
 					_commerceAccountService, _commerceAddressService,
-					_commerceCountryService, _commerceRegionService,
-					renderRequest);
+					_countryService, _regionService, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -78,9 +77,9 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
+	private CountryService _countryService;
 
 	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private RegionService _regionService;
 
 }

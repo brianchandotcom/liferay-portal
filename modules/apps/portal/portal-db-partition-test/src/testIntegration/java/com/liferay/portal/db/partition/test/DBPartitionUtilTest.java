@@ -196,9 +196,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			_getSchemaName(_COMPANY_ID) + StringPool.PERIOD + "test";
 
 		try (Statement statement = _connection.createStatement()) {
-			statement.execute("create table test (test varchar(1))");
-			statement.execute(
-				"create table " + fullTestTableName + "(test varchar(1))");
+			_createAndPopulateTable("test");
+			_createAndPopulateTable(fullTestTableName);
 
 			try {
 				_removeDBPartition();
@@ -293,6 +292,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			ReflectionTestUtil.setFieldValue(
 				CurrentConnectionUtil.class, "_currentConnection",
 				defaultCurrentConnection);
+		}
+	}
+
+	private void _createAndPopulateTable(String tableName) throws Exception {
+		try (Statement statement = _connection.createStatement()) {
+			statement.execute(
+				"create table " + tableName + "(test bigint primary key)");
+			statement.execute("insert into " + tableName + " values (1)");
 		}
 	}
 

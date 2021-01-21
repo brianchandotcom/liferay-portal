@@ -19,7 +19,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import React, {useContext, useState} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
-import {getInputRendererById} from '../../utilities/dataRenderers';
+import {getInputRendererById} from '../../utils/dataRenderers';
 
 function TableInlineAddingRow({fields, selectable}) {
 	const {

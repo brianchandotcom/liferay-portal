@@ -13,7 +13,7 @@
  */
 
 import {updateActiveView} from '../actions/updateActiveView';
-import {saveViewSettings} from '../utilities/saveViewSettings';
+import {saveViewSettings} from '../utils/saveViewSettings';
 
 export default function persistActiveView({
 	activeViewName,

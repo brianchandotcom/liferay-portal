@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import DataSetDisplayContext from '../DataSetDisplayContext';
-import {formatActionURL} from '../utilities/index';
+import {formatActionURL} from '../utils/index';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer({actions, itemData, itemId, options, value}) {

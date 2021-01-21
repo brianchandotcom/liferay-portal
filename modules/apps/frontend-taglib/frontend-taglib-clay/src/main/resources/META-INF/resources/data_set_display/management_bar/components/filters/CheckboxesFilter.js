@@ -18,7 +18,7 @@ import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {isValuesArrayChanged} from '../../../utilities/index';
+import {isValuesArrayChanged} from '../../../utils/index';
 
 export const formatValue = (values, items, exclude) => {
 	const formattedValue = values

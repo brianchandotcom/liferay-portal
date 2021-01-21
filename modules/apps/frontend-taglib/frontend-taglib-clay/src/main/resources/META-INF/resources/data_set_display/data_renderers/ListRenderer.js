@@ -14,7 +14,7 @@
 
 import PropType from 'prop-types';
 
-import {getValueFromItem} from '../utilities/index';
+import {getValueFromItem} from '../utils/index';
 
 function ListRenderer(props) {
 	if (!props.value || props.value.length === 0) {

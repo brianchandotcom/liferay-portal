@@ -18,8 +18,8 @@ import classNames from 'classnames';
 import Proptypes from 'prop-types';
 import React from 'react';
 
-import {getDataRendererById} from '../utilities/dataRenderers';
-import {getSchemaString} from '../utilities/index';
+import {getDataRendererById} from '../utils/dataRenderers';
+import {getSchemaString} from '../utils/index';
 import DefaultRenderer from './DefaultRenderer';
 
 function TooltipTableRow({

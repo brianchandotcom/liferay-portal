@@ -16,7 +16,7 @@ import ClaySticker from '@clayui/sticker';
 import PropType from 'prop-types';
 import React from 'react';
 
-import {getValueFromItem} from '../utilities/index';
+import {getValueFromItem} from '../utils/index';
 
 function ImageRenderer(props) {
 	const imageProps =

@@ -21,16 +21,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Modal from '../modal/Modal';
-import debounce from '../utilities/debounce';
+import debounce from '../utils/debounce';
 import {
 	CLOSE_SIDE_PANEL,
 	IFRAME_LOADED,
 	OPEN_SIDE_PANEL,
 	SIDE_PANEL_CLOSED,
-} from '../utilities/eventsDefinitions';
-import {getIframeHandlerModalId, isPageInIframe} from '../utilities/iframes';
-import {logError} from '../utilities/logError';
-import {exposeSidePanel} from '../utilities/sidePanels';
+} from '../utils/eventsDefinitions';
+import {getIframeHandlerModalId, isPageInIframe} from '../utils/iframes';
+import {logError} from '../utils/logError';
+import {exposeSidePanel} from '../utils/sidePanels';
 import SideMenu from './SideMenu';
 
 const SIDE_PANEL_TITLE_HEIGHT = 65;

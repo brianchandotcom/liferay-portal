@@ -15,7 +15,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useState} from 'react';
 
-import {getComponentByModuleURL} from '../../../utilities/modules';
+import {getComponentByModuleURL} from '../../../utils/modules';
 import AutocompleteFilter from './AutocompleteFilter';
 import CheckboxesFilter from './CheckboxesFilter';
 import DateRangeFilter from './DateRangeFilter';

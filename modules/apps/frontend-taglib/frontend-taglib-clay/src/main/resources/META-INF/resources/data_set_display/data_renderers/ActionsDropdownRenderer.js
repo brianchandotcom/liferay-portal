@@ -23,12 +23,9 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import DataSetDisplayContext from '../DataSetDisplayContext';
-import {ACTION_ITEM_TARGETS} from '../utilities/actionItems/constants';
-import {formatActionURL} from '../utilities/index';
-import {
-	openPermissionsModal,
-	resolveModalSize,
-} from '../utilities/modals/index';
+import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
+import {formatActionURL} from '../utils/index';
+import {openPermissionsModal, resolveModalSize} from '../utils/modals/index';
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 

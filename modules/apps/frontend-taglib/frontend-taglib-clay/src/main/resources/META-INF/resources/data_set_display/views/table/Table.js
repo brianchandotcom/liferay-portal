@@ -20,7 +20,7 @@ import React, {useContext} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
 import ActionsDropdownRenderer from '../../data_renderers/ActionsDropdownRenderer';
-import {getValueDetailsFromItem} from '../../utilities/index';
+import {getValueDetailsFromItem} from '../../utils/index';
 import ViewsContext from '../ViewsContext';
 import TableCell from './TableCell';
 import TableHeadRow from './TableHeadRow';
@@ -35,10 +35,9 @@ function getItemFields(
 ) {
 	return fields.map((field) => {
 		const {actionDropdownItems} = item;
-		const {rootPropertyName, value, valuePath} = getValueDetailsFromItem(
-			item,
-			field.fieldName
-		);
+		const {rootPropertyName, value, valuePath} = field.fieldName
+			? getValueDetailsFromItem(item, field.fieldName)
+			: {};
 
 		return (
 			<TableCell
@@ -47,7 +46,7 @@ function getItemFields(
 				itemData={item}
 				itemId={itemId}
 				itemInlineChanges={itemInlineChanges}
-				key={field.fieldName}
+				key={valuePath ? valuePath.join('_') : field.label}
 				options={field}
 				rootPropertyName={rootPropertyName}
 				value={value}

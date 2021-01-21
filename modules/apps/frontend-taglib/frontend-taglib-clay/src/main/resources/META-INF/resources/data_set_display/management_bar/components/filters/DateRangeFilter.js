@@ -23,7 +23,7 @@ import {
 	formatDateObject,
 	formatDateRangeObject,
 	getDateFromDateString,
-} from '../../../utilities/dates';
+} from '../../../utils/dates';
 
 function getOdataString(value, key) {
 	if (value.from && value.to) {

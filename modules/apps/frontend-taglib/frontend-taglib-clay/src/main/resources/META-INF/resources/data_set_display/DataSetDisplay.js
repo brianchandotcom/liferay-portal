@@ -38,7 +38,7 @@ import {
 	OPEN_SIDE_PANEL,
 	SIDE_PANEL_CLOSED,
 	UPDATE_DATASET_DISPLAY,
-} from './utilities/eventsDefinitions';
+} from './utils/eventsDefinitions';
 import {
 	delay,
 	executeAsyncAction,
@@ -46,9 +46,9 @@ import {
 	getCurrentItemUpdates,
 	getRandomId,
 	loadData,
-} from './utilities/index';
-import {logError} from './utilities/logError';
-import getJsModule from './utilities/modules';
+} from './utils/index';
+import {logError} from './utils/logError';
+import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
 import {getViewContentRenderer} from './views/index';
 

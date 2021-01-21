@@ -19,9 +19,9 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
-import {OPEN_SIDE_PANEL} from '../../utilities/eventsDefinitions';
-import {logError} from '../../utilities/logError';
-import {getOpenedSidePanel} from '../../utilities/sidePanels';
+import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
+import {logError} from '../../utils/logError';
+import {getOpenedSidePanel} from '../../utils/sidePanels';
 
 function submit({action, data, formId, formRef}) {
 	let form = formRef.current;

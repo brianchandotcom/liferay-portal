@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import DataSetDisplayContext from '../../DataSetDisplayContext';
-import {triggerAction} from '../../utilities/actionItems/index';
+import {triggerAction} from '../../utils/actionItems/index';
 
 function CreationMenu({primaryItems}) {
 	const [active, setActive] = useState(false);

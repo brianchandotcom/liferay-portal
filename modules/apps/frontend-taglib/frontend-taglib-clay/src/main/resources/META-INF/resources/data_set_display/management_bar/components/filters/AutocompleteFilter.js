@@ -27,8 +27,8 @@ import {
 	getAcceptLanguageHeaderParam,
 	getValueFromItem,
 	isValuesArrayChanged,
-} from '../../../utilities/index';
-import {logError} from '../../../utilities/logError';
+} from '../../../utils/index';
+import {logError} from '../../../utils/logError';
 
 const DEFAULT_PAGE_SIZE = 10;
 

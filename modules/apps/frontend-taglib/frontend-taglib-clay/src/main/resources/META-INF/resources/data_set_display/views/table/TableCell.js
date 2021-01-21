@@ -21,7 +21,7 @@ import {
 	getDataRendererById,
 	getDataRendererByURL,
 	getInputRendererById,
-} from '../../utilities/dataRenderers';
+} from '../../utils/dataRenderers';
 
 function InlineEditInputRenderer({
 	itemId,

@@ -122,11 +122,7 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 			long commerceInventoryWarehouseId, String sku)
 		throws PortalException {
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceInventoryWarehouseModelResourcePermission.
-				getPortletResourcePermission();
-
-		portletResourcePermission.check(
+		_commerceInventoryWarehouseModelResourcePermission.check(
 			getPermissionChecker(), commerceInventoryWarehouseId,
 			ActionKeys.VIEW);
 

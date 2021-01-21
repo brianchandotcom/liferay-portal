@@ -665,7 +665,7 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_THUMBNAIL_LIST");
 	}
 
-	@description = "This ensures that the thumbnail of YouTube video can be viewed in DM."
+	@description = "This ensures that the thumbnail of YouTube video can be viewed in DM. It also asserts the icon of External Video Shortcut."
 	@priority = "5"
 	test ViewYouTubeThumbnail {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

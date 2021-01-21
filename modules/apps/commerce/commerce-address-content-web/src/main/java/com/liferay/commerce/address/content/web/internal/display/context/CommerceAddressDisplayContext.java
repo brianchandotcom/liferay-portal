@@ -21,18 +21,18 @@ import com.liferay.commerce.address.content.web.internal.portlet.configuration.C
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -57,16 +57,15 @@ public class CommerceAddressDisplayContext {
 			ActionHelper actionHelper,
 			CommerceAccountHelper commerceAccountHelper,
 			CommerceAddressService commerceAddressService,
-			CommerceCountryService commerceCountryService,
-			CommerceRegionService commerceRegionService,
+			CountryService countryService, RegionService regionService,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		_actionHelper = actionHelper;
 		_commerceAccountHelper = commerceAccountHelper;
 		_commerceAddressService = commerceAddressService;
-		_commerceCountryService = commerceCountryService;
-		_commerceRegionService = commerceRegionService;
+		_countryService = countryService;
+		_regionService = regionService;
 		_httpServletRequest = httpServletRequest;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
@@ -126,15 +125,6 @@ public class CommerceAddressDisplayContext {
 		return commerceAddress.getCommerceAddressId();
 	}
 
-	public List<CommerceCountry> getCommerceCountries() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _commerceCountryService.getCommerceCountries(
-			themeDisplay.getCompanyId(), true);
-	}
-
 	public long getCommerceCountryId() throws PortalException {
 		long commerceCountryId = 0;
 
@@ -159,9 +149,13 @@ public class CommerceAddressDisplayContext {
 		return commerceRegionId;
 	}
 
-	public List<CommerceRegion> getCommerceRegions() throws PortalException {
-		return _commerceRegionService.getCommerceRegions(
-			getCommerceCountryId(), true);
+	public List<Country> getCountries() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _countryService.getCompanyCountries(
+			themeDisplay.getCompanyId(), true);
 	}
 
 	public String getDeleteCommerceAddressURL(long commerceAddressId) {
@@ -254,6 +248,10 @@ public class CommerceAddressDisplayContext {
 		return portletURL;
 	}
 
+	public List<Region> getRegions() throws PortalException {
+		return _regionService.getRegions(getCommerceCountryId(), true);
+	}
+
 	public SearchContainer<CommerceAddress> getSearchContainer()
 		throws PortalException {
 
@@ -308,13 +306,13 @@ public class CommerceAddressDisplayContext {
 	private final CommerceAddressContentPortletInstanceConfiguration
 		_commerceAddressContentPortletInstanceConfiguration;
 	private final CommerceAddressService _commerceAddressService;
-	private final CommerceCountryService _commerceCountryService;
-	private final CommerceRegionService _commerceRegionService;
+	private final CountryService _countryService;
 	private final CPRequestHelper _cpRequestHelper;
 	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final RegionService _regionService;
 	private SearchContainer<CommerceAddress> _searchContainer;
 
 }

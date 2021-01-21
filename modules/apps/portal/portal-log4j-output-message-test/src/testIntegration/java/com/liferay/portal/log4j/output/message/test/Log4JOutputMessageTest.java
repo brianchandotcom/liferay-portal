@@ -80,7 +80,8 @@ public class Log4JOutputMessageTest {
 				(Objects.equals("TEXT_FILE", appender.getName()) ||
 				 Objects.equals("XML_FILE", appender.getName()))) {
 
-				_setLoggerRollingFileAppender(appender, logger, tempLogFileDir);
+				logger.addAppender(
+					_createFileAppender(appender, tempLogFileDir));
 			}
 			else if ((appender instanceof ConsoleAppender) &&
 					 Objects.equals("CONSOLE", appender.getName())) {
@@ -134,8 +135,8 @@ public class Log4JOutputMessageTest {
 			matcher.matches());
 	}
 
-	private static void _setLoggerRollingFileAppender(
-		Appender appender, Logger logger, File tempLogFileDir) {
+	private static FileAppender _createFileAppender(
+		Appender appender, File tempLogFileDir) {
 
 		RollingFileAppender portalRollingFileAppender =
 			(RollingFileAppender)appender;
@@ -165,8 +166,6 @@ public class Log4JOutputMessageTest {
 
 		testRollingFileAppender.activateOptions();
 
-		logger.addAppender(testRollingFileAppender);
-
 		String portalLogFileName = portalRollingFileAppender.getFile();
 
 		if (Objects.equals("TEXT_FILE", portalRollingFileAppender.getName())) {
@@ -183,6 +182,8 @@ public class Log4JOutputMessageTest {
 			_portalXmlLogFileName = StringUtil.extractLast(
 				portalLogFileName, StringPool.SLASH);
 		}
+
+		return testRollingFileAppender;
 	}
 
 	private void _assertTextLog(

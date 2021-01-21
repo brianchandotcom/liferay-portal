@@ -518,54 +518,26 @@ public class Log4JOutputMessageTest {
 	private void _testLogOutput(String level) throws Exception {
 		String testMessage = level + " message";
 
-		_outputLog(level, testMessage, null);
-
-		try {
-			_assertTextLog(
-				level, testMessage, null, _unsyncStringWriter.toString());
-
-			_assertFileContent(level, testMessage, null);
-		}
-		finally {
-			_unsyncStringWriter.reset();
-
-			Files.write(
-				_textLogFile.toPath(), new byte[0],
-				StandardOpenOption.TRUNCATE_EXISTING);
-			Files.write(
-				_xmlLogFile.toPath(), new byte[0],
-				StandardOpenOption.TRUNCATE_EXISTING);
-		}
+		_testLogOutput(level, testMessage, null);
 
 		TestException testException = new TestException();
 
-		_outputLog(level, testMessage, testException);
+		_testLogOutput(level, testMessage, testException);
+
+		_testLogOutput(level, null, testException);
+	}
+
+	private void _testLogOutput(
+			String level, String message, Throwable throwable)
+		throws Exception {
+
+		_outputLog(level, message, throwable);
 
 		try {
 			_assertTextLog(
-				level, testMessage, testException,
-				_unsyncStringWriter.toString());
+				level, message, throwable, _unsyncStringWriter.toString());
 
-			_assertFileContent(level, testMessage, testException);
-		}
-		finally {
-			_unsyncStringWriter.reset();
-
-			Files.write(
-				_textLogFile.toPath(), new byte[0],
-				StandardOpenOption.TRUNCATE_EXISTING);
-			Files.write(
-				_xmlLogFile.toPath(), new byte[0],
-				StandardOpenOption.TRUNCATE_EXISTING);
-		}
-
-		_outputLog(level, null, testException);
-
-		try {
-			_assertTextLog(
-				level, null, testException, _unsyncStringWriter.toString());
-
-			_assertFileContent(level, null, testException);
+			_assertFileContent(level, message, throwable);
 		}
 		finally {
 			_unsyncStringWriter.reset();

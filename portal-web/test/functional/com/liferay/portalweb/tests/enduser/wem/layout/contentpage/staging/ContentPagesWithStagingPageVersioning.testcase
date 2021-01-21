@@ -393,4 +393,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125755. The Site Pages Variation is not shown on content page in edit mode when enable page versioning."
+	@priority = "4"
+	test SitePagesVariationOnlyShownInViewMode {
+		task ("Add a public content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			ContentPages.addPage(pageName = "Test Page Name");
+		}
+
+		task ("Assert the Site Page Variation is not shown in management bar") {
+			AssertElementNotPresent(
+				key_stagingVariationLabel = "Site Pages Variation",
+				locator1 = "Staging#STAGING_VARIATION_LABEL");
+
+			AssertElementNotPresent(
+				key_sitePagesVariationName = "Main Variation",
+				locator1 = "Staging#SITE_PAGES_VARIATION_DROPDOWN");
+		}
+
+		task ("Assert the Experience is shown in management bar") {
+			AssertVisible(locator1 = "PageEditor#EXPERIENCE_LABEL");
+		}
+
+		task ("Add a HTML fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page in the staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Assert the Site Page Variation is shown in staging bar") {
+			AssertVisible(
+				key_stagingVariationLabel = "Site Pages Variation",
+				locator1 = "Staging#STAGING_VARIATION_LABEL");
+		}
+
+		task ("Assert the Main Variation is selected in Site Pages Variation field") {
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
+		}
+
+		task ("Assert the HTML fragment is shown") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "HTML Example");
+		}
+
+		task ("Access to content page in edit mode") {
+			ContentPages.clickPencil();
+		}
+
+		task ("Assert the Site Page Variation is not shown in management bar") {
+			AssertElementNotPresent(
+				key_stagingVariationLabel = "Site Pages Variation",
+				locator1 = "Staging#STAGING_VARIATION_LABEL");
+
+			AssertElementNotPresent(
+				key_sitePagesVariationName = "Main Variation",
+				locator1 = "Staging#SITE_PAGES_VARIATION_DROPDOWN");
+		}
+
+		task ("Assert the Experience is shown in management bar") {
+			AssertVisible(locator1 = "PageEditor#EXPERIENCE_LABEL");
+		}
+	}
+
 }

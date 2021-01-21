@@ -195,19 +195,6 @@ public class Log4JOutputMessageTest {
 		}
 	}
 
-	private void _assertFileContent(
-			String level, String message, Throwable throwable)
-		throws Exception {
-
-		_assertTextLog(
-			level, message, throwable,
-			StreamUtil.toString(new FileInputStream(_textLogFile)));
-
-		_assertXmlLog(
-			level, message, throwable,
-			StreamUtil.toString(new FileInputStream(_xmlLogFile)));
-	}
-
 	private void _assertTextLog(
 		String expectedLevel, String expectedMessage,
 		Throwable expectedThrowable, String actualOutput) {
@@ -537,7 +524,13 @@ public class Log4JOutputMessageTest {
 			_assertTextLog(
 				level, message, throwable, _unsyncStringWriter.toString());
 
-			_assertFileContent(level, message, throwable);
+			_assertTextLog(
+				level, message, throwable,
+				StreamUtil.toString(new FileInputStream(_textLogFile)));
+
+			_assertXmlLog(
+				level, message, throwable,
+				StreamUtil.toString(new FileInputStream(_xmlLogFile)));
 		}
 		finally {
 			_unsyncStringWriter.reset();

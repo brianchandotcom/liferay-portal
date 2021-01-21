@@ -259,6 +259,19 @@ public class CountryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.portal.kernel.model.Country> searchCountries(
+				long companyId, java.lang.Boolean active,
+				java.lang.String keywords, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.kernel.model.Country> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryService.searchCountries(
+			companyId, active, keywords, start, end, orderByComparator);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Country updateActive(
 			long countryId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

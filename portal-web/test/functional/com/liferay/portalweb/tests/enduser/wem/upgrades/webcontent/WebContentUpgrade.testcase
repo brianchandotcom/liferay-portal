@@ -27,6 +27,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-125933 ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher70 pending implementation
+
 	}
 
 	@description = "This is a test for LPS-125933. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"

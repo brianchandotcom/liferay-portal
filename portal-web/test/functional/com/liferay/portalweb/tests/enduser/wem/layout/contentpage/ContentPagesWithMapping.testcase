@@ -1374,7 +1374,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-125933 PreviewContentPageViaMappedFragmentWithWCDAndAP pending implementation
-
 	}
 
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with multiple itemTypes, the Item Type label will be shown in mapping label."

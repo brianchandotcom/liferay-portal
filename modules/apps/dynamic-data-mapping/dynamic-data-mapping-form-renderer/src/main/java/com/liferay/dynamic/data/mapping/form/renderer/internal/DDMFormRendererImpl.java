@@ -122,8 +122,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
-				_npmResolver.resolveModuleName(_MODULE_NAME),
-				ddmFormRenderingContext.getContainerId()),
+				_npmResolver.resolveModuleName(_MODULE_NAME)),
 			getContext(ddmForm, ddmFormLayout, ddmFormRenderingContext),
 			ddmFormRenderingContext.getHttpServletRequest(), writer);
 

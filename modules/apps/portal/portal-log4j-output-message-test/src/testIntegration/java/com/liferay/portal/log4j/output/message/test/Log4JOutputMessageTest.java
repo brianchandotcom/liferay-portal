@@ -143,6 +143,14 @@ public class Log4JOutputMessageTest {
 	}
 
 	@Test
+	public void testDefaultLevel() {
+		Logger logger = Logger.getLogger("test.logger");
+
+		Assert.assertTrue(logger.isInfoEnabled());
+		Assert.assertFalse(logger.isDebugEnabled());
+	}
+
+	@Test
 	public void testLogOutput() throws Exception {
 		_testLogOutput("TRACE");
 		_testLogOutput("DEBUG");

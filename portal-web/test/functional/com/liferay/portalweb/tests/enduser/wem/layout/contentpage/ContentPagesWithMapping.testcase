@@ -587,6 +587,7 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-99686 MapDocumentTitleToLinkFragment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-119817. Map manual URL to Container element."
@@ -1019,6 +1020,42 @@ definition {
 			id = "element-text");
 	}
 
+	@description = "This is a test for LPS-99686. Map web content fields to link editable field".
+	@ignore = "true"
+	@priority = "2"
+	test MapWebContentFieldsToLinkFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-99686 MapWebContentFieldsToLinkFragment pending implementation
+	}
+
+	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
+	@ignore = "true"
+	@priority = "4"
+	test MapWebContentFieldWithURLToImageFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-98031 MapWebContentFieldWithURLToImageFragment pending implementation
+	}
+
+	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
+	@ignore = "true"
+	@priority = "4"
+	test MapWebContentFieldWithURLToLinkFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-98031 MapWebContentFieldWithURLToLinkFragment pending implementation
+	}
+
+	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
+	@ignore = "true"
+	@priority = "4"
+	test MapWebContentFieldWithURLToTextFragment {
+		property portal.upstream = "false";
+
+		// TODO LPS-98031 MapWebContentFieldWithURLToTextFragment pending implementation
+	}
+
 	@description = "This case ensures a user can map the editable background image of a fragment to an existing image content."
 	@priority = "5"
 	test MapWebContentImageToFragmentBackground {
@@ -1173,45 +1210,6 @@ definition {
 				key_imageName = "Document_2.jpeg",
 				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
-	}
-
-	@description = "This is a test for LPS-99686. Map web content fields to link editable field".
-	@ignore = "true"
-	@priority = "2"
-	test MapWebContentFieldsToLinkFragment {
-		property portal.upstream = "false";
-
-		// TODO LPS-99686 MapWebContentFieldsToLinkFragment pending implementation
-	}
-
-	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
-	@ignore = "true"
-	@priority = "4"
-	test MapWebContentFieldWithURLToImageFragment {
-		property portal.upstream = "false";
-
-		// TODO LPS-98031 MapWebContentFieldWithURLToImageFragment pending implementation
-
-	}
-
-	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
-	@ignore = "true"
-	@priority = "4"
-	test MapWebContentFieldWithURLToLinkFragment {
-		property portal.upstream = "false";
-
-		// TODO LPS-98031 MapWebContentFieldWithURLToLinkFragment pending implementation
-
-	}
-
-	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
-	@ignore = "true"
-	@priority = "4"
-	test MapWebContentFieldWithURLToTextFragment {
-		property portal.upstream = "false";
-
-		// TODO LPS-98031 MapWebContentFieldWithURLToTextFragment pending implementation
-
 	}
 
 	@description = "This is a test for LPS-96794. Mapped Web Contents' state will appear in the sidebar in a Page Editor's edit mode."

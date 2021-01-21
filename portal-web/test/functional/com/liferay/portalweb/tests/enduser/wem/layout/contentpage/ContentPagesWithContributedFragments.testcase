@@ -1978,7 +1978,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-123456 SelectWebContentTemplateFromGlobalSiteViaContentDisplay pending implementation
-
 	}
 
 	@description = "This is a test for LPS-101248. Can select web content template from script file as a "Template" for Content Display fragment."
@@ -1988,7 +1987,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-123456 SelectWebContentTemplateFromScriptFileViaContentDisplay pending implementation
-
 	}
 
 	@description = "This is a use case for LPS-86141. The title of asset entries in selected collection should be shown as a list in the Collection Display."
@@ -2652,7 +2650,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-123456 ViewAvailableWebContentTemplatesViaContentDisplay pending implementation
-
 	}
 
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."
@@ -3514,7 +3511,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-123456 ViewRestoredAssetInContentDisplay pending implementation
-
 	}
 
 	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."

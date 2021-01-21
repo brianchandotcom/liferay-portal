@@ -79,7 +79,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-98031 MapManualURLToTextFragment pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
@@ -89,7 +88,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-98031 MapWebContentFieldWithURLToImageFragment pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
@@ -99,7 +97,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-98031 MapWebContentFieldWithURLToLinkFragment pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
@@ -109,7 +106,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-98031 MapWebContentFieldWithURLToTextFragment pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98030. Can map the editable background images of a fragment to an existing image content in a display page template."
@@ -119,7 +115,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-123456 MapWebContentImageToBannerCenter pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a display page template."
@@ -129,7 +124,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-123456 MapWebContentImageToContainer pending implementation
-
 	}
 
 	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in display page template."

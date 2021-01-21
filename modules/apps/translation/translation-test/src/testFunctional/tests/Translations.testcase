@@ -143,8 +143,8 @@ definition {
 			status = "Draft",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Delete",
+		LexiconEntry.delete(
+			confirmationText = "Are you sure you want to delete this? It will be deleted immediately.",
 			rowEntry = "Translation of WC WebContent Title to es-ES");
 
 		AssertElementNotPresent(
@@ -210,8 +210,8 @@ definition {
 			status = "Pending",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Delete",
+		LexiconEntry.delete(
+			confirmationText = "Are you sure you want to delete this? It will be deleted immediately.",
 			rowEntry = "Translation of WC WebContent Title to es-ES");
 
 		AssertElementNotPresent(
@@ -267,8 +267,8 @@ definition {
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Delete",
+		LexiconEntry.delete(
+			confirmationText = "Are you sure you want to delete this? It will be deleted immediately.",
 			rowEntry = "Translation of WC WebContent Title to es-ES");
 
 		AssertElementNotPresent(

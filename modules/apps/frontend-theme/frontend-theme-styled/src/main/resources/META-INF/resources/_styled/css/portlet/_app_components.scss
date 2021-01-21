@@ -88,20 +88,6 @@
 	}
 }
 
-// ---------- liferay-ui:icon-menu Taglib ----------
-
-.lfr-icon-menu {
-	.dropdown-toggle {
-		font-size: $dropdown-action-toggle-font-size;
-
-		> span {
-			display: inherit;
-			line-height: inherit;
-			width: inherit;
-		}
-	}
-}
-
 // ---------- Navbar form search ----------
 
 .navbar form {

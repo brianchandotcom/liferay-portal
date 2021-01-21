@@ -71,12 +71,12 @@ long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceReg
 						<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
 
 							<%
-							List<CommerceCountry> commerceCountries = commerceAccountAddressAdminDisplayContext.getCommerceCountries();
+							List<Country> countries = commerceAccountAddressAdminDisplayContext.getCountries();
 
-							for (CommerceCountry commerceCountry : commerceCountries) {
+							for (Country country : countries) {
 							%>
 
-								<aui:option label="<%= commerceCountry.getName(LanguageUtil.getLanguageId(locale)) %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>" value="<%= commerceCountry.getCommerceCountryId() %>" />
+								<aui:option label="<%= country.getTitle(locale) %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
 
 							<%
 							}
@@ -87,12 +87,12 @@ long commerceRegionId = commerceAccountAddressAdminDisplayContext.getCommerceReg
 						<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
 
 							<%
-							List<CommerceRegion> commerceRegions = commerceAccountAddressAdminDisplayContext.getCommerceRegions();
+							List<Region> regions = commerceAccountAddressAdminDisplayContext.getRegions();
 
-							for (CommerceRegion commerceRegion : commerceRegions) {
+							for (Region region : regions) {
 							%>
 
-								<aui:option label="<%= commerceRegion.getName() %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>" value="<%= commerceRegion.getCommerceRegionId() %>" />
+								<aui:option label="<%= region.getName() %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceRegionId() == region.getRegionId()) %>" value="<%= region.getRegionId() %>" />
 
 							<%
 							}

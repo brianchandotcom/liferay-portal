@@ -16,11 +16,7 @@ package com.liferay.commerce.geocoder.bing.internal;
 
 import com.liferay.commerce.exception.CommerceGeocoderException;
 import com.liferay.commerce.geocoder.bing.internal.configuration.BingCommerceGeocoderConfiguration;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceGeocoder;
-import com.liferay.commerce.model.CommerceRegion;
-import com.liferay.commerce.service.CommerceCountryLocalService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -28,6 +24,12 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,20 +58,19 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 	@Override
 	public double[] getCoordinates(
 			long groupId, String street, String city, String zip,
-			String commerceRegionCode, String commerceCountryCode)
+			String regionCode, String countryA2)
 		throws CommerceGeocoderException {
 
 		try {
-			CommerceCountry commerceCountry =
-				_commerceCountryLocalService.getCommerceCountry(
-					groupId, commerceCountryCode);
+			Group group = _groupLocalService.getGroup(groupId);
 
-			CommerceRegion commerceRegion =
-				_commerceRegionLocalService.getCommerceRegion(
-					commerceCountry.getCommerceCountryId(), commerceRegionCode);
+			Country country = _countryLocalService.getCountryByA2(
+				group.getCompanyId(), countryA2);
 
-			return _getCoordinates(
-				street, city, zip, commerceRegion, commerceCountry);
+			Region region = _regionLocalService.getRegion(
+				country.getCountryId(), regionCode);
+
+			return _getCoordinates(street, city, zip, region, country);
 		}
 		catch (CommerceGeocoderException commerceGeocoderException) {
 			throw commerceGeocoderException;
@@ -81,13 +82,12 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 
 	@Override
 	public double[] getCoordinates(
-			String street, String city, String zip,
-			CommerceRegion commerceRegion, CommerceCountry commerceCountry)
+			String street, String city, String zip, Region region,
+			Country country)
 		throws CommerceGeocoderException {
 
 		try {
-			return _getCoordinates(
-				street, city, zip, commerceRegion, commerceCountry);
+			return _getCoordinates(street, city, zip, region, country);
 		}
 		catch (CommerceGeocoderException commerceGeocoderException) {
 			throw commerceGeocoderException;
@@ -124,8 +124,8 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 	}
 
 	private double[] _getCoordinates(
-			String street, String city, String zip,
-			CommerceRegion commerceRegion, CommerceCountry commerceCountry)
+			String street, String city, String zip, Region region,
+			Country country)
 		throws Exception {
 
 		if (Validator.isNull(_apiKey)) {
@@ -135,10 +135,7 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 
 		Http.Options options = new Http.Options();
 
-		String url = _getUrl(
-			street, city, zip, commerceRegion, commerceCountry);
-
-		options.setLocation(url);
+		options.setLocation(_getUrl(street, city, zip, region, country));
 
 		String json = _http.URLtoString(options);
 
@@ -188,8 +185,8 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 	}
 
 	private String _getUrl(
-		String street, String city, String zip, CommerceRegion commerceRegion,
-		CommerceCountry commerceCountry) {
+		String street, String city, String zip, Region region,
+		Country country) {
 
 		StringBundler sb = new StringBundler(28);
 
@@ -200,13 +197,12 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 		_addParameter(sb, "locality", city);
 		_addParameter(sb, "postalCode", zip);
 
-		if (commerceRegion != null) {
-			_addParameter(sb, "adminDistrict", commerceRegion.getCode());
+		if (region != null) {
+			_addParameter(sb, "adminDistrict", region.getRegionCode());
 		}
 
-		if (commerceCountry != null) {
-			_addParameter(
-				sb, "countryRegion", commerceCountry.getTwoLettersISOCode());
+		if (country != null) {
+			_addParameter(sb, "countryRegion", country.getA2());
 		}
 
 		sb.setIndex(sb.index() - 1);
@@ -217,15 +213,18 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 	private volatile String _apiKey;
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile CommerceCountryLocalService _commerceCountryLocalService;
+	private volatile CountryLocalService _countryLocalService;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile CommerceRegionLocalService _commerceRegionLocalService;
+	@Reference
+	private volatile GroupLocalService _groupLocalService;
 
 	@Reference
 	private Http _http;
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	private volatile RegionLocalService _regionLocalService;
 
 }

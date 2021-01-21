@@ -36,6 +36,77 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-125755. Can switch to specific Site Pages Variation on content page when enable page versioning."
+	@priority = "5"
+	test ChangeSitePagesVariationInViewMode {
+		task ("Add a public content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			ContentPages.addPage(pageName = "Test Page Name");
+		}
+
+		task ("Add a Card fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page in the staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Assert the Card fragment is shown") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Card Title Example");
+		}
+
+		task ("Assert the Main Variation is selected in Site Pages Variation field") {
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
+		}
+
+		task ("Add a new site pages variation") {
+			Staging.addSitePagesVariationPG(sitePagesVariationName = "Test Site Pages Variation");
+		}
+
+		task ("Assert the new site pages variation is selected in Site Pages Variation field") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Test Site Pages Variation");
+		}
+
+		task ("Assert the Card fragment is shown") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Card Title Example");
+		}
+
+		task ("Change to Main Variation") {
+			Staging.changeSitePageVariationPG(
+				sitePagesVariationMenulistName = "Main Variation",
+				sitePagesVariationName = "Test Site Pages Variation");
+		}
+
+		task ("Assert the Main Variation is selected in Site Pages Variation field") {
+			Staging.viewSitePagesVariationPG(sitePagesVariationName = "Main Variation");
+		}
+
+		task ("Assert the Card fragment is shown") {
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Card Title Example");
+		}
+	}
+
 	@description = "This is a test for LPS-125755. The Site Pages Variation is enabled on content page in view mode when enable page versioning."
 	@priority = "5"
 	test PublishContentPage {

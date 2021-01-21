@@ -393,7 +393,7 @@ public class PoshiGetterUtil {
 			PoshiProseDefinition poshiProseDefinition =
 				new PoshiProseDefinition(url);
 
-			fileContent = Dom4JUtil.format(poshiProseDefinition.toElement());
+			return poshiProseDefinition.toElement();
 		}
 
 		BufferedReader bufferedReader = new BufferedReader(

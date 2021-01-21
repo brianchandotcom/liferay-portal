@@ -27,10 +27,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 import java.util.Enumeration;
 import java.util.Objects;
@@ -446,12 +446,6 @@ public class Log4JOutputMessageTest {
 				0, expectedLog4JLocationInfoFilePart.length()));
 	}
 
-	private void _clearUpFileContent(File logFile) throws Exception {
-		try (FileWriter fileWriter = new FileWriter(logFile, false)) {
-			fileWriter.write("");
-		}
-	}
-
 	private void _outputLog(String level, String message, Throwable throwable) {
 		if (level.equals("TRACE")) {
 			if ((message == null) && (throwable != null)) {
@@ -535,8 +529,12 @@ public class Log4JOutputMessageTest {
 		finally {
 			_unsyncStringWriter.reset();
 
-			_clearUpFileContent(_textLogFile);
-			_clearUpFileContent(_xmlLogFile);
+			Files.write(
+				_textLogFile.toPath(), new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
+			Files.write(
+				_xmlLogFile.toPath(), new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
 		}
 
 		TestException testException = new TestException();
@@ -553,8 +551,12 @@ public class Log4JOutputMessageTest {
 		finally {
 			_unsyncStringWriter.reset();
 
-			_clearUpFileContent(_textLogFile);
-			_clearUpFileContent(_xmlLogFile);
+			Files.write(
+				_textLogFile.toPath(), new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
+			Files.write(
+				_xmlLogFile.toPath(), new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
 		}
 
 		_outputLog(level, null, testException);
@@ -568,8 +570,12 @@ public class Log4JOutputMessageTest {
 		finally {
 			_unsyncStringWriter.reset();
 
-			_clearUpFileContent(_textLogFile);
-			_clearUpFileContent(_xmlLogFile);
+			Files.write(
+				_textLogFile.toPath(), new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
+			Files.write(
+				_xmlLogFile.toPath(), new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
 		}
 	}
 

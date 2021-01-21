@@ -131,9 +131,9 @@ public class AssetEntriesCheckerHelper {
 			return;
 		}
 
-		Stream<AssetEntry> streamAssetEntries = assetEntries.stream();
+		Stream<AssetEntry> stream = assetEntries.stream();
 
-		assetEntries = streamAssetEntries.distinct(
+		assetEntries = stream.distinct(
 		).collect(
 			Collectors.toList()
 		);

@@ -19,13 +19,13 @@ import com.liferay.commerce.account.admin.web.internal.servlet.taglib.ui.constan
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -107,8 +107,7 @@ public class CommerceAccountAddressScreenNavigationEntry
 				new CommerceAccountAddressAdminDisplayContext(
 					_commerceAccountModelResourcePermission,
 					_commerceAccountService, _commerceAddressService,
-					_commerceCountryService, _commerceRegionService,
-					renderRequest);
+					_countryService, _regionService, renderRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -132,13 +131,13 @@ public class CommerceAccountAddressScreenNavigationEntry
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private CountryService _countryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private RegionService _regionService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.account.admin.web)"

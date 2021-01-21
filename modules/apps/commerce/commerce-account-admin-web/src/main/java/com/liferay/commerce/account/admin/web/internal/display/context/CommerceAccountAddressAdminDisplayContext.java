@@ -18,18 +18,18 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,8 +53,7 @@ public class CommerceAccountAddressAdminDisplayContext
 			commerceAccountModelResourcePermission,
 		CommerceAccountService commerceAccountService,
 		CommerceAddressService commerceAddressService,
-		CommerceCountryService commerceCountryService,
-		CommerceRegionService commerceRegionService,
+		CountryService countryService, RegionService regionService,
 		RenderRequest renderRequest) {
 
 		super(
@@ -62,8 +61,8 @@ public class CommerceAccountAddressAdminDisplayContext
 			renderRequest);
 
 		_commerceAddressService = commerceAddressService;
-		_commerceCountryService = commerceCountryService;
-		_commerceRegionService = commerceRegionService;
+		_countryService = countryService;
+		_regionService = regionService;
 	}
 
 	public CommerceAddress getCommerceAddress() throws PortalException {
@@ -116,11 +115,6 @@ public class CommerceAccountAddressAdminDisplayContext
 		return commerceAddress.getCommerceAddressId();
 	}
 
-	public List<CommerceCountry> getCommerceCountries() {
-		return _commerceCountryService.getCommerceCountries(
-			commerceAccountAdminRequestHelper.getCompanyId(), true);
-	}
-
 	public long getCommerceCountryId() throws PortalException {
 		long commerceCountryId = 0;
 
@@ -145,9 +139,9 @@ public class CommerceAccountAddressAdminDisplayContext
 		return commerceRegionId;
 	}
 
-	public List<CommerceRegion> getCommerceRegions() throws PortalException {
-		return _commerceRegionService.getCommerceRegions(
-			getCommerceCountryId(), true);
+	public List<Country> getCountries() {
+		return _countryService.getCompanyCountries(
+			commerceAccountAdminRequestHelper.getCompanyId(), true);
 	}
 
 	public String getDeleteCommerceAddressURL(long commerceAddressId) {
@@ -200,6 +194,10 @@ public class CommerceAccountAddressAdminDisplayContext
 		return portletURL;
 	}
 
+	public List<Region> getRegions() throws PortalException {
+		return _regionService.getRegions(getCommerceCountryId(), true);
+	}
+
 	@Override
 	public SearchContainer<CommerceAddress> getSearchContainer()
 		throws PortalException {
@@ -238,8 +236,8 @@ public class CommerceAccountAddressAdminDisplayContext
 	}
 
 	private final CommerceAddressService _commerceAddressService;
-	private final CommerceCountryService _commerceCountryService;
-	private final CommerceRegionService _commerceRegionService;
+	private final CountryService _countryService;
+	private final RegionService _regionService;
 	private SearchContainer<CommerceAddress> _searchContainer;
 
 }

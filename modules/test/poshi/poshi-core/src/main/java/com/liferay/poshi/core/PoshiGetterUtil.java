@@ -377,7 +377,7 @@ public class PoshiGetterUtil {
 		String fileContent = FileUtil.read(url);
 		String filePath = url.getFile();
 
-		if (fileContent.endsWith("}") &&
+		if (!Dom4JUtil.isValidDocument(url) &&
 			(filePath.endsWith(".function") || filePath.endsWith(".macro") ||
 			 filePath.endsWith(".testcase"))) {
 

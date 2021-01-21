@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.Writer;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -139,6 +141,19 @@ public class Dom4JUtil {
 		}
 
 		return childElement;
+	}
+
+	public static boolean isValidDocument(URL url) {
+		SAXReader saxReader = new SAXReader();
+
+		try {
+			saxReader.read(url);
+		}
+		catch (DocumentException documentException) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public static Document parse(String xml) throws DocumentException {

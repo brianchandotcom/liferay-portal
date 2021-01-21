@@ -111,6 +111,34 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testDDMFormPortletItemSelector() {
+		mockDDMFormPortletItemSelector();
+
+		ThemeDisplay themeDisplay = mockThemeDisplay();
+
+		when(
+			themeDisplay.isSignedIn()
+		).thenReturn(
+			Boolean.TRUE
+		);
+
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
+			themeDisplay);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			createDDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setPortletNamespace(
+			_DDM_FORM_PORTLET_NAMESPACE);
+
+		Map<String, Object> parameters = spy.getParameters(
+			new DDMFormField("field", "document_library"),
+			ddmFormFieldRenderingContext);
+
+		Assert.assertTrue(parameters.containsKey("itemSelectorURL"));
+	}
+
+	@Test
 	public void testGetParametersShouldContainAllowGuestUsers() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
 			mockThemeDisplay());
@@ -344,6 +372,19 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		return spy;
 	}
 
+	protected void mockDDMFormPortletItemSelector() {
+		PowerMockito.when(
+			_itemSelector.getItemSelectorURL(
+				Mockito.eq(_requestBackedPortletURLFactory), Mockito.eq(_group),
+				Mockito.eq(_GROUP_ID),
+				Mockito.eq(
+					_DDM_FORM_PORTLET_NAMESPACE + "selectDocumentLibrary"),
+				Mockito.any(DDMUserPersonalFolderItemSelectorCriterion.class))
+		).thenReturn(
+			new MockLiferayPortletURL()
+		);
+	}
+
 	protected Folder mockFolder(long folderId) {
 		Folder folder = mock(Folder.class);
 
@@ -560,6 +601,13 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		).set(
 			_documentLibraryDDMFormFieldTemplateContextContributor, _portal
 		);
+
+		PowerMockito.when(
+			_portal.getPortletNamespace(
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM)
+		).thenReturn(
+			_DDM_FORM_PORTLET_NAMESPACE
+		);
 	}
 
 	protected void setUpPortletFileRepository() throws Exception {
@@ -622,6 +670,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private static final String _DDM_FORM_PORTLET_NAMESPACE =
+		"_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_";
 
 	private static final String _FILE_ENTRY_UUID =
 		RandomTestUtil.randomString();

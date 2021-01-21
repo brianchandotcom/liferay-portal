@@ -43,13 +43,33 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-103784. If not giving the individual content's update permission, content author with Update Page Content permission could only go to the edit mode."
+	@description = "This is a test for LPS-96545. Once the user has imported a structure by LAR (imported/exported), Validate if is possible to cancel the reset operation of the default values of all field of the Web Content Structure and the data that inputted is discarded"
+	@ignore = "true"
+	@priority = "2"
+	test CancelResetImportedStructureDefaultValues {
+		property portal.upstream = "false";
+
+		// TODO LPS-96545 CancelResetImportedStructureDefaultValues pending implementation
+
+	}
+
+	@description = "This is a test for LPS-96545. Once the user has created a structure, Validate if is possible to cancel the reset operation of the default values of each kind of field of the Web Content Structure and the data that inputted is discarded"
+	@ignore = "true"
+	@priority = "4"
+	test CancelResetStructureDefaultValues {
+		property portal.upstream = "false";
+
+		// TODO LPS-96545 CancelResetStructureDefaultValues pending implementation
+
+	}
+
+	@description = "This is a test for LPS-96795. If not giving the individual content's update permission, content author with Update Page Content permission could only go to the edit mode."
 	@ignore = "true"
 	@priority = "2"
 	test CannotEditAssetWithoutAssetUpdatePermission {
 		property portal.upstream = "false";
 
-		// TODO LPS-103784 CannotEditAssetWithoutAssetUpdatePermission pending implementation
+		// TODO LPS-96795 CannotEditAssetWithoutAssetUpdatePermission pending implementation
 
 	}
 

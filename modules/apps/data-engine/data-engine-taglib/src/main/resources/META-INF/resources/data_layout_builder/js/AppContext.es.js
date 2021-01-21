@@ -180,7 +180,7 @@ const editFocusedCustomObjectField = ({
 /**
  * Get unformatted definition field
  * @param {object} dataDefinition
- * @param {string} fieldName
+ * @param {object} field
  */
 const getUnformattedDefinitionField = (dataDefinition, {fieldName}) => {
 	return getDataDefinitionField(dataDefinition, fieldName);
@@ -189,7 +189,7 @@ const getUnformattedDefinitionField = (dataDefinition, {fieldName}) => {
 /**
  * Get formatted definition field
  * @param {object} dataLayoutBuilder
- * @param {string} fieldName
+ * @param {object} ddmfield
  */
 const getFormattedDefinitionField = (dataLayoutBuilder, field) => {
 	return dataLayoutBuilder.getDataDefinitionField(field);

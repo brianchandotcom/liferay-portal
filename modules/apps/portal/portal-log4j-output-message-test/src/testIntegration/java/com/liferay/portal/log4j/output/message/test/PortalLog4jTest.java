@@ -53,18 +53,18 @@ import org.junit.runner.RunWith;
  * @author Hai Yu
  */
 @RunWith(Arquillian.class)
-public class Log4JOutputMessageTest {
+public class PortalLog4jTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		Path tempLogDir = Files.createTempDirectory(
-			Log4JOutputMessageTest.class.getName());
+			PortalLog4jTest.class.getName());
 
 		File tempLogFileDir = tempLogDir.toFile();
 
 		tempLogFileDir.deleteOnExit();
 
-		Logger logger = Logger.getLogger(Log4JOutputMessageTest.class);
+		Logger logger = Logger.getLogger(PortalLog4jTest.class);
 
 		logger.setLevel(Level.TRACE);
 		logger.setAdditivity(false);
@@ -106,7 +106,7 @@ public class Log4JOutputMessageTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		Logger logger = Logger.getLogger(Log4JOutputMessageTest.class);
+		Logger logger = Logger.getLogger(PortalLog4jTest.class);
 
 		logger.removeAllAppenders();
 	}
@@ -217,7 +217,7 @@ public class Log4JOutputMessageTest {
 
 		String expectedClassNamePart = StringBundler.concat(
 			StringPool.OPEN_BRACKET,
-			Log4JOutputMessageTest.class.getSimpleName(), StringPool.COLON);
+			PortalLog4jTest.class.getSimpleName(), StringPool.COLON);
 
 		Assert.assertEquals(
 			expectedClassNamePart,
@@ -251,9 +251,9 @@ public class Log4JOutputMessageTest {
 
 			Assert.assertTrue(
 				"A throwable should be logged and the first stack should be " +
-					Log4JOutputMessageTest.class.getName(),
+					PortalLog4jTest.class.getName(),
 				actualFirstPrefixStackTraceElement.startsWith(
-					"at " + Log4JOutputMessageTest.class.getName()));
+					"at " + PortalLog4jTest.class.getName()));
 		}
 	}
 
@@ -279,7 +279,7 @@ public class Log4JOutputMessageTest {
 
 		String expectedLog4JEventLoggerPart = StringBundler.concat(
 			StringPool.SPACE, "logger=", StringPool.QUOTE,
-			Log4JOutputMessageTest.class.getName(), StringPool.QUOTE,
+			PortalLog4jTest.class.getName(), StringPool.QUOTE,
 			StringPool.SPACE);
 
 		Assert.assertEquals(
@@ -354,9 +354,9 @@ public class Log4JOutputMessageTest {
 
 			Assert.assertTrue(
 				"A throwable should be logged and the first stack should be " +
-					Log4JOutputMessageTest.class.getName(),
+					PortalLog4jTest.class.getName(),
 				actualFirstPrefixStackTraceElement.startsWith(
-					"at " + Log4JOutputMessageTest.class.getName()));
+					"at " + PortalLog4jTest.class.getName()));
 		}
 
 		// log4j:locationInfo
@@ -371,7 +371,7 @@ public class Log4JOutputMessageTest {
 
 		String expectedLog4JLocationInfoClassPart = StringBundler.concat(
 			StringPool.SPACE, "class=", StringPool.QUOTE,
-			Log4JOutputMessageTest.class.getName(), StringPool.QUOTE,
+			PortalLog4jTest.class.getName(), StringPool.QUOTE,
 			StringPool.SPACE);
 
 		Assert.assertEquals(
@@ -388,7 +388,7 @@ public class Log4JOutputMessageTest {
 
 		String expectedLog4JLocationInfoFilePart = StringBundler.concat(
 			"file=", StringPool.QUOTE,
-			Log4JOutputMessageTest.class.getSimpleName(), ".java",
+			PortalLog4jTest.class.getSimpleName(), ".java",
 			StringPool.QUOTE);
 
 		Assert.assertEquals(
@@ -511,7 +511,7 @@ public class Log4JOutputMessageTest {
 	private static final String _DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		Log4JOutputMessageTest.class);
+		PortalLog4jTest.class);
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");

@@ -24,11 +24,13 @@ definition {
 	macro deleteDepot {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
+		var portalURL = JSONCompany.getPortalURL();
+
 		var curl = '''
 			${portalURL}/api/jsonws/depot.depotentry/delete-depot-entry \
-			-u test@liferay.com:test \
-			-d nameMap={"en_US": "${depotId}"} \
-		''';
+				-u test@liferay.com:test \
+				-d depotEntryId=${depotId}
+			''';
 
 		echo("## Deleting a 'Depot' with the following info using JSONWS:");
 

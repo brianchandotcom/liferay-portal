@@ -17,6 +17,7 @@ package com.liferay.poshi.core.prose;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.util.Dom4JUtil;
+import com.liferay.poshi.core.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,7 +60,7 @@ public class PoshiProseDefinitionTest extends TestCase {
 		PoshiContext.readFiles(poshiFileNames, _TEST_BASE_DIR_NAME);
 
 		_poshiProseDefinition = new PoshiProseDefinition(
-			_POSHI_PROSE_FILE_NAME, read(_testBaseDir, _POSHI_PROSE_FILE_NAME));
+			FileUtil.getURL(new File(_testBaseDir, _POSHI_PROSE_FILE_NAME)));
 	}
 
 	@After

@@ -391,8 +391,7 @@ public class PoshiGetterUtil {
 
 		if (filePath.endsWith(".prose")) {
 			PoshiProseDefinition poshiProseDefinition =
-				new PoshiProseDefinition(
-					getFileNameFromFilePath(filePath), fileContent);
+				new PoshiProseDefinition(url);
 
 			fileContent = Dom4JUtil.format(poshiProseDefinition.toElement());
 		}

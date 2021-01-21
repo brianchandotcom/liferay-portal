@@ -15,8 +15,13 @@
 package com.liferay.poshi.core.prose;
 
 import com.liferay.poshi.core.util.Dom4JUtil;
+import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
+
+import java.io.IOException;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -33,10 +38,19 @@ import org.dom4j.tree.DefaultAttribute;
  */
 public class PoshiProseDefinition extends BasePoshiProse {
 
-	public PoshiProseDefinition(String fileName, String fileContent) {
-		_fileName = fileName;
+	public PoshiProseDefinition(URL url) throws IOException {
+		_fileName = url.getFile();
 
-		fileContent = filterCommentLines(fileContent);
+		String fileContent = null;
+
+		try {
+			fileContent = filterCommentLines(FileUtil.read(url));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to read file: " + url.getFile(),
+				ioException.getCause());
+		}
 
 		Matcher matcher = _definitionPattern.matcher(fileContent);
 

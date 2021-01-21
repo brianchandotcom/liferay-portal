@@ -152,7 +152,7 @@ AUI.add(
 			'</span>';
 
 		var TPL_ENTRY_WRAPPER =
-			'<li class="lfr-asset-item data-title="{title}"></li>';
+			'<li class="card-page-item card-page-item-asset" data-title="{title}"></li>';
 
 		var TPL_ERROR_FOLDER = new A.Template(
 			'<span class="lfr-status-success-label">{validFilesLength}</span>',

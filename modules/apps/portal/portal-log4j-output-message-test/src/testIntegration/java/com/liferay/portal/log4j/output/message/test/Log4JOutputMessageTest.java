@@ -31,8 +31,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,44 +76,15 @@ public class Log4JOutputMessageTest {
 		while (enumeration.hasMoreElements()) {
 			Appender appender = enumeration.nextElement();
 
-			if ((appender instanceof FileAppender) &&
-				(Objects.equals("TEXT_FILE", appender.getName()) ||
-				 Objects.equals("XML_FILE", appender.getName()))) {
-
-				RollingFileAppender portalRollingFileAppender =
-					(RollingFileAppender)appender;
-
-				TimeBasedRollingPolicy portalTimeBasedRollingPolicy =
-					(TimeBasedRollingPolicy)
-						portalRollingFileAppender.getRollingPolicy();
-
-				TimeBasedRollingPolicy testTimeBasedRollingPolicy =
-					new TimeBasedRollingPolicy();
-
-				testTimeBasedRollingPolicy.setFileNamePattern(
-					StringBundler.concat(
-						StringUtil.replace(
-							tempLogFileDir.toString(), '\\', '/'),
-						StringPool.SLASH,
-						StringUtil.extractLast(
-							portalTimeBasedRollingPolicy.getFileNamePattern(),
-							StringPool.SLASH)));
-
-				RollingFileAppender testRollingFileAppender =
-					new RollingFileAppender();
-
-				testRollingFileAppender.setLayout(
-					portalRollingFileAppender.getLayout());
-				testRollingFileAppender.setRollingPolicy(
-					testTimeBasedRollingPolicy);
-
-				testRollingFileAppender.activateOptions();
-
-				logger.addAppender(testRollingFileAppender);
-
-				_logFiles.put(
-					portalRollingFileAppender.getName(),
-					new File(testRollingFileAppender.getFile()));
+			if (appender instanceof FileAppender) {
+				if (Objects.equals("TEXT_FILE", appender.getName())) {
+					_textLogFile = _initFileAppender(
+						logger, appender, tempLogFileDir.toString());
+				}
+				else if (Objects.equals("XML_FILE", appender.getName())) {
+					_xmlLogFile = _initFileAppender(
+						logger, appender, tempLogFileDir.toString());
+				}
 			}
 			else if ((appender instanceof ConsoleAppender) &&
 					 Objects.equals("CONSOLE", appender.getName())) {
@@ -158,6 +127,39 @@ public class Log4JOutputMessageTest {
 		_testLogOutput("WARN");
 		_testLogOutput("ERROR");
 		_testLogOutput("FATAL");
+	}
+
+	private static File _initFileAppender(
+		Logger logger, Appender appender, String tempLogDir) {
+
+		RollingFileAppender portalRollingFileAppender =
+			(RollingFileAppender)appender;
+
+		TimeBasedRollingPolicy portalTimeBasedRollingPolicy =
+			(TimeBasedRollingPolicy)
+				portalRollingFileAppender.getRollingPolicy();
+
+		TimeBasedRollingPolicy testTimeBasedRollingPolicy =
+			new TimeBasedRollingPolicy();
+
+		testTimeBasedRollingPolicy.setFileNamePattern(
+			StringBundler.concat(
+				StringUtil.replace(tempLogDir, '\\', '/'), StringPool.SLASH,
+				StringUtil.extractLast(
+					portalTimeBasedRollingPolicy.getFileNamePattern(),
+					StringPool.SLASH)));
+
+		RollingFileAppender testRollingFileAppender = new RollingFileAppender();
+
+		testRollingFileAppender.setLayout(
+			portalRollingFileAppender.getLayout());
+		testRollingFileAppender.setRollingPolicy(testTimeBasedRollingPolicy);
+
+		testRollingFileAppender.activateOptions();
+
+		logger.addAppender(testRollingFileAppender);
+
+		return new File(testRollingFileAppender.getFile());
 	}
 
 	private void _assertTextLog(
@@ -482,29 +484,26 @@ public class Log4JOutputMessageTest {
 
 		_outputLog(level, message, throwable);
 
-		File textLogFile = _logFiles.get("TEXT_FILE");
-		File xmlLogFile = _logFiles.get("XML_FILE");
-
 		try {
 			_assertTextLog(
 				level, message, throwable, _unsyncStringWriter.toString());
 
 			_assertTextLog(
 				level, message, throwable,
-				StreamUtil.toString(new FileInputStream(textLogFile)));
+				StreamUtil.toString(new FileInputStream(_textLogFile)));
 
 			_assertXmlLog(
 				level, message, throwable,
-				StreamUtil.toString(new FileInputStream(xmlLogFile)));
+				StreamUtil.toString(new FileInputStream(_xmlLogFile)));
 		}
 		finally {
 			_unsyncStringWriter.reset();
 
 			Files.write(
-				textLogFile.toPath(), new byte[0],
+				_textLogFile.toPath(), new byte[0],
 				StandardOpenOption.TRUNCATE_EXISTING);
 			Files.write(
-				xmlLogFile.toPath(), new byte[0],
+				_xmlLogFile.toPath(), new byte[0],
 				StandardOpenOption.TRUNCATE_EXISTING);
 		}
 	}
@@ -516,8 +515,9 @@ public class Log4JOutputMessageTest {
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
-	private static final Map<String, File> _logFiles = new HashMap<>();
+	private static File _textLogFile;
 	private static UnsyncStringWriter _unsyncStringWriter;
+	private static File _xmlLogFile;
 
 	private class TestException extends Exception {
 	}

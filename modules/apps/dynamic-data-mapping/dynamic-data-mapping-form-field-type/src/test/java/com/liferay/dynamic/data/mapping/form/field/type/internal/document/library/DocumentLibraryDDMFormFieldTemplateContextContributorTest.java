@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.HtmlImpl;
@@ -103,6 +104,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		setUpJSONFactory();
 		setUpJSONFactoryUtil();
 		setUpParamUtil();
+		setUpPortal();
 		setUpPortletFileRepository();
 		setUpRequestBackedPortletURLFactoryUtil();
 		setUpUserLocalService();
@@ -551,6 +553,15 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		PropsUtil.setProps(Mockito.mock(Props.class));
 	}
 
+	protected void setUpPortal() throws Exception {
+		MemberMatcher.field(
+			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
+			"portal"
+		).set(
+			_documentLibraryDDMFormFieldTemplateContextContributor, _portal
+		);
+	}
+
 	protected void setUpPortletFileRepository() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
@@ -650,6 +661,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	private ItemSelector _itemSelector;
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+
+	@Mock
+	private Portal _portal;
 
 	@Mock
 	private PortletFileRepository _portletFileRepository;

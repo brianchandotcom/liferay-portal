@@ -670,6 +670,14 @@ definition {
 	test ViewYouTubeThumbnail {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		LexiconEntry.gotoAdd();
+
+		AssertVisible(
+			key_text = "video",
+			locator1 = "Icon#ANY");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
 			videoURL = "https://youtu.be/HOdbzGCI5ME");

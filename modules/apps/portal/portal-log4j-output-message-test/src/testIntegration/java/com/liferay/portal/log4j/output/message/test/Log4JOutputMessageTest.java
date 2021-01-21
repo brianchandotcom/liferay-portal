@@ -118,23 +118,6 @@ public class Log4JOutputMessageTest {
 		_testLogOutput("FATAL");
 	}
 
-	@Test
-	public void testPortalLogFileName() {
-		Matcher matcher = _textFileNamePattern.matcher(_portalTextLogFileName);
-
-		Assert.assertTrue(
-			"Text log file name should match the pattern liferay.yyyy-MM-dd." +
-				"log, but actual name is " + _portalTextLogFileName,
-			matcher.matches());
-
-		matcher = _xmlFileNamePattern.matcher(_portalXmlLogFileName);
-
-		Assert.assertTrue(
-			"XML log file name should match the pattern liferay.yyyy-MM-dd." +
-				"xml, but actual name is " + _portalXmlLogFileName,
-			matcher.matches());
-	}
-
 	private static FileAppender _createFileAppender(
 		Appender appender, File tempLogFileDir) {
 
@@ -166,21 +149,13 @@ public class Log4JOutputMessageTest {
 
 		testRollingFileAppender.activateOptions();
 
-		String portalLogFileName = portalRollingFileAppender.getFile();
-
 		if (Objects.equals("TEXT_FILE", portalRollingFileAppender.getName())) {
 			_textLogFile = new File(testRollingFileAppender.getFile());
-
-			_portalTextLogFileName = StringUtil.extractLast(
-				portalLogFileName, StringPool.SLASH);
 		}
 		else if (Objects.equals(
 					portalRollingFileAppender.getName(), "XML_FILE")) {
 
 			_xmlLogFile = new File(testRollingFileAppender.getFile());
-
-			_portalXmlLogFileName = StringUtil.extractLast(
-				portalLogFileName, StringPool.SLASH);
 		}
 
 		return testRollingFileAppender;
@@ -539,14 +514,8 @@ public class Log4JOutputMessageTest {
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
-	private static String _portalTextLogFileName;
-	private static String _portalXmlLogFileName;
-	private static final Pattern _textFileNamePattern = Pattern.compile(
-		"liferay.\\d\\d\\d\\d-\\d\\d-\\d\\d.log");
 	private static File _textLogFile;
 	private static UnsyncStringWriter _unsyncStringWriter;
-	private static final Pattern _xmlFileNamePattern = Pattern.compile(
-		"liferay.\\d\\d\\d\\d-\\d\\d-\\d\\d.xml");
 	private static File _xmlLogFile;
 
 	private class TestException extends Exception {

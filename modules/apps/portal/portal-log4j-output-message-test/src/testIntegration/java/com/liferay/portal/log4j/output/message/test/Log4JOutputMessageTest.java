@@ -269,11 +269,8 @@ public class Log4JOutputMessageTest {
 
 		messageLine = messageLine.substring(classNamePartEndIndex + 1);
 
-		if (expectedMessage == null) {
-			expectedMessage = "null";
-		}
-
-		Assert.assertEquals(expectedMessage, messageLine.trim());
+		Assert.assertEquals(
+			String.valueOf(expectedMessage), messageLine.trim());
 
 		// Throwable part
 

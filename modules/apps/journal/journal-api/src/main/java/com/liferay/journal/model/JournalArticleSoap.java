@@ -49,6 +49,7 @@ public class JournalArticleSoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setTreePath(model.getTreePath());
 		soapModel.setArticleId(model.getArticleId());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setUrlTitle(model.getUrlTitle());
 		soapModel.setContent(model.getContent());
@@ -254,6 +255,14 @@ public class JournalArticleSoap implements Serializable {
 		_articleId = articleId;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public double getVersion() {
 		return _version;
 	}
@@ -430,6 +439,7 @@ public class JournalArticleSoap implements Serializable {
 	private long _classPK;
 	private String _treePath;
 	private String _articleId;
+	private String _externalReferenceCode;
 	private double _version;
 	private String _urlTitle;
 	private String _content;

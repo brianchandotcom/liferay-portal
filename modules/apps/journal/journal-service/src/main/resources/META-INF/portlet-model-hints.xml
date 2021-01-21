@@ -22,6 +22,7 @@
 		<field name="articleId" type="String">
 			<hint name="upper-case">true</hint>
 		</field>
+		<field name="externalReferenceCode" type="String" />
 		<field name="version" type="double" />
 		<field name="urlTitle" type="String">
 			<hint name="max-length">255</hint>

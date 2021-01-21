@@ -87,16 +87,16 @@ public class JournalArticleModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"folderId", Types.BIGINT},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"treePath", Types.VARCHAR}, {"articleId", Types.VARCHAR},
-		{"version", Types.DOUBLE}, {"urlTitle", Types.VARCHAR},
-		{"content", Types.CLOB}, {"DDMStructureKey", Types.VARCHAR},
-		{"DDMTemplateKey", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
-		{"layoutUuid", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
-		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
-		{"indexable", Types.BOOLEAN}, {"smallImage", Types.BOOLEAN},
-		{"smallImageId", Types.BIGINT}, {"smallImageURL", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"externalReferenceCode", Types.VARCHAR}, {"version", Types.DOUBLE},
+		{"urlTitle", Types.VARCHAR}, {"content", Types.CLOB},
+		{"DDMStructureKey", Types.VARCHAR}, {"DDMTemplateKey", Types.VARCHAR},
+		{"defaultLanguageId", Types.VARCHAR}, {"layoutUuid", Types.VARCHAR},
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
+		{"reviewDate", Types.TIMESTAMP}, {"indexable", Types.BOOLEAN},
+		{"smallImage", Types.BOOLEAN}, {"smallImageId", Types.BIGINT},
+		{"smallImageURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -119,6 +119,7 @@ public class JournalArticleModelImpl
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("articleId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
@@ -141,7 +142,7 @@ public class JournalArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalArticle (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,id_ LONG not null,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,urlTitle VARCHAR(255) null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (id_, ctCollectionId))";
+		"create table JournalArticle (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,id_ LONG not null,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,version DOUBLE,urlTitle VARCHAR(255) null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (id_, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 
@@ -203,67 +204,73 @@ public class JournalArticleModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long FOLDERID_COLUMN_BITMASK = 128L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 256L;
+	public static final long FOLDERID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long INDEXABLE_COLUMN_BITMASK = 512L;
+	public static final long GROUPID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 1024L;
+	public static final long INDEXABLE_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 2048L;
+	public static final long LAYOUTUUID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 4096L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 8192L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 8192L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long URLTITLE_COLUMN_BITMASK = 16384L;
+	public static final long STATUS_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 32768L;
+	public static final long URLTITLE_COLUMN_BITMASK = 32768L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 65536L;
+	public static final long USERID_COLUMN_BITMASK = 65536L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 131072L;
+	public static final long UUID_COLUMN_BITMASK = 131072L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 262144L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -310,6 +317,7 @@ public class JournalArticleModelImpl
 		model.setClassPK(soapModel.getClassPK());
 		model.setTreePath(soapModel.getTreePath());
 		model.setArticleId(soapModel.getArticleId());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setVersion(soapModel.getVersion());
 		model.setUrlTitle(soapModel.getUrlTitle());
 		model.setContent(soapModel.getContent());
@@ -553,6 +561,12 @@ public class JournalArticleModelImpl
 		attributeSetterBiConsumers.put(
 			"articleId",
 			(BiConsumer<JournalArticle, String>)JournalArticle::setArticleId);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", JournalArticle::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<JournalArticle, String>)
+				JournalArticle::setExternalReferenceCode);
 		attributeGetterFunctions.put("version", JournalArticle::getVersion);
 		attributeSetterBiConsumers.put(
 			"version",
@@ -1048,6 +1062,35 @@ public class JournalArticleModelImpl
 	@Deprecated
 	public String getOriginalArticleId() {
 		return getColumnOriginalValue("articleId");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1797,6 +1840,7 @@ public class JournalArticleModelImpl
 		journalArticleImpl.setClassPK(getClassPK());
 		journalArticleImpl.setTreePath(getTreePath());
 		journalArticleImpl.setArticleId(getArticleId());
+		journalArticleImpl.setExternalReferenceCode(getExternalReferenceCode());
 		journalArticleImpl.setVersion(getVersion());
 		journalArticleImpl.setUrlTitle(getUrlTitle());
 		journalArticleImpl.setContent(getContent());
@@ -1980,6 +2024,18 @@ public class JournalArticleModelImpl
 
 		if ((articleId != null) && (articleId.length() == 0)) {
 			journalArticleCacheModel.articleId = null;
+		}
+
+		journalArticleCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			journalArticleCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			journalArticleCacheModel.externalReferenceCode = null;
 		}
 
 		journalArticleCacheModel.version = getVersion();
@@ -2196,6 +2252,7 @@ public class JournalArticleModelImpl
 	private long _classPK;
 	private String _treePath;
 	private String _articleId;
+	private String _externalReferenceCode;
 	private double _version;
 	private String _urlTitle;
 	private String _content;
@@ -2261,6 +2318,8 @@ public class JournalArticleModelImpl
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("treePath", _treePath);
 		_columnOriginalValues.put("articleId", _articleId);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("version", _version);
 		_columnOriginalValues.put("urlTitle", _urlTitle);
 		_columnOriginalValues.put("content", _content);
@@ -2336,43 +2395,45 @@ public class JournalArticleModelImpl
 
 		columnBitmasks.put("articleId", 32768L);
 
-		columnBitmasks.put("version", 65536L);
+		columnBitmasks.put("externalReferenceCode", 65536L);
 
-		columnBitmasks.put("urlTitle", 131072L);
+		columnBitmasks.put("version", 131072L);
 
-		columnBitmasks.put("content", 262144L);
+		columnBitmasks.put("urlTitle", 262144L);
 
-		columnBitmasks.put("DDMStructureKey", 524288L);
+		columnBitmasks.put("content", 524288L);
 
-		columnBitmasks.put("DDMTemplateKey", 1048576L);
+		columnBitmasks.put("DDMStructureKey", 1048576L);
 
-		columnBitmasks.put("defaultLanguageId", 2097152L);
+		columnBitmasks.put("DDMTemplateKey", 2097152L);
 
-		columnBitmasks.put("layoutUuid", 4194304L);
+		columnBitmasks.put("defaultLanguageId", 4194304L);
 
-		columnBitmasks.put("displayDate", 8388608L);
+		columnBitmasks.put("layoutUuid", 8388608L);
 
-		columnBitmasks.put("expirationDate", 16777216L);
+		columnBitmasks.put("displayDate", 16777216L);
 
-		columnBitmasks.put("reviewDate", 33554432L);
+		columnBitmasks.put("expirationDate", 33554432L);
 
-		columnBitmasks.put("indexable", 67108864L);
+		columnBitmasks.put("reviewDate", 67108864L);
 
-		columnBitmasks.put("smallImage", 134217728L);
+		columnBitmasks.put("indexable", 134217728L);
 
-		columnBitmasks.put("smallImageId", 268435456L);
+		columnBitmasks.put("smallImage", 268435456L);
 
-		columnBitmasks.put("smallImageURL", 536870912L);
+		columnBitmasks.put("smallImageId", 536870912L);
 
-		columnBitmasks.put("lastPublishDate", 1073741824L);
+		columnBitmasks.put("smallImageURL", 1073741824L);
 
-		columnBitmasks.put("status", 2147483648L);
+		columnBitmasks.put("lastPublishDate", 2147483648L);
 
-		columnBitmasks.put("statusByUserId", 4294967296L);
+		columnBitmasks.put("status", 4294967296L);
 
-		columnBitmasks.put("statusByUserName", 8589934592L);
+		columnBitmasks.put("statusByUserId", 8589934592L);
 
-		columnBitmasks.put("statusDate", 17179869184L);
+		columnBitmasks.put("statusByUserName", 17179869184L);
+
+		columnBitmasks.put("statusDate", 34359738368L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

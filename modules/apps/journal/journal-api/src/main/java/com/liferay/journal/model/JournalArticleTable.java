@@ -68,6 +68,10 @@ public class JournalArticleTable extends BaseTable<JournalArticleTable> {
 		"treePath", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, String> articleId = createColumn(
 		"articleId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<JournalArticleTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, Double> version = createColumn(
 		"version", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<JournalArticleTable, String> urlTitle = createColumn(

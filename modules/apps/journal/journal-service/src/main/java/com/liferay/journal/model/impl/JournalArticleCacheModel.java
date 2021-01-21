@@ -77,7 +77,7 @@ public class JournalArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(71);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,6 +111,8 @@ public class JournalArticleCacheModel
 		sb.append(treePath);
 		sb.append(", articleId=");
 		sb.append(articleId);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", urlTitle=");
@@ -211,6 +213,13 @@ public class JournalArticleCacheModel
 		}
 		else {
 			journalArticleImpl.setArticleId(articleId);
+		}
+
+		if (externalReferenceCode == null) {
+			journalArticleImpl.setExternalReferenceCode("");
+		}
+		else {
+			journalArticleImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		journalArticleImpl.setVersion(version);
@@ -349,6 +358,7 @@ public class JournalArticleCacheModel
 		classPK = objectInput.readLong();
 		treePath = objectInput.readUTF();
 		articleId = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		version = objectInput.readDouble();
 		urlTitle = objectInput.readUTF();
@@ -430,6 +440,13 @@ public class JournalArticleCacheModel
 		}
 		else {
 			objectOutput.writeUTF(articleId);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeDouble(version);
@@ -527,6 +544,7 @@ public class JournalArticleCacheModel
 	public long classPK;
 	public String treePath;
 	public String articleId;
+	public String externalReferenceCode;
 	public double version;
 	public String urlTitle;
 	public String content;

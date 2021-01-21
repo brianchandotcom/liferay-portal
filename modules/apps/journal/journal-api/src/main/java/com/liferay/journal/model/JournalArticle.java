@@ -76,6 +76,26 @@ public interface JournalArticle
 			}
 
 		};
+	public static final Accessor<JournalArticle, String>
+		EXTERNAL_REFERENCE_CODE_ACCESSOR =
+			new Accessor<JournalArticle, String>() {
+
+				@Override
+				public String get(JournalArticle journalArticle) {
+					return journalArticle.getExternalReferenceCode();
+				}
+
+				@Override
+				public Class<String> getAttributeClass() {
+					return String.class;
+				}
+
+				@Override
+				public Class<JournalArticle> getTypeClass() {
+					return JournalArticle.class;
+				}
+
+			};
 
 	public com.liferay.portal.kernel.repository.model.Folder addImagesFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;

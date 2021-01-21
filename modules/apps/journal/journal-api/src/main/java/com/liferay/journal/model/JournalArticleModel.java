@@ -351,6 +351,21 @@ public interface JournalArticleModel
 	public void setArticleId(String articleId);
 
 	/**
+	 * Returns the external reference code of this journal article.
+	 *
+	 * @return the external reference code of this journal article
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this journal article.
+	 *
+	 * @param externalReferenceCode the external reference code of this journal article
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the version of this journal article.
 	 *
 	 * @return the version of this journal article

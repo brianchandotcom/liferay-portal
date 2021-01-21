@@ -15,6 +15,7 @@ create table JournalArticle (
 	classPK LONG,
 	treePath STRING null,
 	articleId VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	version DOUBLE,
 	urlTitle VARCHAR(255) null,
 	content TEXT null,

@@ -235,7 +235,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110462. The value of editable field should be reset when the mapped content is missing
+	@description = "This is a test for LPS-110462. The value of editable field should be reset when the mapped content is missing"
 	@ignore = "true"
 	@priority = "2"
 	test ExportImportFragmentCompositionWhenMappedContedIsMissing {

@@ -1,4 +1,7 @@
 dependencies {
 	compileOnly group: "com.liferay", name: "org.apache.felix.configadmin", version: "1.9.8.LIFERAY-PATCHED-4"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:static:portal-file-install:portal-file-install-impl")
+	compileOnly project(":core:petra:petra-string")
 }

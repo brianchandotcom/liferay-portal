@@ -103,7 +103,7 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 			StringPool.BLANK);
 
 		if (Validator.isNull(languageId)) {
-			locale = _portal.getSiteDefaultLocale(groupId);
+			locale = ddmForm.getDefaultLocale();
 		}
 		else {
 			locale = LocaleUtil.fromLanguageId(languageId);

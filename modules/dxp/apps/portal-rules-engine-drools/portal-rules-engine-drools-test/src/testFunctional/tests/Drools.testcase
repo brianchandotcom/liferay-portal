@@ -1,6 +1,7 @@
 @component-name = "portal-workflow-ee"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
@@ -25,8 +26,6 @@ definition {
 
 	@priority = "4"
 	test ViewWebContentInSampleDrools {
-		property portal.acceptance = "true";
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		property osgi.modules.includes = "portal-rules-engine-sample-web";

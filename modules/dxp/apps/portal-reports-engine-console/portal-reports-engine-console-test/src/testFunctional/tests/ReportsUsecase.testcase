@@ -1,6 +1,7 @@
 @component-name = "portal-workflow-ee"
 definition {
 
+	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
@@ -53,8 +54,6 @@ definition {
 
 	@priority = "4"
 	test DownloadReportPG {
-		property portal.acceptance = "true";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -133,7 +132,6 @@ definition {
 	@description = "This is a use case for LPS-51009."
 	@priority = "4"
 	test ViewReportEmailNewConfiguration {
-		property portal.acceptance = "true";
 		property test.assert.javascript.errors = "false";
 		property test.name.skip.portal.instance = "ReportsUsecase#ViewReportEmailNewConfiguration";
 
@@ -236,8 +234,6 @@ definition {
 
 	@priority = "4"
 	test ViewReportPG {
-		property portal.acceptance = "true";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

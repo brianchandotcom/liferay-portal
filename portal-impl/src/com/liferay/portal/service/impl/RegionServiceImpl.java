@@ -19,9 +19,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -42,10 +43,8 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 			String regionCode, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!getPermissionChecker().isOmniadmin()) {
-			throw new PrincipalException.MustBeOmniadmin(
-				getPermissionChecker());
-		}
+		PortalPermissionUtil.check(
+			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
 
 		return regionLocalService.addRegion(
 			countryId, active, name, position, regionCode, serviceContext);
@@ -73,12 +72,8 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 
 	@Override
 	public void deleteRegion(long regionId) throws PortalException {
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException.MustBeOmniadmin(
-				getPermissionChecker());
-		}
+		PortalPermissionUtil.check(
+			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
 
 		regionLocalService.deleteRegion(regionId);
 	}
@@ -169,6 +164,9 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 	public Region updateActive(long regionId, boolean active)
 		throws PortalException {
 
+		PortalPermissionUtil.check(
+			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
+
 		return regionLocalService.updateActive(regionId, active);
 	}
 
@@ -178,12 +176,8 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 			String regionCode)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException.MustBeOmniadmin(
-				getPermissionChecker());
-		}
+		PortalPermissionUtil.check(
+			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
 
 		return regionLocalService.updateRegion(
 			regionId, active, name, position, regionCode);

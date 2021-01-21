@@ -21,8 +21,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.log.LogWrapper;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -66,7 +64,7 @@ public class Log4JOutputMessageTest {
 
 		tempLogFileDir.deleteOnExit();
 
-		Logger logger = _getLogger();
+		Logger logger = Logger.getLogger(Log4JOutputMessageTest.class);
 
 		logger.setLevel(Level.TRACE);
 		logger.setAdditivity(false);
@@ -104,7 +102,7 @@ public class Log4JOutputMessageTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		Logger logger = _getLogger();
+		Logger logger = Logger.getLogger(Log4JOutputMessageTest.class);
 
 		logger.removeAllAppenders();
 	}
@@ -134,14 +132,6 @@ public class Log4JOutputMessageTest {
 			"XML log file name should match the pattern liferay.yyyy-MM-dd." +
 				"xml, but actual name is " + _portalXmlLogFileName,
 			matcher.matches());
-	}
-
-	private static Logger _getLogger() {
-		LogWrapper logWrapper = (LogWrapper)_log;
-
-		Log log = logWrapper.getWrappedLog();
-
-		return ReflectionTestUtil.getFieldValue(log, "_logger");
 	}
 
 	private static void _setLoggerRollingFileAppender(

@@ -59,6 +59,8 @@ definition {
 	}
 
 	macro addNewChannelsEntry {
+		Pause(locator1 = "6000");
+
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
 		Pause(locator1 = "3000");

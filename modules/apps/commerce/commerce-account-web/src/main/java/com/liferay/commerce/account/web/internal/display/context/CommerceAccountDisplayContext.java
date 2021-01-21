@@ -23,21 +23,21 @@ import com.liferay.commerce.account.web.internal.display.context.util.CommerceAc
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -62,8 +62,7 @@ public class CommerceAccountDisplayContext {
 	public CommerceAccountDisplayContext(
 		CommerceAccountService commerceAccountService,
 		CommerceAddressService commerceAddressService,
-		CommerceCountryService commerceCountryService,
-		CommerceRegionService commerceRegionService,
+		CountryService countryService, RegionService regionService,
 		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<CommerceAccount> modelResourcePermission,
@@ -72,8 +71,8 @@ public class CommerceAccountDisplayContext {
 
 		_commerceAccountService = commerceAccountService;
 		_commerceAddressService = commerceAddressService;
-		_commerceCountryService = commerceCountryService;
-		_commerceRegionService = commerceRegionService;
+		_countryService = countryService;
+		_regionService = regionService;
 		_configurationProvider = configurationProvider;
 		_modelResourcePermission = modelResourcePermission;
 		_userFileUploadsConfiguration = userFileUploadsConfiguration;
@@ -108,16 +107,6 @@ public class CommerceAccountDisplayContext {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	public List<CommerceCountry> getCommerceCountries() {
-		return _commerceCountryService.getCommerceCountries(
-			_commerceAccountRequestHelper.getCompanyId(), true);
-	}
-
-	public List<CommerceRegion> getCommerceRegions(long commerceCountryId) {
-		return _commerceRegionService.getCommerceRegions(
-			commerceCountryId, true);
-	}
-
 	public int getCommerceSiteType() throws PortalException {
 		CommerceAccountGroupServiceConfiguration
 			commerceAccountGroupServiceConfiguration =
@@ -128,6 +117,11 @@ public class CommerceAccountDisplayContext {
 						CommerceAccountConstants.SERVICE_NAME));
 
 		return commerceAccountGroupServiceConfiguration.commerceSiteType();
+	}
+
+	public List<Country> getCountries() {
+		return _countryService.getCompanyCountries(
+			_commerceAccountRequestHelper.getCompanyId(), true);
 	}
 
 	public CommerceAccount getCurrentCommerceAccount() throws PortalException {
@@ -270,6 +264,10 @@ public class CommerceAccountDisplayContext {
 		return portletURL;
 	}
 
+	public List<Region> getRegions(long countryId) {
+		return _regionService.getRegions(countryId, true);
+	}
+
 	public User getSelectedUser() throws PortalException {
 		if (getCommerceSiteType() == CommerceAccountConstants.SITE_TYPE_B2C) {
 			return _commerceAccountRequestHelper.getUser();
@@ -387,12 +385,12 @@ public class CommerceAccountDisplayContext {
 	private final CommerceAccountService _commerceAccountService;
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceContext _commerceContext;
-	private final CommerceCountryService _commerceCountryService;
-	private final CommerceRegionService _commerceRegionService;
 	private final ConfigurationProvider _configurationProvider;
+	private final CountryService _countryService;
 	private String _keywords;
 	private final ModelResourcePermission<CommerceAccount>
 		_modelResourcePermission;
+	private final RegionService _regionService;
 	private final UserFileUploadsConfiguration _userFileUploadsConfiguration;
 	private final UserLocalService _userLocalService;
 

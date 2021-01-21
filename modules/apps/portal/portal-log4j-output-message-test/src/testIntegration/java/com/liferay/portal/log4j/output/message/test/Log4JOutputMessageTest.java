@@ -31,6 +31,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -149,14 +151,9 @@ public class Log4JOutputMessageTest {
 
 		testRollingFileAppender.activateOptions();
 
-		if (Objects.equals("TEXT_FILE", portalRollingFileAppender.getName())) {
-			_textLogFile = new File(testRollingFileAppender.getFile());
-		}
-		else if (Objects.equals(
-					portalRollingFileAppender.getName(), "XML_FILE")) {
-
-			_xmlLogFile = new File(testRollingFileAppender.getFile());
-		}
+		_logFiles.put(
+			portalRollingFileAppender.getName(),
+			new File(testRollingFileAppender.getFile()));
 
 		return testRollingFileAppender;
 	}
@@ -483,26 +480,29 @@ public class Log4JOutputMessageTest {
 
 		_outputLog(level, message, throwable);
 
+		File textLogFile = _logFiles.get("TEXT_FILE");
+		File xmlLogFile = _logFiles.get("XML_FILE");
+
 		try {
 			_assertTextLog(
 				level, message, throwable, _unsyncStringWriter.toString());
 
 			_assertTextLog(
 				level, message, throwable,
-				StreamUtil.toString(new FileInputStream(_textLogFile)));
+				StreamUtil.toString(new FileInputStream(textLogFile)));
 
 			_assertXmlLog(
 				level, message, throwable,
-				StreamUtil.toString(new FileInputStream(_xmlLogFile)));
+				StreamUtil.toString(new FileInputStream(xmlLogFile)));
 		}
 		finally {
 			_unsyncStringWriter.reset();
 
 			Files.write(
-				_textLogFile.toPath(), new byte[0],
+				textLogFile.toPath(), new byte[0],
 				StandardOpenOption.TRUNCATE_EXISTING);
 			Files.write(
-				_xmlLogFile.toPath(), new byte[0],
+				xmlLogFile.toPath(), new byte[0],
 				StandardOpenOption.TRUNCATE_EXISTING);
 		}
 	}
@@ -514,9 +514,8 @@ public class Log4JOutputMessageTest {
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
-	private static File _textLogFile;
+	private static final Map<String, File> _logFiles = new HashMap<>();
 	private static UnsyncStringWriter _unsyncStringWriter;
-	private static File _xmlLogFile;
 
 	private class TestException extends Exception {
 	}

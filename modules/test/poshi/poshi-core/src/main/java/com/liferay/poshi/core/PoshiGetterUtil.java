@@ -374,7 +374,6 @@ public class PoshiGetterUtil {
 	public static Element getRootElementFromURL(URL url, boolean addLineNumbers)
 		throws Exception {
 
-		String fileContent = FileUtil.read(url);
 		String filePath = url.getFile();
 
 		if (!Dom4JUtil.isValidDocument(url) &&
@@ -397,7 +396,7 @@ public class PoshiGetterUtil {
 		}
 
 		BufferedReader bufferedReader = new BufferedReader(
-			new StringReader(fileContent));
+			new StringReader(FileUtil.read(url)));
 
 		boolean cdata = false;
 		String line = null;

@@ -573,7 +573,7 @@ AUI.add(
 						instance._removeEmptyResultsMessage(searchContainer);
 
 						var searchContainerWrapper = A.one(
-							'div.lfr-search-container-wrapper.main-content-body'
+							'div.lfr-search-container-wrapper'
 						);
 
 						if (searchContainerWrapper) {

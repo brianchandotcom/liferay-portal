@@ -537,7 +537,7 @@ AUI.add(
 
 						if (displayStyle === CSS_ICON) {
 							entriesContainerSelector =
-								'ul.list-unstyled:last-of-type';
+								'ul.card-page:last-of-type';
 						}
 
 						entriesContainer =

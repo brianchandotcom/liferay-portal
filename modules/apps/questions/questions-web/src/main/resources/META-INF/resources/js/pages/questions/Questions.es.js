@@ -37,6 +37,7 @@ import {
 import {
 	getBasePath,
 	historyPushWithSlug,
+	isWebCrawler,
 	slugToText,
 	useDebounceCallback,
 } from '../../utils/utils.es';
@@ -198,8 +199,18 @@ export default withRouter(
 			siteKey,
 		]);
 
-		function buildURL(search, page, pageSize) {
-			let url = '/questions';
+		function buildURL(needHashtag, search, page, pageSize) {
+			let pathname = window.location.pathname;
+
+			pathname = pathname.endsWith('/')
+				? pathname.slice(0, -1)
+				: pathname;
+
+			let url = isWebCrawler()
+				? pathname + '/-/questions'
+				: needHashtag
+				? pathname + '/#/questions'
+				: '/questions';
 
 			if (sectionTitle || sectionTitle === '0') {
 				url += `/${sectionTitle}`;
@@ -223,14 +234,13 @@ export default withRouter(
 			return url;
 		}
 
-		const changePage = (page, pageSize) => {
-			historyPushParser(buildURL(search, page, pageSize));
-		};
-
-		const [debounceCallback] = useDebounceCallback((search) => {
-			setLoading(true);
-			historyPushParser(buildURL(search, 1, 20));
-		}, 500);
+		const [debounceCallback] = useDebounceCallback(
+			(needHashtag, search) => {
+				setLoading(true);
+				historyPushParser(buildURL(needHashtag, search, 1, 20));
+			},
+			500
+		);
 
 		useEffect(() => {
 			if (sectionTitle && sectionTitle !== '0') {
@@ -261,6 +271,9 @@ export default withRouter(
 			return false;
 		};
 
+		const hrefConstructor = (page) =>
+			buildURL(true, search, page, pageSize);
+
 		return (
 			<section className="questions-section questions-section-list">
 				<Breadcrumb
@@ -284,10 +297,7 @@ export default withRouter(
 						<PaginatedList
 							activeDelta={pageSize}
 							activePage={page}
-							changeDelta={(pageSize) =>
-								changePage(page, pageSize)
-							}
-							changePage={(page) => changePage(page, pageSize)}
+							changeDelta={setPageSize}
 							data={questions}
 							emptyState={
 								!search && !filter ? (
@@ -320,6 +330,7 @@ export default withRouter(
 									/>
 								)
 							}
+							hrefConstructor={hrefConstructor}
 							loading={loading}
 							totalCount={totalCount}
 						>
@@ -405,7 +416,10 @@ export default withRouter(
 											!questions.items.length
 										}
 										onChange={(event) =>
-											debounceCallback(event.target.value)
+											debounceCallback(
+												false,
+												event.target.value
+											)
 										}
 										placeholder={Liferay.Language.get(
 											'search'
@@ -434,9 +448,9 @@ export default withRouter(
 												<ClayButtonWithIcon
 													displayType="unstyled"
 													onClick={() => {
-														setLoading(true);
-														historyPushParser(
-															buildURL('', 1, 20)
+														debounceCallback(
+															false,
+															''
 														);
 													}}
 													symbol="times-circle"

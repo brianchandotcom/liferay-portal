@@ -22,18 +22,16 @@ import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
-import {historyPushWithSlug} from '../../utils/utils.es';
+import {isWebCrawler} from '../../utils/utils.es';
 
 export default withRouter(
 	({
-		history,
 		location,
 		match: {
 			params: {creatorId},
 		},
 	}) => {
 		const context = useContext(AppContext);
-		const historyPushParser = historyPushWithSlug(history.push);
 		const queryParams = useQueryParams(location);
 		const siteKey = context.siteKey;
 		const [page, setPage] = useState(1);
@@ -86,11 +84,10 @@ export default withRouter(
 			};
 		}
 
-		const changePage = (page, pageSize) => {
-			historyPushParser(
-				`/activity/${creatorId}?page=${page}&pagesize=${pageSize}`
-			);
-		};
+		const hrefConstructor = (page) =>
+			`${
+				isWebCrawler() ? '/-' : '#'
+			}/activity/${creatorId}?page=${page}&pagesize=${pageSize}`;
 
 		return (
 			<section className="questions-section questions-section-list">
@@ -131,11 +128,9 @@ export default withRouter(
 						<PaginatedList
 							activeDelta={pageSize}
 							activePage={page}
-							changeDelta={(pageSize) =>
-								changePage(page, pageSize)
-							}
-							changePage={(page) => changePage(page, pageSize)}
+							changeDelta={setPageSize}
 							data={data && data.messageBoardThreads}
+							hrefConstructor={hrefConstructor}
 							loading={loading}
 						>
 							{(question) => (

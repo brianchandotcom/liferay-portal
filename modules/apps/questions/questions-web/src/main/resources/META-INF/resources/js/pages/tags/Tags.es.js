@@ -29,6 +29,7 @@ import lang from '../../utils/lang.es';
 import {
 	dateToInternationalHuman,
 	historyPushWithSlug,
+	isWebCrawler,
 	useDebounceCallback,
 } from '../../utils/utils.es';
 
@@ -89,8 +90,16 @@ export default withRouter(({history, location}) => {
 
 	const historyPushParser = historyPushWithSlug(history.push);
 
-	function buildURL(search, page, pageSize) {
-		let url = '/tags?';
+	function buildURL(needHashtag, search, page, pageSize) {
+		let pathname = window.location.pathname;
+
+		pathname = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+
+		let url = isWebCrawler()
+			? pathname + '/-/tags?'
+			: needHashtag
+			? pathname + '/#/tags?'
+			: '/tags?';
 
 		if (search) {
 			url += `search=${search}&`;
@@ -101,16 +110,14 @@ export default withRouter(({history, location}) => {
 		return url;
 	}
 
-	const changePage = (page, pageSize) => {
-		historyPushParser(buildURL(search, page, pageSize));
-	};
-
 	const orderByOptions = getOrderByOptions();
 
-	const [debounceCallback] = useDebounceCallback((search) => {
+	const [debounceCallback] = useDebounceCallback((needHashtag, search) => {
 		setLoading(true);
-		historyPushParser(buildURL(search, 1, pageSize));
+		historyPushParser(buildURL(needHashtag, search, 1, pageSize));
 	}, 500);
+
+	const hrefConstructor = (page) => buildURL(true, search, page, pageSize);
 
 	return (
 		<>
@@ -163,7 +170,10 @@ export default withRouter(({history, location}) => {
 									}
 									onChange={(event) => {
 										setSearchBoxValue(event.target.value);
-										debounceCallback(event.target.value);
+										debounceCallback(
+											false,
+											event.target.value
+										);
 									}}
 									placeholder={Liferay.Language.get('search')}
 									type="text"
@@ -181,13 +191,7 @@ export default withRouter(({history, location}) => {
 											<ClayButtonWithIcon
 												displayType="unstyled"
 												onClick={() => {
-													historyPushParser(
-														buildURL(
-															'',
-															1,
-															pageSize
-														)
-													);
+													debounceCallback(false, '');
 												}}
 												symbol="times-circle"
 												type="submit"
@@ -209,8 +213,7 @@ export default withRouter(({history, location}) => {
 					<PaginatedList
 						activeDelta={pageSize}
 						activePage={page}
-						changeDelta={(pageSize) => changePage(page, pageSize)}
-						changePage={(page) => changePage(page, pageSize)}
+						changeDelta={setPageSize}
 						data={tags}
 						emptyState={
 							<ClayEmptyState
@@ -220,6 +223,7 @@ export default withRouter(({history, location}) => {
 								)}
 							/>
 						}
+						hrefConstructor={hrefConstructor}
 						loading={loading}
 					>
 						{(tag) => (

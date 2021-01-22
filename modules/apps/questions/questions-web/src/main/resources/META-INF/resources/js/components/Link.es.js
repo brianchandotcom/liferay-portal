@@ -19,10 +19,16 @@ import {isWebCrawler, stringToSlug} from '../utils/utils.es';
 
 export default (props) => {
 	const [isCrawler, setIsCrawler] = useState(false);
+	const [pathname, setPathname] = useState('');
+
+	useEffect(() => {
+		const pathname = window.location.pathname;
+		setPathname(pathname.endsWith('/') ? pathname.slice(0, -1) : pathname);
+	}, []);
 
 	const onClick = (event) => {
 		event.preventDefault();
-		window.location.href = props.to;
+		window.location.href = pathname + '/-' + props.to;
 	};
 
 	useEffect(() => {
@@ -34,7 +40,7 @@ export default (props) => {
 			{isCrawler ? (
 				<a
 					className={props.className}
-					href={stringToSlug(props.to)}
+					href={stringToSlug(pathname + '/-' + props.to)}
 					onClick={onClick}
 				>
 					{props.children}

@@ -12,6 +12,16 @@
  * details.
  */
 
+import {useEffect, useState} from 'react';
+
 export default function useQueryParams(location) {
-	return new URLSearchParams(location.search);
+	const [queryParams, setQueryParams] = useState(
+		new URLSearchParams(location.search)
+	);
+
+	useEffect(() => {
+		setQueryParams(new URLSearchParams(location.search));
+	}, [location.search]);
+
+	return queryParams;
 }

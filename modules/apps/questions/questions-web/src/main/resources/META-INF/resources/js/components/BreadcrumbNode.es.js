@@ -91,7 +91,7 @@ export default ({
 				) : context.showCardsForTopicNavigation && isFirstNode ? (
 					<Link
 						className="breadcrumb-item questions-breadcrumb-unstyled"
-						to={'/'}
+						to={'/questions'}
 					>
 						{ui || section.title}
 					</Link>

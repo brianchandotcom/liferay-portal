@@ -52,6 +52,22 @@ definition {
 		DDLDataDefinition.save();
 	}
 
+	macro deleteFields {
+		DMDocumentType.selectDocumentTypeFrame();
+
+		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
+
+		LexiconEntry.openEntryMenu(rowEntry = "${dmDocumentTypeName}");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		for (var fieldFieldLabel : list "${fieldFieldLabel}") {
+			DataEngine.deleteField(fieldFieldLabel = "${fieldFieldLabel}");
+		}
+
+		DDLDataDefinition.save();
+	}
+
 	macro deletePG {
 		DMDocumentType.selectDocumentTypeFrame();
 
@@ -100,6 +116,47 @@ definition {
 			Type(
 				locator1 = "DocumentsAndMediaEditDocumentType#DETAILS_DESCRIPTION_FIELD",
 				value1 = "${dmDocumentTypeDescriptionEdit}");
+		}
+
+		if (isSet(fieldFieldLabelEdit)) {
+			DMDocumentType.gotoTab(tabName = "Builder");
+
+			DMDocumentType.gotoEditField(fieldName = "${fieldFieldLabel}");
+
+			Type(
+				key_fieldLabel = "Label",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldFieldLabelEdit}");
+
+			AssertTextEquals(
+				key_fieldLabel = "Label",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldFieldLabelEdit}");
+
+			AssertElementPresent(
+				key_fieldFieldLabel = "${fieldFieldLabelEdit}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "${fieldFieldLabelEdit}");
+		}
+
+		if (isSet(dmDocumentTypeFieldNameEdit)) {
+			var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Type(
+				key_fieldLabel = "Field Reference",
+				key_fieldName = "fieldReference",
+				locator1 = "Sidebar#TEXT_INPUT",
+				value1 = "${fieldReference}");
+
+			AssertTextEquals.assertValue(
+				key_fieldLabel = "Field Reference",
+				key_fieldName = "fieldReference",
+				locator1 = "Sidebar#TEXT_INPUT",
+				value1 = "${fieldReference}");
+
+			Click(locator1 = "Sidebar#BACK");
 		}
 
 		if (isSet(dmDocumentTypeFieldRequiredEdit)) {

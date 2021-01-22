@@ -93,7 +93,12 @@ definition {
 		}
 
 		if (isSet(documentsAndMediaField)) {
-			var key_fieldFieldLabel = "Upload";
+			if (isSet(fieldFieldLabel)) {
+				var key_fieldFieldLabel = "${fieldFieldLabel}";
+			}
+			else {
+				var key_fieldFieldLabel = "Upload";
+			}
 
 			AssertClick(
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
@@ -101,6 +106,12 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+			if ("${navTab}" == "Documents and Media") {
+				AssertClick(
+					key_navTab = "${navTab}",
+					locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+					value1 = "${navTab}");
+			}
 			AssertClick.assertPartialTextClickAt(
 				key_dmDocumentTitle = "${documentsAndMediaField}",
 				locator1 = "WC#ICON_DOCUMENT_TITLE",
@@ -108,7 +119,12 @@ definition {
 		}
 
 		if (isSet(imageField)) {
-			var key_fieldFieldLabel = "Image";
+			if (isSet(fieldFieldLabel)) {
+				var key_fieldFieldLabel = "${fieldFieldLabel}";
+			}
+			else {
+				var key_fieldFieldLabel = "Image";
+			}
 
 			AssertClick(
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
@@ -126,15 +142,21 @@ definition {
 						uploadFileName = "${imageField}");
 				}
 			}
-			else if ("${navTab}" == "Web Content Images") {
-				ItemSelector.uploadFile(
-					navTab = "${navTab}",
-					uploadFileName = "${imageField}");
+
+			if (isSet(imageDescription)) {
+				Type(
+					locator1 = "TextInput#IMAGE_DESCRIPTION",
+					value1 = "${imageDescription}");
 			}
 		}
 
 		if (isSet(textField)) {
-			var key_fieldLabel = "Text";
+			if (isSet(fieldFieldLabel)) {
+				var key_fieldLabel = "${fieldFieldLabel}";
+			}
+			else {
+				var key_fieldLabel = "Text";
+			}
 
 			Type(
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
@@ -1999,6 +2021,12 @@ definition {
 				value1 = "${booleanValue}");
 		}
 
+		if (isSet(imageName)) {
+			AssertElementPresent(
+				key_imageName = "${imageName}",
+				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_IMAGE");
+		}
+
 		if (isSet(selectOption)) {
 			var key_selectOption = "${selectOption}";
 
@@ -2024,6 +2052,17 @@ definition {
 				key_fieldFieldLabel = "${textFieldLabel}",
 				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_TEXT_INPUT",
 				value1 = "${textContent}");
+		}
+
+		if (isSet(uploadFile)) {
+			if (!(isSet(uploadFieldLabel))) {
+				var uploadFieldLabel = "Upload";
+			}
+
+			AssertTextEquals(
+				key_fieldFieldLabel = "${uploadFieldLabel}",
+				locator1 = "DocumentsAndMediaDocument#METADATA_PANEL_UPLOAD",
+				value1 = "${uploadFile}");
 		}
 
 		if (isSet(numericValue)) {

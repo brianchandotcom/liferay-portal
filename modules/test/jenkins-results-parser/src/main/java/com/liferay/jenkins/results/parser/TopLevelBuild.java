@@ -378,9 +378,14 @@ public abstract class TopLevelBuild extends BaseBuild {
 		synchronized (_downstreamBatchBuilds) {
 			if (isCompleted() && !_downstreamBatchBuildsPopulated) {
 				for (BatchBuild downstreamBatchBuild : downstreamBatchBuilds) {
+					String jobVariant = downstreamBatchBuild.getJobVariant();
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
+						continue;
+					}
+
 					_downstreamBatchBuilds.put(
-						downstreamBatchBuild.getJobVariant(),
-						downstreamBatchBuild);
+						jobVariant, downstreamBatchBuild);
 				}
 
 				_downstreamBatchBuildsPopulated = true;

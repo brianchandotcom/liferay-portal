@@ -317,14 +317,8 @@
 	width: 100% !important;
 }
 
-@media only screen and (min-height: 720px) and (max-height: 860px) {
-	.portal-popup .basecelleditor {
-		top: 60px !important;
-	}
-}
-
 .portal-popup .basecelleditor {
-	top: 176px !important;
+	top: 200px !important;
 }
 
 .property-builder-disabled {
@@ -473,4 +467,16 @@
 
 #workflowTasksPanelContainer {
 	border-width: 0;
+}
+
+@media only screen and (min-height: 600px) and (max-height: 800px) {
+	.portal-popup .basecelleditor {
+		top: 60px !important;
+	}
+}
+
+@media only screen and (max-height: 599px) {
+	.portal-popup .basecelleditor {
+		top: 35px !important;
+	}
 }

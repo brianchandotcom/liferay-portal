@@ -37,20 +37,40 @@ definition {
     @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "5"
-	test EditLabelHelpAndNameOfSeparator {
+	test EditLabelOfSeparator {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 EditLabelHelpAndNameOfSeparator pending implementation
+		// TODO LPS-98081 EditLabelOfSeparator pending implementation
 
 	}
 
     @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
-	@priority = "4"
-	test EditSeparatorNameWithInvalidCharacters {
+	@priority = "5"
+	test EditHelpTextOfSeparator {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 EditSeparatorNameWithInvalidCharacters pending implementation
+		// TODO LPS-98081 EditHelpTextOfSeparator pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "5"
+	test EditReferenceOfSeparator {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 EditReferenceOfSeparator pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "4"
+	test EditReferenceOfSeparatorWithInvalidCharacters {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 EditReferenceOfSeparatorWithInvalidCharacters pending implementation
 
 	}
 
@@ -77,20 +97,40 @@ definition {
     @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "4"
-	test DuplicateSeparator {
+	test DuplicateSeparatorOnBuilder {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 DuplicateSeparator pending implementation
+		// TODO LPS-98081 DuplicateSeparatorOnBuilder pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "4"
+	test DuplicateSeparatorOnSidebar {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 DuplicateSeparatorOnSidebar pending implementation
 
 	}
 
     @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "5"
-	test DeleteSeparator {
+	test DeleteSeparatorOnBuilder {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 DeleteSeparator pending implementation
+		// TODO LPS-98081 DeleteSeparatorOnBuilder pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "5"
+	test DeleteSeparatorOnSidebar {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 DeleteSeparatorOnSidebar pending implementation
 
 	}
 

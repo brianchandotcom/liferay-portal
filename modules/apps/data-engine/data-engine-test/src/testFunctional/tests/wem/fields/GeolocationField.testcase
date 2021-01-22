@@ -27,20 +27,70 @@ definition {
     @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
 	@ignore = "true"
 	@priority = "5"
-	test CreateGeolocationField {
+	test SetGeolocationLabel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 CreateGeolocationField pending implementation
+		// TODO LPS-98071 SetGeolocationLabel pending implementation
 
 	}
 
     @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
 	@ignore = "true"
 	@priority = "5"
-	test VerifySearchablePropertyOfGeolocation {
+	test VerifyRequiredPropertyOfGeolocation {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 VerifySearchablePropertyOfGeolocation pending implementation
+		// TODO LPS-98071 VerifyRequiredPropertyOfGeolocation pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetReferenceOfGeolocation {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98071 SetReferenceOfGeolocation pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
+	@ignore = "true"
+	@priority = "5"
+	test SetHelpTextOfGeolocation {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98071 SetHelpTextOfGeolocation pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
+	@ignore = "true"
+	@priority = "5"
+	test DisableSearchableOfGeolocation {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98071 DisableSearchableOfGeolocation pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetSearchableOfGeolocationAsKeyword {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98071 SetSearchableOfGeolocationAsKeyword pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetSearchableOfGeolocationAsText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98071 SetSearchableOfGeolocationAsText pending implementation
 
 	}
 
@@ -57,10 +107,40 @@ definition {
     @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
 	@ignore = "true"
 	@priority = "4"
-	test DuplicateGeolocationFieldOnWebContent {
+	test SetGeolocationAsRepeatable {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 DuplicateGeolocationFieldOnWebContent pending implementation
+		// TODO LPS-98071 SetGeolocationAsRepeatable pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
+	@ignore = "true"
+	@priority = "4"
+	test DuplicateGeolocation {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98071 DuplicateGeolocation pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyDuplicatedGeolocationOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98071 VerifyDuplicatedGeolocationOnWebContent pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
+	@ignore = "true"
+	@priority = "4"
+	test DuplicateRepeatableGeolocationOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98071 DuplicateRepeatableGeolocationOnWebContent pending implementation
 
 	}
 

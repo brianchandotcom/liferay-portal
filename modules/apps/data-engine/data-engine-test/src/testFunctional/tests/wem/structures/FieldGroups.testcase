@@ -86,11 +86,21 @@ definition {
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@ignore = "true"
-	@priority = "4"
+	@priority = "5"
 	test DeleteFieldGroupOnStructure {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98077 DeleteFieldGroupOnStructure pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "5"
+	test DeleteNestedFieldGroupOnStructure {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 DeleteNestedFieldGroupOnStructure pending implementation
 
 	}
 
@@ -111,6 +121,76 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98077 NestAFieldGroupOnAnotherFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "5"
+	test DuplicateAFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 DuplicateAFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "3"
+	test EditFieldOnDuplicatedFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 NestAFieldGroupOnAnotherFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "5"
+	test DuplicateANestedFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 DuplicateANestedFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "5"
+	test ChangeFieldGroupPositionOnForm {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 ChangeFieldGroupPositionOnForm pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "5"
+	test NestAFieldGroupOnAnotherFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 NestAFieldGroupOnAnotherFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "4"
+	test DeleteAFieldFromAFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 DeleteAFieldFromAFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "4"
+	test EditFieldGroupLabel {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 EditFieldGroupLabel pending implementation
 
 	}
 

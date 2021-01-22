@@ -36,21 +36,71 @@ definition {
 
     @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
-	@priority = "4"
-	test LocalizationOfRichTextPersists {
+	@priority = "5"
+	test SetLabelOfRichText {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98076 LocalizationOfRichTextPersists pending implementation
+		// TODO LPS-98076 SetLabelOfRichText pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test SetHelpTextOfRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetLabelOfRichText pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyRequiredPropertyOfRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 VerifyRequiredPropertyOfRichText pending implementation
 
 	}
 
     @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "4"
-	test ChangeRichTextSearchableProperty {
+	test SetRichTextSearchableAsDisabled {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98076 ChangeRichTextSearchableProperty pending implementation
+		// TODO LPS-98076 SetRichTextSearchableAsDisabled pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetRichTextSearchableAsByKeyword {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetRichTextSearchableAsByKeyword pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetFieldReferenceOfRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetFieldReferenceOfRichText pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "3"
+	test SetFieldReferenceOfRichTextWithInvalidCharacters {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetFieldReferenceOfRichTextWithInvalidCharacters pending implementation
 
 	}
 
@@ -61,6 +111,16 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98081 ShowAndHideRichTextLabel pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "3"
+	test SetRichTextAsRepeatable {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 SetRichTextAsRepeatable pending implementation
 
 	}
 
@@ -77,10 +137,50 @@ definition {
     @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "5"
+	test VerifyRichTextIsSetAsRequired {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 VerifyRichTextIsSetAsRequired pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
 	test RepeatRichTextOnWebContent {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98081 RepeatRichTextOnWebContent pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyRichFieldHelpTextOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 VerifyRichFieldHelpTextOnWebContent pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test ExcludeRepeatedRichTextOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 ExcludeRepeatedRichTextOnWebContent pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test InsertTextOnRichTextOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 InsertTextOnRichTextOnWebContent pending implementation
 
 	}
 

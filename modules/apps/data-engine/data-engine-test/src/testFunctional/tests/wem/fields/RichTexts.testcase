@@ -1,0 +1,87 @@
+@component-name = "portal-wcm"
+definition {
+
+    property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+    setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+    tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test DragAndDropRichTextToBuilder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 DragAndDropRichTextToBuilder pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test LocalizationOfRichTextPersists {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 LocalizationOfRichTextPersists pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test ChangeRichTextSearchableProperty {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 ChangeRichTextSearchableProperty pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "3"
+	test ShowAndHideRichTextLabel {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 ShowAndHideRichTextLabel pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test PublishWebContentWithRequiredRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 PublishWebContentWithRequiredRichText pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test RepeatRichTextOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 RepeatRichTextOnWebContent pending implementation
+
+	}
+
+}

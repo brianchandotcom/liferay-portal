@@ -10,13 +10,65 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import ClayPopover from '@clayui/popover';
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
 import {sub} from 'app-builder-web/js/utils/lang.es';
 import React, {useContext, useState} from 'react';
 
+import IconWithPopover from '../../../../components/icon-with-popover/IconWithPopover.es';
 import SelectDropdown from '../../../../components/select-dropdown/SelectDropdown.es';
 import {OpenButton} from './DataAndViewsTab.es';
+
+const Item = ({missingRequiredFields, name}) => {
+	const {
+		config: {dataObject},
+	} = useContext(EditAppContext);
+	const [showPopover, setShowPopover] = useState(false);
+
+	const triggerProps = {
+		className: 'dropdown-button-asset help-cursor text-info',
+		triggerProps: {
+			onMouseOut: () => setShowPopover(false),
+			onMouseOver: () => setShowPopover(true),
+			symbol: 'info-circle',
+		},
+	};
+
+	return (
+		<>
+			<span
+				className="float-left text-left text-truncate w50"
+				title={name}
+			>
+				{name}
+			</span>
+
+			{missingRequiredFields && (
+				<IconWithPopover
+					header={<PopoverHeader />}
+					show={showPopover}
+					triggerProps={triggerProps}
+				>
+					{sub(
+						Liferay.Language.get(
+							'this-form-view-does-not-contain-all-required-fields-for-the-x-object'
+						),
+						[dataObject.name]
+					)}
+				</IconWithPopover>
+			)}
+		</>
+	);
+};
+
+const PopoverHeader = () => {
+	return (
+		<>
+			<ClayIcon className="mr-1 text-info" symbol="info-circle" />
+
+			<span>{Liferay.Language.get('missing-required-fields')}</span>
+		</>
+	);
+};
 
 function SelectFormView({openButtonProps, ...props}) {
 	props = {
@@ -43,61 +95,6 @@ function SelectFormView({openButtonProps, ...props}) {
 		</div>
 	);
 }
-
-const Item = ({missingRequiredFields, name}) => {
-	const {
-		config: {dataObject},
-	} = useContext(EditAppContext);
-	const [showPopover, setShowPopover] = useState(false);
-
-	return (
-		<>
-			<span
-				className="float-left text-left text-truncate w50"
-				title={name}
-			>
-				{name}
-			</span>
-
-			{missingRequiredFields && (
-				<ClayPopover
-					alignPosition="left"
-					disableScroll
-					header={
-						<>
-							<ClayIcon
-								className="mr-1 text-info"
-								symbol="info-circle"
-							/>
-
-							<span>
-								{Liferay.Language.get(
-									'missing-required-fields'
-								)}
-							</span>
-						</>
-					}
-					show={showPopover}
-					trigger={
-						<ClayIcon
-							className="dropdown-button-asset float-right help-cursor text-info"
-							onMouseOut={() => setShowPopover(false)}
-							onMouseOver={() => setShowPopover(true)}
-							symbol="info-circle"
-						/>
-					}
-				>
-					{sub(
-						Liferay.Language.get(
-							'this-form-view-does-not-contain-all-required-fields-for-the-x-object'
-						),
-						[dataObject.name]
-					)}
-				</ClayPopover>
-			)}
-		</>
-	);
-};
 
 SelectFormView.Item = Item;
 

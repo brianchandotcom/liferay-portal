@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -184,6 +183,10 @@ public class GetPagePreviewMVCResourceCommandTest {
 
 		httpServletRequest.setMethod(HttpMethods.GET);
 
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+
+		_serviceContext.setRequest(httpServletRequest);
+
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
@@ -231,9 +234,6 @@ public class GetPagePreviewMVCResourceCommandTest {
 		filter = "mvc.command.name=/layout_content_page_editor/get_page_preview"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 	private ThemeDisplay _themeDisplay;

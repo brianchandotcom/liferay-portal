@@ -30,6 +30,7 @@ page import="com.liferay.document.library.web.internal.display.context.DLEditFil
 page import="com.liferay.document.library.web.internal.display.context.DLEditFolderDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLFileEntryAdditionalMetadataSetsDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLFileEntryTypeDetailsDisplayContext" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLInfoPanelDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewEntriesDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext" %><%@

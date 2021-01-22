@@ -17,26 +17,15 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
+DLInfoPanelDisplayContext dlInfoPanelDisplayContext = new DLInfoPanelDisplayContext(request);
+
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"), ParamUtil.getLong(request, "repositoryId"));
 
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 
-List<Folder> folders = (List<Folder>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDERS);
-List<FileEntry> fileEntries = (List<FileEntry>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
-List<FileShortcut> fileShortcuts = (List<FileShortcut>)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS);
-
-if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmpty(fileShortcuts)) {
-	long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"), ParamUtil.getLong(request, "folderId"));
-
-	folders = new ArrayList<>();
-
-	if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-		folders.add(DLAppLocalServiceUtil.getFolder(folderId));
-	}
-	else {
-		folders.add(null);
-	}
-}
+List<FileEntry> fileEntries = dlInfoPanelDisplayContext.getFileEntryList();
+List<FileShortcut> fileShortcuts = dlInfoPanelDisplayContext.getFileShortcutList();
+List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
 %>
 
 <c:choose>

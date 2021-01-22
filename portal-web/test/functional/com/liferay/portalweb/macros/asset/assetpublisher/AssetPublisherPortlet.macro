@@ -986,6 +986,19 @@ definition {
 			value1 = "${assetContent}");
 	}
 
+	macro viewAssetOrderPG {
+		var n = "1";
+
+		for (var assetTitle : list "${assetTitleList}") {
+			AssertVisible(
+				key_assetTitle = "${assetTitle}",
+				key_index = "${n}",
+				locator1 = "AP#ASSET_ORDER");
+
+			var n = ${n} + 1;
+		}
+	}
+
 	macro viewAssetPG {
 		var key_assetTitle = "${assetTitle}";
 

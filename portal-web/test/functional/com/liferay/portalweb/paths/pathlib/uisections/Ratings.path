@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YOUR_RATING_STAR_COUNT_ANY</td>
+	<td>//div[contains(@class,'ratings-stars-dropdown')][contains(@class,'show')]//button[contains(.,'Rate this ${key_ratingStar} out of 5')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>YOUR_RATING_STAR_DELETE</td>
 	<td>//div[contains(@class,'ratings-stars')]//button[@class='dropdown-item' and contains(.,'Delete')]</td>
 	<td></td>

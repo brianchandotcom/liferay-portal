@@ -985,6 +985,23 @@ definition {
 			Navigator.openURL();
 		}
 
+		if (isSet(enableXuggler)) {
+			ServerAdministration.openServerAdmin(baseURL = "http://localhost:${remotePort}");
+
+			ServerAdministration.configureExternalServices(installXuggler = "true");
+
+			Clustering.shutdownSpecificServer(nodePort = "${remotePort}");
+
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "true",
+				keepCachedAppServerData = "true",
+				nodePort = "${remotePort}");
+
+			ServerAdministration.openServerAdmin(baseURL = "http://localhost:${remotePort}");
+
+			ServerAdministration.configureExternalServices(enableXuggler = "true");
+		}
+
 		var siteID = "${siteID}";
 
 		ApplicationsMenu.gotoPortlet(

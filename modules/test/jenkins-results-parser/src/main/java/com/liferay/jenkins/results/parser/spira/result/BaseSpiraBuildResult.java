@@ -27,7 +27,6 @@ import com.liferay.jenkins.results.parser.PortalFixpackReleaseBuild;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalRelease;
 import com.liferay.jenkins.results.parser.PortalReleaseBuild;
-import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.PullRequestBuild;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
@@ -165,16 +164,8 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	}
 
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
-		Job job = _topLevelBuild.getJob();
-
-		if (job instanceof PortalTestClassJob) {
-			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
-
-			return portalTestClassJob.getPortalGitWorkingDirectory();
-		}
-
 		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-			"master");
+			_topLevelBuild.getBranchName());
 	}
 
 	private SpiraProject _getSpiraProject() {
@@ -545,8 +536,13 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		PluginsTopLevelBuild pluginsTopLevelBuild =
 			(PluginsTopLevelBuild)_topLevelBuild;
 
-		return string.replace(
-			"$(plugin.name)", pluginsTopLevelBuild.getPluginName());
+		String pluginName = pluginsTopLevelBuild.getPluginName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(pluginName)) {
+			string = string.replace("$(plugin.name)", pluginName);
+		}
+
+		return string;
 	}
 
 	private String _replaceEnvVarsPortalAppReleaseTopLevelBuild(String string) {
@@ -563,9 +559,7 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 	}
 
 	private String _replaceEnvVarsPortalBranchInformationBuild(String string) {
-		Job job = _topLevelBuild.getJob();
-
-		Job.BuildProfile buildProfile = job.getBuildProfile();
+		Job.BuildProfile buildProfile = _topLevelBuild.getBuildProfile();
 
 		string = string.replace(
 			"$(portal.profile)", buildProfile.toDisplayString());

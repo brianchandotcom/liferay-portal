@@ -849,6 +849,9 @@ definition {
 					key_service = "twitch",
 					locator1 = "BlogsEntry#CONTENT_VIDEO");
 			}
+			else if ("${internalVideo}" == "true") {
+				DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
+			}
 			else {
 				AssertElementPresent(
 					key_service = "youtube",

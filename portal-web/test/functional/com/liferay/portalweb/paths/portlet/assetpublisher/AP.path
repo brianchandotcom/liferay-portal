@@ -98,6 +98,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ORDER</td>
+	<td>xpath=(//div[contains(@class,'asset-abstract')])[${key_index}]//*[contains(@class,'asset-title')][normalize-space(text())='${key_assetTitle}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

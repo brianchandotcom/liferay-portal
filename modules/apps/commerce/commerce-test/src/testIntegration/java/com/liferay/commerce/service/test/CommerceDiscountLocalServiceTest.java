@@ -209,89 +209,6 @@ public class CommerceDiscountLocalServiceTest {
 	}
 
 	@Test
-	public void testGetCorrectDiscountByHierarchy() throws Exception {
-		frutillaRule.scenario(
-			"When multiple discounts are defined for the same target the " +
-				"highest in the hierarchy shall be taken"
-		).given(
-			"A catalog with multiple discounts"
-		).when(
-			"The discount is discovered"
-		).then(
-			"The discount with highest rank is retrieved"
-		);
-
-		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
-			_commerceCatalog.getGroupId());
-
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-		CommerceDiscount commerceUnqualifiedDiscount =
-			CommerceDiscountTestUtil.addPercentageCommerceDiscount(
-				_user.getGroupId(),
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
-				CommerceDiscountConstants.LEVEL_L2,
-				CommerceDiscountConstants.TARGET_PRODUCTS,
-				cpDefinition.getCPDefinitionId());
-
-		_productAssertEquals(
-			commerceUnqualifiedDiscount, cpDefinition.getCPDefinitionId());
-
-		CommerceDiscount commerceChannelDiscount =
-			CommerceDiscountTestUtil.addChannelDiscount(
-				_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
-				CommerceDiscountConstants.LEVEL_L1,
-				cpDefinition.getCPDefinitionId());
-
-		_productAssertEquals(
-			commerceChannelDiscount, cpDefinition.getCPDefinitionId());
-
-		long[] commerceAccountGroups =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				_commerceAccount.getCommerceAccountId());
-
-		CommerceDiscount commerceAccountGroupsDiscount =
-			CommerceDiscountTestUtil.addAccountGroupDiscount(
-				_user.getGroupId(), commerceAccountGroups,
-				CommerceDiscountConstants.LEVEL_L3,
-				cpDefinition.getCPDefinitionId());
-
-		_productAssertEquals(
-			commerceAccountGroupsDiscount, cpDefinition.getCPDefinitionId());
-
-		CommerceDiscount commerceAccountGroupsAndChannelDiscount =
-			CommerceDiscountTestUtil.addAccountGroupAndChannelDiscount(
-				_user.getGroupId(), commerceAccountGroups,
-				_commerceChannel.getCommerceChannelId(),
-				CommerceDiscountConstants.LEVEL_L3,
-				cpDefinition.getCPDefinitionId());
-
-		_productAssertEquals(
-			commerceAccountGroupsAndChannelDiscount,
-			cpDefinition.getCPDefinitionId());
-
-		CommerceDiscount commerceAccountDiscount =
-			CommerceDiscountTestUtil.addAccountDiscount(
-				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
-				CommerceDiscountConstants.LEVEL_L4,
-				cpDefinition.getCPDefinitionId());
-
-		_productAssertEquals(
-			commerceAccountDiscount, cpDefinition.getCPDefinitionId());
-
-		CommerceDiscount commerceAccountAndChannelDiscount =
-			CommerceDiscountTestUtil.addAccountAndChannelDiscount(
-				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
-				_commerceChannel.getCommerceChannelId(),
-				CommerceDiscountConstants.LEVEL_L4,
-				cpDefinition.getCPDefinitionId());
-
-		_productAssertEquals(
-			commerceAccountAndChannelDiscount,
-			cpDefinition.getCPDefinitionId());
-	}
-
-	@Test
 	public void testGetOrderCommerceDiscountByHierarchy1() throws Exception {
 		frutillaRule.scenario(
 			"When multiple discounts are defined for the same target the " +
@@ -528,6 +445,89 @@ public class CommerceDiscountLocalServiceTest {
 	@Test
 	public void testGetProductCommerceDiscountByHierarchy1() throws Exception {
 		frutillaRule.scenario(
+			"When multiple discounts are defined for the same target the " +
+				"highest in the hierarchy shall be taken"
+		).given(
+			"A catalog with multiple discounts"
+		).when(
+			"The discount is discovered"
+		).then(
+			"The discount with highest rank is retrieved"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			_commerceCatalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CommerceDiscount commerceUnqualifiedDiscount =
+			CommerceDiscountTestUtil.addPercentageCommerceDiscount(
+				_user.getGroupId(),
+				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
+				CommerceDiscountConstants.LEVEL_L2,
+				CommerceDiscountConstants.TARGET_PRODUCTS,
+				cpDefinition.getCPDefinitionId());
+
+		_productAssertEquals(
+			commerceUnqualifiedDiscount, cpDefinition.getCPDefinitionId());
+
+		CommerceDiscount commerceChannelDiscount =
+			CommerceDiscountTestUtil.addChannelDiscount(
+				_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.LEVEL_L1,
+				cpDefinition.getCPDefinitionId());
+
+		_productAssertEquals(
+			commerceChannelDiscount, cpDefinition.getCPDefinitionId());
+
+		long[] commerceAccountGroups =
+			_commerceAccountHelper.getCommerceAccountGroupIds(
+				_commerceAccount.getCommerceAccountId());
+
+		CommerceDiscount commerceAccountGroupsDiscount =
+			CommerceDiscountTestUtil.addAccountGroupDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				CommerceDiscountConstants.LEVEL_L3,
+				cpDefinition.getCPDefinitionId());
+
+		_productAssertEquals(
+			commerceAccountGroupsDiscount, cpDefinition.getCPDefinitionId());
+
+		CommerceDiscount commerceAccountGroupsAndChannelDiscount =
+			CommerceDiscountTestUtil.addAccountGroupAndChannelDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				_commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.LEVEL_L3,
+				cpDefinition.getCPDefinitionId());
+
+		_productAssertEquals(
+			commerceAccountGroupsAndChannelDiscount,
+			cpDefinition.getCPDefinitionId());
+
+		CommerceDiscount commerceAccountDiscount =
+			CommerceDiscountTestUtil.addAccountDiscount(
+				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
+				CommerceDiscountConstants.LEVEL_L4,
+				cpDefinition.getCPDefinitionId());
+
+		_productAssertEquals(
+			commerceAccountDiscount, cpDefinition.getCPDefinitionId());
+
+		CommerceDiscount commerceAccountAndChannelDiscount =
+			CommerceDiscountTestUtil.addAccountAndChannelDiscount(
+				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
+				_commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.LEVEL_L4,
+				cpDefinition.getCPDefinitionId());
+
+		_productAssertEquals(
+			commerceAccountAndChannelDiscount,
+			cpDefinition.getCPDefinitionId());
+	}
+
+	@Test
+	public void testGetProductCommerceDiscountByHierarchy2() throws Exception {
+		frutillaRule.scenario(
 			"A discount is qualified by an account and a channel is not " +
 				"applicable to the same account on another channel"
 		).given(
@@ -560,7 +560,7 @@ public class CommerceDiscountLocalServiceTest {
 	}
 
 	@Test
-	public void testGetProductCommerceDiscountByHierarchy2() throws Exception {
+	public void testGetProductCommerceDiscountByHierarchy3() throws Exception {
 		frutillaRule.scenario(
 			"A discount is qualified by an account group and a channel is " +
 				"not applicable to the same account group on another channel"

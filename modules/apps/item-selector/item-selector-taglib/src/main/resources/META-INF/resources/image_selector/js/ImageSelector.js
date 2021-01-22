@@ -305,7 +305,8 @@ const ImageSelector = ({
 
 			uploaderStatusStoppedRef.current = A.Uploader.Queue.STOPPED;
 		});
-	}, [onFileSelect, onUploadComplete, onUploadProgress, uploadURL]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		if(image.fileEntryId) {

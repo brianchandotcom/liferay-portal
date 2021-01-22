@@ -133,6 +133,10 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 				searchEngine = queuingSearchEngine;
 			}
 
+			if (_log.isInfoEnabled()) {
+				_log.info("Returning queuing search engine");
+			}
+
 			return searchEngine;
 		}
 	}

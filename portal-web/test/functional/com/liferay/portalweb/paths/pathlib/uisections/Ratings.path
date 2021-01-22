@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YOUR_RATING_STAR_SPECIFIC_ASSET</td>
+	<td>//div[contains(@class,'asset-abstract')][contains(.,'${key_assetTitle}')]//div[contains(@class,'ratings-stars')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

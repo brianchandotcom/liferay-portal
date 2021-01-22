@@ -19,9 +19,9 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />
@@ -89,9 +89,9 @@ exports[`Field DocumentLibrary has a label 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />
@@ -148,9 +148,9 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />
@@ -202,9 +202,9 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />
@@ -255,9 +255,9 @@ exports[`Field DocumentLibrary has a value 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />
@@ -308,9 +308,9 @@ exports[`Field DocumentLibrary has an id 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />
@@ -362,9 +362,9 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />
@@ -415,9 +415,9 @@ exports[`Field DocumentLibrary is not required 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />
@@ -473,9 +473,9 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
         >
           <input
             aria-label="file"
-            class="form-control field"
-            disabled=""
+            class="form-control bg-light field"
             id="textFieldinputFile"
+            readonly=""
             type="text"
             value=""
           />

@@ -1,0 +1,117 @@
+@component-name = "portal-wcm"
+definition {
+
+    property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+    setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+    tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+    @description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "4"
+	test SetFieldGroupAsRepeatableAndExecuteOnAWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 SetFieldGroupAsRepeatableAndExecuteOnAWebContent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "4"
+	test SetFieldGroupAsCollapsibleAndExecuteOnAWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 SetFieldGroupAsCollapsibleAndExecuteOnAWebContent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "4"
+	test EmptyAFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 EmptyAFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "3"
+	test CheckIfFieldGroupDataPersists {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 CheckIfFieldGroupDataPersists pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "5"
+	test CreateFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 CreateFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "5"
+	test DuplicateFieldGroupOnStructure {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 DuplicateFieldGroupOnStructure pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "4"
+	test DeleteFieldGroupOnStructure {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 DeleteFieldGroupOnStructure pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "3"
+	test CheckWebContentUponDeletingFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 CheckWebContentUponDeletingFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
+	@ignore = "true"
+	@priority = "3"
+	test NestAFieldGroupOnAnotherFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98077 NestAFieldGroupOnAnotherFieldGroup pending implementation
+
+	}
+
+}

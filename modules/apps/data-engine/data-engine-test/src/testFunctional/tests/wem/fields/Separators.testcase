@@ -24,73 +24,73 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "5"
 	test AddSeparatorOnFormByDragAndDrop {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 AddSeparatorOnFormByDragAndDrop pending implementation
+		// TODO LPS-98081 AddSeparatorOnFormByDragAndDrop pending implementation
 
 	}
 
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "5"
 	test EditLabelHelpAndNameOfSeparator {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 EditLabelHelpAndNameOfSeparator pending implementation
+		// TODO LPS-98081 EditLabelHelpAndNameOfSeparator pending implementation
 
 	}
 
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "4"
 	test EditSeparatorNameWithInvalidCharacters {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 EditSeparatorNameWithInvalidCharacters pending implementation
+		// TODO LPS-98081 EditSeparatorNameWithInvalidCharacters pending implementation
 
 	}
 
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "3"
 	test ShowAndHideSeparatorLabel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 ShowAndHideSeparatorLabel pending implementation
+		// TODO LPS-98081 ShowAndHideSeparatorLabel pending implementation
 
 	}
 
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "4"
 	test SetSeparatorRepeatable {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 SetSeparatorRepeatable pending implementation
+		// TODO LPS-98081 SetSeparatorRepeatable pending implementation
 
 	}
 
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "4"
 	test DuplicateSeparator {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 DuplicateSeparator pending implementation
+		// TODO LPS-98081 DuplicateSeparator pending implementation
 
 	}
 
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+    @description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
 	@priority = "5"
 	test DeleteSeparator {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 DeleteSeparator pending implementation
+		// TODO LPS-98081 DeleteSeparator pending implementation
 
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -130,16 +130,17 @@ const DocumentLibrary = ({
 					</ClayInput.GroupItem>
 
 					{transformedFileEntryTitle && (
-						<ClayInput.GroupItem append shrink>
-							<ClayButtonWithIcon
+						<ClayInput.GroupItem shrink>
+							<ClayButton
 								aria-label={Liferay.Language.get(
 									'unselect-file'
 								)}
-								className="clear-button"
 								displayType="secondary"
 								onClick={onClearButtonClicked}
-								symbol="times"
-							/>
+								type="button"
+							>
+								{Liferay.Language.get('clear')}
+							</ClayButton>
 						</ClayInput.GroupItem>
 					)}
 				</ClayInput.Group>
@@ -210,13 +211,16 @@ const GuestUploadFile = ({
 					/>
 				</ClayInput.GroupItem>
 				{transformedFileEntryTitle && (
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('unselect-file')}
-						className="clear-button-upload"
-						displayType="secondary"
-						onClick={onClearButtonClicked}
-						symbol="times"
-					/>
+					<ClayInput.GroupItem shrink>
+						<ClayButton
+							aria-label={Liferay.Language.get('unselect-file')}
+							displayType="secondary"
+							onClick={onClearButtonClicked}
+							type="button"
+						>
+							{Liferay.Language.get('clear')}
+						</ClayButton>
+					</ClayInput.GroupItem>
 				)}
 			</ClayInput.Group>
 

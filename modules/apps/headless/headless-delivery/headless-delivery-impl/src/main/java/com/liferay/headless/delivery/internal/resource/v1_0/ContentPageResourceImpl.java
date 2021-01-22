@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -52,9 +53,12 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.taglib.util.ThemeUtil;
 
@@ -188,16 +192,37 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 		return _layoutLocalService.getLayout(layoutFriendlyURL.getPlid());
 	}
 
-	private SegmentsExperience _getSegmentsExperience(
+	private long _getSegmentsExperienceId(
 			Layout layout, String segmentsExperienceKey)
 		throws Exception {
 
-		if (Validator.isNull(segmentsExperienceKey)) {
-			return null;
+		if (Validator.isNotNull(segmentsExperienceKey)) {
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceService.fetchSegmentsExperience(
+					layout.getGroupId(), segmentsExperienceKey);
+
+			return segmentsExperience.getSegmentsExperienceId();
 		}
 
-		return _segmentsExperienceService.fetchSegmentsExperience(
-			layout.getGroupId(), segmentsExperienceKey);
+		contextHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+			layout.getGroupId(), contextUser.getUserId(),
+			_requestContextMapper.map(contextHttpServletRequest));
+
+		long[] segmentsExperienceIds =
+			_segmentsExperienceRequestProcessorRegistry.
+				getSegmentsExperienceIds(
+					contextHttpServletRequest, null, layout.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layout.getPlid(), segmentsEntryIds);
+
+		if (segmentsExperienceIds.length > 0) {
+			return segmentsExperienceIds[0];
+		}
+
+		return SegmentsEntryConstants.ID_DEFAULT;
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
@@ -244,20 +269,11 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser);
 
+		long segmentsExperienceId = _getSegmentsExperienceId(
+			layout, segmentsExperienceKey);
+
 		dtoConverterContext.setAttribute(
-			"segmentsExperienceId", SegmentsEntryConstants.ID_DEFAULT);
-
-		if (Validator.isNotNull(segmentsExperienceKey)) {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceService.fetchSegmentsExperience(
-					layout.getGroupId(), segmentsExperienceKey);
-
-			if (segmentsExperience != null) {
-				dtoConverterContext.setAttribute(
-					"segmentsExperienceId",
-					segmentsExperience.getSegmentsExperienceId());
-			}
-		}
+			"segmentsExperienceId", segmentsExperienceId);
 
 		return _contentPageDTOConverter.toDTO(dtoConverterContext, layout);
 	}
@@ -271,14 +287,12 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 		contextHttpServletRequest = DynamicServletRequest.addQueryString(
 			contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
 
-		SegmentsExperience segmentsExperience = _getSegmentsExperience(
+		long segmentsExperienceId = _getSegmentsExperienceId(
 			layout, segmentsExperienceKey);
 
-		if (segmentsExperience != null) {
-			contextHttpServletRequest.setAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-				new long[] {segmentsExperience.getSegmentsExperienceId()});
-		}
+		contextHttpServletRequest.setAttribute(
+			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
+			new long[] {segmentsExperienceId});
 
 		contextHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
@@ -329,6 +343,19 @@ public class ContentPageResourceImpl extends BaseContentPageResourceImpl {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
+
+	@Reference
+	private SegmentsExperienceRequestProcessorRegistry
+		_segmentsExperienceRequestProcessorRegistry;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

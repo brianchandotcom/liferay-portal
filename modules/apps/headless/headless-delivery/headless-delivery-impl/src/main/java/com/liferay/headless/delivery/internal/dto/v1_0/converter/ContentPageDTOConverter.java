@@ -155,7 +155,8 @@ public class ContentPageDTOConverter
 
 						long segmentsExperienceId = GetterUtil.getLong(
 							dtoConverterContext.getAttribute(
-								"segmentsExperienceId"));
+								"segmentsExperienceId"),
+							SegmentsEntryConstants.ID_DEFAULT);
 
 						LayoutStructure layoutStructure = LayoutStructure.of(
 							layoutPageTemplateStructure.getData(

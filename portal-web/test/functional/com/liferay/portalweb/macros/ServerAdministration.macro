@@ -177,7 +177,9 @@ definition {
 	}
 
 	macro openServerAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet");
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet");
 	}
 
 	macro tearDownDMFileUploadSettings {

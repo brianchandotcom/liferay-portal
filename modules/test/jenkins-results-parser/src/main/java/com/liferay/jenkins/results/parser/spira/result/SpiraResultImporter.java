@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.AnalyticsCloudBranchInformationBuild;
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.AxisBuild;
+import com.liferay.jenkins.results.parser.BatchDependentJob;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
@@ -114,9 +115,17 @@ public class SpiraResultImporter {
 			SpiraResultFactory.newSpiraTestResult(
 				_spiraBuildResult, null, null));
 
-		for (AxisTestClassGroup axisTestClassGroup :
-				job.getAxisTestClassGroups()) {
+		List<AxisTestClassGroup> axisTestClassGroups =
+			job.getAxisTestClassGroups();
 
+		if (job instanceof BatchDependentJob) {
+			BatchDependentJob batchDependentJob = (BatchDependentJob)job;
+
+			axisTestClassGroups.addAll(
+				batchDependentJob.getDependentAxisTestClassGroups());
+		}
+
+		for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
 			if (axisTestClassGroup instanceof CucumberAxisTestClassGroup ||
 				axisTestClassGroup instanceof FunctionalAxisTestClassGroup ||
 				axisTestClassGroup instanceof JUnitAxisTestClassGroup) {

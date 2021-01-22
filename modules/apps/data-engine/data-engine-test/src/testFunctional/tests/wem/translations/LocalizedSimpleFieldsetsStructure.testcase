@@ -1,0 +1,177 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyFieldsetEditionOnStructure {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 VerifyFieldsetEditionOnStructure pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyNestedFieldsetEditionOnStructure {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 VerifyNestedFieldsetEditionOnStructure pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test CheckFieldsetLocalizationWithDifferentInstanceLanguage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 CheckFieldsetLocalizationWithDifferentInstanceLanguage pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test CheckFieldsetTranslationsOnStructure {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 CheckFieldsetTranslationsOnStructure pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test VerifyPropagationMessageUponFieldsetEdition {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 VerifyPropagationMessageUponFieldsetEdition pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitleIsDisplayedUponLocaleChange {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 DefaultTitleIsDisplayedUponLocaleChange pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateFieldsetToNLanguages {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 TranslateFieldsetToNLanguages pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateFieldsetWithNestedFields {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 TranslateFieldsetWithNestedFields pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateFieldsetWithTwoLevelNestedFields {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 TranslateFieldsetWithTwoLevelNestedFields pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateFieldsetWithoutNestedFields {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 TranslateFieldsetWithoutNestedFields pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test EditFieldset {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 EditFieldset pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test CheckLanguageSelector {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 CheckLanguageSelector pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@ignore = "true"
+	@priority = "5"
+	test VerifyDefaultLanguageIsFirstShown {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123538 VerifyDefaultLanguageIsFirstShown pending implementation
+
+	}
+
+}

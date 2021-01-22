@@ -115,9 +115,9 @@ definition {
 
 				Click(locator1 = "PageEditor#MORE_LINK");
 
-				AssertChecked(
-					key_toggleSwitchLabel = "Use the same look and feel of the Public Pages",
-					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				AssertElementNotPresent(
+					key_sectionTitle = "Theme",
+					locator1 = "SitePagesEditPage#SECTION_TITLE");
 
 				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 			}

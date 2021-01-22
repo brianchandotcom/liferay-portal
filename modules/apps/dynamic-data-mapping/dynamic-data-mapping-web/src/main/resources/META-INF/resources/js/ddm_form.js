@@ -698,6 +698,56 @@ AUI.add(
 					}
 				},
 
+				convertNumberLocale(number, sourceLocale, targetLocale) {
+					if (sourceLocale == targetLocale) {
+						return number;
+					}
+
+					if (sourceLocale.includes('_')) {
+						sourceLocale = sourceLocale.replace('_', '-');
+					}
+
+					if (targetLocale.includes('_')) {
+						targetLocale = targetLocale.replace('_', '-');
+					}
+
+					var test = 1.1;
+					var sourceDecimal = test
+						.toLocaleString(sourceLocale)
+						.charAt(1);
+					var targetDecimal = test
+						.toLocaleString(targetLocale)
+						.charAt(1);
+
+					if (sourceDecimal == targetDecimal) {
+						return number;
+					}
+
+					if (
+						!['.', ','].includes(sourceDecimal) ||
+						!['.', ','].includes(targetDecimal)
+					) {
+						var instance = this;
+
+						var form = instance.getForm();
+
+						form.set(
+							'warningMessage',
+							Liferay.Language.get(
+								'convert-locale-numeric-values-warning-message'
+							)
+						);
+
+						return number;
+					}
+
+					number = number.replace(/,/g, '|');
+					number = number.replace(/\./g, ',');
+					number = number.replace(/\|/g, '.');
+
+					return number;
+				},
+
 				createField(fieldTemplate) {
 					var instance = this;
 
@@ -751,6 +801,24 @@ AUI.add(
 						var defaultLocale = instance.getDefaultLocale();
 
 						if (defaultLocale && localizationMap[defaultLocale]) {
+							var name = instance.get('name');
+
+							var field = instance.getFieldByNameInFieldDefinition(
+								name
+							);
+
+							if (field) {
+								var type = field.type;
+
+								if (type === 'ddm-number') {
+									return instance.convertNumberLocale(
+										localizationMap[defaultLocale],
+										defaultLocale,
+										locale
+									);
+								}
+							}
+
 							return localizationMap[defaultLocale];
 						}
 
@@ -3981,6 +4049,11 @@ AUI.add(
 					validator: Lang.isBoolean,
 					value: true,
 				},
+
+				warningMessage: {
+					validator: Lang.isString,
+					value: null,
+				},
 			},
 
 			AUGMENTS: [DDMPortletSupport, FieldsSupport],
@@ -4111,6 +4184,32 @@ AUI.add(
 					}
 				},
 
+				_onLocaleChanged() {
+					var instance = this;
+
+					var warningMessage = instance.get('warningMessage');
+
+					if (
+						warningMessage &&
+						warningMessage !== null &&
+						warningMessage !== ''
+					) {
+						var portletNamespace = instance.get('portletNamespace');
+
+						new A.Alert({
+							bodyContent: warningMessage,
+							boundingBox:
+								'#' + portletNamespace + 'ddmFormWarning',
+							closeable: true,
+							cssClass: 'alert-warning',
+							destroyOnHide: false,
+							render: true,
+						});
+
+						instance.set('warningMessage', '');
+					}
+				},
+
 				_onSubmitForm() {
 					var instance = this;
 
@@ -4197,6 +4296,10 @@ AUI.add(
 							Liferay.on(
 								'inputLocalized:defaultLocaleChanged',
 								A.bind('_onDefaultLocaleChanged', instance)
+							),
+							Liferay.on(
+								'inputLocalized:localeChanged',
+								A.bind('_onLocaleChanged', instance)
 							)
 						);
 
@@ -4632,6 +4735,7 @@ AUI.add(
 	'',
 	{
 		requires: [
+			'aui-alert',
 			'aui-base',
 			'aui-color-picker-popover',
 			'aui-datatable',

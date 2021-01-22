@@ -109,9 +109,10 @@ const DocumentLibrary = ({
 					<ClayInput.GroupItem prepend>
 						<ClayInput
 							aria-label={Liferay.Language.get('file')}
-							className="field"
-							disabled
+							className="bg-light field"
 							id={`${name}inputFile`}
+							onClick={onSelectButtonClicked}
+							readOnly
 							value={transformedFileEntryTitle || ''}
 						/>
 					</ClayInput.GroupItem>
@@ -184,7 +185,9 @@ const GuestUploadFile = ({
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend>
 					<ClayInput
-						disabled
+						className="bg-light"
+						onClick={onUploadSelectButtonClicked}
+						readOnly
 						type="text"
 						value={transformedFileEntryTitle || ''}
 					/>

@@ -187,4 +187,162 @@ definition {
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
+	@description = "This test ensures that a blog entry created with an internal video embedded in it can be exported and imported."
+	@priority = "5"
+	test ImportExportedBlogWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DLVideo#ImportExportedBlogWithEmbeddedVideo";
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+
+		Blogs.addEntry(
+			embedVideo = "true",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Documents and Media",
+			videoName = "Document_1.mp4",
+			videoShortcutTitle = "DM Video Title In Site",
+			viewInternalVideoPreview = "true");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+
+		LAR.exportPortlet(larFileName = "Blog_portlet.lar");
+
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+
+		LAR.importPortlet(larFileName = "Blog_portlet.lar");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
+
+		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryCP(
+			embedVideo = "true",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			internalVideo = "true",
+			videoName = "Document_1.mp4");
+	}
+
+	@description = "This test ensures that a kb article created with an internal video embedded in it can be exported and imported."
+	@priority = "5"
+	test ImportExportedKBWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DLVideo#ImportExportedKBWithEmbeddedVideo";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Video Title In Depot",
+			groupName = "Test Depot Name",
+			mimeType = "video/mp4",
+			sourceFileName = "Document_1.mp4");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+
+		KBArticle.addCP(
+			depotName = "Test Depot Name",
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			navTab = "Documents and Media",
+			videoName = "Document_1.mp4",
+			videoShortcutTitle = "DM Video Title In Depot",
+			viewInternalVideoPreview = "true");
+
+		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+
+		LAR.exportPortlet(larFileName = "KB_portlet.lar");
+
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+
+		LAR.importPortlet(larFileName = "KB_portlet.lar");
+
+		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
+
+		KBArticle.viewCP(
+			embedVideo = "true",
+			internalVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			videoName = "Document_1.mp4");
+	}
+
+	@description = "This test ensures that a web content created with an internal video embedded in it can be exported and imported."
+	@priority = "5"
+	test ImportExportedWebContentWithEmbeddedVideo {
+		property test.name.skip.portal.instance = "DLVideo#ImportExportedWebContentWithEmbeddedVideo";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Video Title In Depot",
+			groupName = "Test Depot Name",
+			mimeType = "video/mp4",
+			sourceFileName = "Document_1.mp4");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedVideo = "true",
+			navTab = "Documents and Media",
+			videoShortcutTitle = "DM Video Title In Depot",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		Pause(locator1 = "3000");
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+
+		PortletEntry.publish();
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+
+		JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+	}
+
 }

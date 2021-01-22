@@ -273,4 +273,239 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-91001. The collection providers should be available in all areas where the Asset Publisher is available."
+	@priority = "4"
+	test ViewCollectionProvidersInAssetPublisher {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name");
+		}
+
+		task ("Add an Asset Publisher to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("View collection providers in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Widget Page Name",
+				siteName = "Test Site Name");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+
+			Alert.viewSuccessMessage();
+
+			Panel.expandPanel(panel = "Select Collection Provider");
+
+			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
+				AssertElementPresent(
+					key_value = "${collectionProviderName}",
+					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+			}
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
+		task ("Add an Asset Publisher to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("View collection providers in Asset Publisher") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+
+			Alert.viewSuccessMessage();
+
+			Panel.expandPanel(panel = "Select Collection Provider");
+
+			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
+				AssertElementPresent(
+					key_value = "${collectionProviderName}",
+					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+			}
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a widget page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Test Widget Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
+		}
+
+		task ("Add an Asset Publisher to widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Widget Page Template Name");
+
+			Portlet.addPG(portletName = "Asset Publisher");
+		}
+
+		task ("View collection providers in Asset Publisher") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+
+			Alert.viewSuccessMessage();
+
+			Panel.expandPanel(panel = "Select Collection Provider");
+
+			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
+				AssertElementPresent(
+					key_value = "${collectionProviderName}",
+					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+			}
+		}
+
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Test Content Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
+
+		task ("Add an Asset Publisher to content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Test Content Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("View collection providers in Asset Publisher") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+
+			Alert.viewSuccessMessage();
+
+			Panel.expandPanel(panel = "Select Collection Provider");
+
+			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
+				AssertElementPresent(
+					key_value = "${collectionProviderName}",
+					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+			}
+		}
+
+		task ("Add a display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add an Asset Publisher to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("View collection providers in Asset Publisher") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+
+			Alert.viewSuccessMessage();
+
+			Panel.expandPanel(panel = "Select Collection Provider");
+
+			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
+				AssertElementPresent(
+					key_value = "${collectionProviderName}",
+					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+			}
+		}
+
+		task ("Add a master page") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add an Asset Publisher to master page") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addWidget(
+				dropTarget = "Header",
+				portletName = "Asset Publisher",
+				scope = "Master");
+		}
+
+		task ("View collection providers in Asset Publisher") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+
+			Alert.viewSuccessMessage();
+
+			Panel.expandPanel(panel = "Select Collection Provider");
+
+			for (var collectionProviderName : list "Highest Rated Assets,Most Viewed Assets,Related Assets,Recent Content") {
+				AssertElementPresent(
+					key_value = "${collectionProviderName}",
+					locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD_VALUE");
+			}
+		}
+	}
+
 }

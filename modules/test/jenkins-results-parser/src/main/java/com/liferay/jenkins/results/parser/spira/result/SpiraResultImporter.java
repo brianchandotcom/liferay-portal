@@ -993,6 +993,20 @@ public class SpiraResultImporter {
 		NotificationUtil.sendSlackNotification(
 			sb.toString(), "#spira-reports", ":liferay-ci:", buildName,
 			"Liferay CI");
+
+		Job job = _topLevelBuild.getJob();
+
+		String spiraSlackChannels = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "test.batch.spira.slack.channels",
+			_topLevelBuild.getJobName(), _topLevelBuild.getTestSuiteName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(spiraSlackChannels)) {
+			for (String spiraSlackChannel : spiraSlackChannels.split(",")) {
+				NotificationUtil.sendSlackNotification(
+					sb.toString(), spiraSlackChannel, ":liferay-ci:", buildName,
+					"Liferay CI");
+			}
+		}
 	}
 
 	private void _updateTopLevelBuildDescription() {

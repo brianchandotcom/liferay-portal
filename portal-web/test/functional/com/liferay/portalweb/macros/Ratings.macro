@@ -88,6 +88,32 @@ definition {
 			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
 	}
 
+	macro rateStarSpecificAsset {
+		Click(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "Ratings#YOUR_RATING_STAR_SPECIFIC_ASSET");
+
+		if (isSet(checkDeleteButton)) {
+			AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DELETE_DISABLE");
+		}
+
+		if ("${ratingStarCount}" == "1") {
+			var ratingStar = "1 star";
+		}
+		else {
+			var ratingStar = "${ratingStarCount} stars";
+		}
+
+		Click(
+			key_ratingStar = "${ratingStar}",
+			locator1 = "Ratings#YOUR_RATING_STAR_COUNT_ANY");
+
+		AssertElementPresent(
+			key_assetTitle = "${assetTitle}",
+			key_ratingStar = "${ratingStar}",
+			locator1 = "Ratings#YOUR_RATING_STAR_RESULT_SPECIFIC_ASSET");
+	}
+
 	macro rateThumb {
 		if (isSet(blogCommentRating)) {
 			Click.javaScriptClick(

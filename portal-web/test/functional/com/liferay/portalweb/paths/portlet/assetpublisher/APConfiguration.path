@@ -276,6 +276,11 @@
 	<td>//select[contains(@id,'infoListProviderClassName')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_COLLECTION_PROVIDER_FIELD_VALUE</td>
+	<td>//select[contains(@id,'infoListProviderClassName')]/option[normalize-space(text())='${key_value}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

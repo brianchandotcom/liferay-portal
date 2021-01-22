@@ -21,6 +21,7 @@ import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListMergeable;
@@ -35,11 +37,14 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -166,6 +171,17 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		_friendlyURLMapperProvider = null;
 	}
 
+	private HttpServletRequest _getHttpServletRequest() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getRequest();
+		}
+
+		return null;
+	}
+
 	private String _getPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
@@ -226,6 +242,17 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 		if (group.isLayoutPrototype()) {
 			return group.getDescriptiveName(locale);
+		}
+
+		if (Validator.isNull(PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND) &&
+			SessionErrors.contains(
+				_getHttpServletRequest(), NoSuchLayoutException.class)) {
+
+			if (titleListMergeable == null) {
+				titleListMergeable = new ListMergeable<>();
+			}
+
+			titleListMergeable.add(_language.get(locale, "status"));
 		}
 
 		if (titleListMergeable != null) {

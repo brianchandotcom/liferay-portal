@@ -233,6 +233,49 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
+	macro configureCollectionProviderPG {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		if (isSet(columnNumnber)) {
+			MouseOver.mouseOverNotVisible(
+				key_columnNumber = "${columnNumnber}",
+				key_portletName = "Asset Publisher",
+				locator1 = "Home#PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS");
+
+			Click.waitForMenuToggleJSClick(
+				key_columnNumber = "${columnNumnber}",
+				key_portletName = "Asset Publisher",
+				locator1 = "Home#PAGE_COLUMN_PORTLET_HEADER_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+		else {
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "Asset Publisher");
+		}
+
+		Navigator.gotoNavTab(navTab = "Asset Selection");
+
+		Panel.expandPanel(panel = "Asset Selection");
+
+		Click(locator1 = "APConfiguration#ASSET_SELECTION_INFO_LIST_PROVIDER");
+
+		Alert.viewSuccessMessage();
+
+		Panel.expandPanel(panel = "Select Collection Provider");
+
+		Select(
+			locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD",
+			value1 = "${collectionProviderName}");
+
+		Pause(locator1 = "3000");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro configureDisplayConversionsPG {
 		AssetPublisherPortlet.gotoConfigurationPG();
 

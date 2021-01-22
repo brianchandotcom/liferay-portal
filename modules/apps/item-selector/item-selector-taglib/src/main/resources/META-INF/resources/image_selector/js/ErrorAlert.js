@@ -22,7 +22,7 @@ const ErrorAlert = ({
 	handleClose,
 	itemSelectorEventName,
 	itemSelectorURL,
-	message
+	message,
 }) => {
 	return (
 		<div className="error-wrapper">

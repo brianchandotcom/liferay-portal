@@ -625,13 +625,33 @@ public class SpiraResultImporter {
 		String upstreamRepository = JenkinsResultsParserUtil.getProperty(
 			_getBuildProperties(), "plugins.repository", upstreamBranchName);
 
-		GitWorkingDirectory gitWorkingDirectory =
+		GitWorkingDirectory pluginsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				upstreamBranchName, upstreamDirPath, upstreamRepository);
 
-		gitWorkingDirectory.checkoutLocalGitBranch(branchInformation);
+		pluginsGitWorkingDirectory.checkoutLocalGitBranch(branchInformation);
 
-		gitWorkingDirectory.displayLog();
+		pluginsGitWorkingDirectory.displayLog();
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			_getPortalGitWorkingDirectory();
+
+		File releasePropertiesFile = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			JenkinsResultsParserUtil.combine(
+				"release.", System.getenv("HOSTNAME"), ".properties"));
+
+		try {
+			JenkinsResultsParserUtil.write(
+				releasePropertiesFile,
+				JenkinsResultsParserUtil.combine(
+					"lp.plugins.dir=",
+					JenkinsResultsParserUtil.getCanonicalPath(
+						pluginsGitWorkingDirectory.getWorkingDirectory())));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private void _checkoutPortalBaseBranch() {

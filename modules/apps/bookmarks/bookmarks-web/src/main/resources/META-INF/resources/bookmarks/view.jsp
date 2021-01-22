@@ -180,10 +180,7 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 	<liferay-util:param name="searchContainerId" value="entries" />
 </liferay-util:include>
 
-<clay:container-fluid
-	cssClass="closed sidenav-container sidenav-right"
-	id='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
->
+<div class="closed sidenav-container sidenav-right" id="<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/bookmarks/info_panel" var="sidebarPanelURL">
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 	</liferay-portlet:resourceURL>
@@ -196,32 +193,36 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
-		<div class="bookmakrs-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-			<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") %>'>
-				<liferay-ui:breadcrumb
-					showCurrentGroup="<%= false %>"
-					showGuestGroup="<%= false %>"
-					showLayout="<%= false %>"
-					showParentGroups="<%= false %>"
-				/>
-			</c:if>
-		</div>
+		<clay:container-fluid
+			cssClass="container-view"
+		>
+			<div class="bookmarks-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
+				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") %>'>
+					<liferay-ui:breadcrumb
+						showCurrentGroup="<%= false %>"
+						showGuestGroup="<%= false %>"
+						showLayout="<%= false %>"
+						showParentGroups="<%= false %>"
+					/>
+				</c:if>
+			</div>
 
-		<liferay-portlet:actionURL varImpl="editEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
-		</liferay-portlet:actionURL>
+			<liferay-portlet:actionURL varImpl="editEntryURL">
+				<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
+			</liferay-portlet:actionURL>
 
-		<aui:form action="<%= editEntryURL.toString() %>" method="get" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="newFolderId" type="hidden" />
+			<aui:form action="<%= editEntryURL.toString() %>" method="get" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="newFolderId" type="hidden" />
 
-			<liferay-util:include page="/bookmarks/view_entries.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="searchContainerId" value="entries" />
-			</liferay-util:include>
-		</aui:form>
+				<liferay-util:include page="/bookmarks/view_entries.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="searchContainerId" value="entries" />
+				</liferay-util:include>
+			</aui:form>
+		</clay:container-fluid>
 	</div>
-</clay:container-fluid>
+</div>
 
 <%
 if (navigation.equals("all") && !defaultFolderView && (folder != null) && (portletName.equals(BookmarksPortletKeys.BOOKMARKS) || portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN))) {

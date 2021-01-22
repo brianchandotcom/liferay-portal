@@ -149,7 +149,7 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<div class="sidenav-content">
-		<div class="container-fluid container-fluid-max-xl">
+		<clay:container-fluid>
 			<div <%= portletTitleBasedNavigation ? "class=\"panel main-content-card\"" : StringPool.BLANK %>>
 				<div <%= portletTitleBasedNavigation ? "class=\"panel-body\"" : StringPool.BLANK %>>
 					<c:if test="<%= !portletTitleBasedNavigation %>">
@@ -485,6 +485,6 @@ if (portletTitleBasedNavigation) {
 					</ul>
 				</div>
 			</c:if>
-		</div>
+		</clay:container-fluid>
 	</div>
 </div>

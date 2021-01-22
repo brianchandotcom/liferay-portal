@@ -233,10 +233,10 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 				</div>
 			</c:if>
 
-			<clay:container-fluid
-				size='<%= Objects.equals(renderRequest.getWindowState(), LiferayWindowState.POP_UP) ? "xl" : "lg" %>'
-			>
-				<div class="sidenav-content">
+			<div class="sidenav-content">
+				<clay:container-fluid
+					size='<%= Objects.equals(renderRequest.getWindowState(), LiferayWindowState.POP_UP) ? "xl" : "lg" %>'
+				>
 					<aui:form cssClass="full-width-content" method="post" name="fm" onSubmit="event.preventDefault();">
 						<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
 						<aui:input name="mvcPath" type="hidden" value="<%= mvcPath %>" />
@@ -769,8 +769,8 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 							</c:when>
 						</c:choose>
 					</aui:form>
-				</div>
-			</clay:container-fluid>
+				</clay:container-fluid>
+			</div>
 		</div>
 
 		<c:if test="<%= kaleoDefinition != null %>">

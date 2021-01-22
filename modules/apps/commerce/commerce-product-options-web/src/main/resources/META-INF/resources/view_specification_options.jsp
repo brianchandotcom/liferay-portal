@@ -107,7 +107,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 </liferay-frontend:management-bar>
 
 <div id="<portlet:namespace />productSpecificationOptionsContainer">
-	<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<c:if test="<%= cpSpecificationOptionDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/cp_specification_options/cp_specification_option_info_panel" var="sidebarPanelURL" />
 
@@ -120,69 +120,71 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 		</c:if>
 
 		<div class="sidenav-content">
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" />
-				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-				<aui:input name="deleteCPSpecificationOptionIds" type="hidden" />
+			<clay:container-fluid>
+				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+					<aui:input name="<%= Constants.CMD %>" type="hidden" />
+					<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+					<aui:input name="deleteCPSpecificationOptionIds" type="hidden" />
 
-				<div class="product-specification-options-container" id="<portlet:namespace />entriesContainer">
-					<liferay-ui:search-container
-						id="cpSpecificationOptions"
-						iteratorURL="<%= portletURL %>"
-						searchContainer="<%= cpSpecificationOptionDisplayContext.getSearchContainer() %>"
-					>
-						<liferay-ui:search-container-row
-							className="com.liferay.commerce.product.model.CPSpecificationOption"
-							keyProperty="CPSpecificationOptionId"
-							modelVar="cpSpecificationOption"
+					<div class="product-specification-options-container" id="<portlet:namespace />entriesContainer">
+						<liferay-ui:search-container
+							id="cpSpecificationOptions"
+							iteratorURL="<%= portletURL %>"
+							searchContainer="<%= cpSpecificationOptionDisplayContext.getSearchContainer() %>"
 						>
+							<liferay-ui:search-container-row
+								className="com.liferay.commerce.product.model.CPSpecificationOption"
+								keyProperty="CPSpecificationOptionId"
+								modelVar="cpSpecificationOption"
+							>
 
-							<%
-							PortletURL rowURL = renderResponse.createRenderURL();
+								<%
+								PortletURL rowURL = renderResponse.createRenderURL();
 
-							rowURL.setParameter("mvcRenderCommandName", "/cp_specification_options/edit_cp_specification_option");
-							rowURL.setParameter("redirect", currentURL);
-							rowURL.setParameter("cpSpecificationOptionId", String.valueOf(cpSpecificationOption.getCPSpecificationOptionId()));
-							%>
+								rowURL.setParameter("mvcRenderCommandName", "/cp_specification_options/edit_cp_specification_option");
+								rowURL.setParameter("redirect", currentURL);
+								rowURL.setParameter("cpSpecificationOptionId", String.valueOf(cpSpecificationOption.getCPSpecificationOptionId()));
+								%>
 
-							<liferay-ui:search-container-column-text
-								cssClass="important table-cell-expand"
-								href="<%= rowURL %>"
-								name="label"
-								value="<%= HtmlUtil.escape(cpSpecificationOption.getTitle(locale)) %>"
+								<liferay-ui:search-container-column-text
+									cssClass="important table-cell-expand"
+									href="<%= rowURL %>"
+									name="label"
+									value="<%= HtmlUtil.escape(cpSpecificationOption.getTitle(locale)) %>"
+								/>
+
+								<liferay-ui:search-container-column-text
+									cssClass="table-cell-expand"
+									name="default-group"
+									value="<%= HtmlUtil.escape(cpSpecificationOptionDisplayContext.getCPOptionCategoryTitle(cpSpecificationOption)) %>"
+								/>
+
+								<liferay-ui:search-container-column-text
+									cssClass="table-cell-expand"
+									name="use-in-faceted-navigation"
+									value='<%= LanguageUtil.get(request, cpSpecificationOption.isFacetable() ? "yes" : "no") %>'
+								/>
+
+								<liferay-ui:search-container-column-date
+									cssClass="table-cell-expand"
+									name="modified-date"
+									property="modifiedDate"
+								/>
+
+								<liferay-ui:search-container-column-jsp
+									cssClass="entry-action-column"
+									path="/specification_option_action.jsp"
+								/>
+							</liferay-ui:search-container-row>
+
+							<liferay-ui:search-iterator
+								displayStyle="<%= displayStyle %>"
+								markupView="lexicon"
 							/>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand"
-								name="default-group"
-								value="<%= HtmlUtil.escape(cpSpecificationOptionDisplayContext.getCPOptionCategoryTitle(cpSpecificationOption)) %>"
-							/>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-expand"
-								name="use-in-faceted-navigation"
-								value='<%= LanguageUtil.get(request, cpSpecificationOption.isFacetable() ? "yes" : "no") %>'
-							/>
-
-							<liferay-ui:search-container-column-date
-								cssClass="table-cell-expand"
-								name="modified-date"
-								property="modifiedDate"
-							/>
-
-							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
-								path="/specification_option_action.jsp"
-							/>
-						</liferay-ui:search-container-row>
-
-						<liferay-ui:search-iterator
-							displayStyle="<%= displayStyle %>"
-							markupView="lexicon"
-						/>
-					</liferay-ui:search-container>
-				</div>
-			</aui:form>
+						</liferay-ui:search-container>
+					</div>
+				</aui:form>
+			</clay:container-fluid>
 		</div>
 	</div>
 </div>

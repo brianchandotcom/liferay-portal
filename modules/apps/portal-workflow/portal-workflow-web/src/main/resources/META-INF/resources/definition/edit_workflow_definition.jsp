@@ -197,8 +197,8 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		</div>
 	</c:if>
 
-	<clay:container-fluid>
-		<div class="sidenav-content">
+	<div class="sidenav-content">
+		<clay:container-fluid>
 			<aui:form method="post" name="fm">
 				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 				<aui:input name="name" type="hidden" value="<%= name %>" />
@@ -290,8 +290,8 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 					</c:if>
 				</aui:button-row>
 			</aui:form>
-		</div>
-	</clay:container-fluid>
+		</clay:container-fluid>
+	</div>
 </div>
 
 <div class="hide" id="<%= randomNamespace %>titleInputLocalized">

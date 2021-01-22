@@ -70,10 +70,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 		</c:otherwise>
 	</c:choose>
 
-	<clay:container-fluid
-		cssClass="closed sidenav-container sidenav-right"
-		id='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
-	>
+	<div class="closed sidenav-container sidenav-right" id="<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>">
 		<div id="breadcrumb">
 			<liferay-ui:breadcrumb
 				showCurrentGroup="<%= false %>"
@@ -102,83 +99,85 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 		</c:if>
 
 		<div class="sidenav-content">
-			<liferay-ui:search-container
-				searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
-			>
-				<liferay-ui:search-container-row
-					className="com.liferay.user.associated.data.web.internal.display.UADEntity"
-					escapedModel="<%= true %>"
-					keyProperty="primaryKey"
-					modelVar="uadEntity"
+			<clay:container-fluid>
+				<liferay-ui:search-container
+					searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
 				>
+					<liferay-ui:search-container-row
+						className="com.liferay.user.associated.data.web.internal.display.UADEntity"
+						escapedModel="<%= true %>"
+						keyProperty="primaryKey"
+						modelVar="uadEntity"
+					>
 
-					<%
-					List<KeyValuePair> columnEntries = uadEntity.getColumnEntries();
+						<%
+						List<KeyValuePair> columnEntries = uadEntity.getColumnEntries();
 
-					String uadEntityHref = uadEntity.getViewURL();
+						String uadEntityHref = uadEntity.getViewURL();
 
-					if (uadEntityHref == null) {
-						uadEntityHref = uadEntity.getEditURL();
-					}
-
-					boolean showUserIcon = false;
-
-					if ((uadEntity.getViewURL() != null) && !uadEntity.isUserOwned()) {
-						showUserIcon = true;
-					}
-
-					for (KeyValuePair columnEntry : columnEntries) {
-						String columnEntryKey = columnEntry.getKey();
-
-						String cssClass = "table-cell-expand";
-
-						if (columnEntry.equals(columnEntries.get(0))) {
-							cssClass = "table-cell-expand table-list-title";
+						if (uadEntityHref == null) {
+							uadEntityHref = uadEntity.getEditURL();
 						}
-					%>
 
-						<liferay-ui:search-container-column-text
-							cssClass="<%= cssClass %>"
-							name="<%= columnEntryKey %>"
-						>
-							<aui:a href="<%= uadEntityHref %>"><%= StringUtil.shorten(columnEntry.getValue(), 200) %></aui:a>
+						boolean showUserIcon = false;
 
-							<c:if test='<%= columnEntryKey.equals("name") || columnEntryKey.equals("title") %>'>
-								<c:if test="<%= uadEntity.isInTrash() %>">
-									<clay:label
-										label="in-trash"
-									/>
+						if ((uadEntity.getViewURL() != null) && !uadEntity.isUserOwned()) {
+							showUserIcon = true;
+						}
+
+						for (KeyValuePair columnEntry : columnEntries) {
+							String columnEntryKey = columnEntry.getKey();
+
+							String cssClass = "table-cell-expand";
+
+							if (columnEntry.equals(columnEntries.get(0))) {
+								cssClass = "table-cell-expand table-list-title";
+							}
+						%>
+
+							<liferay-ui:search-container-column-text
+								cssClass="<%= cssClass %>"
+								name="<%= columnEntryKey %>"
+							>
+								<aui:a href="<%= uadEntityHref %>"><%= StringUtil.shorten(columnEntry.getValue(), 200) %></aui:a>
+
+								<c:if test='<%= columnEntryKey.equals("name") || columnEntryKey.equals("title") %>'>
+									<c:if test="<%= uadEntity.isInTrash() %>">
+										<clay:label
+											label="in-trash"
+										/>
+									</c:if>
+
+									<c:if test="<%= showUserIcon %>">
+										<liferay-ui:icon
+											cssClass="disabled"
+											icon="user"
+											markupView="lexicon"
+											message="this-parent-item-does-not-belong-to-the-user-but-contains-children-items-belonging-to-the-user"
+											toolTip="<%= true %>"
+										/>
+									</c:if>
 								</c:if>
+							</liferay-ui:search-container-column-text>
 
-								<c:if test="<%= showUserIcon %>">
-									<liferay-ui:icon
-										cssClass="disabled"
-										icon="user"
-										markupView="lexicon"
-										message="this-parent-item-does-not-belong-to-the-user-but-contains-children-items-belonging-to-the-user"
-										toolTip="<%= true %>"
-									/>
-								</c:if>
-							</c:if>
-						</liferay-ui:search-container-column-text>
+						<%
+						}
+						%>
 
-					<%
-					}
-					%>
+						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action-column"
+							path="/uad_entity_action.jsp"
+						/>
+					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
-						path="/uad_entity_action.jsp"
+					<liferay-ui:search-iterator
+						markupView="lexicon"
+						resultRowSplitter="<%= viewUADEntitiesDisplay.getResultRowSplitter() %>"
 					/>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-					resultRowSplitter="<%= viewUADEntitiesDisplay.getResultRowSplitter() %>"
-				/>
-			</liferay-ui:search-container>
+				</liferay-ui:search-container>
+			</clay:container-fluid>
 		</div>
-	</clay:container-fluid>
+	</div>
 </aui:form>
 
 <aui:script>

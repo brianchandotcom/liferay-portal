@@ -14,77 +14,79 @@
  */
 --%>
 
-<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<div class="sidenav-content">
-		<aui:form method="post" name="fm">
-			<aui:input name="deleteMBMessageIds" type="hidden" />
-			<aui:input name="notSpamMBMessageIds" type="hidden" />
+		<clay:container-fluid>
+			<aui:form method="post" name="fm">
+				<aui:input name="deleteMBMessageIds" type="hidden" />
+				<aui:input name="notSpamMBMessageIds" type="hidden" />
 
-			<liferay-ui:search-container
-				emptyResultsMessage="there-are-no-posts"
-				headerNames="subject,preview,posted-by"
-				iteratorURL="<%= portletURL %>"
-				rowChecker="<%= new RowChecker(renderResponse) %>"
-				total="<%= ModerationUtil.getMBMessagesCount(scopeGroupId) %>"
-			>
-				<liferay-ui:search-container-results
-					results="<%= ModerationUtil.getMBMessages(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
-
-				<c:if test="<%= !results.isEmpty() %>">
-					<aui:button-row>
-						<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "notSpamMBMessages();" %>' value="not-spam" />
-
-						<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "deleteMBMessages(false);" %>' value="delete" />
-					</aui:button-row>
-				</c:if>
-
-				<liferay-ui:search-container-row
-					className="com.liferay.message.boards.model.MBMessage"
-					escapedModel="<%= true %>"
-					keyProperty="messageId"
-					modelVar="message"
+				<liferay-ui:search-container
+					emptyResultsMessage="there-are-no-posts"
+					headerNames="subject,preview,posted-by"
+					iteratorURL="<%= portletURL %>"
+					rowChecker="<%= new RowChecker(renderResponse) %>"
+					total="<%= ModerationUtil.getMBMessagesCount(scopeGroupId) %>"
 				>
-					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="mvcPath" value="/view_thread_message.jsp" />
-						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-					</liferay-portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="subject"
-						value="<%= message.getSubject() %>"
+					<liferay-ui:search-container-results
+						results="<%= ModerationUtil.getMBMessages(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
 					/>
 
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="preview"
-						value="<%= StringUtil.shorten(message.getBody(), 100) %>"
-					/>
+					<c:if test="<%= !results.isEmpty() %>">
+						<aui:button-row>
+							<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "notSpamMBMessages();" %>' value="not-spam" />
 
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="posted-by"
+							<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "deleteMBMessages(false);" %>' value="delete" />
+						</aui:button-row>
+					</c:if>
+
+					<liferay-ui:search-container-row
+						className="com.liferay.message.boards.model.MBMessage"
+						escapedModel="<%= true %>"
+						keyProperty="messageId"
+						modelVar="message"
 					>
-						<div>
-							<%= message.isAnonymous() ? LanguageUtil.get(portletConfig.getResourceBundle(locale), "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(message.getUserId(), message.getUserName())) %>
-						</div>
+						<liferay-portlet:renderURL varImpl="rowURL">
+							<portlet:param name="mvcPath" value="/view_thread_message.jsp" />
+							<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+						</liferay-portlet:renderURL>
 
-						<div>
-							<%= longDateFormatDate.format(message.getCreateDate()) %>
-						</div>
-					</liferay-ui:search-container-column-text>
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="subject"
+							value="<%= message.getSubject() %>"
+						/>
 
-					<liferay-ui:search-container-column-jsp
-						align="right"
-						path="/message_boards_action.jsp"
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="preview"
+							value="<%= StringUtil.shorten(message.getBody(), 100) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="posted-by"
+						>
+							<div>
+								<%= message.isAnonymous() ? LanguageUtil.get(portletConfig.getResourceBundle(locale), "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(message.getUserId(), message.getUserName())) %>
+							</div>
+
+							<div>
+								<%= longDateFormatDate.format(message.getCreateDate()) %>
+							</div>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-jsp
+							align="right"
+							path="/message_boards_action.jsp"
+						/>
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator
+						markupView="lexicon"
 					/>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator
-					markupView="lexicon"
-				/>
-			</liferay-ui:search-container>
-		</aui:form>
+				</liferay-ui:search-container>
+			</aui:form>
+		</clay:container-fluid>
 	</div>
 </div>

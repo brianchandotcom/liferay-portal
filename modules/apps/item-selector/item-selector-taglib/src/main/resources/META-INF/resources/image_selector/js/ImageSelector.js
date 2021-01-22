@@ -24,6 +24,7 @@ import ProgressWrapper from './ProgressWrapper';
 
 const CSS_DROP_ACTIVE = 'drop-active';
 const CSS_PROGRESS_ACTIVE = 'progress-active';
+const STATUS_CODE = Liferay.STATUS_CODE;
 const STR_IMAGE_DELETED = 'coverImageDeleted';
 const STR_IMAGE_SELECTED = 'coverImageSelected';
 const STR_IMAGE_UPLOADED = 'coverImageUploaded';
@@ -60,6 +61,76 @@ const ImageSelector = ({
 	const uploaderRef = useRef(null);
 
 	const uploaderStatusStoppedRef = useRef(null);
+
+	const _getErrorMessage = (errorObj) => {console.log(errorObj);
+		let message = Liferay.Language.get(
+			'an-unexpected-error-occurred-while-uploading-your-file'
+		);
+
+		const errorType = errorObj.errorType;
+
+		if (
+			errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION ||
+			errorType === STATUS_CODE.SC_FILE_CUSTOM_EXCEPTION
+		) {
+			message = errorObj.message;
+		}
+		else if (
+			errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION
+		) {
+			if (validExtensions) {
+				message = Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-file-with-a-valid-extension-x'
+					),
+					[validExtensions]
+				);
+			}
+			else {
+				message = Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-file-with-a-valid-file-type'
+					)
+				);
+			}
+		}
+		else if (
+			errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION
+		) {
+			message = Liferay.Language.get(
+				'please-enter-a-file-with-a-valid-file-name'
+			);
+		}
+		else if (
+			errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION
+		) {
+			console.log(maxFileSize);
+			message = Liferay.Util.sub(
+				Liferay.Language.get(
+					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+				),
+				[Liferay.Util.formatStorage(parseInt(maxFileSize, 10))]
+			);
+		}
+		else if (
+			errorType ===
+			STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION
+		) {
+			const maxUploadRequestSize =
+				Liferay.PropsValues
+					.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
+
+			message = Liferay.Util.sub(
+				Liferay.Language.get(
+					'request-is-larger-than-x-and-could-not-be-processed'
+				),
+				[Liferay.Util.formatStorage(maxUploadRequestSize)]
+			);
+		}
+
+		console.log('error message: ' + message);
+		return message;
+	}
 
 	const handleSelectFileClick = useCallback(() => {
 		Liferay.Util.openSelectionModal({
@@ -167,9 +238,12 @@ const ImageSelector = ({
 			}
 			else {
 
-				//TODO error
+				setImage({
+					fileEntryId: 0,
+					src: '',
+				});
 
-				setErrorMessage('error');
+				setErrorMessage(_getErrorMessage(data.error));
 			}
 
 			Liferay.fire(fireEvent, {
@@ -204,6 +278,7 @@ const ImageSelector = ({
 	}, []);
 
 	useEffect(() => {
+		console.log('init uploader');
 		AUI().use('uploader', (A) => {
 			const rootNode = rootNodeRef.current;
 
@@ -231,6 +306,12 @@ const ImageSelector = ({
 			uploaderStatusStoppedRef.current = A.Uploader.Queue.STOPPED;
 		});
 	}, [onFileSelect, onUploadComplete, onUploadProgress, uploadURL]);
+
+	useEffect(() => {
+		if(image.fileEntryId) {
+			setErrorMessage('');
+		}
+	}, [image]);
 
 	return (
 		<div
@@ -292,6 +373,7 @@ const ImageSelector = ({
 			{errorMessage && (
 				<ErrorAlert
 					handleClick={handleSelectFileClick}
+					handleClose={() => setErrorMessage('')}
 					itemSelectorEventName={itemSelectorEventName}
 					itemSelectorURL={itemSelectorURL}
 					message={errorMessage}

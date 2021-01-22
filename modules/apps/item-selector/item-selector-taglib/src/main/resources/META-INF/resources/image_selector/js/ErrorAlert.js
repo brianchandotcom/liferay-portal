@@ -19,13 +19,14 @@ import React from 'react';
 
 const ErrorAlert = ({
 	handleClick,
+	handleClose,
 	itemSelectorEventName,
 	itemSelectorURL,
 	message
 }) => {
 	return (
 		<div className="error-wrapper">
-			<ClayAlert displayType="danger">
+			<ClayAlert displayType="danger" onClose={handleClose}>
 				{message}
 
 				{itemSelectorEventName && itemSelectorURL && (

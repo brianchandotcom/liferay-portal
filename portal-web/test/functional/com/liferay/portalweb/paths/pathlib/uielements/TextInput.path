@@ -270,7 +270,7 @@
 </tr>
 <tr>
 	<td>IMAGE_DESCRIPTION</td>
-	<td>//label[contains(.,'Image Description')]/following-sibling::input</td>
+	<td>//label[contains(.,'Image Description')]/following-sibling::input | //input[@type='text' and contains(@placeholder,'Add image description')]</td>
 	<td></td>
 </tr>
 <tr>

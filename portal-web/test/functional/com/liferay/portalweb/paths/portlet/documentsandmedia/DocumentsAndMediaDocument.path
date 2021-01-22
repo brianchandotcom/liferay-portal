@@ -252,6 +252,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METADATA_PANEL_IMAGE</td>
+	<td>//div[contains(@class,'image-picker-preview')]/img[contains(@src,'${key_imageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METADATA_PANEL_RADIO</td>
 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_radioOption}')]</td>
 	<td></td>
@@ -264,6 +269,11 @@
 <tr>
 	<td>METADATA_PANEL_TEXT_INPUT</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_UPLOAD</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//h4</td>
 	<td></td>
 </tr>
 <tr>

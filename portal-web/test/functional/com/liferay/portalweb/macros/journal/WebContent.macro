@@ -992,6 +992,24 @@ definition {
 			}
 		}
 
+		if (isSet(embedVideo)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click.pauseClickAt(locator1 = "CKEditor#CONTENT_VIDEO_IMAGE");
+
+			if ("${navTab}" == "Documents and Media") {
+				ItemSelector.addVideoFromDM(
+					depotName = "${depotName}",
+					navTab = "${navTab}",
+					videoShortcutTitle = "${videoShortcutTitle}");
+			}
+			else {
+				ItemSelector.addVideoFromURL(
+					navTab = "${navTab}",
+					videoSourceURL = "${embedVideo}");
+			}
+		}
+
 		if ("${saveAsDraft}" == "true") {
 			PortletEntry.saveAsDraft();
 

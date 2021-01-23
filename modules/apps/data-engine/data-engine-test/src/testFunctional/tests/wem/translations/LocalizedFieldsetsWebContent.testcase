@@ -1,0 +1,158 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Web Content Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyDefaultLanguageIsFirstShown {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 VerifyDefaultLanguageIsFirstShown pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateWebContentFromStructureWithFieldset {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 TranslateWebContentFromStructureWithFieldset pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 TranslateWebContentFromStructureWithFieldsetWithFieldGroup pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test CheckStructureTranslationOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 CheckStructureTranslationOnWebContent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationPersistsAfterEditingAnother {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 TranslationPersistsAfterEditingAnother pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test CheckTranslationOfFieldsetOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 CheckTranslationOfFieldsetOnWebContent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitleIsDisplayedUponLocaleChange {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 DefaultTitleIsDisplayedUponLocaleChange pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test CheckFieldsetSummaryLocalization {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 CheckFieldsetSummaryLocalization pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test CheckTranslationOfDuplicatedFieldsetOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 CheckTranslationOfDuplicatedFieldsetOnWebContent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test CheckLanguageSelector {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 CheckLanguageSelector pending implementation
+
+	}
+
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test CheckDefaultWebContentTitleOnWebContentList {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123539 CheckDefaultWebContentTitleOnWebContentList pending implementation
+
+	}
+
+
+}

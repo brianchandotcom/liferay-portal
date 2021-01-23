@@ -39,6 +39,8 @@ definition {
 
 	@priority = "5"
 	test ViewCommerceEnabled {
+		property commerce.enabled = "true";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

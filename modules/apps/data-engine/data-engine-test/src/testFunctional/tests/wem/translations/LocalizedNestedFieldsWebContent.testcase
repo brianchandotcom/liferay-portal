@@ -27,136 +27,6 @@ definition {
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@ignore = "true"
 	@priority = "5"
-	test TranslationDoesNotChangeAnother {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 TranslationDoesNotChangeAnother pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test VerifyDefaultLanguageIsFirstShown {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 VerifyDefaultLanguageIsFirstShown pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test TranslationPersistsAfterEditingAnother {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 TranslationPersistsAfterEditingAnother pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitleIsDisplayedUponLocaleChange {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 DefaultTitleIsDisplayedUponLocaleChange pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test TranslateWebContentWithAllFieldsNested {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 TranslateWebContentWithAllFieldsNested pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test TranslateWebContentFromStructureWithNLevelNestedFields {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 TranslateWebContentFromStructureWithNLevelNestedFields pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test TranslationsRemainsUponSavingWebContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 TranslationsRemainsUponSavingWebContent pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test TranslateWebContentToNLanguages {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 TranslateWebContentToNLanguages pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test CheckLanguageSelector {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 CheckLanguageSelector pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultValuesDisplayedForNonTranslatedWebContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 DefaultValuesDisplayedForNonTranslatedWebContent pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test CheckStructureTranslationsOnWebContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123537 CheckStructureTranslationsOnWebContent pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
 	test CheckDuplicatedRepeatableStructureOnWebContent {
 		property portal.acceptance = "false";
 
@@ -167,11 +37,127 @@ definition {
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@ignore = "true"
 	@priority = "4"
+	test CheckLanguageSelector {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 CheckLanguageSelector pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
 	test CheckLocalizationOfWebContentUponLanguageChange {
 		property portal.acceptance = "false";
 
 		// TODO LPS-123537 CheckLocalizationOfWebContentUponLanguageChange pending implementation
+	}
 
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test CheckStructureTranslationsOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 CheckStructureTranslationsOnWebContent pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitleIsDisplayedUponLocaleChange {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 DefaultTitleIsDisplayedUponLocaleChange pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultValuesDisplayedForNonTranslatedWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 DefaultValuesDisplayedForNonTranslatedWebContent pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateWebContentFromStructureWithNLevelNestedFields {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 TranslateWebContentFromStructureWithNLevelNestedFields pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateWebContentToNLanguages {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 TranslateWebContentToNLanguages pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateWebContentWithAllFieldsNested {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 TranslateWebContentWithAllFieldsNested pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationDoesNotChangeAnother {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 TranslationDoesNotChangeAnother pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationPersistsAfterEditingAnother {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 TranslationPersistsAfterEditingAnother pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationsRemainsUponSavingWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 TranslationsRemainsUponSavingWebContent pending implementation
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyDefaultLanguageIsFirstShown {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123537 VerifyDefaultLanguageIsFirstShown pending implementation
 	}
 
 }

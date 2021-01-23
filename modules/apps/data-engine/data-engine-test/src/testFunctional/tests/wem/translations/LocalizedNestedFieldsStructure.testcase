@@ -26,111 +26,11 @@ definition {
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@ignore = "true"
-	@priority = "5"
-	test TranslationDoesNotChangeAnother {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 TranslationDoesNotChangeAnother pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
 	@priority = "4"
-	test VerifyDefaultLanguageIsFirstShown {
+	test CheckDefaultStructureTitleDisplayedOnStructureList {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123536 VerifyDefaultLanguageIsFirstShown pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "5"
-	test TranslationPersistsForTwoLevelNestedFields {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 TranslationPersistsForTwoLevelNestedFields pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "5"
-	test TranslationPersistsAfterEditingAnother {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 TranslationPersistsAfterEditingAnother pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitleIsDisplayedUponLocaleChange {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 DefaultTitleIsDisplayedUponLocaleChange pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "5"
-	test TranslateStructureWithAllFieldsNested {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 TranslateStructureWithAllFieldsNested pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "5"
-	test TranslationsRemainsUponSavingWebContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 TranslationsRemainsUponSavingWebContent pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "4"
-	test DuplicateTranslatedField {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 DuplicateTranslatedField pending implementation
-
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
-	@priority = "4"
-	test TranslateStructureWithoutDefaultTitle {
-		property portal.acceptance = "false";
-
-		// TODO LPS-123536 TranslateStructureWithoutDefaultTitle pending implementation
+		// TODO LPS-123536 CheckDefaultStructureTitleDisplayedOnStructureList pending implementation
 
 	}
 
@@ -141,7 +41,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-123536 CheckLanguageSelector pending implementation
-
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
@@ -151,17 +50,105 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-123536 CheckLocalizationOfStructureUponLanguageChange pending implementation
-
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@ignore = "true"
 	@priority = "4"
-	test CheckDefaultStructureTitleDisplayedOnStructureList {
+	test DefaultTitleIsDisplayedUponLocaleChange {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123536 CheckDefaultStructureTitleDisplayedOnStructureList pending implementation
+		// TODO LPS-123536 DefaultTitleIsDisplayedUponLocaleChange pending implementation
+	}
 
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "4"
+	test DuplicateTranslatedField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 DuplicateTranslatedField pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateStructureWithAllFieldsNested {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 TranslateStructureWithAllFieldsNested pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "4"
+	test TranslateStructureWithoutDefaultTitle {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 TranslateStructureWithoutDefaultTitle pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationDoesNotChangeAnother {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 TranslationDoesNotChangeAnother pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationPersistsAfterEditingAnother {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 TranslationPersistsAfterEditingAnother pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationPersistsForTwoLevelNestedFields {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 TranslationPersistsForTwoLevelNestedFields pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationsRemainsUponSavingWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 TranslationsRemainsUponSavingWebContent pending implementation
+	}
+
+	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyDefaultLanguageIsFirstShown {
+		property portal.acceptance = "false";
+
+		// TODO LPS-123536 VerifyDefaultLanguageIsFirstShown pending implementation
 	}
 
 }

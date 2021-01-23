@@ -26,82 +26,21 @@ definition {
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@ignore = "true"
-	@priority = "5"
-	test TranslationDoesNotChangeAnother {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 TranslationDoesNotChangeAnother pending implementation
-
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
 	@priority = "4"
-	test VerifyDefaultLanguageIsFirstShown {
+	test CheckDefaultWebContentTitleOnWebContentList {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 VerifyDefaultLanguageIsFirstShown pending implementation
+		// TODO LPS-122317 CheckDefaultWebContentTitleOnWebContentList pending implementation
 
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@ignore = "true"
 	@priority = "5"
-	test TranslationPersistsAfterEditingAnother {
+	test CheckDuplicatedRepeatableStructureOnWebContent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 TranslationPersistsAfterEditingAnother pending implementation
-
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitleIsDisplayedUponLocaleChange {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 DefaultTitleIsDisplayedUponLocaleChange pending implementation
-
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
-
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
-
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test TranslateWebContentWithAllFields {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 TranslateWebContentWithAllFields pending implementation
-
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test TranslationsRemainsUponSavingWebContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 TranslationsRemainsUponSavingWebContent pending implementation
-
+		// TODO LPS-122317 CheckDuplicatedRepeatableStructureOnWebContent pending implementation
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
@@ -111,38 +50,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-122317 CheckLanguageSelector pending implementation
-
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
-	@priority = "4"
-	test DefaultValuesDisplayedForNonTranslatedWebContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 DefaultValuesDisplayedForNonTranslatedWebContent pending implementation
-
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test CheckStructureTranslationsOnWebContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 CheckStructureTranslationsOnWebContent pending implementation
-
-	}
-
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
-	@priority = "5"
-	test CheckDuplicatedRepeatableStructureOnWebContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-122317 CheckDuplicatedRepeatableStructureOnWebContent pending implementation
-
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
@@ -152,17 +59,96 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-122317 CheckLocalizationOfWebContentUponLanguageChange pending implementation
+	}
 
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test CheckStructureTranslationsOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 CheckStructureTranslationsOnWebContent pending implementation
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@ignore = "true"
 	@priority = "4"
-	test CheckDefaultWebContentTitleOnWebContentList {
+	test DefaultTitleIsDisplayedUponLocaleChange {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 CheckDefaultWebContentTitleOnWebContentList pending implementation
+		// TODO LPS-122317 DefaultTitleIsDisplayedUponLocaleChange pending implementation
+	}
 
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
+	}
+
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
+	}
+
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test DefaultValuesDisplayedForNonTranslatedWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 DefaultValuesDisplayedForNonTranslatedWebContent pending implementation
+	}
+
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslateWebContentWithAllFields {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 TranslateWebContentWithAllFields pending implementation
+	}
+
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationDoesNotChangeAnother {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 TranslationDoesNotChangeAnother pending implementation
+	}
+
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationPersistsAfterEditingAnother {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 TranslationPersistsAfterEditingAnother pending implementation
+	}
+
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "5"
+	test TranslationsRemainsUponSavingWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 TranslationsRemainsUponSavingWebContent pending implementation
+	}
+
+	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyDefaultLanguageIsFirstShown {
+		property portal.acceptance = "false";
+
+		// TODO LPS-122317 VerifyDefaultLanguageIsFirstShown pending implementation
 	}
 
 }

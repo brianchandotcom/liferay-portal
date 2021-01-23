@@ -106,8 +106,8 @@ public class Log4JUtil {
 
 						if (systemId.endsWith("log4j.dtd")) {
 							return new InputSource(
-								DOMConfigurator.class.getResourceAsStream(
-									"log4j.dtd"));
+								Level.class.getResourceAsStream(
+									"xml/log4j.dtd"));
 						}
 
 						return null;

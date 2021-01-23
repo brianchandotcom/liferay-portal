@@ -33,8 +33,6 @@ definition {
 		var key_panel = "Commerce";
 
 		AssertElementNotPresent(locator1 = "ApplicationsMenu#PANEL");
-
-		AssertConsoleTextNotPresent(value1 = "STARTED Liferay Commerce");
 	}
 
 	@priority = "5"

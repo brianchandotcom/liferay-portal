@@ -4416,7 +4416,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<equals arg1="${commerce.enabled}" arg2="false" />
 						<then>
-							<delete failonerror="false" file="${test.app.server.dir}/deploy/portal-commerce-license.xml" />
+							<delete failonerror="false" file="${liferay.home}/deploy/portal-commerce-license.xml" verbose="true" />
 						</then>
 					</if>
 

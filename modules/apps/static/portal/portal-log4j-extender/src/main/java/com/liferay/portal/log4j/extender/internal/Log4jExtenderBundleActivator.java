@@ -117,7 +117,8 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 		URI uri = configFile.toURI();
 
 		domConfigurator.doConfigure(
-			uri.toURL(), LogManager.getLoggerRepository());
+			new UnsyncStringReader(_getURLContent(uri.toURL())),
+			LogManager.getLoggerRepository());
 	}
 
 	private String _escapeXMLAttribute(String s) {

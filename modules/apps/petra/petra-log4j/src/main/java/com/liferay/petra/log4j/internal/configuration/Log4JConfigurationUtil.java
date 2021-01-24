@@ -16,7 +16,12 @@ package com.liferay.petra.log4j.internal.configuration;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 
+import java.util.Enumeration;
+
+import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerRepository;
 import org.apache.log4j.xml.DOMConfigurator;
 
 /**
@@ -29,6 +34,36 @@ public class Log4JConfigurationUtil {
 
 		domConfigurator.doConfigure(
 			new UnsyncStringReader(xml), LogManager.getLoggerRepository());
+	}
+
+	public static String getOriginalLevel(String className) {
+		Level level = Level.ALL;
+
+		Enumeration<Logger> enumeration = LogManager.getCurrentLoggers();
+
+		while (enumeration.hasMoreElements()) {
+			Logger logger = enumeration.nextElement();
+
+			if (className.equals(logger.getName())) {
+				level = logger.getLevel();
+
+				break;
+			}
+		}
+
+		return level.toString();
+	}
+
+	public static void setLevel(String name, String priority) {
+		Logger logger = Logger.getLogger(name);
+
+		logger.setLevel(Level.toLevel(priority));
+	}
+
+	public static void shutdownLog4J() {
+		LoggerRepository loggerRepository = LogManager.getLoggerRepository();
+
+		loggerRepository.shutdown();
 	}
 
 }

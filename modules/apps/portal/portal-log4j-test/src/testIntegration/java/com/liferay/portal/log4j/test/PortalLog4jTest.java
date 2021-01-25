@@ -216,8 +216,8 @@ public class PortalLog4jTest {
 		messageLine = messageLine.substring(expectedThreadNamePart.length());
 
 		String expectedClassNamePart = StringBundler.concat(
-			StringPool.OPEN_BRACKET,
-			PortalLog4jTest.class.getSimpleName(), StringPool.COLON);
+			StringPool.OPEN_BRACKET, PortalLog4jTest.class.getSimpleName(),
+			StringPool.COLON);
 
 		Assert.assertEquals(
 			expectedClassNamePart,
@@ -387,9 +387,8 @@ public class PortalLog4jTest {
 			log4JLocationInfoPart.indexOf("file"));
 
 		String expectedLog4JLocationInfoFilePart = StringBundler.concat(
-			"file=", StringPool.QUOTE,
-			PortalLog4jTest.class.getSimpleName(), ".java",
-			StringPool.QUOTE);
+			"file=", StringPool.QUOTE, PortalLog4jTest.class.getSimpleName(),
+			".java", StringPool.QUOTE);
 
 		Assert.assertEquals(
 			expectedLog4JLocationInfoFilePart,

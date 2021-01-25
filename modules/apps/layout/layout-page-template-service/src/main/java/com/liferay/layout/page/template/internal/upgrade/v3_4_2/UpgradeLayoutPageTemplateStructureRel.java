@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.internal.upgrade.v3_4_2;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -42,6 +43,12 @@ import java.util.Set;
  * @author Eudaldo Alonso
  */
 public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
+
+	public UpgradeLayoutPageTemplateStructureRel(
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser) {
+
+		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -92,21 +99,27 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 	}
 
 	private void _replaceBottomSpacing(
+		JSONObject fragmentConfigDefaultValuesJSONObject,
 		JSONObject fragmentConfigValuesJSONObject,
 		JSONObject stylesJSONObject) {
 
-		if (!fragmentConfigValuesJSONObject.has("bottomSpacing") &&
+		if (!fragmentConfigDefaultValuesJSONObject.has("bottomSpacing") &&
+			!fragmentConfigDefaultValuesJSONObject.has("marginBottom") &&
+			!fragmentConfigValuesJSONObject.has("bottomSpacing") &&
 			!fragmentConfigValuesJSONObject.has("marginBottom")) {
 
 			return;
 		}
 
 		String marginBottom = fragmentConfigValuesJSONObject.getString(
-			"bottomSpacing");
+			"bottomSpacing",
+			fragmentConfigDefaultValuesJSONObject.getString("bottomSpacing"));
 
 		if (Validator.isNull(marginBottom)) {
 			marginBottom = fragmentConfigValuesJSONObject.getString(
-				"marginBottom");
+				"marginBottom",
+				fragmentConfigDefaultValuesJSONObject.getString(
+					"marginBottom"));
 		}
 
 		stylesJSONObject.put("marginBottom", marginBottom);
@@ -237,6 +250,9 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 				_replaceBorderRadius(
 					fragmentConfigValuesJSONObject, stylesJSONObject);
 				_replaceBottomSpacing(
+					_fragmentEntryConfigurationParser.
+						getConfigurationDefaultValuesJSONObject(
+							fragmentEntryLink.getConfiguration()),
 					fragmentConfigValuesJSONObject, stylesJSONObject);
 				_replaceShadow(
 					fragmentConfigValuesJSONObject, stylesJSONObject);
@@ -317,5 +333,8 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 	).put(
 		"sm", "0 .125rem .25rem rgba(0, 0, 0, .075)"
 	).build();
+
+	private final FragmentEntryConfigurationParser
+		_fragmentEntryConfigurationParser;
 
 }

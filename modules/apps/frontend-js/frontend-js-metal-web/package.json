@@ -28,6 +28,7 @@
 		"metal-state": "2.16.8",
 		"metal-storage": "2.0.1",
 		"metal-structs": "1.0.2",
+		"metal-throttle": "3.0.1",
 		"metal-toggler": "2.3.0",
 		"metal-uri": "2.4.0",
 		"metal-useragent": "3.0.1",

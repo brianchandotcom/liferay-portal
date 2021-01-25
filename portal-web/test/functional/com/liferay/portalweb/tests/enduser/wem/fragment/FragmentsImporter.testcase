@@ -235,16 +235,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110462. The value of editable field should be reset when the mapped content is missing"
-	@ignore = "true"
-	@priority = "2"
-	test ExportImportFragmentCompositionWhenMappedContedIsMissing {
-		property portal.upstream = "false";
-
-		// TODO LPS-110462 ExportImportFragmentCompositionWhenMappedContedIsMissing pending implementation
-
-	}
-
 	@description = "This is a test case for LPS-110462. The value of editable field is reset in saved composition when unchecking Save Mapping Configuration."
 	@priority = "4"
 	test ExportImportFragmentCompositionWithCheckingSaveMappingConfiguration {

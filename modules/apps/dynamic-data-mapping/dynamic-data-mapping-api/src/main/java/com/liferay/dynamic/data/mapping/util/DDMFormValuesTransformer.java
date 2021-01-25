@@ -16,11 +16,9 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,27 +74,7 @@ public class DDMFormValuesTransformer {
 
 			String fieldType = ddmFormField.getType();
 
-			boolean containsKey = _ddmFormFieldValueTransformersMap.containsKey(
-				fieldType);
-
-			if (!containsKey &&
-				StringUtil.equals(fieldType, "document_library")) {
-
-				fieldType = DDMFormFieldType.DOCUMENT_LIBRARY;
-
-				containsKey = _ddmFormFieldValueTransformersMap.containsKey(
-					fieldType);
-			}
-			else if (!containsKey &&
-					 StringUtil.equals(fieldType, "link_to_layout")) {
-
-				fieldType = DDMFormFieldType.LINK_TO_PAGE;
-
-				containsKey = _ddmFormFieldValueTransformersMap.containsKey(
-					fieldType);
-			}
-
-			if (containsKey) {
+			if (_ddmFormFieldValueTransformersMap.containsKey(fieldType)) {
 				performTransformation(
 					ddmFormFieldValues,
 					_ddmFormFieldValueTransformersMap.get(fieldType));

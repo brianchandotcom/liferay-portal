@@ -378,6 +378,10 @@ public class DDMFormField implements Serializable {
 		return false;
 	}
 
+	public boolean isVisualProperty() {
+		return MapUtil.getBoolean(_properties, "visualProperty");
+	}
+
 	public void setDataType(String dataType) {
 		_properties.put("dataType", dataType);
 	}
@@ -476,6 +480,10 @@ public class DDMFormField implements Serializable {
 
 	public void setVisibilityExpression(String visibilityExpression) {
 		_properties.put("visibilityExpression", visibilityExpression);
+	}
+
+	public void setVisualProperty(boolean visualProperty) {
+		_properties.put("visualProperty", visualProperty);
 	}
 
 	private static final String _DATA_SOURCE_TYPE_MANUAL = "manual";

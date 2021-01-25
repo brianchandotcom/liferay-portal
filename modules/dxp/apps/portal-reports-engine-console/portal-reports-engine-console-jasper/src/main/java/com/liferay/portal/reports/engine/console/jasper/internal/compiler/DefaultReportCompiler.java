@@ -41,8 +41,20 @@ public class DefaultReportCompiler implements ReportCompiler {
 			ReportDesignRetriever reportDesignRetriever, boolean force)
 		throws JRException {
 
-		return JasperCompileManager.compileReport(
-			reportDesignRetriever.getInputStream());
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(
+				DefaultReportCompiler.class.getClassLoader());
+
+			return JasperCompileManager.compileReport(
+				reportDesignRetriever.getInputStream());
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Override

@@ -95,13 +95,21 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 		JSONObject fragmentConfigValuesJSONObject,
 		JSONObject stylesJSONObject) {
 
-		if (!fragmentConfigValuesJSONObject.has("bottomSpacing")) {
+		if (!fragmentConfigValuesJSONObject.has("bottomSpacing") &&
+			!fragmentConfigValuesJSONObject.has("marginBottom")) {
+
 			return;
 		}
 
-		stylesJSONObject.put(
-			"marginBottom",
-			fragmentConfigValuesJSONObject.getString("bottomSpacing"));
+		String marginBottom = fragmentConfigValuesJSONObject.getString(
+			"bottomSpacing");
+
+		if (Validator.isNull(marginBottom)) {
+			marginBottom = fragmentConfigValuesJSONObject.getString(
+				"marginBottom");
+		}
+
+		stylesJSONObject.put("marginBottom", marginBottom);
 	}
 
 	private void _replaceShadow(

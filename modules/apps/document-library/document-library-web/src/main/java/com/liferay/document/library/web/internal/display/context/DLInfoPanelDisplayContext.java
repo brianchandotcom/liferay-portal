@@ -165,6 +165,42 @@ public class DLInfoPanelDisplayContext {
 			ParamUtil.getLong(_httpServletRequest, "repositoryId"));
 	}
 
+	public boolean isFileEntrySelected() throws PortalException {
+		if (ListUtil.isEmpty(getFolderList()) &&
+			ListUtil.isEmpty(getFileShortcutList()) &&
+			ListUtil.isNotEmpty(getFileEntryList()) &&
+			(getFileEntryList().size() == 1)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isFileShortcutSelected() throws PortalException {
+		if (ListUtil.isEmpty(getFolderList()) &&
+			ListUtil.isEmpty(getFileEntryList()) &&
+			ListUtil.isNotEmpty(getFileShortcutList()) &&
+			(getFileShortcutList().size() == 1)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isFolderSelected() throws PortalException {
+		if (ListUtil.isEmpty(getFileEntryList()) &&
+			ListUtil.isEmpty(getFileShortcutList()) &&
+			ListUtil.isNotEmpty(getFolderList()) &&
+			(getFolderList().size() == 1)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private List<FileEntry> _fileEntries;
 	private List<FileShortcut> _fileShortcuts;
 	private List<Folder> _folders;

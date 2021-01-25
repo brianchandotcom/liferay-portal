@@ -27,7 +27,7 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
 %>
 
 <c:choose>
-	<c:when test="<%= ListUtil.isEmpty(fileEntries) && ListUtil.isEmpty(fileShortcuts) && ListUtil.isNotEmpty(folders) && (folders.size() == 1) %>">
+	<c:when test="<%= dlInfoPanelDisplayContext.isFolderSelected() %>">
 
 		<%
 		Folder folder = folders.get(0);
@@ -101,7 +101,7 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
 			</liferay-ui:tabs>
 		</div>
 	</c:when>
-	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileShortcuts) && ListUtil.isNotEmpty(fileEntries) && (fileEntries.size() == 1) %>">
+	<c:when test="<%= dlInfoPanelDisplayContext.isFileEntrySelected() %>">
 
 		<%
 		FileEntry fileEntry = fileEntries.get(0);
@@ -112,7 +112,7 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
 
 		<liferay-util:include page="/document_library/info_panel_file_entry.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test="<%= ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isNotEmpty(fileShortcuts) && (fileShortcuts.size() == 1) %>">
+	<c:when test="<%= dlInfoPanelDisplayContext.isFileShortcutSelected() %>">
 
 		<%
 		FileShortcut fileShortcut = fileShortcuts.get(0);

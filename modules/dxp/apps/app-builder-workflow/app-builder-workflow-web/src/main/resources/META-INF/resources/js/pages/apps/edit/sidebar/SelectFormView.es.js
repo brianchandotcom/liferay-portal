@@ -32,7 +32,8 @@ const Item = ({
 	const {custom, native} = {
 		custom: {
 			triggerProps: {
-				className: ' icon text-info',
+				className: 'help-cursor info tooltip-popover-icon',
+				fontSize: '26px',
 				symbol: 'info-circle',
 			},
 		},
@@ -42,7 +43,8 @@ const Item = ({
 				onMouseLeave: () => setShowPopover(false),
 			},
 			triggerProps: {
-				className: 'icon text-danger',
+				className: 'error help-cursor tooltip-popover-icon',
+				fontSize: '26px',
 				symbol: 'exclamation-full',
 			},
 		},

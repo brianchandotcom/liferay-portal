@@ -14,20 +14,11 @@
 
 package com.liferay.portal.log4j.extender.internal;
 
-import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.string.CharPool;
+import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -35,9 +26,7 @@ import java.net.URL;
 
 import java.util.Enumeration;
 
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -62,11 +51,11 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 					_configureLog4j(bundle, "module-log4j-ext.xml");
 					_configureLog4j(bundle.getSymbolicName());
 				}
-				catch (IOException ioException) {
+				catch (MalformedURLException malformedURLException) {
 					_logger.error(
 						"Unable to configure Log4j for bundle " +
 							bundle.getSymbolicName(),
-						ioException);
+						malformedURLException);
 				}
 
 				return bundle;
@@ -82,20 +71,13 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 		_bundleTracker.close();
 	}
 
-	private void _configureLog4j(Bundle bundle, String resourcePath)
-		throws IOException {
-
+	private void _configureLog4j(Bundle bundle, String resourcePath) {
 		Enumeration<URL> enumeration = bundle.findEntries(
 			"META-INF", resourcePath, false);
 
 		if (enumeration != null) {
 			while (enumeration.hasMoreElements()) {
-				DOMConfigurator domConfigurator = new DOMConfigurator();
-
-				domConfigurator.doConfigure(
-					new UnsyncStringReader(
-						_getURLContent(enumeration.nextElement())),
-					LogManager.getLoggerRepository());
+				Log4JUtil.configureLog4J(enumeration.nextElement());
 			}
 		}
 	}
@@ -112,62 +94,13 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 			return;
 		}
 
-		DOMConfigurator domConfigurator = new DOMConfigurator();
-
 		URI uri = configFile.toURI();
 
-		domConfigurator.doConfigure(
-			new UnsyncStringReader(_getURLContent(uri.toURL())),
-			LogManager.getLoggerRepository());
-	}
-
-	private String _escapeXMLAttribute(String s) {
-		return StringUtil.replace(
-			s,
-			new char[] {
-				CharPool.AMPERSAND, CharPool.APOSTROPHE, CharPool.LESS_THAN,
-				CharPool.QUOTE
-			},
-			new String[] {"&amp;", "&apos;", "&lt;", "&quot;"});
-	}
-
-	private String _getLiferayHome() {
-		if (_liferayHome == null) {
-			_liferayHome = _escapeXMLAttribute(
-				PropsUtil.get(PropsKeys.LIFERAY_HOME));
-		}
-
-		return _liferayHome;
-	}
-
-	private String _getURLContent(URL url) {
-		String urlContent = null;
-
-		try (InputStream inputStream = url.openStream()) {
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			StreamUtil.transfer(
-				inputStream, unsyncByteArrayOutputStream, -1, true);
-
-			byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
-
-			urlContent = new String(bytes, StringPool.UTF8);
-		}
-		catch (Exception exception) {
-			_logger.error(exception, exception);
-
-			return null;
-		}
-
-		return StringUtil.replace(
-			urlContent, "@liferay.home@", _getLiferayHome());
+		Log4JUtil.configureLog4J(uri.toURL());
 	}
 
 	private static final Logger _logger = Logger.getLogger(
 		Log4jExtenderBundleActivator.class);
-
-	private static String _liferayHome;
 
 	private volatile BundleTracker<Bundle> _bundleTracker;
 

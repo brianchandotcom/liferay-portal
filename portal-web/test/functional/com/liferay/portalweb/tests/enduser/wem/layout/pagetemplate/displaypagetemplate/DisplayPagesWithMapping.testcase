@@ -234,12 +234,90 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
-	@ignore = "true"
 	@priority = "2"
 	test MapWebContentFieldWithURLToTextFragment {
-		property portal.upstream = "false";
+		task ("Add a web content structure with a Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-98031 MapWebContentFieldWithURLToTextFragment pending implementation
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a display page template with Web Content Article and WC Structure Name") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Test Display Page Name",
+				subType = "WC Structure Name");
+		}
+
+		task ("Add a Heading fragment to display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map link from Text field to Heading") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorEditableLink.mapURLToAsset(field = "Text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content based on new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentTitle = "Web Content Title",
+				webContentText = "https://www.liferay.com");
+		}
+
+		task ("Select Display Page Name as Specific Display Page Template") {
+			WebContent.editDisplayPage(
+				pageName = "Test Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("View Content in display page template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Display Page Name");
+		}
+
+		task ("Assert mapped URL work in view mode") {
+			AssertVisible(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "https://www.liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			Click(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "https://www.liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
 	}
 
 	@description = "This is a test for LPS-98030. Can map the editable background images of a fragment to an existing image content in a display page template."

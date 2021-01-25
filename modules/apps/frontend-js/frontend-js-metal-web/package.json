@@ -20,6 +20,7 @@
 		"metal-pagination": "2.0.1",
 		"metal-path-parser": "1.0.4",
 		"metal-position": "2.1.2",
+		"metal-promise": "3.0.5",
 		"metal-router": "3.6.3",
 		"metal-scrollspy": "2.1.1",
 		"metal-soy": "2.16.9",

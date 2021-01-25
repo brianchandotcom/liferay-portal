@@ -135,8 +135,6 @@ definition {
 			value1 = "${fieldLabelPT}"
         );
 	}
-		// TODO LPS-98073 LocalizationOfImageFieldtPersists pending implementation
-	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
 	@ignore = "true"

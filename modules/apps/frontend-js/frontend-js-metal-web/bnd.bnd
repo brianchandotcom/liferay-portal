@@ -5,12 +5,14 @@ Liferay-JS-Submodules-Bridge:\
 	incremental-dom,\
 	incremental-dom-string,\
 	metal,\
+	metal-affix,\
 	metal-ajax,\
 	metal-anim,\
 	metal-aop,\
 	metal-assertions,\
 	metal-clipboard,\
 	metal-component,\
+	metal-debounce,\
 	metal-dom,\
 	metal-drag-drop,\
 	metal-events,\
@@ -21,6 +23,8 @@ Liferay-JS-Submodules-Bridge:\
 	metal-multimap,\
 	metal-pagination,\
 	metal-path-parser,\
+	metal-position,\
+	metal-promise,\
 	metal-router,\
 	metal-scrollspy,\
 	metal-soy,\
@@ -28,6 +32,7 @@ Liferay-JS-Submodules-Bridge:\
 	metal-state,\
 	metal-storage,\
 	metal-structs,\
+	metal-throttle,\
 	metal-toggler,\
 	metal-uri,\
 	metal-useragent

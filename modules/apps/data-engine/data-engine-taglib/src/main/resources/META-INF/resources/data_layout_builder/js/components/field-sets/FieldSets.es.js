@@ -118,7 +118,10 @@ export default function FieldSets({keywords}) {
 		}
 
 		setState({
-			childrenAppProps,
+			childrenAppProps: {
+				...childrenAppProps,
+				contentType: 'data-engine-fieldset'
+			},
 			defaultLanguageId,
 			editingDataDefinition,
 			fieldSet,

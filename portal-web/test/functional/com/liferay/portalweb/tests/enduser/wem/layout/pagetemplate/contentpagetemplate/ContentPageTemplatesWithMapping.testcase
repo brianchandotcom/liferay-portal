@@ -515,6 +515,7 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-98030 MapWebContentImageToBannerCenter pending implementation
+
 	}
 
 	@description = "This is a test for LPS-98030. Can map the layout of a fragment to an existing image content in a content page template."

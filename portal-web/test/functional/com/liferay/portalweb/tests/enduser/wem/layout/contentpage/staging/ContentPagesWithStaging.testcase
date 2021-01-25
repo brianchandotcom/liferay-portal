@@ -368,13 +368,58 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97189. Editing a web content in the contents panel in a content page editor survives staging."
-	@ignore = "true"
 	@priority = "2"
 	test EditWebContentViaContentsPanel {
-		property portal.upstream = "false";
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
+		}
 
-		// TODO LPS-97189 EditWebContentViaContentsPanel pending implementation
+		task ("Add a content page based on Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
 
+		task ("Add a Web Content Display to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addWidget(portletName = "Web Content Display");
+		}
+
+		task ("Select the web content in Web Content Display") {
+			WebContentDisplayPortlet.selectWebContent(
+				contentPage = "true",
+				webContentTitle = "Web Content Title");
+
+			Refresh();
+		}
+
+		task ("Assert the web content is shown in Web Content Display") {
+			AssertVisible(
+				key_portletName = "Web Content Content",
+				locator1 = "Portlet#BODY");
+		}
+
+		task ("Edit the web content via Contents panel") {
+			WebContent.editViaContentPanel(
+				webContentContentEdit = "Web Content Content Edit",
+				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit");
+		}
+
+		task ("Assert the edited web content is shown in Web Content Display") {
+			AssertVisible(
+				key_portletName = "Web Content Content Edit",
+				locator1 = "Portlet#BODY");
+		}
 	}
 
 	@description = "This is a test for LPS-98030. A mapped editable background image of a fragment survives local staging."

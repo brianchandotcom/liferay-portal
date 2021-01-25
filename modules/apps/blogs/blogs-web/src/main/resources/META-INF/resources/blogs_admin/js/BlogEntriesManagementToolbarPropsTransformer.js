@@ -12,46 +12,46 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-import {Config} from 'metal-state';
+import {postForm} from 'frontend-js-web';
 
-class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteEntries() {
+export default function propsTransformer({
+	additionalProps: {deleteEntriesCmd, deleteEntriesURL, trashEnabled},
+	portletNamespace,
+	...otherProps
+}) {
+	const deleteEntries = () => {
 		if (
-			this.trashEnabled ||
+			trashEnabled ||
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			const form = this.one('#fm');
+			const form = document.getElementById(`${portletNamespace}fm`);
 
 			const searchContainer = Liferay.SearchContainer.get(
-				this.ns('blogEntries')
+				`${portletNamespace}blogEntries`
 			);
 
-			const bulkSelection =
-				searchContainer.select &&
-				searchContainer.select.get('bulkSelection');
-
-			Liferay.Util.postForm(form, {
+			postForm(form, {
 				data: {
-					cmd: this.deleteEntriesCmd,
+					cmd: deleteEntriesCmd,
 					deleteEntryIds: Liferay.Util.listCheckedExcept(
 						form,
-						this.ns('allRowIds')
+						`${portletNamespace}allRowIds`
 					),
-					selectAll: bulkSelection,
+					selectAll: searchContainer.select?.get('bulkSelection'),
 				},
-				url: this.deleteEntriesURL,
+				url: deleteEntriesURL,
 			});
 		}
-	}
+	};
+
+	return {
+		...otherProps,
+		onActionButtonClick: (event, {item}) => {
+			if (item?.data?.action === 'deleteEntries') {
+				deleteEntries();
+			}
+		},
+	};
 }
-
-ManagementToolbarDefaultEventHandler.STATE = {
-	deleteEntriesCmd: Config.string(),
-	deleteEntriesURL: Config.string(),
-	trashEnabled: Config.bool(),
-};
-
-export default ManagementToolbarDefaultEventHandler;

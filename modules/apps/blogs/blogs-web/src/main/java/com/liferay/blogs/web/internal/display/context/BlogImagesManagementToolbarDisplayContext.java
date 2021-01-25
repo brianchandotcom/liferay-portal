@@ -16,6 +16,7 @@ package com.liferay.blogs.web.internal.display.context;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsImagesFileEntryPermission;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,23 +45,28 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  */
-public class BlogImagesManagementToolbarDisplayContext {
+public class BlogImagesManagementToolbarDisplayContext
+	extends SearchContainerManagementToolbarDisplayContext {
 
 	public BlogImagesManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		SearchContainer<FileEntry> searchContainer) {
+
+		super(
+			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
+			searchContainer);
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_currentURLObj = currentURLObj;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
 	}
 
+	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -94,6 +98,7 @@ public class BlogImagesManagementToolbarDisplayContext {
 		return availableActions;
 	}
 
+	@Override
 	public String getDisplayStyle() {
 		String displayStyle = ParamUtil.getString(
 			_httpServletRequest, "displayStyle");
@@ -114,6 +119,7 @@ public class BlogImagesManagementToolbarDisplayContext {
 		return displayStyle;
 	}
 
+	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
@@ -124,14 +130,17 @@ public class BlogImagesManagementToolbarDisplayContext {
 		).build();
 	}
 
+	@Override
 	public String getOrderByCol() {
 		return ParamUtil.getString(_httpServletRequest, "orderByCol", "title");
 	}
 
+	@Override
 	public String getOrderByType() {
 		return ParamUtil.getString(_httpServletRequest, "orderByType", "desc");
 	}
 
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
 
@@ -143,14 +152,15 @@ public class BlogImagesManagementToolbarDisplayContext {
 		return searchURL.toString();
 	}
 
-	public PortletURL getSortingURL() throws PortletException {
+	@Override
+	public String getSortingURL() {
 		PortletURL sortingURL = _getCurrentSortingURL();
 
 		sortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
-		return sortingURL;
+		return sortingURL.toString();
 	}
 
 	public ViewTypeItemList getViewTypes() {
@@ -191,9 +201,8 @@ public class BlogImagesManagementToolbarDisplayContext {
 		};
 	}
 
-	private PortletURL _getCurrentSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
+	private PortletURL _getCurrentSortingURL() {
+		PortletURL sortingURL = getPortletURL();
 
 		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
@@ -227,7 +236,6 @@ public class BlogImagesManagementToolbarDisplayContext {
 		).build();
 	}
 
-	private final PortletURL _currentURLObj;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

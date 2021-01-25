@@ -31,10 +31,11 @@ PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, entriesSearchContainer, trashHelper, displayStyle);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= blogEntriesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	additionalProps="<%= blogEntriesManagementToolbarDisplayContext.getAdditionalProps() %>"
+	managementToolbarDisplayContext="<%= blogEntriesManagementToolbarDisplayContext %>"
+	propsTransformer="blogs_admin/js/BlogEntriesManagementToolbarPropsTransformer"
 	searchContainerId="blogEntries"
-	supportsBulkActions="<%= true %>"
 />
 
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
@@ -92,12 +93,6 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= blogEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= blogEntriesManagementToolbarDisplayContext.getComponentContext() %>"
-	module="blogs_admin/js/ManagementToolbarDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	componentId="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"

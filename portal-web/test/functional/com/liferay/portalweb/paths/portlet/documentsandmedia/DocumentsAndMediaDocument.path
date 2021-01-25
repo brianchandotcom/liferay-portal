@@ -137,6 +137,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_DETAILS_EMPTY_STATE_PREVIEW</td>
+	<td>//div[contains(@class,'preview-file-error-container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_DETAILS_IMAGE_PREVIEW</td>
 	<td>//div[contains(@class,'preview-file-container')]//img[contains(@src,'${key_dmDocumentFileName}')]</td>
 	<td></td>

@@ -141,26 +141,22 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	}
 
 	public String getInfoPanelId() {
-		String infoPanelId = _infoPanelId;
+		if ((_infoPanelId == null) &&
+			(_managementToolbarDisplayContext != null)) {
 
-		if (infoPanelId == null) {
-			if (_managementToolbarDisplayContext == null) {
-				return null;
-			}
-
-			infoPanelId = _managementToolbarDisplayContext.getInfoPanelId();
+			return _managementToolbarDisplayContext.getInfoPanelId();
 		}
 
-		return infoPanelId;
+		return _infoPanelId;
 	}
 
 	public Integer getItemsTotal() {
 		if (_itemsTotal == null) {
-			if (_managementToolbarDisplayContext == null) {
-				return 0;
+			if (_managementToolbarDisplayContext != null) {
+				return _managementToolbarDisplayContext.getItemsTotal();
 			}
 
-			return _managementToolbarDisplayContext.getItemsTotal();
+			return ManagementToolbarDefaults.getItemsTotal();
 		}
 
 		return _itemsTotal;
@@ -193,60 +189,47 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	}
 
 	public String getSearchContainerId() {
-		String searchContainerId = _searchContainerId;
+		if ((_searchContainerId == null) &&
+			(_managementToolbarDisplayContext != null)) {
 
-		if (searchContainerId == null) {
-			if (_managementToolbarDisplayContext == null) {
-				return null;
-			}
-
-			searchContainerId =
-				_managementToolbarDisplayContext.getSearchContainerId();
+			return _managementToolbarDisplayContext.getSearchContainerId();
 		}
 
-		return searchContainerId;
+		return _searchContainerId;
 	}
 
 	public String getSearchFormMethod() {
 		if (_searchFormMethod == null) {
-			if (_managementToolbarDisplayContext == null) {
-				return ManagementToolbarDefaults.getSearchFormMethod();
+			if (_managementToolbarDisplayContext != null) {
+				return _managementToolbarDisplayContext.getSearchFormMethod();
 			}
 
-			return _managementToolbarDisplayContext.getSearchFormMethod();
+			return ManagementToolbarDefaults.getSearchFormMethod();
 		}
 
 		return _searchFormMethod;
 	}
 
 	public String getSearchFormName() {
-		String searchFormName = _searchFormName;
+		if ((_searchFormName == null) &&
+			(_managementToolbarDisplayContext != null)) {
 
-		if (searchFormName == null) {
-			if (_managementToolbarDisplayContext == null) {
-				return null;
-			}
-
-			searchFormName =
-				_managementToolbarDisplayContext.getSearchFormName();
+			return _managementToolbarDisplayContext.getSearchFormName();
 		}
 
-		return searchFormName;
+		return _searchFormName;
 	}
 
 	public String getSearchInputName() {
-		String searchInputName = _searchInputName;
-
-		if (searchInputName == null) {
-			if (_managementToolbarDisplayContext == null) {
-				return ManagementToolbarDefaults.getSearchInputName();
+		if (_searchInputName == null) {
+			if (_managementToolbarDisplayContext != null) {
+				_managementToolbarDisplayContext.getSearchInputName();
 			}
 
-			searchInputName =
-				_managementToolbarDisplayContext.getSearchInputName();
+			return ManagementToolbarDefaults.getSearchInputName();
 		}
 
-		return searchInputName;
+		return _searchInputName;
 	}
 
 	public String getSearchValue() {
@@ -265,11 +248,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	public Integer getSelectedItems() {
 		if (_selectedItems == null) {
-			if (_managementToolbarDisplayContext == null) {
-				return 0;
+			if (_managementToolbarDisplayContext != null) {
+				return _managementToolbarDisplayContext.getSelectedItems();
 			}
 
-			return _managementToolbarDisplayContext.getSelectedItems();
+			return ManagementToolbarDefaults.getSelectedItems();
 		}
 
 		return _selectedItems;
@@ -311,17 +294,19 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				return _managementToolbarDisplayContext.isDisabled();
 			}
 
-			return false;
+			return ManagementToolbarDefaults.isDisabled();
 		}
 
 		return _disabled;
 	}
 
 	public Boolean isSelectable() {
-		if ((_selectable == null) &&
-			(_managementToolbarDisplayContext != null)) {
+		if (_selectable == null) {
+			if (_managementToolbarDisplayContext != null) {
+				return _managementToolbarDisplayContext.isSelectable();
+			}
 
-			return _managementToolbarDisplayContext.isSelectable();
+			return ManagementToolbarDefaults.isSelectable();
 		}
 
 		return _selectable;
@@ -338,19 +323,15 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	}
 
 	public Boolean isShowInfoButton() {
-		Boolean showInfoButton = _showInfoButton;
-
-		if (showInfoButton == null) {
-			if (_managementToolbarDisplayContext == null) {
-				return ManagementToolbarDefaults.isShowInfoButton(
-					getInfoPanelId());
+		if (_showInfoButton == null) {
+			if (_managementToolbarDisplayContext != null) {
+				return _managementToolbarDisplayContext.isShowInfoButton();
 			}
 
-			showInfoButton =
-				_managementToolbarDisplayContext.isShowInfoButton();
+			return ManagementToolbarDefaults.isShowInfoButton(getInfoPanelId());
 		}
 
-		return showInfoButton;
+		return _showInfoButton;
 	}
 
 	public Boolean isShowResultsBar() {
@@ -363,7 +344,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				return _managementToolbarDisplayContext.isShowSearch();
 			}
 
-			return true;
+			return ManagementToolbarDefaults.isShowSearch();
 		}
 
 		return _showSearch;
@@ -375,12 +356,12 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	public Boolean isSupportsBulkActions() {
 		if (_supportsBulkActions == null) {
-			if (_supportsBulkActions != null) {
+			if (_managementToolbarDisplayContext != null) {
 				return _managementToolbarDisplayContext.
 					getSupportsBulkActions();
 			}
 
-			return true;
+			return ManagementToolbarDefaults.isSupportsBulkActions();
 		}
 
 		return _supportsBulkActions;

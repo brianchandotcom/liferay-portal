@@ -27,12 +27,28 @@ public class ManagementToolbarDefaults {
 		return "hiddenInputsForm";
 	}
 
+	public static Integer getItemsTotal() {
+		return 0;
+	}
+
 	public static String getSearchFormMethod() {
 		return "GET";
 	}
 
 	public static String getSearchInputName() {
 		return DisplayTerms.KEYWORDS;
+	}
+
+	public static Integer getSelectedItems() {
+		return 0;
+	}
+
+	public static Boolean isDisabled() {
+		return false;
+	}
+
+	public static Boolean isSelectable() {
+		return true;
 	}
 
 	public static Boolean isShowCreationMenu(CreationMenu creationMenu) {
@@ -45,6 +61,14 @@ public class ManagementToolbarDefaults {
 
 	public static Boolean isShowInfoButton(String infoPanelId) {
 		return Validator.isNotNull(infoPanelId);
+	}
+
+	public static Boolean isShowSearch() {
+		return true;
+	}
+
+	public static Boolean isSupportsBulkActions() {
+		return true;
 	}
 
 }

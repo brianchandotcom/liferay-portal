@@ -378,12 +378,105 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98030. A mapped editable background image of a fragment survives local staging."
-	@ignore = "true"
 	@priority = "2"
 	test MapWebContentImageToBackgroundImageOfBannerCenter {
-		property portal.upstream = "false";
+		task ("Add a web content structure with an Image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
-		// TODO LPS-98030 MapWebContentImageToBannerCenter pending implementation
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("Upload an image from Image field") {
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				structureName = "WC Structure Name",
+				webContentImage = "Document_2.jpeg",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a content page based on Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Banner Center to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map web content image to background image field of Banner Center") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "banner-center");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Image");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Assert the mapped image is shown in background image field") {
+			AssertVisible(
+				key_imageName = "Document_2.jpeg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the mapped image is shown in view mode in staging site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertVisible(
+				key_imageName = "Document_2.jpeg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+		}
+
+		task ("Publish to Live") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("Assert the mapped image is shown in view mode in live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_imageName = "Document_2.jpeg",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+		}
 	}
 
 	@description = "Content pages only appear in live view after being published and should appear properly."

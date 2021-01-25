@@ -1207,8 +1207,23 @@ definition {
 	@description = "This test ensures that a document with forbidden characters in the filename can not be published successfully."
 	@priority = "5"
 	test ValidateFileNameRestrictions {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		// TODO LPS-126181 ValidateFileNameRestrictions pending implementation(14.07, 14.08 and 15.04)
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = '''Document_1''',
+			dmDocumentTitle = "DM Document Title",
+			emptyFileNameRestriction = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = "",
+			dmDocumentTitle = "DM Document Title",
+			emptyFileNameRestriction = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

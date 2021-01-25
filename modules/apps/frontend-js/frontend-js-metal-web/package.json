@@ -8,6 +8,7 @@
 		"metal-assertions": "2.16.8",
 		"metal-clipboard": "2.0.1",
 		"metal-component": "2.16.8",
+		"metal-debounce": "^2.0.2",
 		"metal-dom": "2.16.8",
 		"metal-drag-drop": "3.3.1",
 		"metal-events": "2.16.8",

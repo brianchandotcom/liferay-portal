@@ -112,7 +112,81 @@ definition {
 	test TranslationDoesNotChangeAnother {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122278 TranslationDoesNotChangeAnother pending implementation
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+        );
+        NavItem.gotoStructures();
+        WebContentStructures.addCP(
+            structureDescription = "Test",
+            structureName = "Test"
+        );
+        DataEngine.addField(
+            fieldFieldLabel = "Text Test",
+            fieldName = "Text");
+
+        DataEngine.editFieldTip(
+            fieldFieldLabel = "Text Test",
+            fieldHelp = "Help Text test"
+        );
+
+        PortletEntry.changeLocale(locale = "pt-BR");
+
+        DataEngine.editFieldTip(
+            fieldFieldLabel = "Text Test",
+            fieldHelp = "Texto teste ajuda"
+        );
+
+        WebContentStructures.addName(structureName="Teste");
+
+        FormViewBuilder.editFieldLabel(fieldLabel="Text Test", label="Texto Teste");
+
+        PortletEntry.changeLocale(locale = "de-DE");
+
+        DataEngine.editFieldTip(
+            fieldFieldLabel = "Text Test",
+            fieldHelp = "Text test help German"
+        );
+
+        WebContentStructures.addName(structureName="Test German");
+
+        FormViewBuilder.editFieldLabel(fieldLabel="Text Test", label="Text test German");
+
+        WebContentStructures.saveCP(structureName = "Test");
+    
+        WebContentStructures.viewCP(
+            structureName = "Test",
+            structureDescription = "Test");
+        LexiconEntry.gotoEntry(rowEntry = "Test");
+
+        AssertTextEquals(
+            locator1 = "//label[@class='ddm-label' and contains(text(),'Text Test')]",
+            value1 = "Text Test");
+        AssertTextEquals(
+            locator1 = "//span[@class='form-text' and contains(text(),'Help Text test')]",
+            value1 = "Help Text test");
+        
+        AssertTextEquals(
+            locator1 = "TextInput#NAME",
+            value1 = "Test");
+
+        PortletEntry.changeLocale(locale = "pt-BR");
+
+        AssertTextEquals(
+            locator1 = "//label[@class='ddm-label' and contains(text(),'Texto Teste')]",
+            value1 = "Texto Teste");
+
+        AssertTextEquals(
+            locator1 = "//span[@class='form-text' and contains(text(),'Texto teste ajuda')]",
+            value1 = "Texto teste ajuda");
+        
+        AssertTextEquals(
+            locator1 = "TextInput#NAME",
+            value1 = "Teste");
+
+        WebContentStructures.saveCP(structureName = "Test");
+        WebContentStructures.deleteCP(structureName="Test");
+
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

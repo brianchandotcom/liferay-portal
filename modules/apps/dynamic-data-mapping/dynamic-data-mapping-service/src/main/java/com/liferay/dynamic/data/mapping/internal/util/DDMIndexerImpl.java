@@ -15,9 +15,9 @@
 package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -303,7 +303,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 					String type = field.getType();
 
-					if (type.equals(DDMFormFieldType.SELECT)) {
+					if (type.equals(DDMFormFieldTypeConstants.SELECT)) {
 						JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 							valueString);
 
@@ -315,7 +315,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 						sb.append(StringPool.SPACE);
 					}
 					else {
-						if (type.equals(DDMFormFieldType.TEXT_HTML)) {
+						if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
 							valueString = HtmlUtil.extractText(valueString);
 						}
 
@@ -482,17 +482,17 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 			String type = field.getType();
 
-			if (type.equals(DDMFormFieldType.GEOLOCATION)) {
+			if (type.equals(DDMFormFieldTypeConstants.GEOLOCATION)) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
 
-				double latitude = jsonObject.getDouble("latitude", 0);
-				double longitude = jsonObject.getDouble("longitude", 0);
+				double latitude = jsonObject.getDouble("lat", 0);
+				double longitude = jsonObject.getDouble("lng", 0);
 
 				document.addGeoLocation(
 					name.concat("_geolocation"), latitude, longitude);
 			}
-			else if (type.equals(DDMFormFieldType.SELECT)) {
+			else if (type.equals(DDMFormFieldTypeConstants.SELECT)) {
 				document.addKeyword(
 					_getSortableFieldName(name),
 					ArrayUtil.toStringArray(
@@ -503,7 +503,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 						JSONFactoryUtil.createJSONArray(valueString)));
 			}
 			else {
-				if (type.equals(DDMFormFieldType.TEXT_HTML)) {
+				if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
 					valueString = HtmlUtil.extractText(valueString);
 					sortableValueString = HtmlUtil.extractText(
 						sortableValueString);

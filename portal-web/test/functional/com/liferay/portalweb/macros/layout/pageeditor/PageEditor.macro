@@ -1551,22 +1551,39 @@ definition {
 					value1 = "${backgroundImage}");
 
 				if ("${backgroundImage}" == "Mapping") {
-					PageEditorMapping.mapEditableFieldToAsset(
-						entryTitle = "${entryTitle}",
-						navItem = "${navItem}");
+					if (isSet(entryTitle)) {
+						PageEditorMapping.mapEditableFieldToAsset(
+							entryTitle = "${entryTitle}",
+							navItem = "${navItem}");
 
-					if ("${navItem}" == "Documents and Media") {
-						Select(
-							locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
-							value1 = "${fieldName}");
+						if ("${navItem}" == "Documents and Media") {
+							Select(
+								locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
+								value1 = "${fieldName}");
+						}
+						else {
+							Select(
+								locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
+								value1 = "Image");
+						}
+
+						SelectFrame(value1 = "relative=top");
 					}
 					else {
-						Select(
-							locator1 = "PageEditorEditableLink#LAYOUT_BACKGROUND_IMAGE_FIELD",
-							value1 = "Image");
-					}
+						if (isSet(source)) {
+							Select(
+								key_fieldLabel = "Source",
+								locator1 = "Select#GENERIC_SELECT_FIELD",
+								value1 = "${source}");
+						}
 
-					SelectFrame(value1 = "relative=top");
+						Pause(locator1 = "3000");
+
+						Select(
+							key_fieldLabel = "Field",
+							locator1 = "Select#GENERIC_SELECT_FIELD",
+							value1 = "${fieldName}");
+					}
 				}
 
 				if ("${backgroundImage}" == "Direct") {

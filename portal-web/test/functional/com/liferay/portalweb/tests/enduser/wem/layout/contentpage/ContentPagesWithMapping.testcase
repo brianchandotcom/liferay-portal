@@ -1048,12 +1048,79 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to text editable field."
-	@ignore = "true"
 	@priority = "4"
 	test MapWebContentFieldWithURLToTextFragment {
-		property portal.upstream = "false";
+		task ("Add a web content structure with a Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-98031 MapWebContentFieldWithURLToTextFragment pending implementation
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentTitle = "Web Content Title",
+				webContentText = "https://www.liferay.com");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map Text field with URL to Heading") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = "Web Content Title",
+				field = "Text",
+				navItem = "Web Content");
+
+			AssertVisible(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "https://www.liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert mapped URL work in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "https://www.liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			Click(
+				key_append = "[normalize-space(text())='Heading Example']",
+				key_URL = "https://www.liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
 	}
 
 	@description = "This case ensures a user can map the editable background image of a fragment to an existing image content."

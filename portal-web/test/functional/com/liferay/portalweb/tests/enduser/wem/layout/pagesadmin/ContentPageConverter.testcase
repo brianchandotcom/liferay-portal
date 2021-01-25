@@ -854,7 +854,33 @@ definition {
 	test ConvertWidgetPageWithWebContentsToContentPage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Asset Publisher");
+
+		JSONWebcontent.addWebContent(
+			content = "test content",
+			groupName = "Test Site Name",
+			title = "test title");
+
+		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to content page...",
+			pageName = "Test Page Name");
+
+		Refresh.();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		AssertElementPresent(locator1 = "//p[contains(.,'test title')]");
 	}
 
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."

@@ -296,6 +296,7 @@ $navbarHeight: 120px;
 	position: absolute;
 	z-index: 50;
 }
+
 .save-app-modal {
 	.modal-dialog {
 		width: 416px;
@@ -326,13 +327,21 @@ $navbarHeight: 120px;
 	fill: #6b6c7e;
 }
 
-.tooltip-icon-error {
+.tooltip-popover-icon {
 	align-self: center;
-	border: 5px solid #fde7e8;
 	border-radius: 50%;
-	fill: #da1414;
 	margin-left: auto;
 	min-width: 1em;
+
+	&.error {
+		border: 5px solid #fde7e8;
+		fill: #da1414;
+	}
+
+	&.info {
+		border: 5px solid #eef2fa;
+		fill: #2e5aac;
+	}
 }
 
 .version-badge {

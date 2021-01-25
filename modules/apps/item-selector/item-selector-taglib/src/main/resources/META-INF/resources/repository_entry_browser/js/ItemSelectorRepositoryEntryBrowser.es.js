@@ -470,7 +470,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		) {
 			const maxFileSize = this.maxFileSize;
 
-			if (file.size <= maxFileSize) {
+			if (maxFileSize === 0 || file.size <= maxFileSize) {
 				this._previewFile(file);
 			}
 			else {

@@ -1642,13 +1642,53 @@ definition {
 			value1 = "2 of 10 Selected");
 	}
 
-	@description = "This ensures that the user can create document with topics."
-	@ignore = "true"
+	@description = "This ensures that the user can create a document with the topic from the Global site."
 	@priority = "4"
 	test ViewDocumentWithTopic {
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Apple",
+			vocabularyName = "Topic");
 
-		// TODO LPS-126181 ViewDocumentWithTopic pending implementation
+		JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Dragon Fruit",
+			vocabularyName = "Topic");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			categoryName = "Apple",
+			dmDocumentDescription = "Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc",
+			vocabularyName = "Topic");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Click(
+			key_dmDocumentTitle = "Document_1.doc",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		AssetCategorization.addCategory(
+			categoryName = "Dragon Fruit",
+			vocabularyName = "Topic");
+
+		Button.clickPublish();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Click(
+			key_dmDocumentTitle = "Document_1.doc",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		DMDocument.viewCategories(categoryNameList = "Apple,Dragon Fruit");
 	}
 
 	@priority = "4"
@@ -1692,6 +1732,7 @@ definition {
 	test ViewRelatedDocument {
 
 		// TODO LPS-126181 ViewRelatedDocument pending implementation
+
 	}
 
 	@priority = "5"

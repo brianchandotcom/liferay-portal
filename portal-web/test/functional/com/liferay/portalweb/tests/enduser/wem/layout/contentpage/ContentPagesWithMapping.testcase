@@ -1578,7 +1578,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-110462. The value of editable field should be reset when the mapped content is missing"
-	@priority = "2"
+	@priority = "3"
 	test ViewEditableFieldValueWhenMappedContentMissing {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(

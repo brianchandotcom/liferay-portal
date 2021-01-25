@@ -1522,12 +1522,79 @@ definition {
 	}
 
 	@description = "This ensures that the user can create document viewable only by the owner."
-	@ignore = "true"
 	@priority = "4"
 	test ViewDocumentWithOwnerAccessOnly {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-126181 ViewDocumentWithOwnerAccessOnly pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc");
+
+		PermissionsInline.gotoDocumentsAndMediaDocumentPG(
+			dmDocumentTitle = "Document_1.doc",
+			pageName = "Documents and Media Page");
+
+		for (var roleTitle : list "guest,site-member") {
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "${roleTitle}");
+		}
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			dmDocumentType = "Basic Document");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMPortlet.viewDefaultPG();
+
+		User.loginUserPG(userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMPortlet.viewDefaultPG();
 	}
 
 	@priority = "5"

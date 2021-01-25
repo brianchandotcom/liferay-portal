@@ -1030,12 +1030,79 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
-	@ignore = "true"
 	@priority = "4"
 	test MapWebContentFieldWithURLToImageFragment {
-		property portal.upstream = "false";
+		task ("Add a web content structure with a Text field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-98031 MapWebContentFieldWithURLToImageFragment pending implementation
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentTitle = "Web Content Title",
+				webContentText = "https://www.liferay.com");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Map Text field with URL to Image") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Image",
+				id = "image-square");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = "Web Content Title",
+				field = "Text",
+				navItem = "Web Content");
+
+			AssertVisible(
+				key_append = "//img[contains(@src,'data:image/png')]",
+				key_URL = "https://www.liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert mapped URL work in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_append = "//img[contains(@src,'data:image/png')]",
+				key_URL = "https://www.liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			Click(
+				key_append = "//img[contains(@src,'data:image/png')]",
+				key_URL = "https://www.liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."

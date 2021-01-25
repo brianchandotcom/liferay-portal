@@ -23,6 +23,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRow;
 import com.liferay.data.engine.rest.dto.v2_0.DataRule;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
@@ -36,12 +37,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
+import com.liferay.dynamic.data.mapping.util.SettingsDDMFormFieldsUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -64,13 +65,16 @@ public class DataLayoutUtil {
 
 	public static String serialize(
 			DataLayout dataLayout, DDMForm ddmForm,
+			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			DDMFormLayoutSerializer ddmFormLayoutSerializer,
 			DDMFormRuleDeserializer ddmFormRuleDeserializer)
 		throws Exception {
 
 		DDMFormLayoutSerializerSerializeRequest.Builder builder =
 			DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
-				toDDMFormLayout(dataLayout, ddmForm, ddmFormRuleDeserializer));
+				toDDMFormLayout(
+					dataLayout, ddmForm, ddmFormFieldTypeServicesTracker,
+					ddmFormRuleDeserializer));
 
 		DDMFormLayoutSerializerSerializeResponse
 			ddmFormLayoutSerializerSerializeResponse =
@@ -128,13 +132,17 @@ public class DataLayoutUtil {
 
 	public static DDMFormLayout toDDMFormLayout(
 			DataLayout dataLayout, DDMForm ddmForm,
+			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			DDMFormRuleDeserializer ddmFormRuleDeserializer)
 		throws Exception {
 
 		DDMFormLayout ddmFormLayout = new DDMFormLayout();
 
 		ddmFormLayout.setDDMFormFields(
-			_toDDMFormFields(dataLayout.getDataLayoutFields()));
+			_toDDMFormFields(
+				dataLayout.getDataLayoutFields(),
+				ddmForm.getDDMFormFieldsMap(true),
+				ddmFormFieldTypeServicesTracker));
 		ddmFormLayout.setDDMFormLayoutPages(
 			_toDDMFormLayoutPages(
 				dataLayout.getDataLayoutPages(), ddmForm.getDefaultLocale()));
@@ -324,7 +332,9 @@ public class DataLayoutUtil {
 	}
 
 	private static List<DDMFormField> _toDDMFormFields(
-		Map<String, Object> dataLayoutFields) {
+		Map<String, Object> dataLayoutFields,
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
@@ -338,10 +348,35 @@ public class DataLayoutUtil {
 
 				ddmFormField.setName(key);
 
-				Map<String, Object> properties = (Map<String, Object>)value;
+				Map<String, Object> properties = ddmFormField.getProperties();
 
-				ddmFormField.setRequired(
-					GetterUtil.getBoolean(properties.get("required")));
+				Map<String, Object> dataLayoutField =
+					(Map<String, Object>)value;
+
+				DDMFormField ddmFormFieldDDMForm = ddmFormFieldsMap.get(key);
+
+				Map<String, DDMFormField> settingsDDMFormFieldsMap =
+					SettingsDDMFormFieldsUtil.getSettingsDDMFormFields(
+						ddmFormFieldTypeServicesTracker,
+						ddmFormFieldDDMForm.getType());
+
+				dataLayoutField.forEach(
+					(keyProperty, valueProperty) -> {
+						DDMFormField settingsDDMFormField =
+							settingsDDMFormFieldsMap.get(keyProperty);
+
+						if (settingsDDMFormField.isLocalizable()) {
+							properties.put(
+								keyProperty,
+								LocalizedValueUtil.toLocalizedValue(
+									(Map<String, Object>)valueProperty));
+						}
+						else {
+							properties.put(keyProperty, valueProperty);
+						}
+					});
+
+				ddmFormField.setType(ddmFormFieldDDMForm.getType());
 
 				ddmFormFields.add(ddmFormField);
 			});

@@ -1093,7 +1093,7 @@ public class DataDefinitionResourceImpl
 				dataLayout,
 				DataDefinitionDDMFormUtil.toDDMForm(
 					dataDefinition, _ddmFormFieldTypeServicesTracker),
-				_ddmFormRuleDeserializer);
+				_ddmFormFieldTypeServicesTracker, _ddmFormRuleDeserializer);
 
 			ddmFormLayout.setDefinitionSchemaVersion(definitionSchemaVersion);
 

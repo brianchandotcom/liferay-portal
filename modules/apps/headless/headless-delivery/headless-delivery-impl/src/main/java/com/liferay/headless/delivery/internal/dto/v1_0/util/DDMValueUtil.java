@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
@@ -26,8 +27,10 @@ import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.dto.v1_0.Geo;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
+import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -88,7 +91,8 @@ public class DDMValueUtil {
 				contentField.getContentFieldValue_i18n();
 
 			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType()) ||
-				Objects.equals("date", ddmFormField.getType())) {
+				Objects.equals(
+					DDMFormFieldTypeConstants.DATE, ddmFormField.getType())) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -98,7 +102,8 @@ public class DDMValueUtil {
 						DDMFormFieldType.DOCUMENT_LIBRARY,
 						ddmFormField.getType()) ||
 					 Objects.equals(
-						 ddmFormField.getType(), "document_library")) {
+						 ddmFormField.getType(),
+						 DDMFormFieldTypeConstants.DOCUMENT_LIBRARY)) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -109,7 +114,9 @@ public class DDMValueUtil {
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.IMAGE, ddmFormField.getType()) ||
-					 Objects.equals("image", ddmFormField.getType())) {
+					 Objects.equals(
+						 DDMFormFieldTypeConstants.IMAGE,
+						 ddmFormField.getType())) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -121,7 +128,9 @@ public class DDMValueUtil {
 						DDMFormFieldType.JOURNAL_ARTICLE,
 						ddmFormField.getType()) ||
 					 Objects.equals(
-						 ddmFormField.getType(), "journal_article")) {
+						 ddmFormField.getType(),
+						 JournalArticleDDMFormFieldTypeConstants.
+							 JOURNAL_ARTICLE)) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -132,11 +141,13 @@ public class DDMValueUtil {
 					preferredLocale);
 			}
 			else if (Objects.equals(
-						DDMFormFieldType.RADIO, ddmFormField.getType()) ||
+						DDMFormFieldTypeConstants.RADIO,
+						ddmFormField.getType()) ||
 					 Objects.equals(
-						 DDMFormFieldType.SELECT, ddmFormField.getType()) ||
+						 DDMFormFieldTypeConstants.SELECT,
+						 ddmFormField.getType()) ||
 					 Objects.equals(
-						 DDMFormFieldType.CHECKBOX_MULTIPLE,
+						 DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
 						 ddmFormField.getType())) {
 
 				return _toLocalizedValue(
@@ -182,7 +193,9 @@ public class DDMValueUtil {
 			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
 						ddmFormField.getType()) ||
-					 Objects.equals("link_to_layout", ddmFormField.getType())) {
+					 Objects.equals(
+						 LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT,
+						 ddmFormField.getType())) {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
@@ -194,7 +207,9 @@ public class DDMValueUtil {
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.GEOLOCATION, ddmFormField.getType()) ||
-					 Objects.equals("geolocation", ddmFormField.getType())) {
+					 Objects.equals(
+						 DDMFormFieldTypeConstants.GEOLOCATION,
+						 ddmFormField.getType())) {
 
 				Geo geo = contentFieldValue.getGeo();
 

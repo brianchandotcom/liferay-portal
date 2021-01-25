@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
@@ -27,8 +28,10 @@ import com.liferay.headless.delivery.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.dto.v1_0.Geo;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
+import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -166,7 +169,8 @@ public class ContentFieldUtil {
 						DDMFormFieldType.DOCUMENT_LIBRARY,
 						ddmFormField.getType()) ||
 					 Objects.equals(
-						 ddmFormField.getType(), "document_library")) {
+						 ddmFormField.getType(),
+						 DDMFormFieldTypeConstants.DOCUMENT_LIBRARY)) {
 
 				FileEntry fileEntry = _getFileEntry(dlAppService, valueString);
 
@@ -183,7 +187,10 @@ public class ContentFieldUtil {
 					}
 				};
 			}
-			else if (Objects.equals("geolocation", ddmFormField.getType())) {
+			else if (Objects.equals(
+						DDMFormFieldTypeConstants.GEOLOCATION,
+						ddmFormField.getType())) {
+
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
 
@@ -217,7 +224,9 @@ public class ContentFieldUtil {
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.IMAGE, ddmFormField.getType()) ||
-					 Objects.equals("image", ddmFormField.getType())) {
+					 Objects.equals(
+						 DDMFormFieldTypeConstants.IMAGE,
+						 ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -254,7 +263,9 @@ public class ContentFieldUtil {
 						DDMFormFieldType.JOURNAL_ARTICLE,
 						ddmFormField.getType()) ||
 					 Objects.equals(
-						 ddmFormField.getType(), "journal_article")) {
+						 ddmFormField.getType(),
+						 JournalArticleDDMFormFieldTypeConstants.
+							 JOURNAL_ARTICLE)) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -286,7 +297,9 @@ public class ContentFieldUtil {
 			else if (Objects.equals(
 						DDMFormFieldType.LINK_TO_PAGE,
 						ddmFormField.getType()) ||
-					 Objects.equals("link_to_layout", ddmFormField.getType())) {
+					 Objects.equals(
+						 LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT,
+						 ddmFormField.getType())) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
@@ -310,10 +323,11 @@ public class ContentFieldUtil {
 				};
 			}
 			else if (Objects.equals(
-						DDMFormFieldType.SELECT, ddmFormField.getType()) ||
+						DDMFormFieldTypeConstants.SELECT,
+						ddmFormField.getType()) ||
 					 Objects.equals(
 						 ddmFormField.getType(),
-						 DDMFormFieldType.CHECKBOX_MULTIPLE)) {
+						 DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
 
 				List<String> list = JSONUtil.toStringList(
 					JSONFactoryUtil.createJSONArray(valueString));
@@ -348,7 +362,8 @@ public class ContentFieldUtil {
 				};
 			}
 			else if (Objects.equals(
-						DDMFormFieldType.RADIO, ddmFormField.getType())) {
+						DDMFormFieldTypeConstants.RADIO,
+						ddmFormField.getType())) {
 
 				DDMFormFieldOptions ddmFormFieldOptions =
 					ddmFormField.getDDMFormFieldOptions();

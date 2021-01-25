@@ -2,9 +2,9 @@
 
 @import './variables';
 
-$desktopToolbarHeight: 112px;
+$toolbarHeight: 112px;
 $sidebarButtonHeight: $sidebarButtonWidth;
-$toolbarHeight: 64px;
+$desktopToolbarHeight: 64px;
 
 // z-indexes for childern of page-editor-sidebar (which is a stacking context).
 
@@ -13,10 +13,10 @@ $zIndexContent: 0;
 
 .page-editor__sidebar {
 	display: flex;
-	height: calc(100vh - #{$toolbarHeight});
+	height: calc(100vh - #{$desktopToolbarHeight});
 	position: fixed;
 	right: 0;
-	top: $toolbarHeight;
+	top: $desktopToolbarHeight;
 	z-index: $sidebarZIndex;
 
 	&__buttons {
@@ -101,7 +101,7 @@ $zIndexContent: 0;
 	&__content {
 		background-color: $white;
 		border-left: 1px solid $secondary-l3;
-		height: calc(100vh - #{$controlMenuHeight + $desktopToolbarHeight});
+		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		overflow-x: hidden;
 		position: fixed;
 		right: $sidebarButtonWidth;
@@ -119,17 +119,21 @@ $zIndexContent: 0;
 		}
 
 		@include media-breakpoint-up(xl) {
-			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
+			height: calc(
+				100vh - #{$desktopControlMenuHeight + $desktopToolbarHeight}
+			);
 		}
 	}
 
 	body.has-control-menu & {
-		height: calc(100vh - #{$controlMenuHeight + $desktopToolbarHeight});
-		top: $controlMenuHeight + $desktopToolbarHeight;
+		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		top: $controlMenuHeight + $toolbarHeight;
 
 		@include media-breakpoint-up(xl) {
-			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
-			top: $desktopControlMenuHeight + $toolbarHeight;
+			height: calc(
+				100vh - #{$desktopControlMenuHeight + $desktopToolbarHeight}
+			);
+			top: $desktopControlMenuHeight + $desktopToolbarHeight;
 		}
 	}
 }

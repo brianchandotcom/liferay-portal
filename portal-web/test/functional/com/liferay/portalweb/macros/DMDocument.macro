@@ -193,6 +193,23 @@ definition {
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
 				value1 = "Please select the file again.");
 		}
+		else if (isSet(emptyFileNameRestriction)) {
+			Button.clickPublish();
+
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "The file name cannot be empty or without extension.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "The file name cannot be empty or without extension.");
+
+			AssertTextEquals.assertPartialText(
+				key_alertMessage = "Please select the file again.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please select the file again.");
+
+			AssertElementNotPresent(locator1 = "TextInput#FILE_UNEMPTY");
+		}
 		else {
 			PortletEntry.publish();
 		}

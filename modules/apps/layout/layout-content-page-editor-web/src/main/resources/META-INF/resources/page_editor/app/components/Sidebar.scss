@@ -118,6 +118,10 @@ $zIndexContent: 0;
 			transform: translateX(0);
 		}
 
+		@include media-breakpoint-up(sm) {
+			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
+		}
+
 		@include media-breakpoint-up(xl) {
 			height: calc(
 				100vh - #{$desktopControlMenuHeight + $desktopToolbarHeight}
@@ -128,6 +132,11 @@ $zIndexContent: 0;
 	body.has-control-menu & {
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		top: $controlMenuHeight + $toolbarHeight;
+
+		@include media-breakpoint-up(sm) {
+			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
+			top: $desktopControlMenuHeight + $toolbarHeight;
+		}
 
 		@include media-breakpoint-up(xl) {
 			height: calc(

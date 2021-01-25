@@ -467,7 +467,7 @@
 						dialogDefinition,
 						'info',
 						'imageselector',
-						'txtUrl'
+						'src'
 					);
 				}
 				else if (dialogName === 'video') {

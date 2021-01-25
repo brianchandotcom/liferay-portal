@@ -208,7 +208,7 @@ definition {
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
 				value1 = "Please select the file again.");
 
-			AssertElementNotPresent(locator1 = "TextInput#FILE_UNEMPTY");
+			AssertElementNotPresent(locator1 = "TextInput#FILE_PRESENT");
 		}
 		else {
 			PortletEntry.publish();

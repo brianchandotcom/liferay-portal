@@ -234,7 +234,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILE_UNEMPTY</td>
+	<td>FILE_PRESENT</td>
 	<td>//input[contains(@class,'success-field')][@type='file']</td>
 	<td></td>
 </tr>

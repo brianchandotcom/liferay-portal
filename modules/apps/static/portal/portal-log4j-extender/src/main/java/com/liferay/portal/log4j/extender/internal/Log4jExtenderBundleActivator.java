@@ -16,6 +16,8 @@ package com.liferay.portal.log4j.extender.internal;
 
 import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -25,8 +27,6 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.Enumeration;
-
-import org.apache.log4j.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -52,7 +52,7 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 					_configureLog4j(bundle.getSymbolicName());
 				}
 				catch (MalformedURLException malformedURLException) {
-					_logger.error(
+					_log.error(
 						"Unable to configure Log4j for bundle " +
 							bundle.getSymbolicName(),
 						malformedURLException);
@@ -99,7 +99,7 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 		Log4JUtil.configureLog4J(uri.toURL());
 	}
 
-	private static final Logger _logger = Logger.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		Log4jExtenderBundleActivator.class);
 
 	private volatile BundleTracker<Bundle> _bundleTracker;

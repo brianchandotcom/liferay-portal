@@ -887,6 +887,39 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
 	}
 
+	@description = "It ensures that the MP4 file can be previewed."
+	@priority = "4"
+	test PreviewMP4 {
+		property test.name.skip.portal.instance = "CPDocumentsandmedia#PreviewMP4";
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(installXuggler = "true");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(enableXuggler = "true");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.mp4",
+			groupName = "Guest",
+			mimeType = "video/mp4",
+			sourceFileName = "Document_1.mp4");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.mp4");
+
+		Pause(locator1 = "5000");
+
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+	}
+
 	@description = "This is a use case for LPS-88785."
 	@priority = "5"
 	test PreviewPDF {

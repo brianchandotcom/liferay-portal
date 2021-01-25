@@ -150,7 +150,8 @@ definition {
 	@description = "This ensures that navigation arrows do not appear in image preview when there is only one image in the library."
 	@priority = "5"
 	test PreviewSingleImage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

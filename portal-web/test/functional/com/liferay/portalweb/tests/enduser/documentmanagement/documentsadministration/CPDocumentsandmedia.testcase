@@ -624,7 +624,8 @@ definition {
 	@description = "This case covers the folder name of a document can be viewed in the info panel and navigate to it."
 	@priority = "5"
 	test MoveDocumentToFolder {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

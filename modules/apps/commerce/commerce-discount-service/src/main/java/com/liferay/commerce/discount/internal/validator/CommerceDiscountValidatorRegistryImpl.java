@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.discount.internal.validator;
 
+import com.liferay.commerce.discount.internal.validator.comparator.CommerceDiscountValidatorServiceWrapperPriorityComparator;
 import com.liferay.commerce.discount.validator.CommerceDiscountValidator;
 import com.liferay.commerce.discount.validator.CommerceDiscountValidatorRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;

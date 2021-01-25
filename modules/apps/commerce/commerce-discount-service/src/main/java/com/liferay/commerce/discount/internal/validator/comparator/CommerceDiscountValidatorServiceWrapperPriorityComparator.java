@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.discount.internal.validator;
+package com.liferay.commerce.discount.internal.validator.comparator;
 
 import com.liferay.commerce.discount.validator.CommerceDiscountValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;

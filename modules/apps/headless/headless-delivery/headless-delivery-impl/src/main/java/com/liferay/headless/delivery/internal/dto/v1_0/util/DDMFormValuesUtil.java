@@ -15,9 +15,9 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -175,7 +175,7 @@ public class DDMFormValuesUtil {
 		DDMFormField ddmFormField, Locale locale) {
 
 		if (Objects.equals(
-				DDMFormFieldType.SEPARATOR, ddmFormField.getType())) {
+				DDMFormFieldTypeConstants.SEPARATOR, ddmFormField.getType())) {
 
 			return null;
 		}

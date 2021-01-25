@@ -213,8 +213,8 @@ definition {
 
 	@priority = "4"
 	test ViewChart {
-		property test.name.skip.portal.instance = "Polls#ViewChart";
 		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Polls#ViewChart";
 
 		Navigator.openURL();
 
@@ -270,8 +270,8 @@ definition {
 
 	@priority = "4"
 	test VotePollsQuestionWithGuestPermissions {
-		property test.name.skip.portal.instance = "Polls#VotePollsQuestionWithGuestPermissions";
 		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Polls#VotePollsQuestionWithGuestPermissions";
 
 		Navigator.openURL();
 

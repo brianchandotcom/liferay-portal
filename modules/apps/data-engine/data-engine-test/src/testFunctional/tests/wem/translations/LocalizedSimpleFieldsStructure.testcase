@@ -115,10 +115,13 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");
+
 		NavItem.gotoStructures();
+
 		WebContentStructures.addCP(
 			structureDescription = "Test",
 			structureName = "Test");
+
 		DataEngine.addField(
 			fieldFieldLabel = "Text Test",
 			fieldName = "Text");
@@ -156,11 +159,13 @@ definition {
 		WebContentStructures.viewCP(
 			structureDescription = "Test",
 			structureName = "Test");
+
 		LexiconEntry.gotoEntry(rowEntry = "Test");
 
 		AssertTextEquals(
 			locator1 = "//label[@class='ddm-label' and contains(text(),'Text Test')]",
 			value1 = "Text Test");
+
 		AssertTextEquals(
 			locator1 = "//span[@class='form-text' and contains(text(),'Help Text test')]",
 			value1 = "Help Text test");
@@ -184,6 +189,7 @@ definition {
 			value1 = "Teste");
 
 		WebContentStructures.saveCP(structureName = "Test");
+
 		WebContentStructures.deleteCP(structureName = "Test");
 	}
 

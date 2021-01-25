@@ -183,10 +183,12 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		Select(
-			key_fieldLabel = "Source",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${source}");
+		if (isSet(source)) {
+			Select(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${source}");
+		}
 
 		Pause(locator1 = "3000");
 

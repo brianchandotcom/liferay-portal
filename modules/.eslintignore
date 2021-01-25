@@ -48,4 +48,5 @@
     # These are generated third-party files, not intended for editing or
     # inspection.
     #
+    apps/frontend-js/frontend-js-jquery-web/src/main/resources/META-INF/resources/jquery/form.js
     apps/frontend-js/frontend-js-svg4everybody-web/src/main/resources/META-INF/resources/svg4everybody.js

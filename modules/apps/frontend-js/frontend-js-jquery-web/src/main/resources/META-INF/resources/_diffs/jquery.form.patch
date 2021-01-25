@@ -1,0 +1,39 @@
+diff --git a/modules/apps/frontend-js/frontend-js-jquery-web/src/main/resources/META-INF/resources/jquery/form.js b/modules/apps/frontend-js/frontend-js-jquery-web/src/main/resources/META-INF/resources/jquery/form.js
+index 591ad6f1fe7b..04cf9498c9a2 100644
+--- a/modules/apps/frontend-js/frontend-js-jquery-web/src/main/resources/META-INF/resources/jquery/form.js
++++ b/modules/apps/frontend-js/frontend-js-jquery-web/src/main/resources/META-INF/resources/jquery/form.js
+@@ -13,7 +13,7 @@
+ // AMD support
+ (function (factory) {
+     "use strict";
+-    if (typeof define === 'function' && define.amd) {
++    if (false && typeof define === 'function' && define.amd) {
+         // using AMD; register as anon module
+         define(['jquery'], factory);
+     } else {
+@@ -190,6 +190,11 @@ $.fn.ajaxSubmit = function(options) {
+         var oldSuccess = options.success || function(){};
+         callbacks.push(function(data) {
+             var fn = options.replaceTarget ? 'replaceWith' : 'html';
++
++            data = options.replaceTarget
++                ? data
++                : $.parseHTML($('<div>').text(data).html());
++
+             $(options.target)[fn](data).each(oldSuccess, arguments);
+         });
+     }
+@@ -800,9 +805,10 @@ $.fn.ajaxSubmit = function(options) {
+             }
+             return (doc && doc.documentElement && doc.documentElement.nodeName != 'parsererror') ? doc : null;
+         };
+-        var parseJSON = $.parseJSON || function(s) {
+-            /*jslint evil:true */
+-            return window['eval']('(' + s + ')');
++        var parseJSON = $.parseJSON || function() {
++            window.console.error('jQuery.paseJSON is undefined');
++
++            return null;
+         };
+ 
+         var httpData = function( xhr, type, s ) { // mostly lifted from jq1.4.4

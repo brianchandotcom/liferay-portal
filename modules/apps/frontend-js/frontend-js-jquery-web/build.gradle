@@ -1,11 +1,21 @@
+import com.liferay.gradle.plugins.defaults.internal.util.GitUtil
+import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+ext {
+	jQueryFormVersion = "3.51"
+
+	jQueryFormURL = "https://raw.githubusercontent.com/jquery-form/form/${jQueryFormVersion}/jquery.form.js"
+}
 
 task buildBootstrapJS(type: Copy)
 task buildJQuery(type: Copy)
+task buildJQueryForm(type: Copy)
 task buildPopperJS(type: Copy)
+task patchJQueryForm(type: Copy)
 
 File jsDestinationDir = file("tmp/META-INF/resources")
-File jqueryDestinationDir = new File(jsDestinationDir, "jquery")
+File jQueryDestinationDir = new File(jsDestinationDir, "jquery")
 
 buildBootstrapJS {
 	dependsOn buildJQuery
@@ -18,14 +28,14 @@ buildBootstrapJS {
 	include "bootstrap/dist/js/bootstrap.bundle.min.js.map"
 
 	includeEmptyDirs = false
-	into jqueryDestinationDir
+	into jQueryDestinationDir
 }
 
 buildJQuery {
 	dependsOn npmInstall
 
 	doFirst {
-		delete jqueryDestinationDir
+		delete jQueryDestinationDir
 	}
 
 	eachFile new StripPathSegmentsAction(2)
@@ -36,7 +46,26 @@ buildJQuery {
 	include "jquery/dist/jquery.min.js.map"
 
 	includeEmptyDirs = false
-	into jqueryDestinationDir
+	into jQueryDestinationDir
+}
+
+buildJQueryForm {
+	File jQueryFormURLFile = file("src/main/resources/META-INF/resources/jquery/form.js")
+
+	ext {
+		autoClean = false
+	}
+
+	from {
+		FileUtil.get(project, project.jQueryFormURL, jQueryFormURLFile)
+	}
+
+	into jQueryFormURLFile.parentFile
+
+	eachFile {
+		GitUtil.getGitResult(project, "apply", "-v",
+		"src/main/resources/META-INF/resources/_diffs/jquery.form.patch")
+	}
 }
 
 buildPopperJS {
@@ -50,12 +79,13 @@ buildPopperJS {
 	include "popper.js/dist/umd/popper.min.js.map"
 
 	includeEmptyDirs = false
-	into jqueryDestinationDir
+	into jQueryDestinationDir
 }
 
 classes {
 	dependsOn buildBootstrapJS
 	dependsOn buildJQuery
+	dependsOn buildJQueryForm
 	dependsOn buildPopperJS
 }
 

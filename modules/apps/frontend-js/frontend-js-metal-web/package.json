@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"metal": "2.16.8",
+		"metal-affix": "2.0.0",
 		"metal-ajax": "2.1.1",
 		"metal-anim": "2.0.1",
 		"metal-aop": "3.0.0",

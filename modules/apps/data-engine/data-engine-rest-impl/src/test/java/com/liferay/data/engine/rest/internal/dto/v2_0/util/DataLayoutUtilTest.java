@@ -20,6 +20,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayoutColumn;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRow;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -195,7 +196,9 @@ public class DataLayoutUtilTest extends PowerMockito {
 		Assert.assertEquals(
 			ddmFormLayout,
 			DataLayoutUtil.toDDMFormLayout(
-				dataLayout, ddmForm, ddmFormRuleDeserializer));
+				dataLayout, ddmForm,
+				PowerMockito.mock(DDMFormFieldTypeServicesTracker.class),
+				ddmFormRuleDeserializer));
 	}
 
 	private void _setUpJSONFactoryUtil() {

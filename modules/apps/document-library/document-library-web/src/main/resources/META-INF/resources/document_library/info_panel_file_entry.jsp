@@ -424,7 +424,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 			</c:if>
 
 			<liferay-ui:panel-container
-				cssClass="metadata-panel-container"
+				cssClass="metadata-panel-container panel-group-flush panel-group-sm"
 				extended="<%= true %>"
 				markupView="lexicon"
 				persistState="<%= true %>"

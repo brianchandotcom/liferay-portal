@@ -807,11 +807,24 @@ definition {
 	}
 
 	@description = "This ensures that the empty state displays when the preview file doesn't have anything previewable."
-	@ignore = "true"
 	@priority = "4"
 	test PreviewEmptyState {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		// TODO LPS-126181 PreviewEmptyState pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.doc");
+
+		for (var emptyStateInfo : list "No preview available,Hmm... looks like this item doesn't have a preview we can show you.") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_EMPTY_STATE_PREVIEW",
+				value1 = "${emptyStateInfo}");
+		}
 	}
 
 	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."
@@ -872,14 +885,6 @@ definition {
 		DMDocument.expandInfo();
 
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
-	}
-
-	@description = "It ensures that the MP4 file can be previewed."
-	@ignore = "true"
-	@priority = "4"
-	test PreviewMP4 {
-
-		// TODO LPS-126181 PreviewMP4 pending implementation
 	}
 
 	@description = "This is a use case for LPS-88785."

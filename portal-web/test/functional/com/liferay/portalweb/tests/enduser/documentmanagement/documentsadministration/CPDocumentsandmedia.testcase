@@ -930,7 +930,6 @@ definition {
 	}
 
 	@description = "This ensures that the user can search for document file name using partial text."
-	@ignore = "true"
 	@priority = "5"
 	test SearchForDocumentWithPartialText {
 		JSONDocument.addFile(

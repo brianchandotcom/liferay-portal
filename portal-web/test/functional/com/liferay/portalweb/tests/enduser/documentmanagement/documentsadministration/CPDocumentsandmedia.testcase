@@ -933,8 +933,16 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test SearchForDocumentWithPartialText {
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
-		// TODO LPS-126181 SearchForDocumentWithPartialText pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "DM");
+
+		DMDocument.viewSearchResultsCP(dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."

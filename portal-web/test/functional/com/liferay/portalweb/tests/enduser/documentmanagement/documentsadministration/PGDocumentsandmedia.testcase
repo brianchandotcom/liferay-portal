@@ -1726,13 +1726,44 @@ definition {
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.1");
 	}
 
-	@description = "This ensures that the user can create document with related assets."
-	@ignore = "true"
+	@description = "This ensures that the user can view the document through related assets."
 	@priority = "3"
 	test ViewRelatedDocument {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		// TODO LPS-126181 ViewRelatedDocument pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Click(
+			key_dmDocumentTitle = "Document_2.jpg",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		RelatedAssets.selectAsset(
+			assetTitle = "Document_1.doc",
+			assetType = "Basic Document");
+
+		Button.clickPublish();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoRelatedAssetPG(
+			assetTitle = "Document_2.jpg",
+			dmDocumentTitle = "Document_1.doc");
+
+		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
 	@priority = "5"

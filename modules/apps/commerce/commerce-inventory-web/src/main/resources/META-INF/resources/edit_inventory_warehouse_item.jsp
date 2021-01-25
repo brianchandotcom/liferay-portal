@@ -24,7 +24,7 @@ CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventor
 
 <liferay-ui:error exception="<%= MVCCException.class %>" message="this-item-is-no-longer-valid-please-try-again" />
 
-<portlet:actionURL name="/cp_definitions/edit_commerce_inventory_warehouse_item" var="editCommerceInventoryWarehouseItemActionURL" />
+<portlet:actionURL name="/commerce_inventory/edit_commerce_inventory_warehouse_item" var="editCommerceInventoryWarehouseItemActionURL" />
 
 <commerce-ui:side-panel-content
 	title='<%= LanguageUtil.get(request, "edit-inventory") %>'

@@ -31,13 +31,82 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98031. Map manual URL to image fragment."
-	@ignore = "true"
 	@priority = "4"
 	test MapManualURLToImageFragment {
-		property portal.upstream = "false";
+		task ("Add an Image fragment to the Display Page Name") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-98031 MapManualURLToImageFragment pending implementation
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Map manual URL to editable field of Image") {
+			PageEditor.editFragmentImage(
+				fileName = "Document_1.jpg",
+				fragmentName = "Image",
+				id = "image-square");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Image",
+				id = "image-square");
+
+			PageEditorEditableLink.updateURL(url = "https://liferay.com");
+
+			AssertVisible(
+				key_append = "/img[contains(@src,'Document_1.jpg')]",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Select Display Page Name as Specific Display Page Template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("View Content in display page template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Display Page Name");
+		}
+
+		task ("Assert mapped URL work in display page template") {
+			AssertVisible(
+				key_append = "/img[contains(@src,'Document_1.jpg')]",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			Click(
+				key_append = "/img[contains(@src,'Document_1.jpg')]",
+				key_URL = "https://liferay.com",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
 	}
 
 	@description = "This is a test for LPS-98031."

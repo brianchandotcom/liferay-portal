@@ -140,6 +140,8 @@ definition {
 	@description = "This is a use case for LPS-66544."
 	@priority = "3"
 	test AddPollWithEmptyChoicesAndViewErrorMessage {
+		property test.name.skip.portal.instance = "Polls#AddPollWithEmptyChoicesAndViewErrorMessage";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -211,6 +213,7 @@ definition {
 
 	@priority = "4"
 	test ViewChart {
+		property test.name.skip.portal.instance = "Polls#ViewChart";
 		property portal.upstream = "true";
 
 		Navigator.openURL();
@@ -267,6 +270,7 @@ definition {
 
 	@priority = "4"
 	test VotePollsQuestionWithGuestPermissions {
+		property test.name.skip.portal.instance = "Polls#VotePollsQuestionWithGuestPermissions";
 		property portal.upstream = "true";
 
 		Navigator.openURL();

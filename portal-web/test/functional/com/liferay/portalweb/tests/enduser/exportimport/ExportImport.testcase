@@ -1618,7 +1618,6 @@ definition {
 	@priority = "3"
 	test ImportSiteWithMissingReferenceOfPreloadedEntry {
 		property portal.release = "false";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ExportImport#ImportSiteWithMissingReferenceOfPreloadedEntry";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Global");

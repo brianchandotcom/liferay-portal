@@ -50,6 +50,10 @@ else {
 editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/journal-web/css/ddm_form.css") %>" rel="stylesheet" />
+</liferay-util:html-top>
+
 <aui:form action="<%= editDDMStructureURL.toString() %>" cssClass="edit-article-form" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

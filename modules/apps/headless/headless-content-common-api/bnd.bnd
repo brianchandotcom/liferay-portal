@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless Content Common API
+Bundle-SymbolicName: com.liferay.headless.content.common.api
+Bundle-Version: 1.0.0

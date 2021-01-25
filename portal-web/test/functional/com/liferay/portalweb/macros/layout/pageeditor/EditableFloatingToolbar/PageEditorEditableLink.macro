@@ -44,13 +44,20 @@ definition {
 	}
 
 	macro mapURLToAsset {
-		Variables.assertDefined(parameterList = "${entryTitle},${field},${navItem}");
-
 		PageEditorEditableLink._gotoFromContentField();
 
-		PageEditorEditableLink._selectContent(
-			entryTitle = "${entryTitle}",
-			navItem = "${navItem}");
+		if (isSet(entryTitle)) {
+			PageEditorEditableLink._selectContent(
+				entryTitle = "${entryTitle}",
+				navItem = "${navItem}");
+		}
+
+		if (isSet(source)) {
+			Select(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${source}");
+		}
 
 		PageEditorEditableLink._selectField(field = "${field}");
 	}

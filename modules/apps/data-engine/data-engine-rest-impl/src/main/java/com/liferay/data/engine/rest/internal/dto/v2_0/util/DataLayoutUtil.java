@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.spi.converter.model.SPIDDMFormRule;
 import com.liferay.dynamic.data.mapping.util.SettingsDDMFormFieldsUtil;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -84,6 +84,7 @@ public class DataLayoutUtil {
 	}
 
 	public static DataLayout toDataLayout(
+			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			DDMFormLayout ddmFormLayout,
 			SPIDDMFormRuleConverter spiDDMFormRuleConverter)
 		throws Exception {
@@ -91,7 +92,8 @@ public class DataLayoutUtil {
 		return new DataLayout() {
 			{
 				dataLayoutFields = _toDataLayoutFields(
-					ddmFormLayout.getDDMFormFields());
+					ddmFormLayout.getDDMFormFields(),
+					ddmFormFieldTypeServicesTracker);
 				dataLayoutPages = _toDataLayoutPages(
 					ddmFormLayout.getDDMFormLayoutPages());
 				dataRules = _toDataRules(
@@ -102,6 +104,7 @@ public class DataLayoutUtil {
 	}
 
 	public static DataLayout toDataLayout(
+			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			DDMStructureLayout ddmStructureLayout,
 			SPIDDMFormRuleConverter spiDDMFormRuleConverter)
 		throws Exception {
@@ -111,6 +114,7 @@ public class DataLayoutUtil {
 		}
 
 		DataLayout dataLayout = toDataLayout(
+			ddmFormFieldTypeServicesTracker,
 			ddmStructureLayout.getDDMFormLayout(), spiDDMFormRuleConverter);
 
 		dataLayout.setDateCreated(ddmStructureLayout.getCreateDate());
@@ -208,16 +212,43 @@ public class DataLayoutUtil {
 	}
 
 	private static Map<String, Object> _toDataLayoutFields(
-		List<DDMFormField> ddmFormFields) {
+		List<DDMFormField> ddmFormFields,
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		Map<String, Object> dataLayoutFields = new HashMap<>();
 
 		ddmFormFields.forEach(
-			ddmFormField -> dataLayoutFields.put(
-				ddmFormField.getName(),
-				HashMapBuilder.<String, Object>put(
-					"required", ddmFormField.isRequired()
-				).build()));
+			ddmFormField -> {
+				Map<String, DDMFormField> settingsDDMFormFieldsMap =
+					SettingsDDMFormFieldsUtil.getSettingsDDMFormFields(
+						ddmFormFieldTypeServicesTracker,
+						ddmFormField.getType());
+
+				List<DDMFormField> visualProperties = ListUtil.filter(
+					new ArrayList<>(settingsDDMFormFieldsMap.values()),
+					DDMFormField::isVisualProperty);
+
+				Map<String, Object> properties = new HashMap<>();
+
+				visualProperties.forEach(
+					visualProperty -> {
+						if (visualProperty.isLocalizable()) {
+							properties.put(
+								visualProperty.getName(),
+								LocalizedValueUtil.toLocalizedValuesMap(
+									(LocalizedValue)ddmFormField.getProperty(
+										visualProperty.getName())));
+						}
+						else {
+							properties.put(
+								visualProperty.getName(),
+								ddmFormField.getProperty(
+									visualProperty.getName()));
+						}
+					});
+
+				dataLayoutFields.put(ddmFormField.getName(), properties);
+			});
 
 		return dataLayoutFields;
 	}

@@ -1079,6 +1079,7 @@ public class DataDefinitionResourceImpl
 					ddmStructureLayoutId);
 
 			DataLayout dataLayout = DataLayoutUtil.toDataLayout(
+				_ddmFormFieldTypeServicesTracker,
 				ddmStructureLayout.getDDMFormLayout(),
 				_spiDDMFormRuleConverter);
 

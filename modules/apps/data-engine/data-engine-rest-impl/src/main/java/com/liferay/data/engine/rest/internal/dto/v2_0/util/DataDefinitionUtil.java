@@ -87,6 +87,7 @@ public class DataDefinitionUtil {
 				dateCreated = ddmStructure.getCreateDate();
 				dateModified = ddmStructure.getModifiedDate();
 				defaultDataLayout = DataLayoutUtil.toDataLayout(
+					ddmFormFieldTypeServicesTracker,
 					ddmStructure.fetchDDMStructureLayout(),
 					spiDDMFormRuleConverter);
 				defaultLanguageId = LanguageUtil.getLanguageId(

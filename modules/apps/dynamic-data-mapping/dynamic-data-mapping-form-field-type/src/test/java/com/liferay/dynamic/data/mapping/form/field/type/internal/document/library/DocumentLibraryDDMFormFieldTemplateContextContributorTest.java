@@ -142,52 +142,60 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetParametersShouldContainAllowGuestUsers() {
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
 
 		ddmFormField.setProperty("allowGuestUsers", true);
 
-		Map<String, Object> parameters = spy.getParameters(
-			ddmFormField, createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals(true, parameters.get("allowGuestUsers"));
 	}
 
 	@Test
 	public void testGetParametersShouldContainFileEntryURL() {
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				mockThemeDisplay());
 
-		Map<String, Object> parameters = spy.getParameters(
-			new DDMFormField("field", "document_library"),
-			createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("fileEntryURL"));
 	}
 
 	@Test
 	public void testGetParametersShouldContainFormsFolderId() {
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				mockThemeDisplay());
 
-		Map<String, Object> parameters = spy.getParameters(
-			new DDMFormField("field", "document_library"),
-			createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals(_FORMS_FOLDER_ID, parameters.get("folderId"));
 	}
 
 	@Test
 	public void testGetParametersShouldContainGuestUploadURL() {
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				mockThemeDisplay());
 
-		Map<String, Object> parameters = spy.getParameters(
-			new DDMFormField("field", "document_library"),
-			createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				createDDMFormFieldRenderingContext());
 
 		String guestUploadURL = String.valueOf(
 			parameters.get("guestUploadURL"));
@@ -219,28 +227,32 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			Boolean.TRUE
 		);
 
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			themeDisplay);
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				themeDisplay);
 
-		Map<String, Object> parameters = spy.getParameters(
-			new DDMFormField("field", "document_library"),
-			createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("itemSelectorURL"));
 	}
 
 	@Test
 	public void testGetParametersShouldContainMaximumRepetitions() {
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
 
 		ddmFormField.setProperty("maximumRepetitions", 8);
 
-		Map<String, Object> parameters = spy.getParameters(
-			ddmFormField, createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals(8, parameters.get("maximumRepetitions"));
 	}
@@ -255,20 +267,23 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			Boolean.TRUE
 		);
 
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			themeDisplay);
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				themeDisplay);
 
-		Map<String, Object> parameters = spy.getParameters(
-			new DDMFormField("field", "document_library"),
-			createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals(_PRIVATE_FOLDER_ID, parameters.get("folderId"));
 	}
 
 	@Test
 	public void testGetParametersShouldUseExistingGuestUploadURL() {
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
@@ -277,8 +292,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		ddmFormField.setProperty("guestUploadURL", expectedGuestUploadURL);
 
-		Map<String, Object> parameters = spy.getParameters(
-			ddmFormField, createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals(
 			expectedGuestUploadURL,
@@ -287,12 +303,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetParametersShouldUseFileEntryTitle() {
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			mockThemeDisplay());
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				mockThemeDisplay());
 
-		Map<String, Object> parameters = spy.getParameters(
-			new DDMFormField("field", "document_library"),
-			createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				createDDMFormFieldRenderingContext());
 
 		Assert.assertEquals("New Title", parameters.get("fileEntryTitle"));
 	}
@@ -315,12 +333,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			Boolean.TRUE
 		);
 
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy(
-			themeDisplay);
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
+				themeDisplay);
 
-		Map<String, Object> parameters = spy.getParameters(
-			new DDMFormField("field", "document_library"),
-			createDDMFormFieldRenderingContext());
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("itemSelectorURL"));
 	}
@@ -350,15 +370,16 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	protected DocumentLibraryDDMFormFieldTemplateContextContributor createSpy(
 		ThemeDisplay themeDisplay) {
 
-		DocumentLibraryDDMFormFieldTemplateContextContributor spy =
-			PowerMockito.spy(
-				_documentLibraryDDMFormFieldTemplateContextContributor);
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor =
+				PowerMockito.spy(
+					_documentLibraryDDMFormFieldTemplateContextContributor);
 
 		PowerMockitoStubber powerMockitoStubber = PowerMockito.doReturn(
 			_resourceBundle);
 
 		powerMockitoStubber.when(
-			spy
+			documentLibraryDDMFormFieldTemplateContextContributor
 		).getResourceBundle(
 			Matchers.any(Locale.class)
 		);
@@ -366,12 +387,12 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		powerMockitoStubber = PowerMockito.doReturn(themeDisplay);
 
 		powerMockitoStubber.when(
-			spy
+			documentLibraryDDMFormFieldTemplateContextContributor
 		).getThemeDisplay(
 			Matchers.any(HttpServletRequest.class)
 		);
 
-		return spy;
+		return documentLibraryDDMFormFieldTemplateContextContributor;
 	}
 
 	protected void mockDDMFormPortletItemSelector() {

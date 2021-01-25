@@ -234,6 +234,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILE_UNEMPTY</td>
+	<td>//input[contains(@class,'success-field')][@type='file']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRIENDLY_URL</td>
 	<td>//input[contains(@id,'friendlyURL')]</td>
 	<td></td>

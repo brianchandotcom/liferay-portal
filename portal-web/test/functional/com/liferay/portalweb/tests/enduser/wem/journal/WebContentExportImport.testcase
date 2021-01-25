@@ -455,9 +455,8 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		LAR.importPortlet(
-			importValidationMissingItem = "Linked Page",
+			importValidationMissingItem = "Test Page",
 			larFileName = "WebContent_portlet.lar",
-			linkedPageName = "Test Page",
 			siteName = "Site Name");
 	}
 

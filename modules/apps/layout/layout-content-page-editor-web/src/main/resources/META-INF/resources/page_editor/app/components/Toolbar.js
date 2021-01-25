@@ -179,7 +179,7 @@ function ToolbarBody() {
 			onClick={deselectItem}
 			ref={dropClearRef}
 		>
-			<ul className="navbar-nav responsive-mode" onClick={deselectItem}>
+			<ul className="navbar-nav start" onClick={deselectItem}>
 				{config.toolbarPlugins.map(
 					({loadingPlaceholder, pluginEntryPoint}) => {
 						return (
@@ -221,6 +221,9 @@ function ToolbarBody() {
 							/>
 						</li>
 					)}
+			</ul>
+
+			<ul className="middle navbar-nav" onClick={deselectItem}>
 				<li className="nav-item">
 					<ViewportSizeSelector
 						onSizeSelected={(size) => {
@@ -233,7 +236,7 @@ function ToolbarBody() {
 				</li>
 			</ul>
 
-			<ul className="navbar-nav" onClick={deselectItem}>
+			<ul className="end navbar-nav" onClick={deselectItem}>
 				<NetworkStatusBar {...network} />
 				<Undo onRedo={onRedo} onUndo={onUndo} />
 

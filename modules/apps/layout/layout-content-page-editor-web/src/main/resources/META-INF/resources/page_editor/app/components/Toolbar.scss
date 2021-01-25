@@ -12,15 +12,6 @@
 	&--master-layout {
 		background-color: $primary-l3;
 		border-bottom: 1px solid $primary-l1;
-
-		.responsive-mode.navbar-nav:first-child .nav-item:last-child {
-			@include media-breakpoint-up(xl) {
-				left: 50%;
-				margin-left: 0;
-				position: absolute;
-				transform: translateX(-50%);
-			}
-		}
 	}
 
 	.btn-secondary:active,
@@ -31,57 +22,53 @@
 	}
 
 	& > .container-fluid {
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: flex-start;
 		padding: 0;
 		white-space: nowrap;
 
-		@include media-breakpoint-up(xl) {
-			flex-direction: row;
-		}
-
 		> .navbar-nav {
-			order: 2;
 			padding: 12px;
 
-			@include media-breakpoint-up(xl) {
-				padding-bottom: 16px;
-				padding-top: 16px;
-			}
-			&:first-child {
+			&.start {
 				align-self: flex-start;
-				flex: 1;
 				order: 1;
-				padding-right: 0;
+			}
 
-				@include media-breakpoint-up(xl) {
+			&.middle {
+				justify-content: flex-start;
+				order: 2;
+			}
+
+			&.end {
+				flex-basis: 100%;
+				justify-content: flex-end;
+				order: 0;
+				border-bottom: $toolbarBorderWidth solid
+					fade_out($secondary-l2, 0.5);
+			}
+		}
+
+		@include media-breakpoint-up(xl) {
+			flex-wrap: nowrap;
+
+			> .navbar-nav {
+				padding: 16px 12px;
+
+				&.start {
 					order: 0;
 				}
 
-				&.responsive-mode .nav-item:last-child {
-					margin-left: 16px;
-					@include media-breakpoint-up(xl) {
-						left: 50%;
-						margin-left: 0;
-						position: absolute;
-						transform: translateX(-50%);
-					}
-					.btn.active .lexicon-icon {
-						fill: $dark;
-					}
+				&.middle {
+					flex: 1;
+					justify-content: center;
+					order: 1;
 				}
-			}
 
-			&:last-child {
-				border-bottom: $toolbarBorderWidth solid
-					fade_out($secondary-l2, 0.5);
-				justify-content: flex-end;
-				order: 0;
-				padding-left: 4px;
-				width: 100%;
-
-				@include media-breakpoint-up(xl) {
-					border-bottom: 0;
-					width: auto;
+				&.end {
+					border-bottom: none;
+					flex-basis: auto;
+					order: 2;
 				}
 			}
 		}

@@ -19,9 +19,7 @@
 <%
 DLInfoPanelDisplayContext dlInfoPanelDisplayContext = new DLInfoPanelDisplayContext(request);
 
-long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"), ParamUtil.getLong(request, "repositoryId"));
-
-request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
+request.setAttribute("view.jsp-repositoryId", String.valueOf(dlInfoPanelDisplayContext.getRepositoryId()));
 
 List<FileEntry> fileEntries = dlInfoPanelDisplayContext.getFileEntryList();
 List<FileShortcut> fileShortcuts = dlInfoPanelDisplayContext.getFileShortcutList();
@@ -80,17 +78,8 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="num-of-items" />
 						</dt>
-
-						<%
-						long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-						if (folder != null) {
-							folderId = folder.getFolderId();
-						}
-						%>
-
 						<dd class="sidebar-dd">
-							<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, true) %>
+							<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(dlInfoPanelDisplayContext.getRepositoryId(), dlInfoPanelDisplayContext.getFolderId(folder), WorkflowConstants.STATUS_APPROVED, true) %>
 						</dd>
 
 						<c:if test="<%= folder != null %>">
@@ -117,17 +106,8 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
 		<%
 		FileEntry fileEntry = fileEntries.get(0);
 
-		FileVersion fileVersion = null;
-
-		if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-			fileVersion = fileEntry.getLatestFileVersion();
-		}
-		else {
-			fileVersion = fileEntry.getFileVersion();
-		}
-
 		request.setAttribute("info_panel.jsp-fileEntry", fileEntry);
-		request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
+		request.setAttribute("info_panel.jsp-fileVersion", dlInfoPanelDisplayContext.getFileVersion(fileEntry));
 		%>
 
 		<liferay-util:include page="/document_library/info_panel_file_entry.jsp" servletContext="<%= application %>" />
@@ -183,18 +163,7 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
 						</dd>
 
 						<%
-						Group fileEntryGroup = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
-
-						if (fileEntryGroup.isSite()) {
-							while ((fileEntryGroup != null) && !fileEntryGroup.isSite()) {
-								fileEntryGroup = fileEntryGroup.getParentGroup();
-							}
-						}
-						else if (fileEntryGroup.isDepot()) {
-							while ((fileEntryGroup != null) && !fileEntryGroup.isDepot()) {
-								fileEntryGroup = fileEntryGroup.getParentGroup();
-							}
-						}
+						Group fileEntryGroup = dlInfoPanelDisplayContext.getFileEntryGroup(fileEntry.getGroupId());
 						%>
 
 						<c:if test="<%= fileEntryGroup != null %>">
@@ -249,18 +218,11 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
 						</dd>
 
 						<c:if test="<%= fileEntry.getModel() instanceof DLFileEntry %>">
-
-							<%
-							DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-							DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
-							%>
-
 							<dt class="sidebar-dt">
 								<liferay-ui:message key="document-type" />
 							</dt>
 							<dd class="sidebar-dd">
-								<%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %>
+								<%= dlInfoPanelDisplayContext.getFileEntryTypeName(fileEntry, locale) %>
 							</dd>
 						</c:if>
 

@@ -14,19 +14,31 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,6 +49,28 @@ public class DLInfoPanelDisplayContext {
 
 	public DLInfoPanelDisplayContext(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_permissionChecker = _themeDisplay.getPermissionChecker();
+	}
+
+	public Group getFileEntryGroup(long groupId) throws PortalException {
+		Group fileEntryGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (fileEntryGroup.isSite()) {
+			while ((fileEntryGroup != null) && !fileEntryGroup.isSite()) {
+				fileEntryGroup = fileEntryGroup.getParentGroup();
+			}
+		}
+		else if (fileEntryGroup.isDepot()) {
+			while ((fileEntryGroup != null) && !fileEntryGroup.isDepot()) {
+				fileEntryGroup = fileEntryGroup.getParentGroup();
+			}
+		}
+
+		return fileEntryGroup;
 	}
 
 	public List<FileEntry> getFileEntryList() {
@@ -50,6 +84,16 @@ public class DLInfoPanelDisplayContext {
 		return _fileEntries;
 	}
 
+	public String getFileEntryTypeName(FileEntry fileEntry, Locale locale)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		DLFileEntryType dlFileEntryType = dlFileEntry.getDLFileEntryType();
+
+		return HtmlUtil.escape(dlFileEntryType.getName(locale));
+	}
+
 	public List<FileShortcut> getFileShortcutList() {
 		if (_fileShortcuts != null) {
 			return _fileShortcuts;
@@ -59,6 +103,31 @@ public class DLInfoPanelDisplayContext {
 			WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUTS);
 
 		return _fileShortcuts;
+	}
+
+	public FileVersion getFileVersion(FileEntry fileEntry)
+		throws PortalException {
+
+		User user = _themeDisplay.getUser();
+
+		if ((user.getUserId() == fileEntry.getUserId()) ||
+			_permissionChecker.isContentReviewer(
+				user.getCompanyId(), _themeDisplay.getScopeGroupId()) ||
+			DLFileEntryPermission.contains(
+				_permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+
+			return fileEntry.getLatestFileVersion();
+		}
+
+		return fileEntry.getFileVersion();
+	}
+
+	public long getFolderId(Folder folder) {
+		if (folder != null) {
+			return folder.getFolderId();
+		}
+
+		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
 	public List<Folder> getFolderList() throws PortalException {
@@ -90,9 +159,17 @@ public class DLInfoPanelDisplayContext {
 		return _folders;
 	}
 
+	public long getRepositoryId() {
+		return GetterUtil.getLong(
+			(String)_httpServletRequest.getAttribute("view.jsp-repositoryId"),
+			ParamUtil.getLong(_httpServletRequest, "repositoryId"));
+	}
+
 	private List<FileEntry> _fileEntries;
 	private List<FileShortcut> _fileShortcuts;
 	private List<Folder> _folders;
 	private final HttpServletRequest _httpServletRequest;
+	private final PermissionChecker _permissionChecker;
+	private final ThemeDisplay _themeDisplay;
 
 }

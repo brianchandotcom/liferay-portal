@@ -125,7 +125,7 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "ddm-image"
+			"type": "image"
 		},
 		{
 			"dataType": "integer",
@@ -146,7 +146,7 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "ddm-integer"
+			"type": "ddm-number"
 		}
 	],
 	"successPage": {

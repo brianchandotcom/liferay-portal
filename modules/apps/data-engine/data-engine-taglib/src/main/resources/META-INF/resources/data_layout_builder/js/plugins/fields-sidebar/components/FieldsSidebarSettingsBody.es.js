@@ -70,7 +70,11 @@ const getColumn = ({customFields = {}, ...otherProps}) => ({
 							data-field-name={fieldName}
 							key={index}
 						>
-							<CustomField {...otherProps} field={field}>
+							<CustomField
+								{...otherProps}
+								field={field}
+								index={index}
+							>
 								{children}
 							</CustomField>
 						</div>

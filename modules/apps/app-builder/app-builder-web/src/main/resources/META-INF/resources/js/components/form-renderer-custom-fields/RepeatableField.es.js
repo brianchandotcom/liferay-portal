@@ -12,10 +12,18 @@
  * details.
  */
 
-import RepeatableField from '../components/form-renderer-custom-fields/RepeatableField.es';
-import RequiredField from '../components/form-renderer-custom-fields/RequiredField.es';
+import React, {useContext} from 'react';
 
-export default {
-	repeatable: RepeatableField,
-	required: RequiredField,
+export default ({AppContext, children, field, index}) => {
+	const [{focusedField}] = useContext(AppContext);
+
+	/**
+	 * Repeatable Behavior is not implemented to App Builder FieldSet yet !
+	 */
+
+	if (focusedField.type === 'fieldset') {
+		return <></>;
+	}
+
+	return children({field, index});
 };

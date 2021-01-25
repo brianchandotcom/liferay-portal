@@ -47,7 +47,6 @@
 		<clay:dropdown-menu
 			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			label="<%= userSticker %>"
-			showToggleIcon="<%= false %>"
 		/>
 	</clay:col>
 
@@ -64,10 +63,8 @@
 		md="2"
 	>
 		<clay:dropdown-menu
-			buttonLabel="Done"
 			dropdownItems="<%= dropdownsDisplayContext.getInputDropdownItems() %>"
-			label="Inputs"
-			searchable="<%= true %>"
+			label="Done"
 		/>
 	</clay:col>
 
@@ -86,7 +83,6 @@
 	>
 		<clay:dropdown-menu
 			dropdownItems="<%= dropdownsDisplayContext.getIconDropdownItems() %>"
-			itemsIconAlignment="left"
 			label="Icons"
 		/>
 	</clay:col>
@@ -97,11 +93,10 @@
 		md="4"
 	>
 		<clay:dropdown-menu
+			cssClass="btn-outline-borderless"
+			displayType="secondary"
 			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
-			itemsIconAlignment="left"
 			label="Secondary Borderless"
-			style="secondary"
-			triggerCssClasses="btn-outline-borderless"
 		/>
 	</clay:col>
 
@@ -117,11 +112,11 @@
 		md="2"
 	>
 		<clay:dropdown-actions
-			buttonLabel="More"
-			buttonStyle="secondary"
 			caption="Showing 4 of 32 Options"
+			displayType="secondary"
 			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			helpText="You can customize this menu or see all you have by pressing \"more\"."
+			label="More"
 		/>
 	</clay:col>
 
@@ -129,12 +124,12 @@
 		md="2"
 	>
 		<clay:dropdown-actions
-			buttonLabel="More"
-			buttonStyle="secondary"
 			caption="Showing 4 of 32 Options"
+			cssClass="btn-outline-borderless"
+			displayType="secondary"
 			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			helpText="You can customize this menu or see all you have by pressing \"more\"."
-			triggerCssClasses="btn-outline-borderless"
+			label="More"
 		/>
 	</clay:col>
 </clay:row>

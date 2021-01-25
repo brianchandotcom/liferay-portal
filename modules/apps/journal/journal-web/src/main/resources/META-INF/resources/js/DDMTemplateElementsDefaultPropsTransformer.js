@@ -12,18 +12,43 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {openModal} from 'frontend-js-web';
 
-class OrganizationDropdownDefaultEventHandler extends DefaultEventHandler {
-	deleteGroupOrganizations(itemData) {
+const ACTIONS = {
+	deleteDDMTemplate(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(document.hrefFm, itemData.deleteGroupOrganizationsURL);
+			submitForm(document.hrefFm, itemData.deleteDDMTemplateURL);
 		}
-	}
-}
+	},
 
-export default OrganizationDropdownDefaultEventHandler;
+	permissionsDDMTemplate(itemData) {
+		openModal({
+			title: Liferay.Language.get('permissions'),
+			url: itemData.permissionsDDMTemplateURL,
+		});
+	},
+};
+
+export default function propsTransformer({items, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
+
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data);
+					}
+				},
+			};
+		}),
+	};
+}

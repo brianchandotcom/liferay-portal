@@ -18,8 +18,8 @@
 
 <clay:button
 	borderless="<%= true %>"
+	cssClass="component-action icon-view"
 	displayType="secondary"
-	elementClasses="component-action icon-view"
 	icon="view"
 	monospaced="<%= true %>"
 />

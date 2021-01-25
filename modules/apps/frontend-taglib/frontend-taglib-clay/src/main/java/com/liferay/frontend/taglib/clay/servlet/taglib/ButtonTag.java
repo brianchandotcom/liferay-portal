@@ -39,23 +39,17 @@ public class ButtonTag extends BaseContainerTag {
 
 		setContainerElement("button");
 
-		if (Validator.isNotNull(_ariaLabel)) {
-			setDynamicAttribute(StringPool.BLANK, "aria-label", _ariaLabel);
-		}
+		Map<String, Object> dynamicAttributes = getDynamicAttributes();
 
-		if (_disabled) {
-			setDynamicAttribute(StringPool.BLANK, "disabled", _disabled);
-		}
+		if (dynamicAttributes.get("title") != null) {
+			String title = (String)dynamicAttributes.get("title");
 
-		if (Validator.isNotNull(_title)) {
 			setDynamicAttribute(
 				StringPool.BLANK, "title",
 				LanguageUtil.get(
 					TagResourceBundleUtil.getResourceBundle(pageContext),
-					_title));
+					title));
 		}
-
-		setDynamicAttribute(StringPool.BLANK, "type", _type);
 
 		return super.doStartTag();
 	}
@@ -64,28 +58,12 @@ public class ButtonTag extends BaseContainerTag {
 		return _alert;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getAriaLabel() {
-		return _ariaLabel;
-	}
-
 	public boolean getBlock() {
 		return _block;
 	}
 
 	public boolean getBorderless() {
 		return _borderless;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean getDisabled() {
-		return _disabled;
 	}
 
 	public String getDisplayType() {
@@ -108,57 +86,12 @@ public class ButtonTag extends BaseContainerTag {
 		return _outline;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getLarge()}
-	 */
-	@Deprecated
-	public String getSize() {
-		if (_small) {
-			return "sm";
-		}
-
-		return null;
-	}
-
 	public boolean getSmall() {
 		return _small;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getDisplayType()}
-	 */
-	@Deprecated
-	public String getStyle() {
-		return getDisplayType();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getTitle() {
-		return _title;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getType() {
-		return _type;
-	}
-
 	public void setAlert(boolean alert) {
 		_alert = alert;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setAriaLabel(String ariaLabel) {
-		_ariaLabel = ariaLabel;
 	}
 
 	public void setBlock(boolean block) {
@@ -167,14 +100,6 @@ public class ButtonTag extends BaseContainerTag {
 
 	public void setBorderless(boolean borderless) {
 		_borderless = borderless;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setDisabled(boolean disabled) {
-		_disabled = disabled;
 	}
 
 	public void setDisplayType(String displayType) {
@@ -197,42 +122,8 @@ public class ButtonTag extends BaseContainerTag {
 		_outline = outline;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setLarge(boolean)}
-	 */
-	@Deprecated
-	public void setSize(String size) {
-		setSmall(size.equals("sm"));
-	}
-
 	public void setSmall(boolean small) {
 		_small = small;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setDisplayType(String)}
-	 */
-	@Deprecated
-	public void setStyle(String style) {
-		setDisplayType(style);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setType(String type) {
-		_type = type;
 	}
 
 	@Override
@@ -240,18 +131,14 @@ public class ButtonTag extends BaseContainerTag {
 		super.cleanUp();
 
 		_alert = false;
-		_ariaLabel = null;
 		_block = false;
 		_borderless = false;
-		_disabled = false;
 		_displayType = "primary";
 		_icon = null;
 		_label = null;
 		_monospaced = false;
 		_outline = false;
 		_small = false;
-		_title = null;
-		_type = "button";
 	}
 
 	@Override
@@ -281,7 +168,6 @@ public class ButtonTag extends BaseContainerTag {
 		props.put("monospaced", _monospaced);
 		props.put("outline", _outline);
 		props.put("small", _small);
-		props.put("type", _type);
 
 		return super.prepareProps(props);
 	}
@@ -373,17 +259,13 @@ public class ButtonTag extends BaseContainerTag {
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:button:";
 
 	private boolean _alert;
-	private String _ariaLabel;
 	private boolean _block;
 	private boolean _borderless;
-	private boolean _disabled;
 	private String _displayType = "primary";
 	private String _icon;
 	private String _label;
 	private boolean _monospaced;
 	private boolean _outline;
 	private boolean _small;
-	private String _title;
-	private String _type = "button";
 
 }

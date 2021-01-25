@@ -30,7 +30,7 @@
 	data-custom-property="customValue"
 	href="#"
 	label="link text"
-	target="blank"
+	target="_blank"
 />
 
 <clay:link
@@ -38,6 +38,6 @@
 	href="#"
 	label="a button link"
 	rel="nofollow"
-	target="blank"
+	target="_blank"
 	type="button"
 />

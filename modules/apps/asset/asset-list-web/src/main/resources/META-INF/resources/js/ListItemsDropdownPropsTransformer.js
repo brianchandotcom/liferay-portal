@@ -12,31 +12,42 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-import {Config} from 'metal-state';
-
-class ListItemsDropdownDefaultEventHandler extends DefaultEventHandler {
+const ACTIONS = {
 	editContent(itemData) {
-		this._navigate(itemData.editContentURL);
-	}
+		this.navigate(itemData.editContentURL);
+	},
 
 	editDisplayPageTemplate(itemData) {
-		this._navigate(itemData.editDisplayPageTemplateURL);
-	}
+		this.navigate(itemData.editDisplayPageTemplateURL);
+	},
 
-	viewDisplayPage(itemData) {
-		this._navigate(itemData.viewDisplayPageURL);
-	}
-
-	_navigate(url) {
+	navigate(url) {
 		const openerWindow = Liferay.Util.getTop();
 
 		openerWindow.Liferay.Util.navigate(url);
-	}
-}
+	},
 
-ListItemsDropdownDefaultEventHandler.STATE = {
-	spritemap: Config.string(),
+	viewDisplayPage(itemData) {
+		this.navigate(itemData.viewDisplayPageURL);
+	},
 };
 
-export default ListItemsDropdownDefaultEventHandler;
+export default function propsTransformer({items, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
+
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data);
+					}
+				},
+			};
+		}),
+	};
+}

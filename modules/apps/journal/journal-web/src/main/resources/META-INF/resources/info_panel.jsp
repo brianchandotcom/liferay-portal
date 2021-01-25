@@ -37,6 +37,8 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		folders.add(null);
 	}
 }
+
+Map<String, Object> componentContext = journalDisplayContext.getComponentContext();
 %>
 
 <c:choose>
@@ -69,8 +71,13 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 						</li>
 						<li class="autofit-col">
 							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"trashEnabled", componentContext.get("trashEnabled")
+									).build()
+								%>'
 								dropdownItems="<%= journalDisplayContext.getFolderInfoPanelDropdownItems(folder) %>"
+								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>
 						</li>
 					</ul>
@@ -139,8 +146,13 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 						</li>
 						<li class="autofit-col">
 							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"trashEnabled", componentContext.get("trashEnabled")
+									).build()
+								%>'
 								dropdownItems="<%= journalDisplayContext.getArticleInfoPanelDropdownItems(article) %>"
+								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>
 						</li>
 					</ul>
@@ -283,9 +295,3 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		</div>
 	</c:otherwise>
 </c:choose>
-
-<liferay-frontend:component
-	componentId="<%= JournalWebConstants.JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-	context="<%= journalDisplayContext.getComponentContext() %>"
-	module="js/ElementsDefaultEventHandler.es"
-/>

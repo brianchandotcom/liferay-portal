@@ -91,8 +91,8 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 									<liferay-ui:search-container-column-text>
 										<clay:dropdown-actions
-											defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
 											dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(modelClassName, curTrashedModel.getTrashEntryClassPK()) %>"
+											propsTransformer="js/EntriesPropsTransformer"
 										/>
 									</liferay-ui:search-container-column-text>
 								</c:when>
@@ -131,8 +131,8 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 									<liferay-ui:search-container-column-text>
 										<clay:dropdown-actions
-											defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
 											dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(modelClassName, curTrashedModel.getTrashEntryClassPK()) %>"
+											propsTransformer="js/EntriesPropsTransformer"
 										/>
 									</liferay-ui:search-container-column-text>
 								</c:when>
@@ -171,8 +171,3 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 		</clay:container-fluid>
 	</c:otherwise>
 </c:choose>
-
-<liferay-frontend:component
-	componentId="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-	module="js/EntriesDefaultEventHandler.es"
-/>

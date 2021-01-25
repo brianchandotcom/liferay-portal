@@ -78,23 +78,6 @@ public class StickerTag extends BaseContainerTag {
 		return _size;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getSpritemap() {
-		return _spritemap;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getDisplayType()}
-	 */
-	@Deprecated
-	public String getStyle() {
-		return getDisplayType();
-	}
-
 	public void setDisplayType(String displayType) {
 		_displayType = displayType;
 	}
@@ -135,23 +118,6 @@ public class StickerTag extends BaseContainerTag {
 		_size = size;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSpritemap(String spritemap) {
-		_spritemap = spritemap;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setDisplayType(String)}
-	 */
-	@Deprecated
-	public void setStyle(String style) {
-		setDisplayType(style);
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -166,7 +132,6 @@ public class StickerTag extends BaseContainerTag {
 		_position = null;
 		_shape = "rounded";
 		_size = null;
-		_spritemap = null;
 	}
 
 	@Override
@@ -258,6 +223,5 @@ public class StickerTag extends BaseContainerTag {
 	private String _position;
 	private String _shape = "rounded";
 	private String _size;
-	private String _spritemap;
 
 }

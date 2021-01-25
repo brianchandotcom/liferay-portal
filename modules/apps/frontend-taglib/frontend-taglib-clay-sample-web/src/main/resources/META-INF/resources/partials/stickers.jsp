@@ -78,9 +78,9 @@
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
 
 			<clay:sticker
+				displayType="danger"
 				label="PDF"
 				position="top-left"
-				style="danger"
 			/>
 		</div>
 	</clay:col>
@@ -92,9 +92,9 @@
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
 
 			<clay:sticker
+				displayType="danger"
 				label="PDF"
 				position="bottom-left"
-				style="danger"
 			/>
 		</clay:col>
 	</div>
@@ -106,9 +106,9 @@
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
 
 			<clay:sticker
+				displayType="danger"
 				label="PDF"
 				position="top-right"
-				style="danger"
 			/>
 		</div>
 	</clay:col>
@@ -120,9 +120,9 @@
 			<img class="aspect-ratio-item-fluid" src="https://claycss.com/images/thumbnail_hot_air_ballon.jpg" />
 
 			<clay:sticker
+				displayType="danger"
 				label="PDF"
 				position="bottom-right"
-				style="danger"
 			/>
 		</div>
 	</clay:col>

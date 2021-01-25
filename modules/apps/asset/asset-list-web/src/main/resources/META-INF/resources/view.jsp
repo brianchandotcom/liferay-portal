@@ -124,8 +124,8 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
-							defaultEventHandler="assetEntryListDropdownDefaultEventHandler"
 							dropdownItems="<%= assetEntryListActionDropdownItems.getActionDropdownItems() %>"
+							propsTransformer="js/AssetEntryListDropdownDefaultPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</liferay-ui:search-container-row>
@@ -154,11 +154,6 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 		module="js/EmptyResultMessageDefaultEventHandler.es"
 	/>
 </c:if>
-
-<liferay-frontend:component
-	componentId="assetEntryListDropdownDefaultEventHandler"
-	module="js/AssetEntryListDropdownDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	componentId="<%= assetListManagementToolbarDisplayContext.getDefaultEventHandler() %>"

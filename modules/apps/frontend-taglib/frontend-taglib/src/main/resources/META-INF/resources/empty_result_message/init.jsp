@@ -20,10 +20,10 @@
 
 <%
 List<DropdownItem> actionDropdownItems = (List<DropdownItem>)request.getAttribute("liferay-frontend:empty-result-message:actionDropdownItems");
+Map<String, Object> additionalProps = (Map<String, Object>)request.getAttribute("liferay-frontend:empty-result-message:additionalProps");
 String animationTypeCssClass = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:animationTypeCssClass"));
 String buttonCssClass = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:buttonCssClass"));
-String componentId = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:componentId"));
-String defaultEventHandler = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:defaultEventHandler"));
+String buttonPropsTransformer = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:buttonPropsTransformer"));
 String description = (String)request.getAttribute("liferay-frontend:empty-result-message:description");
 String elementType = (String)request.getAttribute("liferay-frontend:empty-result-message:elementType");
 String propsTransformer = (String)request.getAttribute("liferay-frontend:empty-result-message:propsTransformer");

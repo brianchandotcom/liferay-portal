@@ -40,29 +40,12 @@ public class LabelTag extends BaseContainerTag {
 		return super.doStartTag();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getDismissible()}
-	 */
-	@Deprecated
-	public boolean getCloseable() {
-		return getDismissible();
-	}
-
 	public boolean getDismissible() {
 		return _dismissible;
 	}
 
 	public String getDisplayType() {
 		return _displayType;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getHref() {
-		return _href;
 	}
 
 	public String getLabel() {
@@ -73,66 +56,12 @@ public class LabelTag extends BaseContainerTag {
 		return _large;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getMessage() {
-		return _message;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getLarge()}
-	 */
-	@Deprecated
-	public String getSize() {
-		if (_large) {
-			return "lg";
-		}
-
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getSpritemap() {
-		return _spritemap;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getDisplayType()}
-	 */
-	@Deprecated
-	public String getStyle() {
-		return getDisplayType();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setDismissible(boolean)}
-	 */
-	@Deprecated
-	public void setCloseable(boolean closeable) {
-		setDismissible(closeable);
-	}
-
 	public void setDismissible(boolean dismissible) {
 		_dismissible = dismissible;
 	}
 
 	public void setDisplayType(String displayType) {
 		_displayType = displayType;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setHref(String href) {
-		_href = href;
 	}
 
 	public void setLabel(String label) {
@@ -143,51 +72,14 @@ public class LabelTag extends BaseContainerTag {
 		_large = large;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setMessage(String message) {
-		_message = message;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setLarge(boolean)}
-	 */
-	@Deprecated
-	public void setSize(String size) {
-		setLarge(size.equals("lg"));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSpritemap(String spritemap) {
-		_spritemap = spritemap;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setDisplayType(String)}
-	 */
-	@Deprecated
-	public void setStyle(String style) {
-		setDisplayType(style);
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_dismissible = false;
 		_displayType = "secondary";
-		_href = null;
 		_label = null;
 		_large = false;
-		_message = null;
-		_spritemap = null;
 	}
 
 	@Override
@@ -247,10 +139,7 @@ public class LabelTag extends BaseContainerTag {
 
 	private boolean _dismissible;
 	private String _displayType = "secondary";
-	private String _href;
 	private String _label;
 	private boolean _large;
-	private String _message;
-	private String _spritemap;
 
 }

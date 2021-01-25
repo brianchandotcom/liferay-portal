@@ -12,20 +12,19 @@
  * details.
  */
 
-import {DefaultEventHandler, openModal} from 'frontend-js-web';
-import {Config} from 'metal-state';
+import {navigate} from 'frontend-js-web';
 
-class InfoListProviderDropdownDefaultEventHandler extends DefaultEventHandler {
-	viewInfoListProviderItems(itemData) {
-		openModal({
-			title: itemData.infoListProviderTitle,
-			url: itemData.viewInfoListProviderItemsURL,
-		});
-	}
+export default function propsTransformer({additionalProps, ...props}) {
+	return {
+		...props,
+		onClick() {
+			const {editMasterLayoutURL, editableMasterLayout} = additionalProps;
+
+			if (!editableMasterLayout) {
+				return;
+			}
+
+			navigate(editMasterLayoutURL);
+		},
+	};
 }
-
-InfoListProviderDropdownDefaultEventHandler.STATE = {
-	spritemap: Config.string(),
-};
-
-export default InfoListProviderDropdownDefaultEventHandler;

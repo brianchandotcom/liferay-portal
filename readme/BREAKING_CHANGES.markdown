@@ -461,3 +461,23 @@ Remove `@spi.id@` from log4j xml definition file.
 The support of SPI has been removed by LPS-110758.
 
 ---------------------------------------
+### Deprecated attributes have been removed from the frontend-taglib-clay tags
+- **Date:** 2021-Jan-26
+- **JIRA Ticket:** [LPS-125256](https://issues.liferay.com/browse/LPS-125256)
+
+#### What changed?
+
+The deprecated attributes have been removed from the `frontend-taglib-clay`
+taglib.
+
+#### Who is affected?
+
+Anyone using deprecated attributes for `<clay:*>` tags.
+
+#### Why was this change made?
+
+The `frontend-taglib-clay` module is now using components from
+[`Clay v3`](https://github.com/liferay/clay), which doesn't support the
+previous attributes.
+
+---------------------------------------

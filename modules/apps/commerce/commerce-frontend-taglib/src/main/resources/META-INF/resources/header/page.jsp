@@ -159,11 +159,11 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						<div class="dropdown-menu dropdown-menu-right" id="<portlet:namespace />commerce-dropdown-assigned-to">
 							<c:if test="<%= !assignedToCurrentUser %>">
 								<clay:button
-									elementClasses="dropdown-item transition-link"
+									cssClass="dropdown-item transition-link"
+									displayType="secondary"
 									id='<%= liferayPortletResponse.getNamespace() + "assign-to-me-modal-opener" %>'
 									label='<%= LanguageUtil.get(request, "assign-to-me") %>'
-									size="lg"
-									style="secondary"
+									small="<%= false %>"
 								/>
 
 								<liferay-portlet:renderURL portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="assignToMeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -196,11 +196,11 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							</c:if>
 
 							<clay:button
-								elementClasses="dropdown-item transition-link"
+								cssClass="dropdown-item transition-link"
+								displayType="secondary"
 								id='<%= liferayPortletResponse.getNamespace() + "assign-to-modal-opener" %>'
 								label='<%= LanguageUtil.get(request, "assign-to-...") %>'
-								size="lg"
-								style="secondary"
+								small="<%= false %>"
 							/>
 
 							<liferay-portlet:renderURL portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="assignToURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -272,7 +272,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						%>
 
 							<clay:link
-								elementClasses="<%= buttonCssClasses %>"
+								cssClass="<%= buttonCssClasses %>"
 								href="<%= Validator.isNotNull(action.getHref()) ? action.getHref() : StringPool.POUND %>"
 								id="<%= actionId %>"
 								label="<%= LanguageUtil.get(request, action.getLabel()) %>"
@@ -328,7 +328,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 					<c:if test="<%= Validator.isNotNull(previewUrl) %>">
 						<clay:link
-							elementClasses="btn btn-outline-borderless btn-outline-secondary btn-sm text-primary"
+							cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm text-primary"
 							href="<%= previewUrl %>"
 							icon="shortcut"
 						/>

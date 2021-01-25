@@ -37,8 +37,8 @@
 		md="1"
 	>
 		<clay:badge
+			displayType="secondary"
 			label="87"
-			style="secondary"
 		/>
 
 		<div>Secondary</div>
@@ -48,8 +48,8 @@
 		md="1"
 	>
 		<clay:badge
+			displayType="info"
 			label="91"
-			style="info"
 		/>
 
 		<div>Info</div>
@@ -59,8 +59,8 @@
 		md="1"
 	>
 		<clay:badge
+			displayType="danger"
 			label="130"
-			style="danger"
 		/>
 
 		<div>Error</div>
@@ -70,8 +70,8 @@
 		md="1"
 	>
 		<clay:badge
+			displayType="success"
 			label="1111"
-			style="success"
 		/>
 
 		<div>Success</div>
@@ -81,8 +81,8 @@
 		md="1"
 	>
 		<clay:badge
+			displayType="warning"
 			label="21"
-			style="warning"
 		/>
 
 		<div>Warning</div>

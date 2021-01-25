@@ -285,10 +285,10 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 	<div class="commerce-cta is-visible">
 		<c:if test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
 			<clay:button
-				elementClasses="btn-fixed btn-secondary"
+				cssClass="btn-fixed btn-secondary"
+				displayType="secondary"
 				label='<%= LanguageUtil.get(request, "save") %>'
-				size="lg"
-				style="secondary"
+				small="<%= false %>"
 				type="submit"
 			/>
 		</c:if>

@@ -107,8 +107,8 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 			/>
 
 			<clay:button
+				cssClass="btn-cancel"
 				displayType="secondary"
-				elementClasses="btn-cancel"
 				label="cancel"
 			/>
 		</liferay-frontend:edit-form-footer>

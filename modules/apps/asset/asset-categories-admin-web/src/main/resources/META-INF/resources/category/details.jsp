@@ -94,7 +94,7 @@ renderResponse.setTitle(title);
 														<div class="input-group-item">
 															<c:if test="<%= parentCategory != null %>">
 																<clay:label
-																	closeable="<%= true %>"
+																	dismissible="<%= true %>"
 																	label="<%= parentCategory.getTitle(locale) %>"
 																/>
 

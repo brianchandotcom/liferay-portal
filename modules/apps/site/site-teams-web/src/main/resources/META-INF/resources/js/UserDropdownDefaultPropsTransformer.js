@@ -12,40 +12,34 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-
-class SiteDropdownDefaultEventHandler extends DefaultEventHandler {
-	activateSite(itemData) {
-		this._send(itemData.activateSiteURL);
-	}
-
-	deactivateSite(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-deactivate-this')
-			)
-		) {
-			this._send(itemData.deactivateSiteURL);
-		}
-	}
-
-	deleteSite(itemData) {
+const ACTIONS = {
+	deleteTeamUsers(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			this._send(itemData.deleteSiteURL);
+			submitForm(document.hrefFm, itemData.deleteTeamUsersURL);
 		}
-	}
+	},
+};
 
-	leaveSite(itemData) {
-		this._send(itemData.leaveSiteURL);
-	}
+export default function propsTransformer({items, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
 
-	_send(url) {
-		submitForm(document.hrefFm, url);
-	}
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data);
+					}
+				},
+			};
+		}),
+	};
 }
-
-export default SiteDropdownDefaultEventHandler;

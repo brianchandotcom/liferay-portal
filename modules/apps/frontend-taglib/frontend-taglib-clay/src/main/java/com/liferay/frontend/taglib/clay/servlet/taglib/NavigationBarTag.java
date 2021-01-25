@@ -47,14 +47,6 @@ public class NavigationBarTag extends BaseContainerTag {
 		return _navigationItems;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getSpritemap() {
-		return _spritemap;
-	}
-
 	public void setInverted(boolean inverted) {
 		_inverted = inverted;
 	}
@@ -63,21 +55,12 @@ public class NavigationBarTag extends BaseContainerTag {
 		_navigationItems = navigationItems;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSpritemap(String spritemap) {
-		_spritemap = spritemap;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_inverted = false;
 		_navigationItems = null;
-		_spritemap = null;
 	}
 
 	@Override
@@ -160,6 +143,5 @@ public class NavigationBarTag extends BaseContainerTag {
 
 	private boolean _inverted;
 	private List<NavigationItem> _navigationItems;
-	private String _spritemap;
 
 }

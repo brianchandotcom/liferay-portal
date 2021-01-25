@@ -48,40 +48,8 @@ public class IconTag extends BaseContainerTag {
 		return super.doStartTag();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean getMonospaced() {
-		return _monospaced;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getSpritemap() {
-		return _spritemap;
-	}
-
 	public String getSymbol() {
 		return _symbol;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setMonospaced(boolean monospaced) {
-		_monospaced = monospaced;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSpritemap(String spritemap) {
-		_spritemap = spritemap;
 	}
 
 	public void setSymbol(String symbol) {
@@ -92,7 +60,6 @@ public class IconTag extends BaseContainerTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_monospaced = false;
 		_spritemap = null;
 		_symbol = null;
 	}
@@ -122,7 +89,6 @@ public class IconTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:icon:";
 
-	private boolean _monospaced;
 	private String _spritemap;
 	private String _symbol;
 

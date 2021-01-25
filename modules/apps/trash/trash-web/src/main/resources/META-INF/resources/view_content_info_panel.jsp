@@ -44,8 +44,13 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 						%>
 
 						<clay:dropdown-actions
-							defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+							additionalProps='<%=
+								HashMapBuilder.<String, Object>put(
+									"portletNamespace", liferayPortletResponse.getNamespace()
+								).build()
+							%>'
 							dropdownItems="<%= trashContainerActionDropdownItemsProvider.getActionDropdownItems() %>"
+							propsTransformer="js/EntriesPropsTransformer"
 						/>
 					</li>
 				</ul>

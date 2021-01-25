@@ -112,8 +112,8 @@
 					<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 								dropdownItems="<%= dropdownItems %>"
+								propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:if>
@@ -173,8 +173,8 @@
 					<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 								dropdownItems="<%= dropdownItems %>"
+								propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:if>
@@ -188,8 +188,3 @@
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= MySitesWebKeys.SITES_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/SiteDropdownDefaultEventHandler.es"
-/>

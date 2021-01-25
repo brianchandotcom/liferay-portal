@@ -78,8 +78,8 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 
 								<liferay-ui:search-container-column-text>
 									<clay:dropdown-actions
-										defaultEventHandler="<%= PortletConfigurationWebKeys.ARCHIVED_SETUPS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 										dropdownItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems(archivedSettings) %>"
+										propsTransformer="js/ArchivedSetuptsDropdownDefaultPropsTransformer"
 									/>
 								</liferay-ui:search-container-column-text>
 							</c:when>
@@ -112,8 +112,8 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 
 								<liferay-ui:search-container-column-text>
 									<clay:dropdown-actions
-										defaultEventHandler="<%= PortletConfigurationWebKeys.ARCHIVED_SETUPS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 										dropdownItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems(archivedSettings) %>"
+										propsTransformer="js/ArchivedSetuptsDropdownDefaultPropsTransformer"
 									/>
 								</liferay-ui:search-container-column-text>
 							</c:when>
@@ -129,19 +129,6 @@ PortletConfigurationTemplatesManagementToolbarDisplayContext portletConfiguratio
 		</div>
 	</aui:form>
 </div>
-
-<aui:script require='<%= portletConfigurationTemplatesDisplayContext.getModuleName() + "/js/ArchivedSetuptsDropdownDefaultEventHandler.es as ArchivedSetuptsDropdownDefaultEventHandler" %>'>
-	Liferay.component(
-		'<%= PortletConfigurationWebKeys.ARCHIVED_SETUPS_DROPDOWN_DEFAULT_EVENT_HANDLER %>',
-		new ArchivedSetuptsDropdownDefaultEventHandler.default({
-			namespace: '<portlet:namespace />',
-		}),
-		{
-			destroyOnNavigate: true,
-			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
-		}
-	);
-</aui:script>
 
 <aui:script require='<%= portletConfigurationTemplatesDisplayContext.getModuleName() + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
 	Liferay.component(

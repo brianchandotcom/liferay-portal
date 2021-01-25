@@ -149,8 +149,8 @@ if (ddmStructure != null) {
 
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
-							defaultEventHandler="<%= JournalWebConstants.JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 							dropdownItems="<%= journalDDMTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
+							propsTransformer="js/DDMTemplateElementsDefaultPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>

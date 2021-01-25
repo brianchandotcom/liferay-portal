@@ -50,7 +50,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 				</c:when>
 				<c:when test="<%= Validator.isNotNull(actionIcon) %>">
 					<clay:link
-						elementClasses="btn btn-monospaced btn-primary btn-sm text-white"
+						cssClass="btn btn-monospaced btn-primary btn-sm text-white"
 						href='<%= (Validator.isNotNull(actionUrl) && Validator.isNull(actionTargetId)) ? actionUrl : "#" %>'
 						icon="<%= actionIcon %>"
 						id="<%= linkId %>"

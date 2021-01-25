@@ -55,11 +55,11 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 				<aui:input name="deleteCommerceOrderIds" type="hidden" />
 
 				<clay:button
+					cssClass="btn-fixed btn-primary"
 					disabled="<%= commerceAccount == null %>"
-					elementClasses="btn-fixed btn-primary"
+					displayType="primary"
 					label='<%= LanguageUtil.get(request, "add-order") %>'
-					size="lg"
-					style="primary"
+					small="<%= false %>"
 					type="submit"
 				/>
 			</aui:form>

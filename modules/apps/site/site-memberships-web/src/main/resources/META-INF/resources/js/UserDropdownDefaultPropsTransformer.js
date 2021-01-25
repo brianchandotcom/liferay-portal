@@ -12,18 +12,24 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {ACTIONS} from './actions';
 
-class UserDropdownDefaultEventHandler extends DefaultEventHandler {
-	deleteTeamUsers(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteTeamUsersURL);
-		}
-	}
+export default function propsTransformer({items, portletNamespace, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
+
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data, portletNamespace);
+					}
+				},
+			};
+		}),
+	};
 }
-
-export default UserDropdownDefaultEventHandler;

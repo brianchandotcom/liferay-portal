@@ -60,8 +60,13 @@
 			%>
 
 			<clay:dropdown-actions
-				defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+				additionalProps='<%=
+					HashMapBuilder.<String, Object>put(
+						"trashEnabled", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
+					).build()
+				%>'
 				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+				propsTransformer="blogs_admin/js/ElementsPropsTransformer"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
@@ -124,8 +129,13 @@
 			%>
 
 			<clay:dropdown-actions
-				defaultEventHandler="<%= BlogsWebConstants.BLOGS_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+				additionalProps='<%=
+					HashMapBuilder.<String, Object>put(
+						"trashEnabled", trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId())
+					).build()
+				%>'
 				dropdownItems="<%= blogsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
+				propsTransformer="blogs_admin/js/ElementsPropsTransformer"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>

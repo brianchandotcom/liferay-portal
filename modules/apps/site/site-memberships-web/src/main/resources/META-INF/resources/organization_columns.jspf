@@ -56,8 +56,8 @@
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
-					defaultEventHandler="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 					dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
+					propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
 				/>
 			</liferay-ui:search-container-column-text>
 		</c:if>
@@ -109,8 +109,8 @@
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
-					defaultEventHandler="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 					dropdownItems="<%= organizationActionDropdownItemsProvider.getActionDropdownItems() %>"
+					propsTransformer="js/OrganizationDropdownDefaultPropsTransformer"
 				/>
 			</liferay-ui:search-container-column-text>
 		</c:if>

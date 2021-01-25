@@ -62,8 +62,8 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
-					defaultEventHandler="infoListProviderDropdownDefaultEventHandler"
 					dropdownItems="<%= infoListProviderActionDropdownItems.getActionDropdownItems() %>"
+					propsTransformer="js/InfoListProviderDropdownDefaultPropsTransformer"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -74,8 +74,3 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 		/>
 	</liferay-ui:search-container>
 </div>
-
-<liferay-frontend:component
-	componentId="infoListProviderDropdownDefaultEventHandler"
-	module="js/InfoListProviderDropdownDefaultEventHandler.es"
-/>

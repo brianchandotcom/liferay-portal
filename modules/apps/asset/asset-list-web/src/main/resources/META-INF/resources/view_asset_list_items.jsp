@@ -87,8 +87,8 @@ ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDrop
 			<c:if test="<%= assetListItemsDisplayContext.isShowActions() %>">
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						defaultEventHandler="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 						dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(AssetEntry.class.getName(), assetEntry) %>"
+						propsTransformer="js/ListItemsDropdownPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:if>
@@ -99,11 +99,6 @@ ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDrop
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/ListItemsDropdownDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	module="js/TopLinkEventHandler.es"

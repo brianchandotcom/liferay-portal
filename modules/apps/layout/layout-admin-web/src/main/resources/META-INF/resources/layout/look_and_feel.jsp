@@ -73,21 +73,51 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 		</p>
 
 		<div class="button-holder">
+
+			<%
+			String editMasterLayoutURL = StringPool.BLANK;
+
+			if (selLayout.getMasterLayoutPlid() > 0) {
+				Layout masterLayout = LayoutLocalServiceUtil.getLayout(selLayout.getMasterLayoutPlid());
+
+				String editLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(selLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", ParamUtil.getString(request, "redirect"));
+
+				editMasterLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterLayout.fetchDraftLayout(), themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editLayoutURL);
+			}
+			%>
+
 			<clay:button
+				additionalProps='<%=
+					HashMapBuilder.<String, Object>put(
+						"editableMasterLayout", editableMasterLayout
+					).put(
+						"editMasterLayoutURL", editMasterLayoutURL
+					).build()
+				%>'
 				cssClass='<%= (masterLayoutPageTemplateEntry == null) ? "hide" : StringPool.BLANK %>'
-				displayType="secondary"
 				id='<%= liferayPortletResponse.getNamespace() + "editMasterLayoutButton" %>'
 				label="edit-master"
+				propsTransformer="js/layout/EditMasterLayoutButtonPropsTransformer"
 				small="<%= true %>"
 			/>
 
+			<portlet:renderURL var="changeMasterLayoutURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcPath" value="/select_master_layout.jsp" />
+			</portlet:renderURL>
+
 			<clay:button
-				displaytype="secondary"
+				additionalProps='<%=
+					HashMapBuilder.<String, Object>put(
+						"url", changeMasterLayoutURL.toString()
+					).build()
+				%>'
 				id='<%= liferayPortletResponse.getNamespace() + "changeMasterLayoutButton" %>'
 				label="change-master"
+				propsTransformer="js/layout/ChangeMasterLayoutButtonPropsTransformer"
 				small="<%= true %>"
 			/>
-		</div>
+		</div
+	>
 	</clay:sheet-section>
 </c:if>
 
@@ -112,11 +142,22 @@ if (hasStyleBooks && (selLayout.getStyleBookEntryId() > 0)) {
 		<b><liferay-ui:message key="style-book-name" />:</b> <span id="<portlet:namespace />styleBookName"><%= (styleBookEntry != null) ? styleBookEntry.getName() : LanguageUtil.get(request, "inherited") %></span>
 	</p>
 
+	<portlet:renderURL var="changeStyleBookURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/select_style_book.jsp" />
+		<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
+		<portlet:param name="editableMasterLayout" value="<%= String.valueOf(editableMasterLayout) %>" />
+	</portlet:renderURL>
+
 	<div class="button-holder">
 		<clay:button
-			displaytype="secondary"
+			additionalProps='<%=
+				HashMapBuilder.<String, Object>put(
+					"url", changeStyleBookURL.toString()
+				).build()
+			%>'
 			id='<%= liferayPortletResponse.getNamespace() + "changeStyleBookButton" %>'
 			label="change-style-book"
+			propsTransformer="js/layout/ChangeStyleBookButtonPropsTransformer"
 			small="<%= true %>"
 		/>
 	</div>
@@ -211,121 +252,3 @@ else {
 		});
 	</aui:script>
 </c:if>
-
-<c:if test="<%= editableMasterLayout %>">
-	<aui:script sandbox="<%= true %>">
-		var changeMasterLayoutButton = document.getElementById(
-			'<portlet:namespace />changeMasterLayoutButton'
-		);
-
-		var editMasterLayoutButton = document.getElementById(
-			'<portlet:namespace />editMasterLayoutButton'
-		);
-
-		var masterLayoutPlid = document.getElementById(
-			'<portlet:namespace />masterLayoutPlid'
-		);
-
-		var oldMasterLayoutPlid = masterLayoutPlid.value;
-
-		var themeContainer = document.getElementById(
-			'<portlet:namespace />themeContainer'
-		);
-
-		var changeMasterLayoutButtonEventListener = changeMasterLayoutButton.addEventListener(
-			'click',
-			function (event) {
-				Liferay.Util.openSelectionModal({
-					buttonAddLabel: '<liferay-ui:message key="done" />',
-					multiple: true,
-					onSelect: function (selectedItem) {
-						if (selectedItem) {
-							var masterLayoutName = document.getElementById(
-								'<portlet:namespace />masterLayoutName'
-							);
-
-							masterLayoutName.innerHTML = selectedItem.name;
-
-							masterLayoutPlid.value = selectedItem.plid;
-
-							if (masterLayoutPlid.value == 0) {
-								themeContainer.classList.remove('hide');
-							}
-							else {
-								themeContainer.classList.add('hide');
-							}
-
-							if (
-								masterLayoutPlid.value == oldMasterLayoutPlid &&
-								masterLayoutPlid.value != 0
-							) {
-								editMasterLayoutButton.classList.remove('hide');
-							}
-							else {
-								editMasterLayoutButton.classList.add('hide');
-							}
-						}
-					},
-					selectEventName: '<portlet:namespace />selectMasterLayout',
-					title: '<liferay-ui:message key="select-master" />',
-					url:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_master_layout.jsp" /></portlet:renderURL>',
-				});
-			}
-		);
-
-		<%
-		String editMasterLayoutURL = StringPool.BLANK;
-
-		if (selLayout.getMasterLayoutPlid() > 0) {
-			Layout masterLayout = LayoutLocalServiceUtil.getLayout(selLayout.getMasterLayoutPlid());
-
-			String editLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(selLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", ParamUtil.getString(request, "redirect"));
-
-			editMasterLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterLayout.fetchDraftLayout(), themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editLayoutURL);
-		}
-		%>
-
-		var editMasterLayoutButtonEventListener = editMasterLayoutButton.addEventListener(
-			'click',
-			function (event) {
-				Liferay.Util.navigate('<%= editMasterLayoutURL %>');
-			}
-		);
-	</aui:script>
-</c:if>
-
-<aui:script sandbox="<%= true %>">
-	var changeStyleBookButton = document.getElementById(
-		'<portlet:namespace />changeStyleBookButton'
-	);
-
-	var changeStyleBookButtonEventListener = changeStyleBookButton.addEventListener(
-		'click',
-		function (event) {
-			Liferay.Util.openSelectionModal({
-				buttonAddLabel: '<liferay-ui:message key="done" />',
-				multiple: true,
-				onSelect: function (selectedItem) {
-					if (selectedItem) {
-						var styleBookName = document.getElementById(
-							'<portlet:namespace />styleBookName'
-						);
-
-						styleBookName.innerHTML = selectedItem.name;
-
-						var styleBookEntryId = document.getElementById(
-							'<portlet:namespace />styleBookEntryId'
-						);
-
-						styleBookEntryId.value = selectedItem.stylebookentryid;
-					}
-				},
-				selectEventName: '<portlet:namespace />selectStyleBook',
-				title: '<liferay-ui:message key="select-style-book" />',
-				url:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_style_book.jsp" /><portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" /><portlet:param name="editableMasterLayout" value="<%= String.valueOf(editableMasterLayout) %>" /></portlet:renderURL>',
-			});
-		}
-	);
-</aui:script>

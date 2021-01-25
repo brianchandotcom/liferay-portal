@@ -67,9 +67,33 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												</c:if>
 											</li>
 											<li>
+
+												<%
+												Map<String, Object> fragmentCollectionsViewContext = fragmentDisplayContext.getFragmentCollectionsViewContext();
+
+												String deleteFragmentCollectionURL = (String)fragmentCollectionsViewContext.get("deleteFragmentCollectionURL");
+												String exportFragmentCollectionsURL = (String)fragmentCollectionsViewContext.get("exportFragmentCollectionsURL");
+												String viewDeleteFragmentCollectionsURL = (String)fragmentCollectionsViewContext.get("viewDeleteFragmentCollectionsURL");
+												String viewExportFragmentCollectionsURL = (String)fragmentCollectionsViewContext.get("viewExportFragmentCollectionsURL");
+												String viewImportURL = (String)fragmentCollectionsViewContext.get("viewImportURL");
+												%>
+
 												<clay:dropdown-actions
-													defaultEventHandler="FragmentCollectionsViewDefaultEventHandler"
+													additionalProps='<%=
+														HashMapBuilder.<String, Object>put(
+															"deleteFragmentCollectionURL", deleteFragmentCollectionURL
+														).put(
+															"exportFragmentCollectionsURL", exportFragmentCollectionsURL
+														).put(
+															"viewDeleteFragmentCollectionsURL", viewDeleteFragmentCollectionsURL
+														).put(
+															"viewExportFragmentCollectionsURL", viewExportFragmentCollectionsURL
+														).put(
+															"viewImportURL", viewImportURL
+														).build()
+													%>'
 													dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>"
+													propsTransformer="js/FragmentCollectionViewDefaultPropsTransformer"
 												/>
 											</li>
 										</ul>
@@ -224,10 +248,14 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 								<liferay-frontend:empty-result-message
 									actionDropdownItems="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? fragmentDisplayContext.getActionDropdownItems() : null %>"
+									additionalProps="<%= fragmentDisplayContext.getFragmentCollectionsViewContext() %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
+									buttonPropsTransformer="js/FragmentCollectionViewButtonPropsTransformer"
 									defaultEventHandler="FragmentCollectionsViewDefaultEventHandler"
 									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-fragments") %>'
 									elementType='<%= LanguageUtil.get(request, "collections") %>'
+									propsTransformer="js/FragmentCollectionViewDefaultPropsTransformer"
+									propsTransformerServletContext="<%= application %>"
 								/>
 							</c:otherwise>
 						</c:choose>

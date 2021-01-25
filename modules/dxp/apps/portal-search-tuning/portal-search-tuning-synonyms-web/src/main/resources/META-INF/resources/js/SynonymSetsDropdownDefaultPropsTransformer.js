@@ -9,22 +9,38 @@
  * distribution rights of the Software.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-
-class SynonymSetsDropdownDefaultEventHandler extends DefaultEventHandler {
+const ACTIONS = {
 	delete(itemData) {
 		const message = Liferay.Language.get(
 			'are-you-sure-you-want-to-delete-this'
 		);
 
 		if (confirm(message)) {
-			this._send(itemData.deleteURL);
+			this.send(itemData.deleteURL);
 		}
-	}
+	},
 
-	_send(url) {
+	send(url) {
 		submitForm(document.hrefFm, url);
-	}
-}
+	},
+};
 
-export default SynonymSetsDropdownDefaultEventHandler;
+export default function ({items, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
+
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data);
+					}
+				},
+			};
+		}),
+	};
+}

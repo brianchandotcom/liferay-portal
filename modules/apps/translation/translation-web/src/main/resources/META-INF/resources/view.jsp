@@ -74,8 +74,8 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						defaultEventHandler="<%= viewDisplayContext.getElementsDefaultEventHandler() %>"
 						dropdownItems="<%= viewDisplayContext.getActionDropdownItems(translationEntry) %>"
+						propsTransformer="js/translate/ElementsDefaultPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
@@ -91,9 +91,4 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 	componentId="<%= viewDisplayContext.getManagementToolbarDefaultEventHandler() %>"
 	context="<%= viewDisplayContext.getComponentContext() %>"
 	module="js/translate/TranslationManagementToolbarDefaultEventHandler.es"
-/>
-
-<liferay-frontend:component
-	componentId="<%= viewDisplayContext.getElementsDefaultEventHandler() %>"
-	module="js/translate/ElementsDefaultEventHandler.es"
 />

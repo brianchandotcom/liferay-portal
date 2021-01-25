@@ -73,8 +73,8 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
-					defaultEventHandler="SynonymSetsDropdownDefaultEventHandler"
 					dropdownItems="<%= synonymSetDisplayContext.getDropdownItems() %>"
+					propsTransformer="js/SynonymSetsDropdownDefaultPropsTransformer"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -89,8 +89,3 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 <aui:script require='<%= npmResolvedPackageName + "/js/MultipleCheckboxAction.es as MultipleCheckboxAction" %>'>
 	new MultipleCheckboxAction.default('<portlet:namespace />');
 </aui:script>
-
-<liferay-frontend:component
-	componentId="SynonymSetsDropdownDefaultEventHandler"
-	module="js/SynonymSetsDropdownDefaultEventHandler.es"
-/>

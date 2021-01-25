@@ -12,32 +12,27 @@
  * details.
  */
 
-import {
-	DefaultEventHandler,
-	openModal,
-	openSimpleInputModal,
-} from 'frontend-js-web';
-import {Config} from 'metal-state';
+import {openModal, openSimpleInputModal} from 'frontend-js-web';
 
-class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
+const ACTIONS = {
 	deleteAssetListEntry(itemData) {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			this._send(itemData.deleteAssetListEntryURL);
+			this.send(itemData.deleteAssetListEntryURL);
 		}
-	}
+	},
 
 	permissionsAssetEntryList(itemData) {
 		openModal({
 			title: Liferay.Language.get('permissions'),
 			url: itemData.permissionsAssetEntryListURL,
 		});
-	}
+	},
 
-	renameAssetListEntry(itemData) {
+	renameAssetListEntry(itemData, portletNamespace) {
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-collection'),
 			formSubmitURL: itemData.renameAssetListEntryURL,
@@ -47,18 +42,31 @@ class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
 			mainFieldName: 'title',
 			mainFieldPlaceholder: Liferay.Language.get('title'),
 			mainFieldValue: itemData.assetListEntryTitle,
-			namespace: this.namespace,
-			spritemap: this.spritemap,
+			namespace: portletNamespace,
 		});
-	}
+	},
 
-	_send(url) {
+	send(url) {
 		submitForm(document.hrefFm, url);
-	}
-}
-
-AssetEntryListDropdownDefaultEventHandler.STATE = {
-	spritemap: Config.string(),
+	},
 };
 
-export default AssetEntryListDropdownDefaultEventHandler;
+export default function propsTransformer({items, portletNamespace, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
+
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data, portletNamespace);
+					}
+				},
+			};
+		}),
+	};
+}

@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+Map<String, Object> componentContext = journalDisplayContext.getComponentContext();
+%>
+
 <liferay-ui:search-container
 	emptyResultsMessage="no-web-content-was-found"
 	searchContainer="<%= journalDisplayContext.getSearchContainer() %>"
@@ -62,8 +66,13 @@
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+						additionalProps='<%=
+							HashMapBuilder.<String, Object>put(
+								"trashEnabled", componentContext.get("trashEnabled")
+							).build()
+						%>'
 						dropdownItems="<%= journalDisplayContext.getArticleVersionActionDropdownItems(articleVersion) %>"
+						propsTransformer="js/ElementsDefaultPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
@@ -116,8 +125,13 @@
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+						additionalProps='<%=
+							HashMapBuilder.<String, Object>put(
+								"trashEnabled", componentContext.get("trashEnabled")
+							).build()
+						%>'
 						dropdownItems="<%= journalDisplayContext.getArticleVersionActionDropdownItems(articleVersion) %>"
+						propsTransformer="js/ElementsDefaultPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
@@ -130,9 +144,3 @@
 		searchContainer="<%= searchContainer %>"
 	/>
 </liferay-ui:search-container>
-
-<liferay-frontend:component
-	componentId="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-	context="<%= journalDisplayContext.getComponentContext() %>"
-	module="js/ElementsDefaultEventHandler.es"
-/>

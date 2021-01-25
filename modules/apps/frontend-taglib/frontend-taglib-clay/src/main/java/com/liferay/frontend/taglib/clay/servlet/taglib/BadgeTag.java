@@ -45,15 +45,6 @@ public class BadgeTag extends BaseContainerTag {
 		return _label;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getDisplayType()}
-	 */
-	@Deprecated
-	public String getStyle() {
-		return getDisplayType();
-	}
-
 	public void setDisplayType(String displayType) {
 		_displayType = displayType;
 	}
@@ -62,22 +53,12 @@ public class BadgeTag extends BaseContainerTag {
 		_label = label;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setDisplayType(String)}
-	 */
-	@Deprecated
-	public void setStyle(String style) {
-		setDisplayType(style);
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_displayType = "primary";
 		_label = null;
-		_style = null;
 	}
 
 	@Override
@@ -107,6 +88,5 @@ public class BadgeTag extends BaseContainerTag {
 
 	private String _displayType = "primary";
 	private String _label;
-	private String _style;
 
 }

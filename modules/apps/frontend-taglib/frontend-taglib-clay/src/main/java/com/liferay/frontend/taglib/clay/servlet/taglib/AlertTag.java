@@ -43,23 +43,6 @@ public class AlertTag extends BaseContainerTag {
 		return _autoClose;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getDismissible()}
-	 */
-	@Deprecated
-	public boolean getCloseable() {
-		return _dismissible;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean getDestroyOnHide() {
-		return _destroyOnHide;
-	}
-
 	public boolean getDismissible() {
 		return _dismissible;
 	}
@@ -72,25 +55,8 @@ public class AlertTag extends BaseContainerTag {
 		return _message;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getDisplayType()}
-	 */
-	@Deprecated
-	public String getStyle() {
-		return getDisplayType();
-	}
-
 	public String getTitle() {
 		return _title;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getType() {
-		return _type;
 	}
 
 	public String getVariant() {
@@ -99,18 +65,6 @@ public class AlertTag extends BaseContainerTag {
 
 	public void setAutoClose(boolean autoClose) {
 		_autoClose = autoClose;
-	}
-
-	public void setCloseable(boolean closeable) {
-		setDismissible(closeable);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setDestroyOnHide(boolean destroyOnHide) {
-		_destroyOnHide = destroyOnHide;
 	}
 
 	public void setDismissible(boolean dismissible) {
@@ -125,27 +79,10 @@ public class AlertTag extends BaseContainerTag {
 		_message = message;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setDisplayType(String)}
-	 */
-	@Deprecated
-	public void setStyle(String style) {
-		setDisplayType(style);
-	}
-
 	public void setTitle(String title) {
 		_title = title;
 	}
 
-	public void setType(String type) {
-		_type = type;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
 	public void setVariant(String variant) {
 		_variant = variant;
 	}
@@ -155,12 +92,10 @@ public class AlertTag extends BaseContainerTag {
 		super.cleanUp();
 
 		_autoClose = false;
-		_destroyOnHide = false;
 		_dismissible = false;
 		_displayType = "info";
 		_message = null;
 		_title = null;
-		_type = null;
 		_variant = null;
 	}
 
@@ -283,12 +218,10 @@ public class AlertTag extends BaseContainerTag {
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:alert:";
 
 	private boolean _autoClose;
-	private boolean _destroyOnHide;
 	private boolean _dismissible;
 	private String _displayType = "info";
 	private String _message;
 	private String _title;
-	private String _type;
 	private String _variant;
 
 }

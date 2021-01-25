@@ -53,14 +53,24 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 									<c:choose>
 										<c:when test="<%= trashEntry.getRootEntry() == null %>">
 											<clay:dropdown-actions
-												defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+												additionalProps='<%=
+													HashMapBuilder.<String, Object>put(
+														"portletNamespace", liferayPortletResponse.getNamespace()
+													).build()
+												%>'
 												dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+												propsTransformer="js/EntriesPropsTransformer"
 											/>
 										</c:when>
 										<c:otherwise>
 											<clay:dropdown-actions
-												defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
+												additionalProps='<%=
+													HashMapBuilder.<String, Object>put(
+														"portletNamespace", liferayPortletResponse.getNamespace()
+													).build()
+												%>'
 												dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
+												propsTransformer="js/EntriesPropsTransformer"
 											/>
 										</c:otherwise>
 									</c:choose>

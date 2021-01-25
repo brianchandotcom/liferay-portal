@@ -117,8 +117,3 @@ Role role = usersDisplayContext.getRole();
 	componentId="<%= usersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	module="js/UsersManagementToolbarDefaultEventHandler.es"
 />
-
-<liferay-frontend:component
-	componentId="<%= SiteMembershipWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/UserDropdownDefaultEventHandler.es"
-/>

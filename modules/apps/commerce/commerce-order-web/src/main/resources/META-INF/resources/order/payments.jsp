@@ -98,10 +98,10 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			<div class="row">
 				<div class="col d-flex">
 					<clay:label
-						elementClasses="align-self-center"
+						cssClass="align-self-center"
+						displayType="<%= CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(commerceOrder.getPaymentStatus()) %>"
 						label="<%= LanguageUtil.get(request, CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(commerceOrder.getPaymentStatus())) %>"
-						size="lg"
-						style="<%= CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(commerceOrder.getPaymentStatus()) %>"
+						large="<%= true %>"
 					/>
 				</div>
 			</div>

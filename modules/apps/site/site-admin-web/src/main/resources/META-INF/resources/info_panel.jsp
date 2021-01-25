@@ -101,8 +101,8 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 							<ul class="autofit-padded-no-gutters autofit-row">
 								<li class="autofit-col">
 									<clay:dropdown-actions
-										defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 										dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(group) %>"
+										propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 									/>
 								</li>
 							</ul>
@@ -247,8 +247,3 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		</div>
 	</c:otherwise>
 </c:choose>
-
-<liferay-frontend:component
-	componentId="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/SiteDropdownDefaultEventHandler.es"
-/>

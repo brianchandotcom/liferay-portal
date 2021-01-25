@@ -49,7 +49,7 @@ SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsD
 			%>
 
 				<clay:link
-					elementClasses="dropdown-item transition-link"
+					cssClass="dropdown-item transition-link"
 					href="#"
 					id="<%= liferayPortletResponse.getNamespace() + sortOption %>"
 					label="<%= LanguageUtil.get(request, sortOption) %>"

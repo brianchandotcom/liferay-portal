@@ -12,20 +12,33 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {openModal} from 'frontend-js-web';
 
-class SiteDropdownDefaultEventHandler extends DefaultEventHandler {
-	joinSite(itemData) {
-		this._send(itemData.joinSiteURL);
-	}
+const ACTIONS = {
+	viewInfoListProviderItems(itemData) {
+		openModal({
+			title: itemData.infoListProviderTitle,
+			url: itemData.viewInfoListProviderItemsURL,
+		});
+	},
+};
 
-	leaveSite(itemData) {
-		this._send(itemData.leaveSiteURL);
-	}
+export default function propsTransformer({items, ...props}) {
+	return {
+		...props,
+		items: items.map((item) => {
+			return {
+				...item,
+				onClick(event) {
+					const action = item.data?.action;
 
-	_send(url) {
-		submitForm(document.hrefFm, url);
-	}
+					if (action) {
+						event.preventDefault();
+
+						ACTIONS[action](item.data);
+					}
+				},
+			};
+		}),
+	};
 }
-
-export default SiteDropdownDefaultEventHandler;

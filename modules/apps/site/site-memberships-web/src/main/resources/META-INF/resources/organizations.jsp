@@ -99,8 +99,3 @@ OrganizationsManagementToolbarDisplayContext organizationsManagementToolbarDispl
 	componentId="<%= organizationsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	module="js/OrganizationsManagementToolbarDefaultEventHandler.es"
 />
-
-<liferay-frontend:component
-	componentId="<%= SiteMembershipWebKeys.ORGANIZATION_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/OrganizationDropdownDefaultEventHandler.es"
-/>

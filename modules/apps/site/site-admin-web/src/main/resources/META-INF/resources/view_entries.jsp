@@ -84,8 +84,8 @@
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 						dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(curGroup) %>"
+						propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
@@ -216,9 +216,8 @@
 
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						defaultEventHandler="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 						dropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems(curGroup) %>"
-						itemsIconAlignment="right"
+						propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>
@@ -230,8 +229,3 @@
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>
-
-<liferay-frontend:component
-	componentId="<%= SiteAdminWebKeys.SITE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/SiteDropdownDefaultEventHandler.es"
-/>

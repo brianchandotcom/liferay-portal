@@ -103,8 +103,8 @@ String infoListProviderClassName = infoListProviderItemsDisplayContext.getInfoLi
 				<c:if test="<%= infoListProviderItemsDisplayContext.isShowActions() %>">
 					<liferay-ui:search-container-column-text>
 						<clay:dropdown-actions
-							defaultEventHandler="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 							dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(infoListProviderClassName, result) %>"
+							propsTransformer="js/ListItemsDropdownPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:if>
@@ -116,11 +116,6 @@ String infoListProviderClassName = infoListProviderItemsDisplayContext.getInfoLi
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/ListItemsDropdownDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	module="js/TopLinkEventHandler.es"

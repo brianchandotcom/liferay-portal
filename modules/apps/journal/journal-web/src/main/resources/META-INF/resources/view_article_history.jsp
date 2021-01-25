@@ -18,6 +18,8 @@
 
 <%
 JournalArticle article = journalDisplayContext.getArticle();
+
+Map<String, Object> componentContext = journalDisplayContext.getComponentContext();
 %>
 
 <c:choose>
@@ -107,8 +109,13 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
-									defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+									additionalProps='<%=
+										HashMapBuilder.<String, Object>put(
+											"trashEnabled", componentContext.get("trashEnabled")
+										).build()
+									%>'
 									dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
+									propsTransformer="js/ElementsDefaultPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
@@ -165,8 +172,13 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 							<liferay-ui:search-container-column-text>
 								<clay:dropdown-actions
-									defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+									additionalProps='<%=
+										HashMapBuilder.<String, Object>put(
+											"trashEnabled", componentContext.get("trashEnabled")
+										).build()
+									%>'
 									dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
+									propsTransformer="js/ElementsDefaultPropsTransformer"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
@@ -179,11 +191,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 				/>
 			</liferay-ui:search-container>
 		</aui:form>
-
-		<liferay-frontend:component
-			componentId="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-			module="js/ElementsDefaultEventHandler.es"
-		/>
 
 		<liferay-frontend:component
 			componentId="<%= journalHistoryManagementToolbarDisplayContext.getDefaultEventHandler() %>"

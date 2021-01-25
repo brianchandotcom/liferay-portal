@@ -30,6 +30,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 		<liferay-ui:search-container-column-text>
 			<clay:user-card
+				propsTransformer="js/UserCardPropsTransformer"
 				userCard="<%= new UsersUserCard(user2, !selectUsers, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				userColorClass='<%= "sticker-user-icon " + LexiconUtil.getUserColorCssClass(user2) %>'
 			/>
@@ -66,8 +67,8 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
-					defaultEventHandler="<%= SiteMembershipWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 					dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
+					propsTransformer="js/UserDropdownDefaultPropsTransformer"
 				/>
 			</liferay-ui:search-container-column-text>
 		</c:if>
@@ -99,8 +100,8 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 
 			<liferay-ui:search-container-column-text>
 				<clay:dropdown-actions
-					defaultEventHandler="<%= SiteMembershipWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 					dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
+					propsTransformer="js/UserDropdownDefaultPropsTransformer"
 				/>
 			</liferay-ui:search-container-column-text>
 		</c:if>

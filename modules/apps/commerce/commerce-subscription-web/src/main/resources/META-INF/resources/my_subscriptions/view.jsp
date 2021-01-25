@@ -116,7 +116,7 @@ CommerceSubscriptionContentDisplayContext commerceSubscriptionContentDisplayCont
 											%>
 
 											<clay:link
-												buttonStyle="secondary"
+												displayType="secondary"
 												href='<%= String.valueOf(dropdownItem.get("href")) %>'
 												label='<%= String.valueOf(dropdownItem.get("label")) %>'
 											/>

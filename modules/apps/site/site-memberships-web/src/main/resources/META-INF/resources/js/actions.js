@@ -12,27 +12,17 @@
  * details.
  */
 
-import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-web';
 
-class UserDropdownDefaultEventHandler extends DefaultEventHandler {
-	deleteGroupUsers(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
-		}
-	}
-
-	assignRoles(itemData) {
+export const ACTIONS = {
+	assignRoles(itemData, portletNamespace) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
-					const editUserGroupRoleFm = this.one(
-						'#editUserGroupRoleFm'
+					const editUserGroupRoleFm = document.getElementById(
+						`${portletNamespace}editUserGroupRoleFm`
 					);
 
 					selectedItem.forEach((item) => {
@@ -45,11 +35,19 @@ class UserDropdownDefaultEventHandler extends DefaultEventHandler {
 					);
 				}
 			},
-			selectEventName: this.ns('selectUsersRoles'),
+			selectEventName: `${portletNamespace}selectUsersRoles`,
 			title: Liferay.Language.get('assign-roles'),
 			url: itemData.assignRolesURL,
 		});
-	}
-}
+	},
 
-export default UserDropdownDefaultEventHandler;
+	deleteGroupUsers(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			submitForm(document.hrefFm, itemData.deleteGroupUsersURL);
+		}
+	},
+};

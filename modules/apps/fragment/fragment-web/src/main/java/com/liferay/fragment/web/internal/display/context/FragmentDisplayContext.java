@@ -88,7 +88,10 @@ public class FragmentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
+	public List<DropdownItem> getActionDropdownItems() throws Exception {
+		Map<String, Object> fragmentCollectionsViewContext =
+			getFragmentCollectionsViewContext();
+
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setHref(
@@ -101,6 +104,10 @@ public class FragmentDisplayContext {
 		).add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "openImportView");
+				dropdownItem.putData(
+					"viewImportURL",
+					(String)fragmentCollectionsViewContext.get(
+						"viewImportURL"));
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "import"));
 			}

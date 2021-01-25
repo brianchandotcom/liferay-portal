@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+Map<String, Object> componentContext = journalDisplayContext.getComponentContext();
+
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 %>
 
@@ -140,8 +142,13 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"trashEnabled", componentContext.get("trashEnabled")
+									).build()
+								%>'
 								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
+								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -240,8 +247,13 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"trashEnabled", componentContext.get("trashEnabled")
+									).build()
+								%>'
 								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
+								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:otherwise>
@@ -311,8 +323,13 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"trashEnabled", componentContext.get("trashEnabled")
+									).build()
+								%>'
 								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
+								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -390,8 +407,13 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"trashEnabled", componentContext.get("trashEnabled")
+									).build()
+								%>'
 								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
+								propsTransformer="js/ElementsDefaultPropsTransformer"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:otherwise>
@@ -407,12 +429,6 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 		searchContainer="<%= searchContainer %>"
 	/>
 </liferay-ui:search-container>
-
-<liferay-frontend:component
-	componentId="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-	context="<%= journalDisplayContext.getComponentContext() %>"
-	module="js/ElementsDefaultEventHandler.es"
-/>
 
 <aui:script use="liferay-journal-navigation">
 	var journalNavigation = new Liferay.Portlet.JournalNavigation({

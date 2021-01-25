@@ -172,14 +172,14 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 									<c:choose>
 										<c:when test="<%= trashEntry.getRootEntry() == null %>">
 											<clay:dropdown-actions
-												defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
 												dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+												propsTransformer="js/EntriesPropsTransformer"
 											/>
 										</c:when>
 										<c:otherwise>
 											<clay:dropdown-actions
-												defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
 												dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
+												propsTransformer="js/EntriesPropsTransformer"
 											/>
 										</c:otherwise>
 									</c:choose>
@@ -259,14 +259,14 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 									<c:choose>
 										<c:when test="<%= trashEntry.getRootEntry() == null %>">
 											<clay:dropdown-actions
-												defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
 												dropdownItems="<%= trashDisplayContext.getTrashEntryActionDropdownItems(trashEntry) %>"
+												propsTransformer="js/EntriesPropsTransformer"
 											/>
 										</c:when>
 										<c:otherwise>
 											<clay:dropdown-actions
-												defaultEventHandler="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
 												dropdownItems="<%= trashDisplayContext.getTrashViewContentActionDropdownItems(trashRenderer.getClassName(), trashRenderer.getClassPK()) %>"
+												propsTransformer="js/EntriesPropsTransformer"
 											/>
 										</c:otherwise>
 									</c:choose>
@@ -287,6 +287,6 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 </div>
 
 <liferay-frontend:component
-	componentId="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"
-	module="js/EntriesDefaultEventHandler.es"
+	componentId="<%= trashManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
 />

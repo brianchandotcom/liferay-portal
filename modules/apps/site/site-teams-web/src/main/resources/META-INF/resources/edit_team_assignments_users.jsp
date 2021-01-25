@@ -82,8 +82,8 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 						%>
 
 						<clay:dropdown-actions
-							defaultEventHandler="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
+							propsTransformer="js/UserDropdownDefaultPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -107,8 +107,8 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 						%>
 
 						<clay:dropdown-actions
-							defaultEventHandler="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
+							propsTransformer="js/UserDropdownDefaultPropsTransformer"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>
@@ -133,9 +133,4 @@ EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext editSiteTeamAssignme
 <liferay-frontend:component
 	componentId="<%= editSiteTeamAssignmentsUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	module="js/EditTeamAssignmentsUsersManagementToolbarDefaultEventHandler.es"
-/>
-
-<liferay-frontend:component
-	componentId="<%= SiteTeamsWebKeys.USER_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/UserDropdownDefaultEventHandler.es"
 />

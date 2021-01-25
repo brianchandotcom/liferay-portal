@@ -103,8 +103,8 @@ if (deliveryMaxSubscriptionCycles > 0) {
 			title='<%= LanguageUtil.get(request, "payment-status") %>'
 		>
 			<clay:label
+				displayType="<%= CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(orderPaymentStatus) %>"
 				label="<%= LanguageUtil.get(request, CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(orderPaymentStatus)) %>"
-				style="<%= CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(orderPaymentStatus) %>"
 			/>
 		</commerce-ui:info-box>
 	</div>

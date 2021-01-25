@@ -103,8 +103,10 @@ public class StructuredContentDTOConverter
 
 	@Override
 	public StructuredContent toDTO(
-		DTOConverterContext dtoConverterContext, JournalArticle journalArticle)
+			DTOConverterContext dtoConverterContext,
+			JournalArticle journalArticle)
 		throws Exception {
+
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
 		Group group = _groupLocalService.fetchGroup(

@@ -237,8 +237,8 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				webContentTitle = "Web Content Title",
-				webContentText = "https://www.liferay.com");
+				webContentText = "https://www.liferay.com",
+				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
 		}
@@ -335,8 +335,8 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				webContentTitle = "Web Content Title",
-				webContentText = "https://www.liferay.com");
+				webContentText = "https://www.liferay.com",
+				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
 		}
@@ -433,8 +433,8 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				webContentTitle = "Web Content Title",
-				webContentText = "https://www.liferay.com");
+				webContentText = "https://www.liferay.com",
+				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
 		}

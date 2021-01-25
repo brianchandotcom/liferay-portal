@@ -14,10 +14,13 @@
 
 package com.liferay.headless.admin.content.internal.resource.v1_0;
 
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.headless.admin.content.dto.v1_0.StructuredContentVersionInformation;
 import com.liferay.headless.admin.content.internal.dto.v1_0.util.StructuredContentVersionInformationBuilder;
 import com.liferay.headless.admin.content.internal.dto.v1_0.util.VersionInformationUtil;
 import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.content.common.search.aggregation.AggregationUtil;
+import com.liferay.headless.content.common.search.sort.SortUtil;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -26,6 +29,11 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -78,13 +86,26 @@ public class StructuredContentResourceImpl
 				if (siteId != null) {
 					searchContext.setGroupIds(new long[] {siteId});
 				}
+
+				SearchRequestBuilder searchRequestBuilder =
+					_searchRequestBuilderFactory.builder(searchContext);
+
+				AggregationUtil.processVulcanAggregation(
+					_aggregations, _ddmIndexer, _queries, searchRequestBuilder,
+					aggregation);
+
+				SortUtil.processSorts(
+					_ddmIndexer, searchRequestBuilder, searchContext.getSorts(),
+					_queries, _sorts);
 			},
 			sorts,
 			document -> {
-				JournalArticle journalArticle = _journalArticleService.getLatestArticle(
-					GetterUtil.getLong(document.get(Field.SCOPE_GROUP_ID)),
-					document.get(Field.ARTICLE_ID),
-					WorkflowConstants.STATUS_ANY);
+				JournalArticle journalArticle =
+					_journalArticleService.getLatestArticle(
+						GetterUtil.getLong(document.get(Field.SCOPE_GROUP_ID)),
+						document.get(Field.ARTICLE_ID),
+						WorkflowConstants.STATUS_ANY);
+
 				return _toStructuredContentVersionInformation(journalArticle);
 			});
 	}
@@ -118,8 +139,8 @@ public class StructuredContentResourceImpl
 	}
 
 	private StructuredContentVersionInformation
-	_toStructuredContentVersionInformation(
-		JournalArticle journalArticle)
+			_toStructuredContentVersionInformation(
+				JournalArticle journalArticle)
 		throws Exception {
 
 		return new StructuredContentVersionInformationBuilder(
@@ -132,9 +153,24 @@ public class StructuredContentResourceImpl
 	}
 
 	@Reference
+	private Aggregations _aggregations;
+
+	@Reference
+	private DDMIndexer _ddmIndexer;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private Queries _queries;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private Sorts _sorts;
 
 }

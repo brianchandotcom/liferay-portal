@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Headless Content Common API
 Bundle-SymbolicName: com.liferay.headless.content.common.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.headless.content.common.search.aggregation,\
+	com.liferay.headless.content.common.search.filter,\
+	com.liferay.headless.content.common.search.sort

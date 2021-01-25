@@ -163,6 +163,8 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 						type: 'danger',
 					});
 
+					nameInput.focus();
+
 					return;
 				}
 

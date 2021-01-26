@@ -153,6 +153,11 @@ public class StyleBookVerticalCard
 	}
 
 	@Override
+	public String getStickerStyle() {
+		return "primary";
+	}
+
+	@Override
 	public String getTitle() {
 		return _styleBookEntry.getName();
 	}

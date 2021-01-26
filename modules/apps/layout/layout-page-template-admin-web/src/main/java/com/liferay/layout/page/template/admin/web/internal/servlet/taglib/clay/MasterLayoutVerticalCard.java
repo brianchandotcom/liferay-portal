@@ -181,6 +181,11 @@ public class MasterLayoutVerticalCard
 	}
 
 	@Override
+	public String getStickerStyle() {
+		return "primary";
+	}
+
+	@Override
 	public String getSubtitle() {
 		int layoutsCount = LayoutLocalServiceUtil.getMasterLayoutsCount(
 			_themeDisplay.getScopeGroupId(),

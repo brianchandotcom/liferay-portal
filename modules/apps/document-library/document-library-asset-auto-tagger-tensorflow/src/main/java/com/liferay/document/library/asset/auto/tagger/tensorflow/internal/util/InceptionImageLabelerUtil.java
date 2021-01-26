@@ -14,10 +14,6 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -58,6 +54,33 @@ public class InceptionImageLabelerUtil {
 			int numberOfLabels = (int)shape[1];
 
 			return resultTensor.copyTo(new float[1][numberOfLabels])[0];
+		}
+	}
+
+	public static void initializeModel(byte[] graphBytes) {
+		if (_imageLabelerGraph != null) {
+			return;
+		}
+
+		try {
+			_imageLabelerGraph = new Graph();
+
+			_imageLabelerGraph.importGraphDef(graphBytes);
+
+			_imageNormalizerGraph = _buildGraph(
+				(graphBuilder, input) -> graphBuilder.div(
+					graphBuilder.sub(
+						graphBuilder.resizeBilinear(
+							graphBuilder.expandDims(
+								input, graphBuilder.constant("make_batch", 0)),
+							graphBuilder.constant(
+								"size", new int[] {224, 224})),
+						graphBuilder.constant("mean", 117F)),
+					graphBuilder.constant("scale", 1F)),
+				Float.class);
+		}
+		catch (Exception exception) {
+			throw exception;
 		}
 	}
 
@@ -112,46 +135,7 @@ public class InceptionImageLabelerUtil {
 		}
 	}
 
-	private static final Graph _imageLabelerGraph;
-	private static final Graph _imageNormalizerGraph;
-
-	static {
-		try (InputStream inputStream =
-				InceptionImageLabelerUtil.class.getResourceAsStream(
-					"/META-INF/tensorflow/tensorflow_inception_graph.pb")) {
-
-			byte[] buffer = new byte[1024];
-
-			try (ByteArrayOutputStream byteArrayOutputStream =
-					new ByteArrayOutputStream()) {
-
-				int size = -1;
-
-				while ((size = inputStream.read(buffer)) != -1) {
-					byteArrayOutputStream.write(buffer, 0, size);
-				}
-
-				_imageLabelerGraph = new Graph();
-
-				_imageLabelerGraph.importGraphDef(
-					byteArrayOutputStream.toByteArray());
-			}
-
-			_imageNormalizerGraph = _buildGraph(
-				(graphBuilder, input) -> graphBuilder.div(
-					graphBuilder.sub(
-						graphBuilder.resizeBilinear(
-							graphBuilder.expandDims(
-								input, graphBuilder.constant("make_batch", 0)),
-							graphBuilder.constant(
-								"size", new int[] {224, 224})),
-						graphBuilder.constant("mean", 117F)),
-					graphBuilder.constant("scale", 1F)),
-				Float.class);
-		}
-		catch (IOException ioException) {
-			throw new ExceptionInInitializerError(ioException);
-		}
-	}
+	private static Graph _imageLabelerGraph;
+	private static Graph _imageNormalizerGraph;
 
 }

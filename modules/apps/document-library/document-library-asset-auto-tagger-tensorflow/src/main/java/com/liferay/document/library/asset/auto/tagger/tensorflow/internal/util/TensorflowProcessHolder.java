@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.osgi.commands.TensorflowAssetAutoTagProviderOSGiCommands;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.TensorFlowDaemonProcessCallable;
 import com.liferay.petra.process.ProcessCallable;
@@ -83,14 +84,23 @@ public class TensorflowProcessHolder {
 	}
 
 	public <T extends Serializable> T execute(
-		ProcessCallable<T> processCallable, int maxRelaunch, long timeout) {
+		ProcessCallable<T> processCallable,
+		TensorFlowImageAssetAutoTagProviderProcessConfiguration
+			tensorFlowImageAssetAutoTagProviderProcessConfiguration) {
 
 		ProcessChannel<String> processChannel = _processChannel;
 
 		if (processChannel == null) {
 			synchronized (this) {
+				long maximumNumberOfRelaunchesTimeout =
+					tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+						maximumNumberOfRelaunchesTimeout();
+
 				processChannel = _startProcess(
-					_processExecutor, maxRelaunch, timeout);
+					_processExecutor,
+					tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+						maximumNumberOfRelaunches(),
+					maximumNumberOfRelaunchesTimeout * 1000);
 			}
 		}
 

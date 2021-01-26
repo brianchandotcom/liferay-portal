@@ -18,6 +18,8 @@ import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.GetLabelProbabilitiesProcessCallable;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.InitializeProcessCallable;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.InceptionModelUtil;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcessHolder;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -29,11 +31,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.IOException;
-
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +43,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -77,7 +73,16 @@ public class TensorFlowImageAssetAutoTagProvider
 
 			if (tensorFlowImageAssetAutoTagProviderCompanyConfiguration.
 					enabled() &&
-				!_isTemporary(fileEntry)) {
+				!_isTemporary(fileEntry) && InceptionModelUtil.isDownloaded()) {
+
+				if (_labels == null) {
+					_labels = InceptionModelUtil.getLabels();
+
+					_tensorflowProcessHolder.execute(
+						new InitializeProcessCallable(
+							InceptionModelUtil.getGraphBytes()),
+						_tensorFlowImageAssetAutoTagProviderProcessConfiguration);
+				}
 
 				FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -102,19 +107,12 @@ public class TensorFlowImageAssetAutoTagProvider
 	@Activate
 	protected void activate(
 			BundleContext bundleContext, Map<String, Object> properties)
-		throws IOException {
-
-		Bundle bundle = bundleContext.getBundle();
-
-		URL url = bundle.getResource(
-			"META-INF/tensorflow/imagenet_comp_graph_label_strings.txt");
-
-		_labels = StringUtil.splitLines(StringUtil.read(url.openStream()));
+		throws Exception {
 
 		modified(properties);
 
 		_tensorflowProcessHolder = new TensorflowProcessHolder(
-			_processExecutor, bundle);
+			_processExecutor, bundleContext.getBundle());
 	}
 
 	@Deactivate
@@ -158,16 +156,9 @@ public class TensorFlowImageAssetAutoTagProvider
 	private List<String> _label(
 		byte[] imageBytes, String mimeType, float confidenceThreshold) {
 
-		int maximumNumberOfRelaunches =
-			_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
-				maximumNumberOfRelaunches();
-		long maximumNumberOfRelaunchesTimeout =
-			_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
-				maximumNumberOfRelaunchesTimeout();
-
 		float[] labelProbabilities = _tensorflowProcessHolder.execute(
 			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType),
-			maximumNumberOfRelaunches, maximumNumberOfRelaunchesTimeout * 1000);
+			_tensorFlowImageAssetAutoTagProviderProcessConfiguration);
 
 		Stream<Integer> stream = _getBestIndexesStream(
 			labelProbabilities, confidenceThreshold);

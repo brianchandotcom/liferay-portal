@@ -245,7 +245,35 @@ definition {
 	test VerifyRequiredPropertyOfGeolocation {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 VerifyRequiredPropertyOfGeolocation pending implementation
+		var key_fieldLabel = "Localization";
+
+		DataEngine.addField(
+			fieldFieldLabel = "${key_fieldLabel}",
+			fieldName = "Geolocation");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "${key_fieldLabel}");
+
+		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+
+		AssertElementPresent(locator1 = "Icon#ASTERISK");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${key_fieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${key_fieldLabel}");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Required Field",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+
+		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
+
 	}
 
 }

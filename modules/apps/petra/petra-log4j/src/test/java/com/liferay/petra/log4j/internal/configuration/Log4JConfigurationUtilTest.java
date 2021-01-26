@@ -68,7 +68,7 @@ public class Log4JConfigurationUtilTest {
 
 		Logger logger = Logger.getLogger(loggerName);
 
-		_assertAppenders(logger.getAllAppenders());
+		_assertAppenders(logger);
 
 		// Assert one appender exist
 
@@ -76,7 +76,7 @@ public class Log4JConfigurationUtilTest {
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, ConsoleAppender.class));
 
-		_assertAppenders(logger.getAllAppenders(), ConsoleAppender.class);
+		_assertAppenders(logger, ConsoleAppender.class);
 
 		// Assert override the previous appender
 
@@ -84,7 +84,7 @@ public class Log4JConfigurationUtilTest {
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, FileAppender.class));
 
-		_assertAppenders(logger.getAllAppenders(), FileAppender.class);
+		_assertAppenders(logger, FileAppender.class);
 
 		// Assert two appenders
 
@@ -92,9 +92,7 @@ public class Log4JConfigurationUtilTest {
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, ConsoleAppender.class, FileAppender.class));
 
-		_assertAppenders(
-			logger.getAllAppenders(), ConsoleAppender.class,
-			FileAppender.class);
+		_assertAppenders(logger, ConsoleAppender.class, FileAppender.class);
 	}
 
 	@Test
@@ -248,13 +246,13 @@ public class Log4JConfigurationUtilTest {
 	@Rule
 	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
-	private void _assertAppenders(
-		Enumeration<Appender> appenderEnumeration, Class<?>... appenderTypes) {
+	private void _assertAppenders(Logger logger, Class<?>... appenderTypes) {
+		Enumeration<Appender> enumeration = logger.getAllAppenders();
 
 		List<String> targetAppenderNames = new ArrayList<>();
 
-		while (appenderEnumeration.hasMoreElements()) {
-			Appender appender = appenderEnumeration.nextElement();
+		while (enumeration.hasMoreElements()) {
+			Appender appender = enumeration.nextElement();
 
 			targetAppenderNames.add(appender.getName());
 		}

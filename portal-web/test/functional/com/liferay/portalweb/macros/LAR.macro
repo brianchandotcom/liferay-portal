@@ -253,8 +253,6 @@ definition {
 			}
 
 			if ("${importPermissions}" == "true") {
-				Click(locator1 = "ExportImport#PERMISSIONS_TITLE");
-
 				Check.checkToggleSwitch(locator1 = "Checkbox#PERMISSIONS");
 			}
 

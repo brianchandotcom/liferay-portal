@@ -2034,14 +2034,14 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		WebContentStructures.resetStructureDefaultValuesCP(
-				assetTitle = "Blogs Entry Title",
-				templateName = "WC Template Name",
-				clickCancel = "true");
+			assetTitle = "Blogs Entry Title",
+			clickCancel = "true",
+			templateName = "WC Template Name");
 
 		AssertTextEquals.assertValue(
-				key_fieldFieldLabel = "Text",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "Enter Text Here");
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Enter Text Here");
 
 		WebContentStructures.resetStructureDefaultValuesCP(
 			assetTitle = "Blogs Entry Title",

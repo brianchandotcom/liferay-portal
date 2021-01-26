@@ -18,6 +18,8 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Constructor;
@@ -25,6 +27,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.objectweb.asm.ClassWriter;
@@ -42,14 +46,18 @@ public class ConfigurableUtil {
 		Class<T> clazz, Dictionary<?, ?> properties) {
 
 		return _createConfigurableSnapshot(
-			clazz, Configurable.createConfigurable(clazz, properties));
+			clazz,
+			Configurable.createConfigurable(
+				clazz, _overrideDictionary(clazz, properties)));
 	}
 
 	public static <T> T createConfigurable(
 		Class<T> clazz, Map<?, ?> properties) {
 
 		return _createConfigurableSnapshot(
-			clazz, Configurable.createConfigurable(clazz, properties));
+			clazz,
+			Configurable.createConfigurable(
+				clazz, _overrideMap(clazz, properties)));
 	}
 
 	private static <T> T _createConfigurableSnapshot(
@@ -200,6 +208,52 @@ public class ConfigurableUtil {
 	private static String _getClassBinaryName(String className) {
 		return StringUtil.replace(
 			className, CharPool.PERIOD, CharPool.FORWARD_SLASH);
+	}
+
+	private static Dictionary<?, ?> _overrideDictionary(
+		Class<?> clazz, Dictionary<?, ?> properties) {
+
+		Map<String, Object> overrideProperties =
+			ConfigurationOverridePropertiesUtil.getOverrideProperties(
+				clazz.getName());
+
+		if (overrideProperties == null) {
+			return properties;
+		}
+
+		Dictionary<Object, Object> overrideDictionary =
+			new HashMapDictionary<>();
+
+		Enumeration<?> enumeration = properties.keys();
+
+		while (enumeration.hasMoreElements()) {
+			Object key = enumeration.nextElement();
+
+			overrideDictionary.put(key, properties.get(key));
+		}
+
+		overrideProperties.forEach(
+			(key, value) -> overrideDictionary.put(key, value));
+
+		return overrideDictionary;
+	}
+
+	private static Map<?, ?> _overrideMap(
+		Class<?> clazz, Map<?, ?> properties) {
+
+		Map<String, Object> overrideProperties =
+			ConfigurationOverridePropertiesUtil.getOverrideProperties(
+				clazz.getName());
+
+		if (overrideProperties == null) {
+			return properties;
+		}
+
+		Map<Object, Object> overrideMap = new HashMap<>(properties);
+
+		overrideMap.putAll(overrideProperties);
+
+		return overrideMap;
 	}
 
 	private static final Method _defineClassMethod;

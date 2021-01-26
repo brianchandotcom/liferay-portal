@@ -152,6 +152,155 @@ public class SiteNavigationMenuItemLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteSiteNavigationMenuItemOrderWith3Levels()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		SiteNavigationMenuItem siteNavigationMenuItem1 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem2 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 1, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 2, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem4 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 3, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3Child1 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3Child2 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 1, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3Child3 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 2, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3Child4 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 3, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3Child2Child1 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenuItem3Child2.getSiteNavigationMenuItemId(),
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 0, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3Child2Child2 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenuItem3Child2.getSiteNavigationMenuItemId(),
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 1, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3Child2Child3 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenuItem3Child2.getSiteNavigationMenuItemId(),
+				SiteNavigationMenuItemTypeConstants.LAYOUT, 2, StringPool.BLANK,
+				serviceContext);
+
+		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItem3Child2.getSiteNavigationMenuItemId());
+
+		Assert.assertEquals(
+			0, siteNavigationMenuItem1.getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(0, siteNavigationMenuItem1.getOrder());
+
+		Assert.assertEquals(
+			0, siteNavigationMenuItem2.getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(1, siteNavigationMenuItem2.getOrder());
+
+		Assert.assertEquals(
+			0, siteNavigationMenuItem3.getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(2, siteNavigationMenuItem3.getOrder());
+
+		Assert.assertEquals(
+			0, siteNavigationMenuItem4.getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(3, siteNavigationMenuItem4.getOrder());
+
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			siteNavigationMenuItem3Child1.getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(0, siteNavigationMenuItem3Child1.getOrder());
+
+		Assert.assertNull(
+			_siteNavigationMenuItemPersistence.fetchByPrimaryKey(
+				siteNavigationMenuItem3Child2.getSiteNavigationMenuItemId()));
+
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			siteNavigationMenuItem3Child2Child1.
+				getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(1, siteNavigationMenuItem3Child2Child1.getOrder());
+
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			siteNavigationMenuItem3Child2Child2.
+				getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(2, siteNavigationMenuItem3Child2Child2.getOrder());
+
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			siteNavigationMenuItem3Child2Child3.
+				getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(3, siteNavigationMenuItem3Child2Child3.getOrder());
+
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			siteNavigationMenuItem3Child3.getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(4, siteNavigationMenuItem3Child3.getOrder());
+
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			siteNavigationMenuItem3Child4.getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(5, siteNavigationMenuItem3Child4.getOrder());
+	}
+
+	@Test
 	public void testDeleteSiteNavigationMenuItemsAndMerge()
 		throws PortalException {
 

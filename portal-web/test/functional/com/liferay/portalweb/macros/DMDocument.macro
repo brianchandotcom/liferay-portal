@@ -2291,7 +2291,9 @@ definition {
 		}
 
 		if ("${dmDocumentFileType}" == "Image") {
-			AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+			AssertElementPresent(
+				key_dmDocumentFileName = "${dmDocumentTitle}",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 		}
 
 		if (isSet(tagNameList)) {

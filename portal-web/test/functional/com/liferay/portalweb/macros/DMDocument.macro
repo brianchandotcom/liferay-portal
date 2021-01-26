@@ -971,6 +971,10 @@ definition {
 			PortletEntry.inputText(
 				fieldLabel = "File Name",
 				text = "${dmDocumentFileNameEdit}");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "Warning: Changing the filename will affect existing links to this document.");
 		}
 	}
 

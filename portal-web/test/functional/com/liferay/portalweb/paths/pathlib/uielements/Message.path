@@ -399,6 +399,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WARNING_FEEDBACK</td>
+	<td>//div[contains(@class,'form-feedback-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WARNING_INFO</td>
 	<td>//*[contains(@class,'warning-info')][contains(.,'${key_warningInfo}')]</td>
 	<td></td>

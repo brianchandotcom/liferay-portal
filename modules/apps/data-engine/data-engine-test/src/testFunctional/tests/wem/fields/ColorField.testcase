@@ -30,7 +30,23 @@ definition {
 	test AddColorFieldByDragAndDrop {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 AddColorFieldByDragAndDrop pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color");
 
 	}
 

@@ -1962,12 +1962,61 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Can select web content template from Global site as a "Template" for Content Display fragment."
-	@ignore = "true"
 	@priority = "2"
-	test SelectWebContentTemplateFromGlobalSiteViaContentDisplay {
-		property portal.upstream = "false";
+	test SelectWebContentTemplateFromGlobalSiteInContentDisplay {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
 
-		// TODO LPS-101248 SelectWebContentTemplateFromGlobalSiteViaContentDisplay pending implementation
+		task ("Add a new template for Basic Web Content in Global site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+			NavItem.gotoTemplates();
+
+			var templateScript = '''<a>${content.getData()}</a>''';
+
+			WebContentTemplates.addCP(
+				structureName = "Basic Web Content",
+				templateName = "WC Template Name",
+				templateScript = "${templateScript}");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				customWebcontenttemplate = "WC Template Name",
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+
+			AssertVisible(
+				key_content = "//a[contains(.,'Web Content Content')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the web content is shown in Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_content = "//a[contains(.,'Web Content Content')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
 	}
 
 	@description = "This is a test for LPS-101248. Can select web content template from script file as a "Template" for Content Display fragment."
@@ -3662,6 +3711,7 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-97182 ViewRestoredAssetInContentDisplay pending implementation
+
 	}
 
 	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."
@@ -4031,8 +4081,8 @@ definition {
 
 			WebContent.addWithStructureCP(
 				column = "1",
-				row = "1",
 				navTab = "Web Content Images",
+				row = "1",
 				structureName = "WC Structure Name",
 				templateName = "WC Template Name",
 				webContentColor = "FF0D0D",

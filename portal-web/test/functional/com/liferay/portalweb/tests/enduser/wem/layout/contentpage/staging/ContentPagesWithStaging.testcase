@@ -784,13 +784,70 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Can select a custom web content template as a "Template" for web content selected in Content Display when enable live."
-	@ignore = "true"
 	@priority = "2"
-	test SelectCustomWebContentTemplateViaContentDisplay {
-		property portal.upstream = "false";
+	test SelectCustomWebContentTemplateInContentDisplay {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
+		}
 
-		// TODO LPS-101248 SelectCustomWebContentTemplateViaContentDisplay pending implementation
+		task ("Add a new template for Basic Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
+			NavItem.gotoTemplates();
+
+			var templateScript = '''<a>${content.getData()}</a>''';
+
+			WebContentTemplates.addCP(
+				structureName = "Basic Web Content",
+				templateName = "WC Template Name",
+				templateScript = "${templateScript}");
+		}
+
+		task ("Add a content page based on Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				customWebcontenttemplate = "WC Template Name",
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+
+			AssertVisible(
+				key_content = "//a[contains(.,'Web Content Content')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the web content is shown in Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			AssertVisible(
+				key_content = "//a[contains(.,'Web Content Content')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments back in Staging site."

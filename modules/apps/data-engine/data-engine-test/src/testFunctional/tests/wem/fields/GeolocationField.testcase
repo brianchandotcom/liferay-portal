@@ -31,7 +31,7 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 
-        Navigator.openURL();
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -110,26 +110,27 @@ definition {
 	test SetGeolocationAsRepeatable {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(    
+		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");
 
-        NavItem.gotoStructures();
-        
-        WebContentStructures.addCP(
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
 			structureDescription = "My Structure Description",
 			structureName = "My Structure Name 1");
 
-        DataEngine.addField(fieldFieldLabel = "Localization", fieldName = "Geolocation");
+		DataEngine.addField(
+			fieldFieldLabel = "Localization",
+			fieldName = "Geolocation");
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Localization");
 
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
 
-        WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
 
 		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
-
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

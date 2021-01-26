@@ -38,7 +38,7 @@ import org.junit.Test;
 /**
  * @author Hai Yu
  */
-public class Log4JConfigurationUtilTest {
+public class Log4JConfiguratorTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -51,7 +51,7 @@ public class Log4JConfigurationUtilTest {
 
 		String loggerName = StringUtil.randomString();
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _ERROR));
 
 		Logger logger = Logger.getLogger(loggerName);
@@ -60,7 +60,7 @@ public class Log4JConfigurationUtilTest {
 
 		// Assert one appender exist
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, ConsoleAppender.class));
 
@@ -68,7 +68,7 @@ public class Log4JConfigurationUtilTest {
 
 		// Assert override the previous appender
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, FileAppender.class));
 
@@ -76,7 +76,7 @@ public class Log4JConfigurationUtilTest {
 
 		// Assert two appenders
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, ConsoleAppender.class, FileAppender.class));
 
@@ -89,47 +89,47 @@ public class Log4JConfigurationUtilTest {
 
 		Logger logger = Logger.getLogger(loggerName);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _ALL));
 
 		_assertLog4JLevel(logger, _ALL);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _OFF));
 
 		_assertLog4JLevel(logger, _OFF);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _FATAL));
 
 		_assertLog4JLevel(logger, _FATAL);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _ERROR));
 
 		_assertLog4JLevel(logger, _ERROR);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _WARN));
 
 		_assertLog4JLevel(logger, _WARN);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _INFO));
 
 		_assertLog4JLevel(logger, _INFO);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _DEBUG));
 
 		_assertLog4JLevel(logger, _DEBUG);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _TRACE));
 
 		_assertLog4JLevel(logger, _TRACE);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, "FAKE_LEVEL"));
 
 		_assertLog4JLevel(logger, _DEBUG);
@@ -137,7 +137,7 @@ public class Log4JConfigurationUtilTest {
 
 	@Test
 	public void testConstructor() {
-		new Log4JConfigurationUtil();
+		new Log4JConfigurator();
 	}
 
 	@Test
@@ -147,14 +147,14 @@ public class Log4JConfigurationUtilTest {
 		Assert.assertEquals(
 			"The original level should be ALL for Logger not configured or " +
 				"created",
-			_ALL, Log4JConfigurationUtil.getOriginalLevel(loggerName));
+			_ALL, Log4JConfigurator.getOriginalLevel(loggerName));
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _ERROR));
 
 		Assert.assertEquals(
 			"The original level should be WARN by configuration", _ERROR,
-			Log4JConfigurationUtil.getOriginalLevel(loggerName));
+			Log4JConfigurator.getOriginalLevel(loggerName));
 	}
 
 	@Test
@@ -171,14 +171,14 @@ public class Log4JConfigurationUtilTest {
 
 		_assertLog4JLevel(childLogger, _INFO);
 
-		Log4JConfigurationUtil.configureLog4JXml(
+		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _WARN));
 
 		_assertLog4JLevel(logger, _WARN);
 
 		_assertLog4JLevel(childLogger, _WARN);
 
-		Log4JConfigurationUtil.setLevel(loggerName, _DEBUG);
+		Log4JConfigurator.setLevel(loggerName, _DEBUG);
 
 		_assertLog4JLevel(logger, _DEBUG);
 
@@ -196,7 +196,7 @@ public class Log4JConfigurationUtilTest {
 			"The root logger should include appenders",
 			appendersEnumeration.hasMoreElements());
 
-		Log4JConfigurationUtil.shutdownLog4J();
+		Log4JConfigurator.shutdownLog4J();
 
 		Assert.assertFalse(
 			"The root logger should not own appenders after shutting down",

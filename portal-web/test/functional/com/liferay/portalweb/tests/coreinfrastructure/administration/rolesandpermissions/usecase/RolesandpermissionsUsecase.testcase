@@ -244,6 +244,55 @@ definition {
 			userScreenName = "usersn");
 	}
 
+	@description = "This is a use case for LPS-124190."
+	@priority = "3"
+	test ExportRoleWithSiteAssignee {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONRole.addRegularRole(
+			roleKey = "Web Content Comment Reviewer",
+			roleTitle = "Web Content Comment Reviewer");
+
+		for (var resourceActionIndex : list "UPDATE_DISCUSSION,DELETE_DISCUSSION") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal.model.JournalArticle",
+				roleTitle = "Web Content Comment Reviewer");
+		}
+
+		JSONRole.assignRoleToGroup(
+			groupName = "Site Name",
+			roleTitle = "Web Content Comment Reviewer");
+
+		Role.openRolesAdmin();
+
+		LAR.exportPortlet(
+			exportPermissions = "true",
+			larFileName = "Roles_And_Assignees.lar");
+
+		JSONRole.deleteRole(roleTitle = "Web Content Comment Reviewer");
+
+		Role.openRolesAdmin();
+
+		LAR.importPortlet(
+			importPermissions = "true",
+			larFileName = "Roles_And_Assignees.lar");
+
+		Role.viewCP(roleTitle = "Web Content Comment Reviewer");
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "Delete Discussion",
+			permissionNavigationValue = "Web Content > Web Content Article");
+
+		Role.viewPermissionCP(
+			assigneeName = "Site Name",
+			assigneeType = "Sites",
+			permissionDefinitionValue = "Update Discussion",
+			permissionNavigationValue = "Web Content > Web Content Article");
+	}
+
 	@priority = "4"
 	test GroupScopePermissionCheck {
 		property osgi.app.includes = "bookmarks";

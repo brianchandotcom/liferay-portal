@@ -15,7 +15,6 @@
 package com.liferay.portal.log4j.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -23,11 +22,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import java.util.Enumeration;
@@ -57,10 +56,8 @@ public class PortalLog4jTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Path tempLogDir = Files.createTempDirectory(
+		_tempLogFileDirPath = Files.createTempDirectory(
 			PortalLog4jTest.class.getName());
-
-		_tempLogFileDir = tempLogDir.toFile();
 
 		Logger logger = Logger.getLogger(PortalLog4jTest.class);
 
@@ -76,12 +73,12 @@ public class PortalLog4jTest {
 
 			if (appender instanceof FileAppender) {
 				if (Objects.equals("TEXT_FILE", appender.getName())) {
-					_textLogFile = _initFileAppender(
-						logger, appender, _tempLogFileDir.toString());
+					_textLogFilePath = _initFileAppender(
+						logger, appender, _tempLogFileDirPath.toString());
 				}
 				else if (Objects.equals("XML_FILE", appender.getName())) {
-					_xmlLogFile = _initFileAppender(
-						logger, appender, _tempLogFileDir.toString());
+					_xmlLogFilePath = _initFileAppender(
+						logger, appender, _tempLogFileDirPath.toString());
 				}
 			}
 			else if ((appender instanceof ConsoleAppender) &&
@@ -103,14 +100,14 @@ public class PortalLog4jTest {
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws IOException {
 		Logger logger = Logger.getLogger(PortalLog4jTest.class);
 
 		logger.removeAllAppenders();
 
-		_textLogFile.delete();
-		_xmlLogFile.delete();
-		_tempLogFileDir.delete();
+		Files.deleteIfExists(_textLogFilePath);
+		Files.deleteIfExists(_xmlLogFilePath);
+		Files.deleteIfExists(_tempLogFileDirPath);
 	}
 
 	@Test
@@ -131,7 +128,7 @@ public class PortalLog4jTest {
 		_testLogOutput("FATAL");
 	}
 
-	private static File _initFileAppender(
+	private static Path _initFileAppender(
 		Logger logger, Appender appender, String tempLogDir) {
 
 		RollingFileAppender portalRollingFileAppender =
@@ -161,7 +158,7 @@ public class PortalLog4jTest {
 
 		logger.addAppender(testRollingFileAppender);
 
-		return new File(testRollingFileAppender.getFile());
+		return Paths.get(testRollingFileAppender.getFile());
 	}
 
 	private void _assertTextLog(
@@ -491,20 +488,20 @@ public class PortalLog4jTest {
 
 			_assertTextLog(
 				level, message, throwable,
-				StreamUtil.toString(new FileInputStream(_textLogFile)));
+				new String(Files.readAllBytes(_textLogFilePath)));
 
 			_assertXmlLog(
 				level, message, throwable,
-				StreamUtil.toString(new FileInputStream(_xmlLogFile)));
+				new String(Files.readAllBytes(_xmlLogFilePath)));
 		}
 		finally {
 			_unsyncStringWriter.reset();
 
 			Files.write(
-				_textLogFile.toPath(), new byte[0],
+				_textLogFilePath, new byte[0],
 				StandardOpenOption.TRUNCATE_EXISTING);
 			Files.write(
-				_xmlLogFile.toPath(), new byte[0],
+				_xmlLogFilePath, new byte[0],
 				StandardOpenOption.TRUNCATE_EXISTING);
 		}
 	}
@@ -516,10 +513,10 @@ public class PortalLog4jTest {
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
-	private static File _tempLogFileDir;
-	private static File _textLogFile;
+	private static Path _tempLogFileDirPath;
+	private static Path _textLogFilePath;
 	private static UnsyncStringWriter _unsyncStringWriter;
-	private static File _xmlLogFile;
+	private static Path _xmlLogFilePath;
 
 	private class TestException extends Exception {
 	}

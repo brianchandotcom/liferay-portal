@@ -553,6 +553,20 @@ definition {
 				value1 = "${webContentDate}");
 		}
 
+		if (isSet(webContentGrid)) {
+			if (!(isSet(webContentGridFieldLabel))) {
+				var webContentGridFieldLabel = "Grid";
+			}
+
+			var column = ${column} + 1;
+
+			Check.checkNotVisible(
+				key_column = "${column}",
+				key_fieldFieldLabel = "${webContentGridFieldLabel}",
+				key_row = "${row}",
+				locator1 = "WCEditWebContent#GRID_OPTION");
+		}
+
 		if (isSet(webContentImage)) {
 			if (!(isSet(webContentImageFieldLabel))) {
 				var webContentImageFieldLabel = "Image";

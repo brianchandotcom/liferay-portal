@@ -39,7 +39,6 @@ const TableHead = ({columns}) => (
 const TableBodyColumns = ({
 	columns,
 	disabled,
-	name,
 	onBlur,
 	onChange,
 	onFocus,
@@ -48,22 +47,20 @@ const TableBodyColumns = ({
 }) => {
 	const columnLabel = Liferay.Language.get('column');
 	const rowLabel = Liferay.Language.get('row');
-	const rowName = `${name}_${row.value}`;
 
 	return columns.map((column, colIndex) => {
 		return (
 			<ClayTable.Cell key={`cell-${column.value}-${colIndex}`}>
 				<ClayRadio
 					aria-label={`${rowLabel}: ${row.label}, ${columnLabel}: ${column.label}`}
-					checked={column.value === value[rowName]}
+					checked={column.value === value[row.value]}
 					className="form-builder-grid-field"
 					disabled={disabled}
-					id={column.value}
-					name={rowName}
+					name={row.value}
 					onBlur={onBlur}
 					onChange={onChange}
 					onFocus={onFocus}
-					value={column.reference}
+					value={column.value}
 				/>
 			</ClayTable.Cell>
 		);
@@ -114,7 +111,6 @@ const Grid = ({
 							<TableBodyColumns
 								columns={columns}
 								disabled={disabled}
-								name={name}
 								onBlur={onBlur}
 								onChange={onChange}
 								onFocus={onFocus}
@@ -152,7 +148,7 @@ const Main = ({
 				onChange={(event) => {
 					const {target} = event;
 					const value = {
-						[target.name]: target.id,
+						[target.name]: target.value,
 					};
 
 					const newState = {...state, ...value};

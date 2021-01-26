@@ -61,7 +61,7 @@
 <!--DOCUMENT_TYPES_TABLE-->
 <tr>
 	<td>DOCUMENT_TYPES_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[1]</td>
+	<td>//tr//td[contains(.,'${key_dmDocumentTypeName}')]</td>
 	<td></td>
 </tr>
 <tr>

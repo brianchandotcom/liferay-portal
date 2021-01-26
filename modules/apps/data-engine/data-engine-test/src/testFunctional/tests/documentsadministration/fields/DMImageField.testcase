@@ -1,0 +1,169 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMMetadataSet.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "5"
+	test SetLabelOfImageField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 SetLabelOfImageField pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "5"
+	test UploadImageFromLocalStorage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 UploadImageFromLocalStorage pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "5"
+	test UploadImageFromDocumentsAndMedia {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 UploadImageFromDocumentsAndMedia pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "5"
+	test LocalizationOfImageFieldtPersists {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 LocalizationOfImageFieldtPersists pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyRequiredPropertyOfImageField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 VerifyRequiredPropertyOfImageField pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetFieldReferenceOfImageField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 SetFieldReferenceOfImageField pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetHelpTextOfImageField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 SetHelpTextOfImageField pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test ShowAndHideImageFieldLabel {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 ShowAndHideImageFieldLabel pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetImageFieldAsRepeatable {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 SetImageFieldAsRepeatable pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test DuplicateImageField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 DuplicateImageField pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test UploadInvalidFile {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 UploadInvalidFile pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetImageDescriptionOnWebContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 SetImageDescriptionOnWebContent pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "4"
+	test ClearUploadedImage {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 ClearUploadedImage pending implementation
+
+	}
+
+    @description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@ignore = "true"
+	@priority = "3"
+	test SaveUploadedImageWithoutDescription {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98073 SaveUploadedImageWithoutDescription pending implementation
+
+	}
+
+}

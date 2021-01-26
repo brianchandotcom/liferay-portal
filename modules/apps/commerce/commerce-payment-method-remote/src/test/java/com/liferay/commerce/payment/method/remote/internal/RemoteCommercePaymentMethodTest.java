@@ -1254,9 +1254,9 @@ public class RemoteCommercePaymentMethodTest {
 
 		_httpServer = HttpServer.create(new InetSocketAddress(_PORT), 0);
 
-		HttpContext context = _httpServer.createContext(uri);
+		HttpContext httpContext = _httpServer.createContext(uri);
 
-		context.setHandler(httpHandler);
+		httpContext.setHandler(httpHandler);
 
 		_httpServer.start();
 	}

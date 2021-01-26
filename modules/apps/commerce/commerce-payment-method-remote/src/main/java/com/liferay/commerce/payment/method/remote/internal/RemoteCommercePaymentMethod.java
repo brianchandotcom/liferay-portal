@@ -464,16 +464,16 @@ public class RemoteCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Activate
 	protected void activate() {
+		HttpClientBuilder httpClientBuilder = HttpClients.custom();
+
 		_poolingHttpClientConnectionManager =
 			new PoolingHttpClientConnectionManager();
 
-		_poolingHttpClientConnectionManager.setMaxTotal(20);
-		_poolingHttpClientConnectionManager.setValidateAfterInactivity(30000);
-
-		HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
 		httpClientBuilder.setConnectionManager(
 			_poolingHttpClientConnectionManager);
+
+		_poolingHttpClientConnectionManager.setMaxTotal(20);
+		_poolingHttpClientConnectionManager.setValidateAfterInactivity(30000);
 
 		httpClientBuilder.useSystemProperties();
 

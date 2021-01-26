@@ -22,7 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 RemoteCommercePaymentMethodConfiguration remoteCommercePaymentMethodConfiguration = (RemoteCommercePaymentMethodConfiguration)request.getAttribute(RemoteCommercePaymentMethodConfiguration.class.getName());
 %>
 
-<portlet:actionURL name="editRemoteCommercePaymentMethodConfiguration" var="editRemoteCommercePaymentMethodConfigurationURL" />
+<portlet:actionURL name="/commerce_payment/edit_remote_commerce_payment_method_configuration" var="editRemoteCommercePaymentMethodConfigurationURL" />
 
 <aui:form action="<%= editRemoteCommercePaymentMethodConfigurationURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

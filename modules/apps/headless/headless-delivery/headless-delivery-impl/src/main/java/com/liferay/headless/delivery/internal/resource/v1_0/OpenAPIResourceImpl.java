@@ -88,8 +88,6 @@ public class OpenAPIResourceImpl {
 
 			add(ContentElementResourceImpl.class);
 
-			add(ContentPageResourceImpl.class);
-
 			add(ContentSetElementResourceImpl.class);
 
 			add(ContentStructureResourceImpl.class);
@@ -99,8 +97,6 @@ public class OpenAPIResourceImpl {
 			add(DocumentResourceImpl.class);
 
 			add(DocumentFolderResourceImpl.class);
-
-			add(ExperienceResourceImpl.class);
 
 			add(KnowledgeBaseArticleResourceImpl.class);
 
@@ -119,6 +115,8 @@ public class OpenAPIResourceImpl {
 			add(MessageBoardThreadResourceImpl.class);
 
 			add(NavigationMenuResourceImpl.class);
+
+			add(SitePageResourceImpl.class);
 
 			add(StructuredContentResourceImpl.class);
 

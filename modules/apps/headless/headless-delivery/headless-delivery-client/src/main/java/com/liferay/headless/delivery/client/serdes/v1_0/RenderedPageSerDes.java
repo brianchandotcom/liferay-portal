@@ -125,20 +125,6 @@ public class RenderedPageSerDes {
 			sb.append("\"");
 		}
 
-		if (renderedPage.getViewPortType() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"viewPortType\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(renderedPage.getViewPortType()));
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -202,14 +188,6 @@ public class RenderedPageSerDes {
 				String.valueOf(renderedPage.getRenderedPageURL()));
 		}
 
-		if (renderedPage.getViewPortType() == null) {
-			map.put("viewPortType", null);
-		}
-		else {
-			map.put(
-				"viewPortType", String.valueOf(renderedPage.getViewPortType()));
-		}
-
 		return map;
 	}
 
@@ -258,11 +236,6 @@ public class RenderedPageSerDes {
 				if (jsonParserFieldValue != null) {
 					renderedPage.setRenderedPageURL(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "viewPortType")) {
-				if (jsonParserFieldValue != null) {
-					renderedPage.setViewPortType((String)jsonParserFieldValue);
 				}
 			}
 			else if (jsonParserFieldName.equals("status")) {

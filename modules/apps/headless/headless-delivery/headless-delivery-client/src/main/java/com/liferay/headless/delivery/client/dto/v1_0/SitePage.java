@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.ContentPageSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.SitePageSerDes;
 
 import java.io.Serializable;
 
@@ -30,10 +30,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentPage implements Cloneable, Serializable {
+public class SitePage implements Cloneable, Serializable {
 
-	public static ContentPage toDTO(String json) {
-		return ContentPageSerDes.toDTO(json);
+	public static SitePage toDTO(String json) {
+		return SitePageSerDes.toDTO(json);
 	}
 
 	public Map<String, Map<String, String>> getActions() {
@@ -272,25 +272,6 @@ public class ContentPage implements Cloneable, Serializable {
 
 	protected Map<String, String> friendlyUrlPath_i18n;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long id;
-
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -354,6 +335,27 @@ public class ContentPage implements Cloneable, Serializable {
 	}
 
 	protected PageSettings pageSettings;
+
+	public String getPageType() {
+		return pageType;
+	}
+
+	public void setPageType(String pageType) {
+		this.pageType = pageType;
+	}
+
+	public void setPageType(
+		UnsafeSupplier<String, Exception> pageTypeUnsafeSupplier) {
+
+		try {
+			pageType = pageTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String pageType;
 
 	public RenderedPage getRenderedPage() {
 		return renderedPage;
@@ -534,8 +536,8 @@ public class ContentPage implements Cloneable, Serializable {
 	protected ViewableBy viewableBy;
 
 	@Override
-	public ContentPage clone() throws CloneNotSupportedException {
-		return (ContentPage)super.clone();
+	public SitePage clone() throws CloneNotSupportedException {
+		return (SitePage)super.clone();
 	}
 
 	@Override
@@ -544,13 +546,13 @@ public class ContentPage implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ContentPage)) {
+		if (!(object instanceof SitePage)) {
 			return false;
 		}
 
-		ContentPage contentPage = (ContentPage)object;
+		SitePage sitePage = (SitePage)object;
 
-		return Objects.equals(toString(), contentPage.toString());
+		return Objects.equals(toString(), sitePage.toString());
 	}
 
 	@Override
@@ -561,7 +563,7 @@ public class ContentPage implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ContentPageSerDes.toJSON(this);
+		return SitePageSerDes.toJSON(this);
 	}
 
 	public static enum ViewableBy {

@@ -199,38 +199,6 @@ public class RenderedPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedPageURL;
 
-	@Schema(
-		description = "The viewport for which this rendered page has been designed."
-	)
-	public String getViewPortType() {
-		return viewPortType;
-	}
-
-	public void setViewPortType(String viewPortType) {
-		this.viewPortType = viewPortType;
-	}
-
-	@JsonIgnore
-	public void setViewPortType(
-		UnsafeSupplier<String, Exception> viewPortTypeUnsafeSupplier) {
-
-		try {
-			viewPortType = viewPortTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The viewport for which this rendered page has been designed."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String viewPortType;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -324,20 +292,6 @@ public class RenderedPage implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(renderedPageURL));
-
-			sb.append("\"");
-		}
-
-		if (viewPortType != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"viewPortType\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(viewPortType));
 
 			sb.append("\"");
 		}

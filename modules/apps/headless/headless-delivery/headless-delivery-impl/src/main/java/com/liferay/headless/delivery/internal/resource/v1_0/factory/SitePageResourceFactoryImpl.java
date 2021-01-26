@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0.factory;
 
-import com.liferay.headless.delivery.resource.v1_0.ExperienceResource;
+import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -50,31 +50,30 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Javier Gamarra
  * @generated
  */
-@Component(immediate = true, service = ExperienceResource.Factory.class)
+@Component(immediate = true, service = SitePageResource.Factory.class)
 @Generated("")
-public class ExperienceResourceFactoryImpl
-	implements ExperienceResource.Factory {
+public class SitePageResourceFactoryImpl implements SitePageResource.Factory {
 
 	@Override
-	public ExperienceResource.Builder create() {
-		return new ExperienceResource.Builder() {
+	public SitePageResource.Builder create() {
+		return new SitePageResource.Builder() {
 
 			@Override
-			public ExperienceResource build() {
+			public SitePageResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (ExperienceResource)ProxyUtil.newProxyInstance(
-					ExperienceResource.class.getClassLoader(),
-					new Class<?>[] {ExperienceResource.class},
+				return (SitePageResource)ProxyUtil.newProxyInstance(
+					SitePageResource.class.getClassLoader(),
+					new Class<?>[] {SitePageResource.class},
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _preferredLocale, _user));
 			}
 
 			@Override
-			public ExperienceResource.Builder checkPermissions(
+			public SitePageResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -83,7 +82,7 @@ public class ExperienceResourceFactoryImpl
 			}
 
 			@Override
-			public ExperienceResource.Builder httpServletRequest(
+			public SitePageResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -92,7 +91,7 @@ public class ExperienceResourceFactoryImpl
 			}
 
 			@Override
-			public ExperienceResource.Builder preferredLocale(
+			public SitePageResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -101,7 +100,7 @@ public class ExperienceResourceFactoryImpl
 			}
 
 			@Override
-			public ExperienceResource.Builder user(User user) {
+			public SitePageResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -117,12 +116,12 @@ public class ExperienceResourceFactoryImpl
 
 	@Activate
 	protected void activate() {
-		ExperienceResource.FactoryHolder.factory = this;
+		SitePageResource.FactoryHolder.factory = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		ExperienceResource.FactoryHolder.factory = null;
+		SitePageResource.FactoryHolder.factory = null;
 	}
 
 	private Object _invoke(
@@ -147,27 +146,27 @@ public class ExperienceResourceFactoryImpl
 				_liberalPermissionCheckerFactory.create(user));
 		}
 
-		ExperienceResource experienceResource =
+		SitePageResource sitePageResource =
 			_componentServiceObjects.getService();
 
-		experienceResource.setContextAcceptLanguage(
+		sitePageResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		experienceResource.setContextCompany(company);
+		sitePageResource.setContextCompany(company);
 
-		experienceResource.setContextHttpServletRequest(httpServletRequest);
-		experienceResource.setContextUser(user);
+		sitePageResource.setContextHttpServletRequest(httpServletRequest);
+		sitePageResource.setContextUser(user);
 
 		try {
-			return method.invoke(experienceResource, arguments);
+			return method.invoke(sitePageResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(experienceResource);
+			_componentServiceObjects.ungetService(sitePageResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -179,8 +178,7 @@ public class ExperienceResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<ExperienceResource>
-		_componentServiceObjects;
+	private ComponentServiceObjects<SitePageResource> _componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;

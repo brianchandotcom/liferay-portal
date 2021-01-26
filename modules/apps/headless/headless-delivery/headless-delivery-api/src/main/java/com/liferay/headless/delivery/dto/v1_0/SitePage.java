@@ -51,17 +51,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ContentPage")
+@GraphQLName("SitePage")
 @JsonFilter("Liferay.Vulcan")
 @Schema(
 	requiredProperties = {"title"},
-	description = "Represents a content page that has fields and is rendered by a template backed by a `PageTemplate`. This is modeled internally as a `Layout`."
+	description = "Represents a site page. This is modeled internally as a `Layout`."
 )
-@XmlRootElement(name = "ContentPage")
-public class ContentPage implements Serializable {
+@XmlRootElement(name = "SitePage")
+public class SitePage implements Serializable {
 
-	public static ContentPage toDTO(String json) {
-		return ObjectMapperUtil.readValue(ContentPage.class, json);
+	public static SitePage toDTO(String json) {
+		return ObjectMapperUtil.readValue(SitePage.class, json);
 	}
 
 	@Schema
@@ -125,7 +125,7 @@ public class ContentPage implements Serializable {
 	protected AggregateRating aggregateRating;
 
 	@Schema(
-		description = "The list of languages the content page has a translation for."
+		description = "The list of languages the page has a translation for."
 	)
 	public String[] getAvailableLanguages() {
 		return availableLanguages;
@@ -151,12 +151,12 @@ public class ContentPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The list of languages the content page has a translation for."
+		description = "The list of languages the page has a translation for."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String[] availableLanguages;
 
-	@Schema
+	@Schema(description = "The page's creator.")
 	@Valid
 	public Creator getCreator() {
 		return creator;
@@ -181,11 +181,11 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(description = "The page's creator.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator creator;
 
-	@Schema
+	@Schema(description = "Custom fields associated to the page.")
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -210,11 +210,11 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Custom fields associated to the page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
-	@Schema(description = "The content page's creation date.")
+	@Schema(description = "The page's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -238,13 +238,11 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The content page's creation date.")
+	@GraphQLField(description = "The page's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
-	@Schema(
-		description = "The last time any field of the content page was changed."
-	)
+	@Schema(description = "The last time any field of the page was changed.")
 	public Date getDateModified() {
 		return dateModified;
 	}
@@ -269,12 +267,12 @@ public class ContentPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The last time any field of the content page was changed."
+		description = "The last time any field of the page was changed."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
-	@Schema(description = "The content page's most recent publication date.")
+	@Schema(description = "The page's most recent publication date.")
 	public Date getDatePublished() {
 		return datePublished;
 	}
@@ -298,13 +296,11 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "The content page's most recent publication date."
-	)
+	@GraphQLField(description = "The page's most recent publication date.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date datePublished;
 
-	@Schema
+	@Schema(description = "Experience of the page that it's being retrived.")
 	@Valid
 	public Experience getExperience() {
 		return experience;
@@ -329,13 +325,13 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Experience of the page that it's being retrived."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Experience experience;
 
-	@Schema(
-		description = "A relative URL to the content page's rendered content."
-	)
+	@Schema(description = "A relative URL to the page's rendered content.")
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}
@@ -360,7 +356,7 @@ public class ContentPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A relative URL to the content page's rendered content."
+		description = "A relative URL to the page's rendered content."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyUrlPath;
@@ -397,32 +393,6 @@ public class ContentPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> friendlyUrlPath_i18n;
 
-	@Schema(description = "The page's ID.")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The page's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long id;
-
 	@Schema(
 		description = "A list of keywords describing the structured content."
 	)
@@ -455,7 +425,9 @@ public class ContentPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
-	@Schema
+	@Schema(
+		description = "Retrieves the structure with all elements of the page"
+	)
 	@Valid
 	public PageDefinition getPageDefinition() {
 		return pageDefinition;
@@ -481,11 +453,13 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Retrieves the structure with all elements of the page"
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageDefinition pageDefinition;
 
-	@Schema
+	@Schema(description = "Settings of the page, such as SEO or OpenGraph")
 	@Valid
 	public PageSettings getPageSettings() {
 		return pageSettings;
@@ -510,11 +484,43 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Settings of the page, such as SEO or OpenGraph"
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSettings pageSettings;
 
-	@Schema
+	@Schema(description = "The type of the page")
+	public String getPageType() {
+		return pageType;
+	}
+
+	public void setPageType(String pageType) {
+		this.pageType = pageType;
+	}
+
+	@JsonIgnore
+	public void setPageType(
+		UnsafeSupplier<String, Exception> pageTypeUnsafeSupplier) {
+
+		try {
+			pageType = pageTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The type of the page")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String pageType;
+
+	@Schema(
+		description = "Metadata of the page such as it's master page and template"
+	)
 	@Valid
 	public RenderedPage getRenderedPage() {
 		return renderedPage;
@@ -539,13 +545,13 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Metadata of the page such as it's master page and template"
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RenderedPage renderedPage;
 
-	@Schema(
-		description = "The ID of the site to which this content page is scoped."
-	)
+	@Schema(description = "The ID of the site to which this page is scoped.")
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -570,7 +576,7 @@ public class ContentPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The ID of the site to which this content page is scoped."
+		description = "The ID of the site to which this page is scoped."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
@@ -639,7 +645,7 @@ public class ContentPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;
 
-	@Schema(description = "the title of the content page")
+	@Schema(description = "the title of the page")
 	public String getTitle() {
 		return title;
 	}
@@ -663,7 +669,7 @@ public class ContentPage implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "the title of the content page")
+	@GraphQLField(description = "the title of the page")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String title;
@@ -698,9 +704,7 @@ public class ContentPage implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title_i18n;
 
-	@Schema(
-		description = "A valid external identifier to reference this content page."
-	)
+	@Schema(description = "A valid external identifier to reference this page.")
 	public String getUuid() {
 		return uuid;
 	}
@@ -723,7 +727,7 @@ public class ContentPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A valid external identifier to reference this content page."
+		description = "A valid external identifier to reference this page."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String uuid;
@@ -772,13 +776,13 @@ public class ContentPage implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ContentPage)) {
+		if (!(object instanceof SitePage)) {
 			return false;
 		}
 
-		ContentPage contentPage = (ContentPage)object;
+		SitePage sitePage = (SitePage)object;
 
-		return Objects.equals(toString(), contentPage.toString());
+		return Objects.equals(toString(), sitePage.toString());
 	}
 
 	@Override
@@ -946,16 +950,6 @@ public class ContentPage implements Serializable {
 			sb.append(_toJSON(friendlyUrlPath_i18n));
 		}
 
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
 		if (keywords != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -998,6 +992,20 @@ public class ContentPage implements Serializable {
 			sb.append("\"pageSettings\": ");
 
 			sb.append(String.valueOf(pageSettings));
+		}
+
+		if (pageType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageType));
+
+			sb.append("\"");
 		}
 
 		if (renderedPage != null) {
@@ -1118,7 +1126,7 @@ public class ContentPage implements Serializable {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentPage",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.SitePage",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -22,12 +22,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.delivery.client.dto.v1_0.ContentPage;
+import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
-import com.liferay.headless.delivery.client.resource.v1_0.ContentPageResource;
-import com.liferay.headless.delivery.client.serdes.v1_0.ContentPageSerDes;
+import com.liferay.headless.delivery.client.resource.v1_0.SitePageResource;
+import com.liferay.headless.delivery.client.serdes.v1_0.SitePageSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -90,7 +90,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseContentPageResourceTestCase {
+public abstract class BaseSitePageResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -111,11 +111,11 @@ public abstract class BaseContentPageResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_contentPageResource.setContextCompany(testCompany);
+		_sitePageResource.setContextCompany(testCompany);
 
-		ContentPageResource.Builder builder = ContentPageResource.builder();
+		SitePageResource.Builder builder = SitePageResource.builder();
 
-		contentPageResource = builder.authentication(
+		sitePageResource = builder.authentication(
 			"test@liferay.com", "test"
 		).locale(
 			LocaleUtil.getDefault()
@@ -146,13 +146,13 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 		};
 
-		ContentPage contentPage1 = randomContentPage();
+		SitePage sitePage1 = randomSitePage();
 
-		String json = objectMapper.writeValueAsString(contentPage1);
+		String json = objectMapper.writeValueAsString(sitePage1);
 
-		ContentPage contentPage2 = ContentPageSerDes.toDTO(json);
+		SitePage sitePage2 = SitePageSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(contentPage1, contentPage2));
+		Assert.assertTrue(equals(sitePage1, sitePage2));
 	}
 
 	@Test
@@ -172,10 +172,10 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 		};
 
-		ContentPage contentPage = randomContentPage();
+		SitePage sitePage = randomSitePage();
 
-		String json1 = objectMapper.writeValueAsString(contentPage);
-		String json2 = ContentPageSerDes.toJSON(contentPage);
+		String json1 = objectMapper.writeValueAsString(sitePage);
+		String json2 = SitePageSerDes.toJSON(sitePage);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -185,71 +185,70 @@ public abstract class BaseContentPageResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		ContentPage contentPage = randomContentPage();
+		SitePage sitePage = randomSitePage();
 
-		contentPage.setFriendlyUrlPath(regex);
-		contentPage.setTitle(regex);
-		contentPage.setUuid(regex);
+		sitePage.setFriendlyUrlPath(regex);
+		sitePage.setPageType(regex);
+		sitePage.setTitle(regex);
+		sitePage.setUuid(regex);
 
-		String json = ContentPageSerDes.toJSON(contentPage);
+		String json = SitePageSerDes.toJSON(sitePage);
 
 		Assert.assertFalse(json.contains(regex));
 
-		contentPage = ContentPageSerDes.toDTO(json);
+		sitePage = SitePageSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, contentPage.getFriendlyUrlPath());
-		Assert.assertEquals(regex, contentPage.getTitle());
-		Assert.assertEquals(regex, contentPage.getUuid());
+		Assert.assertEquals(regex, sitePage.getFriendlyUrlPath());
+		Assert.assertEquals(regex, sitePage.getPageType());
+		Assert.assertEquals(regex, sitePage.getTitle());
+		Assert.assertEquals(regex, sitePage.getUuid());
 	}
 
 	@Test
-	public void testGetSiteContentPagesPage() throws Exception {
-		Page<ContentPage> page = contentPageResource.getSiteContentPagesPage(
-			testGetSiteContentPagesPage_getSiteId(),
-			RandomTestUtil.randomString(), null, null, Pagination.of(1, 2),
-			null);
+	public void testGetSiteSitePagesPage() throws Exception {
+		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
+			testGetSiteSitePagesPage_getSiteId(), RandomTestUtil.randomString(),
+			null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long siteId = testGetSiteContentPagesPage_getSiteId();
-		Long irrelevantSiteId =
-			testGetSiteContentPagesPage_getIrrelevantSiteId();
+		Long siteId = testGetSiteSitePagesPage_getSiteId();
+		Long irrelevantSiteId = testGetSiteSitePagesPage_getIrrelevantSiteId();
 
 		if ((irrelevantSiteId != null)) {
-			ContentPage irrelevantContentPage =
-				testGetSiteContentPagesPage_addContentPage(
-					irrelevantSiteId, randomIrrelevantContentPage());
+			SitePage irrelevantSitePage = testGetSiteSitePagesPage_addSitePage(
+				irrelevantSiteId, randomIrrelevantSitePage());
 
-			page = contentPageResource.getSiteContentPagesPage(
+			page = sitePageResource.getSiteSitePagesPage(
 				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
 			assertEquals(
-				Arrays.asList(irrelevantContentPage),
-				(List<ContentPage>)page.getItems());
+				Arrays.asList(irrelevantSitePage),
+				(List<SitePage>)page.getItems());
 			assertValid(page);
 		}
 
-		ContentPage contentPage1 = testGetSiteContentPagesPage_addContentPage(
-			siteId, randomContentPage());
+		SitePage sitePage1 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
 
-		ContentPage contentPage2 = testGetSiteContentPagesPage_addContentPage(
-			siteId, randomContentPage());
+		SitePage sitePage2 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
 
-		page = contentPageResource.getSiteContentPagesPage(
+		page = sitePageResource.getSiteSitePagesPage(
 			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(contentPage1, contentPage2),
-			(List<ContentPage>)page.getItems());
+			Arrays.asList(sitePage1, sitePage2),
+			(List<SitePage>)page.getItems());
 		assertValid(page);
 	}
 
 	@Test
-	public void testGetSiteContentPagesPageWithFilterDateTimeEquals()
+	public void testGetSiteSitePagesPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -259,28 +258,26 @@ public abstract class BaseContentPageResourceTestCase {
 			return;
 		}
 
-		Long siteId = testGetSiteContentPagesPage_getSiteId();
+		Long siteId = testGetSiteSitePagesPage_getSiteId();
 
-		ContentPage contentPage1 = randomContentPage();
+		SitePage sitePage1 = randomSitePage();
 
-		contentPage1 = testGetSiteContentPagesPage_addContentPage(
-			siteId, contentPage1);
+		sitePage1 = testGetSiteSitePagesPage_addSitePage(siteId, sitePage1);
 
 		for (EntityField entityField : entityFields) {
-			Page<ContentPage> page =
-				contentPageResource.getSiteContentPagesPage(
-					siteId, null, null,
-					getFilterString(entityField, "between", contentPage1),
-					Pagination.of(1, 2), null);
+			Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null,
+				getFilterString(entityField, "between", sitePage1),
+				Pagination.of(1, 2), null);
 
 			assertEquals(
-				Collections.singletonList(contentPage1),
-				(List<ContentPage>)page.getItems());
+				Collections.singletonList(sitePage1),
+				(List<SitePage>)page.getItems());
 		}
 	}
 
 	@Test
-	public void testGetSiteContentPagesPageWithFilterStringEquals()
+	public void testGetSiteSitePagesPageWithFilterStringEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -290,92 +287,91 @@ public abstract class BaseContentPageResourceTestCase {
 			return;
 		}
 
-		Long siteId = testGetSiteContentPagesPage_getSiteId();
+		Long siteId = testGetSiteSitePagesPage_getSiteId();
 
-		ContentPage contentPage1 = testGetSiteContentPagesPage_addContentPage(
-			siteId, randomContentPage());
+		SitePage sitePage1 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ContentPage contentPage2 = testGetSiteContentPagesPage_addContentPage(
-			siteId, randomContentPage());
+		SitePage sitePage2 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
 
 		for (EntityField entityField : entityFields) {
-			Page<ContentPage> page =
-				contentPageResource.getSiteContentPagesPage(
-					siteId, null, null,
-					getFilterString(entityField, "eq", contentPage1),
-					Pagination.of(1, 2), null);
+			Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null,
+				getFilterString(entityField, "eq", sitePage1),
+				Pagination.of(1, 2), null);
 
 			assertEquals(
-				Collections.singletonList(contentPage1),
-				(List<ContentPage>)page.getItems());
+				Collections.singletonList(sitePage1),
+				(List<SitePage>)page.getItems());
 		}
 	}
 
 	@Test
-	public void testGetSiteContentPagesPageWithPagination() throws Exception {
-		Long siteId = testGetSiteContentPagesPage_getSiteId();
+	public void testGetSiteSitePagesPageWithPagination() throws Exception {
+		Long siteId = testGetSiteSitePagesPage_getSiteId();
 
-		ContentPage contentPage1 = testGetSiteContentPagesPage_addContentPage(
-			siteId, randomContentPage());
+		SitePage sitePage1 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
 
-		ContentPage contentPage2 = testGetSiteContentPagesPage_addContentPage(
-			siteId, randomContentPage());
+		SitePage sitePage2 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
 
-		ContentPage contentPage3 = testGetSiteContentPagesPage_addContentPage(
-			siteId, randomContentPage());
+		SitePage sitePage3 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
 
-		Page<ContentPage> page1 = contentPageResource.getSiteContentPagesPage(
+		Page<SitePage> page1 = sitePageResource.getSiteSitePagesPage(
 			siteId, null, null, null, Pagination.of(1, 2), null);
 
-		List<ContentPage> contentPages1 = (List<ContentPage>)page1.getItems();
+		List<SitePage> sitePages1 = (List<SitePage>)page1.getItems();
 
-		Assert.assertEquals(contentPages1.toString(), 2, contentPages1.size());
+		Assert.assertEquals(sitePages1.toString(), 2, sitePages1.size());
 
-		Page<ContentPage> page2 = contentPageResource.getSiteContentPagesPage(
+		Page<SitePage> page2 = sitePageResource.getSiteSitePagesPage(
 			siteId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
-		List<ContentPage> contentPages2 = (List<ContentPage>)page2.getItems();
+		List<SitePage> sitePages2 = (List<SitePage>)page2.getItems();
 
-		Assert.assertEquals(contentPages2.toString(), 1, contentPages2.size());
+		Assert.assertEquals(sitePages2.toString(), 1, sitePages2.size());
 
-		Page<ContentPage> page3 = contentPageResource.getSiteContentPagesPage(
+		Page<SitePage> page3 = sitePageResource.getSiteSitePagesPage(
 			siteId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(contentPage1, contentPage2, contentPage3),
-			(List<ContentPage>)page3.getItems());
+			Arrays.asList(sitePage1, sitePage2, sitePage3),
+			(List<SitePage>)page3.getItems());
 	}
 
 	@Test
-	public void testGetSiteContentPagesPageWithSortDateTime() throws Exception {
-		testGetSiteContentPagesPageWithSort(
+	public void testGetSiteSitePagesPageWithSortDateTime() throws Exception {
+		testGetSiteSitePagesPageWithSort(
 			EntityField.Type.DATE_TIME,
-			(entityField, contentPage1, contentPage2) -> {
+			(entityField, sitePage1, sitePage2) -> {
 				BeanUtils.setProperty(
-					contentPage1, entityField.getName(),
+					sitePage1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
 			});
 	}
 
 	@Test
-	public void testGetSiteContentPagesPageWithSortInteger() throws Exception {
-		testGetSiteContentPagesPageWithSort(
+	public void testGetSiteSitePagesPageWithSortInteger() throws Exception {
+		testGetSiteSitePagesPageWithSort(
 			EntityField.Type.INTEGER,
-			(entityField, contentPage1, contentPage2) -> {
-				BeanUtils.setProperty(contentPage1, entityField.getName(), 0);
-				BeanUtils.setProperty(contentPage2, entityField.getName(), 1);
+			(entityField, sitePage1, sitePage2) -> {
+				BeanUtils.setProperty(sitePage1, entityField.getName(), 0);
+				BeanUtils.setProperty(sitePage2, entityField.getName(), 1);
 			});
 	}
 
 	@Test
-	public void testGetSiteContentPagesPageWithSortString() throws Exception {
-		testGetSiteContentPagesPageWithSort(
+	public void testGetSiteSitePagesPageWithSortString() throws Exception {
+		testGetSiteSitePagesPageWithSort(
 			EntityField.Type.STRING,
-			(entityField, contentPage1, contentPage2) -> {
-				Class<?> clazz = contentPage1.getClass();
+			(entityField, sitePage1, sitePage2) -> {
+				Class<?> clazz = sitePage1.getClass();
 
 				String entityFieldName = entityField.getName();
 
@@ -386,21 +382,21 @@ public abstract class BaseContentPageResourceTestCase {
 
 				if (returnType.isAssignableFrom(Map.class)) {
 					BeanUtils.setProperty(
-						contentPage1, entityFieldName,
+						sitePage1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
 					BeanUtils.setProperty(
-						contentPage2, entityFieldName,
+						sitePage2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
 					BeanUtils.setProperty(
-						contentPage1, entityFieldName,
+						sitePage1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
 					BeanUtils.setProperty(
-						contentPage2, entityFieldName,
+						sitePage2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
@@ -408,12 +404,12 @@ public abstract class BaseContentPageResourceTestCase {
 				}
 				else {
 					BeanUtils.setProperty(
-						contentPage1, entityFieldName,
+						sitePage1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
 					BeanUtils.setProperty(
-						contentPage2, entityFieldName,
+						sitePage2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
@@ -421,9 +417,9 @@ public abstract class BaseContentPageResourceTestCase {
 			});
 	}
 
-	protected void testGetSiteContentPagesPageWithSort(
+	protected void testGetSiteSitePagesPageWithSort(
 			EntityField.Type type,
-			UnsafeTriConsumer<EntityField, ContentPage, ContentPage, Exception>
+			UnsafeTriConsumer<EntityField, SitePage, SitePage, Exception>
 				unsafeTriConsumer)
 		throws Exception {
 
@@ -433,283 +429,203 @@ public abstract class BaseContentPageResourceTestCase {
 			return;
 		}
 
-		Long siteId = testGetSiteContentPagesPage_getSiteId();
+		Long siteId = testGetSiteSitePagesPage_getSiteId();
 
-		ContentPage contentPage1 = randomContentPage();
-		ContentPage contentPage2 = randomContentPage();
+		SitePage sitePage1 = randomSitePage();
+		SitePage sitePage2 = randomSitePage();
 
 		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, contentPage1, contentPage2);
+			unsafeTriConsumer.accept(entityField, sitePage1, sitePage2);
 		}
 
-		contentPage1 = testGetSiteContentPagesPage_addContentPage(
-			siteId, contentPage1);
+		sitePage1 = testGetSiteSitePagesPage_addSitePage(siteId, sitePage1);
 
-		contentPage2 = testGetSiteContentPagesPage_addContentPage(
-			siteId, contentPage2);
+		sitePage2 = testGetSiteSitePagesPage_addSitePage(siteId, sitePage2);
 
 		for (EntityField entityField : entityFields) {
-			Page<ContentPage> ascPage =
-				contentPageResource.getSiteContentPagesPage(
-					siteId, null, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":asc");
+			Page<SitePage> ascPage = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
 
 			assertEquals(
-				Arrays.asList(contentPage1, contentPage2),
-				(List<ContentPage>)ascPage.getItems());
+				Arrays.asList(sitePage1, sitePage2),
+				(List<SitePage>)ascPage.getItems());
 
-			Page<ContentPage> descPage =
-				contentPageResource.getSiteContentPagesPage(
-					siteId, null, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":desc");
+			Page<SitePage> descPage = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
 
 			assertEquals(
-				Arrays.asList(contentPage2, contentPage1),
-				(List<ContentPage>)descPage.getItems());
+				Arrays.asList(sitePage2, sitePage1),
+				(List<SitePage>)descPage.getItems());
 		}
 	}
 
-	protected ContentPage testGetSiteContentPagesPage_addContentPage(
-			Long siteId, ContentPage contentPage)
+	protected SitePage testGetSiteSitePagesPage_addSitePage(
+			Long siteId, SitePage sitePage)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetSiteContentPagesPage_getSiteId() throws Exception {
+	protected Long testGetSiteSitePagesPage_getSiteId() throws Exception {
 		return testGroup.getGroupId();
 	}
 
-	protected Long testGetSiteContentPagesPage_getIrrelevantSiteId()
+	protected Long testGetSiteSitePagesPage_getIrrelevantSiteId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
 	}
 
 	@Test
-	public void testGraphQLGetSiteContentPagesPage() throws Exception {
-		Long siteId = testGetSiteContentPagesPage_getSiteId();
+	public void testGraphQLGetSiteSitePagesPage() throws Exception {
+		Assert.assertTrue(false);
+	}
 
-		GraphQLField graphQLField = new GraphQLField(
-			"contentPages",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 2);
+	@Test
+	public void testGetSiteSitePage() throws Exception {
+		Assert.assertTrue(false);
+	}
 
-					put("siteKey", "\"" + siteId + "\"");
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
+	@Test
+	public void testGraphQLGetSiteSitePage() throws Exception {
+		Assert.assertTrue(true);
+	}
 
-		JSONObject contentPagesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/contentPages");
+	@Test
+	public void testGraphQLGetSiteSitePageNotFound() throws Exception {
+		Assert.assertTrue(true);
+	}
 
-		Assert.assertEquals(0, contentPagesJSONObject.get("totalCount"));
+	@Test
+	public void testGetSiteSitePageFriendlyUrlPathExperiencesPage()
+		throws Exception {
 
-		ContentPage contentPage1 = testGraphQLContentPage_addContentPage();
-		ContentPage contentPage2 = testGraphQLContentPage_addContentPage();
+		Page<SitePage> page =
+			sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
+				testGetSiteSitePageFriendlyUrlPathExperiencesPage_getSiteId(),
+				testGetSiteSitePageFriendlyUrlPathExperiencesPage_getFriendlyUrlPath());
 
-		contentPagesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/contentPages");
+		Assert.assertEquals(0, page.getTotalCount());
 
-		Assert.assertEquals(2, contentPagesJSONObject.get("totalCount"));
+		Long siteId =
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getIrrelevantSiteId();
+		String friendlyUrlPath =
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getFriendlyUrlPath();
+		String irrelevantFriendlyUrlPath =
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getIrrelevantFriendlyUrlPath();
+
+		if ((irrelevantSiteId != null) && (irrelevantFriendlyUrlPath != null)) {
+			SitePage irrelevantSitePage =
+				testGetSiteSitePageFriendlyUrlPathExperiencesPage_addSitePage(
+					irrelevantSiteId, irrelevantFriendlyUrlPath,
+					randomIrrelevantSitePage());
+
+			page =
+				sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
+					irrelevantSiteId, irrelevantFriendlyUrlPath);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantSitePage),
+				(List<SitePage>)page.getItems());
+			assertValid(page);
+		}
+
+		SitePage sitePage1 =
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_addSitePage(
+				siteId, friendlyUrlPath, randomSitePage());
+
+		SitePage sitePage2 =
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_addSitePage(
+				siteId, friendlyUrlPath, randomSitePage());
+
+		page = sitePageResource.getSiteSitePageFriendlyUrlPathExperiencesPage(
+			siteId, friendlyUrlPath);
+
+		Assert.assertEquals(2, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(contentPage1, contentPage2),
-			Arrays.asList(
-				ContentPageSerDes.toDTOs(
-					contentPagesJSONObject.getString("items"))));
+			Arrays.asList(sitePage1, sitePage2),
+			(List<SitePage>)page.getItems());
+		assertValid(page);
 	}
 
-	@Test
-	public void testGetSiteContentPage() throws Exception {
-		ContentPage postContentPage = testGetSiteContentPage_addContentPage();
-
-		ContentPage getContentPage = contentPageResource.getSiteContentPage(
-			postContentPage.getSiteId(), postContentPage.getFriendlyUrlPath());
-
-		assertEquals(postContentPage, getContentPage);
-		assertValid(getContentPage);
-	}
-
-	protected ContentPage testGetSiteContentPage_addContentPage()
+	protected SitePage
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_addSitePage(
+				Long siteId, String friendlyUrlPath, SitePage sitePage)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	@Test
-	public void testGraphQLGetSiteContentPage() throws Exception {
-		ContentPage contentPage = testGraphQLContentPage_addContentPage();
-
-		Assert.assertTrue(
-			equals(
-				contentPage,
-				ContentPageSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"contentPage",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" + contentPage.getSiteId() +
-												"\"");
-										put(
-											"friendlyUrlPath",
-											"\"" +
-												contentPage.
-													getFriendlyUrlPath() +
-														"\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/contentPage"))));
-	}
-
-	@Test
-	public void testGraphQLGetSiteContentPageNotFound() throws Exception {
-		String irrelevantFriendlyUrlPath =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"contentPage",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"friendlyUrlPath",
-									irrelevantFriendlyUrlPath);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	@Test
-	public void testGetSiteContentPageExperienceExperienceKey()
+	protected Long testGetSiteSitePageFriendlyUrlPathExperiencesPage_getSiteId()
 		throws Exception {
 
-		ContentPage postContentPage =
-			testGetSiteContentPageExperienceExperienceKey_addContentPage();
-
-		ContentPage getContentPage =
-			contentPageResource.getSiteContentPageExperienceExperienceKey(
-				postContentPage.getSiteId(),
-				postContentPage.getFriendlyUrlPath(), null);
-
-		assertEquals(postContentPage, getContentPage);
-		assertValid(getContentPage);
+		return testGroup.getGroupId();
 	}
 
-	protected ContentPage
-			testGetSiteContentPageExperienceExperienceKey_addContentPage()
+	protected Long
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	protected String
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getFriendlyUrlPath()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	@Test
-	public void testGraphQLGetSiteContentPageExperienceExperienceKey()
+	protected String
+			testGetSiteSitePageFriendlyUrlPathExperiencesPage_getIrrelevantFriendlyUrlPath()
 		throws Exception {
 
-		ContentPage contentPage = testGraphQLContentPage_addContentPage();
-
-		Assert.assertTrue(
-			equals(
-				contentPage,
-				ContentPageSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"contentPageExperienceExperienceKey",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"siteKey",
-											"\"" + contentPage.getSiteId() +
-												"\"");
-										put(
-											"friendlyUrlPath",
-											"\"" +
-												contentPage.
-													getFriendlyUrlPath() +
-														"\"");
-										put("experienceKey", null);
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/contentPageExperienceExperienceKey"))));
+		return null;
 	}
 
 	@Test
-	public void testGraphQLGetSiteContentPageExperienceExperienceKeyNotFound()
-		throws Exception {
-
-		String irrelevantFriendlyUrlPath =
-			"\"" + RandomTestUtil.randomString() + "\"";
-		String irrelevantExperienceKey =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"contentPageExperienceExperienceKey",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"siteKey",
-									"\"" + irrelevantGroup.getGroupId() + "\"");
-								put(
-									"friendlyUrlPath",
-									irrelevantFriendlyUrlPath);
-								put("experienceKey", irrelevantExperienceKey);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
+	public void testGetSiteSitePageExperienceExperienceKey() throws Exception {
+		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGetSiteContentPageExperienceExperienceKeyRenderedPage()
+	public void testGraphQLGetSiteSitePageExperienceExperienceKey()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetSiteSitePageExperienceExperienceKeyNotFound()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGetSiteSitePageExperienceExperienceKeyRenderedPage()
 		throws Exception {
 
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGetSiteContentPageRenderedPage() throws Exception {
+	public void testGetSiteSitePageRenderedPage() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	protected ContentPage testGraphQLContentPage_addContentPage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
 
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
@@ -719,37 +635,35 @@ public abstract class BaseContentPageResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(
-		ContentPage contentPage1, ContentPage contentPage2) {
-
+	protected void assertEquals(SitePage sitePage1, SitePage sitePage2) {
 		Assert.assertTrue(
-			contentPage1 + " does not equal " + contentPage2,
-			equals(contentPage1, contentPage2));
+			sitePage1 + " does not equal " + sitePage2,
+			equals(sitePage1, sitePage2));
 	}
 
 	protected void assertEquals(
-		List<ContentPage> contentPages1, List<ContentPage> contentPages2) {
+		List<SitePage> sitePages1, List<SitePage> sitePages2) {
 
-		Assert.assertEquals(contentPages1.size(), contentPages2.size());
+		Assert.assertEquals(sitePages1.size(), sitePages2.size());
 
-		for (int i = 0; i < contentPages1.size(); i++) {
-			ContentPage contentPage1 = contentPages1.get(i);
-			ContentPage contentPage2 = contentPages2.get(i);
+		for (int i = 0; i < sitePages1.size(); i++) {
+			SitePage sitePage1 = sitePages1.get(i);
+			SitePage sitePage2 = sitePages2.get(i);
 
-			assertEquals(contentPage1, contentPage2);
+			assertEquals(sitePage1, sitePage2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<ContentPage> contentPages1, List<ContentPage> contentPages2) {
+		List<SitePage> sitePages1, List<SitePage> sitePages2) {
 
-		Assert.assertEquals(contentPages1.size(), contentPages2.size());
+		Assert.assertEquals(sitePages1.size(), sitePages2.size());
 
-		for (ContentPage contentPage1 : contentPages1) {
+		for (SitePage sitePage1 : sitePages1) {
 			boolean contains = false;
 
-			for (ContentPage contentPage2 : contentPages2) {
-				if (equals(contentPage1, contentPage2)) {
+			for (SitePage sitePage2 : sitePages2) {
+				if (equals(sitePage1, sitePage2)) {
 					contains = true;
 
 					break;
@@ -757,26 +671,22 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				contentPages2 + " does not contain " + contentPage1, contains);
+				sitePages2 + " does not contain " + sitePage1, contains);
 		}
 	}
 
-	protected void assertValid(ContentPage contentPage) throws Exception {
+	protected void assertValid(SitePage sitePage) throws Exception {
 		boolean valid = true;
 
-		if (contentPage.getDateCreated() == null) {
+		if (sitePage.getDateCreated() == null) {
 			valid = false;
 		}
 
-		if (contentPage.getDateModified() == null) {
+		if (sitePage.getDateModified() == null) {
 			valid = false;
 		}
 
-		if (contentPage.getId() == null) {
-			valid = false;
-		}
-
-		if (!Objects.equals(contentPage.getSiteId(), testGroup.getGroupId())) {
+		if (!Objects.equals(sitePage.getSiteId(), testGroup.getGroupId())) {
 			valid = false;
 		}
 
@@ -784,7 +694,7 @@ public abstract class BaseContentPageResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
-				if (contentPage.getActions() == null) {
+				if (sitePage.getActions() == null) {
 					valid = false;
 				}
 
@@ -792,7 +702,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
-				if (contentPage.getAggregateRating() == null) {
+				if (sitePage.getAggregateRating() == null) {
 					valid = false;
 				}
 
@@ -802,7 +712,7 @@ public abstract class BaseContentPageResourceTestCase {
 			if (Objects.equals(
 					"availableLanguages", additionalAssertFieldName)) {
 
-				if (contentPage.getAvailableLanguages() == null) {
+				if (sitePage.getAvailableLanguages() == null) {
 					valid = false;
 				}
 
@@ -810,7 +720,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
-				if (contentPage.getCreator() == null) {
+				if (sitePage.getCreator() == null) {
 					valid = false;
 				}
 
@@ -818,7 +728,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
-				if (contentPage.getCustomFields() == null) {
+				if (sitePage.getCustomFields() == null) {
 					valid = false;
 				}
 
@@ -826,7 +736,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
-				if (contentPage.getDatePublished() == null) {
+				if (sitePage.getDatePublished() == null) {
 					valid = false;
 				}
 
@@ -834,7 +744,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("experience", additionalAssertFieldName)) {
-				if (contentPage.getExperience() == null) {
+				if (sitePage.getExperience() == null) {
 					valid = false;
 				}
 
@@ -842,7 +752,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
-				if (contentPage.getFriendlyUrlPath() == null) {
+				if (sitePage.getFriendlyUrlPath() == null) {
 					valid = false;
 				}
 
@@ -852,7 +762,7 @@ public abstract class BaseContentPageResourceTestCase {
 			if (Objects.equals(
 					"friendlyUrlPath_i18n", additionalAssertFieldName)) {
 
-				if (contentPage.getFriendlyUrlPath_i18n() == null) {
+				if (sitePage.getFriendlyUrlPath_i18n() == null) {
 					valid = false;
 				}
 
@@ -860,7 +770,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
-				if (contentPage.getKeywords() == null) {
+				if (sitePage.getKeywords() == null) {
 					valid = false;
 				}
 
@@ -868,7 +778,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("pageDefinition", additionalAssertFieldName)) {
-				if (contentPage.getPageDefinition() == null) {
+				if (sitePage.getPageDefinition() == null) {
 					valid = false;
 				}
 
@@ -876,7 +786,15 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("pageSettings", additionalAssertFieldName)) {
-				if (contentPage.getPageSettings() == null) {
+				if (sitePage.getPageSettings() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pageType", additionalAssertFieldName)) {
+				if (sitePage.getPageType() == null) {
 					valid = false;
 				}
 
@@ -884,7 +802,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("renderedPage", additionalAssertFieldName)) {
-				if (contentPage.getRenderedPage() == null) {
+				if (sitePage.getRenderedPage() == null) {
 					valid = false;
 				}
 
@@ -894,7 +812,7 @@ public abstract class BaseContentPageResourceTestCase {
 			if (Objects.equals(
 					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
 
-				if (contentPage.getTaxonomyCategoryBriefs() == null) {
+				if (sitePage.getTaxonomyCategoryBriefs() == null) {
 					valid = false;
 				}
 
@@ -904,7 +822,7 @@ public abstract class BaseContentPageResourceTestCase {
 			if (Objects.equals(
 					"taxonomyCategoryIds", additionalAssertFieldName)) {
 
-				if (contentPage.getTaxonomyCategoryIds() == null) {
+				if (sitePage.getTaxonomyCategoryIds() == null) {
 					valid = false;
 				}
 
@@ -912,7 +830,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
-				if (contentPage.getTitle() == null) {
+				if (sitePage.getTitle() == null) {
 					valid = false;
 				}
 
@@ -920,7 +838,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
-				if (contentPage.getTitle_i18n() == null) {
+				if (sitePage.getTitle_i18n() == null) {
 					valid = false;
 				}
 
@@ -928,7 +846,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("uuid", additionalAssertFieldName)) {
-				if (contentPage.getUuid() == null) {
+				if (sitePage.getUuid() == null) {
 					valid = false;
 				}
 
@@ -936,7 +854,7 @@ public abstract class BaseContentPageResourceTestCase {
 			}
 
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
-				if (contentPage.getViewableBy() == null) {
+				if (sitePage.getViewableBy() == null) {
 					valid = false;
 				}
 
@@ -951,12 +869,12 @@ public abstract class BaseContentPageResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ContentPage> page) {
+	protected void assertValid(Page<SitePage> page) {
 		boolean valid = false;
 
-		java.util.Collection<ContentPage> contentPages = page.getItems();
+		java.util.Collection<SitePage> sitePages = page.getItems();
 
-		int size = contentPages.size();
+		int size = sitePages.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -979,7 +897,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 		for (Field field :
 				ReflectionUtil.getDeclaredFields(
-					com.liferay.headless.delivery.dto.v1_0.ContentPage.class)) {
+					com.liferay.headless.delivery.dto.v1_0.SitePage.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -1026,16 +944,12 @@ public abstract class BaseContentPageResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(
-		ContentPage contentPage1, ContentPage contentPage2) {
-
-		if (contentPage1 == contentPage2) {
+	protected boolean equals(SitePage sitePage1, SitePage sitePage2) {
+		if (sitePage1 == sitePage2) {
 			return true;
 		}
 
-		if (!Objects.equals(
-				contentPage1.getSiteId(), contentPage2.getSiteId())) {
-
+		if (!Objects.equals(sitePage1.getSiteId(), sitePage2.getSiteId())) {
 			return false;
 		}
 
@@ -1044,8 +958,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)contentPage1.getActions(),
-						(Map)contentPage2.getActions())) {
+						(Map)sitePage1.getActions(),
+						(Map)sitePage2.getActions())) {
 
 					return false;
 				}
@@ -1055,8 +969,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getAggregateRating(),
-						contentPage2.getAggregateRating())) {
+						sitePage1.getAggregateRating(),
+						sitePage2.getAggregateRating())) {
 
 					return false;
 				}
@@ -1068,8 +982,8 @@ public abstract class BaseContentPageResourceTestCase {
 					"availableLanguages", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						contentPage1.getAvailableLanguages(),
-						contentPage2.getAvailableLanguages())) {
+						sitePage1.getAvailableLanguages(),
+						sitePage2.getAvailableLanguages())) {
 
 					return false;
 				}
@@ -1079,7 +993,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getCreator(), contentPage2.getCreator())) {
+						sitePage1.getCreator(), sitePage2.getCreator())) {
 
 					return false;
 				}
@@ -1089,8 +1003,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getCustomFields(),
-						contentPage2.getCustomFields())) {
+						sitePage1.getCustomFields(),
+						sitePage2.getCustomFields())) {
 
 					return false;
 				}
@@ -1100,8 +1014,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getDateCreated(),
-						contentPage2.getDateCreated())) {
+						sitePage1.getDateCreated(),
+						sitePage2.getDateCreated())) {
 
 					return false;
 				}
@@ -1111,8 +1025,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getDateModified(),
-						contentPage2.getDateModified())) {
+						sitePage1.getDateModified(),
+						sitePage2.getDateModified())) {
 
 					return false;
 				}
@@ -1122,8 +1036,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getDatePublished(),
-						contentPage2.getDatePublished())) {
+						sitePage1.getDatePublished(),
+						sitePage2.getDatePublished())) {
 
 					return false;
 				}
@@ -1133,8 +1047,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("experience", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getExperience(),
-						contentPage2.getExperience())) {
+						sitePage1.getExperience(), sitePage2.getExperience())) {
 
 					return false;
 				}
@@ -1144,8 +1057,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getFriendlyUrlPath(),
-						contentPage2.getFriendlyUrlPath())) {
+						sitePage1.getFriendlyUrlPath(),
+						sitePage2.getFriendlyUrlPath())) {
 
 					return false;
 				}
@@ -1157,18 +1070,8 @@ public abstract class BaseContentPageResourceTestCase {
 					"friendlyUrlPath_i18n", additionalAssertFieldName)) {
 
 				if (!equals(
-						(Map)contentPage1.getFriendlyUrlPath_i18n(),
-						(Map)contentPage2.getFriendlyUrlPath_i18n())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						contentPage1.getId(), contentPage2.getId())) {
+						(Map)sitePage1.getFriendlyUrlPath_i18n(),
+						(Map)sitePage2.getFriendlyUrlPath_i18n())) {
 
 					return false;
 				}
@@ -1178,8 +1081,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getKeywords(),
-						contentPage2.getKeywords())) {
+						sitePage1.getKeywords(), sitePage2.getKeywords())) {
 
 					return false;
 				}
@@ -1189,8 +1091,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("pageDefinition", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getPageDefinition(),
-						contentPage2.getPageDefinition())) {
+						sitePage1.getPageDefinition(),
+						sitePage2.getPageDefinition())) {
 
 					return false;
 				}
@@ -1200,8 +1102,18 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("pageSettings", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getPageSettings(),
-						contentPage2.getPageSettings())) {
+						sitePage1.getPageSettings(),
+						sitePage2.getPageSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("pageType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sitePage1.getPageType(), sitePage2.getPageType())) {
 
 					return false;
 				}
@@ -1211,8 +1123,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("renderedPage", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getRenderedPage(),
-						contentPage2.getRenderedPage())) {
+						sitePage1.getRenderedPage(),
+						sitePage2.getRenderedPage())) {
 
 					return false;
 				}
@@ -1224,8 +1136,8 @@ public abstract class BaseContentPageResourceTestCase {
 					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						contentPage1.getTaxonomyCategoryBriefs(),
-						contentPage2.getTaxonomyCategoryBriefs())) {
+						sitePage1.getTaxonomyCategoryBriefs(),
+						sitePage2.getTaxonomyCategoryBriefs())) {
 
 					return false;
 				}
@@ -1237,8 +1149,8 @@ public abstract class BaseContentPageResourceTestCase {
 					"taxonomyCategoryIds", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						contentPage1.getTaxonomyCategoryIds(),
-						contentPage2.getTaxonomyCategoryIds())) {
+						sitePage1.getTaxonomyCategoryIds(),
+						sitePage2.getTaxonomyCategoryIds())) {
 
 					return false;
 				}
@@ -1248,7 +1160,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getTitle(), contentPage2.getTitle())) {
+						sitePage1.getTitle(), sitePage2.getTitle())) {
 
 					return false;
 				}
@@ -1258,8 +1170,8 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("title_i18n", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)contentPage1.getTitle_i18n(),
-						(Map)contentPage2.getTitle_i18n())) {
+						(Map)sitePage1.getTitle_i18n(),
+						(Map)sitePage2.getTitle_i18n())) {
 
 					return false;
 				}
@@ -1269,7 +1181,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("uuid", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getUuid(), contentPage2.getUuid())) {
+						sitePage1.getUuid(), sitePage2.getUuid())) {
 
 					return false;
 				}
@@ -1279,8 +1191,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						contentPage1.getViewableBy(),
-						contentPage2.getViewableBy())) {
+						sitePage1.getViewableBy(), sitePage2.getViewableBy())) {
 
 					return false;
 				}
@@ -1325,13 +1236,13 @@ public abstract class BaseContentPageResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_contentPageResource instanceof EntityModelResource)) {
+		if (!(_sitePageResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_contentPageResource;
+			(EntityModelResource)_sitePageResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -1360,7 +1271,7 @@ public abstract class BaseContentPageResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, ContentPage contentPage) {
+		EntityField entityField, String operator, SitePage sitePage) {
 
 		StringBundler sb = new StringBundler();
 
@@ -1406,14 +1317,13 @@ public abstract class BaseContentPageResourceTestCase {
 				sb.append(" gt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(
-							contentPage.getDateCreated(), -2)));
+						DateUtils.addSeconds(sitePage.getDateCreated(), -2)));
 				sb.append(" and ");
 				sb.append(entityFieldName);
 				sb.append(" lt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(contentPage.getDateCreated(), 2)));
+						DateUtils.addSeconds(sitePage.getDateCreated(), 2)));
 				sb.append(")");
 			}
 			else {
@@ -1423,7 +1333,7 @@ public abstract class BaseContentPageResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_dateFormat.format(contentPage.getDateCreated()));
+				sb.append(_dateFormat.format(sitePage.getDateCreated()));
 			}
 
 			return sb.toString();
@@ -1438,15 +1348,13 @@ public abstract class BaseContentPageResourceTestCase {
 				sb.append(" gt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(
-							contentPage.getDateModified(), -2)));
+						DateUtils.addSeconds(sitePage.getDateModified(), -2)));
 				sb.append(" and ");
 				sb.append(entityFieldName);
 				sb.append(" lt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(
-							contentPage.getDateModified(), 2)));
+						DateUtils.addSeconds(sitePage.getDateModified(), 2)));
 				sb.append(")");
 			}
 			else {
@@ -1456,7 +1364,7 @@ public abstract class BaseContentPageResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_dateFormat.format(contentPage.getDateModified()));
+				sb.append(_dateFormat.format(sitePage.getDateModified()));
 			}
 
 			return sb.toString();
@@ -1471,15 +1379,13 @@ public abstract class BaseContentPageResourceTestCase {
 				sb.append(" gt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(
-							contentPage.getDatePublished(), -2)));
+						DateUtils.addSeconds(sitePage.getDatePublished(), -2)));
 				sb.append(" and ");
 				sb.append(entityFieldName);
 				sb.append(" lt ");
 				sb.append(
 					_dateFormat.format(
-						DateUtils.addSeconds(
-							contentPage.getDatePublished(), 2)));
+						DateUtils.addSeconds(sitePage.getDatePublished(), 2)));
 				sb.append(")");
 			}
 			else {
@@ -1489,7 +1395,7 @@ public abstract class BaseContentPageResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_dateFormat.format(contentPage.getDatePublished()));
+				sb.append(_dateFormat.format(sitePage.getDatePublished()));
 			}
 
 			return sb.toString();
@@ -1502,18 +1408,13 @@ public abstract class BaseContentPageResourceTestCase {
 
 		if (entityFieldName.equals("friendlyUrlPath")) {
 			sb.append("'");
-			sb.append(String.valueOf(contentPage.getFriendlyUrlPath()));
+			sb.append(String.valueOf(sitePage.getFriendlyUrlPath()));
 			sb.append("'");
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("friendlyUrlPath_i18n")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1531,6 +1432,14 @@ public abstract class BaseContentPageResourceTestCase {
 		if (entityFieldName.equals("pageSettings")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("pageType")) {
+			sb.append("'");
+			sb.append(String.valueOf(sitePage.getPageType()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("renderedPage")) {
@@ -1555,7 +1464,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 		if (entityFieldName.equals("title")) {
 			sb.append("'");
-			sb.append(String.valueOf(contentPage.getTitle()));
+			sb.append(String.valueOf(sitePage.getTitle()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1568,7 +1477,7 @@ public abstract class BaseContentPageResourceTestCase {
 
 		if (entityFieldName.equals("uuid")) {
 			sb.append("'");
-			sb.append(String.valueOf(contentPage.getUuid()));
+			sb.append(String.valueOf(sitePage.getUuid()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1620,15 +1529,16 @@ public abstract class BaseContentPageResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected ContentPage randomContentPage() throws Exception {
-		return new ContentPage() {
+	protected SitePage randomSitePage() throws Exception {
+		return new SitePage() {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				id = RandomTestUtil.randomLong();
+				pageType = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				siteId = testGroup.getGroupId();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -1636,19 +1546,19 @@ public abstract class BaseContentPageResourceTestCase {
 		};
 	}
 
-	protected ContentPage randomIrrelevantContentPage() throws Exception {
-		ContentPage randomIrrelevantContentPage = randomContentPage();
+	protected SitePage randomIrrelevantSitePage() throws Exception {
+		SitePage randomIrrelevantSitePage = randomSitePage();
 
-		randomIrrelevantContentPage.setSiteId(irrelevantGroup.getGroupId());
+		randomIrrelevantSitePage.setSiteId(irrelevantGroup.getGroupId());
 
-		return randomIrrelevantContentPage;
+		return randomIrrelevantSitePage;
 	}
 
-	protected ContentPage randomPatchContentPage() throws Exception {
-		return randomContentPage();
+	protected SitePage randomPatchSitePage() throws Exception {
+		return randomSitePage();
 	}
 
-	protected ContentPageResource contentPageResource;
+	protected SitePageResource sitePageResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -1725,7 +1635,7 @@ public abstract class BaseContentPageResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseContentPageResourceTestCase.class);
+		BaseSitePageResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -1742,7 +1652,7 @@ public abstract class BaseContentPageResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.headless.delivery.resource.v1_0.ContentPageResource
-		_contentPageResource;
+	private com.liferay.headless.delivery.resource.v1_0.SitePageResource
+		_sitePageResource;
 
 }

@@ -56,6 +56,17 @@ public class DLInfoPanelDisplayContext {
 		_permissionChecker = _themeDisplay.getPermissionChecker();
 	}
 
+	public List<FileEntry> getFileEntries() {
+		if (_fileEntries != null) {
+			return _fileEntries;
+		}
+
+		_fileEntries = (List<FileEntry>)_httpServletRequest.getAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
+
+		return _fileEntries;
+	}
+
 	public Group getFileEntryGroup(long groupId) throws PortalException {
 		Group fileEntryGroup = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -73,17 +84,6 @@ public class DLInfoPanelDisplayContext {
 		return fileEntryGroup;
 	}
 
-	public List<FileEntry> getFileEntryList() {
-		if (_fileEntries != null) {
-			return _fileEntries;
-		}
-
-		_fileEntries = (List<FileEntry>)_httpServletRequest.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRIES);
-
-		return _fileEntries;
-	}
-
 	public String getFileEntryTypeName(FileEntry fileEntry, Locale locale)
 		throws PortalException {
 
@@ -94,7 +94,7 @@ public class DLInfoPanelDisplayContext {
 		return HtmlUtil.escape(dlFileEntryType.getName(locale));
 	}
 
-	public List<FileShortcut> getFileShortcutList() {
+	public List<FileShortcut> getFileShortcuts() {
 		if (_fileShortcuts != null) {
 			return _fileShortcuts;
 		}
@@ -130,7 +130,7 @@ public class DLInfoPanelDisplayContext {
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
-	public List<Folder> getFolderList() throws PortalException {
+	public List<Folder> getFolders() throws PortalException {
 		if (_folders != null) {
 			return _folders;
 		}
@@ -138,9 +138,8 @@ public class DLInfoPanelDisplayContext {
 		_folders = (List<Folder>)_httpServletRequest.getAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FOLDERS);
 
-		if (ListUtil.isEmpty(_folders) &&
-			ListUtil.isEmpty(getFileEntryList()) &&
-			ListUtil.isEmpty(getFileShortcutList())) {
+		if (ListUtil.isEmpty(_folders) && ListUtil.isEmpty(getFileEntries()) &&
+			ListUtil.isEmpty(getFileShortcuts())) {
 
 			long folderId = GetterUtil.getLong(
 				(String)_httpServletRequest.getAttribute("view.jsp-folderId"),
@@ -166,10 +165,10 @@ public class DLInfoPanelDisplayContext {
 	}
 
 	public boolean isFileEntrySelected() throws PortalException {
-		if (ListUtil.isEmpty(getFolderList()) &&
-			ListUtil.isEmpty(getFileShortcutList()) &&
-			ListUtil.isNotEmpty(getFileEntryList()) &&
-			(getFileEntryList().size() == 1)) {
+		if (ListUtil.isEmpty(getFolders()) &&
+			ListUtil.isEmpty(getFileShortcuts()) &&
+			ListUtil.isNotEmpty(getFileEntries()) &&
+			(getFileEntries().size() == 1)) {
 
 			return true;
 		}
@@ -178,10 +177,10 @@ public class DLInfoPanelDisplayContext {
 	}
 
 	public boolean isFileShortcutSelected() throws PortalException {
-		if (ListUtil.isEmpty(getFolderList()) &&
-			ListUtil.isEmpty(getFileEntryList()) &&
-			ListUtil.isNotEmpty(getFileShortcutList()) &&
-			(getFileShortcutList().size() == 1)) {
+		if (ListUtil.isEmpty(getFolders()) &&
+			ListUtil.isEmpty(getFileEntries()) &&
+			ListUtil.isNotEmpty(getFileShortcuts()) &&
+			(getFileShortcuts().size() == 1)) {
 
 			return true;
 		}
@@ -190,10 +189,9 @@ public class DLInfoPanelDisplayContext {
 	}
 
 	public boolean isFolderSelected() throws PortalException {
-		if (ListUtil.isEmpty(getFileEntryList()) &&
-			ListUtil.isEmpty(getFileShortcutList()) &&
-			ListUtil.isNotEmpty(getFolderList()) &&
-			(getFolderList().size() == 1)) {
+		if (ListUtil.isEmpty(getFileEntries()) &&
+			ListUtil.isEmpty(getFileShortcuts()) &&
+			ListUtil.isNotEmpty(getFolders()) && (getFolders().size() == 1)) {
 
 			return true;
 		}

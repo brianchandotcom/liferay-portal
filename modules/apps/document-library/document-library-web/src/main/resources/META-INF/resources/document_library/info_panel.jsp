@@ -21,9 +21,9 @@ DLInfoPanelDisplayContext dlInfoPanelDisplayContext = new DLInfoPanelDisplayCont
 
 request.setAttribute("view.jsp-repositoryId", String.valueOf(dlInfoPanelDisplayContext.getRepositoryId()));
 
-List<FileEntry> fileEntries = dlInfoPanelDisplayContext.getFileEntryList();
-List<FileShortcut> fileShortcuts = dlInfoPanelDisplayContext.getFileShortcutList();
-List<Folder> folders = dlInfoPanelDisplayContext.getFolderList();
+List<FileEntry> fileEntries = dlInfoPanelDisplayContext.getFileEntries();
+List<FileShortcut> fileShortcuts = dlInfoPanelDisplayContext.getFileShortcuts();
+List<Folder> folders = dlInfoPanelDisplayContext.getFolders();
 %>
 
 <c:choose>

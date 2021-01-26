@@ -11,6 +11,16 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "My Structure Description",
+			structureName = "My Structure Name 1");
 	}
 
 	tearDown {
@@ -51,16 +61,6 @@ definition {
 	@priority = "5"
 	test DisableSearchableOfGeolocation {
 		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "My Structure Description",
-			structureName = "My Structure Name 1");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Localization",

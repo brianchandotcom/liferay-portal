@@ -1021,16 +1021,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101248. Display web content with all fields in Content Display."
-	@ignore = "true"
-	@priority = "2"
-	test DisplayWebContentWithAllFieldsInContentDisplay {
-		property portal.upstream = "false";
-
-		// TODO LPS-101248 DisplayWebContentWithAllFieldsInContentDisplay pending implementation
-
-	}
-
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Any asset types."
 	@priority = "5"
 	test DynamicCollectionWithAnyAssetTypeIsAvailableInCollectionDisplay {
@@ -3934,6 +3924,126 @@ definition {
 			key_fieldLabel = "Template",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Default Template");
+	}
+
+	@description = "This is a test for LPS-101248. Display web content with all fields in Content Display."
+	@priority = "2"
+	test ViewWebContentWithAllFieldsInContentDisplay {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+
+		task ("Add a web content structure with all fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				column = "1",
+				row = "1",
+				navTab = "Web Content Images",
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name",
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Test Page Name",
+				webContentMultipleSelection = "Value 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Value 2",
+				webContentSingleSelection = "Value 3",
+				webContentText = "This is a Text field",
+				webContentTitle = "Web Content Title",
+				webContentUpload = "Document_1.jpg",
+				webContentWebContent = "WC Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				customWebcontenttemplate = "WC Template Name",
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the web content is shown in Content Display") {
+			for (var content : list "This is a Text field,Value 2,Value 3,Yes,10 Oct 2020,9,#FF0D0D") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "WCD#WEB_CONTENT_CONTENT",
+					value1 = "${content}");
+			}
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Row: Row 1, Column: Column 1");
+
+			AssertVisible(
+				key_content = "//img[contains(@src,'Document_3.png')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			AssertVisible(
+				key_content = "//p[contains(.,'This is a Rich Text field')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			AssertVisible(
+				key_content = "//a[contains(@href,'Document_1.jpg')][contains(.,'Download Upload')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			AssertVisible(
+				key_content = "//a[contains(.,'WC Title')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			AssertVisible(
+				key_content = "//div[contains(@id,'Geolocation')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			AssertVisible(
+				key_content = "//a[contains(.,'Link to Page')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
 	}
 
 	@description = "This is a test for LPS-112093. Can display Web Content Articles of collection using custom template when add a Content Display to Collection Display."

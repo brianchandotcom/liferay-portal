@@ -233,6 +233,8 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			siteNavigationMenuItem.getSiteNavigationMenuId(),
 			siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 
+		int oldOrder = siteNavigationMenuItem.getOrder();
+
 		long oldParentSiteNavigationMenuItemId =
 			siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
 
@@ -276,7 +278,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 					oldParentSiteNavigationMenuItemId);
 
 			for (SiteNavigationMenuItem oldChild : oldChildren) {
-				if (oldChild.getOrder() <= order) {
+				if (oldChild.getOrder() <= oldOrder) {
 					continue;
 				}
 

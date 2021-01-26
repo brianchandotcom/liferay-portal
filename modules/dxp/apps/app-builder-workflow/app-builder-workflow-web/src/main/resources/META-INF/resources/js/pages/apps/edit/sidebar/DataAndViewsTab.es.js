@@ -528,6 +528,9 @@ export default function DataAndViewsTab({
 										),
 								}}
 								selectedValue={formView.name}
+								showWarningIcon={
+									formView.missingRequiredFields?.missing
+								}
 							>
 								{SelectFormView.Item}
 							</SelectFormView>

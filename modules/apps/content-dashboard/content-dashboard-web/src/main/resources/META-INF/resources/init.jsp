@@ -37,10 +37,10 @@ page import="com.liferay.content.dashboard.web.internal.item.ContentDashboardIte
 page import="com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType" %><%@
 page import="com.liferay.info.item.InfoItemReference" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.json.JSONUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %>
 

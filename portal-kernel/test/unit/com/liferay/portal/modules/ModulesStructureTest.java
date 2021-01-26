@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,6 +45,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +110,54 @@ public class ModulesStructureTest {
 					_checkoutPrivateAppsDirs, StringUtil.split(dirs));
 			}
 		}
+	}
+
+	@Test
+	public void testScanArchivedProjects() throws IOException {
+		Path archivedPath = _modulesDirPath.resolve("apps/archived");
+
+		if (!Files.exists(archivedPath)) {
+			return;
+		}
+
+		Files.walkFileTree(
+			archivedPath, EnumSet.noneOf(FileVisitOption.class), 2,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (Files.isDirectory(path)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					String fileName = String.valueOf(path.getFileName());
+
+					if (!StringUtil.startsWith(fileName, ".lfrbuild-portal")) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					if (StringUtil.endsWith(fileName, "-deprecated")) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					Files.move(
+						path, path.resolve("../.lfrbuild-portal-deprecated"));
+
+					StringBundler sb = new StringBundler(3);
+
+					sb.append("Renamed archived module build marker to ");
+					sb.append("'.lfrbuild-portal-deprecated' ");
+					sb.append(path);
+
+					Assert.fail(sb.toString());
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	@Test

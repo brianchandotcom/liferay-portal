@@ -8103,6 +8103,8 @@ virtualHostname="localhost"
 				<validate-installed-patches patching.tool.dir="${patching.tool.dir}" />
 
 				<print-file file.name="${patching.tool.dir}/logs/patching-tool.log" />
+
+				<delete file="@{patching.tool.dir}/logs/patching-tool.log" />
 			</else>
 		</if>
 	</target>

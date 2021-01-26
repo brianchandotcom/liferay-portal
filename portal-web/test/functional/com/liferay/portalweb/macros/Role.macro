@@ -702,6 +702,14 @@ definition {
 					value1 = "${siteNameScope}");
 			}
 		}
+
+		if (isSet(assigneeName)) {
+			Navigator.gotoNavItem(navItem = "Assignees");
+
+			RoleNavigator.gotoAssigneeType(assigneeType = "${assigneeType}");
+
+			LexiconEntry.viewEntryName(rowEntry = "${assigneeName}");
+		}
 	}
 
 	macro viewPermissionPG {

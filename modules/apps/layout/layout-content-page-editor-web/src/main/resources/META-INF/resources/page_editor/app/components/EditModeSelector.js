@@ -38,7 +38,6 @@ export default function EditModeSelector() {
 		<ClayDropDown
 			active={active}
 			alignmentPosition={Align.BottomLeft}
-			className="mr-3"
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton

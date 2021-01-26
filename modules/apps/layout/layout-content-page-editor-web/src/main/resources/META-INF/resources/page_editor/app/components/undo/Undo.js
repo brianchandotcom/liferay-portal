@@ -25,7 +25,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 
 	return (
 		<>
-			<ClayButton.Group className="d-block d-none mr-2">
+			<ClayButton.Group>
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('undo')}
 					className="btn-monospaced"
@@ -47,7 +47,10 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 					title={Liferay.Language.get('redo')}
 				/>
 			</ClayButton.Group>
-			<UndoHistory />
+
+			<span className="d-none d-sm-block">
+				<UndoHistory />
+			</span>
 		</>
 	);
 }

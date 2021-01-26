@@ -33,12 +33,21 @@
 			&.start {
 				align-self: flex-start;
 				order: 1;
+				padding-right: 0;
+
+				> .nav-item {
+					margin-right: $pageEditorSpacing;
+				}
 			}
 
 			&.middle {
 				justify-content: flex-start;
 				order: 2;
-				padding-left: 0;
+				padding: 0;
+
+				> .nav-item {
+					margin-right: $pageEditorSpacing;
+				}
 			}
 
 			&.end {
@@ -46,6 +55,26 @@
 				flex-basis: 100%;
 				justify-content: flex-end;
 				order: 0;
+
+				> .nav-item {
+					margin-left: $pageEditorSpacing;
+				}
+			}
+		}
+
+		@include media-breakpoint-up(sm) {
+			> .navbar-nav {
+				&.start > .nav-item {
+					margin-right: $pageEditorSpacing * 2;
+				}
+
+				&.middle > .nav-item {
+					margin-right: 0;
+				}
+
+				&.end > .nav-item {
+					margin-left: $pageEditorSpacing * 2;
+				}
 			}
 		}
 

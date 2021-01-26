@@ -61,7 +61,7 @@ export default function UndoHistory() {
 			<ClayDropDown
 				active={active}
 				alignmentPosition={Align.BottomRight}
-				className="mr-3"
+				className="ml-2"
 				menuElementAttrs={{className: 'page-editor__undo-history'}}
 				onActiveChange={setActive}
 				trigger={

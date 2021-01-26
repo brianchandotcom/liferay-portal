@@ -237,8 +237,13 @@ function ToolbarBody() {
 			</ul>
 
 			<ul className="end navbar-nav" onClick={deselectItem}>
-				<NetworkStatusBar {...network} />
-				<Undo onRedo={onRedo} onUndo={onUndo} />
+				<div className="nav-item">
+					<NetworkStatusBar {...network} />
+				</div>
+
+				<div className="nav-item">
+					<Undo onRedo={onRedo} onUndo={onUndo} />
+				</div>
 
 				<li className="nav-item">
 					<EditModeSelector />
@@ -246,7 +251,7 @@ function ToolbarBody() {
 
 				<li className="nav-item">
 					<ClayButtonWithIcon
-						className="btn btn-secondary mr-3"
+						className="btn btn-secondary"
 						displayType="secondary"
 						onClick={() => setOpenPreviewModal(true)}
 						small
@@ -267,7 +272,7 @@ function ToolbarBody() {
 							/>
 
 							<ClayButton
-								className="btn btn-secondary mr-3"
+								className="btn btn-secondary"
 								displayType="secondary"
 								onClick={handleDiscardVariant}
 								small

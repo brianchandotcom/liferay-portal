@@ -75,7 +75,7 @@ export default function ExperienceToolbarSection({selectId}) {
 	}, [dispatch, selectedExperience.hasLockedSegmentsExperiment]);
 
 	return (
-		<div className="mr-2 page-editor__toolbar-experience">
+		<div className="page-editor__toolbar-experience">
 			<label className="d-lg-block d-none mr-2" htmlFor={selectId}>
 				{Liferay.Language.get('experience')}
 			</label>

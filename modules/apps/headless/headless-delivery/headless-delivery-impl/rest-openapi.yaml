@@ -511,124 +511,6 @@ components:
                                 The resource's title.
                             type: string
                     type: object
-        ContentPage:
-            description:
-                Represents a content page that has fields and is rendered by a template backed by a `PageTemplate`. This
-                is modeled internally as a `Layout`.
-            properties:
-                actions:
-                    additionalProperties:
-                        additionalProperties:
-                            type: string
-                        type: object
-                    readOnly: true
-                    type: object
-                aggregateRating:
-                    $ref: "#/components/schemas/AggregateRating"
-                availableLanguages:
-                    description:
-                        The list of languages the content page has a translation for.
-                    items:
-                        description:
-                            The list of languages the content page has a translation for.
-                        type: string
-                    readOnly: true
-                    type: array
-                creator:
-                    $ref: "#/components/schemas/Creator"
-                customFields:
-                    items:
-                        $ref: "#/components/schemas/CustomField"
-                    type: array
-                dateCreated:
-                    description:
-                        The content page's creation date.
-                    format: date-time
-                    readOnly: true
-                    type: string
-                dateModified:
-                    description:
-                        The last time any field of the content page was changed.
-                    format: date-time
-                    readOnly: true
-                    type: string
-                datePublished:
-                    description:
-                        The content page's most recent publication date.
-                    format: date-time
-                    type: string
-                experience:
-                    $ref: "#/components/schemas/Experience"
-                friendlyUrlPath:
-                    description:
-                        A relative URL to the content page's rendered content.
-                    type: string
-                friendlyUrlPath_i18n:
-                    additionalProperties:
-                        type: string
-                    type: object
-                id:
-                    description:
-                        The page's ID.
-                    format: int64
-                    readOnly: true
-                    type: integer
-                keywords:
-                    description:
-                        A list of keywords describing the structured content.
-                    items:
-                        description:
-                            A list of keywords describing the structured content.
-                        type: string
-                    type: array
-                pageDefinition:
-                    $ref: "#/components/schemas/PageDefinition"
-                pageSettings:
-                    $ref: "#/components/schemas/PageSettings"
-                renderedPage:
-                    $ref: "#/components/schemas/RenderedPage"
-                siteId:
-                    description:
-                        The ID of the site to which this content page is scoped.
-                    format: int64
-                    readOnly: true
-                    type: integer
-                taxonomyCategoryBriefs:
-                    description:
-                        The categories associated with this structured content.
-                    items:
-                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
-                    readOnly: true
-                    type: array
-                taxonomyCategoryIds:
-                    items:
-                        format: int64
-                        type: integer
-                    type: array
-                    writeOnly: true
-                title:
-                    description:
-                        the title of the content page
-                    type: string
-                title_i18n:
-                    additionalProperties:
-                        type: string
-                    type: object
-                uuid:
-                    description:
-                        A valid external identifier to reference this content page.
-                    readOnly: true
-                    type: string
-                viewableBy:
-                    enum:
-                        - Anyone
-                        - Members
-                        - Owner
-                    type: string
-                    writeOnly: true
-            required:
-                - title
-            type: object
         ContentSetElement:
             description:
                 Represents each member of a content set and can contain different types of assets.
@@ -2919,10 +2801,6 @@ components:
                     description:
                         An absolute URL to the rendered page.
                     type: string
-                viewPortType:
-                    description:
-                        The viewport for which this rendered page has been designed.
-                    type: string
             type: object
         RowViewport:
             additionalProperties: false
@@ -2994,6 +2872,140 @@ components:
                     type: string
                 themeSettings:
                     type: object
+            type: object
+        SitePage:
+            # @review
+            description:
+                Represents a site page. This is modeled internally as a `Layout`.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                aggregateRating:
+                    $ref: "#/components/schemas/AggregateRating"
+                availableLanguages:
+                    description:
+                        The list of languages the page has a translation for.
+                    items:
+                        description:
+                            The list of languages the page has a translation for.
+                        type: string
+                    readOnly: true
+                    type: array
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    description:
+                        The page's creator.
+                    readOnly: true
+                customFields:
+                    description:
+                        Custom fields associated to the page.
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
+                dateCreated:
+                    description:
+                        The page's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time any field of the page was changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                datePublished:
+                    description:
+                        The page's most recent publication date.
+                    format: date-time
+                    type: string
+                experience:
+                    allOf:
+                        - $ref: "#/components/schemas/Experience"
+                    description:
+                        Experience of the page that it's being retrived.
+                friendlyUrlPath:
+                    description:
+                        A relative URL to the page's rendered content.
+                    type: string
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                keywords:
+                    description:
+                        A list of keywords describing the structured content.
+                    items:
+                        description:
+                            A list of keywords describing the structured content.
+                        type: string
+                    type: array
+                pageDefinition:
+                    allOf:
+                        - $ref: "#/components/schemas/PageDefinition"
+                    description:
+                        Retrieves the structure with all elements of the page
+                pageSettings:
+                    allOf:
+                        - $ref: "#/components/schemas/PageSettings"
+                    description:
+                        Settings of the page, such as SEO or OpenGraph
+                pageType:
+                    description:
+                        The type of the page
+                    type: string
+                renderedPage:
+                    allOf:
+                        - $ref: "#/components/schemas/RenderedPage"
+                    description:
+                        Metadata of the page such as it's master page and template
+                siteId:
+                    description:
+                        The ID of the site to which this page is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                taxonomyCategoryBriefs:
+                    description:
+                        The categories associated with this structured content.
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                title:
+                    description:
+                        the title of the page
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                uuid:
+                    description:
+                        A valid external identifier to reference this page.
+                    readOnly: true
+                    type: string
+                viewableBy:
+                    enum:
+                        - Anyone
+                        - Members
+                        - Owner
+                    type: string
+                    writeOnly: true
+            required:
+                - title
             type: object
         StructuredContent:
             description:
@@ -7668,229 +7680,6 @@ paths:
                     description:
                         ""
             tags: ["ContentElement"]
-    "/sites/{siteId}/content-pages":
-        get:
-            # @review
-            description:
-                Retrieves the public content pages of the site
-            operationId: getSiteContentPagesPage
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: aggregationTerms
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/ContentPage"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/ContentPage"
-                                type: array
-                    description:
-                        ""
-            tags: ["ContentPage"]
-    "/sites/{siteId}/content-pages/{friendlyUrlPath}":
-        get:
-            # @review
-            description:
-                Retrieves a specific public content page of a site
-            operationId: getSiteContentPage
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: friendlyUrlPath
-                  required: true
-                  schema:
-                      type: string
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ContentPage"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ContentPage"
-                    description:
-                        ""
-            tags: ["ContentPage"]
-    "/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences":
-        get:
-            # @review
-            description:
-                Retrieves the experiences of a given Content Page
-            operationId: getSiteContentPageFriendlyUrlPathExperiencesPage
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: friendlyUrlPath
-                  required: true
-                  schema:
-                      type: string
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Experience"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/Experience"
-                                type: array
-                    description:
-                        ""
-            tags: [ "Experience" ]
-    "/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences/{experienceKey}":
-        get:
-            # @review
-            description:
-                Retrieves a specific public content page of a site for a given experience
-            operationId: getSiteContentPageExperienceExperienceKey
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: friendlyUrlPath
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: experienceKey
-                  required: true
-                  schema:
-                      type: string
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ContentPage"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ContentPage"
-                    description:
-                        ""
-            tags: [ "ContentPage" ]
-    "/sites/{siteId}/content-pages/{friendlyUrlPath}/experiences/{experienceKey}/rendered-page":
-        get:
-            description:
-                Retrieves the rendered content of a given public page for a given experience.
-            operationId: getSiteContentPageExperienceExperienceKeyRenderedPage
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: friendlyUrlPath
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: experienceKey
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        text/html:
-                            schema:
-                                type: string
-                    description:
-                        ""
-            tags: [ "ContentPage" ]
-    "/sites/{siteId}/content-pages/{friendlyUrlPath}/rendered-page":
-        get:
-            description:
-                Retrieves the rendered content of a given public page.
-            operationId: getSiteContentPageRenderedPage
-            parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: friendlyUrlPath
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        text/html:
-                            schema:
-                                type: string
-                    description:
-                        ""
-            tags: [ "ContentPage" ]
     "/sites/{siteId}/content-sets/by-key/{key}/content-set-elements":
         get:
             description:
@@ -8881,6 +8670,229 @@ paths:
                     description:
                         ""
             tags: ["NavigationMenu"]
+    "/sites/{siteId}/site-pages":
+        get:
+            # @review
+            description:
+                Retrieves the public pages of the site
+            operationId: getSiteSitePagesPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SitePage"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SitePage"
+                                type: array
+                    description:
+                        ""
+            tags: ["SitePage"]
+    "/sites/{siteId}/site-pages/{friendlyUrlPath}":
+        get:
+            # @review
+            description:
+                Retrieves a specific public page of a site
+            operationId: getSiteSitePage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SitePage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SitePage"
+                    description:
+                        ""
+            tags: ["SitePage"]
+    "/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences":
+        get:
+            # @review
+            description:
+                Retrieves the experiences of a given Page
+            operationId: getSiteSitePageFriendlyUrlPathExperiencesPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Experience"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Experience"
+                                type: array
+                    description:
+                        ""
+            tags: [ "Experience" ]
+    "/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}":
+        get:
+            # @review
+            description:
+                Retrieves a specific public page of a site for a given experience
+            operationId: getSiteSitePageExperienceExperienceKey
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: experienceKey
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SitePage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SitePage"
+                    description:
+                        ""
+            tags: [ "SitePage" ]
+    "/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}/rendered-page":
+        get:
+            description:
+                Retrieves the rendered content of a given public page for a given experience.
+            operationId: getSiteSitePageExperienceExperienceKeyRenderedPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: experienceKey
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: [ "SitePage" ]
+    "/sites/{siteId}/site-pages/{friendlyUrlPath}/rendered-page":
+        get:
+            description:
+                Retrieves the rendered content of a given public page.
+            operationId: getSiteSitePageRenderedPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: [ "SitePage" ]
     "/sites/{siteId}/structured-content-folders":
         get:
             description:

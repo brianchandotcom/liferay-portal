@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.util.PropsImpl;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
@@ -66,11 +68,7 @@ public class Log4JConfigurationUtilTest {
 
 		Logger logger = Logger.getLogger(loggerName);
 
-		Enumeration<Appender> enumeration = logger.getAllAppenders();
-
-		while (enumeration.hasMoreElements()) {
-			Assert.fail("The logger should not own any Appenders");
-		}
+		_assertAppenders(logger.getAllAppenders());
 
 		// Assert one appender exist
 
@@ -78,55 +76,15 @@ public class Log4JConfigurationUtilTest {
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, ConsoleAppender.class));
 
-		enumeration = logger.getAllAppenders();
-
-		int count = 0;
-
-		while (enumeration.hasMoreElements()) {
-			Appender appender = enumeration.nextElement();
-
-			Assert.assertTrue(appender instanceof ConsoleAppender);
-
-			ConsoleAppender consoleAppender = (ConsoleAppender)appender;
-
-			Assert.assertEquals(
-				"Expected console appender name is " +
-					ConsoleAppender.class.getName(),
-				ConsoleAppender.class.getName(), consoleAppender.getName());
-
-			count++;
-		}
-
-		Assert.assertTrue(count == 1);
+		_assertAppenders(logger.getAllAppenders(), ConsoleAppender.class);
 
 		// Assert override the previous appender
-
-		count = 0;
 
 		Log4JConfigurationUtil.configureLog4JXml(
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, FileAppender.class));
 
-		enumeration = logger.getAllAppenders();
-
-		while (enumeration.hasMoreElements()) {
-			Appender appender = enumeration.nextElement();
-
-			Assert.assertTrue(appender instanceof FileAppender);
-
-			FileAppender fileAppender = (FileAppender)appender;
-
-			Assert.assertEquals(
-				"Expected file appender name is " +
-					FileAppender.class.getName(),
-				FileAppender.class.getName(), fileAppender.getName());
-
-			count++;
-		}
-
-		Assert.assertTrue(count == 1);
-
-		count = 0;
+		_assertAppenders(logger.getAllAppenders(), FileAppender.class);
 
 		// Assert two appenders
 
@@ -134,35 +92,9 @@ public class Log4JConfigurationUtilTest {
 			_generateXMLConfigurationContent(
 				loggerName, _ERROR, ConsoleAppender.class, FileAppender.class));
 
-		enumeration = logger.getAllAppenders();
-
-		while (enumeration.hasMoreElements()) {
-			Appender appender = enumeration.nextElement();
-
-			if (appender instanceof FileAppender) {
-				FileAppender fileAppender = (FileAppender)appender;
-
-				Assert.assertEquals(
-					"Expected file appender name is " +
-						FileAppender.class.getName(),
-					FileAppender.class.getName(), fileAppender.getName());
-			}
-			else if (appender instanceof ConsoleAppender) {
-				ConsoleAppender consoleAppender = (ConsoleAppender)appender;
-
-				Assert.assertEquals(
-					"Expected console appender name is " +
-						ConsoleAppender.class.getName(),
-					ConsoleAppender.class.getName(), consoleAppender.getName());
-			}
-			else {
-				Assert.fail("The logger attached other type Appender");
-			}
-
-			count++;
-		}
-
-		Assert.assertTrue(count == 2);
+		_assertAppenders(
+			logger.getAllAppenders(), ConsoleAppender.class,
+			FileAppender.class);
 	}
 
 	@Test
@@ -313,6 +245,26 @@ public class Log4JConfigurationUtilTest {
 
 	@Rule
 	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
+
+	private void _assertAppenders(
+		Enumeration<Appender> appenderEnumeration, Class<?>... appenderTypes) {
+
+		List<String> targetAppenderNames = new ArrayList<>();
+
+		while (appenderEnumeration.hasMoreElements()) {
+			Appender appender = appenderEnumeration.nextElement();
+
+			targetAppenderNames.add(appender.getName());
+		}
+
+		Assert.assertEquals(targetAppenderNames.size(), appenderTypes.length);
+
+		for (Class<?> appenderType : appenderTypes) {
+			Assert.assertTrue(
+				"Missing appender " + appenderType.getName(),
+				targetAppenderNames.contains(appenderType.getName()));
+		}
+	}
 
 	private void _assertLog4JLevel(String expectedLevel, String loggerName) {
 		Log log = LogFactoryUtil.getLog(loggerName);

@@ -14,9 +14,67 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.SitePageDTOConverter;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.context.RequestContextMapper;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
+import com.liferay.segments.service.SegmentsExperienceService;
+import com.liferay.taglib.util.ThemeUtil;
+
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.MultivaluedMap;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +85,327 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SitePageResource.class
 )
 public class SitePageResourceImpl extends BaseSitePageResourceImpl {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
+	@Override
+	public SitePage getSiteSitePage(Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		return _toSitePage(_getLayout(siteId, friendlyUrlPath), null);
+	}
+
+	@Override
+	public SitePage getSiteSitePageExperienceExperienceKey(
+			Long siteId, String friendlyUrlPath, String experienceKey)
+		throws Exception {
+
+		return _toSitePage(_getLayout(siteId, friendlyUrlPath), experienceKey);
+	}
+
+	@Override
+	public String getSiteSitePageExperienceExperienceKeyRenderedPage(
+			Long siteId, String friendlyUrlPath, String experienceKey)
+		throws Exception {
+
+		return _toHTML(friendlyUrlPath, siteId, experienceKey);
+	}
+
+	@Override
+	public String getSiteSitePageRenderedPage(
+			Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		return _toHTML(friendlyUrlPath, siteId, null);
+	}
+
+	@Override
+	public Page<SitePage> getSiteSitePagesPage(
+			Long siteId, String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					"VIEW", "getSiteSitePagesPage",
+					"com.liferay.portal.kernel.model.Group", siteId)
+			).build(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(Field.GROUP_ID, String.valueOf(siteId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter, Layout.class, search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				searchContext.setAttribute(Field.TITLE, search);
+				searchContext.setAttribute(
+					Field.TYPE,
+					new String[] {
+						LayoutConstants.TYPE_COLLECTION,
+						LayoutConstants.TYPE_CONTENT,
+						LayoutConstants.TYPE_EMBEDDED,
+						LayoutConstants.TYPE_LINK_TO_LAYOUT,
+						LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+						LayoutConstants.TYPE_PANEL,
+						LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
+					});
+
+				searchContext.setAttribute(
+					"privateLayout", Boolean.FALSE.toString());
+
+				Group group = groupLocalService.getGroup(siteId);
+
+				searchContext.setCompanyId(group.getCompanyId());
+
+				searchContext.setGroupIds(new long[] {siteId});
+				searchContext.setKeywords(search);
+			},
+			sorts,
+			document -> {
+				long plid = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				return _toSitePage(_layoutLocalService.getLayout(plid), null);
+			});
+	}
+
+	private Map<String, Map<String, String>> _getActions(Layout layout) {
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"get",
+				addAction(
+					"VIEW", "getSiteSitePage",
+					"com.liferay.portal.kernel.model.Group",
+					layout.getGroupId())
+			).put(
+				"get-rendered-page",
+				addAction(
+					"VIEW", "getSiteSitePageRenderedPage",
+					"com.liferay.portal.kernel.model.Group",
+					layout.getGroupId())
+			).build();
+
+		if (layout.isTypeContent()) {
+			actions.put(
+				"get-experiences",
+				addAction(
+					"VIEW", "getSiteSitePageFriendlyUrlPathExperiencesPage",
+					"com.liferay.portal.kernel.model.Group",
+					layout.getGroupId()));
+		}
+
+		return actions;
+	}
+
+	private Map<String, Map<String, String>> _getExperienceActions(
+		Layout layout) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", "getSiteSitePageExperienceExperienceKey",
+				"com.liferay.portal.kernel.model.Group", layout.getGroupId())
+		).put(
+			"get-rendered-page",
+			addAction(
+				"VIEW", "getSiteSitePageExperienceExperienceKeyRenderedPage",
+				"com.liferay.portal.kernel.model.Group", layout.getGroupId())
+		).build();
+	}
+
+	private Layout _getLayout(long groupId, String friendlyUrlPath)
+		throws Exception {
+
+		String languageId = LocaleUtil.toLanguageId(
+			contextAcceptLanguage.getPreferredLocale());
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			_layoutFriendlyURLLocalService.getLayoutFriendlyURL(
+				groupId, false, StringPool.FORWARD_SLASH + friendlyUrlPath,
+				languageId);
+
+		return _layoutLocalService.getLayout(layoutFriendlyURL.getPlid());
+	}
+
+	private long _getSegmentsExperienceId(
+			Layout layout, String segmentsExperienceKey)
+		throws Exception {
+
+		if (Validator.isNotNull(segmentsExperienceKey)) {
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceService.fetchSegmentsExperience(
+					layout.getGroupId(), segmentsExperienceKey);
+
+			return segmentsExperience.getSegmentsExperienceId();
+		}
+
+		contextHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+			layout.getGroupId(), contextUser.getUserId(),
+			_requestContextMapper.map(contextHttpServletRequest));
+
+		long[] segmentsExperienceIds =
+			_segmentsExperienceRequestProcessorRegistry.
+				getSegmentsExperienceIds(
+					contextHttpServletRequest, null, layout.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layout.getPlid(), segmentsEntryIds);
+
+		if (segmentsExperienceIds.length > 0) {
+			return segmentsExperienceIds[0];
+		}
+
+		return SegmentsEntryConstants.ID_DEFAULT;
+	}
+
+	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
+		ServicePreAction servicePreAction = new ServicePreAction();
+
+		HttpServletResponse httpServletResponse =
+			new DummyHttpServletResponse();
+
+		servicePreAction.servicePre(
+			contextHttpServletRequest, httpServletResponse, false);
+
+		ThemeServicePreAction themeServicePreAction =
+			new ThemeServicePreAction();
+
+		themeServicePreAction.run(
+			contextHttpServletRequest, httpServletResponse);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setScopeGroupId(layout.getGroupId());
+		themeDisplay.setSiteGroupId(layout.getGroupId());
+
+		return themeDisplay;
+	}
+
+	private String _toHTML(
+			String friendlyUrlPath, long groupId, String segmentsExperienceKey)
+		throws Exception {
+
+		Layout layout = _getLayout(groupId, friendlyUrlPath);
+
+		contextHttpServletRequest = DynamicServletRequest.addQueryString(
+			contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
+
+		long segmentsExperienceId = _getSegmentsExperienceId(
+			layout, segmentsExperienceKey);
+
+		contextHttpServletRequest.setAttribute(
+			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
+			new long[] {segmentsExperienceId});
+
+		contextHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		ServletContext servletContext = ServletContextPool.get(
+			StringPool.BLANK);
+
+		if (contextHttpServletRequest.getAttribute(WebKeys.CTX) == null) {
+			contextHttpServletRequest.setAttribute(WebKeys.CTX, servletContext);
+		}
+
+		layout.includeLayoutContent(
+			contextHttpServletRequest, contextHttpServletResponse);
+
+		StringBundler sb =
+			(StringBundler)contextHttpServletRequest.getAttribute(
+				WebKeys.LAYOUT_CONTENT);
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		Document document = Jsoup.parse(
+			ThemeUtil.include(
+				servletContext, contextHttpServletRequest,
+				contextHttpServletResponse, "portal_normal.ftl",
+				layoutSet.getTheme(), false));
+
+		Element bodyElement = document.body();
+
+		bodyElement.html(sb.toString());
+
+		return document.html();
+	}
+
+	private SitePage _toSitePage(Layout layout, String segmentsExperienceKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> actions = null;
+
+		if (segmentsExperienceKey == null) {
+			actions = _getActions(layout);
+		}
+		else {
+			actions = _getExperienceActions(layout);
+		}
+
+		DefaultDTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), actions,
+				_dtoConverterRegistry, contextHttpServletRequest,
+				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
+				contextUriInfo, contextUser);
+
+		long segmentsExperienceId = _getSegmentsExperienceId(
+			layout, segmentsExperienceKey);
+
+		dtoConverterContext.setAttribute(
+			"segmentsExperienceId", segmentsExperienceId);
+
+		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
+	}
+
+	private static final EntityModel _entityModel = new SitePageEntityModel();
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
+
+	@Reference
+	private SegmentsExperienceRequestProcessorRegistry
+		_segmentsExperienceRequestProcessorRegistry;
+
+	@Reference
+	private SegmentsExperienceService _segmentsExperienceService;
+
+	@Reference
+	private SitePageDTOConverter _sitePageDTOConverter;
+
 }

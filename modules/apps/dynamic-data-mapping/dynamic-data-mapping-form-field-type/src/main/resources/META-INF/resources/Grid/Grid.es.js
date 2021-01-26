@@ -39,6 +39,7 @@ const TableHead = ({columns}) => (
 const TableBodyColumns = ({
 	columns,
 	disabled,
+	name,
 	onBlur,
 	onChange,
 	onFocus,
@@ -55,8 +56,9 @@ const TableBodyColumns = ({
 					aria-label={`${rowLabel}: ${row.label}, ${columnLabel}: ${column.label}`}
 					checked={column.value === value[row.value]}
 					className="form-builder-grid-field"
+					data-name={row.value}
 					disabled={disabled}
-					name={row.value}
+					name={name}
 					onBlur={onBlur}
 					onChange={onChange}
 					onFocus={onFocus}
@@ -111,6 +113,7 @@ const Grid = ({
 							<TableBodyColumns
 								columns={columns}
 								disabled={disabled}
+								name={`${name}_${row.value}`}
 								onBlur={onBlur}
 								onChange={onChange}
 								onFocus={onFocus}
@@ -148,7 +151,7 @@ const Main = ({
 				onChange={(event) => {
 					const {target} = event;
 					const value = {
-						[target.name]: target.value,
+						[target.dataset.name]: target.value,
 					};
 
 					const newState = {...state, ...value};

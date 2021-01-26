@@ -187,6 +187,18 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.xlsx",
 			dmDocumentType = "Basic Document");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.mov",
+			dmDocumentTitle = "Document_1.mov");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.mov",
+			dmDocumentType = "Basic Document");
 	}
 
 	@priority = "4"

@@ -61,11 +61,8 @@ public class Log4JConfigurationUtilTest {
 
 		String loggerName = StringUtil.randomString();
 
-		String xml = _getLoggerConfigurationWithAppender(loggerName, _ERROR);
-
-		xml = StringUtil.removeSubstring(xml, _APPENDER_REF_PLACEHOLDER);
-
-		Log4JConfigurationUtil.configureLog4JXml(xml);
+		Log4JConfigurationUtil.configureLog4JXml(
+			_generateXMLConfigurationContent(loggerName, _ERROR));
 
 		Logger logger = Logger.getLogger(loggerName);
 
@@ -77,13 +74,9 @@ public class Log4JConfigurationUtilTest {
 
 		// Assert one appender exist
 
-		xml = _getLoggerConfigurationWithAppender(loggerName, _ERROR);
-
-		xml = StringUtil.replace(
-			xml, _APPENDER_REF_PLACEHOLDER,
-			"<appender-ref ref=\"" + _CONSOLE_APPENDER_NAME + "\" />");
-
-		Log4JConfigurationUtil.configureLog4JXml(xml);
+		Log4JConfigurationUtil.configureLog4JXml(
+			_generateXMLConfigurationContent(
+				loggerName, _ERROR, ConsoleAppender.class));
 
 		enumeration = logger.getAllAppenders();
 
@@ -97,8 +90,9 @@ public class Log4JConfigurationUtilTest {
 			ConsoleAppender consoleAppender = (ConsoleAppender)appender;
 
 			Assert.assertEquals(
-				"Expected console appender name is " + _CONSOLE_APPENDER_NAME,
-				_CONSOLE_APPENDER_NAME, consoleAppender.getName());
+				"Expected console appender name is " +
+					ConsoleAppender.class.getName(),
+				ConsoleAppender.class.getName(), consoleAppender.getName());
 
 			count++;
 		}
@@ -109,13 +103,9 @@ public class Log4JConfigurationUtilTest {
 
 		count = 0;
 
-		xml = _getLoggerConfigurationWithAppender(loggerName, _ERROR);
-
-		xml = StringUtil.replace(
-			xml, _APPENDER_REF_PLACEHOLDER,
-			"<appender-ref ref=\"" + _FILE_APPENDER_NAME + "\" />");
-
-		Log4JConfigurationUtil.configureLog4JXml(xml);
+		Log4JConfigurationUtil.configureLog4JXml(
+			_generateXMLConfigurationContent(
+				loggerName, _ERROR, FileAppender.class));
 
 		enumeration = logger.getAllAppenders();
 
@@ -127,8 +117,9 @@ public class Log4JConfigurationUtilTest {
 			FileAppender fileAppender = (FileAppender)appender;
 
 			Assert.assertEquals(
-				"Expected file appender name is " + _FILE_APPENDER_NAME,
-				_FILE_APPENDER_NAME, fileAppender.getName());
+				"Expected file appender name is " +
+					FileAppender.class.getName(),
+				FileAppender.class.getName(), fileAppender.getName());
 
 			count++;
 		}
@@ -139,14 +130,9 @@ public class Log4JConfigurationUtilTest {
 
 		// Assert two appenders
 
-		xml = _getLoggerConfigurationWithAppender(loggerName, _WARN);
-
-		xml = StringUtil.replace(
-			xml, _APPENDER_REF_PLACEHOLDER,
-			"<appender-ref ref=\"" + _CONSOLE_APPENDER_NAME + "\" />" +
-				"<appender-ref ref=\"" + _FILE_APPENDER_NAME + "\" />");
-
-		Log4JConfigurationUtil.configureLog4JXml(xml);
+		Log4JConfigurationUtil.configureLog4JXml(
+			_generateXMLConfigurationContent(
+				loggerName, _ERROR, ConsoleAppender.class, FileAppender.class));
 
 		enumeration = logger.getAllAppenders();
 
@@ -157,16 +143,17 @@ public class Log4JConfigurationUtilTest {
 				FileAppender fileAppender = (FileAppender)appender;
 
 				Assert.assertEquals(
-					"Expected console appender name is " + _FILE_APPENDER_NAME,
-					_FILE_APPENDER_NAME, fileAppender.getName());
+					"Expected file appender name is " +
+						FileAppender.class.getName(),
+					FileAppender.class.getName(), fileAppender.getName());
 			}
 			else if (appender instanceof ConsoleAppender) {
 				ConsoleAppender consoleAppender = (ConsoleAppender)appender;
 
 				Assert.assertEquals(
 					"Expected console appender name is " +
-						_CONSOLE_APPENDER_NAME,
-					_CONSOLE_APPENDER_NAME, consoleAppender.getName());
+						ConsoleAppender.class.getName(),
+					ConsoleAppender.class.getName(), consoleAppender.getName());
 			}
 			else {
 				Assert.fail("The logger attached other type Appender");
@@ -186,63 +173,63 @@ public class Log4JConfigurationUtilTest {
 		String loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _ALL));
+			_generateXMLConfigurationContent(loggerName, _ALL));
 
 		_assertLog4JLevel(_ALL, loggerName);
 
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _OFF));
+			_generateXMLConfigurationContent(loggerName, _OFF));
 
 		_assertLog4JLevel(_OFF, loggerName);
 
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _FATAL));
+			_generateXMLConfigurationContent(loggerName, _FATAL));
 
 		_assertLog4JLevel(_FATAL, loggerName);
 
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _ERROR));
+			_generateXMLConfigurationContent(loggerName, _ERROR));
 
 		_assertLog4JLevel(_ERROR, loggerName);
 
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _WARN));
+			_generateXMLConfigurationContent(loggerName, _WARN));
 
 		_assertLog4JLevel(_WARN, loggerName);
 
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _INFO));
+			_generateXMLConfigurationContent(loggerName, _INFO));
 
 		_assertLog4JLevel(_INFO, loggerName);
 
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _DEBUG));
+			_generateXMLConfigurationContent(loggerName, _DEBUG));
 
 		_assertLog4JLevel(_DEBUG, loggerName);
 
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _TRACE));
+			_generateXMLConfigurationContent(loggerName, _TRACE));
 
 		_assertLog4JLevel(_TRACE, loggerName);
 
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, "FAKE_LEVEL"));
+			_generateXMLConfigurationContent(loggerName, "FAKE_LEVEL"));
 
 		_assertLog4JLevel(_DEBUG, loggerName);
 
@@ -251,12 +238,12 @@ public class Log4JConfigurationUtilTest {
 		loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _WARN));
+			_generateXMLConfigurationContent(loggerName, _WARN));
 
 		_assertLog4JLevel(_WARN, loggerName);
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _INFO));
+			_generateXMLConfigurationContent(loggerName, _INFO));
 
 		_assertLog4JLevel(_INFO, loggerName);
 	}
@@ -271,7 +258,7 @@ public class Log4JConfigurationUtilTest {
 		String loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _ERROR));
+			_generateXMLConfigurationContent(loggerName, _ERROR));
 
 		Assert.assertEquals(
 			"The original level should be WARN by configuration", "ERROR",
@@ -289,7 +276,7 @@ public class Log4JConfigurationUtilTest {
 		String loggerName = StringUtil.randomString();
 
 		Log4JConfigurationUtil.configureLog4JXml(
-			_getLoggerConfiguration(loggerName, _WARN));
+			_generateXMLConfigurationContent(loggerName, _WARN));
 
 		_assertLog4JLevel(_WARN, loggerName);
 
@@ -366,47 +353,36 @@ public class Log4JConfigurationUtilTest {
 			"Logging level is wrong", expectedLevel, actualLevel);
 	}
 
-	private String _getLoggerConfiguration(String name, String level) {
-		StringBundler sb = new StringBundler(9);
+	private String _generateXMLConfigurationContent(
+		String loggerName, String level, Class<?>... appenderTypes) {
+
+		StringBundler sb = new StringBundler(10 + (8 * appenderTypes.length));
 
 		sb.append("<?xml version=\"1.0\"?>");
 		sb.append("<!DOCTYPE log4j:configuration SYSTEM \"log4j.dtd\">");
 		sb.append("<log4j:configuration xmlns:log4j=");
 		sb.append("\"http://jakarta.apache.org/log4j/\">");
+
+		for (Class<?> appenderType : appenderTypes) {
+			sb.append("<appender class=\"");
+			sb.append(appenderType.getName());
+			sb.append("\" name=\"");
+			sb.append(appenderType.getName());
+			sb.append("\"></appender>");
+		}
+
 		sb.append("<category name=\"");
-		sb.append(name);
-		sb.append("\"><priority value=\"");
-		sb.append(level);
-		sb.append("\" /></category></log4j:configuration>");
-
-		return sb.toString();
-	}
-
-	private String _getLoggerConfigurationWithAppender(
-		String name, String level) {
-
-		StringBundler sb = new StringBundler(21);
-
-		sb.append("<?xml version=\"1.0\"?>");
-		sb.append("<!DOCTYPE log4j:configuration SYSTEM \"log4j.dtd\">");
-		sb.append("<log4j:configuration xmlns:log4j=");
-		sb.append("\"http://jakarta.apache.org/log4j/\">");
-		sb.append("<appender class=\"");
-		sb.append(ConsoleAppender.class.getName());
-		sb.append("\" name=\"");
-		sb.append(_CONSOLE_APPENDER_NAME);
-		sb.append("\"></appender>");
-		sb.append("<appender class=\"");
-		sb.append(FileAppender.class.getName());
-		sb.append("\" name=\"");
-		sb.append(_FILE_APPENDER_NAME);
-		sb.append("\"></appender>");
-		sb.append("<category name=\"");
-		sb.append(name);
+		sb.append(loggerName);
 		sb.append("\"><priority value=\"");
 		sb.append(level);
 		sb.append("\" />");
-		sb.append(_APPENDER_REF_PLACEHOLDER);
+
+		for (Class<?> appenderType : appenderTypes) {
+			sb.append("<appender-ref ref=\"");
+			sb.append(appenderType.getName());
+			sb.append("\" />");
+		}
+
 		sb.append("</category></log4j:configuration>");
 
 		return sb.toString();
@@ -414,17 +390,11 @@ public class Log4JConfigurationUtilTest {
 
 	private static final String _ALL = "ALL";
 
-	private static final String _APPENDER_REF_PLACEHOLDER = "%appender-ref%";
-
-	private static final String _CONSOLE_APPENDER_NAME = "TEST-CONSOLE";
-
 	private static final String _DEBUG = "DEBUG";
 
 	private static final String _ERROR = "ERROR";
 
 	private static final String _FATAL = "FATAL";
-
-	private static final String _FILE_APPENDER_NAME = "TEST-FILE";
 
 	private static final String _INFO = "INFO";
 

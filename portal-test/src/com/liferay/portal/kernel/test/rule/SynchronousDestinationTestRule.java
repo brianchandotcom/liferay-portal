@@ -204,6 +204,7 @@ public class SynchronousDestinationTestRule
 			replaceDestination("liferay/shipment_status");
 			replaceDestination("liferay/stock_quantity");
 			replaceDestination("liferay/subscription_status");
+			replaceDestination("liferay/tensorflow_model_download");
 
 			if (_sync != null) {
 				for (String name : _sync.destinationNames()) {

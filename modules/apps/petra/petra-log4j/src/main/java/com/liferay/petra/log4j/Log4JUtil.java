@@ -14,7 +14,7 @@
 
 package com.liferay.petra.log4j;
 
-import com.liferay.petra.log4j.internal.configuration.Log4JConfigurationUtil;
+import com.liferay.petra.log4j.internal.Log4JConfigurationUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;

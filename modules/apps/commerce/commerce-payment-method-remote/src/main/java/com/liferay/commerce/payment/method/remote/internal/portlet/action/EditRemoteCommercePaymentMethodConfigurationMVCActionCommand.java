@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PAYMENT_METHODS,
-		"mvc.command.name=editRemoteCommercePaymentMethodConfiguration"
+		"mvc.command.name=/commerce_payment/edit_remote_commerce_payment_method_configuration"
 	},
 	service = MVCActionCommand.class
 )

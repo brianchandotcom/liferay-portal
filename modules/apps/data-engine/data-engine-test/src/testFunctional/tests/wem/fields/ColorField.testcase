@@ -94,7 +94,28 @@ definition {
 	test EditColorFieldNameWithInvalidCharacters {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 EditColorFieldNameWithInvalidCharacters pending implementation
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+        );
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+            structureName = "Structure Name Test",
+            structureDescription = "Structure Description Test"
+        );
+
+        DataEngine.addField(
+            fieldFieldLabel = "Color Test",
+            fieldName = "Color"
+        );
+
+		DataEngine.editFieldReference(
+			fieldFieldLabel = "Color Test", 
+			fieldReference = "%Color*Test @1",
+			assertFieldReference = "ColorTest1"
+		); 
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

@@ -2644,7 +2644,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. The available web content template options are grouped and listed in alphabetical order in Content Display. Additionally, the web content templates for other structrue and deleted ones shouldn't be available."
-	@priority = "2"
+	@priority = "3"
 	test ViewAvailableWebContentTemplatesInContentDisplay {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(

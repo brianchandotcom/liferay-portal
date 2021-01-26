@@ -249,6 +249,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-125933 ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure pending implementation
+
 	}
 
 	@description = "This is a use case for LPS-116515. The creation of template is not allowed when disable template creation in Dynamic Data Mapping."

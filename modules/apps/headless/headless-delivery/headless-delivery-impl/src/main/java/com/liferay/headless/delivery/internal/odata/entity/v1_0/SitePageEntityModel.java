@@ -28,9 +28,9 @@ import java.util.Map;
 /**
  * @author Jürgen Kappler
  */
-public class ContentPageEntityModel implements EntityModel {
+public class SitePageEntityModel implements EntityModel {
 
-	public ContentPageEntityModel() {
+	public SitePageEntityModel() {
 		_entityFieldsMap = EntityFieldsMapFactory.create(
 			new DateTimeEntityField(
 				"dateCreated",

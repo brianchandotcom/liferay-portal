@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
-import com.liferay.headless.delivery.dto.v1_0.ContentPage;
+import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
@@ -33,12 +33,16 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -47,6 +51,8 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,22 +63,21 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.portal.kernel.model.Layout",
-	service = {ContentPageDTOConverter.class, DTOConverter.class}
+	service = {DTOConverter.class, SitePageDTOConverter.class}
 )
-public class ContentPageDTOConverter
-	implements DTOConverter<Layout, ContentPage> {
+public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 	@Override
 	public String getContentType() {
-		return ContentPage.class.getSimpleName();
+		return SitePage.class.getSimpleName();
 	}
 
 	@Override
-	public ContentPage toDTO(
+	public SitePage toDTO(
 			DTOConverterContext dtoConverterContext, Layout layout)
 		throws Exception {
 
-		return new ContentPage() {
+		return new SitePage() {
 			{
 				actions = dtoConverterContext.getActions();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
@@ -95,7 +100,6 @@ public class ContentPageDTOConverter
 				friendlyUrlPath_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					layout.getFriendlyURLMap());
-				id = layout.getLayoutId();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						Layout.class.getName(), layout.getPlid()),
@@ -164,6 +168,24 @@ public class ContentPageDTOConverter
 
 						return _pageDefinitionDTOConverter.toDTO(
 							dtoConverterContext, layoutStructure);
+					});
+
+				setPageType(
+					() -> {
+						LayoutTypeController layoutTypeController =
+							LayoutTypeControllerTracker.getLayoutTypeController(
+								layout.getType());
+
+						ResourceBundle layoutTypeResourceBundle =
+							ResourceBundleUtil.getBundle(
+								"content.Language",
+								dtoConverterContext.getLocale(),
+								layoutTypeController.getClass());
+
+						return LanguageUtil.get(
+							dtoConverterContext.getHttpServletRequest(),
+							layoutTypeResourceBundle,
+							"layout.types." + layout.getType());
 					});
 			}
 		};

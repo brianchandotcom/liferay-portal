@@ -158,7 +158,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_data_definition.jsp");
 				) {
 					Liferay.Util.openToast({
 						message:
-							'<liferay-ui:message key="please-enter-a-valid-name" />',
+							'<liferay-ui:message arguments="<%= LocaleUtil.toW3cLanguageId(journalEditDDMStructuresDisplayContext.getDefaultLanguageId()) %>" key="please-enter-a-valid-title-for-the-default-language-x" />',
 						title: '<liferay-ui:message key="error" />',
 						type: 'danger',
 					});

@@ -2644,12 +2644,111 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. The available web content template options are grouped and listed in alphabetical order in Content Display. Additionally, the web content templates for other structrue and deleted ones shouldn't be available."
-	@ignore = "true"
 	@priority = "2"
-	test ViewAvailableWebContentTemplatesViaContentDisplay {
-		property portal.upstream = "false";
+	test ViewAvailableWebContentTemplatesInContentDisplay {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
 
-		// TODO LPS-101248 ViewAvailableWebContentTemplatesViaContentDisplay pending implementation
+		task ("Add a new web content structrue") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a template for new structrue") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFieldNames = "Text",
+				templateName = "WC Template For Text");
+		}
+
+		task ("Add three templates for Basic Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.addCP(
+				generalVariables = "Site ID",
+				structureName = "Basic Web Content",
+				templateFieldNames = "Content",
+				templateName = "First Template For Basic Web Content");
+
+			WebContentTemplates.addCP(
+				generalVariables = "Portal Instance ID",
+				structureName = "Basic Web Content",
+				templateFieldNames = "Content",
+				templateName = "Second Template For Basic Web Content");
+
+			WebContentTemplates.addCP(
+				generalVariables = "Device",
+				structureName = "Basic Web Content",
+				templateFieldNames = "Content",
+				templateName = "Third Template For Basic Web Content");
+		}
+
+		task ("Delete the Third Template For Basic Web Content") {
+			WebContentTemplates.deleteCP(templateName = "Third Template For Basic Web Content");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View the order of templates options in Content Display") {
+			var n = "1";
+
+			for (var templateName : list "Basic Web Content,First Template For Basic Web Content,Second Template For Basic Web Content") {
+				AssertTextEquals(
+					key_fieldLabel = "Template",
+					key_groupLabel = "Basic Web Content",
+					key_index = "${n}",
+					locator1 = "Select#GROUPED_SELECT_VALUE_ANY",
+					value1 = "${templateName}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the WC Template For Text and Third Template For Basic Web Content are not shown") {
+			AssertElementNotPresent(
+				key_fieldLabel = "Template",
+				key_groupLabel = "Text",
+				key_value = "WC Template For Text",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Template",
+				key_groupLabel = "Basic Web Content",
+				key_value = "Third Template For Basic Web Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+		}
 	}
 
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."

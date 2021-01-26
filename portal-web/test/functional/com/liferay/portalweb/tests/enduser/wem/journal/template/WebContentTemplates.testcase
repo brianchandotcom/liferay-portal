@@ -117,13 +117,64 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101248. Cannot delete a web content template used in Content Display fragment."
-	@ignore = "true"
 	@priority = "2"
 	test CannotDeleteTemplateUsedInContentDisplay {
-		property portal.upstream = "false";
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
 
-		// TODO LPS-101248 CannotDeleteTemplateUsedInContentDisplay pending implementation
+		task ("Add a web content template for Basic Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
+			NavItem.gotoTemplates();
+
+			var templateScript = '''<a>${content.getData()}</a>''';
+
+			WebContentTemplates.addCP(
+				structureName = "Basic Web Content",
+				templateName = "WC Template Name",
+				templateScript = "${templateScript}");
+		}
+
+		task ("Add a content page on Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				customWebcontenttemplate = "WC Template Name",
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+
+			AssertVisible(
+				key_content = "//a[contains(.,'Web Content Content')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
+
+		task ("Assert cannot delete web content template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentStructures.deleteCP(
+				structureName = "WC Structure Name",
+				webContentHasReference = "true");
+		}
 	}
 
 	@description = "This is a use case for LPS-116515. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."

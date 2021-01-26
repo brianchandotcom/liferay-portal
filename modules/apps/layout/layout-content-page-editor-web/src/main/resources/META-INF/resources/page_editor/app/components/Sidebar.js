@@ -41,6 +41,27 @@ const {Suspense, useCallback, useEffect} = React;
  */
 const swallow = [(value) => value, (_error) => undefined];
 
+/**
+ * Load the first available panel if the selected sidebar panel ID is not found.
+ * This may happen because the list of panels is modified depending on the user permissions.
+ *
+ * @param {string} panelId
+ * @param {Array} panels
+ * @param {object} sidebarPanels
+ */
+const getActivePanelData = ({panelId, panels, sidebarPanels}) => {
+	let sidebarPanelId = panelId;
+
+	let panel = sidebarPanels[sidebarPanelId];
+
+	if (!panel) {
+		sidebarPanelId = panels[0][0];
+		panel = sidebarPanels[sidebarPanelId];
+	}
+
+	return {panel, sidebarPanelId};
+};
+
 export default function Sidebar() {
 	const dropClearRef = useDropClear();
 	const [hasError, setHasError] = useStateSafe(false);
@@ -57,9 +78,12 @@ export default function Sidebar() {
 		selectAvailableSidebarPanels(config.sidebarPanels)
 	);
 	const sidebarOpen = store.sidebar.open;
-	const sidebarPanelId = store.sidebar.panelId;
+	const {panel, sidebarPanelId} = getActivePanelData({
+		panelId: store.sidebar.panelId,
+		panels,
+		sidebarPanels,
+	});
 
-	const panel = sidebarPanels[sidebarPanelId];
 	const promise = panel
 		? load(sidebarPanelId, panel.pluginEntryPoint)
 		: Promise.resolve();

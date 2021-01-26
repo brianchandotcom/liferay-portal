@@ -12,7 +12,7 @@
  * details.
  */
 
-import Disposable from '../util/Disposable';
+import Disposable from './Disposable';
 import EventHandle from './EventHandle';
 
 const singleArray = [0];

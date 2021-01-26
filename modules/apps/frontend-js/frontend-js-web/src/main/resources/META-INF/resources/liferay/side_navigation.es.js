@@ -12,7 +12,7 @@
  * details.
  */
 
-import EventEmitter from 'metal-events';
+import EventEmitter from './EventEmitter';
 
 /**
  * Options

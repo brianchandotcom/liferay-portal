@@ -12,7 +12,7 @@
  * details.
  */
 
-import Disposable from '../util/Disposable';
+import Disposable from './Disposable';
 
 /**
  * EventHandle utility. Holds information about an event subscription, and

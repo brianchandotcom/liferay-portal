@@ -124,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GROUPED_SELECT_VALUE_ANY</td>
+	<td>//div[label[normalize-space(text())='${key_fieldLabel}']]/select/optgroup[@label='${key_groupLabel}']/option[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KNOWLEDGE_BASE_RATING</td>
 	<td>//select[contains(@id,'knowledge-base')]</td>
 	<td></td>

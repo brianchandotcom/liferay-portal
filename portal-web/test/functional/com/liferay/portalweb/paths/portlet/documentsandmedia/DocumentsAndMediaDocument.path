@@ -41,6 +41,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_DOCUMENT_TYPE</td>
+	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Document Type')]/following-sibling::dd[contains(.,'${key_dmDocumentType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_INFO_EXTENSION</td>
+	<td>//dt[contains(@class,'sidebar-dt') and contains (.,'Extension')]/following-sibling::dd[contains(.,'${key_dmDocumentExtension}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_INFO_FILE_NAME</td>
 	<td>//p[contains(@class,'component-subtitle')]</td>
 	<td></td>

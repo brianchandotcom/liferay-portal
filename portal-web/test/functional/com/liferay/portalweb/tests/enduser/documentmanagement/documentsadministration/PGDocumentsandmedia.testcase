@@ -1703,6 +1703,26 @@ definition {
 		DMDocument.viewCategories(categoryNameList = "Apple,Dragon Fruit");
 	}
 
+	@description = "This ensures that a user can view the information about an image when navigating to info panel."
+	@priority = "4"
+	test ViewImageInfoPanel {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentExtension = "jpg",
+			dmDocumentFileTypeInfo = "Image",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "Basic Document");
+	}
+
 	@priority = "4"
 	test ViewOlderVersion {
 		JSONDocument.addFileWithUploadedFile(

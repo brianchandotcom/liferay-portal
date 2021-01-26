@@ -1283,18 +1283,22 @@ definition {
 						key_contentName = "${customWebcontenttemplate}",
 						locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT");
 
-					AssertTextEquals(
-						locator1 = "Fragment#FRAGMENT_BODY",
-						value1 = "${webContentContent}");
+					if (isSet(webContentContent)) {
+						AssertTextEquals(
+							locator1 = "Fragment#FRAGMENT_BODY",
+							value1 = "${webContentContent}");
+					}
 				}
 				else {
 					AssertElementPresent(
 						key_contentName = "${webContentTitle}",
 						locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
-					AssertTextEquals(
-						locator1 = "Fragment#FRAGMENT_BODY",
-						value1 = "${webContentContent}");
+					if (isSet(webContentContent)) {
+						AssertTextEquals(
+							locator1 = "Fragment#FRAGMENT_BODY",
+							value1 = "${webContentContent}");
+					}
 				}
 			}
 		}

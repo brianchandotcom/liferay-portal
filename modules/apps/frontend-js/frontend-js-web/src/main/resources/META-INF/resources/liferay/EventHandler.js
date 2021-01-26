@@ -12,7 +12,7 @@
  * details.
  */
 
-import {Disposable} from 'frontend-js-web';
+import Disposable from './Disposable';
 
 /**
  * EventHandler utility. It's useful for easily removing a group of
@@ -33,7 +33,7 @@ class EventHandler extends Disposable {
 		 * @type {Array.<EventHandle>}
 		 * @protected
 		 */
-		this.eventHandles_ = [];
+		this._eventHandles = [];
 	}
 
 	/**
@@ -43,7 +43,7 @@ class EventHandler extends Disposable {
 	 */
 	add(...args) {
 		for (let i = 0; i < args.length; i++) {
-			this.eventHandles_.push(args[i]);
+			this._eventHandles.push(args[i]);
 		}
 	}
 
@@ -52,18 +52,18 @@ class EventHandler extends Disposable {
 	 * @override
 	 */
 	disposeInternal() {
-		this.eventHandles_ = null;
+		this._eventHandles = null;
 	}
 
 	/**
 	 * Removes all listeners that have been added through the `add` method.
 	 */
 	removeAllListeners() {
-		for (let i = 0; i < this.eventHandles_.length; i++) {
-			this.eventHandles_[i].removeListener();
+		for (let i = 0; i < this._eventHandles.length; i++) {
+			this._eventHandles[i].removeListener();
 		}
 
-		this.eventHandles_ = [];
+		this._eventHandles = [];
 	}
 }
 

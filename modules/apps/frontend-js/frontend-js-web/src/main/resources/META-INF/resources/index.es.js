@@ -44,6 +44,7 @@ export {default as CompatibilityEventProxy} from './liferay/CompatibilityEventPr
 export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
 export {default as Disposable} from './liferay/Disposable';
 export {default as EventEmitter} from './liferay/EventEmitter';
+export {default as EventHandler} from './liferay/EventHandler';
 export {default as ItemSelectorDialog} from './liferay/ItemSelectorDialog.es';
 export {default as PortletBase} from './liferay/PortletBase.es';
 

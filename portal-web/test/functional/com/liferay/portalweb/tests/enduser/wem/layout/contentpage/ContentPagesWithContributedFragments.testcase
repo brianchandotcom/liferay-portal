@@ -1971,12 +1971,74 @@ definition {
 	}
 
 	@description = "This is a test for LPS-101248. Can select web content template from script file as a "Template" for Content Display fragment."
-	@ignore = "true"
 	@priority = "2"
-	test SelectWebContentTemplateFromScriptFileViaContentDisplay {
-		property portal.upstream = "false";
+	test SelectWebContentTemplateFromScriptFileInContentDisplay {
+		task ("Add a web content structure with Text and Numeric fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-101248 SelectWebContentTemplateFromScriptFileViaContentDisplay pending implementation
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			for (var fieldName : list "Text,Numeric") {
+				DataEngine.addField(
+					fieldFieldLabel = "${fieldName}",
+					fieldName = "${fieldName}");
+			}
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a template for new structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				templateFile = "wc_template_2.ftl",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name",
+				webContentNumeric = "9",
+				webContentText = "This is a Text field",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content and custom template in Content Display") {
+			PageEditor.editContentDisplay(
+				customWebcontenttemplate = "WC Template Name",
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Assert the web content is shown in Content Display") {
+			AssertVisible(
+				key_content = "//p[contains(@class,'text')][contains(.,'This is a Text field')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			AssertVisible(
+				key_content = "//p[contains(@class,'numeric')][contains(.,'9')]",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
 	}
 
 	@description = "This is a use case for LPS-86141. The title of asset entries in selected collection should be shown as a list in the Collection Display."

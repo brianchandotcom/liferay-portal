@@ -207,20 +207,22 @@ public class Log4JConfigurationUtilTest {
 	public void testSetLevel() {
 		String loggerName = StringUtil.randomString();
 
+		String childLoggerName = loggerName + ".child";
+
+		_assertLog4JLevel(_INFO, loggerName);
+
+		_assertLog4JLevel(_INFO, childLoggerName);
+
 		Log4JConfigurationUtil.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _WARN));
 
 		_assertLog4JLevel(_WARN, loggerName);
 
+		_assertLog4JLevel(_WARN, childLoggerName);
+
 		Log4JConfigurationUtil.setLevel(loggerName, _DEBUG);
 
 		_assertLog4JLevel(_DEBUG, loggerName);
-
-		String childLoggerName = "com.test.parent.child";
-
-		_assertLog4JLevel(_INFO, childLoggerName);
-
-		Log4JConfigurationUtil.setLevel("com.test.parent", _DEBUG);
 
 		_assertLog4JLevel(_DEBUG, childLoggerName);
 	}

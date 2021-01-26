@@ -139,27 +139,6 @@ public class RenderedPage implements Cloneable, Serializable {
 
 	protected String renderedPageURL;
 
-	public String getViewPortType() {
-		return viewPortType;
-	}
-
-	public void setViewPortType(String viewPortType) {
-		this.viewPortType = viewPortType;
-	}
-
-	public void setViewPortType(
-		UnsafeSupplier<String, Exception> viewPortTypeUnsafeSupplier) {
-
-		try {
-			viewPortType = viewPortTypeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String viewPortType;
-
 	@Override
 	public RenderedPage clone() throws CloneNotSupportedException {
 		return (RenderedPage)super.clone();

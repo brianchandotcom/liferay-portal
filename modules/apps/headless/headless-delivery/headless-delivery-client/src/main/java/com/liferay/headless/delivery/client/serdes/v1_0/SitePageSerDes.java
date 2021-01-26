@@ -14,8 +14,8 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.ContentPage;
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -36,24 +36,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ContentPageSerDes {
+public class SitePageSerDes {
 
-	public static ContentPage toDTO(String json) {
-		ContentPageJSONParser contentPageJSONParser =
-			new ContentPageJSONParser();
+	public static SitePage toDTO(String json) {
+		SitePageJSONParser sitePageJSONParser = new SitePageJSONParser();
 
-		return contentPageJSONParser.parseToDTO(json);
+		return sitePageJSONParser.parseToDTO(json);
 	}
 
-	public static ContentPage[] toDTOs(String json) {
-		ContentPageJSONParser contentPageJSONParser =
-			new ContentPageJSONParser();
+	public static SitePage[] toDTOs(String json) {
+		SitePageJSONParser sitePageJSONParser = new SitePageJSONParser();
 
-		return contentPageJSONParser.parseToDTOs(json);
+		return sitePageJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ContentPage contentPage) {
-		if (contentPage == null) {
+	public static String toJSON(SitePage sitePage) {
+		if (sitePage == null) {
 			return "null";
 		}
 
@@ -64,27 +62,27 @@ public class ContentPageSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (contentPage.getActions() != null) {
+		if (sitePage.getActions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"actions\": ");
 
-			sb.append(_toJSON(contentPage.getActions()));
+			sb.append(_toJSON(sitePage.getActions()));
 		}
 
-		if (contentPage.getAggregateRating() != null) {
+		if (sitePage.getAggregateRating() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"aggregateRating\": ");
 
-			sb.append(String.valueOf(contentPage.getAggregateRating()));
+			sb.append(String.valueOf(sitePage.getAggregateRating()));
 		}
 
-		if (contentPage.getAvailableLanguages() != null) {
+		if (sitePage.getAvailableLanguages() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -93,16 +91,14 @@ public class ContentPageSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contentPage.getAvailableLanguages().length;
-				 i++) {
+			for (int i = 0; i < sitePage.getAvailableLanguages().length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(sitePage.getAvailableLanguages()[i]));
 
 				sb.append("\"");
 
-				sb.append(_escape(contentPage.getAvailableLanguages()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < contentPage.getAvailableLanguages().length) {
+				if ((i + 1) < sitePage.getAvailableLanguages().length) {
 					sb.append(", ");
 				}
 			}
@@ -110,17 +106,17 @@ public class ContentPageSerDes {
 			sb.append("]");
 		}
 
-		if (contentPage.getCreator() != null) {
+		if (sitePage.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"creator\": ");
 
-			sb.append(String.valueOf(contentPage.getCreator()));
+			sb.append(String.valueOf(sitePage.getCreator()));
 		}
 
-		if (contentPage.getCustomFields() != null) {
+		if (sitePage.getCustomFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -129,10 +125,10 @@ public class ContentPageSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contentPage.getCustomFields().length; i++) {
-				sb.append(String.valueOf(contentPage.getCustomFields()[i]));
+			for (int i = 0; i < sitePage.getCustomFields().length; i++) {
+				sb.append(String.valueOf(sitePage.getCustomFields()[i]));
 
-				if ((i + 1) < contentPage.getCustomFields().length) {
+				if ((i + 1) < sitePage.getCustomFields().length) {
 					sb.append(", ");
 				}
 			}
@@ -140,7 +136,7 @@ public class ContentPageSerDes {
 			sb.append("]");
 		}
 
-		if (contentPage.getDateCreated() != null) {
+		if (sitePage.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -150,12 +146,12 @@ public class ContentPageSerDes {
 			sb.append("\"");
 
 			sb.append(
-				liferayToJSONDateFormat.format(contentPage.getDateCreated()));
+				liferayToJSONDateFormat.format(sitePage.getDateCreated()));
 
 			sb.append("\"");
 		}
 
-		if (contentPage.getDateModified() != null) {
+		if (sitePage.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -165,12 +161,12 @@ public class ContentPageSerDes {
 			sb.append("\"");
 
 			sb.append(
-				liferayToJSONDateFormat.format(contentPage.getDateModified()));
+				liferayToJSONDateFormat.format(sitePage.getDateModified()));
 
 			sb.append("\"");
 		}
 
-		if (contentPage.getDatePublished() != null) {
+		if (sitePage.getDatePublished() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -180,22 +176,22 @@ public class ContentPageSerDes {
 			sb.append("\"");
 
 			sb.append(
-				liferayToJSONDateFormat.format(contentPage.getDatePublished()));
+				liferayToJSONDateFormat.format(sitePage.getDatePublished()));
 
 			sb.append("\"");
 		}
 
-		if (contentPage.getExperience() != null) {
+		if (sitePage.getExperience() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"experience\": ");
 
-			sb.append(String.valueOf(contentPage.getExperience()));
+			sb.append(String.valueOf(sitePage.getExperience()));
 		}
 
-		if (contentPage.getFriendlyUrlPath() != null) {
+		if (sitePage.getFriendlyUrlPath() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -204,32 +200,22 @@ public class ContentPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contentPage.getFriendlyUrlPath()));
+			sb.append(_escape(sitePage.getFriendlyUrlPath()));
 
 			sb.append("\"");
 		}
 
-		if (contentPage.getFriendlyUrlPath_i18n() != null) {
+		if (sitePage.getFriendlyUrlPath_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"friendlyUrlPath_i18n\": ");
 
-			sb.append(_toJSON(contentPage.getFriendlyUrlPath_i18n()));
+			sb.append(_toJSON(sitePage.getFriendlyUrlPath_i18n()));
 		}
 
-		if (contentPage.getId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append(contentPage.getId());
-		}
-
-		if (contentPage.getKeywords() != null) {
+		if (sitePage.getKeywords() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -238,14 +224,14 @@ public class ContentPageSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contentPage.getKeywords().length; i++) {
+			for (int i = 0; i < sitePage.getKeywords().length; i++) {
 				sb.append("\"");
 
-				sb.append(_escape(contentPage.getKeywords()[i]));
+				sb.append(_escape(sitePage.getKeywords()[i]));
 
 				sb.append("\"");
 
-				if ((i + 1) < contentPage.getKeywords().length) {
+				if ((i + 1) < sitePage.getKeywords().length) {
 					sb.append(", ");
 				}
 			}
@@ -253,47 +239,61 @@ public class ContentPageSerDes {
 			sb.append("]");
 		}
 
-		if (contentPage.getPageDefinition() != null) {
+		if (sitePage.getPageDefinition() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"pageDefinition\": ");
 
-			sb.append(String.valueOf(contentPage.getPageDefinition()));
+			sb.append(String.valueOf(sitePage.getPageDefinition()));
 		}
 
-		if (contentPage.getPageSettings() != null) {
+		if (sitePage.getPageSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"pageSettings\": ");
 
-			sb.append(String.valueOf(contentPage.getPageSettings()));
+			sb.append(String.valueOf(sitePage.getPageSettings()));
 		}
 
-		if (contentPage.getRenderedPage() != null) {
+		if (sitePage.getPageType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sitePage.getPageType()));
+
+			sb.append("\"");
+		}
+
+		if (sitePage.getRenderedPage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"renderedPage\": ");
 
-			sb.append(String.valueOf(contentPage.getRenderedPage()));
+			sb.append(String.valueOf(sitePage.getRenderedPage()));
 		}
 
-		if (contentPage.getSiteId() != null) {
+		if (sitePage.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"siteId\": ");
 
-			sb.append(contentPage.getSiteId());
+			sb.append(sitePage.getSiteId());
 		}
 
-		if (contentPage.getTaxonomyCategoryBriefs() != null) {
+		if (sitePage.getTaxonomyCategoryBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -302,13 +302,13 @@ public class ContentPageSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contentPage.getTaxonomyCategoryBriefs().length;
+			for (int i = 0; i < sitePage.getTaxonomyCategoryBriefs().length;
 				 i++) {
 
 				sb.append(
-					String.valueOf(contentPage.getTaxonomyCategoryBriefs()[i]));
+					String.valueOf(sitePage.getTaxonomyCategoryBriefs()[i]));
 
-				if ((i + 1) < contentPage.getTaxonomyCategoryBriefs().length) {
+				if ((i + 1) < sitePage.getTaxonomyCategoryBriefs().length) {
 					sb.append(", ");
 				}
 			}
@@ -316,7 +316,7 @@ public class ContentPageSerDes {
 			sb.append("]");
 		}
 
-		if (contentPage.getTaxonomyCategoryIds() != null) {
+		if (sitePage.getTaxonomyCategoryIds() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -325,12 +325,10 @@ public class ContentPageSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < contentPage.getTaxonomyCategoryIds().length;
-				 i++) {
+			for (int i = 0; i < sitePage.getTaxonomyCategoryIds().length; i++) {
+				sb.append(sitePage.getTaxonomyCategoryIds()[i]);
 
-				sb.append(contentPage.getTaxonomyCategoryIds()[i]);
-
-				if ((i + 1) < contentPage.getTaxonomyCategoryIds().length) {
+				if ((i + 1) < sitePage.getTaxonomyCategoryIds().length) {
 					sb.append(", ");
 				}
 			}
@@ -338,7 +336,7 @@ public class ContentPageSerDes {
 			sb.append("]");
 		}
 
-		if (contentPage.getTitle() != null) {
+		if (sitePage.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -347,22 +345,22 @@ public class ContentPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contentPage.getTitle()));
+			sb.append(_escape(sitePage.getTitle()));
 
 			sb.append("\"");
 		}
 
-		if (contentPage.getTitle_i18n() != null) {
+		if (sitePage.getTitle_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"title_i18n\": ");
 
-			sb.append(_toJSON(contentPage.getTitle_i18n()));
+			sb.append(_toJSON(sitePage.getTitle_i18n()));
 		}
 
-		if (contentPage.getUuid() != null) {
+		if (sitePage.getUuid() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -371,12 +369,12 @@ public class ContentPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(contentPage.getUuid()));
+			sb.append(_escape(sitePage.getUuid()));
 
 			sb.append("\"");
 		}
 
-		if (contentPage.getViewableBy() != null) {
+		if (sitePage.getViewableBy() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -385,7 +383,7 @@ public class ContentPageSerDes {
 
 			sb.append("\"");
 
-			sb.append(contentPage.getViewableBy());
+			sb.append(sitePage.getViewableBy());
 
 			sb.append("\"");
 		}
@@ -396,14 +394,13 @@ public class ContentPageSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ContentPageJSONParser contentPageJSONParser =
-			new ContentPageJSONParser();
+		SitePageJSONParser sitePageJSONParser = new SitePageJSONParser();
 
-		return contentPageJSONParser.parseToMap(json);
+		return sitePageJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(ContentPage contentPage) {
-		if (contentPage == null) {
+	public static Map<String, String> toMap(SitePage sitePage) {
+		if (sitePage == null) {
 			return null;
 		}
 
@@ -412,221 +409,216 @@ public class ContentPageSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-		if (contentPage.getActions() == null) {
+		if (sitePage.getActions() == null) {
 			map.put("actions", null);
 		}
 		else {
-			map.put("actions", String.valueOf(contentPage.getActions()));
+			map.put("actions", String.valueOf(sitePage.getActions()));
 		}
 
-		if (contentPage.getAggregateRating() == null) {
+		if (sitePage.getAggregateRating() == null) {
 			map.put("aggregateRating", null);
 		}
 		else {
 			map.put(
 				"aggregateRating",
-				String.valueOf(contentPage.getAggregateRating()));
+				String.valueOf(sitePage.getAggregateRating()));
 		}
 
-		if (contentPage.getAvailableLanguages() == null) {
+		if (sitePage.getAvailableLanguages() == null) {
 			map.put("availableLanguages", null);
 		}
 		else {
 			map.put(
 				"availableLanguages",
-				String.valueOf(contentPage.getAvailableLanguages()));
+				String.valueOf(sitePage.getAvailableLanguages()));
 		}
 
-		if (contentPage.getCreator() == null) {
+		if (sitePage.getCreator() == null) {
 			map.put("creator", null);
 		}
 		else {
-			map.put("creator", String.valueOf(contentPage.getCreator()));
+			map.put("creator", String.valueOf(sitePage.getCreator()));
 		}
 
-		if (contentPage.getCustomFields() == null) {
+		if (sitePage.getCustomFields() == null) {
 			map.put("customFields", null);
 		}
 		else {
-			map.put(
-				"customFields", String.valueOf(contentPage.getCustomFields()));
+			map.put("customFields", String.valueOf(sitePage.getCustomFields()));
 		}
 
-		if (contentPage.getDateCreated() == null) {
+		if (sitePage.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
 		else {
 			map.put(
 				"dateCreated",
-				liferayToJSONDateFormat.format(contentPage.getDateCreated()));
+				liferayToJSONDateFormat.format(sitePage.getDateCreated()));
 		}
 
-		if (contentPage.getDateModified() == null) {
+		if (sitePage.getDateModified() == null) {
 			map.put("dateModified", null);
 		}
 		else {
 			map.put(
 				"dateModified",
-				liferayToJSONDateFormat.format(contentPage.getDateModified()));
+				liferayToJSONDateFormat.format(sitePage.getDateModified()));
 		}
 
-		if (contentPage.getDatePublished() == null) {
+		if (sitePage.getDatePublished() == null) {
 			map.put("datePublished", null);
 		}
 		else {
 			map.put(
 				"datePublished",
-				liferayToJSONDateFormat.format(contentPage.getDatePublished()));
+				liferayToJSONDateFormat.format(sitePage.getDatePublished()));
 		}
 
-		if (contentPage.getExperience() == null) {
+		if (sitePage.getExperience() == null) {
 			map.put("experience", null);
 		}
 		else {
-			map.put("experience", String.valueOf(contentPage.getExperience()));
+			map.put("experience", String.valueOf(sitePage.getExperience()));
 		}
 
-		if (contentPage.getFriendlyUrlPath() == null) {
+		if (sitePage.getFriendlyUrlPath() == null) {
 			map.put("friendlyUrlPath", null);
 		}
 		else {
 			map.put(
 				"friendlyUrlPath",
-				String.valueOf(contentPage.getFriendlyUrlPath()));
+				String.valueOf(sitePage.getFriendlyUrlPath()));
 		}
 
-		if (contentPage.getFriendlyUrlPath_i18n() == null) {
+		if (sitePage.getFriendlyUrlPath_i18n() == null) {
 			map.put("friendlyUrlPath_i18n", null);
 		}
 		else {
 			map.put(
 				"friendlyUrlPath_i18n",
-				String.valueOf(contentPage.getFriendlyUrlPath_i18n()));
+				String.valueOf(sitePage.getFriendlyUrlPath_i18n()));
 		}
 
-		if (contentPage.getId() == null) {
-			map.put("id", null);
-		}
-		else {
-			map.put("id", String.valueOf(contentPage.getId()));
-		}
-
-		if (contentPage.getKeywords() == null) {
+		if (sitePage.getKeywords() == null) {
 			map.put("keywords", null);
 		}
 		else {
-			map.put("keywords", String.valueOf(contentPage.getKeywords()));
+			map.put("keywords", String.valueOf(sitePage.getKeywords()));
 		}
 
-		if (contentPage.getPageDefinition() == null) {
+		if (sitePage.getPageDefinition() == null) {
 			map.put("pageDefinition", null);
 		}
 		else {
 			map.put(
-				"pageDefinition",
-				String.valueOf(contentPage.getPageDefinition()));
+				"pageDefinition", String.valueOf(sitePage.getPageDefinition()));
 		}
 
-		if (contentPage.getPageSettings() == null) {
+		if (sitePage.getPageSettings() == null) {
 			map.put("pageSettings", null);
 		}
 		else {
-			map.put(
-				"pageSettings", String.valueOf(contentPage.getPageSettings()));
+			map.put("pageSettings", String.valueOf(sitePage.getPageSettings()));
 		}
 
-		if (contentPage.getRenderedPage() == null) {
+		if (sitePage.getPageType() == null) {
+			map.put("pageType", null);
+		}
+		else {
+			map.put("pageType", String.valueOf(sitePage.getPageType()));
+		}
+
+		if (sitePage.getRenderedPage() == null) {
 			map.put("renderedPage", null);
 		}
 		else {
-			map.put(
-				"renderedPage", String.valueOf(contentPage.getRenderedPage()));
+			map.put("renderedPage", String.valueOf(sitePage.getRenderedPage()));
 		}
 
-		if (contentPage.getSiteId() == null) {
+		if (sitePage.getSiteId() == null) {
 			map.put("siteId", null);
 		}
 		else {
-			map.put("siteId", String.valueOf(contentPage.getSiteId()));
+			map.put("siteId", String.valueOf(sitePage.getSiteId()));
 		}
 
-		if (contentPage.getTaxonomyCategoryBriefs() == null) {
+		if (sitePage.getTaxonomyCategoryBriefs() == null) {
 			map.put("taxonomyCategoryBriefs", null);
 		}
 		else {
 			map.put(
 				"taxonomyCategoryBriefs",
-				String.valueOf(contentPage.getTaxonomyCategoryBriefs()));
+				String.valueOf(sitePage.getTaxonomyCategoryBriefs()));
 		}
 
-		if (contentPage.getTaxonomyCategoryIds() == null) {
+		if (sitePage.getTaxonomyCategoryIds() == null) {
 			map.put("taxonomyCategoryIds", null);
 		}
 		else {
 			map.put(
 				"taxonomyCategoryIds",
-				String.valueOf(contentPage.getTaxonomyCategoryIds()));
+				String.valueOf(sitePage.getTaxonomyCategoryIds()));
 		}
 
-		if (contentPage.getTitle() == null) {
+		if (sitePage.getTitle() == null) {
 			map.put("title", null);
 		}
 		else {
-			map.put("title", String.valueOf(contentPage.getTitle()));
+			map.put("title", String.valueOf(sitePage.getTitle()));
 		}
 
-		if (contentPage.getTitle_i18n() == null) {
+		if (sitePage.getTitle_i18n() == null) {
 			map.put("title_i18n", null);
 		}
 		else {
-			map.put("title_i18n", String.valueOf(contentPage.getTitle_i18n()));
+			map.put("title_i18n", String.valueOf(sitePage.getTitle_i18n()));
 		}
 
-		if (contentPage.getUuid() == null) {
+		if (sitePage.getUuid() == null) {
 			map.put("uuid", null);
 		}
 		else {
-			map.put("uuid", String.valueOf(contentPage.getUuid()));
+			map.put("uuid", String.valueOf(sitePage.getUuid()));
 		}
 
-		if (contentPage.getViewableBy() == null) {
+		if (sitePage.getViewableBy() == null) {
 			map.put("viewableBy", null);
 		}
 		else {
-			map.put("viewableBy", String.valueOf(contentPage.getViewableBy()));
+			map.put("viewableBy", String.valueOf(sitePage.getViewableBy()));
 		}
 
 		return map;
 	}
 
-	public static class ContentPageJSONParser
-		extends BaseJSONParser<ContentPage> {
+	public static class SitePageJSONParser extends BaseJSONParser<SitePage> {
 
 		@Override
-		protected ContentPage createDTO() {
-			return new ContentPage();
+		protected SitePage createDTO() {
+			return new SitePage();
 		}
 
 		@Override
-		protected ContentPage[] createDTOArray(int size) {
-			return new ContentPage[size];
+		protected SitePage[] createDTOArray(int size) {
+			return new SitePage[size];
 		}
 
 		@Override
 		protected void setField(
-			ContentPage contentPage, String jsonParserFieldName,
+			SitePage sitePage, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setActions(
-						(Map)ContentPageSerDes.toMap(
+					sitePage.setActions(
+						(Map)SitePageSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "aggregateRating")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setAggregateRating(
+					sitePage.setAggregateRating(
 						AggregateRatingSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
@@ -635,19 +627,19 @@ public class ContentPageSerDes {
 						jsonParserFieldName, "availableLanguages")) {
 
 				if (jsonParserFieldValue != null) {
-					contentPage.setAvailableLanguages(
+					sitePage.setAvailableLanguages(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setCreator(
+					sitePage.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setCustomFields(
+					sitePage.setCustomFields(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -659,77 +651,75 @@ public class ContentPageSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setDateCreated(
+					sitePage.setDateCreated(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setDateModified(
+					sitePage.setDateModified(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "datePublished")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setDatePublished(
+					sitePage.setDatePublished(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "experience")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setExperience(
+					sitePage.setExperience(
 						ExperienceSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setFriendlyUrlPath(
-						(String)jsonParserFieldValue);
+					sitePage.setFriendlyUrlPath((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "friendlyUrlPath_i18n")) {
 
 				if (jsonParserFieldValue != null) {
-					contentPage.setFriendlyUrlPath_i18n(
-						(Map)ContentPageSerDes.toMap(
+					sitePage.setFriendlyUrlPath_i18n(
+						(Map)SitePageSerDes.toMap(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					contentPage.setId(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "keywords")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setKeywords(
+					sitePage.setKeywords(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pageDefinition")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setPageDefinition(
+					sitePage.setPageDefinition(
 						PageDefinitionSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pageSettings")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setPageSettings(
+					sitePage.setPageSettings(
 						PageSettingsSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageType")) {
+				if (jsonParserFieldValue != null) {
+					sitePage.setPageType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "renderedPage")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setRenderedPage(
+					sitePage.setRenderedPage(
 						RenderedPageSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setSiteId(
+					sitePage.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -737,7 +727,7 @@ public class ContentPageSerDes {
 						jsonParserFieldName, "taxonomyCategoryBriefs")) {
 
 				if (jsonParserFieldValue != null) {
-					contentPage.setTaxonomyCategoryBriefs(
+					sitePage.setTaxonomyCategoryBriefs(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
@@ -752,31 +742,31 @@ public class ContentPageSerDes {
 						jsonParserFieldName, "taxonomyCategoryIds")) {
 
 				if (jsonParserFieldValue != null) {
-					contentPage.setTaxonomyCategoryIds(
+					sitePage.setTaxonomyCategoryIds(
 						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setTitle((String)jsonParserFieldValue);
+					sitePage.setTitle((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title_i18n")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setTitle_i18n(
-						(Map)ContentPageSerDes.toMap(
+					sitePage.setTitle_i18n(
+						(Map)SitePageSerDes.toMap(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setUuid((String)jsonParserFieldValue);
+					sitePage.setUuid((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {
 				if (jsonParserFieldValue != null) {
-					contentPage.setViewableBy(
-						ContentPage.ViewableBy.create(
+					sitePage.setViewableBy(
+						SitePage.ViewableBy.create(
 							(String)jsonParserFieldValue));
 				}
 			}

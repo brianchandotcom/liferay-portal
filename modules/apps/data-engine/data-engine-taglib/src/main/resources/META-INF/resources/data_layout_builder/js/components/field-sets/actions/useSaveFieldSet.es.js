@@ -26,6 +26,7 @@ import {
 	normalizeDataLayoutRows,
 } from '../../../utils/normalizers.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
+import getFieldsWithoutOptions from './getFieldsWithoutOptions.es';
 
 export default ({
 	availableLanguageIds,
@@ -67,6 +68,24 @@ export default ({
 			newDataDefinition = normalizeDataDefinition(
 				newDataDefinition,
 				fieldSet.defaultLanguageId
+			);
+		}
+
+		const fieldsWithoutOptions = getFieldsWithoutOptions(
+			dataDefinitionFields,
+			defaultLanguageId
+		);
+
+		if (fieldsWithoutOptions.length) {
+			return Promise.reject(
+				new Error(
+					Liferay.Util.sub(
+						Liferay.Language.get(
+							'at-least-one-option-should-be-set-for-field-x'
+						),
+						fieldsWithoutOptions[0].label[defaultLanguageId]
+					)
+				)
 			);
 		}
 

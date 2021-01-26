@@ -34,13 +34,13 @@ class EventEmitter extends Disposable {
 		 * @type {Object<string, !Array<!function()>>}
 		 * @protected
 		 */
-		this.events_ = null;
+		this._events = null;
 
 		/**
 		 * Handlers that are triggered when an event is listened to.
 		 * @type {Array}
 		 */
-		this.listenerHandlers_ = null;
+		this._listenerHandlers = null;
 
 		/**
 		 * Configuration option which determines if an event facade should be sent
@@ -49,7 +49,7 @@ class EventEmitter extends Disposable {
 		 * @type {boolean}
 		 * @protected
 		 */
-		this.shouldUseFacade_ = false;
+		this._shouldUseFacade = false;
 	}
 
 	/**
@@ -62,7 +62,7 @@ class EventEmitter extends Disposable {
 	 * @return {*} The holder's new value.
 	 * @protected
 	 */
-	addHandler_(holder, handler) {
+	_addHandler(holder, handler) {
 		if (!holder) {
 			holder = handler;
 		}
@@ -86,11 +86,11 @@ class EventEmitter extends Disposable {
 	 * @return {!EventHandle} Can be used to remove the listener.
 	 */
 	addListener(event, listener, defaultListener) {
-		this.validateListener_(listener);
+		this._validateListener(listener);
 
-		const events = this.toEventsArray_(event);
+		const events = this._toEventsArray(event);
 		for (let i = 0; i < events.length; i++) {
-			this.addSingleListener_(events[i], listener, defaultListener);
+			this._addSingleListener(events[i], listener, defaultListener);
 		}
 
 		return new EventHandle(this, event, listener);
@@ -107,8 +107,8 @@ class EventEmitter extends Disposable {
 	 *   listener, if there is any.
 	 * @protected
 	 */
-	addSingleListener_(event, listener, defaultListener, origin) {
-		this.runListenerHandlers_(event);
+	_addSingleListener(event, listener, defaultListener, origin) {
+		this._runListenerHandlers(event);
 		if (defaultListener || origin) {
 			listener = {
 				default: defaultListener,
@@ -116,8 +116,8 @@ class EventEmitter extends Disposable {
 				origin,
 			};
 		}
-		this.events_ = this.events_ || {};
-		this.events_[event] = this.addHandler_(this.events_[event], listener);
+		this._events = this._events || {};
+		this._events[event] = this._addHandler(this._events[event], listener);
 	}
 
 	/**
@@ -126,7 +126,7 @@ class EventEmitter extends Disposable {
 	 * @return {Object}
 	 * @protected
 	 */
-	buildFacade_(event) {
+	_buildFacade(event) {
 		if (this.getShouldUseFacade()) {
 			const facade = {
 				preventDefault() {
@@ -145,7 +145,7 @@ class EventEmitter extends Disposable {
 	 * @override
 	 */
 	disposeInternal() {
-		this.events_ = null;
+		this._events = null;
 	}
 
 	/**
@@ -155,13 +155,13 @@ class EventEmitter extends Disposable {
 	 * @return {boolean} Returns true if event had listeners, false otherwise.
 	 */
 	emit(event) {
-		const listeners = this.getRawListeners_(event);
+		const listeners = this._getRawListeners(event);
 		if (listeners.length === 0) {
 			return false;
 		}
 
 		const args = Array.prototype.slice.call(arguments, 1);
-		this.runListeners_(listeners, args, this.buildFacade_(event));
+		this._runListeners(listeners, args, this._buildFacade(event));
 
 		return true;
 	}
@@ -172,11 +172,11 @@ class EventEmitter extends Disposable {
 	 * @return {!Array}
 	 * @protected
 	 */
-	getRawListeners_(event) {
-		const directListeners = toArray(this.events_ && this.events_[event]);
+	_getRawListeners(event) {
+		const directListeners = toArray(this._events && this._events[event]);
 
 		return directListeners.concat(
-			toArray(this.events_ && this.events_['*'])
+			toArray(this._events && this._events['*'])
 		);
 	}
 
@@ -187,7 +187,7 @@ class EventEmitter extends Disposable {
 	 * @return {boolean}
 	 */
 	getShouldUseFacade() {
-		return this.shouldUseFacade_;
+		return this._shouldUseFacade;
 	}
 
 	/**
@@ -196,7 +196,7 @@ class EventEmitter extends Disposable {
 	 * @return {Array} Array of listeners.
 	 */
 	listeners(event) {
-		return this.getRawListeners_(event).map((listener) =>
+		return this._getRawListeners(event).map((listener) =>
 			listener.fn ? listener.fn : listener
 		);
 	}
@@ -212,9 +212,9 @@ class EventEmitter extends Disposable {
 	 * @return {!EventHandle} Can be used to remove the listener.
 	 */
 	many(event, amount, listener) {
-		const events = this.toEventsArray_(event);
+		const events = this._toEventsArray(event);
 		for (let i = 0; i < events.length; i++) {
-			this.many_(events[i], amount, listener);
+			this._many(events[i], amount, listener);
 		}
 
 		return new EventHandle(this, event, listener);
@@ -230,7 +230,7 @@ class EventEmitter extends Disposable {
 	 * @param {!Function} listener
 	 * @protected
 	 */
-	many_(event, amount, listener) {
+	_many(event, amount, listener) {
 		const self = this;
 
 		if (amount <= 0) {
@@ -247,7 +247,7 @@ class EventEmitter extends Disposable {
 			listener.apply(self, arguments);
 		}
 
-		self.addSingleListener_(event, handlerInternal, false, listener);
+		self._addSingleListener(event, handlerInternal, false, listener);
 	}
 
 	/**
@@ -258,7 +258,7 @@ class EventEmitter extends Disposable {
 	 * @return {boolean}
 	 * @protected
 	 */
-	matchesListener_(listenerObj, listener) {
+	_matchesListener(listenerObj, listener) {
 		const fn = listenerObj.fn || listenerObj;
 
 		return (
@@ -275,15 +275,15 @@ class EventEmitter extends Disposable {
 	 * @return {!Object} Returns emitter, so calls can be chained.
 	 */
 	off(event, listener) {
-		this.validateListener_(listener);
-		if (!this.events_) {
+		this._validateListener(listener);
+		if (!this._events) {
 			return this;
 		}
 
-		const events = this.toEventsArray_(event);
+		const events = this._toEventsArray(event);
 		for (let i = 0; i < events.length; i++) {
-			this.events_[events[i]] = this.removeMatchingListenerObjs_(
-				toArray(this.events_[events[i]]),
+			this._events[events[i]] = this._removeMatchingListenerObjs(
+				toArray(this._events[events[i]]),
 				listener
 			);
 		}
@@ -307,8 +307,8 @@ class EventEmitter extends Disposable {
 	 * @param {!function()} handler
 	 */
 	onListener(handler) {
-		this.listenerHandlers_ = this.addHandler_(
-			this.listenerHandlers_,
+		this._listenerHandlers = this._addHandler(
+			this._listenerHandlers,
 			handler
 		);
 	}
@@ -332,15 +332,15 @@ class EventEmitter extends Disposable {
 	 * @return {!Object} Returns emitter, so calls can be chained.
 	 */
 	removeAllListeners(event) {
-		if (this.events_) {
+		if (this._events) {
 			if (event) {
-				const events = this.toEventsArray_(event);
+				const events = this._toEventsArray(event);
 				for (let i = 0; i < events.length; i++) {
-					this.events_[events[i]] = null;
+					this._events[events[i]] = null;
 				}
 			}
 			else {
-				this.events_ = null;
+				this._events = null;
 			}
 		}
 
@@ -355,10 +355,10 @@ class EventEmitter extends Disposable {
 	 * @return {Array.<Object>|Object} The new listeners array for this event.
 	 * @protected
 	 */
-	removeMatchingListenerObjs_(listenerObjs, listener) {
+	_removeMatchingListenerObjs(listenerObjs, listener) {
 		const finalListeners = [];
 		for (let i = 0; i < listenerObjs.length; i++) {
-			if (!this.matchesListener_(listenerObjs[i], listener)) {
+			if (!this._matchesListener(listenerObjs[i], listener)) {
 				finalListeners.push(listenerObjs[i]);
 			}
 		}
@@ -382,8 +382,8 @@ class EventEmitter extends Disposable {
 	 * @param {string} event
 	 * @protected
 	 */
-	runListenerHandlers_(event) {
-		let handlers = this.listenerHandlers_;
+	_runListenerHandlers(event) {
+		let handlers = this._listenerHandlers;
 		if (handlers) {
 			handlers = toArray(handlers);
 			for (let i = 0; i < handlers.length; i++) {
@@ -399,7 +399,7 @@ class EventEmitter extends Disposable {
 	 * @param {Object} facade
 	 * @protected
 	 */
-	runListeners_(listeners, args, facade) {
+	_runListeners(listeners, args, facade) {
 		if (facade) {
 			args.push(facade);
 		}
@@ -429,7 +429,7 @@ class EventEmitter extends Disposable {
 	 * @return {!Object} Returns emitter, so calls can be chained.
 	 */
 	setShouldUseFacade(shouldUseFacade) {
-		this.shouldUseFacade_ = shouldUseFacade;
+		this._shouldUseFacade = shouldUseFacade;
 
 		return this;
 	}
@@ -442,7 +442,7 @@ class EventEmitter extends Disposable {
 	 * @return {!Array}
 	 * @protected
 	 */
-	toEventsArray_(events) {
+	_toEventsArray(events) {
 		if (typeof events === 'string') {
 			singleArray[0] = events;
 			events = singleArray;
@@ -456,7 +456,7 @@ class EventEmitter extends Disposable {
 	 * @param  {*} listener
 	 * @protected
 	 */
-	validateListener_(listener) {
+	_validateListener(listener) {
 		if (typeof listener !== 'function') {
 			throw new TypeError('Listener must be a function');
 		}

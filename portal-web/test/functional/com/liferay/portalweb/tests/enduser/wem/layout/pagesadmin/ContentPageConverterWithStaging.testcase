@@ -34,8 +34,69 @@ definition {
 	test ViewContentPageInLiveAfterConvertingAndPublishingWidgetPage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98327 ViewContentPageInLiveAfterConvertingAndPublishingWidgetPage pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
 
+		SitePages.addPublicPage(pageName = "Test Page Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to content page...",
+			pageName = "Test Page Name");
+
+		Button.clickPublish();
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Page Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(checkPageName = "Test Page Name");
+
+		Staging.publishToLive();
+
+		AssertElementPresent(
+			key_portletName = "Blogs",
+			locator1 = "Portlet#TITLE");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		AssertElementPresent(
+			key_pageName = "Test Page Name",
+			key_pageType = "Content Page",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+
+		ProductMenu.gotoLiveSite(site = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		AssertElementPresent(
+			key_pageName = "Test Page Name",
+			key_pageType = "Content Page",
+			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "View",
+			pageName = "Test Page Name");
+
+		AssertElementPresent(
+			key_portletName = "Blogs",
+			locator1 = "Portlet#TITLE");
 	}
 
 	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the content page has the original plid identifier."

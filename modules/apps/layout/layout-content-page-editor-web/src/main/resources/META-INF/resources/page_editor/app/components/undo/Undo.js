@@ -25,7 +25,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 
 	return (
 		<>
-			<ClayButton.Group>
+			<ClayButton.Group className="flex-nowrap">
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('undo')}
 					className="btn-monospaced"

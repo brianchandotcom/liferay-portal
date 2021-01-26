@@ -47,7 +47,6 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
-
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -57,6 +56,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98070 CancelChangesOnColorField pending implementation
+
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

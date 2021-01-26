@@ -1763,7 +1763,9 @@ definition {
 			assetTitle = "Document_2.jpg",
 			dmDocumentTitle = "Document_1.doc");
 
-		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
 	@priority = "5"

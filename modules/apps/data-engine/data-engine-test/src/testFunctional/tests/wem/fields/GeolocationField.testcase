@@ -202,11 +202,28 @@ definition {
 
 		DataEngine.editFieldShowLabel(fieldFieldLabel = "${key_fieldLabel}");
 
+		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+
 		AssertElementPresent(locator1 = "FormFields#LABEL");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${key_fieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${key_fieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
 
 		Uncheck.uncheckToggleSwitch(
 				key_toggleSwitchLabel = "Show Label",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
 
 		AssertElementNotPresent(locator1 = "FormFields#LABEL");
 	}

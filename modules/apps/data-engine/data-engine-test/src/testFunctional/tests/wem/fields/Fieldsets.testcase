@@ -54,6 +54,7 @@ definition {
             panel = "Site Administration",
             portlet = "Web Content"           
         );
+
         NavItem.gotoStructures();
         
         WebContentStructures.addCP(

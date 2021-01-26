@@ -223,9 +223,11 @@ function ToolbarBody() {
 					)}
 				<li className="nav-item">
 					<ViewportSizeSelector
-						onSizeSelected={(size) =>
-							dispatch(Actions.switchViewportSize({size}))
-						}
+						onSizeSelected={(size) => {
+							if (size !== selectedViewportSize) {
+								dispatch(Actions.switchViewportSize({size}));
+							}
+						}}
 						selectedSize={selectedViewportSize}
 					/>
 				</li>

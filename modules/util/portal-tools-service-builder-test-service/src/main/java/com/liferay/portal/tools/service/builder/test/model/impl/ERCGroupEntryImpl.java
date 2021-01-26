@@ -25,7 +25,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
  */
 public class ERCGroupEntryImpl extends ERCGroupEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a erc group entry model instance should use the {@link com.liferay.portal.tools.service.builder.test.model.ERCGroupEntry} interface instead.

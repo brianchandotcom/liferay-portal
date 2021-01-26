@@ -31,9 +31,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.ERCGroupEntryS
  */
 public class ERCGroupEntryServiceImpl extends ERCGroupEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.ERCGroupEntryServiceUtil</code> to access the erc group entry remote service.
 	 */
+
 }

@@ -2357,6 +2357,24 @@ definition {
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_FILE_NAME",
 				value1 = "${dmDocumentFileName}");
 		}
+
+		if (isSet(dmDocumentType)) {
+			AssertTextEquals(
+				key_dmDocumentType = "${dmDocumentType}",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_DOCUMENT_TYPE",
+				value1 = "${dmDocumentType}");
+		}
+
+		if (isSet(dmDocumentExtension)) {
+			AssertTextEquals(
+				key_dmDocumentExtension = "${dmDocumentExtension}",
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_EXTENSION",
+				value1 = "${dmDocumentExtension}");
+		}
+
+		if ("${dmDocumentFileTypeInfo}" == "Image") {
+			AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
+		}
 	}
 
 	macro viewPGDetails {

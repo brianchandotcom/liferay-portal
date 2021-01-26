@@ -54,6 +54,18 @@ definition {
 			type = "${type}");
 	}
 
+	macro assignRoleToGroup {
+		Variables.assertDefined(parameterList = "${groupName},${roleTitle}");
+
+		var groupId = JSONUserSetter.setGroupId(groupName = "${groupName}");
+
+		var roleId = JSONRoleSetter.setRoleId(name = "${roleTitle}");
+
+		JSONRoleAPI._assignRoleToGroup(
+			groupId = "${groupId}",
+			roleId = "${roleId}");
+	}
+
 	macro assignRoleToUser {
 		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 

@@ -20,6 +20,21 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _assignRoleToGroup {
+		Variables.assertDefined(parameterList = "${groupId},${roleId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/add-role-groups \
+				-u test@liferay.com:test \
+				-d roleId=${roleId} \
+				-d groupIds=${groupId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _assignRoleToUser {
 		Variables.assertDefined(parameterList = "${roleId},${userId}");
 

@@ -491,6 +491,49 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldReference {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+		
+		if (isSet(fieldReference)) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Type(
+				key_fieldLabel = "Field Reference",
+				key_fieldName = "fieldReference",
+				locator1 = "Sidebar#TEXT_INPUT",
+				value1 = "${fieldReference}"
+			);
+			
+			AssertTextEquals.assertValue(
+				key_fieldLabel = "Field Reference",
+				key_fieldName = "fieldReference",
+				locator1 = "Sidebar#TEXT_INPUT",
+				value1 = "${assertFieldReference}"
+			);
+		}
+		Click(locator1 = "Sidebar#BACK");
+	}
+
+	macro editGridOptions {
+		var key_gridField = "${gridField}";
+		var key_rowNumber = "${rowNumber}";
+
+		Type(
+			locator1 = "DDMEditStructure#GRID_OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
+	}
+
+	macro editOptionValue {
+		var key_rowNumber = "${rowNumber}";
+
+		Type(
+			locator1 = "DDMEditStructure#OPTION_VALUE_FIELD",
+			value1 = "${optionValue}");
+	}
+
 	macro viewField {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_text = "${fieldName}";

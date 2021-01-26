@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.log4j.internal.configuration;
+package com.liferay.petra.log4j.internal;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 

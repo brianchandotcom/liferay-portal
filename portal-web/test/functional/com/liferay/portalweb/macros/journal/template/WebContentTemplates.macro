@@ -75,18 +75,45 @@ definition {
 
 	@summary = "Click on the add button to add a template named '${templateName}' for structure '${structureName}', input most basic fields and then save the template"
 	macro addCP {
+		if (isSet(manageTemplates)) {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage Templates",
+				rowEntry = "${structureName}");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Templates for Structure: ${structureName}");
+		}
+
 		LexiconEntry.gotoAdd();
 
-		WebContentTemplates.inputTemplateAddScreenFields(
-			generalVariables = "${generalVariables}",
-			imageSourceURL = "${imageSourceURL}",
-			structureName = "${structureName}",
-			templateDescription = "${templateDescription}",
-			templateFieldNames = "${templateFieldNames}",
-			templateFile = "${templateFile}",
-			templateLanguage = "${templateLanguage}",
-			templateName = "${templateName}",
-			templateScript = "${templateScript}");
+		if (isSet(manageTemplates)) {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "New Template for Structure: ${structureName}");
+
+			WebContentTemplates.inputTemplateAddScreenFields(
+				generalVariables = "${generalVariables}",
+				imageSourceURL = "${imageSourceURL}",
+				templateDescription = "${templateDescription}",
+				templateFieldNames = "${templateFieldNames}",
+				templateFile = "${templateFile}",
+				templateLanguage = "${templateLanguage}",
+				templateName = "${templateName}",
+				templateScript = "${templateScript}");
+		}
+		else {
+			WebContentTemplates.inputTemplateAddScreenFields(
+				generalVariables = "${generalVariables}",
+				imageSourceURL = "${imageSourceURL}",
+				structureName = "${structureName}",
+				templateDescription = "${templateDescription}",
+				templateFieldNames = "${templateFieldNames}",
+				templateFile = "${templateFile}",
+				templateLanguage = "${templateLanguage}",
+				templateName = "${templateName}",
+				templateScript = "${templateScript}");
+		}
 
 		DDLDataDefinition.save(publicationsEnabled = "${publicationsEnabled}");
 	}

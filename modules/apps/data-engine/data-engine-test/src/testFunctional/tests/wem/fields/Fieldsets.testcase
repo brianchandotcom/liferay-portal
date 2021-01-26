@@ -48,33 +48,32 @@ definition {
 	@priority = "5"
 	test DuplicateFieldset {
 		property portal.acceptance = "false";
-		
-		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            panel = "Site Administration",
-            portlet = "Web Content"           
-        );
 
-        NavItem.gotoStructures();
-        
-        WebContentStructures.addCP(
-		    structureDescription = "DuplicateTest",
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "DuplicateTest",
 			structureName = "DuplicateTest");
 
 		DataEngine.addFields(fieldNameList = "Text,Image,Upload");
 
 		WebContentStructures.saveCP(structureName = "DuplicateTest");
 
-        WebContentStructures.addCP(
-		    structureDescription = "DuplicateTest1",
+		WebContentStructures.addCP(
+			structureDescription = "DuplicateTest1",
 			structureName = "DuplicateTest1");
-        
-        DataEngine.addFieldsets(
+
+		DataEngine.addFieldsets(
 			fieldsetsLabel = "DuplicateTest",
 			fieldsetsName = "DuplicateTest");
 
 		
-        Click(locator1 = "//div[contains(@class,'fieldset')]//label[text()='DuplicateTest']");
+		Click(locator1 = "//div[contains(@class,'fieldset')]//label[text()='DuplicateTest']");
 
 		Click(
 			key_text = "DuplicateTest",
@@ -82,16 +81,15 @@ definition {
 
 		MenuItem.click(menuItem = "Duplicate");
 
-        AssertElementPresent(locator1 = "//div[contains(@class,'fieldset')]//label[text()='Copy of DuplicateTest']");
+		AssertElementPresent(locator1 = "//div[contains(@class,'fieldset')]//label[text()='Copy of DuplicateTest']");
 
-        AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Text')]");
+		AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Text')]");
 
-        AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Image')]");
+		AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Image')]");
 
-        AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Upload')]");
+		AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Upload')]");
 
-        WebContentStructures.saveCP(structureName = "DuplicateTest1");
-        
+		WebContentStructures.saveCP(structureName = "DuplicateTest1");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
@@ -110,23 +108,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-107630 FieldsetNameRenamedWhenNameAlreadyExistent pending implementation
-		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            panel = "Site Administration",
-            portlet = "Web Content"           
-        );
-        NavItem.gotoStructures();
-        WebContentStructures.addCP(
-		    structureDescription = "Reference Test",
-			structureName = "Reference Test");
-        DataEngine.addField(
-            field = "Text",
-            fieldFieldLabel = "Text",
-            fieldName = "Text");
-		DataEngine.addField(
-            field = "Text",
-            fieldFieldLabel = "Text",
-            fieldName = "Text");
 
 	}
 

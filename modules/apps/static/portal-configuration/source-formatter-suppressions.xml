@@ -3,5 +3,6 @@
 <suppressions>
 	<source-check>
 		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="portal-configuration-metatype-api/src/test/java/com/liferay/portal/configuration/metatype/bnd/util/ConfigurableUtilTest\.java" />
+		<suppress checks="JavaModuleInternalImportsCheck" files="portal-configuration-persistence-api/src/main/java/com/liferay/portal/configuration/persistence/ConfigurationOverridePropertiesUtil\.java" />
 	</source-check>
 </suppressions>

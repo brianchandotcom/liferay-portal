@@ -45,7 +45,7 @@ public class Log4JConfigurationUtilTest {
 		CodeCoverageAssertor.INSTANCE;
 
 	@Test
-	public void testConfigureLog4JXmlAppenderExist() {
+	public void testConfigureLog4JXmlAppender() {
 
 		// Assert no appender exist
 
@@ -84,7 +84,7 @@ public class Log4JConfigurationUtilTest {
 	}
 
 	@Test
-	public void testConfigureLog4JXmlLogEnable() {
+	public void testConfigureLog4JXmlLogLevel() {
 		String loggerName = StringUtil.randomString();
 
 		Logger logger = Logger.getLogger(loggerName);

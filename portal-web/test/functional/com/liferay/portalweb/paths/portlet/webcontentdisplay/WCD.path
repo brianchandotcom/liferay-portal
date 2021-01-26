@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_CONTENT_ANY</td>
+	<td>//div[contains(@class,'journal-content-article')]${key_content}</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_CONTENT_2</td>
 	<td>xPath=(//div[contains(@class,'journal-content-article')])[2]</td>
 	<td></td>

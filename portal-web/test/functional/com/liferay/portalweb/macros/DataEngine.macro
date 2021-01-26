@@ -208,12 +208,19 @@ definition {
 						rowNumber = "${optionNumber}");
 				}
 			}
-
-			else if ("${fieldName}" == "Multiple Selection" ||
-				"${fieldName}" == "Select from List" ||
-				"${fieldName}" == "Single Selection") {
+			else if ("${fieldName}" == "Multiple Selection") {
 				DataEngine.editOptionValue(
-					optionValue = "Option 1",
+					optionValue = "Value 1",
+					rowNumber = "1");
+			}
+			else if ("${fieldName}" == "Select from List") {
+				DataEngine.editOptionValue(
+					optionValue = "Value 2",
+					rowNumber = "1");
+			}
+			else if ("${fieldName}" == "Single Selection") {
+				DataEngine.editOptionValue(
+					optionValue = "Value 3",
 					rowNumber = "1");
 			}
 

@@ -2001,7 +2001,7 @@ definition {
 
 		WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(webContentText = "(Enter Text Here)");
+		WebContent.addWithStructureCP(webContentText = "Enter Text Here");
 
 		PortletEntry.save();
 
@@ -2032,6 +2032,16 @@ definition {
 			scopeSite = "Everywhere");
 
 		SelectFrame(value1 = "relative=top");
+
+		WebContentStructures.resetStructureDefaultValuesCP(
+				assetTitle = "Blogs Entry Title",
+				templateName = "WC Template Name",
+				clickCancel = "true");
+
+		AssertTextEquals.assertValue(
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "Enter Text Here");
 
 		WebContentStructures.resetStructureDefaultValuesCP(
 			assetTitle = "Blogs Entry Title",

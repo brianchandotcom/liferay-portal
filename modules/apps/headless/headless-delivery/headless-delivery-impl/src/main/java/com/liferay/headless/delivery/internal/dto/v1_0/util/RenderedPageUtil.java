@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.RenderedPage;
-import com.liferay.headless.delivery.internal.resource.v1_0.BaseContentPageResourceImpl;
+import com.liferay.headless.delivery.internal.resource.v1_0.BaseSitePageResourceImpl;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -111,7 +111,7 @@ public class RenderedPageUtil {
 			return null;
 		}
 
-		String methodName = "getSiteContentPageRenderedPage";
+		String methodName = "getSiteSitePageRenderedPage";
 
 		List<Object> arguments = new ArrayList<>();
 
@@ -126,8 +126,7 @@ public class RenderedPageUtil {
 			dtoConverterContext.getAttribute("segmentsExperienceId"));
 
 		if (segmentsExperienceId != SegmentsEntryConstants.ID_DEFAULT) {
-			methodName =
-				"getSiteContentPageExperienceExperienceKeyRenderedPage";
+			methodName = "getSiteSitePageExperienceExperienceKeyRenderedPage";
 
 			SegmentsExperience segmentsExperience =
 				SegmentsExperienceLocalServiceUtil.getSegmentsExperience(
@@ -137,7 +136,7 @@ public class RenderedPageUtil {
 		}
 
 		return JaxRsLinkUtil.getJaxRsLink(
-			"headless-delivery", BaseContentPageResourceImpl.class, methodName,
+			"headless-delivery", BaseSitePageResourceImpl.class, methodName,
 			uriInfo, arguments.toArray(new Object[0]));
 	}
 

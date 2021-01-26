@@ -66,7 +66,42 @@ definition {
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 DeleteColorFieldOnBuilder pending implementation
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+        );
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+        	structureName = "Structure Name Test",
+        	structureDescription = "Structure Description Test"
+        );
+
+        DataEngine.addField(
+            fieldFieldLabel = "Color Test",
+            fieldName = "Color"
+        );
+
+        WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+        WebContentStructures.viewTableEntryCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test"
+        );
+
+        WebContentNavigator.gotoEditStructure(
+			structureName = "Structure Name Test"
+        );
+
+        DataEngine.deleteField(
+            fieldFieldLabel = "Color Test"
+        );
+
+        AssertElementNotPresent(
+			fieldName = "Color",
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME"
+        );
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -106,7 +141,53 @@ definition {
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 DuplicateColorFieldOnBuilder pending implementation
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+        );
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureName = "Structure Name Test",
+            structureDescription = "Structure Description Test"
+        );
+
+        DataEngine.addField(
+            fieldFieldLabel = "Color Test",
+            fieldName = "Color"
+        );
+
+        WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+        WebContentStructures.viewTableEntryCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test"
+        );
+
+        WebContentNavigator.gotoEditStructure(
+			structureName = "Structure Name Test"
+        );
+
+        DataEngine.duplicateField(
+            fieldFieldLabel = "Color Test"
+        );
+
+        WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+        WebContentNavigator.gotoEditStructure(
+			structureName = "Structure Name Test"
+        );
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color"
+		);
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Color Test",
+			fieldName = "Color"
+		);
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -187,7 +268,48 @@ definition {
 	test EditHelpTextOfColorField {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 EditHelpTextOfColorField pending implementation
+		ProductMenu.gotoPortlet(
+                category = "Content & Data",
+                panel = "Site Administration",
+                portlet = "Web Content"
+        );
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureName = "Structure Name Test",
+            structureDescription = "Structure Description Test"
+        );
+
+        DataEngine.addField(
+            fieldFieldLabel = "Color Test",
+            fieldName = "Color"
+        );
+
+        DataEngine.editFieldTip(
+			fieldFieldLabel = "Color Test",
+			fieldHelp = "Help Test"
+        );
+
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+        WebContentStructures.viewTableEntryCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test"
+        );
+
+        WebContentNavigator.gotoEditStructure(
+			structureName = "Structure Name Test"
+        );
+
+        DataEngine.viewFieldHelpText(
+			fieldFieldLabel = "Color Test",
+			fieldHelp = "Help Test"
+		);
+
+		Click(locator1 = "Icon#BACK");
+
+        WebContentStructures.deleteCP(structureName = "Structure Name Test");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -196,7 +318,42 @@ definition {
 	test EditLabelOfColorField {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 EditLabelOfColorField pending implementation
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+        );
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+            structureName = "Structure Name Test",
+            structureDescription = "Structure Description Test"
+        );
+
+        DataEngine.addField(
+            fieldFieldLabel = "Color Test",
+            fieldName = "Color"
+        );
+
+        WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+        WebContentStructures.viewTableEntryCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test"
+        );
+
+        WebContentNavigator.gotoEditStructure(
+			structureName = "Structure Name Test"
+        );
+
+        DataEngine.viewField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color"
+		);
+
+        Click(locator1 = "Icon#BACK");
+
+        WebContentStructures.deleteCP(structureName = "Structure Name Test");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

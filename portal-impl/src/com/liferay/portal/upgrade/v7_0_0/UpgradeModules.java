@@ -184,8 +184,7 @@ public class UpgradeModules extends UpgradeProcess {
 		{"contacts-portlet", "com.liferay.contacts.service", "Contacts"},
 		{
 			"kaleo-designer-portlet",
-			"com.liferay.portal.workflow.kaleo.designer.service",
-			"KaleoDesigner"
+			"com.liferay.portal.workflow.kaleo.designer.web", "KaleoDesigner"
 		},
 		{
 			"kaleo-forms-portlet",

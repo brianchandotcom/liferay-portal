@@ -14,8 +14,7 @@
 
 import {ClayAlert} from 'clay-alert';
 import {render} from 'frontend-js-react-web';
-import {PortletBase, delegate} from 'frontend-js-web';
-import {EventHandler} from 'metal-events';
+import {EventHandler, PortletBase, delegate} from 'frontend-js-web';
 import {Config} from 'metal-state';
 import ReactDOM from 'react-dom';
 

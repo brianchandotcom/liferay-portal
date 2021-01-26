@@ -12,7 +12,7 @@
  * details.
  */
 
-import {EventHandler} from 'metal-events';
+import {EventHandler} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 

@@ -25,9 +25,8 @@ import {
 	generateName,
 } from 'dynamic-data-mapping-form-renderer';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
-import {openModal} from 'frontend-js-web';
+import {EventHandler, openModal} from 'frontend-js-web';
 import {Drag, DragDrop} from 'metal-drag-drop';
-import {EventHandler} from 'metal-events';
 import Component, {Fragment} from 'metal-jsx';
 import {Config} from 'metal-state';
 

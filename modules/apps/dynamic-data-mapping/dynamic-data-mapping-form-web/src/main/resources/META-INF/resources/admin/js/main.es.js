@@ -28,8 +28,7 @@ import {
 } from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
-import {delegate} from 'frontend-js-web';
-import {EventHandler} from 'metal-events';
+import {EventHandler, delegate} from 'frontend-js-web';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 

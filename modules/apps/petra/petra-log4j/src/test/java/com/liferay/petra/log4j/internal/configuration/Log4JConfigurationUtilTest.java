@@ -367,23 +367,17 @@ public class Log4JConfigurationUtilTest {
 	}
 
 	private String _getLoggerConfiguration(String name, String level) {
-		String log4JConfigurationStartTag =
-			"<log4j:configuration xmlns:log4j=" +
-				"\"http://jakarta.apache.org/log4j/\">";
-
-		String log4JConfigurationEndTag = "</log4j:configuration>";
-
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("<?xml version=\"1.0\"?>");
 		sb.append("<!DOCTYPE log4j:configuration SYSTEM \"log4j.dtd\">");
-		sb.append(log4JConfigurationStartTag);
+		sb.append("<log4j:configuration xmlns:log4j=");
+		sb.append("\"http://jakarta.apache.org/log4j/\">");
 		sb.append("<category name=\"");
 		sb.append(name);
 		sb.append("\"><priority value=\"");
 		sb.append(level);
-		sb.append("\" /></category>");
-		sb.append(log4JConfigurationEndTag);
+		sb.append("\" /></category></log4j:configuration>");
 
 		return sb.toString();
 	}
@@ -391,17 +385,12 @@ public class Log4JConfigurationUtilTest {
 	private String _getLoggerConfigurationWithAppender(
 		String name, String level) {
 
-		String log4JConfigurationStartTag =
-			"<log4j:configuration xmlns:log4j=" +
-				"\"http://jakarta.apache.org/log4j/\">";
-
-		String log4JConfigurationEndTag = "</log4j:configuration>";
-
 		StringBundler sb = new StringBundler(21);
 
 		sb.append("<?xml version=\"1.0\"?>");
 		sb.append("<!DOCTYPE log4j:configuration SYSTEM \"log4j.dtd\">");
-		sb.append(log4JConfigurationStartTag);
+		sb.append("<log4j:configuration xmlns:log4j=");
+		sb.append("\"http://jakarta.apache.org/log4j/\">");
 		sb.append("<appender class=\"");
 		sb.append(ConsoleAppender.class.getName());
 		sb.append("\" name=\"");
@@ -418,8 +407,7 @@ public class Log4JConfigurationUtilTest {
 		sb.append(level);
 		sb.append("\" />");
 		sb.append(_APPENDER_REF_PLACEHOLDER);
-		sb.append("</category>");
-		sb.append(log4JConfigurationEndTag);
+		sb.append("</category></log4j:configuration>");
 
 		return sb.toString();
 	}

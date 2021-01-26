@@ -12,7 +12,7 @@
  * details.
  */
 
-import Disposable from '../util/Disposable';
+import {Disposable} from 'frontend-js-web';
 
 /**
  * EventHandler utility. It's useful for easily removing a group of

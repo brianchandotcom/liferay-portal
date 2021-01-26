@@ -12,9 +12,7 @@
  * details.
  */
 
-import {buildFragment} from 'frontend-js-web';
-
-import Disposable from '../util/Disposable';
+import {Disposable, buildFragment} from 'frontend-js-web';
 
 class Surface extends Disposable {
 

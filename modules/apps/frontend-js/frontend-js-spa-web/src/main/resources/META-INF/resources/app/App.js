@@ -12,9 +12,8 @@
  * details.
  */
 
-import {debounce, delegate} from 'frontend-js-web';
+import {EventEmitter, debounce, delegate} from 'frontend-js-web';
 
-import EventEmitter from '../events/EventEmitter';
 import EventHandler from '../events/EventHandler';
 import Route from '../route/Route';
 import Screen from '../screen/Screen';

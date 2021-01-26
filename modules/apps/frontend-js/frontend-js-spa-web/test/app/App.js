@@ -14,10 +14,9 @@
 
 import {fireEvent} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import {buildFragment} from 'frontend-js-web';
+import {EventEmitter, buildFragment} from 'frontend-js-web';
 
 import App from '../../src/main/resources/META-INF/resources/app/App';
-import EventEmitter from '../../src/main/resources/META-INF/resources/events/EventEmitter';
 import Route from '../../src/main/resources/META-INF/resources/route/Route';
 import HtmlScreen from '../../src/main/resources/META-INF/resources/screen/HtmlScreen';
 import Screen from '../../src/main/resources/META-INF/resources/screen/Screen';

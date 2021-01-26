@@ -12,7 +12,7 @@
  * details.
  */
 
-import Disposable from '../util/Disposable';
+import {Disposable} from 'frontend-js-web';
 
 class Cacheable extends Disposable {
 

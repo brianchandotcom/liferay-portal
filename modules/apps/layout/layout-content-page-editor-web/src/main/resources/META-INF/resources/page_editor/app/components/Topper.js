@@ -38,6 +38,7 @@ import {
 	useSelectItem,
 } from './Controls';
 import ItemActions from './ItemActions';
+import {useEditableProcessorUniqueId} from './fragment-content/EditableProcessorContext';
 
 const TOPPER_BAR_HEIGHT = 24;
 
@@ -108,6 +109,10 @@ function TopperContent({
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const hoverItem = useHoverItem();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+
+	const editableProcessorUniqueId = useEditableProcessorUniqueId();
+
+	const canBeDragged = canUpdatePageStructure && !editableProcessorUniqueId;
 
 	const selectItem = useSelectItem();
 
@@ -194,7 +199,7 @@ function TopperContent({
 
 				hoverItem(item.itemId);
 			}}
-			ref={canUpdatePageStructure ? handlerRef : null}
+			ref={canBeDragged ? handlerRef : null}
 			style={style}
 		>
 			<TopperLabel
@@ -203,7 +208,7 @@ function TopperContent({
 				itemElement={itemElement}
 			>
 				<ul className="tbar-nav">
-					{canUpdatePageStructure && (
+					{canBeDragged && (
 						<TopperListItem className="page-editor__topper__drag-handler">
 							<ClayIcon
 								className="page-editor__topper__drag-icon page-editor__topper__icon"

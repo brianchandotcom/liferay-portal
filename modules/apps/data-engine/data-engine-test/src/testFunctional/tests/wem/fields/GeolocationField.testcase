@@ -23,7 +23,7 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 
-        Navigator.openURL();
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -52,25 +52,27 @@ definition {
 	test DisableSearchableOfGeolocation {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(    
+		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");
 
-        NavItem.gotoStructures();
-        
-        WebContentStructures.addCP(
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
 			structureDescription = "My Structure Description",
 			structureName = "My Structure Name 1");
 
-        DataEngine.addField(fieldFieldLabel = "Localization", fieldName = "Geolocation");
+		DataEngine.addField(
+			fieldFieldLabel = "Localization",
+			fieldName = "Geolocation");
 
 		DataEngine.editFieldSearchable(
-				fieldFieldLabel = "Localization",
-				searchableType = "Disable");
+			fieldFieldLabel = "Localization",
+			searchableType = "Disable");
 
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
 
-        WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
 
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "Localization",
@@ -82,9 +84,8 @@ definition {
 		}
 
 		FormFields.viewRadioValue(
-				fieldName = "indexType",
-				fieldValue = "Disable");
-
+			fieldName = "indexType",
+			fieldValue = "Disable");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
@@ -94,6 +95,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98071 DuplicateGeolocation pending implementation
+
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

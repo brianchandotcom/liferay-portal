@@ -1911,7 +1911,7 @@ definition {
 
 	@description = "This is a test for LPS-101248. Can select any custom web content template as a "Template" for web content selected in content fragment."
 	@priority = "5"
-	test SelectCustomWebContentTemplateViaContentDisplay {
+	test SelectCustomWebContentTemplateInContentDisplay {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(

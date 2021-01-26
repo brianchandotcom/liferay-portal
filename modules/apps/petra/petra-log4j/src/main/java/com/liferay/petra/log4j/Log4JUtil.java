@@ -14,7 +14,7 @@
 
 package com.liferay.petra.log4j;
 
-import com.liferay.petra.log4j.internal.Log4JConfigurationUtil;
+import com.liferay.petra.log4j.internal.Log4JConfigurator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -86,7 +86,7 @@ public class Log4JUtil {
 
 		// See LPS-6029, LPS-8865, and LPS-24280
 
-		Log4JConfigurationUtil.configureLog4JXml(urlContent);
+		Log4JConfigurator.configureLog4JXml(urlContent);
 
 		try {
 			SAXReader saxReader = new SAXReader();
@@ -138,7 +138,7 @@ public class Log4JUtil {
 	}
 
 	public static String getOriginalLevel(String className) {
-		return Log4JConfigurationUtil.getOriginalLevel(className);
+		return Log4JConfigurator.getOriginalLevel(className);
 	}
 
 	public static void initLog4J(
@@ -166,7 +166,7 @@ public class Log4JUtil {
 	}
 
 	public static void setLevel(String name, String priority, boolean custom) {
-		Log4JConfigurationUtil.setLevel(name, priority);
+		Log4JConfigurator.setLevel(name, priority);
 
 		Logger jdkLogger = Logger.getLogger(name);
 
@@ -178,7 +178,7 @@ public class Log4JUtil {
 	}
 
 	public static void shutdownLog4J() {
-		Log4JConfigurationUtil.shutdownLog4J();
+		Log4JConfigurator.shutdownLog4J();
 	}
 
 	private static String _escapeXMLAttribute(String s) {

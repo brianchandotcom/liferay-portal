@@ -27,7 +27,7 @@ import org.apache.log4j.xml.DOMConfigurator;
 /**
  * @author Hai Yu
  */
-public class Log4JConfigurationUtil {
+public class Log4JConfigurator {
 
 	public static void configureLog4JXml(String xml) {
 		DOMConfigurator domConfigurator = new DOMConfigurator();

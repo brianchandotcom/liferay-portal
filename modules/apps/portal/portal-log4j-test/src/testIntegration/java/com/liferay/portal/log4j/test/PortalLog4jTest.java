@@ -60,9 +60,7 @@ public class PortalLog4jTest {
 		Path tempLogDir = Files.createTempDirectory(
 			PortalLog4jTest.class.getName());
 
-		File tempLogFileDir = tempLogDir.toFile();
-
-		tempLogFileDir.deleteOnExit();
+		_tempLogFileDir = tempLogDir.toFile();
 
 		Logger logger = Logger.getLogger(PortalLog4jTest.class);
 
@@ -79,11 +77,11 @@ public class PortalLog4jTest {
 			if (appender instanceof FileAppender) {
 				if (Objects.equals("TEXT_FILE", appender.getName())) {
 					_textLogFile = _initFileAppender(
-						logger, appender, tempLogFileDir.toString());
+						logger, appender, _tempLogFileDir.toString());
 				}
 				else if (Objects.equals("XML_FILE", appender.getName())) {
 					_xmlLogFile = _initFileAppender(
-						logger, appender, tempLogFileDir.toString());
+						logger, appender, _tempLogFileDir.toString());
 				}
 			}
 			else if ((appender instanceof ConsoleAppender) &&
@@ -109,6 +107,10 @@ public class PortalLog4jTest {
 		Logger logger = Logger.getLogger(PortalLog4jTest.class);
 
 		logger.removeAllAppenders();
+
+		_textLogFile.delete();
+		_xmlLogFile.delete();
+		_tempLogFileDir.delete();
 	}
 
 	@Test
@@ -514,6 +516,7 @@ public class PortalLog4jTest {
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
+	private static File _tempLogFileDir;
 	private static File _textLogFile;
 	private static UnsyncStringWriter _unsyncStringWriter;
 	private static File _xmlLogFile;

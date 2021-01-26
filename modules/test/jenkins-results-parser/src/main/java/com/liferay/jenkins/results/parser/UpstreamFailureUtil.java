@@ -215,7 +215,7 @@ public class UpstreamFailureUtil {
 	}
 
 	public static boolean isBuildFailingInUpstreamJob(Build build) {
-		if (!isUpstreamComparisonAvailable() || !build.isCompareToUpstream()) {
+		if (!_upstreamComparisonAvailable || !build.isCompareToUpstream()) {
 			return false;
 		}
 
@@ -250,7 +250,7 @@ public class UpstreamFailureUtil {
 	public static boolean isTestFailingInUpstreamJob(TestResult testResult) {
 		Build build = testResult.getBuild();
 
-		if (!isUpstreamComparisonAvailable() || !build.isCompareToUpstream()) {
+		if (!_upstreamComparisonAvailable || !build.isCompareToUpstream()) {
 			return false;
 		}
 
@@ -284,7 +284,11 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	public static boolean isUpstreamComparisonAvailable() {
+	public static boolean isUpstreamComparisonAvailable(
+		TopLevelBuild topLevelBuild) {
+
+		initUpstreamJobFailuresJSONObject(topLevelBuild);
+
 		return _upstreamComparisonAvailable;
 	}
 

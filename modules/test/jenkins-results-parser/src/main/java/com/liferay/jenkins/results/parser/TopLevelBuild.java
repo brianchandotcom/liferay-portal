@@ -855,7 +855,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		else {
 			String failureTitle = "Failures unique to this pull:";
 
-			if (!UpstreamFailureUtil.isUpstreamComparisonAvailable() &&
+			if (!UpstreamFailureUtil.isUpstreamComparisonAvailable(this) &&
 				isCompareToUpstream()) {
 
 				failureTitle =
@@ -1583,7 +1583,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		String result = getResult();
 
-		if (isCompareToUpstream()) {
+		if (isCompareToUpstream() &&
+			UpstreamFailureUtil.isUpstreamComparisonAvailable(this)) {
+
 			String upstreamBranchSHA = getUpstreamBranchSHA();
 
 			int buildNumber =
@@ -1606,7 +1608,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 			getBaseBranchDetailsElement());
 
 		if (isCompareToUpstream() &&
-			UpstreamFailureUtil.isUpstreamComparisonAvailable()) {
+			UpstreamFailureUtil.isUpstreamComparisonAvailable(this)) {
 
 			Dom4JUtil.addToElement(
 				detailsElement,

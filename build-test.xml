@@ -5448,6 +5448,8 @@ war.path=${app.server.portal.dir}/</echo>
 				</else>
 			</if>
 
+			<print-file file.name="${patching.tool.dir}/logs/patching-tool.log" />
+
 			<delete file="@{patching.tool.dir}/logs/patching-tool.log" />
 
 			<execute dir="@{patching.tool.dir}" failonerror="true">
@@ -8099,6 +8101,8 @@ virtualHostname="localhost"
 				<install-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
 
 				<validate-installed-patches patching.tool.dir="${patching.tool.dir}" />
+
+				<print-file file.name="${patching.tool.dir}/logs/patching-tool.log" />
 			</else>
 		</if>
 	</target>

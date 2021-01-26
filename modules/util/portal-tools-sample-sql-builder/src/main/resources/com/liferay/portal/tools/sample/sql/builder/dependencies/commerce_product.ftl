@@ -20,14 +20,26 @@
 	<#list dataFactory.getSequence(dataFactory.maxCommerceProductCount) as commerceProductCount>
 		<#assign cProductModel = dataFactory.newCProductModel(commerceCatalogGroupModel) />
 
-		${dataFactory.toInsertSQL(cProductModel)}
-
 		<#list dataFactory.getSequence(dataFactory.maxCommerceProductDefinitionCount) as commerceProductDefinitionCount>
 			<#assign
 				cpDefinitionModel = dataFactory.newCPDefinitionModel(cpTaxCategoryModel, cProductModel, commerceCatalogGroupModel, commerceProductDefinitionCount)
+
+				cProductModel = dataFactory.setCProductModelPublishedCPDefinitionId(cProductModel, commerceProductDefinitionCount, cpDefinitionModel.CPDefinitionId)
+
+				friendlyURLEntryModel = dataFactory.newFriendlyURLEntryModel(cProductModel.groupId, dataFactory.CProductClassNameId, cProductModel.CProductId)
+
+				friendlyURLEntryLocalizationModel = dataFactory.newFriendlyURLEntryLocalizationModel(friendlyURLEntryModel, "definition-" + cProductModel.publishedCPDefinitionId)
 			/>
 
 			${dataFactory.toInsertSQL(cpDefinitionModel)}
+
+			${dataFactory.toInsertSQL(friendlyURLEntryModel)}
+
+			${dataFactory.toInsertSQL(friendlyURLEntryLocalizationModel)}
+
+			${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
+
+			${csvFileWriter.write("cpFriendlyURLEntry", friendlyURLEntryLocalizationModel.urlTitle + "\n")}
 
 			${dataFactory.toInsertSQL(dataFactory.newCPDefinitionModelAssetEntryModel(cpDefinitionModel, commerceCatalogGroupModel))}
 
@@ -38,6 +50,9 @@
 			</#list>
 		</#list>
 	</#list>
+
+	${dataFactory.toInsertSQL(cProductModel)}
+</#list>
 
 	${dataFactory.toInsertSQL(cpTaxCategoryModel)}
 

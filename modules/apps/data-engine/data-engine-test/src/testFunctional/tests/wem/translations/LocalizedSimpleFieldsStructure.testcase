@@ -121,7 +121,87 @@ definition {
 	test TranslationPersistsAfterEditingAnother {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122278 TranslationPersistsAfterEditingAnother pending implementation
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+        );
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureDescription = "Test",
+            structureName = "Test"
+        );
+
+        DataEngine.addField(
+            fieldFieldLabel = "Text Test",
+            fieldName = "Text");
+
+        DataEngine.editFieldTip(
+            fieldFieldLabel = "Text Test",
+            fieldHelp = "Help Text test"
+        );
+
+        PortletEntry.changeLocale(locale = "pt-BR");
+		
+		DataEngine.editFieldTip(
+            fieldFieldLabel = "Text Test",
+            fieldHelp = "Texto teste ajuda"
+        );
+
+        WebContentStructures.addName(structureName="Teste");
+
+        FormViewBuilder.editFieldLabel(fieldLabel="Text Test", label="Texto Teste");
+
+        PortletEntry.changeLocale(locale = "de-DE");
+
+        DataEngine.editFieldTip(
+            fieldFieldLabel = "Text Test",
+            fieldHelp = "Text test help German"
+        );
+
+        WebContentStructures.addName(structureName="Test German");
+
+        FormViewBuilder.editFieldLabel(fieldLabel="Text Test", label="Text test German");
+
+        WebContentStructures.saveCP(structureName = "Test");
+    
+        WebContentStructures.viewCP(
+            structureName = "Test",
+            structureDescription = "Test");
+		
+        LexiconEntry.gotoEntry(rowEntry = "Test");
+
+        PortletEntry.changeLocale(locale = "pt-BR");
+
+        DataEngine.editFieldTip(
+            fieldFieldLabel = "Texto Teste",
+            fieldHelp = "Texto teste ajuda editado"
+        );
+
+        FormViewBuilder.editFieldLabel(fieldLabel="Texto Teste", label="Texto Teste editado");
+    
+	    WebContentStructures.saveCP(structureName = "Test");
+    
+        WebContentStructures.viewCP(
+            structureName = "Test",
+            structureDescription = "Test");
+		
+        LexiconEntry.gotoEntry(rowEntry = "Test");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+        AssertTextEquals(
+            locator1 = "//label[@class='ddm-label' and contains(text(),'Text test German')]",
+            value1 = "Text test German");
+		
+        AssertTextEquals(
+            locator1 = "//span[@class='form-text' and contains(text(),'Text test help German')]",
+            value1 = "Text test help German");
+
+		WebContentStructures.saveCP(structureName = "Test");
+	
+        WebContentStructures.deleteCP(structureName="Test");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

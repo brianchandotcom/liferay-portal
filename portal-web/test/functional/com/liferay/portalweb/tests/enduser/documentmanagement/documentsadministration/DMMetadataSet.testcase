@@ -20,6 +20,8 @@ definition {
 		else {
 			DMDocument.tearDownCP();
 
+			DMDocumentType.tearDownCP();
+
 			DMMetadataSet.tearDownCP();
 
 			User.logoutPG();
@@ -27,36 +29,319 @@ definition {
 	}
 
 	@description = "This ensures that the user can delete fields within a metadata set."
-	@ignore = "true"
 	@priority = "3"
 	test DeleteFields {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		// TODO LPS-126181 DeleteFields pending implementation
+		DMNavigator.gotoMetadataSets();
 
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addFields(fieldNameList = "Text,Date,Image,Web Content");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Numeric",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+
+		for (var fieldFieldLabel : list "Numeric,Text,Date,Image,Web Content") {
+			AssertElementPresent(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMDocumentType.deleteFields(
+			dmDocumentTypeName = "DM Metadata Set Name",
+			fieldFieldLabel = "Text,Date,Image");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+
+		for (var fieldFieldLabel : list "Text,Date,Image") {
+			AssertElementNotPresent(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+
+		for (var fieldFieldLabel : list "Numeric,Web Content") {
+			AssertElementPresent(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 	}
 
 	@description = "This ensures that the user can create a document using edited image field inside metadata set."
-	@ignore = "true"
 	@priority = "4"
 	test ViewDocumentwithEditedImageField {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		// TODO LPS-126181 ViewDocumentwithEditedImageField pending implementation
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Numeric",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			imageField = "Document_1.jpg",
+			navTab = "Documents and Media",
+			numericField = "123");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewDocumentTypePG(imageName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Photo",
+			dmDocumentTypeFieldRequiredEdit = "Photo",
+			dmDocumentTypeName = "DM Metadata Set Name",
+			dmDocumentTypeNameEdit = "DM Metadata Set Name Edit",
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "Photo");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Photo",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Photo",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title 2",
+			dmDocumentTypeName = "DM Document Type Name",
+			fieldFieldLabel = "Photo",
+			imageDescription = "Photo Description",
+			imageField = "Document_2.jpg",
+			navTab = "Documents and Media",
+			numericField = "123");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
+
+		DMDocument.viewDocumentTypePG(imageName = "Document_2.jpg");
 	}
 
 	@description = "This ensures that the user can create a document using edited text field inside metadata set."
-	@ignore = "true"
 	@priority = "4"
 	test ViewDocumentwithEditedTextField {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		// TODO LPS-126181 ViewDocumentwithEditedTextField pending implementation
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Numeric",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			numericField = "123",
+			textField = "DM Document Text");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewDocumentTypePG(textContent = "DM Document Text");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Company",
+			dmDocumentTypeFieldRequiredEdit = "Company",
+			dmDocumentTypeName = "DM Metadata Set Name",
+			dmDocumentTypeNameEdit = "DM Metadata Set Name Edit",
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Company");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Company",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Company",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "DM Document Title 2",
+			dmDocumentTypeName = "DM Document Type Name",
+			fieldFieldLabel = "Company",
+			numericField = "123",
+			textField = "Liferay");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
+
+		DMDocument.viewDocumentTypePG(
+			textContent = "Liferay",
+			textFieldLabel = "Company");
 	}
 
 	@description = "This ensures that the user can create a document using edited upload field inside metadata set."
-	@ignore = "true"
 	@priority = "4"
 	test ViewDocumentwithEditedUploadField {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
-		// TODO LPS-126181 ViewDocumentwithEditedUploadField pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Upload",
+			fieldName = "Upload");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Numeric",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			documentsAndMediaField = "Document_1.doc",
+			fieldFieldLabel = "Upload",
+			navTab = "Documents and Media",
+			numericField = "123");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewDocumentTypePG(uploadFile = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Resume",
+			dmDocumentTypeFieldRequiredEdit = "Resume",
+			dmDocumentTypeName = "DM Metadata Set Name",
+			dmDocumentTypeNameEdit = "DM Metadata Set Name Edit",
+			fieldFieldLabel = "Upload",
+			fieldFieldLabelEdit = "Resume");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "DM Document Title");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Resume",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Resume",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title 2",
+			dmDocumentTypeName = "DM Document Type Name",
+			documentsAndMediaField = "Document_1.doc",
+			fieldFieldLabel = "Resume",
+			navTab = "Documents and Media",
+			numericField = "123");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
+
+		DMDocument.viewDocumentTypePG(
+			uploadFieldLabel = "Resume",
+			uploadFile = "Document_1.doc");
 	}
 
 }

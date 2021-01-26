@@ -41,11 +41,10 @@
 			}
 
 			&.end {
+				box-shadow: inset 0 -1px 0 0 fade-out($secondary-l2, 0.5);
 				flex-basis: 100%;
 				justify-content: flex-end;
 				order: 0;
-				border-bottom: $toolbarBorderWidth solid
-					fade_out($secondary-l2, 0.5);
 			}
 		}
 
@@ -66,7 +65,7 @@
 				}
 
 				&.end {
-					border-bottom: none;
+					box-shadow: none;
 					flex-basis: auto;
 					order: 2;
 				}

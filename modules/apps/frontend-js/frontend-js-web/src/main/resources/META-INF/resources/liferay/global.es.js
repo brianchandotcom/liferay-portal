@@ -17,9 +17,7 @@ import groupBy from 'lodash.groupby';
 import isEqual from 'lodash.isequal';
 import unescape from 'lodash.unescape';
 
-import Disposable from './Disposable';
 import DynamicSelect from './DynamicSelect';
-import EventEmitter from './EventEmitter';
 import BREAKPOINTS from './breakpoints';
 import {
 	component,
@@ -102,9 +100,6 @@ Liferay.Address = {
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 Liferay.DynamicSelect = DynamicSelect;
-
-Liferay.Disposable = Disposable;
-Liferay.EventEmitter = EventEmitter;
 
 Liferay.LayoutExporter = {
 	all: hideLayoutPane,

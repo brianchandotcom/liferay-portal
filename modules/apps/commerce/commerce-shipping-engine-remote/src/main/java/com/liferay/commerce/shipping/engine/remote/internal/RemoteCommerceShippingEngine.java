@@ -89,8 +89,6 @@ public class RemoteCommerceShippingEngine implements CommerceShippingEngine {
 		throw new UnsupportedOperationException();
 	}
 
-	// TODO Ask Marco about context commerceOrder vs commerceOrder
-
 	@Override
 	public List<CommerceShippingOption> getCommerceShippingOptions(
 			CommerceContext commerceContext, CommerceOrder commerceOrder,
@@ -131,16 +129,16 @@ public class RemoteCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Activate
 	protected void activate() {
+		HttpClientBuilder httpClientBuilder = HttpClients.custom();
+
 		_poolingHttpClientConnectionManager =
 			new PoolingHttpClientConnectionManager();
 
-		_poolingHttpClientConnectionManager.setMaxTotal(20);
-		_poolingHttpClientConnectionManager.setValidateAfterInactivity(30000);
-
-		HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
 		httpClientBuilder.setConnectionManager(
 			_poolingHttpClientConnectionManager);
+
+		_poolingHttpClientConnectionManager.setMaxTotal(20);
+		_poolingHttpClientConnectionManager.setValidateAfterInactivity(30000);
 
 		httpClientBuilder.useSystemProperties();
 

@@ -872,10 +872,10 @@ public class RemoteCommerceShippingEngineTest {
 	private void _startHttpServer() throws Exception {
 		_httpServer = HttpServer.create(new InetSocketAddress(_PORT), 0);
 
-		HttpContext context = _httpServer.createContext(
+		HttpContext httpContext = _httpServer.createContext(
 			"/commerce/shipping-options");
 
-		context.setHandler(new ShippingOptionsHttpHandler());
+		httpContext.setHandler(new ShippingOptionsHttpHandler());
 
 		_httpServer.start();
 	}

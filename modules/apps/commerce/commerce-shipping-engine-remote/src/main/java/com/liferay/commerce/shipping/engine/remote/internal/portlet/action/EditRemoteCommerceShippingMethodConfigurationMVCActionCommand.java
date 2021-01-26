@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_SHIPPING_METHODS,
-		"mvc.command.name=editRemoteCommerceShippingMethodConfiguration"
+		"mvc.command.name=/commerce_shipping/edit_remote_commerce_shipping_method_configuration"
 	},
 	service = MVCActionCommand.class
 )

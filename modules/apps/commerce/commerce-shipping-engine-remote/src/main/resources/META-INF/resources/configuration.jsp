@@ -22,7 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 RemoteCommerceShippingEngineConfiguration remoteCommerceShippingEngineConfiguration = (RemoteCommerceShippingEngineConfiguration)request.getAttribute(RemoteCommerceShippingEngineConfiguration.class.getName());
 %>
 
-<portlet:actionURL name="editRemoteCommerceShippingMethodConfiguration" var="editRemoteCommerceShippingMethodConfigurationURL" />
+<portlet:actionURL name="/commerce_shipping/edit_remote_commerce_shipping_method_configuration" var="editRemoteCommerceShippingMethodConfigurationURL" />
 
 <aui:form action="<%= editRemoteCommerceShippingMethodConfigurationURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

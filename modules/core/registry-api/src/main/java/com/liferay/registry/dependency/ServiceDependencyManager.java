@@ -21,8 +21,10 @@ import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -159,22 +161,22 @@ public class ServiceDependencyManager {
 				return;
 			}
 
-			boolean missingServiceDependencies = false;
-
-			for (ServiceDependency serviceDependency : _serviceDependencies) {
-				if (!serviceDependency.isFulfilled()) {
-					missingServiceDependencies = true;
-
-					break;
-				}
+			if (!_hasUnfulfilledServiceDependencies()) {
+				return;
 			}
 
-			if (missingServiceDependencies) {
-				try {
-					_serviceDependencies.wait(timeout);
-				}
-				catch (InterruptedException interruptedException) {
-				}
+			try {
+				_serviceDependencies.wait(timeout);
+			}
+			catch (InterruptedException interruptedException) {
+			}
+
+			List<ServiceDependency> serviceDependencies =
+				_getUnfulfilledServiceDependencies();
+
+			if (!serviceDependencies.isEmpty()) {
+				throw new RuntimeException(
+					"Unfulfilled dependencies: " + serviceDependencies);
 			}
 		}
 	}
@@ -214,6 +216,28 @@ public class ServiceDependencyManager {
 
 			serviceDependency.setServiceTracker(serviceTracker);
 		}
+	}
+
+	private List<ServiceDependency> _getUnfulfilledServiceDependencies() {
+		List<ServiceDependency> serviceDependencies = new ArrayList<>();
+
+		for (ServiceDependency serviceDependency : _serviceDependencies) {
+			if (!serviceDependency.isFulfilled()) {
+				serviceDependencies.add(serviceDependency);
+			}
+		}
+
+		return serviceDependencies;
+	}
+
+	private boolean _hasUnfulfilledServiceDependencies() {
+		for (ServiceDependency serviceDependency : _serviceDependencies) {
+			if (!serviceDependency.isFulfilled()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final Set<ServiceDependency> _serviceDependencies = new HashSet<>();

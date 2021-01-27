@@ -175,17 +175,16 @@ definition {
 	@priority = "4"
 	test FieldsetSetAsRepeatable {
 		property portal.acceptance = "false";
-		
+
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            panel = "Site Administration",
-            portlet = "Web Content"           
-        );
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-		    structureDescription = "FieldsetRepeatibleTest",
+		WebContentStructures.addCP(
+			structureDescription = "FieldsetRepeatibleTest",
 			structureName = "FieldsetRepeatibleTest");
 
 		Navigator.gotoSidebarTab(tabName = "Builder");
@@ -216,10 +215,9 @@ definition {
 
 		NavItem.gotoWebContent();
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "FieldsetRepeatibleTest");		
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "FieldsetRepeatibleTest");
 
 		AssertElementPresent(locator1 = "Button#DUPLICATE");
-
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

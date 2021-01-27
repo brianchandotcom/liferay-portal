@@ -40,9 +40,6 @@ definition {
 		NavItem.click(navItem = "Page Templates");
 	}
 
-	macro gotoWebContent {
-		NavItem.click(navItem = "Web Content");
-	}
 	macro gotoStructures {
 		NavItem.click(navItem = "Structures");
 	}
@@ -57,6 +54,10 @@ definition {
 
 	macro gotoUsers {
 		NavItem.click(navItem = "Users");
+	}
+
+	macro gotoWebContent {
+		NavItem.click(navItem = "Web Content");
 	}
 
 	macro viewActive {

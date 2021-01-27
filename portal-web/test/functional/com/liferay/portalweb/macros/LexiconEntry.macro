@@ -1,5 +1,17 @@
 definition {
 
+	macro changeBlogDisplayStyle {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForManagementBar();
+		}
+
+		Click(locator1 = "Icon#CURRENT_BLOG_DISPLAY_STYLE");
+
+		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
+	}
+
 	macro changeDisplayStyle {
 		var browserType = PropsUtil.get("browser.type");
 

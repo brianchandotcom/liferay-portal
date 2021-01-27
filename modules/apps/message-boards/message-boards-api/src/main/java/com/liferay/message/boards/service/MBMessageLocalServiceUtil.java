@@ -421,6 +421,21 @@ public class MBMessageLocalServiceUtil {
 		return getService().fetchMBMessage(messageId);
 	}
 
+	/**
+	 * Returns the message-boards message with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the message-boards message's external reference code
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	public static com.liferay.message.boards.model.MBMessage
+		fetchMBMessageByReferenceCode(
+			long groupId, String externalReferenceCode) {
+
+		return getService().fetchMBMessageByReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	public static com.liferay.message.boards.model.MBMessage
 		fetchMBMessageByUrlSubject(long groupId, String urlSubject) {
 

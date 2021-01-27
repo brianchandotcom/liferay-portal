@@ -117,6 +117,21 @@ public interface MBMessageModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this message-boards message.
+	 *
+	 * @return the external reference code of this message-boards message
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this message-boards message.
+	 *
+	 * @param externalReferenceCode the external reference code of this message-boards message
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the message ID of this message-boards message.
 	 *
 	 * @return the message ID of this message-boards message

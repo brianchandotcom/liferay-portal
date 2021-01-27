@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
 	@ignore = "true"
 	@priority = "5"
 	test AddColorFieldByDragAndDrop {
@@ -36,113 +36,103 @@ definition {
 
 	}
 
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "5"
-	test EditLabelOfColorField {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 EditLabelOfColorField pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
 	@ignore = "true"
 	@priority = "5"
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98070 DeleteColorFieldOnBuilder pending implementation
-
 	}
 
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "5"
-	test SetColorWithHex {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 SetColorWithHex pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "5"
-	test SetColorWithPicker {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 SetColorWithPicker pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "4"
-	test EditHelpTextOfColorField {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 EditHelpTextOfColorField pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "4"
-	test SetColorFieldAsRequired {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 SetColorFieldAsRequired pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "4"
-	test EditColorFieldNameWithValidCharacters {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 EditColorFieldNameWithValidCharacters pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
 	@ignore = "true"
 	@priority = "4"
 	test DisableSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98070 DisableSearchablePropertyOfColorField pending implementation
-
 	}
 
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
-	@priority = "4"
-	test SetSearchablePropertyOfColorField {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98070 SetSearchablePropertyOfColorField pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
 	@ignore = "true"
 	@priority = "4"
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98070 DuplicateColorFieldOnBuilder pending implementation
-
 	}
 
-    @description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
 	@ignore = "true"
 	@priority = "3"
 	test EditColorFieldNameWithInvalidCharacters {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98070 EditColorFieldNameWithInvalidCharacters pending implementation
-
 	}
+
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@ignore = "true"
+	@priority = "4"
+	test EditColorFieldNameWithValidCharacters {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98070 EditColorFieldNameWithValidCharacters pending implementation
+	}
+
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@ignore = "true"
+	@priority = "4"
+	test EditHelpTextOfColorField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98070 EditHelpTextOfColorField pending implementation
+	}
+
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@ignore = "true"
+	@priority = "5"
+	test EditLabelOfColorField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98070 EditLabelOfColorField pending implementation
+	}
+
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetColorFieldAsRequired {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98070 SetColorFieldAsRequired pending implementation
+	}
+
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@ignore = "true"
+	@priority = "5"
+	test SetColorWithHex {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98070 SetColorWithHex pending implementation
+	}
+
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@ignore = "true"
+	@priority = "5"
+	test SetColorWithPicker {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98070 SetColorWithPicker pending implementation
+	}
+
+	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetSearchablePropertyOfColorField {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98070 SetSearchablePropertyOfColorField pending implementation
+	}
+
 }

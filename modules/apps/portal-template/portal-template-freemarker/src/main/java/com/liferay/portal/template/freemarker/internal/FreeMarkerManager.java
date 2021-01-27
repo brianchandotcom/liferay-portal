@@ -384,29 +384,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		WriterFactoryUtil.setWriterFactory(new UnsyncStringWriterFactory());
 
-		if (_freeMarkerEngineConfiguration.asyncRenderTimeout() > 0) {
-			_serviceRegistration = bundleContext.registerService(
-				PortalExecutorConfig.class,
-				new PortalExecutorConfig(
-					FreeMarkerManager.class.getName(), 1,
-					_freeMarkerEngineConfiguration.
-						asyncRenderThreadPoolMaxSize(),
-					60, TimeUnit.SECONDS,
-					_freeMarkerEngineConfiguration.
-						asyncRenderThreadPoolMaxQueueSize(),
-					new NamedThreadFactory(
-						FreeMarkerManager.class.getName(), Thread.NORM_PRIORITY,
-						null),
-					new ThreadPoolExecutor.AbortPolicy(),
-					new ThreadPoolHandlerAdapter()),
-				null);
-
-			_noticeableExecutorService =
-				_portalExecutorManager.getPortalExecutor(
-					FreeMarkerManager.class.getName());
-
-			_timeoutTemplateCounters = new ConcurrentHashMap<>();
-		}
+		_initAsyncRender(bundleContext);
 	}
 
 	protected void addTaglibSupport(
@@ -649,6 +627,32 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		}
 
 		return sb.toString();
+	}
+
+	private void _initAsyncRender(BundleContext bundleContext) {
+		if (_freeMarkerEngineConfiguration.asyncRenderTimeout() <= 0) {
+			return;
+		}
+
+		_serviceRegistration = bundleContext.registerService(
+			PortalExecutorConfig.class,
+			new PortalExecutorConfig(
+				FreeMarkerManager.class.getName(), 1,
+				_freeMarkerEngineConfiguration.asyncRenderThreadPoolMaxSize(),
+				60, TimeUnit.SECONDS,
+				_freeMarkerEngineConfiguration.
+					asyncRenderThreadPoolMaxQueueSize(),
+				new NamedThreadFactory(
+					FreeMarkerManager.class.getName(), Thread.NORM_PRIORITY,
+					null),
+				new ThreadPoolExecutor.AbortPolicy(),
+				new ThreadPoolHandlerAdapter()),
+			null);
+
+		_noticeableExecutorService = _portalExecutorManager.getPortalExecutor(
+			FreeMarkerManager.class.getName());
+
+		_timeoutTemplateCounters = new ConcurrentHashMap<>();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

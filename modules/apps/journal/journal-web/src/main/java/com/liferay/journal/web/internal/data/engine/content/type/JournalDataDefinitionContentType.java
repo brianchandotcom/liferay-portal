@@ -42,7 +42,7 @@ public class JournalDataDefinitionContentType
 
 	@Override
 	public boolean allowInvalidAvailableLocalesForProperty() {
-		return false;
+		return true;
 	}
 
 	@Override

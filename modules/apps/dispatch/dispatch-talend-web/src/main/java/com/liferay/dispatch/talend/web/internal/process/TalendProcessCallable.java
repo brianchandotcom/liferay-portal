@@ -18,6 +18,7 @@ import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessE
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Base64;
 
 import java.io.PrintStream;
 import java.io.Serializable;
@@ -109,10 +110,10 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 		return String.format(
 			"{\"%s\":\"%s\",\"%s\":%d,\"%s\":\"%s\"}",
 			TalendProcessOutputParser.KEY_ERROR,
-			talendProcessErrPrintStream._error,
+			Base64.encode(talendProcessErrPrintStream._error.getBytes()),
 			TalendProcessOutputParser.KEY_EXIT_CODE, exitCode,
 			TalendProcessOutputParser.KEY_OUTPUT,
-			talendProcessOutPrintStream._output);
+			Base64.encode(talendProcessOutPrintStream._output.getBytes()));
 	}
 
 	private static final long serialVersionUID = 1L;

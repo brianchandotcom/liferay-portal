@@ -136,7 +136,41 @@ definition {
 	test ViewWidgetPageInLiveAfterConvertingWidgetPage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98327 ViewWidgetPageInLiveAfterConvertingWidgetPage pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Test Page Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Convert to content page...",
+			pageName = "Test Page Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name Staging");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssertTextEquals(
+			key_portletTitleName = "Asset Publisher",
+			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
+			value1 = "Asset Publisher");
+
+		ProductMenu.gotoLiveSite(site = "Test Site Name");
+
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenuHelper.expandCategory(category = "Design");
+
+		AssertElementNotPresent(
+			key_portlet = "Fragments",
+			locator1 = "ProductMenu#PORTLET");
+
 	}
 
 }

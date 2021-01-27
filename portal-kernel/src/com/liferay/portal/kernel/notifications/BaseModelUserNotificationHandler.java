@@ -63,7 +63,8 @@ public abstract class BaseModelUserNotificationHandler
 		AssetRenderer<?> assetRenderer = null;
 
 		try {
-			assetRenderer = assetRendererFactory.getAssetRenderer(classPK,AssetRendererFactory.TYPE_LATEST_APPROVED);
+			assetRenderer = assetRendererFactory.getAssetRenderer(
+				classPK, AssetRendererFactory.TYPE_LATEST_APPROVED);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -71,9 +72,10 @@ public abstract class BaseModelUserNotificationHandler
 			}
 		}
 
-		if(assetRenderer==null) {
+		if (assetRenderer == null) {
 			try {
-				assetRenderer = assetRendererFactory.getAssetRenderer(classPK,AssetRendererFactory.TYPE_LATEST);
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					classPK, AssetRendererFactory.TYPE_LATEST);
 			}
 			catch (Exception exception) {
 			}

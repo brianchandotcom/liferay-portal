@@ -1067,12 +1067,153 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99686. Map web content fields to link editable field".
-	@ignore = "true"
 	@priority = "2"
 	test MapWebContentFieldsToLinkFragment {
-		property portal.upstream = "false";
+		task ("Add a web content structure with multiple fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-99686 MapWebContentFieldsToLinkFragment pending implementation
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			for (var fieldName : list "Text,Rich Text,Date") {
+				DataEngine.addField(
+					fieldFieldLabel = "${fieldName}",
+					fieldName = "${fieldName}");
+			}
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text Box",
+				fieldName = "Text",
+				fieldType = "Multiple Lines");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Integer",
+				fieldName = "Numeric");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Decimal",
+				fieldName = "Numeric",
+				numericType = "Decimal");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content based on new structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentDate = "10/10/2020",
+				webContentNumeric = "9",
+				webContentNumericFieldLabel = "Integer",
+				webContentRichText = "This is a Rich Text field",
+				webContentText = "This is a Text field",
+				webContentTitle = "Web Content Title");
+
+			WebContent.addWithStructureCP(
+				fieldType = "Multiple Lines",
+				numericType = "Decimal",
+				webContentNumeric = "0.5",
+				webContentNumericFieldLabel = "Decimal",
+				webContentText = "This is a Text Box field",
+				webContentTextFieldLabel = "Text Box");
+
+			WebContent.addWithStructureCP(
+				webContentText = "This is a Text field",
+				webContentTitle = "Web Content Title");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Assert map the fields of web content to link fragment") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "link");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Text");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "This is a Text field",
+				fragmentName = "Banner Center",
+				id = "link");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Text Box");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "This is a Text Box field",
+				fragmentName = "Banner Center",
+				id = "link");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Rich Text");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "This is a Rich Text field",
+				fragmentName = "Banner Center",
+				id = "link");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Date");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "10/10/20",
+				fragmentName = "Banner Center",
+				id = "link");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Integer");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "9",
+				fragmentName = "Banner Center",
+				id = "link");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Decimal");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "0.5",
+				fragmentName = "Banner Center",
+				id = "link");
+		}
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."
@@ -1621,6 +1762,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-125933 PreviewContentPageViaMappedFragmentWithWCDAndAP pending implementation
+
 	}
 
 	@description = "This is a test for LPS-110462. The value of editable field should be reset when the mapped content is missing"

@@ -17,16 +17,12 @@ package com.liferay.dispatch.internal.executor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,18 +46,8 @@ public class DispatchTaskExecutorRegistryImpl
 	}
 
 	@Override
-	public String getDispatchTaskExecutorName(
-		Locale locale, String dispatchTaskExecutorType) {
-
-		DispatchTaskExecutor dispatchTaskExecutor = _dispatchTaskExecutors.get(
-			dispatchTaskExecutorType);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, dispatchTaskExecutor.getClass());
-
-		String name = _dispatchTaskExecutorNames.get(dispatchTaskExecutorType);
-
-		return LanguageUtil.get(resourceBundle, name);
+	public String getDispatchTaskExecutorName(String dispatchTaskExecutorType) {
+		return _dispatchTaskExecutorNames.get(dispatchTaskExecutorType);
 	}
 
 	@Override

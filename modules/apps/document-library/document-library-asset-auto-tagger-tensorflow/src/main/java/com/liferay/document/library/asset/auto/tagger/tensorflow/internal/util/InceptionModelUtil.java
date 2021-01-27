@@ -43,14 +43,23 @@ public class InceptionModelUtil {
 			return;
 		}
 
-		File tempFile = FileUtil.createTempFile();
+		try {
+			_downloadFailed = false;
 
-		JarUtil.downloadAndInstallJar(
-			new URL(modelDownloadURL), tempFile.toPath());
+			File tempFile = FileUtil.createTempFile();
 
-		DLStoreUtil.addFile(
-			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			_getFileName(), false, tempFile);
+			JarUtil.downloadAndInstallJar(
+				new URL(modelDownloadURL), tempFile.toPath());
+
+			DLStoreUtil.addFile(
+				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+				_getFileName(), false, tempFile);
+		}
+		catch (Exception exception) {
+			_downloadFailed = true;
+
+			throw exception;
+		}
 	}
 
 	public static byte[] getGraphBytes() throws IOException, PortalException {
@@ -68,6 +77,10 @@ public class InceptionModelUtil {
 		return DLStoreUtil.hasFile(
 			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
 			_getFileName());
+	}
+
+	public static boolean isDownloadFailed() {
+		return _downloadFailed;
 	}
 
 	private static InputStream _getFileInputStream(String fileName)
@@ -88,5 +101,7 @@ public class InceptionModelUtil {
 
 		return path.toString();
 	}
+
+	private static boolean _downloadFailed;
 
 }

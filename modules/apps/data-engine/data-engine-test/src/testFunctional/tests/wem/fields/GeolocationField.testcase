@@ -326,8 +326,7 @@ definition {
 
 		MenuItem.click(menuItem = "My Structure Name 1");
 
-		WebContent.addCP(
-			webContentTitle = "My Web Content Name 1");
+		WebContent.addCP(webContentTitle = "My Web Content Name 1");
 
 		Button.clickPublish();
 

@@ -250,8 +250,34 @@ definition {
 	test ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure {
 		property portal.acceptance = "false";
 
-		// TODO LPS-125933 ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name");
+
+		WebContentTemplates.modifyTemplate(
+			templateName = "WC Template Name Edit",
+			templatePreviousName = "WC Template Name");
+
+
+		WebContentTemplates.deleteCP(templateName = "WC Template Name");
 	}
 
 	@description = "This is a use case for LPS-116515. The creation of template is not allowed when disable template creation in Dynamic Data Mapping."

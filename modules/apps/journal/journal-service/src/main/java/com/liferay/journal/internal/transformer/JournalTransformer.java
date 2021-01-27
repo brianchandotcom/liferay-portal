@@ -631,15 +631,20 @@ public class JournalTransformer {
 
 			Map<String, LocalizedValue> options =
 				ddmFormFieldOptions.getOptions();
+			Map<String, String> optionsReferences =
+				ddmFormFieldOptions.getOptionsReferences();
 
 			for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
 				String optionValue = StringUtil.stripCDATA(entry.getKey());
+
+				String optionReference = optionsReferences.getOrDefault(
+					optionValue, optionValue);
 
 				LocalizedValue localizedLabel = entry.getValue();
 
 				String optionLabel = localizedLabel.getString(locale);
 
-				templateNode.appendOptionMap(optionValue, optionLabel);
+				templateNode.appendOptionMap(optionReference, optionLabel);
 			}
 
 			TemplateNode prototypeTemplateNode = prototypeTemplateNodes.get(

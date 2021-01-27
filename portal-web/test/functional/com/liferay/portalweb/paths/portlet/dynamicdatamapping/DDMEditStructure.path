@@ -163,6 +163,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_SETS_CONTAINER_LABEL</td>
+	<td>//div[contains(@class,'fieldset')]//label[text()='${key_fieldsetLabel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_1_NO_LABEL</td>
 	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div)[1]</td>
 	<td></td>

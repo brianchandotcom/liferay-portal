@@ -183,6 +183,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 
 		AssertTextEquals(
+			key_fieldFieldLabel = "Image",
 			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
 			value1 = "My description");
 	}

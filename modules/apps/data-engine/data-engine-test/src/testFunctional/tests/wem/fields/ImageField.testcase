@@ -31,6 +31,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98073 ClearUploadedImage pending implementation
+
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
@@ -52,7 +53,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
-	@ignore = "true"
 	@priority = "4"
 	test LocalizationOfImageFieldtPersists {
 		property portal.acceptance = "false";
@@ -158,7 +158,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
-	@ignore = "true"
 	@priority = "5"
 	test SetLabelOfImageField {
 		property portal.acceptance = "false";

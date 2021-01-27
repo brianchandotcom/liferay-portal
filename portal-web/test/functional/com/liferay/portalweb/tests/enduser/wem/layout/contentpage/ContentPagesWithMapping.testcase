@@ -1073,7 +1073,6 @@ definition {
 		property portal.upstream = "false";
 
 		// TODO LPS-99686 MapWebContentFieldsToLinkFragment pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98031. Map web content field with URL to image editable field."

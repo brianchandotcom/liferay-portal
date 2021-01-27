@@ -328,7 +328,6 @@ definition {
 		Uncheck.uncheckToggleSwitch(
 			checkboxName = "Required Field",
 			locator1 = "Checkbox#ANY_CHECKBOX");
-
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

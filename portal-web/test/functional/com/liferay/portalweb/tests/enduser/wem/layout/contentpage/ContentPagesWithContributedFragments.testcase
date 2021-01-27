@@ -3705,13 +3705,92 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97182. If you recycle bin the asset attached to a Content Display fragment and then restore it, it should re-appear in the Content Display fragment."
-	@ignore = "true"
 	@priority = "2"
 	test ViewRestoredAssetInContentDisplay {
-		property portal.upstream = "false";
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
 
-		// TODO LPS-97182 ViewRestoredAssetInContentDisplay pending implementation
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the web content is shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+		}
+
+		task ("Delete the web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.moveToRecycleBinCP(webContentTitle = "Web Content Title");
+		}
+
+		task ("Assert the web content is not shown in Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementNotPresent(
+				key_content = "[normalize-space(text())='Web Content Content']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			ContentPages.clickPencil();
+
+			AssertVisible(
+				key_fragmentName = "Content Display",
+				key_messageIfo = "The selected content is no longer available. Please select another.",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+
+		task ("Restore web content from Recycle Bin") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+			RecycleBin.restoreCP(
+				assetName = "Web Content Title",
+				assetRestoreLocation = "Home",
+				assetType = "Web Content Article");
+		}
+
+		task ("Assert the web content is shown in Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+
+			ContentPages.clickPencil();
+
+			AssertTextEquals(
+				key_fragmentName = "Content Display",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				value1 = "Web Content Content");
+		}
 	}
 
 	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."

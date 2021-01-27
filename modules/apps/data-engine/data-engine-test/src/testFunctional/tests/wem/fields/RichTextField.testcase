@@ -314,7 +314,21 @@ definition {
 	test VerifyRequiredPropertyOfRichText {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98076 VerifyRequiredPropertyOfRichText pending implementation
+		DataEngine.addField(
+			fieldFieldLabel = "Test",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Test");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Test",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "Test");
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Required Field",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

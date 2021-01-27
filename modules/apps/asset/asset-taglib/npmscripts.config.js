@@ -14,6 +14,7 @@
 
 module.exports = {
 	federation: {
+		bridges: [],
 		runLegacyBuild: false,
 	},
 	preset: '@liferay/npm-scripts/src/presets/standard',

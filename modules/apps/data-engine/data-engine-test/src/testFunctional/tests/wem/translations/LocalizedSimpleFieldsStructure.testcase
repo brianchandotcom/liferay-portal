@@ -107,8 +107,26 @@ definition {
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122278 DefaultTitleIsDisplayedUponLocaleChange pending implementation
+		ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content"
+			);
+			
+        NavItem.gotoStructures();
+		
+        WebContentStructures.addCP(
+            structureDescription = "Test",
+            structureName = "Test"
+        );
+
+        PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+            locator1 = "TextInput#NAME",
+            value1 = "Test");
 	}
+	
+
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@ignore = "true"

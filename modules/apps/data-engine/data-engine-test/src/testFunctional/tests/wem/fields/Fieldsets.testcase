@@ -44,7 +44,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
 	@priority = "5"
 	test DuplicateFieldset {
 		property portal.acceptance = "false";
@@ -72,22 +71,17 @@ definition {
 			fieldsetsLabel = "DuplicateTest",
 			fieldsetsName = "DuplicateTest");
 
-		
-		Click(locator1 = "//div[contains(@class,'fieldset')]//label[text()='DuplicateTest']");
+		DataEngine.duplicateFieldsets(fieldsetLabel = "DuplicateTest");
 
-		Click(
-			key_text = "DuplicateTest",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+		AssertElementPresent(
+			key_fieldsetLabel = "Copy of DuplicateTest",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
-		MenuItem.click(menuItem = "Duplicate");
-
-		AssertElementPresent(locator1 = "//div[contains(@class,'fieldset')]//label[text()='Copy of DuplicateTest']");
-
-		AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Text')]");
-
-		AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Image')]");
-
-		AssertElementPresent(locator1 = "//label[contains(text(),'Copy of Upload')]");
+		for (var fieldLabelList : list "Copy of Text,Copy of Image,Copy of Upload") {
+			AssertElementPresent(
+				key_fieldFieldLabel = "${fieldLabelList}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 
 		WebContentStructures.saveCP(structureName = "DuplicateTest1");
 	}
@@ -108,7 +102,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-107630 FieldsetNameRenamedWhenNameAlreadyExistent pending implementation
-
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

@@ -17,8 +17,11 @@ package com.liferay.dispatch.talend.web.internal.process;
 import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessException;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.string.StringPool;
 
+import java.io.PrintStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -58,6 +61,16 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 			});
 
+		TalendProcessOutPrintStream talendProcessOutPrintStream =
+			new TalendProcessOutPrintStream(System.out);
+
+		System.setOut(talendProcessOutPrintStream);
+
+		TalendProcessErrPrintStream talendProcessErrPrintStream =
+			new TalendProcessErrPrintStream(System.err);
+
+		System.setErr(talendProcessErrPrintStream);
+
 		ClassLoader classLoader = TalendProcessCallable.class.getClassLoader();
 
 		try {
@@ -74,11 +87,9 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			Throwable causeThrowable = invocationTargetException.getCause();
 
 			if (causeThrowable == talendProcessException) {
-				if (talendProcessException.getStatus() > 0) {
-					throw talendProcessException;
-				}
-
-				return null;
+				return _getTalendProcessOutput(
+					talendProcessException.getStatus(),
+					talendProcessErrPrintStream, talendProcessOutPrintStream);
 			}
 
 			throw new ProcessException(causeThrowable);
@@ -87,12 +98,72 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			throw new ProcessException(throwable);
 		}
 
-		return null;
+		return _getTalendProcessOutput(
+			0, talendProcessErrPrintStream, talendProcessOutPrintStream);
+	}
+
+	private String _getTalendProcessOutput(
+		int exitCode, TalendProcessErrPrintStream talendProcessErrPrintStream,
+		TalendProcessOutPrintStream talendProcessOutPrintStream) {
+
+		return String.format(
+			"{\"%s\":\"%s\",\"%s\":%d,\"%s\":\"%s\"}",
+			TalendProcessOutputParser.KEY_ERROR,
+			talendProcessErrPrintStream._error,
+			TalendProcessOutputParser.KEY_EXIT_CODE, exitCode,
+			TalendProcessOutputParser.KEY_OUTPUT,
+			talendProcessOutPrintStream._output);
 	}
 
 	private static final long serialVersionUID = 1L;
 
 	private final String _jobMainClassFQN;
 	private final String[] _mainMethodArgs;
+
+	private static class TalendProcessErrPrintStream extends PrintStream {
+
+		public TalendProcessErrPrintStream(PrintStream printStream) {
+			super(printStream);
+		}
+
+		@Override
+		public void write(byte[] buf, int off, int len) {
+			try {
+				_error = _error.concat(
+					new String(buf, off, len, StringPool.UTF8));
+			}
+			catch (UnsupportedEncodingException unsupportedEncodingException) {
+				unsupportedEncodingException.printStackTrace();
+			}
+
+			super.write(buf, off, len);
+		}
+
+		private String _error = "";
+
+	}
+
+	private static class TalendProcessOutPrintStream extends PrintStream {
+
+		public TalendProcessOutPrintStream(PrintStream printStream) {
+			super(printStream);
+		}
+
+		@Override
+		public void write(byte[] buf, int off, int len) {
+			try {
+				_output = _output.concat(
+					new String(buf, off, len, StringPool.UTF8));
+			}
+			catch (UnsupportedEncodingException unsupportedEncodingException) {
+				unsupportedEncodingException.printStackTrace();
+			}
+
+			super.write(buf, off, len);
+		}
+
+		private String _output = "";
+
+	}
 
 }

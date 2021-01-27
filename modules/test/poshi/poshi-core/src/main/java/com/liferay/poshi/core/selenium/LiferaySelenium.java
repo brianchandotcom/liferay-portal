@@ -164,6 +164,8 @@ public interface LiferaySelenium {
 
 	public void deleteAllEmails() throws Exception;
 
+	public void dismissConfirmation();
+
 	public void doubleClick(String locator);
 
 	public void doubleClickAt(String locator, String coordString);

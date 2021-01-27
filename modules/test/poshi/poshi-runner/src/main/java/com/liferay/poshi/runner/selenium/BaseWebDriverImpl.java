@@ -837,6 +837,22 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		LiferaySeleniumUtil.deleteAllEmails();
 	}
 
+	public void dismissConfirmation() {
+		switchTo();
+
+		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
+
+		try {
+			Alert alert = webDriverWait.until(
+				ExpectedConditions.alertIsPresent());
+
+			alert.dismiss();
+		}
+		catch (Exception exception) {
+			throw new WebDriverException(exception);
+		}
+	}
+
 	@Override
 	public void doubleClick(String locator) {
 		WebElement webElement = getWebElement(locator);

@@ -88,6 +88,11 @@
 	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}']</td>
 	<td></td>
 </tr>
+<tr>
+    <td>DDM_FIELD_REFERENCE</td>
+    <td>//div[contains(@class,'sidebar')]//label[contains(.,'Field Reference')]//following-sibling::input</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -431,7 +431,30 @@ definition {
 			Click(locator1 = "Sidebar#BACK");
 		}
 	}
+	macro editFieldReference {
 
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (isSet(fieldReference)) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+			Type(
+				key_fieldLabel = "Field Reference",
+				key_fieldName = "fieldReference",
+				locator1 = "Sidebar#TEXT_INPUT",
+				value1 = "${fieldReference}");
+
+			AssertTextEquals.assertValue(
+				key_fieldLabel = "Field Reference",
+				key_fieldName = "fieldReference",
+				locator1 = "Sidebar#TEXT_INPUT",
+				value1 = "${fieldReference}");
+		}
+
+		Click(locator1 = "Sidebar#BACK");
+	}
 	macro editFieldRepeatable {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
@@ -618,6 +641,25 @@ definition {
 		AssertTextEquals.assertValue(
 			locator1 = "Sidebar#DDM_HELP_TEXT",
 			value1 = "${fieldHelp}");
+	}
+
+	macro viewFieldReference {
+		var key_fieldFieldLabel = "${fieldFieldLabel}";
+		var key_text = "${fieldName}";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		AssertTextEquals(
+			locator1 = "Button#ANY",
+			value1 = "${fieldName}");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertTextEquals.assertValue(
+			locator1 = "Sidebar#DDM_FIELD_REFERENCE",
+			value1 = "${fieldReference}");
 	}
 
 	macro viewFieldSearchable {

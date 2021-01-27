@@ -1,6 +1,10 @@
 definition {
 
 	macro gotoAddEntry {
+		if (IsElementNotPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY") || IsElementNotPresent(key_tab = "New Entry", locator1 = "Button#ANY")) {
+			Pause(locator = "1000");
+		}
+
 		if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
 			Click(locator1 = "Blogs#ADD_BLOGS_ENTRY");
 		}

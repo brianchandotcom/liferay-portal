@@ -136,6 +136,7 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Test",
 			fieldName = "Separator");
+
 		DataEngine.editFieldReference(
 			fieldFieldLabel = "Test",
 			fieldName = "Separator",

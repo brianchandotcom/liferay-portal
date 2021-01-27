@@ -104,12 +104,12 @@ definition {
 		property portal.acceptance = "false";
 
 		var structureName = "WC Structure Name";
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content");
-    
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
 		NavItem.gotoStructures();
-        
+
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
@@ -123,21 +123,19 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-        DataEngine.addFieldNested(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
 			targetFieldLabel = "Numeric");
 
-        Click(
-            locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP"
-        );
+		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP");
 
 		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "Duplicate");
 
-        AssertTextEquals(
-            locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
 			value1 = "Copy of Fields Group");
 
 		WebContentStructures.saveCP(structureName = "${structureName}");

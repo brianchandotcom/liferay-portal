@@ -58,6 +58,14 @@ export default function AuditBarChart({rtl, vocabularies}) {
 			return acc.concat(newBar);
 		}, []);
 
+		const noneBarIndex = bars.findIndex((bar) => bar.dataKey === 'none');
+
+		if (noneBarIndex !== -1) {
+			const noneBar = bars.splice(noneBarIndex, 1)[0];
+
+			bars.push(noneBar);
+		}
+
 		const data = vocabularies.map((category) => {
 			if (!category.categories) {
 				if (Number(category.value) > maxValue) {

@@ -24,57 +24,7 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test EditFieldsetPropertiesFromSideBar {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 EditFieldsetPropertiesFromSideBar pending implementation
-
-	}
-
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test RepeatFieldsetWithoutDuplicatingContent {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 RepeatFieldsetWithoutDuplicatingContent pending implementation
-
-	}
-
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test FieldsetSetAsRepeatable {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 FieldsetSetAsRepeatable pending implementation
-
-	}
-
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test FieldsetSetAsCollapsible {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 FieldsetSetAsCollapsible pending implementation
-
-	}
-
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
-	@priority = "4"
-	test ShowAndHideFieldsetLabel {
-		property portal.acceptance = "false";
-
-		// TODO LPS-107630 ShowAndHideFieldsetLabel pending implementation
-
-	}
-
-    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
 	@ignore = "true"
 	@priority = "4"
 	test AddFieldsetOnOtherFieldsetAlreadyOnBuilder {
@@ -82,6 +32,51 @@ definition {
 
 		// TODO LPS-107630 AddFieldsetOnOtherFieldsetAlreadyOnBuilder pending implementation
 
+	}
+
+	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test EditFieldsetPropertiesFromSideBar {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 EditFieldsetPropertiesFromSideBar pending implementation
+	}
+
+	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test FieldsetSetAsCollapsible {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 FieldsetSetAsCollapsible pending implementation
+	}
+
+	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test FieldsetSetAsRepeatable {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 FieldsetSetAsRepeatable pending implementation
+	}
+
+	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test RepeatFieldsetWithoutDuplicatingContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 RepeatFieldsetWithoutDuplicatingContent pending implementation
+	}
+
+	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test ShowAndHideFieldsetLabel {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 ShowAndHideFieldsetLabel pending implementation
 	}
 
 }

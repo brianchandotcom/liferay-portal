@@ -187,45 +187,36 @@ definition {
 		var key_fieldFieldLabel = "${newLabel}";
 
 		ProductMenu.gotoPortlet(
-        	category = "Content & Data",
-            portlet = "Web Content" 
-        );
+			category = "Content & Data",
+			portlet = "Web Content");
 
-    	NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
+		WebContentStructures.addCP(
 			structureDescription = "I'm a test",
-			structureName = "${structureTitle}"
-        );
+			structureName = "${structureTitle}");
 
-        DataEngine.addField(
-    	    fieldFieldLabel = "${newLabel}",
-            fieldName = "Image"
-        );
-        
-        Button.clickSave();
+		DataEngine.addField(
+			fieldFieldLabel = "${newLabel}",
+			fieldName = "Image");
 
-        WebContentNavigator.gotoEditStructure(
-            structureName = "${structureTitle}"
-        );
+		Button.clickSave();
 
-        DataEngine.editFieldTip( 
-		    fieldFieldLabel = "${newLabel}",
-            fieldHelp = "${fieldHelp}"
-        );
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
-        Button.clickSave();
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "${newLabel}",
+			fieldHelp = "${fieldHelp}");
 
-        WebContentNavigator.gotoEditStructure(
-            structureName = "${structureTitle}"
-        );
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${newLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "${newLabel}");
 
-		
 		AssertTextEquals(
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
 			value1 = "${fieldHelp}");

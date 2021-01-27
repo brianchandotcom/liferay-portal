@@ -1,0 +1,87 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test EditFieldsetPropertiesFromSideBar {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 EditFieldsetPropertiesFromSideBar pending implementation
+
+	}
+
+    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test RepeatFieldsetWithoutDuplicatingContent {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 RepeatFieldsetWithoutDuplicatingContent pending implementation
+
+	}
+
+    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test FieldsetSetAsRepeatable {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 FieldsetSetAsRepeatable pending implementation
+
+	}
+
+    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test FieldsetSetAsCollapsible {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 FieldsetSetAsCollapsible pending implementation
+
+	}
+
+    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test ShowAndHideFieldsetLabel {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 ShowAndHideFieldsetLabel pending implementation
+
+	}
+
+    @description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@ignore = "true"
+	@priority = "4"
+	test AddFieldsetOnOtherFieldsetAlreadyOnBuilder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107630 AddFieldsetOnOtherFieldsetAlreadyOnBuilder pending implementation
+
+	}
+
+}

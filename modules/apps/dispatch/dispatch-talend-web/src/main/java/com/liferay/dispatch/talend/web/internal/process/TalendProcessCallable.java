@@ -17,6 +17,7 @@ package com.liferay.dispatch.talend.web.internal.process;
 import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessException;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Base64;
 
@@ -39,6 +40,9 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 		_mainMethodArgs = mainMethodArgs;
 		_jobMainClassFQN = jobMainClassFQN;
+
+		System.setErr(_errSniffPrintStream);
+		System.setOut(_outSniffPrintStream);
 	}
 
 	@Override
@@ -62,16 +66,6 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 			});
 
-		TalendProcessOutPrintStream talendProcessOutPrintStream =
-			new TalendProcessOutPrintStream(System.out);
-
-		System.setOut(talendProcessOutPrintStream);
-
-		TalendProcessErrPrintStream talendProcessErrPrintStream =
-			new TalendProcessErrPrintStream(System.err);
-
-		System.setErr(talendProcessErrPrintStream);
-
 		ClassLoader classLoader = TalendProcessCallable.class.getClassLoader();
 
 		try {
@@ -88,9 +82,7 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			Throwable causeThrowable = invocationTargetException.getCause();
 
 			if (causeThrowable == talendProcessException) {
-				return _getTalendProcessOutput(
-					talendProcessException.getStatus(),
-					talendProcessErrPrintStream, talendProcessOutPrintStream);
+				return _getCallableOutput(talendProcessException.getStatus());
 			}
 
 			throw new ProcessException(causeThrowable);
@@ -99,39 +91,38 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			throw new ProcessException(throwable);
 		}
 
-		return _getTalendProcessOutput(
-			0, talendProcessErrPrintStream, talendProcessOutPrintStream);
+		return _getCallableOutput(0);
 	}
 
-	private String _getTalendProcessOutput(
-		int exitCode, TalendProcessErrPrintStream talendProcessErrPrintStream,
-		TalendProcessOutPrintStream talendProcessOutPrintStream) {
-
+	private String _getCallableOutput(int exitCode) {
 		return String.format(
 			"{\"%s\":\"%s\",\"%s\":%d,\"%s\":\"%s\"}",
 			TalendProcessOutputParser.KEY_ERROR,
-			Base64.encode(talendProcessErrPrintStream._error.getBytes()),
+			Base64.encode(_errSniffPrintStream.getBytes()),
 			TalendProcessOutputParser.KEY_EXIT_CODE, exitCode,
 			TalendProcessOutputParser.KEY_OUTPUT,
-			Base64.encode(talendProcessOutPrintStream._output.getBytes()));
+			Base64.encode(_outSniffPrintStream.getBytes()));
 	}
 
 	private static final long serialVersionUID = 1L;
 
+	private final SniffPrintStream _errSniffPrintStream = new SniffPrintStream(
+		System.err);
 	private final String _jobMainClassFQN;
 	private final String[] _mainMethodArgs;
+	private final SniffPrintStream _outSniffPrintStream = new SniffPrintStream(
+		System.out);
 
-	private static class TalendProcessErrPrintStream extends PrintStream {
+	private static class SniffPrintStream extends PrintStream {
 
-		public TalendProcessErrPrintStream(PrintStream printStream) {
+		public SniffPrintStream(PrintStream printStream) {
 			super(printStream);
 		}
 
 		@Override
 		public void write(byte[] buf, int off, int len) {
 			try {
-				_error = _error.concat(
-					new String(buf, off, len, StringPool.UTF8));
+				_sb.append(new String(buf, off, len, StringPool.UTF8));
 			}
 			catch (UnsupportedEncodingException unsupportedEncodingException) {
 				unsupportedEncodingException.printStackTrace();
@@ -140,30 +131,13 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			super.write(buf, off, len);
 		}
 
-		private String _error = "";
+		protected byte[] getBytes() {
+			String string = _sb.toString();
 
-	}
-
-	private static class TalendProcessOutPrintStream extends PrintStream {
-
-		public TalendProcessOutPrintStream(PrintStream printStream) {
-			super(printStream);
+			return string.getBytes();
 		}
 
-		@Override
-		public void write(byte[] buf, int off, int len) {
-			try {
-				_output = _output.concat(
-					new String(buf, off, len, StringPool.UTF8));
-			}
-			catch (UnsupportedEncodingException unsupportedEncodingException) {
-				unsupportedEncodingException.printStackTrace();
-			}
-
-			super.write(buf, off, len);
-		}
-
-		private String _output = "";
+		private StringBundler _sb = new StringBundler();
 
 	}
 

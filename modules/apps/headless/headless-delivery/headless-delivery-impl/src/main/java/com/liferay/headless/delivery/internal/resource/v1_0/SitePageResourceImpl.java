@@ -14,6 +14,8 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.SitePageDTOConverter;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
@@ -25,7 +27,6 @@ import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
@@ -42,7 +44,6 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -229,15 +230,16 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private Layout _getLayout(long groupId, String friendlyUrlPath)
 		throws Exception {
 
-		String languageId = LocaleUtil.toLanguageId(
-			contextAcceptLanguage.getPreferredLocale());
+		String resourceName = ResourceActionsUtil.getCompositeModelName(
+			Layout.class.getName(), "false");
 
-		LayoutFriendlyURL layoutFriendlyURL =
-			_layoutFriendlyURLLocalService.getLayoutFriendlyURL(
-				groupId, false, StringPool.FORWARD_SLASH + friendlyUrlPath,
-				languageId);
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
+				groupId, _portal.getClassNameId(resourceName),
+				StringPool.FORWARD_SLASH + friendlyUrlPath);
 
-		return _layoutLocalService.getLayout(layoutFriendlyURL.getPlid());
+		return _layoutLocalService.getLayout(
+			friendlyURLEntryLocalization.getClassPK());
 	}
 
 	private long _getSegmentsExperienceId(
@@ -379,6 +381,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;

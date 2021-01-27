@@ -308,7 +308,32 @@ definition {
 	test VerifyDuplicatedGeolocationOnWebContent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 VerifyDuplicatedGeolocationOnWebContent pending implementation
+		var key_Label = "Localization";
+
+		var key_fieldLabel = "Copy of ${key_Label}";
+
+		DataEngine.addField(
+			fieldFieldLabel = "${key_Label}",
+			fieldName = "Geolocation");
+
+		DataEngine.duplicateField(fieldFieldLabel = "${key_Label}");
+
+		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+
+		Navigator.gotoNavItem(navItem = "Web Content");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "My Structure Name 1");
+
+		WebContent.addCP(
+			webContentTitle = "My Web Content Name 1");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content Name 1");
+
+		AssertElementPresent(locator1 = "FormFields#LABEL");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

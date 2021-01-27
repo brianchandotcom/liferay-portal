@@ -171,8 +171,10 @@ definition {
 		task ("Assert cannot delete web content template") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentStructures.deleteCP(
-				structureName = "WC Structure Name",
+			NavItem.gotoTemplates();
+
+			WebContentTemplates.deleteCP(
+				templateName = "WC Template Name",
 				webContentHasReference = "true");
 		}
 	}

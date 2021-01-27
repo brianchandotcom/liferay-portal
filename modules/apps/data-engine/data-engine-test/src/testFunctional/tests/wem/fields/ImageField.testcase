@@ -191,12 +191,9 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
-		AssertClick.assertPartialTextClickAt(
+		AssertElementPresent(
 			key_fieldFieldLabel = "${newLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${newLabel}");
-
-		Button.clickSave();
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"

@@ -581,13 +581,59 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99686. The user can map the content of link editable to a field of a document and the editable link display text will update to the published document field content".
-	@ignore = "true"
 	@priority = "3"
 	test MapDocumentTitleToLinkFragment {
-		property portal.upstream = "false";
+		task ("Add a document based on Basic Document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
 
-		// TODO LPS-99686 MapDocumentTitleToLinkFragment pending implementation
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the Title field of document to link editable field of Banner Center") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "link");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Document Title",
+				navItem = "Documents and Media");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			Pause(locator1 = "3000");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Document Title",
+				fragmentName = "Banner Center",
+				id = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the mapped title of document is shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_append = "[contains(@data-lfr-editable-id,'link')][normalize-space(text())='Document Title']",
+				key_URL = "",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
 	}
 
 	@description = "This is a test for LPS-119817. Map manual URL to Container element."

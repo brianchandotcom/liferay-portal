@@ -16,46 +16,36 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
-import isClickOutside from '../../utils/clickOutside.es';
+import useClickOutside from '../../hooks/useClickOutside.es';
+import {
+	getFormattedState,
+	setPropertyAtFormViewLevel,
+	setPropertyAtObjectViewLevel,
+} from './shared/index.es';
 
 const FORM_VIEW_LEVEL = 'form-view-level';
 const OBJECT_VIEW_LEVEL = 'object-view-level';
 
+const propertyName = 'required';
+
 const VIEW_LEVEL = {
 	[FORM_VIEW_LEVEL]: {
 		fn: (...params) => {
-			setRequiredAtFormViewLevel(true)(...params);
+			setPropertyAtFormViewLevel(true)(...params);
 
-			setRequiredAtObjectViewLevel(false)(...params);
+			setPropertyAtObjectViewLevel(false)(...params);
 		},
 		label: Liferay.Language.get('only-for-this-form'),
 	},
 	[OBJECT_VIEW_LEVEL]: {
 		fn: (...params) => {
-			setRequiredAtObjectViewLevel(true)(...params);
+			setPropertyAtObjectViewLevel(true)(...params);
 		},
 		label: Liferay.Language.get('for-all-forms-using-this-field'),
 	},
 };
-
-/**
- * Return the formatted state
- * @param {object} state
- */
-function getFormattedState({
-	dataDefinition: {dataDefinitionFields},
-	dataLayout: {dataLayoutFields},
-	focusedField: {fieldName},
-}) {
-	return {
-		dataDefinitionFields,
-		dataLayoutFields,
-		fieldName,
-	};
-}
 
 /**
  * Define an initial value to toggled state
@@ -110,55 +100,8 @@ function isRequiredAtObjectViewLevel({dataDefinitionFields, fieldName}) {
 	return isRequiredField(field);
 }
 
-/**
- * Set required at form view level
- * @param {boolean} required
- */
-function setRequiredAtFormViewLevel(required) {
-	return ({dataLayoutFields, fieldName}, dispatch) => {
-		dispatch({
-			payload: {
-				dataLayoutFields: {
-					...dataLayoutFields,
-					[fieldName]: {
-						...dataLayoutFields[fieldName],
-						required,
-					},
-				},
-			},
-			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_FIELDS,
-		});
-	};
-}
-
-/**
- * Set required at object view level
- * @param {boolean} required
- */
-function setRequiredAtObjectViewLevel(required) {
-	return ({dataDefinitionFields, fieldName}, dispatch) => {
-		dispatch({
-			payload: {
-				dataDefinitionFields: dataDefinitionFields.map((field) => {
-					if (field.name === fieldName) {
-						return {
-							...field,
-							required,
-						};
-					}
-
-					return field;
-				}),
-			},
-			type: DataLayoutBuilderActions.UPDATE_DATA_DEFINITION_FIELDS,
-		});
-	};
-}
-
 export default ({AppContext, dataLayoutBuilder}) => {
 	const [state, dispatch] = useContext(AppContext);
-	const popoverRef = useRef(null);
-	const triggerRef = useRef(null);
 	const [showPopover, setShowPopover] = useState(false);
 
 	const formattedState = getFormattedState(state);
@@ -172,28 +115,13 @@ export default ({AppContext, dataLayoutBuilder}) => {
 	 * Set require callback function
 	 * @param {function} fn
 	 */
-	const setRequireCallbackFn = (fn) => fn(formattedState, dispatch);
+	const setRequireCallbackFn = (fn) =>
+		fn({...formattedState, propertyName}, dispatch);
 
-	/**
-	 * UseEffect to click outside and close the popover
-	 */
-	useEffect(() => {
-		const handler = ({target}) => {
-			const outside = isClickOutside(
-				target,
-				popoverRef?.current,
-				triggerRef?.current
-			);
-
-			if (outside) {
-				setShowPopover(false);
-			}
-		};
-
-		window.addEventListener('click', handler);
-
-		return () => window.removeEventListener('click', handler);
-	}, [popoverRef, triggerRef]);
+	const [popoverRef, triggerRef] = useClickOutside(
+		[useRef(null), useRef(null)],
+		setShowPopover
+	);
 
 	useEffect(() => {
 		setToggle(initialToggledValue(formattedState));
@@ -226,9 +154,9 @@ export default ({AppContext, dataLayoutBuilder}) => {
 						}
 						else {
 							setRequireCallbackFn((...params) => {
-								setRequiredAtFormViewLevel(false)(...params);
+								setPropertyAtFormViewLevel(false)(...params);
 
-								setRequiredAtObjectViewLevel(false)(...params);
+								setPropertyAtObjectViewLevel(false)(...params);
 							});
 						}
 					}}

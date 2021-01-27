@@ -22,6 +22,7 @@ import com.liferay.registry.internal.TrackedOne;
 import com.liferay.registry.internal.TrackedTwo;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -235,28 +236,14 @@ public class ServiceDependencyManagerTest {
 		serviceDependencyManager.registerDependencies(filter1, filter2);
 
 		Thread dependencyWaiter1 = new Thread(
-			new Runnable() {
-
-				@Override
-				public void run() {
-					serviceDependencyManager.waitForDependencies(0);
-				}
-
-			});
+			() -> serviceDependencyManager.waitForDependencies(0));
 
 		dependencyWaiter1.setDaemon(true);
 
 		dependencyWaiter1.start();
 
 		Thread dependencyWaiter2 = new Thread(
-			new Runnable() {
-
-				@Override
-				public void run() {
-					serviceDependencyManager.waitForDependencies(0);
-				}
-
-			});
+			() -> serviceDependencyManager.waitForDependencies(0));
 
 		dependencyWaiter2.setDaemon(true);
 
@@ -293,6 +280,8 @@ public class ServiceDependencyManagerTest {
 
 		final AtomicBoolean dependenciesSatisfied = new AtomicBoolean(false);
 
+		final AtomicReference<String> atomicReference = new AtomicReference<>();
+
 		serviceDependencyManager.addServiceDependencyListener(
 			new ServiceDependencyListener() {
 
@@ -317,13 +306,13 @@ public class ServiceDependencyManagerTest {
 		registry.registerService(TrackedOne.class, new TrackedOne());
 
 		Thread dependencyWaiter = new Thread(
-			new Runnable() {
-
-				@Override
-				public void run() {
+			() -> {
+				try {
 					serviceDependencyManager.waitForDependencies(100);
 				}
-
+				catch (RuntimeException runtimeException) {
+					atomicReference.set(String.valueOf(runtimeException));
+				}
 			});
 
 		dependencyWaiter.setDaemon(true);
@@ -335,6 +324,12 @@ public class ServiceDependencyManagerTest {
 
 			if (!dependencyWaiter.isAlive()) {
 				Assert.assertFalse(dependenciesSatisfied.get());
+
+				String message = String.valueOf(atomicReference.get());
+
+				if (!message.contains(String.valueOf(filter2))) {
+					Assert.assertEquals(String.valueOf(filter2), message);
+				}
 
 				return;
 			}

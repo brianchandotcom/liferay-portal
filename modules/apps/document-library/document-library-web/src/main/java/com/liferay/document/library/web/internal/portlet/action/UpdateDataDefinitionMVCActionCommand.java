@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -68,6 +69,10 @@ public class UpdateDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
 
 		try {
+			if (ArrayUtil.isEmpty(dataDefinition.getDataDefinitionFields())) {
+				throw new DataDefinitionValidationException.MustSetFields();
+			}
+
 			dataDefinitionResource.putDataDefinition(
 				ParamUtil.getLong(actionRequest, "dataDefinitionId"),
 				dataDefinition);

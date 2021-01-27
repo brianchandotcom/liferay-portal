@@ -397,7 +397,7 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeBlogDisplayStyle(displayStyle = "list");
 
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
@@ -433,7 +433,7 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeBlogDisplayStyle(displayStyle = "list");
 
 		BlogsEntry.searchCP(
 			entryContent = "Blogs Entry Content",
@@ -537,7 +537,7 @@ definition {
 
 		Click(locator1 = "Icon#BACK");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeBlogDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = "Blogs Entry Title";
 

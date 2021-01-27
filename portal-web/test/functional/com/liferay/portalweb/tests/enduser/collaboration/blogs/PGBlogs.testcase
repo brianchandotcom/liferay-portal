@@ -1470,7 +1470,7 @@ definition {
 			portlet = "Blogs",
 			scope = "Blogs Page");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		LexiconEntry.changeBlogDisplayStyle(displayStyle = "table");
 
 		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
 

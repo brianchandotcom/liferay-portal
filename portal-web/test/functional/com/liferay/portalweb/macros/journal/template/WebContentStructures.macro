@@ -111,15 +111,15 @@ definition {
 		}
 	}
 
-	macro editStructureDefaultValuesCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit Default Values",
-			rowEntry = "${structureName}");
-	}
-
 	macro editStructure {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
+			rowEntry = "${structureName}");
+	}
+
+	macro editStructureDefaultValuesCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit Default Values",
 			rowEntry = "${structureName}");
 	}
 

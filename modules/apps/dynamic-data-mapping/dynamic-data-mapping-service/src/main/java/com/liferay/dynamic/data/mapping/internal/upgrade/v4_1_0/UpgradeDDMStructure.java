@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -232,43 +231,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
-	private String _upgradeDDMFormLayoutDefinition(
-			String structureLayoutDefinition, String structureVersionDefinition)
-		throws Exception {
-
-		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
-			_ddmFormLayoutDeserializer, structureLayoutDefinition);
-
-		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
-			_ddmFormDeserializer, structureVersionDefinition);
-
-		DDMFormLayoutPage ddmFormLayoutPage =
-			ddmFormLayout.getDDMFormLayoutPage(0);
-
-		List<DDMFormLayoutRow> ddmFormLayoutRows = new ArrayList<>();
-
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-			ddmFormLayoutRow.addDDMFormLayoutColumn(
-				new DDMFormLayoutColumn(
-					DDMFormLayoutColumn.FULL, ddmFormField.getName()));
-
-			ddmFormLayoutRows.add(ddmFormLayoutRow);
-		}
-
-		ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
-
-		DDMFormLayoutSerializerSerializeResponse
-			ddmFormLayoutSerializerSerializeResponse =
-				_ddmFormLayoutSerializer.serialize(
-					DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
-						ddmFormLayout
-					).build());
-
-		return ddmFormLayoutSerializerSerializeResponse.getContent();
-	}
-
 	private String _upgradeDefinition(
 			String definition, Long parentStructureId,
 			Long parentStructureLayoutId, Long structureId)
@@ -334,9 +296,10 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 					ps2.setString(
 						1,
-						_upgradeDDMFormLayoutDefinition(
-							structureLayoutDefinition,
-							structureVersionDefinition));
+						_ddmDataDefinitionConverter.
+							convertDDMFormLayoutDataDefinition(
+								structureLayoutDefinition,
+								structureVersionDefinition));
 
 					ps2.setLong(2, rs.getLong("structureLayoutId"));
 

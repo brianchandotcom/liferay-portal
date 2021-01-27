@@ -15,13 +15,22 @@
 package com.liferay.dynamic.data.mapping.internal.util;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -69,6 +79,45 @@ public class DDMDataDefinitionConverterImpl
 			_ddmFormDeserializer, dataDefinition);
 
 		return convert(ddmForm, defaultLocale);
+	}
+
+	@Override
+	public String convertDDMFormLayoutDataDefinition(
+			String structureLayoutDataDefinition,
+			String structureVersionDataDefinition)
+		throws Exception {
+
+		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
+			_ddmFormLayoutDeserializer, structureLayoutDataDefinition);
+
+		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+			_ddmFormDeserializer, structureVersionDataDefinition);
+
+		DDMFormLayoutPage ddmFormLayoutPage =
+			ddmFormLayout.getDDMFormLayoutPage(0);
+
+		List<DDMFormLayoutRow> ddmFormLayoutRows = new ArrayList<>();
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+			ddmFormLayoutRow.addDDMFormLayoutColumn(
+				new DDMFormLayoutColumn(
+					DDMFormLayoutColumn.FULL, ddmFormField.getName()));
+
+			ddmFormLayoutRows.add(ddmFormLayoutRow);
+		}
+
+		ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
+
+		DDMFormLayoutSerializerSerializeResponse
+			ddmFormLayoutSerializerSerializeResponse =
+				_ddmFormLayoutSerializer.serialize(
+					DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
+						ddmFormLayout
+					).build());
+
+		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
 	private DDMFormField _createFieldSetDDMFormField(
@@ -465,6 +514,12 @@ public class DDMDataDefinitionConverterImpl
 
 	@Reference
 	private DDMFormDeserializer _ddmFormDeserializer;
+
+	@Reference
+	private DDMFormLayoutDeserializer _ddmFormLayoutDeserializer;
+
+	@Reference(target = "(ddm.form.layout.serializer.type=json)")
+	private DDMFormLayoutSerializer _ddmFormLayoutSerializer;
 
 	@Reference
 	private DDMFormSerializer _ddmFormSerializer;

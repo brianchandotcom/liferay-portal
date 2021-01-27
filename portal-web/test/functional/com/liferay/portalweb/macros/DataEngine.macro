@@ -151,10 +151,12 @@ definition {
 	}
 
 	macro addFieldOption {
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+		if (isSet(fieldFieldLabel)) {
+			AssertClick.assertPartialTextClickAt(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+				value1 = "${fieldFieldLabel}");
+		}
 
 		if (isSet(optionFieldLabel)) {
 			Type(
@@ -170,7 +172,9 @@ definition {
 				value1 = "${optionValue}");
 		}
 
-		Click(locator1 = "Sidebar#BACK");
+		if (isSet(fieldFieldLabel)) {
+			Click(locator1 = "Sidebar#BACK");
+		}
 	}
 
 	macro addFields {

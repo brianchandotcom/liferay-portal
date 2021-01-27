@@ -145,7 +145,50 @@ definition {
 	test SetImageDescriptionOnWebContent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98073 SetImageDescriptionOnWebContent pending implementation
+		var structureTitle = "My Structure";
+		var webTitle = "WC Title";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg"
+		);
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "${structureTitle}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image"
+		);
+
+		Button.clickSave();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+
+		WebContent.addWithStructureCP(
+			imageFileName = "Document Title",
+			navTab = "Documents and Media",
+			structureName = "${structureTitle}",
+			webContentImage = "Document Title",
+			webContentTitle = "${webTitle}",
+            webContentImageDescription = "My description"
+		);
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
+
+        AssertTextEquals(
+            locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			value1 = "My description"
+        );
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"

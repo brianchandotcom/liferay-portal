@@ -57,7 +57,9 @@ public class DDMDataDefinitionConverterImpl
 	implements DDMDataDefinitionConverter {
 
 	@Override
-	public String convert(DDMForm ddmForm, Locale defaultLocale) {
+	public String convertDDMFormDataDefinition(
+		DDMForm ddmForm, Locale defaultLocale) {
+
 		if (Objects.equals(ddmForm.getDefinitionSchemaVersion(), "2.0")) {
 			return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 		}
@@ -72,13 +74,14 @@ public class DDMDataDefinitionConverterImpl
 	}
 
 	@Override
-	public String convert(String dataDefinition, Locale defaultLocale)
+	public String convertDDMFormDataDefinition(
+			String dataDefinition, Locale defaultLocale)
 		throws Exception {
 
 		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
 			_ddmFormDeserializer, dataDefinition);
 
-		return convert(ddmForm, defaultLocale);
+		return convertDDMFormDataDefinition(ddmForm, defaultLocale);
 	}
 
 	@Override

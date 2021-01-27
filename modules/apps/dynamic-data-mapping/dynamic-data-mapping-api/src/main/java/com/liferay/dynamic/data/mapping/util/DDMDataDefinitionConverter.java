@@ -23,9 +23,11 @@ import java.util.Locale;
  */
 public interface DDMDataDefinitionConverter {
 
-	public String convert(DDMForm ddmForm, Locale defaultLocale);
+	public String convertDDMFormDataDefinition(
+		DDMForm ddmForm, Locale defaultLocale);
 
-	public String convert(String dataDefinition, Locale defaultLocale)
+	public String convertDDMFormDataDefinition(
+			String dataDefinition, Locale defaultLocale)
 		throws Exception;
 
 	public String convertDDMFormLayoutDataDefinition(

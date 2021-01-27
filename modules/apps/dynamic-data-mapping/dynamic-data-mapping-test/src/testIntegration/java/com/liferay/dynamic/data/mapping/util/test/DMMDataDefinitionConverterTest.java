@@ -53,60 +53,73 @@ public class DMMDataDefinitionConverterTest {
 	}
 
 	@Test
-	public void testConvertAllFields() throws Exception {
-		String dataDefinition = _ddmDataDefinitionConverter.convert(
-			_read("ddm-data-definition-json-converter-all-fields.json"),
-			LocaleUtil.US);
+	public void testConvertDDMFormDataDefinitionAllFields() throws Exception {
+		String dataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				_read(
+					"ddm-form-data-definition-json-converter-all-fields.json"),
+				LocaleUtil.US);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
 				_read(
-					"ddm-data-definition-json-converter-all-fields-expected-" +
-						"result.json")),
-			_objectMapper.readTree(dataDefinition));
-	}
-
-	@Test
-	public void testConvertCheckboxToCheckboxMultiple() throws Exception {
-		String dataDefinition = _ddmDataDefinitionConverter.convert(
-			_read("ddm-data-definition-json-converter-checkbox.json"),
-			LocaleUtil.US);
-
-		Assert.assertEquals(
-			_objectMapper.readTree(
-				_read(
-					"ddm-data-definition-json-converter-checkbox-expected-" +
-						"result.json")),
-			_objectMapper.readTree(dataDefinition));
-	}
-
-	@Test
-	public void testConvertNestedFields() throws Exception {
-		String dataDefinition = _ddmDataDefinitionConverter.convert(
-			_read("ddm-data-definition-json-converter-nested-fields.json"),
-			LocaleUtil.US);
-
-		Assert.assertEquals(
-			_objectMapper.readTree(
-				_read(
-					"ddm-data-definition-json-converter-nested-fields-" +
+					"ddm-form-data-definition-json-converter-all-fields-" +
 						"expected-result.json")),
 			_objectMapper.readTree(dataDefinition));
 	}
 
 	@Test
-	public void testConvertRepeatableNestedFields() throws Exception {
-		String dataDefinition = _ddmDataDefinitionConverter.convert(
-			_read(
-				"ddm-data-definition-json-converter-repeatable-nested-" +
-					"fields.json"),
-			LocaleUtil.US);
+	public void testConvertDDMFormDataDefinitionCheckboxToCheckboxMultiple()
+		throws Exception {
+
+		String dataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				_read("ddm-form-data-definition-json-converter-checkbox.json"),
+				LocaleUtil.US);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
 				_read(
-					"ddm-data-definition-json-converter-repeatable-nested-" +
-						"fields-expected-result.json")),
+					"ddm-form-data-definition-json-converter-checkbox-" +
+						"expected-result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
+	@Test
+	public void testConvertDDMFormDataDefinitionNestedFields()
+		throws Exception {
+
+		String dataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				_read(
+					"ddm-form-data-definition-json-converter-nested-" +
+						"fields.json"),
+				LocaleUtil.US);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"ddm-form-data-definition-json-converter-nested-fields-" +
+						"expected-result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
+	@Test
+	public void testConvertDDMFormDataDefinitionRepeatableNestedFields()
+		throws Exception {
+
+		String dataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				_read(
+					"ddm-form-data-definition-json-converter-repeatable-" +
+						"nested-fields.json"),
+				LocaleUtil.US);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"ddm-form-data-definition-json-converter-repeatable-" +
+						"nested-fields-expected-result.json")),
 			_objectMapper.readTree(dataDefinition));
 	}
 

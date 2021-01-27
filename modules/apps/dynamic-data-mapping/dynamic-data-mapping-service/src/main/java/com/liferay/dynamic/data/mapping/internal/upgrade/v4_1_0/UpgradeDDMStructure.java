@@ -380,8 +380,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 					ps2.setString(
 						1,
-						_ddmDataDefinitionConverter.convert(
-							definition, locale));
+						_ddmDataDefinitionConverter.
+							convertDDMFormDataDefinition(definition, locale));
 
 					ps2.setLong(2, rs.getLong("structureId"));
 					ps2.addBatch();
@@ -496,8 +496,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 					ps2.setString(
 						1,
-						_ddmDataDefinitionConverter.convert(
-							definition, locale));
+						_ddmDataDefinitionConverter.
+							convertDDMFormDataDefinition(definition, locale));
 
 					ps2.setLong(2, rs.getLong("structureVersionId"));
 					ps2.addBatch();

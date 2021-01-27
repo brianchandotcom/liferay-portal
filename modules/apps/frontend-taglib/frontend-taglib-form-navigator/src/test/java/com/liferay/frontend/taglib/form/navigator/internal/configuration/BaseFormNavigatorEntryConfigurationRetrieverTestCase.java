@@ -16,6 +16,8 @@ package com.liferay.frontend.taglib.form.navigator.internal.configuration;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,11 +28,17 @@ import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  * @author Alejandro Tardín
  */
 public abstract class BaseFormNavigatorEntryConfigurationRetrieverTestCase {
+
+	@BeforeClass
+	public static void setUpClass() {
+		PropsUtil.setProps(new PropsImpl());
+	}
 
 	@Before
 	public void setUp() throws Exception {

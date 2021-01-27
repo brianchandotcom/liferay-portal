@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.transformer;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -570,7 +571,7 @@ public class JournalTransformer {
 
 			Map<String, String> attributes = new HashMap<>();
 
-			if (type.equals("image")) {
+			if (type.equals(DDMFormFieldTypeConstants.IMAGE)) {
 				JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject(
 					data);
 

@@ -104,6 +104,25 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "When the user clicks on the Duplicate option of an experience, a new experience with [the same name] + Copy and the same audience (Segment) appears in the last position of the list, always below the default experience"
+	@priority = "5"
+	test DuplicateExperience {
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addExperience(
+			experienceName = "NewExp1",
+			segmentName = "AddSegmentUserEmailAddressContains Test");
+
+		PageEditor.duplicateExperience(experienceName = "NewExp1");
+
+		PageEditor.clickPublish();
+	}
+
 	@description = "Validate experience edition and deletion"
 	@priority = "5"
 	test EditAndDeleteExperience {

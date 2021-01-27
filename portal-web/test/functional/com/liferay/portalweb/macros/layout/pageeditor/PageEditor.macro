@@ -976,6 +976,24 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
+	macro duplicateExperience {
+		var key_experienceName = "${experienceName}";
+
+		AssertTextEquals(
+			locator1 = "PageEditor#EXPERIENCE_LABEL",
+			value1 = "Experience");
+
+		AssertClick(
+			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
+			value1 = "${experienceName}");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_DUPLICATE_BUTTON");
+
+		AssertElementPresent(
+			key_experienceName = "${experienceName} (Copy)",
+			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
+	}
+
 	macro editCollectionCategoryFilter {
 		var key_fragmentName = "${fragmentName}";
 

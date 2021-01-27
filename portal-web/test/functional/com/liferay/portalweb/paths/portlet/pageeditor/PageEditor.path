@@ -286,6 +286,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_DUPLICATE_BUTTON</td>
+	<td>//div[contains(@class,'toolbar-experience')]//button[contains(@title,'Duplicate Experience')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_EDIT_BUTTON</td>
 	<td>//div[contains(@class,'toolbar-experience')]//button[contains(@title,'Edit Experience')]</td>
 	<td></td>

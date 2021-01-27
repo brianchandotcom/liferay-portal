@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend Taglib Clay Test Alert Toast
+Bundle-SymbolicName: com.liferay.frontend.taglib.clay.test.alert.toast
+Bundle-Version: 1.0.0
+Web-ContextPath: /frontend-taglib-clay-test-alert-toast

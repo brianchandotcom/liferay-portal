@@ -72,12 +72,138 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97182. If a page author does not have view permissions for an asset, it should not display for them."
-	@ignore = "true"
 	@priority = "2"
 	test CannotViewAssetInContentDisplayWithoutAssetViewPermission {
-		property portal.upstream = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-97182 CannotViewAssetInContentDisplayWithoutAssetViewPermission pending implementation
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Change password") {
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add user to Test Site Name") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a site role") {
+			JSONRole.addSiteRole(
+				roleKey = "Roles Siterole Name",
+				roleTitle = "Roles Siterole Name");
+		}
+
+		task ("Define permissions for new site role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			for (var resourceActionIndex : list "VIEW,UPDATE_LAYOUT_CONTENT") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Layout",
+					roleTitle = "Roles Siterole Name",
+					roleType = "site");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		task ("Assign new site role to new user") {
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Roles Siterole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Remove View permission for Guest and Site Member in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			WebContentAdmin.clickEntryEllipsisItem(
+				entry = "Web Content Title",
+				item = "Permissions");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+				addOrRemoveViewPermission = "Remove",
+				roleList = "Guest,Site Member");
+		}
+
+		task ("Add a Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
+
+		task ("Select the web content in Content Display") {
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "Web Content Content");
+		}
+
+		task ("logout and login as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Assert cannot view the web content in Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementNotPresent(
+				key_content = "[normalize-space(text())='Web Content Content']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+
+			ContentPages.clickPencil();
+
+			AssertElementNotPresent(
+				key_content = "[normalize-space(text())='Web Content Content']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
+		}
 	}
 
 	@description = "This is a test for LPS-103454. Content author having permission to update blog entry could see edit icon in the content page displaying the blog and could edit blog in editmode. "

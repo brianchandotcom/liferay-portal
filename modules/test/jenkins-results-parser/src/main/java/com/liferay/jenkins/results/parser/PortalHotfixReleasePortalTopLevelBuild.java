@@ -44,11 +44,17 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				"Please set 'TEST_BUILD_HOTFIX_ZIP_URL'");
 		}
 
-		return JenkinsResultsParserUtil.combine(
+		String branchName = JenkinsResultsParserUtil.combine(
 			matcher.group("major"), ".", matcher.group("minor"), ".x");
+
+		if (branchName.startsWith("6")) {
+			return "ee-" + branchName;
+		}
+
+		return branchName;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"https?://.*/fix-packs/(?<major>\\d)\\.(?<minor>\\d)\\.(?<fix>\\d+).*");
+		"https?://.*(?<major>\\d)(?<minor>\\d)(?<fix>\\d{2})\\.(lpkg|zip)");
 
 }

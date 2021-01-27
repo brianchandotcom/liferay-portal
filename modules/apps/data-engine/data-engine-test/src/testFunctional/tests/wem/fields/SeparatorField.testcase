@@ -7,14 +7,26 @@ definition {
 
 	setUp {
 		TestCase.setUpPortalInstance();
+        User.firstLoginPG();
+        Navigator.openURL();
+     
+        
+      	ProductMenu.gotoPortlet(
+		category = "Content & Data",
+		portlet = "Web Content"); 
 
-		User.firstLoginPG();
+        AppBuilderAdmin.switchTab(tabName = "Structures");  
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+        WebContentStructures.addCP(
+		structureName = "Test");
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		WebContentStructures.deleteCP(
+			structureName = "Test"
+		);
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -23,6 +35,7 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
+
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@ignore = "true"
@@ -85,7 +98,20 @@ definition {
 	test EditLabelOfSeparator {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 EditLabelOfSeparator pending implementation
+		DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Test");
+        FormViewBuilder.editFieldLabel(fieldLabel = "Test", label = "Edited label");
+
+		Button.clickSave();
+		
+		WebContentStructures.editStructure(structureName = "Test");
+		
+		DataEngine.viewField(
+			fieldFieldLabel = "Edited label",
+			fieldName = "Separator"
+		);
+
+		Button.clickSave();
+
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

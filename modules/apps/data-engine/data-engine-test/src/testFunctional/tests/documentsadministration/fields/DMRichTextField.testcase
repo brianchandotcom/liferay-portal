@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "5"
 	test DragAndDropRichTextToBuilder {
@@ -34,164 +34,148 @@ definition {
 
 	}
 
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "5"
-	test SetLabelOfRichText {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 SetLabelOfRichText pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "5"
-	test SetHelpTextOfRichText {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 SetHelpTextOfRichText pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "5"
-	test UploadDocumentTypetWithRequiredRichText {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 UploadDocumentTypetWithRequiredRichText pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "5"
 	test InsertTextOnRichTextOnUpload {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98076 InsertTextOnRichTextOnUpload pending implementation
-
 	}
 
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "5"
-	test RepeatRichTextOnUpload {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 RepeatRichTextOnUpload pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "4"
-	test VerifyRequiredPropertyOfRichText {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 VerifyRequiredPropertyOfRichText pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "4"
 	test LocalizationOfRichTextPersists {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98076 LocalizationOfRichTextPersists pending implementation
-
 	}
 
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test RepeatRichTextOnUpload {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 RepeatRichTextOnUpload pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "4"
 	test SetFieldReferenceOfRichText {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98076 SetFieldReferenceOfRichText pending implementation
-
 	}
 
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "4"
-	test SetRichTextSearchableAsDisabled {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 SetRichTextSearchableAsDisabled pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "4"
-	test SetRichTextSearchableAsByKeyword {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 SetRichTextSearchableAsByKeyword pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "4"
-	test SetRichTextAsRepeatable {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 SetRichTextAsRepeatable pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "4"
-	test VerifyRichTextIsSetAsRequiredOnUploading {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 VerifyRichTextIsSetAsRequiredOnUploading pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "4"
-	test VerifyRichFieldHelpTextOnUpload {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 VerifyRichFieldHelpTextOnUpload pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "4"
-	test UploadWithRequiredRichText {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 UploadWithRequiredRichText pending implementation
-
-	}
-
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "3"
 	test SetFieldReferenceOfRichTextWithInvalidCharacters {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98076 SetFieldReferenceOfRichTextWithInvalidCharacters pending implementation
-
 	}
 
-    @description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test SetHelpTextOfRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetHelpTextOfRichText pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test SetLabelOfRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetLabelOfRichText pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetRichTextAsRepeatable {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetRichTextAsRepeatable pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetRichTextSearchableAsByKeyword {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetRichTextSearchableAsByKeyword pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test SetRichTextSearchableAsDisabled {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 SetRichTextSearchableAsDisabled pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@ignore = "true"
 	@priority = "3"
 	test ShowAndHideRichTextLabel {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98076 ShowAndHideRichTextLabel pending implementation
+	}
 
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "5"
+	test UploadDocumentTypetWithRequiredRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 UploadDocumentTypetWithRequiredRichText pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test UploadWithRequiredRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 UploadWithRequiredRichText pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyRequiredPropertyOfRichText {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 VerifyRequiredPropertyOfRichText pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyRichFieldHelpTextOnUpload {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 VerifyRichFieldHelpTextOnUpload pending implementation
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyRichTextIsSetAsRequiredOnUploading {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98076 VerifyRichTextIsSetAsRequiredOnUploading pending implementation
 	}
 
 }

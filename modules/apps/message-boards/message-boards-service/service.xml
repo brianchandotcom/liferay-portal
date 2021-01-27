@@ -218,7 +218,7 @@
 			<finder-column name="categoryId" />
 		</finder>
 	</entity>
-	<entity human-name="message-boards message" local-service="true" name="MBMessage" remote-service="true" trash-enabled="true" uuid="true">
+	<entity external-reference-code="group" human-name="message-boards message" local-service="true" name="MBMessage" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 

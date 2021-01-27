@@ -84,7 +84,24 @@ definition {
 	test EditHelpTextOfSeparator {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 EditHelpTextOfSeparator pending implementation
+		DataEngine.addField(
+			fieldFieldLabel = "Test",
+			fieldName = "Separator");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Test",
+			fieldHelp = "Choose as many content pieces as you would like to feature.");
+
+		Button.clickSave();
+
+		WebContentStructures.editStructure(structureName = "Test");
+
+		DataEngine.viewFieldHelpText(
+			fieldFieldLabel = "Test",
+			fieldHelp = "Choose as many content pieces as you would like to feature.",
+			fieldName = "Separator");
+
+		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

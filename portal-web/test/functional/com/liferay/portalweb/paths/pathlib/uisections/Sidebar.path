@@ -44,6 +44,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>DDM_HELP_TEXT</td>
+    <td>//div[contains(@class,'sidebar')]//label[contains(.,'Help Text')]//following-sibling::input</td>
+    <td></td>
+</tr>
+<tr>
 	<td>FORM_BUILDER</td>
 	<td>//div[contains(@class,'form-builder-layout')]</td>
 	<td></td>

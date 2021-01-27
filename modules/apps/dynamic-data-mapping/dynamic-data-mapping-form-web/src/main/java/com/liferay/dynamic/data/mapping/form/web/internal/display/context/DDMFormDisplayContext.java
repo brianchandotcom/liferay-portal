@@ -367,7 +367,7 @@ public class DDMFormDisplayContext {
 		DDMFormInstance ddmFormInstance = getFormInstance();
 
 		if (ddmFormInstance == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =

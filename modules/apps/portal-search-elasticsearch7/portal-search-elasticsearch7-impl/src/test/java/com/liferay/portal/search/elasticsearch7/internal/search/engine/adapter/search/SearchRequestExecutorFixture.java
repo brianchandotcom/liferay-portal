@@ -14,14 +14,18 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
+import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.SearchHitDocumentTranslatorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationVisitorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.facet.ModifiedFacetProcessor;
+import com.liferay.portal.search.elasticsearch7.internal.facet.NestedFacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.groupby.DefaultGroupByTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.DefaultHighlighterTranslator;
@@ -38,6 +42,8 @@ import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
+import com.liferay.portal.search.internal.facet.ModifiedFacetImpl;
+import com.liferay.portal.search.internal.facet.NestedFacetImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
@@ -52,7 +58,10 @@ import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 
+import java.util.Collections;
+
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
@@ -100,18 +109,6 @@ public class SearchRequestExecutorFixture {
 			FacetProcessor<?> facetProcessor, StatsTranslator statsTranslator,
 			ComplexQueryBuilderFactory complexQueryBuilderFactory) {
 
-		ElasticsearchAggregationVisitorFixture
-			elasticsearchAggregationVisitorFixture =
-				new ElasticsearchAggregationVisitorFixture();
-
-		ElasticsearchFilterTranslatorFixture
-			elasticsearchFilterTranslatorFixture =
-				new ElasticsearchFilterTranslatorFixture();
-
-		ElasticsearchPipelineAggregationVisitorFixture
-			elasticsearchPipelineAggregationVisitorFixture =
-				new ElasticsearchPipelineAggregationVisitorFixture();
-
 		com.liferay.portal.search.elasticsearch7.internal.legacy.query.
 			ElasticsearchQueryTranslatorFixture
 				legacyElasticsearchQueryTranslatorFixture =
@@ -123,6 +120,19 @@ public class SearchRequestExecutorFixture {
 				legacyElasticsearchQueryTranslatorFixture.
 					getElasticsearchQueryTranslator();
 
+		ElasticsearchAggregationVisitorFixture
+			elasticsearchAggregationVisitorFixture =
+				new ElasticsearchAggregationVisitorFixture();
+
+		ElasticsearchFilterTranslatorFixture
+			elasticsearchFilterTranslatorFixture =
+				new ElasticsearchFilterTranslatorFixture(
+					legacyElasticsearchQueryTranslator);
+
+		ElasticsearchPipelineAggregationVisitorFixture
+			elasticsearchPipelineAggregationVisitorFixture =
+				new ElasticsearchPipelineAggregationVisitorFixture();
+
 		return new CommonSearchSourceBuilderAssemblerImpl() {
 			{
 				setAggregationTranslator(
@@ -131,7 +141,9 @@ public class SearchRequestExecutorFixture {
 
 				setComplexQueryBuilderFactory(complexQueryBuilderFactory);
 
-				setFacetTranslator(createFacetTranslator(facetProcessor));
+				setFacetTranslator(
+					createFacetTranslator(
+						facetProcessor, legacyElasticsearchQueryTranslator));
 
 				setFilterToQueryBuilderTranslator(
 					elasticsearchFilterTranslatorFixture.
@@ -184,7 +196,8 @@ public class SearchRequestExecutorFixture {
 	}
 
 	protected static FacetTranslator createFacetTranslator(
-		FacetProcessor<?> facetProcessor) {
+		FacetProcessor<?> facetProcessor,
+		QueryTranslator<QueryBuilder> queryTranslator) {
 
 		return new DefaultFacetTranslator() {
 			{
@@ -193,7 +206,8 @@ public class SearchRequestExecutorFixture {
 
 				ElasticsearchFilterTranslatorFixture
 					elasticsearchFilterTranslatorFixture =
-						new ElasticsearchFilterTranslatorFixture();
+						new ElasticsearchFilterTranslatorFixture(
+							queryTranslator);
 
 				setFilterTranslator(
 					elasticsearchFilterTranslatorFixture.

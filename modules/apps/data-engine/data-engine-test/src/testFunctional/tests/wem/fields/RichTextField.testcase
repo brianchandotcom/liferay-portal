@@ -88,7 +88,37 @@ definition {
 	test InsertTextOnRichTextOnWebContent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 InsertTextOnRichTextOnWebContent pending implementation
+		DataEngine.addField(
+			fieldFieldLabel = "Test",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Test");
+
+		WebContentStructures.saveCP(structureName = "New Structure");
+
+		Navigator.gotoNavTab(navTab = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Structure");
+
+		WebContent.addWithStructureCP(
+			structureName = "New Structure",
+			webContentTitle = "WC WebContent Title");
+
+		CKEditor.addContentInWebContent(
+			content = "Hello",
+			fieldLabel = "Test");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "Test",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "Hello");
 
 	}
 

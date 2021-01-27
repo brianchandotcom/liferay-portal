@@ -104,6 +104,29 @@ definition {
 		VideoShortcut.viewCP(videoShortcutTitle = "Test Facebook Video Name");
 	}
 
+	@description = "This test ensures that a Facebook video added via item selector can be embedded when adding a KB."
+	@priority = "5"
+	test AddFaceBookToKBViaItemSelector {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://www.facebook.com",
+			videoShortcutTitle = "Test Facebook Video",
+			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title",
+			service = "facebook");
+	}
+
 	@description = "This test ensures that a user is able to embed an external video in a KB article."
 	@priority = "5"
 	test AddKBArticleWithEmbeddedVideo {
@@ -207,6 +230,47 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		VideoShortcut.viewCP(videoShortcutTitle = "Test Vimeo Video Name");
+	}
+
+	@description = "This test ensures that a Vimeo video added via item selector can be embedded when adding a blog."
+	@priority = "5"
+	test AddVimeoToBlogViaItemSelector {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blog Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blog Page",
+			widgetName = "Blogs");
+
+		Navigator.gotoSitePage(
+			pageName = "Blog Page",
+			siteName = "Guest");
+
+		Blogs.addEntry(
+			embedVideo = "true",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title",
+			extractedVideoShortcutTitle = "Air",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://player.vimeo.com",
+			videoShortcutTitle = "Test Vimeo Video",
+			videoURL = "https://vimeo.com/483035084");
+
+		Navigator.gotoSitePage(
+			pageName = "Blog Page",
+			siteName = "Guest");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntryPG(
+			embedVideo = "vimeo",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This test ensures that a user is able to embed an external video in web content."
@@ -322,6 +386,38 @@ definition {
 		VideoShortcut.viewPG(
 			videoShortcutDescription = "Video Shortcut Description",
 			videoShortcutTitle = "Test YouTube Video Name");
+	}
+
+	@description = "This test ensures that a YouTube video added via item selector can be embedded when adding a WC."
+	@priority = "5"
+	test AddYouTubeToWCViaItemSelector {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedVideo = "true",
+			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://www.youtube.com",
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertVisible(
+			key_service = "https://www.youtube.com",
+			locator1 = "WCPreview#BODY_FIELD_VIDEO");
 	}
 
 	@description = "This ensures that the video shortcut can be viewed with different views in the item selector."

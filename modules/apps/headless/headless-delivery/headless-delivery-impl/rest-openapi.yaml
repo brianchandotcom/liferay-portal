@@ -1936,6 +1936,10 @@ components:
                     description:
                         The message's media format (e.g., HTML, BBCode, etc.).
                     type: string
+                externalReferenceCode:
+                    description:
+                        The message's external reference code.
+                    type: string
                 friendlyUrlPath:
                     type: string
                 headline:
@@ -7302,6 +7306,98 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardMessage"]
+    "/message-board-threads/{messageBoardThreadId}/message-board-messages/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Delete the message board thread's message board message by external reference code.
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
+        get:
+            # @review
+            description:
+                Retrieves the message board thread's message board message by external reference code.
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
+        put:
+            # @review
+            description:
+                Update the message board thread's message board message by external reference code, or creates it if it
+                not exists.
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
+                description:
+                    ""
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
     "/message-board-threads/{messageBoardThreadId}/my-rating":
         delete:
             description:

@@ -20,7 +20,52 @@ import {
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {useContext} from 'react';
 
+import {isLabelAtFormViewLevel} from '../../components/form-renderer-custom-fields/shared/index.es';
+import {sub} from '../../utils/lang.es';
 import FormViewContext from './FormViewContext.es';
+
+/**
+ * Get all language properties and values from dataDefinitionField
+ * and add a prepend with copy of.
+ * @param {object} languageKeys
+ */
+
+function getCopyOfLanguageKeys(languageKeys) {
+	const newLanguageKeys = {};
+
+	Object.keys(languageKeys).forEach((key) => {
+		newLanguageKeys[key] = sub(Liferay.Language.get('copy-of-x'), [
+			languageKeys[key],
+		]);
+	});
+
+	return newLanguageKeys;
+}
+
+/**
+ * Get the FieldLabel from DataDefinitionField or Form Field
+ * @param {object} dataDefinition
+ * @param {object} field
+ * @param {object} dataLayoutFields
+ */
+
+function getFieldLabel(dataDefinition, field, dataLayoutFields) {
+	const dataDefinitionField = DataDefinitionUtils.getDataDefinitionField(
+		dataDefinition,
+		field.name
+	);
+
+	const isLabelAtFormView = isLabelAtFormViewLevel({
+		dataLayoutFields,
+		fieldName: field.name,
+	});
+
+	if (dataDefinitionField && isLabelAtFormView) {
+		return dataDefinitionField.label;
+	}
+
+	return field.label;
+}
 
 /**
  * Get new fields with from forms with merged
@@ -68,29 +113,66 @@ function isRequiredField(dataDefinition, fieldName) {
 }
 
 export default ({dataLayoutBuilder}) => {
-	const [{dataDefinition}, dispatch] = useContext(FormViewContext);
+	const [
+		{
+			dataDefinition,
+			dataLayout: {dataLayoutFields},
+		},
+		dispatch,
+	] = useContext(FormViewContext);
 
 	return (event) => {
 		dataLayoutBuilder.dispatch('fieldDuplicated', event);
 
+		const {fieldName} = event;
+
 		const dataDefinitionFields = getNewFields(dataLayoutBuilder).map(
-			(newField) => {
-				if (hasField(dataDefinition, newField.name)) {
+			(field) => {
+				if (hasField(dataDefinition, field.name)) {
 					return {
-						...newField,
-						required: isRequiredField(
+						...field,
+						label: getFieldLabel(
 							dataDefinition,
-							newField.name
+							field,
+							dataLayoutFields
 						),
+						required: isRequiredField(dataDefinition, field.name),
 					};
 				}
 
+				const isPrimaryFieldAtFormViewLevel = isLabelAtFormViewLevel({
+					dataLayoutFields,
+					fieldName,
+				});
+
+				let label = field.label;
+
+				if (isPrimaryFieldAtFormViewLevel) {
+					const dataDefinitionField = DataDefinitionUtils.getDataDefinitionField(
+						dataDefinition,
+						fieldName
+					);
+
+					dataLayoutFields[field.name] = {
+						...dataLayoutFields[field.name],
+						label,
+					};
+
+					label = getCopyOfLanguageKeys(dataDefinitionField.label);
+				}
+
 				return {
-					...newField,
-					required: isRequiredField(dataDefinition, event.fieldName),
+					...field,
+					label,
+					required: isRequiredField(dataDefinition, fieldName),
 				};
 			}
 		);
+
+		dispatch({
+			payload: {dataLayoutFields},
+			type: DataLayoutBuilderActions.UPDATE_DATA_LAYOUT_FIELDS,
+		});
 
 		dispatch({
 			payload: {dataDefinitionFields},

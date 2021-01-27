@@ -69,6 +69,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT</td>
+    <td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[${index}]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>TAB</td>
 	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}']</td>
 	<td></td>

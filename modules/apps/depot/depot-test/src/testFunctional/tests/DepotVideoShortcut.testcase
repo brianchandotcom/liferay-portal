@@ -10,6 +10,10 @@ definition {
 
 		User.firstLoginPG();
 
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -79,6 +83,38 @@ definition {
 			embedVideo = "true",
 			entryContent = "video",
 			entryTitle = "Blogs Entry Title");
+	}
+
+	@description = "This test ensures that a YouTube shortened URL video added via item selector can be embedded when adding a depot WC."
+	@priority = "4"
+	test AddWithShortenedURLToWCViaItemSelector {
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			embedVideo = "true",
+			extractedVideoShortcutTitle = "Liferay Digital Experience Platform",
+			videoShortcutDescription = "Video Shortcut Description",
+			videoShortcutPreview = "https://www.youtube.com",
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://youtu.be/HOdbzGCI5ME",
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertVisible(
+			key_service = "https://www.youtube.com",
+			locator1 = "WCPreview#BODY_FIELD_VIDEO");
 	}
 
 	@description = "This ensures that a depot video shortcut associated with a tag can be searched from the connected site."

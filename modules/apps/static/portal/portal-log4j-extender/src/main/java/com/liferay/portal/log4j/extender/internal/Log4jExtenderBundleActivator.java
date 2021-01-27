@@ -46,17 +46,9 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 
 			@Override
 			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				try {
-					_configureLog4j(bundle, "module-log4j.xml");
-					_configureLog4j(bundle, "module-log4j-ext.xml");
-					_configureLog4j(bundle.getSymbolicName());
-				}
-				catch (MalformedURLException malformedURLException) {
-					_log.error(
-						"Unable to configure Log4j for bundle " +
-							bundle.getSymbolicName(),
-						malformedURLException);
-				}
+				_configureLog4j(bundle, "module-log4j.xml");
+				_configureLog4j(bundle, "module-log4j-ext.xml");
+				_configureLog4j(bundle.getSymbolicName());
 
 				return bundle;
 			}
@@ -82,9 +74,7 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 		}
 	}
 
-	private void _configureLog4j(String symbolicName)
-		throws MalformedURLException {
-
+	private void _configureLog4j(String symbolicName) {
 		File configFile = new File(
 			StringBundler.concat(
 				PropsValues.MODULE_FRAMEWORK_BASE_DIR, "/log4j/", symbolicName,
@@ -96,7 +86,14 @@ public class Log4jExtenderBundleActivator implements BundleActivator {
 
 		URI uri = configFile.toURI();
 
-		Log4JUtil.configureLog4J(uri.toURL());
+		try {
+			Log4JUtil.configureLog4J(uri.toURL());
+		}
+		catch (MalformedURLException malformedURLException) {
+			_log.error(
+				"Unable to configure Log4j for bundle " + symbolicName,
+				malformedURLException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

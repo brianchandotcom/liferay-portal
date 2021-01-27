@@ -280,7 +280,7 @@ definition {
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Color Test",
 			searchableType = "Keyword");
-			
+
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Color Test",
 			searchableType = "Keyword");

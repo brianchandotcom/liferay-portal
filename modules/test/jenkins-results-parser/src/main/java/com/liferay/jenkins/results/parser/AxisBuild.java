@@ -493,7 +493,13 @@ public class AxisBuild extends BaseBuild {
 			}
 		}
 
-		JSONObject testReportJSONObject = getTestReportJSONObject(true);
+		String result = getResult();
+
+		JSONObject testReportJSONObject = null;
+
+		if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
+			testReportJSONObject = getTestReportJSONObject(true);
+		}
 
 		if (testReportJSONObject == null) {
 			System.out.println(

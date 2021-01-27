@@ -50,9 +50,8 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
 				getModule(), getComponentId(), null, isPositionInLine());
-			
-			ReactRenderer reactRenderer =
-				ServicesProvider.getReactRenderer();
+
+			ReactRenderer reactRenderer = ServicesProvider.getReactRenderer();
 
 			reactRenderer.renderReact(
 				componentDescriptor, props, request, jspWriter);
@@ -128,18 +127,18 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	protected Map<String, Object> getData() {
 		return getProps();
 	}
-	
+
 	protected String getNamespace() {
 		ServletContext servletContext = pageContext.getServletContext();
 
 		if (_setServletContext) {
 			servletContext = this.servletContext;
 		}
-		
+
 		try {
 			return NPMResolvedPackageNameUtil.get(servletContext);
-		} 
-		catch(UnsupportedOperationException unsupportedOperationException) {
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
 			JSModuleResolver jsModuleResolver =
 				ServicesProvider.getJSModuleResolver();
 

@@ -35,13 +35,13 @@ public class ServicesProvider {
 	}
 
 	@Reference(unbind = "-")
-	public void setReactRenderer(ReactRenderer reactRenderer) {
-		_reactRenderer = reactRenderer;
+	public void setJSModuleResolver(JSModuleResolver jsModuleResolver) {
+		_jsModuleResolver = jsModuleResolver;
 	}
 
 	@Reference(unbind = "-")
-	public void setJSModuleResolver(JSModuleResolver jsModuleResolver) {
-		_jsModuleResolver = jsModuleResolver;
+	public void setReactRenderer(ReactRenderer reactRenderer) {
+		_reactRenderer = reactRenderer;
 	}
 
 	private static JSModuleResolver _jsModuleResolver;

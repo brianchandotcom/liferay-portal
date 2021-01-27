@@ -318,12 +318,14 @@ public class BaseContainerTag extends AttributesTagSupport {
 
 			if (Validator.isNotNull(_propsTransformer)) {
 				String resolvedPackageName;
-				
+
 				try {
 					resolvedPackageName = NPMResolvedPackageNameUtil.get(
 						getPropsTransformerServletContext());
-				} 
-				catch(UnsupportedOperationException unsupportedOperationException) {
+				}
+				catch (UnsupportedOperationException
+							unsupportedOperationException) {
+
 					JSModuleResolver jsModuleResolver =
 						ServicesProvider.getJSModuleResolver();
 
@@ -344,8 +346,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 				moduleName, getId(), new LinkedHashSet<>(), false,
 				propsTransformer);
 
-			ReactRenderer reactRenderer =
-				ServicesProvider.getReactRenderer();
+			ReactRenderer reactRenderer = ServicesProvider.getReactRenderer();
 
 			reactRenderer.renderReact(
 				componentDescriptor, prepareProps(new HashMap<>()), request,

@@ -14,8 +14,10 @@
 
 package com.liferay.portal.template.react.renderer.internal;
 
+import com.liferay.frontend.js.module.launcher.JSModuleDependency;
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,7 +29,9 @@ import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +54,41 @@ public class ReactRendererUtil {
 		_renderJavaScript(
 			componentDescriptor, props, httpServletRequest, placeholderId,
 			jsModuleLauncher, portal, writer);
+	}
+
+	private static String _getRenderInvocation(
+		ComponentDescriptor componentDescriptor, Map<String, Object> props,
+		HttpServletRequest httpServletRequest, String placeholderId,
+		Portal portal) {
+
+		StringBundler javascriptSB = new StringBundler(7);
+
+		javascriptSB.append("try {\nrender(component.default, ");
+
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		if (Validator.isNotNull(componentDescriptor.getPropsTransformer())) {
+			javascriptSB.append("propsTransformer.default(");
+			javascriptSB.append(
+				jsonSerializer.serializeDeep(
+					_prepareProps(
+						componentDescriptor, props, httpServletRequest,
+						portal)));
+			javascriptSB.append(")");
+		}
+		else {
+			javascriptSB.append(
+				jsonSerializer.serializeDeep(
+					_prepareProps(
+						componentDescriptor, props, httpServletRequest,
+						portal)));
+		}
+
+		javascriptSB.append(", '");
+		javascriptSB.append(placeholderId);
+		javascriptSB.append("');\n} catch (err) {console.error(err);}");
+
+		return javascriptSB.toString();
 	}
 
 	private static Map<String, Object> _prepareProps(
@@ -103,66 +142,100 @@ public class ReactRendererUtil {
 		return modifiedProps;
 	}
 
+	private static void _registerJSModuleDependency(
+		JSModuleLauncher jsModuleLauncher,
+		JSModuleDependency jsModuleDependency,
+		List<JSModuleDependency> jsModuleDependencies,
+		List<JSModuleDependency> amdJSModuleDependencies) {
+
+		if (jsModuleLauncher.isValidModule(
+				jsModuleDependency.getModuleName())) {
+
+			jsModuleDependencies.add(jsModuleDependency);
+		}
+		else {
+			amdJSModuleDependencies.add(jsModuleDependency);
+		}
+	}
+
 	private static void _renderJavaScript(
 		ComponentDescriptor componentDescriptor, Map<String, Object> props,
 		HttpServletRequest httpServletRequest, String placeholderId,
 		JSModuleLauncher jsModuleLauncher, Portal portal, Writer writer) {
 
-		StringBundler javascriptSB = new StringBundler(15);
+		List<JSModuleDependency> jsModuleDependencies = new ArrayList<>();
+		List<JSModuleDependency> amdJSModuleDependencies = new ArrayList<>();
 
-		javascriptSB.append("Liferay.Loader.require(['");
-		javascriptSB.append(componentDescriptor.getModule());
-		javascriptSB.append("'");
+		jsModuleDependencies.add(
+			new JSModuleDependency(
+				"portal-template-react-renderer-impl", "{render}"));
+
+		_registerJSModuleDependency(
+			jsModuleLauncher,
+			new JSModuleDependency(
+				componentDescriptor.getModule(), "component"),
+			jsModuleDependencies, amdJSModuleDependencies);
 
 		String propsTransformer = componentDescriptor.getPropsTransformer();
 
 		if (Validator.isNotNull(propsTransformer)) {
-			javascriptSB.append(", '");
-			javascriptSB.append(propsTransformer);
-			javascriptSB.append("'");
+			_registerJSModuleDependency(
+				jsModuleLauncher,
+				new JSModuleDependency(propsTransformer, "propsTransformer"),
+				jsModuleDependencies, amdJSModuleDependencies);
 		}
 
-		javascriptSB.append("], function(component");
+		String javascriptCode = _getRenderInvocation(
+			componentDescriptor, props, httpServletRequest, placeholderId,
+			portal);
 
-		if (Validator.isNotNull(propsTransformer)) {
-			javascriptSB.append(", propsTransformer");
+		if (!amdJSModuleDependencies.isEmpty()) {
+			StringBundler javascriptSB = new StringBundler(
+				5 + (6 * amdJSModuleDependencies.size()) - 2);
+
+			javascriptSB.append("Liferay.Loader.require([");
+
+			for (int i = 0; i < amdJSModuleDependencies.size(); i++) {
+				JSModuleDependency jsModuleDependency =
+					amdJSModuleDependencies.get(i);
+
+				if (i > 0) {
+					javascriptSB.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				javascriptSB.append(StringPool.APOSTROPHE);
+				javascriptSB.append(jsModuleDependency.getModuleName());
+				javascriptSB.append(StringPool.APOSTROPHE);
+			}
+
+			javascriptSB.append("], function(");
+
+			for (int i = 0; i < amdJSModuleDependencies.size(); i++) {
+				JSModuleDependency jsModuleDependency =
+					amdJSModuleDependencies.get(i);
+
+				if (i > 0) {
+					javascriptSB.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				javascriptSB.append(jsModuleDependency.getVariableName());
+			}
+
+			javascriptSB.append(") {\n");
+			javascriptSB.append(javascriptCode);
+			javascriptSB.append("});");
+
+			javascriptCode = javascriptSB.toString();
 		}
-
-		javascriptSB.append(") {\ntry {\nrender(component.default, ");
-
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-		if (Validator.isNotNull(propsTransformer)) {
-			javascriptSB.append("propsTransformer.default(");
-			javascriptSB.append(
-				jsonSerializer.serializeDeep(
-					_prepareProps(
-						componentDescriptor, props, httpServletRequest,
-						portal)));
-			javascriptSB.append(")");
-		}
-		else {
-			javascriptSB.append(
-				jsonSerializer.serializeDeep(
-					_prepareProps(
-						componentDescriptor, props, httpServletRequest,
-						portal)));
-		}
-
-		javascriptSB.append(", '");
-		javascriptSB.append(placeholderId);
-		javascriptSB.append("');\n} catch (err) {console.error(err);}});");
 
 		if (componentDescriptor.isPositionInLine()) {
 			jsModuleLauncher.writeScript(
-				writer, "portal-template-react-renderer-impl", "{render}",
-				javascriptSB.toString());
+				writer, jsModuleDependencies, javascriptCode);
 		}
 		else {
 			jsModuleLauncher.appendPortletScript(
 				httpServletRequest, portal.getPortletId(httpServletRequest),
-				"portal-template-react-renderer-impl", "{render}",
-				javascriptSB.toString());
+				jsModuleDependencies, javascriptCode);
 		}
 	}
 

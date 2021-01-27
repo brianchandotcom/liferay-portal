@@ -15,7 +15,8 @@
 package com.liferay.frontend.taglib.react.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.frontend.taglib.react.internal.util.ReactRendererProvider;
+import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.frontend.taglib.react.internal.util.ServicesProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -49,9 +50,9 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 
 			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
 				getModule(), getComponentId(), null, isPositionInLine());
-
+			
 			ReactRenderer reactRenderer =
-				ReactRendererProvider.getReactRenderer();
+				ServicesProvider.getReactRenderer();
 
 			reactRenderer.renderReact(
 				componentDescriptor, props, request, jspWriter);
@@ -76,16 +77,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	public String getModule() {
-		if (_setServletContext) {
-			String namespace = NPMResolvedPackageNameUtil.get(servletContext);
-
-			return StringBundler.concat(namespace, "/", _module);
-		}
-
-		String namespace = NPMResolvedPackageNameUtil.get(
-			pageContext.getServletContext());
-
-		return StringBundler.concat(namespace, "/", _module);
+		return StringBundler.concat(getNamespace(), "/", _module);
 	}
 
 	@Override
@@ -135,6 +127,24 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	@Deprecated
 	protected Map<String, Object> getData() {
 		return getProps();
+	}
+	
+	protected String getNamespace() {
+		ServletContext servletContext = pageContext.getServletContext();
+
+		if (_setServletContext) {
+			servletContext = this.servletContext;
+		}
+		
+		try {
+			return NPMResolvedPackageNameUtil.get(servletContext);
+		} 
+		catch(UnsupportedOperationException unsupportedOperationException) {
+			JSModuleResolver jsModuleResolver =
+				ServicesProvider.getJSModuleResolver();
+
+			return jsModuleResolver.resolveModule(servletContext, null);
+		}
 	}
 
 	protected Map<String, Object> getProps() {

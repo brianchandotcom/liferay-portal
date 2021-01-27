@@ -14,7 +14,9 @@
 
 package com.liferay.frontend.js.module.launcher.internal;
 
+import com.liferay.frontend.js.module.launcher.JSModuleDependency;
 import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -23,6 +25,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.Writer;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,26 +42,40 @@ public class JSModuleLauncherImpl implements JSModuleLauncher {
 	@Override
 	public void appendPortletScript(
 		HttpServletRequest httpServletRequest, String portletId,
-		String javascriptModule, String javascriptVariable,
+		Collection<JSModuleDependency> jsModuleDependencies,
 		String javascriptCode) {
 
 		_appendScriptData(
 			httpServletRequest,
-			_getScriptBody(
-				javascriptModule, javascriptVariable, javascriptCode),
-			portletId);
+			_getScriptBody(jsModuleDependencies, javascriptCode), portletId);
 	}
 
 	@Override
 	public void appendScript(
-		HttpServletRequest httpServletRequest, String javascriptModule,
-		String javascriptVariable, String javascriptCode) {
+		HttpServletRequest httpServletRequest,
+		Collection<JSModuleDependency> jsModuleDependencies,
+		String javascriptCode) {
 
 		_appendScriptData(
 			httpServletRequest,
-			_getScriptBody(
-				javascriptModule, javascriptVariable, javascriptCode),
-			null);
+			_getScriptBody(jsModuleDependencies, javascriptCode), null);
+	}
+
+	@Override
+	public boolean isValidModule(String moduleName) {
+		int i = moduleName.indexOf(StringPool.SLASH);
+
+		if (moduleName.charAt(0) == CharPool.AT) {
+			i = moduleName.indexOf(StringPool.SLASH, i + 1);
+		}
+
+		String packageName = moduleName.substring(0, i);
+
+		if (packageName.contains(StringPool.AT)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -73,20 +92,19 @@ public class JSModuleLauncherImpl implements JSModuleLauncher {
 		_writeScriptData(
 			writer,
 			_getScriptBody(
-				javascriptModule, "__module__", javascriptCodeSB.toString()),
+				Arrays.asList(
+					new JSModuleDependency(javascriptModule, "__module__")),
+				javascriptCodeSB.toString()),
 			null);
 	}
 
 	@Override
 	public void writeScript(
-		Writer writer, String javascriptModule, String javascriptVariable,
+		Writer writer, Collection<JSModuleDependency> jsModuleDependencies,
 		String javascriptCode) {
 
 		_writeScriptData(
-			writer,
-			_getScriptBody(
-				javascriptModule, javascriptVariable, javascriptCode),
-			null);
+			writer, _getScriptBody(jsModuleDependencies, javascriptCode), null);
 	}
 
 	private void _appendScriptData(
@@ -108,21 +126,28 @@ public class JSModuleLauncherImpl implements JSModuleLauncher {
 	}
 
 	private String _getScriptBody(
-		String javascriptModule, String javascriptVariable,
+		Collection<JSModuleDependency> jsModuleDependencies,
 		String javascriptCode) {
 
 		StringBundler javascriptSB = new StringBundler(10);
 
 		javascriptSB.append("(function() {");
 
-		javascriptSB.append("window[");
-		javascriptSB.append("Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')]('");
-		javascriptSB.append(javascriptModule);
-		javascriptSB.append("').then((");
-		javascriptSB.append(javascriptVariable);
-		javascriptSB.append(") => {");
+		for (JSModuleDependency jsModuleDependency : jsModuleDependencies) {
+			javascriptSB.append("window[");
+			javascriptSB.append("Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')");
+			javascriptSB.append("]('");
+			javascriptSB.append(jsModuleDependency.getModuleName());
+			javascriptSB.append("').then((");
+			javascriptSB.append(jsModuleDependency.getVariableName());
+			javascriptSB.append(") => {");
+		}
+
 		javascriptSB.append(javascriptCode);
-		javascriptSB.append("});");
+
+		for (int i = 0; i < jsModuleDependencies.size(); i++) {
+			javascriptSB.append("});");
+		}
 
 		javascriptSB.append("})();");
 

@@ -16,6 +16,8 @@ package com.liferay.frontend.js.module.launcher;
 
 import java.io.Writer;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -25,18 +27,27 @@ public interface JSModuleLauncher {
 
 	public void appendPortletScript(
 		HttpServletRequest httpServletRequest, String portletId,
-		String javascriptModule, String javascriptVariable,
+		Collection<JSModuleDependency> jsModuleDependencies,
 		String javascriptCode);
 
 	public void appendScript(
-		HttpServletRequest httpServletRequest, String javascriptModule,
-		String javascriptVariable, String javascriptCode);
+		HttpServletRequest httpServletRequest,
+		Collection<JSModuleDependency> jsModuleDependencies,
+		String javascriptCode);
+
+	/**
+	 * Check if a JavaScript module identified by name must be loaded using
+	 * {@link JSModuleLauncher} (instead of AMD Loader, for example).
+	 *
+	 * @review
+	 */
+	public boolean isValidModule(String moduleName);
 
 	public void writeModuleInvocation(
 		Writer writer, String javascriptModule, String... parameters);
 
 	public void writeScript(
-		Writer writer, String javascriptModule, String javascriptVariable,
+		Writer writer, Collection<JSModuleDependency> jsModuleDependencies,
 		String javascriptCode);
 
 }

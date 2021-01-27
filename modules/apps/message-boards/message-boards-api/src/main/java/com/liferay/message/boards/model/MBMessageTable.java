@@ -39,6 +39,10 @@ public class MBMessageTable extends BaseTable<MBMessageTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<MBMessageTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<MBMessageTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<MBMessageTable, Long> messageId = createColumn(
 		"messageId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<MBMessageTable, Long> groupId = createColumn(

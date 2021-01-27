@@ -40,6 +40,7 @@ create index IX_AAAD4168 on MBMessage (groupId, categoryId, threadId, answer, ct
 create index IX_158DD1B6 on MBMessage (groupId, categoryId, threadId, ctCollectionId);
 create index IX_CC88AC9C on MBMessage (groupId, categoryId, threadId, status, ctCollectionId);
 create index IX_A3E7210 on MBMessage (groupId, ctCollectionId);
+create index IX_7BEA05A9 on MBMessage (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_F6A852F6 on MBMessage (groupId, status, ctCollectionId);
 create unique index IX_8813E901 on MBMessage (groupId, urlSubject[$COLUMN_LENGTH:255$], ctCollectionId);
 create index IX_C892444A on MBMessage (groupId, userId, ctCollectionId);

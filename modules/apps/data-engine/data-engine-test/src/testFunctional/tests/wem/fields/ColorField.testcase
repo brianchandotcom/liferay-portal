@@ -255,7 +255,35 @@ definition {
 	test SetSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 SetSearchablePropertyOfColorField pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Color Test",
+			searchableType = "Disable");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Color Test",
+			searchableType = "Disable");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Color Test",
+			searchableType = "Keyword");
+			
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Color Test",
+			searchableType = "Keyword");
 	}
 
 }

@@ -37,8 +37,7 @@ definition {
 			dmDocumentTitle = "Document Title",
 			groupName = "Test Site Name",
 			mimeType = "image/jpeg",
-			sourceFileName = "Document_1.jpg"
-		);
+			sourceFileName = "Document_1.jpg");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -48,8 +47,7 @@ definition {
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
-			fieldName = "Image"
-		);
+			fieldName = "Image");
 
 		Button.clickSave();
 
@@ -62,27 +60,22 @@ definition {
 			navTab = "Documents and Media",
 			structureName = "${structureTitle}",
 			webContentImage = "Document Title",
-			webContentTitle = "${webTitle}"
-		);
+			webContentTitle = "${webTitle}");
 
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 
-        AssertClick(
+		AssertClick(
 			key_fieldFieldLabel = "Image",
 			locator1 = "AppBuilder#CLEAR_SEARCH",
-			value1 = "Clear"
-        );
+			value1 = "Clear");
 
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 
-		AssertElementNotPresent(
-			locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE"
-		);
-
+		AssertElementNotPresent(locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
@@ -92,6 +85,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98073 DragAndDropImageFieldToBuilder pending implementation
+
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"

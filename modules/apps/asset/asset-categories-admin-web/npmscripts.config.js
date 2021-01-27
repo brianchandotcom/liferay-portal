@@ -12,11 +12,15 @@
  * details.
  */
 
-const preset = require('@liferay/npm-scripts/src/presets/standard');
-
 module.exports = {
-	build: {
-		dependencies: [...preset.build.dependencies, 'asset-taglib'],
+	federation: {
+		exposes: [
+			'<inputDir>/js/ActionsComponentPropsTransformer.js',
+			'<inputDir>/js/AssetCategoriesManagementToolbarDefaultEventHandler.es.js',
+			'<inputDir>/js/AssetCategoriesSelectorTag.es.js',
+		],
+		remotes: ['asset-taglib'],
+		runLegacyBuild: false,
 	},
 	preset: '@liferay/npm-scripts/src/presets/standard',
 };

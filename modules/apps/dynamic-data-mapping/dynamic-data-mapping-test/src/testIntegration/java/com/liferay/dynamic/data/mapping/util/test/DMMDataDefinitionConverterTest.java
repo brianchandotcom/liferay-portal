@@ -123,6 +123,32 @@ public class DMMDataDefinitionConverterTest {
 			_objectMapper.readTree(dataDefinition));
 	}
 
+	@Test
+	public void testConvertDDMFormLayoutDataDefinitionNestedFields()
+		throws Exception {
+
+		String structureVersionDataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				_read(
+					"ddm-form-data-definition-json-converter-nested-" +
+						"fields.json"),
+				LocaleUtil.US);
+
+		String dataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormLayoutDataDefinition(
+				_read(
+					"ddm-form-layout-data-definition-json-converter-nested-" +
+						"fields.json"),
+				structureVersionDataDefinition);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"ddm-form-layout-data-definition-json-converter-nested-" +
+						"fields-expected-result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 

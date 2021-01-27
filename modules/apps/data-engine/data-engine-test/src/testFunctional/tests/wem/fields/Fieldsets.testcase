@@ -174,8 +174,51 @@ definition {
 	@priority = "4"
 	test FieldsetSetAsRepeatable {
 		property portal.acceptance = "false";
+		
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            panel = "Site Administration",
+            portlet = "Web Content"           
+        );
 
-		// TODO LPS-107630 FieldsetSetAsRepeatable pending implementation
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+		    structureDescription = "FieldsetRepeatibleTest",
+			structureName = "FieldsetRepeatibleTest");
+
+		Navigator.gotoSidebarTab(tabName = "Builder");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		DoubleClick(locator1 = "Modal#CREATE_DATE_FIELD");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "FieldsetRepeatibleTest");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "FieldsetRepeatibleTest",
+			fieldsetsName = "FieldsetRepeatibleTest");
+
+		Click(locator1 = "//div[contains(@class,'fieldset')]//label[text()='FieldsetRepeatibleTest']");
+
+		Check.checkToggleSwitch(
+			checkboxName = "Repeatable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		WebContentStructures.saveCP(structureName = "FieldsetRepeatibleTest");
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "FieldsetRepeatibleTest");		
+
+		AssertElementPresent(locator1 = "Button#DUPLICATE");
+
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

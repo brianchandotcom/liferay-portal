@@ -30,7 +30,58 @@ definition {
 	test ClearUploadedImage {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98073 ClearUploadedImage pending implementation
+		var structureTitle = "My Structure";
+		var webTitle = "WC Title";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg"
+		);
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "${structureTitle}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image"
+		);
+
+		Button.clickSave();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+
+		WebContent.addWithStructureCP(
+			imageFileName = "Document Title",
+			navTab = "Documents and Media",
+			structureName = "${structureTitle}",
+			webContentImage = "Document Title",
+			webContentTitle = "${webTitle}"
+		);
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
+
+        AssertClick(
+			key_fieldFieldLabel = "Image",
+			locator1 = "AppBuilder#CLEAR_SEARCH",
+			value1 = "Clear"
+        );
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
+
+		AssertElementNotPresent(
+			locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE"
+		);
 
 	}
 

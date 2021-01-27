@@ -21,6 +21,7 @@ import com.liferay.jenkins.results.parser.spira.BaseSpiraArtifact;
 import com.liferay.jenkins.results.parser.spira.SpiraCustomProperty;
 import com.liferay.jenkins.results.parser.spira.SpiraCustomPropertyValue;
 import com.liferay.jenkins.results.parser.spira.SpiraTestCaseRun;
+import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -182,36 +183,31 @@ public class JUnitAxisSpiraTestResultValues
 	}
 
 	private SpiraCustomPropertyValue _getMethodsValue() {
-		TestClassResult testClassResult =
-			_jUnitAxisSpiraTestResult.getTestClassResult();
+		TestClassGroup.TestClass testClass =
+			_jUnitAxisSpiraTestResult.getTestClass();
 
-		if (testClassResult == null) {
-			return null;
-		}
-
-		List<TestResult> testResults = testClassResult.getTestResults();
-
-		if ((testResults == null) || testResults.isEmpty()) {
-			return null;
-		}
+		List<TestClassGroup.TestClass.TestClassMethod> testClassMethods =
+			testClass.getTestClassMethods();
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<details><summary>methods (");
-		sb.append(testResults.size());
+		sb.append(testClassMethods.size());
 		sb.append(")</summary><hr /><ol>");
 
-		List<String> testResultNames = new ArrayList<>();
+		List<String> testClassMethodNames = new ArrayList<>();
 
-		for (TestResult testResult : testResults) {
-			testResultNames.add(testResult.getTestName());
+		for (TestClassGroup.TestClass.TestClassMethod testClassMethod :
+				testClassMethods) {
+
+			testClassMethodNames.add(testClassMethod.getName());
 		}
 
-		Collections.sort(testResultNames);
+		Collections.sort(testClassMethodNames);
 
-		for (String testResultName : testResultNames) {
+		for (String testClassMethodName : testClassMethodNames) {
 			sb.append("<li>");
-			sb.append(BaseSpiraArtifact.fixStringForJSON(testResultName));
+			sb.append(BaseSpiraArtifact.fixStringForJSON(testClassMethodName));
 			sb.append("</li>");
 		}
 

@@ -516,7 +516,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 							<liferay-ui:panel
 								collapsible="<%= true %>"
-								cssClass="lfr-asset-metadata"
+								cssClass="lfr-asset-metadata panel-unstyled"
 								defaultState="closed"
 								id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>'
 								markupView="lexicon"

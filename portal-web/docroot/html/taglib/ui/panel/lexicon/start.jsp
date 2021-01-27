@@ -33,7 +33,7 @@ if (persistState) {
 }
 %>
 
-<div class="panel panel-unstyled <%= cssClass %>" id="<%= id %>">
+<div class="panel <%= cssClass %>" id="<%= id %>">
 	<c:choose>
 		<c:when test="<%= collapsible %>">
 			<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon collapsed panel-header panel-header-link <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-parent="#<%= id %>" data-toggle="liferay-collapse" href="#<%= id %>Content" role="button">

@@ -238,9 +238,7 @@ definition {
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");
 
-		Staging.activateStagingCP(
-			noContent = "true",
-			siteName = "Site Name");
+		Staging.activateStagingCP(siteName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 

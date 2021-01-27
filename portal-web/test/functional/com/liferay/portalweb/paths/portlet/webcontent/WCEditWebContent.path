@@ -238,6 +238,12 @@
 	<td>//label[contains(.,'Web Content')]/..//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
+<!--REPEATED FIELD ON WEB CONTENT-->
+<tr>
+	<td>REPEATED_FIELD</td>
+	<td>xpath=(//div[contains(@class,'form-group')  and contains(@data-field-name, '${key_fieldName}')])[2]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

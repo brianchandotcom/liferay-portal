@@ -83,6 +83,11 @@
 	<td>//div[@data-fieldname='${key_fieldName}']//input[@value='${key_fieldData}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REMOVE_REPEATED_FIELD</td>
+	<td>//button[@class= 'ddm-form-field-repeatable-delete-button p-0 btn btn-sm btn-primary']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

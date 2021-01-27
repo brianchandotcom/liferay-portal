@@ -72,7 +72,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-97182. If a page author does not have view permissions for an asset, it should not display for them."
-	@priority = "2"
+	@priority = "3"
 	test CannotViewAssetInContentDisplayWithoutAssetViewPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

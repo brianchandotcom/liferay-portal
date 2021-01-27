@@ -277,12 +277,13 @@ public class DDMDataDefinitionConverterImpl
 			for (Locale locale : availableLocales) {
 				localizedValue.addString(locale, LanguageUtil.get(locale, key));
 			}
+
+			return localizedValue;
 		}
-		else {
-			if (Validator.isNull(localizedValue.getString(defaultLocale))) {
-				localizedValue.addString(
-					defaultLocale, LanguageUtil.get(defaultLocale, key));
-			}
+
+		if (Validator.isNull(localizedValue.getString(defaultLocale))) {
+			localizedValue.addString(
+				defaultLocale, LanguageUtil.get(defaultLocale, key));
 		}
 
 		return localizedValue;

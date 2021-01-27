@@ -20,6 +20,7 @@ import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import BrowseImage from './BrowseImage';
 import ChangeImageControls from './ChangeImageControls';
 import ErrorAlert from './ErrorAlert';
+import ImageSelectorImage from './ImageSelectorImage';
 import ProgressWrapper from './ProgressWrapper';
 
 const CSS_DROP_ACTIVE = 'drop-active';
@@ -46,11 +47,14 @@ const ImageSelector = ({
 	uploadURL,
 	validExtensions,
 }) => {
+	const isDraggable = draggableImage !== 'none';
+
 	const [image, setImage] = useState({
 		fileEntryId,
 		src: imageURL,
 	});
 
+	const [imageCropRegion, setImageCropRegion] = useState(cropRegion);
 	const [fileName, setFileName] = useState('');
 	const [progressValue, setProgressValue] = useState(0);
 	const [progressData, setProgressData] = useState();
@@ -124,6 +128,10 @@ const ImageSelector = ({
 		},
 		[maxFileSize, validExtensions]
 	);
+
+	const handleImageCropped = (cropRegion) => {
+		setImageCropRegion(JSON.stringify(cropRegion));
+	};
 
 	const handleSelectFileClick = useCallback(() => {
 		Liferay.Util.openSelectionModal({
@@ -309,7 +317,8 @@ const ImageSelector = ({
 		<div
 			className={classNames(
 				'drop-zone',
-				{'draggable-image': draggableImage !== 'none'},
+				{'draggable-image': isDraggable},
+				{[`${draggableImage}`]: isDraggable},
 				{'drop-enabled': image.fileEntryId == 0},
 				'taglib-image-selector'
 			)}
@@ -323,18 +332,17 @@ const ImageSelector = ({
 			<input
 				name={`${portletNamespace}${paramName}CropRegion`}
 				type="hidden"
-				value={cropRegion}
+				value={imageCropRegion}
 			/>
 
 			{image.src && (
-				<div className="image-wrapper">
-					<img
-						alt={Liferay.Language.get('current-image')}
-						className="current-image"
-						id={`${portletNamespace}image`}
-						src={image.src}
-					/>
-				</div>
+				<ImageSelectorImage
+					direction={draggableImage}
+					imageSrc={image.src}
+					isCroppable={isDraggable}
+					onImageCrop={handleImageCropped}
+					portletNamespace={portletNamespace}
+				/>
 			)}
 
 			{image.fileEntryId == 0 && (
@@ -382,7 +390,7 @@ ImageSelector.propTypes = {
 	imageURL: PropTypes.string,
 	itemSelectorEventName: PropTypes.string,
 	itemSelectorURL: PropTypes.string,
-	maxFileSize: PropTypes.number,
+	maxFileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	paramName: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	validExtensions: PropTypes.string,

@@ -1,8 +1,8 @@
 definition {
 
 	macro gotoAddEntry {
-		if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
-			Click(locator1 = "Blogs#ADD_BLOGS_ENTRY");
+		if (IsElementPresent(locator1 = "Button#PLUS")) {
+			Click(locator1 = "Button#PLUS");
 		}
 		else {
 			var key_text = "New Entry";

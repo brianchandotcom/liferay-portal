@@ -103,7 +103,44 @@ definition {
 	test DuplicateANestedFieldGroup {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98077 DuplicateANestedFieldGroup pending implementation
+		var structureName = "WC Structure Name";
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content");
+    
+		NavItem.gotoStructures();
+        
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+        DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Numeric");
+
+        Click(
+            locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP"
+        );
+
+		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Duplicate");
+
+        AssertTextEquals(
+            locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
+			value1 = "Copy of Fields Group");
+
+		WebContentStructures.saveCP(structureName = "${structureName}");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

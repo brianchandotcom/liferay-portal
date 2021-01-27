@@ -75,6 +75,28 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro addVideo {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		AssertClick(
+			key_navTab = "Documents and Media",
+			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+			value1 = "Documents and Media");
+
+		VideoShortcut.addCP(
+			extractedVideoShortcutTitle = "${extractedVideoShortcutTitle}",
+			videoShortcutDescription = "${videoShortcutDescription}",
+			videoShortcutPreview = "${videoShortcutPreview}",
+			videoShortcutTitle = "${videoShortcutTitle}",
+			videoURL = "${videoURL}");
+
+		Click(
+			key_imageFileName = "${videoShortcutTitle}",
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+
+		SelectFrameTop(value1 = "relative=top");
+	}
+
 	macro addVideoFromDM {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 

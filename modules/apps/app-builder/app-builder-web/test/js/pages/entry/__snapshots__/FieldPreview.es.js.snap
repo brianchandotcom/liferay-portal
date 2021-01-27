@@ -129,8 +129,9 @@ exports[`EditEntry renders FieldPreview for Section 1`] = `
   >
     <button
       aria-expanded="true"
-      class="btn btn-unstyled panel-header panel-header-link collapse-icon collapse-icon-middle"
+      class="panel-header panel-header-link collapse-icon collapse-icon-middle btn btn-unstyled"
       role="tab"
+      type="button"
     >
       <div
         class="sheet-section"

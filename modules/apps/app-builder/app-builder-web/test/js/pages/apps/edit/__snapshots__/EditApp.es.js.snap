@@ -98,6 +98,7 @@ exports[`EditApp renders 1`] = `
                 >
                   <button
                     class="multi-step-icon"
+                    type="button"
                   >
                     1
                   </button>
@@ -114,6 +115,7 @@ exports[`EditApp renders 1`] = `
                 >
                   <button
                     class="multi-step-icon"
+                    type="button"
                   >
                     2
                   </button>
@@ -130,6 +132,7 @@ exports[`EditApp renders 1`] = `
                 >
                   <button
                     class="multi-step-icon"
+                    type="button"
                   >
                     3
                   </button>
@@ -146,6 +149,7 @@ exports[`EditApp renders 1`] = `
                 >
                   <button
                     class="multi-step-icon"
+                    type="button"
                   >
                     4
                   </button>

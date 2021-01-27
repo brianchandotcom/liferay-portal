@@ -106,7 +106,7 @@ definition {
 
 	@description = "This test ensures that a Facebook video added via item selector can be embedded when adding a KB."
 	@priority = "5"
-	test AddFaceBookToKBViaItemSelector {
+	test AddFacebookToKBViaItemSelector {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(

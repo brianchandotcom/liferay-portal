@@ -90,19 +90,15 @@ public class TemplateManagerUtil {
 	}
 
 	private void _destroy() {
-		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
-
-		for (TemplateManager templateManager : templateManagers.values()) {
+		for (TemplateManager templateManager : _templateManagers.values()) {
 			templateManager.destroy();
 		}
 
-		templateManagers.clear();
+		_templateManagers.clear();
 	}
 
 	private void _destroy(ClassLoader classLoader) {
-		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
-
-		for (TemplateManager templateManager : templateManagers.values()) {
+		for (TemplateManager templateManager : _templateManagers.values()) {
 			templateManager.destroy(classLoader);
 		}
 	}
@@ -115,11 +111,9 @@ public class TemplateManagerUtil {
 			return supportedLanguageTypes;
 		}
 
-		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
-
 		supportedLanguageTypes = new HashSet<>();
 
-		for (String templateManagerName : templateManagers.keySet()) {
+		for (String templateManagerName : _templateManagers.keySet()) {
 			String content = PropsUtil.get(
 				propertyKey, new Filter(templateManagerName));
 
@@ -167,9 +161,7 @@ public class TemplateManagerUtil {
 	}
 
 	private Set<String> _getTemplateManagerNames() {
-		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
-
-		return templateManagers.keySet();
+		return _templateManagers.keySet();
 	}
 
 	private Map<String, TemplateManager> _getTemplateManagers() {

@@ -15,6 +15,8 @@
 package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.FieldArray;
+import com.liferay.portal.search.test.util.mappings.NestedDDMFieldArrayUtil;
 
 import java.util.Date;
 
@@ -25,6 +27,18 @@ public class DocumentCreationHelpers {
 
 	public static DocumentCreationHelper field(Field field) {
 		return document -> document.add(field);
+	}
+
+	public static DocumentCreationHelper oneDDMField(
+		String fieldName, String valueFieldName, Object value) {
+
+		FieldArray fieldArray = new FieldArray("ddmFieldArray");
+
+		fieldArray.addField(
+			NestedDDMFieldArrayUtil.createField(
+				fieldName, valueFieldName, value));
+
+		return field(fieldArray);
 	}
 
 	public static DocumentCreationHelper singleDate(

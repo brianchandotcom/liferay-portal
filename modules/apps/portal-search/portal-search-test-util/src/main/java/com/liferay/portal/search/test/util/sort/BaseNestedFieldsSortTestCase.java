@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.test.util.sort;
 
-import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -56,12 +55,8 @@ public abstract class BaseNestedFieldsSortTestCase
 	protected void addDocumentWithOneDDMField(
 		String name, String valueFieldName, Object value) {
 
-		FieldArray fieldArray = new FieldArray("ddmFieldArray");
-
-		fieldArray.addField(
-			NestedDDMFieldArrayUtil.createField(name, valueFieldName, value));
-
-		addDocument(DocumentCreationHelpers.field(fieldArray));
+		addDocument(
+			DocumentCreationHelpers.oneDDMField(name, valueFieldName, value));
 	}
 
 	protected void assertSort(String fieldName) {

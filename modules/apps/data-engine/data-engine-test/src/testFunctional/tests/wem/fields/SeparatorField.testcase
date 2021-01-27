@@ -22,9 +22,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		WebContentStructures.deleteCP(
-			structureName = "Test"
-		);
+		WebContentStructures.deleteCP(structureName = "Test");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -135,19 +133,22 @@ definition {
 	test EditReferenceOfSeparator {
 		property portal.acceptance = "false";
 
-        DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Test");
-        DataEngine.editFieldReference(fieldFieldLabel = "Test", fieldReference = "Minhareferencia123", fieldName = "Separator");
+		DataEngine.addField(
+			fieldFieldLabel = "Test",
+			fieldName = "Separator");
+		DataEngine.editFieldReference(
+			fieldFieldLabel = "Test",
+			fieldName = "Separator",
+			fieldReference = "Minhareferencia123");
 
 		Button.clickSave();
 
 		WebContentStructures.editStructure(structureName = "Test");
 
-
 		DataEngine.viewFieldReference(
 			fieldFieldLabel = "Test",
 			fieldName = "Separator",
-			fieldReference = "Minhareferencia123"
-		);
+			fieldReference = "Minhareferencia123");
 
 		Button.clickSave();
 

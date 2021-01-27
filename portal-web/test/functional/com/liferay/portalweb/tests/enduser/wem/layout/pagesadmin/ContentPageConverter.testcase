@@ -76,7 +76,7 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 	}
 
-	@description = "This is a test for LPS-98325. Assert that multiple pages with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, all widget pages are converted."
+	@description = "This is a test for LPS-98325. Assert that multiple pages with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, if convertLayouts and getConvertibleLayoutPlid is invoked, an array with the plids of the widget pages that are convertible to content pages is returned and all convertibles widget pages in the site are converted to content pages."
 	@priority = "5"
 	test ConvertMultipleWidgetPagesToContentPagesViaAPI {
 		property portal.acceptance = "true";
@@ -187,16 +187,6 @@ definition {
 			siteName = "Test Site Name");
 
 		AssertElementPresent(locator1 = "//h1[contains(.,'Heading Example')]");
-	}
-
-	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, if getConvertibleLayoutPlid is invoked, an array with the plids of the widget pages that are convertible to content pages is returned."
-	@ignore = "true"
-	@priority = "2"
-	test ConvertMultipleWidgetPagesViaAPIAndViewLayoutPlids {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98325 ConvertMultipleWidgetPagesViaAPIAndViewLayoutPlids pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and some content pages and an api to convert bulk widget pages to content pages is executed, you should be able to convert the widget pages."
@@ -1180,15 +1170,6 @@ definition {
 		PageEditor.viewFragment(fragmentName = "Web Content Display");
 
 		PageEditor.viewNoFragment(fragmentName = "Asset Publisher");
-	}
-
-	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and an api to convert bulk widget pages to content pages is executed, if convertLayouts is invoked, all convertibles widget pages in the site are converted to content pages."
-	@ignore = "true"
-	@priority = "2"
-	test ViewContentPagesAndNoWidgetPagePlidsAfterConverting {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98325 ViewContentPagesAndNoWidgetPagePlidsAfterConverting pending implementation
 	}
 
 }

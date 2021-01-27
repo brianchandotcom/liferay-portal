@@ -65,9 +65,7 @@ definition {
 		var fieldHelpEN = "I'm a help text";
 		var fieldHelpPT = "Eu sou um texto de ajuda";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -175,9 +173,7 @@ definition {
 		var structureTitle = "My Structure";
 		var newLabel = "Changes";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 

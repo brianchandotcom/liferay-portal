@@ -181,7 +181,54 @@ definition {
 	test SetHelpTextOfImageField {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98073 SetHelpTextOfImageField pending implementation
+		var structureTitle = "My Structure";
+		var newLabel = "Image";
+		var fieldHelp = "Help Text";
+		var key_fieldFieldLabel = "${newLabel}";
+
+		ProductMenu.gotoPortlet(
+        	category = "Content & Data",
+            portlet = "Web Content" 
+        );
+
+    	NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+			structureDescription = "I'm a test",
+			structureName = "${structureTitle}"
+        );
+
+        DataEngine.addField(
+    	    fieldFieldLabel = "${newLabel}",
+            fieldName = "Image"
+        );
+        
+        Button.clickSave();
+
+        WebContentNavigator.gotoEditStructure(
+            structureName = "${structureTitle}"
+        );
+
+        DataEngine.editFieldTip( 
+		    fieldFieldLabel = "${newLabel}",
+            fieldHelp = "${fieldHelp}"
+        );
+
+        Button.clickSave();
+
+        WebContentNavigator.gotoEditStructure(
+            structureName = "${structureTitle}"
+        );
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${newLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${newLabel}");
+
+		
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
+			value1 = "${fieldHelp}");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"

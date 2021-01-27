@@ -34,8 +34,11 @@ export default function ({namespace}) {
 		canonicalURLAlert.classList.toggle('hide');
 
 		toggleDisabled(canonicalURLField, disabled);
-
 		toggleDisabled(canonicalURLFieldDefaultLocale, disabled);
+
+		if (!canonicalURLField.value && canonicalURLField.placeholder) {
+			canonicalURLField.value = canonicalURLField.placeholder;
+		}
 
 		previewSeoFireChange(namespace, {
 			disabled,

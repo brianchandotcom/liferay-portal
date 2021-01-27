@@ -6,15 +6,27 @@ definition {
 	property testray.main.component.name = "Web Content Administration";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		 TestCase.setUpPortalInstance();
+        User.firstLoginPG();
+        Navigator.openURL();
+     
+        
+      	ProductMenu.gotoPortlet(
+		category = "Content & Data",
+		portlet = "Web Content"); 
 
-		User.firstLoginPG();
+        AppBuilderAdmin.switchTab(tabName = "Structures");  
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+        WebContentStructures.addCP(
+		structureName = "Test");
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		WebContentStructures.deleteCP(
+			structureName = "Test"
+		);
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -93,6 +105,22 @@ definition {
 	@priority = "5"
 	test EditReferenceOfSeparator {
 		property portal.acceptance = "false";
+
+        DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Test");
+        DataEngine.editFieldReference(fieldFieldLabel = "Test", fieldReference = "Minhareferencia123", fieldName = "Separator");
+
+		Button.clickSave();
+
+		WebContentStructures.editStructure(structureName = "Test");
+
+
+		DataEngine.viewFieldReference(
+			fieldFieldLabel = "Test",
+			fieldName = "Separator",
+			fieldReference = "Minhareferencia123"
+		);
+
+		Button.clickSave();
 
 		// TODO LPS-98081 EditReferenceOfSeparator pending implementation
 	}

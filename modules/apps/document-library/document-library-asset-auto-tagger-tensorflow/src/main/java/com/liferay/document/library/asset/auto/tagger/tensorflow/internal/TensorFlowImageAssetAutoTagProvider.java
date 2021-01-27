@@ -18,7 +18,6 @@ import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.GetLabelProbabilitiesProcessCallable;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.InitializeProcessCallable;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.InceptionModelUtil;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcessHolder;
 import com.liferay.petra.process.ProcessExecutor;
@@ -77,11 +76,6 @@ public class TensorFlowImageAssetAutoTagProvider
 
 				if (_labels == null) {
 					_labels = InceptionModelUtil.getLabels();
-
-					_tensorflowProcessHolder.execute(
-						new InitializeProcessCallable(
-							InceptionModelUtil.getGraphBytes()),
-						_tensorFlowImageAssetAutoTagProviderProcessConfiguration);
 				}
 
 				FileVersion fileVersion = fileEntry.getFileVersion();
@@ -156,9 +150,16 @@ public class TensorFlowImageAssetAutoTagProvider
 	private List<String> _label(
 		byte[] imageBytes, String mimeType, float confidenceThreshold) {
 
+		int maximumNumberOfRelaunches =
+			_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+				maximumNumberOfRelaunches();
+		long maximumNumberOfRelaunchesTimeout =
+			_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
+				maximumNumberOfRelaunchesTimeout();
+
 		float[] labelProbabilities = _tensorflowProcessHolder.execute(
 			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType),
-			_tensorFlowImageAssetAutoTagProviderProcessConfiguration);
+			maximumNumberOfRelaunches, maximumNumberOfRelaunchesTimeout * 1000);
 
 		Stream<Integer> stream = _getBestIndexesStream(
 			labelProbabilities, confidenceThreshold);

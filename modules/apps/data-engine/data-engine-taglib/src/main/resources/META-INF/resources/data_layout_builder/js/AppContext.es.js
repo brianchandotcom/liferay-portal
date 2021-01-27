@@ -201,12 +201,19 @@ const setDataDefinitionFields = (
 
 	visitor.mapFields((field) => {
 		const formattedDefinitionField = convertFieldToDataDefinition(field);
+		
+		const unformattedDefinitionField = getUnformattedDefinitionField(
+			dataDefinition,
+			field
+		);
 
 		if (dataLayoutBuilder.props.contentType === 'app-builder') {
 			newFields.push({
 				...formattedDefinitionField,
-				required: !!getUnformattedDefinitionField(dataDefinition, field)
-					?.required,
+				label:
+					unformattedDefinitionField?.label ||
+					formattedDefinitionField?.label,
+				required: !!unformattedDefinitionField?.required,
 			});
 		}
 		else {

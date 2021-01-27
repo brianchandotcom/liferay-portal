@@ -17,12 +17,21 @@ import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
-import isClickOutside from '../../utils/clickOutside.es';
+import useClickOutside from '../../hooks/useClickOutside.es';
+import {getLocalizedUserPreferenceValue, sub} from '../../utils/lang.es';
+import {
+	getFormattedState,
+	isLabelAtFormViewLevel,
+	setPropertyAtFormViewLevel,
+	setPropertyAtObjectViewLevel,
+} from './shared/index.es';
 
 const ALL_FORMS = 'all-forms';
 const ONLY_THIS_FORM = 'only-this-form';
+
+const propertyName = 'label';
 
 const LABEL_LEVEL = {
 	[ALL_FORMS]: {
@@ -33,44 +42,177 @@ const LABEL_LEVEL = {
 	},
 };
 
-export default ({field}) => {
-	const popoverRef = useRef(null);
-	const triggerRef = useRef(null);
+/**
+ * Define an initial value to viewSelected state
+ * @param {object} state
+ */
+
+function initialViewSelectedValue(state) {
+	if (isLabelAtFormViewLevel(state)) {
+		return ONLY_THIS_FORM;
+	}
+
+	return ALL_FORMS;
+}
+
+/**
+ * Get the Label from Field inside the dataLayoutField and dataDefinitionField
+ * @param {object} formattedState
+ * @param {object} componentState
+ */
+
+function getLabelFromContext(
+	{
+		dataDefinitionFields,
+		dataLayoutFields,
+		defaultLanguageId,
+		editingLanguageId,
+	},
+	{fieldName, levelSelected, value}
+) {
+	const findByName = ({name}) => fieldName === name;
+
+	const dataLayoutField = dataLayoutFields[fieldName] || {};
+	const dataDefinitionField = dataDefinitionFields.find(findByName) || {};
+
+	const formViewLabel = dataLayoutField.label;
+	const dataDefinitionFieldLabel = dataDefinitionField.label;
+
+	const currentValue =
+		levelSelected === ALL_FORMS
+			? value
+			: getLocalizedUserPreferenceValue(
+					formViewLabel,
+					editingLanguageId,
+					defaultLanguageId
+			  );
+
+	return {
+		currentValue,
+		dataDefinitionFieldLabel,
+		formViewLabel,
+	};
+}
+
+export default ({
+	AppContext,
+	dataLayoutBuilder,
+	field: {label, localizedValue, placeholder, tooltip, value},
+}) => {
+	const [state, dispatch] = useContext(AppContext);
+	const formattedState = getFormattedState(state);
 	const [showPopover, setShowPopover] = useState(false);
-	const [selectedLabelLevel, setSelectedLabelLevel] = useState(ALL_FORMS);
+	const [levelSelected, setLevelSelected] = useState(
+		initialViewSelectedValue(formattedState)
+	);
+	const [popoverRef, triggerRef] = useClickOutside(
+		[useRef(null), useRef(null)],
+		setShowPopover
+	);
 
 	useEffect(() => {
-		const handler = ({target}) => {
-			const outside = isClickOutside(
-				target,
-				popoverRef?.current,
-				triggerRef?.current
+		setLevelSelected(initialViewSelectedValue(formattedState));
+	}, [formattedState]);
+
+	const {defaultLanguageId, editingLanguageId, fieldName} = formattedState;
+
+	const {
+		currentValue,
+		dataDefinitionFieldLabel,
+		formViewLabel,
+	} = getLabelFromContext(formattedState, {fieldName, levelSelected, value});
+
+	/**
+	 * Set require callback function
+	 * @param {function} fn
+	 */
+
+	const setLabelCallbackFn = (fn) =>
+		fn({...formattedState, propertyName}, dispatch);
+
+	const onChangeValue = ({target: {value}}) => {
+		const newLabel = {[editingLanguageId]: value};
+
+		dataLayoutBuilder.dispatch('fieldEdited', {
+			fieldName,
+			propertyName,
+			propertyValue: value,
+		});
+
+		if (levelSelected === ALL_FORMS) {
+			setLabelCallbackFn((...params) =>
+				setPropertyAtObjectViewLevel({
+					...localizedValue,
+					...newLabel,
+				})(...params)
 			);
+		}
+		else {
+			setLabelCallbackFn((...params) =>
+				setPropertyAtFormViewLevel({
+					...formViewLabel,
+					...newLabel,
+				})(...params)
+			);
+		}
+	};
 
-			if (outside) {
-				setShowPopover(false);
-			}
-		};
+	const onChangeLabelOptions = (level) => {
+		if (level === ONLY_THIS_FORM) {
+			setLabelCallbackFn((...params) =>
+				setPropertyAtFormViewLevel(dataDefinitionFieldLabel)(...params)
+			);
+		}
+		else {
+			setLabelCallbackFn((...params) => {
+				setPropertyAtFormViewLevel({})(...params);
 
-		window.addEventListener('click', handler);
+				setPropertyAtObjectViewLevel({
+					...dataDefinitionFieldLabel,
+					[editingLanguageId]: currentValue,
+				})(...params);
+			});
+		}
 
-		return () => window.removeEventListener('click', handler);
-	}, [popoverRef, triggerRef]);
+		setLevelSelected(level);
+	};
 
 	return (
 		<div className="d-flex form-renderer-label-field justify-content-between">
 			<ClayForm.Group className="form-renderer-label-field__input">
 				<label className="ddm-label">
-					{field.label}
+					{label}
 
 					<span className="ddm-tooltip">
 						<ClayIcon
 							symbol="question-circle-full"
-							title={field.tooltip}
+							title={tooltip}
 						/>
 					</span>
 				</label>
-				<ClayInput placeholder={field.placeholder} type="text" />
+				<ClayInput
+					autoFocus
+					onChange={onChangeValue}
+					placeholder={placeholder}
+					type="text"
+					value={currentValue}
+				/>
+
+				{levelSelected === ONLY_THIS_FORM && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							{sub(Liferay.Language.get('object-field-label-x'), [
+								[
+									getLocalizedUserPreferenceValue(
+										dataDefinitionFieldLabel,
+										editingLanguageId,
+										defaultLanguageId
+									),
+								],
+							])}
+						</ClayForm.FeedbackItem>
+					</ClayForm.FeedbackGroup>
+				)}
 			</ClayForm.Group>
 
 			<ClayTooltipProvider>
@@ -97,8 +239,8 @@ export default ({field}) => {
 			>
 				<div className="mt-2">
 					<ClayRadioGroup
-						onSelectedValueChange={setSelectedLabelLevel}
-						selectedValue={selectedLabelLevel}
+						onSelectedValueChange={onChangeLabelOptions}
+						selectedValue={levelSelected}
 					>
 						{Object.keys(LABEL_LEVEL).map((key) => (
 							<ClayRadio

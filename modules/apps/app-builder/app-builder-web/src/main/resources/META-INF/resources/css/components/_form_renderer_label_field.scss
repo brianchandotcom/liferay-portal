@@ -3,6 +3,10 @@
 
 	&__input {
 		width: 100%;
+
+		.form-feedback-item {
+			color: $grayColor700;
+		}
 	}
 
 	&__button {

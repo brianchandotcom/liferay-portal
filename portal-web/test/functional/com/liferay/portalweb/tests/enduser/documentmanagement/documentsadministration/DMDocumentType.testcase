@@ -54,17 +54,21 @@ definition {
 
 		DMDocumentType.deleteFields(
 			dmDocumentTypeName = "DM Document Type Name",
-			fieldFieldLabel = "Text,Date,Image,Upload,Web Content");
+			fieldFieldLabel = "Text,Date,Image,Upload");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
-		for (var fieldFieldLabel : list "Text,Date,Image,Upload,Web Content") {
+		for (var fieldFieldLabel : list "Text,Date,Image,Upload") {
 			AssertElementNotPresent(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Web Content",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This ensures that the user can create a document using edited image field inside document type."

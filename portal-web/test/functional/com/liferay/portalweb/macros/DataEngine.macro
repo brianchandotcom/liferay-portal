@@ -200,32 +200,42 @@ definition {
 				value1 = "${fieldName}");
 
 			if ("${fieldName}" == "Grid") {
-				for (var optionNumber : list "1,2") {
-					DataEngine.editGridOptions(
-						gridField = "Rows",
-						optionValue = "Row ${optionNumber}",
-						rowNumber = "${optionNumber}");
+				var index = "1";
 
-					DataEngine.editGridOptions(
-						gridField = "Columns",
-						optionValue = "Column ${optionNumber}",
-						rowNumber = "${optionNumber}");
+				for (var optionValue : list "1,2") {
+					DataEngine.addFieldOption(
+						index = "${index}",
+						optionFieldLabel = "Rows",
+						optionValue = "Row ${optionValue}");
+
+					var index = ${index} + 1;
+				}
+
+				var index = "1";
+
+				for (var optionValue : list "1,2") {
+					DataEngine.addFieldOption(
+						index = "${index}",
+						optionFieldLabel = "Columns",
+						optionValue = "Column ${optionValue}");
+
+					var index = ${index} + 1;
 				}
 			}
 			else if ("${fieldName}" == "Multiple Selection") {
-				DataEngine.editOptionValue(
-					optionValue = "Value 1",
-					rowNumber = "1");
+				DataEngine.addFieldOption(
+					index = "1",
+					optionValue = "Value 1");
 			}
 			else if ("${fieldName}" == "Select from List") {
-				DataEngine.editOptionValue(
-					optionValue = "Value 2",
-					rowNumber = "1");
+				DataEngine.addFieldOption(
+					index = "1",
+					optionValue = "Value 2");
 			}
 			else if ("${fieldName}" == "Single Selection") {
-				DataEngine.editOptionValue(
-					optionValue = "Value 3",
-					rowNumber = "1");
+				DataEngine.addFieldOption(
+					index = "1",
+					optionValue = "Value 3");
 			}
 
 			Navigator.gotoNavTab(navTab = "Advanced");

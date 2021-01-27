@@ -52,6 +52,58 @@ definition {
 		}
 	}
 
+	@description = "When the user creates a new experience, it is always placed in the last position of the list, always below the default experience and always set as non-active"
+	@priority = "5"
+	test AddNewAnyoneExperience {
+		property portal.acceptance = "true";
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+		
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Default");
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addExperience(
+			experienceName = "NewAnyoneExperience",
+			segmentName = "Anyone");
+
+		Refresh();
+
+		PageEditor.changeExperience(newExperience = "NewAnyoneExperience");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Anyone1");
+
+		Button.clickPublish();
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Default");
+
+		User.firstLoginPG();
+	}
+
 	@description = "Validate if the user can create a Experience"
 	@priority = "5"
 	test AddDefaultExperienceWithBannerCenter {
@@ -147,7 +199,9 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditor.addExperience(experienceName = "exp1");
+		PageEditor.addExperience(
+			experienceName = "exp1", 
+			segmentName = "AddSegmentUserEmailAddressContains Test");
 
 		Refresh();
 
@@ -172,7 +226,9 @@ definition {
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
 
-		PageEditor.addExperience(experienceName = "exp1");
+		PageEditor.addExperience(
+			experienceName = "exp1", 
+			segmentName = "AddSegmentUserEmailAddressContains Test");
 
 		Refresh();
 

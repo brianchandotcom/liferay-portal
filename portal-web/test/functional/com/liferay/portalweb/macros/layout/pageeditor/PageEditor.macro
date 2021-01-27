@@ -345,6 +345,7 @@ definition {
 
 	macro addExperience {
 		var key_experienceName = "${experienceName}";
+		var key_segmentName = "${segmentName}";
 
 		AssertTextEquals(
 			locator1 = "PageEditor#EXPERIENCE_LABEL",
@@ -359,6 +360,12 @@ definition {
 		Type(
 			locator1 = "PageEditor#EXPERIENCE_NAME",
 			value1 = "${experienceName}");
+		
+		Click(locator1 = "PageEditor#EXPERIENCE_SEGMENT_ANYONE");
+
+		AssertClick(
+			locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+			value1 = "${segmentName}");
 
 		Click(locator1 = "Button#SAVE");
 
@@ -2250,6 +2257,10 @@ definition {
 			value1 = "${navItem}");
 
 		AssertElementPresent(locator1 = "Fragment#ACTIVE_NAV_ITEM_TAB");
+	}
+
+	macro openExperienceMenu {
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
 	macro removeFragment {

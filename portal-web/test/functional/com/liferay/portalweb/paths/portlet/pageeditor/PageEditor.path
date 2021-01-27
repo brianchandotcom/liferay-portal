@@ -291,8 +291,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_SEGMENT_ANYONE</td>
+	<td>//select[@id='_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_segmentsExperienceSegment']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_SELECT_ITEM</td>
 	<td>//div[contains(@class,'toolbar-experience')]//ul//*[text()='${key_experienceName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_SELECT_SEGMENT</td>
+	<td>//select[@id='_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_segmentsExperienceSegment']/option[.='${key_segmentName}']</td>
 	<td></td>
 </tr>
 <tr>

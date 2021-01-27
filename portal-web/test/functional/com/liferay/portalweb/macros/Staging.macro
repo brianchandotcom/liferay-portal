@@ -1192,9 +1192,9 @@ definition {
 			locator1 = "Select#DATE_RANGE_END_DATE",
 			value1 = "${dateRangeEndDate}");
 
-		takeScreenshot();
+		Click.mouseDownMouseUp(locator1 = "Link#REFRESH_COUNTS");
 
-		Click.javaScriptClick(locator1 = "Link#REFRESH_COUNTS");
+		takeScreenshot();
 
 		Pause(locator1 = "3000");
 

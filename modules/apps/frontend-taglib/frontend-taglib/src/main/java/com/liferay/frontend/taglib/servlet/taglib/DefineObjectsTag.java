@@ -68,8 +68,15 @@ public class DefineObjectsTag extends TagSupport {
 				"windowState", liferayPortletRequest.getWindowState());
 		}
 
-		String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
-			pageContext.getServletContext());
+		String npmResolvedPackageName;
+
+		try {
+			npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
+				pageContext.getServletContext());
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			npmResolvedPackageName = null;
+		}
 
 		if (Validator.isNotNull(npmResolvedPackageName)) {
 			pageContext.setAttribute(

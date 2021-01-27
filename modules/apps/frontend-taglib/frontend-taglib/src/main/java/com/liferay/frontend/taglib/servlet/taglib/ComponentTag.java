@@ -15,9 +15,12 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
+import com.liferay.frontend.js.module.launcher.JSModuleDependency;
+import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
+import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -33,6 +36,8 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -73,16 +78,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	public String getModule() {
-		String namespace = StringPool.BLANK;
-
-		if (_setServletContext) {
-			namespace = NPMResolvedPackageNameUtil.get(servletContext);
-		}
-		else {
-			namespace = NPMResolvedPackageNameUtil.get(request);
-		}
-
-		return namespace + "/" + _module;
+		return StringBundler.concat(getNamespace(), "/", _module);
 	}
 
 	public boolean isDestroyOnNavigate() {
@@ -136,6 +132,24 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		return _context;
 	}
 
+	protected String getNamespace() {
+		ServletContext servletContext = pageContext.getServletContext();
+
+		if (_setServletContext) {
+			servletContext = this.servletContext;
+		}
+
+		try {
+			return NPMResolvedPackageNameUtil.get(servletContext);
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			JSModuleResolver jsModuleResolver =
+				ServicesProvider.getJSModuleResolver();
+
+			return jsModuleResolver.resolveModule(servletContext, null);
+		}
+	}
+
 	protected boolean isPositionInline() {
 		Boolean positionInline = null;
 
@@ -176,25 +190,14 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		return positionInline;
 	}
 
-	private String _getModuleName(String module) {
-		String moduleName = StringUtil.extractLast(
-			module, CharPool.FORWARD_SLASH);
-
-		return StringUtil.removeChars(moduleName, _UNSAFE_MODULE_NAME_CHARS);
-	}
-
-	private void _renderJavaScript() throws IOException {
+	private String _getRenderInvocation(String variableName) {
 		StringBundler sb = new StringBundler(14);
 
 		sb.append("Liferay.component('");
 		sb.append(getComponentId());
 		sb.append("', new ");
 
-		String module = getModule();
-
-		String moduleName = _getModuleName(module);
-
-		sb.append(moduleName);
+		sb.append(variableName);
 
 		sb.append(".default(");
 
@@ -228,32 +231,68 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		sb.append(portletDisplay.getId());
 		sb.append("'});");
 
-		if (isPositionInline()) {
-			ScriptData scriptData = new ScriptData();
+		return sb.toString();
+	}
+
+	private String _getVariableName(String module) {
+		String moduleName = StringUtil.extractLast(
+			module, CharPool.FORWARD_SLASH);
+
+		return StringUtil.removeChars(moduleName, _UNSAFE_MODULE_NAME_CHARS);
+	}
+
+	private void _renderJavaScript() throws IOException {
+		JSModuleLauncher jsModuleLauncher =
+			ServicesProvider.getJSModuleLauncher();
+
+		String module = getModule();
+
+		String variableName = _getVariableName(module);
+
+		String javascriptCode = _getRenderInvocation(variableName);
+
+		if (jsModuleLauncher.isValidModule(module)) {
+			List<JSModuleDependency> jsModuleDependencies = Arrays.asList(
+				new JSModuleDependency(module, variableName));
+
+			if (isPositionInline()) {
+				jsModuleLauncher.writeScript(
+					pageContext.getOut(), jsModuleDependencies, javascriptCode);
+			}
+			else {
+				jsModuleLauncher.appendPortletScript(
+					request, PortalUtil.getPortletId(request),
+					jsModuleDependencies, javascriptCode);
+			}
+		}
+		else {
+			if (isPositionInline()) {
+				ScriptData scriptData = new ScriptData();
+
+				scriptData.append(
+					PortalUtil.getPortletId(request), javascriptCode,
+					module + " as " + variableName, ScriptData.ModulesType.ES6);
+
+				JspWriter jspWriter = pageContext.getOut();
+
+				scriptData.writeTo(jspWriter);
+
+				return;
+			}
+
+			ScriptData scriptData = (ScriptData)request.getAttribute(
+				WebKeys.AUI_SCRIPT_DATA);
+
+			if (scriptData == null) {
+				scriptData = new ScriptData();
+
+				request.setAttribute(WebKeys.AUI_SCRIPT_DATA, scriptData);
+			}
 
 			scriptData.append(
-				PortalUtil.getPortletId(request), sb.toString(),
-				module + " as " + moduleName, ScriptData.ModulesType.ES6);
-
-			JspWriter jspWriter = pageContext.getOut();
-
-			scriptData.writeTo(jspWriter);
-
-			return;
+				PortalUtil.getPortletId(request), javascriptCode,
+				module + " as " + variableName, ScriptData.ModulesType.ES6);
 		}
-
-		ScriptData scriptData = (ScriptData)request.getAttribute(
-			WebKeys.AUI_SCRIPT_DATA);
-
-		if (scriptData == null) {
-			scriptData = new ScriptData();
-
-			request.setAttribute(WebKeys.AUI_SCRIPT_DATA, scriptData);
-		}
-
-		scriptData.append(
-			PortalUtil.getPortletId(request), sb.toString(),
-			module + " as " + moduleName, ScriptData.ModulesType.ES6);
 	}
 
 	private static final char[] _UNSAFE_MODULE_NAME_CHARS = {

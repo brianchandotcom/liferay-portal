@@ -39,9 +39,8 @@ definition {
 	@priority = "5"
 	test DragAndDropImageFieldToBuilder {
 		property portal.acceptance = "false";
-		
+
 		// TODO LPS-98073 DragAndDropImageFieldToBuilder pending implementation
-		
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
@@ -230,26 +229,24 @@ definition {
 	@priority = "4"
 	test VerifyRequiredPropertyOfImageField {
 		property portal.acceptance = "false";
-		
+
 		var structureTitle = "My Structure";
-        var newLabel = "Image";
+		var newLabel = "Image";
 		var webTitle = "WC Title";
 
 		ProductMenu.gotoPortlet(
-        	category = "Content & Data",
-            portlet = "Web Content" 
-        );
+			category = "Content & Data",
+			portlet = "Web Content");
 
-    	NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "I'm a Structure",
-			structureName = "${structureTitle}"
-        );
+			structureName = "${structureTitle}");
 
-     	DataEngine.addFields(fieldNameList = "Image");
+		DataEngine.addFields(fieldNameList = "Image");
 
-		DataEngine.editFieldRequired(fieldFieldLabel = "Image");    
+		DataEngine.editFieldRequired(fieldFieldLabel = "Image");
 
 		Button.clickSave();
 
@@ -257,14 +254,11 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
 
-		WebContent.addWithStructureCP(
-			webContentTitle = "${webTitle}"
-		);
+		WebContent.addWithStructureCP(webContentTitle = "${webTitle}");
 
 		PortletEntry.publish();
 
 		AppBuilderAdmin.validateRequiredValidNameMessage();
-
 	}
 
 }

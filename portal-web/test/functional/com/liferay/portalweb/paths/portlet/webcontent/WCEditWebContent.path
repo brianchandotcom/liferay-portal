@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTION_OPTION_CHECKED</td>
+	<td>//legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//input//following-sibling::span[normalize-space()='${key_optionValue}']//preceding-sibling::input[@checked]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_BUTTON</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
 	<td></td>

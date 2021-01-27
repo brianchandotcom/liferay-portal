@@ -67,7 +67,27 @@ definition {
 	test DisableSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 DisableSearchablePropertyOfColorField pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Color Test",
+			searchableType = "Disable");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Color Test",
+			searchableType = "Disable");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

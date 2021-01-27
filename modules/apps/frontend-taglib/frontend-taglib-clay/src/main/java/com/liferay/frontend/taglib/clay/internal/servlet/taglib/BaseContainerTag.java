@@ -16,9 +16,10 @@ package com.liferay.frontend.taglib.clay.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
-import com.liferay.frontend.taglib.clay.internal.util.ReactRendererProvider;
+import com.liferay.frontend.taglib.clay.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -316,11 +317,22 @@ public class BaseContainerTag extends AttributesTagSupport {
 			String propsTransformer = null;
 
 			if (Validator.isNotNull(_propsTransformer)) {
-				String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
-					getPropsTransformerServletContext());
+				String resolvedPackageName;
+				
+				try {
+					resolvedPackageName = NPMResolvedPackageNameUtil.get(
+						getPropsTransformerServletContext());
+				} 
+				catch(UnsupportedOperationException unsupportedOperationException) {
+					JSModuleResolver jsModuleResolver =
+						ServicesProvider.getJSModuleResolver();
+
+					resolvedPackageName = jsModuleResolver.resolveModule(
+						getPropsTransformerServletContext(), null);
+				}
 
 				propsTransformer =
-					npmResolvedPackageName + "/" + _propsTransformer;
+					resolvedPackageName + "/" + _propsTransformer;
 			}
 			else if (Validator.isNotNull(getDefaultEventHandler())) {
 				propsTransformer = npmResolver.resolveModuleName(
@@ -333,7 +345,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 				propsTransformer);
 
 			ReactRenderer reactRenderer =
-				ReactRendererProvider.getReactRenderer();
+				ServicesProvider.getReactRenderer();
 
 			reactRenderer.renderReact(
 				componentDescriptor, prepareProps(new HashMap<>()), request,

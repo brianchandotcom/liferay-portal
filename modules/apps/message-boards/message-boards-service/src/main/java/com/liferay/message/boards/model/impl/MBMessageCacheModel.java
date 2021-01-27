@@ -76,7 +76,7 @@ public class MBMessageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -84,6 +84,8 @@ public class MBMessageCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", messageId=");
 		sb.append(messageId);
 		sb.append(", groupId=");
@@ -155,6 +157,13 @@ public class MBMessageCacheModel
 		}
 		else {
 			mbMessageImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			mbMessageImpl.setExternalReferenceCode("");
+		}
+		else {
+			mbMessageImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		mbMessageImpl.setMessageId(messageId);
@@ -267,6 +276,7 @@ public class MBMessageCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		messageId = objectInput.readLong();
 
@@ -323,6 +333,13 @@ public class MBMessageCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(messageId);
@@ -416,6 +433,7 @@ public class MBMessageCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long messageId;
 	public long groupId;
 	public long companyId;

@@ -23,18 +23,6 @@ import java.nio.charset.StandardCharsets;
  */
 public class DispatchTaskExecutorOutput {
 
-	public DispatchTaskExecutorOutput concatError(String error) {
-		_error = _error + error + StringPool.NEW_LINE;
-
-		return this;
-	}
-
-	public DispatchTaskExecutorOutput concatOutput(String output) {
-		_output = _output + output + StringPool.NEW_LINE;
-
-		return this;
-	}
-
 	public String getError() {
 		return _error;
 	}

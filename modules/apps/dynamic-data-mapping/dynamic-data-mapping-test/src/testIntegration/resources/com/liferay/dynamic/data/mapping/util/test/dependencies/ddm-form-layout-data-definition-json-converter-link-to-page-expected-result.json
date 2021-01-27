@@ -1,0 +1,29 @@
+{
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+	],
+	"pages": [
+		{
+			"description": {
+				"en_US": "Description"
+			},
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"LinkToPage85es"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": "Page"
+			}
+		}
+	],
+	"paginationMode": "single-page"
+}

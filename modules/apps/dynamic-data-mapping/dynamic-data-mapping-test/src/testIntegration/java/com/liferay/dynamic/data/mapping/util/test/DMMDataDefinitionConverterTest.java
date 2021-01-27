@@ -124,6 +124,24 @@ public class DMMDataDefinitionConverterTest {
 	}
 
 	@Test
+	public void testConvertDDMFormLayoutDataDefinitionLinkToPage()
+		throws Exception {
+
+		String dataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormLayoutDataDefinition(
+				_read(
+					"ddm-form-layout-data-definition-json-converter-link-to-" +
+						"page.json"));
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"ddm-form-layout-data-definition-json-converter-link-to-" +
+						"page-expected-result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
+	@Test
 	public void testConvertDDMFormLayoutDataDefinitionNestedFields()
 		throws Exception {
 

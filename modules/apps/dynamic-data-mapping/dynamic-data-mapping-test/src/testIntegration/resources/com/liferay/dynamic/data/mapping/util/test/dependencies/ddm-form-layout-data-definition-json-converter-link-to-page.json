@@ -1,0 +1,23 @@
+{
+	"defaultLanguageId": "en_US",
+	"pages": [
+		{
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"LinkToPage85es"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": ""
+			}
+		}
+	],
+	"paginationMode": "single-page"
+}

@@ -114,7 +114,7 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Blogs");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		LexiconEntry.changeBlogDisplayStyle(displayStyle = "cards");
 
 		AssertElementNotPresent(
 			key_entryTitle = "Blogs Entry Title",

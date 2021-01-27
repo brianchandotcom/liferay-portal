@@ -97,7 +97,7 @@ function getLabelFromContext(
 export default ({
 	AppContext,
 	dataLayoutBuilder,
-	field: {label, localizedValue, placeholder, tooltip, value},
+	field: {label, localizedValue, name, placeholder, tooltip, value},
 }) => {
 	const [state, dispatch] = useContext(AppContext);
 	const formattedState = getFormattedState(state);
@@ -192,6 +192,8 @@ export default ({
 				</label>
 				<ClayInput
 					autoFocus
+					className="ddm-field-text"
+					name={name}
 					onChange={onChangeValue}
 					placeholder={placeholder}
 					type="text"

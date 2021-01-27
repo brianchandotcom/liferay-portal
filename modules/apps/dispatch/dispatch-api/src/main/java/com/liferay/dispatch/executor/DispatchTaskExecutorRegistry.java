@@ -14,17 +14,19 @@
 
 package com.liferay.dispatch.executor;
 
-import java.util.Locale;
 import java.util.Set;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Matija Petanjek
  */
+@ProviderType
 public interface DispatchTaskExecutorRegistry {
 
 	public DispatchTaskExecutor getDispatchTaskExecutor(String type);
 
-	public String getDispatchTaskExecutorName(Locale locale, String type);
+	public String getDispatchTaskExecutorName(String type);
 
 	public Set<String> getDispatchTaskExecutorTypes();
 

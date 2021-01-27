@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*",
-		"metal-events": "2.16.8"
+		"frontend-js-web": "*"
 	},
 	"name": "message-boards-web",
 	"scripts": {

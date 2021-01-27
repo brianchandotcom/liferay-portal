@@ -1973,7 +1973,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This test ensures that all the default values for a structure can be reset."
+	@description = "This is a test for LPS-96545. This test \"Ensures that all the default values for a structure can be reset\" and \"Once the user has created a structure, Validate if is possible to cancel the reset operation of the default values of each kind of field of the Web Content Structure and the data that inputted is discarded\""
 	@priority = "4"
 	test ResetStructureDefaultValues {
 		property testray.component.names = "Web Content Administration";

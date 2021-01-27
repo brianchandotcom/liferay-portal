@@ -677,7 +677,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-96545. This tests \"Ensures that all the default values for an imported structure can be reset\" and \"Once the user has imported a structure by LAR (imported/exported), Validate if is possible to cancel the reset operation of the default values of all field of the Web Content Structure and the data that inputted is discarded\""
+	@description = "This is a test for LPS-96545. This test \"Ensures that all the default values for an imported structure can be reset\" and \"Once the user has imported a structure by LAR (imported/exported), Validate if is possible to cancel the reset operation of the default values of all field of the Web Content Structure and the data that inputted is discarded\""
 	@priority = "4"
 	test ResetImportedStructureDefaultValues {
 		property test.name.skip.portal.instance = "WebContentExportImport#ResetImportedStructureDefaultValues";

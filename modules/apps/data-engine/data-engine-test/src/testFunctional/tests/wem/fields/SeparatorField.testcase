@@ -96,6 +96,7 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Test",
 			fieldName = "Separator");
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Test",
 			label = "Edited label");

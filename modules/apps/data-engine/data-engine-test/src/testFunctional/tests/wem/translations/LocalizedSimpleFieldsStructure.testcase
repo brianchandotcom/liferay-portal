@@ -107,7 +107,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
-	@ignore = "true"
 	@priority = "5"
 	test TranslationDoesNotChangeAnother {
 		property portal.acceptance = "false";
@@ -163,11 +162,13 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "Test");
 
 		AssertTextEquals(
-			locator1 = "//label[@class='ddm-label' and contains(text(),'Text Test')]",
+			key_fieldFieldLabel = "Text Test",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "Text Test");
 
 		AssertTextEquals(
-			locator1 = "//span[@class='form-text' and contains(text(),'Help Text test')]",
+			key_fieldFieldLabel = "Text Test",
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
 			value1 = "Help Text test");
 
 		AssertTextEquals(
@@ -177,16 +178,34 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
-			locator1 = "//label[@class='ddm-label' and contains(text(),'Texto Teste')]",
+			key_fieldFieldLabel = "Texto Teste",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "Texto Teste");
 
 		AssertTextEquals(
-			locator1 = "//span[@class='form-text' and contains(text(),'Texto teste ajuda')]",
+			key_fieldFieldLabel = "Texto Teste",
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
 			value1 = "Texto teste ajuda");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "Teste");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text test German",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "Text test German");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text test German",
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
+			value1 = "Text test help German");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Test German");
 
 		WebContentStructures.saveCP(structureName = "Test");
 

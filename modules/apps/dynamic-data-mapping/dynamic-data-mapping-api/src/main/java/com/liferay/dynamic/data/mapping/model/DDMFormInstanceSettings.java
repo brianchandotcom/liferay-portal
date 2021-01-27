@@ -148,7 +148,10 @@ public interface DDMFormInstanceSettings {
 	)
 	public String storageType();
 
-	@DDMFormField(label = "%submit-button-label", type = "localizable_text")
+	@DDMFormField(
+			label = "%submit-button-label",
+			properties = "placeholder=%submit-form",
+			type = "localizable_text")
 	public String submitLabel();
 
 	@DDMFormField(

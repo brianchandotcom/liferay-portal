@@ -379,7 +379,21 @@ public class SearchRequestExecutorFixture {
 			return _facetProcessor;
 		}
 
-		return new DefaultFacetProcessor();
+		return new CompositeFacetProcessor() {
+			{
+				defaultFacetProcessor = new DefaultFacetProcessor();
+
+				setFacetProcessor(
+					new ModifiedFacetProcessor(),
+					Collections.singletonMap(
+						"class.name", ModifiedFacetImpl.class.getName()));
+
+				setFacetProcessor(
+					new NestedFacetProcessor(),
+					Collections.singletonMap(
+						"class.name", NestedFacetImpl.class.getName()));
+			}
+		};
 	}
 
 	protected void setElasticsearchClientResolver(

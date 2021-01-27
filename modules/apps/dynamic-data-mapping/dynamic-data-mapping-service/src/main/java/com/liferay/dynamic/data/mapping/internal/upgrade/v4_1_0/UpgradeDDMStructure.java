@@ -198,13 +198,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			ps1.setLong(
 				1,
-				PortalUtil.getClassNameId(
-					"com.liferay.document.library.kernel.model." +
-						"DLFileEntryMetadata"));
+				PortalUtil.getClassNameId(_CLASS_NAME_DL_FILE_ENTRY_METADATA));
 			ps1.setLong(
-				2,
-				PortalUtil.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"));
+				2, PortalUtil.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE));
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
@@ -274,13 +270,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			ps1.setLong(
 				1,
-				PortalUtil.getClassNameId(
-					"com.liferay.document.library.kernel.model." +
-						"DLFileEntryMetadata"));
+				PortalUtil.getClassNameId(_CLASS_NAME_DL_FILE_ENTRY_METADATA));
 			ps1.setLong(
-				2,
-				PortalUtil.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"));
+				2, PortalUtil.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE));
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
@@ -339,13 +331,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			ps1.setLong(
 				1,
-				PortalUtil.getClassNameId(
-					"com.liferay.document.library.kernel.model." +
-						"DLFileEntryMetadata"));
+				PortalUtil.getClassNameId(_CLASS_NAME_DL_FILE_ENTRY_METADATA));
 			ps1.setLong(
-				2,
-				PortalUtil.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"));
+				2, PortalUtil.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE));
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
@@ -392,13 +380,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			ps1.setLong(
 				1,
-				PortalUtil.getClassNameId(
-					"com.liferay.document.library.kernel.model." +
-						"DLFileEntryMetadata"));
+				PortalUtil.getClassNameId(_CLASS_NAME_DL_FILE_ENTRY_METADATA));
 			ps1.setLong(
-				2,
-				PortalUtil.getClassNameId(
-					"com.liferay.journal.model.JournalArticle"));
+				2, PortalUtil.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE));
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
@@ -428,6 +412,12 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			}
 		}
 	}
+
+	private static final String _CLASS_NAME_DL_FILE_ENTRY_METADATA =
+		"com.liferay.document.library.kernel.model.DLFileEntryMetadata";
+
+	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
+		"com.liferay.journal.model.JournalArticle";
 
 	private final DDMDataDefinitionConverter _ddmDataDefinitionConverter;
 	private final DDMFormDeserializer _ddmFormDeserializer;

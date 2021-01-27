@@ -171,9 +171,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 			helper -> {
 				Facet facet = helper.addFacet(this::createFacet);
 
-				helper.setQueryContributor(
-					QueryContributors.mustNotTerm(
-						getField(), presentButUnmatched));
+				filterUnmatched(helper, presentButUnmatched);
 
 				helper.search();
 
@@ -189,6 +187,13 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 		facet.setFieldName(Field.STATUS);
 
 		return facet;
+	}
+
+	protected void filterUnmatched(
+		FacetTestHelper helper, String presentButUnmatched) {
+
+		helper.setQueryContributor(
+			QueryContributors.mustNotTerm(getField(), presentButUnmatched));
 	}
 
 	@Override

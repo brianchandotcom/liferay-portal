@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -98,6 +99,12 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 			String fieldName, List<String> expectedValues) {
 
 			_indexingTestHelper.assertValues(fieldName, expectedValues);
+		}
+
+		public void defineRequest(
+			Consumer<SearchRequestBuilder> searchRequestBuilderConsumer) {
+
+			_indexingTestHelper.defineRequest(searchRequestBuilderConsumer);
 		}
 
 		public SearchContext getSearchContext() {

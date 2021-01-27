@@ -81,8 +81,6 @@ public class UpstreamFailureUtil {
 			JSONObject upstreamJobFailuresJSONObject =
 				getUpstreamJobFailuresJSONObject(topLevelBuild);
 
-			System.out.println(upstreamJobFailuresJSONObject);
-
 			return upstreamJobFailuresJSONObject.getInt("buildNumber");
 		}
 		catch (JSONException jsonException) {
@@ -189,6 +187,10 @@ public class UpstreamFailureUtil {
 			else {
 				_upstreamFailuresJobJSONObject =
 					_getUpstreamJobFailuresJSONObject(topLevelBuild);
+
+				System.out.println(
+					"Caching upstream test results in: " +
+						upstreamJobFailuresJSONFile);
 
 				JenkinsResultsParserUtil.write(
 					upstreamJobFailuresJSONFile,

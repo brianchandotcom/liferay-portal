@@ -560,6 +560,20 @@ definition {
 		}
 	}
 
+	macro viewFieldSearchable {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Searchable",
+			key_optionValue = "${searchableType}",
+			locator1 = "WCEditWebContent#SELECTION_OPTION_CHECKED");
+	}
+
 	macro viewNestedField {
 		AssertTextEquals.assertValue(
 			key_fieldName = "${fieldName}",

@@ -219,6 +219,8 @@ public class DataLayoutUtil {
 
 		ddmFormFields.forEach(
 			ddmFormField -> {
+				Map<String, Object> properties = new HashMap<>();
+
 				Map<String, DDMFormField> settingsDDMFormFieldsMap =
 					SettingsDDMFormFieldsUtil.getSettingsDDMFormFields(
 						ddmFormFieldTypeServicesTracker,
@@ -227,8 +229,6 @@ public class DataLayoutUtil {
 				List<DDMFormField> visualProperties = ListUtil.filter(
 					new ArrayList<>(settingsDDMFormFieldsMap.values()),
 					DDMFormField::isVisualProperty);
-
-				Map<String, Object> properties = new HashMap<>();
 
 				visualProperties.forEach(
 					visualProperty -> {
@@ -381,15 +381,15 @@ public class DataLayoutUtil {
 
 				Map<String, Object> properties = ddmFormField.getProperties();
 
-				Map<String, Object> dataLayoutField =
-					(Map<String, Object>)value;
-
 				DDMFormField ddmFormFieldDDMForm = ddmFormFieldsMap.get(key);
 
 				Map<String, DDMFormField> settingsDDMFormFieldsMap =
 					SettingsDDMFormFieldsUtil.getSettingsDDMFormFields(
 						ddmFormFieldTypeServicesTracker,
 						ddmFormFieldDDMForm.getType());
+
+				Map<String, Object> dataLayoutField =
+					(Map<String, Object>)value;
 
 				dataLayoutField.forEach(
 					(keyProperty, valueProperty) -> {

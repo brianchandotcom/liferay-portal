@@ -131,6 +131,75 @@ public class JUnitAxisSpiraTestResultDetails
 		return sb.toString();
 	}
 
+	@Override
+	protected String getTestMethodsSummary() {
+		TestClassGroup.TestClass testClass =
+			_jUnitAxisSpiraTestResult.getTestClass();
+
+		TestClassResult testClassResult =
+			_jUnitAxisSpiraTestResult.getTestClassResult();
+
+		StringBuilder sb = new StringBuilder();
+
+		long testClassDuration = 0;
+		String testClassStatus = "FAILED";
+
+		if (testClassResult != null) {
+			testClassDuration = testClassResult.getDuration();
+			testClassStatus = testClassResult.getStatus();
+		}
+
+		sb.append("<h4>Test Methods");
+		sb.append(" - ");
+		sb.append(JenkinsResultsParserUtil.toDurationString(testClassDuration));
+		sb.append(" - ");
+		sb.append(testClassStatus);
+		sb.append("</h4><ul>");
+
+		Map<String, TestResult> testResultMap = new HashMap<>();
+
+		if (testClassResult != null) {
+			for (TestResult testResult : testClassResult.getTestResults()) {
+				if (testResult == null) {
+					continue;
+				}
+
+				testResultMap.put(testResult.getTestName(), testResult);
+			}
+		}
+
+		for (TestClassGroup.TestClass.TestClassMethod testClassMethod :
+				testClass.getTestClassMethods()) {
+
+			String testMethodName = testClassMethod.getName();
+
+			TestResult testResult = testResultMap.get(testMethodName);
+
+			long testMethodDuration = 0;
+			String testMethodStatus = "MISSING";
+
+			if (testResult != null) {
+				testMethodDuration = testResult.getDuration();
+				testMethodStatus = testResult.getStatus();
+			}
+
+			sb.append("<li>");
+			sb.append(testMethodName);
+			sb.append(" - ");
+
+			sb.append(
+				JenkinsResultsParserUtil.toDurationString(testMethodDuration));
+
+			sb.append(" - ");
+			sb.append(testMethodStatus);
+			sb.append("</li>");
+		}
+
+		sb.append("</ul>");
+
+		return sb.toString();
+	}
+
 	private final JUnitAxisSpiraTestResult _jUnitAxisSpiraTestResult;
 
 }

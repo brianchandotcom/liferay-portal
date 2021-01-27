@@ -431,6 +431,10 @@ definition {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_text = "${fieldName}";
 
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "${fieldFieldLabel}");
@@ -442,6 +446,12 @@ definition {
 		AssertTextEquals.assertValue(
 			locator1 = "Sidebar#DDM_LABEL",
 			value1 = "${fieldFieldLabel}");
+
+		if (isSet(fieldHelp)) {
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#SETTINGS_TEXT",
+				value1 = "${fieldHelp}");
+		}
 	}
 
 	macro viewNestedField {

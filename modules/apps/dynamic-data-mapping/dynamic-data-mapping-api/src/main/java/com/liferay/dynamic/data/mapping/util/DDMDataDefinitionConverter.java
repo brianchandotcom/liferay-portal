@@ -27,7 +27,16 @@ public interface DDMDataDefinitionConverter {
 		DDMForm ddmForm, Locale defaultLocale);
 
 	public String convertDDMFormDataDefinition(
+		DDMForm ddmForm, Locale defaultLocale, long parentStructureId,
+		long parentStructureLayoutId);
+
+	public String convertDDMFormDataDefinition(
 			String dataDefinition, Locale defaultLocale)
+		throws Exception;
+
+	public String convertDDMFormDataDefinition(
+			String dataDefinition, Locale defaultLocale, long parentStructureId,
+			long parentStructureLayoutId)
 		throws Exception;
 
 	public String convertDDMFormLayoutDataDefinition(String dataDefinition)

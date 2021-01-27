@@ -66,8 +66,22 @@ public class DDMDataDefinitionConverterImpl
 			return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 		}
 
+		return convertDDMFormDataDefinition(ddmForm, defaultLocale, 0, 0);
+	}
+
+	@Override
+	public String convertDDMFormDataDefinition(
+		DDMForm ddmForm, Locale defaultLocale, long parentStructureId,
+		long parentStructureLayoutId) {
+
+		if (Objects.equals(ddmForm.getDefinitionSchemaVersion(), "2.0")) {
+			return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
+		}
+
 		ddmForm.setDefinitionSchemaVersion("2.0");
 
+		_upgradeParentStructure(
+			ddmForm, parentStructureId, parentStructureLayoutId);
 		_upgradeFields(ddmForm.getDDMFormFields(), defaultLocale);
 
 		ddmForm = _upgradeNestedFields(ddmForm);
@@ -84,6 +98,19 @@ public class DDMDataDefinitionConverterImpl
 			_ddmFormDeserializer, dataDefinition);
 
 		return convertDDMFormDataDefinition(ddmForm, defaultLocale);
+	}
+
+	@Override
+	public String convertDDMFormDataDefinition(
+			String dataDefinition, Locale defaultLocale, long parentStructureId,
+			long parentStructureLayoutId)
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+			_ddmFormDeserializer, dataDefinition);
+
+		return convertDDMFormDataDefinition(
+			ddmForm, defaultLocale, parentStructureId, parentStructureLayoutId);
 	}
 
 	@Override
@@ -167,6 +194,16 @@ public class DDMDataDefinitionConverterImpl
 		Locale defaultLocale, String name,
 		List<DDMFormField> nestedDDMFormFields, boolean repeatable) {
 
+		return _createFieldSetDDMFormField(
+			StringPool.BLANK, StringPool.BLANK, defaultLocale, name,
+			nestedDDMFormFields, repeatable);
+	}
+
+	private DDMFormField _createFieldSetDDMFormField(
+		String ddmStructureId, String ddmStructureLayoutId,
+		Locale defaultLocale, String name,
+		List<DDMFormField> nestedDDMFormFields, boolean repeatable) {
+
 		return new DDMFormField(name, "fieldset") {
 			{
 				setLabel(
@@ -177,8 +214,8 @@ public class DDMDataDefinitionConverterImpl
 					});
 				setLocalizable(false);
 				setNestedDDMFormFields(nestedDDMFormFields);
-				setProperty("ddmStructureId", StringPool.BLANK);
-				setProperty("ddmStructureLayoutId", StringPool.BLANK);
+				setProperty("ddmStructureId", ddmStructureId);
+				setProperty("ddmStructureLayoutId", ddmStructureLayoutId);
 				setProperty("upgradedStructure", false);
 				setReadOnly(false);
 				setRepeatable(repeatable);
@@ -515,6 +552,21 @@ public class DDMDataDefinitionConverterImpl
 		ddmFormField.setFieldNamespace(StringPool.BLANK);
 		ddmFormField.setType("numeric");
 		ddmFormField.setVisibilityExpression(StringPool.BLANK);
+	}
+
+	private void _upgradeParentStructure(
+		DDMForm ddmForm, long parentStructureId, long parentStructureLayoutId) {
+
+		if (parentStructureId <= 0) {
+			return;
+		}
+
+		ddmForm.addDDMFormField(
+			_createFieldSetDDMFormField(
+				String.valueOf(parentStructureId),
+				String.valueOf(parentStructureLayoutId),
+				ddmForm.getDefaultLocale(), "parentStructureFieldSet",
+				Collections.emptyList(), false));
 	}
 
 	private void _upgradeSelectField(DDMFormField ddmFormField) {

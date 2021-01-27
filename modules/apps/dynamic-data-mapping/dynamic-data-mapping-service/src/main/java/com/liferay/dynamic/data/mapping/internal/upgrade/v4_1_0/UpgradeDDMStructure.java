@@ -14,31 +14,23 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
-import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutDeserializeUtil;
-import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -56,16 +48,12 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	public UpgradeDDMStructure(
 		DDMDataDefinitionConverter ddmDataDefinitionConverter,
-		DDMFormDeserializer ddmFormDeserializer,
 		DDMFormLayoutDeserializer ddmFormLayoutDeserializer,
-		DDMFormLayoutSerializer ddmFormLayoutSerializer,
-		DDMFormSerializer ddmFormSerializer) {
+		DDMFormLayoutSerializer ddmFormLayoutSerializer) {
 
 		_ddmDataDefinitionConverter = ddmDataDefinitionConverter;
-		_ddmFormDeserializer = ddmFormDeserializer;
 		_ddmFormLayoutDeserializer = ddmFormLayoutDeserializer;
 		_ddmFormLayoutSerializer = ddmFormLayoutSerializer;
-		_ddmFormSerializer = ddmFormSerializer;
 	}
 
 	@Override
@@ -77,43 +65,33 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		_upgradeNestedFieldsStructureLayoutDefinition();
 	}
 
-	private DDMFormField _createFieldSetDDMFormField(
-		Locale defaultLocale, String name, Long parentStructureId,
-		Long parentStructureLayoutId) {
+	private long _getParentStructureLayoutId(long parentStructureId)
+		throws Exception {
 
-		return new DDMFormField(name, "fieldset") {
-			{
-				setDataType("string");
-				setIndexType("keyword");
-				setLabel(
-					new LocalizedValue() {
-						{
-							addString(defaultLocale, StringPool.BLANK);
-						}
-					});
-				setLocalizable(true);
-				setReadOnly(false);
-				setPredefinedValue(
-					new LocalizedValue() {
-						{
-							addString(defaultLocale, StringPool.BLANK);
-						}
-					});
-				setProperty("ddmStructureId", parentStructureId);
-				setProperty("ddmStructureLayoutId", parentStructureLayoutId);
-				setProperty("upgradedStructure", true);
-				setRepeatable(false);
-				setRequired(false);
-				setShowLabel(false);
-				setTip(
-					new LocalizedValue() {
-						{
-							addString(defaultLocale, StringPool.BLANK);
-						}
-					});
-				setVisibilityExpression(StringPool.BLANK);
+		StringBundler sb1 = new StringBundler(8);
+
+		sb1.append("select DDMStructureLayout.structureLayoutId  from ");
+		sb1.append("DDMStructureLayout inner join DDMStructureVersion on ");
+		sb1.append("DDMStructureVersion.structureVersionId = ");
+		sb1.append("DDMStructureLayout.structureVersionId inner join ");
+		sb1.append("DDMStructure on DDMStructure.structureId = ");
+		sb1.append("DDMStructureVersion.structureId and DDMStructure.version ");
+		sb1.append("= DDMStructureVersion.version where ");
+		sb1.append("DDMStructure.structureId = ?");
+
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				sb1.toString())) {
+
+			ps1.setLong(1, parentStructureId);
+
+			try (ResultSet rs = ps1.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("structureLayoutId");
+				}
 			}
-		};
+		}
+
+		return 0;
 	}
 
 	private String _upgradeDDMFormLayoutDefinition(
@@ -149,25 +127,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 					).build());
 
 		return ddmFormLayoutSerializerSerializeResponse.getContent();
-	}
-
-	private String _upgradeDefinition(
-			String definition, Long parentStructureId,
-			Long parentStructureLayoutId, Long structureId)
-		throws Exception {
-
-		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
-			_ddmFormDeserializer, definition);
-
-		_fieldSetMap.computeIfAbsent(
-			structureId,
-			key -> _createFieldSetDDMFormField(
-				ddmForm.getDefaultLocale(), StringUtil.randomString(),
-				parentStructureId, parentStructureLayoutId));
-
-		ddmForm.addDDMFormField(_fieldSetMap.get(structureId));
-
-		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}
 
 	private void _upgradeNestedFieldsStructureLayoutDefinition()
@@ -227,38 +186,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 	}
 
-	private String _upgradeParentStructureDefinition(
-			String definition, Long parentStructureId, Long structureId)
-		throws Exception {
-
-		StringBundler sb1 = new StringBundler(8);
-
-		sb1.append("select DDMStructureLayout.structureLayoutId  from ");
-		sb1.append("DDMStructureLayout inner join DDMStructureVersion on ");
-		sb1.append("DDMStructureVersion.structureVersionId = ");
-		sb1.append("DDMStructureLayout.structureVersionId inner join ");
-		sb1.append("DDMStructure on DDMStructure.structureId = ");
-		sb1.append("DDMStructureVersion.structureId and DDMStructure.version ");
-		sb1.append("= DDMStructureVersion.version where ");
-		sb1.append("DDMStructure.structureId = ?");
-
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				sb1.toString())) {
-
-			ps1.setLong(1, parentStructureId);
-
-			try (ResultSet rs = ps1.executeQuery()) {
-				if (rs.next()) {
-					return _upgradeDefinition(
-						definition, parentStructureId,
-						rs.getLong("structureLayoutId"), structureId);
-				}
-			}
-		}
-
-		return definition;
-	}
-
 	private void _upgradeStructureDefinition() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select * from DDMStructure where classNameId = ? or " +
@@ -277,23 +204,26 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					String definition = rs.getString("definition");
-
-					if (Validator.isNotNull(rs.getLong("parentStructureId"))) {
-						definition = _upgradeParentStructureDefinition(
-							definition, rs.getLong("parentStructureId"),
-							rs.getLong("structureId"));
-					}
-
 					long companyId = rs.getLong("companyId");
 
 					Locale locale = LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(companyId));
 
+					long parentStructureId = rs.getLong("parentStructureId");
+
+					long parentStructureLayoutId = 0;
+
+					if (parentStructureId > 0) {
+						parentStructureLayoutId = _getParentStructureLayoutId(
+							parentStructureId);
+					}
+
 					ps2.setString(
 						1,
 						_ddmDataDefinitionConverter.
-							convertDDMFormDataDefinition(definition, locale));
+							convertDDMFormDataDefinition(
+								rs.getString("definition"), locale,
+								parentStructureId, parentStructureLayoutId));
 
 					ps2.setLong(2, rs.getLong("structureId"));
 					ps2.addBatch();
@@ -387,25 +317,28 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					String definition = rs.getString("definition");
-
-					if (Validator.isNotNull(rs.getLong("parentStructureId"))) {
-						definition = _upgradeParentStructureDefinition(
-							definition, rs.getLong("parentStructureId"),
-							rs.getLong("structureId"));
-					}
-
 					long companyId = rs.getLong("companyId");
 
 					Locale locale = LocaleUtil.fromLanguageId(
 						UpgradeProcessUtil.getDefaultLanguageId(companyId));
 
+					long parentStructureId = rs.getLong("parentStructureId");
+
+					long parentStructureLayoutId = 0;
+
+					if (parentStructureId > 0) {
+						parentStructureLayoutId = _getParentStructureLayoutId(
+							parentStructureId);
+					}
+
 					ps2.setString(
 						1,
 						_ddmDataDefinitionConverter.
-							convertDDMFormDataDefinition(definition, locale));
+							convertDDMFormDataDefinition(
+								rs.getString("definition"), locale,
+								parentStructureId, parentStructureLayoutId));
 
-					ps2.setLong(2, rs.getLong("structureVersionId"));
+					ps2.setLong(2, rs.getLong("structureId"));
 					ps2.addBatch();
 				}
 
@@ -421,10 +354,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		"com.liferay.journal.model.JournalArticle";
 
 	private final DDMDataDefinitionConverter _ddmDataDefinitionConverter;
-	private final DDMFormDeserializer _ddmFormDeserializer;
 	private final DDMFormLayoutDeserializer _ddmFormLayoutDeserializer;
 	private final DDMFormLayoutSerializer _ddmFormLayoutSerializer;
-	private final DDMFormSerializer _ddmFormSerializer;
 	private final Map<Long, DDMFormField> _fieldSetMap = new HashMap<>();
 
 }

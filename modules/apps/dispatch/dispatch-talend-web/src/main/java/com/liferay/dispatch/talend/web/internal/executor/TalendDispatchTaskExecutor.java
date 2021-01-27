@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -143,9 +142,9 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			new TalendProcessOutputParser(talendProcessOutput);
 
 		dispatchTaskExecutorOutput.setError(
-			Base64.decode(talendProcessOutputParser.getError()));
+			talendProcessOutputParser.getError());
 		dispatchTaskExecutorOutput.setOutput(
-			Base64.decode(talendProcessOutputParser.getOutput()));
+			talendProcessOutputParser.getOutput());
 
 		if (talendProcessOutputParser.hasException()) {
 			throw new ProcessException(

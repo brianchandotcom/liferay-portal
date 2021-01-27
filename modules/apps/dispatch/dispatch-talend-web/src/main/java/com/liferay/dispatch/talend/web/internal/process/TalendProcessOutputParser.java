@@ -17,6 +17,7 @@ package com.liferay.dispatch.talend.web.internal.process;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Base64;
 
 /**
  * @author Matija Petanjek
@@ -37,16 +38,16 @@ public class TalendProcessOutputParser {
 		_output = resultJSONObject.getString(KEY_OUTPUT);
 	}
 
-	public String getError() {
-		return _error;
+	public byte[] getError() {
+		return Base64.decode(_error);
 	}
 
 	public int getExitCode() {
 		return _exitCode;
 	}
 
-	public String getOutput() {
-		return _output;
+	public byte[] getOutput() {
+		return Base64.decode(_output);
 	}
 
 	public boolean hasException() {

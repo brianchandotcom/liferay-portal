@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_EXCLAMATION_REQUIRED_FIELD</td>
-	<td>//strong[contains(text(),'${value1}')]</td>
+	<td>//strong[contains(text(),'${value1}')]|//div[contains(text(),'This field is required.')] </td>
 	<td></td>
 </tr>
 <tr>

@@ -24,24 +24,44 @@ const ORDERED_VIEWPORT_SIZES = [
 export function getResponsiveConfig(config, viewportSize) {
 	const viewportSizeIndex = ORDERED_VIEWPORT_SIZES.indexOf(viewportSize);
 
-	let responsiveConfig = {};
+	let responsiveConfig = {
+		styles: {},
+	};
+
+	Object.keys(config)
+		.filter((key) => !ORDERED_VIEWPORT_SIZES.includes(key))
+		.forEach((key) => {
+			responsiveConfig[key] = config[key];
+		});
 
 	for (let i = 0; i <= viewportSizeIndex; i++) {
-		const viewPortSizeConfig =
-			ORDERED_VIEWPORT_SIZES[i] === VIEWPORT_SIZES.desktop
-				? config
-				: config[ORDERED_VIEWPORT_SIZES[i]];
-
-		responsiveConfig = {
-			...responsiveConfig,
-			...viewPortSizeConfig,
-			gutters: config.gutters,
-			styles: {
-				...responsiveConfig.styles,
-				...viewPortSizeConfig.styles,
-			},
-		};
+		responsiveConfig = mergeDeep(
+			responsiveConfig,
+			config[ORDERED_VIEWPORT_SIZES[i]] || {}
+		);
 	}
 
 	return responsiveConfig;
+}
+
+function mergeDeep(...objects) {
+	const target = {};
+
+	objects.forEach((object) => {
+		Object.keys(object).forEach((key) => {
+			if (
+				typeof object[key] === 'object' &&
+				object[key] !== null &&
+				typeof target[key] === 'object' &&
+				target[key] !== null
+			) {
+				target[key] = mergeDeep(target[key], object[key]);
+			}
+			else {
+				target[key] = object[key];
+			}
+		});
+	});
+
+	return target;
 }

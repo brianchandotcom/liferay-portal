@@ -31,11 +31,14 @@ definition {
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}",
+			extractedVideoShortcutTitle = "${extractedVideoShortcutTitle}",
 			navTab = "${navTab}",
 			videoName = "${videoName}",
 			videoService = "${videoService}",
+			videoShortcutDescription = "${videoShortcutDescription}",
 			videoShortcutPreview = "${videoShortcutPreview}",
 			videoShortcutTitle = "${videoShortcutTitle}",
+			videoURL = "${videoURL}",
 			viewInternalVideoPreview = "${viewInternalVideoPreview}");
 
 		if (isSet(readingTime)) {

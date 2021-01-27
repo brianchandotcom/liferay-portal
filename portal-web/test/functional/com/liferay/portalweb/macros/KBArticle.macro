@@ -157,6 +157,14 @@ definition {
 					DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
 				}
 			}
+			else if (isSet(videoURL)) {
+				ItemSelector.addVideo(
+					extractedVideoShortcutTitle = "${extractedVideoShortcutTitle}",
+					videoShortcutDescription = "${videoShortcutDescription}",
+					videoShortcutPreview = "${videoShortcutPreview}",
+					videoShortcutTitle = "${videoShortcutTitle}",
+					videoURL = "${videoURL}");
+			}
 			else {
 				ItemSelector.addVideoFromURL(
 					navTab = "${navTab}",
@@ -1165,6 +1173,12 @@ definition {
 			Pause(locator1 = "5000");
 
 			if ("${service}" == "twitch") {
+				AssertVisible(
+					key_service = "${service}",
+					locator1 = "BlogsEntry#CONTENT_VIDEO");
+			}
+
+			else if ("${service}" == "facebook") {
 				AssertVisible(
 					key_service = "${service}",
 					locator1 = "BlogsEntry#CONTENT_VIDEO");

@@ -105,6 +105,25 @@ public class DMMDataDefinitionConverterTest {
 	}
 
 	@Test
+	public void testConvertDDMFormDataDefinitionParentStructure()
+		throws Exception {
+
+		String dataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				_read(
+					"ddm-form-data-definition-json-converter-parent-" +
+						"structure.json"),
+				LocaleUtil.US, 1, 2);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"ddm-form-data-definition-json-converter-parent-" +
+						"structure-expected-result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
+	@Test
 	public void testConvertDDMFormDataDefinitionRepeatableNestedFields()
 		throws Exception {
 

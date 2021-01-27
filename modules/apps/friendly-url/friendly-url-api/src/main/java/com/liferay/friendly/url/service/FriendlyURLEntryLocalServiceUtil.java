@@ -451,6 +451,16 @@ public class FriendlyURLEntryLocalServiceUtil {
 
 	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization
 			getFriendlyURLEntryLocalization(
+				long groupId, long classNameId, String urlTitle)
+		throws com.liferay.friendly.url.exception.
+			NoSuchFriendlyURLEntryLocalizationException {
+
+		return getService().getFriendlyURLEntryLocalization(
+			groupId, classNameId, urlTitle);
+	}
+
+	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization
+			getFriendlyURLEntryLocalization(
 				long friendlyURLEntryId, String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

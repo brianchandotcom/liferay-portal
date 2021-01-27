@@ -59,12 +59,14 @@ if (calendarResource != null) {
 		<aui:input name="name" />
 
 		<liferay-ui:panel-container
+			cssClass="panel-group-flush panel-group-sm"
 			extended="<%= true %>"
 			id="calendarResourceDetailsPanelContainer"
 			persistState="<%= true %>"
 		>
 			<liferay-ui:panel
 				collapsible="<%= true %>"
+				cssClass="panel-unstyled"
 				defaultState="closed"
 				extended="<%= false %>"
 				id="calendarResourceDetailsPanel"
@@ -106,6 +108,7 @@ if (calendarResource != null) {
 
 			<liferay-ui:panel
 				collapsible="<%= true %>"
+				cssClass="panel-unstyled"
 				defaultState="closed"
 				extended="<%= false %>"
 				id="calendarResourceCategorizationPanel"
@@ -128,6 +131,7 @@ if (calendarResource != null) {
 			<c:if test="<%= calendarResource == null %>">
 				<liferay-ui:panel
 					collapsible="<%= true %>"
+					cssClass="panel-unstyled"
 					defaultState="closed"
 					extended="<%= false %>"
 					id="calendarResourcePermissionsPanel"

@@ -299,12 +299,14 @@ while (manageableCalendarsIterator.hasNext()) {
 
 			<aui:fieldset markupView="lexicon">
 				<liferay-ui:panel-container
+					cssClass="panel-group-flush panel-group-sm"
 					extended="<%= true %>"
 					id="calendarBookingDetailsPanelContainer"
 					persistState="<%= true %>"
 				>
 					<liferay-ui:panel
 						collapsible="<%= true %>"
+						cssClass="panel-unstyled"
 						defaultState="closed"
 						extended="<%= false %>"
 						id="calendarBookingDetailsPanel"
@@ -362,6 +364,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 					<liferay-ui:panel
 						collapsible="<%= true %>"
+						cssClass="panel-unstyled"
 						defaultState="closed"
 						extended="<%= false %>"
 						id="calendarBookingInvitationPanel"
@@ -450,6 +453,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 					<liferay-ui:panel
 						collapsible="<%= true %>"
+						cssClass="panel-unstyled"
 						defaultState="closed"
 						extended="<%= false %>"
 						id="calendarBookingReminderPanel"
@@ -462,6 +466,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 					<liferay-ui:panel
 						collapsible="<%= true %>"
+						cssClass="panel-unstyled"
 						defaultState="closed"
 						extended="<%= false %>"
 						id="calendarBookingCategorizationPanel"
@@ -483,6 +488,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 					<liferay-ui:panel
 						collapsible="<%= true %>"
+						cssClass="panel-unstyled"
 						defaultState="closed"
 						extended="<%= false %>"
 						id="calendarBookingAssetLinksPanel"

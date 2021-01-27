@@ -131,37 +131,33 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-        );
-        NavItem.gotoStructures();
-        WebContentStructures.addCP(
-            structureName = "Structure Name Test",
-            structureDescription = "Structure Description Test"
-        );
-        DataEngine.addField(
-            fieldFieldLabel = "Color Test",
-            fieldName = "Color"
-        );
-        DataEngine.editFieldRequired(fieldFieldLabel = "Color Test");
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Color Test");
 
 		var key_fieldFieldLabel = "Color Test";
 		Click(
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Color Test"
-		);
+			value1 = "Color Test");
+
 		Click(
-			locator1 = "Sidebar#DDM_ANY",
-			key_text = "Label"
-		);
+			key_text = "Label",
+			locator1 = "Sidebar#DDM_ANY");
+
 		AssertElementPresent(
-			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED",
-			checkboxName = "Required Field"
-		);
-
-
-
-		
+			checkboxName = "Required Field",
+			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

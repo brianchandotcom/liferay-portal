@@ -36,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -82,6 +83,87 @@ public class DDMDataDefinitionConverterImpl
 			_ddmFormDeserializer, dataDefinition);
 
 		return convertDDMFormDataDefinition(ddmForm, defaultLocale);
+	}
+
+	@Override
+	public String convertDDMFormLayoutDataDefinition(String dataDefinition)
+		throws Exception {
+
+		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
+			_ddmFormLayoutDeserializer, dataDefinition);
+
+		ddmFormLayout.setDefinitionSchemaVersion("2.0");
+		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
+
+		for (DDMFormLayoutPage ddmFormLayoutPage :
+				ddmFormLayout.getDDMFormLayoutPages()) {
+
+			LocalizedValue localizedValue = ddmFormLayoutPage.getTitle();
+
+			if (localizedValue == null) {
+				localizedValue = new LocalizedValue();
+
+				localizedValue.addString(
+					ddmFormLayout.getDefaultLocale(),
+					LanguageUtil.get(ddmFormLayout.getDefaultLocale(), "page"));
+
+				for (Locale locale : ddmFormLayout.getAvailableLocales()) {
+					localizedValue.addString(
+						locale, LanguageUtil.get(locale, "page"));
+				}
+			}
+			else {
+				if (Validator.isNull(
+						localizedValue.getString(
+							ddmFormLayout.getDefaultLocale()))) {
+
+					localizedValue.addString(
+						ddmFormLayout.getDefaultLocale(),
+						LanguageUtil.get(
+							ddmFormLayout.getDefaultLocale(), "page"));
+				}
+			}
+
+			ddmFormLayoutPage.setTitle(localizedValue);
+
+			localizedValue = ddmFormLayoutPage.getDescription();
+
+			if (localizedValue == null) {
+				localizedValue = new LocalizedValue();
+
+				localizedValue.addString(
+					ddmFormLayout.getDefaultLocale(),
+					LanguageUtil.get(
+						ddmFormLayout.getDefaultLocale(), "description"));
+
+				for (Locale locale : ddmFormLayout.getAvailableLocales()) {
+					localizedValue.addString(
+						locale, LanguageUtil.get(locale, "description"));
+				}
+			}
+			else {
+				if (Validator.isNull(
+						localizedValue.getString(
+							ddmFormLayout.getDefaultLocale()))) {
+
+					localizedValue.addString(
+						ddmFormLayout.getDefaultLocale(),
+						LanguageUtil.get(
+							ddmFormLayout.getDefaultLocale(), "description"));
+				}
+			}
+
+			ddmFormLayoutPage.setDescription(localizedValue);
+		}
+
+		DDMFormLayoutSerializerSerializeResponse
+			ddmFormLayoutSerializerSerializeResponse =
+				_ddmFormLayoutSerializer.serialize(
+					DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
+						ddmFormLayout
+					).build());
+
+		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
 	@Override

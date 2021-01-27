@@ -30,6 +30,9 @@ public interface DDMDataDefinitionConverter {
 			String dataDefinition, Locale defaultLocale)
 		throws Exception;
 
+	public String convertDDMFormLayoutDataDefinition(String dataDefinition)
+		throws Exception;
+
 	public String convertDDMFormLayoutDataDefinition(
 			String structureLayoutDataDefinition,
 			String structureVersionDataDefinition)

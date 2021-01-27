@@ -34,7 +34,6 @@ import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -114,86 +113,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				setVisibilityExpression(StringPool.BLANK);
 			}
 		};
-	}
-
-	private String _upgradeDDMFormLayoutDefinition(String content)
-		throws Exception {
-
-		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
-			_ddmFormLayoutDeserializer, content);
-
-		ddmFormLayout.setDefinitionSchemaVersion("2.0");
-		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
-
-		for (DDMFormLayoutPage ddmFormLayoutPage :
-				ddmFormLayout.getDDMFormLayoutPages()) {
-
-			LocalizedValue localizedValue = ddmFormLayoutPage.getTitle();
-
-			if (localizedValue == null) {
-				localizedValue = new LocalizedValue();
-
-				localizedValue.addString(
-					ddmFormLayout.getDefaultLocale(),
-					LanguageUtil.get(ddmFormLayout.getDefaultLocale(), "page"));
-
-				for (Locale locale : ddmFormLayout.getAvailableLocales()) {
-					localizedValue.addString(
-						locale, LanguageUtil.get(locale, "page"));
-				}
-			}
-			else {
-				if (Validator.isNull(
-						localizedValue.getString(
-							ddmFormLayout.getDefaultLocale()))) {
-
-					localizedValue.addString(
-						ddmFormLayout.getDefaultLocale(),
-						LanguageUtil.get(
-							ddmFormLayout.getDefaultLocale(), "page"));
-				}
-			}
-
-			ddmFormLayoutPage.setTitle(localizedValue);
-
-			localizedValue = ddmFormLayoutPage.getDescription();
-
-			if (localizedValue == null) {
-				localizedValue = new LocalizedValue();
-
-				localizedValue.addString(
-					ddmFormLayout.getDefaultLocale(),
-					LanguageUtil.get(
-						ddmFormLayout.getDefaultLocale(), "description"));
-
-				for (Locale locale : ddmFormLayout.getAvailableLocales()) {
-					localizedValue.addString(
-						locale, LanguageUtil.get(locale, "description"));
-				}
-			}
-			else {
-				if (Validator.isNull(
-						localizedValue.getString(
-							ddmFormLayout.getDefaultLocale()))) {
-
-					localizedValue.addString(
-						ddmFormLayout.getDefaultLocale(),
-						LanguageUtil.get(
-							ddmFormLayout.getDefaultLocale(), "description"));
-				}
-			}
-
-			ddmFormLayoutPage.setDescription(localizedValue);
-		}
-
-		DDMFormLayoutSerializerSerializeResponse
-			ddmFormLayoutSerializerSerializeResponse =
-				_ddmFormLayoutSerializer.serialize(
-					DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
-						ddmFormLayout
-					).build());
-
-		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
 	private String _upgradeDDMFormLayoutDefinition(
@@ -438,7 +357,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 					}
 
 					ps2.setString(
-						1, _upgradeDDMFormLayoutDefinition(definition));
+						1,
+						_ddmDataDefinitionConverter.
+							convertDDMFormLayoutDataDefinition(definition));
 					ps2.setLong(2, rs.getLong("classNameId"));
 					ps2.setString(3, rs.getString("structureKey"));
 					ps2.setLong(4, rs.getLong("structureLayoutId"));

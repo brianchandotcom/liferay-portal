@@ -40,8 +40,16 @@ public abstract class BaseAxisSpiraTestResultDetails
 		List<TestResult> failedTestResults =
 			_axisSpiraTestResult.getFailedTestResults();
 
-		failedTestResults.addAll(
-			_axisSpiraTestResult.getCommonFailedTestResults());
+		if (failedTestResults == null) {
+			failedTestResults = new ArrayList<>();
+		}
+
+		List<TestResult> commonFailedTestResults =
+			_axisSpiraTestResult.getCommonFailedTestResults();
+
+		if (commonFailedTestResults != null) {
+			failedTestResults.addAll(commonFailedTestResults);
+		}
 
 		if (failedTestResults.isEmpty()) {
 			return "";
@@ -53,8 +61,6 @@ public abstract class BaseAxisSpiraTestResultDetails
 
 		for (TestResult failedTestResult : failedTestResults) {
 			sb.append("<li><details><summary>");
-			sb.append(failedTestResult.getSimpleClassName());
-			sb.append(".");
 			sb.append(failedTestResult.getTestName());
 			sb.append("</summary><pre>");
 

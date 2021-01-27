@@ -71,26 +71,18 @@ public class JUnitAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 	public SpiraTestCaseRun.Status getSpiraTestCaseRunStatus() {
 		TestClassResult testClassResult = getTestClassResult();
 
-		if (testClassResult != null) {
-			if (testClassResult.isFailing()) {
-				return SpiraTestCaseRun.Status.FAILED;
-			}
-
-			return SpiraTestCaseRun.Status.PASSED;
+		if ((testClassResult == null) || testClassResult.isFailing()) {
+			return SpiraTestCaseRun.Status.FAILED;
 		}
 
-		return super.getSpiraTestCaseRunStatus();
+		return SpiraTestCaseRun.Status.PASSED;
+	}
+
+	public TestClassGroup.TestClass getTestClass() {
+		return _testClass;
 	}
 
 	public TestClassResult getTestClassResult() {
-		if (_testClassResult != null) {
-			return _testClassResult;
-		}
-
-		AxisBuild axisBuild = getAxisBuild();
-
-		_testClassResult = axisBuild.getTestClassResult(getTestName());
-
 		return _testClassResult;
 	}
 
@@ -114,9 +106,24 @@ public class JUnitAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 		super(spiraBuildResult, jUnitAxisTestClassGroup);
 
 		_testClass = testClass;
+
+		TestClassResult testClassResult = null;
+
+		AxisBuild axisBuild = getAxisBuild();
+
+		if (axisBuild != null) {
+			try {
+				testClassResult = axisBuild.getTestClassResult(getTestName());
+			}
+			catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		}
+
+		_testClassResult = testClassResult;
 	}
 
 	private final TestClassGroup.TestClass _testClass;
-	private TestClassResult _testClassResult;
+	private final TestClassResult _testClassResult;
 
 }

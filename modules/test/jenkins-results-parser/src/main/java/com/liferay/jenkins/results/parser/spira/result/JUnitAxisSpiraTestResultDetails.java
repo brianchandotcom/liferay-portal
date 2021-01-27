@@ -17,8 +17,15 @@ package com.liferay.jenkins.results.parser.spira.result;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
+import com.liferay.jenkins.results.parser.spira.BaseSpiraArtifact;
+import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroup;
 
+import java.io.File;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Michael Hashimoto
@@ -34,44 +41,89 @@ public class JUnitAxisSpiraTestResultDetails
 		_jUnitAxisSpiraTestResult = jUnitAxisSpiraTestResult;
 	}
 
-	protected String getTestMethodsSummary() {
+	@Override
+	protected String getTestFailuresSummary() {
+		Map<String, String> failedTestResultMap = new TreeMap<>();
+
+		List<TestResult> commonFailedTestResults =
+			_jUnitAxisSpiraTestResult.getCommonFailedTestResults();
+
+		for (TestResult testResult : commonFailedTestResults) {
+			String testResultMethodName = JenkinsResultsParserUtil.combine(
+				testResult.getSimpleClassName(), ".", testResult.getTestName());
+
+			String testResultFailure = JenkinsResultsParserUtil.combine(
+				BaseSpiraArtifact.fixStringForJSON(
+					testResult.getErrorDetails()),
+				"\n", testResult.getErrorStackTrace());
+
+			failedTestResultMap.put(testResultMethodName, testResultFailure);
+		}
+
+		Map<String, TestResult> testResultMap = new HashMap<>();
+
 		TestClassResult testClassResult =
 			_jUnitAxisSpiraTestResult.getTestClassResult();
 
-		if (testClassResult == null) {
-			return "";
+		if (testClassResult != null) {
+			for (TestResult testResult : testClassResult.getTestResults()) {
+				if (testResult == null) {
+					continue;
+				}
+
+				testResultMap.put(testResult.getTestName(), testResult);
+			}
 		}
 
-		List<TestResult> testResults = testClassResult.getTestResults();
+		TestClassGroup.TestClass testClass =
+			_jUnitAxisSpiraTestResult.getTestClass();
 
-		if ((testResults == null) || testResults.isEmpty()) {
+		File testClassFile = testClass.getTestClassFile();
+
+		String testClassName = testClassFile.getName();
+
+		testClassName = testClassName.replace(".class", "");
+
+		for (TestClassGroup.TestClass.TestClassMethod testClassMethod :
+				testClass.getTestClassMethods()) {
+
+			String testMethodName = testClassMethod.getName();
+
+			TestResult testResult = testResultMap.get(testMethodName);
+
+			if ((testResult != null) && !testResult.isFailing()) {
+				continue;
+			}
+
+			String testMethodFailure = "Failed to run.";
+
+			if (testResult != null) {
+				testMethodFailure = JenkinsResultsParserUtil.combine(
+					BaseSpiraArtifact.fixStringForJSON(
+						testResult.getErrorDetails()),
+					"\n", testResult.getErrorStackTrace());
+			}
+
+			failedTestResultMap.put(
+				testClassName + "." + testMethodName, testMethodFailure);
+		}
+
+		if (failedTestResultMap.isEmpty()) {
 			return "";
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<h4>Test Methods - ");
+		sb.append("<h4>Test Failures</h4><ul>");
 
-		sb.append(
-			JenkinsResultsParserUtil.toDurationString(
-				testClassResult.getDuration()));
+		for (Map.Entry<String, String> failedTestResultEntry :
+				failedTestResultMap.entrySet()) {
 
-		sb.append(" - ");
-		sb.append(testClassResult.getStatus());
-		sb.append("</h4><ul>");
-
-		for (TestResult testResult : testResults) {
-			sb.append("<li>");
-			sb.append(testResult.getTestName());
-			sb.append(" - ");
-
-			sb.append(
-				JenkinsResultsParserUtil.toDurationString(
-					testResult.getDuration()));
-
-			sb.append(" - ");
-			sb.append(testResult.getStatus());
-			sb.append("</li>");
+			sb.append("<li><details><summary>");
+			sb.append(failedTestResultEntry.getKey());
+			sb.append("</summary><pre>");
+			sb.append(failedTestResultEntry.getValue());
+			sb.append("</pre></details></li>");
 		}
 
 		sb.append("</ul>");

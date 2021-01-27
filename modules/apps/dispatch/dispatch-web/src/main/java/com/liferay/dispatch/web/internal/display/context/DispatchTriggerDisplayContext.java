@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.Format;
@@ -33,6 +35,7 @@ import java.text.Format;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletURL;
@@ -61,8 +64,13 @@ public class DispatchTriggerDisplayContext {
 	public String getDispatchTaskExecutorName(
 		Locale locale, String dispatchTaskExecutorType) {
 
-		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorName(
-			locale, dispatchTaskExecutorType);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		String name = _dispatchTaskExecutorRegistry.getDispatchTaskExecutorName(
+			dispatchTaskExecutorType);
+
+		return LanguageUtil.get(resourceBundle, name);
 	}
 
 	public Set<String> getDispatchTaskExecutorTypes() {

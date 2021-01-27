@@ -169,11 +169,13 @@ definition {
 	test SetReferenceOfGeolocation {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(fieldFieldLabel = "Localization", fieldName = "Geolocation");
+		DataEngine.addField(
+			fieldFieldLabel = "Localization",
+			fieldName = "Geolocation");
 
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
 
-        WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
 
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "Localization",

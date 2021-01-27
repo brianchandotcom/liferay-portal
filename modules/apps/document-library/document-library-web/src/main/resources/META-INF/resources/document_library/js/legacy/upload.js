@@ -498,8 +498,7 @@ AUI.add(
 						'display-style-descriptive tabular-list-group';
 
 					if (displayStyle === CSS_ICON) {
-						containerClasses =
-							'display-style-icon list-unstyled row';
+						containerClasses = 'card-page card-page-equal-height';
 					}
 
 					var entriesContainer = ANode.create(

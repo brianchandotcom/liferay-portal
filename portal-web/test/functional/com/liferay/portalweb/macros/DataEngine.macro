@@ -327,32 +327,32 @@ definition {
 	macro editFieldReferenceOfFieldOption {
 		if (isSet(fieldFieldLabel)) {
 			AssertClick.assertPartialTextClickAt(
-					key_fieldFieldLabel = "${fieldFieldLabel}",
-					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-					value1 = "${fieldFieldLabel}");
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+				value1 = "${fieldFieldLabel}");
 		}
 
 		if (isSet(optionFieldLabel)) {
 			DoubleClick(
-					index = "${index}",
-					key_optionFieldLabel = "${optionFieldLabel}",
-					locator1 = "Sidebar#OPTION_FIELD_REFERENCE_INPUT");
+				index = "${index}",
+				key_optionFieldLabel = "${optionFieldLabel}",
+				locator1 = "Sidebar#OPTION_FIELD_REFERENCE_INPUT");
 
 			Type.type(
-					index = "${index}",
-					key_optionFieldLabel = "${optionFieldLabel}",
-					locator1 = "Sidebar#OPTION_FIELD_REFERENCE_INPUT",
-					value1 = "${fieldReferenceOfFieldOption}");
+				index = "${index}",
+				key_optionFieldLabel = "${optionFieldLabel}",
+				locator1 = "Sidebar#OPTION_FIELD_REFERENCE_INPUT",
+				value1 = "${fieldReferenceOfFieldOption}");
 		}
 		else {
 			DoubleClick(
-					index = "${index}",
-					locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT");
+				index = "${index}",
+				locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT");
 
 			Type.type(
-					index = "${index}",
-					locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
-					value1 = "${fieldReferenceOfFieldOption}");
+				index = "${index}",
+				locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
+				value1 = "${fieldReferenceOfFieldOption}");
 		}
 
 		if (isSet(fieldFieldLabel)) {

@@ -137,7 +137,7 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		if ((testBaseDir != null) && testBaseDir.exists()) {
 			sb.append("TEST_BASE_DIR_NAME=");
 			sb.append(JenkinsResultsParserUtil.getCanonicalPath(testBaseDir));
-			sb.append("\n");
+			sb.append("/\n");
 		}
 
 		return sb.toString();

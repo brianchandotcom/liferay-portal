@@ -55,7 +55,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		return Arrays.asList(
 			new File(
 				portalGitWorkingDirectory.getWorkingDirectory(),
-				"portal-web/test/functional"));
+				"portal-web/test/functional/portalweb"));
 	}
 
 	public String getTestBatchRunPropertyQuery() {

@@ -1,0 +1,127 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "5"
+	test AddSeparatorOnFormByDragAndDrop {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 AddSeparatorOnFormByDragAndDrop pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "5"
+	test EditLabelOfSeparator {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 EditLabelOfSeparator pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "5"
+	test EditHelpTextOfSeparator {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 EditHelpTextOfSeparator pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "5"
+	test EditReferenceOfSeparator {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 EditReferenceOfSeparator pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "5"
+	test DeleteSeparatorOnBuilder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 DeleteSeparatorOnBuilder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "5"
+	test RepeatSeparatorOnUpload {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 RepeatSeparatorOnUpload pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "4"
+	test EditReferenceOfSeparatorWithInvalidCharacters {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 EditReferenceOfSeparatorWithInvalidCharacters pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "4"
+	test SetSeparatorRepeatable {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 SetSeparatorRepeatable pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "4"
+	test DuplicateSeparatorOnBuilder {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 DuplicateSeparatorOnBuilder pending implementation
+
+	}
+
+	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@ignore = "true"
+	@priority = "3"
+	test ShowAndHideSeparatorLabel {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98081 ShowAndHideSeparatorLabel pending implementation
+
+	}
+
+}

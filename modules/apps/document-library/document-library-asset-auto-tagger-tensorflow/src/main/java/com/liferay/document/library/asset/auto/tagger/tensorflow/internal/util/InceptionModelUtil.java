@@ -38,7 +38,7 @@ import java.nio.file.Paths;
  */
 public class InceptionModelUtil {
 
-	public static void download() throws Exception {
+	public static void download(String modelDownloadURL) throws Exception {
 		if (isDownloaded()) {
 			return;
 		}
@@ -46,11 +46,7 @@ public class InceptionModelUtil {
 		File tempFile = FileUtil.createTempFile();
 
 		JarUtil.downloadAndInstallJar(
-			new URL(
-				"https://repository.liferay.com/nexus/service/local/artifact" +
-					"/maven/redirect?r=third-party&g=com.liferay" +
-						"&a=org.tensorflow.models.inception&v=5h&e=jar"),
-			tempFile.toPath());
+			new URL(modelDownloadURL), tempFile.toPath());
 
 		DLStoreUtil.addFile(
 			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,

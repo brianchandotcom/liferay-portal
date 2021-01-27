@@ -14,18 +14,25 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.messaging;
 
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderDownloadConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorflowDestinationNames;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.InceptionModelUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alejandro Tardín
  */
 @Component(
+	configurationPid = "com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderDownloadConfiguration",
 	immediate = true,
 	property = "destination.name=" + TensorflowDestinationNames.TENSORFLOW_MODEL_DOWNLOAD,
 	service = MessageListener.class
@@ -33,9 +40,23 @@ import org.osgi.service.component.annotations.Component;
 public class TensorflowModelDownloadMessageListener
 	extends BaseMessageListener {
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_tensorFlowImageAssetAutoTagProviderDownloadConfiguration =
+			ConfigurableUtil.createConfigurable(
+				TensorFlowImageAssetAutoTagProviderDownloadConfiguration.class,
+				properties);
+	}
+
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		InceptionModelUtil.download();
+		InceptionModelUtil.download(
+			_tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+				modelDownloadURL());
 	}
+
+	private volatile TensorFlowImageAssetAutoTagProviderDownloadConfiguration
+		_tensorFlowImageAssetAutoTagProviderDownloadConfiguration;
 
 }

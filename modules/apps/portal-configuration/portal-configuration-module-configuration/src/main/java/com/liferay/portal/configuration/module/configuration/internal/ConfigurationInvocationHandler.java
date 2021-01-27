@@ -42,13 +42,12 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 		_clazz = clazz;
 		_typedSettings = typedSettings;
 
-		_overrideProperties =
-			ConfigurationOverridePropertiesUtil.getOverrideProperties(
-				clazz.getName());
-
 		_configurationOverrideInstance =
 			ConfigurationOverrideInstance.getConfigurationOverrideInstance(
 				clazz, typedSettings);
+		_overrideProperties =
+			ConfigurationOverridePropertiesUtil.getOverrideProperties(
+				clazz.getName());
 	}
 
 	public S createProxy() {

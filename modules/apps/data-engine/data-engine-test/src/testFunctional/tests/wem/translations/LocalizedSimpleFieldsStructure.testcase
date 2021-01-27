@@ -430,51 +430,48 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-        );
+			category = "Content & Data",
+			portlet = "Web Content");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-            structureDescription = "Test",
-            structureName = "Test"
-        );
+		WebContentStructures.addCP(
+			structureDescription = "Test",
+			structureName = "Test");
 
-        DataEngine.addField(
-            fieldFieldLabel = "Text Test",
-            fieldName = "Text");
+		DataEngine.addField(
+			fieldFieldLabel = "Text Test",
+			fieldName = "Text");
 
-        DataEngine.editFieldTip(
-            fieldFieldLabel = "Text Test",
-            fieldHelp = "Help Text test"
-        );
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text Test",
+			fieldHelp = "Help Text test");
 
-        PortletEntry.changeLocale(locale = "pt-BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-        DataEngine.editFieldTip(
-            fieldFieldLabel = "Text Test",
-            fieldHelp = "Texto teste ajuda"
-        );
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text Test",
+			fieldHelp = "Texto teste ajuda");
 
-        WebContentStructures.addName(structureName="Teste");
+		WebContentStructures.addName(structureName = "Teste");
 
-        FormViewBuilder.editFieldLabel(fieldLabel="Text Test", label="Texto Teste");
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text Test",
+			label = "Texto Teste");
 
 		WebContentStructures.saveCP(structureName = "Test");
 
 		WebContentStructures.viewCP(
-            structureName = "Test",
-            structureDescription = "Test");
-			
-        LexiconEntry.gotoEntry(rowEntry = "Test");
+			structureDescription = "Test",
+			structureName = "Test");
 
-		PortletEntry.viewLocale(locale="en-US");
+		LexiconEntry.gotoEntry(rowEntry = "Test");
+
+		PortletEntry.viewLocale(locale = "en-US");
 
 		WebContentStructures.saveCP(structureName = "Test");
 
-	    WebContentStructures.deleteCP(structureName="Test");
-
+		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 }

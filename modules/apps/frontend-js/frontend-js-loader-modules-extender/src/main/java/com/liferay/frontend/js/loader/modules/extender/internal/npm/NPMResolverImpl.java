@@ -21,12 +21,8 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,12 +36,14 @@ import org.osgi.framework.Bundle;
 public class NPMResolverImpl implements NPMResolver {
 
 	public NPMResolverImpl(
-		Bundle bundle, JSONFactory jsonFactory, NPMRegistry npmRegistry) {
+		Bundle bundle, NPMRegistry npmRegistry, JSONObject packageJSONObject,
+		JSONObject packagesJSONObject) {
 
 		_npmRegistry = npmRegistry;
 
-		_jsPackageIdentifier = _resolveJSPackageIdentifier(bundle, jsonFactory);
-		_packageNamesMap = _loadPackageNamesMap(bundle, jsonFactory);
+		_jsPackageIdentifier = _resolveJSPackageIdentifier(
+			bundle, packageJSONObject);
+		_packageNamesMap = _loadPackageNamesMap(packagesJSONObject);
 	}
 
 	@Override
@@ -102,41 +100,33 @@ public class NPMResolverImpl implements NPMResolver {
 	}
 
 	private Map<String, String> _loadPackageNamesMap(
-		Bundle bundle, JSONFactory jsonFactory) {
+		JSONObject packagesJSONObject) {
 
 		try {
 			Map<String, String> map = new HashMap<>();
 
-			URL url = bundle.getEntry("META-INF/resources/manifest.json");
+			Iterator<String> iterator = packagesJSONObject.keys();
 
-			if (url != null) {
-				String content = StringUtil.read(url.openStream());
+			while (iterator.hasNext()) {
+				String packageId = iterator.next();
 
-				JSONObject jsonObject = jsonFactory.createJSONObject(content);
+				JSONObject packageJSONObject = packagesJSONObject.getJSONObject(
+					packageId);
 
-				JSONObject packagesJSONObject = jsonObject.getJSONObject(
-					"packages");
+				JSONObject srcJSONObject = packageJSONObject.getJSONObject(
+					"src");
+				JSONObject destJSONObject = packageJSONObject.getJSONObject(
+					"dest");
 
-				Iterator<String> iterator = packagesJSONObject.keys();
-
-				while (iterator.hasNext()) {
-					String packageId = iterator.next();
-
-					JSONObject packageJSONObject =
-						packagesJSONObject.getJSONObject(packageId);
-
-					JSONObject srcJSONObject = packageJSONObject.getJSONObject(
-						"src");
-					JSONObject destJSONObject = packageJSONObject.getJSONObject(
-						"dest");
-
-					map.put(
-						srcJSONObject.getString("name"),
-						destJSONObject.getString("name"));
-				}
+				map.put(
+					srcJSONObject.getString("name"),
+					destJSONObject.getString("name"));
 			}
 
 			return map;
+		}
+		catch (IllegalStateException illegalStateException) {
+			throw illegalStateException;
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -144,7 +134,7 @@ public class NPMResolverImpl implements NPMResolver {
 	}
 
 	private String _resolveJSPackageIdentifier(
-		Bundle bundle, JSONFactory jsonFactory) {
+		Bundle bundle, JSONObject packageJSONObject) {
 
 		try {
 			StringBundler sb = new StringBundler(5);
@@ -152,19 +142,13 @@ public class NPMResolverImpl implements NPMResolver {
 			sb.append(bundle.getBundleId());
 			sb.append(StringPool.SLASH);
 
-			URL url = bundle.getEntry("META-INF/resources/package.json");
-
-			String content = StringUtil.read(url.openStream());
-
-			JSONObject jsonObject = jsonFactory.createJSONObject(content);
-
-			String name = jsonObject.getString("name");
+			String name = packageJSONObject.getString("name");
 
 			sb.append(name);
 
 			sb.append(StringPool.AT);
 
-			String version = jsonObject.getString("version");
+			String version = packageJSONObject.getString("version");
 
 			sb.append(version);
 

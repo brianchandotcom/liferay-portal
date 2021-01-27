@@ -20,39 +20,46 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import org.osgi.framework.Bundle;
 
 /**
+ * This implementation of {@Link NPMResolver} throws a exception in every
+ * method.
+ *
+ * It is instantiated when an OSGi bundle has a `package.json` file but the
+ * `manifest.json` is missing or empty (which is a sign that the OSGi bundle has
+ * not been built by liferay-npm-bundler but by npm-scripts, thus it uses
+ * webpack federation to load modules).
+ *
  * @author Iván Zaera Avellón
  */
-public class NullNPMResolverImpl implements NPMResolver {
+public class UnsupportedNPMResolverImpl implements NPMResolver {
 
-	public NullNPMResolverImpl(Bundle bundle) {
+	public UnsupportedNPMResolverImpl(Bundle bundle) {
 		_bundle = bundle;
 	}
 
 	@Override
 	public JSPackage getDependencyJSPackage(String packageName) {
-		_throwIllegalStateException();
+		_throwUnsupportedOperationException();
 
 		return null;
 	}
 
 	@Override
 	public JSPackage getJSPackage() {
-		_throwIllegalStateException();
+		_throwUnsupportedOperationException();
 
 		return null;
 	}
 
 	@Override
 	public String resolveModuleName(String moduleName) {
-		_throwIllegalStateException();
+		_throwUnsupportedOperationException();
 
 		return null;
 	}
 
-	private void _throwIllegalStateException() {
-		throw new IllegalStateException(
-			"Unable to find META-INF/resources/package.json in " +
-				_bundle.getSymbolicName());
+	private void _throwUnsupportedOperationException() {
+		throw new UnsupportedOperationException(
+			"Bundle has no AMD Loader support: " + _bundle.getSymbolicName());
 	}
 
 	private final Bundle _bundle;

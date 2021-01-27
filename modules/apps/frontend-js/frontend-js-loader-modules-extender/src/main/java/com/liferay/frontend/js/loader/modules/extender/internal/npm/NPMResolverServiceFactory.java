@@ -16,7 +16,12 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.IOException;
 
 import java.net.URL;
 
@@ -43,13 +48,31 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 	public NPMResolver getService(
 		Bundle bundle, ServiceRegistration<NPMResolver> serviceRegistration) {
 
-		URL url = bundle.getEntry("META-INF/resources/package.json");
+		URL packageURL = bundle.getEntry("META-INF/resources/package.json");
 
-		if (url == null) {
-			return new NullNPMResolverImpl(bundle);
+		if (packageURL == null) {
+			return new InvalidNPMResolverImpl(bundle);
 		}
 
-		return new NPMResolverImpl(bundle, _jsonFactory, _npmRegistry);
+		JSONObject packageJSONObject = _createJSONObject(packageURL);
+
+		URL manifestURL = bundle.getEntry("META-INF/resources/manifest.json");
+
+		if (manifestURL == null) {
+			return new UnsupportedNPMResolverImpl(bundle);
+		}
+
+		JSONObject manifestJSONObject = _createJSONObject(manifestURL);
+
+		JSONObject packagesJSONObject = manifestJSONObject.getJSONObject(
+			"packages");
+
+		if (packagesJSONObject == null) {
+			return new UnsupportedNPMResolverImpl(bundle);
+		}
+
+		return new NPMResolverImpl(
+			bundle, _npmRegistry, packageJSONObject, packagesJSONObject);
 	}
 
 	@Override
@@ -67,6 +90,16 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistration.unregister();
+	}
+
+	private JSONObject _createJSONObject(URL url) {
+		try {
+			return _jsonFactory.createJSONObject(
+				StringUtil.read(url.openStream()));
+		}
+		catch (IOException | JSONException exception) {
+			throw new RuntimeException("Unable to read " + url, exception);
+		}
 	}
 
 	@Reference(

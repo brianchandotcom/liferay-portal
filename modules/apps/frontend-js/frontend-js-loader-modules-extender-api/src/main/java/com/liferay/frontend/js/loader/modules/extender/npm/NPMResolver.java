@@ -19,10 +19,22 @@ package com.liferay.frontend.js.loader.modules.extender.npm;
  */
 public interface NPMResolver {
 
+	/**
+	 * @throws UnsupportedOperationException if the associated bundle does not contain AMD modules
+	 * @review
+	 */
 	public JSPackage getDependencyJSPackage(String packageName);
 
+	/**
+	 * @throws UnsupportedOperationException if the associated bundle does not contain AMD modules
+	 * @review
+	 */
 	public JSPackage getJSPackage();
 
+	/**
+	 * @throws UnsupportedOperationException if the associated bundle does not contain AMD modules
+	 * @review
+	 */
 	public String resolveModuleName(String moduleName);
 
 }

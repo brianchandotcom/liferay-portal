@@ -40,7 +40,7 @@ import org.osgi.util.tracker.BundleTracker;
 public class Log4jExtenderBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) throws Exception {
+	public void start(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<Bundle>(
 			bundleContext, ~(Bundle.INSTALLED | Bundle.UNINSTALLED), null) {
 

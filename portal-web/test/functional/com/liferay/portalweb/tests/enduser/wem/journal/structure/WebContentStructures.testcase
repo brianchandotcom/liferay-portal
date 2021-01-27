@@ -156,6 +156,90 @@ definition {
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2");
 	}
 
+	@description = "This is a use case for LPS-126248. Edit field reference of field options in structure editor."
+	@priority = "4"
+	test EditFieldReferenceOfFieldOption {
+		task ("Add a web content structure with a Select from List field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Select from List",
+				fieldName = "Select from List");
+		}
+
+		task ("Add two field options for Select from List") {
+			var index = "1";
+
+			for (var optionValue : list "value 1,value 2") {
+				DataEngine.addFieldOption(
+					fieldFieldLabel = "Select from List",
+					index = "${index}",
+					optionValue = "${optionValue}");
+
+				var index = ${index} + 1;
+			}
+		}
+
+		task ("Edit field reference of field options") {
+			var index = "1";
+
+			for (var fieldReferenceOfFieldOption : list "Reference1,Reference2") {
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldFieldLabel = "Select from List",
+					fieldReferenceOfFieldOption = "${fieldReferenceOfFieldOption}",
+					index = "${index}");
+
+				var index = ${index} + 1;
+			}
+		}
+
+		task ("Assert the field reference of field options") {
+			Click(
+				key_fieldFieldLabel = "Select from List",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+			Navigator.gotoNavTab(navTab = "Basic");
+
+			var index = "1";
+
+			for (var fieldReferenceOfFieldOption : list "Reference1,Reference2") {
+				AssertTextEquals(
+					index = "${index}",
+					locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
+					value1 = "${fieldReferenceOfFieldOption}");
+
+				var index = ${index} + 1;
+			}
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Assert the field reference of field options saved") {
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			Click(
+				key_fieldFieldLabel = "Select from List",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+			Navigator.gotoNavTab(navTab = "Basic");
+
+			var index = "1";
+
+			for (var fieldReferenceOfFieldOption : list "Reference1,Reference2") {
+				AssertTextEquals(
+					index = "${index}",
+					locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
+					value1 = "${fieldReferenceOfFieldOption}");
+
+				var index = ${index} + 1;
+			}
+		}
+	}
+
 	@priority = "4"
 	test EditStructureDefaultValuesForFieldsets {
 		property testray.component.names = "Web Content Administration";

@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -98,60 +99,17 @@ public class DDMDataDefinitionConverterImpl
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {
 
-			LocalizedValue localizedValue = ddmFormLayoutPage.getTitle();
-
-			if (localizedValue == null) {
-				localizedValue = new LocalizedValue();
-
-				localizedValue.addString(
-					ddmFormLayout.getDefaultLocale(),
-					LanguageUtil.get(ddmFormLayout.getDefaultLocale(), "page"));
-
-				for (Locale locale : ddmFormLayout.getAvailableLocales()) {
-					localizedValue.addString(
-						locale, LanguageUtil.get(locale, "page"));
-				}
-			}
-			else {
-				if (Validator.isNull(
-						localizedValue.getString(
-							ddmFormLayout.getDefaultLocale()))) {
-
-					localizedValue.addString(
-						ddmFormLayout.getDefaultLocale(),
-						LanguageUtil.get(
-							ddmFormLayout.getDefaultLocale(), "page"));
-				}
-			}
+			LocalizedValue localizedValue = _updateLocalizedValue(
+				ddmFormLayout.getAvailableLocales(),
+				ddmFormLayout.getDefaultLocale(), "page",
+				ddmFormLayoutPage.getTitle());
 
 			ddmFormLayoutPage.setTitle(localizedValue);
 
-			localizedValue = ddmFormLayoutPage.getDescription();
-
-			if (localizedValue == null) {
-				localizedValue = new LocalizedValue();
-
-				localizedValue.addString(
-					ddmFormLayout.getDefaultLocale(),
-					LanguageUtil.get(
-						ddmFormLayout.getDefaultLocale(), "description"));
-
-				for (Locale locale : ddmFormLayout.getAvailableLocales()) {
-					localizedValue.addString(
-						locale, LanguageUtil.get(locale, "description"));
-				}
-			}
-			else {
-				if (Validator.isNull(
-						localizedValue.getString(
-							ddmFormLayout.getDefaultLocale()))) {
-
-					localizedValue.addString(
-						ddmFormLayout.getDefaultLocale(),
-						LanguageUtil.get(
-							ddmFormLayout.getDefaultLocale(), "description"));
-				}
-			}
+			localizedValue = _updateLocalizedValue(
+				ddmFormLayout.getAvailableLocales(),
+				ddmFormLayout.getDefaultLocale(), "description",
+				ddmFormLayoutPage.getDescription());
 
 			ddmFormLayoutPage.setDescription(localizedValue);
 		}
@@ -304,6 +262,30 @@ public class DDMDataDefinitionConverterImpl
 		}
 
 		return false;
+	}
+
+	private LocalizedValue _updateLocalizedValue(
+		Set<Locale> availableLocales, Locale defaultLocale, String key,
+		LocalizedValue localizedValue) {
+
+		if (localizedValue == null) {
+			localizedValue = new LocalizedValue();
+
+			localizedValue.addString(
+				defaultLocale, LanguageUtil.get(defaultLocale, key));
+
+			for (Locale locale : availableLocales) {
+				localizedValue.addString(locale, LanguageUtil.get(locale, key));
+			}
+		}
+		else {
+			if (Validator.isNull(localizedValue.getString(defaultLocale))) {
+				localizedValue.addString(
+					defaultLocale, LanguageUtil.get(defaultLocale, key));
+			}
+		}
+
+		return localizedValue;
 	}
 
 	private void _upgradeBooleanField(DDMFormField ddmFormField) {

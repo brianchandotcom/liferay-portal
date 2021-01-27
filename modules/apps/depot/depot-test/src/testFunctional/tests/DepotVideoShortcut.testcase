@@ -45,10 +45,6 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Blogs");
 
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(
@@ -132,10 +128,6 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(
@@ -177,10 +169,6 @@ definition {
 			layoutName = "Page Name",
 			widgetName = "Search Results");
 
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(
@@ -216,10 +204,6 @@ definition {
 	@description = "This ensures that a depot external video cannot be viewed from the disconnected site."
 	@priority = "4"
 	test ViewFromDisconnectedSite {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(
@@ -269,10 +253,6 @@ definition {
 			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 

@@ -24,12 +24,12 @@ public class ElasticsearchQueryTranslatorFixture {
 	public ElasticsearchQueryTranslatorFixture() {
 		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator() {
 			{
+				ElasticsearchFilterTranslatorFixture
+					elasticsearchFilterTranslatorFixture =
+						new ElasticsearchFilterTranslatorFixture(this);
+
 				booleanQueryTranslator = new BooleanQueryTranslatorImpl() {
 					{
-						ElasticsearchFilterTranslatorFixture
-							elasticsearchFilterTranslatorFixture =
-								new ElasticsearchFilterTranslatorFixture();
-
 						filterTranslator =
 							elasticsearchFilterTranslatorFixture.
 								getElasticsearchFilterTranslator();

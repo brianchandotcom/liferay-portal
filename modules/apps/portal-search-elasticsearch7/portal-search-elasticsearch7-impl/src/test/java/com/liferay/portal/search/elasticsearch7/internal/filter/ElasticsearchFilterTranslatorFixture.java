@@ -14,12 +14,18 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.filter;
 
+import com.liferay.portal.kernel.search.query.QueryTranslator;
+
+import org.elasticsearch.index.query.QueryBuilder;
+
 /**
  * @author Michael C. Han
  */
 public class ElasticsearchFilterTranslatorFixture {
 
-	public ElasticsearchFilterTranslatorFixture() {
+	public ElasticsearchFilterTranslatorFixture(
+		QueryTranslator<QueryBuilder> queryTranslator) {
+
 		_elasticsearchFilterTranslator = new ElasticsearchFilterTranslator() {
 			{
 				booleanFilterTranslator = new BooleanFilterTranslatorImpl();
@@ -35,6 +41,8 @@ public class ElasticsearchFilterTranslatorFixture {
 					new GeoDistanceRangeFilterTranslatorImpl();
 				missingFilterTranslator = new MissingFilterTranslatorImpl();
 				prefixFilterTranslator = new PrefixFilterTranslatorImpl();
+				queryFilterTranslator = new QueryFilterTranslatorImpl(
+					queryTranslator);
 				rangeTermFilterTranslator = new RangeTermFilterTranslatorImpl();
 				termFilterTranslator = new TermFilterTranslatorImpl();
 				termsFilterTranslator = new TermsFilterTranslatorImpl();

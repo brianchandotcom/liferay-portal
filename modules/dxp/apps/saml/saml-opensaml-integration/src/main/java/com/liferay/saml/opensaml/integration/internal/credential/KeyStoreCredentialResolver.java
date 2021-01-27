@@ -22,6 +22,7 @@ import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
+import com.liferay.saml.runtime.exception.EntityIdException;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
 import java.security.KeyStore;
@@ -115,7 +116,8 @@ public class KeyStoreCredentialResolver
 		String entityId = getLocalEntityId();
 
 		if (Validator.isBlank(entityId)) {
-			return null;
+			throw new SamlException(
+				new EntityIdException("An Entity ID must be configured"));
 		}
 
 		UsageCriterion usageCriterion = new UsageCriterion(usageType);

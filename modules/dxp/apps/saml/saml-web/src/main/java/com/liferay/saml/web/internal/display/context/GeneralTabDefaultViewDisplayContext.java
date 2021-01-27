@@ -17,6 +17,7 @@ package com.liferay.saml.web.internal.display.context;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
+import com.liferay.saml.runtime.exception.EntityIdException;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
 import java.security.KeyStoreException;
@@ -117,18 +118,32 @@ public class GeneralTabDefaultViewDisplayContext {
 							SAML_X509_CERTIFICATE_AUTH_NEEDED;
 				}
 				else {
-					String message =
-						"Unable to get local entity certificate: " +
-							exception.getMessage();
+					throwable = _getCauseThrowable(
+						exception, EntityIdException.class);
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(message, exception);
-					}
-					else if (_log.isWarnEnabled()) {
-						_log.warn(message);
-					}
+					if (throwable != null) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Unable to get local entity certificate",
+								throwable);
+						}
 
-					status = X509CertificateStatus.Status.UNKNOWN_EXCEPTION;
+						status = X509CertificateStatus.Status.UNBOUND;
+					}
+					else {
+						String message =
+							"Unable to get local entity certificate: " +
+								exception.getMessage();
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(message, exception);
+						}
+						else if (_log.isWarnEnabled()) {
+							_log.warn(message);
+						}
+
+						status = X509CertificateStatus.Status.UNKNOWN_EXCEPTION;
+					}
 				}
 			}
 

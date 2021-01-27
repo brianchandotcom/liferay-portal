@@ -57,83 +57,68 @@ definition {
 	@priority = "4"
 	test LocalizationOfImageFieldtPersists {
 		property portal.acceptance = "false";
+
 		var structureTitle = "Test";
-        var structureTitlePT = "Teste";
-        var fieldLabelEN = "Text EN";
-        var fieldLabelPT = "Text PT";
-        var fieldHelpEN = "I'm a help text";
-        var fieldHelpPT = "Eu sou um texto de ajuda";
+		var structureTitlePT = "Teste";
+		var fieldLabelEN = "Text EN";
+		var fieldLabelPT = "Text PT";
+		var fieldHelpEN = "I'm a help text";
+		var fieldHelpPT = "Eu sou um texto de ajuda";
 
-        ProductMenu.gotoPortlet(
-        	category = "Content & Data",
-            portlet = "Web Content" 
-        );
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
 
-    	NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
+		WebContentStructures.addCP(
 			structureDescription = "I'm a test",
-			structureName = "${structureTitle}"
-        );
+			structureName = "${structureTitle}");
 
-        DataEngine.addField(
-    	    fieldFieldLabel = "${fieldLabelEN}",
-            fieldName = "Image"
-        );
-        
-        Button.clickSave();
+		DataEngine.addField(
+			fieldFieldLabel = "${fieldLabelEN}",
+			fieldName = "Image");
 
-        WebContentNavigator.gotoEditStructure(
-            structureName = "${structureTitle}"
-        );
+		Button.clickSave();
 
-        DataEngine.editFieldTip( 
-		    fieldFieldLabel = "${fieldLabelEN}",
-            fieldHelp = "${fieldHelpEN}"
-        );
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
-        Button.clickSave();
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "${fieldLabelEN}",
+			fieldHelp = "${fieldHelpEN}");
 
-        WebContentNavigator.gotoEditStructure(
-            structureName = "${structureTitle}"
-        );
+		Button.clickSave();
 
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
-       WebContentStructures.addLocalization(
-            locale = "en_US",
-            locale2 = "pt_BR",
-            localization1Name = "${structureTitle}",
-            localization2Name = "${structureTitlePT}"
-        );
+		WebContentStructures.addLocalization(
+			locale = "en_US",
+			locale2 = "pt_BR",
+			localization1Name = "${structureTitle}",
+			localization2Name = "${structureTitlePT}");
 
-        DataEngine.editFieldTip(
-            fieldFieldLabel = "${fieldLabelEN}",
-            fieldHelp = "${fieldHelpPT}"
-        );
-            
-        FormViewBuilder.editFieldLabel(
-            fieldLabel = "${fieldLabelEN}",
-            label = "${fieldLabelPT}"
-        );
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "${fieldLabelEN}",
+			fieldHelp = "${fieldHelpPT}");
 
-        Button.clickSave();
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "${fieldLabelEN}",
+			label = "${fieldLabelPT}");
 
-        WebContentNavigator.gotoEditStructure(
-            structureName = "${structureTitle}"
-        );
+		Button.clickSave();
 
-        WebContentStructures.addLocalization(
-            locale = "en_US",
-            locale2 = "pt_BR",
-            localization1Name = "${structureTitle}",
-            localization2Name = "${structureTitlePT}"
-        );
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
-        AssertClick.assertPartialTextClickAt(
+		WebContentStructures.addLocalization(
+			locale = "en_US",
+			locale2 = "pt_BR",
+			localization1Name = "${structureTitle}",
+			localization2Name = "${structureTitlePT}");
+
+		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldLabelPT}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldLabelPT}"
-        );
+			value1 = "${fieldLabelPT}");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
@@ -188,40 +173,34 @@ definition {
 		property portal.acceptance = "false";
 
 		var structureTitle = "My Structure";
-        var newLabel = "Changes";
+		var newLabel = "Changes";
 
 		ProductMenu.gotoPortlet(
-        	category = "Content & Data",
-            portlet = "Web Content" 
-        );
+			category = "Content & Data",
+			portlet = "Web Content");
 
-    	NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "I'm a test",
-			structureName = "${structureTitle}"
-        );
+			structureName = "${structureTitle}");
 
-     	DataEngine.addFields(fieldNameList = "Image");
-      
-        FormViewBuilder.editFieldLabel(
-            fieldLabel = "Image",
-            label = "${newLabel}"
-        );
+		DataEngine.addFields(fieldNameList = "Image");
 
-        Button.clickSave();
-        
-        WebContentNavigator.gotoEditStructure(
-            structureName = "${structureTitle}"
-        );
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Image",
+			label = "${newLabel}");
 
-        AssertClick.assertPartialTextClickAt(
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+
+		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${newLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${newLabel}"
-        );
+			value1 = "${newLabel}");
 
-        Button.clickSave();
+		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"

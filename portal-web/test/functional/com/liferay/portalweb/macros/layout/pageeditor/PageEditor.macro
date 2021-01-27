@@ -360,7 +360,7 @@ definition {
 		Type(
 			locator1 = "PageEditor#EXPERIENCE_NAME",
 			value1 = "${experienceName}");
-		
+
 		Click(locator1 = "PageEditor#EXPERIENCE_SEGMENT_ANYONE");
 
 		AssertClick(

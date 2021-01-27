@@ -64,7 +64,7 @@ definition {
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
 			fragmentName = "Heading");
-		
+
 		PageEditor.editFragmentText(
 			fragmentName = "Heading",
 			id = "element-text",
@@ -134,7 +134,7 @@ definition {
 		ContentPages.clickPencil();
 
 		PageEditor.addExperience(
-			experienceName = "exp1", 
+			experienceName = "exp1",
 			segmentName = "AddSegmentUserEmailAddressContains Test");
 
 		Refresh();

@@ -210,6 +210,21 @@ export default ({
 		}
 	}, [appId]);
 
+	useEffect(() => {
+		if (!app.active && config.dataObject.id) {
+			dispatchConfig({
+				config: {
+					formView: checkRequiredFields(
+						[config.formView],
+						config.dataObject
+					)[0],
+				},
+				type: UPDATE_CONFIG,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [app.active]);
+
 	let title = Liferay.Language.get('new-workflow-powered-app');
 
 	if (appId) {

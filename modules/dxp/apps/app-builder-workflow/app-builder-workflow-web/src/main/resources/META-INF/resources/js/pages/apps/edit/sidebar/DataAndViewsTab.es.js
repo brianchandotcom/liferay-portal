@@ -17,7 +17,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import Button from 'app-builder-web/js/components/button/Button.es';
 import SelectObjects from 'app-builder-web/js/components/select-objects/SelectObjects.es';
-import {
+import EditAppContext, {
 	UPDATE_APP,
 	UPDATE_DATA_LAYOUT_ID,
 	UPDATE_DATA_LIST_VIEW_ID,
@@ -90,6 +90,10 @@ export default function DataAndViewsTab({
 	dispatchConfig,
 }) {
 	const {objectsPortletURL} = useContext(AppContext);
+	const {
+		config,
+		state: {app},
+	} = useContext(EditAppContext);
 	const {
 		appWorkflowDataLayoutLinks: stepFormViews = [],
 		errors: {
@@ -515,7 +519,14 @@ export default function DataAndViewsTab({
 								addButton={addFormViewButton(updateFormView)}
 								ariaLabelId="form-view-label"
 								isLoading={fetching}
-								items={formViews}
+								items={
+									app.active
+										? formViews
+										: checkRequiredFields(
+												formViews,
+												config.dataObject
+										  )
+								}
 								onSelect={updateFormView}
 								openButtonProps={{
 									disabled: !formView.name,

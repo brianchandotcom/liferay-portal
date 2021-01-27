@@ -12,7 +12,11 @@
 import {getItem} from 'app-builder-web/js/utils/client.es';
 import {getLocalizedValue} from 'app-builder-web/js/utils/lang.es';
 
-import {getFormViewFields, validateSelectedFormViews} from './utils.es';
+import {
+	checkRequiredFields,
+	getFormViewFields,
+	validateSelectedFormViews,
+} from './utils.es';
 
 const PARAMS = {keywords: '', page: -1, pageSize: -1, sort: ''};
 
@@ -110,6 +114,13 @@ export function populateConfigData([
 		steps: [initialState, ...appWorkflowTasks, finalState],
 		tableView: tableViews.find(({id}) => id === app.dataListViewId),
 	};
+
+	if (!app.active) {
+		config.formView = checkRequiredFields(
+			[config.formView],
+			config.dataObject
+		)[0];
+	}
 
 	return [app, config];
 }

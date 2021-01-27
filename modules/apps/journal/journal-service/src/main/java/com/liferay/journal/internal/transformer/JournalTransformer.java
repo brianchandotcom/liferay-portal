@@ -25,6 +25,7 @@ import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -72,6 +73,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -600,7 +602,9 @@ public class JournalTransformer {
 
 			TemplateNode templateNode = new TemplateNode(
 				themeDisplay, ddmFormField.getFieldReference(),
-				StringUtil.stripCDATA(data), type, attributes);
+				_convertToReferenceIfNeeded(
+					StringUtil.stripCDATA(data), ddmFormField),
+				type, attributes);
 
 			if (dynamicElementElement.element("dynamic-element") != null) {
 				templateNode.appendChildren(
@@ -616,7 +620,9 @@ public class JournalTransformer {
 
 				for (Element optionElement : optionElements) {
 					templateNode.appendOption(
-						StringUtil.stripCDATA(optionElement.getText()));
+						_convertToReferenceIfNeeded(
+							StringUtil.stripCDATA(optionElement.getText()),
+							ddmFormField));
 				}
 			}
 
@@ -718,6 +724,88 @@ public class JournalTransformer {
 		}
 
 		return map;
+	}
+
+	private String _convertToReferenceIfNeeded(
+		String data, DDMFormField ddmFormField) {
+
+		if (Validator.isNull(data)) {
+			return data;
+		}
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		Map<String, String> optionsReferences =
+			ddmFormFieldOptions.getOptionsReferences();
+
+		String type = ddmFormField.getType();
+
+		if (Objects.equals(type, DDMFormFieldTypeConstants.SELECT) ||
+			Objects.equals(type, DDMFormFieldTypeConstants.RADIO)) {
+
+			return optionsReferences.getOrDefault(data, data);
+		}
+
+		if (Objects.equals(type, DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
+			try {
+				JSONArray nextJSONArray = JSONFactoryUtil.createJSONArray();
+
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(data);
+
+				for (Object element : jsonArray) {
+					String optionValue = (String)element;
+
+					nextJSONArray.put(
+						optionsReferences.getOrDefault(
+							optionValue, optionValue));
+				}
+
+				return nextJSONArray.toJSONString();
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+		}
+
+		if (Objects.equals(type, DDMFormFieldTypeConstants.GRID)) {
+			try {
+				JSONObject nextJSONObject = JSONFactoryUtil.createJSONObject();
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+
+				DDMFormFieldOptions rowsDDMFormFieldOptions =
+					(DDMFormFieldOptions)ddmFormField.getProperty("rows");
+
+				Map<String, String> rowOptionsReferences =
+					rowsDDMFormFieldOptions.getOptionsReferences();
+
+				DDMFormFieldOptions columnsDDMFormFieldOptions =
+					(DDMFormFieldOptions)ddmFormField.getProperty("columns");
+
+				Map<String, String> columnsReferences =
+					columnsDDMFormFieldOptions.getOptionsReferences();
+
+				for (String key : jsonObject.keySet()) {
+					String value = jsonObject.getString(key);
+
+					nextJSONObject.put(
+						rowOptionsReferences.getOrDefault(key, key),
+						columnsReferences.getOrDefault(value, value));
+				}
+
+				return nextJSONObject.toString();
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+		}
+
+		return data;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1213,11 +1213,15 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
 		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewDefaultCP();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
 	}

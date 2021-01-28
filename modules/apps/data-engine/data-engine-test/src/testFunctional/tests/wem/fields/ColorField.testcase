@@ -125,7 +125,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
 	@priority = "4"
 	test SetColorFieldAsRequired {
 		property portal.acceptance = "false";

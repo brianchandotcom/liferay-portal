@@ -187,8 +187,6 @@ public interface LiferaySelenium {
 
 	public void fail(String message);
 
-	public String getAlert();
-
 	public String getAttribute(String attributeLocator);
 
 	public String getBodyText();

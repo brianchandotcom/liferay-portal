@@ -67,41 +67,32 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-        );
+			category = "Content & Data",
+			portlet = "Web Content");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-        	structureName = "Structure Name Test",
-        	structureDescription = "Structure Description Test"
-        );
-
-        DataEngine.addField(
-            fieldFieldLabel = "Color Test",
-            fieldName = "Color"
-        );
-
-        WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-        WebContentStructures.viewTableEntryCP(
+		WebContentStructures.addCP(
 			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test"
-        );
+			structureName = "Structure Name Test");
 
-        WebContentNavigator.gotoEditStructure(
-			structureName = "Structure Name Test"
-        );
+		DataEngine.addField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color");
 
-        DataEngine.deleteField(
-            fieldFieldLabel = "Color Test"
-        );
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
 
-        AssertElementNotPresent(
+		WebContentStructures.viewTableEntryCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		DataEngine.deleteField(fieldFieldLabel = "Color Test");
+
+		AssertElementNotPresent(
 			fieldName = "Color",
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME"
-        );
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -142,52 +133,40 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-        );
+			category = "Content & Data",
+			portlet = "Web Content");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-            structureName = "Structure Name Test",
-            structureDescription = "Structure Description Test"
-        );
-
-        DataEngine.addField(
-            fieldFieldLabel = "Color Test",
-            fieldName = "Color"
-        );
-
-        WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-        WebContentStructures.viewTableEntryCP(
+		WebContentStructures.addCP(
 			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test"
-        );
+			structureName = "Structure Name Test");
 
-        WebContentNavigator.gotoEditStructure(
-			structureName = "Structure Name Test"
-        );
+		DataEngine.addField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color");
 
-        DataEngine.duplicateField(
-            fieldFieldLabel = "Color Test"
-        );
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
 
-        WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.viewTableEntryCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
 
-        WebContentNavigator.gotoEditStructure(
-			structureName = "Structure Name Test"
-        );
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		DataEngine.duplicateField(fieldFieldLabel = "Color Test");
+
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Color Test",
-			fieldName = "Color"
-		);
+			fieldName = "Color");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Copy of Color Test",
-			fieldName = "Color"
-		);
+			fieldName = "Color");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -269,47 +248,39 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-                category = "Content & Data",
-                panel = "Site Administration",
-                portlet = "Web Content"
-        );
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-            structureName = "Structure Name Test",
-            structureDescription = "Structure Description Test"
-        );
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
 
-        DataEngine.addField(
-            fieldFieldLabel = "Color Test",
-            fieldName = "Color"
-        );
-
-        DataEngine.editFieldTip(
+		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
-			fieldHelp = "Help Test"
-        );
+			fieldName = "Color");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Color Test",
+			fieldHelp = "Help Test");
 
 		WebContentStructures.saveCP(structureName = "Structure Name Test");
 
-        WebContentStructures.viewTableEntryCP(
+		WebContentStructures.viewTableEntryCP(
 			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test"
-        );
+			structureName = "Structure Name Test");
 
-        WebContentNavigator.gotoEditStructure(
-			structureName = "Structure Name Test"
-        );
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
-        DataEngine.viewFieldHelpText(
+		DataEngine.viewFieldHelpText(
 			fieldFieldLabel = "Color Test",
-			fieldHelp = "Help Test"
-		);
+			fieldHelp = "Help Test");
 
 		Click(locator1 = "Icon#BACK");
 
-        WebContentStructures.deleteCP(structureName = "Structure Name Test");
+		WebContentStructures.deleteCP(structureName = "Structure Name Test");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -318,42 +289,35 @@ definition {
 	test EditLabelOfColorField {
 		property portal.acceptance = "false";
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-        );
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-            structureName = "Structure Name Test",
-            structureDescription = "Structure Description Test"
-        );
-
-        DataEngine.addField(
-            fieldFieldLabel = "Color Test",
-            fieldName = "Color"
-        );
-
-        WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-        WebContentStructures.viewTableEntryCP(
 			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test"
-        );
+			structureName = "Structure Name Test");
 
-        WebContentNavigator.gotoEditStructure(
-			structureName = "Structure Name Test"
-        );
-
-        DataEngine.viewField(
+		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
-			fieldName = "Color"
-		);
+			fieldName = "Color");
 
-        Click(locator1 = "Icon#BACK");
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
 
-        WebContentStructures.deleteCP(structureName = "Structure Name Test");
+		WebContentStructures.viewTableEntryCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Color Test",
+			fieldName = "Color");
+
+		Click(locator1 = "Icon#BACK");
+
+		WebContentStructures.deleteCP(structureName = "Structure Name Test");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

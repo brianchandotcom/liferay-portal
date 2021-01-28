@@ -41,7 +41,6 @@ String sku = cpContentListEntryModel.getSku();
 			<span class="d-flex flex-row text-truncate">
 				<commerce-ui:price
 					CPDefinitionId='<%= cpContentListEntryModel.getCpDefinitionId() %>'
-					displayOneLine="<%= true %>"
 				/>
 			</span>
 		</span>

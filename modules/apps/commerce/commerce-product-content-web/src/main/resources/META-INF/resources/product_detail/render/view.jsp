@@ -105,7 +105,9 @@ if (cpSku != null) {
 			</h4>
 
 			<div class="product-detail-options">
-				<%= cpContentHelper.renderOptions(renderRequest, renderResponse) %>
+				<form data-senna-off="true" name="fm">
+					<%= cpContentHelper.renderOptions(renderRequest, renderResponse) %>
+				</form>
 
 				<%@ include file="/product_detail/render/form_handlers/metal_js.jspf" %>
 			</div>

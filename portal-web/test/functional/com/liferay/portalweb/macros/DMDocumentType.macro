@@ -10,18 +10,13 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = "${dmDocumentTypeName}");
-
 		DMDocumentType.gotoTab(tabName = "Builder");
-
 		var rowNum = "0";
-
 		for (var dmDocumentTypeFieldName : list "${dmDocumentTypeFieldNames}") {
 			Type.sendKeys(
 				locator1 = "DocumentsAndMediaDocumentTypes#SEARCH_FIELD",
 				value1 = "${dmDocumentTypeFieldName}");
-
 			var key_fieldType = "${dmDocumentTypeFieldName}";
-
 			if (IsElementPresent(locator1 = "DocumentsAndMediaDocumentTypes#FIELD_DROP_TARGET")) {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					locator1 = "DocumentsAndMediaDocumentTypes#ADD_FIELD_TYPE",
@@ -35,20 +30,14 @@ definition {
 					locator2 = "DocumentsAndMediaDocumentTypes#FIELD_BOTTOM_DROP_TARGET",
 					value1 = "${dmDocumentTypeFieldName}");
 			}
-
 			Click(locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_BACK");
-
 			Click(locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_DELETE");
-
 			var rowNum = ${rowNum} + 1;
 		}
-
 		if (isSet(dmDocumentTypeDescription)) {
 			DMDocumentType.gotoTab(tabName = "Details");
-
 			PortletEntry.inputDescription(description = "${dmDocumentTypeDescription}");
 		}
-
 		if (isSet(metadataSetName)) {
 			DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
 

@@ -90,12 +90,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
-	@ignore = "true"
 	@priority = "5"
 	test SetGeolocationLabel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 SetGeolocationLabel pending implementation
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeFieldNames = "Geolocation",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		FormViewBuilder.editFieldLabel(
+            fieldLabel = "Geolocation",
+            label = "Localization");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Localization",
+			fieldName = "Geolocation");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

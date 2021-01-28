@@ -44,6 +44,7 @@ function ManagementToolbar({
 	onClearSelectionButtonClick = () => {},
 	onInfoButtonClick = () => {},
 	onSelectAllButtonClick = () => {},
+	onShowMoreButtonClick,
 	searchActionURL,
 	searchContainerId,
 	searchData,
@@ -161,7 +162,12 @@ function ManagementToolbar({
 
 							{showCreationMenu && creationMenu && (
 								<ClayManagementToolbar.Item>
-									<CreationMenu {...creationMenu} />
+									<CreationMenu
+										{...creationMenu}
+										onShowMoreButtonClick={
+											onShowMoreButtonClick
+										}
+									/>
 								</ClayManagementToolbar.Item>
 							)}
 						</ClayManagementToolbar.ItemList>

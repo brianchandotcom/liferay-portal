@@ -35,24 +35,3 @@ export const getValidName = (defaultName, name) => {
 
 	return name;
 };
-
-export const normalizeNames = ({
-	allowEmptyKeys = true,
-	defaultName = '',
-	localizableValue,
-}) => {
-	const name = {};
-
-	Object.keys(localizableValue).forEach((languageId) => {
-		const value = localizableValue[languageId];
-		const normalizedValue = getValidName(defaultName, value)?.trim();
-
-		if (!allowEmptyKeys && !normalizedValue) {
-			return;
-		}
-
-		name[languageId] = normalizedValue;
-	});
-
-	return name;
-};

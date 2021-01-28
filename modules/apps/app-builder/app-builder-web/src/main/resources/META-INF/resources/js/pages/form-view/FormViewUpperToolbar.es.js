@@ -23,8 +23,8 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
+import {normalizeData} from '../../utils/normalizers.es';
 import {errorToast, successToast} from '../../utils/toast.es';
-import {normalizeNames} from '../../utils/utils.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
 
@@ -38,6 +38,7 @@ export default function FormViewUpperToolbar({newCustomObject, popUpWindow}) {
 		dataDefinition,
 		dataDefinitionId,
 		dataLayout,
+		dataLayoutId,
 		initialAvailableLanguageIds,
 	} = state;
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
@@ -126,26 +127,18 @@ export default function FormViewUpperToolbar({newCustomObject, popUpWindow}) {
 	};
 
 	const onSave = () => {
-		if (!dataLayout.name[defaultLanguageId]) {
-			dataLayout.name[defaultLanguageId] =
-				dataLayout.name[editingLanguageId];
-		}
-
 		setLoading(true);
 
-		DataDefinitionUtils.saveDataDefinition(
-			{
+		DataDefinitionUtils.saveDataDefinition({
+			...normalizeData({
 				...state,
-				dataLayout: {
-					...dataLayout,
-					name: normalizeNames({
-						defaultName: Liferay.Language.get('untitled-form-view'),
-						localizableValue: dataLayout.name,
-					}),
-				},
-			},
-			dataLayoutBuilder
-		)
+				dataLayoutBuilder,
+				defaultLanguageId,
+				editingLanguageId,
+			}),
+			dataDefinitionId,
+			dataLayoutId,
+		})
 			.then(onSuccess)
 			.catch((error) => {
 				onError(error);

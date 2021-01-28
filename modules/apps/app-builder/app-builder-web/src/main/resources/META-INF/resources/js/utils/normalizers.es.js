@@ -1,0 +1,104 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import {getValidName} from '../utils/utils.es';
+
+export const normalizeNames = ({
+	allowEmptyKeys = true,
+	defaultName = '',
+	localizableValue,
+}) => {
+	const name = {};
+
+	Object.keys(localizableValue).forEach((languageId) => {
+		const value = localizableValue[languageId];
+		const normalizedValue = getValidName(defaultName, value)?.trim();
+
+		if (!allowEmptyKeys && !normalizedValue) {
+			return;
+		}
+
+		name[languageId] = normalizedValue;
+	});
+
+	return name;
+};
+
+function normalizeDataLayout({
+	dataDefinition,
+	dataLayout,
+	dataLayoutBuilder,
+	defaultLanguageId,
+	editingLanguageId,
+}) {
+	const {dataDefinitionFields = []} = dataDefinition;
+	const dataLayoutFields = {...dataLayout.dataLayoutFields};
+
+	Object.keys(dataLayoutFields).forEach((field) => {
+		if (!dataDefinitionFields.find((item) => item.name === field)) {
+			delete dataLayoutFields[field];
+		}
+	});
+
+	dataDefinitionFields.forEach((definitionField) => {
+		const fieldProperties = dataLayoutBuilder.getDDMSettingsContextWithVisualProperties(
+			definitionField
+		);
+
+		// Ignore this visual properties because it is treated differently
+
+		delete fieldProperties['required'];
+
+		dataLayoutFields[definitionField.name] = {
+			...dataLayoutFields[definitionField.name],
+			...fieldProperties,
+		};
+	});
+
+	const name = normalizeNames({
+		defaultName: Liferay.Language.get('untitled-form-view'),
+		localizableValue: dataLayout.name,
+	});
+
+	if (!name[defaultLanguageId]) {
+		name[defaultLanguageId] = name[editingLanguageId];
+	}
+
+	return {
+		...dataLayout,
+		dataLayoutFields,
+		name,
+	};
+}
+
+export const normalizeData = ({
+	dataDefinition,
+	dataLayout,
+	dataLayoutBuilder,
+	defaultLanguageId,
+	editingLanguageId,
+}) => {
+	const normalizedDataLayout = normalizeDataLayout({
+		dataDefinition,
+		dataLayout,
+		dataLayoutBuilder,
+		defaultLanguageId,
+		editingLanguageId,
+	});
+
+	return {
+		dataDefinition,
+		dataLayout: normalizedDataLayout,
+	};
+};

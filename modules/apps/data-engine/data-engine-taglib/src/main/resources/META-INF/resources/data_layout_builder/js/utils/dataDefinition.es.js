@@ -116,10 +116,12 @@ export function getOptionLabel(
 	return getLabel(languageId) || getLabel(defaultLanguageId) || value;
 }
 
-export function saveDataDefinition(
-	{dataDefinition, dataDefinitionId, dataLayout, dataLayoutId},
-	dataLayoutBuilder
-) {
+export function saveDataDefinition({
+	dataDefinition,
+	dataDefinitionId,
+	dataLayout,
+	dataLayoutId,
+}) {
 	const {defaultLanguageId} = dataDefinition;
 
 	const normalizedDataDefinition = normalizeDataDefinition(
@@ -127,11 +129,10 @@ export function saveDataDefinition(
 		defaultLanguageId,
 		false
 	);
+
 	const normalizedDataLayout = normalizeDataLayout(
 		dataLayout,
-		defaultLanguageId,
-		dataDefinition,
-		dataLayoutBuilder
+		defaultLanguageId
 	);
 
 	const updateDefinition = () =>

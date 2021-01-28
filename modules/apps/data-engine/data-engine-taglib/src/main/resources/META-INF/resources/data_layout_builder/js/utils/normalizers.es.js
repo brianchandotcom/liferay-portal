@@ -12,28 +12,6 @@
  * details.
  */
 
-const getVisualPropertiesFromField = ({pages}) => {
-	const fieldProperties = {};
-
-	pages.forEach((page) =>
-		page.rows.forEach((row) =>
-			row.columns.forEach(({fields}) =>
-				fields
-					.filter(({visualProperty}) => visualProperty)
-					.forEach(
-						({fieldName, localizable, localizedValue, value}) => {
-							fieldProperties[fieldName] = localizable
-								? localizedValue
-								: value;
-						}
-					)
-			)
-		)
-	);
-
-	return fieldProperties;
-};
-
 /**
  * Normalize field
  * @param {Array} availableLanguageIds
@@ -110,6 +88,7 @@ function normalizeField(
  * Normalize Data Definition
  * @param {Object} dataDefinition
  * @param {String?} defaultLanguageId
+ * @param {boolean?} normalizeFieldset
  */
 
 export function normalizeDataDefinition(
@@ -150,42 +129,17 @@ export function normalizeDataDefinition(
  * Normalize Data Layout
  * @param {Object} dataLayout
  * @param {String?} defaultLanguageId
- * @param {Object?} dataDefinition
- * @param {Object} dataLayoutBuilder
  */
 
 export function normalizeDataLayout(
 	dataLayout,
-	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
-	dataDefinition,
-	dataLayoutBuilder
+	defaultLanguageId = themeDisplay.getDefaultLanguageId()
 ) {
-	const {dataLayoutFields = {}} = dataLayout;
-
-	if (dataDefinition?.dataDefinitionFields) {
-		const {dataDefinitionFields} = dataDefinition;
-		Object.keys(dataLayoutFields).forEach((field) => {
-			if (!dataDefinitionFields.find((item) => item.name === field)) {
-				delete dataLayoutFields[field];
-			}
-		});
-
-		dataDefinitionFields.forEach((definitionField) => {
-			dataLayoutFields[definitionField.name] = {
-				...dataLayoutFields[definitionField.name],
-				...getVisualPropertiesFromField(
-					dataLayoutBuilder.getDDMFormFieldSettingsContext(
-						definitionField
-					)
-				),
-			};
-		});
-	}
+	const {dataLayoutPages, dataRules, description} = dataLayout;
 
 	return {
 		...dataLayout,
-		dataLayoutFields,
-		dataLayoutPages: dataLayout.dataLayoutPages.map((dataLayoutPage) => ({
+		dataLayoutPages: dataLayoutPages.map((dataLayoutPage) => ({
 			...dataLayoutPage,
 			dataLayoutRows: (dataLayoutPage.dataLayoutRows || []).map(
 				(dataLayoutRow) => ({
@@ -199,7 +153,7 @@ export function normalizeDataLayout(
 				})
 			),
 			description: {
-				...dataLayout.description,
+				...description,
 				[defaultLanguageId]:
 					dataLayoutPage.description[defaultLanguageId] || '',
 			},
@@ -209,7 +163,7 @@ export function normalizeDataLayout(
 					dataLayoutPage.title[defaultLanguageId] || '',
 			},
 		})),
-		dataRules: dataLayout.dataRules.map((rule) => {
+		dataRules: dataRules.map((rule) => {
 			delete rule.ruleEditedIndex;
 
 			return rule;

@@ -19,8 +19,8 @@ import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../../AppContext.es';
 import {addItem, updateItem} from '../../../utils/client.es';
+import {normalizeNames} from '../../../utils/normalizers.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
-import {normalizeNames} from '../../../utils/utils.es';
 import {isProductMenuValid} from '../utils.es';
 import EditAppContext from './EditAppContext.es';
 

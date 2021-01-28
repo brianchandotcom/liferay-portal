@@ -23,8 +23,8 @@ import {AppContext} from '../../AppContext.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import DragLayer from '../../components/drag-and-drop/DragLayer.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
+import {normalizeNames} from '../../utils/normalizers.es';
 import {errorToast, successToast} from '../../utils/toast.es';
-import {normalizeNames} from '../../utils/utils.es';
 import DropZone from './DropZone.es';
 import EditTableViewContext, {
 	ADD_DATA_LIST_VIEW_FIELD,

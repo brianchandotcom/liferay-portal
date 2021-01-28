@@ -948,6 +948,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-125933 ConvertWidgetPageWithWebContentsToContentPage pending implementation
+
 	}
 
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."

@@ -32,45 +32,7 @@ definition {
 	test CheckDefaultWebContentTitleOnWebContentList {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text Test",
-			fieldName = "Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Help Test");
-
-		WebContentStructures.addLocalization(
-			locale = "pt-BR",
-			localization1Name = "Novo nome do teste");
-
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text Test",
-			label = "Teste de nome");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Teste de nome",
-			fieldHelp = "Teste do campo de ajuda");
-
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-		PortletEntry.viewLocale(
-			locale = "en-US",
-			portletName = "Web Content");
+		// TODO LPS-122317 CheckDefaultWebContentTitleOnWebContentList pending implementation
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
@@ -287,7 +249,47 @@ definition {
 	test VerifyDefaultLanguageIsFirstShown {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 VerifyDefaultLanguageIsFirstShown pending implementation
+				property portal.acceptance = "false";
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text Test",
+			fieldName = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text Test",
+			fieldHelp = "Help Test");
+
+		WebContentStructures.addLocalization(
+			locale = "pt-BR",
+			localization1Name = "Novo nome do teste");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text Test",
+			label = "Teste de nome");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Teste de nome",
+			fieldHelp = "Teste do campo de ajuda");
+
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.viewLocale(
+			locale = "en-US",
+			portletName = "Web Content");
 	}
 
 }

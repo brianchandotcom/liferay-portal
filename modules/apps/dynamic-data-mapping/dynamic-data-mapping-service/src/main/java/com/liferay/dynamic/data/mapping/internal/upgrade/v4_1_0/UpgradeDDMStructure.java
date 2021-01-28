@@ -41,8 +41,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_upgradeStructureDefinition();
-		_upgradeStructureLayoutDefinition();
 		_upgradeStructureVersionDefinition();
+
+		_upgradeStructureLayoutDefinition();
 	}
 
 	private long _getParentStructureLayoutId(long parentStructureId)

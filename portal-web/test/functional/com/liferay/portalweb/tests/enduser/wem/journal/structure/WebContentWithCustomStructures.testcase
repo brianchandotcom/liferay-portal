@@ -2173,23 +2173,33 @@ definition {
 
 			var index = "1";
 
-			for (var optionValue : list "value 1,value 2,value 3") {
+			for (var optionValue : list "Option 1,Option 2,Option 3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "Select from List",
 					index = "${index}",
 					optionValue = "${optionValue}");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldFieldLabel = "Select from List",
+					fieldReferenceOfFieldOption = "Value${index}",
+					index = "${index}");
 
 				var index = ${index} + 1;
 			}
 
 			var index = "1";
 
-			for (var optionValue : list "value 1,value 2,value 3") {
+			for (var optionValue : list "Option 1,Option 2,Option 3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "Single Selection",
 					index = "${index}",
 					optionFieldLabel = "Options",
 					optionValue = "${optionValue}");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldFieldLabel = "Single Selection",
+					fieldReferenceOfFieldOption = "Value${index}",
+					index = "${index}");
 
 				var index = ${index} + 1;
 			}
@@ -2214,8 +2224,8 @@ definition {
 				webContentMultipleSelection = "Boolean",
 				webContentNumeric = "9",
 				webContentRichText = "This is a Rich Text field",
-				webContentSelectFromList = "value 2",
-				webContentSingleSelection = "value 1",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 1",
 				webContentText = "This is a Text field",
 				webContentUpload = "Document_1.jpg",
 				webContentWebContent = "Web Content Title");
@@ -2249,8 +2259,8 @@ definition {
 				webContentMultipleSelection = "Boolean",
 				webContentNumeric = "9",
 				webContentRichText = "This is a Rich Text field",
-				webContentSelectFromList = "value 2",
-				webContentSingleSelection = "value 1",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 1",
 				webContentText = "This is a Text field",
 				webContentUpload = "Document_1.jpg",
 				webContentWebContent = "Web Content Title");

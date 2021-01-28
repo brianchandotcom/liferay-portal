@@ -4169,11 +4169,11 @@ definition {
 				webContentGrid = "true",
 				webContentImage = "Document_3.png",
 				webContentLinkToPage = "Test Page Name",
-				webContentMultipleSelection = "Value 1",
+				webContentMultipleSelection = "Option 1",
 				webContentNumeric = "9",
 				webContentRichText = "This is a Rich Text field",
-				webContentSelectFromList = "Value 2",
-				webContentSingleSelection = "Value 3",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
 				webContentText = "This is a Text field",
 				webContentTitle = "Web Content Title",
 				webContentUpload = "Document_1.jpg",
@@ -4201,7 +4201,7 @@ definition {
 		}
 
 		task ("View the web content is shown in Content Display") {
-			for (var content : list "This is a Text field,Value 2,Value 3,Yes,10 Oct 2020,9,#FF0D0D") {
+			for (var content : list "This is a Text field,Option 2,Option 3,Yes,10 Oct 2020,9,#FF0D0D") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "WCD#WEB_CONTENT_CONTENT",
 					value1 = "${content}");
@@ -4209,7 +4209,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "Row: Row 1, Column: Column 1");
+				value1 = "Row: R1, Column: C1");
 
 			AssertVisible(
 				key_content = "//img[contains(@src,'Document_3.png')]",

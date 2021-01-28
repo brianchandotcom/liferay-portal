@@ -174,7 +174,7 @@ definition {
 		task ("Add two field options for Select from List") {
 			var index = "1";
 
-			for (var optionValue : list "value 1,value 2") {
+			for (var optionValue : list "Option 1,Option 2") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "Select from List",
 					index = "${index}",
@@ -187,7 +187,7 @@ definition {
 		task ("Edit field reference of field options") {
 			var index = "1";
 
-			for (var fieldReferenceOfFieldOption : list "Reference1,Reference2") {
+			for (var fieldReferenceOfFieldOption : list "Value1,Value2") {
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldFieldLabel = "Select from List",
 					fieldReferenceOfFieldOption = "${fieldReferenceOfFieldOption}",
@@ -206,7 +206,7 @@ definition {
 
 			var index = "1";
 
-			for (var fieldReferenceOfFieldOption : list "Reference1,Reference2") {
+			for (var fieldReferenceOfFieldOption : list "Value1,Value2") {
 				AssertTextEquals(
 					index = "${index}",
 					locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",
@@ -229,7 +229,7 @@ definition {
 
 			var index = "1";
 
-			for (var fieldReferenceOfFieldOption : list "Reference1,Reference2") {
+			for (var fieldReferenceOfFieldOption : list "Value1,Value2") {
 				AssertTextEquals(
 					index = "${index}",
 					locator1 = "Sidebar#OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT",

@@ -42,11 +42,16 @@ definition {
 
 			var index = "1";
 
-			for (var optionValue : list "value 1,value 2,value 3") {
+			for (var optionValue : list "Option 1,Option 2,Option 3") {
 				DataEngine.addFieldOption(
 					fieldFieldLabel = "Select from List",
 					index = "${index}",
 					optionValue = "${optionValue}");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldFieldLabel = "Select from List",
+					fieldReferenceOfFieldOption = "Value${index}",
+					index = "1");
 
 				var index = ${index} + 1;
 			}
@@ -80,14 +85,14 @@ definition {
 			Select(
 				key_fieldFieldLabel = "Select from List",
 				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
-				value1 = "value 2");
+				value1 = "Option 2");
 
 			Pause(locator1 = "3000");
 
 			AssertSelectedLabel(
 				key_fieldFieldLabel = "Select from List",
 				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
-				value1 = "value 2");
+				value1 = "Option 2");
 
 			Button.click(button = "Apply");
 
@@ -96,18 +101,18 @@ definition {
 
 		task ("Assert the selected info is shown above the Select button") {
 			AssertTextEquals.assertPartialText(
-				key_text = "Select from List: value 2",
+				key_text = "Select from List: Value2",
 				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
-				value1 = "Select from List: value 2");
+				value1 = "Select from List: Value2");
 		}
 
 		task ("Assert the selected info is still shown above the Select button") {
 			PortletEntry.save();
 
 			AssertTextEquals.assertPartialText(
-				key_text = "Select from List: value 2",
+				key_text = "Select from List: Value2",
 				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",
-				value1 = "Select from List: value 2");
+				value1 = "Select from List: Value2");
 		}
 	}
 

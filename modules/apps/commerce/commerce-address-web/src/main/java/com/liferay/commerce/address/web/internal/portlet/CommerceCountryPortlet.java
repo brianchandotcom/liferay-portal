@@ -20,10 +20,10 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -72,7 +72,7 @@ public class CommerceCountryPortlet extends MVCPortlet {
 		CommerceCountriesDisplayContext commerceCountriesDisplayContext =
 			new CommerceCountriesDisplayContext(
 				_actionHelper, _commerceChannelRelService,
-				_commerceChannelService, _commerceCountryService,
+				_commerceChannelService, _countryService,
 				_commerceRegionsStarterRegistry, _portletResourcePermission,
 				renderRequest, renderResponse);
 
@@ -92,10 +92,10 @@ public class CommerceCountryPortlet extends MVCPortlet {
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
+	private CommerceRegionsStarterRegistry _commerceRegionsStarterRegistry;
 
 	@Reference
-	private CommerceRegionsStarterRegistry _commerceRegionsStarterRegistry;
+	private CountryService _countryService;
 
 	@Reference(
 		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_ADDRESS + ")"

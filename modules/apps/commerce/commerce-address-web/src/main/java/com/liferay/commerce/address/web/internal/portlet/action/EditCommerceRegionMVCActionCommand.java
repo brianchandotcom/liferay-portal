@@ -15,15 +15,14 @@
 package com.liferay.commerce.address.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.exception.CommerceRegionNameException;
 import com.liferay.commerce.exception.NoSuchRegionException;
-import com.liferay.commerce.model.CommerceRegion;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RegionNameException;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -68,7 +67,7 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long deleteCommerceRegionId : deleteCommerceRegionIds) {
-			_commerceRegionService.deleteCommerceRegion(deleteCommerceRegionId);
+			_regionService.deleteRegion(deleteCommerceRegionId);
 		}
 	}
 
@@ -98,7 +97,7 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (exception instanceof CommerceRegionNameException) {
+			else if (exception instanceof RegionNameException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
@@ -122,45 +121,43 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
-		_commerceRegionService.setActive(commerceRegionId, active);
+		_regionService.updateActive(commerceRegionId, active);
 	}
 
-	protected CommerceRegion updateCommerceRegion(ActionRequest actionRequest)
+	protected Region updateCommerceRegion(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceRegionId = ParamUtil.getLong(
 			actionRequest, "commerceRegionId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String code = ParamUtil.getString(actionRequest, "code");
-		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+		String code = ParamUtil.getString(actionRequest, "code");
+		String name = ParamUtil.getString(actionRequest, "name");
+		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceRegion.class.getName(), actionRequest);
-
-		CommerceRegion commerceRegion = null;
+		Region region = null;
 
 		if (commerceRegionId <= 0) {
 			long commerceCountryId = ParamUtil.getLong(
 				actionRequest, "commerceCountryId");
 
-			commerceRegion = _commerceRegionService.addCommerceRegion(
-				commerceCountryId, name, code, priority, active,
-				serviceContext);
+			region = _regionService.addRegion(
+				commerceCountryId, active, name, priority, code,
+				ServiceContextFactory.getInstance(
+					Region.class.getName(), actionRequest));
 		}
 		else {
-			commerceRegion = _commerceRegionService.updateCommerceRegion(
-				commerceRegionId, name, code, priority, active, serviceContext);
+			region = _regionService.updateRegion(
+				commerceRegionId, active, name, priority, code);
 		}
 
-		return commerceRegion;
+		return region;
 	}
 
 	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private Portal _portal;
 
 	@Reference
-	private Portal _portal;
+	private RegionService _regionService;
 
 }

@@ -21,7 +21,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
+Country country = (Country)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -36,7 +36,7 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 			<portlet:param name="mvcRenderCommandName" value="/commerce_country/edit_commerce_country" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= backURL %>" />
-			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
+			<portlet:param name="commerceCountryId" value="<%= String.valueOf(country.getCountryId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -47,12 +47,12 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 		<portlet:actionURL name="/commerce_country/edit_commerce_country" var="setActiveURL">
 			<portlet:param name="<%= Constants.CMD %>" value="setActive" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
-			<portlet:param name="active" value="<%= String.valueOf(!commerceCountry.isActive()) %>" />
+			<portlet:param name="commerceCountryId" value="<%= String.valueOf(country.getCountryId()) %>" />
+			<portlet:param name="active" value="<%= String.valueOf(!country.isActive()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message='<%= commerceCountry.isActive() ? "deactivate" : "activate" %>'
+			message='<%= country.isActive() ? "deactivate" : "activate" %>'
 			url="<%= setActiveURL %>"
 		/>
 
@@ -60,7 +60,7 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backURL" value="<%= backURL %>" />
-			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
+			<portlet:param name="commerceCountryId" value="<%= String.valueOf(country.getCountryId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

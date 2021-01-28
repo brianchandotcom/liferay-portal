@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
@@ -36,54 +36,48 @@ import org.osgi.service.component.annotations.Reference;
 @Component(enabled = false, service = ActionHelper.class)
 public class ActionHelper {
 
-	public List<CommerceCountry> getCommerceCountries(
-			PortletRequest portletRequest)
+	public List<Country> getCountries(PortletRequest portletRequest)
 		throws PortalException {
 
-		List<CommerceCountry> commerceCountries = new ArrayList<>();
+		List<Country> countries = new ArrayList<>();
 
-		long[] commerceCountryIds = ParamUtil.getLongValues(
-			portletRequest, "rowIds");
+		long[] countryIds = ParamUtil.getLongValues(portletRequest, "rowIds");
 
-		for (long commerceCountryId : commerceCountryIds) {
-			commerceCountries.add(
-				_commerceCountryService.getCommerceCountry(commerceCountryId));
+		for (long countryId : countryIds) {
+			countries.add(_countryService.getCountry(countryId));
 		}
 
-		return commerceCountries;
+		return countries;
 	}
 
-	public CommerceCountry getCommerceCountry(RenderRequest renderRequest)
+	public Country getCountry(RenderRequest renderRequest)
 		throws PortalException {
 
-		long commerceCountryId = ParamUtil.getLong(
-			renderRequest, "commerceCountryId");
+		long countryId = ParamUtil.getLong(renderRequest, "commerceCountryId");
 
-		if (commerceCountryId > 0) {
-			return _commerceCountryService.getCommerceCountry(
-				commerceCountryId);
+		if (countryId > 0) {
+			return _countryService.getCountry(countryId);
 		}
 
 		return null;
 	}
 
-	public CommerceRegion getCommerceRegion(RenderRequest renderRequest)
+	public Region getRegion(RenderRequest renderRequest)
 		throws PortalException {
 
-		long commerceRegionId = ParamUtil.getLong(
-			renderRequest, "commerceRegionId");
+		long regionId = ParamUtil.getLong(renderRequest, "commerceRegionId");
 
-		if (commerceRegionId > 0) {
-			return _commerceRegionService.getCommerceRegion(commerceRegionId);
+		if (regionId > 0) {
+			return _regionService.getRegion(regionId);
 		}
 
 		return null;
 	}
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
+	private CountryService _countryService;
 
 	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private RegionService _regionService;
 
 }

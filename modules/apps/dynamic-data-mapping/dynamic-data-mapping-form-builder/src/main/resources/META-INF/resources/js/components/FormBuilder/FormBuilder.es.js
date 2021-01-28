@@ -83,7 +83,7 @@ class FormBuilderBase extends Component {
 	render() {
 		const {
 			activePage,
-			allowNestedFields,
+			allowNestedFields = true,
 			dnd,
 			editingLanguageId,
 			fieldActions,
@@ -92,6 +92,7 @@ class FormBuilderBase extends Component {
 			pages,
 			paginationMode,
 			portletNamespace,
+			sidebarOpen,
 			spritemap,
 			successPageSettings,
 			view,
@@ -99,7 +100,11 @@ class FormBuilderBase extends Component {
 
 		return (
 			<div class="ddm-form-builder-wrapper">
-				<div class="container ddm-form-builder">
+				<div
+					class={`container ddm-form-builder ${
+						sidebarOpen ? 'ddm-form-builder--sidebar-open' : ''
+					}`}
+				>
 					<FormNoopAdapter
 						activePage={activePage}
 						allowNestedFields={allowNestedFields}

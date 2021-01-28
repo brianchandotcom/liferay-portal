@@ -210,7 +210,7 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 	);
 };
 
-export default () => {
+const CustomObjectSidebar = () => {
 	const [
 		{
 			dataDefinition: {dataDefinitionFields, id},
@@ -283,3 +283,5 @@ export default () => {
 		</Sidebar>
 	);
 };
+CustomObjectSidebar.displayName = 'CustomObjectSidebar';
+export default CustomObjectSidebar;

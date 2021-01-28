@@ -145,56 +145,49 @@ definition {
 	test DuplicateTranslatedField {
 		property portal.acceptance = "false";
 
-        ProductMenu.gotoPortlet(
+		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "Test",
-			structureName = "Test"
-		);
+			structureName = "Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Lbltest",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Lbltest",
-			label = "Lbltest pt"
-		);
+			label = "Lbltest pt");
 
 		WebContentStructures.addName(structureName = "Titulo teste");
 
-		Click(locator1="//div[contains(@class,'dropdown')]//button[@data-title='Actions']");
+		Click(locator1 = "//div[contains(@class,'dropdown')]//button[@data-title='Actions']");
 
-        MenuItem.clickNoError(menuItem = "Duplicate");
+		MenuItem.clickNoError(menuItem = "Duplicate");
 
 		WebContentStructures.saveCP();
 
 		WebContentStructures.viewCP(
-            structureName = "Test",
-            structureDescription = "Test"
-		);
+			structureDescription = "Test",
+			structureName = "Test");
 
-        LexiconEntry.gotoEntry(rowEntry = "Test");
+		LexiconEntry.gotoEntry(rowEntry = "Test");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
-            locator1 = "//label[@class='ddm-label' and contains(text(),'Copy of Lbltest pt')]",
-            value1 = "Copy of Lbltest pt"
-		);
+			locator1 = "//label[@class='ddm-label' and contains(text(),'Copy of Lbltest pt')]",
+			value1 = "Copy of Lbltest pt");
 
 		WebContentStructures.saveCP();
 
 		WebContentStructures.deleteCP(structureName = "Test");
-	
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

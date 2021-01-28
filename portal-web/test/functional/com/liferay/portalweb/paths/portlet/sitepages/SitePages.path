@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_PAGE_TYPE</td>
-	<td>//li[contains(@class,'list-group-item')]//h5[contains(.,'Content Page')]/../ h4[contains(.,'${key_pageName}')]</td>
+	<td>//li[contains(@class,'list-group-item')]//h5[contains(.,'${key_pageType}')]/../ h4[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

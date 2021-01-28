@@ -19,17 +19,13 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.punchout.service.PunchOutReturnService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
-import com.liferay.commerce.service.CommerceCountryLocalService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -37,6 +33,10 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.OutputStreamWriter;
@@ -260,22 +260,20 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 			return countryJSONObject;
 		}
 
-		CommerceCountry commerceCountry =
-			_commerceCountryLocalService.fetchCommerceCountry(
-				commerceCountryId);
+		Country country = _countryLocalService.fetchCountry(commerceCountryId);
 
-		if (commerceCountry == null) {
+		if (country == null) {
 			return countryJSONObject;
 		}
 
 		countryJSONObject.put(
-			"name", commerceCountry.getName()
+			"name", country.getName()
 		).put(
-			"numericISOCode", commerceCountry.getNumericISOCode()
+			"numericISOCode", country.getNumber()
 		).put(
-			"threeLettersISOCode", commerceCountry.getThreeLettersISOCode()
+			"threeLettersISOCode", country.getA3()
 		).put(
-			"twoLettersISOCode", commerceCountry.getTwoLettersISOCode()
+			"twoLettersISOCode", country.getA2()
 		);
 
 		return countryJSONObject;
@@ -290,17 +288,16 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 			return regionJSONObject;
 		}
 
-		CommerceRegion commerceRegion =
-			_commerceRegionLocalService.fetchCommerceRegion(commerceRegionId);
+		Region region = _regionLocalService.fetchRegion(commerceRegionId);
 
-		if (commerceRegion == null) {
+		if (region == null) {
 			return regionJSONObject;
 		}
 
 		regionJSONObject.put(
-			"code", commerceRegion.getCode()
+			"code", region.getRegionCode()
 		).put(
-			"name", commerceRegion.getName()
+			"name", region.getName()
 		);
 
 		return regionJSONObject;
@@ -407,15 +404,15 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 	private CommerceAddressLocalService _commerceAddressLocalService;
 
 	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
-
-	@Reference
-	private CommerceRegionLocalService _commerceRegionLocalService;
+	private CountryLocalService _countryLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
 
 }

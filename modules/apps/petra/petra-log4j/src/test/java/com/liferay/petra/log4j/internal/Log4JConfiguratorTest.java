@@ -264,7 +264,7 @@ public class Log4JConfiguratorTest {
 	}
 
 	private String _generateXMLConfigurationContent(
-		String loggerName, String level, Class<?>... appenderTypes) {
+		String loggerName, String priority, Class<?>... appenderTypes) {
 
 		StringBundler sb = new StringBundler(10 + (8 * appenderTypes.length));
 
@@ -284,7 +284,7 @@ public class Log4JConfiguratorTest {
 		sb.append("<category name=\"");
 		sb.append(loggerName);
 		sb.append("\"><priority value=\"");
-		sb.append(level);
+		sb.append(priority);
 		sb.append("\" />");
 
 		for (Class<?> appenderType : appenderTypes) {

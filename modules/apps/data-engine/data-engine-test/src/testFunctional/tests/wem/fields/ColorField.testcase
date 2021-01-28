@@ -17,8 +17,8 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-				structureDescription = "Structure Description Test",
-				structureName = "Structure Name Test");
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
 	}
 
 	tearDown {
@@ -36,8 +36,6 @@ definition {
 	@priority = "5"
 	test AddColorFieldByDragAndDrop {
 		property portal.acceptance = "false";
-
-
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
@@ -85,8 +83,6 @@ definition {
 	test DisableSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
 
-
-
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
@@ -127,8 +123,6 @@ definition {
 	test EditColorFieldNameWithInvalidCharacters {
 		property portal.acceptance = "false";
 
-
-
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
@@ -160,8 +154,6 @@ definition {
 	@priority = "3"
 	test EditColorFieldNameWithValidCharacters {
 		property portal.acceptance = "false";
-
-
 
 		DataEngine.addField(
 			fieldFieldLabel = "ColorTest",
@@ -212,8 +204,6 @@ definition {
 	test SetColorFieldAsRequired {
 		property portal.acceptance = "false";
 
-
-
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
@@ -240,8 +230,6 @@ definition {
 	@priority = "4"
 	test SetSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
-
-
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",

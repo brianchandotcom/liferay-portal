@@ -490,6 +490,8 @@ AUI.add(
 					if (formNode) {
 						var formValidator = new A.FormValidator({
 							boundingBox: formNode,
+							stackErrorContainer:
+								'<div class="form-feedback-item form-validator-stack help-block"></div>',
 							validateOnBlur: instance.get('validateOnBlur'),
 						});
 

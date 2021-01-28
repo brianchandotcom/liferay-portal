@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.upgrade;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.store.Store;
@@ -401,7 +402,8 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"4.2.0", "4.3.0", new UpgradeDLFileEntryTypeDDMFieldAttribute(),
-			new UpgradeDLFileEntryTypeDataDefinitionId());
+			new UpgradeDLFileEntryTypeDataDefinitionId(
+				_dlFileEntryTypeLocalService));
 	}
 
 	@Activate
@@ -467,6 +469,9 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;

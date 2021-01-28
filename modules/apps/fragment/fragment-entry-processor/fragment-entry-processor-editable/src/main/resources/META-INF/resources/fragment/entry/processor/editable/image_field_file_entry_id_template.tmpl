@@ -1,0 +1,9 @@
+[#if field_name??]
+    [#if field_name?is_hash]
+        [#if field_name.infoItemReference??]
+			[#if field_name.infoItemReference.className?ends_with("FileEntry") && field_name.infoItemReference.infoItemIdentifier.classPK??]
+				${field_name.infoItemReference.infoItemIdentifier.classPK}
+			[/#if]
+        [/#if]
+    [/#if]
+[/#if]

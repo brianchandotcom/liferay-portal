@@ -1577,7 +1577,9 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Test Blog");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Test Blog");
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Blog",
+			searchAssetType = "Blogs Entry");
 
 		User.logoutPG();
 

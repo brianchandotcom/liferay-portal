@@ -15,10 +15,13 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -29,62 +32,78 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Alejandro Tardín
  */
 public class UpgradeDLFileEntryTypeDataDefinitionId extends UpgradeProcess {
 
+	public UpgradeDLFileEntryTypeDataDefinitionId(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select userId, userName, companyId, groupId, ",
-					"fileEntryTypeId, fileEntryTypeKey, name from ",
-					"DLFileEntryType where (dataDefinitionId is null or ",
-					"dataDefinitionId = 0) and fileEntryTypeKey != ",
-					"'BASIC-DOCUMENT'"));
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
-					"update DLFileEntryType set dataDefinitionId = ? where " +
-						"fileEntryTypeId = ? "));
-			ResultSet rs = ps1.executeQuery()) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_dlFileEntryTypeLocalService.getActionableDynamicQuery();
 
-			while (rs.next()) {
-				long ddmStructureId = _addDDMStructure(
-					rs.getLong("groupId"), rs.getLong("companyId"),
-					rs.getLong("userId"), rs.getString("userName"),
-					rs.getString("name"));
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.or(
+						RestrictionsFactoryUtil.eq("dataDefinitionId", 0L),
+						RestrictionsFactoryUtil.isNull("dataDefinitionId")));
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.ne(
+						"fileEntryTypeKey", "BASIC-DOCUMENT"));
+			});
 
-				long ddmStructureVersionId = _addDDMStructureVersion(
-					rs.getLong("userId"), rs.getString("userName"),
-					rs.getLong("companyId"), rs.getLong("groupId"),
-					ddmStructureId, rs.getString("name"));
+		actionableDynamicQuery.setPerformActionMethod(
+			(DLFileEntryType dlFileEntryType) -> {
+				try {
+					long ddmStructureId = _addDDMStructure(
+						dlFileEntryType.getGroupId(),
+						dlFileEntryType.getCompanyId(),
+						dlFileEntryType.getUserId(),
+						dlFileEntryType.getUserName(),
+						dlFileEntryType.getName());
 
-				_addDDMStructureLayout(
-					rs.getLong("userId"), rs.getString("userName"),
-					rs.getLong("groupId"), rs.getLong("companyId"),
-					ddmStructureId, rs.getString("name"),
-					ddmStructureVersionId);
+					long ddmStructureVersionId = _addDDMStructureVersion(
+						dlFileEntryType.getUserId(),
+						dlFileEntryType.getUserName(),
+						dlFileEntryType.getCompanyId(),
+						dlFileEntryType.getGroupId(), ddmStructureId,
+						dlFileEntryType.getName());
 
-				ResourceLocalServiceUtil.addResources(
-					rs.getLong("companyId"), rs.getLong("groupId"),
-					rs.getLong("userId"),
-					ResourceActionsUtil.getCompositeModelName(
-						DLFileEntryMetadata.class.getName(),
-						DDMStructure.class.getName()),
-					ddmStructureId, false, false, false);
+					_addDDMStructureLayout(
+						dlFileEntryType.getUserId(),
+						dlFileEntryType.getUserName(),
+						dlFileEntryType.getGroupId(),
+						dlFileEntryType.getCompanyId(), ddmStructureId,
+						dlFileEntryType.getName(), ddmStructureVersionId);
 
-				ps2.setLong(1, ddmStructureId);
+					ResourceLocalServiceUtil.addResources(
+						dlFileEntryType.getCompanyId(),
+						dlFileEntryType.getGroupId(),
+						dlFileEntryType.getUserId(),
+						ResourceActionsUtil.getCompositeModelName(
+							DLFileEntryMetadata.class.getName(),
+							DDMStructure.class.getName()),
+						ddmStructureId, false, false, false);
 
-				ps2.setLong(2, rs.getLong("fileEntryTypeId"));
+					dlFileEntryType.setDataDefinitionId(ddmStructureId);
 
-				ps2.addBatch();
-			}
+					_dlFileEntryTypeLocalService.updateDLFileEntryType(
+						dlFileEntryType);
+				}
+				catch (Exception exception) {
+					exception.printStackTrace();
+				}
+			});
 
-			ps2.executeBatch();
-		}
+		actionableDynamicQuery.performActions();
 
 		if (!hasIndex("DLFileEntryType", "IX_B6F21286")) {
 			runSQLTemplateString(
@@ -266,5 +285,7 @@ public class UpgradeDLFileEntryTypeDataDefinitionId extends UpgradeProcess {
 	).put(
 		"paginationMode", "single-page"
 	).toString();
+
+	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }

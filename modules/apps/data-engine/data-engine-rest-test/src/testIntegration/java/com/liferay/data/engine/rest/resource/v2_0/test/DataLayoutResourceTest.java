@@ -195,6 +195,23 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			assertValid(postDataLayout);
 		}
 
+		// Data layout with Data Layout Fields (Visual Property)
+
+		DataLayout randomDataLayoutWithVisualProps =
+			_createRandomDataLayoutFieldsWithVisualProps();
+
+		DataLayout postDataLayoutWithVisualProps =
+			testPostDataDefinitionDataLayout_addDataLayout(
+				randomDataLayoutWithVisualProps);
+
+		assertEquals(
+			randomDataLayoutWithVisualProps, postDataLayoutWithVisualProps);
+		assertValid(postDataLayoutWithVisualProps);
+		Assert.assertTrue(
+			equals(
+				randomDataLayoutWithVisualProps.getDataLayoutFields(),
+				postDataLayoutWithVisualProps.getDataLayoutFields()));
+
 		// MustNotDuplicateFieldName
 
 		DataDefinitionResource.Builder builder =
@@ -350,6 +367,40 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutDataLayout() throws Exception {
+		super.testPutDataLayout();
+
+		DataLayout postDataLayout = testPutDataLayout_addDataLayout();
+
+		DataLayout randomDataLayoutWithVisualProps =
+			_createRandomDataLayoutFieldsWithVisualProps();
+
+		DataLayout putDataLayoutWithVisualProps =
+			dataLayoutResource.putDataLayout(
+				postDataLayout.getId(), randomDataLayoutWithVisualProps);
+
+		assertEquals(
+			randomDataLayoutWithVisualProps, putDataLayoutWithVisualProps);
+		assertValid(putDataLayoutWithVisualProps);
+		Assert.assertTrue(
+			equals(
+				randomDataLayoutWithVisualProps.getDataLayoutFields(),
+				putDataLayoutWithVisualProps.getDataLayoutFields()));
+
+		DataLayout getDataLayoutWithVisualProps =
+			dataLayoutResource.getDataLayout(postDataLayout.getId());
+
+		assertEquals(
+			randomDataLayoutWithVisualProps, getDataLayoutWithVisualProps);
+		assertValid(getDataLayoutWithVisualProps);
+		Assert.assertTrue(
+			equals(
+				randomDataLayoutWithVisualProps.getDataLayoutFields(),
+				getDataLayoutWithVisualProps.getDataLayoutFields()));
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"dataDefinitionId", "name", "paginationMode"};
 	}
@@ -424,6 +475,47 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
 		return dataLayoutResource.postDataDefinitionDataLayout(
 			_dataDefinition.getId(), randomDataLayout());
+	}
+
+	private DataLayout _createRandomDataLayoutFieldsWithVisualProps() {
+		DataDefinitionField firstDataDefinitionField =
+			_dataDefinition.getDataDefinitionFields()[0];
+
+		String defaultLanguageId = _dataDefinition.getDefaultLanguageId();
+
+		DataLayout randomDataLayoutWithVisualProps = randomDataLayout();
+
+		randomDataLayoutWithVisualProps.setDataLayoutFields(
+			HashMapBuilder.<String, Object>put(
+				firstDataDefinitionField.getName(),
+				HashMapBuilder.<String, Object>put(
+					"label",
+					HashMapBuilder.<String, Object>put(
+						defaultLanguageId, RandomTestUtil.randomString()
+					).build()
+				).put(
+					"placeholder",
+					HashMapBuilder.<String, Object>put(
+						defaultLanguageId, RandomTestUtil.randomString()
+					).build()
+				).put(
+					"predefinedValue",
+					HashMapBuilder.<String, Object>put(
+						defaultLanguageId, RandomTestUtil.randomString()
+					).build()
+				).put(
+					"required", RandomTestUtil.randomBoolean()
+				).put(
+					"showLabel", RandomTestUtil.randomBoolean()
+				).put(
+					"tip",
+					HashMapBuilder.<String, Object>put(
+						defaultLanguageId, RandomTestUtil.randomString()
+					).build()
+				).build()
+			).build());
+
+		return randomDataLayoutWithVisualProps;
 	}
 
 	private void _testGetDataDefinitionDataLayoutsPage(

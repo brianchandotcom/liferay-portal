@@ -96,7 +96,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	public SitePage getSiteSitePage(Long siteId, String friendlyUrlPath)
 		throws Exception {
 
-		return _toSitePage(_getLayout(siteId, friendlyUrlPath), null);
+		return _toSitePage(true, _getLayout(siteId, friendlyUrlPath), null);
 	}
 
 	@Override
@@ -104,7 +104,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			Long siteId, String friendlyUrlPath, String experienceKey)
 		throws Exception {
 
-		return _toSitePage(_getLayout(siteId, friendlyUrlPath), experienceKey);
+		return _toSitePage(
+			true, _getLayout(siteId, friendlyUrlPath), experienceKey);
 	}
 
 	@Override
@@ -128,6 +129,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			Long siteId, String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		boolean embeddedPageDefinition = _isEmbeddedPageDefinition();
 
 		return SearchUtil.search(
 			HashMapBuilder.put(
@@ -179,7 +182,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				long plid = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
-				return _toSitePage(_layoutLocalService.getLayout(plid), null);
+				return _toSitePage(
+					embeddedPageDefinition, _layoutLocalService.getLayout(plid),
+					null);
 			});
 	}
 
@@ -301,6 +306,19 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return themeDisplay;
 	}
 
+	private boolean _isEmbeddedPageDefinition() {
+		MultivaluedMap<String, String> queryParameters =
+			contextUriInfo.getQueryParameters();
+
+		String nestedFields = queryParameters.getFirst("nestedFields");
+
+		if (nestedFields == null) {
+			return false;
+		}
+
+		return nestedFields.contains("embeddedPageDefinition");
+	}
+
 	private String _toHTML(
 			String friendlyUrlPath, long groupId, String segmentsExperienceKey)
 		throws Exception {
@@ -349,7 +367,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return document.html();
 	}
 
-	private SitePage _toSitePage(Layout layout, String segmentsExperienceKey)
+	private SitePage _toSitePage(
+			boolean embeddedPageDefinition, Layout layout,
+			String segmentsExperienceKey)
 		throws Exception {
 
 		Map<String, Map<String, String>> actions = null;
@@ -371,6 +391,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		long segmentsExperienceId = _getSegmentsExperienceId(
 			layout, segmentsExperienceKey);
 
+		dtoConverterContext.setAttribute(
+			"embeddedPageDefinition", embeddedPageDefinition);
 		dtoConverterContext.setAttribute(
 			"segmentsExperienceId", segmentsExperienceId);
 

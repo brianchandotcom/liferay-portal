@@ -364,6 +364,7 @@ definition {
 				locator1 = "Sidebar#TEXT_INPUT",
 				value1 = "${assertFieldReference}");
 		}
+
 		Click(locator1 = "Sidebar#BACK");
 	}
 

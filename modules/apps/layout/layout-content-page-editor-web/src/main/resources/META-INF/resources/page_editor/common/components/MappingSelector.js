@@ -82,7 +82,11 @@ function loadFields({
 	return Promise.resolve(null);
 }
 
-export default function ({fieldType, mappedItem, onMappingSelect}) {
+export default function MappingSelectorWrapper({
+	fieldType,
+	mappedItem,
+	onMappingSelect,
+}) {
 	const collectionConfig = useCollectionConfig();
 	const [collectionFieldSets, setCollectionFieldSets] = useState([]);
 	const [

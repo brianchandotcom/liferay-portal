@@ -29,51 +29,6 @@ import org.json.JSONObject;
  */
 public class UpstreamFailureUtil {
 
-	public static List<String> getUpstreamJobFailures(
-		String type, TopLevelBuild topLevelBuild) {
-
-		List<String> upstreamFailures = new ArrayList<>();
-
-		JSONObject upstreamJobFailuresJSONObject =
-			getUpstreamJobFailuresJSONObject(topLevelBuild);
-
-		JSONArray failedBatchesJSONArray =
-			upstreamJobFailuresJSONObject.optJSONArray("failedBatches");
-
-		if (failedBatchesJSONArray == null) {
-			return upstreamFailures;
-		}
-
-		for (int i = 0; i < failedBatchesJSONArray.length(); i++) {
-			JSONObject failedBatchJSONObject =
-				failedBatchesJSONArray.getJSONObject(i);
-
-			String jobVariant = failedBatchJSONObject.getString("jobVariant");
-
-			jobVariant = _formatJobVariant(jobVariant);
-
-			if (type.equals("build")) {
-				upstreamFailures.add(
-					_formatUpstreamBuildFailure(
-						jobVariant, failedBatchJSONObject.getString("result")));
-			}
-			else if (type.equals("test")) {
-				JSONArray failedTestsJSONArray =
-					failedBatchJSONObject.getJSONArray("failedTests");
-
-				for (int j = 0; j < failedTestsJSONArray.length(); j++) {
-					Object object = failedTestsJSONArray.get(j);
-
-					upstreamFailures.add(
-						_formatUpstreamTestFailure(
-							jobVariant, object.toString()));
-				}
-			}
-		}
-
-		return upstreamFailures;
-	}
-
 	public static int getUpstreamJobFailuresBuildNumber(
 		TopLevelBuild topLevelBuild) {
 
@@ -264,7 +219,7 @@ public class UpstreamFailureUtil {
 			jobVariant = _formatJobVariant(jobVariant);
 
 			for (String failure :
-					getUpstreamJobFailures("test", topLevelBuild)) {
+					_getUpstreamJobFailures("test", topLevelBuild)) {
 
 				if (failure.equals(
 						_formatUpstreamTestFailure(
@@ -346,6 +301,51 @@ public class UpstreamFailureUtil {
 		}
 	}
 
+	private static List<String> _getUpstreamJobFailures(
+		String type, TopLevelBuild topLevelBuild) {
+
+		List<String> upstreamFailures = new ArrayList<>();
+
+		JSONObject upstreamJobFailuresJSONObject =
+			getUpstreamJobFailuresJSONObject(topLevelBuild);
+
+		JSONArray failedBatchesJSONArray =
+			upstreamJobFailuresJSONObject.optJSONArray("failedBatches");
+
+		if (failedBatchesJSONArray == null) {
+			return upstreamFailures;
+		}
+
+		for (int i = 0; i < failedBatchesJSONArray.length(); i++) {
+			JSONObject failedBatchJSONObject =
+				failedBatchesJSONArray.getJSONObject(i);
+
+			String jobVariant = failedBatchJSONObject.getString("jobVariant");
+
+			jobVariant = _formatJobVariant(jobVariant);
+
+			if (type.equals("build")) {
+				upstreamFailures.add(
+					_formatUpstreamBuildFailure(
+						jobVariant, failedBatchJSONObject.getString("result")));
+			}
+			else if (type.equals("test")) {
+				JSONArray failedTestsJSONArray =
+					failedBatchJSONObject.getJSONArray("failedTests");
+
+				for (int j = 0; j < failedTestsJSONArray.length(); j++) {
+					Object object = failedTestsJSONArray.get(j);
+
+					upstreamFailures.add(
+						_formatUpstreamTestFailure(
+							jobVariant, object.toString()));
+				}
+			}
+		}
+
+		return upstreamFailures;
+	}
+
 	private static JSONObject _getUpstreamJobFailuresJSONObject(
 			String jobName, String buildNumber)
 		throws IOException {
@@ -409,7 +409,7 @@ public class UpstreamFailureUtil {
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
 		for (String upstreamJobFailure :
-				getUpstreamJobFailures("build", topLevelBuild)) {
+				_getUpstreamJobFailures("build", topLevelBuild)) {
 
 			if (upstreamJobFailure.equals(
 					_formatUpstreamBuildFailure(jobVariant, result))) {

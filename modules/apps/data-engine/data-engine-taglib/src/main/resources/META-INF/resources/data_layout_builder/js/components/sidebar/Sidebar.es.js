@@ -12,6 +12,8 @@
  * details.
  */
 
+import './Sidebar.scss';
+
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import React, {useState} from 'react';

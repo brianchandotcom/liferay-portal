@@ -213,6 +213,10 @@ public interface CPDefinitionService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPDefinition updateCPDefinitionExternalReferenceCode(
+			long cpDefinitionId, String externalReferenceCode)
+		throws PortalException;
+
 	public CPDefinition updateShippingInfo(
 			long cpDefinitionId, boolean shippable, boolean freeShipping,
 			boolean shipSeparately, double shippingExtraPrice, double width,

@@ -122,6 +122,12 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 
 		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
 
+		if (externalReferenceCode.equals(cProduct.getExternalReferenceCode())) {
+			return cProduct;
+		}
+
+		validate(cProduct.getCompanyId(), externalReferenceCode);
+
 		cProduct.setExternalReferenceCode(externalReferenceCode);
 
 		cProduct = cProductPersistence.update(cProduct);

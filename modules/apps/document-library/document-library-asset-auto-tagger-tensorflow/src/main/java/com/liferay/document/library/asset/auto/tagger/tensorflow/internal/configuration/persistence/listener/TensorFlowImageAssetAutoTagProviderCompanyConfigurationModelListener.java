@@ -66,7 +66,7 @@ public class
 	protected void activate(BundleContext bundleContext) {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 				TensorflowDestinationNames.TENSORFLOW_MODEL_DOWNLOAD);
 
 		Destination destination = _destinationFactory.createDestination(

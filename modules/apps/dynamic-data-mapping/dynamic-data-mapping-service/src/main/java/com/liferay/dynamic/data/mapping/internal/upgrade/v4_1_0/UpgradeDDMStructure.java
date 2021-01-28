@@ -14,32 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
-import com.liferay.dynamic.data.mapping.util.DDMFormLayoutDeserializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Marcela Cunha
@@ -47,13 +33,9 @@ import java.util.Map;
 public class UpgradeDDMStructure extends UpgradeProcess {
 
 	public UpgradeDDMStructure(
-		DDMDataDefinitionConverter ddmDataDefinitionConverter,
-		DDMFormLayoutDeserializer ddmFormLayoutDeserializer,
-		DDMFormLayoutSerializer ddmFormLayoutSerializer) {
+		DDMDataDefinitionConverter ddmDataDefinitionConverter) {
 
 		_ddmDataDefinitionConverter = ddmDataDefinitionConverter;
-		_ddmFormLayoutDeserializer = ddmFormLayoutDeserializer;
-		_ddmFormLayoutSerializer = ddmFormLayoutSerializer;
 	}
 
 	@Override
@@ -92,41 +74,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 
 		return 0;
-	}
-
-	private String _upgradeDDMFormLayoutDefinition(
-			String definition, Long structureId)
-		throws Exception {
-
-		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
-			_ddmFormLayoutDeserializer, definition);
-
-		DDMFormLayoutPage ddmFormLayoutPage =
-			ddmFormLayout.getDDMFormLayoutPage(0);
-
-		List<DDMFormLayoutRow> ddmFormLayoutRows =
-			ddmFormLayoutPage.getDDMFormLayoutRows();
-
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		DDMFormField ddmFormField = _fieldSetMap.get(structureId);
-
-		ddmFormLayoutRow.addDDMFormLayoutColumn(
-			new DDMFormLayoutColumn(
-				DDMFormLayoutColumn.FULL, ddmFormField.getName()));
-
-		ddmFormLayoutRows.add(0, ddmFormLayoutRow);
-
-		ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
-
-		DDMFormLayoutSerializerSerializeResponse
-			ddmFormLayoutSerializerSerializeResponse =
-				_ddmFormLayoutSerializer.serialize(
-					DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
-						ddmFormLayout
-					).build());
-
-		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
 	private void _upgradeNestedFieldsStructureLayoutDefinition()
@@ -276,19 +223,13 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 					String structureVersionDefinition = rs.getString(
 						"structureVersionDefinition");
 
-					if (Validator.isNotNull(rs.getLong("parentStructureId"))) {
-						structureLayoutDefinition =
-							_upgradeDDMFormLayoutDefinition(
-								structureLayoutDefinition,
-								rs.getLong("structureId"));
-					}
-
 					ps2.setString(
 						1,
 						_ddmDataDefinitionConverter.
 							convertDDMFormLayoutDataDefinition(
 								structureLayoutDefinition,
 								structureVersionDefinition));
+
 					ps2.setLong(2, rs.getLong("classNameId"));
 					ps2.setString(3, rs.getString("structureKey"));
 					ps2.setLong(4, rs.getLong("structureLayoutId"));
@@ -364,8 +305,5 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		"com.liferay.journal.model.JournalArticle";
 
 	private final DDMDataDefinitionConverter _ddmDataDefinitionConverter;
-	private final DDMFormLayoutDeserializer _ddmFormLayoutDeserializer;
-	private final DDMFormLayoutSerializer _ddmFormLayoutSerializer;
-	private final Map<Long, DDMFormField> _fieldSetMap = new HashMap<>();
 
 }

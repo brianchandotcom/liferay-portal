@@ -40,15 +40,20 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 		_mainMethodArgs = mainMethodArgs;
 		_jobMainClassFQN = jobMainClassFQN;
-
-		System.setErr(_errSniffPrintStream);
-		System.setOut(_outSniffPrintStream);
 	}
 
 	@Override
 	public Serializable call() throws ProcessException {
 		TalendProcessException talendProcessException =
 			new TalendProcessException();
+
+		SniffPrintStream errSniffPrintStream = new SniffPrintStream(System.err);
+
+		System.setErr(errSniffPrintStream);
+
+		SniffPrintStream outSniffPrintStream = new SniffPrintStream(System.out);
+
+		System.setOut(outSniffPrintStream);
 
 		System.setSecurityManager(
 			new SecurityManager() {
@@ -82,7 +87,9 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			Throwable causeThrowable = invocationTargetException.getCause();
 
 			if (causeThrowable == talendProcessException) {
-				return _getCallableOutput(talendProcessException.getStatus());
+				return _getCallableOutput(
+					errSniffPrintStream, talendProcessException.getStatus(),
+					outSniffPrintStream);
 			}
 
 			throw new ProcessException(causeThrowable);
@@ -91,27 +98,26 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			throw new ProcessException(throwable);
 		}
 
-		return _getCallableOutput(0);
+		return _getCallableOutput(errSniffPrintStream, 0, outSniffPrintStream);
 	}
 
-	private String _getCallableOutput(int exitCode) {
+	private String _getCallableOutput(
+		SniffPrintStream errSniffPrintStream, int exitCode,
+		SniffPrintStream outSniffPrintStream) {
+
 		return String.format(
 			"{\"%s\":\"%s\",\"%s\":%d,\"%s\":\"%s\"}",
 			TalendProcessOutputParser.KEY_ERROR,
-			Base64.encode(_errSniffPrintStream.getBytes()),
+			Base64.encode(errSniffPrintStream.getBytes()),
 			TalendProcessOutputParser.KEY_EXIT_CODE, exitCode,
 			TalendProcessOutputParser.KEY_OUTPUT,
-			Base64.encode(_outSniffPrintStream.getBytes()));
+			Base64.encode(outSniffPrintStream.getBytes()));
 	}
 
 	private static final long serialVersionUID = 1L;
 
-	private final SniffPrintStream _errSniffPrintStream = new SniffPrintStream(
-		System.err);
 	private final String _jobMainClassFQN;
 	private final String[] _mainMethodArgs;
-	private final SniffPrintStream _outSniffPrintStream = new SniffPrintStream(
-		System.out);
 
 	private static class SniffPrintStream extends PrintStream {
 

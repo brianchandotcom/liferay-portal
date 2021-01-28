@@ -20,6 +20,8 @@ package com.liferay.poshi.core.selenium;
 @SuppressWarnings("deprecation")
 public interface LiferaySelenium {
 
+	public void acceptAlert();
+
 	public void addSelection(String locator, String optionLocator);
 
 	public void antCommand(String fileName, String target) throws Exception;
@@ -29,6 +31,8 @@ public interface LiferaySelenium {
 	public void assertAlert(String pattern) throws Exception;
 
 	public void assertAlertNotPresent() throws Exception;
+
+	public void assertAlertText(String pattern) throws Exception;
 
 	public void assertAttributeNotPresent(String attribute, String locator)
 		throws Exception;
@@ -164,7 +168,7 @@ public interface LiferaySelenium {
 
 	public void deleteAllEmails() throws Exception;
 
-	public void dismissConfirmation();
+	public void dismissAlert();
 
 	public void doubleClick(String locator);
 
@@ -475,6 +479,8 @@ public interface LiferaySelenium {
 	public void type(String locator, String value) throws Exception;
 
 	public void typeAceEditor(String locator, String value);
+
+	public void typeAlert(String value);
 
 	public void typeAlloyEditor(String locator, String value);
 

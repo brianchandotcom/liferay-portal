@@ -222,7 +222,6 @@ definition {
 		Click(locator1 = "Button#DUPLICATE");
 
 		AssertElementPresent(locator1 = "Button#REMOVE_BUTTON");
-
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

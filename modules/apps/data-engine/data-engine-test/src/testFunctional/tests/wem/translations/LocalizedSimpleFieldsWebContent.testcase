@@ -80,7 +80,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
 	@priority = "4"
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		property portal.acceptance = "false";

@@ -15,6 +15,8 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
+import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
+import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -72,6 +74,11 @@ public class ComponentTagTest {
 
 	@Test
 	public void testDoEndTag() throws Exception {
+		ServicesProvider servicesProvider = new ServicesProvider();
+
+		servicesProvider.setJsModuleLauncher(
+			Mockito.mock(JSModuleLauncher.class));
+
 		ComponentTag componentTag = new ComponentTag();
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();

@@ -56,9 +56,54 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CreateFieldGroup {
+
 		property portal.acceptance = "false";
 
-		// TODO LPS-98077 CreateFieldGroup pending implementation
+        var structureName = "WC Structure Name";
+
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+		);
+        
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name"
+		);
+
+        DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text"
+		);
+
+        DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Numeric"
+		);
+
+		AssertElementPresent(
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP"
+		);
+
+		WebContentStructures.saveCP(structureName = "${structureName}");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "WC Structure Name");
+		
+		AssertElementPresent(
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP"
+		);
+
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

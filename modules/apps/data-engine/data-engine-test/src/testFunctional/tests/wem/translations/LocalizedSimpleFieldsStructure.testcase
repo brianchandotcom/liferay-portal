@@ -146,37 +146,31 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "Test",
-			structureName = "Test"
-		);
+			structureName = "Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Lbltest",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Lbltest",
-			fieldHelp = "Help Text test"
-		);
+			fieldHelp = "Help Text test");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Lbltest",
-			fieldHelp = "Texto de ajuda"
-		);
+			fieldHelp = "Texto de ajuda");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Lbltest",
-			label = "Lbltest pt"
-		);
+			label = "Lbltest pt");
 
 		WebContentStructures.addName(structureName = "Titulo teste");
 
@@ -184,8 +178,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "Test"
-		);
+			value1 = "Test");
 
 		WebContentStructures.saveCP();
 
@@ -195,13 +188,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "Test"
-		);
+			value1 = "Test");
 
 		WebContentStructures.saveCP();
-		
-		WebContentStructures.deleteCP(structureName = "Test");
 
+		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

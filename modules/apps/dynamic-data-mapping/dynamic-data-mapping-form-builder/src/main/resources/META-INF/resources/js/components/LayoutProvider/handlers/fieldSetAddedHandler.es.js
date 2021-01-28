@@ -47,7 +47,7 @@ const handleFieldSetAdded = (props, state, event) => {
 
 	let fieldSetField = createFieldSet(
 		props,
-		{skipFieldNameGeneration: false, useFieldName},
+		{skipFieldNameGeneration: false, useFieldName: useFieldName[props.defaultLanguageId]},
 		nestedFields
 	);
 

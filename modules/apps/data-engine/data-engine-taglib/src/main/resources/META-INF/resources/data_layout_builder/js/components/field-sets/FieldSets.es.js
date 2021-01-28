@@ -21,6 +21,7 @@ import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilde
 import {DRAG_FIELDSET} from '../../drag-and-drop/dragTypes.es';
 import {containsFieldSet} from '../../utils/dataDefinition.es';
 import {getLocalizedValue} from '../../utils/lang.es';
+import {normalizeDataLayoutRows} from '../../utils/normalizers.es';
 import EmptyState from '../empty-state/EmptyState.es';
 import FieldType from '../field-types/FieldType.es';
 import {getPluralMessage} from './../../utils/lang.es';
@@ -133,6 +134,12 @@ export default function FieldSets({keywords}) {
 	const deleteFieldSet = useDeleteFieldSet({dataLayoutBuilder});
 	const propagateFieldSet = usePropagateFieldSet();
 
+	const getFieldSet = (fieldSet) => {
+		return dataLayoutBuilder.getFieldSetDDMForm(fieldSet, {
+			availableLanguageIds: dataDefinition.availableLanguageIds,
+		});
+	};
+
 	const onDoubleClick = ({fieldSet}) => {
 		const {activePage, pages} = dataLayoutBuilder.getStore();
 
@@ -168,6 +175,11 @@ export default function FieldSets({keywords}) {
 								fieldSet.defaultLanguageId,
 								fieldSet.name
 							);
+
+							const dataLayoutPages = (
+								fieldSet.defaultDataLayout ||
+								dataLayoutBuilder.getDefaultDataLayout(fieldSet)
+							).dataLayoutPages;
 
 							return (
 								<FieldType
@@ -219,11 +231,15 @@ export default function FieldSets({keywords}) {
 										)
 									}
 									dragType={DRAG_FIELDSET}
-									fieldSet={fieldSet}
+									fieldSet={getFieldSet(fieldSet)}
 									icon="forms"
 									key={fieldSet.dataDefinitionKey}
 									label={fieldSetName}
 									onDoubleClick={onDoubleClick}
+									rows={
+										fieldSet.id &&
+										normalizeDataLayoutRows(dataLayoutPages)
+									}
 								/>
 							);
 						})}

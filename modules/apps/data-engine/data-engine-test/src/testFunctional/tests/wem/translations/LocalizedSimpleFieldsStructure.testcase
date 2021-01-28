@@ -144,7 +144,64 @@ definition {
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122278 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Test",
+			structureName = "Test"
+		);
+
+		DataEngine.addField(
+			fieldFieldLabel = "Lbltest",
+			fieldName = "Text"
+		);
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Lbltest",
+			fieldHelp = "Help Text test"
+		);
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Lbltest",
+			fieldHelp = "Texto de ajuda"
+		);
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Lbltest",
+			label = "Lbltest pt"
+		);
+
+		WebContentStructures.addName(structureName = "Titulo teste");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Test"
+		);
+
+		WebContentStructures.saveCP();
+
+		WebContentStructures.viewCP(structureName = "Test");
+
+		LexiconEntry.gotoEntry(rowEntry = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Test"
+		);
+
+		WebContentStructures.saveCP();
+		
+		WebContentStructures.deleteCP(structureName = "Test");
+
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

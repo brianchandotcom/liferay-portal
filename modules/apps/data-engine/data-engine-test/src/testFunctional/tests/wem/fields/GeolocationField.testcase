@@ -12,15 +12,13 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-			structureDescription = "My Structure Description",
-			structureName = "My Structure Name 1");
+				structureDescription = "My Structure Description",
+				structureName = "My Structure Name 1");
 	}
 
 	tearDown {

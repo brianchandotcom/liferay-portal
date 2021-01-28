@@ -19,7 +19,7 @@ import {getDefaultFieldsShape, updateFields} from './formsHelper';
 class DDMFormHandler {
 	constructor({DDMFormInstance, actionURL, portletId}) {
 		this.actionURL = actionURL;
-		this.DDMFormInstance = DDMFormInstance;
+		this.DDMFormInstance = DDMFormInstance.reactComponentRef.current.getFormNode();
 		this.portletId = portletId;
 		this.fields = getDefaultFieldsShape(DDMFormInstance);
 
@@ -28,7 +28,7 @@ class DDMFormHandler {
 	}
 
 	_attachFormListener() {
-		this.DDMFormInstance.on('fieldEdited', (field) => {
+		this.DDMFormInstance.addEventListener('fieldEdited', (field) => {
 			this.fields = updateFields(this.fields, field);
 			this.checkCPInstance();
 		});

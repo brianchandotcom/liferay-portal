@@ -324,6 +324,57 @@ public class SegmentsExperimentLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteSegmentsExperimentsWithVariantSegmentsExperience()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment(
+			segmentsExperience);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		SegmentsExperience variantSegmentsExperience1 =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK(),
+				RandomTestUtil.randomLocaleStringMap(), false,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			variantSegmentsExperience1.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperience variantSegmentsExperience2 =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK(),
+				RandomTestUtil.randomLocaleStringMap(), false,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			variantSegmentsExperience2.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentLocalService.deleteSegmentsExperiments(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperience.getClassNameId(),
+			segmentsExperience.getClassPK());
+
+		Assert.assertNull(
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				variantSegmentsExperience1.getSegmentsExperienceId()));
+		Assert.assertNull(
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				variantSegmentsExperience2.getSegmentsExperienceId()));
+	}
+
+	@Test
 	public void testFetchSegmentsExperiment() throws Exception {
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 

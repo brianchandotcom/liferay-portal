@@ -20,6 +20,13 @@ import withContextMock from '../../__mock__/withContextMock.es';
 
 const mockFieldTypes = [
 	{
+		description: 'Custom field description.',
+		group: 'customized',
+		icon: 'icon',
+		label: 'Custom Field',
+		name: 'custom_field',
+	},
+	{
 		description: 'Select date from a Datepicker.',
 		group: 'basic',
 		icon: 'calendar',
@@ -190,15 +197,6 @@ describe('Sidebar', () => {
 
 		expect(basicTab).toEqual(expect.anything());
 		expect(basicTab.classList.value).toEqual(
-			'collapse-icon panel-header panel-header-link'
-		);
-
-		const customizedTab = document.querySelector(
-			'#ddm-field-types-customized-header'
-		);
-
-		expect(customizedTab).toEqual(expect.anything());
-		expect(customizedTab.classList.value).toEqual(
 			'collapse-icon panel-header panel-header-link'
 		);
 	});

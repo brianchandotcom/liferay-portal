@@ -98,7 +98,17 @@ exports[`Sidebar closes the sidebar in edition mode 1`] = `
                   <use xlink:href="icons.svg#angle-down"></use>
                 </svg></span></a>
             <div aria-labelledby="#ddm-field-types-customized-header" id="ddm-field-types-customized-body" class="panel-collapse show" role="tabpanel">
-              <div class="panel-body p-0 m-0 list-group"></div>
+              <div class="panel-body p-0 m-0 list-group">
+                <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="custom_field" ref="fieldType_custom_field">
+                  <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-icon" aria-hidden="true">
+                          <use xlink:href="icons.svg#icon"></use>
+                        </svg></span></span></div>
+                  <div class="autofit-col autofit-col-expand">
+                    <h4 class="list-group-title text-truncate"><span>Custom Field</span></h4>
+                    <p class="list-group-subtitle text-truncate">Custom field description.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -255,7 +265,17 @@ exports[`Sidebar renders a Sidebar with fieldTypes 1`] = `
                   <use xlink:href="icons.svg#angle-down"></use>
                 </svg></span></a>
             <div aria-labelledby="#ddm-field-types-customized-header" id="ddm-field-types-customized-body" class="panel-collapse show" role="tabpanel">
-              <div class="panel-body p-0 m-0 list-group"></div>
+              <div class="panel-body p-0 m-0 list-group">
+                <div class="ddm-drag-item list-group-item list-group-item-flex" data-field-type-name="custom_field" ref="fieldType_custom_field">
+                  <div class="autofit-col"><span class="sticker sticker-secondary"><span class="inline-item"><svg class="lexicon-icon lexicon-icon-icon" aria-hidden="true">
+                          <use xlink:href="icons.svg#icon"></use>
+                        </svg></span></span></div>
+                  <div class="autofit-col autofit-col-expand">
+                    <h4 class="list-group-title text-truncate"><span>Custom Field</span></h4>
+                    <p class="list-group-subtitle text-truncate">Custom field description.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

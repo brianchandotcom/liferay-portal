@@ -146,18 +146,20 @@ definition {
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "Color Test");
 
-		var key_fieldFieldLabel = "Color Test";
-		Click(
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Color Test");
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
 
-		Click(
-			key_text = "Label",
-			locator1 = "Sidebar#DDM_ANY");
+		NavItem.click(navItem = "Web Content");
 
-		AssertElementPresent(
-			checkboxName = "Required Field",
-			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		Button.clickPublish();
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "Color Test",
+			locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
+			value1 = "This field is required.");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

@@ -29,9 +29,7 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
 		}
-
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
@@ -272,7 +270,6 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
 
 		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
-
 	}
 
 }

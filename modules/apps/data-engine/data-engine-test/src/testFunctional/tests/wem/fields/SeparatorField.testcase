@@ -228,18 +228,19 @@ definition {
 	test SetSeparatorRepeatable {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Separator test");
+		DataEngine.addField(
+			fieldFieldLabel = "Separator test",
+			fieldName = "Separator");
 
-        DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator test");
-
-        Button.clickSave();
-
-        WebContentNavigator.gotoEditStructure(structureName = "Test");
-
-        AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator test");
 
 		Button.clickSave();
 
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
+
+		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
+		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

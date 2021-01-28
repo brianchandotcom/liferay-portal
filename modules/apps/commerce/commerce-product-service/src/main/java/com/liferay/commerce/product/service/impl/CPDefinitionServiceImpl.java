@@ -365,18 +365,6 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public CPDefinition updateCPDefinitionExternalReferenceCode(
-			long cpDefinitionId, String externalReferenceCode)
-		throws PortalException {
-
-		_checkCommerceCatalogByCPDefinitionId(
-			cpDefinitionId, ActionKeys.UPDATE);
-
-		return cpDefinitionLocalService.updateCPDefinitionExternalReferenceCode(
-			cpDefinitionId, externalReferenceCode);
-	}
-
-	@Override
 	public void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,
 			ServiceContext serviceContext)
@@ -387,6 +375,18 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		cpDisplayLayoutLocalService.addCPDisplayLayout(
 			CPDefinition.class, cpDefinitionId, layoutUuid, serviceContext);
+	}
+
+	@Override
+	public CPDefinition updateExternalReferenceCode(
+			long cpDefinitionId, String externalReferenceCode)
+		throws PortalException {
+
+		_checkCommerceCatalogByCPDefinitionId(
+			cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionLocalService.updateExternalReferenceCode(
+			cpDefinitionId, externalReferenceCode);
 	}
 
 	@Override

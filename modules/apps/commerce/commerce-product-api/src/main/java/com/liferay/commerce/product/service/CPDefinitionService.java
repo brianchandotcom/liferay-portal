@@ -208,13 +208,13 @@ public interface CPDefinitionService extends BaseService {
 			long cpDefinitionId, boolean enable)
 		throws PortalException;
 
-	public CPDefinition updateCPDefinitionExternalReferenceCode(
-			long cpDefinitionId, String externalReferenceCode)
-		throws PortalException;
-
 	public void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CPDefinition updateExternalReferenceCode(
+			long cpDefinitionId, String externalReferenceCode)
 		throws PortalException;
 
 	public CPDefinition updateShippingInfo(

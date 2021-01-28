@@ -201,8 +201,36 @@ definition {
 	@priority = "4"
 	test EditReferenceOfSeparatorWithInvalidCharacters {
 		property portal.acceptance = "false";
+		
+		DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Separator test");
+        
+		DataEngine.editFieldReferenceWithInvalidCharacters(
+			fieldFieldLabel = "Separator test", 
+			fieldReference = "example123A@#@$%$%%",
+			assertFieldReference = "example123A"
+		);
+		
+		Button.clickSave();
+				
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
-		// TODO LPS-98081 EditReferenceOfSeparatorWithInvalidCharacters pending implementation
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Separator test",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "Separator test"
+		);
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertTextEquals.assertValue(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "example123A"
+		);
+
+		Button.clickSave();
+
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

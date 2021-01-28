@@ -29,74 +29,105 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the widget page is replaced by the content page on live with local live staging."
-	@ignore = "true"
 	@priority = "2"
-	test ViewContentPageInLiveAfterConvertingAndPublishingWidgetPage {
-		property portal.acceptance = "false";
+	test ViewContentPageInLiveAfterConvertingWidgetPageWithPublish {
+		task ("Add a widget page in staging site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
+		}
 
-		SitePages.addPublicPage(pageName = "Test Page Name");
+		task ("Add an Asset Publisher to widget page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				widgetName = "Asset Publisher");
+		}
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("Assert the web content is shown in Asset Publisher") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Portlet.addPG(portletName = "Blogs");
+			Portlet.viewTitle(portletName = "Asset Publisher");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+		}
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+		task ("Publish to Live") {
+			Staging.gotoPublishToLive();
 
-		Button.clickPublish();
+			Staging.publishToLive();
+		}
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "View",
-			pageName = "Test Page Name");
+		task ("Assert the page type is Widget Page in Live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		Staging.gotoPublishToLive();
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				key_pageType = "Widget Page",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+		}
 
-		Staging.configurePublishToLive(checkPageName = "Test Page Name");
+		task ("Convert the widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		Staging.publishToLive();
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
 
-		AssertElementPresent(
-			key_portletName = "Blogs",
-			locator1 = "Portlet#TITLE");
+			PageEditor.assertFragmentSidebarLoaded();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			PageEditor.clickPublish();
 
-		AssertElementPresent(
-			key_pageName = "Test Page Name",
-			key_pageType = "Content Page",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				key_pageType = "Content Page",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+		}
 
-		ProductMenu.gotoLiveSite(site = "Test Site Name");
+		task ("Publish to Live") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			Staging.gotoPublishToLive();
 
-		AssertElementPresent(
-			key_pageName = "Test Page Name",
-			key_pageType = "Content Page",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			Staging.publishToLive();
+		}
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "View",
-			pageName = "Test Page Name");
+		task ("Assert the Asset Publisher is shown in Live site") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		AssertElementPresent(
-			key_portletName = "Blogs",
-			locator1 = "Portlet#TITLE");
+			Portlet.viewTitle(portletName = "Asset Publisher");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+		}
+
+		task ("Assert the page type is Content Page in Live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				key_pageType = "Content Page",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+		}
 	}
 
 	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the content page has the original plid identifier."

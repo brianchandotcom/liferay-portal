@@ -11,6 +11,14 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+				structureDescription = "Test",
+				structureName = "Test");
 	}
 
 	tearDown {
@@ -105,16 +113,6 @@ definition {
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
 		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Test",
-			structureName = "Test");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -440,16 +438,6 @@ definition {
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
 		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Test",
-			structureName = "Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text Test",

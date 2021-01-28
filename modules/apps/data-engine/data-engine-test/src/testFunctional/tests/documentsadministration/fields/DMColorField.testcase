@@ -18,9 +18,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
 			DMDocument.tearDownCP();
-			
+
 			Navigator.openURL();
 
 			ProductMenu.gotoPortlet(
@@ -41,7 +40,6 @@ definition {
 
 			DMMetadataSet.tearDownCP();
 
-		
 			User.logoutPG();
 		}
 	}
@@ -116,16 +114,15 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Documents and Media"
-        );
+			category = "Content & Data",
+			portlet = "Documents and Media");
 
-        DMNavigator.gotoDocumentType();
+		DMNavigator.gotoDocumentType();
 
-        DMDocumentType.add(
-            dmDocumentTypeDescription = "DM Document Type Description",
-            dmDocumentTypeFieldNames = "Color",
-            dmDocumentTypeName = "DM Document Type Name");
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Color",
+			dmDocumentTypeName = "DM Document Type Name");
 
 		DMDocumentType.edit(
 			dmDocumentTypeName = "DM Document Type Name",
@@ -134,7 +131,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Documents and Media");
 
-        DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
 		Pause(locator1 = "2000");
 

@@ -73,6 +73,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		_upgradeStructureDefinition();
 		_upgradeStructureLayoutDefinition();
 		_upgradeStructureVersionDefinition();
+
 		_upgradeNestedFieldsStructureLayoutDefinition();
 	}
 

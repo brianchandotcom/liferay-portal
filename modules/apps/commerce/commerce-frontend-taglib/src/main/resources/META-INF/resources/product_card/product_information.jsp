@@ -36,7 +36,6 @@
 			<span class="d-flex flex-row text-truncate">
 				<commerce-ui:price
 					CPDefinitionId='<%= cpCatalogEntry.getCPDefinitionId() %>'
-					displayOneLine="<%= true %>"
 				/>
 			</span>
 		</span>

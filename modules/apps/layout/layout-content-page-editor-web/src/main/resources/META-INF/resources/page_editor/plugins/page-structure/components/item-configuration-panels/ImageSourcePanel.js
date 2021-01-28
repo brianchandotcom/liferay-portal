@@ -16,6 +16,7 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
+import {FILE_ENTRY_CLASS_NAME} from '../../../../app/config/constants/classNames';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
@@ -321,16 +322,25 @@ function ImagePanelSizeSelector({item}) {
 		);
 	};
 
-	return config.adaptiveMediaEnabled && editableContent?.fileEntryId ? (
-		<ImageSelectorSize
-			editableElement={editableElement}
-			fileEntryId={editableContent.fileEntryId}
-			imageSizeId={imageSizeId}
-			onImageSizeIdChanged={
-				type === EDITABLE_TYPES.image ? handleImageSizeChanged : null
-			}
-		/>
-	) : null;
+	return (
+		config.adaptiveMediaEnabled &&
+		(editableContent?.fileEntryId ||
+			(editableContent?.className === FILE_ENTRY_CLASS_NAME &&
+				editableContent?.classPK)) && (
+			<ImageSelectorSize
+				editableElement={editableElement}
+				fileEntryId={
+					editableContent.fileEntryId || editableContent.classPK
+				}
+				imageSizeId={imageSizeId}
+				onImageSizeIdChanged={
+					item.type === EDITABLE_TYPES.image
+						? handleImageSizeChanged
+						: null
+				}
+			/>
+		)
+	);
 }
 
 ImagePanelSizeSelector.propTypes = {

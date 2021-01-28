@@ -85,7 +85,31 @@ definition {
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addCP(webContentTitle = "测试");
+
+		PortletEntry.publish();
+
+		WebContentAdmin.gotoEntry(entry = "Test");
+
+		AssertAttributeValue(
+			attribute1 = "value",
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertAttributeValue(
+			attribute1 = "value",
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

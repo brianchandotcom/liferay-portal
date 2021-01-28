@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -38,7 +37,6 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -203,23 +201,42 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiences priorities
 
-		List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
-			segmentsExperiencePersistence.findByG_C_C_GtP(
+		if (segmentsExperience.getPriority() >= 0) {
+			List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
+				segmentsExperiencePersistence.findByG_C_C_GtP(
+					segmentsExperience.getGroupId(),
+					segmentsExperience.getClassNameId(),
+					segmentsExperience.getClassPK(),
+					segmentsExperience.getPriority()));
+
+			int lowestPriority = _getLowestPriority(
 				segmentsExperience.getGroupId(),
 				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK(),
-				segmentsExperience.getPriority()));
+				segmentsExperience.getClassPK());
 
-		Collections.reverse(segmentsExperiences);
+			int highestPriority = _getHighestPriority(
+				segmentsExperience.getGroupId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK());
 
-		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
-				curSegmentsExperience.setPriority(
-					curSegmentsExperience.getPriority() - 1);
+			segmentsExperiences = _updateSegmentExperiencesPriority(
+				segmentsExperiences, lowestPriority - 1, -1);
 
-				segmentsExperienceLocalService.updateSegmentsExperience(
-					curSegmentsExperience);
+			segmentsExperiencePersistence.flush();
 
-				segmentsExperiencePersistence.flush();
+			_updateSegmentExperiencesPriority(
+				segmentsExperiences, highestPriority - 1, -1);
+		}
+		else {
+			List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
+				segmentsExperiencePersistence.findByG_C_C_LtP(
+					segmentsExperience.getGroupId(),
+					segmentsExperience.getClassNameId(),
+					segmentsExperience.getClassPK(),
+					segmentsExperience.getPriority()));
+
+			_updateSegmentExperiencesPriority(
+				segmentsExperiences, segmentsExperience.getPriority(), +1);
 		}
 
 		// Segments experiments

@@ -24,9 +24,7 @@ taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.commerce.model.CommerceCountry" %><%@
-page import="com.liferay.commerce.model.CommerceRegion" %><%@
-page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
+<%@ page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel" %><%@
 page import="com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRateAddressRelsDisplayContext" %><%@
@@ -36,6 +34,8 @@ page import="com.liferay.commerce.tax.engine.fixed.web.internal.frontend.constan
 page import="com.liferay.commerce.tax.model.CommerceTaxMethod" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Country" %><%@
+page import="com.liferay.portal.kernel.model.Region" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

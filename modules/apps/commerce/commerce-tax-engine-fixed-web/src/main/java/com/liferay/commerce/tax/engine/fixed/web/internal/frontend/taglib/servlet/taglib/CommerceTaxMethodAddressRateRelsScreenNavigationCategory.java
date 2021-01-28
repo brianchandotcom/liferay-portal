@@ -20,8 +20,6 @@ import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRateAddressRelsDisplayContext;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
@@ -32,6 +30,8 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -122,9 +122,9 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationCategory
 			commerceTaxFixedRateAddressRelsDisplayContext =
 				new CommerceTaxFixedRateAddressRelsDisplayContext(
 					_commerceChannelLocalService,
-					_commerceChannelModelResourcePermission,
-					_commerceCountryService, _commerceCurrencyLocalService,
-					_commerceRegionService, _commerceTaxMethodService,
+					_commerceChannelModelResourcePermission, _countryService,
+					_commerceCurrencyLocalService, _regionService,
+					_commerceTaxMethodService,
 					_commerceTaxFixedRateAddressRelService,
 					_cpTaxCategoryService, _percentageFormatter, renderRequest);
 
@@ -147,13 +147,7 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationCategory
 		_commerceChannelModelResourcePermission;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private CommerceRegionService _commerceRegionService;
 
 	@Reference
 	private CommerceTaxFixedRateAddressRelService
@@ -163,6 +157,9 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationCategory
 	private CommerceTaxMethodService _commerceTaxMethodService;
 
 	@Reference
+	private CountryService _countryService;
+
+	@Reference
 	private CPTaxCategoryService _cpTaxCategoryService;
 
 	@Reference
@@ -170,6 +167,9 @@ public class CommerceTaxMethodAddressRateRelsScreenNavigationCategory
 
 	@Reference
 	private PercentageFormatter _percentageFormatter;
+
+	@Reference
+	private RegionService _regionService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.tax.engine.fixed.web)"

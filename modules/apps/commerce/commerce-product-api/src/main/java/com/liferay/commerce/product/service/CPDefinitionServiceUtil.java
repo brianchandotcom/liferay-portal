@@ -302,6 +302,15 @@ public class CPDefinitionServiceUtil {
 			cpDefinitionId, enable);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition
+			updateCPDefinitionExternalReferenceCode(
+				long cpDefinitionId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCPDefinitionExternalReferenceCode(
+			cpDefinitionId, externalReferenceCode);
+	}
+
 	public static void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

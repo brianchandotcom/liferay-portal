@@ -387,6 +387,26 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionSoap
+			updateCPDefinitionExternalReferenceCode(
+				long cpDefinitionId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPDefinition returnValue =
+				CPDefinitionServiceUtil.updateCPDefinitionExternalReferenceCode(
+					cpDefinitionId, externalReferenceCode);
+
+			return com.liferay.commerce.product.model.CPDefinitionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

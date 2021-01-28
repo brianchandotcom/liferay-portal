@@ -589,6 +589,10 @@ public interface CPDefinitionLocalService
 			long cpDefinitionId, boolean enable)
 		throws PortalException;
 
+	public CPDefinition updateCPDefinitionExternalReferenceCode(
+			long cpDefinitionId, String externalReferenceCode)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
 			long cpDefinitionId, boolean ignoreSKUCombinations,

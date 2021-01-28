@@ -47,12 +47,26 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
-	@ignore = "true"
 	@priority = "5"
 	test DeleteSeparatorOnBuilder {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 DeleteSeparatorOnBuilder pending implementation
+		var fieldLabel = "Test";
+
+        DataEngine.addField(fieldName = "Text", fieldFieldLabel = "Text field");
+		DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Test");
+
+		DataEngine.deleteField(fieldFieldLabel = "Test");
+
+		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+
+		Button.clickSave();
+
+		WebContentStructures.editStructure(structureName = "Test");
+
+		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+
+		Button.clickSave();
 
 	}
 

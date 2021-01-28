@@ -417,7 +417,6 @@ public class DataFactory {
 		_companyId = _counter.get();
 		_defaultDLDDMStructureId = _counter.get();
 		_defaultDLDDMStructureVersionId = _counter.get();
-		_defaultJournalDDMStructureVersionId = _counter.get();
 		_defaultJournalDDMTemplateId = _counter.get();
 
 		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
@@ -3449,6 +3448,8 @@ public class DataFactory {
 
 	public DDMStructureVersionModel newDefaultJournalDDMStructureVersionModel(
 		DDMStructureModel ddmStructureModel) {
+
+		_defaultJournalDDMStructureVersionId = _counter.get();
 
 		return newDDMStructureVersionModel(
 			ddmStructureModel, _defaultJournalDDMStructureVersionId);
@@ -7011,7 +7012,7 @@ public class DataFactory {
 	private final long _defaultDLDDMStructureId;
 	private final long _defaultDLDDMStructureVersionId;
 	private long _defaultJournalDDMStructureId;
-	private final long _defaultJournalDDMStructureVersionId;
+	private long _defaultJournalDDMStructureVersionId;
 	private final long _defaultJournalDDMTemplateId;
 	private long _defaultUserId;
 	private final String _dlDDMStructureContent;

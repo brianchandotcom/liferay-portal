@@ -29,29 +29,9 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
 		}
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		Navigator.gotoNavItem(navItem = "Structures");
-
-		Search.searchCP(searchTerm = "Structure");
-
-		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
-			PortletEntry.selectAll();
-
-			ClickNoError(locator1 = "Icon#DELETE");
-
-			AssertConfirm.assertConfirmationNoWait(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-			Alert.viewSuccessMessage();
-		}
-
-		Portlet.viewEmptyMessage(message = "There are no results.");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

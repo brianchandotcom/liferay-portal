@@ -19,13 +19,13 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -58,9 +58,9 @@ public class AddCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 			new CommerceShipmentDisplayContext(
 				_actionHelper, _portal.getHttpServletRequest(renderRequest),
 				_commerceAddressFormatter, _commerceAddressService,
-				_commerceChannelService, _commerceCountryService,
+				_commerceChannelService, _countryService,
 				_commerceOrderItemService, _commerceOrderLocalService,
-				_commerceRegionService, _portletResourcePermission);
+				_regionService, _portletResourcePermission);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceShipmentDisplayContext);
@@ -81,16 +81,13 @@ public class AddCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private CountryService _countryService;
 
 	@Reference
 	private Portal _portal;
@@ -99,5 +96,8 @@ public class AddCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME_SHIPMENT + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private RegionService _regionService;
 
 }

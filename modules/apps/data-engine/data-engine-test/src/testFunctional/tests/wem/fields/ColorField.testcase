@@ -112,6 +112,23 @@ definition {
 			assertFieldReference = "ColorTest1",
 			fieldFieldLabel = "Color Test",
 			fieldReference = "%Color*Test @1");
+
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Color Test",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "Color Test");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertTextEquals.assertValue(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "ColorTest1");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

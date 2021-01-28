@@ -203,6 +203,19 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 						mappedValueConfigJSONObject.put("alt", alt);
 					}
 
+					if (mappedValueConfigJSONObject.has("fileEntryId")) {
+						String fileEntryId =
+							mappedValueConfigJSONObject.getString(
+								"fileEntryId", StringPool.BLANK);
+
+						fileEntryId = StringUtil.trim(
+							_fragmentEntryProcessorHelper.processTemplate(
+								fileEntryId, fragmentEntryProcessorContext));
+
+						mappedValueConfigJSONObject.put(
+							"fileEntryId", fileEntryId);
+					}
+
 					value = StringUtil.replace(
 						editableElementParser.getFieldTemplate(), "field_name",
 						value);

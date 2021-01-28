@@ -326,8 +326,33 @@ definition {
 	@priority = "4"
 	test VerifyRichFieldHelpTextOnWebContent {
 		property portal.acceptance = "false";
+		
+		DataEngine.addField(
+			fieldFieldLabel = "LabelTest",
+			fieldName = "Rich Text"
+		);
 
-		// TODO LPS-98081 VerifyRichFieldHelpTextOnWebContent pending implementation
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "LabelTest",
+			fieldHelp = "Testing Help Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "New Structure");
+
+		Navigator.gotoNavTab(navTab = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Structure");
+
+		WebContent.addWithStructureCP(
+			structureName = "New Structure",
+			webContentTitle = "WC WebContent Title"
+		);
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Testing Help Text",
+			fieldName = "LabelTest"
+		);
+
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

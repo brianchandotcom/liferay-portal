@@ -475,6 +475,23 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Click(locator1 = "Sidebar#BACK");
+
+	macro editFieldHide {
+		var checkboxName = "Show Label";
+		var fieldLabel = "${fieldLabel}";
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Show Label",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 	macro editFieldReference {
@@ -864,23 +881,6 @@ definition {
 			key_nestedFieldName = "${nestedField}",
 			locator1 = "DDMField#NESTED_INPUT",
 			value1 = "${nestedFieldData}");
-	}
-
-	macro editFieldHide {
-		var checkboxName = "Show Label";
-		var fieldLabel = "${fieldLabel}";
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-		Uncheck.uncheckToggleSwitch(
-			checkboxName = "Show Label",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-		
-		
 	}
 
 }

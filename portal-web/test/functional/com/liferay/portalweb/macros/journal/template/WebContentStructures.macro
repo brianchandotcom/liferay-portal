@@ -113,13 +113,13 @@ definition {
 
 	macro editStructureDefaultValuesCP {
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit Default Values",
+			menuItem = "Edit",
 			rowEntry = "${structureName}");
 	}
 
-	macro editStructure {
+	macro editStructureDefaultValuesCP {
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
+			menuItem = "Edit Default Values",
 			rowEntry = "${structureName}");
 	}
 

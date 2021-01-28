@@ -214,27 +214,29 @@ definition {
 	@priority = "3"
 	test ShowAndHideSeparatorLabel {
 		property portal.acceptance = "false";
-		       
-        DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Test", fieldReference = "Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Test",
+			fieldName = "Separator",
+			fieldReference = "Test");
 
 		var fieldLabel = "Test";
 
-		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL"); 
+		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
 
-
-        DataEngine.editFieldHide(fieldFieldLabel = "Test", fieldLabel = "Test");
+		DataEngine.editFieldHide(
+			fieldFieldLabel = "Test",
+			fieldLabel = "Test");
 
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
 
-
-		Button.clickSave();		
+		Button.clickSave();
 
 		WebContentStructures.editStructure(structureName = "Test");
-		
 
-		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");        
+		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
 
-		Button.clickSave();	
+		Button.clickSave();
 
 	}
 

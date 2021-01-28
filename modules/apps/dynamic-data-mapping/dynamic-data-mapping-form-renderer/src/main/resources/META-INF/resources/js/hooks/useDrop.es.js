@@ -13,13 +13,12 @@
  */
 
 import {useDrop as useDndDrop} from 'react-dnd';
-
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {useForm} from '../hooks/useForm.es';
 import {usePage} from './usePage.es';
 
 const defaultSpec = {
-	accept: [],
+	accept: ['dataDefinitionField', 'fieldType', 'fieldset'],
 };
 
 export const DND_ORIGIN_TYPE = {
@@ -27,8 +26,15 @@ export const DND_ORIGIN_TYPE = {
 	FIELD: 'field',
 };
 
-export const useDrop = (sourceItem) => {
-	const {dnd} = usePage();
+export const useDrop = ({
+	columnIndex,
+	fieldName,
+	origin,
+	pageIndex,
+	parentField,
+	rowIndex,
+}) => {
+	const {dnd, fieldTypesMetadata} = usePage();
 	const dispatch = useForm();
 
 	const spec = dnd ?? defaultSpec;
@@ -39,6 +45,38 @@ export const useDrop = (sourceItem) => {
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver(),
 		}),
+		drop: (item, monitor) => {
+			if (monitor.didDrop()) {
+				return;
+			}
+
+			const dataDefinitionField = item.data.getDataDefinitionField(
+				item.data.name
+			);
+			const {label} = dataDefinitionField;
+
+			switch (item.type) {
+				case 'fieldType':
+					dispatch({
+						payload: {
+							data: {
+								fieldName,
+								parentFieldName: parentField?.fieldName,
+							},
+							fieldType: {
+								...fieldTypesMetadata.find(({name}) => {
+									return name === item.data.name;
+								}),
+								editable: true,
+							},
+							indexes: {columnIndex, pageIndex, rowIndex},
+						},
+						type:
+							origin === DND_ORIGIN_TYPE.EMPTY
+								? EVENT_TYPES.FIELD_ADD
+								: EVENT_TYPES.SECTION_ADD,
+					});
+					break;
 				case 'dataDefinitionField':
 					dispatch({
 						payload: {
@@ -88,6 +126,8 @@ export const useDrop = (sourceItem) => {
 					break;
 				default:
 					break;
+			}
+		},
 	});
 
 	return {

@@ -103,7 +103,6 @@ definition {
 	test DuplicateANestedFieldGroup {
 		property portal.acceptance = "false";
 
-		var structureName = "WC Structure Name";
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");
@@ -138,7 +137,7 @@ definition {
 			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
 			value1 = "Copy of Fields Group");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

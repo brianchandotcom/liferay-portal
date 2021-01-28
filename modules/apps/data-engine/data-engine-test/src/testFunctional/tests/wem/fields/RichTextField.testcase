@@ -326,16 +326,14 @@ definition {
 	@priority = "4"
 	test VerifyRichFieldHelpTextOnWebContent {
 		property portal.acceptance = "false";
-		
+
 		DataEngine.addField(
 			fieldFieldLabel = "LabelTest",
-			fieldName = "Rich Text"
-		);
+			fieldName = "Rich Text");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "LabelTest",
-			fieldHelp = "Testing Help Text"
-		);
+			fieldHelp = "Testing Help Text");
 
 		WebContentStructures.saveCP(structureName = "New Structure");
 
@@ -345,14 +343,11 @@ definition {
 
 		WebContent.addWithStructureCP(
 			structureName = "New Structure",
-			webContentTitle = "WC WebContent Title"
-		);
+			webContentTitle = "WC WebContent Title");
 
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "Testing Help Text",
-			fieldName = "LabelTest"
-		);
-
+			fieldName = "LabelTest");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

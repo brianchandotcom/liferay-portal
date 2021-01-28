@@ -11,6 +11,14 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+				structureDescription = "Structure Description Test",
+				structureName = "Structure Name Test");
 	}
 
 	tearDown {
@@ -29,13 +37,7 @@ definition {
 	test AddColorFieldByDragAndDrop {
 		property portal.acceptance = "false";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
@@ -83,13 +85,7 @@ definition {
 	test DisableSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
@@ -131,13 +127,7 @@ definition {
 	test EditColorFieldNameWithInvalidCharacters {
 		property portal.acceptance = "false";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
@@ -171,13 +161,7 @@ definition {
 	test EditColorFieldNameWithValidCharacters {
 		property portal.acceptance = "false";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "ColorTest",
@@ -228,13 +212,7 @@ definition {
 	test SetColorFieldAsRequired {
 		property portal.acceptance = "false";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
@@ -263,13 +241,7 @@ definition {
 	test SetSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",

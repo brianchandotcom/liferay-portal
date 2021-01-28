@@ -19,7 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import React, {forwardRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import InputComponent from './InputComponent.es';
@@ -39,28 +39,6 @@ const INITIAL_EDITING_LOCALE = {
 	icon: normalizeLocaleId(themeDisplay.getDefaultLanguageId()),
 	localeId: themeDisplay.getDefaultLanguageId(),
 };
-
-const DropdownTrigger = forwardRef(({editingLocale, ...otherProps}, ref) => {
-	return (
-		<ClayButton
-			aria-expanded="false"
-			aria-haspopup="true"
-			className="dropdown-toggle"
-			data-testid="triggerButton"
-			displayType="secondary"
-			monospaced
-			ref={ref}
-			{...otherProps}
-		>
-			<span className="inline-item">
-				<ClayIcon symbol={editingLocale.icon} />
-			</span>
-			<span className="btn-section" data-testid="triggerText">
-				{editingLocale.icon}
-			</span>
-		</ClayButton>
-	);
-});
 
 const AvailableLocaleLabel = ({isDefault, isTranslated}) => {
 	const labelText = isDefault
@@ -87,14 +65,35 @@ const LocalesDropdown = ({
 	editingLocale,
 	onLanguageClicked = () => {},
 }) => {
+	const alignElementRef = useRef(null);
+	const dropdownMenuRef = useRef(null);
+
 	const [dropdownActive, setDropdownActive] = useState(false);
 
 	return (
 		<div>
-			<ClayDropDown
+			<ClayButton
+				aria-expanded="false"
+				aria-haspopup="true"
+				className="dropdown-toggle"
+				data-testid="triggerButton"
+				displayType="secondary"
+				monospaced
+				onClick={() => setDropdownActive(!dropdownActive)}
+				ref={alignElementRef}
+			>
+				<span className="inline-item">
+					<ClayIcon symbol={editingLocale.icon} />
+				</span>
+				<span className="btn-section" data-testid="triggerText">
+					{editingLocale.icon}
+				</span>
+			</ClayButton>
+			<ClayDropDown.Menu
 				active={dropdownActive}
-				onActiveChange={setDropdownActive}
-				trigger={<DropdownTrigger editingLocale={editingLocale} />}
+				alignElementRef={alignElementRef}
+				onSetActive={setDropdownActive}
+				ref={dropdownMenuRef}
 			>
 				<ClayDropDown.ItemList>
 					{availableLocales.map(
@@ -138,7 +137,7 @@ const LocalesDropdown = ({
 						)
 					)}
 				</ClayDropDown.ItemList>
-			</ClayDropDown>
+			</ClayDropDown.Menu>
 		</div>
 	);
 };

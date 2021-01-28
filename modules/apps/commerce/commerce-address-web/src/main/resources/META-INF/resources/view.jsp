@@ -90,9 +90,9 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 				searchContainer="<%= commerceCountriesDisplayContext.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
-					className="com.liferay.commerce.model.CommerceCountry"
-					keyProperty="commerceCountryId"
-					modelVar="commerceCountry"
+					className="com.liferay.portal.kernel.model.Country"
+					keyProperty="countryId"
+					modelVar="country"
 				>
 
 					<%
@@ -100,14 +100,14 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 					rowURL.setParameter("mvcRenderCommandName", "/commerce_country/edit_commerce_country");
 					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("commerceCountryId", String.valueOf(commerceCountry.getCommerceCountryId()));
+					rowURL.setParameter("commerceCountryId", String.valueOf(country.getCountryId()));
 					%>
 
 					<liferay-ui:search-container-column-text
 						cssClass="important table-cell-expand"
 						href="<%= rowURL %>"
 						name="name"
-						value="<%= HtmlUtil.escape(commerceCountry.getName(locale)) %>"
+						value="<%= HtmlUtil.escape(country.getTitle(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -115,7 +115,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 						name="billing-allowed"
 					>
 						<c:choose>
-							<c:when test="<%= commerceCountry.isBillingAllowed() %>">
+							<c:when test="<%= country.isBillingAllowed() %>">
 								<liferay-ui:icon
 									cssClass="commerce-admin-icon-check"
 									icon="check"
@@ -137,7 +137,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 						name="shipping-allowed"
 					>
 						<c:choose>
-							<c:when test="<%= commerceCountry.isShippingAllowed() %>">
+							<c:when test="<%= country.isShippingAllowed() %>">
 								<liferay-ui:icon
 									cssClass="commerce-admin-icon-check"
 									icon="check"
@@ -157,14 +157,14 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="two-letter-iso-code"
-						property="twoLettersISOCode"
+						property="a2"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="active"
 					>
 						<c:choose>
-							<c:when test="<%= commerceCountry.isActive() %>">
+							<c:when test="<%= country.isActive() %>">
 								<liferay-ui:icon
 									cssClass="commerce-admin-icon-check"
 									icon="check"
@@ -182,7 +182,8 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						property="priority"
+						name="priority"
+						property="position"
 					/>
 
 					<liferay-ui:search-container-column-jsp

@@ -19,34 +19,34 @@
 <%
 CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceCountry commerceCountry = commerceCountriesDisplayContext.getCommerceCountry();
-long commerceCountryId = commerceCountriesDisplayContext.getCommerceCountryId();
+Country country = commerceCountriesDisplayContext.getCountry();
+long countryId = commerceCountriesDisplayContext.getCountryId();
 CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.getCommerceRegionsStarter();
 %>
 
 <portlet:actionURL name="/commerce_country/edit_commerce_country" var="editCommerceCountryActionURL" />
 
 <aui:form action="<%= editCommerceCountryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceCountry();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceCountry == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (country == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(commerceCountryId) %>" />
+	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
 
-	<liferay-ui:error exception="<%= CommerceCountryAlreadyExistsException.class %>" message="the-two-letter-iso-code-is-already-used" />
-	<liferay-ui:error exception="<%= CommerceCountryNameException.class %>" message="please-enter-a-valid-name" />
-	<liferay-ui:error exception="<%= CommerceCountryThreeLettersISOCodeException.class %>" message="please-enter-a-valid-three-letter-iso-code" />
-	<liferay-ui:error exception="<%= CommerceCountryTwoLettersISOCodeException.class %>" message="please-enter-a-valid-two-letter-iso-code" />
+	<liferay-ui:error exception="<%= CountryA2Exception.class %>" message="please-enter-a-valid-two-letter-iso-code" />
+	<liferay-ui:error exception="<%= CountryA3Exception.class %>" message="please-enter-a-valid-three-letter-iso-code" />
+	<liferay-ui:error exception="<%= CountryNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= DuplicateCountryException.class %>" message="the-two-letter-iso-code-is-already-used" />
 
-	<aui:model-context bean="<%= commerceCountry %>" model="<%= CommerceCountry.class %>" />
+	<aui:model-context bean="<%= country %>" model="<%= Country.class %>" />
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="name" />
 
-				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getBillingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="billingAllowed" type="toggle-switch" />
+				<aui:input checked="<%= (country == null) ? false : country.getBillingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="billingAllowed" type="toggle-switch" />
 
-				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getShippingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="shippingAllowed" type="toggle-switch" />
+				<aui:input checked="<%= (country == null) ? false : country.getShippingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="shippingAllowed" type="toggle-switch" />
 
 				<aui:input label="two-letter-iso-code" name="twoLettersISOCode" />
 
@@ -54,16 +54,16 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 
 				<aui:input name="numericISOCode" />
 
-				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
+				<aui:input checked="<%= (country == null) ? false : country.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
 
 				<aui:input name="priority" />
 
-				<aui:input checked="<%= (commerceCountry == null) ? false : commerceCountry.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
+				<aui:input checked="<%= (country == null) ? false : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 
 				<c:if test="<%= commerceRegionsStarter != null %>">
 					<aui:input name="key" type="hidden" value="<%= commerceRegionsStarter.getKey() %>" />
 
-					<aui:button cssClass="btn-lg" disabled="<%= commerceCountriesDisplayContext.hasCommerceRegions(commerceCountry) %>" name="importCommerceRegionsButton" value='<%= LanguageUtil.get(request, "import-regions") %>' />
+					<aui:button cssClass="btn-lg" disabled="<%= commerceCountriesDisplayContext.hasRegions(country) %>" name="importCommerceRegionsButton" value='<%= LanguageUtil.get(request, "import-regions") %>' />
 				</c:if>
 			</aui:fieldset>
 		</aui:fieldset>

@@ -44,6 +44,10 @@ definition {
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
 
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
 		DataEngine.viewField(
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");

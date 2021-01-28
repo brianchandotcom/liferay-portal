@@ -167,36 +167,31 @@ definition {
 	test DuplicateAFieldGroup {
 		property portal.acceptance = "false";
 
-        var structureName = "WC Structure Name";
+		var structureName = "WC Structure Name";
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-		);
-    
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
-        DataEngine.addField(
+		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
-			targetFieldLabel = "Text"
-		);
+			targetFieldLabel = "Text");
 
-        DataEngine.addFieldNested(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			targetFieldLabel = "Numeric"
-		);
+			targetFieldLabel = "Numeric");
 
 		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP");
 
@@ -205,21 +200,18 @@ definition {
 		MenuItem.clickNoError(menuItem = "Duplicate");
 
 		AssertTextEquals(
-            locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
-			value1 = "Copy of Fields Group"
-        );
+			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
+			value1 = "Copy of Fields Group");
 
 		WebContentStructures.saveCP(structureName = "${structureName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "WC Structure Name"
-		);
+			rowEntry = "WC Structure Name");
 
 		AssertTextEquals(
-            locator1 = "DataEngineBuilder#NESTED_DUPLICATED_FORM_FIELDS_GROUP",
-			value1 = "Copy of Fields Group"
-        );
+			locator1 = "DataEngineBuilder#NESTED_DUPLICATED_FORM_FIELDS_GROUP",
+			value1 = "Copy of Fields Group");
 
 		WebContentStructures.saveCP(structureName = "${structureName}");
 	}

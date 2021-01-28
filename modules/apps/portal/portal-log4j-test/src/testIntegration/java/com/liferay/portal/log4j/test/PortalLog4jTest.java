@@ -71,18 +71,8 @@ public class PortalLog4jTest {
 		while (enumeration.hasMoreElements()) {
 			Appender appender = enumeration.nextElement();
 
-			if (appender instanceof FileAppender) {
-				if (Objects.equals("TEXT_FILE", appender.getName())) {
-					_textLogFilePath = _initFileAppender(
-						logger, appender, _tempLogFileDirPath.toString());
-				}
-				else if (Objects.equals("XML_FILE", appender.getName())) {
-					_xmlLogFilePath = _initFileAppender(
-						logger, appender, _tempLogFileDirPath.toString());
-				}
-			}
-			else if ((appender instanceof ConsoleAppender) &&
-					 Objects.equals("CONSOLE", appender.getName())) {
+			if ((appender instanceof ConsoleAppender) &&
+				Objects.equals("CONSOLE", appender.getName())) {
 
 				ConsoleAppender consoleAppender = new ConsoleAppender();
 
@@ -95,6 +85,16 @@ public class PortalLog4jTest {
 				consoleAppender.setWriter(_unsyncStringWriter);
 
 				logger.addAppender(consoleAppender);
+			}
+			else if (appender instanceof FileAppender) {
+				if (Objects.equals("TEXT_FILE", appender.getName())) {
+					_textLogFilePath = _initFileAppender(
+						logger, appender, _tempLogFileDirPath.toString());
+				}
+				else if (Objects.equals("XML_FILE", appender.getName())) {
+					_xmlLogFilePath = _initFileAppender(
+						logger, appender, _tempLogFileDirPath.toString());
+				}
 			}
 		}
 	}
@@ -396,18 +396,7 @@ public class PortalLog4jTest {
 	}
 
 	private void _outputLog(String level, String message, Throwable throwable) {
-		if (level.equals("TRACE")) {
-			if ((message == null) && (throwable != null)) {
-				_log.trace(throwable);
-			}
-			else if ((message != null) && (throwable == null)) {
-				_log.trace(message);
-			}
-			else {
-				_log.trace(message, throwable);
-			}
-		}
-		else if (level.equals("DEBUG")) {
+		if (level.equals("DEBUG")) {
 			if ((message == null) && (throwable != null)) {
 				_log.debug(throwable);
 			}
@@ -416,28 +405,6 @@ public class PortalLog4jTest {
 			}
 			else {
 				_log.debug(message, throwable);
-			}
-		}
-		else if (level.equals("INFO")) {
-			if ((message == null) && (throwable != null)) {
-				_log.info(throwable);
-			}
-			else if ((message != null) && (throwable == null)) {
-				_log.info(message);
-			}
-			else {
-				_log.info(message, throwable);
-			}
-		}
-		else if (level.equals("WARN")) {
-			if ((message == null) && (throwable != null)) {
-				_log.warn(throwable);
-			}
-			else if ((message != null) && (throwable == null)) {
-				_log.warn(message);
-			}
-			else {
-				_log.warn(message, throwable);
 			}
 		}
 		else if (level.equals("ERROR")) {
@@ -451,7 +418,7 @@ public class PortalLog4jTest {
 				_log.error(message, throwable);
 			}
 		}
-		else {
+		else if (level.equals("FATAL")) {
 			if ((message == null) && (throwable != null)) {
 				_log.fatal(throwable);
 			}
@@ -460,6 +427,39 @@ public class PortalLog4jTest {
 			}
 			else {
 				_log.fatal(message, throwable);
+			}
+		}
+		else if (level.equals("INFO")) {
+			if ((message == null) && (throwable != null)) {
+				_log.info(throwable);
+			}
+			else if ((message != null) && (throwable == null)) {
+				_log.info(message);
+			}
+			else {
+				_log.info(message, throwable);
+			}
+		}
+		else if (level.equals("TRACE")) {
+			if ((message == null) && (throwable != null)) {
+				_log.trace(throwable);
+			}
+			else if ((message != null) && (throwable == null)) {
+				_log.trace(message);
+			}
+			else {
+				_log.trace(message, throwable);
+			}
+		}
+		else if (level.equals("WARN")) {
+			if ((message == null) && (throwable != null)) {
+				_log.warn(throwable);
+			}
+			else if ((message != null) && (throwable == null)) {
+				_log.warn(message);
+			}
+			else {
+				_log.warn(message, throwable);
 			}
 		}
 	}

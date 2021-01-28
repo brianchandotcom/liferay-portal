@@ -16,17 +16,17 @@ package com.liferay.commerce.initializer.util;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
-import com.liferay.commerce.service.CommerceCountryLocalService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
@@ -100,17 +100,15 @@ public class CommerceInventoryWarehousesImporter {
 		if (Validator.isNotNull(externalReferenceCode) &&
 			(commerceInventoryWarehouse == null)) {
 
-			int countryNumericISOCode = jsonObject.getInt("Country");
+			String countryNumericISOCode = jsonObject.getString("Country");
 
-			CommerceCountry commerceCountry =
-				_commerceCountryLocalService.fetchCommerceCountry(
-					serviceContext.getCompanyId(), countryNumericISOCode);
+			Country country = _countryLocalService.fetchCountryByNumber(
+				serviceContext.getCompanyId(), countryNumericISOCode);
 
 			String regionCode = jsonObject.getString("Region");
 
-			CommerceRegion commerceRegion =
-				_commerceRegionLocalService.getCommerceRegion(
-					commerceCountry.getCommerceCountryId(), regionCode);
+			Region region = _regionLocalService.getRegion(
+				country.getCountryId(), regionCode);
 
 			String name = jsonObject.getString("Name");
 			String description = jsonObject.getString("Description");
@@ -128,8 +126,7 @@ public class CommerceInventoryWarehousesImporter {
 					addCommerceInventoryWarehouse(
 						externalReferenceCode, name, description, active,
 						street1, street2, street3, city, zip,
-						commerceRegion.getCode(),
-						commerceCountry.getTwoLettersISOCode(), latitude,
+						region.getRegionCode(), country.getA2(), latitude,
 						longitude, serviceContext);
 		}
 
@@ -156,14 +153,14 @@ public class CommerceInventoryWarehousesImporter {
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
 
 	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
-
-	@Reference
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
 
 	@Reference
-	private CommerceRegionLocalService _commerceRegionLocalService;
+	private CountryLocalService _countryLocalService;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

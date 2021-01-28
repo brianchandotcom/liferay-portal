@@ -63,6 +63,8 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
+		Pause(locator1 = "1000");
+
 		var plid2 = Page.getPlidFromHtmlSource();
 
 		TestUtils.assertEquals(

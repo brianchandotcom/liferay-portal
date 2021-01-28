@@ -64,17 +64,17 @@ public interface CommerceTaxFixedRateAddressRel
 
 			};
 
-	public com.liferay.commerce.model.CommerceCountry getCommerceCountry()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.commerce.model.CommerceRegion getCommerceRegion()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public com.liferay.commerce.tax.model.CommerceTaxMethod
 			getCommerceTaxMethod()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.kernel.model.Country getCountry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.commerce.product.model.CPTaxCategory getCPTaxCategory()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.portal.kernel.model.Region getRegion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 }

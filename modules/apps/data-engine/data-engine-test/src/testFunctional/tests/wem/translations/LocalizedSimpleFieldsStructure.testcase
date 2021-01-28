@@ -17,8 +17,8 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-				structureDescription = "Test",
-				structureName = "Test");
+			structureDescription = "Test",
+			structureName = "Test");
 	}
 
 	tearDown {

@@ -61,8 +61,8 @@ public class PortalLog4jTest {
 
 		Logger logger = Logger.getLogger(PortalLog4jTest.class);
 
-		logger.setLevel(Level.TRACE);
 		logger.setAdditivity(false);
+		logger.setLevel(Level.TRACE);
 
 		Logger rootLogger = Logger.getRootLogger();
 
@@ -105,27 +105,27 @@ public class PortalLog4jTest {
 
 		logger.removeAllAppenders();
 
+		Files.deleteIfExists(_tempLogFileDirPath);
 		Files.deleteIfExists(_textLogFilePath);
 		Files.deleteIfExists(_xmlLogFilePath);
-		Files.deleteIfExists(_tempLogFileDirPath);
 	}
 
 	@Test
 	public void testDefaultLevel() {
 		Logger logger = Logger.getLogger("test.logger");
 
-		Assert.assertTrue(logger.isInfoEnabled());
 		Assert.assertFalse(logger.isDebugEnabled());
+		Assert.assertTrue(logger.isInfoEnabled());
 	}
 
 	@Test
 	public void testLogOutput() throws Exception {
-		_testLogOutput("TRACE");
 		_testLogOutput("DEBUG");
-		_testLogOutput("INFO");
-		_testLogOutput("WARN");
 		_testLogOutput("ERROR");
 		_testLogOutput("FATAL");
+		_testLogOutput("INFO");
+		_testLogOutput("TRACE");
+		_testLogOutput("WARN");
 	}
 
 	private static Path _initFileAppender(
@@ -173,7 +173,7 @@ public class PortalLog4jTest {
 
 		String messageLine = outputLines[0];
 
-		// Date Format
+		// Date format
 
 		Matcher dateMatcher = _datePattern.matcher(
 			messageLine.substring(0, _DATE_FORMAT.length()));
@@ -182,7 +182,7 @@ public class PortalLog4jTest {
 			"Output date format should be yyyy-MM-dd HH:mm:ss.SSS",
 			dateMatcher.matches());
 
-		// Level part
+		// Level
 
 		messageLine = messageLine.substring(_DATE_FORMAT.length());
 
@@ -193,7 +193,7 @@ public class PortalLog4jTest {
 			expectedLevelPart,
 			messageLine.substring(0, expectedLevelPart.length()));
 
-		// Thread name part
+		// Thread name
 
 		int threadNamePartBeginIndex = messageLine.indexOf(
 			StringPool.OPEN_BRACKET);
@@ -231,14 +231,14 @@ public class PortalLog4jTest {
 
 		Integer.valueOf(messageLine.substring(0, classNamePartEndIndex - 1));
 
-		// Message part
+		// Message
 
 		messageLine = messageLine.substring(classNamePartEndIndex + 1);
 
 		Assert.assertEquals(
 			String.valueOf(expectedMessage), messageLine.trim());
 
-		// Throwable part
+		// Throwable
 
 		if (expectedThrowable != null) {
 			Class<?> expectedThrowableClass = expectedThrowable.getClass();

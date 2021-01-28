@@ -18,7 +18,6 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
@@ -159,11 +158,11 @@ public class GetFieldValueMVCResourceCommand extends BaseMVCResourceCommand {
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
 
-		LocalizedValue localizedValue = ddmFormFieldOptions.getOptionLabels(
+		String optionReference = ddmFormFieldOptions.getOptionReference(
 			String.valueOf(fieldValue));
 
-		if (localizedValue != null) {
-			return localizedValue.getString(themeDisplay.getLocale());
+		if (optionReference != null) {
+			return optionReference;
 		}
 
 		return fieldValue;

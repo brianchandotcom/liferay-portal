@@ -12,7 +12,7 @@
  * details.
  */
 
-import {normalizeDataLayout} from '../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/normalizers.es';
+import {normalizeData} from '../../../src/main/resources/META-INF/resources/js/utils/normalizers.es';
 
 const dataDefinition = {
 	availableLanguageIds: ['en_US'],
@@ -175,7 +175,7 @@ const dataLayout = {
 	paginationMode: 'single-page',
 };
 
-const pagesField = [
+const fields = [
 	'Text97181041',
 	'SelectFromList15352821',
 	'MultipleSelection22024132',
@@ -184,70 +184,33 @@ const pagesField = [
 		(definitionField) => definitionField.name === fieldName
 	);
 
-	return [
-		{
-			rows: [
-				{
-					columns: [
-						{
-							fields: [
-								{
-									fieldName: 'label',
-									localizable: true,
-									localizedValue: dataDefinitionField.label,
-									visualProperty: true,
-								},
-								{
-									fieldName: 'placeholder',
-									localizable: true,
-									localizedValue:
-										dataDefinitionField.customProperties
-											.placeholder,
-									visualProperty: true,
-								},
-								{
-									fieldName: 'tip',
-									localizable: true,
-									localizedValue:
-										dataDefinitionField.customProperties
-											.tooltip,
-								},
-								{
-									fieldName: 'displayStyle',
-									localizable: false,
-									value: 'singleline',
-								},
-								{
-									fieldName: 'required',
-									localizable: false,
-									value: dataDefinitionField.required,
-								},
-							],
-						},
-					],
-				},
-			],
-		},
-	];
+	return {
+		label: dataDefinitionField.label,
+		placeholder: dataDefinitionField.customProperties.placeholder,
+		required: dataDefinitionField.required,
+	};
 });
 
 describe('normalizers', () => {
 	it('Validate DataLayout visualProperties', () => {
 		const defaultLanguageId = 'en_US';
+		const editingLanguageId = 'en_US';
+
 		const dataLayoutBuilder = {
-			getDDMFormFieldSettingsContext: jest
+			getDDMSettingsContextWithVisualProperties: jest
 				.fn()
-				.mockImplementationOnce(() => ({pages: pagesField[0]}))
-				.mockImplementationOnce(() => ({pages: pagesField[1]}))
-				.mockImplementationOnce(() => ({pages: pagesField[2]})),
+				.mockImplementationOnce(() => fields[0])
+				.mockImplementationOnce(() => fields[1])
+				.mockImplementationOnce(() => fields[2]),
 		};
 
-		const normalizedDataLayout = normalizeDataLayout(
-			dataLayout,
-			defaultLanguageId,
+		const {dataLayout: normalizedDataLayout} = normalizeData({
 			dataDefinition,
-			dataLayoutBuilder
-		);
+			dataLayout,
+			dataLayoutBuilder,
+			defaultLanguageId,
+			editingLanguageId,
+		});
 
 		expect(
 			normalizedDataLayout.dataLayoutFields.Text97181041

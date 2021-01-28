@@ -693,7 +693,32 @@ const FORM_VIEW_CONTEXT = {
 	dataDefinition: DATA_DEFINITION_RESPONSES.THREE_ITEMS,
 	dataDefinitionId: 0,
 	dataLayout: {
-		dataLayoutFields: {},
+		dataLayoutFields: {
+			Field53354166: {
+				label: {
+					en_US: 'Name',
+				},
+				placeholder: {
+					en_US: '',
+				},
+			},
+			SelectFromList: {
+				label: {
+					en_US: 'Name',
+				},
+				placeholder: {
+					en_US: '',
+				},
+			},
+			Text: {
+				label: {
+					en_US: 'Name',
+				},
+				placeholder: {
+					en_US: '',
+				},
+			},
+		},
 		dataLayoutPages: [],
 		dataRules: [],
 		name: {
@@ -734,6 +759,14 @@ export const FORM_VIEW = {
 			getDDMFormFieldSettingsContext: jest
 				.fn()
 				.mockImplementation(() => ({pages: []})),
+			getDDMSettingsContextWithVisualProperties: jest
+				.fn()
+				.mockImplementation(() => ({
+					label: dataDefinitionField.label,
+					placeholder:
+						dataDefinitionField.customProperties.placeholder,
+					required: dataDefinitionField.required,
+				})),
 			getFieldTypes: () => {
 				return [
 					{

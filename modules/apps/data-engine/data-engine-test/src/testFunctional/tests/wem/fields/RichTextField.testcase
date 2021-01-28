@@ -349,5 +349,57 @@ definition {
 
 		// TODO LPS-98081 VerifyRichTextIsSetAsRequired pending implementation
 	}
+	@description = "Verify that a user Can localize the field data"
+	@ignore = "true"
+	@priority = "4"
+	test LocalizationOfRichTextPersists {
+		property portal.acceptance = "false";
+	
+		DataEngine.addField(
+			fieldFieldLabel = "Label Test",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldTip(
+            fieldFieldLabel = "Label Test",
+            fieldHelp = "Help Text test");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContentStructures.addName(structureName="Titulo Teste");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Label Test",
+			label = "Rotulo Teste");
+
+		DataEngine.editFieldTip(
+            fieldFieldLabel = "Rotulo Teste",
+            fieldHelp = "Texto de ajuda");
+		
+        WebContentStructures.saveCP();
+		
+    	WebContentNavigator.gotoEditStructure(structureName = "New Structure");
+
+        AssertTextEquals(
+            locator1 = "//label[@class='ddm-label' and contains(text(),'Label Test')]",
+            value1 = "Label Test");
+
+        AssertTextEquals(
+            locator1 = "TextInput#NAME",
+            value1 = "New Structure");
+
+        PortletEntry.changeLocale(locale = "pt-BR");
+
+        AssertTextEquals(
+            locator1 = "//label[@class='ddm-label' and contains(text(),'Rotulo Teste')]",
+            value1 = "Rotulo Teste");
+
+        AssertTextEquals(
+            locator1 = "TextInput#NAME",
+            value1 = "Titulo Teste");
+
+        WebContentStructures.saveCP();
+        WebContentStructures.deleteCP(structureName="New Structure");
+
+	}
 
 }

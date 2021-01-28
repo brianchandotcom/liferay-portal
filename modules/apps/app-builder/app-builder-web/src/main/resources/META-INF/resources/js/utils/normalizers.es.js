@@ -35,13 +35,13 @@ export const normalizeNames = ({
 	return name;
 };
 
-function normalizeDataLayout({
+export const normalizeDataLayout = ({
 	dataDefinition,
 	dataLayout,
 	dataLayoutBuilder,
 	defaultLanguageId,
 	editingLanguageId,
-}) {
+}) => {
 	const {dataDefinitionFields = []} = dataDefinition;
 	const dataLayoutFields = {...dataLayout.dataLayoutFields};
 
@@ -79,26 +79,5 @@ function normalizeDataLayout({
 		...dataLayout,
 		dataLayoutFields,
 		name,
-	};
-}
-
-export const normalizeData = ({
-	dataDefinition,
-	dataLayout,
-	dataLayoutBuilder,
-	defaultLanguageId,
-	editingLanguageId,
-}) => {
-	const normalizedDataLayout = normalizeDataLayout({
-		dataDefinition,
-		dataLayout,
-		dataLayoutBuilder,
-		defaultLanguageId,
-		editingLanguageId,
-	});
-
-	return {
-		dataDefinition,
-		dataLayout: normalizedDataLayout,
 	};
 };

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {normalizeData} from '../../../src/main/resources/META-INF/resources/js/utils/normalizers.es';
+import {normalizeDataLayout} from '../../../src/main/resources/META-INF/resources/js/utils/normalizers.es';
 
 const dataDefinition = {
 	availableLanguageIds: ['en_US'],
@@ -204,7 +204,7 @@ describe('normalizers', () => {
 				.mockImplementationOnce(() => fields[2]),
 		};
 
-		const {dataLayout: normalizedDataLayout} = normalizeData({
+		const normalizedDataLayout = normalizeDataLayout({
 			dataDefinition,
 			dataLayout,
 			dataLayoutBuilder,

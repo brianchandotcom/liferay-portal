@@ -18,4 +18,22 @@ definition {
 		AssertElementPresent(locator1 = "Panel#PANEL_EXPANDED");
 	}
 
+	macro expandUnstyledPanel {
+		Portlet.waitForForm();
+
+		var key_panel = "${panel}";
+
+		AssertVisible(
+			key_panel = "${panel}",
+			locator1 = "Panel#UNSTYLED_PANEL");
+
+		if ((IsElementPresent(locator1 = "Panel#UNSTYLED_PANEL_COLLAPSED")) && (IsVisible(locator1 = "Panel#UNSTYLED_PANEL_COLLAPSED"))) {
+			AssertClick(
+				locator1 = "Panel#UNSTYLED_PANEL_COLLAPSED",
+				value1 = "${panel}");
+		}
+
+		AssertElementPresent(locator1 = "Panel#UNSTYLED_PANEL_EXPANDED");
+	}
+
 }

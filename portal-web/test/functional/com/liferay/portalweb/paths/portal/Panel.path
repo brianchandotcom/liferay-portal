@@ -39,6 +39,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNSTYLED_PANEL</td>
+	<td>//div[contains(@class,'panel-group')]//span[normalize-space(text())='${key_panel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSTYLED_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'panel-group')]//a[@aria-expanded='false']//span[normalize-space(text())='${key_panel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSTYLED_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'panel-group')]//a[@aria-expanded='true']//span[normalize-space(text())='${key_panel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

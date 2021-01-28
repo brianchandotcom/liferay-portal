@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -101,7 +103,7 @@ public class TensorFlowImageAssetAutoTagProvider
 	@Activate
 	protected void activate(
 			BundleContext bundleContext, Map<String, Object> properties)
-		throws Exception {
+		throws IOException {
 
 		modified(properties);
 

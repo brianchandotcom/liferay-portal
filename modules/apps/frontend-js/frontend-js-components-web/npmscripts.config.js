@@ -15,11 +15,6 @@
 module.exports = {
 	federation: {
 		bridges: [],
-		exposes: [
-			'<inputDir>/asset_categories_navigation/js/AssetCategoriesNavigationTreeView.js',
-			'<inputDir>/asset_categories_selector/AssetCategoriesSelectorTag.es.js',
-			'<inputDir>/asset_tags_selector/AssetTagsSelectorTag.es.js',
-		],
 		runLegacyBuild: false,
 	},
 	preset: '@liferay/npm-scripts/src/presets/standard',

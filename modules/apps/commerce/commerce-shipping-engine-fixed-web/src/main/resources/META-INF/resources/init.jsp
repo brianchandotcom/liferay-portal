@@ -26,8 +26,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.inventory.model.CommerceInventoryWarehouse" %><%@
-page import="com.liferay.commerce.model.CommerceCountry" %><%@
-page import="com.liferay.commerce.model.CommerceRegion" %><%@
 page import="com.liferay.commerce.product.constants.CPMeasurementUnitConstants" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel" %><%@
@@ -37,6 +35,8 @@ page import="com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.Co
 page import="com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.CommerceShippingFixedOptionSettingClayTable" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.Country" %><%@
+page import="com.liferay.portal.kernel.model.Region" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

@@ -519,6 +519,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE_BUTTON</td>
+	<td>//button[contains(@class, 'ddm-form-field-repeatable-delete-button p-0 btn btn-sm btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE_IMAGE</td>
 	<td>//button[@id='sdjj___removeImage']</td>
 	<td></td>

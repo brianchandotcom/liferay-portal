@@ -140,6 +140,33 @@ definition {
 				widgetName = "Asset Publisher");
 		}
 
+		task ("Get plids of widget pages before conversion") {
+			var plidsBeforeConversion = "";
+
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name ${i}",
+					siteName = "Test Site Name");
+
+				var plidBeforeConversion = Page.getPlidFromHtmlSource();
+
+				if ("${i}" == "1") {
+					var plidsBeforeConversion = StringUtil.add("${plidsBeforeConversion}", "${plidBeforeConversion}");
+				}
+				else {
+					var plidsBeforeConversion = StringUtil.add("${plidsBeforeConversion}", " ${plidBeforeConversion}");
+				}
+			}
+
+			var length = StringUtil.length("${plidsBeforeConversion}");
+
+			var endIndex = ${length} - 1;
+
+			var plidsBeforeConversion = StringUtil.substring("${plidsBeforeConversion}", "0","${endIndex}");
+
+			echo("${plidsBeforeConversion}");
+		}
+
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		ServerAdministration.openServerAdmin();
@@ -150,9 +177,69 @@ definition {
 			language = "Groovy",
 			script = "${script}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Convertible layouts before conversion");
+		task ("Assert output content") {
+			var output = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
+
+			echo("${output}");
+
+			if (contains("${output}", "Convertible layouts before conversion:[${plidsBeforeConversion}]")) {
+				echo("Returned convertible layouts plids array is correct");
+			}
+			else {
+				fail("Returned convertible layout plids array is wrong");
+			}
+
+			if (contains("${output}", "Convertible layouts after conversion: []")) {
+				echo("No convertiable layouts left");
+			}
+			else {
+				fail("There are convertiable layouts left");
+			}
+		}
+
+		task ("Get plids of converted pages") {
+			var plidsAfterConversion = "";
+
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Test Page Name ${i}",
+					siteName = "Test Site Name");
+
+				Pause(locator1 = "1000");
+
+				var plidAfterConversion = Page.getPlidFromHtmlSource();
+
+				if ("${i}" == "1") {
+					var plidsAfterConversion = StringUtil.add("${plidsAfterConversion}", "${plidAfterConversion}");
+				}
+				else {
+					var plidsAfterConversion = StringUtil.add("${plidsAfterConversion}", " ${plidAfterConversion}");
+				}
+			}
+
+			var length = StringUtil.length("${plidsAfterConversion}");
+
+			var endIndex = ${length} - 1;
+
+			var plidsAfterConversion = StringUtil.substring("${plidsAfterConversion}", "0","${endIndex}");
+
+			echo("${plidsAfterConversion}");
+		}
+
+		task ("Assert output content") {
+			if (contains("${output}", "Converted layouts:[${plidsAfterConversion}]")) {
+				echo("Returned converted layouts plids array is correct");
+			}
+			else {
+				fail("Returned converted layout plids array is wrong");
+			}
+		}
+
+		task ("Assert plids of before conversion are the same with converted") {
+			TestUtils.assertEquals(
+				actual = "${plidsAfterConversion}",
+				expected = "${plidsBeforeConversion}");
+		}
 
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 

@@ -94,9 +94,41 @@ public class ClaySampleManagementToolbarsDisplayContext
 		).addFavoriteDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref("#4");
-				dropdownItem.setLabel("Other item");
+				dropdownItem.setLabel("Favorite 2");
+			}
+		).addRestDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#5");
+				dropdownItem.setLabel("Secondary 1");
+			}
+		).addRestDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#6");
+				dropdownItem.setLabel("Secondary 2");
+			}
+		).addRestDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#7");
+				dropdownItem.setLabel("Secondary 3");
+			}
+		).addRestDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#8");
+				dropdownItem.setLabel("Secondary 4");
+			}
+		).addRestDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#9");
+				dropdownItem.setLabel("Secondary 5");
+			}
+		).addRestDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref("#10");
+				dropdownItem.setLabel("Secondary 6");
 			}
 		).build();
+
+		_creationMenu.put("maxTotalItems", 8);
 
 		return _creationMenu;
 	}

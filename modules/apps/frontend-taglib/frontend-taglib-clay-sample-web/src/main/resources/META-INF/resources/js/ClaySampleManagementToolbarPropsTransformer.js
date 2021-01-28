@@ -30,5 +30,8 @@ export default function propsTransformer(props) {
 		onSelectAllButtonClick: () => {
 			alert('Select all button clicked');
 		},
+		onShowMoreButtonClick: () => {
+			alert('Show more button clicked');
+		},
 	};
 }

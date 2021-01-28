@@ -44,6 +44,26 @@ export const useDrop = (sourceItem) => {
 				payload: {item, monitor, sourceItem},
 				type: EVENT_TYPES.FIELD_DROP,
 			}),
+				case 'fieldset':
+					dispatch({
+						payload: {
+							availableLanguageIds:
+								item.data.fieldSet.availableLanguageIds,
+							defaultLanguageId:
+								item.data.fieldSet.defaultLanguageId,
+							fieldName,
+							fieldSet: item.data.fieldSet,
+							indexes: {columnIndex, pageIndex, rowIndex},
+							parentFieldName: parentField?.fieldName,
+							properties: item.data.properties,
+							rows: item.data.rows,
+							useFieldName: item.data.useFieldName,
+						},
+						type: EVENT_TYPES.FIELD_SET_ADD,
+					});
+					break;
+				default:
+					break;
 	});
 
 	return {

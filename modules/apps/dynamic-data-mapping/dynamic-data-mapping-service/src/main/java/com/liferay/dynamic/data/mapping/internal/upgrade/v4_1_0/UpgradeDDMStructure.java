@@ -43,8 +43,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		_upgradeStructureDefinition();
 		_upgradeStructureLayoutDefinition();
 		_upgradeStructureVersionDefinition();
-
-		_upgradeNestedFieldsStructureLayoutDefinition();
 	}
 
 	private long _getParentStructureLayoutId(long parentStructureId)
@@ -74,63 +72,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 
 		return 0;
-	}
-
-	private void _upgradeNestedFieldsStructureLayoutDefinition()
-		throws Exception {
-
-		StringBundler sb1 = new StringBundler(13);
-
-		sb1.append("select DDMStructureLayout.structureLayoutId, ");
-		sb1.append("DDMStructureLayout.definition as ");
-		sb1.append("structureLayoutDefinition, ");
-		sb1.append("DDMStructureVersion.definition as ");
-		sb1.append("structureVersionDefinition from DDMStructureLayout inner ");
-		sb1.append("join DDMStructureVersion on ");
-		sb1.append("DDMStructureVersion.structureVersionId = ");
-		sb1.append("DDMStructureLayout.structureVersionId inner join ");
-		sb1.append("DDMStructure on DDMStructure.structureId = ");
-		sb1.append("DDMStructureVersion.structureId and DDMStructure.version ");
-		sb1.append("= DDMStructureVersion.version where ");
-		sb1.append("DDMStructure.classNameId = ? or DDMStructure.classNameId ");
-		sb1.append("= ?");
-
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				sb1.toString());
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMStructureLayout set definition = ? where " +
-						"structureLayoutId = ?")) {
-
-			ps1.setLong(
-				1,
-				PortalUtil.getClassNameId(_CLASS_NAME_DL_FILE_ENTRY_METADATA));
-			ps1.setLong(
-				2, PortalUtil.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE));
-
-			try (ResultSet rs = ps1.executeQuery()) {
-				while (rs.next()) {
-					String structureLayoutDefinition = rs.getString(
-						"structureLayoutDefinition");
-					String structureVersionDefinition = rs.getString(
-						"structureVersionDefinition");
-
-					ps2.setString(
-						1,
-						_ddmDataDefinitionConverter.
-							convertDDMFormLayoutDataDefinition(
-								structureLayoutDefinition,
-								structureVersionDefinition));
-
-					ps2.setLong(2, rs.getLong("structureLayoutId"));
-
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
-			}
-		}
 	}
 
 	private void _upgradeStructureDefinition() throws Exception {

@@ -848,39 +848,102 @@ definition {
 			locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 	}
 
-	@description = "This is a test for LPS-125933. Check for possible not covered scenarios for Echo components in Data Engine"
-	@ignore = "true"
+	@description = "This is a test for LPS-125933. Convert widget page to content page with a WCD and an Asset Publisher where web contents are displayed."
 	@priority = "3"
 	test ConvertWidgetPageWithWebContentsToContentPage {
-		property portal.acceptance = "false";
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
+		task ("Change layout to 1 column") {
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				layoutTemplate = "1 Column");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Asset Publisher");
+		task ("Add an Asset Publisher and a Web Content Display to page") {
+			for (var widgetName : list "Asset Publisher,Web Content Display") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					widgetName = "${widgetName}");
+			}
+		}
 
-		JSONWebcontent.addWebContent(
-			content = "test content",
-			groupName = "Test Site Name",
-			title = "test title");
+		task ("Add two web contents based on Basic Web Content") {
+			for (var n : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${n}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+			}
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+		task ("Assert the web contents are shown in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+			for (var n : list "1,2") {
+				AssetPublisherPortlet.viewAssetPG(
+					assetContent = "Web Content Content ${n}",
+					assetTitle = "Web Content Title ${n}");
+			}
+		}
 
-		Refresh.();
+		task ("Display the Web Content Title 1 in Web Content Display") {
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title 1");
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			IFrame.closeFrame();
 
-		AssertElementPresent(locator1 = "//p[contains(.,'test title')]");
+			WebContent.viewPGViaWCD(webContentContent = "Web Content Content 1");
+		}
+
+		task ("Convert the widget page to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			for (var n : list "1,2") {
+				AssetPublisherPortlet.viewAssetPG(
+					assetContent = "Web Content Content ${n}",
+					assetTitle = "Web Content Title ${n}");
+			}
+
+			WebContent.viewPGViaWCD(webContentContent = "Web Content Content 1");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the widget page is converted to content page") {
+			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			AssertElementPresent(
+				key_pageName = "Test Page Name",
+				key_pageType = "Content Page",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+		}
+
+		task ("Assert the web contents are shown in Asset Publisher and Web Content Display") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			for (var n : list "1,2") {
+				AssetPublisherPortlet.viewAssetPG(
+					assetContent = "Web Content Content ${n}",
+					assetTitle = "Web Content Title ${n}");
+			}
+
+			WebContent.viewPGViaWCD(webContentContent = "Web Content Content 1");
+		}
 	}
 
 	@description = "This is a test for LPS-98589. Can edit the title of the widgets with "borderless" and "decorate" decorators in content page with correct permissions."

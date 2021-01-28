@@ -72,11 +72,15 @@ public class ImageEditableElementParser implements EditableElementParser {
 		String fieldName, Locale locale, Object fieldValue) {
 
 		String alt = StringPool.BLANK;
-		long fileEntryId = 0;
+		Object fileEntryId = 0;
 
 		if (fieldValue == null) {
 			alt = StringUtil.replace(
 				_TMPL_IMAGE_FIELD_ALT_TEMPLATE, "field_name", fieldName);
+
+			fileEntryId = StringUtil.replace(
+				_TMPL_IMAGE_FIELD_FILE_ENTRY_ID_TEMPLATE, "field_name",
+				fieldName);
 		}
 		else if (fieldValue instanceof JSONObject) {
 			JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
@@ -330,6 +334,12 @@ public class ImageEditableElementParser implements EditableElementParser {
 			EditableFragmentEntryProcessor.class,
 			"/META-INF/resources/fragment/entry/processor/editable" +
 				"/image_field_alt_template.tmpl");
+
+	private static final String _TMPL_IMAGE_FIELD_FILE_ENTRY_ID_TEMPLATE =
+		StringUtil.read(
+			EditableFragmentEntryProcessor.class,
+			"/META-INF/resources/fragment/entry/processor/editable" +
+				"/image_field_file_entry_id_template.tmpl");
 
 	private static final String _TMPL_IMAGE_FIELD_TEMPLATE = StringUtil.read(
 		EditableFragmentEntryProcessor.class,

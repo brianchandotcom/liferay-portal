@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -98,10 +99,14 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		ServiceContext currentServiceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		boolean copyLayout = CopyLayoutThreadLocal.isCopyLayout();
+
 		boolean stagingAdvicesThreadLocalEnabled =
 			StagingAdvicesThreadLocal.isEnabled();
 
 		try {
+			CopyLayoutThreadLocal.setCopyLayout(true);
+
 			StagingAdvicesThreadLocal.setEnabled(false);
 
 			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
@@ -114,6 +119,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			StagingAdvicesThreadLocal.setEnabled(
 				stagingAdvicesThreadLocalEnabled);
+
+			CopyLayoutThreadLocal.setCopyLayout(copyLayout);
 		}
 	}
 

@@ -12,17 +12,25 @@
  * details.
  */
 
-import React, {useContext} from 'react';
+import {useContext} from 'react';
+
+/**
+ * Verify if focusedField or focusedCustomObjectField contains FieldSet
+ * @param {*} state
+ */
+
+function isUninplementedType({focusedCustomObjectField, focusedField}) {
+	return (
+		focusedCustomObjectField.fieldType === 'fieldset' ||
+		focusedField.type === 'fieldset'
+	);
+}
 
 export default ({AppContext, children, field, index}) => {
-	const [{focusedField}] = useContext(AppContext);
+	const [state] = useContext(AppContext);
 
-	/**
-	 * Repeatable Behavior is not implemented to App Builder FieldSet yet !
-	 */
-
-	if (focusedField.type === 'fieldset') {
-		return <></>;
+	if (isUninplementedType(state)) {
+		return null;
 	}
 
 	return children({field, index});

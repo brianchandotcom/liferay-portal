@@ -1260,14 +1260,7 @@ definition {
 	@priority = "3"
 	test OrganizationDropDownItems {
 		for (var siteName : list "Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addCP(
-				siteName = "${siteName}",
-				siteType = "Blank");
+			JSONGroup.addGroup(groupName = "${siteName}");
 		}
 
 		ApplicationsMenu.gotoPortlet(
@@ -1285,28 +1278,11 @@ definition {
 
 		ApplicationsMenu.gotoSiteViaViewAll(site = "Site Name H");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONOrganization.addOrganization(organizationName = "Site Name M");
 
-		Organization.addCP(
-			orgName = "Site Name M",
-			orgType = "Organization");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		UsersAndOrganizationsNavigator.gotoOrganizations();
-
-		Organization.assignUser(
-			orgName = "Site Name M",
-			userFirstName = "Test",
-			userLastName = "Test",
-			userName = "Test Test",
-			userScreenName = "test");
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Site Name M",
+			userEmailAddress = "test@liferay.com");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 

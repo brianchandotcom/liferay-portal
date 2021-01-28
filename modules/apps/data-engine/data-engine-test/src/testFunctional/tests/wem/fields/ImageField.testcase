@@ -225,7 +225,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyRequiredPropertyOfImageField {
 		property portal.acceptance = "false";

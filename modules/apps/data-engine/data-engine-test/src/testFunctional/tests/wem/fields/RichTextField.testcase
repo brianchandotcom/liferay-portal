@@ -37,7 +37,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test DragAndDropRichTextToBuilder {
 		property portal.acceptance = "false";
@@ -52,7 +51,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test ExcludeRepeatedRichTextOnWebContent {
 		property portal.acceptance = "false";
@@ -83,7 +81,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test InsertTextOnRichTextOnWebContent {
 		property portal.acceptance = "false";
@@ -122,7 +119,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "4"
 	test PublishWebContentWithEmptyRequiredRichText {
 		property portal.acceptance = "false";
@@ -153,7 +149,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test PublishWebContentWithRequiredRichText {
 		property portal.acceptance = "false";
@@ -184,7 +179,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test RepeatRichTextOnWebContent {
 		property portal.acceptance = "false";
@@ -230,7 +224,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test SetHelpTextOfRichText {
 		property portal.acceptance = "false";
@@ -254,7 +247,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test SetLabelOfRichText {
 		property portal.acceptance = "false";
@@ -309,7 +301,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyRequiredPropertyOfRichText {
 		property portal.acceptance = "false";

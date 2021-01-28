@@ -114,17 +114,36 @@ public class DDMDataDefinitionConverterImpl
 	}
 
 	@Override
-	public String convertDDMFormLayoutDataDefinition(String dataDefinition)
+	public String convertDDMFormLayoutDataDefinition(
+			String structureLayoutDataDefinition,
+			String structureVersionDataDefinition)
 		throws Exception {
 
 		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
-			_ddmFormLayoutDeserializer, dataDefinition);
+			_ddmFormLayoutDeserializer, structureLayoutDataDefinition);
+
+		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+			_ddmFormDeserializer, structureVersionDataDefinition);
 
 		ddmFormLayout.setDefinitionSchemaVersion("2.0");
 		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
 
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {
+
+			List<DDMFormLayoutRow> ddmFormLayoutRows = new ArrayList<>();
+
+			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+				DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+				ddmFormLayoutRow.addDDMFormLayoutColumn(
+					new DDMFormLayoutColumn(
+						DDMFormLayoutColumn.FULL, ddmFormField.getName()));
+
+				ddmFormLayoutRows.add(ddmFormLayoutRow);
+			}
+
+			ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
 
 			LocalizedValue localizedValue = _updateLocalizedValue(
 				ddmFormLayout.getAvailableLocales(),
@@ -140,45 +159,6 @@ public class DDMDataDefinitionConverterImpl
 
 			ddmFormLayoutPage.setDescription(localizedValue);
 		}
-
-		DDMFormLayoutSerializerSerializeResponse
-			ddmFormLayoutSerializerSerializeResponse =
-				_ddmFormLayoutSerializer.serialize(
-					DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
-						ddmFormLayout
-					).build());
-
-		return ddmFormLayoutSerializerSerializeResponse.getContent();
-	}
-
-	@Override
-	public String convertDDMFormLayoutDataDefinition(
-			String structureLayoutDataDefinition,
-			String structureVersionDataDefinition)
-		throws Exception {
-
-		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
-			_ddmFormLayoutDeserializer, structureLayoutDataDefinition);
-
-		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
-			_ddmFormDeserializer, structureVersionDataDefinition);
-
-		DDMFormLayoutPage ddmFormLayoutPage =
-			ddmFormLayout.getDDMFormLayoutPage(0);
-
-		List<DDMFormLayoutRow> ddmFormLayoutRows = new ArrayList<>();
-
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-			ddmFormLayoutRow.addDDMFormLayoutColumn(
-				new DDMFormLayoutColumn(
-					DDMFormLayoutColumn.FULL, ddmFormField.getName()));
-
-			ddmFormLayoutRows.add(ddmFormLayoutRow);
-		}
-
-		ddmFormLayoutPage.setDDMFormLayoutRows(ddmFormLayoutRows);
 
 		DDMFormLayoutSerializerSerializeResponse
 			ddmFormLayoutSerializerSerializeResponse =

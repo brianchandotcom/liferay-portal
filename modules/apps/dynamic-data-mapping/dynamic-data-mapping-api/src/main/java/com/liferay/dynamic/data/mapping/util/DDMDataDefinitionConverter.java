@@ -39,9 +39,6 @@ public interface DDMDataDefinitionConverter {
 			long parentStructureLayoutId)
 		throws Exception;
 
-	public String convertDDMFormLayoutDataDefinition(String dataDefinition)
-		throws Exception;
-
 	public String convertDDMFormLayoutDataDefinition(
 			String structureLayoutDataDefinition,
 			String structureVersionDataDefinition)

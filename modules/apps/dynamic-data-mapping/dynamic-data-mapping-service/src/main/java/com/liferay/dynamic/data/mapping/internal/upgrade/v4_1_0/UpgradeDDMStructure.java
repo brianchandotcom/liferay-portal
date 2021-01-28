@@ -235,14 +235,17 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private void _upgradeStructureLayoutDefinition() throws Exception {
-		StringBundler sb1 = new StringBundler(13);
+		StringBundler sb1 = new StringBundler(16);
 
 		sb1.append("select DDMStructure.structureId, ");
 		sb1.append("DDMStructure.parentStructureId, DDMStructure.classNameId ");
 		sb1.append(", DDMStructure.structureKey, ");
 		sb1.append("DDMStructureLayout.structureLayoutId, ");
-		sb1.append("DDMStructureLayout.definition from DDMStructureLayout ");
-		sb1.append("inner join DDMStructureVersion on ");
+		sb1.append("DDMStructureLayout.definition as ");
+		sb1.append("structureLayoutDefinition, ");
+		sb1.append("DDMStructureVersion.definition as ");
+		sb1.append("structureVersionDefinition from DDMStructureLayout inner ");
+		sb1.append("join DDMStructureVersion on ");
 		sb1.append("DDMStructureVersion.structureVersionId = ");
 		sb1.append("DDMStructureLayout.structureVersionId inner join ");
 		sb1.append("DDMStructure on DDMStructure.structureId = ");
@@ -268,17 +271,24 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					String definition = rs.getString("definition");
+					String structureLayoutDefinition = rs.getString(
+						"structureLayoutDefinition");
+					String structureVersionDefinition = rs.getString(
+						"structureVersionDefinition");
 
 					if (Validator.isNotNull(rs.getLong("parentStructureId"))) {
-						definition = _upgradeDDMFormLayoutDefinition(
-							definition, rs.getLong("structureId"));
+						structureLayoutDefinition =
+							_upgradeDDMFormLayoutDefinition(
+								structureLayoutDefinition,
+								rs.getLong("structureId"));
 					}
 
 					ps2.setString(
 						1,
 						_ddmDataDefinitionConverter.
-							convertDDMFormLayoutDataDefinition(definition));
+							convertDDMFormLayoutDataDefinition(
+								structureLayoutDefinition,
+								structureVersionDefinition));
 					ps2.setLong(2, rs.getLong("classNameId"));
 					ps2.setString(3, rs.getString("structureKey"));
 					ps2.setLong(4, rs.getLong("structureLayoutId"));

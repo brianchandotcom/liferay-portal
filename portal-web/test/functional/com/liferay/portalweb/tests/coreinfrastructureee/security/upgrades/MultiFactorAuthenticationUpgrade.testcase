@@ -1,0 +1,77 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+	property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
+	property dummy.socket.proxy.disabled = "true";
+	property osgi.app.includes = "multi-factor-authentication";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.component.names = "Multi Factor Authentication";
+	property testray.main.component.name = "Upgrades Security";
+
+	setUp {
+		Navigator.openURL();
+
+		Smoke.viewWelcomePage();
+	}
+
+	@priority = "5"
+	test ViewMFAConfigurationInInstanceLevelAfterUpgrade7310 {
+		property data.archive.type = "data-archive-mfa-instance-level";
+		property database.types = "db2,mariadb,mysql,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+		SignIn.signInSpecificURL(
+			url = "http://www.able.com:8080/",
+			userEmailAddress = "test@www.able.com");
+
+		MultiFactorAuthentication.sendOTPEmailPG();
+
+		MultiFactorAuthentication.verifyOTP(
+			portalURL = "http://www.able.com:8080",
+			recipient = "test test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userPassword = "test");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.viewOTPEmailSenderCP(
+			emailAddress = "test@www.able.com",
+			emailSenderName = "Joe Bloggs");
+	}
+
+	@priority = "5"
+	test ViewMFAConfigurationInSystemLevelAfterUpgrade7310 {
+		property data.archive.type = "data-archive-mfa-system-level";
+		property database.types = "db2,mariadb,mysql,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		SignIn.signIn(userEmailAddress = "test@liferay.com");
+
+		MultiFactorAuthentication.sendOTPEmailPG();
+
+		MultiFactorAuthentication.verifyOTP(
+			portalURL = "${portalURL}",
+			recipient = "test test",
+			userEmailAddress = "test@liferay.com",
+			userPassword = "test");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.viewOTPEmailSenderCP(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+	}
+
+}

@@ -218,7 +218,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertAlert(String pattern) throws Exception {
-		TestCase.assertEquals(pattern, getAlert());
+		TestCase.assertEquals(pattern, getAlertText());
 	}
 
 	@Override
@@ -480,7 +480,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertNotAlert(String pattern) {
-		TestCase.assertTrue(Objects.equals(pattern, getAlert()));
+		TestCase.assertTrue(Objects.equals(pattern, getAlertText()));
 	}
 
 	@Override
@@ -1029,17 +1029,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void get(String url) {
 		_webDriver.get(url);
-	}
-
-	@Override
-	public String getAlert() {
-		switchTo();
-
-		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
-
-		Alert alert = webDriverWait.until(ExpectedConditions.alertIsPresent());
-
-		return alert.getText();
 	}
 
 	@Override
@@ -3635,6 +3624,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		sb.append("', true, false);element.dispatchEvent(event);");
 
 		javascriptExecutor.executeScript(sb.toString(), webElement);
+	}
+
+	protected String getAlertText() {
+		switchTo();
+
+		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
+
+		Alert alert = webDriverWait.until(ExpectedConditions.alertIsPresent());
+
+		return alert.getText();
 	}
 
 	protected By getBy(String locator) {

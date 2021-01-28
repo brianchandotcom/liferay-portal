@@ -19,8 +19,6 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
@@ -31,6 +29,8 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -126,8 +126,8 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 		CommerceShippingFixedOptionRelsDisplayContext
 			commerceShippingFixedOptionRelsDisplayContext =
 				new CommerceShippingFixedOptionRelsDisplayContext(
-					_commerceChannelLocalService, _commerceCountryService,
-					_commerceCurrencyLocalService, _commerceRegionService,
+					_commerceChannelLocalService, _countryService,
+					_commerceCurrencyLocalService, _regionService,
 					_commerceShippingMethodService,
 					_commerceShippingFixedOptionService,
 					_commerceInventoryWarehouseService,
@@ -148,17 +148,11 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
-
-	@Reference
-	private CommerceRegionService _commerceRegionService;
 
 	@Reference
 	private CommerceShippingFixedOptionRelService
@@ -172,6 +166,9 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 	private CommerceShippingMethodService _commerceShippingMethodService;
 
 	@Reference
+	private CountryService _countryService;
+
+	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 	@Reference
@@ -179,6 +176,9 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RegionService _regionService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.engine.fixed.web)"

@@ -93,12 +93,12 @@ if (commerceShippingFixedOptionRel != null) {
 					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="country" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceCountryId" showEmptyOption="<%= true %>">
 
 						<%
-						List<CommerceCountry> commerceCountries = commerceShippingFixedOptionRelsDisplayContext.getCommerceCountries();
+						List<Country> countries = commerceShippingFixedOptionRelsDisplayContext.getCountries();
 
-						for (CommerceCountry commerceCountry : commerceCountries) {
+						for (Country country : countries) {
 						%>
 
-							<aui:option label="<%= commerceCountry.getName(languageId) %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>" value="<%= commerceCountry.getCommerceCountryId() %>" />
+							<aui:option label="<%= country.getTitle(languageId) %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == country.getCountryId()) %>" value="<%= country.getCountryId() %>" />
 
 						<%
 						}
@@ -111,12 +111,12 @@ if (commerceShippingFixedOptionRel != null) {
 					<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="region" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceRegionId" showEmptyOption="<%= true %>">
 
 						<%
-						List<CommerceRegion> commerceRegions = commerceShippingFixedOptionRelsDisplayContext.getCommerceRegions();
+						List<Region> regions = commerceShippingFixedOptionRelsDisplayContext.getRegions();
 
-						for (CommerceRegion commerceRegion : commerceRegions) {
+						for (Region region : regions) {
 						%>
 
-							<aui:option label="<%= commerceRegion.getName() %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>" value="<%= commerceRegion.getCommerceRegionId() %>" />
+							<aui:option label="<%= region.getName() %>" selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == region.getRegionId()) %>" value="<%= region.getRegionId() %>" />
 
 						<%
 						}

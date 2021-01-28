@@ -10,13 +10,11 @@ definition {
 
 		User.firstLoginPG();
 
-		Navigator.openURL();
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		AppBuilderAdmin.switchTab(tabName = "Structures");
+		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "Test");
 	}

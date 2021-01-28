@@ -6,16 +6,16 @@ definition {
 	property testray.main.component.name = "Web Content Administration";
 
 	setUp {
-        TestCase.setUpPortalInstance();
-
-        User.firstLoginPG();
-
+		TestCase.setUpPortalInstance();
+		
+		User.firstLoginPG();
+		
 		JSONGroup.addGroup(groupName = "Test Site Name");
-
+		
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
+		
 		NavItem.gotoStructures();
-
+		
 		WebContentStructures.addCP(structureName = "Test");
 	}
 

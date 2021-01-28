@@ -53,8 +53,12 @@ definition {
 
 		var fieldLabel = "Test";
 
-        DataEngine.addField(fieldName = "Text", fieldFieldLabel = "Text field");
-		DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Test");
+		DataEngine.addField(
+			fieldFieldLabel = "Text field",
+			fieldName = "Text");
+		DataEngine.addField(
+			fieldFieldLabel = "Test",
+			fieldName = "Separator");
 
 		DataEngine.deleteField(fieldFieldLabel = "Test");
 
@@ -67,7 +71,6 @@ definition {
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
 
 		Button.clickSave();
-
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

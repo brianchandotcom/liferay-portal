@@ -17,16 +17,14 @@ package com.liferay.dispatch.talend.web.internal.process;
 import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessException;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Base64;
 
 import java.io.PrintStream;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import java.nio.ByteBuffer;
 
 import java.security.Permission;
 
@@ -87,7 +85,7 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			Throwable causeThrowable = invocationTargetException.getCause();
 
 			if (causeThrowable == talendProcessException) {
-				return _getCallableOutput(
+				return _getCallableOutputBytes(
 					errSniffPrintStream, talendProcessException.getStatus(),
 					outSniffPrintStream);
 			}
@@ -98,20 +96,40 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			throw new ProcessException(throwable);
 		}
 
-		return _getCallableOutput(errSniffPrintStream, 0, outSniffPrintStream);
+		return _getCallableOutputBytes(
+			errSniffPrintStream, 0, outSniffPrintStream);
 	}
 
-	private String _getCallableOutput(
+	private byte[] _getCallableOutputBytes(
 		SniffPrintStream errSniffPrintStream, int exitCode,
 		SniffPrintStream outSniffPrintStream) {
 
-		return String.format(
-			"{\"%s\":\"%s\",\"%s\":%d,\"%s\":\"%s\"}",
-			TalendProcessOutputParser.KEY_ERROR,
-			Base64.encode(errSniffPrintStream.getBytes()),
-			TalendProcessOutputParser.KEY_EXIT_CODE, exitCode,
-			TalendProcessOutputParser.KEY_OUTPUT,
-			Base64.encode(outSniffPrintStream.getBytes()));
+		byte[] controlWord = _getControlWord(
+			errSniffPrintStream, outSniffPrintStream);
+
+		ByteBuffer byteBuffer = ByteBuffer.allocate(
+			controlWord.length + Integer.BYTES +
+				errSniffPrintStream._bytes.length +
+					outSniffPrintStream._bytes.length);
+
+		byteBuffer.put(controlWord);
+		byteBuffer.putInt(exitCode);
+		byteBuffer.put(errSniffPrintStream._bytes);
+		byteBuffer.put(outSniffPrintStream._bytes);
+
+		return byteBuffer.array();
+	}
+
+	private byte[] _getControlWord(
+		SniffPrintStream errSniffPrintStream,
+		SniffPrintStream outSniffPrintStream) {
+
+		ByteBuffer byteBuffer = ByteBuffer.allocate(8);
+
+		byteBuffer.putInt(errSniffPrintStream._bytes.length);
+		byteBuffer.putInt(outSniffPrintStream._bytes.length);
+
+		return byteBuffer.array();
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -127,23 +145,17 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 		@Override
 		public void write(byte[] buf, int off, int len) {
-			try {
-				_sb.append(new String(buf, off, len, StringPool.UTF8));
-			}
-			catch (UnsupportedEncodingException unsupportedEncodingException) {
-				unsupportedEncodingException.printStackTrace();
-			}
+			byte[] tempBytes = _bytes;
+
+			_bytes = new byte[tempBytes.length + len];
+
+			System.arraycopy(tempBytes, 0, _bytes, 0, tempBytes.length);
+			System.arraycopy(buf, off, _bytes, tempBytes.length, len);
 
 			super.write(buf, off, len);
 		}
 
-		protected byte[] getBytes() {
-			String string = _sb.toString();
-
-			return string.getBytes();
-		}
-
-		private StringBundler _sb = new StringBundler();
+		private byte[] _bytes = new byte[0];
 
 	}
 

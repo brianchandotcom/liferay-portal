@@ -15,39 +15,47 @@
 package com.liferay.dispatch.talend.web.internal.process;
 
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Base64;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Matija Petanjek
  */
 public class TalendProcessOutputParser {
 
-	public static final String KEY_ERROR = "error";
+	public TalendProcessOutputParser(byte[] resultBytes) throws JSONException {
+		ByteBuffer byteBuffer = ByteBuffer.wrap(resultBytes);
 
-	public static final String KEY_EXIT_CODE = "exitCode";
+		int errorLength = byteBuffer.getInt();
 
-	public static final String KEY_OUTPUT = "output";
+		int outputLength = byteBuffer.getInt();
 
-	public TalendProcessOutputParser(String result) throws JSONException {
-		JSONObject resultJSONObject = JSONFactoryUtil.createJSONObject(result);
+		_exitCode = byteBuffer.getInt();
 
-		_error = resultJSONObject.getString(KEY_ERROR);
-		_exitCode = resultJSONObject.getInt(KEY_EXIT_CODE);
-		_output = resultJSONObject.getString(KEY_OUTPUT);
+		byte[] errorBytes = new byte[errorLength];
+
+		byteBuffer.get(errorBytes, 0, errorLength);
+
+		_error = new String(errorBytes, StandardCharsets.UTF_8);
+
+		byte[] outputBytes = new byte[outputLength];
+
+		byteBuffer.get(outputBytes, 0, outputLength);
+
+		_output = new String(outputBytes, StandardCharsets.UTF_8);
 	}
 
-	public byte[] getError() {
-		return Base64.decode(_error);
+	public String getError() {
+		return _error;
 	}
 
 	public int getExitCode() {
 		return _exitCode;
 	}
 
-	public byte[] getOutput() {
-		return Base64.decode(_output);
+	public String getOutput() {
+		return _output;
 	}
 
 	public boolean hasException() {

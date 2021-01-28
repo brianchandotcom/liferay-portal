@@ -94,7 +94,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			NoticeableFuture<Serializable> future =
 				processChannel.getProcessNoticeableFuture();
 
-			String talendProcessOutput = (String)future.get();
+			byte[] talendProcessOutput = (byte[])future.get();
 
 			_checkTalendProcessOutput(
 				talendProcessOutput, dispatchTaskExecutorOutput);
@@ -134,7 +134,7 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	}
 
 	private void _checkTalendProcessOutput(
-			String talendProcessOutput,
+			byte[] talendProcessOutput,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws JSONException, ProcessException {
 

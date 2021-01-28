@@ -22,7 +22,6 @@ import {
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import AppContext from '../../../AppContext.es';
-import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
 function getSettingsContext(
@@ -90,6 +89,7 @@ const getColumn = ({customFields = {}, ...otherProps}) => ({
 export default function ({
 	config,
 	customFields,
+	dataLayoutBuilder,
 	dataRules,
 	defaultLanguageId,
 	dispatchEvent,
@@ -99,7 +99,6 @@ export default function ({
 	hasFocusedCustomObjectField,
 }) {
 	const [activePage, setActivePage] = useState(0);
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const spritemap = useContext(ClayIconSpriteContext);
 
 	const Column = useMemo(
@@ -164,6 +163,7 @@ export default function ({
 					activePage,
 					builderRules: dataRules,
 					defaultLanguageId,
+					displayable: true,
 					editable: true,
 					editingLanguageId,
 					spritemap,

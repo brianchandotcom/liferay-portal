@@ -71,20 +71,25 @@ definition {
 	test DuplicateSeparatorOnBuilder {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Separator test");
+		DataEngine.addField(
+			fieldFieldLabel = "Separator test",
+			fieldName = "Separator");
 
-        DataEngine.duplicateField(fieldFieldLabel = "Separator test");
+		DataEngine.duplicateField(fieldFieldLabel = "Separator test");
 
-		DataEngine.viewField(fieldName = "Separator", fieldFieldLabel = "Copy of Separator test");
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Separator test",
+			fieldName = "Separator");
 
 		Button.clickSave();
 
 		WebContentStructures.editStructure(structureName = "Test");
 
-		DataEngine.viewField(fieldName = "Separator", fieldFieldLabel = "Copy of Separator test");
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Separator test",
+			fieldName = "Separator");
 
 		Button.clickSave();
-
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

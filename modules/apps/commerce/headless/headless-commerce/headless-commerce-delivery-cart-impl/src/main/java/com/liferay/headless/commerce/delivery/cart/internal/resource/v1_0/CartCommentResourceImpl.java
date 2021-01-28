@@ -34,8 +34,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,7 +69,7 @@ public class CartCommentResourceImpl
 	@NestedField(parentClass = Cart.class, value = "notes")
 	@Override
 	public Page<CartComment> getCartCommentsPage(
-			@NestedFieldId("id") @NotNull Long cartId, Pagination pagination)
+			@NestedFieldId("id") Long cartId, Pagination pagination)
 		throws Exception {
 
 		List<CommerceOrderNote> commerceOrderNotes =

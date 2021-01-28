@@ -40,8 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,7 +59,7 @@ public class CartItemResourceImpl
 	extends BaseCartItemResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public Response deleteCartItem(@NotNull Long cartItemId) throws Exception {
+	public Response deleteCartItem(Long cartItemId) throws Exception {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.getCommerceOrderItem(cartItemId);
 
@@ -81,7 +79,7 @@ public class CartItemResourceImpl
 	}
 
 	@Override
-	public CartItem getCartItem(@NotNull Long cartItemId) throws Exception {
+	public CartItem getCartItem(Long cartItemId) throws Exception {
 		return _toCartItem(
 			_commerceOrderItemService.getCommerceOrderItem(cartItemId));
 	}
@@ -89,7 +87,7 @@ public class CartItemResourceImpl
 	@NestedField(parentClass = Cart.class, value = "cartItems")
 	@Override
 	public Page<CartItem> getCartItemsPage(
-			@NestedFieldId("id") @NotNull Long cartId, Pagination pagination)
+			@NestedFieldId("id") Long cartId, Pagination pagination)
 		throws Exception {
 
 		return Page.of(
@@ -99,7 +97,7 @@ public class CartItemResourceImpl
 	}
 
 	@Override
-	public CartItem postCartItem(@NotNull Long cartId, CartItem cartItem)
+	public CartItem postCartItem(Long cartId, CartItem cartItem)
 		throws Exception {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
@@ -121,7 +119,7 @@ public class CartItemResourceImpl
 	}
 
 	@Override
-	public CartItem putCartItem(@NotNull Long cartItemId, CartItem cartItem)
+	public CartItem putCartItem(Long cartItemId, CartItem cartItem)
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem =

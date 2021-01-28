@@ -27,8 +27,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import javax.validation.constraints.NotNull;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -49,7 +47,7 @@ public class AccountGroupResourceImpl
 		parentClass = DiscountAccountGroup.class, value = "accountGroup"
 	)
 	@Override
-	public AccountGroup getDiscountAccountGroupAccountGroup(@NotNull Long id)
+	public AccountGroup getDiscountAccountGroupAccountGroup(Long id)
 		throws Exception {
 
 		CommerceDiscountCommerceAccountGroupRel
@@ -68,7 +66,7 @@ public class AccountGroupResourceImpl
 		parentClass = PriceListAccountGroup.class, value = "accountGroup"
 	)
 	@Override
-	public AccountGroup getPriceListAccountGroupAccountGroup(@NotNull Long id)
+	public AccountGroup getPriceListAccountGroupAccountGroup(Long id)
 		throws Exception {
 
 		CommercePriceListCommerceAccountGroupRel

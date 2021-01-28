@@ -48,8 +48,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -140,8 +138,7 @@ public class SkuResourceImpl
 	@NestedField(parentClass = Product.class, value = "skus")
 	@Override
 	public Page<Sku> getProductIdSkusPage(
-			@NestedFieldId(value = "productId") @NotNull Long id,
-			Pagination pagination)
+			@NestedFieldId(value = "productId") Long id, Pagination pagination)
 		throws Exception {
 
 		return _skuHelper.getSkusPage(
@@ -230,7 +227,7 @@ public class SkuResourceImpl
 	}
 
 	@Override
-	public Sku postProductIdSku(@NotNull Long id, Sku sku) throws Exception {
+	public Sku postProductIdSku(Long id, Sku sku) throws Exception {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
 

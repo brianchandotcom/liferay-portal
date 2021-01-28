@@ -18,8 +18,6 @@ import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.MeasurementUnit
 import com.liferay.headless.commerce.admin.site.setting.internal.util.v1_0.MeasurementUnitHelper;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.MeasurementUnitResource;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,7 +36,7 @@ public class MeasurementUnitResourceImpl
 	extends BaseMeasurementUnitResourceImpl {
 
 	@Override
-	public Response deleteMeasurementUnit(@NotNull Long id) throws Exception {
+	public Response deleteMeasurementUnit(Long id) throws Exception {
 		_measurementUnitHelper.deleteMeasurementUnit(id);
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -47,9 +45,7 @@ public class MeasurementUnitResourceImpl
 	}
 
 	@Override
-	public MeasurementUnit getMeasurementUnit(@NotNull Long id)
-		throws Exception {
-
+	public MeasurementUnit getMeasurementUnit(Long id) throws Exception {
 		return _measurementUnitHelper.getMeasurementUnit(id);
 	}
 

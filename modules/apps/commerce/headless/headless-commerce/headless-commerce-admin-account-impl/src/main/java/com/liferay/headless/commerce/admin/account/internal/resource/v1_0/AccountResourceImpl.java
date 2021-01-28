@@ -72,8 +72,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -126,8 +124,7 @@ public class AccountResourceImpl
 
 	@Override
 	public Response deleteAccountGroupByExternalReferenceCodeAccount(
-			@NotNull String accountExternalReferenceCode,
-			@NotNull String externalReferenceCode)
+			String accountExternalReferenceCode, String externalReferenceCode)
 		throws Exception {
 
 		CommerceAccountGroup commerceAccountGroup =
@@ -318,7 +315,7 @@ public class AccountResourceImpl
 
 	@Override
 	public Response postAccountGroupByExternalReferenceCodeAccount(
-			@NotNull String externalReferenceCode, Account account)
+			String externalReferenceCode, Account account)
 		throws Exception {
 
 		CommerceAccountGroup commerceAccountGroup =

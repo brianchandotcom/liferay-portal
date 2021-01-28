@@ -58,8 +58,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,7 +77,7 @@ public class ProductResourceImpl
 
 	@Override
 	public Product getChannelProduct(
-			@NotNull Long channelId, @NotNull Long productId, Long accountId)
+			Long channelId, Long productId, Long accountId)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
@@ -102,7 +100,7 @@ public class ProductResourceImpl
 
 	@Override
 	public Page<Product> getChannelProductsPage(
-			@NotNull Long channelId, Long accountId, Filter filter,
+			Long channelId, Long accountId, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 

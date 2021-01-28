@@ -31,8 +31,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import javax.validation.constraints.NotNull;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -51,9 +49,7 @@ public class ProductResourceImpl
 
 	@NestedField(parentClass = DiscountProduct.class, value = "product")
 	@Override
-	public Product getDiscountProductProduct(@NotNull Long id)
-		throws Exception {
-
+	public Product getDiscountProductProduct(Long id) throws Exception {
 		CommerceDiscountRel commerceDiscountRel =
 			_commerceDiscountRelService.getCommerceDiscountRel(id);
 
@@ -65,7 +61,7 @@ public class ProductResourceImpl
 
 	@NestedField(parentClass = PriceEntry.class, value = "product")
 	@Override
-	public Product getPriceEntryIdProduct(@NotNull Long id) throws Exception {
+	public Product getPriceEntryIdProduct(Long id) throws Exception {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.getCommercePriceEntry(id);
 
@@ -79,9 +75,7 @@ public class ProductResourceImpl
 
 	@NestedField(parentClass = PriceModifierProduct.class, value = "product")
 	@Override
-	public Product getPriceModifierProductProduct(@NotNull Long id)
-		throws Exception {
-
+	public Product getPriceModifierProductProduct(Long id) throws Exception {
 		CommercePriceModifierRel commercePriceModifierRel =
 			_commercePriceModifierRelService.getCommercePriceModifierRel(id);
 

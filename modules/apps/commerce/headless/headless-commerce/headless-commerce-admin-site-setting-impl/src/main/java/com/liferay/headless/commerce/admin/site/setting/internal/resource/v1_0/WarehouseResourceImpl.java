@@ -18,8 +18,6 @@ import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.site.setting.internal.util.v1_0.WarehouseHelper;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.WarehouseResource;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,7 +35,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 
 	@Override
-	public Response deleteWarehouse(@NotNull Long id) throws Exception {
+	public Response deleteWarehouse(Long id) throws Exception {
 		_warehouseHelper.deleteWarehouse(id);
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -46,7 +44,7 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 	}
 
 	@Override
-	public Warehouse getWarehouse(@NotNull Long id) throws Exception {
+	public Warehouse getWarehouse(Long id) throws Exception {
 		return _warehouseHelper.getWarehouse(id);
 	}
 

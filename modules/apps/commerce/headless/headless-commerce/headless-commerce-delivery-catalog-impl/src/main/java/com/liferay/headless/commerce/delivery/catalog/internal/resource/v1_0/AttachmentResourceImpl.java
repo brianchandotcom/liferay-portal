@@ -36,8 +36,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -57,8 +55,7 @@ public class AttachmentResourceImpl
 	@NestedField(parentClass = Product.class, value = "attachments")
 	@Override
 	public Page<Attachment> getChannelProductAttachmentsPage(
-			@NotNull Long channelId,
-			@NestedFieldId("productId") @NotNull Long productId,
+			Long channelId, @NestedFieldId("productId") Long productId,
 			Pagination pagination)
 		throws Exception {
 
@@ -78,8 +75,7 @@ public class AttachmentResourceImpl
 	@NestedField(parentClass = Product.class, value = "images")
 	@Override
 	public Page<Attachment> getChannelProductImagesPage(
-			@NotNull Long channelId,
-			@NestedFieldId("productId") @NotNull Long productId,
+			Long channelId, @NestedFieldId("productId") Long productId,
 			Pagination pagination)
 		throws Exception {
 

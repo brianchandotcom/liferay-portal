@@ -27,8 +27,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import javax.validation.constraints.NotNull;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -47,9 +45,7 @@ public class AccountResourceImpl
 
 	@NestedField(parentClass = DiscountAccount.class, value = "account")
 	@Override
-	public Account getDiscountAccountAccount(@NotNull Long id)
-		throws Exception {
-
+	public Account getDiscountAccountAccount(Long id) throws Exception {
 		CommerceDiscountAccountRel commerceDiscountAccountRel =
 			_commerceDiscountAccountRelService.getCommerceDiscountAccountRel(
 				id);
@@ -62,9 +58,7 @@ public class AccountResourceImpl
 
 	@NestedField(parentClass = PriceListAccount.class, value = "account")
 	@Override
-	public Account getPriceListAccountAccount(@NotNull Long id)
-		throws Exception {
-
+	public Account getPriceListAccountAccount(Long id) throws Exception {
 		CommercePriceListAccountRel commercePriceListAccountRel =
 			_commercePriceListAccountRelService.getCommercePriceListAccountRel(
 				id);

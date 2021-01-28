@@ -41,8 +41,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -72,7 +70,7 @@ public class AccountAddressResourceImpl
 
 	@Override
 	public Response deleteAccountAddressByExternalReferenceCode(
-			@NotNull String externalReferenceCode)
+			String externalReferenceCode)
 		throws Exception {
 
 		CommerceAddress commerceAddress =
@@ -101,7 +99,7 @@ public class AccountAddressResourceImpl
 
 	@Override
 	public AccountAddress getAccountAddressByExternalReferenceCode(
-			@NotNull String externalReferenceCode)
+			String externalReferenceCode)
 		throws Exception {
 
 		CommerceAddress commerceAddress =
@@ -185,8 +183,7 @@ public class AccountAddressResourceImpl
 
 	@Override
 	public Response patchAccountAddressByExternalReferenceCode(
-			@NotNull String externalReferenceCode,
-			AccountAddress accountAddress)
+			String externalReferenceCode, AccountAddress accountAddress)
 		throws Exception {
 
 		CommerceAddress commerceAddress =

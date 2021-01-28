@@ -69,8 +69,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -87,7 +85,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Override
-	public Response deleteCart(@NotNull Long cartId) throws Exception {
+	public Response deleteCart(Long cartId) throws Exception {
 		_commerceOrderService.deleteCommerceOrder(cartId);
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
@@ -96,7 +94,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
-	public Cart getCart(@NotNull Long cartId) throws Exception {
+	public Cart getCart(Long cartId) throws Exception {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
@@ -104,8 +102,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
-	public Page<Cart> getChannelCartsPage(
-			@NotNull Long channelId, Pagination pagination)
+	public Page<Cart> getChannelCartsPage(Long channelId, Pagination pagination)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
@@ -126,7 +123,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
-	public Cart patchCart(@NotNull Long cartId, Cart cart) throws Exception {
+	public Cart patchCart(Long cartId, Cart cart) throws Exception {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			cartId);
 
@@ -195,7 +192,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
-	public Cart postCartCouponCode(@NotNull Long cartId, CouponCode couponCode)
+	public Cart postCartCouponCode(Long cartId, CouponCode couponCode)
 		throws Exception {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
@@ -212,9 +209,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	@Override
-	public Cart postChannelCart(@NotNull Long channelId, Cart cart)
-		throws Exception {
-
+	public Cart postChannelCart(Long channelId, Cart cart) throws Exception {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 

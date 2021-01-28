@@ -41,8 +41,6 @@ import com.liferay.upload.UniqueFileNameProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -161,8 +159,7 @@ public class AttachmentResourceImpl
 
 	@Override
 	public Attachment postProductByExternalReferenceCodeAttachmentByBase64(
-			@NotNull String externalReferenceCode,
-			AttachmentBase64 attachmentBase64)
+			String externalReferenceCode, AttachmentBase64 attachmentBase64)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -181,7 +178,7 @@ public class AttachmentResourceImpl
 
 	@Override
 	public Attachment postProductByExternalReferenceCodeAttachmentByUrl(
-			@NotNull String externalReferenceCode, AttachmentUrl attachmentUrl)
+			String externalReferenceCode, AttachmentUrl attachmentUrl)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -219,8 +216,7 @@ public class AttachmentResourceImpl
 
 	@Override
 	public Attachment postProductByExternalReferenceCodeImageByBase64(
-			@NotNull String externalReferenceCode,
-			AttachmentBase64 attachmentBase64)
+			String externalReferenceCode, AttachmentBase64 attachmentBase64)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -239,7 +235,7 @@ public class AttachmentResourceImpl
 
 	@Override
 	public Attachment postProductByExternalReferenceCodeImageByUrl(
-			@NotNull String externalReferenceCode, AttachmentUrl attachmentUrl)
+			String externalReferenceCode, AttachmentUrl attachmentUrl)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -273,7 +269,7 @@ public class AttachmentResourceImpl
 
 	@Override
 	public Attachment postProductIdAttachmentByBase64(
-			@NotNull Long id, AttachmentBase64 attachmentBase64)
+			Long id, AttachmentBase64 attachmentBase64)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -289,7 +285,7 @@ public class AttachmentResourceImpl
 
 	@Override
 	public Attachment postProductIdAttachmentByUrl(
-			@NotNull Long id, AttachmentUrl attachmentUrl)
+			Long id, AttachmentUrl attachmentUrl)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -320,7 +316,7 @@ public class AttachmentResourceImpl
 
 	@Override
 	public Attachment postProductIdImageByBase64(
-			@NotNull Long id, AttachmentBase64 attachmentBase64)
+			Long id, AttachmentBase64 attachmentBase64)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -336,7 +332,7 @@ public class AttachmentResourceImpl
 
 	@Override
 	public Attachment postProductIdImageByUrl(
-			@NotNull Long id, AttachmentUrl attachmentUrl)
+			Long id, AttachmentUrl attachmentUrl)
 		throws Exception {
 
 		CPDefinition cpDefinition =

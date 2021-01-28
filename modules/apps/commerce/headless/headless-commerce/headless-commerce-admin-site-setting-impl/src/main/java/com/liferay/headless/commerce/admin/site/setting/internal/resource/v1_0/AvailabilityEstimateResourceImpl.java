@@ -18,8 +18,6 @@ import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEst
 import com.liferay.headless.commerce.admin.site.setting.internal.util.v1_0.AvailabilityEstimateHelper;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.AvailabilityEstimateResource;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,9 +36,7 @@ public class AvailabilityEstimateResourceImpl
 	extends BaseAvailabilityEstimateResourceImpl {
 
 	@Override
-	public Response deleteAvailabilityEstimate(@NotNull Long id)
-		throws Exception {
-
+	public Response deleteAvailabilityEstimate(Long id) throws Exception {
 		_availabilityEstimateHelper.deleteAvailabilityEstimate(id);
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -49,7 +45,7 @@ public class AvailabilityEstimateResourceImpl
 	}
 
 	@Override
-	public AvailabilityEstimate getAvailabilityEstimate(@NotNull Long id)
+	public AvailabilityEstimate getAvailabilityEstimate(Long id)
 		throws Exception {
 
 		return _availabilityEstimateHelper.getAvailabilityEstimate(id);

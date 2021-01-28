@@ -27,8 +27,6 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 
-import javax.validation.constraints.NotNull;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -47,8 +45,7 @@ public class AddressResourceImpl
 
 	@NestedField(parentClass = Cart.class, value = "billingAddress")
 	@Override
-	public Address getCartBillingAddres(
-			@NestedFieldId("id") @NotNull Long cartId)
+	public Address getCartBillingAddres(@NestedFieldId("id") Long cartId)
 		throws Exception {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
@@ -66,8 +63,7 @@ public class AddressResourceImpl
 
 	@NestedField(parentClass = Cart.class, value = "shippingAddress")
 	@Override
-	public Address getCartShippingAddres(
-			@NestedFieldId("id") @NotNull Long cartId)
+	public Address getCartShippingAddres(@NestedFieldId("id") Long cartId)
 		throws Exception {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(

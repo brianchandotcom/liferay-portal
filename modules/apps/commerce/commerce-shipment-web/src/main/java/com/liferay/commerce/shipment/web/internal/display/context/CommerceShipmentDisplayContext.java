@@ -24,17 +24,13 @@ import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -43,12 +39,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -79,10 +79,10 @@ public class CommerceShipmentDisplayContext
 		CommerceAddressFormatter commerceAddressFormatter,
 		CommerceAddressService commerceAddressService,
 		CommerceChannelService commerceChannelService,
-		CommerceCountryService commerceCountryService,
+		CountryService countryService,
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderLocalService commerceOrderLocalService,
-		CommerceRegionService commerceRegionService,
+		RegionService regionService,
 		PortletResourcePermission portletResourcePermission) {
 
 		super(actionHelper, httpServletRequest, portletResourcePermission);
@@ -90,10 +90,10 @@ public class CommerceShipmentDisplayContext
 		_commerceAddressFormatter = commerceAddressFormatter;
 		_commerceAddressService = commerceAddressService;
 		_commerceChannelService = commerceChannelService;
-		_commerceCountryService = commerceCountryService;
+		_countryService = countryService;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
-		_commerceRegionService = commerceRegionService;
+		_regionService = regionService;
 	}
 
 	public List<CommerceAccount> getCommerceAccountsWithShippableOrders()
@@ -154,11 +154,6 @@ public class CommerceShipmentDisplayContext
 			cpRequestHelper.getCompanyId());
 	}
 
-	public List<CommerceCountry> getCommerceCountries() {
-		return _commerceCountryService.getCommerceCountries(
-			cpRequestHelper.getCompanyId(), true);
-	}
-
 	public List<CommerceOrder> getCommerceOrders() throws PortalException {
 		SearchContext searchContext = _buildSearchContext();
 
@@ -168,9 +163,9 @@ public class CommerceShipmentDisplayContext
 		return baseModelSearchResult.getBaseModels();
 	}
 
-	public List<CommerceRegion> getCommerceRegions(long commerceCountryId) {
-		return _commerceRegionService.getCommerceRegions(
-			commerceCountryId, true);
+	public List<Country> getCountries() {
+		return _countryService.getCompanyCountries(
+			cpRequestHelper.getCompanyId(), true);
 	}
 
 	public String getDatasetView() throws PortalException {
@@ -288,6 +283,10 @@ public class CommerceShipmentDisplayContext
 		portletURL.setParameter("navigation", getNavigation());
 
 		return portletURL;
+	}
+
+	public List<Region> getRegions(long countryId) {
+		return _regionService.getRegions(countryId, true);
 	}
 
 	public List<DropdownItem> getShipmentItemBulkActions()
@@ -438,9 +437,9 @@ public class CommerceShipmentDisplayContext
 	private final CommerceAddressFormatter _commerceAddressFormatter;
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceChannelService _commerceChannelService;
-	private final CommerceCountryService _commerceCountryService;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
-	private final CommerceRegionService _commerceRegionService;
+	private final CountryService _countryService;
+	private final RegionService _regionService;
 
 }

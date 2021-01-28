@@ -466,23 +466,6 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
-	macro editFieldShow{
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
-
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-
-		Uncheck.uncheckToggleSwitch(
-			checkboxName = "Show Label",
-			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
-
-		Click(locator1 = "Sidebar#BACK");	
-	}
-
 	macro editFieldSearchable {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
@@ -518,6 +501,23 @@ definition {
 		Check.checkToggleSwitch(
 			checkboxName = "Repeatable",
 			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
+	macro editFieldShow {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Show Label",
+			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
 
 		Click(locator1 = "Sidebar#BACK");
 	}

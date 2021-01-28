@@ -46,7 +46,18 @@ String monthParamId = namespace + HtmlUtil.getAUICompatibleId(monthParam);
 String nameId = namespace + HtmlUtil.getAUICompatibleId(name);
 String yearParamId = namespace + HtmlUtil.getAUICompatibleId(yearParam);
 
-Calendar calendar = CalendarFactoryUtil.getCalendar(yearValue, monthValue, dayValue);
+Calendar calendar = null;
+
+if (required && (yearValue == 0) && (monthValue == -1) && (dayValue == 0)) {
+	calendar = CalendarFactoryUtil.getCalendar(timeZone);
+
+	yearValue = calendar.get(Calendar.YEAR);
+	monthValue = calendar.get(Calendar.MONTH);
+	dayValue = calendar.get(Calendar.DAY_OF_MONTH);
+}
+else {
+	calendar = CalendarFactoryUtil.getCalendar(yearValue, monthValue, dayValue);
+}
 
 String mask = _MASK_YMD;
 String simpleDateFormatPattern = _SIMPLE_DATE_FORMAT_PATTERN_HTML5;

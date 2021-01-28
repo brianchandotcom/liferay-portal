@@ -147,13 +147,6 @@ public class CommerceTaxFixedRateAddressRelWrapper
 		}
 	}
 
-	@Override
-	public com.liferay.commerce.model.CommerceCountry getCommerceCountry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getCommerceCountry();
-	}
-
 	/**
 	 * Returns the commerce country ID of this commerce tax fixed rate address rel.
 	 *
@@ -162,13 +155,6 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	@Override
 	public long getCommerceCountryId() {
 		return model.getCommerceCountryId();
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceRegion getCommerceRegion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getCommerceRegion();
 	}
 
 	/**
@@ -217,6 +203,13 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country getCountry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCountry();
 	}
 
 	@Override
@@ -284,6 +277,13 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	@Override
 	public double getRate() {
 		return model.getRate();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Region getRegion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getRegion();
 	}
 
 	/**

@@ -22,6 +22,7 @@ import FormsRuleBuilder from './components/rule-builder/FormsRuleBuilder.es';
 import SearchInput, {
 	SearchInputWithForm,
 } from './components/search-input/SearchInput.es';
+import {ReactMultiPanelSidebarAdapter} from './components/sidebar/MultiPanelSidebarFormsProxy.es';
 import Sidebar from './components/sidebar/Sidebar.es';
 import TranslationManager from './components/translation-manager/TranslationManager.es';
 import * as DataLayoutBuilder from './data-layout-builder/DataLayoutBuilder.es';
@@ -43,6 +44,7 @@ export {
 	DragTypes,
 	FieldType,
 	FieldTypeList,
+	ReactMultiPanelSidebarAdapter,
 	SearchInput,
 	SearchInputWithForm,
 	Sidebar,

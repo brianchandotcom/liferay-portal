@@ -109,6 +109,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
@@ -517,6 +518,27 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		return false;
 	}
 
+	@Modified
+	protected void modified(ComponentContext componentContext) {
+		if (_freeMarkerEngineConfiguration.asyncRenderTimeout() > 0) {
+			_noticeableExecutorService.shutdownNow();
+
+			_timeoutTemplateCounters.clear();
+
+			_serviceRegistration.unregister();
+
+			_noticeableExecutorService = null;
+			_timeoutTemplateCounters = null;
+			_serviceRegistration = null;
+		}
+
+		_freeMarkerEngineConfiguration = ConfigurableUtil.createConfigurable(
+			FreeMarkerEngineConfiguration.class,
+			componentContext.getProperties());
+
+		_initAsyncRender(componentContext.getBundleContext());
+	}
+
 	protected void render(
 			String templateId, Writer writer, boolean restricted,
 			Callable<Void> callable)
@@ -671,28 +693,30 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	// Set initial to -2 because -1 has significance to bundle trackers
 
 	private volatile int _bundleTrackingCount = -2;
-	private Configuration _configuration;
-	private BeansWrapper _defaultBeanWrapper;
+	private volatile Configuration _configuration;
+	private volatile BeansWrapper _defaultBeanWrapper;
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
-	private FreeMarkerEngineConfiguration _freeMarkerEngineConfiguration;
+	private volatile FreeMarkerEngineConfiguration
+		_freeMarkerEngineConfiguration;
 
 	@Reference
 	private FreeMarkerTemplateResourceCache _freeMarkerTemplateResourceCache;
 
-	private NoticeableExecutorService _noticeableExecutorService;
+	private volatile NoticeableExecutorService _noticeableExecutorService;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
 
-	private BeansWrapper _restrictedBeanWrapper;
-	private ServiceRegistration<PortalExecutorConfig> _serviceRegistration;
+	private volatile BeansWrapper _restrictedBeanWrapper;
+	private volatile ServiceRegistration<PortalExecutorConfig>
+		_serviceRegistration;
 	private SingleVMPool _singleVMPool;
 	private final Map<String, String> _taglibMappings =
 		new ConcurrentHashMap<>();
 	private TemplateClassResolver _templateClassResolver;
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
-	private Map<String, AtomicInteger> _timeoutTemplateCounters;
+	private volatile Map<String, AtomicInteger> _timeoutTemplateCounters;
 
 	private static class ThreadLocalUtil {
 

@@ -37,6 +37,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -205,26 +207,26 @@ public class CommerceShippingFixedOptionSettingClayTable
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Country commerceCountry = commerceShippingFixedOptionRel.getCountry();
+		Country country = commerceShippingFixedOptionRel.getCountry();
 
-		if (commerceCountry == null) {
+		if (country == null) {
 			return StringPool.STAR;
 		}
 
-		return commerceCountry.getName(themeDisplay.getLanguageId());
+		return country.getTitle(themeDisplay.getLanguageId());
 	}
 
 	private String _getRegion(
 			CommerceShippingFixedOptionRel commerceShippingFixedOptionRel)
 		throws PortalException {
 
-		Region commerceRegion = commerceShippingFixedOptionRel.getRegion();
+		Region region = commerceShippingFixedOptionRel.getRegion();
 
-		if (commerceRegion == null) {
+		if (region == null) {
 			return StringPool.STAR;
 		}
 
-		return commerceRegion.getName();
+		return region.getName();
 	}
 
 	private String _getShippingFixedOptionSettingDeleteURL(

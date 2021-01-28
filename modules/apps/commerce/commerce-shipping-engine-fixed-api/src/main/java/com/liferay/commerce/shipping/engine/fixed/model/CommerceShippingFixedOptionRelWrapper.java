@@ -192,13 +192,6 @@ public class CommerceShippingFixedOptionRelWrapper
 		}
 	}
 
-	@Override
-	public com.liferay.commerce.model.CommerceCountry getCommerceCountry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getCommerceCountry();
-	}
-
 	/**
 	 * Returns the commerce country ID of this commerce shipping fixed option rel.
 	 *
@@ -225,13 +218,6 @@ public class CommerceShippingFixedOptionRelWrapper
 	@Override
 	public long getCommerceInventoryWarehouseId() {
 		return model.getCommerceInventoryWarehouseId();
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceRegion getCommerceRegion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getCommerceRegion();
 	}
 
 	/**
@@ -297,6 +283,13 @@ public class CommerceShippingFixedOptionRelWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country getCountry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCountry();
 	}
 
 	/**
@@ -367,6 +360,13 @@ public class CommerceShippingFixedOptionRelWrapper
 	@Override
 	public BigDecimal getRateUnitWeightPrice() {
 		return model.getRateUnitWeightPrice();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Region getRegion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getRegion();
 	}
 
 	/**

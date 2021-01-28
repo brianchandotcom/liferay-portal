@@ -58,7 +58,7 @@ public class DMMDataDefinitionConverterTest {
 			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
 				_read(
 					"ddm-form-data-definition-json-converter-all-fields.json"),
-				LocaleUtil.US);
+				LocaleUtil.US, 0, 0);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
@@ -75,7 +75,7 @@ public class DMMDataDefinitionConverterTest {
 		String dataDefinition =
 			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
 				_read("ddm-form-data-definition-json-converter-checkbox.json"),
-				LocaleUtil.US);
+				LocaleUtil.US, 0, 0);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
@@ -94,7 +94,7 @@ public class DMMDataDefinitionConverterTest {
 				_read(
 					"ddm-form-data-definition-json-converter-nested-" +
 						"fields.json"),
-				LocaleUtil.US);
+				LocaleUtil.US, 0, 0);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
@@ -132,7 +132,7 @@ public class DMMDataDefinitionConverterTest {
 				_read(
 					"ddm-form-data-definition-json-converter-repeatable-" +
 						"nested-fields.json"),
-				LocaleUtil.US);
+				LocaleUtil.US, 0, 0);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(
@@ -151,7 +151,7 @@ public class DMMDataDefinitionConverterTest {
 				_read(
 					"ddm-form-data-definition-json-converter-link-to-" +
 						"page.json"),
-				LocaleUtil.US);
+				LocaleUtil.US, 0, 0);
 
 		String dataDefinition =
 			_ddmDataDefinitionConverter.convertDDMFormLayoutDataDefinition(
@@ -177,7 +177,7 @@ public class DMMDataDefinitionConverterTest {
 				_read(
 					"ddm-form-data-definition-json-converter-nested-" +
 						"fields.json"),
-				LocaleUtil.US);
+				LocaleUtil.US, 0, 0);
 
 		String dataDefinition =
 			_ddmDataDefinitionConverter.convertDDMFormLayoutDataDefinition(

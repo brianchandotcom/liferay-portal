@@ -24,15 +24,8 @@ import java.util.Locale;
 public interface DDMDataDefinitionConverter {
 
 	public String convertDDMFormDataDefinition(
-		DDMForm ddmForm, Locale defaultLocale);
-
-	public String convertDDMFormDataDefinition(
 		DDMForm ddmForm, Locale defaultLocale, long parentStructureId,
 		long parentStructureLayoutId);
-
-	public String convertDDMFormDataDefinition(
-			String dataDefinition, Locale defaultLocale)
-		throws Exception;
 
 	public String convertDDMFormDataDefinition(
 			String dataDefinition, Locale defaultLocale, long parentStructureId,

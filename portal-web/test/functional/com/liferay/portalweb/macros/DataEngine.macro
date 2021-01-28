@@ -202,22 +202,32 @@ definition {
 			if ("${fieldName}" == "Grid") {
 				var index = "1";
 
-				for (var optionValue : list "1,2") {
+				for (var optionValue : list "R1,R2") {
 					DataEngine.addFieldOption(
 						index = "${index}",
 						optionFieldLabel = "Rows",
-						optionValue = "Row ${optionValue}");
+						optionValue = "Row ${index}");
+
+					DataEngine.editFieldReferenceOfFieldOption(
+						fieldReferenceOfFieldOption = "${optionValue}",
+						index = "${index}",
+						optionFieldLabel = "Rows");
 
 					var index = ${index} + 1;
 				}
 
 				var index = "1";
 
-				for (var optionValue : list "1,2") {
+				for (var optionValue : list "C1,C2") {
 					DataEngine.addFieldOption(
 						index = "${index}",
 						optionFieldLabel = "Columns",
-						optionValue = "Column ${optionValue}");
+						optionValue = "Column ${index}");
+
+					DataEngine.editFieldReferenceOfFieldOption(
+						fieldReferenceOfFieldOption = "${optionValue}",
+						index = "${index}",
+						optionFieldLabel = "Rows");
 
 					var index = ${index} + 1;
 				}
@@ -225,17 +235,26 @@ definition {
 			else if ("${fieldName}" == "Multiple Selection") {
 				DataEngine.addFieldOption(
 					index = "1",
-					optionValue = "Value 1");
+					optionFieldLabel = "Options",
+					optionValue = "Option 1");
 			}
 			else if ("${fieldName}" == "Select from List") {
 				DataEngine.addFieldOption(
 					index = "1",
-					optionValue = "Value 2");
+					optionValue = "Option 2");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldReferenceOfFieldOption = "Value2",
+					index = "1");
 			}
 			else if ("${fieldName}" == "Single Selection") {
 				DataEngine.addFieldOption(
 					index = "1",
-					optionValue = "Value 3");
+					optionValue = "Option 3");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+					fieldReferenceOfFieldOption = "Value3",
+					index = "1");
 			}
 
 			Navigator.gotoNavTab(navTab = "Advanced");

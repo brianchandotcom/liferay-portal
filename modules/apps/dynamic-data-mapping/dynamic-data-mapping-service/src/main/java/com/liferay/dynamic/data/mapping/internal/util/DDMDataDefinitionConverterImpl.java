@@ -59,23 +59,22 @@ public class DDMDataDefinitionConverterImpl
 	implements DDMDataDefinitionConverter {
 
 	@Override
-	public String convertDDMFormDataDefinition(
+	public DDMForm convertDDMFormDataDefinition(
 		DDMForm ddmForm, Locale defaultLocale, long parentStructureId,
 		long parentStructureLayoutId) {
 
 		if (Objects.equals(ddmForm.getDefinitionSchemaVersion(), "2.0")) {
-			return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
+			return ddmForm;
 		}
 
 		ddmForm.setDefinitionSchemaVersion("2.0");
 
 		_upgradeParentStructure(
 			ddmForm, parentStructureId, parentStructureLayoutId);
+
 		_upgradeFields(ddmForm.getDDMFormFields(), defaultLocale);
 
-		ddmForm = _upgradeNestedFields(ddmForm);
-
-		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
+		return _upgradeNestedFields(ddmForm);
 	}
 
 	@Override
@@ -87,21 +86,15 @@ public class DDMDataDefinitionConverterImpl
 		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
 			_ddmFormDeserializer, dataDefinition);
 
-		return convertDDMFormDataDefinition(
+		ddmForm = convertDDMFormDataDefinition(
 			ddmForm, defaultLocale, parentStructureId, parentStructureLayoutId);
+
+		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}
 
 	@Override
-	public String convertDDMFormLayoutDataDefinition(
-			String structureLayoutDataDefinition,
-			String structureVersionDataDefinition)
-		throws Exception {
-
-		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
-			_ddmFormLayoutDeserializer, structureLayoutDataDefinition);
-
-		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
-			_ddmFormDeserializer, structureVersionDataDefinition);
+	public DDMFormLayout convertDDMFormLayoutDataDefinition(
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout) {
 
 		ddmFormLayout.setDefinitionSchemaVersion("2.0");
 		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
@@ -137,6 +130,24 @@ public class DDMDataDefinitionConverterImpl
 
 			ddmFormLayoutPage.setDescription(localizedValue);
 		}
+
+		return ddmFormLayout;
+	}
+
+	@Override
+	public String convertDDMFormLayoutDataDefinition(
+			String structureLayoutDataDefinition,
+			String structureVersionDataDefinition)
+		throws Exception {
+
+		DDMFormLayout ddmFormLayout = DDMFormLayoutDeserializeUtil.deserialize(
+			_ddmFormLayoutDeserializer, structureLayoutDataDefinition);
+
+		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+			_ddmFormDeserializer, structureVersionDataDefinition);
+
+		ddmFormLayout = convertDDMFormLayoutDataDefinition(
+			ddmForm, ddmFormLayout);
 
 		DDMFormLayoutSerializerSerializeResponse
 			ddmFormLayoutSerializerSerializeResponse =

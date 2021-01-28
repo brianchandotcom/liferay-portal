@@ -152,6 +152,10 @@ public abstract class BaseTemplateResourceCache
 
 		_multiVMPool.removePortalCache(_portalCacheName);
 		_singleVMPool.removePortalCache(_portalCacheName);
+
+		_multiVMPortalCache = null;
+		_singleVMPortalCache = null;
+		_templateResourcePortalCacheListener = null;
 	}
 
 	protected void init(
@@ -179,13 +183,13 @@ public abstract class BaseTemplateResourceCache
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseTemplateResourceCache.class);
 
-	private long _modificationCheckInterval;
+	private volatile long _modificationCheckInterval;
 	private MultiVMPool _multiVMPool;
-	private PortalCache<String, TemplateResource> _multiVMPortalCache;
+	private volatile PortalCache<String, TemplateResource> _multiVMPortalCache;
 	private String _portalCacheName;
 	private SingleVMPool _singleVMPool;
-	private PortalCache<String, TemplateResource> _singleVMPortalCache;
-	private TemplateResourcePortalCacheListener
+	private volatile PortalCache<String, TemplateResource> _singleVMPortalCache;
+	private volatile TemplateResourcePortalCacheListener
 		_templateResourcePortalCacheListener;
 
 	private class TemplateResourcePortalCacheListener

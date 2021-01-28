@@ -27,13 +27,13 @@ definition {
 		}
 
 		if ((isSet(installXuggler)) && (IsElementNotPresent(locator1 = "ServerAdministrationExternalServices#XUGGLER_ENABLED_CHECKBOX"))) {
-			Panel.expandPanel(panel = "Enabling Xuggler provides video conversion functionality.");
+			Panel.expandUnstyledPanel(panel = "Enabling Xuggler provides video conversion functionality.");
 
 			AssertClick(
 				locator1 = "ServerAdministrationExternalServices#XUGGLER_INSTALL_BUTTON",
 				value1 = "Install");
 
-			Panel.expandPanel(panel = "Enabling Xuggler provides video conversion functionality.");
+			Panel.expandUnstyledPanel(panel = "Enabling Xuggler provides video conversion functionality.");
 
 			AssertTextNotEquals(
 				locator1 = "Message#INFO",

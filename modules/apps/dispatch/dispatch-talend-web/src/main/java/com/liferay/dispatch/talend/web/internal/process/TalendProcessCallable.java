@@ -137,7 +137,7 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 	private final String _jobMainClassFQN;
 	private final String[] _mainMethodArgs;
 
-	private static class SniffPrintStream extends PrintStream {
+	private class SniffPrintStream extends PrintStream {
 
 		public SniffPrintStream(PrintStream printStream) {
 			super(printStream);

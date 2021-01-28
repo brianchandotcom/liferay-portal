@@ -199,6 +199,8 @@ public class SegmentsExperienceLocalServiceImpl
 
 		segmentsExperiencePersistence.remove(segmentsExperience);
 
+		segmentsExperiencePersistence.flush();
+
 		// Segments experiences priorities
 
 		List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
@@ -211,16 +213,13 @@ public class SegmentsExperienceLocalServiceImpl
 		Collections.reverse(segmentsExperiences);
 
 		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					curSegmentsExperience.setPriority(
-						curSegmentsExperience.getPriority() - 1);
+				curSegmentsExperience.setPriority(
+					curSegmentsExperience.getPriority() - 1);
 
-					segmentsExperienceLocalService.updateSegmentsExperience(
-						curSegmentsExperience);
+				segmentsExperienceLocalService.updateSegmentsExperience(
+					curSegmentsExperience);
 
-					return null;
-				});
+				segmentsExperiencePersistence.flush();
 		}
 
 		// Segments experiments

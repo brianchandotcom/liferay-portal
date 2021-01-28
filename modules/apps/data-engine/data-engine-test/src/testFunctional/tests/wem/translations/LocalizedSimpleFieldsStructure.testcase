@@ -264,7 +264,6 @@ definition {
 		WebContentStructures.saveCP();
 
 		WebContentStructures.deleteCP(structureName = "Structure1");
-
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

@@ -146,11 +146,19 @@ public class DMMDataDefinitionConverterTest {
 	public void testConvertDDMFormLayoutDataDefinitionLinkToPage()
 		throws Exception {
 
+		String structureVersionDataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				_read(
+					"ddm-form-data-definition-json-converter-link-to-" +
+						"page.json"),
+				LocaleUtil.US);
+
 		String dataDefinition =
 			_ddmDataDefinitionConverter.convertDDMFormLayoutDataDefinition(
 				_read(
 					"ddm-form-layout-data-definition-json-converter-link-to-" +
-						"page.json"));
+						"page.json"),
+				structureVersionDataDefinition);
 
 		Assert.assertEquals(
 			_objectMapper.readTree(

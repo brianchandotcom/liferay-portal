@@ -16,22 +16,22 @@ package com.liferay.commerce.address.web.internal.display.context;
 
 import com.liferay.commerce.address.web.internal.display.context.util.CommerceCountryRequestHelper;
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.starter.CommerceRegionsStarter;
 import com.liferay.commerce.starter.CommerceRegionsStarterRegistry;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,13 +46,13 @@ import javax.portlet.RenderResponse;
  * @author Alessio Antonio Rendina
  */
 public class CommerceCountriesDisplayContext
-	extends BaseCommerceCountriesDisplayContext<CommerceCountry> {
+	extends BaseCommerceCountriesDisplayContext<Country> {
 
 	public CommerceCountriesDisplayContext(
 		ActionHelper actionHelper,
 		CommerceChannelRelService commerceChannelRelService,
 		CommerceChannelService commerceChannelService,
-		CommerceCountryService commerceCountryService,
+		CountryService countryService,
 		CommerceRegionsStarterRegistry commerceRegionsStarterRegistry,
 		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
@@ -63,7 +63,7 @@ public class CommerceCountriesDisplayContext
 
 		_commerceChannelRelService = commerceChannelRelService;
 		_commerceChannelService = commerceChannelService;
-		_commerceCountryService = commerceCountryService;
+		_countryService = countryService;
 		_commerceRegionsStarterRegistry = commerceRegionsStarterRegistry;
 
 		_commerceCountryRequestHelper = new CommerceCountryRequestHelper(
@@ -75,7 +75,7 @@ public class CommerceCountriesDisplayContext
 
 		List<CommerceChannelRel> commerceChannelRels =
 			_commerceChannelRelService.getCommerceChannelRels(
-				CommerceCountry.class.getName(), getCommerceCountryId(), null,
+				Country.class.getName(), getCountryId(), null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
@@ -93,18 +93,18 @@ public class CommerceCountriesDisplayContext
 	public CommerceRegionsStarter getCommerceRegionsStarter()
 		throws PortalException {
 
-		CommerceCountry commerceCountry = getCommerceCountry();
+		Country country = getCountry();
 
-		if (commerceCountry == null) {
+		if (country == null) {
 			return null;
 		}
 
 		return _commerceRegionsStarterRegistry.getCommerceRegionsStarter(
-			String.valueOf(commerceCountry.getNumericISOCode()));
+			String.valueOf(country.getNumber()));
 	}
 
 	@Override
-	public SearchContainer<CommerceCountry> getSearchContainer()
+	public SearchContainer<Country> getSearchContainer()
 		throws PortalException {
 
 		if (searchContainer != null) {
@@ -131,9 +131,8 @@ public class CommerceCountriesDisplayContext
 		String orderByCol = getOrderByCol();
 		String orderByType = getOrderByType();
 
-		OrderByComparator<CommerceCountry> orderByComparator =
-			CommerceUtil.getCommerceCountryOrderByComparator(
-				orderByCol, orderByType);
+		OrderByComparator<Country> orderByComparator =
+			CommerceUtil.getCountryOrderByComparator(orderByCol, orderByType);
 
 		searchContainer.setOrderByCol(orderByCol);
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -141,37 +140,33 @@ public class CommerceCountriesDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total;
-		List<CommerceCountry> results;
+		List<Country> results;
 
 		if (isSearch()) {
-			Sort sort = CommerceUtil.getCommerceCountrySort(
-				orderByCol, orderByType);
+			BaseModelSearchResult<Country> baseModelSearchResult =
+				_countryService.searchCountries(
+					_commerceCountryRequestHelper.getCompanyId(), active,
+					getKeywords(), searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
 
-			BaseModelSearchResult<CommerceCountry>
-				commerceCountryBaseModelSearchResult =
-					_commerceCountryService.searchCommerceCountries(
-						_commerceCountryRequestHelper.getCompanyId(), active,
-						getKeywords(), searchContainer.getStart(),
-						searchContainer.getEnd(), sort);
-
-			total = commerceCountryBaseModelSearchResult.getLength();
-			results = commerceCountryBaseModelSearchResult.getBaseModels();
+			total = baseModelSearchResult.getLength();
+			results = baseModelSearchResult.getBaseModels();
 		}
 		else {
 			if (active == null) {
-				total = _commerceCountryService.getCommerceCountriesCount(
+				total = _countryService.getCompanyCountriesCount(
 					_commerceCountryRequestHelper.getCompanyId());
 
-				results = _commerceCountryService.getCommerceCountries(
+				results = _countryService.getCompanyCountries(
 					_commerceCountryRequestHelper.getCompanyId(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					orderByComparator);
 			}
 			else {
-				total = _commerceCountryService.getCommerceCountriesCount(
+				total = _countryService.getCompanyCountriesCount(
 					_commerceCountryRequestHelper.getCompanyId(), active);
 
-				results = _commerceCountryService.getCommerceCountries(
+				results = _countryService.getCompanyCountries(
 					_commerceCountryRequestHelper.getCompanyId(), active,
 					searchContainer.getStart(), searchContainer.getEnd(),
 					orderByComparator);
@@ -184,11 +179,11 @@ public class CommerceCountriesDisplayContext
 		return searchContainer;
 	}
 
-	public boolean hasCommerceRegions(CommerceCountry commerceCountry) {
-		List<CommerceRegion> commerceRegions =
-			commerceCountry.getCommerceRegions();
+	public boolean hasRegions(Country country) {
+		List<Region> regions = RegionServiceUtil.getRegions(
+			country.getCountryId());
 
-		return !commerceRegions.isEmpty();
+		return !regions.isEmpty();
 	}
 
 	protected String getKeywords() {
@@ -212,9 +207,9 @@ public class CommerceCountriesDisplayContext
 	private final CommerceChannelRelService _commerceChannelRelService;
 	private final CommerceChannelService _commerceChannelService;
 	private final CommerceCountryRequestHelper _commerceCountryRequestHelper;
-	private final CommerceCountryService _commerceCountryService;
 	private final CommerceRegionsStarterRegistry
 		_commerceRegionsStarterRegistry;
+	private final CountryService _countryService;
 	private String _keywords;
 
 }

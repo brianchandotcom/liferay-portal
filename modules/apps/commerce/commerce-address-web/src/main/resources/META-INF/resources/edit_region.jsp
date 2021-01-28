@@ -19,11 +19,11 @@
 <%
 CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-long commerceCountryId = commerceRegionsDisplayContext.getCommerceCountryId();
+long countryId = commerceRegionsDisplayContext.getCountryId();
 
-CommerceRegion commerceRegion = commerceRegionsDisplayContext.getCommerceRegion();
+Region region = commerceRegionsDisplayContext.getRegion();
 
-long commerceRegionId = commerceRegionsDisplayContext.getCommerceRegionId();
+long regionId = commerceRegionsDisplayContext.getRegionId();
 
 portletDisplay.setShowBackIcon(true);
 
@@ -38,15 +38,15 @@ else {
 <portlet:actionURL name="/commerce_country/edit_commerce_region" var="editCommerceRegionActionURL" />
 
 <aui:form action="<%= editCommerceRegionActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceRegion();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceRegion == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (region == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(commerceCountryId) %>" />
-	<aui:input name="commerceRegionId" type="hidden" value="<%= String.valueOf(commerceRegionId) %>" />
+	<aui:input name="commerceCountryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
+	<aui:input name="commerceRegionId" type="hidden" value="<%= String.valueOf(regionId) %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:error exception="<%= CommerceRegionNameException.class %>" message="please-enter-a-valid-name" />
+		<liferay-ui:error exception="<%= RegionNameException.class %>" message="please-enter-a-valid-name" />
 
-		<aui:model-context bean="<%= commerceRegion %>" model="<%= CommerceRegion.class %>" />
+		<aui:model-context bean="<%= region %>" model="<%= Region.class %>" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
@@ -56,7 +56,7 @@ else {
 
 				<aui:input name="priority" />
 
-				<aui:input checked="<%= (commerceRegion == null) ? false : commerceRegion.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
+				<aui:input checked="<%= (region == null) ? false : region.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

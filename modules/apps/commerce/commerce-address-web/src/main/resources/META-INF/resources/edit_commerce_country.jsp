@@ -31,7 +31,7 @@ else {
 
 <liferay-frontend:screen-navigation
 	containerCssClass="col-md-10"
-	context="<%= commerceCountriesDisplayContext.getCommerceCountry() %>"
+	context="<%= commerceCountriesDisplayContext.getCountry() %>"
 	key="<%= CommerceCountryScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_COUNTRY_GENERAL %>"
 	navCssClass="col-md-2"
 	portletURL="<%= currentURLObj %>"

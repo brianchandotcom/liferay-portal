@@ -19,7 +19,7 @@
 <%
 CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceCountry commerceCountry = commerceCountriesDisplayContext.getCommerceCountry();
+Country country = commerceCountriesDisplayContext.getCountry();
 
 List<CommerceChannel> commerceChannels = commerceCountriesDisplayContext.getCommerceChannels();
 long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRelCommerceChannelIds();
@@ -30,13 +30,13 @@ long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRe
 <aui:form action="<%= editCommerceCountryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateChannels" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceCountryId" type="hidden" value="<%= commerceCountry.getCommerceCountryId() %>" />
+	<aui:input name="commerceCountryId" type="hidden" value="<%= country.getCountryId() %>" />
 	<aui:input name="commerceChannelIds" type="hidden" />
 
 	<div class="lfr-form-content">
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input checked="<%= commerceCountry.isChannelFilterEnabled() %>" inlineLabel="right" label="enable-filter-channels" labelCssClass="simple-toggle-switch" name="channelFilterEnabled" type="toggle-switch" value="<%= commerceCountry.isChannelFilterEnabled() %>" />
+				<aui:input checked="<%= country.isGroupFilterEnabled() %>" inlineLabel="right" label="enable-filter-channels" labelCssClass="simple-toggle-switch" name="channelFilterEnabled" type="toggle-switch" value="<%= country.isGroupFilterEnabled() %>" />
 
 				<c:choose>
 					<c:when test="<%= commerceChannels.isEmpty() %>">

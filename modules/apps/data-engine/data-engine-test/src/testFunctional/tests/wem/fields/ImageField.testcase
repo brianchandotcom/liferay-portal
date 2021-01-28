@@ -25,7 +25,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
-	@ignore = "true"
 	@priority = "4"
 	test ClearUploadedImage {
 		property portal.acceptance = "false";
@@ -176,7 +175,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
-	@ignore = "true"
 	@priority = "4"
 	test SetHelpTextOfImageField {
 		property portal.acceptance = "false";

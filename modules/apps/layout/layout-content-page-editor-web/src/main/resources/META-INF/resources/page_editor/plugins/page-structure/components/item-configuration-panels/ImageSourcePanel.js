@@ -48,23 +48,46 @@ const SOURCE_OPTIONS = {
 };
 
 export default function ImageSourcePanel({item}) {
+	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const languageId = useSelector(selectLanguageId);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const sourceSelectionInputId = useId();
 
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
 
+	const editableValues =
+		fragmentEntryLinks[item.fragmentEntryLinkId].editableValues;
+
 	const editableValue =
-		fragmentEntryLinks[item.fragmentEntryLinkId].editableValues[
-			item.editableValueNamespace
-		][item.editableId];
+		editableValues[item.editableValueNamespace][item.editableId];
 
 	const [source, setSource] = useState(() =>
 		isMapped(editableValue)
 			? SOURCE_OPTIONS.mapping.value
 			: SOURCE_OPTIONS.direct.value
 	);
+
+	const handleSourceChanged = (event) => {
+		setSource(event.target.value);
+
+		if (Object.keys(editableValue).length) {
+			dispatch(
+				updateEditableValuesThunk({
+					editableValues: setIn(
+						editableValues,
+						[item.editableValueNamespace, item.editableId],
+						{}
+					),
+					fragmentEntryLinkId: item.fragmentEntryLinkId,
+					languageId,
+					segmentsExperienceId,
+				})
+			);
+		}
+	};
 
 	let ConfigurationPanel = DirectImagePanel;
 
@@ -89,7 +112,7 @@ export default function ImageSourcePanel({item}) {
 						<ClaySelectWithOption
 							className="form-control form-control-sm mb-3"
 							id={sourceSelectionInputId}
-							onChange={(event) => setSource(event.target.value)}
+							onChange={handleSourceChanged}
 							options={Object.values(SOURCE_OPTIONS)}
 							value={source}
 						/>

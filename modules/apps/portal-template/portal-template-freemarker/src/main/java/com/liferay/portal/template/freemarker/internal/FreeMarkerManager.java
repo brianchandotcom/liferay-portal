@@ -288,21 +288,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				Configuration.class, "cache");
 
 			PortalCache<TemplateResource, TemplateCache.MaybeMissingTemplate>
-				portalCache = null;
-
-			if (_freeMarkerTemplateResourceCache.isEnabled()) {
 				portalCache =
-					(PortalCache
-						<TemplateResource, TemplateCache.MaybeMissingTemplate>)
-							_singleVMPool.getPortalCache(
-								StringBundler.concat(
-									TemplateResource.class.getName(),
-									StringPool.POUND,
-									TemplateConstants.LANG_TYPE_FTL));
-
-				_freeMarkerTemplateResourceCache.setSecondLevelPortalCache(
-					portalCache);
-			}
+					_freeMarkerTemplateResourceCache.
+						getSecondLevelPortalCache();
 
 			TemplateCache templateCache = new LiferayTemplateCache(
 				_configuration, templateResourceLoader, portalCache);

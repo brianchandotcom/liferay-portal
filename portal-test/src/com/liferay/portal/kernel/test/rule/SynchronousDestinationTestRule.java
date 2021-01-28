@@ -162,6 +162,8 @@ public class SynchronousDestinationTestRule
 				"liferay/segments_entry_reindex");
 			Filter subscrpitionSenderFilter = _registerDestinationFilter(
 				DestinationNames.SUBSCRIPTION_SENDER);
+			Filter tensorflowModelDownloadFilter = _registerDestinationFilter(
+				"liferay/tensorflow_model_download");
 
 			serviceDependencyManager.registerDependencies(
 				auditFilter, asyncFilter, backgroundTaskFilter,
@@ -170,7 +172,8 @@ public class SynchronousDestinationTestRule
 				commerceStockFilter, commerceSubscriptionFilter,
 				ddmStructureReindexFilter, kaleoGraphWalkerFilter, mailFilter,
 				pdfProcessorFilter, rawMetaDataProcessorFilter,
-				segmentsEntryReindexFilter, subscrpitionSenderFilter);
+				segmentsEntryReindexFilter, subscrpitionSenderFilter,
+				tensorflowModelDownloadFilter);
 
 			serviceDependencyManager.waitForDependencies();
 

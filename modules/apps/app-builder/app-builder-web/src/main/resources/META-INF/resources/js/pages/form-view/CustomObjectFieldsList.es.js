@@ -183,7 +183,7 @@ const FieldCategory = ({categoryName}) => (
 	</div>
 );
 
-export default ({keywords}) => {
+const CustomObjectFieldsList = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [state, dispatch] = useContext(FormViewContext);
 	const {dataDefinition, fieldSets} = state;
@@ -272,6 +272,21 @@ export default ({keywords}) => {
 		onDoubleClick: handleOnDoubleClick,
 	};
 
+	const getDataDefinitionField = (fieldName) => {
+		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
+			(field) => field.name === fieldName
+		);
+
+		const settingsContext = dataLayoutBuilder.getDDMFormFieldSettingsContext(
+			dataDefinitionField
+		);
+
+		return {
+			...dataDefinitionField,
+			settingsContext,
+		};
+	};
+
 	return (
 		<>
 			{showCategories && (
@@ -283,6 +298,7 @@ export default ({keywords}) => {
 			<FieldTypeList
 				{...fieldTypeListProps}
 				fieldTypes={customFieldTypes}
+				getDataDefinitionField={getDataDefinitionField}
 				showEmptyState={false}
 			/>
 
@@ -295,8 +311,12 @@ export default ({keywords}) => {
 			<FieldTypeList
 				{...fieldTypeListProps}
 				fieldTypes={nativeFieldTypes}
+				getDataDefinitionField={getDataDefinitionField}
 				showEmptyState={false}
 			/>
 		</>
 	);
 };
+
+CustomObjectFieldsList.displayName = 'CustomObjectFieldsList';
+export default CustomObjectFieldsList;

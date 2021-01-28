@@ -39,11 +39,35 @@ export const useDrop = (sourceItem) => {
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver(),
 		}),
-		drop: (item, monitor) =>
-			dispatch({
-				payload: {item, monitor, sourceItem},
-				type: EVENT_TYPES.FIELD_DROP,
-			}),
+				case 'dataDefinitionField':
+					dispatch({
+						payload: {
+							data: {
+								fieldName,
+								parentFieldName: parentField?.fieldName,
+							},
+							fieldType: {
+								...fieldTypesMetadata.find(({name}) => {
+									return (
+										name === dataDefinitionField.fieldType
+									);
+								}),
+								editable: true,
+								label:
+									label[item.data.editingLanguageId] ||
+									label[themeDisplay.getLanguageId()],
+								settingsContext:
+									dataDefinitionField.settingsContext,
+							},
+							indexes: {columnIndex, pageIndex, rowIndex},
+							skipFieldNameGeneration: true,
+						},
+						type:
+							origin === DND_ORIGIN_TYPE.EMPTY
+								? EVENT_TYPES.FIELD_ADD
+								: EVENT_TYPES.SECTION_ADD,
+					});
+					break;
 				case 'fieldset':
 					dispatch({
 						payload: {

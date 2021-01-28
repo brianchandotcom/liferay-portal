@@ -7,15 +7,15 @@ definition {
 
 	setUp {
 		TestCase.setUpPortalInstance();
-		
+
 		User.firstLoginPG();
-		
+
 		JSONGroup.addGroup(groupName = "Test Site Name");
-		
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-		
+
 		NavItem.gotoStructures();
-		
+
 		WebContentStructures.addCP(structureName = "Test");
 	}
 

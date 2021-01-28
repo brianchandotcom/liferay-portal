@@ -348,7 +348,7 @@ function CustomTooltip(props) {
 		return null;
 	}
 
-	for (var i = 0; i <= payload.length; i++) {
+	for (var i = 0; i < payload.length; i++) {
 		if (payload[i].dataKey === tooltip.dataKey) {
 			return (
 				<ClayLayout.ContentRow

@@ -138,7 +138,7 @@ public class Log4JUtil {
 	}
 
 	public static String getOriginalLevel(String className) {
-		return Log4JConfigurator.getOriginalLevel(className);
+		return Log4JConfigurator.getOriginalPriority(className);
 	}
 
 	public static void initLog4J(

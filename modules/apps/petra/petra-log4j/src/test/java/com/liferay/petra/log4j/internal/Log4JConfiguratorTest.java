@@ -147,14 +147,14 @@ public class Log4JConfiguratorTest {
 		Assert.assertEquals(
 			"The original level should be ALL for Logger not configured or " +
 				"created",
-			_ALL, Log4JConfigurator.getOriginalLevel(loggerName));
+			_ALL, Log4JConfigurator.getOriginalPriority(loggerName));
 
 		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _ERROR));
 
 		Assert.assertEquals(
 			"The original level should be WARN by configuration", _ERROR,
-			Log4JConfigurator.getOriginalLevel(loggerName));
+			Log4JConfigurator.getOriginalPriority(loggerName));
 	}
 
 	@Test

@@ -36,7 +36,7 @@ public class Log4JConfigurator {
 			new UnsyncStringReader(xml), LogManager.getLoggerRepository());
 	}
 
-	public static String getOriginalLevel(String className) {
+	public static String getOriginalPriority(String className) {
 		Level level = Level.ALL;
 
 		Enumeration<Logger> enumeration = LogManager.getCurrentLoggers();

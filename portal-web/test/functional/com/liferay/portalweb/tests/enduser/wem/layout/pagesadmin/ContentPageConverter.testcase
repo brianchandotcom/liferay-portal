@@ -200,98 +200,114 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98325. If there is a site with several widget pages(that can be converted) and some content pages and an api to convert bulk widget pages to content pages is executed, you should be able to convert the widget pages."
-	@ignore = "true"
 	@priority = "2"
 	test ConvertMultipleWidgetPagesWithContentPagesViaAPI {
-		property portal.acceptance = "false";
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name ${i}");
+		task ("Add 10 widget pages") {
+			for (var n : list "1,2,3,4,5,6,7,8,9,10") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Widget Page Name ${n}");
+			}
 		}
 
-		for (var x : list "5,6,7,8") {
+		task ("Change layout of each page") {
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 1",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 2",
+				layoutTemplate = "2 Columns (50/50)");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 4",
+				layoutTemplate = "2 Columns (70/30)");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 5",
+				layoutTemplate = "3 Columns");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 6",
+				layoutTemplate = "1-2 Columns (30/70)");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 7",
+				layoutTemplate = "1-2 Columns (70/30)");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 8",
+				layoutTemplate = "1-2-1 Columns (50/50)");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 9",
+				layoutTemplate = "1-3-1 Columns");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Widget Page Name 10",
+				layoutTemplate = "1-2-1 Columns (70/30)");
+		}
+
+		task ("Add an Asset Publisher to each widget page") {
+			for (var n : list "1,2,3,4,5,6,7,8,9,10") {
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Widget Page Name ${n}",
+					widgetName = "Asset Publisher");
+			}
+		}
+
+		task ("Add 4 content pages with Heading fragment") {
+			for (var n : list "1,2,3,4") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Content Page Name ${n}",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Content Page Name ${n}",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+				PageEditor.clickPublish();
+			}
+		}
+
+		task ("Execute grooy script to bulk convert all widget pages") {
+			ServerAdministration.openServerAdmin();
+
+			var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = "${script}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+				value1 = "Convertible layouts after conversion: []");
+		}
+
+		task ("Assert all widget pages are converted to content page") {
 			SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			ContentPages.addPage(pageName = "Test Content Page Name ${x}");
-
-			PageEditor.clickPublish();
-		}
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 1",
-			layoutTemplate = "1 Column");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 2",
-			layoutTemplate = "2 Columns (50/50)");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 4",
-			layoutTemplate = "2 Columns (70/30)");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 5",
-			layoutTemplate = "3 Columns");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 6",
-			layoutTemplate = "1-2 Columns (30/70)");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 7",
-			layoutTemplate = "1-2 Columns (70/30)");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 8",
-			layoutTemplate = "1-2-1 Columns (50/50)");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 9",
-			layoutTemplate = "1-3-1 Columns");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name 10",
-			layoutTemplate = "1-2-1 Columns (70/30)");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name ${i}",
-				widgetName = "Asset Publisher");
-		}
-
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		ServerAdministration.openServerAdmin();
-
-		var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
-
-		ServerAdministration.executeScript(
-			language = "Groovy",
-			script = "${script}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-			value1 = "Convertible layouts before conversion");
-
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10") {
-			AssertElementPresent(
-				key_pageName = "Test Page Name ${i}",
-				key_pageType = "Content Page",
-				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			for (var n : list "1,2,3,4,5,6,7,8,9,10") {
+				AssertVisible(
+					key_pageName = "Test Widget Page Name ${n}",
+					key_pageType = "Content Page",
+					locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+			}
 		}
 	}
 

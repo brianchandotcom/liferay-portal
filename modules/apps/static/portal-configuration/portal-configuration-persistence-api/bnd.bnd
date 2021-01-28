@@ -5,4 +5,3 @@ Export-Package:\
 	com.liferay.portal.configuration.persistence,\
 	com.liferay.portal.configuration.persistence.listener,\
 	com.liferay.portal.configuration.persistence.upgrade
--includeresource: @com.liferay.portal.file.install.impl-*.jar!/com/liferay/portal/file/install/internal/properties/ConfigurationHandler.class

@@ -15,7 +15,7 @@
 package com.liferay.portal.configuration.persistence;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.file.install.internal.properties.ConfigurationHandler;
+import com.liferay.portal.file.install.properties.ConfigurationHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;

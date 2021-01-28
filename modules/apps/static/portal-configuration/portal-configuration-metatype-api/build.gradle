@@ -11,6 +11,7 @@ dependencies {
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
+	testCompile project(":apps:static:portal-file-install:portal-file-install-api")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")

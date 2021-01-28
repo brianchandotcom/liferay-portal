@@ -71,7 +71,20 @@ definition {
 	test DuplicateSeparatorOnBuilder {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 DuplicateSeparatorOnBuilder pending implementation
+		DataEngine.addField(fieldName = "Separator", fieldFieldLabel = "Separator test");
+
+        DataEngine.duplicateField(fieldFieldLabel = "Separator test");
+
+		DataEngine.viewField(fieldName = "Separator", fieldFieldLabel = "Copy of Separator test");
+
+		Button.clickSave();
+
+		WebContentStructures.editStructure(structureName = "Test");
+
+		DataEngine.viewField(fieldName = "Separator", fieldFieldLabel = "Copy of Separator test");
+
+		Button.clickSave();
+
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

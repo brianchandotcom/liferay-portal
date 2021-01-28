@@ -221,9 +221,25 @@ public class TemplateManagerUtil {
 			ServiceReference<TemplateManager> serviceReference,
 			TemplateManager templateManager) {
 
-			removedService(serviceReference, templateManager);
+			_templateManagers.compute(
+				templateManager.getName(),
+				(key, value) -> {
+					templateManager.destroy();
 
-			addingService(serviceReference);
+					try {
+						templateManager.init();
+					}
+					catch (TemplateException templateException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"unable to init " + templateManager.getName() +
+									" Template Manager ",
+								templateException);
+						}
+					}
+
+					return templateManager;
+				});
 		}
 
 		@Override

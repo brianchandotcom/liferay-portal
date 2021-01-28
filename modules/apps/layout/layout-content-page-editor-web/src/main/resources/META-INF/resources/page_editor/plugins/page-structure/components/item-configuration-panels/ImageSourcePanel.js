@@ -69,7 +69,7 @@ export default function ImageSourcePanel({item}) {
 
 	if (source === SOURCE_OPTIONS.mapping.value) {
 		if (selectedViewportSize === VIEWPORT_SIZES.desktop) {
-			ConfigurationPanel = MappingPanel;
+			ConfigurationPanel = MappingImagePanel;
 		}
 		else {
 			ConfigurationPanel = null;
@@ -287,5 +287,13 @@ function DirectImagePanel({item}) {
 }
 
 DirectImagePanel.propTypes = {
+	item: getEditableItemPropTypes().isRequired,
+};
+
+function MappingImagePanel({item}) {
+	return <MappingPanel item={item} />;
+}
+
+MappingImagePanel.propTypes = {
 	item: getEditableItemPropTypes().isRequired,
 };

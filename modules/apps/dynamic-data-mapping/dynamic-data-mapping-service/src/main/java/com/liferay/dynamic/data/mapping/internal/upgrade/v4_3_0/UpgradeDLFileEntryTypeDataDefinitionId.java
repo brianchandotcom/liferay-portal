@@ -118,7 +118,7 @@ public class UpgradeDLFileEntryTypeDataDefinitionId extends UpgradeProcess {
 			String name)
 		throws Exception {
 
-		try (PreparedStatement ps2 = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
 					"insert into DDMStructure (mvccVersion, ctCollectionId, ",
 					"uuid_, structureId, groupId, companyId, userId, ",
@@ -132,31 +132,31 @@ public class UpgradeDLFileEntryTypeDataDefinitionId extends UpgradeProcess {
 			long classNameId = PortalUtil.getClassNameId(
 				DLFileEntryMetadata.class);
 
-			ps2.setString(1, PortalUUIDUtil.generate());
+			ps.setString(1, PortalUUIDUtil.generate());
 
 			long ddmStructureId = increment();
 
-			ps2.setLong(2, ddmStructureId);
+			ps.setLong(2, ddmStructureId);
 
-			ps2.setLong(3, groupId);
-			ps2.setLong(4, companyId);
-			ps2.setLong(5, userId);
-			ps2.setString(6, userName);
-			ps2.setLong(7, userId);
-			ps2.setString(8, userName);
+			ps.setLong(3, groupId);
+			ps.setLong(4, companyId);
+			ps.setLong(5, userId);
+			ps.setString(6, userName);
+			ps.setLong(7, userId);
+			ps.setString(8, userName);
 
 			Date now = new Date(System.currentTimeMillis());
 
-			ps2.setDate(9, now);
-			ps2.setDate(10, now);
+			ps.setDate(9, now);
+			ps.setDate(10, now);
 
-			ps2.setLong(11, classNameId);
+			ps.setLong(11, classNameId);
 
-			ps2.setString(12, String.valueOf(ddmStructureId));
-			ps2.setString(13, name);
-			ps2.setString(14, _DDM_STRUCTURE_DEFINITION);
+			ps.setString(12, String.valueOf(ddmStructureId));
+			ps.setString(13, name);
+			ps.setString(14, _DDM_STRUCTURE_DEFINITION);
 
-			ps2.executeUpdate();
+			ps.executeUpdate();
 
 			return ddmStructureId;
 		}

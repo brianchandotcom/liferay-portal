@@ -302,48 +302,38 @@ definition {
 
 		var structureName = "WC Structure Name";
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-		);
-    
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
 		NavItem.gotoStructures();
-        
+
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+			structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
-			targetFieldLabel = "Text"
-		);
+			targetFieldLabel = "Text");
 
-		DataEngine.deleteField(
-			fieldFieldLabel = "Text"
-		);
+		DataEngine.deleteField(fieldFieldLabel = "Text");
 
-		DataEngine.deleteField(
-			fieldFieldLabel = "Numeric"
-		);
+		DataEngine.deleteField(fieldFieldLabel = "Numeric");
 
 		WebContentStructures.saveCP(structureName = "${structureName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "WC Structure Name"
-		);
+			rowEntry = "WC Structure Name");
 
 		AssertElementNotPresent(locator1 = "DataEngineBuilder#NESTED_NUMERIC_STRUCTURE");
 
 		AssertElementNotPresent(locator1 = "DataEngineBuilder#NESTED_TEXT_STRUCTURE");
-		
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

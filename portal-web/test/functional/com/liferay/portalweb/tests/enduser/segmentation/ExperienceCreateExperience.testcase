@@ -117,6 +117,10 @@ definition {
 			experienceName = "NewExp1",
 			segmentName = "AddSegmentUserEmailAddressContains Test");
 
+		Refresh();
+
+		PageEditor.changeExperience(newExperience = "NewExp1");
+
 		PageEditor.duplicateExperience(experienceName = "NewExp1");
 
 		PageEditor.clickPublish();

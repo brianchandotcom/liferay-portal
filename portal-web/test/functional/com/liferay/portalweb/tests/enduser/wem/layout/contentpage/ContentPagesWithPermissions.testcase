@@ -67,8 +67,146 @@ definition {
 	@priority = "2"
 	test CannotEditAssetWithoutAssetUpdatePermission {
 		property portal.upstream = "false";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		// TODO LPS-96795 CannotEditAssetWithoutAssetUpdatePermission pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "Userfn",
+			userLastName = "Userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(
+			roleKey = "Roles Siterole Name",
+			roleTitle = "Roles Siterole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		for (var resourceActionIndex : list "UPDATE_LAYOUT_CONTENT,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.journal",
+			roleTitle = "Roles Siterole Name",
+			roleType = "site");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Test Site Name",
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "${webContentTitle}");
+		}
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Heading",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WC WebContent Title 1",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		SelectFrame(value1 = "relative=top");
+
+		PageEditor.waitForAutoSave();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addWidget(
+			portletName = "Web Content Display",
+			targetFragmentName = "Heading");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Web Content Display");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC WebContent Title 3",
+			assetType = "Basic Web Content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+
+		ContentPages.clickPencil();
+
+		task ("Assert can not access to web content editor via Contents panel in edit mode") {
+			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
+				PageEditor.gotoTab(tabName = "Contents");
+
+				Click.waitForMenuToggleJSClick(
+					key_rowEntry = "${webContentTitle}",
+					locator1 = "Icon#FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS");
+
+				AssertElementNotPresent(
+					key_menuItem = "Edit",
+					locator1 = "MenuItem#ANY_MENU_ITEM");
+			}
+		}
+
+		PageEditor.clickPublish();
+
+		task ("Assert can access to web content editor via Asset Publisher in view mode") {
+			MouseOver(
+				key_assetTitle = "WC WebContent Title 3",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+			AssertElementNotPresent(locator1 = "AP#SPECIFIC_ASSET_EDIT");
+		}
 	}
 
 	@description = "This is a test for LPS-97182. If a page author does not have view permissions for an asset, it should not display for them."

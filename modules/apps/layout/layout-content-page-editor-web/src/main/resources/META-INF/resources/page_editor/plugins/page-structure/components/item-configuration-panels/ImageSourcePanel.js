@@ -109,7 +109,6 @@ function DirectImagePanel({item}) {
 	const {editableId, fragmentEntryLinkId, type} = item;
 
 	const dispatch = useDispatch();
-	const editables = useSelector((state) => state.editables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -127,7 +126,6 @@ function DirectImagePanel({item}) {
 
 	const editableValue = editableValues[processorKey][editableId];
 	const editableConfig = editableValue.config || {};
-	const editableElement = editables?.[item.parentId]?.[item.itemId]?.element;
 
 	const editableContent = selectEditableValueContent(
 		{fragmentEntryLinks, languageId},
@@ -152,9 +150,6 @@ function DirectImagePanel({item}) {
 			  editableConfig.alt[config.defaultLanguageId] ||
 			  ''
 			: editableConfig.alt || '';
-
-	const imageSizeId =
-		editableConfig.imageConfiguration?.[selectedViewportSize];
 
 	const handleImageChanged = (nextImage) => {
 		const nextEditableValue = {
@@ -225,6 +220,87 @@ function DirectImagePanel({item}) {
 		);
 	};
 
+	return (
+		<>
+			<ImageSelector
+				imageTitle={imageTitle}
+				label={Liferay.Language.get('image')}
+				onClearButtonPressed={() => {
+					handleImageChanged({
+						fileEntryId: '',
+						title: '',
+						url: '',
+					});
+				}}
+				onImageSelected={handleImageChanged}
+			/>
+
+			<ImagePanelSizeSelector item={item} />
+
+			{selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				type === EDITABLE_TYPES.image && (
+					<ImageSelectorDescription
+						imageDescription={imageDescription}
+						onImageDescriptionChanged={
+							handleImageDescriptionChanged
+						}
+					/>
+				)}
+		</>
+	);
+}
+
+DirectImagePanel.propTypes = {
+	item: getEditableItemPropTypes().isRequired,
+};
+
+function MappingImagePanel({item}) {
+	return (
+		<>
+			<MappingPanel item={item} />
+			<ImagePanelSizeSelector item={item} />
+		</>
+	);
+}
+
+MappingImagePanel.propTypes = {
+	item: getEditableItemPropTypes().isRequired,
+};
+
+function ImagePanelSizeSelector({item}) {
+	const {editableId, fragmentEntryLinkId, type} = item;
+
+	const dispatch = useDispatch();
+	const editables = useSelector((state) => state.editables);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const languageId = useSelector(selectLanguageId);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
+	const processorKey =
+		type === EDITABLE_TYPES.backgroundImage
+			? BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+			: EDITABLE_FRAGMENT_ENTRY_PROCESSOR;
+
+	const editableValues =
+		fragmentEntryLinks[fragmentEntryLinkId].editableValues;
+
+	const editableValue = editableValues[processorKey][editableId];
+	const editableConfig = editableValue.config || {};
+	const editableElement = editables?.[item.parentId]?.[item.itemId]?.element;
+
+	const editableContent = selectEditableValueContent(
+		{fragmentEntryLinks, languageId},
+		fragmentEntryLinkId,
+		editableId,
+		processorKey
+	);
+
+	const imageSizeId =
+		editableConfig.imageConfiguration?.[selectedViewportSize];
+
 	const handleImageSizeChanged = (imageSizeId) => {
 		dispatch(
 			updateEditableValuesThunk({
@@ -245,55 +321,18 @@ function DirectImagePanel({item}) {
 		);
 	};
 
-	return (
-		<>
-			<ImageSelector
-				imageTitle={imageTitle}
-				label={Liferay.Language.get('image')}
-				onClearButtonPressed={() => {
-					handleImageChanged({
-						fileEntryId: '',
-						title: '',
-						url: '',
-					});
-				}}
-				onImageSelected={handleImageChanged}
-			/>
-
-			{config.adaptiveMediaEnabled && editableContent?.fileEntryId && (
-				<ImageSelectorSize
-					editableElement={editableElement}
-					fileEntryId={editableContent.fileEntryId}
-					imageSizeId={imageSizeId}
-					onImageSizeIdChanged={
-						type === EDITABLE_TYPES.image
-							? handleImageSizeChanged
-							: null
-					}
-				/>
-			)}
-
-			{selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				type === EDITABLE_TYPES.image && (
-					<ImageSelectorDescription
-						imageDescription={imageDescription}
-						onImageDescriptionChanged={
-							handleImageDescriptionChanged
-						}
-					/>
-				)}
-		</>
-	);
+	return config.adaptiveMediaEnabled && editableContent?.fileEntryId ? (
+		<ImageSelectorSize
+			editableElement={editableElement}
+			fileEntryId={editableContent.fileEntryId}
+			imageSizeId={imageSizeId}
+			onImageSizeIdChanged={
+				type === EDITABLE_TYPES.image ? handleImageSizeChanged : null
+			}
+		/>
+	) : null;
 }
 
-DirectImagePanel.propTypes = {
-	item: getEditableItemPropTypes().isRequired,
-};
-
-function MappingImagePanel({item}) {
-	return <MappingPanel item={item} />;
-}
-
-MappingImagePanel.propTypes = {
+ImagePanelSizeSelector.propTypes = {
 	item: getEditableItemPropTypes().isRequired,
 };

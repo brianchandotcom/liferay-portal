@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98303. Assert that a page that uses a default layout template, does not have a 'Nested Application' Widget, and is not set as customizable can be converted to a Content Page by default."
+	@description = "This is a test for LPS-98303 and LPS-98327. Assert convert a widget page with Asset Publisher to content page and the content page keeps the same plid identifier before conversion."
 	@priority = "5"
 	test ConvertBasicWidgetPageToContentPage {
 		property portal.acceptance = "true";
@@ -38,17 +38,21 @@ definition {
 			layoutName = "Test Page Name",
 			widgetName = "Asset Publisher");
 
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		var plid1 = Page.getPlidFromHtmlSource();
+
 		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Convert to content page...",
 			pageName = "Test Page Name");
 
-		Pause(locator1 = "3000");
-
 		PageEditor.assertFragmentSidebarLoaded();
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 
 		AssertElementPresent(
 			key_pageName = "Test Page Name",
@@ -59,11 +63,13 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+		var plid2 = Page.getPlidFromHtmlSource();
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		TestUtils.assertEquals(
+			actual = "${plid2}",
+			expected = "${plid1}");
+
+		ContentPages.clickPencil();
 
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
 	}
@@ -198,50 +204,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98325 ConvertMultipleWidgetPagesWithContentPagesViaAPI pending implementation
-	}
-
-	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the content page has the original plid identifier."
-	@priority = "2"
-	test ConvertWidgetPageAndViewPlidIdentifier {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		var plid1 = Page.getPlidFromHtmlSource();
-
-		SitePages.openPagesAdmin(siteURLKey = "Test Site Name");
-
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
-
-		PageEditor.assertFragmentSidebarLoaded();
-
-		PageEditor.clickPublish();
-
-		AssertElementPresent(
-			key_pageName = "Test Page Name",
-			key_pageType = "Content Page",
-			locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
-
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		var plid2 = Page.getPlidFromHtmlSource();
-
-		TestUtils.assertEquals(
-			actual = "${plid2}",
-			expected = "${plid1}");
 	}
 
 	@description = "This is a test for LPS-98589. Multiple widgets with different application decorators survive content page conversion."

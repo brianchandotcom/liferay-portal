@@ -22,6 +22,7 @@ import React, {useEffect, useState} from 'react';
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
+import './FieldType.scss';
 import {DRAG_FIELD_TYPE} from '../../drag-and-drop/dragTypes.es';
 import DropDown from '../drop-down/DropDown.es';
 import FieldTypeDragPreview from './FieldTypeDragPreview.es';
@@ -34,7 +35,7 @@ const ICONS = {
 	select: 'list',
 };
 
-export default (props) => {
+const FieldType = (props) => {
 	const {
 		actions,
 		active,
@@ -179,3 +180,6 @@ export default (props) => {
 		</ClayLayout.ContentRow>
 	);
 };
+
+FieldType.displayName = 'FieldType';
+export default FieldType;

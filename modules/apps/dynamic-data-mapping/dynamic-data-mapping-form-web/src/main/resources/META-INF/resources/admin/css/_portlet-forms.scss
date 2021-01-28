@@ -1,3 +1,18 @@
+.portlet-forms {
+	.ddm-form-builder {
+		.multi-panel-sidebar {
+			top: 168px;
+		}
+
+		transition: padding ease 0.5s;
+
+		&--sidebar-open {
+			padding-left: 0;
+			padding-right: 338px;
+		}
+	}
+}
+
 .portlet-forms,
 .form-entry {
 	label,

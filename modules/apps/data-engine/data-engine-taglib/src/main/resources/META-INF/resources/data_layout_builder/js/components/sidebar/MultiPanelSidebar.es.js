@@ -12,6 +12,8 @@
  * details.
  */
 
+import './MultiPanelSidebar.scss';
+
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';

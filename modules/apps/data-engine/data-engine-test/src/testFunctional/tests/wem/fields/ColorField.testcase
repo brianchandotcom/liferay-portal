@@ -103,9 +103,7 @@ definition {
 	test EditColorFieldNameWithValidCharacters {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -118,9 +116,26 @@ definition {
 			fieldName = "Color");
 
 		DataEngine.editFieldReference(
-			assertFieldReference = "ColorTest",
+			assertFieldReference = "Color_Test",
 			fieldFieldLabel = "ColorTest",
-			fieldReference = "ColorTest");
+			fieldReference = "Color_Test");
+
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "ColorTest",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "ColorTest");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertTextEquals.assertValue(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "Color_Test");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

@@ -265,17 +265,6 @@ definition {
 	}
 
 	macro verifyOTP {
-		if (isSet(specificURL)) {
-			Navigator.openSpecificURL(url = "${specificURL}");
-		}
-		else {
-			Navigator.openURL();
-		}
-
-		SignIn._signIn(
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
-
 		if ("${validOTP}" == "false") {
 			Type(
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD",

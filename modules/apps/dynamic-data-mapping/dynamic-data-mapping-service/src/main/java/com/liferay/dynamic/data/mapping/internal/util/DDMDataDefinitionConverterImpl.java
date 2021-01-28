@@ -60,8 +60,7 @@ public class DDMDataDefinitionConverterImpl
 
 	@Override
 	public DDMForm convertDDMFormDataDefinition(
-		DDMForm ddmForm, Locale defaultLocale, long parentStructureId,
-		long parentStructureLayoutId) {
+		DDMForm ddmForm, long parentStructureId, long parentStructureLayoutId) {
 
 		if (Objects.equals(ddmForm.getDefinitionSchemaVersion(), "2.0")) {
 			return ddmForm;
@@ -72,14 +71,14 @@ public class DDMDataDefinitionConverterImpl
 		_upgradeParentStructure(
 			ddmForm, parentStructureId, parentStructureLayoutId);
 
-		_upgradeFields(ddmForm.getDDMFormFields(), defaultLocale);
+		_upgradeFields(ddmForm.getDDMFormFields(), ddmForm.getDefaultLocale());
 
 		return _upgradeNestedFields(ddmForm);
 	}
 
 	@Override
 	public String convertDDMFormDataDefinition(
-			String dataDefinition, Locale defaultLocale, long parentStructureId,
+			String dataDefinition, long parentStructureId,
 			long parentStructureLayoutId)
 		throws Exception {
 
@@ -87,7 +86,7 @@ public class DDMDataDefinitionConverterImpl
 			_ddmFormDeserializer, dataDefinition);
 
 		ddmForm = convertDDMFormDataDefinition(
-			ddmForm, defaultLocale, parentStructureId, parentStructureLayoutId);
+			ddmForm, parentStructureId, parentStructureLayoutId);
 
 		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
 	}

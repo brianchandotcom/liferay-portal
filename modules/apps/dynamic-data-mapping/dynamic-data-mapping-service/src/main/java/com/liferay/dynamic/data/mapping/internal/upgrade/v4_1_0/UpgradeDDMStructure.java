@@ -18,14 +18,10 @@ import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import java.util.Locale;
 
 /**
  * @author Marcela Cunha
@@ -93,11 +89,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					long companyId = rs.getLong("companyId");
-
-					Locale locale = LocaleUtil.fromLanguageId(
-						UpgradeProcessUtil.getDefaultLanguageId(companyId));
-
 					long parentStructureId = rs.getLong("parentStructureId");
 
 					long parentStructureLayoutId = 0;
@@ -111,8 +102,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						1,
 						_ddmDataDefinitionConverter.
 							convertDDMFormDataDefinition(
-								rs.getString("definition"), locale,
-								parentStructureId, parentStructureLayoutId));
+								rs.getString("definition"), parentStructureId,
+								parentStructureLayoutId));
 
 					ps2.setLong(2, rs.getLong("structureId"));
 					ps2.addBatch();
@@ -210,11 +201,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					long companyId = rs.getLong("companyId");
-
-					Locale locale = LocaleUtil.fromLanguageId(
-						UpgradeProcessUtil.getDefaultLanguageId(companyId));
-
 					long parentStructureId = rs.getLong("parentStructureId");
 
 					long parentStructureLayoutId = 0;
@@ -228,8 +214,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						1,
 						_ddmDataDefinitionConverter.
 							convertDDMFormDataDefinition(
-								rs.getString("definition"), locale,
-								parentStructureId, parentStructureLayoutId));
+								rs.getString("definition"), parentStructureId,
+								parentStructureLayoutId));
 
 					ps2.setLong(2, rs.getLong("structureId"));
 					ps2.addBatch();

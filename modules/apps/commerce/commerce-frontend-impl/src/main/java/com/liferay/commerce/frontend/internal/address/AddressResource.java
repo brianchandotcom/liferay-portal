@@ -23,15 +23,16 @@ import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.frontend.internal.address.model.CountryModel;
 import com.liferay.commerce.frontend.internal.address.model.RegionModel;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionService;
+import com.liferay.commerce.util.CommerceCountryHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.ArrayList;
@@ -86,20 +87,17 @@ public class AddressResource {
 	@GET
 	@Path("/address/regions/{countryId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCommerceRegions(
-		@PathParam("countryId") long commerceCountryId,
+	public Response getRegions(
+		@PathParam("countryId") long countryId,
 		@Context ThemeDisplay themeDisplay) {
 
 		List<RegionModel> regionModels = new ArrayList<>();
 
-		List<CommerceRegion> commerceRegions =
-			_commerceRegionService.getCommerceRegions(commerceCountryId, true);
+		List<Region> regions = _regionService.getRegions(countryId, true);
 
-		for (CommerceRegion commerceRegion : commerceRegions) {
+		for (Region region : regions) {
 			regionModels.add(
-				new RegionModel(
-					commerceRegion.getCommerceRegionId(),
-					commerceRegion.getName()));
+				new RegionModel(region.getRegionId(), region.getName()));
 		}
 
 		try {
@@ -125,56 +123,47 @@ public class AddressResource {
 	@GET
 	@Path("/address/countries")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getShippingCommerceCountries(
+	public Response getShippingCountries(
 		@QueryParam("companyId") long companyId,
 		@Context ThemeDisplay themeDisplay) {
 
-		return _getCommerceCountries(
-			_commerceCountryService.getCommerceCountries(companyId, true),
+		return _getCountries(
+			_countryService.getCompanyCountries(companyId, true),
 			themeDisplay.getLanguageId());
 	}
 
 	@GET
 	@Path("/address/countries")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getShippingCommerceCountries(
-		@Context ThemeDisplay themeDisplay) {
+	public Response getShippingCountries(@Context ThemeDisplay themeDisplay) {
+		List<Country> countries = _countryService.getCompanyCountries(
+			themeDisplay.getCompanyId(), true);
 
-		List<CommerceCountry> commerceCountries =
-			_commerceCountryService.getCommerceCountries(
-				themeDisplay.getCompanyId(), true);
-
-		return _getCommerceCountries(
-			commerceCountries, themeDisplay.getLanguageId());
+		return _getCountries(countries, themeDisplay.getLanguageId());
 	}
 
 	@GET
 	@Path("/address/countries-by-channel-id")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getShippingCommerceCountriesByChannelId(
+	public Response getShippingCountriesByChannelId(
 		@QueryParam("channelId") long channelId,
 		@Context ThemeDisplay themeDisplay) {
 
-		List<CommerceCountry> commerceCountries =
-			_commerceCountryService.getShippingCommerceCountriesByChannelId(
+		List<Country> countries =
+			_commerceCountryHelper.getShippingCountriesByChannelId(
 				channelId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		return _getCommerceCountries(
-			commerceCountries, themeDisplay.getLanguageId());
+		return _getCountries(countries, themeDisplay.getLanguageId());
 	}
 
-	private Response _getCommerceCountries(
-		List<CommerceCountry> commerceCountries, String languageId) {
-
+	private Response _getCountries(List<Country> countries, String languageId) {
 		List<CountryModel> countryModels = new ArrayList<>();
 
-		for (CommerceCountry commerceCountry : commerceCountries) {
+		for (Country country : countries) {
 			countryModels.add(
 				new CountryModel(
-					commerceCountry.getCommerceCountryId(),
-					commerceCountry.getName(languageId),
-					commerceCountry.isBillingAllowed(),
-					commerceCountry.isShippingAllowed()));
+					country.getCountryId(), country.getTitle(languageId),
+					country.isBillingAllowed(), country.isShippingAllowed()));
 		}
 
 		try {
@@ -210,9 +199,12 @@ public class AddressResource {
 	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
+	private CommerceCountryHelper _commerceCountryHelper;
 
 	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private CountryService _countryService;
+
+	@Reference
+	private RegionService _regionService;
 
 }

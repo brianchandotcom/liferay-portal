@@ -49,7 +49,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 			<portlet:renderURL var="addCommerceRegionURL">
 				<portlet:param name="mvcRenderCommandName" value="/commerce_country/edit_commerce_region" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceRegionsDisplayContext.getCommerceCountryId()) %>" />
+				<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceRegionsDisplayContext.getCountryId()) %>" />
 			</portlet:renderURL>
 
 			<liferay-frontend:add-menu
@@ -84,9 +84,9 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 				searchContainer="<%= commerceRegionsDisplayContext.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
-					className="com.liferay.commerce.model.CommerceRegion"
-					keyProperty="commerceRegionId"
-					modelVar="commerceRegion"
+					className="com.liferay.portal.kernel.model.Region"
+					keyProperty="regionId"
+					modelVar="region"
 				>
 
 					<%
@@ -94,8 +94,8 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 
 					rowURL.setParameter("mvcRenderCommandName", "/commerce_country/edit_commerce_region");
 					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("commerceCountryId", String.valueOf(commerceRegion.getCommerceCountryId()));
-					rowURL.setParameter("commerceRegionId", String.valueOf(commerceRegion.getCommerceRegionId()));
+					rowURL.setParameter("commerceCountryId", String.valueOf(region.getCountryId()));
+					rowURL.setParameter("commerceRegionId", String.valueOf(region.getRegionId()));
 					%>
 
 					<liferay-ui:search-container-column-text
@@ -106,7 +106,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
-						property="code"
+						property="regionCode"
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -114,7 +114,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 						name="active"
 					>
 						<c:choose>
-							<c:when test="<%= commerceRegion.isActive() %>">
+							<c:when test="<%= region.isActive() %>">
 								<liferay-ui:icon
 									cssClass="commerce-admin-icon-check"
 									icon="check"
@@ -133,7 +133,8 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
-						property="priority"
+						name="priority"
+						property="position"
 					/>
 
 					<liferay-ui:search-container-column-jsp

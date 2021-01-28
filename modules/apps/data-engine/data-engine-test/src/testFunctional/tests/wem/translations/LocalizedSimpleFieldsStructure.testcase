@@ -44,7 +44,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
-	@ignore = "true"
 	@priority = "4"
 	test CheckLocalizationOfFieldsUponLanguageChange {
 		property portal.acceptance = "false";

@@ -145,6 +145,16 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 					});
 				setPageDefinition(
 					() -> {
+						boolean embeddedPageDefinition = GetterUtil.getBoolean(
+							dtoConverterContext.getAttribute(
+								"embeddedPageDefinition"));
+
+						if (!layout.isTypeContent() ||
+							!embeddedPageDefinition) {
+
+							return null;
+						}
+
 						dtoConverterContext.setAttribute("layout", layout);
 
 						LayoutPageTemplateStructure

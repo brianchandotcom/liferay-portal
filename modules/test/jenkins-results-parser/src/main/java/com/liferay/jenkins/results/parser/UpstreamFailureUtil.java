@@ -130,12 +130,9 @@ public class UpstreamFailureUtil {
 		}
 
 		try {
-			File upstreamJobFailuresJSONFile = new File(
-				System.getenv("WORKSPACE"), "test.results.json");
-
-			if (upstreamJobFailuresJSONFile.exists()) {
+			if (_upstreamJobFailuresJSONFile.exists()) {
 				String fileContent = JenkinsResultsParserUtil.read(
-					upstreamJobFailuresJSONFile);
+					_upstreamJobFailuresJSONFile);
 
 				_upstreamFailuresJobJSONObject = new JSONObject(fileContent);
 			}
@@ -145,10 +142,10 @@ public class UpstreamFailureUtil {
 
 				System.out.println(
 					"Caching upstream test results in: " +
-						upstreamJobFailuresJSONFile);
+						_upstreamJobFailuresJSONFile);
 
 				JenkinsResultsParserUtil.write(
-					upstreamJobFailuresJSONFile,
+					_upstreamJobFailuresJSONFile,
 					_upstreamFailuresJobJSONObject.toString());
 			}
 
@@ -247,6 +244,14 @@ public class UpstreamFailureUtil {
 		initUpstreamJobFailuresJSONObject(topLevelBuild);
 
 		return _upstreamComparisonAvailable;
+	}
+
+	public static void resetUpstreamJobFailuresJSONObject() {
+		if (_upstreamJobFailuresJSONFile.exists()) {
+			_upstreamJobFailuresJSONFile.delete();
+		}
+
+		_upstreamFailuresJobJSONObject = null;
 	}
 
 	private static String _formatJobVariant(String jobVariant) {
@@ -428,5 +433,7 @@ public class UpstreamFailureUtil {
 		new JSONObject("{\"SHA\":\"\",\"failedBatches\":[]}");
 	private static boolean _upstreamComparisonAvailable = true;
 	private static JSONObject _upstreamFailuresJobJSONObject;
+	private static final File _upstreamJobFailuresJSONFile = new File(
+		System.getenv("WORKSPACE"), "test.results.json");
 
 }

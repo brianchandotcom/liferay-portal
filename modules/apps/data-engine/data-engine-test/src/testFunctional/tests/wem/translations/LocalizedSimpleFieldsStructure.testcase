@@ -38,8 +38,38 @@ definition {
 	test CheckDefaultStructureTitleDisplayedOnStructureList {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122278 CheckDefaultStructureTitleDisplayedOnStructureList pending implementation
+		var defaultStructureName = "Structure1";
+		var defaultStructureName_pt = "Structure1 PT";
+		var textFieldName = "Lbltest";
 
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+        );
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureDescription = "Test Description",
+            structureName = "${defaultStructureName}"
+        );
+
+        DataEngine.addField(
+            fieldFieldLabel = "${textFieldName}",
+            fieldName = "Text"
+		);
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContentStructures.addName(structureName="${defaultStructureName_pt}");
+
+		WebContentStructures.saveCP();
+
+		WebContentStructures.viewCP(
+            structureName = "${defaultStructureName}"
+		);
+
+		WebContentStructures.deleteCP(structureName="${defaultStructureName}");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

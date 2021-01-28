@@ -130,7 +130,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is published, the content page has the original plid identifier."
+	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is not yet published, and the site is published the widget page is still visible on live with local live staging."
 	@ignore = "true"
 	@priority = "2"
 	test ViewWidgetPageInLiveAfterConvertingWidgetPage {

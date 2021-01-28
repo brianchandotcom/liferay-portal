@@ -131,46 +131,115 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98327. When a widget page is converted to a content page and the content page is not yet published, and the site is published the widget page is still visible on live with local live staging."
-	@ignore = "true"
 	@priority = "2"
-	test ViewWidgetPageInLiveAfterConvertingWidgetPage {
-		property portal.acceptance = "false";
+	test ViewWidgetPageInLiveAfterConvertingWidgetPageWithoutPublish {
+		task ("Add a widget page in staging site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title");
+		}
 
-		SitePages.addPublicPage(pageName = "Test Page Name");
+		task ("Add an Asset Publisher to widget page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name",
+				site = "false",
+				widgetName = "Asset Publisher");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("Assert the web content is shown in Asset Publisher") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		SitePages.gotoPageMenuItem(
-			menuItem = "Convert to content page...",
-			pageName = "Test Page Name");
+			Portlet.viewTitle(portletName = "Asset Publisher");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name Staging");
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+		}
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		task ("Publish to Live") {
+			Staging.gotoPublishToLive();
 
-		AssertTextEquals(
-			key_portletTitleName = "Asset Publisher",
-			locator1 = "Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE",
-			value1 = "Asset Publisher");
+			Staging.publishToLive();
+		}
 
-		ProductMenu.gotoLiveSite(site = "Test Site Name");
+		task ("Assert the page type is Widget Page in Live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		ProductMenuHelper.openProductMenu();
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				key_pageType = "Widget Page",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+		}
 
-		ProductMenuHelper.expandCategory(category = "Design");
+		task ("Convert the widget page to content page without publish") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		AssertElementNotPresent(
-			key_portlet = "Fragments",
-			locator1 = "ProductMenu#PORTLET");
+			SitePages.gotoPageMenuItem(
+				menuItem = "Convert to content page...",
+				pageName = "Test Page Name");
 
+			PageEditor.assertFragmentSidebarLoaded();
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				key_pageType = "Widget Page",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+
+			AssertTextEquals.assertPartialText(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Conversion Draft");
+		}
+
+		task ("Publish to Live") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("Assert the Asset Publisher is shown in Live site") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Portlet.viewTitle(portletName = "Asset Publisher");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+		}
+
+		task ("Assert the page type is Widget Page in Live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			AssertVisible(
+				key_pageName = "Test Page Name",
+				key_pageType = "Widget Page",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_TYPE");
+
+			AssertTextEquals.assertPartialText(
+				key_itemName = "Test Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_PAGE_INFO",
+				value1 = "Conversion Draft");
+		}
 	}
 
 }

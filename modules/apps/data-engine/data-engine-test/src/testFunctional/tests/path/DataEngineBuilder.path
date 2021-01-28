@@ -8,25 +8,21 @@
 <tr><td rowspan="1" colspan="3">DataEngineBuilder</td></tr>
 </thead>
 <tbody>
-
 <tr>
 	<td>FORM_FIELDS_GROUP</td>
 	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[2]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS</td>
 	<td>//div[contains(@class, 'dropdown')]//button[@data-title='Actions']</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>DUPLICATED_FORM_FIELDS_GROUP_LABEL</td>
 	<td>//input[(@class='form-control ddm-field-text') and (@placeholder='Enter a field label.')]</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

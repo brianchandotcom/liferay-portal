@@ -273,6 +273,10 @@ definition {
 			fieldFieldLabel = "Color Test",
 			searchableType = "Disable");
 
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Color Test",
 			searchableType = "Disable");
@@ -280,6 +284,10 @@ definition {
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Color Test",
 			searchableType = "Keyword");
+
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Color Test",

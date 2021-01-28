@@ -47,17 +47,17 @@ export function MappingPanel({item}) {
 		processoryKey
 	);
 
-	const updateEditableValue = (newEditableValue) => {
+	const updateEditableValue = (nextEditableValue) => {
 		const nextEditableValues = {
 			...fragmentEntryLink.editableValues,
 			[processoryKey]: {
 				...fragmentEntryLink.editableValues[processoryKey],
 				[editableId]: {
-					config: isMapped(newEditableValue)
+					config: isMapped(nextEditableValue)
 						? {...editableValue.config, alt: '', imageTitle: ''}
 						: editableValue.config,
 					defaultValue: editableValue.defaultValue,
-					...newEditableValue,
+					...nextEditableValue,
 				},
 			},
 		};

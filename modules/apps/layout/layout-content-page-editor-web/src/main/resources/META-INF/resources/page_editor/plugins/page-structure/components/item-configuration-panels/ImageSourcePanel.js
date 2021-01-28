@@ -16,9 +16,9 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useState} from 'react';
 
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
-import {FILE_ENTRY_CLASS_NAME} from '../../../../app/config/constants/classNames';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
+import {FILE_ENTRY_CLASS_NAME} from '../../../../app/config/constants/fileEntryClassName';
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../app/config/index';
 import selectEditableValueContent from '../../../../app/selectors/selectEditableValueContent';

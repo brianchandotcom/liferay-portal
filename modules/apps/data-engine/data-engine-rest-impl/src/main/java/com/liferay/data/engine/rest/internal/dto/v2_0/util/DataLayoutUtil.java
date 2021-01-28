@@ -226,11 +226,11 @@ public class DataLayoutUtil {
 						ddmFormFieldTypeServicesTracker,
 						ddmFormField.getType());
 
-				List<DDMFormField> visualProperties = ListUtil.filter(
+				List<DDMFormField> visualPropertiesList = ListUtil.filter(
 					new ArrayList<>(settingsDDMFormFieldsMap.values()),
 					DDMFormField::isVisualProperty);
 
-				visualProperties.forEach(
+				visualPropertiesList.forEach(
 					visualProperty -> {
 						if (visualProperty.isLocalizable()) {
 							properties.put(

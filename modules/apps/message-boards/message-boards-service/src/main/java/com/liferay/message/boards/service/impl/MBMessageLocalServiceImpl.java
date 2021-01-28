@@ -26,6 +26,7 @@ import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
+import com.liferay.message.boards.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.MessageSubjectException;
 import com.liferay.message.boards.exception.NoSuchThreadException;
@@ -136,6 +137,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -306,6 +308,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long messageId = counterLocalService.increment();
 
+		String externalReferenceCode = _getExternalReferenceCode(
+			messageId, serviceContext);
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		subject = getSubject(subject, body);
 
 		body = getBody(subject, body, format);
@@ -327,6 +334,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
+		message.setExternalReferenceCode(externalReferenceCode);
 		message.setUuid(serviceContext.getUuid());
 		message.setGroupId(groupId);
 		message.setCompanyId(user.getCompanyId());
@@ -2479,6 +2487,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			new GroupServiceSettingsLocator(groupId, MBConstants.SERVICE_NAME));
 	}
 
+	private String _getExternalReferenceCode(
+		long messageId, ServiceContext serviceContext) {
+
+		return Optional.ofNullable(
+			(String)serviceContext.getAttribute("externalReferenceCode")
+		).orElse(
+			String.valueOf(messageId)
+		);
+	}
+
 	private long _getFileEntryMessageId(long fileEntryId)
 		throws PortalException {
 
@@ -2569,6 +2587,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		String externalReferenceCode = (String)serviceContext.getAttribute(
+			"externalReferenceCode");
+
+		if ((externalReferenceCode != null) &&
+			!StringUtil.equals(
+				externalReferenceCode, message.getExternalReferenceCode())) {
+
+			_validateExternalReferenceCode(externalReferenceCode, messageId);
+
+			message.setExternalReferenceCode(externalReferenceCode);
+		}
 
 		int oldStatus = message.getStatus();
 		String oldSubject = message.getSubject();
@@ -2745,6 +2775,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						extraDataJSONObject.toString(), assetEntry.getUserId());
 				}
 			}
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		MBMessage messageWithERC = mbMessagePersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (messageWithERC != null) {
+			throw new DuplicateExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate external reference code ", externalReferenceCode,
+					" in group ", groupId));
 		}
 	}
 

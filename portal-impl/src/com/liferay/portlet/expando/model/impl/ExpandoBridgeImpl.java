@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.util.PropsValues;
 
@@ -410,6 +411,10 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 	public void setAttribute(String name, Serializable value) {
 		boolean secure =
 			PropsValues.PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT;
+
+		if (CopyLayoutThreadLocal.isCopyLayout()) {
+			secure = false;
+		}
 
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			secure = false;

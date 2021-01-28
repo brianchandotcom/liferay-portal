@@ -411,7 +411,7 @@ public class DDMFormAdminDisplayContext {
 
 		DDMForm ddmForm = createSettingsDDMForm(formInstanceId, themeDisplay);
 
-		return ddmFormRenderer.getContext(
+		return ddmFormRenderer.getDDMFormTemplateContext(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 

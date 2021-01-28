@@ -27,7 +27,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DDMFormRenderer {
 
-	public Map<String, Object> getContext(
+	public Map<String, Object> getDDMFormTemplateContext(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws Exception;

@@ -99,17 +99,17 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		DDMStructureVersion structureVersion =
 			formInstanceVersion.getStructureVersion();
 
-		DDMFormRenderingContext formRenderingContext =
+		DDMFormRenderingContext ddmFormRenderingContext =
 			createDDMFormRenderingContext(
 				structureVersion.getDDMForm(), readOnly);
 
 		DDMFormValues formValues = getDDMFormValues(
 			renderRequest, formInstanceRecord, structureVersion);
 
-		formRenderingContext.setContainerId(
+		ddmFormRenderingContext.setContainerId(
 			"ddmForm".concat(StringUtil.randomString()));
-		formRenderingContext.setDDMFormValues(formValues);
-		formRenderingContext.setLocale(formValues.getDefaultLocale());
+		ddmFormRenderingContext.setDDMFormValues(formValues);
+		ddmFormRenderingContext.setLocale(formValues.getDefaultLocale());
 
 		DDMFormInstanceVersion latestApprovedFormInstanceVersion =
 			_ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
@@ -123,10 +123,11 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 			structureVersion.getDDMForm(),
 			latestApprovedStructureVersion.getDDMForm());
 
-		DDMFormLayout formLayout = structureVersion.getDDMFormLayout();
+		DDMFormLayout ddmFormLayout = structureVersion.getDDMFormLayout();
 
-		return _ddmFormRenderer.getContext(
-			structureVersion.getDDMForm(), formLayout, formRenderingContext);
+		return _ddmFormRenderer.getDDMFormTemplateContext(
+			structureVersion.getDDMForm(), ddmFormLayout,
+			ddmFormRenderingContext);
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(

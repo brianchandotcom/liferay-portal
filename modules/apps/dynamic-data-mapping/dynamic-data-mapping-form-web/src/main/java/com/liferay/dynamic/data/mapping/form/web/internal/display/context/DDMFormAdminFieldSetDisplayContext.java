@@ -165,7 +165,7 @@ public class DDMFormAdminFieldSetDisplayContext
 
 		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
 
-		return ddmFormRenderer.getContext(
+		return ddmFormRenderer.getDDMFormTemplateContext(
 			createSettingsDDMForm(0L, themeDisplay), ddmFormLayout,
 			createDDMFormRenderingContext(pageContext, renderRequest));
 	}

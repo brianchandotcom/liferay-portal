@@ -12,27 +12,36 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-import {Config} from 'metal-state';
-
-class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteSelectedEntries() {
+export default function propsTransformer({
+	additionalProps: {restoreEntriesURL},
+	portletNamespace,
+	...otherProps
+}) {
+	const deleteSelectedEntries = () => {
 		if (
 			confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(this.one('#fm'));
+			submitForm(document[`${portletNamespace}fm`]);
 		}
-	}
+	};
 
-	restoreSelectedEntries() {
-		submitForm(this.one('#fm'), this.restoreEntriesURL);
-	}
+	const restoreSelectedEntries = () => {
+		submitForm(document[`${portletNamespace}fm`], restoreEntriesURL);
+	};
+
+	return {
+		...otherProps,
+		onActionButtonClick: (event, {item}) => {
+			const action = item?.data?.action;
+
+			if (action === 'deleteSelectedEntries') {
+				deleteSelectedEntries();
+			}
+			else if (action === 'restoreSelectedEntries') {
+				restoreSelectedEntries();
+			}
+		},
+	};
 }
-
-ManagementToolbarDefaultEventHandler.STATE = {
-	restoreEntriesURL: Config.string(),
-};
-
-export default ManagementToolbarDefaultEventHandler;

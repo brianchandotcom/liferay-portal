@@ -20,8 +20,10 @@
 TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new TrashManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, trashDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= trashManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	additionalProps="<%= trashManagementToolbarDisplayContext.getAdditionalProps() %>"
+	managementToolbarDisplayContext="<%= trashManagementToolbarDisplayContext %>"
+	propsTransformer="js/TrashManagementToolbarPropsTransformer"
 />
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
@@ -283,12 +285,6 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 		</clay:container-fluid>
 	</div>
 </div>
-
-<liferay-frontend:component
-	componentId="<%= trashManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= trashManagementToolbarDisplayContext.getComponentContext() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
-/>
 
 <liferay-frontend:component
 	componentId="<%= TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER %>"

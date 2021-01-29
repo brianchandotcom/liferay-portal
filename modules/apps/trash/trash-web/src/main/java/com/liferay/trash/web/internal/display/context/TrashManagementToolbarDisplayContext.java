@@ -84,6 +84,24 @@ public class TrashManagementToolbarDisplayContext
 		).build();
 	}
 
+	public Map<String, Object> getAdditionalProps() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletURL restoreEntriesURL = liferayPortletResponse.createActionURL(
+			TrashPortletKeys.TRASH);
+
+		restoreEntriesURL.setParameter(
+			ActionRequest.ACTION_NAME, "restoreEntries");
+		restoreEntriesURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+
+		return HashMapBuilder.<String, Object>put(
+			"restoreEntriesURL", restoreEntriesURL.toString()
+		).build();
+	}
+
 	public String getAvailableActions(TrashEntry trashEntry)
 		throws PortalException {
 
@@ -104,32 +122,9 @@ public class TrashManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
-	public Map<String, Object> getComponentContext() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletURL restoreEntriesURL = liferayPortletResponse.createActionURL(
-			TrashPortletKeys.TRASH);
-
-		restoreEntriesURL.setParameter(
-			ActionRequest.ACTION_NAME, "restoreEntries");
-		restoreEntriesURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
-
-		return HashMapBuilder.<String, Object>put(
-			"restoreEntriesURL", restoreEntriesURL.toString()
-		).build();
-	}
-
 	@Override
 	public String getComponentId() {
 		return "trashWebManagementToolbar";
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return "TRASH_ENTRIES_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override

@@ -196,7 +196,33 @@ definition {
 	test SetFieldReferenceOfRichTextWithInvalidCharacters {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98076 SetFieldReferenceOfRichTextWithInvalidCharacters pending implementation
+		DataEngine.addField(
+			fieldFieldLabel = "Test Invalid Reference",
+			fieldName = "Rich Text"
+		);
+		
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Test Invalid Reference",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "Test Invalid Reference"
+		);
+		
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Type(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "Test!Invalid@#Reference"
+		);
+
+		AssertTextNotPresent(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "Test!Invalid@#Reference"
+		);
+		
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

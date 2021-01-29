@@ -39,7 +39,8 @@ public class AccountConstants {
 	public static final String ACCOUNT_ENTRY_TYPE_PERSONAL = "person";
 
 	public static final String[] ACCOUNT_ENTRY_TYPES = {
-		ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_PERSON
+		ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_GUEST,
+		ACCOUNT_ENTRY_TYPE_PERSON
 	};
 
 	public static final String ACCOUNT_GROUP_NAME_GUEST = "Guest";

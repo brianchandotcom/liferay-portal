@@ -147,6 +147,7 @@ const LocalizableText = ({
 	defaultLocale = INITIAL_DEFAULT_LOCALE,
 	displayStyle = 'singleline',
 	editingLocale = INITIAL_EDITING_LOCALE,
+	fieldName,
 	id,
 	name,
 	onFieldBlurred,
@@ -175,6 +176,7 @@ const LocalizableText = ({
 		<ClayInput.Group>
 			<InputComponent
 				displayStyle={displayStyle}
+				fieldName={fieldName}
 				id={id}
 				inputValue={inputValue}
 				name={name}
@@ -242,6 +244,7 @@ const Main = ({
 	defaultLocale,
 	displayStyle,
 	editingLocale,
+	fieldName,
 	id,
 	name,
 	onBlur,
@@ -262,6 +265,7 @@ const Main = ({
 			})}
 			displayStyle={displayStyle}
 			editingLocale={editingLocale}
+			fieldName={fieldName}
 			id={id}
 			name={name}
 			onFieldBlurred={onBlur}

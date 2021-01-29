@@ -17,6 +17,7 @@ import React from 'react';
 
 const InputComponent = ({
 	displayStyle,
+	fieldName,
 	inputValue,
 	name,
 	onFieldBlurred,
@@ -48,6 +49,7 @@ const InputComponent = ({
 	return (
 		<ClayInput.GroupItem append>
 			<input
+				{...(fieldName === 'submitLabel' && {maxLength: 25})}
 				className="ddm-field-text form-control"
 				data-testid="visibleChangeInput"
 				disabled={readOnly}

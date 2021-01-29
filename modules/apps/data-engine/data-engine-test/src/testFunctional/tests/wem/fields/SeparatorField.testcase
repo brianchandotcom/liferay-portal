@@ -33,13 +33,17 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
-	@ignore = "true"
 	@priority = "5"
 	test AddSeparatorOnFormByDragAndDrop {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 AddSeparatorOnFormByDragAndDrop pending implementation
+		DataEngine.addField(
+			fieldFieldLabel = "Test",
+			fieldName = "Separator");
 
+		DataEngine.viewField(
+			fieldFieldLabel = "Test",
+			fieldName = "Separator");
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
@@ -49,6 +53,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98081 DeleteSeparatorOnBuilder pending implementation
+
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

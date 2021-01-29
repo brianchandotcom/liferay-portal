@@ -151,6 +151,8 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 				continue;
 			}
 
+			BigDecimal amount = commerceShippingFixedOption.getAmount();
+
 			CommerceChannel commerceChannel =
 				_commerceChannelService.getCommerceChannelByOrderGroupId(
 					commerceOrder.getGroupId());
@@ -160,20 +162,18 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 			String commerceCurrencyCode = commerceCurrency.getCode();
 
-			BigDecimal amount = commerceShippingFixedOption.getAmount();
-
 			if (!commerceCurrencyCode.equals(
 					commerceChannel.getCommerceCurrencyCode())) {
 
-				CommerceCurrency commerceChannelCurrency =
+				CommerceCurrency channelCommerceCurrency =
 					_commerceCurrencyService.getCommerceCurrency(
 						commerceOrder.getCompanyId(),
 						commerceChannel.getCommerceCurrencyCode());
 
 				amount = amount.divide(
-					commerceChannelCurrency.getRate(),
+					channelCommerceCurrency.getRate(),
 					RoundingMode.valueOf(
-						commerceChannelCurrency.getRoundingMode()));
+						channelCommerceCurrency.getRoundingMode()));
 
 				amount = amount.multiply(commerceCurrency.getRate());
 			}

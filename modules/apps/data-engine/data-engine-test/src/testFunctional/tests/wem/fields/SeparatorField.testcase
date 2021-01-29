@@ -223,7 +223,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
-	@ignore = "true"
 	@priority = "4"
 	test SetSeparatorRepeatable {
 		property portal.acceptance = "false";

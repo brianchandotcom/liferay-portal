@@ -14,9 +14,10 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-		
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}

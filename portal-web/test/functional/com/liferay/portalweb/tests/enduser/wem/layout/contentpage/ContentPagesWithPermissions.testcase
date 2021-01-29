@@ -63,7 +63,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-96795. If not giving the individual content's update permission, content author with Update Page Content permission could only go to the edit mode."
-	@ignore = "true"
 	@priority = "2"
 	test CannotEditAssetWithoutAssetUpdatePermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -139,35 +138,31 @@ definition {
 			locator1 = "PageEditorEditableLink#FIELD",
 			value1 = "Title");
 
-		SelectFrame(value1 = "relative=top");
-
 		PageEditor.waitForAutoSave();
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
 
 		PageEditor.addWidget(
 			portletName = "Web Content Display",
 			targetFragmentName = "Heading");
 
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		WebContentDisplayPortlet.selectWebContent(
+			contentPage = "true",
+			webContentTitle = "WC WebContent Title 2");
 
 		PageEditor.addWidget(
 			portletName = "Asset Publisher",
 			targetFragmentName = "Web Content Display");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "WC WebContent Title 3",
 			assetType = "Basic Web Content");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.clickPublish();
 
@@ -175,18 +170,16 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
-
 		ContentPages.clickPencil();
 
-		task ("Assert can not access to web content editor via Contents panel in edit mode") {
-			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-				PageEditor.gotoTab(tabName = "Contents");
+		PageEditor.gotoTab(tabName = "Contents");
 
+		task ("Assert cannot access to web content editor via Contents panel in edit mode") {
+			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
 				Click.waitForMenuToggleJSClick(
 					key_rowEntry = "${webContentTitle}",
 					locator1 = "Icon#FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS");
@@ -197,14 +190,18 @@ definition {
 			}
 		}
 
-		PageEditor.clickPublish();
+		task ("Assert cannot access to web content editor via Asset Publisher and Web Content Display in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		task ("Assert can access to web content editor via Asset Publisher in view mode") {
-			MouseOver(
+			AssertElementNotPresent(
+				key_webContentTitle = "WC WebContent Title 2",
+				locator1 = "WCD#ARTICLE_BAREBONE_ELLIPSIS_ICON");
+
+			AssertElementNotPresent(
 				key_assetTitle = "WC WebContent Title 3",
-				locator1 = "AP#ASSET_ABSTRACT_TITLE");
-
-			AssertElementNotPresent(locator1 = "AP#SPECIFIC_ASSET_EDIT");
+				locator1 = "AP#SPECIFIC_ASSET_EDIT");
 		}
 	}
 

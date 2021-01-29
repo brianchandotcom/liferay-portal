@@ -38,13 +38,24 @@ definition {
 			MouseOver(locator1 = "WCD#WEB_CONTENT_CONTENT");
 		}
 
-		MouseOver.mouseOverNotVisible(
-			key_webContentTitle = "${webContentTitle}",
-			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+		if (isSet(contentPage)) {
+			MouseOver.mouseOverNotVisible(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCD#ARTICLE_BAREBONE_ELLIPSIS_ICON");
 
-		Click(
-			key_webContentTitle = "${webContentTitle}",
-			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+			Click(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCD#ARTICLE_BAREBONE_ELLIPSIS_ICON");
+		}
+		else {
+			MouseOver.mouseOverNotVisible(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+
+			Click(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+		}
 	}
 
 	macro gotoEdit {

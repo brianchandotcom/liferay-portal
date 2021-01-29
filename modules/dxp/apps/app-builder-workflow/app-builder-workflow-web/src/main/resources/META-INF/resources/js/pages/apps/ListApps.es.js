@@ -12,6 +12,7 @@
 import ClayPopover from '@clayui/popover';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import Button from 'app-builder-web/js/components/button/Button.es';
+import useDeployApp from 'app-builder-web/js/hooks/useDeployApp.es';
 import ListApps, {Actions} from 'app-builder-web/js/pages/apps/ListApps.es';
 import {COLUMNS, FILTERS} from 'app-builder-web/js/pages/apps/constants.es';
 import {parseResponse} from 'app-builder-web/js/utils/client.es';
@@ -20,9 +21,19 @@ import {createResourceURL, fetch} from 'frontend-js-web';
 import {compile} from 'path-to-regexp';
 import React, {useContext, useState} from 'react';
 
+import MissingFieldsModal from './edit/MissingFieldsModal.es';
+import {getDataDefinition, getFormViews} from './edit/actions.es';
+import {checkRequiredFields} from './edit/utils.es';
+
 export default ({scope, ...props}) => {
 	const {userId} = useContext(AppContext);
+	const {deployApp} = useDeployApp();
+	const [currentApp, setCurrentApp] = useState({dataDefinitionName: ''});
 	const [showTooltip, setShowTooltip] = useState(false);
+	const [deployCallback, setDeployCallback] = useState({});
+	const [missingFieldsModalVisible, setMissingFieldsModalVisible] = useState(
+		false
+	);
 	const {baseResourceURL, namespace} = useContext(AppContext);
 
 	const [firstColumn, ...otherColumns] = COLUMNS;
@@ -114,7 +125,39 @@ export default ({scope, ...props}) => {
 		});
 	};
 
-	const actions = [...Actions()];
+	function validateFormViewMissingRequiredFields(app) {
+		const isFormViewMissingRequiredFields = (app) => {
+			return getDataDefinition(app.dataDefinitionId).then(
+				(dataDefinition) => {
+					setCurrentApp(app);
+
+					return getFormViews(
+						dataDefinition.id,
+						dataDefinition.defaultLanguageId
+					).then((formViews) => {
+						formViews = checkRequiredFields(
+							formViews,
+							dataDefinition
+						);
+
+						return formViews.find(({id}) => id === app.dataLayoutId)
+							.missingRequiredFields?.customField;
+					});
+				}
+			);
+		};
+
+		return isFormViewMissingRequiredFields(app).then((missing) => {
+			if (missing) {
+				return new Promise((resolve, reject) => {
+					setDeployCallback({reject, resolve});
+					setMissingFieldsModalVisible(true);
+				});
+			}
+		});
+	}
+
+	const actions = [...Actions(validateFormViewMissingRequiredFields)];
 
 	actions.splice(-1, 1, {
 		action: confirmDelete,
@@ -123,35 +166,53 @@ export default ({scope, ...props}) => {
 	});
 
 	return (
-		<ListApps
-			listViewProps={{
-				actions,
-				addButton: () => (
-					<ClayPopover
-						alignPosition="bottom-right"
-						header={Liferay.Language.get('workflow-powered-app')}
-						show={showTooltip}
-						trigger={
-							<Button
-								className="nav-btn nav-btn-monospaced"
-								href={newAppLink}
-								onMouseOut={() => setShowTooltip(false)}
-								onMouseOver={() => setShowTooltip(true)}
-								symbol="plus"
-							/>
-						}
-					>
-						{Liferay.Language.get(
-							'create-an-app-that-integrates-a-step-driven-workflow-process'
-						)}
-					</ClayPopover>
-				),
-				columns,
-				emptyState,
-				endpoint: `/o/app-builder/v1.0/apps?scope=${scope}`,
-				filters,
-			}}
-			{...props}
-		/>
+		<>
+			<ListApps
+				listViewProps={{
+					actions,
+					addButton: () => (
+						<ClayPopover
+							alignPosition="bottom-right"
+							header={Liferay.Language.get(
+								'workflow-powered-app'
+							)}
+							show={showTooltip}
+							trigger={
+								<Button
+									className="nav-btn nav-btn-monospaced"
+									href={newAppLink}
+									onMouseOut={() => setShowTooltip(false)}
+									onMouseOver={() => setShowTooltip(true)}
+									symbol="plus"
+								/>
+							}
+						>
+							{Liferay.Language.get(
+								'create-an-app-that-integrates-a-step-driven-workflow-process'
+							)}
+						</ClayPopover>
+					),
+					columns,
+					emptyState,
+					endpoint: `/o/app-builder/v1.0/apps?scope=${scope}`,
+					filters,
+				}}
+				{...props}
+			/>
+
+			<MissingFieldsModal
+				dataObjectName={currentApp.dataDefinitionName}
+				missingFieldsModalVisible={missingFieldsModalVisible}
+				onDeploy={() =>
+					deployApp(currentApp)
+						.then((result) => {
+							setMissingFieldsModalVisible(false);
+							deployCallback.resolve(result);
+						})
+						.catch(deployCallback.reject)
+				}
+				setMissingFieldsModalVisible={setMissingFieldsModalVisible}
+			/>
+		</>
 	);
 };

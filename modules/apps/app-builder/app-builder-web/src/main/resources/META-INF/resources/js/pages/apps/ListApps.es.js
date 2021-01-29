@@ -34,13 +34,25 @@ import {
 	STATUSES,
 } from './constants.es';
 
-export const Actions = () => {
+export const Actions = (validateFormViewMissingRequiredFields) => {
 	const {getStandaloneURL} = useContext(AppContext);
 	const {deployApp, undeployApp} = useDeployApp();
 
 	return [
 		{
-			action: (app) => (app.active ? undeployApp(app) : deployApp(app)),
+			action: (app) => {
+				if (app.active) {
+					return undeployApp(app);
+				}
+
+				if (validateFormViewMissingRequiredFields) {
+					return validateFormViewMissingRequiredFields(app).then(
+						(callback) => callback ?? deployApp(app)
+					);
+				}
+
+				return deployApp(app);
+			},
 			name: ({active}) =>
 				DEPLOYMENT_ACTION[active ? 'undeploy' : 'deploy'],
 			show: ({appDeployments}) => appDeployments.length > 0,

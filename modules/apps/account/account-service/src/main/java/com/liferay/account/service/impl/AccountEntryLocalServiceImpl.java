@@ -765,7 +765,7 @@ public class AccountEntryLocalServiceImpl
 			});
 	}
 
-	private Long[] _getOrganizationIds(long userId) throws PortalException {
+	private Long[] _getOrganizationIds(long userId) {
 		List<Organization> organizations =
 			organizationLocalService.getUserOrganizations(userId);
 

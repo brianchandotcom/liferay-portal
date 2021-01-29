@@ -70,33 +70,28 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "Test",
-			structureName = "Test"
-		);
+			structureName = "Test");
 
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		AssertElementPresent(
-			locator1 = "Translation#TRANSLATION_LANGUAGE",
+			key_locale = "${locale}",
 			key_localeUnderscore = StringUtil.replace("${locale}", "-", "_"),
-			key_locale = "${locale}"
-		);
+			locator1 = "Translation#TRANSLATION_LANGUAGE");
 
 		AssertElementPresent(
-			locator1="Translation#TRANSLATION_STATUS",
-			key_locale="${locale}"
-		);
+			key_locale = "${locale}",
+			locator1 = "Translation#TRANSLATION_STATUS");
 
 		AssertElementPresent(
-			locator1="Translation#TRANSLATION_FLAG_LANGUAGE",
-			key_localeLowerCase="${localeLowerCase}"
-		);
+			key_localeLowerCase = "${localeLowerCase}",
+			locator1 = "Translation#TRANSLATION_FLAG_LANGUAGE");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

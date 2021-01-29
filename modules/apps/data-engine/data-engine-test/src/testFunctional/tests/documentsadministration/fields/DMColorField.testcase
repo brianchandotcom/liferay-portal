@@ -133,8 +133,6 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
-		Pause(locator1 = "2000");
-
 		AssertElementPresent(
 			key_fieldFieldLabel = "Color Test Name",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");

@@ -277,5 +277,4 @@ definition {
 
 		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
 	}
-
 }

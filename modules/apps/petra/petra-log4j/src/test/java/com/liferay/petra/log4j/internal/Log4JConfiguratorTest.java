@@ -95,14 +95,9 @@ public class Log4JConfiguratorTest {
 		_assertLog4JLevel(logger, _ALL);
 
 		Log4JConfigurator.configureLog4JXml(
-			_generateXMLConfigurationContent(loggerName, _OFF));
+			_generateXMLConfigurationContent(loggerName, _DEBUG));
 
-		_assertLog4JLevel(logger, _OFF);
-
-		Log4JConfigurator.configureLog4JXml(
-			_generateXMLConfigurationContent(loggerName, _FATAL));
-
-		_assertLog4JLevel(logger, _FATAL);
+		_assertLog4JLevel(logger, _DEBUG);
 
 		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _ERROR));
@@ -110,9 +105,9 @@ public class Log4JConfiguratorTest {
 		_assertLog4JLevel(logger, _ERROR);
 
 		Log4JConfigurator.configureLog4JXml(
-			_generateXMLConfigurationContent(loggerName, _WARN));
+			_generateXMLConfigurationContent(loggerName, _FATAL));
 
-		_assertLog4JLevel(logger, _WARN);
+		_assertLog4JLevel(logger, _FATAL);
 
 		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _INFO));
@@ -120,14 +115,19 @@ public class Log4JConfiguratorTest {
 		_assertLog4JLevel(logger, _INFO);
 
 		Log4JConfigurator.configureLog4JXml(
-			_generateXMLConfigurationContent(loggerName, _DEBUG));
+			_generateXMLConfigurationContent(loggerName, _OFF));
 
-		_assertLog4JLevel(logger, _DEBUG);
+		_assertLog4JLevel(logger, _OFF);
 
 		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, _TRACE));
 
 		_assertLog4JLevel(logger, _TRACE);
+
+		Log4JConfigurator.configureLog4JXml(
+			_generateXMLConfigurationContent(loggerName, _WARN));
+
+		_assertLog4JLevel(logger, _WARN);
 
 		Log4JConfigurator.configureLog4JXml(
 			_generateXMLConfigurationContent(loggerName, "FAKE_LEVEL"));

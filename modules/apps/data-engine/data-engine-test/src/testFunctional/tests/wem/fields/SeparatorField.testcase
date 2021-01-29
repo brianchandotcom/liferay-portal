@@ -10,21 +10,15 @@ definition {
 
 		User.firstLoginPG();
 
-		Navigator.openURL();
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		AppBuilderAdmin.switchTab(tabName = "Structures");
+		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "Test");
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		WebContentStructures.deleteCP(structureName = "Test");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();

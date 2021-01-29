@@ -4047,7 +4047,10 @@ go</echo>
 					</then>
 				</elseif>
 				<elseif>
-					<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10" />
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.5" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.3.10" />
+					</or>
 					<then>
 						<var name="app.server.tomcat.version" value="9.0.37" />
 					</then>
@@ -5894,6 +5897,12 @@ war.path=${app.server.portal.dir}/</echo>
 							<property name="portal.version.url.path" value="7.3.0-ga1" />
 						</then>
 					</elseif>
+					<elseif>
+						<equals arg1="${portal.version}" arg2="7.3.5" />
+						<then>
+							<property name="portal.version.url.path" value="7.3.5-ga6" />
+						</then>
+					</elseif>
 					<else>
 						<property name="portal.version.url.path" value="${portal.version}" />
 					</else>
@@ -5910,6 +5919,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<equals arg1="${portal.version}" arg2="7.2.0" />
 						<equals arg1="${portal.version}" arg2="7.2.1" />
 						<equals arg1="${portal.version}" arg2="7.3.0" />
+						<equals arg1="${portal.version}" arg2="7.3.5" />
 					</or>
 					<then>
 						<propertycopy from="sql.legacy.base.url[ce]" name="sql.legacy.base.url" />

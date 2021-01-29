@@ -210,6 +210,14 @@ definition {
 
 			AssertElementNotPresent(locator1 = "TextInput#FILE_PRESENT");
 		}
+		else if (isSet(requiredFieldValidation)) {
+			Button.clickPublish();
+
+			AssertTextEquals.assertPartialText(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DocumentsAndMediaDocument#CUSTOM_FIELD_REQUIRED_ALERT",
+				value1 = "This field is required.");
+		}
 		else {
 			PortletEntry.publish();
 		}

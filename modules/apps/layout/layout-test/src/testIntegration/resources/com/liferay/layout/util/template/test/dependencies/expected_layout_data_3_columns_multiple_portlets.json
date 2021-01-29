@@ -1,4 +1,6 @@
 {
+	"deletedItems": [
+	],
 	"items": {
 		"ROOT": {
 			"children": [
@@ -18,6 +20,8 @@
 				"landscapeMobile": {
 					"styles": {
 					}
+				},
+				"link": {
 				},
 				"portraitMobile": {
 					"styles": {
@@ -69,20 +73,14 @@
 			"config": {
 				"gutters": true,
 				"landscapeMobile": {
-					"gutters": true,
-					"modulesPerRow": 3,
-					"numberOfColumns": 3,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"modulesPerRow": 3,
 				"numberOfColumns": 3,
 				"portraitMobile": {
-					"gutters": true,
-					"modulesPerRow": 3,
-					"numberOfColumns": 3,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"reverseOrder": false,
 				"styles": {
@@ -113,11 +111,8 @@
 					"width": ""
 				},
 				"tablet": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 3,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"verticalAlignment": "top"
 			},
@@ -131,7 +126,13 @@
 				"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT1"
 			],
 			"config": {
-				"size": 4
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
 			},
 			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0",
 			"parentId": "ROOT-CONTAINER0-ROW0",
@@ -241,7 +242,13 @@
 				"ROOT-CONTAINER0-ROW0-COLUMN1-FRAGMENT1"
 			],
 			"config": {
-				"size": 4
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
 			},
 			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN1",
 			"parentId": "ROOT-CONTAINER0-ROW0",
@@ -351,7 +358,13 @@
 				"ROOT-CONTAINER0-ROW0-COLUMN2-FRAGMENT1"
 			],
 			"config": {
-				"size": 4
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
 			},
 			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN2",
 			"parentId": "ROOT-CONTAINER0-ROW0",

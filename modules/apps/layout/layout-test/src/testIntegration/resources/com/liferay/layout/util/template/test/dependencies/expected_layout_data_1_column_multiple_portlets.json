@@ -1,4 +1,6 @@
 {
+	"deletedItems": [
+	],
 	"items": {
 		"ROOT": {
 			"children": [
@@ -18,6 +20,8 @@
 				"landscapeMobile": {
 					"styles": {
 					}
+				},
+				"link": {
 				},
 				"portraitMobile": {
 					"styles": {
@@ -67,20 +71,14 @@
 			"config": {
 				"gutters": true,
 				"landscapeMobile": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"modulesPerRow": 1,
 				"numberOfColumns": 1,
 				"portraitMobile": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"reverseOrder": false,
 				"styles": {
@@ -111,11 +109,8 @@
 					"width": ""
 				},
 				"tablet": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"verticalAlignment": "top"
 			},
@@ -130,7 +125,13 @@
 				"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT2"
 			],
 			"config": {
-				"size": 12
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 12,
+				"tablet": {
+				}
 			},
 			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0",
 			"parentId": "ROOT-CONTAINER0-ROW0",

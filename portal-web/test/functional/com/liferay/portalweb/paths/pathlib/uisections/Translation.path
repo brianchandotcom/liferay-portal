@@ -90,6 +90,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSLATION_LANGUAGE</td>
+	<td>//div[contains(@class,'menu-open')]//a[@data-value='${key_localeUnderscore}']//span[contains(text(),'${key_locale}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATION_STATUS</td>
+	<td>//div[contains(@class,'open lfr-icon-menu-open')]//span[contains(text(),'${key_locale}')]//span[contains(text(),'')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATION_FLAG_LANGUAGE</td>
+	<td>//div[contains(@class,'open lfr-icon-menu-open')]//span[contains(@class,'inline-item')]//*[name()='svg' and contains(@class,'${key_localeLowerCase}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZATION_NAME</td>
 	<td>//div[contains(@class,'menu-open')]//a[@data-value='${key_locale}']</td>
 	<td></td>

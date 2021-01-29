@@ -81,12 +81,23 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
-	@ignore = "true"
 	@priority = "4"
 	test SetGeolocationAsRepeatable {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 SetGeolocationAsRepeatable pending implementation
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeFieldNames = "Geolocation",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Geolocation");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

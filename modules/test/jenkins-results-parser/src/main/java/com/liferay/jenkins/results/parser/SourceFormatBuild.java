@@ -19,6 +19,9 @@ import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailu
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.dom4j.Element;
 
 /**
@@ -35,7 +38,24 @@ public class SourceFormatBuild
 
 	@Override
 	public String getBaseGitRepositorySHA(String gitRepositoryName) {
-		return _pullRequest.getUpstreamBranchSHA();
+		if (_baseGitRepositorySHA != null) {
+			return _baseGitRepositorySHA;
+		}
+
+		String consoleText = getConsoleText();
+
+		for (String line : consoleText.split("\\s*\\n\\s*")) {
+			Matcher matcher = _gitHubUpstreamBranchShaPattern.matcher(line);
+
+			if (matcher.find()) {
+				_baseGitRepositorySHA = matcher.group("sha");
+
+				return _baseGitRepositorySHA;
+			}
+		}
+
+		throw new RuntimeException(
+			"Unable to find Source Format Base Git Repository SHA");
 	}
 
 	@Override
@@ -231,6 +251,12 @@ public class SourceFormatBuild
 
 	private static final String _NAME_TEST_SUITE = "sf";
 
+	private static final Pattern _gitHubUpstreamBranchShaPattern =
+		Pattern.compile(
+			"\\[beanshell\\] GITHUB_UPSTREAM_BRANCH_SHA=" +
+				"(?<sha>[0-9a-f]{7,40})");
+
+	private String _baseGitRepositorySHA;
 	private PullRequest _pullRequest;
 
 }

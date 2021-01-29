@@ -433,6 +433,7 @@ public class AccountEntryLocalServiceImpl
 		accountEntryImpl.setUserName(defaultUser.getFullName());
 		accountEntryImpl.setParentAccountEntryId(
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT);
+		accountEntryImpl.setEmailAddress(defaultUser.getEmailAddress());
 		accountEntryImpl.setName(defaultUser.getFullName());
 		accountEntryImpl.setType(AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST);
 		accountEntryImpl.setStatus(WorkflowConstants.STATUS_APPROVED);

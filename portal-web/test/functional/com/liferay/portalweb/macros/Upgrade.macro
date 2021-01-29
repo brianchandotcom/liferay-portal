@@ -722,7 +722,7 @@ definition {
 
 		BlogsEntry.viewEntryTable(entryTitle = "Blogs Workflow Title");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		LexiconEntry.changeBlogDisplayStyle(displayStyle = "cards");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Workflow Title");
 
@@ -1068,7 +1068,7 @@ definition {
 
 		BlogsEntry.viewEntryTable(entryTitle = "New Blog After Upgrade");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		LexiconEntry.changeBlogDisplayStyle(displayStyle = "cards");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "New Blog After Upgrade");
 

@@ -100,7 +100,7 @@ definition {
 
 		BlogsEntry.viewEntryTable(entryTitle = "Blogs Entry Title");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		LexiconEntry.changeBlogDisplayStyle(displayStyle = "cards");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 

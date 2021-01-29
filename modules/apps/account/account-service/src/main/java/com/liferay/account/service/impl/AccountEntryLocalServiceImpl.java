@@ -242,10 +242,15 @@ public class AccountEntryLocalServiceImpl
 			user.getCompanyId(), 0, user.getUserId(),
 			AccountEntry.class.getName(), accountEntryId, false, false, false);
 
-		// Asset
-
 		if (serviceContext != null) {
+
+			// Asset
+
 			_updateAsset(accountEntry, serviceContext);
+
+			// Expando
+
+			accountEntry.setExpandoBridgeAttributes(serviceContext);
 		}
 
 		return accountEntry;
@@ -316,6 +321,10 @@ public class AccountEntryLocalServiceImpl
 
 		assetEntryLocalService.deleteEntry(
 			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
+
+		// Expando
+
+		expandoRowLocalService.deleteRows(accountEntry.getAccountEntryId());
 
 		return accountEntry;
 	}
@@ -540,10 +549,15 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setTaxIdNumber(taxIdNumber);
 		accountEntry.setStatus(status);
 
-		// Asset
-
 		if (serviceContext != null) {
+
+			// Asset
+
 			_updateAsset(accountEntry, serviceContext);
+
+			// Expando
+
+			accountEntry.setExpandoBridgeAttributes(serviceContext);
 		}
 
 		return accountEntryPersistence.update(accountEntry);

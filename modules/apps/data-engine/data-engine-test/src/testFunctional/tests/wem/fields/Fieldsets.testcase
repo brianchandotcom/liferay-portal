@@ -22,6 +22,7 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
+		WebContentStructures.tearDownStructureCP();
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
@@ -30,8 +31,17 @@ definition {
 	test AddFieldsetOnBuilderWithSameFieldType {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 AddFieldsetOnBuilderWithSameFieldType pending implementation
+		WebContentStructures.saveCP(structureName = "CollapsibleFieldSetTest");
 
+		WebContentStructures.editStructureCP(structureName = "CollapsibleFieldSetTest");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		Click(locator1 = "AppBuilder#BUTTON_EDIT_FIELDSET");
+
+		Click(
+			key_selectAction = "Delete",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
@@ -141,12 +151,66 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
 	@priority = "4"
 	test ShowAndHideFieldsetLabel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 ShowAndHideFieldsetLabel pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "ShowAndHideFieldSet",
+			structureName = "ShowAndHideFieldSet");
+
+		Navigator.gotoSidebarTab(tabName = "Builder");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		DoubleClick(locator1 = "Modal#CREATE_DATE_FIELD");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "ShowAndHideFieldSet");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "ShowAndHideFieldSet",
+			fieldsetsName = "ShowAndHideFieldSet");
+
+		Click(
+			key_fieldSetName = "ShowAndHideFieldSet",
+			locator1 = "FormViewBuilder#SELECT_FIELD_SET");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Show Label",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			
+		WebContentStructures.saveCP(structureName = "ShowAndHideFieldSet");
+
+		WebContentStructures.editStructureCP(structureName = "ShowAndHideFieldSet");
+
+		AssertElementNotPresent(
+			key_fieldsetLabel = "ShowAndHideFieldSet",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		WebContentStructures.saveCP(structureName = "ShowAndHideFieldSet");
+
+		WebContentStructures.editStructureCP(structureName = "ShowAndHideFieldSet");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		Click(locator1 = "AppBuilder#BUTTON_EDIT_FIELDSET");
+
+		Click(
+			key_selectAction = "Delete",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
 }

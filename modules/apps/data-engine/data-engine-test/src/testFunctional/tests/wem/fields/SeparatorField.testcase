@@ -215,20 +215,20 @@ definition {
 		property portal.acceptance = "false";
 
 		DataEngine.addField(
-			fieldFieldLabel = "Test",
+			fieldFieldLabel = "Separator Label",
 			fieldName = "Separator",
 			fieldReference = "Test");
 
 		FormFields.viewSwitcherLabel(
-			fieldLabel = "Test",
+			fieldLabel = "Separator Label",
 			fieldName = "Separator");
 
 		DataEngine.editFieldHide(
-			fieldFieldLabel = "Test",
+			fieldFieldLabel = "Separator Label",
 			fieldLabel = "Test");
 
 		FormFields.viewSwitcherLabelNotPresent(
-			fieldLabel = "Test",
+			fieldLabel = "Separator Label",
 			fieldName = "Separator");
 
 		Button.clickSave();
@@ -236,7 +236,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
 		FormFields.viewSwitcherLabelNotPresent(
-			fieldLabel = "Test",
+			fieldLabel = "Separator Label",
 			fieldName = "Separator");
 
 		Button.clickSave();

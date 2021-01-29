@@ -743,23 +743,29 @@ definition {
 				locator1 = "WCEditWebContent#SELECT_BUTTON",
 				value1 = "Select");
 
-			if (isSet(depotName)) {
-				ItemSelector.selectRepositoryImage(
-					available = "${available}",
-					depotName = "${depotName}",
-					folderName = "${folderName}",
-					imageFileName = "${webContentUpload}");
+			if ("${dmNavTab}" == "Documents and Media") {
+				if (isSet(depotName)) {
+					ItemSelector.selectRepositoryImage(
+						depotName = "${depotName}",
+						folderName = "${folderName}",
+						imageFileName = "${webContentUpload}",
+						navTab = "${dmNavTab}");
+				}
+				else if (isSet(dmDocumentTitle)) {
+					ItemSelector.selectDMImage(
+						imageFileName = "${dmDocumentTitle}",
+						navTab = "${dmNavTab}");
+				}
+				else {
+					ItemSelector.uploadFile(
+						navTab = "${dmNavTab}",
+						uploadFileName = "${webContentUpload}");
+				}
 			}
-			else if (isSet(dmDocumentTitle)) {
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				AssertClick(
-					key_dmDocumentTitle = "${webContentUpload}",
-					locator1 = "WC#ICON_DOCUMENT_TITLE",
-					value1 = "${dmDocumentTitle}");
-			}
-			else {
-				ItemSelector.uploadFile(uploadFileName = "${webContentUpload}");
+			else if ("${dmNavTab}" == "User Personal Folder") {
+				ItemSelector.uploadFile(
+					navTab = "${dmNavTab}",
+					uploadFileName = "${webContentUpload}");
 			}
 		}
 

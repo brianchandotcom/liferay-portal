@@ -14,6 +14,7 @@
 
 import classNames from 'classnames';
 import {
+	DataConverter,
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
 	DragTypes,
@@ -75,7 +76,7 @@ const getFieldTypes = ({
 
 	const setDefinitionField = (
 		{
-			customProperties,
+			customProperties = {},
 			fieldType,
 			label,
 			name,
@@ -126,7 +127,7 @@ const getFieldTypes = ({
 				? DragTypes.DRAG_FIELDSET
 				: DragTypes.DRAG_DATA_DEFINITION_FIELD,
 			icon: fieldTypeSettings.icon,
-			isCustomField: !customProperties['nativeField'],
+			isCustomField: !customProperties.nativeField,
 			isFieldSet,
 			...(isFieldGroup && {
 				fieldSet: getFieldSet({
@@ -186,7 +187,7 @@ const FieldCategory = ({categoryName}) => (
 const CustomObjectFieldsList = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [state, dispatch] = useContext(FormViewContext);
-	const {dataDefinition, fieldSets} = state;
+	const {dataDefinition, editingLanguageId, fieldSets, fieldTypes} = state;
 	const {dataDefinitionFields} = dataDefinition;
 	const [customFieldTypes, nativeFieldTypes] = getFieldTypes(state);
 
@@ -277,12 +278,15 @@ const CustomObjectFieldsList = ({keywords}) => {
 			(field) => field.name === fieldName
 		);
 
-		const settingsContext = dataLayoutBuilder.getDDMFormFieldSettingsContext(
-			dataDefinitionField
-		);
+		const settingsContext = DataConverter.getDDMFormFieldSettingsContext({
+			dataDefinitionField,
+			editingLanguageId,
+			fieldTypes,
+		});
 
 		return {
 			...dataDefinitionField,
+			editingLanguageId,
 			settingsContext,
 		};
 	};

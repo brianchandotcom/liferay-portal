@@ -13,7 +13,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
-import {getConnectedReactComponentAdapter} from 'dynamic-data-mapping-form-renderer';
+import {getConnectedReactComponentAdapter} from 'dynamic-data-mapping-form-renderer/js/util/ReactComponentAdapter.es';
 import React, {useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';

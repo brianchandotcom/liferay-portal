@@ -12,7 +12,9 @@
  * details.
  */
 
+import {DataConverter} from 'data-engine-taglib';
 import {useDrop as useDndDrop} from 'react-dnd';
+
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {useForm} from '../hooks/useForm.es';
 import {usePage} from './usePage.es';
@@ -34,7 +36,12 @@ export const useDrop = ({
 	parentField,
 	rowIndex,
 }) => {
-	const {dnd, fieldTypesMetadata} = usePage();
+	const {
+		allowInvalidAvailableLocalesForProperty,
+		dnd,
+		editingLanguageId: pageEditingLanguageId,
+		fieldTypesMetadata,
+	} = usePage();
 	const dispatch = useForm();
 
 	const spec = dnd ?? defaultSpec;
@@ -45,17 +52,21 @@ export const useDrop = ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver(),
 		}),
-		drop: (item, monitor) => {
+		drop: ({data, type}, monitor) => {
 			if (monitor.didDrop()) {
 				return;
 			}
-
-			const dataDefinitionField = item.data.getDataDefinitionField(
-				item.data.name
-			);
-			const {label} = dataDefinitionField;
-
-			switch (item.type) {
+			const {
+				fieldSet,
+				getDataDefinitionField,
+				name,
+				properties,
+				useFieldName,
+			} = data;
+			const {editingLanguageId, fieldType, label, settingsContext} =
+				getDataDefinitionField?.(name) ?? {};
+			const {availableLanguageIds, defaultLanguageId} = fieldSet ?? {};
+			switch (type) {
 				case 'fieldType':
 					dispatch({
 						payload: {
@@ -65,7 +76,7 @@ export const useDrop = ({
 							},
 							fieldType: {
 								...fieldTypesMetadata.find(({name}) => {
-									return name === item.data.name;
+									return name === data.name;
 								}),
 								editable: true,
 							},
@@ -86,16 +97,15 @@ export const useDrop = ({
 							},
 							fieldType: {
 								...fieldTypesMetadata.find(({name}) => {
-									return (
-										name === dataDefinitionField.fieldType
-									);
+									return name === fieldType;
 								}),
 								editable: true,
 								label:
-									label[item.data.editingLanguageId] ||
-									label[themeDisplay.getLanguageId()],
-								settingsContext:
-									dataDefinitionField.settingsContext,
+									label[
+										editingLanguageId ??
+											themeDisplay.getLanguageId()
+									],
+								settingsContext,
 							},
 							indexes: {columnIndex, pageIndex, rowIndex},
 							skipFieldNameGeneration: true,
@@ -109,17 +119,21 @@ export const useDrop = ({
 				case 'fieldset':
 					dispatch({
 						payload: {
-							availableLanguageIds:
-								item.data.fieldSet.availableLanguageIds,
-							defaultLanguageId:
-								item.data.fieldSet.defaultLanguageId,
+							availableLanguageIds,
+							defaultLanguageId,
 							fieldName,
-							fieldSet: item.data.fieldSet,
 							indexes: {columnIndex, pageIndex, rowIndex},
 							parentFieldName: parentField?.fieldName,
-							properties: item.data.properties,
-							rows: item.data.rows,
-							useFieldName: item.data.useFieldName,
+							properties,
+							useFieldName,
+							...DataConverter.getDataDefinitionFieldSet({
+								allowInvalidAvailableLocalesForProperty,
+								availableLanguageIds,
+								defaultLanguageId,
+								editingLanguageId: pageEditingLanguageId,
+								fieldSet,
+								fieldTypes: fieldTypesMetadata,
+							}),
 						},
 						type: EVENT_TYPES.FIELD_SET_ADD,
 					});

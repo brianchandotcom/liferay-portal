@@ -22,7 +22,7 @@
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
-	<td>//div[@class='h4 panel-title']</td>
+	<td>//span[@class='panel-title']</td>
 	<td></td>
 </tr>
 <tr>

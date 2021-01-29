@@ -1195,7 +1195,7 @@ definition {
 			value1 = "${workflowAssetTitle}");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "WorkflowSubmissionsTask#PREVIEW_CONTENT",
+			locator1 = "MyWorkflowTasksTask#PREVIEW_CONTENT",
 			value1 = "${workflowAssetContent}");
 
 		Portlet.viewTitle(portletName = "${workflowSubmissionTitle}");

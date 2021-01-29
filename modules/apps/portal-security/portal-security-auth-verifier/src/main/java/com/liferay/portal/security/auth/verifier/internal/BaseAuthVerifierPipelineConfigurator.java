@@ -71,7 +71,9 @@ public abstract class BaseAuthVerifierPipelineConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	protected abstract Class<? extends AuthVerifier> getAuthVerifierClass();

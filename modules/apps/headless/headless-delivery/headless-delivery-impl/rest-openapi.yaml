@@ -8787,16 +8787,16 @@ paths:
                         application/json:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Experience"
+                                    $ref: "#/components/schemas/SitePage"
                                 type: array
                         application/xml:
                             schema:
                                 items:
-                                    $ref: "#/components/schemas/Experience"
+                                    $ref: "#/components/schemas/SitePage"
                                 type: array
                     description:
                         ""
-            tags: [ "Experience" ]
+            tags: [ "SitePage" ]
     "/sites/{siteId}/site-pages/{friendlyUrlPath}/experiences/{experienceKey}":
         get:
             # @review

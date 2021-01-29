@@ -47,6 +47,7 @@ public class AccountEntryModelDocumentContributor
 	public void contribute(Document document, AccountEntry accountEntry) {
 		document.addText(Field.DESCRIPTION, accountEntry.getDescription());
 		document.addText(Field.NAME, accountEntry.getName());
+		document.addText("taxIdNumber", accountEntry.getTaxIdNumber());
 		document.addKeyword(Field.STATUS, accountEntry.getStatus());
 		document.addKeyword(Field.TYPE, accountEntry.getType());
 		document.addKeyword(

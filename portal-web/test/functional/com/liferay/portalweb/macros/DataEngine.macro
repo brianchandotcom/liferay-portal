@@ -570,7 +570,7 @@ definition {
 		}
 
 		AssertClick.assertPartialTextClickAt(
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${fieldFieldLabel}");
 
 		AssertTextEquals(

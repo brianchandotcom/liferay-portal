@@ -135,13 +135,11 @@ const deleteDataLayoutField = (dataLayout, fieldName) => {
 };
 
 const editFocusedCustomObjectField = ({
-	editingLanguageId,
 	focusedCustomObjectField,
 	propertyName,
 	propertyValue,
 }) => {
 	let localizableProperty = false;
-	let localizedValue;
 	const {settingsContext} = focusedCustomObjectField;
 	const visitor = new PagesVisitor(settingsContext.pages);
 	const newSettingsContext = {
@@ -151,14 +149,13 @@ const editFocusedCustomObjectField = ({
 
 			if (fieldName === propertyName) {
 				localizableProperty = localizable;
-				localizedValue = {
-					...field.localizedValue,
-					[editingLanguageId]: propertyValue,
-				};
 
 				return {
 					...field,
-					localizedValue,
+					localizedValue: {
+						...field.localizedValue,
+						[themeDisplay.getLanguageId()]: propertyValue,
+					},
 					value: propertyValue,
 				};
 			}
@@ -168,7 +165,9 @@ const editFocusedCustomObjectField = ({
 	};
 
 	if (localizableProperty) {
-		propertyValue = localizedValue;
+		propertyValue = {
+			[themeDisplay.getLanguageId()]: propertyValue,
+		};
 	}
 
 	return {
@@ -567,8 +566,7 @@ const createReducer = (dataLayoutBuilder) => {
 					focusedCustomObjectField = {
 						...dataDefinitionField,
 						settingsContext: dataLayoutBuilder.getDDMFormFieldSettingsContext(
-							dataDefinitionField,
-							state.editingLanguageId
+							dataDefinitionField
 						),
 					};
 

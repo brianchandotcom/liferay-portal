@@ -219,21 +219,25 @@ definition {
 			fieldName = "Separator",
 			fieldReference = "Test");
 
-		var fieldLabel = "Test";
-
-		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+		FormFields.viewSwitcherLabel(
+			fieldLabel = "Test",
+			fieldName = "Separator");
 
 		DataEngine.editFieldHide(
 			fieldFieldLabel = "Test",
 			fieldLabel = "Test");
 
-		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+		FormFields.viewSwitcherLabelNotPresent(
+			fieldLabel = "Test",
+			fieldName = "Separator");
 
 		Button.clickSave();
 
-		WebContentStructures.editStructure(structureName = "Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
-		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+		FormFields.viewSwitcherLabelNotPresent(
+			fieldLabel = "Test",
+			fieldName = "Separator");
 
 		Button.clickSave();
 

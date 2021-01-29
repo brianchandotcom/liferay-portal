@@ -489,9 +489,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Advanced");
 		}
 
-		Uncheck.uncheckToggleSwitch(
-			checkboxName = "Show Label",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		FormFields.disableSwitcher(fieldName = "Show Label");
 	}
 
 	macro editFieldReference {

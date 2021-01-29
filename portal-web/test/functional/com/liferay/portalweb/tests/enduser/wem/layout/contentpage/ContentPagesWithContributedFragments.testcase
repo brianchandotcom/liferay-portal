@@ -4207,9 +4207,11 @@ definition {
 					value1 = "${content}");
 			}
 
+			var gridFieldValue = '''{"R1":"C1"}''';
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "Row: R1, Column: C1");
+				value1 = "${gridFieldValue}");
 
 			AssertVisible(
 				key_content = "//img[contains(@src,'Document_3.png')]",

@@ -82,12 +82,41 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
-	@ignore = "true"
 	@priority = "5"
 	test EditReferenceOfSeparator {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 EditReferenceOfSeparator pending implementation
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeDescription = "Document Type Description",
+			dmDocumentTypeName = "Document Type Name"
+		);
+
+		var assertFieldReference = "Myreference123";
+
+		DataEngine.addField(
+			fieldFieldLabel = "Separator test",
+			fieldName = "Separator"
+		);
+
+		DataEngine.editFieldReference(
+			fieldFieldLabel = "Separator test",
+			fieldName = "Separator",
+			fieldReference = "${assertFieldReference}",
+			assertFieldReference = "${assertFieldReference}"
+		);
+
+		Button.clickSave();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
+
+		DataEngine.viewFieldReference(
+			fieldFieldLabel = "Separator test",
+			fieldName = "Separator",
+			fieldReference = "${assertFieldReference}"
+		);
+
+		Button.clickSave();
+		
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

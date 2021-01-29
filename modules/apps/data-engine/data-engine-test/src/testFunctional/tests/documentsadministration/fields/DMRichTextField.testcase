@@ -40,11 +40,11 @@ definition {
 		property portal.acceptance = "false";
 
 		DataEngine.addField(
-			fieldFieldLabel = "LPS126836",
+			fieldFieldLabel = "Rich Text Dropped",
 			fieldName = "Rich Text");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "LPS126836",
+			fieldFieldLabel = "Rich Text Dropped",
 			fieldName = "Rich Text");
 	}
 

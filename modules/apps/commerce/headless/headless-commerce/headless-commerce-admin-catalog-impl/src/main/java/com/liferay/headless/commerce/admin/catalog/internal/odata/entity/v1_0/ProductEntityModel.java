@@ -14,7 +14,11 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0;
 
+import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -38,6 +42,13 @@ public class ProductEntityModel implements EntityModel {
 				new StringEntityField(
 					"categoryIds", locale -> "assetCategoryIds")),
 			new IntegerEntityField("catalogId", locale -> "commerceCatalogId"),
+			new CollectionEntityField(
+				new EntityField(
+					"channelId", EntityField.Type.INTEGER,
+					locale -> Field.getSortableFieldName(
+						CPField.CHANNEL_GROUP_IDS),
+					locale -> CPField.CHANNEL_GROUP_IDS,
+					object -> _getChannelGroupId(object))),
 			new DateTimeEntityField(
 				"createDate",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -49,7 +60,8 @@ public class ProductEntityModel implements EntityModel {
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName("name")),
 			new StringEntityField("productType", locale -> "productTypeName"),
-			new IntegerEntityField("statusCode", locale -> Field.STATUS)
+			new CollectionEntityField(
+				new IntegerEntityField("statusCode", locale -> Field.STATUS))
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);
@@ -58,6 +70,18 @@ public class ProductEntityModel implements EntityModel {
 	@Override
 	public Map<String, EntityField> getEntityFieldsMap() {
 		return _entityFieldsMap;
+	}
+
+	private String _getChannelGroupId(Object channelId) {
+		CommerceChannel commerceChannel =
+			CommerceChannelLocalServiceUtil.fetchCommerceChannel(
+				GetterUtil.getLong(channelId));
+
+		if (commerceChannel == null) {
+			return "-1";
+		}
+
+		return String.valueOf(commerceChannel.getGroupId());
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

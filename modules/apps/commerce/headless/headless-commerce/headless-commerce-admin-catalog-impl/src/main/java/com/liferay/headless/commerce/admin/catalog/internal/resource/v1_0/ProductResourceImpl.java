@@ -773,8 +773,6 @@ public class ProductResourceImpl
 		return cpDefinition;
 	}
 
-	private static final EntityModel _entityModel = new ProductEntityModel();
-
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -824,6 +822,8 @@ public class ProductResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	private final EntityModel _entityModel = new ProductEntityModel();
 
 	@Reference
 	private ProductDTOConverter _productDTOConverter;

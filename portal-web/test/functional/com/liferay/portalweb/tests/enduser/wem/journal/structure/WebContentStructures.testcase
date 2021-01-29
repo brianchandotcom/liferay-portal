@@ -544,97 +544,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-125933. Create, read, update and delete a Structure with all possible fields."
-	@priority = "5"
-	test ViewAndEditAsWellAsDeleteStructureWithAllFields {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training,Web Content Administration";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 1");
-
-		DataEngine.addFields(fieldNameList = "Date,Image,Upload");
-
-		WebContentStructures.saveCP(structureName = "WC Structure Name 1");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 2");
-
-		DataEngine.addFields(fieldNameList = "Grid,Link to Page");
-
-		WebContentStructures.saveCP(structureName = "WC Structure Name 2");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 3");
-
-		DataEngine.addFields(fieldNameList = "Numeric,Single Selection,Select from List,Separator,Text,Rich Text");
-
-		WebContentStructures.saveCP(structureName = "WC Structure Name 3");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.viewCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 1");
-
-		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 1");
-
-		for (var structureFieldName : list "Date,Image,Upload") {
-			DataEngine.viewField(
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = "${structureFieldName}");
-		}
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.viewCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 2");
-
-		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 2");
-
-		for (var structureFieldName : list "Grid,Link to Page") {
-			DataEngine.viewField(
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = "${structureFieldName}");
-		}
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.viewCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name 3");
-
-		LexiconEntry.gotoEntry(rowEntry = "WC Structure Name 3");
-
-		for (var structureFieldName : list "Numeric,Single Selection,Select from List,Separator,Text,Rich Text") {
-			DataEngine.viewField(
-				fieldFieldLabel = "${structureFieldName}",
-				fieldName = "${structureFieldName}");
-		}
-	}
-
 	@priority = "4"
 	test ValidateDDMNavigation {
 		property test.name.skip.portal.instance = "WebContentStructures#ValidateDDMNavigation";
@@ -682,6 +591,61 @@ definition {
 		WebContentStructures.viewTableEntryCP(
 			structureDescription = "Basic Web Content",
 			structureName = "Basic Web Content");
+	}
+
+	@description = "This is a test for LPS-125933. Create, read, update and delete a Structure with all possible fields."
+	@priority = "5"
+	test ViewAndEditAsWellAsDeleteStructureWithAllFields {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training,Web Content Administration";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator") {
+			DataEngine.viewField(
+				fieldFieldLabel = "${fieldFieldLabel}",
+				fieldName = "${fieldFieldLabel}");
+		}
+
+		task ("Edit structure name") {
+			WebContentStructures.addName(structureName = "WC Structure Name Edit");
+		}
+
+		task ("Edit field labels") {
+			for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator") {
+				DataEngine.editFieldLabel(
+					fieldFieldLabel = "${fieldFieldLabel}",
+					fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
+			}
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name Edit");
+		}
+
+		task ("Assert the structure is renamed") {
+			WebContentStructures.viewCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name Edit");
+		}
+
+		task ("Delete the structure") {
+			WebContentStructures.deleteCP(structureName = "WC Structure Name Edit");
+		}
+
+		task ("Assert the structure is deleted") {
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "WC Structure Name Edit");
+		}
 	}
 
 	@priority = "4"

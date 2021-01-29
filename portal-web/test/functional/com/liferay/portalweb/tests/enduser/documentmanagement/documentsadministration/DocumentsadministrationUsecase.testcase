@@ -37,50 +37,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test AddAndRemoveMetadataSets {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoMetadataSets();
-
-		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name",
-			metadataSetName = "DM Metadata Set Name");
-
-		DMNavigator.gotoMetadataSets();
-
-		DMMetadataSet.delete(
-			metadataSetHasReference = "true",
-			metadataSetName = "DM Metadata Set Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.edit(
-			dmDocumentTypeName = "DM Document Type Name",
-			metadataSetName = "DM Metadata Set Name",
-			removeMetadataSet = "true");
-
-		DMNavigator.gotoMetadataSets();
-
-		DMMetadataSet.delete(metadataSetName = "DM Metadata Set Name");
-	}
-
 	@description = "This test covers LPS-94657. It ensures that auto complete for edit categories."
 	@priority = "5"
 	test AddAutoAssertionCategoryViaDMDocument {

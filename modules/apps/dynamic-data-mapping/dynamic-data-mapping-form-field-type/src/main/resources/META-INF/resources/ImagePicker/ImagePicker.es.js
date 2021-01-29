@@ -113,8 +113,9 @@ const ImagePicker = ({
 					<ClayInput.GroupItem className="d-none d-sm-block" prepend>
 						<ClayInput
 							className="field"
-							disabled
+							disabled={readOnly}
 							id={id}
+							onClick={handleItemSelectorTriggerClick}
 							type="text"
 							value={imageValues.title || ''}
 						/>

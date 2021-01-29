@@ -216,12 +216,44 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
-	@ignore = "true"
 	@priority = "4"
 	test TranslateStructureWithoutDefaultTitle {
 		property portal.acceptance = "false";
+		
+		var structureName_pt = "Test PT";
+		var fieldLabel = "Text Test";
+		var fieldLabel_pt = "Text Test PT";
 
-		// TODO LPS-122278 TranslateStructureWithoutDefaultTitle pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		LexiconEntry.gotoAdd();
+
+		AssertVisible(locator1 = "Sidebar#FORM_BUILDER");
+
+		DataEngine.addField(
+			fieldFieldLabel = "${fieldLabel}",
+			fieldName = "Text"
+		);
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "${fieldLabel}",
+			label = "${fieldLabel_pt}"
+		);
+
+		WebContentStructures.addName(structureName = "${structureName_pt}");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		WebContentStructures.saveCP();
+		
+		AssertElementPresent(locator1 = "//input[contains(@class,'error-field')]");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

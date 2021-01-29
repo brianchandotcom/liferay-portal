@@ -31,16 +31,16 @@ class Disposable {
 		 * @type {boolean}
 		 * @protected
 		 */
-		this.disposed_ = false;
+		this._disposed = false;
 	}
 
 	/**
 	 * Disposes of this instance's object references. Calls `disposeInternal`.
 	 */
 	dispose() {
-		if (!this.disposed_) {
+		if (!this._disposed) {
 			this.disposeInternal();
-			this.disposed_ = true;
+			this._disposed = true;
 		}
 	}
 
@@ -56,7 +56,7 @@ class Disposable {
 	 * @return {boolean}
 	 */
 	isDisposed() {
-		return this.disposed_;
+		return this._disposed;
 	}
 }
 

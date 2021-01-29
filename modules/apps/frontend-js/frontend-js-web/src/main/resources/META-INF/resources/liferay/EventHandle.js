@@ -38,21 +38,21 @@ class EventHandle extends Disposable {
 		 * @type {EventEmitter}
 		 * @protected
 		 */
-		this.emitter_ = emitter;
+		this._emitter = emitter;
 
 		/**
 		 * The name of the event that was subscribed to.
 		 * @type {string}
 		 * @protected
 		 */
-		this.event_ = event;
+		this._event = event;
 
 		/**
 		 * The listener subscribed to the event.
 		 * @type {Function}
 		 * @protected
 		 */
-		this.listener_ = listener;
+		this._listener = listener;
 	}
 
 	/**
@@ -61,16 +61,16 @@ class EventHandle extends Disposable {
 	 */
 	disposeInternal() {
 		this.removeListener();
-		this.emitter_ = null;
-		this.listener_ = null;
+		this._emitter = null;
+		this._listener = null;
 	}
 
 	/**
 	 * Removes the listener subscription from the emitter.
 	 */
 	removeListener() {
-		if (!this.emitter_.isDisposed()) {
-			this.emitter_.removeListener(this.event_, this.listener_);
+		if (!this._emitter.isDisposed()) {
+			this._emitter.removeListener(this._event, this._listener);
 		}
 	}
 }

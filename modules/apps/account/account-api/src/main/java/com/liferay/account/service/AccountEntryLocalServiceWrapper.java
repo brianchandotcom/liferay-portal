@@ -362,6 +362,21 @@ public class AccountEntryLocalServiceWrapper
 			companyId, externalReferenceCode);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntry fetchPersonAccountEntry(
+		long userId) {
+
+		return _accountEntryLocalService.fetchPersonAccountEntry(userId);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry fetchUserAccountEntry(
+		long userId, long accountEntryId) {
+
+		return _accountEntryLocalService.fetchUserAccountEntry(
+			userId, accountEntryId);
+	}
+
 	/**
 	 * Returns a range of all the account entries.
 	 *
@@ -605,10 +620,36 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateDefaultBillingAddressId(
+			long accountEntryId, long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateDefaultBillingAddressId(
+			accountEntryId, addressId);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry
+			updateDefaultShippingAddressId(long accountEntryId, long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateDefaultShippingAddressId(
+			accountEntryId, addressId);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateStatus(
 		com.liferay.account.model.AccountEntry accountEntry, int status) {
 
 		return _accountEntryLocalService.updateStatus(accountEntry, status);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry updateStatus(
+			long accountEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateStatus(accountEntryId, status);
 	}
 
 	@Override

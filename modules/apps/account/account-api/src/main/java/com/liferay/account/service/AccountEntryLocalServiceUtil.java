@@ -343,6 +343,18 @@ public class AccountEntryLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	public static com.liferay.account.model.AccountEntry
+		fetchPersonAccountEntry(long userId) {
+
+		return getService().fetchPersonAccountEntry(userId);
+	}
+
+	public static com.liferay.account.model.AccountEntry fetchUserAccountEntry(
+		long userId, long accountEntryId) {
+
+		return getService().fetchUserAccountEntry(userId, accountEntryId);
+	}
+
 	/**
 	 * Returns a range of all the account entries.
 	 *
@@ -565,10 +577,33 @@ public class AccountEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.account.model.AccountEntry
+			updateDefaultBillingAddressId(long accountEntryId, long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDefaultBillingAddressId(
+			accountEntryId, addressId);
+	}
+
+	public static com.liferay.account.model.AccountEntry
+			updateDefaultShippingAddressId(long accountEntryId, long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDefaultShippingAddressId(
+			accountEntryId, addressId);
+	}
+
 	public static com.liferay.account.model.AccountEntry updateStatus(
 		com.liferay.account.model.AccountEntry accountEntry, int status) {
 
 		return getService().updateStatus(accountEntry, status);
+	}
+
+	public static com.liferay.account.model.AccountEntry updateStatus(
+			long accountEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStatus(accountEntryId, status);
 	}
 
 	public static AccountEntryLocalService getService() {

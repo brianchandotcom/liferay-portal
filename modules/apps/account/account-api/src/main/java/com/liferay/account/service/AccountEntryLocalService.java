@@ -274,6 +274,12 @@ public interface AccountEntryLocalService
 	public AccountEntry fetchAccountEntryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry fetchPersonAccountEntry(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry fetchUserAccountEntry(long userId, long accountEntryId);
+
 	/**
 	 * Returns a range of all the account entries.
 	 *
@@ -424,6 +430,21 @@ public interface AccountEntryLocalService
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountEntry updateDefaultBillingAddressId(
+			long accountEntryId, long addressId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountEntry updateDefaultShippingAddressId(
+			long accountEntryId, long addressId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public AccountEntry updateStatus(AccountEntry accountEntry, int status);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountEntry updateStatus(long accountEntryId, int status)
+		throws PortalException;
 
 }

@@ -153,6 +153,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void acceptAlert() {
+		Alert alert = getAlert();
+
+		alert.accept();
+
+		setAlert(null);
+	}
+
+	@Override
 	public void addSelection(String locator, String optionLocator) {
 		Select select = new Select(getWebElement(locator));
 
@@ -225,6 +234,21 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void assertAlertNotPresent() throws Exception {
 		if (isAlertPresent()) {
 			throw new Exception("Alert is present");
+		}
+	}
+
+	@Override
+	public void assertAlertText(String pattern) throws Exception {
+		Alert alert = getAlert();
+
+		String alertText = alert.getText();
+
+		if (!pattern.equals(alertText)) {
+			String message = StringUtil.combine(
+				"Expected text \"", pattern, "\" does not match actual text \"",
+				alertText, "\"");
+
+			throw new Exception(message);
 		}
 	}
 
@@ -839,19 +863,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void dismissAlert() {
-		switchTo();
+		Alert alert = getAlert();
 
-		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
+		alert.dismiss();
 
-		try {
-			Alert alert = webDriverWait.until(
-				ExpectedConditions.alertIsPresent());
-
-			alert.dismiss();
-		}
-		catch (Exception exception) {
-			throw new WebDriverException(exception);
-		}
+		setAlert(null);
 	}
 
 	@Override
@@ -3058,6 +3074,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void typeAlert(String value) {
+		Alert alert = getAlert();
+
+		alert.sendKeys(value);
+	}
+
+	@Override
 	public void typeAlloyEditor(String locator, String value) {
 		WebElement webElement = getWebElement(locator);
 
@@ -3624,6 +3647,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		sb.append("', true, false);element.dispatchEvent(event);");
 
 		javascriptExecutor.executeScript(sb.toString(), webElement);
+	}
+
+	protected Alert getAlert() {
+		if (_alert == null) {
+			switchTo();
+
+			WebDriverWait webDriverWait = new WebDriverWait(this, 1);
+
+			_alert = webDriverWait.until(ExpectedConditions.alertIsPresent());
+		}
+
+		return _alert;
 	}
 
 	protected String getAlertText() {
@@ -4610,6 +4645,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		select.selectByIndex(index);
 	}
 
+	protected void setAlert(Alert alert) {
+		_alert = alert;
+	}
+
 	protected void setDefaultWindowHandle(String defaultWindowHandle) {
 		_defaultWindowHandle = defaultWindowHandle;
 	}
@@ -4753,6 +4792,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		_TEST_DEPENDENCIES_DIR_NAME = testDependenciesDirName;
 	}
 
+	private Alert _alert;
 	private String _clipBoard = "";
 	private String _defaultWindowHandle;
 	private Stack<WebElement> _frameWebElements = new Stack<>();

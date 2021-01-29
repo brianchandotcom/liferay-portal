@@ -467,4 +467,31 @@ describe('Field LocalizableText', () => {
 
 		expect(container).toMatchSnapshot();
 	});
+
+	describe('Submit Button Label', () => {
+		it('does not have the maxLength property equal to 25', () => {
+			const {getByTestId} = render(
+				<LocalizableTextWithProvider
+					{...defaultLocalizableTextConfig}
+				/>
+			);
+
+			const inputComponent = getByTestId('visibleChangeInput');
+
+			expect(inputComponent.maxLength).not.toBe(25);
+		});
+
+		it('has the maxLength property equal to 25 for the Submit Button Label input', () => {
+			const {getByTestId} = render(
+				<LocalizableTextWithProvider
+					{...defaultLocalizableTextConfig}
+					fieldName="submitLabel"
+				/>
+			);
+
+			const inputComponent = getByTestId('visibleChangeInput');
+
+			expect(inputComponent.maxLength).toBe(25);
+		});
+	});
 });

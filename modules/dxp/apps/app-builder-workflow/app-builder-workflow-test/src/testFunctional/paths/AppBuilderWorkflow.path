@@ -91,7 +91,7 @@
 </tr>
 <tr>
 	<td>FORM_OR_TABLE_VIEW_ITEM</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//span[contains(text(),'${key_itemName}')] | //button[contains(@class,'dropdown-item') and contains(text(),'${key_itemName}')]</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'${key_itemName}')] | //button[contains(@class,'dropdown-item')]//span[contains(text(),'${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>

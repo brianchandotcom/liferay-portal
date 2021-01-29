@@ -186,54 +186,49 @@ public class PortalLog4jTest {
 
 		messageLine = messageLine.substring(_DATE_FORMAT.length());
 
-		String expectedLevelPart = StringBundler.concat(
-			StringPool.SPACE, expectedLevel, StringPool.SPACE);
-
 		Assert.assertEquals(
-			expectedLevelPart,
-			messageLine.substring(0, expectedLevelPart.length()));
+			StringBundler.concat(
+				StringPool.SPACE, expectedLevel, StringPool.SPACE),
+			messageLine.substring(0, expectedLevel.length() + 2));
 
 		// Thread name
 
-		int threadNamePartBeginIndex = messageLine.indexOf(
-			StringPool.OPEN_BRACKET);
-
-		messageLine = messageLine.substring(threadNamePartBeginIndex);
+		messageLine = messageLine.substring(
+			messageLine.indexOf(StringPool.OPEN_BRACKET));
 
 		Thread currentThread = Thread.currentThread();
 
-		String expectedThreadNamePart = StringBundler.concat(
+		String expectedThreadName = StringBundler.concat(
 			StringPool.OPEN_BRACKET, currentThread.getName(),
 			StringPool.CLOSE_BRACKET);
 
 		Assert.assertEquals(
-			expectedThreadNamePart,
-			messageLine.substring(0, expectedThreadNamePart.length()));
+			expectedThreadName,
+			messageLine.substring(0, expectedThreadName.length()));
 
 		// Class name
 
-		messageLine = messageLine.substring(expectedThreadNamePart.length());
+		messageLine = messageLine.substring(expectedThreadName.length());
 
-		String expectedClassNamePart = StringBundler.concat(
+		String expectedClassName = StringBundler.concat(
 			StringPool.OPEN_BRACKET, PortalLog4jTest.class.getSimpleName(),
 			StringPool.COLON);
 
 		Assert.assertEquals(
-			expectedClassNamePart,
-			messageLine.substring(0, expectedClassNamePart.length()));
-
-		messageLine = messageLine.substring(expectedClassNamePart.length());
+			expectedClassName,
+			messageLine.substring(0, expectedClassName.length()));
 
 		// Line number
 
-		int classNamePartEndIndex = messageLine.indexOf(
-			StringPool.CLOSE_BRACKET);
+		messageLine = messageLine.substring(expectedClassName.length());
 
-		Integer.valueOf(messageLine.substring(0, classNamePartEndIndex - 1));
+		int classNameEndIndex = messageLine.indexOf(StringPool.CLOSE_BRACKET);
+
+		Integer.valueOf(messageLine.substring(0, classNameEndIndex - 1));
 
 		// Message
 
-		messageLine = messageLine.substring(classNamePartEndIndex + 1);
+		messageLine = messageLine.substring(classNameEndIndex + 1);
 
 		Assert.assertEquals(
 			String.valueOf(expectedMessage), messageLine.trim());
@@ -268,61 +263,59 @@ public class PortalLog4jTest {
 
 		// log4j:event
 
-		String log4JEvent = outputLines[0];
+		String log4JEventLine = outputLines[0];
 
-		String log4JEventPart = log4JEvent.substring(
-			log4JEvent.indexOf(StringPool.SPACE),
-			log4JEvent.indexOf(StringPool.GREATER_THAN));
+		String log4JEvent = log4JEventLine.substring(
+			log4JEventLine.indexOf(StringPool.SPACE),
+			log4JEventLine.indexOf(StringPool.GREATER_THAN));
 
 		// log4j:event logger
 
-		String expectedLog4JEventLoggerPart = StringBundler.concat(
+		String expectedLog4JEventLogger = StringBundler.concat(
 			StringPool.SPACE, "logger=", StringPool.QUOTE,
 			PortalLog4jTest.class.getName(), StringPool.QUOTE,
 			StringPool.SPACE);
 
 		Assert.assertEquals(
-			expectedLog4JEventLoggerPart,
-			log4JEventPart.substring(0, expectedLog4JEventLoggerPart.length()));
+			expectedLog4JEventLogger,
+			log4JEvent.substring(0, expectedLog4JEventLogger.length()));
 
 		// log4j:event timestamp
 
-		log4JEventPart = log4JEventPart.substring(
-			expectedLog4JEventLoggerPart.length());
+		log4JEvent = log4JEvent.substring(expectedLog4JEventLogger.length());
 
-		String actualLog4JEventTimestamp = log4JEventPart.substring(
-			log4JEventPart.indexOf(StringPool.QUOTE) + 1,
-			log4JEventPart.indexOf(StringPool.SPACE) - 1);
+		String actualLog4JEventTimestamp = log4JEvent.substring(
+			log4JEvent.indexOf(StringPool.QUOTE) + 1,
+			log4JEvent.indexOf(StringPool.SPACE) - 1);
 
 		Long.valueOf(actualLog4JEventTimestamp);
 
 		// log4j:event level
 
-		log4JEventPart = log4JEventPart.substring(
+		log4JEvent = log4JEvent.substring(
 			"timestamp=".length() + actualLog4JEventTimestamp.length() + 2);
 
-		String expectedLog4JEventLevelPart = StringBundler.concat(
+		String expectedLog4JEventLevel = StringBundler.concat(
 			StringPool.SPACE, "level=", StringPool.QUOTE, expectedLevel,
 			StringPool.QUOTE, StringPool.SPACE);
 
 		Assert.assertEquals(
-			expectedLog4JEventLevelPart,
-			log4JEventPart.substring(0, expectedLog4JEventLevelPart.length()));
+			expectedLog4JEventLevel,
+			log4JEvent.substring(0, expectedLog4JEventLevel.length()));
 
 		// log4j:event thread
 
-		log4JEventPart = log4JEventPart.substring(
-			expectedLog4JEventLevelPart.length());
+		log4JEvent = log4JEvent.substring(expectedLog4JEventLevel.length());
 
 		Thread currentThread = Thread.currentThread();
 
-		String expectedLog4JEventThreadPart = StringBundler.concat(
+		String expectedLog4JEventThread = StringBundler.concat(
 			"thread=", StringPool.QUOTE, currentThread.getName(),
 			StringPool.QUOTE);
 
 		Assert.assertEquals(
-			expectedLog4JEventThreadPart,
-			log4JEventPart.substring(0, expectedLog4JEventThreadPart.length()));
+			expectedLog4JEventThread,
+			log4JEvent.substring(0, expectedLog4JEventThread.length()));
 
 		// log4j:message
 
@@ -331,11 +324,11 @@ public class PortalLog4jTest {
 				expectedMessage = StringPool.BLANK;
 			}
 
-			String expectedLog4JMessagePart = StringBundler.concat(
-				"<log4j:message>", StringPool.CDATA_OPEN, expectedMessage,
-				StringPool.CDATA_CLOSE, "</log4j:message>");
-
-			Assert.assertEquals(expectedLog4JMessagePart, outputLines[1]);
+			Assert.assertEquals(
+				StringBundler.concat(
+					"<log4j:message>", StringPool.CDATA_OPEN, expectedMessage,
+					StringPool.CDATA_CLOSE, "</log4j:message>"),
+				outputLines[1]);
 		}
 
 		// log4j:throwable
@@ -343,11 +336,11 @@ public class PortalLog4jTest {
 		if (expectedThrowable != null) {
 			Class<?> expectedThrowableClass = expectedThrowable.getClass();
 
-			String expectedLog4JThrowablePart = StringBundler.concat(
-				"<log4j:throwable>", StringPool.CDATA_OPEN,
-				expectedThrowableClass.getName());
-
-			Assert.assertEquals(expectedLog4JThrowablePart, outputLines[2]);
+			Assert.assertEquals(
+				StringBundler.concat(
+					"<log4j:throwable>", StringPool.CDATA_OPEN,
+					expectedThrowableClass.getName()),
+				outputLines[2]);
 
 			String actualFirstPrefixStackTraceElement = outputLines[3].trim();
 
@@ -360,39 +353,39 @@ public class PortalLog4jTest {
 
 		// log4j:locationInfo
 
-		String log4JLocationInfo = outputLines[outputLines.length - 2];
+		String log4JLocationInfoLine = outputLines[outputLines.length - 2];
 
-		String log4JLocationInfoPart = log4JLocationInfo.substring(
-			log4JLocationInfo.indexOf(StringPool.SPACE),
-			log4JLocationInfo.indexOf(StringPool.FORWARD_SLASH));
+		String log4JLocationInfo = log4JLocationInfoLine.substring(
+			log4JLocationInfoLine.indexOf(StringPool.SPACE),
+			log4JLocationInfoLine.indexOf(StringPool.FORWARD_SLASH));
 
 		// log4j:locationInfo class
 
-		String expectedLog4JLocationInfoClassPart = StringBundler.concat(
+		String expectedLog4JLocationInfoClass = StringBundler.concat(
 			StringPool.SPACE, "class=", StringPool.QUOTE,
 			PortalLog4jTest.class.getName(), StringPool.QUOTE,
 			StringPool.SPACE);
 
 		Assert.assertEquals(
-			expectedLog4JLocationInfoClassPart,
-			log4JLocationInfoPart.substring(
-				0, expectedLog4JLocationInfoClassPart.length()));
+			expectedLog4JLocationInfoClass,
+			log4JLocationInfo.substring(
+				0, expectedLog4JLocationInfoClass.length()));
 
 		// log4j:locationInfo file
 
-		log4JLocationInfoPart = log4JLocationInfoPart.substring(
-			expectedLog4JLocationInfoClassPart.length());
-		log4JLocationInfoPart = log4JLocationInfoPart.substring(
-			log4JLocationInfoPart.indexOf("file"));
+		log4JLocationInfo = log4JLocationInfo.substring(
+			expectedLog4JLocationInfoClass.length());
+		log4JLocationInfo = log4JLocationInfo.substring(
+			log4JLocationInfo.indexOf("file"));
 
-		String expectedLog4JLocationInfoFilePart = StringBundler.concat(
+		String expectedLog4JLocationInfoFile = StringBundler.concat(
 			"file=", StringPool.QUOTE, PortalLog4jTest.class.getSimpleName(),
 			".java", StringPool.QUOTE);
 
 		Assert.assertEquals(
-			expectedLog4JLocationInfoFilePart,
-			log4JLocationInfoPart.substring(
-				0, expectedLog4JLocationInfoFilePart.length()));
+			expectedLog4JLocationInfoFile,
+			log4JLocationInfo.substring(
+				0, expectedLog4JLocationInfoFile.length()));
 	}
 
 	private void _outputLog(String level, String message, Throwable throwable) {

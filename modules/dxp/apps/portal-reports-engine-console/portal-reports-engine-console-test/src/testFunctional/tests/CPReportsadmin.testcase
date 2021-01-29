@@ -441,7 +441,6 @@ definition {
 		ReportsAdmin.downloadReportEntryFile(reportsFileName = "reports_admin_template_source_sample_class_name.txt");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test DownloadReportXLS {
 		Navigator.openURL();

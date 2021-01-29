@@ -62,12 +62,61 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
 	@priority = "5"
 	test CheckStructureTranslationsOnWebContent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 CheckStructureTranslationsOnWebContent pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "文本");
+
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			structureName = "Structure Name Test",
+			webContentText = "Test",
+			webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addWithStructureCP(
+			structureName = "Structure Name Test",
+			webContentText = "测试",
+			webContentTextFieldLabel = "文本",
+			webContentTitle = "测试");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "文本",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "测试");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

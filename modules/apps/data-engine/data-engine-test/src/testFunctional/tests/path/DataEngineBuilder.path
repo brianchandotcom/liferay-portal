@@ -13,6 +13,13 @@
 	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[2]</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>FORM_FIELDS_GROUP_FIRST</td>
+	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])</td>
+	<td></td>
+</tr>
+
 <tr>
 	<td>FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS</td>
 	<td>//div[contains(@class, 'dropdown')]//button[@data-title='Actions']</td>
@@ -23,6 +30,43 @@
 	<td>//input[(@class='form-control ddm-field-text') and (@placeholder='Enter a field label.')]</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>EDITING_FORM_FIELDS_GROUP_LABEL</td>
+	<td>//label[(@class='text-uppercase')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>NESTED_DUPLICATED_FORM_FIELDS_GROUP</td>
+	<td>//div[@class='ddm-field-types-fieldset__nested']//label[text()='Copy of Fields Group']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>NESTED_DUPLICATED_FORM_FIELDS_GROUP_LABEL</td>
+	<td>//label[(@class='text-uppercase') and(text()='Editing Label')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>NESTED_NUMERIC_STRUCTURE</td>
+	<td>//label[text()='Numeric']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>NESTED_TEXT_STRUCTURE</td>
+	<td>//label[text()='Text']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>ELLIPSIS_NESTED_FIELD_GROUP</td>
+	<td>//button[(@class='dropdown-toggle btn btn-monospaced btn-unstyled')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

@@ -66,25 +66,11 @@ definition {
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
 
 		WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-		WebContentStructures.viewTableEntryCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
@@ -131,16 +117,6 @@ definition {
 	@priority = "4"
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
@@ -247,17 +223,6 @@ definition {
 	test EditHelpTextOfColorField {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
@@ -289,25 +254,11 @@ definition {
 	test EditLabelOfColorField {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Color Test",
 			fieldName = "Color");
 
 		WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-		WebContentStructures.viewTableEntryCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 

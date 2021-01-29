@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -28,7 +29,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.model.WikiNode;
@@ -40,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -91,6 +95,32 @@ public class WikiNodesManagementToolbarDisplayContext {
 
 				dropdownItem.setQuickAction(true);
 			}
+		).build();
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"deleteNodesCmd",
+			() -> {
+				if (_isTrashEnabled()) {
+					return Constants.MOVE_TO_TRASH;
+				}
+
+				return Constants.DELETE;
+			}
+		).put(
+			"deleteNodesURL",
+			() -> {
+				PortletURL deleteNodesURL =
+					_liferayPortletResponse.createActionURL();
+
+				deleteNodesURL.setParameter(
+					ActionRequest.ACTION_NAME, "/wiki/edit_node");
+
+				return deleteNodesURL.toString();
+			}
+		).put(
+			"trashEnabled", _isTrashEnabled()
 		).build();
 	}
 
@@ -232,6 +262,16 @@ public class WikiNodesManagementToolbarDisplayContext {
 		portletURL.setParameter("mvcRenderCommandName", "/wiki_admin/view");
 
 		return portletURL;
+	}
+
+	private boolean _isTrashEnabled() {
+		try {
+			return _trashHelper.isTrashEnabled(
+				PortalUtil.getScopeGroupId(_httpServletRequest));
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	private final PortletURL _currentURLObj;

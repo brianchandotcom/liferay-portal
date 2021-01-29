@@ -82,16 +82,17 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 
 <liferay-util:include page="/wiki_admin/pages_navigation.jsp" servletContext="<%= application %>" />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	actionDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	additionalProps="<%= wikiPagesManagementToolbarDisplayContext.getAdditionalProps() %>"
 	clearResultsURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getClearResultsURL()) %>"
-	componentId="wikiPagesManagementToolbar"
 	creationMenu="<%= wikiPagesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= wikiPagesManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= wikiPagesManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= wikiPagesManagementToolbarDisplayContext.getTotalItems() %>"
+	propsTransformer="wiki_admin/js/WikiPagesManagementToolbarPropsTransformer"
 	searchActionURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getSearchActionURL()) %>"
 	searchContainerId="wikiPages"
 	selectable="<%= wikiPagesManagementToolbarDisplayContext.isSelectable() %>"
@@ -296,40 +297,3 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 		</clay:container-fluid>
 	</div>
 </div>
-
-<script>
-	var deletePages = function () {
-		if (
-			<%= trashHelper.isTrashEnabled(scopeGroupId) %> ||
-			confirm(
-				' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>'
-			)
-		) {
-			var form = document.<portlet:namespace />fm;
-
-			Liferay.Util.postForm(form, {
-				data: {
-					<%= Constants.CMD %>:
-						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>',
-				},
-				url: '<portlet:actionURL name="/wiki/edit_page" />',
-			});
-		}
-	};
-
-	var ACTIONS = {
-		deletePages: deletePages,
-	};
-
-	Liferay.componentReady('wikiPagesManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
-			var itemData = event.data.item.data;
-
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
-</script>

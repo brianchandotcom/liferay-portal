@@ -76,14 +76,15 @@ wikiNodesSearchContainer.setResults(WikiNodeServiceUtil.getNodes(scopeGroupId, W
 WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContext = new WikiNodesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	actionDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	componentId="wikiNodesManagementToolbar"
+	additionalProps="<%= wikiNodesManagementToolbarDisplayContext.getAdditionalProps() %>"
 	creationMenu="<%= wikiNodesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= wikiNodesManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= wikiNodesManagementToolbarDisplayContext.getTotalItems() %>"
+	propsTransformer="wiki_admin/js/WikiNodesManagementToolbarPropsTransformer"
 	searchContainerId="wikiNodes"
 	selectable="<%= wikiNodesManagementToolbarDisplayContext.isSelectable() %>"
 	showInfoButton="<%= true %>"
@@ -230,40 +231,3 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 		</clay:container-fluid>
 	</div>
 </div>
-
-<script>
-	var deleteNodes = function () {
-		if (
-			<%= trashHelper.isTrashEnabled(scopeGroupId) %> ||
-			confirm(
-				' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>'
-			)
-		) {
-			var form = document.<portlet:namespace />fm;
-
-			Liferay.Util.postForm(form, {
-				data: {
-					<%= Constants.CMD %>:
-						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>',
-				},
-				url: '<portlet:actionURL name="/wiki/edit_node" />',
-			});
-		}
-	};
-
-	var ACTIONS = {
-		deleteNodes: deleteNodes,
-	};
-
-	Liferay.componentReady('wikiNodesManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
-			var itemData = event.data.item.data;
-
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
-</script>

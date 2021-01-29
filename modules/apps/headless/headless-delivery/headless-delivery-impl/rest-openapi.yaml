@@ -8590,6 +8590,97 @@ paths:
                     description:
                         ""
             tags: ["MessageBoardMessage"]
+    "/sites/{siteId}/message-board-messages/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Delete the site's message board message by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
+        get:
+            # @review
+            description:
+                Retrieves the site's message board message by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
+        put:
+            # @review
+            description:
+                Update the site's message board message by external reference code, or creates it if it not exists.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MessageBoardMessage"
+                description:
+                    ""
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/MessageBoardMessage"
+                    description:
+                        ""
+            tags: [ "MessageBoardMessage" ]
     "/sites/{siteId}/message-board-sections":
         get:
             description:

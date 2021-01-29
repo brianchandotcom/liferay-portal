@@ -61,6 +61,9 @@ public class TrashManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			trashDisplayContext.getEntrySearch());
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -85,17 +88,13 @@ public class TrashManagementToolbarDisplayContext
 	}
 
 	public Map<String, Object> getAdditionalProps() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		PortletURL restoreEntriesURL = liferayPortletResponse.createActionURL(
 			TrashPortletKeys.TRASH);
 
 		restoreEntriesURL.setParameter(
 			ActionRequest.ACTION_NAME, "restoreEntries");
 		restoreEntriesURL.setParameter(
-			"redirect", themeDisplay.getURLCurrent());
+			"redirect", _themeDisplay.getURLCurrent());
 
 		return HashMapBuilder.<String, Object>put(
 			"restoreEntriesURL", restoreEntriesURL.toString()
@@ -129,10 +128,6 @@ public class TrashManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return LabelItemListBuilder.add(
 			() ->
 				Validator.isNotNull(getNavigation()) &&
@@ -149,7 +144,7 @@ public class TrashManagementToolbarDisplayContext
 
 				labelItem.setLabel(
 					ResourceActionsUtil.getModelResource(
-						themeDisplay.getLocale(), getNavigation()));
+						_themeDisplay.getLocale(), getNavigation()));
 			}
 		).build();
 	}
@@ -178,10 +173,6 @@ public class TrashManagementToolbarDisplayContext
 
 	@Override
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -208,7 +199,7 @@ public class TrashManagementToolbarDisplayContext
 								trashHandler.getClassName());
 							dropdownItem.setLabel(
 								ResourceActionsUtil.getModelResource(
-									themeDisplay.getLocale(),
+									_themeDisplay.getLocale(),
 									trashHandler.getClassName()));
 						});
 				}
@@ -227,5 +218,7 @@ public class TrashManagementToolbarDisplayContext
 
 		return trashHandler.isDeletable(trashEntry.getClassPK());
 	}
+
+	private final ThemeDisplay _themeDisplay;
 
 }

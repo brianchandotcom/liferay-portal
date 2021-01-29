@@ -16,7 +16,9 @@ package com.liferay.dynamic.data.mapping.form.web.internal.configuration.persist
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.Dictionary;
 import java.util.Locale;
@@ -41,6 +43,7 @@ public class DDMFormWebConfigurationModelListenerTest extends PowerMockito {
 	@Before
 	public void setUp() {
 		_setUpDDMFormWebConfigurationModelListener();
+		_setUpProps();
 		_setUpResourceBundleUtil();
 	}
 
@@ -58,6 +61,10 @@ public class DDMFormWebConfigurationModelListenerTest extends PowerMockito {
 	private void _setUpDDMFormWebConfigurationModelListener() {
 		_ddmFormWebConfigurationModelListener =
 			new DDMFormWebConfigurationModelListener();
+	}
+
+	private void _setUpProps() {
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	private void _setUpResourceBundleUtil() {

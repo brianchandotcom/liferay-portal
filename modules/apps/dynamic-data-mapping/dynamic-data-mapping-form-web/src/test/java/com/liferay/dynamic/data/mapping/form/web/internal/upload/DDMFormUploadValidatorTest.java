@@ -22,7 +22,9 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activato
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.FileImpl;
+import com.liferay.portal.util.PropsImpl;
 
 import java.io.File;
 
@@ -41,6 +43,7 @@ public class DDMFormUploadValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpProps();
 		setUpDDMFormWebConfigurationActivator();
 		setUpFileUtil();
 	}
@@ -107,6 +110,10 @@ public class DDMFormUploadValidatorTest {
 		FileUtil fileUtil = new FileUtil();
 
 		fileUtil.setFile(FileImpl.getInstance());
+	}
+
+	protected void setUpProps() {
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	private static final long _FILE_LENGTH_MB = 1024 * 1024;

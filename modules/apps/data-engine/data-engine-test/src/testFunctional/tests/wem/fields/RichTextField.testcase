@@ -269,7 +269,34 @@ definition {
 	test ShowAndHideRichTextLabel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 ShowAndHideRichTextLabel pending implementation
+		DataEngine.addField(
+			fieldFieldLabel = "Test Show Label",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldShowLabel(fieldFieldLabel = "Test Show Label");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Test Show Label",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Test Show Label",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "Test Show Label");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Show Label",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		WebContentStructures.saveCP(structureName = "New Structure");
+
+		WebContentNavigator.gotoEditStructure(structureName = "New Structure");
+
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "Test Show Label",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

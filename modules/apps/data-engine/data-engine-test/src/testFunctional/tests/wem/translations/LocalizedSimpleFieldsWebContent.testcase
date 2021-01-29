@@ -11,6 +11,8 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 	}
 
 	tearDown {
@@ -21,8 +23,6 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-			WebContentStructures.tearDownStructures();
-			User.logoutPG();
 		}
 	}
 
@@ -247,10 +247,6 @@ definition {
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
 		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 

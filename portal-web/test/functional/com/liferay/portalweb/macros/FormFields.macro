@@ -847,6 +847,7 @@ definition {
 		var key_fieldName = "${fieldName}";
 
 		AssertTextNotPresent(
+			key_fieldLabel = "${fieldLabel}",
 			locator1 = "FormFields#LABEL",
 			value1 = "${fieldLabel}");
 	}

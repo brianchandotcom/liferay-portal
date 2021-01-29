@@ -23,6 +23,8 @@ import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalServiceUtil;
 import com.liferay.commerce.account.service.CommerceAccountUserRelLocalServiceUtil;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -188,6 +190,12 @@ public class CommerceAccountImpl extends CommerceAccountBaseImpl {
 	public List<CommerceAccountUserRel> getCommerceAccountUserRels() {
 		return CommerceAccountUserRelLocalServiceUtil.
 			getCommerceAccountUserRels(getCommerceAccountId());
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), AccountEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override

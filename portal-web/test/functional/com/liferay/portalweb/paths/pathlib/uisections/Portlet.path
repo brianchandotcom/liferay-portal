@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_INFO</td>
+	<td>//div[contains(@class,'portlet-msg-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_TITLE</td>
 	<td>//div[contains(@class,'modal-content')]//*[@class='modal-title']</td>
 	<td></td>

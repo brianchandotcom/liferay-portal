@@ -77,8 +77,8 @@ definition {
 		DataEngine.deleteField(fieldFieldLabel = "Color Test");
 
 		AssertElementNotPresent(
-			fieldName = "Color",
-			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME");
+			key_fieldFieldLabel = "Color Test",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
@@ -233,19 +233,12 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Structure Name Test");
 
-		WebContentStructures.viewTableEntryCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
-		DataEngine.viewFieldHelpText(
+		DataEngine.viewField(
 			fieldFieldLabel = "Color Test",
-			fieldHelp = "Help Test");
-
-		Click(locator1 = "Icon#BACK");
-
-		WebContentStructures.deleteCP(structureName = "Structure Name Test");
+			fieldHelp = "Help Test",
+			fieldName = "Color");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

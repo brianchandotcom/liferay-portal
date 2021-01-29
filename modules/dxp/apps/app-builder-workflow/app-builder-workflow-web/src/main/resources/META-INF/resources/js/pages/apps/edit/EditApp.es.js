@@ -26,6 +26,7 @@ import '../../../../css/EditApp.scss';
 import ApplyAppChangesModal from './ApplyAppChangesModal.es';
 import DeployAppModal from './DeployAppModal.es';
 import EditAppToolbar from './EditAppToolbar.es';
+import MissingFieldsModal from './MissingFieldsModal.es';
 import {
 	getAssigneeRoles,
 	getDataDefinition,
@@ -77,6 +78,9 @@ export default ({
 		false
 	);
 	const [isDeployModalVisible, setDeployModalVisible] = useState(false);
+	const [missingFieldsModalVisible, setMissingFieldsModalVisible] = useState(
+		false
+	);
 	const [isLoading, setLoading] = useState(false);
 	const [isSaving, setSaving] = useState(false);
 
@@ -89,6 +93,7 @@ export default ({
 		isDeployModalVisible,
 		setAppChangesModalVisible,
 		setDeployModalVisible,
+		setMissingFieldsModalVisible,
 		state: {app},
 	};
 
@@ -331,6 +336,19 @@ export default ({
 					<ApplyAppChangesModal onSave={onSave} />
 
 					<DeployAppModal onSave={onSave} />
+
+					<MissingFieldsModal
+						dataObjectName={config.dataObject.name}
+						missingFieldsModalVisible={missingFieldsModalVisible}
+						onDeploy={() => {
+							setDeployModalVisible(true);
+
+							setMissingFieldsModalVisible(false);
+						}}
+						setMissingFieldsModalVisible={
+							setMissingFieldsModalVisible
+						}
+					/>
 				</EditAppContext.Provider>
 			</Loading>
 		</div>

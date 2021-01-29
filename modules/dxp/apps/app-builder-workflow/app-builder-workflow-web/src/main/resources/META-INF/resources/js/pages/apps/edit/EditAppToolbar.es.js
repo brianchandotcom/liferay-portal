@@ -34,6 +34,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 		dispatch,
 		setAppChangesModalVisible,
 		setDeployModalVisible,
+		setMissingFieldsModalVisible,
 		state: {app},
 	} = useContext(EditAppContext);
 	const {availableLanguageIds, defaultLanguageId} = config.dataObject;
@@ -178,6 +179,9 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 						onClick={
 							app.active
 								? onClickUndeploy
+								: config.formView.missingRequiredFields
+										?.customField
+								? () => setMissingFieldsModalVisible(true)
 								: () => setDeployModalVisible(true)
 						}
 						small

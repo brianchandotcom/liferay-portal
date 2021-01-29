@@ -34,7 +34,7 @@ catch (Exception e) {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-instance") : HtmlUtil.escape(selCompany.getName()));
+renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-instance") : HtmlUtil.escape(selCompany.getWebId()));
 %>
 
 <portlet:actionURL name="/portal_instances/edit_instance" var="editInstanceURL" />

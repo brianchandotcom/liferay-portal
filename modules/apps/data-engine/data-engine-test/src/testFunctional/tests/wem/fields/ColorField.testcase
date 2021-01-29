@@ -61,7 +61,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
 	@priority = "5"
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
@@ -113,7 +112,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
 	@priority = "4"
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
@@ -242,7 +240,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"
-	@ignore = "true"
 	@priority = "5"
 	test EditLabelOfColorField {
 		property portal.acceptance = "false";

@@ -28,6 +28,7 @@ import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
@@ -336,6 +337,71 @@ public class AccountEntryLocalServiceImpl
 		throws PortalException {
 
 		return deleteAccountEntry(getAccountEntry(accountEntryId));
+	}
+
+	@Override
+	public AccountEntry fetchPersonAccountEntry(long userId) {
+		return accountEntryPersistence.fetchByU_T_First(
+			userId, AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, null);
+	}
+
+	@Override
+	public AccountEntry fetchUserAccountEntry(
+		long userId, long accountEntryId) {
+
+		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
+			AccountEntryTable.INSTANCE
+		).from(
+			UserTable.INSTANCE
+		).leftJoinOn(
+			AccountEntryUserRelTable.INSTANCE,
+			AccountEntryUserRelTable.INSTANCE.accountUserId.eq(
+				UserTable.INSTANCE.userId)
+		);
+
+		Predicate accountEntryTablePredicate =
+			AccountEntryTable.INSTANCE.accountEntryId.eq(
+				AccountEntryUserRelTable.INSTANCE.accountEntryId
+			).or(
+				AccountEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
+			);
+
+		Long[] organizationIds = _getOrganizationIds(userId);
+
+		if (ArrayUtil.isNotEmpty(organizationIds)) {
+			joinStep = joinStep.leftJoinOn(
+				AccountEntryOrganizationRelTable.INSTANCE,
+				AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
+					organizationIds));
+
+			accountEntryTablePredicate = accountEntryTablePredicate.or(
+				AccountEntryTable.INSTANCE.accountEntryId.eq(
+					AccountEntryOrganizationRelTable.INSTANCE.accountEntryId));
+		}
+
+		joinStep = joinStep.leftJoinOn(
+			AccountEntryTable.INSTANCE, accountEntryTablePredicate);
+
+		DSLQuery dslQuery = joinStep.where(
+			UserTable.INSTANCE.userId.eq(
+				userId
+			).and(
+				AccountEntryTable.INSTANCE.type.neq(
+					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)
+			).and(
+				AccountEntryTable.INSTANCE.accountEntryId.eq(accountEntryId)
+			)
+		).limit(
+			0, 1
+		);
+
+		List<AccountEntry> accountEntries = dslQuery(dslQuery);
+
+		if (accountEntries.isEmpty()) {
+			return null;
+		}
+
+		return accountEntries.get(0);
 	}
 
 	@Override

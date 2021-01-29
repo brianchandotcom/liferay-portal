@@ -382,9 +382,12 @@ class DataLayoutBuilder extends React.Component {
 		return ddmFormField;
 	}
 
-	getDDMFormFieldSettingsContext(dataDefinitionField, editingLanguageId) {
+	getDDMFormFieldSettingsContext(
+		dataDefinitionField,
+		defaultLanguageId = themeDisplay.getDefaultLanguageId()
+	) {
 		const {
-			defaultLanguageId = themeDisplay.getDefaultLanguageId(),
+			editingLanguageId = themeDisplay.getDefaultLanguageId(),
 		} = this.props;
 		const fieldTypes = this.getFieldTypes();
 		const {settingsContext} = fieldTypes.find(({name}) => {
@@ -403,10 +406,16 @@ class DataLayoutBuilder extends React.Component {
 
 				let value = propertyValue || field.value;
 
-				if (localizable && propertyValue) {
-					value =
-						propertyValue[editingLanguageId] ||
-						propertyValue[defaultLanguageId];
+				if (
+					localizable &&
+					propertyValue &&
+					Object.prototype.hasOwnProperty.call(
+						propertyValue,
+						editingLanguageId
+					) &&
+					fieldName !== 'label'
+				) {
+					value = propertyValue[editingLanguageId];
 				}
 
 				let localizedValue = {};

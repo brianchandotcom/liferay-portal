@@ -331,6 +331,19 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 	}
 
+	macro duplicateField {
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		Click(
+			key_text = "${fieldFieldLabel}",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Duplicate");
+	}
+
 	macro duplicateFieldsets {
 		Click(
 			key_fieldsetLabel = "${fieldsetLabel}",

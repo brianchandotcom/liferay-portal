@@ -168,8 +168,8 @@ definition {
 			fieldsetsName = "CollapsibleFieldSetTest");
 
 		Click(
-			locator1 = "FormViewBuilder#SELECT_FIELD_SET",
-			key_fieldSetName = "CollapsibleFieldSetTest");
+			key_fieldSetName = "CollapsibleFieldSetTest",
+			locator1 = "FormViewBuilder#SELECT_FIELD_SET");
 
 		Check.checkToggleSwitch(
 			checkboxName = "Collapsible",
@@ -186,7 +186,7 @@ definition {
 		WebContentStructures.saveCP(structureName = "CollapsibleFieldSetTest");
 
 		WebContentStructures.editStructureCP(structureName = "CollapsibleFieldSetTest");
-		
+
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		Click(locator1 = "AppBuilder#BUTTON_EDIT_FIELDSET");

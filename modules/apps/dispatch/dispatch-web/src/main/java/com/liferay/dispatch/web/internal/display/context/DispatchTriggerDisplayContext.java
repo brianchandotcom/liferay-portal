@@ -14,6 +14,7 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
+import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
@@ -64,8 +65,12 @@ public class DispatchTriggerDisplayContext {
 	public String getDispatchTaskExecutorName(
 		String dispatchTaskExecutorType, Locale locale) {
 
+		DispatchTaskExecutor dispatchTaskExecutor =
+			_dispatchTaskExecutorRegistry.getDispatchTaskExecutor(
+				dispatchTaskExecutorType);
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
+			locale, dispatchTaskExecutor.getClass());
 
 		String name = _dispatchTaskExecutorRegistry.getDispatchTaskExecutorName(
 			dispatchTaskExecutorType);

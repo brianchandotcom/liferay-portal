@@ -152,4 +152,8 @@ public abstract class AccountEntryServiceBaseImpl
 	protected com.liferay.asset.kernel.service.AssetEntryService
 		assetEntryService;
 
+	@Reference
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
+		expandoRowLocalService;
+
 }

@@ -470,4 +470,8 @@ public abstract class AccountEntryLocalServiceBaseImpl
 	protected com.liferay.asset.kernel.service.AssetEntryLocalService
 		assetEntryLocalService;
 
+	@Reference
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
+		expandoRowLocalService;
+
 }

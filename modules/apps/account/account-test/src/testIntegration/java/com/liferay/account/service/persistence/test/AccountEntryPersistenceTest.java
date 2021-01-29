@@ -238,6 +238,15 @@ public class AccountEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_T() throws Exception {
+		_persistence.countByU_T(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByU_T(0L, "null");
+
+		_persistence.countByU_T(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 

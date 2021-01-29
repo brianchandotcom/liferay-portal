@@ -472,6 +472,230 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 	public int filterCountByC_S(long companyId, int status);
 
 	/**
+	 * Returns all the account entries where userId = &#63; and type = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @return the matching account entries
+	 */
+	public java.util.List<AccountEntry> findByU_T(long userId, String type);
+
+	/**
+	 * Returns a range of all the account entries where userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account entries
+	 * @param end the upper bound of the range of account entries (not inclusive)
+	 * @return the range of matching account entries
+	 */
+	public java.util.List<AccountEntry> findByU_T(
+		long userId, String type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the account entries where userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account entries
+	 * @param end the upper bound of the range of account entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entries
+	 */
+	public java.util.List<AccountEntry> findByU_T(
+		long userId, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the account entries where userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account entries
+	 * @param end the upper bound of the range of account entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching account entries
+	 */
+	public java.util.List<AccountEntry> findByU_T(
+		long userId, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first account entry in the ordered set where userId = &#63; and type = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account entry
+	 * @throws NoSuchEntryException if a matching account entry could not be found
+	 */
+	public AccountEntry findByU_T_First(
+			long userId, String type,
+			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first account entry in the ordered set where userId = &#63; and type = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account entry, or <code>null</code> if a matching account entry could not be found
+	 */
+	public AccountEntry fetchByU_T_First(
+		long userId, String type,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last account entry in the ordered set where userId = &#63; and type = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account entry
+	 * @throws NoSuchEntryException if a matching account entry could not be found
+	 */
+	public AccountEntry findByU_T_Last(
+			long userId, String type,
+			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the last account entry in the ordered set where userId = &#63; and type = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account entry, or <code>null</code> if a matching account entry could not be found
+	 */
+	public AccountEntry fetchByU_T_Last(
+		long userId, String type,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the account entries before and after the current account entry in the ordered set where userId = &#63; and type = &#63;.
+	 *
+	 * @param accountEntryId the primary key of the current account entry
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account entry
+	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
+	 */
+	public AccountEntry[] findByU_T_PrevAndNext(
+			long accountEntryId, long userId, String type,
+			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns all the account entries that the user has permission to view where userId = &#63; and type = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @return the matching account entries that the user has permission to view
+	 */
+	public java.util.List<AccountEntry> filterFindByU_T(
+		long userId, String type);
+
+	/**
+	 * Returns a range of all the account entries that the user has permission to view where userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account entries
+	 * @param end the upper bound of the range of account entries (not inclusive)
+	 * @return the range of matching account entries that the user has permission to view
+	 */
+	public java.util.List<AccountEntry> filterFindByU_T(
+		long userId, String type, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the account entries that the user has permissions to view where userId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account entries
+	 * @param end the upper bound of the range of account entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entries that the user has permission to view
+	 */
+	public java.util.List<AccountEntry> filterFindByU_T(
+		long userId, String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the account entries before and after the current account entry in the ordered set of account entries that the user has permission to view where userId = &#63; and type = &#63;.
+	 *
+	 * @param accountEntryId the primary key of the current account entry
+	 * @param userId the user ID
+	 * @param type the type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next account entry
+	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
+	 */
+	public AccountEntry[] filterFindByU_T_PrevAndNext(
+			long accountEntryId, long userId, String type,
+			com.liferay.portal.kernel.util.OrderByComparator<AccountEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Removes all the account entries where userId = &#63; and type = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 */
+	public void removeByU_T(long userId, String type);
+
+	/**
+	 * Returns the number of account entries where userId = &#63; and type = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @return the number of matching account entries
+	 */
+	public int countByU_T(long userId, String type);
+
+	/**
+	 * Returns the number of account entries that the user has permission to view where userId = &#63; and type = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @return the number of matching account entries that the user has permission to view
+	 */
+	public int filterCountByU_T(long userId, String type);
+
+	/**
 	 * Returns the account entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID

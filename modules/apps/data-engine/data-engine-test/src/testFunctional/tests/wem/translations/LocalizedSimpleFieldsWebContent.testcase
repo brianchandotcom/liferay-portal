@@ -171,7 +171,43 @@ definition {
 	test DefaultValuesDisplayedForNonTranslatedWebContent {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 DefaultValuesDisplayedForNonTranslatedWebContent pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			structureName = "Structure Name Test",
+			webContentText = "Test",
+			webContentTitle = "Test");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Test");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

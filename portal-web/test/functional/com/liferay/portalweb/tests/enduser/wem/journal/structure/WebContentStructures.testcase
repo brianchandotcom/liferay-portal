@@ -683,16 +683,6 @@ definition {
 			structureName = "Basic Web Content");
 	}
 
-	@description = "This is a test for LPS-125933. Create, read, update and delete a Structure with all possible fields."
-	@ignore = "true"
-	@priority = "5"
-	test ViewAndEditAsWellAsDeleteStructureWithTitleAndAllFields {
-		property portal.acceptance = "false";
-
-		// TODO LPS-125933 ViewAndEditAsWellAsDeleteStructureWithTitleAndAllFields pending implementation
-
-	}
-
 	@priority = "4"
 	test ViewFavoriteStructure {
 		property testray.component.names = "Web Content Administration";

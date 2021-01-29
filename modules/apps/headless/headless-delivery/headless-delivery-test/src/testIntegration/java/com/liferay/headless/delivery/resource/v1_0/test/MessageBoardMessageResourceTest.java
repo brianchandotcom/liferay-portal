@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -47,10 +49,48 @@ public class MessageBoardMessageResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutMessageBoardThreadMessageBoardMessage()
+		throws Exception {
+
+		// Update
+
+		super.testPutMessageBoardThreadMessageBoardMessage();
+
+		// Insert
+
+		MessageBoardMessage randomMessageBoardMessage =
+			randomMessageBoardMessage();
+
+		randomMessageBoardMessage.setMessageBoardThreadId(
+			_mbThread.getThreadId());
+
+		MessageBoardMessage insertMessageBoardMessage =
+			messageBoardMessageResource.
+				putMessageBoardThreadMessageBoardMessage(
+					randomMessageBoardMessage.getMessageBoardThreadId(),
+					randomMessageBoardMessage.getExternalReferenceCode(),
+					randomMessageBoardMessage);
+
+		assertEquals(randomMessageBoardMessage, insertMessageBoardMessage);
+		assertValid(insertMessageBoardMessage);
+
+		MessageBoardMessage getMessageBoardMessage =
+			messageBoardMessageResource.
+				getMessageBoardThreadMessageBoardMessage(
+					insertMessageBoardMessage.getMessageBoardThreadId(),
+					insertMessageBoardMessage.getExternalReferenceCode());
+
+		assertEquals(randomMessageBoardMessage, getMessageBoardMessage);
+		assertValid(getMessageBoardMessage);
+		Assert.assertEquals(
+			randomMessageBoardMessage.getExternalReferenceCode(),
+			getMessageBoardMessage.getExternalReferenceCode());
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {
-			"articleBody", "externalReferenceCode", "headline"
-		};
+		return new String[] {"articleBody", "headline"};
 	}
 
 	@Override

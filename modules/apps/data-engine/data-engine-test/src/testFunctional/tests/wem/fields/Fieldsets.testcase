@@ -51,6 +51,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-107630 AddFieldsetOnOtherFieldsetAlreadyOnBuilder pending implementation
+
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
@@ -191,7 +192,7 @@ definition {
 		Uncheck.uncheckToggleSwitch(
 			key_toggleSwitchLabel = "Show Label",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-			
+
 		WebContentStructures.saveCP(structureName = "ShowAndHideFieldSet");
 
 		WebContentStructures.editStructureCP(structureName = "ShowAndHideFieldSet");

@@ -137,7 +137,6 @@ definition {
 	}
 
 	@description = "Verify that a user Can localize the field data"
-	@ignore = "true"
 	@priority = "4"
 	test LocalizationOfRichTextPersists {
 		property portal.acceptance = "false";

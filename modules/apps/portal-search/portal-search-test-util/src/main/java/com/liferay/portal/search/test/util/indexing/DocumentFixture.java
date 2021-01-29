@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.text.SimpleDateFormat;
 
+import java.util.Properties;
+
 import org.mockito.Mockito;
 
 /**
@@ -116,6 +118,8 @@ public class DocumentFixture {
 				PropsKeys.INDEX_SEARCH_SCORING_ENABLED, "true"
 			).put(
 				PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH, "255"
+			).put(
+				"configuration.override.", new Properties()
 			).build());
 	}
 

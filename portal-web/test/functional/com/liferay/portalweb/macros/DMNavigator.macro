@@ -82,6 +82,10 @@ definition {
 		Navigator.gotoNavItem(navItem = "Document Types");
 	}
 
+	macro gotoDocumentsAndMedia {
+		Navigator.gotoNavItem(navItem = "Documents and Media");
+	}
+
 	macro gotoDocumentVersion {
 		DMDocument.expandInfo();
 

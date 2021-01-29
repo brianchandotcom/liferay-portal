@@ -13,6 +13,8 @@ definition {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMNavigator.gotoDocumentType();
 	}
 
 	tearDown {
@@ -253,12 +255,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyRequiredPropertyOfGeolocation {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 VerifyRequiredPropertyOfGeolocation pending implementation
+		var fieldLabel = "Geolocation";
+
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeFieldNames = "${fieldLabel}",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "${fieldLabel}");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentsAndMedia();
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "DM Document Type Name");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
 	}
 
 }

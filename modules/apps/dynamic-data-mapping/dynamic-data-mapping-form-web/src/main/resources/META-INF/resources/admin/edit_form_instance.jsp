@@ -287,7 +287,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		Liferay.Util.openWindow(
 			{
 				dialog: {
-					cssClass: 'ddm-form-settings-modal',
+					cssClass: 'ddm-form-settings-modal modal-full-screen',
 					height: 700,
 					resizable: false,
 					'toolbars.footer': [

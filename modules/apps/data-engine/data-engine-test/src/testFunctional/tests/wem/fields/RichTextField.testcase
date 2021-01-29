@@ -322,7 +322,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyRichFieldHelpTextOnWebContent {
 		property portal.acceptance = "false";

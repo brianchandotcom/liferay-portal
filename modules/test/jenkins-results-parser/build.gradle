@@ -6,7 +6,7 @@ dependencies {
 	compile group: "com.amazonaws", name: "aws-java-sdk-ec2", version: "1.11.220"
 	compile group: "com.amazonaws", name: "aws-java-sdk-rds", version: "1.11.220"
 	compile group: "com.google.guava", name: "guava", version: "30.1-jre"
-	compile group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.15"
+	compile group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.16"
 	compile group: "com.sun.mail", name: "javax.mail", version: "1.6.2"
 	compile group: "commons-codec", name: "commons-codec", version: "1.9"
 	compile group: "commons-io", name: "commons-io", version: "2.6"

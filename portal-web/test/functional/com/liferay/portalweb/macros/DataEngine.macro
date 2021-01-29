@@ -343,6 +343,34 @@ definition {
 		MenuItem.click(menuItem = "Duplicate");
 	}
 
+	macro editFieldLabel {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldFieldLabel}");
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldFieldLabelEdit}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldFieldLabelEdit}");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "${fieldFieldLabelEdit}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldFieldLabelEdit}");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro editFieldReference {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",

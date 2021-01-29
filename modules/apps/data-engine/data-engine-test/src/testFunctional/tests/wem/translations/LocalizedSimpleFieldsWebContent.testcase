@@ -248,8 +248,6 @@ definition {
 	test VerifyDefaultLanguageIsFirstShown {
 		property portal.acceptance = "false";
 
-				property portal.acceptance = "false";
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");

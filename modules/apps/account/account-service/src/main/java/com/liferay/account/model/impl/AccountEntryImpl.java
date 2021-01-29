@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -56,6 +57,11 @@ public class AccountEntryImpl extends AccountEntryBaseImpl {
 	public Address getDefaultShippingAddress() {
 		return AddressLocalServiceUtil.fetchAddress(
 			getDefaultShippingAddressId());
+	}
+
+	@Override
+	public String[] getDomainsStringArray() {
+		return StringUtil.split(getDomains());
 	}
 
 	private Group _getAccountEntryGroup() {

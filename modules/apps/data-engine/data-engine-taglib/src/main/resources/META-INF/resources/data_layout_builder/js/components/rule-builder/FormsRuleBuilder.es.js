@@ -15,10 +15,8 @@
 import {useResource} from '@clayui/data-provider';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {
-	PagesVisitor,
-	getConnectedReactComponentAdapter,
-} from 'dynamic-data-mapping-form-renderer';
+import {getConnectedReactComponentAdapter} from 'dynamic-data-mapping-form-renderer/js/util/ReactComponentAdapter.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {fetch} from 'frontend-js-web';
 import React, {useImperativeHandle, useMemo, useState} from 'react';
 

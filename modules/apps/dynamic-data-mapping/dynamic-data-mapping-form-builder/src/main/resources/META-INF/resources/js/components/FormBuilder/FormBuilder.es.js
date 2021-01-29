@@ -83,6 +83,7 @@ class FormBuilderBase extends Component {
 	render() {
 		const {
 			activePage,
+			allowInvalidAvailableLocalesForProperty,
 			allowNestedFields = true,
 			dnd,
 			editingLanguageId,
@@ -107,6 +108,9 @@ class FormBuilderBase extends Component {
 				>
 					<FormNoopAdapter
 						activePage={activePage}
+						allowInvalidAvailableLocalesForProperty={
+							allowInvalidAvailableLocalesForProperty
+						}
 						allowNestedFields={allowNestedFields}
 						dnd={dnd}
 						editable={true}

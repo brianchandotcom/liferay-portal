@@ -29,10 +29,12 @@ import * as DataLayoutBuilder from './data-layout-builder/DataLayoutBuilder.es';
 import DragLayer from './drag-and-drop/DragLayer.es';
 import * as DragTypes from './drag-and-drop/dragTypes.es';
 import withDragAndDropContext from './drag-and-drop/withDragAndDropContext.es';
+import * as DataConverter from './utils/dataConverter.es';
 import * as DataDefinitionUtils from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
 
 export {
+	DataConverter,
 	DataDefinitionUtils,
 	DataLayoutBuilder,
 	DataLayoutBuilderActions,

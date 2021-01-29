@@ -185,6 +185,7 @@ definition {
 			value1 = "Titulo Teste");
 
 		WebContentStructures.saveCP();
+
 		WebContentStructures.deleteCP(structureName = "New Structure");
 	}
 

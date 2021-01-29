@@ -14,6 +14,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
@@ -22,7 +23,7 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		
+
 			User.logoutPG();
 		}
 	}

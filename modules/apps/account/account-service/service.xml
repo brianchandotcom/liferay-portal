@@ -47,6 +47,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="U_T" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="type" />
+		</finder>
 
 		<!-- References -->
 
@@ -55,6 +59,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="AccountEntryOrganizationRel">
 

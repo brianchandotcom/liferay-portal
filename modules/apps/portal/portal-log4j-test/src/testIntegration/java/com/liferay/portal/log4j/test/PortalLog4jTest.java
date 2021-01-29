@@ -105,9 +105,10 @@ public class PortalLog4jTest {
 
 		logger.removeAllAppenders();
 
-		Files.deleteIfExists(_tempLogFileDirPath);
 		Files.deleteIfExists(_textLogFilePath);
 		Files.deleteIfExists(_xmlLogFilePath);
+
+		Files.deleteIfExists(_tempLogFileDirPath);
 	}
 
 	@Test

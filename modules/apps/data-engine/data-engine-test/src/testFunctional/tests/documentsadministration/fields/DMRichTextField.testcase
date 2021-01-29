@@ -5,9 +5,9 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Documents Management";
 
-setUp {
-        TestCase.setUpPortalInstance();
-        
+	setUp {
+		TestCase.setUpPortalInstance();
+
 		User.firstLoginPG();
 
 		ProductMenu.gotoPortlet(
@@ -159,14 +159,14 @@ setUp {
 	test SetLabelOfRichText {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(	
+		DataEngine.addField(
 			fieldFieldLabel = "Edited Test",
 			fieldName = "Rich Text");
 
 		Button.clickSave();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
-	
+
 		DataEngine.viewField(
 			fieldFieldLabel = "Edited Test",
 			fieldName = "Rich Text");
@@ -175,7 +175,6 @@ setUp {
 			key_fieldFieldLabel = "Edited Test",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "Edited Test");
-
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

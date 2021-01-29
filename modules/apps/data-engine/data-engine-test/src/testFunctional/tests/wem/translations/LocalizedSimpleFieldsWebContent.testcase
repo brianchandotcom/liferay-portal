@@ -96,7 +96,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentAdmin.gotoEntry(entry = "Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
 		AssertAttributeValue(
 			attribute1 = "value",

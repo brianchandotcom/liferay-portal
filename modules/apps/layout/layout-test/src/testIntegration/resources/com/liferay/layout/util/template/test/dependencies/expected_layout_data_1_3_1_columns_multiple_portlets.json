@@ -1,10 +1,10 @@
 {
+	"deletedItems": [
+	],
 	"items": {
 		"ROOT": {
 			"children": [
-				"ROOT-CONTAINER0",
-				"ROOT-CONTAINER1",
-				"ROOT-CONTAINER2"
+				"ROOT-CONTAINER0"
 			],
 			"config": {
 			},
@@ -14,12 +14,16 @@
 		},
 		"ROOT-CONTAINER0": {
 			"children": [
-				"ROOT-CONTAINER0-ROW0"
+				"ROOT-CONTAINER0-ROW0",
+				"ROOT-CONTAINER0-ROW1",
+				"ROOT-CONTAINER0-ROW2"
 			],
 			"config": {
 				"landscapeMobile": {
 					"styles": {
 					}
+				},
+				"link": {
 				},
 				"portraitMobile": {
 					"styles": {
@@ -69,20 +73,14 @@
 			"config": {
 				"gutters": true,
 				"landscapeMobile": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"modulesPerRow": 1,
 				"numberOfColumns": 1,
 				"portraitMobile": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"reverseOrder": false,
 				"styles": {
@@ -113,11 +111,8 @@
 					"width": ""
 				},
 				"tablet": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"verticalAlignment": "top"
 			},
@@ -131,7 +126,13 @@
 				"ROOT-CONTAINER0-ROW0-COLUMN0-FRAGMENT1"
 			],
 			"config": {
-				"size": 12
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 12,
+				"tablet": {
+				}
 			},
 			"itemId": "ROOT-CONTAINER0-ROW0-COLUMN0",
 			"parentId": "ROOT-CONTAINER0-ROW0",
@@ -235,79 +236,23 @@
 			"parentId": "ROOT-CONTAINER0-ROW0-COLUMN0",
 			"type": "fragment"
 		},
-		"ROOT-CONTAINER1": {
+		"ROOT-CONTAINER0-ROW1": {
 			"children": [
-				"ROOT-CONTAINER1-ROW0"
-			],
-			"config": {
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
-				},
-				"tablet": {
-					"styles": {
-					}
-				},
-				"widthType": "fluid"
-			},
-			"itemId": "ROOT-CONTAINER1",
-			"parentId": "ROOT",
-			"type": "container"
-		},
-		"ROOT-CONTAINER1-ROW0": {
-			"children": [
-				"ROOT-CONTAINER1-ROW0-COLUMN0",
-				"ROOT-CONTAINER1-ROW0-COLUMN1",
-				"ROOT-CONTAINER1-ROW0-COLUMN2"
+				"ROOT-CONTAINER0-ROW1-COLUMN0",
+				"ROOT-CONTAINER0-ROW1-COLUMN1",
+				"ROOT-CONTAINER0-ROW1-COLUMN2"
 			],
 			"config": {
 				"gutters": true,
 				"landscapeMobile": {
-					"gutters": true,
-					"modulesPerRow": 3,
-					"numberOfColumns": 3,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"modulesPerRow": 3,
 				"numberOfColumns": 3,
 				"portraitMobile": {
-					"gutters": true,
-					"modulesPerRow": 3,
-					"numberOfColumns": 3,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"reverseOrder": false,
 				"styles": {
@@ -338,31 +283,34 @@
 					"width": ""
 				},
 				"tablet": {
-					"gutters": true,
-					"modulesPerRow": 3,
-					"numberOfColumns": 3,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"verticalAlignment": "top"
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0",
-			"parentId": "ROOT-CONTAINER1",
+			"itemId": "ROOT-CONTAINER0-ROW1",
+			"parentId": "ROOT-CONTAINER0",
 			"type": "row"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN0": {
+		"ROOT-CONTAINER0-ROW1-COLUMN0": {
 			"children": [
-				"ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT0",
-				"ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT1"
+				"ROOT-CONTAINER0-ROW1-COLUMN0-FRAGMENT0",
+				"ROOT-CONTAINER0-ROW1-COLUMN0-FRAGMENT1"
 			],
 			"config": {
-				"size": 4
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN0",
-			"parentId": "ROOT-CONTAINER1-ROW0",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN0",
+			"parentId": "ROOT-CONTAINER0-ROW1",
 			"type": "column"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT0": {
+		"ROOT-CONTAINER0-ROW1-COLUMN0-FRAGMENT0": {
 			"children": [
 			],
 			"config": {
@@ -407,11 +355,11 @@
 					}
 				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT0",
-			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN0",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN0-FRAGMENT0",
+			"parentId": "ROOT-CONTAINER0-ROW1-COLUMN0",
 			"type": "fragment"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT1": {
+		"ROOT-CONTAINER0-ROW1-COLUMN0-FRAGMENT1": {
 			"children": [
 			],
 			"config": {
@@ -456,23 +404,29 @@
 					}
 				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN0-FRAGMENT1",
-			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN0",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN0-FRAGMENT1",
+			"parentId": "ROOT-CONTAINER0-ROW1-COLUMN0",
 			"type": "fragment"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN1": {
+		"ROOT-CONTAINER0-ROW1-COLUMN1": {
 			"children": [
-				"ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT0",
-				"ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT1"
+				"ROOT-CONTAINER0-ROW1-COLUMN1-FRAGMENT0",
+				"ROOT-CONTAINER0-ROW1-COLUMN1-FRAGMENT1"
 			],
 			"config": {
-				"size": 4
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN1",
-			"parentId": "ROOT-CONTAINER1-ROW0",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN1",
+			"parentId": "ROOT-CONTAINER0-ROW1",
 			"type": "column"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT0": {
+		"ROOT-CONTAINER0-ROW1-COLUMN1-FRAGMENT0": {
 			"children": [
 			],
 			"config": {
@@ -517,11 +471,11 @@
 					}
 				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT0",
-			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN1",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN1-FRAGMENT0",
+			"parentId": "ROOT-CONTAINER0-ROW1-COLUMN1",
 			"type": "fragment"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT1": {
+		"ROOT-CONTAINER0-ROW1-COLUMN1-FRAGMENT1": {
 			"children": [
 			],
 			"config": {
@@ -566,23 +520,29 @@
 					}
 				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN1-FRAGMENT1",
-			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN1",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN1-FRAGMENT1",
+			"parentId": "ROOT-CONTAINER0-ROW1-COLUMN1",
 			"type": "fragment"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN2": {
+		"ROOT-CONTAINER0-ROW1-COLUMN2": {
 			"children": [
-				"ROOT-CONTAINER1-ROW0-COLUMN2-FRAGMENT0",
-				"ROOT-CONTAINER1-ROW0-COLUMN2-FRAGMENT1"
+				"ROOT-CONTAINER0-ROW1-COLUMN2-FRAGMENT0",
+				"ROOT-CONTAINER0-ROW1-COLUMN2-FRAGMENT1"
 			],
 			"config": {
-				"size": 4
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN2",
-			"parentId": "ROOT-CONTAINER1-ROW0",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN2",
+			"parentId": "ROOT-CONTAINER0-ROW1",
 			"type": "column"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN2-FRAGMENT0": {
+		"ROOT-CONTAINER0-ROW1-COLUMN2-FRAGMENT0": {
 			"children": [
 			],
 			"config": {
@@ -627,11 +587,11 @@
 					}
 				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN2-FRAGMENT0",
-			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN2",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN2-FRAGMENT0",
+			"parentId": "ROOT-CONTAINER0-ROW1-COLUMN2",
 			"type": "fragment"
 		},
-		"ROOT-CONTAINER1-ROW0-COLUMN2-FRAGMENT1": {
+		"ROOT-CONTAINER0-ROW1-COLUMN2-FRAGMENT1": {
 			"children": [
 			],
 			"config": {
@@ -676,81 +636,25 @@
 					}
 				}
 			},
-			"itemId": "ROOT-CONTAINER1-ROW0-COLUMN2-FRAGMENT1",
-			"parentId": "ROOT-CONTAINER1-ROW0-COLUMN2",
+			"itemId": "ROOT-CONTAINER0-ROW1-COLUMN2-FRAGMENT1",
+			"parentId": "ROOT-CONTAINER0-ROW1-COLUMN2",
 			"type": "fragment"
 		},
-		"ROOT-CONTAINER2": {
+		"ROOT-CONTAINER0-ROW2": {
 			"children": [
-				"ROOT-CONTAINER2-ROW0"
-			],
-			"config": {
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-					"backgroundImage": {
-					},
-					"borderRadius": "",
-					"borderWidth": 0,
-					"fontFamily": "",
-					"fontSize": "",
-					"fontWeight": "",
-					"height": "",
-					"marginBottom": "",
-					"marginLeft": "",
-					"marginRight": "",
-					"marginTop": "",
-					"maxHeight": "",
-					"maxWidth": "",
-					"minHeight": "",
-					"minWidth": "",
-					"opacity": 100,
-					"overflow": "",
-					"paddingBottom": "",
-					"paddingLeft": "",
-					"paddingRight": "",
-					"paddingTop": "",
-					"shadow": "",
-					"textAlign": "",
-					"width": ""
-				},
-				"tablet": {
-					"styles": {
-					}
-				},
-				"widthType": "fluid"
-			},
-			"itemId": "ROOT-CONTAINER2",
-			"parentId": "ROOT",
-			"type": "container"
-		},
-		"ROOT-CONTAINER2-ROW0": {
-			"children": [
-				"ROOT-CONTAINER2-ROW0-COLUMN0"
+				"ROOT-CONTAINER0-ROW2-COLUMN0"
 			],
 			"config": {
 				"gutters": true,
 				"landscapeMobile": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"modulesPerRow": 1,
 				"numberOfColumns": 1,
 				"portraitMobile": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"reverseOrder": false,
 				"styles": {
@@ -781,31 +685,34 @@
 					"width": ""
 				},
 				"tablet": {
-					"gutters": true,
-					"modulesPerRow": 1,
-					"numberOfColumns": 1,
-					"reverseOrder": false,
-					"verticalAlignment": "top"
+					"styles": {
+					}
 				},
 				"verticalAlignment": "top"
 			},
-			"itemId": "ROOT-CONTAINER2-ROW0",
-			"parentId": "ROOT-CONTAINER2",
+			"itemId": "ROOT-CONTAINER0-ROW2",
+			"parentId": "ROOT-CONTAINER0",
 			"type": "row"
 		},
-		"ROOT-CONTAINER2-ROW0-COLUMN0": {
+		"ROOT-CONTAINER0-ROW2-COLUMN0": {
 			"children": [
-				"ROOT-CONTAINER2-ROW0-COLUMN0-FRAGMENT0",
-				"ROOT-CONTAINER2-ROW0-COLUMN0-FRAGMENT1"
+				"ROOT-CONTAINER0-ROW2-COLUMN0-FRAGMENT0",
+				"ROOT-CONTAINER0-ROW2-COLUMN0-FRAGMENT1"
 			],
 			"config": {
-				"size": 12
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 12,
+				"tablet": {
+				}
 			},
-			"itemId": "ROOT-CONTAINER2-ROW0-COLUMN0",
-			"parentId": "ROOT-CONTAINER2-ROW0",
+			"itemId": "ROOT-CONTAINER0-ROW2-COLUMN0",
+			"parentId": "ROOT-CONTAINER0-ROW2",
 			"type": "column"
 		},
-		"ROOT-CONTAINER2-ROW0-COLUMN0-FRAGMENT0": {
+		"ROOT-CONTAINER0-ROW2-COLUMN0-FRAGMENT0": {
 			"children": [
 			],
 			"config": {
@@ -850,11 +757,11 @@
 					}
 				}
 			},
-			"itemId": "ROOT-CONTAINER2-ROW0-COLUMN0-FRAGMENT0",
-			"parentId": "ROOT-CONTAINER2-ROW0-COLUMN0",
+			"itemId": "ROOT-CONTAINER0-ROW2-COLUMN0-FRAGMENT0",
+			"parentId": "ROOT-CONTAINER0-ROW2-COLUMN0",
 			"type": "fragment"
 		},
-		"ROOT-CONTAINER2-ROW0-COLUMN0-FRAGMENT1": {
+		"ROOT-CONTAINER0-ROW2-COLUMN0-FRAGMENT1": {
 			"children": [
 			],
 			"config": {
@@ -899,8 +806,8 @@
 					}
 				}
 			},
-			"itemId": "ROOT-CONTAINER2-ROW0-COLUMN0-FRAGMENT1",
-			"parentId": "ROOT-CONTAINER2-ROW0-COLUMN0",
+			"itemId": "ROOT-CONTAINER0-ROW2-COLUMN0-FRAGMENT1",
+			"parentId": "ROOT-CONTAINER0-ROW2-COLUMN0",
 			"type": "fragment"
 		}
 	},

@@ -115,15 +115,21 @@ public class DDMFormExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		if (ExportImportThreadLocal.isStagingInProcess() &&
-			!group.isStagedPortlet(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN)) {
+		if (ExportImportThreadLocal.isStagingInProcess()) {
+			if (!group.isStagedPortlet(
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN)) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Form is not staged in the site " + group.getName());
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Form is not staged in the site " + group.getName());
+				}
+
+				return portletPreferences;
 			}
 
-			return portletPreferences;
+			if (!(group.isStagingGroup() || group.isCompanyStagingGroup())) {
+				return portletPreferences;
+			}
 		}
 
 		DDMFormInstance ddmFormInstance =

@@ -364,12 +364,31 @@ public abstract class BasePortletExportImportTestCase
 	protected void exportImportPortlet(String portletId) throws Exception {
 		exportImportPortlet(
 			portletId, new LinkedHashMap<String, String[]>(),
-			new LinkedHashMap<String, String[]>());
+			new LinkedHashMap<String, String[]>(), true, false);
+	}
+
+	protected void exportImportPortlet(
+			String portletId, boolean staging, boolean exporting)
+		throws Exception {
+
+		exportImportPortlet(
+			portletId, new LinkedHashMap<String, String[]>(),
+			new LinkedHashMap<String, String[]>(), staging, exporting);
 	}
 
 	protected void exportImportPortlet(
 			String portletId, Map<String, String[]> exportParameterMap,
 			Map<String, String[]> importParameterMap)
+		throws Exception {
+
+		exportImportPortlet(
+			portletId, exportParameterMap, importParameterMap, true, false);
+	}
+
+	protected void exportImportPortlet(
+			String portletId, Map<String, String[]> exportParameterMap,
+			Map<String, String[]> importParameterMap, boolean staging,
+			boolean exporting)
 		throws Exception {
 
 		User user = TestPropsValues.getUser();
@@ -390,7 +409,8 @@ public abstract class BasePortletExportImportTestCase
 						TYPE_PUBLISH_PORTLET_LOCAL,
 					settingsMap);
 
-		ExportImportThreadLocal.setPortletStagingInProcess(true);
+		ExportImportThreadLocal.setPortletStagingInProcess(staging);
+		ExportImportThreadLocal.setPortletExportInProcess(exporting);
 
 		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 			ExportImportLifecycleConstants.
@@ -448,9 +468,10 @@ public abstract class BasePortletExportImportTestCase
 		}
 		finally {
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
+			ExportImportThreadLocal.setPortletExportInProcess(false);
 		}
 	}
-
+	
 	protected PortletPreferences getImportedPortletPreferences(
 			Map<String, String[]> preferenceMap)
 		throws Exception {
@@ -460,6 +481,20 @@ public abstract class BasePortletExportImportTestCase
 			preferenceMap);
 
 		exportImportPortlet(portletId);
+
+		return LayoutTestUtil.getPortletPreferences(importedLayout, portletId);
+	}
+
+	protected PortletPreferences getImportedPortletPreferences(
+			Map<String, String[]> preferenceMap, boolean staging,
+			boolean exporting)
+		throws Exception {
+
+		String portletId = LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), layout, getPortletId(), "column-1",
+			preferenceMap);
+
+		exportImportPortlet(portletId, staging, exporting);
 
 		return LayoutTestUtil.getPortletPreferences(importedLayout, portletId);
 	}

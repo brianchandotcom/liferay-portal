@@ -6,19 +6,36 @@ definition {
 	property testray.main.component.name = "Documents Management";
 
 	setUp {
+
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-	}
 
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+
+			dmDocumentTypeDescription = "Document Type Description",
+
+			dmDocumentTypeFieldNames = "Separator",
+
+			dmDocumentTypeName = "Document Type Name"
+		);
+	}
 	tearDown {
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
+
 			PortalInstances.tearDownCP();
 		}
 		else {
-			DMDocument.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 			User.logoutPG();
 		}
@@ -98,12 +115,21 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
-	@ignore = "true"
 	@priority = "4"
 	test SetSeparatorRepeatable {
+		
 		property portal.acceptance = "false";
 
-		// TODO LPS-98081 SetSeparatorRepeatable pending implementation
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
+		
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
+        
+		Button.clickSave();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
+
+		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

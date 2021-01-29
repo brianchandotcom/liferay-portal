@@ -16,17 +16,25 @@ package com.liferay.portal.search.internal.batch;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author André de Oliveira
  */
 public class BatchIndexingHelperImplBulkSizesTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		PropsUtil.setProps(new PropsImpl());
+	}
 
 	@Test
 	public void testConfiguration() {

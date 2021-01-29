@@ -111,16 +111,6 @@ definition {
 			userScreenName = "usersn2");
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
-
-		PasswordPolicies.togglePasswordChangeRequired(
-			enableChangeRequired = "true",
-			passwordPolicyName = "Default Password Policy",
-			passwordPolicyPanel = "Password Changes");
-
-		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -2157,16 +2147,6 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "Password Policies");
-
-		PasswordPolicies.togglePasswordChangeRequired(
-			enableChangeRequired = "true",
-			passwordPolicyName = "Default Password Policy",
-			passwordPolicyPanel = "Password Changes");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

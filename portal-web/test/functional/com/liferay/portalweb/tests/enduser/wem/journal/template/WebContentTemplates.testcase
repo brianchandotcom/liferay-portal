@@ -245,39 +245,33 @@ definition {
 	}
 
 	@description = "This is a test for LPS-125933. Create, read, update and delete a Template based on a Structure with all possible fields."
-	@ignore = "true"
 	@priority = "4"
-	test ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStrucrure {
-		property portal.acceptance = "false";
-
+	test ViewAndEditAsWellAsDeleteTemplateWithAllFieldsStructure {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoTemplates();
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
-			templateFieldNames = "Text",
+			templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
 			templateName = "WC Template Name");
 
 		WebContentTemplates.modifyTemplate(
 			templateName = "WC Template Name Edit",
 			templatePreviousName = "WC Template Name");
 
+		LexiconCard.viewCardTitle(card = "WC Template Name Edit");
 
-		WebContentTemplates.deleteCP(templateName = "WC Template Name");
+		WebContentTemplates.deleteCP(templateName = "WC Template Name Edit");
+
+		LexiconCard.viewCardNotPresent(card = "WC Template Name Edit");
 	}
 
 	@description = "This is a use case for LPS-116515. The creation of template is not allowed when disable template creation in Dynamic Data Mapping."

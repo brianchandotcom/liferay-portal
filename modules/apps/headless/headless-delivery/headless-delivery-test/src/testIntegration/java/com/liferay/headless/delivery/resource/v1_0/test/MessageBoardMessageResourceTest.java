@@ -48,7 +48,9 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"articleBody", "headline"};
+		return new String[] {
+			"articleBody", "externalReferenceCode", "headline"
+		};
 	}
 
 	@Override
@@ -87,6 +89,14 @@ public class MessageBoardMessageResourceTest
 
 	@Override
 	protected MessageBoardMessage
+			testDeleteMessageBoardThreadMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		return _addMessageBoardMessage();
+	}
+
+	@Override
+	protected MessageBoardMessage
 			testGetMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
@@ -103,6 +113,14 @@ public class MessageBoardMessageResourceTest
 			RandomTestUtil.randomString());
 
 		return mbMessage.getRootMessageId();
+	}
+
+	@Override
+	protected MessageBoardMessage
+			testGetMessageBoardThreadMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		return _addMessageBoardMessage();
 	}
 
 	@Override
@@ -176,6 +194,14 @@ public class MessageBoardMessageResourceTest
 	@Override
 	protected MessageBoardMessage
 			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage()
+		throws Exception {
+
+		return _addMessageBoardMessage();
+	}
+
+	@Override
+	protected MessageBoardMessage
+			testPutMessageBoardThreadMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
 		return _addMessageBoardMessage();

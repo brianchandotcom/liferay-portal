@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARTICLE_BAREBONE_ELLIPSIS_ICON</td>
+	<td>//section[contains(@id,'JournalContentPortlet')]//div[contains(@class,'portlet-content')][div//div[contains(@data-analytics-asset-title,'${key_webContentTitle}')]]//a[contains(@id,'JournalContentPortlet')][span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_STRUCTURED_WEB_CONTENT</td>
 	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_structureName}')]</td>
 	<td></td>

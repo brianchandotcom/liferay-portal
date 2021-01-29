@@ -205,6 +205,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			dmDocumentTitle = "DM Document Title",
+			dmNavTab = "Documents and Media",
 			navTab = "Web Content Images",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",

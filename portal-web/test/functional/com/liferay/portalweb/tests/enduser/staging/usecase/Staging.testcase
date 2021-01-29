@@ -3930,6 +3930,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			dmDocumentTitle = '''example (“PDF”).pdf''',
+			dmNavTab = "Documents and Media",
 			structureName = "Structure Name",
 			templateName = "Template Name",
 			webContentTitle = "WC WebContent Title",

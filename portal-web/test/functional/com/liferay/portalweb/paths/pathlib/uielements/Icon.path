@@ -85,12 +85,12 @@
 </tr>
 <tr>
 	<td>CURRENT_DISPLAY_STYLE</td>
-	<td>//ul[@class='navbar-nav'][2]//li[contains(@class,'nav-item')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//ul[@class='navbar-nav'][2]//li[contains(@class,'nav-item')]//button[contains(@class,'dropdown-toggle') and contains(@class,'nav-link-monospaced')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_DISPLAY_STYLE_ACTIVE</td>
-	<td>//ul[@class='navbar-nav'][2]//li[contains(@class,'nav-item')]//button[*[name()='svg'][contains(@class,'${key_displayStyle}')]]</td>
+	<td>//ul[@class='navbar-nav'][2]//li[contains(@class,'nav-item')]//button[contains(@class,'dropdown-toggle') and contains(@class,'nav-link-monospaced')][*[name()='svg'][contains(@class,'${key_displayStyle}')]]</td>
 	<td></td>
 </tr>
 <tr>

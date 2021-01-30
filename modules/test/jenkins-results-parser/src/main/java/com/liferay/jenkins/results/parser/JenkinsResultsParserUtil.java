@@ -2064,6 +2064,30 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static Long getRemoteCurrentTimeSeconds(String hostname) {
+		if (isNullOrEmpty(hostname)) {
+			return null;
+		}
+
+		String command = combine("ssh ", hostname, " date +%s");
+
+		try {
+			Process process = executeBashCommands(
+				false, new File("."), 3000, command);
+
+			if (process.exitValue() != 0) {
+				return null;
+			}
+
+			String output = readInputStream(process.getInputStream());
+
+			return Long.parseLong(output.replaceAll("(?s)(\\d+).*", "$1"));
+		}
+		catch (IOException | TimeoutException exception) {
+			return null;
+		}
+	}
+
 	public static String getRemoteURL(String localURL) {
 		if (localURL.startsWith("file")) {
 			localURL = fixFileName(localURL);

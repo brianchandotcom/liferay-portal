@@ -906,7 +906,7 @@ definition {
 	macro viewEntryTable {
 		var key_entryTitle = "${entryTitle}";
 
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "table");
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertElementPresent(locator1 = "Blogs#ENTRY_TABLE_CHECKBOX");
 
@@ -1438,7 +1438,7 @@ definition {
 	macro viewWithWorkflowCP {
 		var key_entryTitle = "${entryTitle}";
 
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "table");
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		AssertTextEquals(
 			locator1 = "Blogs#ENTRY_TABLE_TITLE",

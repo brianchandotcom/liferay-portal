@@ -60,7 +60,7 @@ definition {
 	}
 
 	macro gotoEditCP {
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = "${entryTitle}";
 
@@ -101,7 +101,7 @@ definition {
 	}
 
 	macro gotoEntryCP {
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = "${entryTitle}";
 
@@ -182,7 +182,7 @@ definition {
 	}
 
 	macro moveToRecycleBinCP {
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = "${entryTitle}";
 

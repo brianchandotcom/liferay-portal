@@ -323,7 +323,7 @@ definition {
 	}
 
 	macro assertNoPublishOption {
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = "${entryTitle}";
 

@@ -436,7 +436,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Blogs");
 
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "cards");
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		var key_entryTitle = "Blogs Entry Title";
 

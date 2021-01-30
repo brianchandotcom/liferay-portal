@@ -90,7 +90,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "Cards");
+		LexiconEntry.changeDisplayStyle(displayStyle = "Cards");
 
 		Blogs.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish to live?",
@@ -167,7 +167,7 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Blogs");
 
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "cards");
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		Blogs.viewEntryPresent(entryTitle = "Blogs Entry Title");
 
@@ -219,7 +219,7 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Blogs");
 
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "cards");
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		AssertElementPresent(
 			key_entryTitle = "Blogs Entry Title",
@@ -268,7 +268,7 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Blogs");
 
-		LexiconEntry.changeBlogDisplayStyle(displayStyle = "list");
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
 			key_listEntry = "Blogs Entry Title",

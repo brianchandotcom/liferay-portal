@@ -62,6 +62,9 @@ public class DepotAdminManagementToolbarDisplayContext
 			depotAdminDisplayContext.searchContainer());
 
 		_depotAdminDisplayContext = depotAdminDisplayContext;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -77,18 +80,7 @@ public class DepotAdminManagementToolbarDisplayContext
 		).build();
 	}
 
-	@Override
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-		clearResultsURL.setParameter("orderByCol", getOrderByCol());
-		clearResultsURL.setParameter("orderByType", getOrderByType());
-
-		return clearResultsURL.toString();
-	}
-
-	public Map<String, Object> getComponentContext() throws PortalException {
+	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"deleteDepotEntriesURL",
 			() -> {
@@ -104,6 +96,17 @@ public class DepotAdminManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("orderByCol", getOrderByCol());
+		clearResultsURL.setParameter("orderByType", getOrderByType());
+
+		return clearResultsURL.toString();
+	}
+
+	@Override
 	public String getComponentId() {
 		return "depotAdminManagementToolbar";
 	}
@@ -115,13 +118,9 @@ public class DepotAdminManagementToolbarDisplayContext
 				dropdownItem -> {
 					dropdownItem.putData("action", "addDepotEntry");
 
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
 					PortletURL addDepotEntryURL =
 						DepotEntryURLUtil.getAddDepotEntryActionURL(
-							themeDisplay.getURLCurrent(),
+							_themeDisplay.getURLCurrent(),
 							liferayPortletResponse);
 
 					dropdownItem.putData(
@@ -136,11 +135,6 @@ public class DepotAdminManagementToolbarDisplayContext
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return "depotAdminManagementToolbarDefaultEventHandler";
 	}
 
 	public Map<String, Object> getRowData(DepotEntry depotEntry)
@@ -163,13 +157,9 @@ public class DepotAdminManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return DepotPermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			DepotActionKeys.ADD_DEPOT_ENTRY);
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(), DepotActionKeys.ADD_DEPOT_ENTRY);
 	}
 
 	@Override
@@ -207,12 +197,8 @@ public class DepotAdminManagementToolbarDisplayContext
 	private boolean _hasDeleteDepotEntryPermission(DepotEntry depotEntry)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (!DepotEntryPermission.contains(
-				themeDisplay.getPermissionChecker(),
+				_themeDisplay.getPermissionChecker(),
 				depotEntry.getDepotEntryId(), ActionKeys.DELETE)) {
 
 			return false;
@@ -222,5 +208,6 @@ public class DepotAdminManagementToolbarDisplayContext
 	}
 
 	private final DepotAdminDisplayContext _depotAdminDisplayContext;
+	private final ThemeDisplay _themeDisplay;
 
 }

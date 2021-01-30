@@ -22,8 +22,10 @@ DepotAdminDisplayContext depotAdminDisplayContext = new DepotAdminDisplayContext
 DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayContext = new DepotAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, depotAdminDisplayContext);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= depotAdminManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	additionalProps="<%= depotAdminManagementToolbarDisplayContext.getAdditionalProps() %>"
+	managementToolbarDisplayContext="<%= depotAdminManagementToolbarDisplayContext %>"
+	propsTransformer="js/DepotAdminManagementToolbarPropsTransformer"
 />
 
 <div class="closed sidenav-container sidenav-right">
@@ -134,10 +136,4 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 <liferay-frontend:component
 	componentId="<%= DepotAdminWebKeys.DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	module="js/DepotEntryDropdownDefaultEventHandler.es"
-/>
-
-<liferay-frontend:component
-	componentId="<%= depotAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= depotAdminManagementToolbarDisplayContext.getComponentContext() %>"
-	module="js/DepotAdminManagementToolbarDefaultEventHandler.es"
 />

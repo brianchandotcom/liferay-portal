@@ -50,6 +50,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -61,6 +63,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1003,6 +1006,18 @@ public class DDMDisplayContext {
 
 		if (showAncestorScopes()) {
 			groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds);
+		}
+
+		Layout layout = _ddmWebRequestHelper.getLayout();
+
+		Group group = null;
+
+		if (layout != null) {
+			group = layout.getGroup();
+		}
+
+		if ((group != null) && !group.isStagingGroup()) {
+			groupIds = ArrayUtil.append(groupIds, group.getGroupId());
 		}
 
 		List<DDMStructure> results = null;

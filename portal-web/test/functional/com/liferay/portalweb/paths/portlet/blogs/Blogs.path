@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_BLOGS_ENTRY</td>
-	<td>//a[contains(@aria-label,'Add Blog Entry')]</td>
+	<td>//a[contains(@class,'nav-btn') and *[contains(@class,'icon-plus')]][*[name()='svg'][contains(@class,'lexicon-icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -3323,9 +3323,26 @@ definition {
 
 		Navigator.gotoBack();
 
-		WebContentUpgrade.viewWithStructureCP(
-			webContentImage = "Document_1.jpg",
-			webContentTitle = "Image Web Content");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Image Web Content");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Image Web Content");
+
+		var imageFieldValue = selenium.getElementValue("//label[normalize-space(text())='Image']/following-sibling::div//div[contains(@class,'input-group')]//input[contains(@type,'text')]");
+
+		TestUtils.assertNotEquals(
+			actual = "${imageFieldValue}",
+			expected = "");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Image",
+			locator1 = "WCEditWebContent#CLEAR_BUTTON");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Image",
+			key_image = "/documents/",
+			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 	}
 
 	macro viewWebContentWithPredefinedValueInWebContentField {

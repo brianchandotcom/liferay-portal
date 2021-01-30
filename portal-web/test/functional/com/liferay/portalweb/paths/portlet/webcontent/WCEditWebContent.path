@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLEAR_BUTTON</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form')]//button[normalize-space()='Clear']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLOR_PICKER</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::div[contains(@class,'color-picker')]//button[contains(@class,'clay-color-btn')]</td>
 	<td></td>

@@ -1,5 +1,21 @@
 # Poshi Runner Change Log
 
+## 1.0.296
+
+### Other
+
+* [LRCI-1916](https://issues.liferay.com/browse/LRCI-1916) - Allow Functional Batch Test Class Groups to have multiple test base dirs
+* [LRCI-1922](https://issues.liferay.com/browse/LRCI-1922) - Add support for QA Website test imports in Spira
+
+### Validation
+
+* [POSHI-140](https://issues.liferay.com/browse/POSHI-140) - Make validation more robust
+
+### WebDriver
+
+* [POSHI-12](https://issues.liferay.com/browse/POSHI-12) - As an Automation Tester, I'd like to have a function available to click the 'Cancel' button when the confirm dialog box pops up
+* [POSHI-92](https://issues.liferay.com/browse/POSHI-92) - Poshi cannot type some special characters on Safari
+
 ## 1.0.291
 
 ### Backend

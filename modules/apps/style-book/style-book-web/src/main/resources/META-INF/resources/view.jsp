@@ -22,8 +22,10 @@ StyleBookDisplayContext styleBookDisplayContext = new StyleBookDisplayContext(re
 StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContext = new StyleBookManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, styleBookDisplayContext.getStyleBookEntriesSearchContainer());
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= styleBookManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	additionalProps="<%= styleBookManagementToolbarDisplayContext.getAdditionalProps() %>"
+	managementToolbarDisplayContext="<%= styleBookManagementToolbarDisplayContext %>"
+	propsTransformer="js/StyleBookManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="/style_book/delete_style_book_entry" var="deleteStyleBookEntryURL">
@@ -71,10 +73,4 @@ StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContex
 <liferay-frontend:component
 	componentId="<%= StyleBookWebKeys.STYLE_BOOK_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	module="js/StyleBookEntryDropdownDefaultEventHandler.es"
-/>
-
-<liferay-frontend:component
-	componentId="<%= styleBookManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= styleBookManagementToolbarDisplayContext.getComponentContext() %>"
-	module="js/ManagementToolbarDefaultEventHandler.es"
 />

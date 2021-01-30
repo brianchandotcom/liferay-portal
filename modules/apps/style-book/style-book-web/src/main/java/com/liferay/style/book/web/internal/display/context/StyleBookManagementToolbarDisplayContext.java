@@ -56,17 +56,16 @@ public class StyleBookManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (!StyleBookPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
 				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
 
 			return Collections.emptyList();
@@ -101,20 +100,7 @@ public class StyleBookManagementToolbarDisplayContext
 		).build();
 	}
 
-	@Override
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
-	public Map<String, Object> getComponentContext() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
+	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"copyStyleBookEntryURL",
 			() -> {
@@ -125,7 +111,7 @@ public class StyleBookManagementToolbarDisplayContext
 					ActionRequest.ACTION_NAME,
 					"/style_book/copy_style_book_entry");
 				copyStyleBookEntryURL.setParameter(
-					"redirect", themeDisplay.getURLCurrent());
+					"redirect", _themeDisplay.getURLCurrent());
 
 				return copyStyleBookEntryURL.toString();
 			}
@@ -141,6 +127,15 @@ public class StyleBookManagementToolbarDisplayContext
 				return exportStyleBookEntriesURL.toString();
 			}
 		).build();
+	}
+
+	@Override
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	@Override
@@ -174,11 +169,6 @@ public class StyleBookManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "STYLE_BOOK_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
-	}
-
-	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 
@@ -187,13 +177,9 @@ public class StyleBookManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (StyleBookPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
 				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
 
 			return true;
@@ -211,5 +197,7 @@ public class StyleBookManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "create-date"};
 	}
+
+	private final ThemeDisplay _themeDisplay;
 
 }

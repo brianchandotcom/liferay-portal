@@ -26,22 +26,23 @@ import org.osgi.service.component.annotations.Modified;
  * @author Renato Rego
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.mapping.form.builder.internal.configuration.DDMFormSidebarConfiguration",
-	immediate = true, service = DDMFormSidebarConfigurationActivator.class
+	configurationPid = "com.liferay.dynamic.data.mapping.form.builder.internal.configuration.FFDDMFormSidebarConfiguration",
+	immediate = true, service = FFDDMFormSidebarConfigurationActivator.class
 )
-public class DDMFormSidebarConfigurationActivator {
+public class FFDDMFormSidebarConfigurationActivator {
 
 	public boolean isDataEngineSidebar() {
-		return _ddmFormSidebarConfiguration.isDataEngineSidebar();
+		return _ffDDMFormSidebarConfiguration.isDataEngineSidebar();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ddmFormSidebarConfiguration = ConfigurableUtil.createConfigurable(
-			DDMFormSidebarConfiguration.class, properties);
+		_ffDDMFormSidebarConfiguration = ConfigurableUtil.createConfigurable(
+			FFDDMFormSidebarConfiguration.class, properties);
 	}
 
-	private volatile DDMFormSidebarConfiguration _ddmFormSidebarConfiguration;
+	private volatile FFDDMFormSidebarConfiguration
+		_ffDDMFormSidebarConfiguration;
 
 }

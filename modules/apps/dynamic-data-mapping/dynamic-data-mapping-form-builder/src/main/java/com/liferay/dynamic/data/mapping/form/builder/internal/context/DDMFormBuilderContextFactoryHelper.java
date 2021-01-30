@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.context;
 
-import com.liferay.dynamic.data.mapping.form.builder.internal.configuration.DDMFormSidebarConfigurationActivator;
+import com.liferay.dynamic.data.mapping.form.builder.internal.configuration.FFDDMFormSidebarConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -74,8 +74,8 @@ public class DDMFormBuilderContextFactoryHelper {
 		Optional<DDMStructure> ddmStructureOptional,
 		Optional<DDMStructureVersion> ddmStructureVersionOptional,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
-		DDMFormSidebarConfigurationActivator
-			ddmFormSidebarConfigurationActivator,
+		FFDDMFormSidebarConfigurationActivator
+			ffDDMFormSidebarConfigurationActivator,
 		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, JSONFactory jsonFactory,
@@ -85,8 +85,8 @@ public class DDMFormBuilderContextFactoryHelper {
 		_ddmStructureOptional = ddmStructureOptional;
 		_ddmStructureVersionOptional = ddmStructureVersionOptional;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-		_ddmFormSidebarConfigurationActivator =
-			ddmFormSidebarConfigurationActivator;
+		_ffDDMFormSidebarConfigurationActivator =
+			ffDDMFormSidebarConfigurationActivator;
 		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
@@ -364,7 +364,7 @@ public class DDMFormBuilderContextFactoryHelper {
 		throws PortalException {
 
 		boolean dataEngineSidebar =
-			_ddmFormSidebarConfigurationActivator.isDataEngineSidebar();
+			_ffDDMFormSidebarConfigurationActivator.isDataEngineSidebar();
 
 		Map<String, Object> fullFormContext =
 			HashMapBuilder.<String, Object>put(
@@ -494,11 +494,11 @@ public class DDMFormBuilderContextFactoryHelper {
 
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
-	private final DDMFormSidebarConfigurationActivator
-		_ddmFormSidebarConfigurationActivator;
 	private final DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 	private final Optional<DDMStructure> _ddmStructureOptional;
 	private final Optional<DDMStructureVersion> _ddmStructureVersionOptional;
+	private final FFDDMFormSidebarConfigurationActivator
+		_ffDDMFormSidebarConfigurationActivator;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final JSONFactory _jsonFactory;

@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.context;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextFactory;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextRequest;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormBuilderContextResponse;
-import com.liferay.dynamic.data.mapping.form.builder.internal.configuration.DDMFormSidebarConfigurationActivator;
+import com.liferay.dynamic.data.mapping.form.builder.internal.configuration.FFDDMFormSidebarConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -55,7 +55,7 @@ public class DDMFormBuilderContextFactoryImpl
 			new DDMFormBuilderContextFactoryHelper(
 				ddmStructureOptional, ddmStructureVersionOptional,
 				_ddmFormFieldTypeServicesTracker,
-				_ddmFormSidebarConfigurationActivator,
+				_ffDDMFormSidebarConfigurationActivator,
 				_ddmFormTemplateContextFactory,
 				ddmFormBuilderContextRequest.getHttpServletRequest(),
 				ddmFormBuilderContextRequest.getHttpServletResponse(),
@@ -76,11 +76,11 @@ public class DDMFormBuilderContextFactoryImpl
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
-	private DDMFormSidebarConfigurationActivator
-		_ddmFormSidebarConfigurationActivator;
+	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
 	@Reference
-	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
+	private FFDDMFormSidebarConfigurationActivator
+		_ffDDMFormSidebarConfigurationActivator;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.dynamic.data.mapping.form.builder.internal.configuration.DDMFormSidebarConfiguration"
+	id = "com.liferay.dynamic.data.mapping.form.builder.internal.configuration.FFDDMFormSidebarConfiguration"
 )
-public interface DDMFormSidebarConfiguration {
+public interface FFDDMFormSidebarConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean isDataEngineSidebar();

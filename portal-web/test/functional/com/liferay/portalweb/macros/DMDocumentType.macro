@@ -97,6 +97,10 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
+		if (isSet(locale)) {
+			PortletEntry.changeLocale(locale = "${locale}");
+		}
+
 		if (isSet(dmDocumentTypeNameEdit)) {
 			Type.clickAtType(
 				locator1 = "TextInput#NAME",
@@ -197,6 +201,10 @@ definition {
 		DDLDataDefinition.save();
 
 		if (isSet(dmDocumentTypeNameEdit)) {
+			if (isSet(locale)) {
+				Navigator.ensureLocaleURL(locale = "${locale}");
+			}
+
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_NAME",
 				value1 = "${dmDocumentTypeNameEdit}");

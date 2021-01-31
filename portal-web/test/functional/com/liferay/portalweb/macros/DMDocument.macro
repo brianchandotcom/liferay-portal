@@ -138,6 +138,7 @@ definition {
 				}
 				else {
 					ItemSelector.uploadFile(
+						invalidFileValidation = "${invalidFileValidation}",
 						navTab = "${navTab}",
 						uploadFileName = "${imageField}");
 				}

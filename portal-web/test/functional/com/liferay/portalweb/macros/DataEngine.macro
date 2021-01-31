@@ -444,6 +444,22 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldHide {
+		var checkboxName = "Show Label";
+		var fieldLabel = "${fieldLabel}";
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		FormFields.disableSwitcher(fieldName = "Show Label");
+	}
+
 	macro editFieldLabel {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");
@@ -475,21 +491,6 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Click(locator1 = "Sidebar#BACK");
-
-	macro editFieldHide {
-		var checkboxName = "Show Label";
-		var fieldLabel = "${fieldLabel}";
-
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
-
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-
-		FormFields.disableSwitcher(fieldName = "Show Label");
 	}
 
 	macro editFieldReference {

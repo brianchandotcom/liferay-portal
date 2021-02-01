@@ -92,6 +92,16 @@ definition {
 			value1 = "Versions");
 	}
 
+	macro gotoEditDocumentType {
+		DMDocumentType.selectDocumentTypeFrame();
+
+		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
+
+		LexiconEntry.openEntryMenu(rowEntry = "${dmDocumentTypeName}");
+
+		MenuItem.click(menuItem = "Edit");
+	}
+
 	macro gotoFolder {
 		var key_dmFolderName = "${dmFolderName}";
 

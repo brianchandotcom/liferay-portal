@@ -228,7 +228,19 @@ public abstract class BaseSegmentsEntryProvider
 		Criteria.Conjunction contextConjunction = getConjunction(
 			segmentsEntry, Criteria.Type.CONTEXT);
 
+		String modelFilterString = getFilterString(
+			segmentsEntry, Criteria.Type.MODEL);
+
 		if (context != null) {
+			boolean defaultUser = !GetterUtil.getBoolean(
+				context.get(Context.SIGNED_IN), true);
+
+			if (contextConjunction.equals(Criteria.Conjunction.AND) &&
+				defaultUser && Validator.isNotNull(modelFilterString)) {
+
+				return false;
+			}
+
 			boolean matchesContext = false;
 
 			if (Validator.isNotNull(contextFilterString)) {
@@ -253,19 +265,13 @@ public abstract class BaseSegmentsEntryProvider
 				}
 			}
 
-			if (context.containsKey(Context.SIGNED_IN) &&
-				!GetterUtil.getBoolean(context.get(Context.SIGNED_IN))) {
-
+			if (defaultUser) {
 				return matchesContext;
 			}
 		}
 
-		Criteria.Conjunction modelConjunction = getConjunction(
-			segmentsEntry, Criteria.Type.MODEL);
 		ODataRetriever<BaseModel<?>> oDataRetriever =
 			serviceTrackerMap.getService(className);
-		String modelFilterString = getFilterString(
-			segmentsEntry, Criteria.Type.MODEL);
 
 		if (Validator.isNotNull(modelFilterString) &&
 			(oDataRetriever != null)) {
@@ -292,6 +298,9 @@ public abstract class BaseSegmentsEntryProvider
 			catch (PortalException portalException) {
 				_log.error(portalException, portalException);
 			}
+
+			Criteria.Conjunction modelConjunction = getConjunction(
+				segmentsEntry, Criteria.Type.MODEL);
 
 			if (matchesModel &&
 				modelConjunction.equals(Criteria.Conjunction.OR)) {

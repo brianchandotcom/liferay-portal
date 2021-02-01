@@ -263,9 +263,22 @@ definition {
 			templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
 			templateName = "WC Template Name");
 
-		WebContentTemplates.modifyTemplate(
-			templateName = "WC Template Name Edit",
-			templatePreviousName = "WC Template Name");
+		WebContentTemplates.gotoTemplateEllipsisItem(
+			item = "Edit",
+			templateName = "WC Template Name");
+
+		PortletEntry.inputName(name = "WC Template Name Edit");
+
+		for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page") {
+			var key_fieldFieldLabel = "${fieldFieldLabel}";
+			var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
+				value1 = "${fieldReference}.getData()");
+		}
+
+		DDLDataDefinition.save();
 
 		LexiconCard.viewCardTitle(card = "WC Template Name Edit");
 

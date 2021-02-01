@@ -164,11 +164,15 @@ definition {
 	@description = "This test covers LPS-117063 and LPS-117068. It ensures that web content using a structure stored in AL can be selected without NPE throwing and removed from the disconnected site."
 	@priority = "4"
 	test RemoveCustomizedWCFromDisconnectedSite {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Remove Customized WC Depot Name");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Page Name");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Remove Customized WC Depot Name");
 
 		NavItem.gotoStructures();
 
@@ -182,7 +186,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Remove Customized WC Depot Name");
 
 		NavItem.gotoTemplates();
 
@@ -194,16 +198,16 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+		DepotNavigator.gotoEdit(depotName = "Test Remove Customized WC Depot Name");
 
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+		DepotNavigator.gotoSites(depotName = "Test Remove Customized WC Depot Name");
 
 		Depot.connectSite(siteList = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.configureDDMStructures(
-			depotName = "Test Depot Name",
+			depotName = "Test Remove Customized WC Depot Name",
 			siteName = "Site Name",
 			tableEntryText = "Yes");
 
@@ -222,16 +226,16 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.configureDDMStructures(
-			depotName = "Test Depot Name",
+			depotName = "Test Remove Customized WC Depot Name",
 			makeWCUnavailable = "true",
 			siteName = "Site Name",
 			tableEntryText = "No");
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+		DepotNavigator.gotoEdit(depotName = "Test Remove Customized WC Depot Name");
 
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+		DepotNavigator.gotoSites(depotName = "Test Remove Customized WC Depot Name");
 
 		Depot.disconnectSite(siteList = "Site Name");
 
@@ -390,17 +394,21 @@ definition {
 	@description = "This ensures that a depot web content can be selected through the fragment in a content page on a connected site."
 	@priority = "5"
 	test SelectFromFragmentInContentPage {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Fragment Depot Name");
+
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Depot",
-			groupName = "Test Depot Name",
+			groupName = "Test Fragment Depot Name",
 			site = "false",
 			title = "WC WebContent Title");
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+		DepotNavigator.gotoEdit(depotName = "Test Fragment Depot Name");
 
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+		DepotNavigator.gotoSites(depotName = "Test Fragment Depot Name");
 
 		Depot.connectSite(siteList = "Site Name");
 
@@ -413,7 +421,7 @@ definition {
 			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
-			depotName = "Test Depot Name",
+			depotName = "Test Fragment Depot Name",
 			fragmentName = "Content Display",
 			webcontent = "true",
 			webContentContent = "WC WebContent Depot",

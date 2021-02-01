@@ -21,7 +21,6 @@ import {Config} from 'metal-state';
 
 import {pageStructure} from '../../util/config.es';
 import withEditablePageHeader from './withEditablePageHeader.es';
-import withMoveableFields from './withMoveableFields.es';
 import withMultiplePages from './withMultiplePages.es';
 import withResizeableColumns from './withResizeableColumns.es';
 
@@ -229,7 +228,6 @@ FormBuilderBase.PROPS = {
 
 export default compose(
 	withEditablePageHeader,
-	withMoveableFields,
 	withMultiplePages,
 	withResizeableColumns
 )(FormBuilderBase);

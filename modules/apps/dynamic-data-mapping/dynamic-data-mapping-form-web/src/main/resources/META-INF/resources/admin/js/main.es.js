@@ -19,7 +19,6 @@ import {
 } from 'data-engine-taglib';
 import {FormBuilderBase} from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import withEditablePageHeader from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withEditablePageHeader.es';
-import withMoveableFields from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMoveableFields.es';
 import withMultiplePages from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMultiplePages.es';
 import withResizeableColumns from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withResizeableColumns.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
@@ -758,11 +757,7 @@ class Form extends Component {
 	}
 
 	_createFormBuilder() {
-		const composeList = [
-			withMoveableFields,
-			withMultiplePages,
-			withResizeableColumns,
-		];
+		const composeList = [withMultiplePages, withResizeableColumns];
 
 		if (this.isFormBuilderView()) {
 			composeList.push(withEditablePageHeader);

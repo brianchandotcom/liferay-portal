@@ -259,6 +259,12 @@
 	<td>xpath=(//div[contains(@class,'ddm-field')][contains(@data-field-name,'${key_fieldName}')][not(contains(@class,'container'))])[${key_index}]</td>
 	<td></td>
 </tr>
+<!--REPEATED FIELD BY INDEX-->
+<tr>
+	<td>REPEATED_FIELD_BY_INDEX</td>
+	<td>xpath=//div[contains(@class,'ddm-field') and contains(@data-field-name,'${key_fieldReference}')][${key_index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

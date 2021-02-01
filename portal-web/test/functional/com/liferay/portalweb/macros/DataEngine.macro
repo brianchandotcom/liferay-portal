@@ -356,6 +356,10 @@ definition {
 		MenuItem.click(menuItem = "Duplicate");
 	}
 
+	macro duplicateFieldsets {
+		DataEngine.duplicateField(fieldFieldLabel = "${fieldsetLabel}");
+	}
+
 	macro editFieldLabel {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");

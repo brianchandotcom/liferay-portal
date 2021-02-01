@@ -1121,7 +1121,14 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 
-			Navigator.gotoNavTab(navTab = "Sites That I Administer");
+			AssertClick.assertPartialTextClickAt(
+				key_tab = "Sites That I Administer",
+				locator1 = "NavTab#TAB_LINK",
+				value1 = "Sites That I Administer");
+
+			AssertElementPresent(
+				key_tab = "Sites That I Administer",
+				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 			var key_siteName = "${liferaySiteName}";
 

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_KEYWORDS</td>
+	<td>//input[contains(@name,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIBE_LINK</td>
 	<td>//div/a[contains(.,'Subscribe')]</td>
 	<td></td>

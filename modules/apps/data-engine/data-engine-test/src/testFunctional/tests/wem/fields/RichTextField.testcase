@@ -11,6 +11,12 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 	}
 
 	tearDown {
@@ -45,15 +51,13 @@ definition {
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Test");
 
-		WebContentStructures.saveCP(structureName = "New Structure");
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Structure");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			structureName = "New Structure",
-			webContentTitle = "WC WebContent Title");
+		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
 		DataEngine.addRepeatableField(fieldName = "Test");
 
@@ -73,21 +77,19 @@ definition {
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "Test");
 
-		WebContentStructures.saveCP(structureName = "New Structure");
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Structure");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			structureName = "New Structure",
-			webContentTitle = "WC WebContent Title");
+		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
 		CKEditor.addContentInWebContent(
 			content = "Hello",
 			fieldLabel = "Test");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -165,15 +167,13 @@ definition {
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Test");
 
-		WebContentStructures.saveCP(structureName = "New Structure");
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Structure");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			structureName = "New Structure",
-			webContentTitle = "WC WebContent Title");
+		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
 		DataEngine.addRepeatableField(fieldName = "Test");
 
@@ -275,12 +275,6 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test VerifyHelpTextofRichTextOnWebContent {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text");

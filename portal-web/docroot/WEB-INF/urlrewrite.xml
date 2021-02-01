@@ -26,8 +26,4 @@
 		<from>^/web/guest/community/forums/message_boards(.{0,2000})$</from>
 		<to type="permanent-redirect">%{context-path}/web/guest/community/forums/-/message_boards$1</to>
 	</rule>
-	<rule>
-		<from>^(.*)\/-\/(questions|activity|tags)(.*)$</from>
-		<to type="redirect" qsappend="true">%{context-path}$1/#/$2$3?</to>
-	</rule>
 </urlrewrite>

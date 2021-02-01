@@ -100,8 +100,8 @@ public class CommercePaymentSubscriptionsTest {
 
 		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), serviceContext);
 
 		CommerceAccountTestUtil.addCommerceAccountGroupAndAccountRel(
 			_user.getCompanyId(), RandomTestUtil.randomString(),

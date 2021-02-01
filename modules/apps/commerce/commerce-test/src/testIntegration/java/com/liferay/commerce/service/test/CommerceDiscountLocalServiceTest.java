@@ -100,8 +100,9 @@ public class CommerceDiscountLocalServiceTest {
 
 		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new long[] {_user.getUserId()}, null, _serviceContext);
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
+			_serviceContext);
 
 		_commerceAccountGroup =
 			_commerceAccountGroupLocalService.addCommerceAccountGroup(

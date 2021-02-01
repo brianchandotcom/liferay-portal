@@ -186,7 +186,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "ShowAndHideFieldSet");
 
-		WebContentStructures.editStructureCP(structureName = "ShowAndHideFieldSet");
+		WebContentStructures.editStructure(structureName = "ShowAndHideFieldSet");
 
 		AssertElementNotPresent(
 			key_fieldsetLabel = "ShowAndHideFieldSet",
@@ -194,7 +194,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "ShowAndHideFieldSet");
 
-		WebContentStructures.editStructureCP(structureName = "ShowAndHideFieldSet");
+		WebContentStructures.editStructure(structureName = "ShowAndHideFieldSet");
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 

@@ -11,18 +11,6 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		var structureName = "Test LPS-98076";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "LPS-98076 Description",
-			structureName = "New Structure");
 	}
 
 	tearDown {
@@ -302,6 +290,38 @@ definition {
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
+	test VerifyHelpTextofRichTextOnWebContent {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Rich Text Help Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentRichText = "This is a Rich Text field",
+			webContentTitle = "Web Content Title");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Rich Text Help Text",
+			fieldName = "RichText");
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@priority = "4"
 	test VerifyRequiredPropertyOfRichText {
 		property portal.acceptance = "false";
 
@@ -319,34 +339,6 @@ definition {
 		Uncheck.uncheckToggleSwitch(
 			checkboxName = "Required Field",
 			locator1 = "Checkbox#ANY_CHECKBOX");
-	}
-
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@priority = "4"
-	test VerifyRichFieldHelpTextOnWebContent {
-		property portal.acceptance = "false";
-
-		DataEngine.addField(
-			fieldFieldLabel = "LabelTest",
-			fieldName = "Rich Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "LabelTest",
-			fieldHelp = "Testing Help Text");
-
-		WebContentStructures.saveCP(structureName = "New Structure");
-
-		Navigator.gotoNavTab(navTab = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Structure");
-
-		WebContent.addWithStructureCP(
-			structureName = "New Structure",
-			webContentTitle = "WC WebContent Title");
-
-		FormFields.viewFieldHelpText(
-			fieldHelpText = "Testing Help Text",
-			fieldName = "LabelTest");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

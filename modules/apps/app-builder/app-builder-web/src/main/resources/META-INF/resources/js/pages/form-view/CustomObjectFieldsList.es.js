@@ -123,8 +123,8 @@ const getFieldTypes = ({
 			disabled: DataLayoutVisitor.containsField(dataLayoutPages, name),
 			dragAlignment: 'right',
 			dragType: isFieldGroup
-				? DragTypes.DRAG_FIELDSET
-				: DragTypes.DRAG_DATA_DEFINITION_FIELD,
+				? DragTypes.DRAG_FIELDSET_MOVE
+				: DragTypes.DRAG_DATA_DEFINITION_FIELD_MOVE,
 			icon: fieldTypeSettings.icon,
 			isCustomField: !customProperties.nativeField,
 			isFieldSet,
@@ -262,6 +262,21 @@ const CustomObjectFieldsList = ({keywords}) => {
 	);
 	const showCategories =
 		!!customFieldTypes.length && !!nativeFieldTypes.length;
+	
+	const getDataDefinitionField = (fieldName) => {
+		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
+			(field) => field.name === fieldName
+		);
+
+		const settingsContext = dataLayoutBuilder.getDDMFormFieldSettingsContext(
+			dataDefinitionField
+		);
+
+		return {
+			...dataDefinitionField,
+			settingsContext,
+		};
+	};
 
 	const fieldTypeListProps = {
 		deleteLabel: Liferay.Language.get('delete-from-object'),
@@ -284,6 +299,7 @@ const CustomObjectFieldsList = ({keywords}) => {
 				{...fieldTypeListProps}
 				dataDefinition={dataDefinition}
 				fieldTypes={customFieldTypes}
+				getDataDefinitionField={getDataDefinitionField}
 				showEmptyState={false}
 			/>
 
@@ -297,6 +313,7 @@ const CustomObjectFieldsList = ({keywords}) => {
 				{...fieldTypeListProps}
 				dataDefinition={dataDefinition}
 				fieldTypes={nativeFieldTypes}
+				getDataDefinitionField={getDataDefinitionField}
 				showEmptyState={false}
 			/>
 		</>

@@ -23,7 +23,7 @@ import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import './FieldType.scss';
-import {DRAG_FIELD_TYPE} from '../../drag-and-drop/dragTypes.es';
+import {DRAG_FIELD_TYPE_ADD} from '../../drag-and-drop/dragTypes.es';
 import DropDown from '../drop-down/DropDown.es';
 import FieldTypeDragPreview from './FieldTypeDragPreview.es';
 
@@ -45,7 +45,7 @@ const FieldType = (props) => {
 		disabled,
 		dragAlignment = 'left',
 		draggable = true,
-		dragType = DRAG_FIELD_TYPE,
+		dragType = DRAG_FIELD_TYPE_ADD,
 		icon,
 		label,
 		name,

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DataConverter} from 'data-engine-taglib';
+import {DataConverter, DragTypes} from 'data-engine-taglib';
 import {useDrop as useDndDrop} from 'react-dnd';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
@@ -40,10 +40,18 @@ export const useDrop = ({
 	const dispatch = useForm();
 
 	const [{canDrop, overTarget}, drop] = useDndDrop({
-		accept: ['dataDefinitionField', 'fieldType', 'fieldset'],
+		accept: [
+			DragTypes.DRAG_FIELD_TYPE_ADD,
+			DragTypes.DRAG_DATA_DEFINITION_FIELD_MOVE,
+			DragTypes.DRAG_FIELD_TYPE_MOVE,
+			DragTypes.DRAG_FIELDSET_MOVE,
+			DragTypes.DRAG_DATA_DEFINITION_FIELD_ADD,
+			DragTypes.DRAG_FIELD_TYPE_ADD,
+			DragTypes.DRAG_FIELDSET_ADD,
+		],
 		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
-			overTarget: monitor.isOver(),
+			overTarget: monitor.isOver({shallow: true}),
 		}),
 		drop: ({data, type}, monitor) => {
 			if (monitor.didDrop()) {
@@ -68,7 +76,7 @@ export const useDrop = ({
 				{};
 			const {availableLanguageIds, defaultLanguageId} = fieldSet ?? {};
 			switch (type) {
-				case 'fieldType':
+				case DragTypes.DRAG_FIELD_TYPE_ADD:
 					dispatch({
 						payload: {
 							data: {
@@ -89,7 +97,23 @@ export const useDrop = ({
 								: EVENT_TYPES.SECTION_ADD,
 					});
 					break;
-				case 'dataDefinitionField':
+				case DragTypes.DRAG_FIELD_TYPE_MOVE:
+					dispatch({
+						payload: {
+							sourceFieldName: data.fieldName,
+							sourceFieldPage: pageIndex,
+							targetFieldName: fieldName,
+							targetIndexes: {
+								columnIndex,
+								pageIndex,
+								rowIndex,
+							},
+							targetParentFieldName: parentField.fieldName,
+						},
+						type: EVENT_TYPES.FIELD_MOVED,
+					});
+					break;
+				case DragTypes.DRAG_DATA_DEFINITION_FIELD_ADD:
 					dispatch({
 						payload: {
 							data: {
@@ -117,7 +141,7 @@ export const useDrop = ({
 								: EVENT_TYPES.SECTION_ADD,
 					});
 					break;
-				case 'fieldset':
+				case DragTypes.DRAG_FIELDSET_ADD:
 					dispatch({
 						payload: {
 							availableLanguageIds,

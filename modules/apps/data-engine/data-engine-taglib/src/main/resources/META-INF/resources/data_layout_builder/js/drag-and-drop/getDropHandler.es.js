@@ -18,9 +18,9 @@ import {
 	dropLayoutBuilderField,
 } from '../actions.es';
 import {
-	DRAG_DATA_DEFINITION_FIELD,
-	DRAG_FIELDSET,
-	DRAG_FIELD_TYPE,
+	DRAG_DATA_DEFINITION_FIELD_ADD,
+	DRAG_FIELD_TYPE_ADD,
+	DRAG_FIELDSET_ADD,
 } from './dragTypes.es';
 
 export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {
@@ -33,7 +33,7 @@ export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {
 		}
 
 		switch (type) {
-			case DRAG_FIELD_TYPE: {
+			case DRAG_FIELD_TYPE_ADD: {
 				if (
 					parentField &&
 					parentField.nestedFields &&
@@ -60,7 +60,7 @@ export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {
 				);
 				break;
 			}
-			case DRAG_DATA_DEFINITION_FIELD: {
+			case DRAG_DATA_DEFINITION_FIELD_ADD: {
 				const payload = dropCustomObjectField({
 					dataDefinition,
 					dataDefinitionFieldName: data.name,
@@ -76,7 +76,7 @@ export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {
 				);
 				break;
 			}
-			case DRAG_FIELDSET:
+			case DRAG_FIELDSET_ADD:
 				dataLayoutBuilder.dispatch(
 					'fieldSetAdded',
 					dropFieldSet({

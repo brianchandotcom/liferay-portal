@@ -14,8 +14,10 @@
 
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
+import {DragTypes} from 'data-engine-taglib';
 import React, {useContext, useRef} from 'react';
 
+import {useDrag} from '../../hooks/useDrag.es';
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
 import {hasFieldSet} from '../../util/fields.es';
 import {Actions, ActionsControls, useActions} from '../Actions.es';
@@ -33,20 +35,35 @@ export const Column = ({
 	pageIndex,
 	rowIndex,
 }) => {
+	const ref = useRef(null);
+
 	const parentField = useContext(ParentFieldContext);
 
 	const actionsRef = useRef(null);
 	const columnRef = useRef(null);
 
+	const firstField = column.fields[0];
+	const isFieldSet = hasFieldSet(firstField);
+
 	const [{activeId, hoveredId}] = useActions();
 
-	const {drop, overTarget} = useDrop({
+	const {canDrop, drop, overTarget} = useDrop({
 		columnIndex: index,
 		fieldName: column.fields[0]?.fieldName,
 		origin: DND_ORIGIN_TYPE.FIELD,
 		pageIndex,
 		parentField,
 		rowIndex,
+	});
+
+	const dragType = isFieldSet
+		? DragTypes.DRAG_FIELDSET_MOVE
+		: DragTypes.DRAG_FIELD_TYPE_MOVE;
+
+	const {drag} = useDrag({
+		item: firstField ?? undefined,
+		pageIndex,
+		type: dragType,
 	});
 
 	if (editable && column.fields.length === 0 && activePage === pageIndex) {
@@ -60,10 +77,9 @@ export const Column = ({
 		);
 	}
 
-	const firstField = column.fields[0];
 	const rootParentField = parentField.root ?? firstField;
 	const isFieldSetOrGroup = firstField.type === 'fieldset';
-	const isFieldSet = hasFieldSet(firstField);
+
 	const isFieldSelected =
 		firstField.fieldName === activeId || firstField.fieldName === hoveredId;
 
@@ -93,6 +109,7 @@ export const Column = ({
 						!rootParentField.ddmStructureId,
 					hovered: editable && firstField.fieldName === hoveredId,
 					selected: editable && firstField.fieldName === activeId,
+					'target-droppable': canDrop,
 					'target-over targetOver':
 						!rootParentField.ddmStructureId && overTarget,
 				})}
@@ -128,8 +145,8 @@ export const Column = ({
 					})}
 					ref={
 						allowNestedFields && !rootParentField.ddmStructureId
-							? drop
-							: undefined
+							? drag(drop(ref))
+							: drag
 					}
 				>
 					{column.fields.map((field, index) =>
@@ -167,6 +184,7 @@ export const Page = ({
 		columnIndex: 0,
 		origin: DND_ORIGIN_TYPE.EMPTY,
 		pageIndex,
+		parentField: {},
 		rowIndex: 0,
 	});
 

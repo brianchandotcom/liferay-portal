@@ -12,10 +12,18 @@
  * details.
  */
 
-export const DRAG_DATA_DEFINITION_FIELD_MOVE = 'dataDefinitionField:move';
-export const DRAG_FIELD_TYPE_MOVE = 'fieldType:move';
-export const DRAG_FIELDSET_MOVE = 'fieldset:move';
+import {useDrag as useDndDrag} from 'react-dnd';
 
-export const DRAG_DATA_DEFINITION_FIELD_ADD = 'dataDefinitionField:add';
-export const DRAG_FIELD_TYPE_ADD = 'fieldType:add';
-export const DRAG_FIELDSET_ADD = 'fieldset:add';
+export const useDrag = ({item, pageIndex, type}) => {
+	const [, drag] = useDndDrag({
+		item: {
+			data: item,
+			pageIndex,
+			type,
+		},
+	});
+
+	return {
+		drag,
+	};
+};

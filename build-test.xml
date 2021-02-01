@@ -2547,6 +2547,12 @@ jdbc.default.password=${database.password}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-portal-tensorflow-osgi-configuration">
+		<sequential>
+			<echo if:set="env.JENKINS_HOME" file="${liferay.home}/osgi/configs/com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderDownloadConfiguration.config">modelDownloadURL="http://repository-cdn.liferay.com/nexus/service/local/repositories/public-proxy/content/com/liferay/org.tensorflow.models.inception/5h/org.tensorflow.models.inception-5h.jar"</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-safari-driver">
 		<sequential>
 			<if>
@@ -8748,6 +8754,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<prepare-portal-search-osgi-configuration/>
 
 		<prepare-portal-template-freemarker-osgi-configuration />
+
+		<prepare-portal-tensorflow-osgi-configuration />
 	</target>
 
 	<target name="prepare-patching-tool">

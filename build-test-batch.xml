@@ -2782,6 +2782,8 @@ log.sanitizer.enabled=false</echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
+							<prepare-portal-tensorflow-osgi-configuration />
+
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>

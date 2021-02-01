@@ -168,31 +168,36 @@ definition {
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@priority = "5"
 	test RepeatSeparatorOnWebContent {
-		property portal.acceptance = "false";
-
 		DataEngine.addField(
-			fieldFieldLabel = "Test",
+			fieldFieldLabel = "Separator",
 			fieldName = "Separator");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Test");
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
 
-		Button.clickSave();
+		WebContentStructures.saveCP(structureName = "Test");
 
-		Navigator.gotoNavItem(navItem = "Web Content");
+		NavItem.click(navItem = "Web Content");
 
-		LexiconEntry.gotoAdd();
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test");
 
-		MenuItem.click(menuItem = "Test");
+		WebContent.addCP(webContentTitle = "Web Content Title");
 
-		WebContent.addCP(webContentTitle = "My Web Content Name 1");
+		DataEngine.addRepeatableField(fieldName = "Separator");
 
-		DataEngine.addRepeatableField(fieldName = "Test");
+		PortletEntry.publish();
 
-		Button.clickPublish();
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content Name 1");
+		for (var n : list "1,2") {
+			WebContent.assertFieldRepeated(
+				fieldReference = "Separator",
+				index = "${n}");
+		}
 
-		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_REMOVE");
+		AssertVisible(
+			key_fieldReference = "Separator",
+			key_index = "2",
+			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

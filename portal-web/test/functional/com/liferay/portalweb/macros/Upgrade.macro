@@ -890,6 +890,69 @@ definition {
 		}
 	}
 
+	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		for (var fieldFieldLabel : list "Boolean,Color,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "${fieldFieldLabel}",
+				fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
+		}
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field Edit",
+			webContentTextFieldLabel = "Text Edit",
+			webContentTitle = "Web Content Title Edit");
+
+		Navigator.gotoPage(pageName = "Web Content Display");
+
+		WebContent.viewEditWCViaWCD(
+			webContentContent = "This is a Text field Edit",
+			webContentTitle = "Web Content Title Edit");
+
+		Navigator.gotoPage(pageName = "Asset Publisher");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "This is a Text field Edit",
+			assetTitle = "Web Content Title Edit");
+	}
+
+	macro EditWebContentAndViewInWCDandAssetPublisher {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field Edit",
+			webContentTitle = "Web Content Title Edit");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field Edit",
+			webContentTitle = "Web Content Title Edit");
+
+		Navigator.gotoPage(pageName = "Web Content Display");
+
+		WebContent.viewEditWCViaWCD(
+			webContentContent = "This is a Text field Edit",
+			webContentTitle = "Web Content Title Edit");
+
+		Navigator.gotoPage(pageName = "Asset Publisher");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "This is a Text field Edit",
+			assetTitle = "Web Content Title Edit");
+	}
+
 	macro publishStagedSite {
 		Navigator.openSiteURL(siteName = "Staging Site Staging");
 
@@ -3219,6 +3282,62 @@ definition {
 		SignOut.signOut();
 
 		SignIn.signIn();
+	}
+
+	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.viewWithStructureCP(
+			linkedPageName = "Home",
+			linkFieldName = "LinktoPage",
+			menuItem = "Basic Document",
+			structureName = "WC Structure Name",
+			webContentBoolean = "true",
+			webContentColor = "000000",
+			webContentDate = "01/29/2021",
+			webContentDecimal = "0.5",
+			webContentDocumentsAndMedia = "DM Document Title",
+			webContentHTML = "This is a HTML field",
+			webContentImage = "Document_1.jpg",
+			webContentImageDescription = "Image Description",
+			webContentInteger = "9",
+			webContentNumber = "-1",
+			webContentRadio = "option 1",
+			webContentSelect = "option 2",
+			webContentSelectWCFile = "WC WebContent 1 Title",
+			webContentText = "This is a Text field",
+			webContentTextBox = "This is a Text Box field",
+			webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.viewCP(
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		Navigator.gotoPage(pageName = "Web Content Display");
+
+		WebContent.viewPGViaWCD(webContentContent = "This is a Text Box field");
+
+		Navigator.gotoPage(pageName = "Asset Publisher");
+
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "This is a HTML field",
+			assetTitle = "Web Content Title");
 	}
 
 	macro viewWebContentWithAllFields {

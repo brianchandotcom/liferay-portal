@@ -78,12 +78,13 @@ export interface Config {
 
 	containerItemFlexEnabled: boolean;
 
-	defaultEditorConfigurations: {
-		[key: 'comment' | 'rich-text' | 'text']: {
+	defaultEditorConfigurations: Record<
+		'comment' | 'rich-text' | 'text',
+		{
 			editorConfig: object;
 			editorOptions: object;
-		};
-	};
+		}
+	>;
 
 	defaultLanguageId: string;
 	defaultStyleBookEntryName: string;

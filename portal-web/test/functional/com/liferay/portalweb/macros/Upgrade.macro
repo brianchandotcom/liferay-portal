@@ -914,13 +914,21 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display");
 
-		WebContent.viewEditWCViaWCD(
+		WebContent.viewPGViaWCD(
 			webContentContent = "This is a Text field Edit",
 			webContentTitle = "Web Content Title Edit");
 
 		Navigator.gotoPage(pageName = "Asset Publisher");
 
-		AssetPublisherPortlet.viewAssetPG(
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration");
+
+		AssetPublisherPortlet.configureDisplayTemplatePG(displayTemplate = "Full Content");
+
+		Navigator.gotoPage(pageName = "Asset Publisher");
+
+		AssetPublisherPortlet.viewAssetDetailsPG(
 			assetContent = "This is a Text field Edit",
 			assetTitle = "Web Content Title Edit");
 	}
@@ -942,7 +950,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display");
 
-		WebContent.viewEditWCViaWCD(
+		WebContent.viewPGViaWCD(
 			webContentContent = "This is a Text field Edit",
 			webContentTitle = "Web Content Title Edit");
 

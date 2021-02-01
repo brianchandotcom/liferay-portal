@@ -107,8 +107,8 @@ public class CommerceOrderStatusNotificationTest {
 
 		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_serviceContext);
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), _serviceContext);
 
 		CommerceAccountTestUtil.addCommerceAccountGroupAndAccountRel(
 			_user.getCompanyId(), RandomTestUtil.randomString(),

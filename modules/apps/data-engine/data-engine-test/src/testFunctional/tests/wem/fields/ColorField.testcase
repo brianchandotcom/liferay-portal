@@ -259,7 +259,6 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "Color Test Edited",
 			fieldName = "Color");
-
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

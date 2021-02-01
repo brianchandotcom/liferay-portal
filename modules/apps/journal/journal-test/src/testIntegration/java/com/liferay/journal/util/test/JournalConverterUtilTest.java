@@ -51,8 +51,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -102,11 +100,6 @@ public class JournalConverterUtilTest {
 			PortalUtil.getClassNameId(JournalArticle.class), null,
 			"Test Structure", ddmForm, StorageType.DEFAULT.getValue(),
 			DDMStructureConstants.TYPE_DEFAULT);
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_journalConverter = registry.getService(
-			registry.getServiceReference(JournalConverter.class));
 	}
 
 	@Test
@@ -693,7 +686,9 @@ public class JournalConverterUtilTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
 	private JournalConverter _journalConverter;
+
 	private Locale _ptLocale;
 
 }

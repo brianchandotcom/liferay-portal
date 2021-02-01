@@ -426,6 +426,12 @@ definition {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		var dmDocumentTypeName = "WC Structure Name";
+		var fieldHelp = "Help Text On Upload";
+
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
 
@@ -445,5 +451,25 @@ definition {
 
 		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
 	}
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeName = "DM Document Type Name",
+			dmDocumentTypeFieldNames = "Upload"
+		);
 
+		DataEngine.editFieldTip(
+            fieldFieldLabel = "Upload",
+            fieldHelp = "${fieldHelp}");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		DMDocumentType.gotoEditField(fieldName = "Upload");
+
+		var key_fieldFieldLabel = "Help Text";
+
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
+			value1 = "${fieldHelp}");
+	}
 }

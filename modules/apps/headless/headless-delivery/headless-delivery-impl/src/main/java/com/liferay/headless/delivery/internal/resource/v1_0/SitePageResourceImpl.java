@@ -54,15 +54,19 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.taglib.util.ThemeUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -114,6 +118,26 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		throws Exception {
 
 		return _toHTML(friendlyUrlPath, siteId, experienceKey);
+	}
+
+	@Override
+	public Page<SitePage> getSiteSitePageFriendlyUrlPathExperiencesPage(
+			Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		boolean embeddedPageDefinition = _isEmbeddedPageDefinition();
+
+		Layout layout = _getLayout(siteId, friendlyUrlPath);
+
+		List<SegmentsExperience> segmentsExperiences = _getSegmentsExperiences(
+			layout);
+
+		return Page.of(
+			TransformUtil.transform(
+				segmentsExperiences,
+				segmentsExperience -> _toSitePage(
+					embeddedPageDefinition, layout,
+					segmentsExperience.getSegmentsExperienceKey())));
 	}
 
 	@Override
@@ -216,6 +240,21 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return actions;
 	}
 
+	private SegmentsExperience _getDefaultSegmentsExperience(long groupId) {
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.createSegmentsExperience(
+				SegmentsEntryConstants.ID_DEFAULT);
+
+		segmentsExperience.setGroupId(groupId);
+		segmentsExperience.setSegmentsExperienceKey(
+			String.valueOf(SegmentsEntryConstants.ID_DEFAULT));
+		segmentsExperience.setName(
+			SegmentsEntryConstants.getDefaultSegmentsEntryName(
+				contextUser.getLocale()));
+
+		return segmentsExperience;
+	}
+
 	private Map<String, Map<String, String>> _getExperienceActions(
 		Layout layout) {
 
@@ -278,6 +317,21 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return SegmentsEntryConstants.ID_DEFAULT;
+	}
+
+	private List<SegmentsExperience> _getSegmentsExperiences(Layout layout)
+		throws Exception {
+
+		List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
+			_segmentsExperienceService.getSegmentsExperiences(
+				layout.getGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid(), true));
+
+		segmentsExperiences.add(
+			_getDefaultSegmentsExperience(layout.getGroupId()));
+
+		return segmentsExperiences;
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
@@ -424,6 +478,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private SegmentsEntryRetriever _segmentsEntryRetriever;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private SegmentsExperienceRequestProcessorRegistry

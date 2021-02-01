@@ -14,7 +14,13 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -23,41 +29,39 @@ public abstract class BaseTestClassResult implements TestClassResult {
 
 	@Override
 	public Build getBuild() {
-		TestResult firstTestResult = _getFirstTestResult();
-
-		return firstTestResult.getBuild();
+		return _build;
 	}
 
 	@Override
 	public String getClassName() {
-		TestResult firstTestResult = _getFirstTestResult();
-
-		return firstTestResult.getClassName();
+		return _suiteJSONObject.getString("name");
 	}
 
 	@Override
 	public long getDuration() {
-		long duration = 0;
-
-		for (TestResult testResult : _testResults) {
-			duration += testResult.getDuration();
-		}
-
-		return duration;
+		return _duration;
 	}
 
 	@Override
 	public String getPackageName() {
-		TestResult firstTestResult = _getFirstTestResult();
+		String className = getClassName();
 
-		return firstTestResult.getPackageName();
+		int x = className.lastIndexOf(".");
+
+		if (x < 0) {
+			return "(root)";
+		}
+
+		return className.substring(0, x);
 	}
 
 	@Override
 	public String getSimpleClassName() {
-		TestResult firstTestResult = _getFirstTestResult();
+		String className = getClassName();
 
-		return firstTestResult.getSimpleClassName();
+		int x = className.lastIndexOf(".");
+
+		return className.substring(x + 1);
 	}
 
 	@Override
@@ -66,11 +70,9 @@ public abstract class BaseTestClassResult implements TestClassResult {
 			return _status.toString();
 		}
 
-		TestResult firstTestResult = _getFirstTestResult();
+		_status = Status.PASSED;
 
-		_status = Status.valueOf(firstTestResult.getStatus());
-
-		for (TestResult testResult : _testResults) {
+		for (TestResult testResult : getTestResults()) {
 			Status status = Status.valueOf(testResult.getStatus());
 
 			if (_status.getPriority() <= status.getPriority()) {
@@ -84,8 +86,13 @@ public abstract class BaseTestClassResult implements TestClassResult {
 	}
 
 	@Override
+	public TestResult getTestResult(String testName) {
+		return _testResults.get(testName);
+	}
+
+	@Override
 	public List<TestResult> getTestResults() {
-		return _testResults;
+		return new ArrayList<>(_testResults.values());
 	}
 
 	@Override
@@ -101,29 +108,37 @@ public abstract class BaseTestClassResult implements TestClassResult {
 		return true;
 	}
 
-	protected BaseTestClassResult(List<TestResult> testResults) {
-		if ((testResults == null) || testResults.isEmpty()) {
-			throw new RuntimeException("Please set the test results");
+	protected BaseTestClassResult(Build build, JSONObject suiteJSONObject) {
+		if (suiteJSONObject == null) {
+			throw new RuntimeException("Please set suiteJSONObject");
 		}
 
-		_testResults = testResults;
+		_build = build;
+		_suiteJSONObject = suiteJSONObject;
 
-		String testClassName = getClassName();
+		_duration = (long)(suiteJSONObject.getDouble("duration") * 1000D);
 
-		for (TestResult testResult : _testResults) {
-			if (!testClassName.equals(testResult.getClassName())) {
-				throw new RuntimeException(
-					"Mismatched test class name " + testClassName);
-			}
+		if (!suiteJSONObject.has("cases")) {
+			return;
+		}
+
+		JSONArray casesJSONArray = suiteJSONObject.getJSONArray("cases");
+
+		for (int i = 0; i < casesJSONArray.length(); i++) {
+			JSONObject caseJSONObject = casesJSONArray.getJSONObject(i);
+
+			TestResult testResult = TestResultFactory.newTestResult(
+				build, caseJSONObject);
+
+			_testResults.put(testResult.getTestName(), testResult);
 		}
 	}
 
-	private TestResult _getFirstTestResult() {
-		return _testResults.get(0);
-	}
-
+	private final Build _build;
+	private final long _duration;
 	private Status _status;
-	private final List<TestResult> _testResults;
+	private final JSONObject _suiteJSONObject;
+	private final Map<String, TestResult> _testResults = new TreeMap<>();
 
 	private static enum Status {
 

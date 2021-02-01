@@ -44,6 +44,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1160,37 +1161,57 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public List<TestClassResult> getTestClassResults() {
-		if (_testClassResults != null) {
-			return _testClassResults;
+	public TestClassResult getTestClassResult(String testClassName) {
+		if (!isCompleted()) {
+			return null;
 		}
 
-		List<TestResult> buildTestResults = getTestResults(null);
+		getTestClassResults();
 
-		if (buildTestResults.isEmpty()) {
+		return _testClassResults.get(testClassName);
+	}
+
+	@Override
+	public synchronized List<TestClassResult> getTestClassResults() {
+		if (!isCompleted()) {
+			return null;
+		}
+
+		if (_testClassResults != null) {
+			return new ArrayList<>(_testClassResults.values());
+		}
+
+		JSONObject testReportJSONObject = null;
+
+		try {
+			testReportJSONObject = getTestReportJSONObject(true);
+		}
+		catch (RuntimeException runtimeException) {
 			return new ArrayList<>();
 		}
 
-		Map<String, List<TestResult>> testClassResultsMap = new HashMap<>();
+		_testClassResults = new ConcurrentHashMap<>();
 
-		for (TestResult testResult : buildTestResults) {
-			String testClassName = testResult.getClassName();
+		if ((testReportJSONObject == null) ||
+			!testReportJSONObject.has("suites")) {
 
-			List<TestResult> testResults = testClassResultsMap.getOrDefault(
-				testClassName, new ArrayList());
-
-			testResults.add(testResult);
-
-			testClassResultsMap.put(testClassName, testResults);
+			return new ArrayList<>();
 		}
 
-		_testClassResults = new ArrayList<>();
+		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
 
-		for (List<TestResult> testResults : testClassResultsMap.values()) {
-			_testClassResults.add(new DefaultTestClassResult(testResults));
+		for (int i = 0; i < suitesJSONArray.length(); i++) {
+			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
+
+			TestClassResult testClassResult =
+				TestClassResultFactory.newTestClassResult(
+					this, suiteJSONObject);
+
+			_testClassResults.put(
+				testClassResult.getClassName(), testClassResult);
 		}
 
-		return _testClassResults;
+		return new ArrayList<>(_testClassResults.values());
 	}
 
 	@Override
@@ -1205,6 +1226,21 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException(
 				"Unable to get test report JSON object", ioException);
 		}
+	}
+
+	@Override
+	public synchronized List<TestResult> getTestResults() {
+		if (!isCompleted()) {
+			return null;
+		}
+
+		List<TestResult> testResults = new ArrayList<>();
+
+		for (TestClassResult testClassResult : getTestClassResults()) {
+			testResults.addAll(testClassResult.getTestResults());
+		}
+
+		return testResults;
 	}
 
 	public List<TestResult> getTestResults(
@@ -3856,6 +3892,7 @@ public abstract class BaseBuild implements Build {
 	private String _previousStatus;
 	private String _result;
 	private String _status;
-	private List<TestClassResult> _testClassResults;
+	private Map<String, TestClassResult> _testClassResults;
+	private Map<String, TestResult> _testResults;
 
 }

@@ -83,12 +83,12 @@ public class EditCPOptionMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
+	@Reference
+	private Portal _portal;
+
 	@Reference(
 		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private Portal _portal;
 
 }

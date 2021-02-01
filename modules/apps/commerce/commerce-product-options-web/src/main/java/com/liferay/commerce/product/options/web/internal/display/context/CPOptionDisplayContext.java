@@ -152,16 +152,6 @@ public class CPOptionDisplayContext {
 			ddmFormFieldTypes, ddmFormFieldTypesAllowed);
 	}
 
-	public boolean hasPermission(String actionId) throws PortalException {
-		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return _portletResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), null, actionId);
-	}
-
 	public List<HeaderActionModel> getHeaderActionModels() {
 		List<HeaderActionModel> headerActionModels = new ArrayList<>();
 
@@ -249,6 +239,16 @@ public class CPOptionDisplayContext {
 				dropdownItem.setTarget("modal");
 			}
 		).build();
+	}
+
+	public boolean hasPermission(String actionId) throws PortalException {
+		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null, actionId);
 	}
 
 	public boolean hasValues(CPOption cpOption) {

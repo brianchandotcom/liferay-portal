@@ -596,7 +596,17 @@ definition {
 		var key_entryContent = "${entryContent}";
 		var key_entryTitle = "${entryTitle}";
 
-		Search.searchCP(searchTerm = "${entrySearchTerm}");
+		AssertElementPresent(locator1 = "Blogs#SEARCH_KEYWORDS");
+
+		Type(
+			locator1 = "Blogs#SEARCH_KEYWORDS",
+			value1 = "${entrySearchTerm}");
+
+		KeyPress(
+			locator1 = "Blogs#SEARCH_KEYWORDS",
+			value1 = "\RETURN");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Blogs.viewEntryTitle(entryTitle = "${entryTitle}");
 	}
@@ -605,7 +615,17 @@ definition {
 		var key_entryContent = "${entryContent}";
 		var key_entryTitle = "${entryTitle}";
 
-		Search.searchCP(searchTerm = "${entrySearchTerm}");
+		AssertElementPresent(locator1 = "Blogs#SEARCH_KEYWORDS");
+
+		Type(
+			locator1 = "Blogs#SEARCH_KEYWORDS",
+			value1 = "${entrySearchTerm}");
+
+		KeyPress(
+			locator1 = "Blogs#SEARCH_KEYWORDS",
+			value1 = "\RETURN");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

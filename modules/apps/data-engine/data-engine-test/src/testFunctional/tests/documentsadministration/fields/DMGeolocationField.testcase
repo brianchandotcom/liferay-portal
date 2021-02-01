@@ -101,8 +101,8 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name");
 
 		FormViewBuilder.editFieldLabel(
-            fieldLabel = "Geolocation",
-            label = "Localization");
+			fieldLabel = "Geolocation",
+			label = "Localization");
 
 		DDLDataDefinition.save();
 

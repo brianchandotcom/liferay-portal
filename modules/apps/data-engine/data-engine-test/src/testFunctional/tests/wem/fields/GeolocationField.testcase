@@ -232,43 +232,35 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
-	@ignore = "true"
 	@priority = "3"
 	test ShowAndHideGeolocationLabel {
-		property portal.acceptance = "false";
-
-		var key_fieldLabel = "Localization";
-
 		DataEngine.addField(
-			fieldFieldLabel = "${key_fieldLabel}",
+			fieldFieldLabel = "Geolocation",
 			fieldName = "Geolocation");
 
-		DataEngine.editFieldShowLabel(fieldFieldLabel = "${key_fieldLabel}");
+		DataEngine.editFieldShowOrHideLabel(
+			fieldFieldLabel = "Geolocation",
+			showLabel = "true");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Geolocation",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		DataEngine.editFieldShowOrHideLabel(
+			fieldFieldLabel = "Geolocation",
+			showLabel = "false");
 
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
 
-		AssertElementPresent(locator1 = "FormFields#LABEL");
-
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${key_fieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${key_fieldLabel}");
-
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-
-		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "Show Label",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
-
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
-
-		AssertElementNotPresent(locator1 = "FormFields#LABEL");
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "Geolocation",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

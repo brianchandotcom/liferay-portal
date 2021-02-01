@@ -92,6 +92,27 @@ td.lfr-name-column {
 		}
 	}
 
+	.modal-body {
+		padding: 0;
+
+		.component-tbar {
+			height: 48px;
+			padding: 0 12px;
+
+			.nav-link {
+				height: 100%;
+			}
+		}
+
+		.tab-pane {
+			padding: 16px 12px 8px;
+		}
+	}
+
+	.modal-footer {
+		padding-right: 20px;
+	}
+
 	.navbar-nav {
 		float: none;
 		margin-right: 0;

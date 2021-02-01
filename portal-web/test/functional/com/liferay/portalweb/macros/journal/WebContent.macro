@@ -896,13 +896,15 @@ definition {
 
 	macro assertFieldRepeated {
 		AssertElementPresent(
-			key_fieldName = "${fieldName}",
+			key_fieldReference = "${fieldReference}",
+			key_index = "${index}",
 			locator1 = "WCEditWebContent#REPEATED_FIELD");
 	}
 
 	macro assertFieldRepeatedNotPresent {
 		AssertElementNotPresent(
-			key_fieldName = "${fieldName}",
+			key_fieldReference = "${fieldReference}",
+			key_index = "${index}",
 			locator1 = "WCEditWebContent#REPEATED_FIELD");
 	}
 

@@ -95,7 +95,29 @@ definition {
 	test EditColorFieldNameWithInvalidCharacters {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98070 EditColorFieldNameWithInvalidCharacters pending implementation
+		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
+
+		DataEngine.editFieldReference(
+			assertFieldReference = "ColorTest1",
+			fieldFieldLabel = "Color",
+			fieldReference = "%Color*Test @1");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Color",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "Color");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertTextEquals.assertValue(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "ColorTest1");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

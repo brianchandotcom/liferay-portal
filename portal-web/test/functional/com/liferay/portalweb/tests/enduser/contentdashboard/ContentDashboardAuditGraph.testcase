@@ -173,9 +173,9 @@ definition {
 			xAxisCategoryName = "No Audience");
 
 		AssertTextPresent(
-			auditGraphCheckboxName = "No Stage Category",
+			auditGraphCheckboxName = "No Stage Specified",
 			locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
-			value1 = "No Stage Category");
+			value1 = "No Stage Specified");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

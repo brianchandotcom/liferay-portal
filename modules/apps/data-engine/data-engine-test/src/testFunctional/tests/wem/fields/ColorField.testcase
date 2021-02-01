@@ -252,13 +252,14 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
-		DataEngine.viewField(
+		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Color Test",
+			fieldFieldLabelEdit = "Color Test Edited");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Color Test Edited",
 			fieldName = "Color");
 
-		Click(locator1 = "Icon#BACK");
-
-		WebContentStructures.deleteCP(structureName = "Structure Name Test");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

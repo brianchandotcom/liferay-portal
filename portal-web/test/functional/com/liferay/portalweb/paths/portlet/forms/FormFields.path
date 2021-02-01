@@ -19,13 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_ADD_REMOVE</td>
-	<td>//div[contains(@class,'ddm-field')]//button[contains(@class,'ddm-form-field-repeatable-delete-button')]</td>
+	<td>FIELD_ADD_SPECIFIC</td>
+	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_ADD_SPECIFIC</td>
-	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')]</td>
+	<td>FIELD_REMOVE</td>
+	<td>xpath=(//div[contains(@class,'ddm-field')][contains(@data-field-name,'${key_fieldReference}')][not(contains(@class,'container'))])[${key_index}]//button[contains(@class,'ddm-form-field-repeatable-delete-button')]</td>
 	<td></td>
 </tr>
 <tr>

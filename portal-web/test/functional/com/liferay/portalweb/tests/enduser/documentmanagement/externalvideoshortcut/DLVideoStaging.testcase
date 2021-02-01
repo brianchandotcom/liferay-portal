@@ -269,7 +269,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.gotoPreviewEntryCP(
+			liveSite = "true",
+			webContentTitle = "WC WebContent Title");
 
 		Pause(locator1 = "5000");
 
@@ -298,7 +300,9 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
+		WebContentNavigator.gotoPreviewEntryCP(
+			liveSite = "true",
+			webContentTitle = "WC WebContent Title");
 
 		Pause(locator1 = "5000");
 

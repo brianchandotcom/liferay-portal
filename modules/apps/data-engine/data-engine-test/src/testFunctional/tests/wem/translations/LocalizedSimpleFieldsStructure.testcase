@@ -142,51 +142,41 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "4"
 	test DuplicateTranslatedField {
-		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Test",
-			structureName = "Test");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Lbltest",
+			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Lbltest",
-			label = "Lbltest pt");
+		WebContentStructures.addName(structureName = "Nome da Estrutura WC");
 
-		WebContentStructures.addName(structureName = "Titulo teste");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
 
-		Click(locator1 = "//div[contains(@class,'dropdown')]//button[@data-title='Actions']");
-
-		MenuItem.clickNoError(menuItem = "Duplicate");
+		DataEngine.duplicateField(fieldFieldLabel = "Texto");
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.viewCP(
-			structureDescription = "Test",
-			structureName = "Test");
+		WebContentStructures.viewCP(structureName = "WC Structure Name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Test");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertTextEquals(
-			locator1 = "//label[@class='ddm-label' and contains(text(),'Copy of Lbltest pt')]",
-			value1 = "Copy of Lbltest pt");
+		AssertVisible(
+			key_fieldFieldLabel = "Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		WebContentStructures.saveCP();
-
-		WebContentStructures.deleteCP(structureName = "Test");
+		AssertVisible(
+			key_fieldFieldLabel = "Copy of Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

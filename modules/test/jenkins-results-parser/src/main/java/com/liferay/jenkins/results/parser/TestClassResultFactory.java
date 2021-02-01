@@ -14,17 +14,17 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.List;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class DefaultTestClassResult extends BaseTestClassResult {
+public class TestClassResultFactory {
 
-	protected DefaultTestClassResult(Build build, JSONObject suiteJSONObject) {
-		super(build, suiteJSONObject);
+	public static TestClassResult newTestClassResult(
+		Build build, JSONObject suiteJSONObject) {
+
+		return new DefaultTestClassResult(build, suiteJSONObject);
 	}
 
 }

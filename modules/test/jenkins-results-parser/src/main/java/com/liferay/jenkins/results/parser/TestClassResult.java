@@ -33,6 +33,8 @@ public interface TestClassResult {
 
 	public String getStatus();
 
+	public TestResult getTestResult(String testName);
+
 	public List<TestResult> getTestResults();
 
 	public boolean isFailing();

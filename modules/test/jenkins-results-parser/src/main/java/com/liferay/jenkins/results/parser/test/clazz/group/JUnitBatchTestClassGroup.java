@@ -485,6 +485,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return relevantTestClassNameRelativeIncludesGlobs;
 	}
 
+	protected boolean isValidTestClass(TestClass testClass) {
+		return true;
+	}
+
 	@Override
 	protected void setAxisTestClassGroups() {
 		int axisCount = getAxisCount();
@@ -575,7 +579,17 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 								testClassNamesIncludesPathMatchers,
 								filePath.toFile())) {
 
-							testClasses.add(_getPackagePathClassFile(filePath));
+							TestClass testClass = _getPackagePathClassFile(
+								filePath);
+
+							List<TestClass.TestClassMethod> testClassMethods =
+								testClass.getTestClassMethods();
+
+							if (!testClassMethods.isEmpty() &&
+								isValidTestClass(testClass)) {
+
+								testClasses.add(testClass);
+							}
 						}
 
 						return FileVisitResult.CONTINUE;

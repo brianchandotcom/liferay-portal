@@ -161,7 +161,7 @@ definition {
 	macro executeServerResourcesActions {
 		Navigator.gotoNavItem(navItem = "Resources");
 
-		Panel.expandPanel(panel = "Clean Up Actions");
+		Panel.expandUnstyledPanel(panel = "Clean Up Actions");
 
 		var key_actionsDescription = "${actionsDescription}";
 

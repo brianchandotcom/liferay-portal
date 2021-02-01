@@ -68,6 +68,7 @@ import com.liferay.taglib.util.ThemeUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -212,7 +213,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			});
 	}
 
-	private Map<String, Map<String, String>> _getActions(Layout layout) {
+	private Map<String, Map<String, String>> _getBasicActions(Layout layout) {
 		Map<String, Map<String, String>> actions =
 			HashMapBuilder.<String, Map<String, String>>put(
 				"get",
@@ -286,37 +287,23 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			friendlyURLEntryLocalization.getClassPK());
 	}
 
-	private long _getSegmentsExperienceId(
+	private SegmentsExperience _getSegmentsExperience(
 			Layout layout, String segmentsExperienceKey)
 		throws Exception {
 
-		if (Validator.isNotNull(segmentsExperienceKey)) {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceService.fetchSegmentsExperience(
-					layout.getGroupId(), segmentsExperienceKey);
-
-			return segmentsExperience.getSegmentsExperienceId();
+		if (Validator.isNull(segmentsExperienceKey)) {
+			return _getUserSegmentsExperience(layout);
 		}
 
-		contextHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+		if (Objects.equals(
+				String.valueOf(SegmentsEntryConstants.ID_DEFAULT),
+				segmentsExperienceKey)) {
 
-		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
-			layout.getGroupId(), contextUser.getUserId(),
-			_requestContextMapper.map(contextHttpServletRequest));
-
-		long[] segmentsExperienceIds =
-			_segmentsExperienceRequestProcessorRegistry.
-				getSegmentsExperienceIds(
-					contextHttpServletRequest, null, layout.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid(), segmentsEntryIds);
-
-		if (segmentsExperienceIds.length > 0) {
-			return segmentsExperienceIds[0];
+			return _getDefaultSegmentsExperience(layout.getGroupId());
 		}
 
-		return SegmentsEntryConstants.ID_DEFAULT;
+		return _segmentsExperienceService.fetchSegmentsExperience(
+			layout.getGroupId(), segmentsExperienceKey);
 	}
 
 	private List<SegmentsExperience> _getSegmentsExperiences(Layout layout)
@@ -360,6 +347,31 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return themeDisplay;
 	}
 
+	private SegmentsExperience _getUserSegmentsExperience(Layout layout)
+		throws Exception {
+
+		contextHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+			layout.getGroupId(), contextUser.getUserId(),
+			_requestContextMapper.map(contextHttpServletRequest));
+
+		long[] segmentsExperienceIds =
+			_segmentsExperienceRequestProcessorRegistry.
+				getSegmentsExperienceIds(
+					contextHttpServletRequest, null, layout.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layout.getPlid(), segmentsEntryIds);
+
+		if (segmentsExperienceIds.length > 0) {
+			return _segmentsExperienceLocalService.getSegmentsExperience(
+				segmentsExperienceIds[0]);
+		}
+
+		return _getDefaultSegmentsExperience(layout.getGroupId());
+	}
+
 	private boolean _isEmbeddedPageDefinition() {
 		MultivaluedMap<String, String> queryParameters =
 			contextUriInfo.getQueryParameters();
@@ -382,12 +394,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		contextHttpServletRequest = DynamicServletRequest.addQueryString(
 			contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
 
-		long segmentsExperienceId = _getSegmentsExperienceId(
+		SegmentsExperience segmentsExperience = _getSegmentsExperience(
 			layout, segmentsExperienceKey);
 
 		contextHttpServletRequest.setAttribute(
 			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-			new long[] {segmentsExperienceId});
+			new long[] {segmentsExperience.getSegmentsExperienceId()});
 
 		contextHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
@@ -428,11 +440,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		Map<String, Map<String, String>> actions = null;
 
-		if (segmentsExperienceKey == null) {
-			actions = _getActions(layout);
+		if (Validator.isNotNull(segmentsExperienceKey)) {
+			actions = _getExperienceActions(layout);
 		}
 		else {
-			actions = _getExperienceActions(layout);
+			actions = _getBasicActions(layout);
 		}
 
 		DefaultDTOConverterContext dtoConverterContext =
@@ -442,13 +454,19 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser);
 
-		long segmentsExperienceId = _getSegmentsExperienceId(
-			layout, segmentsExperienceKey);
-
 		dtoConverterContext.setAttribute(
 			"embeddedPageDefinition", embeddedPageDefinition);
-		dtoConverterContext.setAttribute(
-			"segmentsExperienceId", segmentsExperienceId);
+
+		if (Validator.isNotNull(segmentsExperienceKey)) {
+			dtoConverterContext.setAttribute(
+				"segmentsExperience",
+				_getSegmentsExperience(layout, segmentsExperienceKey));
+			dtoConverterContext.setAttribute("showExperience", Boolean.TRUE);
+		}
+		else {
+			dtoConverterContext.setAttribute(
+				"segmentsExperience", _getUserSegmentsExperience(layout));
+		}
 
 		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
 	}

@@ -16,6 +16,8 @@ package com.liferay.talend.avro;
 
 import com.liferay.talend.avro.exception.ConverterException;
 import com.liferay.talend.common.json.JsonFinder;
+import com.liferay.talend.common.oas.OASException;
+import com.liferay.talend.common.oas.OASExtensions;
 
 import java.math.BigDecimal;
 
@@ -238,26 +240,16 @@ public class JsonObjectIndexedRecordConverter {
 	}
 
 	private boolean _isI18nFieldName(String name) {
-		int idx = name.indexOf("_i18n");
-
-		if (idx < 0) {
-			return false;
+		try {
+			return _oasExtensions.isI18nFieldName(name);
 		}
-
-		if (name.lastIndexOf("_") == idx) {
-			return true;
+		catch (OASException oasException) {
+			throw new ConverterException("Unable to check name", oasException);
 		}
-
-		throw new ConverterException(
-			"Unsupported usage of _i18n in OpenAPI schema property name");
 	}
 
 	private boolean _isI18nFieldNameNested(String name) {
-		if (name.indexOf("_") < name.indexOf("_i18n")) {
-			return true;
-		}
-
-		return false;
+		return _oasExtensions.isI18nFieldNameNested(name);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
@@ -275,6 +267,7 @@ public class JsonObjectIndexedRecordConverter {
 			}
 		};
 	private static final JsonFinder _jsonFinder = new JsonFinder();
+	private static final OASExtensions _oasExtensions = new OASExtensions();
 
 	private final Schema _schema;
 

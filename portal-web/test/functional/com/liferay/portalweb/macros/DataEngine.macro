@@ -227,7 +227,7 @@ definition {
 					DataEngine.editFieldReferenceOfFieldOption(
 						fieldReferenceOfFieldOption = "${optionValue}",
 						index = "${index}",
-						optionFieldLabel = "Rows");
+						optionFieldLabel = "Columns");
 
 					var index = ${index} + 1;
 				}

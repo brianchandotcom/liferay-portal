@@ -234,7 +234,8 @@ public class FunctionalAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 		}
 
 		return _testResult = axisBuild.getTestResult(
-			_functionalTestClass.getTestClassMethodName());
+			JenkinsResultsParserUtil.combine(
+				"test[", _functionalTestClass.getTestClassMethodName(), "]"));
 	}
 
 	protected FunctionalAxisSpiraTestResult(

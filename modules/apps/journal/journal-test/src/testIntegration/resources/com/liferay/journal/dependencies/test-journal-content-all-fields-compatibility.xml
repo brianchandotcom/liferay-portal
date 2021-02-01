@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="aghw" name="Boolean" type="boolean">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="qyem" name="Color" type="ddm-color">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="mlgm" name="Date" type="ddm-date">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="ohgr" name="Decimal" type="ddm-decimal">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="rvuu" name="DocumentsAndMedia" type="document_library">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="pyxy" name="Geolocation" type="ddm-geolocation">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="gzpj" name="HTML" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="fbvh" name="Image" type="image">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="oswg" name="Integer" type="ddm-integer">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="mpch" name="LinkToPage" type="link_to_layout">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="mssk" name="Number" type="ddm-number">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="yuul" name="Radio" type="radio">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="fjro" name="Select" type="list">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="knum" name="Separator" type="selection_break" />
+	<dynamic-element index-type="keyword" instance-id="qdsm" name="Text" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="nmzq" name="TextBox" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="xcbw" name="WebContent" type="ddm-journal-article">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+</root>

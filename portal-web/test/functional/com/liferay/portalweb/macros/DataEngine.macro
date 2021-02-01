@@ -346,18 +346,6 @@ definition {
 
 	macro duplicateFieldsets {
 		Click(
-			key_fieldFieldLabel = "${fieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		Click(
-			key_text = "${fieldLabel}",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Duplicate");
-	}
-
-	macro duplicateFieldsets {
-		Click(
 			key_fieldsetLabel = "${fieldsetLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 

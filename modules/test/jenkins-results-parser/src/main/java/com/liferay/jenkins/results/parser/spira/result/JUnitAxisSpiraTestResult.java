@@ -93,7 +93,7 @@ public class JUnitAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 		testName = testName.replaceAll(".*(com/.*)", "$1");
 
 		testName = testName.replaceAll("\\/", ".");
-		testName = testName.replaceAll(".class", "");
+		testName = testName.replaceAll(".java", "");
 
 		return testName;
 	}
@@ -118,6 +118,11 @@ public class JUnitAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 			catch (Exception exception) {
 				exception.printStackTrace();
 			}
+		}
+
+		if (testClassResult == null) {
+			System.out.println(
+				"Could not find class result for " + getTestName());
 		}
 
 		_testClassResult = testClassResult;

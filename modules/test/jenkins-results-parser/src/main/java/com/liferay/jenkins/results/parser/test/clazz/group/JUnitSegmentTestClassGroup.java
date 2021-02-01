@@ -20,6 +20,8 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -45,7 +47,15 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 			sb.append("=");
 
 			for (File testClassFile : testClassFiles) {
-				sb.append(testClassFile.toPath());
+				Matcher matcher = _pattern.matcher(testClassFile.toString());
+
+				if (!matcher.find()) {
+					continue;
+				}
+
+				String classFileName = matcher.group("classFileName");
+
+				sb.append(classFileName.replace(".java", ".class"));
 				sb.append(",");
 			}
 
@@ -68,5 +78,8 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 
 		super(parentJUnitBatchTestClassGroup);
 	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		".*/(?<classFileName>com/.*)");
 
 }

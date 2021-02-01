@@ -90,8 +90,6 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 				continue;
 			}
 
-			Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
-
 			JsonObjectBuilder currentJsonObjectBuilder = objectBuilder;
 
 			if (_isNestedFieldName(fieldName)) {
@@ -117,6 +115,8 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 
 				fieldName = nameParts[1];
 			}
+
+			Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 			int fieldPos = dataField.pos();
 

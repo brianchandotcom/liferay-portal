@@ -213,18 +213,17 @@ definition {
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-		
+
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "Rich Text");
-		
+
 		FormViewBuilder.switchToAdvancedTab();
-		
+
 		FormFields.viewRadioValue(
 			fieldName = "indexType",
 			fieldValue = "Text");
-
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

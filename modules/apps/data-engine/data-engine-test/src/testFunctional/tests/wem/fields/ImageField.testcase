@@ -311,31 +311,38 @@ definition {
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
 	@priority = "3"
 	test ShowAndHideImageFieldLabel {
-		property portal.acceptance = "false";
-
-		var structureTitle = "My Structure";
-		var newLabel = "Changes";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "I'm a test",
-			structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "${newLabel}",
+			fieldFieldLabel = "Image",
 			fieldName = "Image");
 
-		DataEngine.editFieldShow(fieldFieldLabel = "${newLabel}");
+		DataEngine.editFieldShowOrHideLabel(
+			fieldFieldLabel = "Image",
+			showLabel = "true");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Image",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		DataEngine.editFieldShowOrHideLabel(
+			fieldFieldLabel = "Image",
+			showLabel = "false");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		AssertElementNotPresent(
-			key_fieldFieldLabel = "${newLabel}",
+			key_fieldFieldLabel = "Image",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 

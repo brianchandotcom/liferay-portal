@@ -61,6 +61,20 @@ definition {
 		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
+	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@priority = "5"
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher7310 {
+		property data.archive.type = "data-archive-web-content-with-fields";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10";
+
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+
+		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
+
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
+	}
+
 	@description = "This is a use case for LPS-75561."
 	@priority = "5"
 	test ViewLayoutArchive625 {

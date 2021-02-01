@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -77,16 +76,19 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
-			new StagedModelType(PollsQuestion.class));
+			new StagedModelType(PollsChoice.class),
+			new StagedModelType(PollsQuestion.class),
+			new StagedModelType(PollsVote.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "questions", true, false,
-				new PortletDataHandlerControl[] {
-					new PortletDataHandlerBoolean(
-						NAMESPACE, "votes", true, false, null,
-						PollsVote.class.getName())
-				},
-				PollsQuestion.class.getName()));
+				NAMESPACE, "choices", true, false, null,
+				PollsChoice.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "questions", true, false, null,
+				PollsQuestion.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "votes", true, false, null,
+				PollsVote.class.getName()));
 		setStagingControls(getExportControls());
 	}
 

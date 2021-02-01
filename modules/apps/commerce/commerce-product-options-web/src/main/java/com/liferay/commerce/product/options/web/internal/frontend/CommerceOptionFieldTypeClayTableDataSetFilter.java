@@ -85,7 +85,7 @@ public class CommerceOptionFieldTypeClayTableDataSetFilter
 		try {
 			cpOptionConfiguration = _configurationProvider.getConfiguration(
 				CPOptionConfiguration.class,
-				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
+				new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
 		}
 		catch (ConfigurationException configurationException) {
 			configurationException.printStackTrace();

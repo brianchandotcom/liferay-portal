@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.exception.NoSuchAccountGroupException;
@@ -278,7 +279,7 @@ public class AccountResourceImpl
 
 		if ((customFields != null) && !customFields.isEmpty()) {
 			ExpandoUtil.updateExpando(
-				contextCompany.getCompanyId(), CommerceAccount.class,
+				contextCompany.getCompanyId(), AccountEntry.class,
 				commerceAccount.getPrimaryKey(), customFields);
 		}
 
@@ -461,7 +462,7 @@ public class AccountResourceImpl
 
 		if ((customFields != null) && !customFields.isEmpty()) {
 			ExpandoUtil.updateExpando(
-				serviceContext.getCompanyId(), CommerceAccount.class,
+				serviceContext.getCompanyId(), AccountEntry.class,
 				commerceAccount.getPrimaryKey(), customFields);
 		}
 

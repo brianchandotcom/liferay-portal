@@ -55,7 +55,7 @@
 
 		<!-- References -->
 
-		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="AccountEntry" package-path="com.liferay.account" />
 		<reference entity="Organization" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="UserGroupRole" package-path="com.liferay.portal" />

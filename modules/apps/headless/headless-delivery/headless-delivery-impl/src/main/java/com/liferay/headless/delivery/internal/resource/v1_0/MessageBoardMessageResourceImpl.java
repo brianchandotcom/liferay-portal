@@ -111,17 +111,17 @@ public class MessageBoardMessageResourceImpl
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		MBMessage mbMessage =
-			_mbMessageLocalService.fetchMBMessageByReferenceCode(
-				mbThread.getGroupId(), externalReferenceCode);
+		_deleteMessageBoardMessageByExternalReferenceCode(
+			externalReferenceCode, mbThread.getGroupId());
+	}
 
-		if (mbMessage == null) {
-			throw new NoSuchMessageException(
-				"No message exists with external reference code " +
-					externalReferenceCode);
-		}
+	@Override
+	public void deleteSiteMessageBoardMessage(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
 
-		_mbMessageService.deleteMessage(mbMessage.getMessageId());
+		_deleteMessageBoardMessageByExternalReferenceCode(
+			externalReferenceCode, siteId);
 	}
 
 	@Override
@@ -190,17 +190,8 @@ public class MessageBoardMessageResourceImpl
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		MBMessage mbMessage =
-			_mbMessageLocalService.fetchMBMessageByReferenceCode(
-				mbThread.getGroupId(), externalReferenceCode);
-
-		if (mbMessage == null) {
-			throw new NoSuchMessageException(
-				"No message exists with external reference code " +
-					externalReferenceCode);
-		}
-
-		return _toMessageBoardMessage(mbMessage);
+		return _getMessageBoardMessageByExternalReferenceCode(
+			externalReferenceCode, mbThread.getGroupId());
 	}
 
 	@Override
@@ -232,6 +223,15 @@ public class MessageBoardMessageResourceImpl
 			).build(),
 			mbThread.getRootMessageId(), null, false, search, aggregation,
 			filter, pagination, sorts);
+	}
+
+	@Override
+	public MessageBoardMessage getSiteMessageBoardMessage(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		return _getMessageBoardMessageByExternalReferenceCode(
+			externalReferenceCode, siteId);
 	}
 
 	@Override
@@ -344,19 +344,28 @@ public class MessageBoardMessageResourceImpl
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
 			messageBoardThreadId);
 
-		MBMessage mbMessage =
-			_mbMessageLocalService.fetchMBMessageByReferenceCode(
-				mbThread.getGroupId(), externalReferenceCode);
-
-		if (mbMessage == null) {
-			messageBoardMessage.setExternalReferenceCode(externalReferenceCode);
-
-			return _addMessageBoardMessage(
-				mbThread.getRootMessageId(), messageBoardMessage);
+		if (messageBoardMessage.getParentMessageBoardMessageId() == null) {
+			messageBoardMessage.setParentMessageBoardMessageId(
+				mbThread.getRootMessageId());
 		}
 
-		return _replaceMessageBoardMessage(
-			mbMessage.getMessageId(), messageBoardMessage);
+		return _upsertMessageBoardMessageByExternalReferenceCode(
+			externalReferenceCode, mbThread.getGroupId(), messageBoardMessage);
+	}
+
+	@Override
+	public MessageBoardMessage putSiteMessageBoardMessage(
+			Long siteId, String externalReferenceCode,
+			MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		if (messageBoardMessage.getParentMessageBoardMessageId() == null) {
+			throw new BadRequestException(
+				"Missing required property \"parentMessageBoardMessageId\"");
+		}
+
+		return _upsertMessageBoardMessageByExternalReferenceCode(
+			externalReferenceCode, siteId, messageBoardMessage);
 	}
 
 	private MessageBoardMessage _addMessageBoardMessage(
@@ -395,6 +404,23 @@ public class MessageBoardMessageResourceImpl
 		return _toMessageBoardMessage(mbMessage);
 	}
 
+	private void _deleteMessageBoardMessageByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageLocalService.fetchMBMessageByReferenceCode(
+				groupId, externalReferenceCode);
+
+		if (mbMessage == null) {
+			throw new NoSuchMessageException(
+				"No message exists with external reference code " +
+					externalReferenceCode);
+		}
+
+		_mbMessageService.deleteMessage(mbMessage.getMessageId());
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		MessageBoardMessage messageBoardMessage) {
 
@@ -402,6 +428,23 @@ public class MessageBoardMessageResourceImpl
 			MBMessage.class.getName(), contextCompany.getCompanyId(),
 			messageBoardMessage.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private MessageBoardMessage _getMessageBoardMessageByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageLocalService.fetchMBMessageByReferenceCode(
+				groupId, externalReferenceCode);
+
+		if (mbMessage == null) {
+			throw new NoSuchMessageException(
+				"No message exists with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toMessageBoardMessage(mbMessage);
 	}
 
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
@@ -639,6 +682,28 @@ public class MessageBoardMessageResourceImpl
 
 			mbMessage.setAnswer(showAsAnswer);
 		}
+	}
+
+	private MessageBoardMessage
+			_upsertMessageBoardMessageByExternalReferenceCode(
+				String externalReferenceCode, long groupId,
+				MessageBoardMessage messageBoardMessage)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageLocalService.fetchMBMessageByReferenceCode(
+				groupId, externalReferenceCode);
+
+		if (mbMessage == null) {
+			messageBoardMessage.setExternalReferenceCode(externalReferenceCode);
+
+			return _addMessageBoardMessage(
+				messageBoardMessage.getParentMessageBoardMessageId(),
+				messageBoardMessage);
+		}
+
+		return _replaceMessageBoardMessage(
+			mbMessage.getMessageId(), messageBoardMessage);
 	}
 
 	@Reference

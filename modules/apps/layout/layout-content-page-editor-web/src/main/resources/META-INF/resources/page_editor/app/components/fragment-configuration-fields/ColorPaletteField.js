@@ -31,14 +31,13 @@ export const ColorPaletteField = ({field, onValueSelect, value}) => {
 
 					onValueSelect(field.name, '');
 				}}
-				onColorSelect={(color, event) => {
+				onColorSelect={(color) => {
 					setNextValue(color);
 
 					onValueSelect(field.name, {
 						color,
 						cssClass: color,
-						rgbValue: getComputedStyle(event.target)
-							.backgroundColor,
+						rgbValue: getRgbValue(color),
 					});
 				}}
 				selectedColor={nextValue}
@@ -46,6 +45,21 @@ export const ColorPaletteField = ({field, onValueSelect, value}) => {
 		</ClayForm.Group>
 	);
 };
+
+function getRgbValue(className) {
+	const node = document.createElement('div');
+
+	node.classList.add(`bg-${className}`);
+	node.style.display = 'none';
+
+	document.body.append(node);
+
+	const rgbValue = getComputedStyle(node).backgroundColor;
+
+	document.body.removeChild(node);
+
+	return rgbValue;
+}
 
 ColorPaletteField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,

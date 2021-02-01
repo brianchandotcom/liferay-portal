@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.internal.model.listener;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.exception.CommerceAccountOrdersException;
-import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -27,15 +27,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alec Sloan
  */
 @Component(enabled = false, immediate = true, service = ModelListener.class)
-public class CommerceAccountModelListener
-	extends BaseModelListener<CommerceAccount> {
+public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 
 	@Override
-	public void onBeforeRemove(CommerceAccount commerceAccount) {
+	public void onBeforeRemove(AccountEntry accountEntry) {
 		int accountOrders =
 			_commerceOrderLocalService.
 				getCommerceOrdersCountByCommerceAccountId(
-					commerceAccount.getCommerceAccountId());
+					accountEntry.getAccountEntryId());
 
 		if (accountOrders > 0) {
 			throw new CommerceAccountOrdersException();

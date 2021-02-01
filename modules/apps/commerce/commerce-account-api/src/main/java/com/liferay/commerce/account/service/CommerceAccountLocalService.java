@@ -404,6 +404,11 @@ public interface CommerceAccountLocalService
 			long commerceAccountId, long commerceAddressId)
 		throws PortalException;
 
+	/**
+	 * @bridged
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAccount updateStatus(
 			long userId, long commerceAccountId, int status,

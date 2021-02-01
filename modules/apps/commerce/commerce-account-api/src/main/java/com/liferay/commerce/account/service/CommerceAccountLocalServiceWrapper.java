@@ -591,6 +591,11 @@ public class CommerceAccountLocalServiceWrapper
 			commerceAccountId, commerceAddressId);
 	}
 
+	/**
+	 * @bridged
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccount updateStatus(
 			long userId, long commerceAccountId, int status,

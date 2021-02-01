@@ -88,6 +88,8 @@ public interface CommerceAccount extends CommerceAccountModel, PersistedModel {
 
 	public java.util.List<CommerceAccountUserRel> getCommerceAccountUserRels();
 
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge();
+
 	public CommerceAccount getParentCommerceAccount()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

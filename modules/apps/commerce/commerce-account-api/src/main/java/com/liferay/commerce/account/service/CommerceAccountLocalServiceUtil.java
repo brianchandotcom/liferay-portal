@@ -548,6 +548,11 @@ public class CommerceAccountLocalServiceUtil {
 			commerceAccountId, commerceAddressId);
 	}
 
+	/**
+	 * @bridged
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.account.model.CommerceAccount
 			updateStatus(
 				long userId, long commerceAccountId, int status,

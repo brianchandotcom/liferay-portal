@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.account.service.base;
 
+import com.liferay.account.service.persistence.AccountEntryPersistence;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.persistence.CommerceAccountFinder;
@@ -47,7 +48,6 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
@@ -725,6 +725,49 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the account entry local service.
+	 *
+	 * @return the account entry local service
+	 */
+	public com.liferay.account.service.AccountEntryLocalService
+		getAccountEntryLocalService() {
+
+		return accountEntryLocalService;
+	}
+
+	/**
+	 * Sets the account entry local service.
+	 *
+	 * @param accountEntryLocalService the account entry local service
+	 */
+	public void setAccountEntryLocalService(
+		com.liferay.account.service.AccountEntryLocalService
+			accountEntryLocalService) {
+
+		this.accountEntryLocalService = accountEntryLocalService;
+	}
+
+	/**
+	 * Returns the account entry persistence.
+	 *
+	 * @return the account entry persistence
+	 */
+	public AccountEntryPersistence getAccountEntryPersistence() {
+		return accountEntryPersistence;
+	}
+
+	/**
+	 * Sets the account entry persistence.
+	 *
+	 * @param accountEntryPersistence the account entry persistence
+	 */
+	public void setAccountEntryPersistence(
+		AccountEntryPersistence accountEntryPersistence) {
+
+		this.accountEntryPersistence = accountEntryPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -788,46 +831,6 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 		ClassNamePersistence classNamePersistence) {
 
 		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the group local service.
-	 *
-	 * @return the group local service
-	 */
-	public com.liferay.portal.kernel.service.GroupLocalService
-		getGroupLocalService() {
-
-		return groupLocalService;
-	}
-
-	/**
-	 * Sets the group local service.
-	 *
-	 * @param groupLocalService the group local service
-	 */
-	public void setGroupLocalService(
-		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-
-		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group persistence.
-	 *
-	 * @return the group persistence
-	 */
-	public GroupPersistence getGroupPersistence() {
-		return groupPersistence;
-	}
-
-	/**
-	 * Sets the group persistence.
-	 *
-	 * @param groupPersistence the group persistence
-	 */
-	public void setGroupPersistence(GroupPersistence groupPersistence) {
-		this.groupPersistence = groupPersistence;
 	}
 
 	/**
@@ -1184,6 +1187,15 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 		commerceAccountUserRelPersistence;
 
 	@ServiceReference(
+		type = com.liferay.account.service.AccountEntryLocalService.class
+	)
+	protected com.liferay.account.service.AccountEntryLocalService
+		accountEntryLocalService;
+
+	@ServiceReference(type = AccountEntryPersistence.class)
+	protected AccountEntryPersistence accountEntryPersistence;
+
+	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
@@ -1197,15 +1209,6 @@ public abstract class CommerceAccountLocalServiceBaseImpl
 
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.GroupLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.GroupLocalService
-		groupLocalService;
-
-	@ServiceReference(type = GroupPersistence.class)
-	protected GroupPersistence groupPersistence;
 
 	@ServiceReference(
 		type = com.liferay.portal.kernel.service.OrganizationLocalService.class

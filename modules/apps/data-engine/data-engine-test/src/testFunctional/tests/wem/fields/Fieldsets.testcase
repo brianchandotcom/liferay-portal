@@ -118,7 +118,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "EditFieldSetTest");
 
-		WebContentStructures.editStructureCP(structureName = "EditFieldSetTest");
+		WebContentStructures.editStructure(structureName = "EditFieldSetTest");
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 

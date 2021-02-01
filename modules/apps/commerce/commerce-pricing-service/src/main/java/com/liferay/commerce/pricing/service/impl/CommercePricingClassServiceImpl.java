@@ -21,6 +21,7 @@ import com.liferay.commerce.pricing.service.base.CommercePricingClassServiceBase
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -255,7 +256,7 @@ public class CommercePricingClassServiceImpl
 			serviceContext);
 	}
 
-	private void _checkPortletResourcePermission(Long groupId, String actionId)
+	private void _checkPortletResourcePermission(Group group, String actionId)
 		throws PrincipalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -263,7 +264,7 @@ public class CommercePricingClassServiceImpl
 				getPortletResourcePermission();
 
 		portletResourcePermission.check(
-			getPermissionChecker(), groupId, actionId);
+			getPermissionChecker(), group, actionId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

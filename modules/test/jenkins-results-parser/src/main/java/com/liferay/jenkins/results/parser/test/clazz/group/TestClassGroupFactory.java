@@ -91,13 +91,16 @@ public class TestClassGroupFactory {
 				batchTestClassGroup = new FunctionalBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
-			else if (batchName.startsWith("integration-") ||
-					 batchName.startsWith("junit-test-") ||
-					 batchName.startsWith("subrepository-integration-") ||
-					 batchName.startsWith("subrepository-unit-") ||
-					 batchName.startsWith("unit-")) {
-
+			else if (batchName.startsWith("integration-")) {
+				batchTestClassGroup = new IntegrationJUnitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+			else if (batchName.startsWith("junit-test-")) {
 				batchTestClassGroup = new JUnitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+			else if (batchName.startsWith("unit-")) {
+				batchTestClassGroup = new UnitJUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("modules-compile-")) {
@@ -105,9 +108,15 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("modules-integration-") ||
-					 batchName.startsWith("modules-unit-")) {
+					 batchName.startsWith("subrepository-integration-")) {
 
-				batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
+				batchTestClassGroup = new ModulesIntegrationJUnitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+			else if (batchName.startsWith("modules-unit-") ||
+					 batchName.startsWith("subrepository-unit-")) {
+
+				batchTestClassGroup = new ModulesUnitJUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("modules-semantic-versioning-")) {

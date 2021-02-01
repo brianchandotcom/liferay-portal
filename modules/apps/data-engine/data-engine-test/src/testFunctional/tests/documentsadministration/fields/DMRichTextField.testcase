@@ -135,8 +135,24 @@ definition {
 	@priority = "5"
 	test RepeatRichTextOnUpload {
 		property portal.acceptance = "false";
+		
+		DataEngine.addField(
+			fieldFieldLabel = "Repeatable",
+			fieldName = "Rich Text");
 
-		// TODO LPS-98076 RepeatRichTextOnUpload pending implementation
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Repeatable");
+
+		DDLDataDefinition.save();
+
+		Navigator.gotoNavItem(navItem = "Documents and Media");
+		
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "New Document Type");
+
+		DataEngine.addRepeatableField(fieldName = "Repeatable");
+
+		DataEngine.assertFieldRepeated(
+            fieldReference = "RichText",
+            index = "2");
 
 	}
 

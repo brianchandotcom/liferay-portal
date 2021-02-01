@@ -35,24 +35,20 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "4"
 	test CheckDefaultStructureTitleDisplayedOnStructureList {
-		property portal.acceptance = "false";
+		var defaultStructureName = "WC Structure Name EN";
+		var defaultStructureName_pt = "WC Structure Name PT";
+		var key_urlAppend = "pt/group/test-site-name/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp";
 
-		var defaultStructureName = "Structure1";
-		var defaultStructureName_pt = "Structure1 PT";
-		var textFieldName = "Lbltest";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-			structureDescription = "Test Description",
+			structureDescription = "WC Structure Description",
 			structureName = "${defaultStructureName}");
 
 		DataEngine.addField(
-			fieldFieldLabel = "${textFieldName}",
+			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -63,7 +59,13 @@ definition {
 
 		WebContentStructures.viewCP(structureName = "${defaultStructureName}");
 
-		WebContentStructures.deleteCP(structureName = "${defaultStructureName}");
+		Navigator.openWithAppendToBaseURL(urlAppend = "${key_urlAppend}");
+
+		AssertTextEquals(
+			key_columnName = "name",
+			key_tableEntry = "${defaultStructureName_pt}",
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			value1 = "${defaultStructureName_pt}");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

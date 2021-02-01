@@ -23,14 +23,12 @@ import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class PollsPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {

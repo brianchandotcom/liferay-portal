@@ -440,6 +440,22 @@ public class SegmentsExperienceLocalServiceImpl
 			Map<Locale, String> nameMap, boolean active)
 		throws PortalException {
 
+		SegmentsExperience segmentsExperience =
+			segmentsExperiencePersistence.findByPrimaryKey(
+				segmentsExperienceId);
+
+		return updateSegmentsExperience(
+			segmentsExperienceId, segmentsEntryId, nameMap, active,
+			segmentsExperience.getTypeSettingsUnicodeProperties());
+	}
+
+	@Override
+	public SegmentsExperience updateSegmentsExperience(
+			long segmentsExperienceId, long segmentsEntryId,
+			Map<Locale, String> nameMap, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException {
+
 		_validateName(nameMap);
 
 		SegmentsExperience segmentsExperience =
@@ -455,6 +471,8 @@ public class SegmentsExperienceLocalServiceImpl
 		segmentsExperience.setSegmentsEntryId(segmentsEntryId);
 		segmentsExperience.setNameMap(nameMap);
 		segmentsExperience.setActive(active);
+		segmentsExperience.setTypeSettingsUnicodeProperties(
+			typeSettingsUnicodeProperties);
 
 		return segmentsExperiencePersistence.update(segmentsExperience);
 	}

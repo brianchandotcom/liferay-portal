@@ -412,7 +412,7 @@ renderResponse.setTitle(headerTitle);
 											containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
 											dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 											dataRecordValues="<%= ddmFormValuesToMapConverter.convert(ddmFormValues, DDMStructureLocalServiceUtil.getStructure(ddmStructure.getStructureId())) %>"
-											namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() %>"
+											namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
 										/>
 
 										<liferay-frontend:component

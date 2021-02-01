@@ -139,6 +139,28 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		Assert.assertNotNull(resolvedUser);
 	}
 
+	@Test
+	public void testImportUserWithScreenNameAttribute() throws Exception {
+		when(
+			_company.isStrangers()
+		).thenReturn(
+			true
+		);
+
+		when(
+			_company.isStrangersWithMx()
+		).thenReturn(
+			true
+		);
+
+		User resolvedUser = _defaultUserResolver.importUser(
+			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME,
+			"screenName", new UserResolverSAMLContextImpl(_messageContext),
+			new ServiceContext());
+
+		Assert.assertNotNull(resolvedUser);
+	}
+
 	@Test(expected = SubjectException.class)
 	public void testStrangersNotAllowedToCreateAccounts() throws Exception {
 		when(

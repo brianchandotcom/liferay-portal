@@ -119,7 +119,7 @@ long commerceAccountId = commerceAccountAdminDisplayContext.getCommerceAccountId
 			<c:if test="<%= commerceAccountAdminDisplayContext.hasCustomAttributesAvailable() %>">
 				<aui:fieldset collapsible="<%= true %>" label="custom-attribute">
 					<liferay-expando:custom-attribute-list
-						className="<%= CommerceAccount.class.getName() %>"
+						className="<%= AccountEntry.class.getName() %>"
 						classPK="<%= commerceAccountId %>"
 						editable="<%= true %>"
 						label="<%= true %>"

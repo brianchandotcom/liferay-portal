@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.dependency.ServiceDependencyManager;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,9 +127,6 @@ public class SynchronousDestinationTestRule
 		}
 
 		public void enableSync() {
-			ServiceDependencyManager serviceDependencyManager =
-				new ServiceDependencyManager();
-
 			Filter auditFilter = _registerDestinationFilter(
 				DestinationNames.AUDIT);
 			Filter asyncFilter = _registerDestinationFilter(
@@ -163,7 +160,7 @@ public class SynchronousDestinationTestRule
 			Filter subscrpitionSenderFilter = _registerDestinationFilter(
 				DestinationNames.SUBSCRIPTION_SENDER);
 
-			serviceDependencyManager.registerDependencies(
+			_waitForDependencies(
 				auditFilter, asyncFilter, backgroundTaskFilter,
 				backgroundTaskStatusFilter, commerceOrderFilter,
 				commercePaymentFilter, commerceShipmentFilter,
@@ -171,8 +168,6 @@ public class SynchronousDestinationTestRule
 				ddmStructureReindexFilter, kaleoGraphWalkerFilter, mailFilter,
 				pdfProcessorFilter, rawMetaDataProcessorFilter,
 				segmentsEntryReindexFilter, subscrpitionSenderFilter);
-
-			serviceDependencyManager.waitForDependencies();
 
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
@@ -373,6 +368,37 @@ public class SynchronousDestinationTestRule
 					"(&(destination.name=", destinationName, ")(objectClass=",
 					Destination.class.getName(), "))"));
 		}
+
+		private void _waitForDependencies(Filter... filters) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			for (Filter filter : filters) {
+				ServiceTracker<Object, Object> serviceTracker =
+					registry.trackServices(filter);
+
+				serviceTracker.open();
+
+				while (true) {
+					try {
+						Object service = serviceTracker.waitForService(
+							_SLEEP_TIME);
+
+						if (service != null) {
+							serviceTracker.close();
+
+							break;
+						}
+
+						System.out.println(
+							"Waiting for destination " + filter.toString());
+					}
+					catch (InterruptedException interruptedException) {
+					}
+				}
+			}
+		}
+
+		private static final int _SLEEP_TIME = 2000;
 
 		private final List<String> _absentDestinationNames = new ArrayList<>();
 		private final List<Destination> _asyncServiceDestinations =

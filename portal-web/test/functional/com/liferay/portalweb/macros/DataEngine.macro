@@ -505,7 +505,7 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
-	macro editFieldShow {
+	macro editFieldShowOrHideLabel {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
@@ -515,26 +515,18 @@ definition {
 			Navigator.gotoNavTab(navTab = "Advanced");
 		}
 
-		Uncheck.uncheckToggleSwitch(
-			checkboxName = "Show Label",
-			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+		if ("${showLabel}" == "true") {
+			Check.checkToggleSwitch(
+				checkboxName = "Show Label",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else if ("${showLabel}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Show Label",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+		}
 
 		Click(locator1 = "Sidebar#BACK");
-	}
-
-	macro editFieldShowLabel {
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
-
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-
-		Check.checkToggleSwitch(
-			checkboxName = "Show Label",
-			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
 	macro editFieldTip {

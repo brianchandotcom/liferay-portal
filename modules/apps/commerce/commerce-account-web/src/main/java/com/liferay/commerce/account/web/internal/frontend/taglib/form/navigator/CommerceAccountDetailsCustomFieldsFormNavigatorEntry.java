@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.account.web.internal.frontend.taglib.form.navigator;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
@@ -73,8 +74,8 @@ public class CommerceAccountDetailsCustomFieldsFormNavigatorEntry
 
 			hasCustomAttributesAvailable =
 				CustomAttributesUtil.hasCustomAttributes(
-					user.getCompanyId(), CommerceAccount.class.getName(),
-					classPK, null);
+					user.getCompanyId(), AccountEntry.class.getName(), classPK,
+					null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

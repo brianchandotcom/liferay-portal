@@ -28,7 +28,7 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 <aui:model-context bean="<%= commerceAccountDisplayContext.getCurrentCommerceAccount() %>" model="<%= CommerceAccount.class %>" />
 
 <liferay-expando:custom-attribute-list
-	className="<%= CommerceAccount.class.getName() %>"
+	className="<%= AccountEntry.class.getName() %>"
 	classPK="<%= commerceAccountDisplayContext.getCurrentCommerceAccountId() %>"
 	editable="<%= true %>"
 	label="<%= true %>"

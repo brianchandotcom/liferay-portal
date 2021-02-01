@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.account.web.internal.portlet.action;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.exception.CommerceAccountNameException;
@@ -26,6 +29,7 @@ import com.liferay.commerce.exception.NoSuchAddressException;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,8 +40,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -48,7 +52,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.Serializable;
+
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -204,8 +211,8 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
 		}
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceAccount.class.getName(), actionRequest);
+		ServiceContext serviceContext = _getServiceContext(
+			actionRequest, commerceAccountId);
 
 		CommerceAccount commerceAccount;
 
@@ -233,12 +240,48 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 		return commerceAccount;
 	}
 
+	private ServiceContext _getServiceContext(
+			ActionRequest actionRequest, long commerceAccountId)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(_portal.getCompanyId(actionRequest));
+		serviceContext.setUserId(_portal.getUserId(actionRequest));
+
+		if (commerceAccountId > 0) {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				_classNameLocalService.getClassNameId(AccountEntry.class),
+				commerceAccountId);
+
+			serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
+			serviceContext.setAssetTagNames(assetEntry.getTagNames());
+		}
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			_portal.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(),
+					AccountEntry.class.getName()),
+				actionRequest);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditCommerceAccountMVCActionCommand.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

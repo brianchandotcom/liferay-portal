@@ -1980,11 +1980,19 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected void validate(DDMForm ddmForm) throws PortalException {
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
 		_ddmFormValidator.validate(ddmForm);
 	}
 
 	protected void validate(DDMForm parentDDMForm, DDMForm ddmForm)
 		throws PortalException {
+
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
 
 		Set<String> commonDDMFormFieldNames = SetUtil.intersect(
 			getDDMFormFieldsNames(parentDDMForm),
@@ -2001,6 +2009,10 @@ public class DDMStructureLocalServiceImpl
 			long groupId, long parentStructureId, long classNameId,
 			String structureKey, Map<Locale, String> nameMap, DDMForm ddmForm)
 		throws PortalException {
+
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
 
 		structureKey = getStructureKey(structureKey);
 
@@ -2026,10 +2038,11 @@ public class DDMStructureLocalServiceImpl
 		throws PortalException {
 
 		try {
-			if (!ExportImportThreadLocal.isImportInProcess()) {
-				validate(nameMap, ddmForm.getDefaultLocale());
+			if (ExportImportThreadLocal.isImportInProcess()) {
+				return;
 			}
 
+			validate(nameMap, ddmForm.getDefaultLocale());
 			validate(ddmForm);
 
 			if (parentDDMForm != null) {
@@ -2062,6 +2075,10 @@ public class DDMStructureLocalServiceImpl
 			Map<Locale, String> nameMap, Locale contentDefaultLocale)
 		throws PortalException {
 
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
 		String name = nameMap.get(contentDefaultLocale);
 
 		if (Validator.isNull(name)) {
@@ -2090,6 +2107,10 @@ public class DDMStructureLocalServiceImpl
 	protected void validateParentStructure(
 			long structureId, long parentStructureId)
 		throws PortalException {
+
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
 
 		while (parentStructureId != 0) {
 			DDMStructure parentStructure =

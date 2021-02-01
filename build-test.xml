@@ -9653,6 +9653,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</else>
 		</if>
 
+		<get-testcase-property property.name="test.skip.tear.down" />
+
 		<if>
 			<and>
 				<contains string="${test.class}" substring="," />

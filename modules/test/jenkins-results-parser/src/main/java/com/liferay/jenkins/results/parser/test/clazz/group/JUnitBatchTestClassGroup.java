@@ -363,7 +363,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		private static Pattern _classHeaderPattern = Pattern.compile(
 			JenkinsResultsParserUtil.combine(
-				"(?<annotations>(@[\\s\\S]+?))?public\\s+class\\s+",
+				"\\*/(?<annotations>[^/]*)public\\s+class\\s+",
 				"(?<className>[^\\(\\s]+)"));
 		private static final Map<File, JunitBatchTestClass> _junitTestClasses =
 			new HashMap<>();
@@ -596,22 +596,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					}
 
 					private BaseTestClass _getPackagePathClassFile(Path path) {
-						String filePath = path.toString();
-
-						Matcher matcher = _packagePathPattern.matcher(filePath);
-
-						if (matcher.find()) {
-							String packagePath = matcher.group("packagePath");
-
-							return JunitBatchTestClass.getInstance(
-								new File(
-									packagePath.replace(".java", ".class")),
-								portalGitWorkingDirectory, path.toFile());
-						}
-
 						return JunitBatchTestClass.getInstance(
-							new File(filePath.replace(".java", ".class")),
-							portalGitWorkingDirectory, path.toFile());
+							path.toFile(), portalGitWorkingDirectory,
+							path.toFile());
 					}
 
 				});
@@ -729,8 +716,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		List<String> propertyValues = new ArrayList<>();
 
-		String propertyValue = getFirstPropertyValue(
-			propertyName, batchName, testSuiteName);
+		String propertyValue = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), propertyName, batchName, testSuiteName,
+			getJobName());
 
 		if (propertyValue != null) {
 			propertyValues.add(propertyValue);
@@ -857,9 +845,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		false;
 
 	private static final String _GLOB_MODULES_PRIVATE = "modules/private/**";
-
-	private static final Pattern _packagePathPattern = Pattern.compile(
-		".*/(?<packagePath>com/.*)");
 
 	private final List<File> _autoBalanceTestFiles = new ArrayList<>();
 	private boolean _includeAutoBalanceTests;

@@ -354,23 +354,23 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title");
+			webContentTitle = "Romove and Restore WC WebContent Title");
 
 		PortletEntry.publish();
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
-			webContentTitle = "WC WebContent Title");
+			webContentTitle = "Romove and Restore WC WebContent Title");
 
 		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
 
 		RecycleBin.viewCP(
-			assetName = "WC WebContent Title",
+			assetName = "Romove and Restore WC WebContent Title",
 			assetType = "Web Content Article",
 			deleteUser = "Test Test");
 
 		RecycleBin.restoreCP(
-			assetName = "WC WebContent Title",
+			assetName = "Romove and Restore WC WebContent Title",
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Article");
 
@@ -378,7 +378,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
-			webContentTitle = "WC WebContent Title");
+			webContentTitle = "Romove and Restore WC WebContent Title");
 	}
 
 }

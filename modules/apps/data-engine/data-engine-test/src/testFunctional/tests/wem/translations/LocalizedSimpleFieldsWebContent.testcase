@@ -176,12 +176,66 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@ignore = "true"
 	@priority = "5"
 	test CheckLocalizationOfWebContentUponLanguageChange {
-		property portal.acceptance = "false";
 
-		// TODO LPS-122317 CheckLocalizationOfWebContentUponLanguageChange pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureDescription = "Structure Description Test",
+            structureName = "Structure Name Test");
+
+        DataEngine.addField(
+            fieldFieldLabel = "Text Test",
+            fieldName = "Text");
+		
+        WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+        NavItem.click(navItem = "Web Content");
+
+        WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+        PortletEntry.inputTitle(title = "WC Title Test");
+
+		PortletEntry.inputText(fieldLabel = "Text",
+                text = "Text test");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		PortletEntry.inputText(fieldLabel = "Text",
+                text = "Texto teste pt_BR");
+
+		PortletEntry.changeLocale(locale = "es_ES");
+
+		PortletEntry.inputText(fieldLabel = "Text",
+                text = "Texto teste es_ES");
+
+        PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+            menuItem = "Edit",
+            rowEntry = "WC Title Test");
+
+		AssertTextEquals(
+			key_fieldLabel = "Text",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Text test");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		AssertTextEquals(
+			key_fieldLabel = "Text",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Texto teste pt_BR");
+
+		PortletEntry.changeLocale(locale = "es_ES");
+
+		AssertTextEquals(
+			key_fieldLabel = "Text",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Texto teste es_ES");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

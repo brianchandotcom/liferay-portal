@@ -46,74 +46,68 @@ public class TalendProcessCallable
 		PrintStream errPrintStream = System.err;
 		PrintStream outPrintStream = System.out;
 
+		UnsyncByteArrayOutputStream errUnsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		System.setErr(
+			new TeePrintStream(errUnsyncByteArrayOutputStream, errPrintStream));
+
+		UnsyncByteArrayOutputStream outUnsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		System.setOut(
+			new TeePrintStream(outUnsyncByteArrayOutputStream, outPrintStream));
+
+		TalendProcessException talendProcessException =
+			new TalendProcessException();
+
+		System.setSecurityManager(
+			new SecurityManager() {
+
+				@Override
+				public void checkExit(int status) {
+					talendProcessException.setStatus(status);
+
+					throw talendProcessException;
+				}
+
+				@Override
+				public void checkPermission(Permission perm) {
+				}
+
+			});
+
+		ClassLoader classLoader = TalendProcessCallable.class.getClassLoader();
+
 		try {
-			UnsyncByteArrayOutputStream errUnsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
+			Class<?> talendJobClass = classLoader.loadClass(_jobMainClassFQN);
 
-			System.setErr(
-				new TeePrintStream(
-					errUnsyncByteArrayOutputStream, errPrintStream));
+			Method mainMethod = talendJobClass.getMethod(
+				"main", String[].class);
 
-			UnsyncByteArrayOutputStream outUnsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
+			mainMethod.setAccessible(true);
 
-			System.setOut(
-				new TeePrintStream(
-					outUnsyncByteArrayOutputStream, outPrintStream));
+			mainMethod.invoke(null, new Object[] {_mainMethodArgs});
 
-			TalendProcessException talendProcessException =
-				new TalendProcessException();
+			return new TalendProcessOutput(
+				errUnsyncByteArrayOutputStream.toString(),
+				talendProcessException.getStatus(),
+				outUnsyncByteArrayOutputStream.toString());
+		}
+		catch (InvocationTargetException invocationTargetException) {
+			Throwable causeThrowable = invocationTargetException.getCause();
 
-			System.setSecurityManager(
-				new SecurityManager() {
-
-					@Override
-					public void checkExit(int status) {
-						talendProcessException.setStatus(status);
-
-						throw talendProcessException;
-					}
-
-					@Override
-					public void checkPermission(Permission perm) {
-					}
-
-				});
-
-			ClassLoader classLoader =
-				TalendProcessCallable.class.getClassLoader();
-
-			try {
-				Class<?> talendJobClass = classLoader.loadClass(
-					_jobMainClassFQN);
-
-				Method mainMethod = talendJobClass.getMethod(
-					"main", String[].class);
-
-				mainMethod.setAccessible(true);
-
-				mainMethod.invoke(null, new Object[] {_mainMethodArgs});
-
+			if (causeThrowable == talendProcessException) {
 				return new TalendProcessOutput(
 					errUnsyncByteArrayOutputStream.toString(),
 					talendProcessException.getStatus(),
 					outUnsyncByteArrayOutputStream.toString());
 			}
-			catch (InvocationTargetException invocationTargetException) {
-				Throwable causeThrowable = invocationTargetException.getCause();
 
-				if (causeThrowable == talendProcessException) {
-					return new TalendProcessOutput(
-						errUnsyncByteArrayOutputStream.toString(),
-						talendProcessException.getStatus(),
-						outUnsyncByteArrayOutputStream.toString());
-				}
-
-				throw new ProcessException(causeThrowable);
-			}
-			catch (Throwable throwable) {
-				throw new ProcessException(throwable);
-			}
+			throw new ProcessException(causeThrowable);
+		}
+		catch (Throwable throwable) {
+			throw new ProcessException(throwable);
 		}
 		finally {
 			System.setErr(errPrintStream);

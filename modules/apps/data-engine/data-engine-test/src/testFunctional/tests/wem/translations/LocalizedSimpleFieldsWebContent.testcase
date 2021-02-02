@@ -178,45 +178,47 @@ definition {
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "5"
 	test CheckLocalizationOfWebContentUponLanguageChange {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-            structureDescription = "Structure Description Test",
-            structureName = "Structure Name Test");
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
 
-        DataEngine.addField(
-            fieldFieldLabel = "Text Test",
-            fieldName = "Text");
-		
-        WebContentStructures.saveCP(structureName = "Structure Name Test");
+		DataEngine.addField(
+			fieldFieldLabel = "Text Test",
+			fieldName = "Text");
 
-        NavItem.click(navItem = "Web Content");
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
 
-        WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		NavItem.click(navItem = "Web Content");
 
-        PortletEntry.inputTitle(title = "WC Title Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
 
-		PortletEntry.inputText(fieldLabel = "Text",
-                text = "Text test");
+		PortletEntry.inputTitle(title = "WC Title Test");
+
+		PortletEntry.inputText(
+			fieldLabel = "Text",
+			text = "Text test");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		PortletEntry.inputText(fieldLabel = "Text",
-                text = "Texto teste pt_BR");
+		PortletEntry.inputText(
+			fieldLabel = "Text",
+			text = "Texto teste pt_BR");
 
 		PortletEntry.changeLocale(locale = "es_ES");
 
-		PortletEntry.inputText(fieldLabel = "Text",
-                text = "Texto teste es_ES");
+		PortletEntry.inputText(
+			fieldLabel = "Text",
+			text = "Texto teste es_ES");
 
-        PortletEntry.publish();
+		PortletEntry.publish();
 
 		LexiconEntry.gotoEntryMenuItem(
-            menuItem = "Edit",
-            rowEntry = "WC Title Test");
+			menuItem = "Edit",
+			rowEntry = "WC Title Test");
 
 		AssertTextEquals(
 			key_fieldLabel = "Text",

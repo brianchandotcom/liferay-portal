@@ -44,7 +44,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
 	@priority = "4"
 	test FieldsetSetAsCollapsible {
 		property portal.acceptance = "false";
@@ -87,7 +86,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
 	@priority = "4"
 	test FieldsetSetAsRepeatable {
 		property portal.acceptance = "false";
@@ -139,7 +137,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
 	@priority = "4"
 	test ShowAndHideFieldsetLabel {
 		property portal.acceptance = "false";

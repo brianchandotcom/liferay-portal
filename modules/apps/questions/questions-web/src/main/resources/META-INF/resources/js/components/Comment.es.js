@@ -20,15 +20,21 @@ import React, {useEffect, useState} from 'react';
 import {deleteMessageQuery} from '../utils/client.es';
 import lang from '../utils/lang.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
+import Modal from './Modal.es';
 
 export default ({comment, commentChange, editable = true}) => {
 	const [dateModified, setDateModified] = useState('');
+	const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
 
 	const [deleteMessage] = useMutation(deleteMessageQuery, {
 		onCompleted() {
 			if (commentChange) {
 				commentChange(comment);
 			}
+		},
+		update(proxy) {
+			proxy.evict(`MessageBoardMessage:${comment.id}`);
+			proxy.gc();
 		},
 	});
 
@@ -59,17 +65,36 @@ export default ({comment, commentChange, editable = true}) => {
 				</div>
 
 				{editable && comment.actions.delete && (
-					<ClayButton
-						className="c-mt-3 font-weight-bold text-secondary"
-						displayType="unstyled"
-						onClick={() => {
-							deleteMessage({
-								variables: {messageBoardMessageId: comment.id},
-							});
-						}}
-					>
-						{Liferay.Language.get('delete')}
-					</ClayButton>
+					<>
+						<ClayButton
+							className="c-mt-3 font-weight-bold text-secondary"
+							displayType="unstyled"
+							onClick={() => {
+								setShowDeleteCommentModal(true);
+							}}
+						>
+							{Liferay.Language.get('delete')}
+						</ClayButton>
+						<Modal
+							body={Liferay.Language.get(
+								'do-you-want-to-delete–this-comment'
+							)}
+							callback={() => {
+								deleteMessage({
+									variables: {
+										messageBoardMessageId: comment.id,
+									},
+								});
+							}}
+							onClose={() => {
+								setShowDeleteCommentModal(false);
+							}}
+							status="warning"
+							textPrimaryButton={Liferay.Language.get('delete')}
+							title={Liferay.Language.get('delete-comment')}
+							visible={showDeleteCommentModal}
+						/>
+					</>
 				)}
 			</div>
 		</div>

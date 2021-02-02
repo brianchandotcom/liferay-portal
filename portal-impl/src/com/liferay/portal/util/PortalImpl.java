@@ -1549,7 +1549,7 @@ public class PortalImpl implements Portal {
 
 		Company company = getCompany(httpServletRequest);
 
-		if (isSecure(httpServletRequest)) {
+		if (httpServletRequest.isSecure()) {
 			cdnHost = getCDNHostHttps(company.getCompanyId());
 		}
 		else {

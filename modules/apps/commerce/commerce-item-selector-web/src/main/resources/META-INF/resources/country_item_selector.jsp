@@ -57,38 +57,39 @@ PortletURL portletURL = commerceCountryItemSelectorViewDisplayContext.getPortlet
 		searchContainer="<%= commerceCountryItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.model.CommerceCountry"
+			className="com.liferay.portal.kernel.model.Country"
 			cssClass="commerce-country-row"
-			keyProperty="commerceCountryId"
-			modelVar="commerceCountry"
+			keyProperty="countryId"
+			modelVar="country"
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 				name="name"
-				value="<%= commerceCountry.getName(locale) %>"
+				value="<%= country.getTitle(locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 				name="billing-allowed"
-				value='<%= LanguageUtil.get(request, commerceCountry.isBillingAllowed() ? "yes" : "no") %>'
+				value='<%= LanguageUtil.get(request, country.isBillingAllowed() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 				name="shipping-allowed"
-				value='<%= LanguageUtil.get(request, commerceCountry.isShippingAllowed() ? "yes" : "no") %>'
+				value='<%= LanguageUtil.get(request, country.isShippingAllowed() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
 				name="two-letter-iso-code"
-				property="twoLettersISOCode"
+				property="a2"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
-				property="priority"
+				name="priority"
+				property="position"
 			/>
 		</liferay-ui:search-container-row>
 

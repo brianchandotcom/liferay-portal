@@ -16,11 +16,11 @@ package com.liferay.commerce.item.selector.web.internal;
 
 import com.liferay.commerce.item.selector.criterion.CommerceCountryItemSelectorCriterion;
 import com.liferay.commerce.item.selector.web.internal.display.context.CommerceCountryItemSelectorViewDisplayContext;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -84,7 +84,7 @@ public class CommerceCountryItemSelectorView
 		CommerceCountryItemSelectorViewDisplayContext
 			commerceCountryItemSelectorViewDisplayContext =
 				new CommerceCountryItemSelectorViewDisplayContext(
-					_commerceCountryService, httpServletRequest, portletURL,
+					_countryService, httpServletRequest, portletURL,
 					itemSelectedEventName);
 
 		httpServletRequest.setAttribute(
@@ -104,7 +104,7 @@ public class CommerceCountryItemSelectorView
 			ListUtil.fromArray(new UUIDItemSelectorReturnType()));
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
+	private CountryService _countryService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.item.selector.web)"

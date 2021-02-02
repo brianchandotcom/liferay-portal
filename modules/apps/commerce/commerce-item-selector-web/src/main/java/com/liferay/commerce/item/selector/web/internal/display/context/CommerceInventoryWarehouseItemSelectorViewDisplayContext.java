@@ -17,14 +17,15 @@ package com.liferay.commerce.item.selector.web.internal.display.context;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.item.selector.web.internal.search.CommerceInventoryWarehouseChecker;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.service.CommerceCountryService;
+import com.liferay.commerce.util.CommerceCountryHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -49,15 +50,16 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 		<CommerceInventoryWarehouse> {
 
 	public CommerceInventoryWarehouseItemSelectorViewDisplayContext(
-		CommerceCountryService commerceCountryService,
+		CommerceCountryHelper commerceCountryHelper,
 		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
-		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName, boolean search) {
+		CountryService countryService, HttpServletRequest httpServletRequest,
+		PortletURL portletURL, String itemSelectedEventName, boolean search) {
 
 		super(httpServletRequest, portletURL, itemSelectedEventName);
 
-		_commerceCountryService = commerceCountryService;
+		_commerceCountryHelper = commerceCountryHelper;
 		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
+		_countryService = countryService;
 		_search = search;
 	}
 
@@ -69,21 +71,20 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 	public List<ManagementBarFilterItem> getManagementBarFilterItems()
 		throws PortalException, PortletException {
 
-		List<CommerceCountry> commerceCountries =
-			_commerceCountryService.getWarehouseCommerceCountries(
-				cpRequestHelper.getCompanyId(), false);
+		List<Country> countries = _commerceCountryHelper.getWarehouseCountries(
+			cpRequestHelper.getCompanyId(), false);
 
 		List<ManagementBarFilterItem> managementBarFilterItems =
-			new ArrayList<>(commerceCountries.size() + 2);
+			new ArrayList<>(countries.size() + 2);
 
 		managementBarFilterItems.add(getManagementBarFilterItem(-1, "all"));
 		managementBarFilterItems.add(getManagementBarFilterItem(0, "none"));
 
-		for (CommerceCountry commerceCountry : commerceCountries) {
+		for (Country country : countries) {
 			managementBarFilterItems.add(
 				getManagementBarFilterItem(
-					commerceCountry.getCommerceCountryId(),
-					commerceCountry.getName(cpRequestHelper.getLocale())));
+					country.getCountryId(),
+					country.getName(cpRequestHelper.getLocale())));
 		}
 
 		return managementBarFilterItems;
@@ -115,13 +116,12 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			emptyResultsMessage = "no-warehouses-were-found";
 		}
 
-		CommerceCountry commerceCountry = null;
+		Country country = null;
 
 		if (commerceCountryId > 0) {
 			emptyResultsMessage += "-in-x";
 
-			commerceCountry = _commerceCountryService.getCommerceCountry(
-				commerceCountryId);
+			country = _countryService.getCountry(commerceCountryId);
 
 			Locale locale = cpRequestHelper.getLocale();
 
@@ -129,8 +129,8 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 				"content.Language", locale, getClass());
 
 			emptyResultsMessage = LanguageUtil.format(
-				resourceBundle, emptyResultsMessage,
-				commerceCountry.getName(locale), false);
+				resourceBundle, emptyResultsMessage, country.getName(locale),
+				false);
 		}
 
 		searchContainer = new SearchContainer<>(
@@ -157,34 +157,32 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 		int total = 0;
 		List<CommerceInventoryWarehouse> results = Collections.emptyList();
 
-		if (searchContainer.isSearch() && (commerceCountry != null)) {
+		if (searchContainer.isSearch() && (country != null)) {
 			total =
 				_commerceInventoryWarehouseService.
 					searchCommerceInventoryWarehousesCount(
-						cpRequestHelper.getCompanyId(), true,
-						commerceCountry.getTwoLettersISOCode(), getKeywords());
+						cpRequestHelper.getCompanyId(), true, country.getA2(),
+						getKeywords());
 
 			results =
 				_commerceInventoryWarehouseService.
 					searchCommerceInventoryWarehouses(
-						cpRequestHelper.getCompanyId(), true,
-						commerceCountry.getTwoLettersISOCode(), getKeywords(),
-						searchContainer.getStart(), searchContainer.getEnd(),
+						cpRequestHelper.getCompanyId(), true, country.getA2(),
+						getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(),
 						CommerceUtil.getCommerceInventoryWarehouseSort(
 							orderByCol, orderByType));
 		}
-		else if (commerceCountry != null) {
+		else if (country != null) {
 			total =
 				_commerceInventoryWarehouseService.
 					getCommerceInventoryWarehousesCount(
-						cpRequestHelper.getCompanyId(), true,
-						commerceCountry.getTwoLettersISOCode());
+						cpRequestHelper.getCompanyId(), true, country.getA2());
 
 			results =
 				_commerceInventoryWarehouseService.
 					getCommerceInventoryWarehouses(
-						cpRequestHelper.getCompanyId(), true,
-						commerceCountry.getTwoLettersISOCode(),
+						cpRequestHelper.getCompanyId(), true, country.getA2(),
 						searchContainer.getStart(), searchContainer.getEnd(),
 						orderByComparator);
 		}
@@ -228,9 +226,10 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			portletURL.toString());
 	}
 
-	private final CommerceCountryService _commerceCountryService;
+	private final CommerceCountryHelper _commerceCountryHelper;
 	private final CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
+	private final CountryService _countryService;
 	private final boolean _search;
 
 }

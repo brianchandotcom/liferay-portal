@@ -238,7 +238,7 @@ definition {
 			fieldFieldLabel = "Geolocation",
 			fieldName = "Geolocation");
 
-		DataEngine.editFieldShowOrHideLabel(
+		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Geolocation",
 			showLabel = "true");
 
@@ -250,7 +250,7 @@ definition {
 			key_fieldFieldLabel = "Geolocation",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		DataEngine.editFieldShowOrHideLabel(
+		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Geolocation",
 			showLabel = "false");
 

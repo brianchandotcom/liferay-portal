@@ -321,7 +321,7 @@ definition {
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
 
-		DataEngine.editFieldShowOrHideLabel(
+		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Image",
 			showLabel = "true");
 
@@ -333,7 +333,7 @@ definition {
 			key_fieldFieldLabel = "Image",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		DataEngine.editFieldShowOrHideLabel(
+		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Image",
 			showLabel = "false");
 

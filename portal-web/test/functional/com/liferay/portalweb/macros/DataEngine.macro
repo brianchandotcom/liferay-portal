@@ -703,25 +703,6 @@ definition {
 			value1 = "${fieldReference}");
 	}
 
-	macro viewFieldReference {
-		var key_fieldFieldLabel = "${fieldFieldLabel}";
-		var key_text = "${fieldName}";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
-
-		AssertTextEquals(
-			locator1 = "Button#ANY",
-			value1 = "${fieldName}");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		AssertTextEquals.assertValue(
-			locator1 = "Sidebar#DDM_FIELD_REFERENCE",
-			value1 = "${fieldReference}");
-	}
-
 	macro viewFieldSearchable {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",

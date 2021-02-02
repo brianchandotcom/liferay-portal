@@ -14,12 +14,16 @@
 
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
@@ -28,12 +32,15 @@ import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.exception.SubjectException;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
@@ -49,9 +56,14 @@ import org.opensaml.saml.saml2.core.Response;
 import org.opensaml.saml.saml2.core.Subject;
 import org.opensaml.saml.saml2.core.SubjectConfirmation;
 
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 /**
  * @author Mika Koivisto
  */
+@PrepareForTest(CalendarFactoryUtil.class)
+@RunWith(PowerMockRunner.class)
 public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 	@Before
@@ -113,6 +125,14 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_defaultUserResolver.setCompanyLocalService(companyLocalService);
 
+		mockStatic(CalendarFactoryUtil.class);
+
+		when(
+			CalendarFactoryUtil.getCalendar()
+		).thenReturn(
+			new GregorianCalendar()
+		);
+
 		_initMessageContext();
 		_initUnknownUserHandling();
 	}
@@ -161,6 +181,54 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		Assert.assertNotNull(resolvedUser);
 	}
 
+	@Test
+	public void testMatchingUserWithEmailAddress() throws Exception {
+		when(
+			_company.isStrangers()
+		).thenReturn(
+			true
+		);
+
+		when(
+			_company.isStrangersWithMx()
+		).thenReturn(
+			true
+		);
+
+		_initMatchingUserHandling();
+
+		User existingUser = _defaultUserResolver.importUser(
+			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
+			"emailAddress", new UserResolverSAMLContextImpl(_messageContext),
+			new ServiceContext());
+
+		Assert.assertNotNull(existingUser);
+	}
+
+	@Test
+	public void testMatchingUserWithScreenNameAttribute() throws Exception {
+		when(
+			_company.isStrangers()
+		).thenReturn(
+			true
+		);
+
+		when(
+			_company.isStrangersWithMx()
+		).thenReturn(
+			true
+		);
+
+		_initMatchingUserHandling();
+
+		User existingUser = _defaultUserResolver.importUser(
+			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME,
+			"screenName", new UserResolverSAMLContextImpl(_messageContext),
+			new ServiceContext());
+
+		Assert.assertNotNull(existingUser);
+	}
+
 	@Test(expected = SubjectException.class)
 	public void testStrangersNotAllowedToCreateAccounts() throws Exception {
 		when(
@@ -195,6 +263,84 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
 			"emailAddress", new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
+	}
+
+	private void _initMatchingUserHandling() throws Exception {
+		User existingUser = mock(User.class);
+
+		Contact contactUser = mock(Contact.class);
+
+		when(
+			contactUser.getBirthday()
+		).thenReturn(
+			new Date()
+		);
+
+		when(
+			existingUser.getContact()
+		).thenReturn(
+			contactUser
+		);
+
+		when(
+			_userLocalService.getUserByScreenName(
+				Mockito.anyLong(),
+				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))
+		).thenReturn(
+			existingUser
+		);
+
+		when(
+			_userLocalService.getUserByEmailAddress(
+				Mockito.anyLong(),
+				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS))
+		).thenReturn(
+			existingUser
+		);
+
+		when(
+			_userLocalService.addUser(
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyBoolean(),
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
+				Mockito.anyString(), Mockito.anyString(),
+				Mockito.any(Locale.class), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyBoolean(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyInt(), Mockito.anyString(),
+				Mockito.any(long[].class), Mockito.any(long[].class),
+				Mockito.any(long[].class), Mockito.any(long[].class),
+				Mockito.anyBoolean(), Mockito.any(ServiceContext.class))
+		).thenReturn(
+			null
+		);
+
+		when(
+			_userLocalService.updateEmailAddress(
+				Mockito.anyLong(), Mockito.eq(StringPool.BLANK),
+				Mockito.anyString(), Mockito.anyString())
+		).thenReturn(
+			existingUser
+		);
+
+		when(
+			_userLocalService.updateUser(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyBoolean(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyBoolean(), Mockito.any(byte[].class),
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyLong(),
+				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.any(long[].class),
+				Mockito.any(long[].class), Mockito.any(long[].class),
+				Mockito.anyListOf(UserGroupRole.class),
+				Mockito.any(long[].class), Mockito.any(ServiceContext.class))
+		).thenReturn(
+			existingUser
+		);
 	}
 
 	private void _initMessageContext() {

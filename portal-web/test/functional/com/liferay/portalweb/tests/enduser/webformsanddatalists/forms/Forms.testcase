@@ -3163,6 +3163,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-64798."
+	@ignore = "true"
 	@priority = "5"
 	test SubmitFormWithAllFieldTypesAndThreePages {
 		property portal.acceptance = "true";

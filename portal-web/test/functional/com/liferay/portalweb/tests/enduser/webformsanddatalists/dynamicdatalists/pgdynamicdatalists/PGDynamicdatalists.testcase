@@ -1426,6 +1426,7 @@ definition {
 			fieldFieldLabel = "Text");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewListRecordWithUploadedFreeMarkerDisplayTemplate {
 		property custom.properties = "freemarker.engine.restricted.variables=${line.separator}restricted.variables=";

@@ -653,6 +653,7 @@ definition {
 	}
 
 	@description = "Automate LPS-117199 Define translations when creating fieldsets"
+	@ignore = "true"
 	@priority = "5"
 	test DefineTranslationCreatedFieldSets {
 		property portal.acceptance = "true";
@@ -2805,6 +2806,7 @@ definition {
 	}
 
 	@description = "Automate LPS-122695 Use fieldsets with translations in Form View of an Object"
+	@ignore = "true"
 	@priority = "5"
 	test TranslationsForFormViewObject {
 		property portal.acceptance = "true";

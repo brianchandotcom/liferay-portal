@@ -106,7 +106,7 @@ const PopoverContent = ({
 	const {custom, native} = {
 		custom: {
 			content: sub(
-				Liferay.Language.get('this-form-view-must-include-all-fields'),
+				Liferay.Language.get('this-form-view-does-not-contain-all-custom-required-fields-for-the-x-object'),
 				[name]
 			),
 		},
@@ -115,7 +115,7 @@ const PopoverContent = ({
 				<>
 					{sub(
 						Liferay.Language.get(
-							'this-form-view-does-not-contain-all-required-fields-for-the-x-object'
+							'this-form-view-must-include-all-native-required-fields'
 						),
 						[name]
 					)}
@@ -154,7 +154,7 @@ const PopoverHeader = ({nativeField}) => {
 					'mr-2',
 					nativeField ? 'text-danger' : 'text-info'
 				)}
-				symbol="info-circle"
+				symbol={nativeField ? 'exclamation-full' : 'info-circle'}
 			/>
 
 			<span>{Liferay.Language.get('missing-required-fields')}</span>

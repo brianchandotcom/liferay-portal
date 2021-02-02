@@ -77,7 +77,7 @@ definition {
 			fieldFieldLabel = "${key_Label}",
 			fieldName = "Geolocation");
 
-		DataEngine.duplicateField(fieldFieldLabel = "${key_Label}");
+		DataEngine.duplicate(fieldFieldLabel = "${key_Label}");
 
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
 

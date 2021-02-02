@@ -82,68 +82,46 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
 	@priority = "4"
 	test EditFieldsetPropertiesFromSideBar {
-		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "EditFieldSetTest",
-			structureName = "EditFieldSetTest");
-
-		Navigator.gotoSidebarTab(tabName = "Builder");
-
-		Navigator.gotoNavTab(navTab = "Fieldsets");
-
-		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
-
-		DoubleClick(locator1 = "Modal#CREATE_DATE_FIELD");
-
-		Type(
-			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "EditFieldSetTest");
-
-		Click(locator1 = "Modal#SAVE_BUTTON");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
-			fieldsetsLabel = "EditFieldSetTest",
-			fieldsetsName = "EditFieldSetTest");
+			createNewFieldset = "true",
+			fieldNameList = "Text",
+			fieldsetsLabel = "New Fieldset",
+			fieldsetsName = "New Fieldset");
 
-		WebContentStructures.saveCP(structureName = "EditFieldSetTest");
+		WebContentStructures.saveCP();
 
-		WebContentStructures.editStructure(structureName = "EditFieldSetTest");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		Navigator.gotoNavTab(navTab = "Fieldsets");
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetsName = "New Fieldset");
 
-		Click(locator1 = "AppBuilder#BUTTON_EDIT_FIELDSET");
+		MenuItem.click(menuItem = "Edit");
 
-		Click(
-			key_selectAction = "Edit",
-			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
-
-		Click(locator1 = "Modal#CLICK_DATE_FIELD");
-
-		Type(
-			key_fieldLabel = "Label",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "NewDate");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Edit",
+			fieldsetModal = "true");
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
-		Click(locator1 = "Modal#PROPAGATE_BUTTON");
+		Alert.viewSuccessMessage();
 
-		var key_fieldLabel = "NewDate";
-		
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#ASSERT_FIELD_SET_NAME",
-			value1 = "NewDate");
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "New Fieldset",
+			fieldsetsName = "New Fieldset");
+
+		for (var fieldFieldLabel : list "Text,Text Edit") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

@@ -1,47 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceCountryFinder.findByCommerceInventoryWarehouses">
-		<![CDATA[
-			SELECT
-				{CommerceCountry.*}
-			FROM
-				CommerceCountry
-			INNER JOIN
-				CIWarehouse
-			ON
-				CIWarehouse.countryTwoLettersISOCode = CommerceCountry.twoLettersISOCode
-			WHERE
-				(CIWarehouse.companyId = ?) [$ALL$]
-			ORDER BY
-				CommerceCountry.priority
-		]]>
-	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceCountryFinder.findByCommerceChannel">
-		<![CDATA[
-			SELECT
-				{CommerceCountry.*}
-			FROM
-				CommerceCountry
-			LEFT JOIN
-				CommerceChannelRel
-			ON
-				CommerceChannelRel.classPK = CommerceCountry.commerceCountryId
-			WHERE
-				(CommerceCountry.active_ = [$TRUE$]) AND
-				(
-					(CommerceCountry.channelFilterEnabled = [$FALSE$]) OR
-					(
-						(CommerceCountry.channelFilterEnabled = [$TRUE$]) AND
-						(CommerceChannelRel.classNameId = ?) AND
-						(CommerceChannelRel.commerceChannelId = ?)
-					)
-				)
-				[$BILLING$] [$SHIPPING$]
-			ORDER BY
-				CommerceCountry.priority
-		]]>
-	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.findByG_O">
 		<![CDATA[
 			SELECT

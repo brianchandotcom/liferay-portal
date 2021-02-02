@@ -60,6 +60,22 @@ public class JournalContentCompatibilityLayerTest {
 		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
 	}
 
+	@Test
+	public void testVersionCompatibilityLayer() throws Exception {
+		String content = read("test-journal-content-version-compatibility.xml");
+
+		Document document = SAXReaderUtil.read(content);
+
+		_journalContentCompatibilityLayer.convertDocumentContent(document);
+
+		String expectedContent = read(
+			"test-journal-content-version-compatibility-expected-results.xml");
+
+		Document expectedDocument = SAXReaderUtil.read(expectedContent);
+
+		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+	}
+
 	protected String read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 

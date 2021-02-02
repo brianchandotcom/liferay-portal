@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_SETS_COLLAPSE_BUTTON</td>
+	<td>//div[contains(@class,'fieldset')]//button[contains(@class,'collapse-icon')][//label[text()='${key_fieldsetLabel}']]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_SETS_CONTAINER_LABEL</td>
 	<td>//div[contains(@class,'fieldset')]//label[text()='${key_fieldsetLabel}']</td>
 	<td></td>

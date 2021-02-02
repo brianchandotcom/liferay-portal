@@ -49,6 +49,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>FIELDSET_ITEM_ELLIPSIS</td>
+    <td>//div[contains(@class, 'field-type')][contains(.,'${key_fieldsetName}')]//button[contains(@class, 'dropdown-toggle')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>FORM_BUILDER</td>
 	<td>//div[contains(@class,'form-builder-layout')]</td>
 	<td></td>

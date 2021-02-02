@@ -143,6 +143,45 @@ components:
                     description:
                         Internationalized field of the robots of the page that renders the Display Page Template
                     type: object
+        Status:
+            # @review
+            description:
+                Represents the status of a resource
+            properties:
+                code:
+                    # @review
+                    description:
+                        A number which identifies a specific status
+                    format: int32
+                    readOnly: true
+                    type: integer
+                label:
+                    # @review
+                    description:
+                        Label associated to the status
+                    readOnly: true
+                    type: string
+                label_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
+        Version:
+            properties:
+                number:
+                    # @review
+                    description:
+                        The version of a resource
+                    format: double
+                    readOnly: true
+                    type: number
+                status:
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
+                    # @review
+                    description:
+                        Represents the status of a resource
+                    readOnly: true
             type: object
 info:
     description:
@@ -259,3 +298,67 @@ paths:
                     description:
                         ""
             tags: ["PageDefinition"]
+    "/sites/{siteId}/structured-contents":
+        get:
+            # @review
+            description:
+                Retrieves the site's structured contents latest version. Results can be paginated, filtered, searched,
+                flattened, and sorted.
+            operationId: getSiteStructuredContentsVersionInformationPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#StructuredContent"
+                                type: array
+                    description:
+                        ""
+            tags: ["StructuredContent"]

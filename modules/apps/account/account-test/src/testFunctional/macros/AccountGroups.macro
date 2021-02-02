@@ -118,4 +118,22 @@ definition {
 			value1 = "No ${tabName} were found.");
 	}
 
+	macro viewEntry {
+		LexiconEntry.viewEntryName(rowEntry = "${accountGroupName}");
+
+		if (isSet(accountGroupDescription)) {
+			AssertTextEquals(
+				key_rowEntry = "${accountGroupName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3",
+				value1 = "${accountGroupDescription}");
+		}
+
+		if (isSet(accountGroupAccount)) {
+			AssertTextEquals(
+				key_rowEntry = "${accountGroupName}",
+				locator1 = "AccountGroup#ACCOUNT_GROUP_ACCOUNTS",
+				value1 = "${accountGroupAccount}");
+		}
+	}
+
 }

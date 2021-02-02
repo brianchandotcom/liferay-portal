@@ -49,7 +49,41 @@ definition {
 	test FieldsetSetAsCollapsible {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 FieldsetSetAsCollapsible pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "CollapsibleTest");
+
+		DataEngine.addFields(fieldNameList = "Text,Image");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "CollapsibleTest1");
+
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "CollapsibleTest",
+			fieldsetsName = "CollapsibleTest");
+
+		DataEngine.editFieldsetsCollapsible(fieldsetLabel = "CollapsibleTest");
+
+		Click(locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_COLLAPSIBLE_UP");
+
+		Pause(locator1 = "3000");
+
+		Click(locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_COLLAPSIBLE_DOWN");
+
+		DDLDataDefinition.save();
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "CollapsibleTest1");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

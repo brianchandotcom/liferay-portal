@@ -284,6 +284,20 @@ definition {
 			Navigator.gotoNavTab(navTab = "Fieldsets");
 		}
 
+		if (isSet(createNewFieldset)) {
+			Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+			Type(
+				locator1 = "FormViewBuilder#FIELD_SET_NAME",
+				value1 = "${fieldsetsName}");
+
+			DataEngine.addFields(fieldNameList = "${fieldNameList}");
+
+			Click(locator1 = "Modal#SAVE_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
 		DoubleClick(
 			key_fieldName = "${fieldsetsName}",
 			locator1 = "Sidebar#ADD_FIELD_NAME");

@@ -25,10 +25,7 @@ import java.net.URI;
 
 import java.nio.file.Files;
 
-import java.util.Optional;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -168,71 +165,9 @@ public class ProjectTemplatesRESTBuilderTest
 			"project(\":" + name + ":" + name + "-api");
 	}
 
-	@Test
-	public void testCompareRESTBuilderPluginVersions() throws Exception {
-		String liferayVersion = getDefaultLiferayVersion();
-		String name = "sample";
-		String packageName = "com.test.sample";
-		String template = "rest-builder";
-
-		String implProjectName = name + "-impl";
-
-		File gradleWorkspaceDir = buildWorkspace(
-			temporaryFolder, "gradle", "gradleWS", liferayVersion,
-			mavenExecutor);
-
-		File gradleWorkspaceModulesDir = new File(
-			gradleWorkspaceDir, "modules");
-
-		buildTemplateWithGradle(
-			gradleWorkspaceModulesDir, template, name, "--package-name",
-			packageName, "--liferay-version", liferayVersion);
-
-		Optional<String> gradleResult = executeGradle(
-			gradleWorkspaceDir, true, _gradleDistribution,
-			":modules:" + name + ":" + implProjectName + ":dependencies");
-
-		String gradleRESTBuilderVersion = null;
-
-		Matcher matcher = _restBuilderVersionPattern.matcher(
-			gradleResult.get());
-
-		if (matcher.matches()) {
-			gradleRESTBuilderVersion = matcher.group(1);
-		}
-
-		File mavenWorkspaceDir = buildWorkspace(
-			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
-
-		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
-
-		File mavenProjectDir = buildTemplateWithMaven(
-			mavenModulesDir, mavenModulesDir, template, name, "com.test",
-			mavenExecutor, "-Dpackage=" + packageName, "-DbuildType=maven");
-
-		String mavenResult = executeMaven(
-			new File(mavenProjectDir, implProjectName), mavenExecutor,
-			MAVEN_GOAL_BUILD_REST);
-
-		matcher = _restBuilderVersionPattern.matcher(mavenResult);
-
-		String mavenRESTBuilderVersion = null;
-
-		if (matcher.matches()) {
-			mavenRESTBuilderVersion = matcher.group(1);
-		}
-
-		Assert.assertEquals(
-			"com.liferay.portal.tools.rest.builder versions do not match",
-			gradleRESTBuilderVersion, mavenRESTBuilderVersion);
-	}
-
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private static URI _gradleDistribution;
-	private static final Pattern _restBuilderVersionPattern = Pattern.compile(
-		".*rest\\.builder:([0-9]+\\.[0-9]+\\.[0-9]+).*",
-		Pattern.DOTALL | Pattern.MULTILINE);
 
 }

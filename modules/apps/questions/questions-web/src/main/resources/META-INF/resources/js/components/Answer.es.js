@@ -28,6 +28,7 @@ import lang from '../utils/lang.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';
 import Link from './Link.es';
+import Modal from './Modal.es';
 import Rating from './Rating.es';
 import UserRow from './UserRow.es';
 
@@ -46,6 +47,9 @@ export default withRouter(
 		const [dateModified, setDateModified] = useState('');
 		const [showAsAnswer, setShowAsAnswer] = useState(answer.showAsAnswer);
 		const [showNewComment, setShowNewComment] = useState(false);
+		const [showDeleteAnswerModal, setShowDeleteAnswerModal] = useState(
+			false
+		);
 
 		const [deleteMessage] = useMutation(deleteMessageQuery, {
 			onCompleted() {
@@ -64,6 +68,10 @@ export default withRouter(
 				else {
 					deleteAnswer(answer);
 				}
+			},
+			update(proxy) {
+				proxy.evict(`MessageBoardMessage:${answer.id}`);
+				proxy.gc();
 			},
 		});
 
@@ -159,22 +167,49 @@ export default withRouter(
 											)}
 
 											{answer.actions.delete && (
-												<ClayButton
-													className="text-reset"
-													displayType="unstyled"
-													onClick={() => {
-														deleteMessage({
-															variables: {
-																messageBoardMessageId:
-																	answer.id,
-															},
-														});
-													}}
-												>
-													{Liferay.Language.get(
-														'delete'
-													)}
-												</ClayButton>
+												<>
+													<ClayButton
+														className="text-reset"
+														displayType="unstyled"
+														onClick={() => {
+															setShowDeleteAnswerModal(
+																true
+															);
+														}}
+													>
+														{Liferay.Language.get(
+															'delete'
+														)}
+													</ClayButton>
+													<Modal
+														body={Liferay.Language.get(
+															'do-you-want-to-delete–this-answer'
+														)}
+														callback={() => {
+															deleteMessage({
+																variables: {
+																	messageBoardMessageId:
+																		answer.id,
+																},
+															});
+														}}
+														onClose={() => {
+															setShowDeleteAnswerModal(
+																false
+															);
+														}}
+														status="warning"
+														textPrimaryButton={Liferay.Language.get(
+															'delete'
+														)}
+														title={Liferay.Language.get(
+															'delete-answer'
+														)}
+														visible={
+															showDeleteAnswerModal
+														}
+													/>
+												</>
 											)}
 
 											{canMarkAsAnswer && (

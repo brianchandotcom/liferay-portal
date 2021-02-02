@@ -136,6 +136,45 @@
 					"Organization",
 					"Nested"
 				]
+			},
+			"patch": {
+				"operationId": "patchSystemOrganization",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/Organization"
+								},
+								"type": "array"
+							}
+						}
+					},
+					"description": "valid request definition"
+				},
+				"tags": [
+					"Organization",
+					"Nested"
+				]
+			},
+			"post": {
+				"operationId": "postSystemOrganization",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+								},
+								"type": "array"
+							}
+						}
+					},
+					"description": "invalid request body because items misses content"
+				},
+				"tags": [
+					"Organization",
+					"Nested"
+				]
 			}
 		}
 	}

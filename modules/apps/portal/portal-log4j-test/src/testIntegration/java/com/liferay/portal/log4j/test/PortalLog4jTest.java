@@ -174,7 +174,7 @@ public class PortalLog4jTest {
 
 		String messageLine = outputLines[0];
 
-		// Date format
+		// Timestamp
 
 		Matcher dateMatcher = _datePattern.matcher(
 			messageLine.substring(0, _DATE_FORMAT.length()));
@@ -192,7 +192,7 @@ public class PortalLog4jTest {
 				StringPool.SPACE, expectedLevel, StringPool.SPACE),
 			messageLine.substring(0, expectedLevel.length() + 2));
 
-		// Thread name
+		// [ThreadName]
 
 		messageLine = messageLine.substring(
 			messageLine.indexOf(StringPool.OPEN_BRACKET));
@@ -207,7 +207,7 @@ public class PortalLog4jTest {
 			expectedThreadName,
 			messageLine.substring(0, expectedThreadName.length()));
 
-		// Class name
+		// [ClassName:LineNumber]
 
 		messageLine = messageLine.substring(expectedThreadName.length());
 
@@ -218,8 +218,6 @@ public class PortalLog4jTest {
 		Assert.assertEquals(
 			expectedClassName,
 			messageLine.substring(0, expectedClassName.length()));
-
-		// Line number
 
 		messageLine = messageLine.substring(expectedClassName.length());
 

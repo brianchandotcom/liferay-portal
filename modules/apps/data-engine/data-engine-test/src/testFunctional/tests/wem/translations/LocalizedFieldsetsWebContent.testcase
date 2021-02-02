@@ -25,13 +25,36 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
-	@ignore = "true"
 	@priority = "5"
 	test CheckDefaultWebContentTitleOnWebContentList {
-		property portal.acceptance = "false";
 
-		// TODO LPS-123539 CheckDefaultWebContentTitleOnWebContentList pending implementation
+		var structureTitle = "My Structure";
+		var newLabel = "Image";
+		var webTitle = "WC Title";
 
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "I'm a Structure",
+			structureName = "${structureTitle}");
+
+		DataEngine.addFields(fieldNameList = "Image");
+
+		Button.clickSave();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+
+		WebContent.addWithStructureCP(webContentTitle = "${webTitle}");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC Title");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

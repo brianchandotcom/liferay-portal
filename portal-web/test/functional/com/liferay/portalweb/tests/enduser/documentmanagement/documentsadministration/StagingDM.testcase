@@ -130,6 +130,23 @@ definition {
 			userFullName = "Test Test (You)");
 	}
 
+	@description = "This ensures that the document using custom document type can be deleted and republished."
+	@ignore = "true"
+	@priority = "5"
+	test DeleteDocumentWithCustomType {
+
+		// TODO LPS-127173 DeleteDocumentWithCustomType pending implementation
+
+	}
+
+	@description = "This ensures that the document using custom document type can be edited and republished."
+	@ignore = "true"
+	@priority = "5"
+	test EditDocumentWithCustomType {
+
+		// TODO LPS-127173 EditDocumentWithCustomType pending implementation
+	}
+
 	@description = "This is a use case for LPS-79925."
 	@priority = "5"
 	test PublishDocumentFromRestrictedFolder {
@@ -219,6 +236,30 @@ definition {
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+	}
+
+	@description = "This ensures that the custom document type being used by document can be edited and republished."
+	@ignore = "true"
+	@priority = "5"
+	test PublishEditsToDocumentType {
+
+		// TODO LPS-127173 PublishEditsToDocumentType pending implementation
+	}
+
+	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."
+	@ignore = "true"
+	@priority = "5"
+	test PublishEditsToDocumentUsingCustomTypeAndSet {
+
+		// TODO LPS-127173 PublishEditsToDocumentUsingCustomTypeAndSet pending implementation
+	}
+
+	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
+	@ignore = "true"
+	@priority = "5"
+	test PublishEditsToMetadataSet {
+
+		// TODO LPS-127173 PublishEditsToMetadataSet pending implementation
 	}
 
 	@description = "This test covers LPS-82539."
@@ -433,6 +474,30 @@ definition {
 			contentSharingPermission = "viewing",
 			contentTitle = "DM Document Title",
 			ownerName = "Test Test");
+	}
+
+	@description = "This ensures that the document info is displayed correctly after publishing and republishing."
+	@ignore = "true"
+	@priority = "5"
+	test ViewRepublishedDocumentInfo {
+
+		// TODO LPS-127173 ViewRepublishedDocumentInfo pending implementation
+	}
+
+	@description = "This ensures that the image can be deleted and republished in web content."
+	@ignore = "true"
+	@priority = "4"
+	test ViewWebContentWithDeletedImage {
+
+		// TODO LPS-127173 ViewWebContentWithDeletedImage pending implementation
+	}
+
+	@description = "This ensures that the image can be edited and republished in web content."
+	@ignore = "true"
+	@priority = "4"
+	test ViewWebContentWithRepublishedImage {
+
+		// TODO LPS-127173 ViewWebContentWithRepublishedImage pending implementation
 	}
 
 }

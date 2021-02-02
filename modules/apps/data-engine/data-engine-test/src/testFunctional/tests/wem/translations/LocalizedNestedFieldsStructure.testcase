@@ -237,32 +237,32 @@ definition {
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "4"
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
-        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-            structureDescription = "Structure Description Test",
-            structureName = "Structure Name Test");
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
 
-        DataEngine.addField(
-            fieldFieldLabel = "Text Test",
-            fieldName = "Text");
-	
-        DataEngine.addFieldNested(
-            fieldName = "Text",
-            targetFieldLabel = "Text Test",
-            fieldFieldLabel = "Text Test Second");
+		DataEngine.addField(
+			fieldFieldLabel = "Text Test",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text Test Second",
+			fieldName = "Text",
+			targetFieldLabel = "Text Test");
 
 		WebContentStructures.addLocalization(
-            locale = "pt-BR",
-            localization1Name = "Nome Estrutura Teste");
-    
-        WebContentStructures.saveCP(structureName = "Structure Name Test");
+			locale = "pt-BR",
+			localization1Name = "Nome Estrutura Teste");
 
-        WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
-		
-        PortletEntry.changeLocale(locale = "pt_BR");
+		WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
 
 		PortletEntry.changeLocale(locale = "en_US");
 

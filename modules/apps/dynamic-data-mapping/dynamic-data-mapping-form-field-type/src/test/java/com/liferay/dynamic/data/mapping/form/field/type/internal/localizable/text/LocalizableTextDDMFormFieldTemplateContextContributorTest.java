@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageImpl;
 
@@ -33,6 +34,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mock;
 
 import org.powermock.api.support.membermodification.MemberMatcher;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -51,6 +54,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 
 		_setUpJSONFactory();
 		_setUpLanguage();
+		_setUpPortal();
 	}
 
 	@Test
@@ -126,6 +130,15 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
+	private void _setUpPortal() throws Exception {
+		MemberMatcher.field(
+			LocalizableTextDDMFormFieldTemplateContextContributor.class,
+			"portal"
+		).set(
+			_localizableTextDDMFormFieldTemplateContextContributor, _portal
+		);
+	}
+
 	private final DDMFormField _ddmFormField = new DDMFormField(
 		"field", "localizableText");
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
@@ -133,5 +146,8 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 	private final LocalizableTextDDMFormFieldTemplateContextContributor
 		_localizableTextDDMFormFieldTemplateContextContributor =
 			new LocalizableTextDDMFormFieldTemplateContextContributor();
+
+	@Mock
+	private Portal _portal;
 
 }

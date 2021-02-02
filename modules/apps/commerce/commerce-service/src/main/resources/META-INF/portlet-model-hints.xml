@@ -74,30 +74,6 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.commerce.model.CommerceCountry">
-		<field name="uuid" type="String" />
-		<field name="commerceCountryId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field name="billingAllowed" type="boolean" />
-		<field name="shippingAllowed" type="boolean" />
-		<field name="twoLettersISOCode" type="String" />
-		<field name="threeLettersISOCode" type="String" />
-		<field name="numericISOCode" type="int" />
-		<field name="subjectToVAT" type="boolean" />
-		<field name="priority" type="double">
-			<validator name="number" />
-		</field>
-		<field name="active" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
-		<field name="channelFilterEnabled" type="boolean" />
-	</model>
 	<model name="com.liferay.commerce.model.CommerceOrder">
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
@@ -267,27 +243,6 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="status" type="int" />
-	</model>
-	<model name="com.liferay.commerce.model.CommerceRegion">
-		<field name="uuid" type="String" />
-		<field name="commerceRegionId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="commerceCountryId" type="long" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field name="code" type="String">
-			<validator name="required" />
-		</field>
-		<field name="priority" type="double">
-			<validator name="number" />
-		</field>
-		<field name="active" type="boolean" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceShipment">
 		<field name="commerceShipmentId" type="long" />

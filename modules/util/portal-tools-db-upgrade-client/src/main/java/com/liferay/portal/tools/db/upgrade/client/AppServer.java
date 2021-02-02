@@ -41,7 +41,7 @@ public class AppServer {
 
 	public static AppServer getTomcatAppServer() {
 		return new AppServer(
-			"../../tomcat-9.0.37", "/bin", "/lib", "/webapps/ROOT", "tomcat");
+			"../../tomcat-9.0.40", "/bin", "/lib", "/webapps/ROOT", "tomcat");
 	}
 
 	public static AppServer getWebLogicAppServer() {

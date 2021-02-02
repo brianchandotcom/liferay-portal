@@ -18,7 +18,7 @@ definition {
 		User.firstLoginPG();
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var fileContent = FileUtil.read("${liferayHome}/tomcat-9.0.37/bin/cas.log");
+		var fileContent = FileUtil.read("${liferayHome}/tomcat-9.0.40/bin/cas.log");
 
 		if (contains("${fileContent}", "org.jasig.cas")) {
 			echo("CAS server started.");

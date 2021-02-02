@@ -88,11 +88,6 @@ public class TalendProcessCallable
 			mainMethod.setAccessible(true);
 
 			mainMethod.invoke(null, new Object[] {_mainMethodArgs});
-
-			return new TalendProcessOutput(
-				errUnsyncByteArrayOutputStream.toString(),
-				talendProcessException.getStatus(),
-				outUnsyncByteArrayOutputStream.toString());
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			Throwable causeThrowable = invocationTargetException.getCause();
@@ -113,6 +108,8 @@ public class TalendProcessCallable
 			System.setErr(errPrintStream);
 			System.setOut(outPrintStream);
 		}
+
+		throw new ProcessException("Talend process did not trigger jvm exit");
 	}
 
 	private static final long serialVersionUID = 1L;

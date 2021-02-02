@@ -31,12 +31,12 @@ import {useId} from '../../utils/useId';
 
 const SOURCE_OPTIONS = {
 	fromContentField: {
-		label: `${Liferay.Language.get('from-content-field')}`,
+		label: Liferay.Language.get('from-content-field'),
 		value: 'fromContentField',
 	},
 
 	manual: {
-		label: `${Liferay.Language.get('manual')}`,
+		label: Liferay.Language.get('manual'),
 		value: 'manual',
 	},
 };

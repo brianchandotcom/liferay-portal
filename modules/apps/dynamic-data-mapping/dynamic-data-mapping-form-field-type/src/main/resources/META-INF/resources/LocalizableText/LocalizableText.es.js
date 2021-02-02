@@ -154,6 +154,7 @@ const LocalizableText = ({
 	onFieldChanged = () => {},
 	onFieldFocused,
 	placeholder = '',
+	placeholdersSubmitLabel = [],
 	predefinedValue = '',
 	readOnly,
 	value,
@@ -167,6 +168,16 @@ const LocalizableText = ({
 	const [currentInternalValue, setCurrentInternalValue] = useState(
 		getInitialInternalValue({editingLocale: currentEditingLocale, value})
 	);
+
+	const getPlaceholder = (currentEditingLocale, placeholdersSubmitLabel) => {
+		if (fieldName !== 'submitLabel') {
+			return placeholder;
+		}
+
+		return placeholdersSubmitLabel.find(
+			({localeId}) => localeId === currentEditingLocale.localeId
+		).placeholderSubmitLabel;
+	};
 
 	const inputValue = currentInternalValue
 		? currentInternalValue
@@ -196,7 +207,10 @@ const LocalizableText = ({
 					onFieldChanged({event, value: newValue});
 				}}
 				onFieldFocused={onFieldFocused}
-				placeholder={placeholder}
+				placeholder={getPlaceholder(
+					currentEditingLocale,
+					placeholdersSubmitLabel
+				)}
 				readOnly={readOnly}
 			/>
 
@@ -251,6 +265,7 @@ const Main = ({
 	onChange,
 	onFocus,
 	placeholder,
+	placeholdersSubmitLabel,
 	predefinedValue,
 	readOnly,
 	value = {},
@@ -272,6 +287,7 @@ const Main = ({
 			onFieldChanged={({event, value}) => onChange(event, value)}
 			onFieldFocused={onFocus}
 			placeholder={placeholder}
+			placeholdersSubmitLabel={placeholdersSubmitLabel}
 			predefinedValue={predefinedValue}
 			readOnly={readOnly}
 		/>

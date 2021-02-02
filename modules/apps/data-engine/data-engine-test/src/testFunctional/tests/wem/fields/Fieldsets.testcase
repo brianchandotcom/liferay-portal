@@ -63,8 +63,8 @@ definition {
 			structureName = "DuplicateTest1");
 
 		DataEngine.addFieldsets(
-			fieldsetsLabel = "DuplicateTest",
-			fieldsetsName = "DuplicateTest");
+			fieldsetLabel = "DuplicateTest",
+			fieldsetName = "DuplicateTest");
 
 		DataEngine.duplicateFieldsets(fieldsetLabel = "DuplicateTest");
 
@@ -93,14 +93,14 @@ definition {
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
-			fieldsetsLabel = "New Fieldset",
-			fieldsetsName = "New Fieldset");
+			fieldsetLabel = "New Fieldset",
+			fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetsName = "New Fieldset");
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "New Fieldset");
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -114,8 +114,8 @@ definition {
 		Alert.viewSuccessMessage();
 
 		DataEngine.addFieldsets(
-			fieldsetsLabel = "New Fieldset",
-			fieldsetsName = "New Fieldset");
+			fieldsetLabel = "New Fieldset",
+			fieldsetName = "New Fieldset");
 
 		for (var fieldFieldLabel : list "Text,Text Edit") {
 			AssertVisible(
@@ -235,8 +235,8 @@ definition {
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Date",
-			fieldsetsLabel = "New Fieldset",
-			fieldsetsName = "New Fieldset");
+			fieldsetLabel = "New Fieldset",
+			fieldsetName = "New Fieldset");
 
 		DataEngine.editShowOrHideLabel(
 			fieldsetLabel = "New Fieldset",

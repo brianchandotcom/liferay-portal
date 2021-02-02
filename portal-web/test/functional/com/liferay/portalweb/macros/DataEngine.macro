@@ -289,7 +289,7 @@ definition {
 
 			Type(
 				locator1 = "FormViewBuilder#FIELD_SET_NAME",
-				value1 = "${fieldsetsName}");
+				value1 = "${fieldsetName}");
 
 			DataEngine.addFields(fieldNameList = "${fieldNameList}");
 
@@ -299,7 +299,7 @@ definition {
 		}
 
 		DoubleClick(
-			key_fieldName = "${fieldsetsName}",
+			key_fieldName = "${fieldsetName}",
 			locator1 = "Sidebar#ADD_FIELD_NAME");
 
 		Pause(locator1 = "3000");
@@ -311,17 +311,17 @@ definition {
 		Type(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldsetsLabel}");
+			value1 = "${fieldsetLabel}");
 
 		AssertTextEquals(
 			key_fieldLabel = "Label",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldsetsLabel}");
+			value1 = "${fieldsetLabel}");
 
 		AssertElementPresent(
-			key_fieldFieldLabel = "${fieldsetsLabel}",
+			key_fieldFieldLabel = "${fieldsetLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldsetsLabel}");
+			value1 = "${fieldsetLabel}");
 
 		Click(locator1 = "Sidebar#BACK");
 	}
@@ -719,7 +719,7 @@ definition {
 		}
 
 		Click(
-			key_fieldsetName = "${fieldsetsName}",
+			key_fieldsetName = "${fieldsetName}",
 			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
 	}
 

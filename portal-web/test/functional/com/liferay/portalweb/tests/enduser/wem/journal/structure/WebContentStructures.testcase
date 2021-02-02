@@ -179,8 +179,8 @@ definition {
 		PortletEntry.inputDescriptionTextInput(description = "WC Structure Description");
 
 		DataEngine.addFieldsets(
-			fieldsetsLabel = "WC Structure 1",
-			fieldsetsName = "WC Structure 1");
+			fieldsetLabel = "WC Structure 1",
+			fieldsetName = "WC Structure 1");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Numeric",

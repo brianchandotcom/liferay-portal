@@ -29,29 +29,29 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.exception.CommerceOrderAccountLimitException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
-import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -131,8 +131,7 @@ public class CommerceOrderTest {
 
 		modifiableSettings.store();
 
-		_commerceCountryLocalService.deleteCommerceCountries(
-			_group.getCompanyId());
+		_countryLocalService.deleteCompanyCountries(_group.getCompanyId());
 	}
 
 	@After
@@ -918,23 +917,22 @@ public class CommerceOrderTest {
 	private CommerceAddress _addAddressToAccount(long commerceAccountId)
 		throws Exception {
 
-		_commerceCountry = _commerceCountryLocalService.fetchCommerceCountry(
-			_serviceContext.getCompanyId(), 000);
+		_country = _countryLocalService.fetchCountryByNumber(
+			_serviceContext.getCompanyId(), "000");
 
-		if (_commerceCountry == null) {
-			_commerceCountry = _commerceCountryLocalService.addCommerceCountry(
-				RandomTestUtil.randomLocaleStringMap(), true, true, "ZZ", "ZZZ",
-				000, false, RandomTestUtil.randomDouble(), true,
+		if (_country == null) {
+			_country = _countryLocalService.addCountry(
+				"ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(),
+				"000", RandomTestUtil.randomDouble(), true, false, false,
 				_serviceContext);
 
-			_commerceRegion = _commerceRegionLocalService.addCommerceRegion(
-				_commerceCountry.getCommerceCountryId(),
-				RandomTestUtil.randomString(), "ZZ",
-				RandomTestUtil.randomDouble(), true, _serviceContext);
+			_region = _regionLocalService.addRegion(
+				_country.getCountryId(), true, RandomTestUtil.randomString(),
+				RandomTestUtil.randomDouble(), "ZZ", _serviceContext);
 		}
 		else {
-			_commerceRegion = _commerceRegionLocalService.getCommerceRegion(
-				_commerceCountry.getCommerceCountryId(), "ZZ");
+			_region = _regionLocalService.getRegion(
+				_country.getCountryId(), "ZZ");
 		}
 
 		return _commerceAddressLocalService.addCommerceAddress(
@@ -942,9 +940,8 @@ public class CommerceOrderTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			String.valueOf(30133), _commerceRegion.getCommerceRegionId(),
-			_commerceCountry.getCommerceCountryId(),
-			RandomTestUtil.randomString(),
+			String.valueOf(30133), _region.getRegionId(),
+			_country.getCountryId(), RandomTestUtil.randomString(),
 			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
 			_serviceContext);
 	}
@@ -1033,12 +1030,6 @@ public class CommerceOrderTest {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@DeleteAfterTestRun
-	private CommerceCountry _commerceCountry;
-
-	@Inject
-	private CommerceCountryLocalService _commerceCountryLocalService;
-
-	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
 
 	@Inject
@@ -1051,16 +1042,22 @@ public class CommerceOrderTest {
 	private CommerceOrderService _commerceOrderService;
 
 	@DeleteAfterTestRun
-	private CommerceRegion _commerceRegion;
+	private Country _country;
 
 	@Inject
-	private CommerceRegionLocalService _commerceRegionLocalService;
+	private CountryLocalService _countryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
+
+	@DeleteAfterTestRun
+	private Region _region;
+
+	@Inject
+	private RegionLocalService _regionLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -473,6 +473,11 @@ describe('Field LocalizableText', () => {
 			const {getByTestId} = render(
 				<LocalizableTextWithProvider
 					{...defaultLocalizableTextConfig}
+					placeholdersSubmitLabel={[
+						{localeId: 'en_US', placeholderSubmitLabel: 'Submit'},
+						{localeId: 'es_ES', placeholderSubmitLabel: 'Enviar'},
+						{localeId: 'de_DE', placeholderSubmitLabel: 'Senden'},
+					]}
 				/>
 			);
 
@@ -486,6 +491,11 @@ describe('Field LocalizableText', () => {
 				<LocalizableTextWithProvider
 					{...defaultLocalizableTextConfig}
 					fieldName="submitLabel"
+					placeholdersSubmitLabel={[
+						{localeId: 'en_US', placeholderSubmitLabel: 'Submit'},
+						{localeId: 'es_ES', placeholderSubmitLabel: 'Enviar'},
+						{localeId: 'de_DE', placeholderSubmitLabel: 'Senden'},
+					]}
 				/>
 			);
 

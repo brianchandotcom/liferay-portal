@@ -6,7 +6,7 @@ definition {
 	property testray.main.component.name = "Documents Management";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+        	TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
@@ -49,13 +49,41 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test InsertTextOnRichTextOnUpload {
-		property portal.acceptance = "false";
+			property portal.acceptance = "false";
 
-		// TODO LPS-98076 InsertTextOnRichTextOnUpload pending implementation
+			DataEngine.addField(
+					fieldFieldLabel = "Insert Text",
+					fieldName = "Rich Text");
 
+			PortletEntry.save();
+
+			Navigator.gotoNavTab(navTab = "Documents and Media");
+
+			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "New Document Type");
+
+			DMDocument.editCmd(dmDocumentTitleEdit = "Test Rich Text");
+
+			CKEditor.addContentInWebContent(
+					content = "Inserting a new Text",
+					fieldLabel = "Insert Text");
+
+			Button.clickPublish();
+
+			DMDocumentType.selectDocumentTypeFrame();
+
+			LexiconEntry.openEntryMenu(rowEntry = "Test Rich Text");
+
+			MenuItem.click(menuItem = "Edit");
+
+			SelectFrame.selectFrameNoLoading(
+					key_fieldLabel = "Insert Text",
+					locator1 = "CKEditor#BODY_FIELD_IFRAME");
+				
+			AssertTextEquals(
+					locator1 = "CKEditor#BODY",
+					value1 = "Inserting a new Text");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

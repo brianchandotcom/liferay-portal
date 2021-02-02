@@ -505,6 +505,12 @@
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
+			<attribute>
+				<description>A CSS class for styling the panel-header-link.</description>
+				<name>panelHeaderLinkCssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
 		</attributes>
 	</component>
 	<component bodyContent="true" name="FieldsetGroup">

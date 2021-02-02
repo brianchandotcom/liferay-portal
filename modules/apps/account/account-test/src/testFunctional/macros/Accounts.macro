@@ -186,7 +186,7 @@ definition {
 		AssertElementPresent(locator1 = "Account#DOMAIN_SECTION");
 
 		AssertClick(
-			locator1 = "Account#ACCOUNT_DOMAIN_ADD_Link",
+			locator1 = "Account#ACCOUNT_DOMAIN_ADD_LINK",
 			value1 = "Add");
 
 		SelectFrame(locator1 = "IFrame#ADD_DOMAIN");

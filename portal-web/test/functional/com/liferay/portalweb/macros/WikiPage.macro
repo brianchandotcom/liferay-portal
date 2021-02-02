@@ -250,7 +250,7 @@ definition {
 				value1 = "${wikiPageContent}");
 		}
 		else if ("${htmlSource}" == "true") {
-			Panel.expandPanel(panel = "Configuration");
+			Panel.expandUnstyledPanel(panel = "Configuration");
 
 			SelectNoError(
 				locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",

@@ -108,7 +108,7 @@ definition {
 
 		Click.clickAt(locator1 = "TextInput#TITLE");
 
-		Panel.expandPanel(panel = "Configuration");
+		Panel.expandUnstyledPanel(panel = "Configuration");
 
 		if (isSet(kbArticleFriendlyURL)) {
 			var kbArticleTitleFormatted = StringUtil.lowerCase("${kbArticleFriendlyURL}");

@@ -93,7 +93,7 @@ definition {
 
 		Button.clickSave();
 
-		WebContentStructures.editStructure(structureName = "Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
 		DataEngine.viewFieldHelpText(
 			fieldFieldLabel = "Test",
@@ -118,7 +118,7 @@ definition {
 
 		Button.clickSave();
 
-		WebContentStructures.editStructure(structureName = "Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Edited label",
@@ -144,7 +144,7 @@ definition {
 
 		Button.clickSave();
 
-		WebContentStructures.editStructure(structureName = "Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
 		DataEngine.viewFieldReference(
 			fieldFieldLabel = "Test",
@@ -178,7 +178,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
 		WebContent.addCP(webContentTitle = "Web Content Title");
 

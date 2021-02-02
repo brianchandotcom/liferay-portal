@@ -41,7 +41,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 
 <liferay-frontend:edit-form
 	action="<%= addAccountUsersURL %>"
-	cssClass="container-form-lg"
 >
 	<liferay-frontend:edit-form-body>
 		<portlet:renderURL var="defaultRedirect">

@@ -36,7 +36,6 @@ renderResponse.setTitle((layoutPageTemplateCollection != null) ? layoutPageTempl
 
 <liferay-frontend:edit-form
 	action="<%= editLayoutPageTemplateCollectionURL %>"
-	cssClass="container-form-lg"
 	name="fm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

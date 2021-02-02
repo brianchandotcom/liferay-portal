@@ -33,7 +33,6 @@ renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getNam
 
 <liferay-frontend:edit-form
 	action="<%= editFragmentCollectionURL %>"
-	cssClass="container-form-lg"
 	name="fm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= fragmentDisplayContext.getRedirect() %>" />

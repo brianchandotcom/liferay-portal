@@ -90,7 +90,6 @@ if (layoutSetPrototypeId > 0) {
 
 <liferay-frontend:edit-form
 	action="<%= editGroupURL %>"
-	cssClass="container-form-lg"
 	method="post"
 	name="fm"
 	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveGroup();" %>'

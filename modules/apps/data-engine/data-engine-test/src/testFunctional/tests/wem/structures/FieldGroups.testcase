@@ -64,13 +64,7 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "4"
 	test DeleteAFieldFromAFieldGroup {
-		property portal.acceptance = "false";
-
-		var structureName = "WC Structure Name";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -87,15 +81,21 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DataEngine.deleteField(fieldFieldLabel = "Text");
+		DataEngine.delete(fieldFieldLabel = "Numeric");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
+		WebContentStructures.saveCP();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertElementNotPresent(locator1 = "DataEngineBuilder#NESTED_TEXT_STRUCTURE");
+		for (var label : list "Fields Group,Text") {
+			AssertVisible(
+				key_fieldFieldLabel = "${label}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "Numeric",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

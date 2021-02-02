@@ -49,7 +49,8 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.view.count.ViewCountManagerUtil" %><%@
 page import="com.liferay.taglib.util.PortalIncludeUtil" %>
 
-<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.Collections" %><%@
+page import="java.util.stream.Collectors" %>
 
 <%
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);

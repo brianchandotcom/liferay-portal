@@ -388,21 +388,41 @@ renderResponse.setTitle(headerTitle);
 							<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />
 
 							<c:if test="<%= fileEntryTypeId > 0 %>">
+								<div>
+									<react:component
+										module="document_library/js/LanguageSelector"
+										props='<%=
+											HashMapBuilder.<String, Object>put(
+												"languageIds",
+												LanguageUtil.getAvailableLocales(
+													themeDisplay.getSiteGroupId()
+												).stream(
+												).map(
+													LanguageUtil::getLanguageId
+												).collect(
+													Collectors.toList()
+												)
+											).put(
+												"selectedLanguageId", themeDisplay.getLanguageId()
+											).build()
+										%>'
+									/>
+								</div>
 
-								<%
-								try {
-									boolean localizable = true;
+							<%
+							try {
+								boolean localizable = true;
 
-									for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
-										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
+								for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+									com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
 
-										try {
-											DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+									try {
+										DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-											ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
-										}
-										catch (Exception e) {
-										}
+										ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+									}
+									catch (Exception e) {
+									}
 								%>
 
 										<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">

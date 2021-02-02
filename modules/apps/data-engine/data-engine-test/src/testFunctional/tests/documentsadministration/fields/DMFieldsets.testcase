@@ -58,7 +58,41 @@ definition {
 	test FieldsetSetAsRepeatable {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 FieldsetSetAsRepeatable pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "RepeatableTest");
+
+		DataEngine.addFields(fieldNameList = "Text,Image");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "RepeatableTest1");
+
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "RepeatableTest",
+			fieldsetsName = "RepeatableTest");
+
+		DataEngine.editFieldsetsRepeatable(fieldsetLabel = "RepeatableTest");
+
+		DDLDataDefinition.save();
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "RepeatableTest1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "RepeatableTest1");
+
+		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

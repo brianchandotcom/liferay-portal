@@ -490,11 +490,6 @@ public class JournalConverterImpl implements JournalConverter {
 		boolean multiple = GetterUtil.getBoolean(
 			ddmStructure.getFieldProperty(fieldName, "multiple"));
 
-		dynamicElementElement.addAttribute(
-			"type",
-			_convertFromDDMFieldTypeToJournalType(
-				fieldType, ddmStructure, fieldName));
-
 		dynamicElementElement.addAttribute("index-type", indexType);
 
 		int count = ddmFieldsCounter.get(fieldName);
@@ -628,109 +623,6 @@ public class JournalConverterImpl implements JournalConverter {
 			fieldsDisplayValues, fieldsDisplayValue);
 
 		fieldsDisplayField.setValue(StringUtil.merge(fieldsDisplayValues));
-	}
-
-	private String _convertFromDDMFieldTypeToJournalType(
-		String ddmFieldType, DDMStructure ddmStructure, String fieldName) {
-
-		String type = ddmFieldType;
-
-		if (Objects.equals(
-				ddmFieldType, DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
-
-			try {
-				DDMFormField ddmFormField = ddmStructure.getDDMFormField(
-					fieldName);
-
-				DDMFormFieldOptions ddmFormFieldOptions =
-					(DDMFormFieldOptions)ddmFormField.getProperty("options");
-
-				Map<String, LocalizedValue> options =
-					ddmFormFieldOptions.getOptions();
-
-				if (options.size() == 1) {
-					type = "boolean";
-				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to get dynamic data mapping form field for " +
-							fieldName,
-						portalException);
-				}
-			}
-		}
-		else if (Objects.equals(
-					ddmFieldType, DDMFormFieldTypeConstants.COLOR)) {
-
-			type = "ddm-color";
-		}
-		else if (Objects.equals(ddmFieldType, DDMFormFieldTypeConstants.DATE)) {
-			type = "ddm-date";
-		}
-		else if (Objects.equals(
-					ddmFieldType, DDMFormFieldTypeConstants.GEOLOCATION)) {
-
-			type = "ddm-geolocation";
-		}
-		else if (Objects.equals(
-					ddmFieldType,
-					JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE)) {
-
-			type = "ddm-journal-article";
-		}
-		else if (Objects.equals(
-					ddmFieldType,
-					LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT)) {
-
-			type = "ddm-link-to-page";
-		}
-		else if (Objects.equals(
-					ddmFieldType, DDMFormFieldTypeConstants.NUMERIC)) {
-
-			type = "ddm-number";
-		}
-		else if (Objects.equals(
-					ddmFieldType, DDMFormFieldTypeConstants.RICH_TEXT)) {
-
-			type = "text_area";
-		}
-		else if (Objects.equals(
-					ddmFieldType, DDMFormFieldTypeConstants.SELECT)) {
-
-			type = "list";
-		}
-		else if (Objects.equals(
-					ddmFieldType, DDMFormFieldTypeConstants.SEPARATOR)) {
-
-			type = "selection_break";
-		}
-		else if (Objects.equals(ddmFieldType, DDMFormFieldTypeConstants.TEXT)) {
-			type = "text";
-
-			try {
-				DDMFormField ddmFormField = ddmStructure.getDDMFormField(
-					fieldName);
-
-				String displayStyle = (String)ddmFormField.getProperty(
-					"displayStyle");
-
-				if (Objects.equals(displayStyle, "multiline")) {
-					type = "text_box";
-				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to get dynamic data mapping form field for " +
-							fieldName,
-						portalException);
-				}
-			}
-		}
-
-		return type;
 	}
 
 	private Serializable _getCheckboxMultipleValue(

@@ -166,68 +166,6 @@
 			<finder-column name="companyId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceCountry" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="commerceCountryId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column localized="true" name="name" type="String" />
-		<column name="billingAllowed" type="boolean" />
-		<column name="shippingAllowed" type="boolean" />
-		<column name="twoLettersISOCode" type="String" />
-		<column name="threeLettersISOCode" type="String" />
-		<column name="numericISOCode" type="int" />
-		<column name="subjectToVAT" type="boolean" />
-		<column name="priority" type="double" />
-		<column name="active" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
-		<column name="channelFilterEnabled" type="boolean" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="priority" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
-		<finder name="C_Tw" return-type="CommerceCountry" unique="true">
-			<finder-column name="companyId" />
-			<finder-column name="twoLettersISOCode" />
-		</finder>
-		<finder name="C_N" return-type="CommerceCountry" unique="true">
-			<finder-column name="companyId" />
-			<finder-column name="numericISOCode" />
-		</finder>
-		<finder name="C_A" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="active" />
-		</finder>
-		<finder name="C_B_A" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="billingAllowed" />
-			<finder-column name="active" />
-		</finder>
-		<finder name="C_S_A" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="shippingAllowed" />
-			<finder-column name="active" />
-		</finder>
-	</entity>
 	<entity external-reference-code="true" local-service="true" name="CommerceOrder" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -551,49 +489,6 @@
 			<finder-column name="commerceOrderId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceRegion" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="commerceRegionId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="commerceCountryId" type="long" />
-		<column name="name" type="String" />
-		<column name="code" type="String" />
-		<column name="priority" type="double" />
-		<column name="active" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="priority" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="CommerceCountryId" return-type="Collection">
-			<finder-column name="commerceCountryId" />
-		</finder>
-		<finder name="C_C" return-type="CommerceRegion" unique="true">
-			<finder-column name="commerceCountryId" />
-			<finder-column name="code" />
-		</finder>
-		<finder name="C_A" return-type="Collection">
-			<finder-column name="commerceCountryId" />
-			<finder-column name="active" />
-		</finder>
-	</entity>
 	<entity local-service="true" name="CommerceShipment" remote-service="true">
 
 		<!-- PK fields -->
@@ -898,10 +793,6 @@
 		<exception>CommerceAddressStreet</exception>
 		<exception>CommerceAddressType</exception>
 		<exception>CommerceAddressZip</exception>
-		<exception>CommerceCountryAlreadyExists</exception>
-		<exception>CommerceCountryName</exception>
-		<exception>CommerceCountryThreeLettersISOCode</exception>
-		<exception>CommerceCountryTwoLettersISOCode</exception>
 		<exception>CommerceGeocoder</exception>
 		<exception>CommerceOrderAccountLimit</exception>
 		<exception>CommerceOrderBillingAddress</exception>
@@ -918,7 +809,6 @@
 		<exception>CommerceOrderStatus</exception>
 		<exception>CommerceOrderValidator</exception>
 		<exception>CommercePaymentEngine</exception>
-		<exception>CommerceRegionName</exception>
 		<exception>CommerceShipmentExpectedDate</exception>
 		<exception>CommerceShipmentItemQuantity</exception>
 		<exception>CommerceShipmentShippingDate</exception>

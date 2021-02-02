@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 function getLanguage(id) {
 	const text = id.replace('_', '-');
@@ -28,9 +28,32 @@ function getLanguage(id) {
 	};
 }
 
-function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
+function LanguageSelector(props) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const [selectedLanguageId, setSelectedLanguageId] = useState(
+		props.selectedLanguageId
+	);
 	const language = getLanguage(selectedLanguageId);
+
+	useEffect(() => {
+		props.ddmStructureIds.forEach((ddmStructureId) => {
+			Liferay.componentReady(
+				props.portletNamespace +
+					'dataEngineLayoutRenderer' +
+					ddmStructureId
+			).then((dataEngineLayoutRenderer) => {
+				const {
+					reactComponentRef: {current},
+				} = dataEngineLayoutRenderer;
+
+				if (current) {
+					current.updateEditingLanguageId({
+						editingLanguageId: selectedLanguageId,
+					});
+				}
+			});
+		});
+	}, [props, selectedLanguageId]);
 
 	return (
 		<ClayDropDown
@@ -46,7 +69,7 @@ function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
 			}
 		>
 			<ClayDropDown.ItemList>
-				{languageIds.map((id) => {
+				{props.languageIds.map((id) => {
 					const {icon, text} = getLanguage(id);
 
 					return (
@@ -54,7 +77,7 @@ function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
 							active={id === selectedLanguageId}
 							key={id}
 							onClick={() => {
-								onChange(id);
+								setSelectedLanguageId(id);
 								setIsDropdownOpen(false);
 							}}
 						>
@@ -71,8 +94,9 @@ function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
 }
 
 LanguageSelector.propTypes = {
+	ddmStructureIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 	languageIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-	onChange: PropTypes.func.isRequired,
+	portletNamespace: PropTypes.string.isRequired,
 	selectedLanguageId: PropTypes.string.isRequired,
 };
 

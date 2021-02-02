@@ -27,6 +27,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
 import isMapped from '../../utils/editable-value/isMapped';
+import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
 import {useId} from '../../utils/useId';
 
 const SOURCE_OPTIONS = {
@@ -76,7 +77,7 @@ export default function LinkField({field, onValueSelect, value}) {
 	const targetInputId = useId();
 
 	useEffect(() => {
-		if (nextValue.classNameId && nextValue.classPK && nextValue.fieldId) {
+		if (isMappedToInfoItem(nextValue)) {
 			setMappedHrefPreview('');
 
 			InfoItemService.getInfoItemFieldValue({

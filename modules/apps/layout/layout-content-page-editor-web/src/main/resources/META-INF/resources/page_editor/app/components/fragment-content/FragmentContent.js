@@ -129,9 +129,9 @@ const FragmentContent = ({
 			Promise.all(
 				getAllEditables(fragmentElement).map((editable) =>
 					resolveEditableValue(
-						editableValues,
-						editable.editableId,
-						editable.editableValueNamespace,
+						editableValues[editable.editableValueNamespace][
+							editable.editableId
+						],
 						languageId,
 						getFieldValue
 					).then(([value, editableConfig]) => {

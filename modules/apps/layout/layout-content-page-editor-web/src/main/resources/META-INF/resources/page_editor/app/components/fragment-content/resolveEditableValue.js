@@ -14,33 +14,36 @@
 
 import {config} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
+import isMapped from '../../utils/editable-value/isMapped';
+import isMappedToCollection from '../../utils/editable-value/isMappedToCollection';
+import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
 
-export default function (
-	editableValues,
-	editableId,
-	processorType,
+export default function resolveEditableValue(
+	editableValue,
 	languageId,
-	getFieldValue = InfoItemService.getInfoItemFieldValue
+	getFieldValue = null
 ) {
-	const editableValue = editableValues[processorType][editableId];
-
 	let valuePromise;
 
-	if (editableIsMappedToInfoItem(editableValue)) {
-		valuePromise = getFieldValue({
-			classNameId: editableValue.classNameId,
-			classPK: editableValue.classPK,
-			collectionFieldId: editableValue.collectionFieldId,
-			fieldId: editableValue.fieldId,
-			languageId,
-		}).catch(() => {
-			return selectEditableValueContent(editableValue, languageId);
-		});
+	if (isMapped(editableValue)) {
+		if (getFieldValue) {
+			valuePromise = getFieldValue({
+				...editableValue,
+				languageId,
+			}).catch(() => resolveRawEditableValue(editableValue, languageId));
+		}
+		else if (isMappedToInfoItem()) {
+			valuePromise =  InfoItemService.getInfoItemFieldValue({
+				...editableValue,
+				languageId,
+			}).catch(() => resolveRawEditableValue(editableValue, languageId));
+		}
+		else {
+			valuePromise = resolveRawEditableValue(editableValue, languageId);
+		}
 	}
 	else {
-		valuePromise = Promise.resolve(
-			selectEditableValueContent(editableValue, languageId)
-		);
+		valuePromise = resolveRawEditableValue(editableValue, languageId);
 	}
 
 	let configPromise;
@@ -51,12 +54,12 @@ export default function (
 		  editableValue.config
 		: editableValue.config;
 
-	if (editableIsMappedToInfoItem(editableConfig)) {
+	if (
+		isMappedToInfoItem(editableConfig) ||
+		isMappedToCollection(editableConfig)
+	) {
 		configPromise = getFieldValue({
-			classNameId: editableConfig.classNameId,
-			classPK: editableConfig.classPK,
-			collectionFieldId: editableConfig.collectionFieldId,
-			fieldId: editableConfig.fieldId,
+			...editableConfig,
 			languageId,
 		})
 			.then((href) => {
@@ -73,7 +76,7 @@ export default function (
 	return Promise.all([valuePromise, configPromise]);
 }
 
-function selectEditableValueContent(editableValue, languageId) {
+function resolveRawEditableValue(editableValue, languageId) {
 	let content = editableValue;
 
 	if (content[languageId]) {
@@ -87,15 +90,5 @@ function selectEditableValueContent(editableValue, languageId) {
 		content = editableValue.defaultValue;
 	}
 
-	return content;
-}
-
-function editableIsMappedToInfoItem(editableValue) {
-	return (
-		editableValue &&
-		((editableValue.classNameId &&
-			editableValue.classPK &&
-			editableValue.fieldId) ||
-			editableValue.collectionFieldId)
-	);
+	return Promise.resolve(content);
 }

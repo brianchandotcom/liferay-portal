@@ -21,6 +21,7 @@ import {config} from '../../config/index';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
+import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import loadBackgroundImage from '../../utils/loadBackgroundImage';
@@ -101,7 +102,7 @@ const Container = React.forwardRef(
 			if (linkConfig.href) {
 				setLink(linkConfig);
 			}
-			else if (linkConfig.fieldId) {
+			else if (isMappedToInfoItem(linkConfig)) {
 				InfoItemService.getInfoItemFieldValue({
 					...linkConfig,
 					languageId,

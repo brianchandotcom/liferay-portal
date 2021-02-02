@@ -13,6 +13,7 @@
  */
 
 import InfoItemService from '../services/InfoItemService';
+import isMappedToInfoItem from './editable-value/isMappedToInfoItem';
 
 export default function loadBackgroundImage(backgroundImage) {
 	if (!backgroundImage) {
@@ -21,11 +22,9 @@ export default function loadBackgroundImage(backgroundImage) {
 	else if (typeof backgroundImage.url === 'string') {
 		return Promise.resolve(backgroundImage.url);
 	}
-	else if (backgroundImage.fieldId) {
+	else if (isMappedToInfoItem(backgroundImage)) {
 		return InfoItemService.getInfoItemFieldValue({
-			classNameId: backgroundImage.classNameId,
-			classPK: backgroundImage.classPK,
-			fieldId: backgroundImage.fieldId,
+			...backgroundImage,
 			onNetworkStatus: () => {},
 		}).then((response) => {
 			if (response.fieldValue && response.fieldValue.url) {

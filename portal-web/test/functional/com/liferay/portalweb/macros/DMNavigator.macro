@@ -78,10 +78,6 @@ definition {
 			value1 = "${dmDocumentTitle}");
 	}
 
-	macro gotoDocumentsAndMedia {
-		Navigator.gotoNavItem(navItem = "Documents and Media");
-	}
-
 	macro gotoDocumentType {
 		Navigator.gotoNavItem(navItem = "Document Types");
 	}

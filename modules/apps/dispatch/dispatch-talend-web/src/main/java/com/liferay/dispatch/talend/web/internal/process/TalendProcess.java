@@ -16,10 +16,13 @@ package com.liferay.dispatch.talend.web.internal.process;
 
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
 import com.liferay.petra.process.ProcessConfig;
+import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 
 import java.io.File;
@@ -127,8 +130,9 @@ public class TalendProcess {
 
 			processConfigBuilder.setBootstrapClassPath(
 				portalProcessConfig.getBootstrapClassPath());
+
 			processConfigBuilder.setProcessLogConsumer(
-				portalProcessConfig.getProcessLogConsumer());
+				this::_consumeProcessLog);
 
 			processConfigBuilder.setRuntimeClassPath(
 				StringBundler.concat(
@@ -136,6 +140,30 @@ public class TalendProcess {
 					_BUNDLE_FILE_PATH));
 
 			return processConfigBuilder.build();
+		}
+
+		private void _consumeProcessLog(ProcessLog processLog) {
+			if (ProcessLog.Level.DEBUG == processLog.getLevel()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						processLog.getMessage(), processLog.getThrowable());
+				}
+			}
+			else if (ProcessLog.Level.INFO == processLog.getLevel()) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						processLog.getMessage(), processLog.getThrowable());
+				}
+			}
+			else if (ProcessLog.Level.WARN == processLog.getLevel()) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						processLog.getMessage(), processLog.getThrowable());
+				}
+			}
+			else {
+				_log.error(processLog.getMessage(), processLog.getThrowable());
+			}
 		}
 
 		private static final String _BUNDLE_FILE_PATH;
@@ -161,6 +189,8 @@ public class TalendProcess {
 		_mainMethodArguments = builder._contextParams;
 		_processConfig = builder._buildProcessConfig();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(TalendProcess.class);
 
 	private final List<String> _mainMethodArguments;
 	private final ProcessConfig _processConfig;

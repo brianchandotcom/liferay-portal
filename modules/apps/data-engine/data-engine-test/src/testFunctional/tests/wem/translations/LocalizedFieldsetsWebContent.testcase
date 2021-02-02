@@ -125,12 +125,79 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
-	@ignore = "true"
 	@priority = "5"
 	test TranslationPersistsAfterEditingAnother {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123539 TranslationPersistsAfterEditingAnother pending implementation
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content");
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureDescription = "Structure Description Test",
+            structureName = "Structure FieldSet Test");
+
+        DataEngine.addField(
+            fieldFieldLabel = "Text Test",
+            fieldName = "Text");
+
+        WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+        WebContentStructures.addCP(
+            structureDescription = "Structure Description Test",
+            structureName = "Structure Name Test");
+
+        DataEngine.addFieldsets(
+            fieldsetLabel = "Structure FieldSet Test",
+            fieldsetName = "Structure FieldSet Test");
+
+        WebContentStructures.saveCP(structureName = "Structure Name Test");
+
+        NavItem.click(navItem = "Web Content");
+
+        WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+        PortletEntry.inputTitle(title = "WC Title Test");
+
+        PortletEntry.inputText(fieldLabel = "Text",
+                text = "Text test");
+
+        PortletEntry.changeLocale(locale = "pt_BR");
+
+        PortletEntry.inputText(fieldLabel = "Text",
+                text = "Texto teste pt");
+
+		PortletEntry.changeLocale(locale = "es_ES");
+
+        PortletEntry.inputText(fieldLabel = "Text",
+                text = "Texto teste es");
+
+        PortletEntry.publish();
+
+        LexiconEntry.gotoEntryMenuItem(
+            menuItem = "Edit",
+            rowEntry = "WC Title Test");
+
+        AssertTextEquals(
+            key_fieldLabel = "Text",
+            locator1 = "TextInput#GENERIC_TEXT_INPUT",
+            value1 = "Text test");
+
+        PortletEntry.changeLocale(locale = "pt_BR");
+
+        AssertTextEquals(
+            key_fieldLabel = "Text",
+            locator1 = "TextInput#GENERIC_TEXT_INPUT",
+            value1 = "Texto teste pt");
+
+		PortletEntry.changeLocale(locale = "es_ES");
+
+		AssertTextEquals(
+            key_fieldLabel = "Text",
+            locator1 = "TextInput#GENERIC_TEXT_INPUT",
+            value1 = "Texto teste es");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

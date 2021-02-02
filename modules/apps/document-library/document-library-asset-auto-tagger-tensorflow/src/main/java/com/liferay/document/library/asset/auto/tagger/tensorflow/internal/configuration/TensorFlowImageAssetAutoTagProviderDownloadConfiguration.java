@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface TensorFlowImageAssetAutoTagProviderDownloadConfiguration {
 
 	@Meta.AD(
-		deflt = "https://repository.liferay.com/nexus/service/local/artifact/maven/redirect?r=third-party&g=com.liferay&a=org.tensorflow.models.inception&v=5h&e=jar",
+		deflt = "https://repository-cdn.liferay.com/nexus/service/local/repositories/public/content/com/liferay/org.tensorflow.models.inception/5h/org.tensorflow.models.inception-5h.jar",
 		required = false
 	)
 	public String modelDownloadURL();

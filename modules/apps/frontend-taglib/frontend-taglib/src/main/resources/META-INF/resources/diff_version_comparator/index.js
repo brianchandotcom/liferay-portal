@@ -149,7 +149,7 @@ function Comparator({
 	return (
 		<form
 			action={portletURL}
-			className="container-fluid-1280 diff-version-comparator"
+			className="container-fluid container-fluid-max-xl container-view diff-version-comparator"
 			method="post"
 			name={`${portletNamespace}diffVersionFm`}
 			ref={formRef}
@@ -166,7 +166,7 @@ function Comparator({
 				value={targetVersion}
 			/>
 
-			<ClayCard className="main-content-card" horizontal>
+			<ClayCard horizontal>
 				<ClayCard.Body>
 					<ClayCard.Description displayType="title">
 						{Liferay.Language.get(

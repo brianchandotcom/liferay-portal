@@ -532,30 +532,6 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
-	macro editFieldShowOrHideLabel {
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
-
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-
-		if ("${showLabel}" == "true") {
-			Check.checkToggleSwitch(
-				checkboxName = "Show Label",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-		else if ("${showLabel}" == "false") {
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Show Label",
-				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
-		}
-
-		Click(locator1 = "Sidebar#BACK");
-	}
-
 	macro editFieldTip {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
@@ -610,6 +586,49 @@ definition {
 		Type(
 			locator1 = "DDMEditStructure#OPTION_VALUE_FIELD",
 			value1 = "${optionValue}");
+	}
+
+	macro editShowOrHideLabel {
+		if (isSet(fieldFieldLabel)) {
+			Click(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+			if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+				Navigator.gotoNavTab(navTab = "Advanced");
+			}
+		}
+		else if (isSet(fieldsetLabel)) {
+			Click(
+				key_fieldsetLabel = "${fieldsetLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+			if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
+				Navigator.gotoNavTab(navTab = "Basic");
+			}
+		}
+		else if (isSet(fieldsGroupLabel)) {
+			Click(
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+			if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
+				Navigator.gotoNavTab(navTab = "Basic");
+			}
+		}
+
+		if ("${showLabel}" == "true") {
+			Check.checkToggleSwitch(
+				checkboxName = "Show Label",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else if ("${showLabel}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Show Label",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+		}
+
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro viewField {

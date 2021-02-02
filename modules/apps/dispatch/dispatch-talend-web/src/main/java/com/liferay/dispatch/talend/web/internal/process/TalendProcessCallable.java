@@ -24,8 +24,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.nio.ByteBuffer;
-
 import java.security.Permission;
 
 /**
@@ -85,9 +83,10 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			Throwable causeThrowable = invocationTargetException.getCause();
 
 			if (causeThrowable == talendProcessException) {
-				return _getCallableOutputBytes(
-					errSniffPrintStream, talendProcessException.getStatus(),
-					outSniffPrintStream);
+				return new TalendProcessOutput(
+					errSniffPrintStream._bytes,
+					talendProcessException.getStatus(),
+					outSniffPrintStream._bytes);
 			}
 
 			throw new ProcessException(causeThrowable);
@@ -96,40 +95,9 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 			throw new ProcessException(throwable);
 		}
 
-		return _getCallableOutputBytes(
-			errSniffPrintStream, 0, outSniffPrintStream);
-	}
-
-	private byte[] _getCallableOutputBytes(
-		SniffPrintStream errSniffPrintStream, int exitCode,
-		SniffPrintStream outSniffPrintStream) {
-
-		byte[] controlWord = _getControlWord(
-			errSniffPrintStream, outSniffPrintStream);
-
-		ByteBuffer byteBuffer = ByteBuffer.allocate(
-			controlWord.length + Integer.BYTES +
-				errSniffPrintStream._bytes.length +
-					outSniffPrintStream._bytes.length);
-
-		byteBuffer.put(controlWord);
-		byteBuffer.putInt(exitCode);
-		byteBuffer.put(errSniffPrintStream._bytes);
-		byteBuffer.put(outSniffPrintStream._bytes);
-
-		return byteBuffer.array();
-	}
-
-	private byte[] _getControlWord(
-		SniffPrintStream errSniffPrintStream,
-		SniffPrintStream outSniffPrintStream) {
-
-		ByteBuffer byteBuffer = ByteBuffer.allocate(8);
-
-		byteBuffer.putInt(errSniffPrintStream._bytes.length);
-		byteBuffer.putInt(outSniffPrintStream._bytes.length);
-
-		return byteBuffer.array();
+		return new TalendProcessOutput(
+			errSniffPrintStream._bytes, talendProcessException.getStatus(),
+			outSniffPrintStream._bytes);
 	}
 
 	private static final long serialVersionUID = 1L;

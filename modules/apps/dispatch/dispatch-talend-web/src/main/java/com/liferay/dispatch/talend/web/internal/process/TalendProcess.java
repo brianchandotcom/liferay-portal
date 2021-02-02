@@ -134,6 +134,9 @@ public class TalendProcess {
 			processConfigBuilder.setProcessLogConsumer(
 				this::_consumeProcessLog);
 
+			processConfigBuilder.setReactClassLoader(
+				TalendProcess.class.getClassLoader());
+
 			processConfigBuilder.setRuntimeClassPath(
 				StringBundler.concat(
 					_talendArchive.getClassPath(), File.pathSeparator,

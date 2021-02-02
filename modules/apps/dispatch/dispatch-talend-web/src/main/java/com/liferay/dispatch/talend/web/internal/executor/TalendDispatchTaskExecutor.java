@@ -25,13 +25,12 @@ import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParserUtil;
 import com.liferay.dispatch.talend.web.internal.process.TalendProcess;
 import com.liferay.dispatch.talend.web.internal.process.TalendProcessCallable;
-import com.liferay.dispatch.talend.web.internal.process.TalendProcessOutputParser;
+import com.liferay.dispatch.talend.web.internal.process.TalendProcessOutput;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -94,7 +93,8 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			NoticeableFuture<Serializable> future =
 				processChannel.getProcessNoticeableFuture();
 
-			byte[] talendProcessOutput = (byte[])future.get();
+			TalendProcessOutput talendProcessOutput =
+				(TalendProcessOutput)future.get();
 
 			_checkTalendProcessOutput(
 				talendProcessOutput, dispatchTaskExecutorOutput);
@@ -134,22 +134,17 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	}
 
 	private void _checkTalendProcessOutput(
-			byte[] talendProcessOutput,
+			TalendProcessOutput talendProcessOutput,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
-		throws JSONException, ProcessException {
+		throws ProcessException {
 
-		TalendProcessOutputParser talendProcessOutputParser =
-			new TalendProcessOutputParser(talendProcessOutput);
+		dispatchTaskExecutorOutput.setError(talendProcessOutput.getError());
+		dispatchTaskExecutorOutput.setOutput(talendProcessOutput.getOutput());
 
-		dispatchTaskExecutorOutput.setError(
-			talendProcessOutputParser.getError());
-		dispatchTaskExecutorOutput.setOutput(
-			talendProcessOutputParser.getOutput());
-
-		if (talendProcessOutputParser.hasException()) {
+		if (talendProcessOutput.hasException()) {
 			throw new ProcessException(
 				"Subprocess terminated with exit code " +
-					talendProcessOutputParser.getExitCode());
+					talendProcessOutput.getExitCode());
 		}
 	}
 

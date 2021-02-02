@@ -14,36 +14,21 @@
 
 package com.liferay.dispatch.talend.web.internal.process;
 
-import com.liferay.portal.kernel.json.JSONException;
+import java.io.Serializable;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 /**
  * @author Matija Petanjek
  */
-public class TalendProcessOutputParser {
+public class TalendProcessOutput implements Serializable {
 
-	public TalendProcessOutputParser(byte[] resultBytes) throws JSONException {
-		ByteBuffer byteBuffer = ByteBuffer.wrap(resultBytes);
+	public TalendProcessOutput(byte[] errBytes, int exitCode, byte[] outBytes) {
+		_error = new String(errBytes, StandardCharsets.UTF_8);
 
-		int errorLength = byteBuffer.getInt();
+		_exitCode = exitCode;
 
-		int outputLength = byteBuffer.getInt();
-
-		_exitCode = byteBuffer.getInt();
-
-		byte[] errorBytes = new byte[errorLength];
-
-		byteBuffer.get(errorBytes, 0, errorLength);
-
-		_error = new String(errorBytes, StandardCharsets.UTF_8);
-
-		byte[] outputBytes = new byte[outputLength];
-
-		byteBuffer.get(outputBytes, 0, outputLength);
-
-		_output = new String(outputBytes, StandardCharsets.UTF_8);
+		_output = new String(outBytes, StandardCharsets.UTF_8);
 	}
 
 	public String getError() {
@@ -65,6 +50,8 @@ public class TalendProcessOutputParser {
 
 		return true;
 	}
+
+	private static final long serialVersionUID = 1L;
 
 	private final String _error;
 	private int _exitCode;

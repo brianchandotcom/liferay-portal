@@ -199,12 +199,45 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
 	@priority = "4"
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
-		property portal.acceptance = "false";
 
-		// TODO LPS-123537 DefaultTitlePersistsAfterTranslatingForAnotherLocale pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "My Structure Name 1");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Text");
+
+		DDLDataDefinition.save();
+
+		Navigator.gotoNavItem(navItem = "Web Content");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "My Structure Name 1");
+
+		PortletEntry.inputTitle(title = "My Web Content Name 1");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		PortletEntry.inputTitle(title = "Minha conta web nome 1");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content Name 1");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "My Web Content Name 1");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

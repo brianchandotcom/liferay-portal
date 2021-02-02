@@ -103,7 +103,7 @@
 </tr>
 <tr>
 	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_RADIO</td>
-	<td>//label[@class='radio-inline' and contains(.,'Day of the Week')]/input</td>
+	<td>//label[contains(@class,'radio-inline') and contains(.,'Day of the Week')]/input</td>
 	<td></td>
 </tr>
 <tr>

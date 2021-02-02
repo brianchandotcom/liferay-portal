@@ -163,9 +163,7 @@ public class Changeset implements Serializable {
 			String stagedModelClassName = stagedModel.getModelClassName();
 
 			if (stagedModelClassName.equals(parentClassName)) {
-				for (Object object :
-						hierarchyFunction.apply(parentStagedModel)) {
-
+				for (Object object : hierarchyFunction.apply(stagedModel)) {
 					StagedModel childStagedModel = (StagedModel)object;
 
 					childrenStagedModels.add(childStagedModel);

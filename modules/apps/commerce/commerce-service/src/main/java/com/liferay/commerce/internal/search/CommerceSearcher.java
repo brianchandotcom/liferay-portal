@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
@@ -26,7 +25,7 @@ import com.liferay.portal.kernel.search.Indexer;
 public class CommerceSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
-		CommerceAddress.class.getName(), CommerceCountry.class.getName()
+		CommerceAddress.class.getName()
 	};
 
 	public static Indexer<?> getInstance() {

@@ -148,8 +148,8 @@ const Options = ({
 				);
 			}
 
-			formattedValue[languageId] = formattedValue[languageId].map(
-				(option) => {
+			formattedValue[languageId] = normalizeFields(
+				formattedValue[languageId].map((option) => {
 					let newOption = {
 						id: random(),
 						...option,
@@ -173,7 +173,8 @@ const Options = ({
 					}
 
 					return newOption;
-				}
+				}),
+				generateOptionValueUsingOptionLabel
 			);
 		});
 
@@ -201,20 +202,23 @@ const Options = ({
 		const availableLanguageIds = Object.getOwnPropertyNames(value);
 
 		availableLanguageIds.forEach((languageId) => {
-			normalizedValue[languageId] = value[languageId].map((option) => {
-				if (option.edited) {
-					return option;
-				}
+			normalizedValue[languageId] = normalizeFields(
+				value[languageId].map((option) => {
+					if (option.edited) {
+						return option;
+					}
 
-				const {label} = value[defaultLanguageId].find(
-					(defaultOption) => defaultOption.value === option.value
-				);
+					const {label} = value[defaultLanguageId].find(
+						(defaultOption) => defaultOption.value === option.value
+					);
 
-				return {
-					...option,
-					label,
-				};
-			});
+					return {
+						...option,
+						label,
+					};
+				}),
+				generateOptionValueUsingOptionLabel
+			);
 		});
 
 		const options = normalizedValue[editingLanguageId] || [];

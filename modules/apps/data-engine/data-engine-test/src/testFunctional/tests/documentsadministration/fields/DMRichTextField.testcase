@@ -195,10 +195,9 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test SetRichTextSearchableAsByText {
-				
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-        DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMNavigator.gotoDocumentType();
 
@@ -210,9 +209,9 @@ definition {
 			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "Rich Text");
-		
+
 		FormViewBuilder.switchToAdvancedTab();
-		
+
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Searchable",
 			searchableType = "Disable");
@@ -231,7 +230,7 @@ definition {
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Searchable",
 			searchableType = "Text");
-		
+
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
@@ -245,8 +244,7 @@ definition {
 
 		FormFields.viewRadioValue(
 			fieldName = "indexType",
-			fieldValue = "Text");		
-		
+			fieldValue = "Text");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

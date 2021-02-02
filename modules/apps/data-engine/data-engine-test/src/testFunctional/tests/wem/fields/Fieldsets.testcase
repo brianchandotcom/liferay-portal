@@ -87,7 +87,63 @@ definition {
 	test EditFieldsetPropertiesFromSideBar {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 EditFieldsetPropertiesFromSideBar pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "EditFieldSetTest",
+			structureName = "EditFieldSetTest");
+
+		Navigator.gotoSidebarTab(tabName = "Builder");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		DoubleClick(locator1 = "Modal#CREATE_DATE_FIELD");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "EditFieldSetTest");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "EditFieldSetTest",
+			fieldsetsName = "EditFieldSetTest");
+
+		WebContentStructures.saveCP(structureName = "EditFieldSetTest");
+
+		WebContentStructures.editStructureCP(structureName = "EditFieldSetTest");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		Click(locator1 = "AppBuilder#BUTTON_EDIT_FIELDSET");
+
+		Click(
+			key_selectAction = "Edit",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		Click(locator1 = "Modal#CLICK_DATE_FIELD");
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "NewDate");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Click(locator1 = "Modal#PROPAGATE_BUTTON");
+
+		var key_fieldLabel = "NewDate";
+		
+		AssertTextEquals(
+			locator1 = "FormViewBuilder#ASSERT_FIELD_SET_NAME",
+			value1 = "NewDate");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

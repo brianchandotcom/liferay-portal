@@ -26,7 +26,7 @@ import selectLanguageId from '../../../../app/selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../../../app/selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
-import isMapped from '../../../../app/utils/isMapped';
+import isMapped from '../../../../app/utils/editable-value/isMapped';
 import {setIn} from '../../../../app/utils/setIn';
 import {updateIn} from '../../../../app/utils/updateIn';
 import {useId} from '../../../../app/utils/useId';

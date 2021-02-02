@@ -26,7 +26,7 @@ import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
-import isMapped from '../../utils/isMapped';
+import isMapped from '../../utils/editable-value/isMapped';
 import {useId} from '../../utils/useId';
 
 const SOURCE_OPTIONS = {

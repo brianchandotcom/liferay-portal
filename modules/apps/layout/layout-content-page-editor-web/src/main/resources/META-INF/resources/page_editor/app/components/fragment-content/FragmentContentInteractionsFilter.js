@@ -26,7 +26,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import {useSelector, useSelectorCallback} from '../../store/index';
 import canActivateEditable from '../../utils/canActivateEditable';
 import {deepEqual} from '../../utils/checkDeepEqual';
-import isMapped from '../../utils/isMapped';
+import isMapped from '../../utils/editable-value/isMapped';
 import {useToControlsId} from '../CollectionItemContext';
 import {
 	useActivationOrigin,

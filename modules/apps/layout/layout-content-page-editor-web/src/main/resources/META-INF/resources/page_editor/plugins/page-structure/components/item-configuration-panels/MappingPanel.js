@@ -21,7 +21,7 @@ import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
 import selectEditableValue from '../../../../app/selectors/selectEditableValue';
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValues from '../../../../app/thunks/updateEditableValues';
-import isMapped from '../../../../app/utils/isMapped';
+import isMapped from '../../../../app/utils/editable-value/isMapped';
 import MappingSelector from '../../../../common/components/MappingSelector';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
 

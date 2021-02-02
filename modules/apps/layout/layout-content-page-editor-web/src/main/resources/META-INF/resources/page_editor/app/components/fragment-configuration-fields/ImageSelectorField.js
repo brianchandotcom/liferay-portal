@@ -25,6 +25,7 @@ import {FILE_ENTRY_CLASS_NAME} from '../../config/constants/fileEntryClassName';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
 import {useSelector} from '../../store/index';
+import isMapped from '../../utils/editable-value/isMapped';
 import {useId} from '../../utils/useId';
 
 const IMAGE_SOURCES = {
@@ -47,7 +48,7 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 	);
 
 	const [imageSource, setImageSource] = useState(() =>
-		value.fieldId || value.mappedField
+		isMapped(value)
 			? IMAGE_SOURCES.mapping.value
 			: IMAGE_SOURCES.direct.value
 	);

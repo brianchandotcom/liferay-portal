@@ -25,7 +25,7 @@ import {config} from '../../app/config/index';
 import CollectionService from '../../app/services/CollectionService';
 import InfoItemService from '../../app/services/InfoItemService';
 import {useDispatch, useSelector} from '../../app/store/index';
-import isMapped from '../../app/utils/isMapped';
+import isMapped from '../../app/utils/editable-value/isMapped';
 import {useId} from '../../app/utils/useId';
 import ItemSelector from './ItemSelector';
 

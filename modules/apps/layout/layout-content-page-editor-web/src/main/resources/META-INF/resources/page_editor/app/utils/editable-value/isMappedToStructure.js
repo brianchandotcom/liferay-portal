@@ -12,9 +12,6 @@
  * details.
  */
 
-export default function isMapped(editable) {
-	return (
-		editable &&
-		(editable.fieldId || editable.mappedField || editable.collectionFieldId)
-	);
+export default function isMappedToStructure(editable) {
+	return editable && editable.mappedField;
 }

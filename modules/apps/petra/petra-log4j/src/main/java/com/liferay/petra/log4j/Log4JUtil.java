@@ -144,6 +144,24 @@ public class Log4JUtil {
 		return new HashMap<>(_customLogSettings);
 	}
 
+	public static Map<String, String> getLogLevelStrings() {
+		Map<String, String> logLevelStrings = new HashMap<>();
+
+		Enumeration<Logger> enumeration = LogManager.getCurrentLoggers();
+
+		while (enumeration.hasMoreElements()) {
+			Logger logger = enumeration.nextElement();
+
+			Level level = logger.getLevel();
+
+			if (level != null) {
+				logLevelStrings.put(logger.getName(), level.toString());
+			}
+		}
+
+		return logLevelStrings;
+	}
+
 	public static String getOriginalLevel(String className) {
 		Level level = Level.ALL;
 

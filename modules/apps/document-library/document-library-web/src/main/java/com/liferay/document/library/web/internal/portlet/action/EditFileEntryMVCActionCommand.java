@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.service.TrashEntryService;
 import com.liferay.upload.UploadResponseHandler;
 
@@ -732,6 +733,14 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					vocabularyTitle);
 			}
 		}
+		else if (exception instanceof DLStorageQuotaExceededException) {
+			errorMessage = _language.format(
+				themeDisplay.getLocale(),
+				"you-have-exceeded-the-x-storage-quota-for-this-instance",
+				_language.formatStorageSize(
+					PropsValues.DATA_LIMIT_MAX_DL_STORAGE_SIZE,
+					themeDisplay.getLocale()));
+		}
 		else if (exception instanceof DuplicateFileEntryException) {
 			errorMessage = _language.get(
 				themeDisplay.getLocale(),
@@ -893,6 +902,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if (exception instanceof AntivirusScannerException ||
+				exception instanceof DLStorageQuotaExceededException ||
 				exception instanceof DuplicateFileEntryException ||
 				exception instanceof FileExtensionException ||
 				exception instanceof FileNameException ||

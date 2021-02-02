@@ -208,9 +208,9 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-            panel = "Site Administration",
+			panel = "Site Administration",
 			portlet = "Documents and Media");
-		
+
 		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
@@ -236,7 +236,6 @@ definition {
 			fieldReference = "${assertFieldReference}");
 
 		Button.clickSave();
-		
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

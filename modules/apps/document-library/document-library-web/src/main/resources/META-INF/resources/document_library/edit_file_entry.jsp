@@ -139,7 +139,9 @@ renderResponse.setTitle(headerTitle);
 	</liferay-frontend:info-bar>
 </c:if>
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
 	<c:if test="<%= checkedOut %>">
 
 		<%
@@ -531,32 +533,32 @@ renderResponse.setTitle(headerTitle);
 						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
 					</div>
 				</c:if>
+
+				<div class="sheet-footer">
+					<c:if test="<%= dlEditFileEntryDisplayContext.isSaveButtonVisible() %>">
+						<aui:button disabled="<%= dlEditFileEntryDisplayContext.isSaveButtonDisabled() %>" name="saveButton" onClick='<%= liferayPortletResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= dlEditFileEntryDisplayContext.getSaveButtonLabel() %>" />
+					</c:if>
+
+					<c:if test="<%= dlEditFileEntryDisplayContext.isPublishButtonVisible() %>">
+						<aui:button disabled="<%= dlEditFileEntryDisplayContext.isPublishButtonDisabled() %>" name="publishButton" type="submit" value="<%= dlEditFileEntryDisplayContext.getPublishButtonLabel() %>" />
+					</c:if>
+
+					<c:if test="<%= dlEditFileEntryDisplayContext.isCheckoutDocumentButtonVisible() %>">
+						<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCheckoutDocumentButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "checkOut();" %>' value="checkout[document]" />
+					</c:if>
+
+					<c:if test="<%= dlEditFileEntryDisplayContext.isCheckinButtonVisible() %>">
+						<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCheckinButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
+					</c:if>
+
+					<c:if test="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
+						<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
+					</c:if>
+
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</div>
 			</aui:fieldset-group>
 		</div>
-
-		<aui:button-row>
-			<c:if test="<%= dlEditFileEntryDisplayContext.isSaveButtonVisible() %>">
-				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isSaveButtonDisabled() %>" name="saveButton" onClick='<%= liferayPortletResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= dlEditFileEntryDisplayContext.getSaveButtonLabel() %>" />
-			</c:if>
-
-			<c:if test="<%= dlEditFileEntryDisplayContext.isPublishButtonVisible() %>">
-				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isPublishButtonDisabled() %>" name="publishButton" type="submit" value="<%= dlEditFileEntryDisplayContext.getPublishButtonLabel() %>" />
-			</c:if>
-
-			<c:if test="<%= dlEditFileEntryDisplayContext.isCheckoutDocumentButtonVisible() %>">
-				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCheckoutDocumentButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "checkOut();" %>' value="checkout[document]" />
-			</c:if>
-
-			<c:if test="<%= dlEditFileEntryDisplayContext.isCheckinButtonVisible() %>">
-				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCheckinButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "checkIn();" %>' value="save-and-checkin" />
-			</c:if>
-
-			<c:if test="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonVisible() %>">
-				<aui:button disabled="<%= dlEditFileEntryDisplayContext.isCancelCheckoutDocumentButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "cancelCheckOut();" %>' value="cancel-checkout[document]" />
-			</c:if>
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 
 	<liferay-ui:upload-progress

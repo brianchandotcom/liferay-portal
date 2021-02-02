@@ -82,43 +82,41 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 	</clay:container-fluid>
 </liferay-frontend:info-bar>
 
-<div class="<%= previewBeforeRestore ? "" : "container-fluid container-fluid-max-xl" %>" id="container">
+<div class="<%= previewBeforeRestore ? "" : "container-fluid container-fluid-max-xl container-form-lg" %>" id="container">
 	<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
 
 	<aui:input name="content" type="hidden" value="<%= content %>" />
 
 	<aui:form method="post" name="form">
-		<div class="card-horizontal main-content-card">
-			<div class="card-row-padded">
-				<aui:fieldset cssClass="workflow-definition-content">
-					<clay:col>
-						<aui:field-wrapper label="title">
-							<liferay-ui:input-localized
-								disabled="<%= true %>"
-								name=" <%= workflowDefinition.getName() %>_title"
-								xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>'
-							/>
-						</aui:field-wrapper>
-					</clay:col>
+		<div class="sheet">
+			<aui:fieldset cssClass="workflow-definition-content">
+				<clay:col>
+					<aui:field-wrapper label="title">
+						<liferay-ui:input-localized
+							disabled="<%= true %>"
+							name=" <%= workflowDefinition.getName() %>_title"
+							xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>'
+						/>
+					</aui:field-wrapper>
+				</clay:col>
 
-					<clay:col
-						cssClass="workflow-definition-content-source-wrapper"
-						id='<%= liferayPortletResponse.getNamespace() + "contentSourceWrapper" %>'
-					>
-						<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
-					</clay:col>
-				</aui:fieldset>
-			</div>
+				<clay:col
+					cssClass="workflow-definition-content-source-wrapper"
+					id='<%= liferayPortletResponse.getNamespace() + "contentSourceWrapper" %>'
+				>
+					<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
+				</clay:col>
+			</aui:fieldset>
+
+			<c:choose>
+				<c:when test="<%= !previewBeforeRestore %>">
+					<div class="sheet-footer">
+						<aui:button href="<%= editWorkflowDefinitionURL %>" primary="<%= true %>" value="edit" />
+					</div>
+				</c:when>
+			</c:choose>
 		</div>
 	</aui:form>
-
-	<c:choose>
-		<c:when test="<%= !previewBeforeRestore %>">
-			<aui:button-row>
-				<aui:button href="<%= editWorkflowDefinitionURL %>" primary="<%= true %>" value="edit" />
-			</aui:button-row>
-		</c:when>
-	</c:choose>
 </div>
 
 <aui:script use="aui-ace-editor">

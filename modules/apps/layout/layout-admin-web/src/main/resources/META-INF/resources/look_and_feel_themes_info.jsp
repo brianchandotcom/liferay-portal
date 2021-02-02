@@ -34,9 +34,9 @@ else if (selLayout == null) {
 PluginPackage selPluginPackage = selTheme.getPluginPackage();
 %>
 
-<h1 class="h4 text-default"><liferay-ui:message key="current-theme" /></h1>
+<h1 class="c-mb-4 h4 text-default"><liferay-ui:message key="current-theme" /></h1>
 
-<div class="card-horizontal main-content-card">
+<div class="card">
 	<div class="card-body">
 		<clay:row>
 			<clay:col

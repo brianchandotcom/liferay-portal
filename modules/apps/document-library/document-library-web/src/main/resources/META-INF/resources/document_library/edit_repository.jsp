@@ -33,7 +33,9 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(headerTitle);
 %>
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
 	<portlet:actionURL name="/document_library/edit_repository" var="editRepositoryURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 	</portlet:actionURL>
@@ -127,13 +129,13 @@ renderResponse.setTitle(headerTitle);
 					/>
 				</aui:fieldset>
 			</c:if>
+
+			<div class="sheet-footer">
+				<aui:button type="submit" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
 		</aui:fieldset-group>
-
-		<aui:button-row>
-			<aui:button type="submit" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 
 	<div class="hide" id="<portlet:namespace />settingsSupported">

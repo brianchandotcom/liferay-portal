@@ -50,7 +50,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<%@ include file="/exceptions.jspf" %>
 
 	<clay:container-fluid
-		cssClass="lfr-ddm-edit-data-provider"
+		cssClass="container-form-lg lfr-ddm-edit-data-provider"
 	>
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
@@ -84,18 +84,16 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 					/>
 				</aui:fieldset>
 			</c:if>
+
+			<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
+				<div class="sheet-footer">
+					<aui:button id="submit" label="save" type="submit" />
+
+					<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+				</div>
+			</c:if>
 		</aui:fieldset-group>
 	</clay:container-fluid>
-
-	<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-		<clay:container-fluid>
-			<aui:button-row>
-				<aui:button id="submit" label="save" type="submit" />
-
-				<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
-			</aui:button-row>
-		</clay:container-fluid>
-	</c:if>
 
 	<aui:button cssClass="hide" type="submit" />
 </aui:form>

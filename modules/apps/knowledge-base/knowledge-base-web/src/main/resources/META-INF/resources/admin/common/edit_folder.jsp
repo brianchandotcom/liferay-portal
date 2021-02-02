@@ -41,7 +41,9 @@ renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "n
 
 <liferay-portlet:actionURL name="updateKBFolder" var="updateKBFolderURL" />
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
 	<aui:form action="<%= updateKBFolderURL %>" method="post" name="fm">
 		<aui:input name="mvcPath" type="hidden" value="/admin/common/edit_folder.jsp" />
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (kbFolder == null) ? Constants.ADD : Constants.UPDATE %>" />
@@ -84,12 +86,12 @@ renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "n
 					</aui:field-wrapper>
 				</aui:fieldset>
 			</c:if>
+
+			<div class="sheet-footer">
+				<aui:button type="submit" value="save" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
 		</aui:fieldset-group>
-
-		<aui:button-row>
-			<aui:button type="submit" value="save" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </clay:container-fluid>

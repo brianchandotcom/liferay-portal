@@ -73,27 +73,25 @@ if (portletTitleBasedNavigation) {
 	searchURL.setParameter("keywords", title);
 	%>
 
-	<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
-		<div class="main-content-card panel">
-			<div class="panel-body">
-				<div class="alert alert-info">
-					<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
-				</div>
+	<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
+		<div class="sheet">
+			<div class="alert alert-info">
+				<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
+			</div>
 
-				<div class="btn-toolbar">
+			<div class="btn-toolbar">
 
-					<%
-					String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
-					%>
+				<%
+				String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
+				%>
 
-					<aui:button onClick="<%= taglibEditPage %>" primary="<%= true %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
+				<aui:button onClick="<%= taglibEditPage %>" primary="<%= true %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
 
-					<%
-					String taglibSearch = "location.href = '" + searchURL.toString() + "';";
-					%>
+				<%
+				String taglibSearch = "location.href = '" + searchURL.toString() + "';";
+				%>
 
-					<aui:button cssClass="btn-secondary" onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
-				</div>
+				<aui:button cssClass="btn-secondary" onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
 			</div>
 		</div>
 	</div>

@@ -88,7 +88,9 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custom-export") : LanguageUtil.format(request, "new-export-based-on-x", exportImportConfiguration.getName(), false));
 %>
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
 	<portlet:actionURL name="/export_import/edit_export_configuration" var="restoreTrashEntriesURL">
 		<portlet:param name="mvcRenderCommandName" value="/export_import/export_layouts" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
@@ -173,14 +175,14 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 					global="<%= group.isCompany() %>"
 					labelCSSClass="permissions-label"
 				/>
+
+				<div class="sheet-footer">
+					<aui:button type="submit" value="export" />
+
+					<aui:button href="<%= backURL %>" type="cancel" />
+				</div>
 			</aui:fieldset-group>
 		</div>
-
-		<aui:button-row>
-			<aui:button type="submit" value="export" />
-
-			<aui:button href="<%= backURL %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </clay:container-fluid>
 

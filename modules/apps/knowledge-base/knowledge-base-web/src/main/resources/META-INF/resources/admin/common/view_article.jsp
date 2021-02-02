@@ -72,7 +72,7 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<div class="sidenav-content">
-		<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
+		<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
 			<c:if test="<%= !portletTitleBasedNavigation %>">
 				<liferay-ui:header
 					title="<%= kbArticle.getTitle() %>"
@@ -83,7 +83,7 @@ if (portletTitleBasedNavigation) {
 				<liferay-util:include page="/admin/common/article_tools.jsp" servletContext="<%= application %>" />
 			</div>
 
-			<div <%= portletTitleBasedNavigation ? "class=\"main-content-card panel\"" : StringPool.BLANK %>>
+			<div <%= portletTitleBasedNavigation ? "class=\"panel\"" : StringPool.BLANK %>>
 				<div class="kb-entity-body <%= portletTitleBasedNavigation ? "panel-body" : StringPool.BLANK %>">
 					<c:if test="<%= portletTitleBasedNavigation %>">
 						<h1>

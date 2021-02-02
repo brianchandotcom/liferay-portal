@@ -41,12 +41,14 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(assetRenderer.getTitle(workflowTaskDisplayContext.getTaskContentLocale()));
 %>
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-view"
+>
 	<clay:col
 		cssClass="lfr-asset-column lfr-asset-column-details"
 		md="12"
 	>
-		<div class="card-horizontal main-content-card">
+		<div class="card">
 			<div class="panel-body">
 				<c:if test="<%= assetEntry != null %>">
 					<c:if test="<%= assetRenderer.isLocalizable() %>">

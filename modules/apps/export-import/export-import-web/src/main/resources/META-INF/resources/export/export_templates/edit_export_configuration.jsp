@@ -82,7 +82,9 @@ portletDisplay.setURLBack(portletURL.toString());
 renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(request, "new-export-template") : exportImportConfiguration.getName());
 %>
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
 	<portlet:actionURL name="/export_import/edit_export_configuration" var="updateExportConfigurationURL">
 		<portlet:param name="mvcRenderCommandName" value="/export_import/edit_export_configuration" />
 	</portlet:actionURL>
@@ -139,13 +141,13 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 					labelCSSClass="permissions-label"
 				/>
 			</aui:fieldset-group>
+
+			<div class="sheet-footer">
+				<aui:button type="submit" value="save" />
+
+				<aui:button href="<%= portletURL.toString() %>" type="cancel" />
+			</div>
 		</div>
-
-		<aui:button-row>
-			<aui:button type="submit" value="save" />
-
-			<aui:button href="<%= portletURL.toString() %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </clay:container-fluid>
 

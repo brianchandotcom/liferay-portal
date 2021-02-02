@@ -71,7 +71,7 @@ portletDisplay.setURLBack(redirect);
 	<portlet:param name="mvcPath" value="/polls/edit_question.jsp" />
 </liferay-portlet:actionURL>
 
-<aui:form action="<%= editQuestionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveQuestion();" %>'>
+<aui:form action="<%= editQuestionURL %>" cssClass="container-fluid container-fluid-max-xl container-form-lg" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveQuestion();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
@@ -142,8 +142,10 @@ portletDisplay.setURLBack(redirect);
 				}
 				%>
 
-				<div class="button-holder">
-					<aui:button cssClass="add-choice" onClick='<%= liferayPortletResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
+				<div class="btn-group">
+					<div class="btn-group-item">
+						<aui:button cssClass="add-choice" onClick='<%= liferayPortletResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
+					</div>
 				</div>
 			</aui:field-wrapper>
 		</aui:fieldset>
@@ -155,13 +157,13 @@ portletDisplay.setURLBack(redirect);
 				/>
 			</aui:fieldset>
 		</c:if>
+
+		<div class="sheet-footer">
+			<aui:button type="submit" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</div>
 	</aui:fieldset-group>
-
-	<aui:button-row>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
 </aui:form>
 
 <aui:script use="aui-char-counter">

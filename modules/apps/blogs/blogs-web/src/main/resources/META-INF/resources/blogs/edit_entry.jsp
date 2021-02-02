@@ -57,7 +57,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <clay:container-fluid
-	cssClass="entry-body"
+	cssClass="container-form-lg entry-body"
 >
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -360,51 +360,51 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 						/>
 					</aui:fieldset>
 				</c:if>
+
+				<%
+				boolean pending = false;
+
+				if (entry != null) {
+					pending = entry.isPending();
+				}
+				%>
+
+				<c:if test="<%= pending %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+					</div>
+				</c:if>
+
+				<div class="blog-article-button-row sheet-footer">
+
+					<%
+					String saveButtonLabel = "save";
+
+					if ((entry == null) || entry.isDraft() || entry.isApproved()) {
+						saveButtonLabel = "save-as-draft";
+					}
+
+					String publishButtonLabel = "publish";
+
+					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, BlogsEntry.class.getName())) {
+						publishButtonLabel = "submit-for-publication";
+					}
+					%>
+
+					<c:if test="<%= (entry != null) && entry.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class.getName()) %>">
+						<div class="alert alert-info">
+							<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, BlogsEntry.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+						</div>
+					</c:if>
+
+					<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+					<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+					<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+				</div>
 			</aui:fieldset-group>
-
-			<%
-			boolean pending = false;
-
-			if (entry != null) {
-				pending = entry.isPending();
-			}
-			%>
-
-			<c:if test="<%= pending %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-				</div>
-			</c:if>
 		</div>
-
-		<aui:button-row cssClass="blog-article-button-row">
-
-			<%
-			String saveButtonLabel = "save";
-
-			if ((entry == null) || entry.isDraft() || entry.isApproved()) {
-				saveButtonLabel = "save-as-draft";
-			}
-
-			String publishButtonLabel = "publish";
-
-			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, BlogsEntry.class.getName())) {
-				publishButtonLabel = "submit-for-publication";
-			}
-			%>
-
-			<c:if test="<%= (entry != null) && entry.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class.getName()) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, BlogsEntry.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
-				</div>
-			</c:if>
-
-			<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-			<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
-
-			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </clay:container-fluid>
 

@@ -67,7 +67,7 @@ if (portletTitleBasedNavigation) {
 	/>
 </c:if>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
 	<liferay-portlet:actionURL name="moveKBObject" var="moveKBObjectURL" />
 
 	<aui:form action="<%= moveKBObjectURL %>" method="post" name="fm">
@@ -99,13 +99,13 @@ if (portletTitleBasedNavigation) {
 					<aui:button name="selectKBObjectButton" value="select" />
 				</aui:field-wrapper>
 			</aui:fieldset>
+
+			<div class="sheet-footer">
+				<aui:button type="submit" value="move" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
 		</aui:fieldset-group>
-
-		<aui:button-row>
-			<aui:button type="submit" value="move" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </div>
 

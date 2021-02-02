@@ -55,7 +55,9 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(headerTitle);
 %>
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
 	<portlet:actionURL name="/bookmarks/edit_folder" var="editFolderURL">
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
 	</portlet:actionURL>
@@ -168,13 +170,13 @@ renderResponse.setTitle(headerTitle);
 					</aui:field-wrapper>
 				</aui:fieldset>
 			</c:if>
+
+			<div class="sheet-footer">
+				<aui:button type="submit" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
 		</aui:fieldset-group>
-
-		<aui:button-row>
-			<aui:button type="submit" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </clay:container-fluid>
 

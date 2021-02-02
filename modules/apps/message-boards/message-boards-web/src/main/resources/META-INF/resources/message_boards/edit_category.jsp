@@ -74,7 +74,7 @@ if (portletTitleBasedNavigation) {
 }
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
 	<c:if test="<%= !portletTitleBasedNavigation %>">
 		<h3><%= LanguageUtil.get(request, mbHomeDisplayContext.getTitle()) %></h3>
 	</c:if>
@@ -222,13 +222,13 @@ if (portletTitleBasedNavigation) {
 					/>
 				</aui:fieldset>
 			</c:if>
+
+			<div class="sheet-footer">
+				<aui:button type="submit" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
 		</aui:fieldset-group>
-
-		<aui:button-row>
-			<aui:button type="submit" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </div>
 

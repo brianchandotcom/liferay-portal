@@ -73,7 +73,7 @@ if (portletTitleBasedNavigation) {
 	/>
 </c:if>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
 	<liferay-portlet:actionURL name="updateKBArticle" var="updateKBArticleURL" />
 
 	<aui:form action="<%= updateKBArticleURL %>" method="post" name="fm">
@@ -254,37 +254,37 @@ if (portletTitleBasedNavigation) {
 						/>
 					</aui:fieldset>
 				</c:if>
+
+				<div class="kb-submit-buttons sheet-footer">
+
+					<%
+					boolean pending = false;
+
+					if (kbArticle != null) {
+						pending = kbArticle.isPending();
+					}
+
+					String saveButtonLabel = "save";
+
+					if ((kbArticle == null) || kbArticle.isDraft() || kbArticle.isApproved()) {
+						saveButtonLabel = "save-as-draft";
+					}
+
+					String publishButtonLabel = "publish";
+
+					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, KBArticle.class.getName())) {
+						publishButtonLabel = "submit-for-publication";
+					}
+					%>
+
+					<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+					<aui:button primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+
+					<aui:button href="<%= redirect %>" type="cancel" />
+				</div>
 			</aui:fieldset-group>
 		</div>
-
-		<aui:button-row cssClass="kb-submit-buttons">
-
-			<%
-			boolean pending = false;
-
-			if (kbArticle != null) {
-				pending = kbArticle.isPending();
-			}
-
-			String saveButtonLabel = "save";
-
-			if ((kbArticle == null) || kbArticle.isDraft() || kbArticle.isApproved()) {
-				saveButtonLabel = "save-as-draft";
-			}
-
-			String publishButtonLabel = "publish";
-
-			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, KBArticle.class.getName())) {
-				publishButtonLabel = "submit-for-publication";
-			}
-			%>
-
-			<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
-
-			<aui:button primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 </div>
 

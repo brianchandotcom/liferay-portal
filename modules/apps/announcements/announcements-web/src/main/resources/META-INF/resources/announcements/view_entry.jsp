@@ -99,7 +99,7 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</div>
 
-				<div class="entry-content c-mt-3">
+				<div class="c-mt-3 entry-content">
 					<%= entry.getContent() %>
 				</div>
 			</div>

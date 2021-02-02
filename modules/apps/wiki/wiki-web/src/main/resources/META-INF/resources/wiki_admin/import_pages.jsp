@@ -55,7 +55,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 
 <portlet:actionURL name="/wiki/import_pages" var="importPagesURL" />
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="container-form-lg"
+>
 	<aui:form action="<%= importPagesURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "importPages();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -74,13 +76,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 			<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
 			<liferay-util:include page='<%= wikiImporterTracker.getProperty(tabs2, "page") %>' servletContext="<%= application %>" />
+
+			<div class="sheet-footer">
+				<aui:button type="submit" value="import" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
 		</aui:fieldset-group>
-
-		<aui:button-row>
-			<aui:button type="submit" value="import" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
 	</aui:form>
 
 	<liferay-ui:upload-progress

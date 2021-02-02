@@ -42,17 +42,17 @@
 <!--CARD_VIEW_ENTRY-->
 <tr>
 	<td>CARD_VIEW_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'panel')]//h4[@title='${key_entryTitle}']/a</td>
+	<td>//*[@title='${key_entryTitle}']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CARD_VIEW_ENTRY_SCOPE</td>
-	<td>//div[contains(@class,'panel')]//h4[@title='${key_entryTitle}']/..//h5[contains(.,'${key_distributionScope}')]</td>
+	<td>//*[@title='${key_entryTitle}']/..//*[contains(.,'${key_distributionScope}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CARD_VIEW_ENTRY_CONTENT</td>
-	<td>//div[contains(@class,'panel')]//div[contains(@class,'entry-content') and contains(.,'${key_entryContent}')]</td>
+	<td>//*[contains(@class,'entry-content') and contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -435,7 +435,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "Subtype1");
 
-		DataEngine.addFields(fieldNameList = "Link to Page");
+		DataEngine.addFields(fieldNameList = "Text");
 
 		WebContentStructures.saveCP(structureName = "Subtype1");
 
@@ -447,7 +447,7 @@ definition {
 			structureDescription = "WC Structure Description",
 			structureName = "Subtype2");
 
-		DataEngine.addFields(fieldNameList = "Link to Page");
+		DataEngine.addFields(fieldNameList = "Text");
 
 		WebContentStructures.saveCP(structureName = "Subtype2");
 

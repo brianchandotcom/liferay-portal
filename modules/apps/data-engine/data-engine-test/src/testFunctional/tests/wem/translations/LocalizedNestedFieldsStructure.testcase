@@ -73,7 +73,6 @@ definition {
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -83,7 +82,7 @@ definition {
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
 			localization1Name = "Nome Estrutura Teste");
-		
+
 		PortletEntry.changeLocale(locale = "en_US");
 
 		WebContentStructures.addName(structureName = "Structure Name Test");

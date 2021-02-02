@@ -89,10 +89,9 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test LocalizationOfRichTextPersists {
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-            panel = "Site Administration",
+			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
@@ -107,10 +106,10 @@ definition {
 
 		DDLDataDefinition.save();
 
-        DMNavigator.gotoDocumentCP(dmDocumentTitle = "Test");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Test");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
-		
+
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "Teste");

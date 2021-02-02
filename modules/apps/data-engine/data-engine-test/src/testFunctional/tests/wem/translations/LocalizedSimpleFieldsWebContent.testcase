@@ -64,8 +64,6 @@ definition {
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "5"
 	test CheckStructureTranslationsOnWebContent {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -80,25 +78,23 @@ definition {
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text",
-			label = "文本");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
 
 		WebContent.addWithStructureCP(
-			structureName = "Structure Name Test",
 			webContentText = "Test",
 			webContentTitle = "Test");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		WebContent.addWithStructureCP(
-			structureName = "Structure Name Test",
 			webContentText = "测试",
 			webContentTextFieldLabel = "文本",
 			webContentTitle = "测试");

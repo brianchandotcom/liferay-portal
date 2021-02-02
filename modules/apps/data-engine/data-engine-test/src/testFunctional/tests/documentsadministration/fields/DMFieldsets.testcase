@@ -144,7 +144,55 @@ definition {
 	test ShowAndHideFieldsetLabel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 ShowAndHideFieldsetLabel pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "ShowAndHideTest");
+
+		DataEngine.addFields(fieldNameList = "Text,Image");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "ShowAndHideTest1");
+
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "ShowAndHideTest",
+			fieldsetsName = "ShowAndHideTest");
+
+		DataEngine.configureFieldsetsShowOrHideLabel(
+			fieldFieldLabel = "Text",
+			status = "Hide");
+
+		DDLDataDefinition.save();
+
+		LexiconEntry.openEntryMenu(rowEntry = "ShowAndHideTest1");
+
+		MenuItem.click(menuItem = "Edit");
+
+		AssertElementNotPresent(
+			key_fieldsetLabel = "ShowAndHideTest",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		DataEngine.configureFieldsetsShowOrHideLabel(
+			fieldFieldLabel = "Text",
+			status = "Show");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "ShowAndHideTest",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		DDLDataDefinition.save();
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "ShowAndHideTest1");
 	}
 
 }

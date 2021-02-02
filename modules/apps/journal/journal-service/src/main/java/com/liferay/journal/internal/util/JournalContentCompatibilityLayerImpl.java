@@ -19,6 +19,7 @@ import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constant
 import com.liferay.journal.util.JournalContentCompatibilityLayer;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -38,6 +39,16 @@ public class JournalContentCompatibilityLayerImpl
 	@Override
 	public void convertDocumentContent(Document document) {
 		Element rootElement = document.getRootElement();
+
+		String version = rootElement.attributeValue("version");
+
+		if (Validator.isNotNull(version) &&
+			Objects.equals(version, _LATEST_CONTENT_VERSION)) {
+
+			return;
+		}
+
+		rootElement.addAttribute("version", _LATEST_CONTENT_VERSION);
 
 		List<Element> dynamicElementElements = rootElement.elements(
 			"dynamic-element");
@@ -144,5 +155,7 @@ public class JournalContentCompatibilityLayerImpl
 
 		return ddmFieldType;
 	}
+
+	private static final String _LATEST_CONTENT_VERSION = "1.0";
 
 }

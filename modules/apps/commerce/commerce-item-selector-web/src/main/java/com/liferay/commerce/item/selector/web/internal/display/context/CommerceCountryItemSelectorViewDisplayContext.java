@@ -15,12 +15,12 @@
 package com.liferay.commerce.item.selector.web.internal.display.context;
 
 import com.liferay.commerce.item.selector.web.internal.search.CommerceCountryItemSelectorChecker;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -37,16 +37,15 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  */
 public class CommerceCountryItemSelectorViewDisplayContext
-	extends BaseCommerceItemSelectorViewDisplayContext<CommerceCountry> {
+	extends BaseCommerceItemSelectorViewDisplayContext<Country> {
 
 	public CommerceCountryItemSelectorViewDisplayContext(
-		CommerceCountryService commerceCountryService,
-		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName) {
+		CountryService countryService, HttpServletRequest httpServletRequest,
+		PortletURL portletURL, String itemSelectedEventName) {
 
 		super(httpServletRequest, portletURL, itemSelectedEventName);
 
-		_commerceCountryService = commerceCountryService;
+		_countryService = countryService;
 
 		setDefaultOrderByCol("priority");
 		setDefaultOrderByType("asc");
@@ -66,7 +65,7 @@ public class CommerceCountryItemSelectorViewDisplayContext
 	}
 
 	@Override
-	public SearchContainer<CommerceCountry> getSearchContainer()
+	public SearchContainer<Country> getSearchContainer()
 		throws PortalException {
 
 		if (searchContainer != null) {
@@ -84,8 +83,8 @@ public class CommerceCountryItemSelectorViewDisplayContext
 
 		searchContainer.setOrderByCol(getOrderByCol());
 
-		OrderByComparator<CommerceCountry> orderByComparator =
-			CommerceUtil.getCommerceCountryOrderByComparator(
+		OrderByComparator<Country> orderByComparator =
+			CommerceUtil.getCountryOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -98,14 +97,13 @@ public class CommerceCountryItemSelectorViewDisplayContext
 
 		searchContainer.setRowChecker(rowChecker);
 
-		List<CommerceCountry> results =
-			_commerceCountryService.getCommerceCountries(
-				themeDisplay.getCompanyId(), true, searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+		List<Country> results = _countryService.getCompanyCountries(
+			themeDisplay.getCompanyId(), true, searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
-		int total = _commerceCountryService.getCommerceCountriesCount(
+		int total = _countryService.getCompanyCountriesCount(
 			themeDisplay.getCompanyId());
 
 		searchContainer.setTotal(total);
@@ -118,6 +116,6 @@ public class CommerceCountryItemSelectorViewDisplayContext
 			cpRequestHelper.getRenderRequest(), "checkedCommerceCountryIds");
 	}
 
-	private final CommerceCountryService _commerceCountryService;
+	private final CountryService _countryService;
 
 }

@@ -724,27 +724,16 @@ AUI.add(
 					}
 
 					if (
-						!['.', ','].includes(sourceDecimal) ||
-						!['.', ','].includes(targetDecimal)
+						['.', ','].includes(sourceDecimal) &&
+						['.', ','].includes(targetDecimal)
 					) {
-						var instance = this;
-
-						var form = instance.getForm();
-
-						form.set(
-							'warningMessage',
-							Liferay.Language.get(
-								'convert-locale-numeric-values-warning-message'
-							)
-						);
+						number = number.replace(/,/g, '|');
+						number = number.replace(/\./g, ',');
+						number = number.replace(/\|/g, '.');
 
 						return number;
 					}
-
-					number = number.replace(/,/g, '|');
-					number = number.replace(/\./g, ',');
-					number = number.replace(/\|/g, '.');
-
+ 
 					return number;
 				},
 
@@ -4049,11 +4038,6 @@ AUI.add(
 					validator: Lang.isBoolean,
 					value: true,
 				},
-
-				warningMessage: {
-					validator: Lang.isString,
-					value: null,
-				},
 			},
 
 			AUGMENTS: [DDMPortletSupport, FieldsSupport],
@@ -4184,32 +4168,6 @@ AUI.add(
 					}
 				},
 
-				_onLocaleChanged() {
-					var instance = this;
-
-					var warningMessage = instance.get('warningMessage');
-
-					if (
-						warningMessage &&
-						warningMessage !== null &&
-						warningMessage !== ''
-					) {
-						var portletNamespace = instance.get('portletNamespace');
-
-						new A.Alert({
-							bodyContent: warningMessage,
-							boundingBox:
-								'#' + portletNamespace + 'ddmFormWarning',
-							closeable: true,
-							cssClass: 'alert-warning',
-							destroyOnHide: false,
-							render: true,
-						});
-
-						instance.set('warningMessage', '');
-					}
-				},
-
 				_onSubmitForm() {
 					var instance = this;
 
@@ -4296,10 +4254,6 @@ AUI.add(
 							Liferay.on(
 								'inputLocalized:defaultLocaleChanged',
 								A.bind('_onDefaultLocaleChanged', instance)
-							),
-							Liferay.on(
-								'inputLocalized:localeChanged',
-								A.bind('_onLocaleChanged', instance)
 							)
 						);
 
@@ -4735,7 +4689,6 @@ AUI.add(
 	'',
 	{
 		requires: [
-			'aui-alert',
 			'aui-base',
 			'aui-color-picker-popover',
 			'aui-datatable',

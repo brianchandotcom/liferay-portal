@@ -50,57 +50,59 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl\"" : StringPool.BLANK %>>
-	<div class="main-content-card panel" id="<portlet:namespace /><%= entry.getEntryId() %>">
-		<div class="panel-heading">
-			<div class="card-row">
-				<div class="card-col-field">
-					<div class="list-group-card-icon">
-						<liferay-ui:user-portrait
-							userId="<%= entry.getUserId() %>"
-						/>
+	<div id="<portlet:namespace /><%= entry.getEntryId() %>">
+		<div class="autofit-padded autofit-row">
+			<div class="autofit-col">
+				<liferay-ui:user-portrait
+					userId="<%= entry.getUserId() %>"
+				/>
+			</div>
+
+			<div class="autofit-col autofit-col-expand">
+
+				<%
+				String userDisplayText = PortalUtil.getUserName(entry) + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, announcementsDisplayContext.getDateFormatDate());
+				%>
+
+				<div class="autofit-row">
+					<div class="autofit-col autofit-col-expand">
+						<div class="autofit-section">
+							<div class="component-title entry-user-display-text" title="<%= userDisplayText %>">
+								<%= userDisplayText %>
+							</div>
+
+							<div class="component-title entry-title" title="<%= HtmlUtil.escape(entry.getTitle()) %>">
+								<c:choose>
+									<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">
+										<a href="<%= HtmlUtil.escapeHREF(entry.getUrl()) %>">
+											<%= HtmlUtil.escape(entry.getTitle()) %>
+										</a>
+									</c:when>
+									<c:otherwise>
+										<%= HtmlUtil.escape(entry.getTitle()) %>
+									</c:otherwise>
+								</c:choose>
+
+								<c:if test="<%= entry.isAlert() || (entry.getPriority() > 0) %>">
+									<span class="badge badge-danger">
+										<liferay-ui:message key="important" />
+									</span>
+								</c:if>
+							</div>
+
+							<%@ include file="/announcements/entry_scope.jspf" %>
+						</div>
+					</div>
+
+					<div class="autofit-col">
+						<%@ include file="/announcements/entry_action.jspf" %>
 					</div>
 				</div>
 
-				<div class="card-col-content card-col-gutters">
-
-					<%
-					String userDisplayText = PortalUtil.getUserName(entry) + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, announcementsDisplayContext.getDateFormatDate());
-					%>
-
-					<h5 class="text-default" title="<%= userDisplayText %>">
-						<%= userDisplayText %>
-					</h5>
-
-					<h4 title="<%= HtmlUtil.escape(entry.getTitle()) %>">
-						<c:choose>
-							<c:when test="<%= Validator.isNotNull(entry.getUrl()) %>">
-								<a href="<%= HtmlUtil.escapeHREF(entry.getUrl()) %>">
-									<%= HtmlUtil.escape(entry.getTitle()) %>
-								</a>
-							</c:when>
-							<c:otherwise>
-								<%= HtmlUtil.escape(entry.getTitle()) %>
-							</c:otherwise>
-						</c:choose>
-
-						<c:if test="<%= entry.isAlert() || (entry.getPriority() > 0) %>">
-							<span class="badge badge-danger badge-sm">
-								<liferay-ui:message key="important" />
-							</span>
-						</c:if>
-					</h4>
-
-					<%@ include file="/announcements/entry_scope.jspf" %>
-				</div>
-
-				<div class="card-col-field">
-					<%@ include file="/announcements/entry_action.jspf" %>
+				<div class="entry-content c-mt-3">
+					<%= entry.getContent() %>
 				</div>
 			</div>
-		</div>
-
-		<div class="entry-content panel-body">
-			<%= entry.getContent() %>
 		</div>
 	</div>
 </div>

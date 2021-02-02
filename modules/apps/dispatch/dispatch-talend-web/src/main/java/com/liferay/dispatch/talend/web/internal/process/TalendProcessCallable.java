@@ -40,64 +40,78 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 
 	@Override
 	public Serializable call() throws ProcessException {
-		TalendProcessException talendProcessException =
-			new TalendProcessException();
-
-		SniffPrintStream errSniffPrintStream = new SniffPrintStream(System.err);
-
-		System.setErr(errSniffPrintStream);
-
-		SniffPrintStream outSniffPrintStream = new SniffPrintStream(System.out);
-
-		System.setOut(outSniffPrintStream);
-
-		System.setSecurityManager(
-			new SecurityManager() {
-
-				@Override
-				public void checkExit(int status) {
-					talendProcessException.setStatus(status);
-
-					throw talendProcessException;
-				}
-
-				@Override
-				public void checkPermission(Permission perm) {
-				}
-
-			});
-
-		ClassLoader classLoader = TalendProcessCallable.class.getClassLoader();
+		PrintStream errPrintStream = System.err;
+		PrintStream outPrintStream = System.out;
 
 		try {
-			Class<?> talendJobClass = classLoader.loadClass(_jobMainClassFQN);
+			SniffPrintStream errSniffPrintStream = new SniffPrintStream(
+				System.err);
 
-			Method mainMethod = talendJobClass.getMethod(
-				"main", String[].class);
+			System.setErr(errSniffPrintStream);
 
-			mainMethod.setAccessible(true);
+			SniffPrintStream outSniffPrintStream = new SniffPrintStream(
+				System.out);
 
-			mainMethod.invoke(null, new Object[] {_mainMethodArgs});
-		}
-		catch (InvocationTargetException invocationTargetException) {
-			Throwable causeThrowable = invocationTargetException.getCause();
+			System.setOut(outSniffPrintStream);
 
-			if (causeThrowable == talendProcessException) {
+			TalendProcessException talendProcessException =
+				new TalendProcessException();
+
+			System.setSecurityManager(
+				new SecurityManager() {
+
+					@Override
+					public void checkExit(int status) {
+						talendProcessException.setStatus(status);
+
+						throw talendProcessException;
+					}
+
+					@Override
+					public void checkPermission(Permission perm) {
+					}
+
+				});
+
+			ClassLoader classLoader =
+				TalendProcessCallable.class.getClassLoader();
+
+			try {
+				Class<?> talendJobClass = classLoader.loadClass(
+					_jobMainClassFQN);
+
+				Method mainMethod = talendJobClass.getMethod(
+					"main", String[].class);
+
+				mainMethod.setAccessible(true);
+
+				mainMethod.invoke(null, new Object[] {_mainMethodArgs});
+
 				return new TalendProcessOutput(
 					errSniffPrintStream._bytes,
 					talendProcessException.getStatus(),
 					outSniffPrintStream._bytes);
 			}
+			catch (InvocationTargetException invocationTargetException) {
+				Throwable causeThrowable = invocationTargetException.getCause();
 
-			throw new ProcessException(causeThrowable);
-		}
-		catch (Throwable throwable) {
-			throw new ProcessException(throwable);
-		}
+				if (causeThrowable == talendProcessException) {
+					return new TalendProcessOutput(
+						errSniffPrintStream._bytes,
+						talendProcessException.getStatus(),
+						outSniffPrintStream._bytes);
+				}
 
-		return new TalendProcessOutput(
-			errSniffPrintStream._bytes, talendProcessException.getStatus(),
-			outSniffPrintStream._bytes);
+				throw new ProcessException(causeThrowable);
+			}
+			catch (Throwable throwable) {
+				throw new ProcessException(throwable);
+			}
+		}
+		finally {
+			System.setErr(errPrintStream);
+			System.setOut(outPrintStream);
+		}
 	}
 
 	private static final long serialVersionUID = 1L;

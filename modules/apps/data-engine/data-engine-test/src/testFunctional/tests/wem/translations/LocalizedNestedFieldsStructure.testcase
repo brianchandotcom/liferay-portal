@@ -786,82 +786,74 @@ definition {
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "5"
 	test TranslationsRemainsUponSavingWebContent {
-
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-		);
+			category = "Content & Data",
+			portlet = "Web Content");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-            structureDescription = "Test",
-            structureName = "Test"
-		);
+		WebContentStructures.addCP(
+			structureDescription = "Test",
+			structureName = "Test");
 
-        DataEngine.addField(
-            fieldFieldLabel = "Text Test",
-            fieldName = "Text"
-		);
+		DataEngine.addField(
+			fieldFieldLabel = "Text Test",
+			fieldName = "Text");
 
-        DataEngine.addFieldNested(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Text Test 2",
 			fieldName = "Text",
-			targetFieldLabel = "Text Test"
-		);
+			targetFieldLabel = "Text Test");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-        WebContentStructures.addName(structureName = "Teste");
-
-        FormViewBuilder.editFieldLabel(
-            fieldLabel = "Text Test",
-            label = "Texto Teste"
-		);
+		WebContentStructures.addName(structureName = "Teste");
 
 		FormViewBuilder.editFieldLabel(
-            fieldLabel = "Text Test 2",
-            label = "Texto Teste 2"
-		);	
+			fieldLabel = "Text Test",
+			label = "Texto Teste");
 
-        WebContentStructures.saveCP(structureName = "Test");
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text Test 2",
+			label = "Texto Teste 2");
 
-        WebContentStructures.viewCP(
-            structureDescription = "Test",
-            structureName = "Test"
-		);
+		WebContentStructures.saveCP(structureName = "Test");
 
-        LexiconEntry.gotoEntry(rowEntry = "Test");
+		WebContentStructures.viewCP(
+			structureDescription = "Test",
+			structureName = "Test");
 
-        AssertTextEquals(
-            locator1 = "//label[@class='ddm-label' and contains(text(),'Text Test')]",
-            value1 = "Text Test");
+		LexiconEntry.gotoEntry(rowEntry = "Test");
 
 		AssertTextEquals(
-            locator1 = "//label[@class='ddm-label' and contains(text(),'Text Test 2')]",
-            value1 = "Text Test 2");
-
-        AssertTextEquals(
-            locator1 = "TextInput#NAME",
-            value1 = "Test");	
-
-        PortletEntry.changeLocale(locale = "pt-BR");
-
-        AssertTextEquals(
-            locator1 = "//label[@class='ddm-label' and contains(text(),'Texto Teste')]",
-            value1 = "Texto Teste");
+			locator1 = "//label[@class='ddm-label' and contains(text(),'Text Test')]",
+			value1 = "Text Test");
 
 		AssertTextEquals(
-            locator1 = "//label[@class='ddm-label' and contains(text(),'Texto Teste 2')]",
-            value1 = "Texto Teste 2");
+			locator1 = "//label[@class='ddm-label' and contains(text(),'Text Test 2')]",
+			value1 = "Text Test 2");
 
-        AssertTextEquals(
-            locator1 = "TextInput#NAME",
-            value1 = "Teste");	
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Test");
 
-        WebContentStructures.saveCP(structureName = "Test");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-        WebContentStructures.deleteCP(structureName = "Test");
+		AssertTextEquals(
+			locator1 = "//label[@class='ddm-label' and contains(text(),'Texto Teste')]",
+			value1 = "Texto Teste");
+
+		AssertTextEquals(
+			locator1 = "//label[@class='ddm-label' and contains(text(),'Texto Teste 2')]",
+			value1 = "Texto Teste 2");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Teste");
+
+		WebContentStructures.saveCP(structureName = "Test");
+
+		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

@@ -497,6 +497,18 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldsetsCollapsible {
+		Click(
+			key_fieldsetLabel = "${fieldsetLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		Check.checkToggleSwitch(
+			checkboxName = "Collapsible",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro editFieldsetsRepeatable {
 		Click(
 			key_fieldsetLabel = "${fieldsetLabel}",

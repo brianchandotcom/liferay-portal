@@ -656,6 +656,27 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldsGroupCollapsible {
+		if (!(isSet(fieldsGroupLabel))) {
+			var fieldsGroupLabel = "Fields Group";
+		}
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldsGroupLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldsGroupLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
+			Navigator.gotoNavTab(navTab = "Basic");
+		}
+
+		Check.checkToggleSwitch(
+			checkboxName = "Collapsible",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro editFieldsGroupLabel {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");

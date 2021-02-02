@@ -207,7 +207,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
-		DataEngine.deleteField(fieldFieldLabel = "Text");
+		DataEngine.delete(fieldFieldLabel = "Text");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Web Content",

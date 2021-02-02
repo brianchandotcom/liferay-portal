@@ -55,7 +55,7 @@ definition {
 		MenuItem.clickNoError(menuItem = "Edit");
 
 		for (var fieldFieldLabel : list "${fieldFieldLabel}") {
-			DataEngine.deleteField(fieldFieldLabel = "${fieldFieldLabel}");
+			DataEngine.delete(fieldFieldLabel = "${fieldFieldLabel}");
 		}
 
 		DDLDataDefinition.save();

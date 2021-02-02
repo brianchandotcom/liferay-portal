@@ -73,7 +73,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
-		DataEngine.deleteField(fieldFieldLabel = "Color Test");
+		DataEngine.delete(fieldFieldLabel = "Color Test");
 
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Color Test",

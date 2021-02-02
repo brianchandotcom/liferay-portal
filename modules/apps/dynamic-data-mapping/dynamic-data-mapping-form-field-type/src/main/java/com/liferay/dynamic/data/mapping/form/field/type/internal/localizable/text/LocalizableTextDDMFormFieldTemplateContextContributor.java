@@ -160,9 +160,9 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 		JSONArray placeholdersSubmitLabelJSONArray =
 			jsonFactory.createJSONArray();
 
-		Set<Locale> locales = language.getAvailableLocales();
+		Set<Locale> availableLocales = language.getAvailableLocales();
 
-		Stream<Locale> availableLocaleStream = locales.stream();
+		Stream<Locale> availableLocaleStream = availableLocales.stream();
 
 		availableLocaleStream.map(
 			this::getPlaceholdersSubmitLabelJSONObject
@@ -174,9 +174,10 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 	}
 
 	protected JSONObject getPlaceholdersSubmitLabelJSONObject(Locale locale) {
-		JSONObject jsonObject = jsonFactory.createJSONObject();
+		JSONObject placeholdersSubmitLabelJSONObject =
+			jsonFactory.createJSONObject();
 
-		return jsonObject.put(
+		return placeholdersSubmitLabelJSONObject.put(
 			"localeId", LocaleUtil.toLanguageId(locale)
 		).put(
 			"placeholderSubmitLabel",

@@ -20,7 +20,7 @@
 String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));
 %>
 
-<form action="<%= HtmlUtil.escapeAttribute(action) %>" class="container-fluid container-fluid-max-xl container-no-gutters form <%= cssClass %> <%= inlineLabels ? "field-labels-inline" : StringPool.BLANK %>" data-fm-namespace="<%= namespace %>" id="<%= fullName %>" method="<%= method %>" name="<%= fullName %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<form action="<%= HtmlUtil.escapeAttribute(action) %>" class="container-fluid container-fluid-max-xl container-form-lg container-no-gutters form <%= cssClass %> <%= inlineLabels ? "field-labels-inline" : StringPool.BLANK %>" data-fm-namespace="<%= namespace %>" id="<%= fullName %>" method="<%= method %>" name="<%= fullName %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 	<c:if test="<%= !themeDisplay.isStatePopUp() %>">
 		<div class="sheet <%= fluid ? StringPool.BLANK : "sheet-lg" %>">
 	</c:if>

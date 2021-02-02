@@ -31,11 +31,7 @@ import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountAddress;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
@@ -50,12 +46,16 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -384,24 +384,6 @@ public class AccountResourceImpl
 				commerceAccount.getCommerceAccountGroupId()));
 	}
 
-	private long _getCommerceRegionId(
-			CommerceCountry commerceCountry, AccountAddress accountAddress)
-		throws Exception {
-
-		if (Validator.isNull(accountAddress.getRegionISOCode()) ||
-			(commerceCountry == null)) {
-
-			return 0;
-		}
-
-		CommerceRegion commerceRegion =
-			_commerceRegionLocalService.getCommerceRegion(
-				commerceCountry.getCommerceCountryId(),
-				accountAddress.getRegionISOCode());
-
-		return commerceRegion.getCommerceRegionId();
-	}
-
 	private String _getEmailAddress(
 		Account account, CommerceAccount commerceAccount) {
 
@@ -420,6 +402,21 @@ public class AccountResourceImpl
 		}
 
 		return commerceAccount.getEmail();
+	}
+
+	private long _getRegionId(Country country, AccountAddress accountAddress)
+		throws Exception {
+
+		if (Validator.isNull(accountAddress.getRegionISOCode()) ||
+			(country == null)) {
+
+			return 0;
+		}
+
+		Region region = _regionLocalService.getRegion(
+			country.getCountryId(), accountAddress.getRegionISOCode());
+
+		return region.getRegionId();
 	}
 
 	private Account _toAccount(CommerceAccount commerceAccount)
@@ -492,10 +489,9 @@ public class AccountResourceImpl
 			}
 
 			for (AccountAddress accountAddress : accountAddresses) {
-				CommerceCountry commerceCountry =
-					_commerceCountryService.getCommerceCountry(
-						commerceAccount.getCompanyId(),
-						accountAddress.getCountryISOCode());
+				Country country = _countryService.getCountryByA2(
+					commerceAccount.getCompanyId(),
+					accountAddress.getCountryISOCode());
 
 				CommerceAddress commerceAddress =
 					_commerceAddressService.addCommerceAddress(
@@ -507,9 +503,8 @@ public class AccountResourceImpl
 						accountAddress.getStreet2(),
 						accountAddress.getStreet3(), accountAddress.getCity(),
 						accountAddress.getZip(),
-						_getCommerceRegionId(commerceCountry, accountAddress),
-						commerceCountry.getCommerceCountryId(),
-						accountAddress.getPhoneNumber(),
+						_getRegionId(country, accountAddress),
+						country.getCountryId(), accountAddress.getPhoneNumber(),
 						GetterUtil.get(
 							accountAddress.getDefaultBilling(), false),
 						GetterUtil.get(
@@ -618,13 +613,13 @@ public class AccountResourceImpl
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
-	private CommerceRegionLocalService _commerceRegionLocalService;
+	private CountryService _countryService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

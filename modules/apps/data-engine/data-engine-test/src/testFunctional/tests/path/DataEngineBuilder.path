@@ -97,6 +97,17 @@
 	<td>PANEL_COLLAPSE_BUTTON</td>
 	<td>//div[contains(@class,'collapsable-panel')]//button[contains(@class,'collapse-icon')]</td>
 	<td></td>
+
+</tr>
+<tr>
+	<td>WEB_CONTENT_TEXT_FIELD</td>
+	<td>//input[(@class='form-control ddm-field-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_NUMERIC_FIELD</td>
+	<td>//input[(@class='form-control')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

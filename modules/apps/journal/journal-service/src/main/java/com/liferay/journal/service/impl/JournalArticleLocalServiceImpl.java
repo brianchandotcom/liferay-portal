@@ -71,6 +71,7 @@ import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.base.JournalArticleLocalServiceBaseImpl;
+import com.liferay.journal.util.JournalContentCompatibilityLayer;
 import com.liferay.journal.util.JournalDefaultTemplateProvider;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
@@ -452,6 +453,8 @@ public class JournalArticleLocalServiceImpl
 
 		content = format(user, groupId, article, content);
 		content = _replaceTempImages(article, content);
+		content = _journalContentCompatibilityLayer.convertDocumentContent(
+			content);
 
 		article.setContent(content);
 
@@ -791,6 +794,8 @@ public class JournalArticleLocalServiceImpl
 
 		content = format(user, groupId, article, content);
 		content = _replaceTempImages(article, content);
+		content = _journalContentCompatibilityLayer.convertDocumentContent(
+			content);
 
 		article.setContent(content);
 
@@ -5700,6 +5705,8 @@ public class JournalArticleLocalServiceImpl
 
 		content = format(user, groupId, article, content);
 		content = _replaceTempImages(article, content);
+		content = _journalContentCompatibilityLayer.convertDocumentContent(
+			content);
 
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
@@ -6180,6 +6187,8 @@ public class JournalArticleLocalServiceImpl
 
 		content = format(user, groupId, article, content);
 		content = _replaceTempImages(article, content);
+		content = _journalContentCompatibilityLayer.convertDocumentContent(
+			content);
 
 		article.setContent(content);
 
@@ -6370,6 +6379,8 @@ public class JournalArticleLocalServiceImpl
 
 		content = format(user, groupId, article, content);
 		content = _replaceTempImages(article, content);
+		content = _journalContentCompatibilityLayer.convertDocumentContent(
+			content);
 
 		article.setContent(content);
 
@@ -9217,6 +9228,9 @@ public class JournalArticleLocalServiceImpl
 	@Reference
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+
+	@Reference
+	private JournalContentCompatibilityLayer _journalContentCompatibilityLayer;
 
 	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocalService;

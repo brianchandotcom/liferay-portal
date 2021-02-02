@@ -56,6 +56,8 @@ public class BaseManagementToolbarDisplayContext
 
 		currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
+
+		request = httpServletRequest;
 	}
 
 	/**

@@ -81,8 +81,6 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "4"
 	test CheckLocalizationOfFieldsUponLanguageChange {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -137,8 +135,6 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
-		property portal.acceptance = "false";
-
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
@@ -254,8 +250,6 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "5"
 	test TranslationDoesNotChangeAnother {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -358,8 +352,6 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "5"
 	test TranslationPersistsAfterEditingAnother {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -444,8 +436,6 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "5"
 	test TranslationsRemainUponSavingStructure {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -516,8 +506,6 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
-		property portal.acceptance = "false";
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text Test",
 			fieldName = "Text");

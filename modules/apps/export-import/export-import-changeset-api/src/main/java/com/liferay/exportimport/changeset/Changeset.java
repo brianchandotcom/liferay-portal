@@ -97,12 +97,8 @@ public class Changeset implements Serializable {
 
 			StagedModel stagedModel = supplier.get();
 
-			String stagedModelClassName =
-				ExportImportClassedModelUtil.getClassName(stagedModel);
-
 			_collectChildrenStagedModels(
-				_changeset._stagedModels, stagedModel, stagedModelClassName,
-				function);
+				_changeset._stagedModels, stagedModel, function);
 
 			return this;
 		}
@@ -150,8 +146,10 @@ public class Changeset implements Serializable {
 
 	private static void _collectChildrenStagedModels(
 		List<StagedModel> childrenStagedModels, StagedModel parentStagedModel,
-		String parentClassName,
 		Function<StagedModel, Collection<?>> hierarchyFunction) {
+
+		String parentClassName = ExportImportClassedModelUtil.getClassName(
+			parentStagedModel);
 
 		Queue<StagedModel> queue = new LinkedList<>();
 

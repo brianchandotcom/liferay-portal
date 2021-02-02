@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.spira.result;
 
 import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.CucumberAxisBuild;
+import com.liferay.jenkins.results.parser.CucumberTestClassResult;
 import com.liferay.jenkins.results.parser.CucumberTestResult;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestResult;
@@ -50,11 +51,25 @@ public class CucumberAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 		return _cucumberTestClass;
 	}
 
-	public CucumberTestResult getCucumberTestResult() {
+	public CucumberTestClassResult getCucumberTestClassResult() {
 		CucumberAxisBuild cucumberAxisBuild = getCucumberAxisBuild();
 
-		return cucumberAxisBuild.getCucumberTestResult(
-			_cucumberTestClass.getScenarioName());
+		if (cucumberAxisBuild == null) {
+			return null;
+		}
+
+		return cucumberAxisBuild.getCucumberTestClassResult(getTestName());
+	}
+
+	public CucumberTestResult getCucumberTestResult() {
+		CucumberTestClassResult cucumberTestClassResult =
+			getCucumberTestClassResult();
+
+		if (cucumberTestClassResult == null) {
+			return null;
+		}
+
+		return cucumberTestClassResult.getCucumberTestResult(getTestName());
 	}
 
 	@Override

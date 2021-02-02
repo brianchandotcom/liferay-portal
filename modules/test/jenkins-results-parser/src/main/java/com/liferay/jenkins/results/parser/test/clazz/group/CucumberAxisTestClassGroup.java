@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.test.clazz.group.CucumberBatchTestClassGroup.CucumberTestClass;
 
 import java.util.ArrayList;
@@ -43,10 +42,11 @@ public class CucumberAxisTestClassGroup extends AxisTestClassGroup {
 		List<String> scenarioNames = new ArrayList<>();
 
 		for (CucumberTestClass cucumberTestClass : getCucumberTestClasses()) {
-			scenarioNames.add(
-				JenkinsResultsParserUtil.combine(
-					cucumberTestClass.getFeatureName(), " > ",
-					cucumberTestClass.getScenarioName()));
+			for (TestClass.TestClassMethod testClassMethod :
+					cucumberTestClass.getTestClassMethods()) {
+
+				scenarioNames.add(testClassMethod.getName());
+			}
 		}
 
 		return scenarioNames;

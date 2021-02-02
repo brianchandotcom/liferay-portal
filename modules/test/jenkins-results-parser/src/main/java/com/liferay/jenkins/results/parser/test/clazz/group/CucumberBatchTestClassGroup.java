@@ -91,7 +91,9 @@ public class CucumberBatchTestClassGroup extends BatchTestClassGroup {
 
 			super(featureFile);
 
-			addTestClassMethod(scenarioName);
+			addTestClassMethod(
+				JenkinsResultsParserUtil.combine(
+					featureName, " > ", scenarioName));
 
 			_cucumberBatchTestClassGroup = cucumberBatchTestClassGroup;
 			_featureName = featureName;

@@ -23,8 +23,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 
-import org.json.JSONArray;
-
 /**
  * @author Michael Hashimoto
  */
@@ -52,21 +50,38 @@ public class CucumberAxisBuild extends AxisBuild {
 		return _cucumberFeatureResults;
 	}
 
-	public CucumberTestResult getCucumberTestResult(String testName) {
-		TestResult testResult = getTestResult(testName);
+	public CucumberTestClassResult getCucumberTestClassResult(
+		String cucumberTestName) {
 
-		if (!(testResult instanceof CucumberTestResult)) {
-			return null;
+		for (TestClassResult testClassResult : getTestClassResults()) {
+			if (!(testClassResult instanceof CucumberTestClassResult)) {
+				continue;
+			}
+
+			CucumberTestClassResult cucumberTestClassResult =
+				(CucumberTestClassResult)testClassResult;
+
+			if (cucumberTestName.equals(
+					cucumberTestClassResult.getCucumberTestName())) {
+
+				return cucumberTestClassResult;
+			}
 		}
 
-		return (CucumberTestResult)testResult;
+		return null;
 	}
 
 	public List<CucumberTestResult> getCucumberTestResults(String testStatus) {
 		List<CucumberTestResult> cucumberTestResults = new ArrayList<>();
 
-		for (TestResult testResult : getTestResults(testStatus)) {
+		for (TestResult testResult : getTestResults()) {
 			if (!(testResult instanceof CucumberTestResult)) {
+				continue;
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(testStatus) ||
+				!testStatus.equals(testResult.getStatus())) {
+
 				continue;
 			}
 
@@ -77,9 +92,22 @@ public class CucumberAxisBuild extends AxisBuild {
 	}
 
 	@Override
-	public List<TestResult> getTestResults(
-		Build build, JSONArray suitesJSONArray) {
+	public List<TestClassResult> getTestClassResults() {
+		List<TestClassResult> testClassResults = new ArrayList<>();
 
+		for (CucumberScenarioResult cucumberScenarioResult :
+				_getCucumberScenarioResults()) {
+
+			testClassResults.add(
+				TestClassResultFactory.newCucumberTestClassResultTestResult(
+					this, cucumberScenarioResult));
+		}
+
+		return testClassResults;
+	}
+
+	@Override
+	public List<TestResult> getTestResults() {
 		List<TestResult> testResults = new ArrayList<>();
 
 		for (CucumberScenarioResult cucumberScenarioResult :

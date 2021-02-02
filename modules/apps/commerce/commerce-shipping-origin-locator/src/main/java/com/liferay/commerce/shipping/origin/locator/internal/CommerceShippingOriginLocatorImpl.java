@@ -17,16 +17,16 @@ package com.liferay.commerce.shipping.origin.locator.internal;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceGeocoder;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressLocalService;
-import com.liferay.commerce.service.CommerceCountryLocalService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.shipping.origin.locator.CommerceShippingOriginLocator;
 import com.liferay.commerce.shipping.origin.locator.internal.util.DistanceCalculator;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -121,19 +121,18 @@ public class CommerceShippingOriginLocatorImpl
 				commerceInventoryWarehouses) {
 
 			if (!commerceInventoryWarehouse.isGeolocated()) {
-				CommerceCountry commerceCountry = _getCommerceCountry(
+				Country country = _getCountry(
 					commerceAddress.getCompanyId(),
 					commerceInventoryWarehouse.getCountryTwoLettersISOCode());
 
-				CommerceRegion commerceRegion = _getCommerceRegion(
-					commerceCountry.getCommerceCountryId(),
+				Region region = _getRegion(
+					country.getCountryId(),
 					commerceInventoryWarehouse.getCommerceRegionCode());
 
 				double[] coordinates = _commerceGeocoder.getCoordinates(
 					commerceInventoryWarehouse.getStreet1(),
 					commerceInventoryWarehouse.getCity(),
-					commerceInventoryWarehouse.getZip(), commerceRegion,
-					commerceCountry);
+					commerceInventoryWarehouse.getZip(), region, country);
 
 				commerceInventoryWarehouse =
 					_commerceInventoryWarehouseLocalService.
@@ -171,18 +170,16 @@ public class CommerceShippingOriginLocatorImpl
 		commerceAddress.setCity(commerceInventoryWarehouse.getCity());
 		commerceAddress.setZip(commerceInventoryWarehouse.getZip());
 
-		CommerceCountry commerceCountry = _getCommerceCountry(
+		Country country = _getCountry(
 			groupId, commerceInventoryWarehouse.getCountryTwoLettersISOCode());
 
-		CommerceRegion commerceRegion = _getCommerceRegion(
-			commerceCountry.getCommerceCountryId(),
+		Region region = _getRegion(
+			country.getCountryId(),
 			commerceInventoryWarehouse.getCommerceRegionCode());
 
-		commerceAddress.setCommerceRegionId(
-			commerceRegion.getCommerceRegionId());
+		commerceAddress.setCommerceRegionId(region.getRegionId());
 
-		commerceAddress.setCommerceCountryId(
-			commerceCountry.getCommerceCountryId());
+		commerceAddress.setCommerceCountryId(country.getCountryId());
 
 		commerceAddress.setLatitude(commerceInventoryWarehouse.getLatitude());
 		commerceAddress.setLongitude(commerceInventoryWarehouse.getLongitude());
@@ -190,27 +187,20 @@ public class CommerceShippingOriginLocatorImpl
 		return commerceAddress;
 	}
 
-	private CommerceCountry _getCommerceCountry(
-			long companyId, String countryCode)
+	private Country _getCountry(long companyId, String countryCode)
 		throws Exception {
 
-		return _commerceCountryLocalService.getCommerceCountry(
-			companyId, countryCode);
+		return _countryLocalService.getCountryByA2(companyId, countryCode);
 	}
 
-	private CommerceRegion _getCommerceRegion(
-			long commerceCountryId, String regionCode)
+	private Region _getRegion(long countryId, String regionCode)
 		throws Exception {
 
-		return _commerceRegionLocalService.getCommerceRegion(
-			commerceCountryId, regionCode);
+		return _regionLocalService.getRegion(countryId, regionCode);
 	}
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
-
-	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
 
 	@Reference
 	private CommerceGeocoder _commerceGeocoder;
@@ -220,9 +210,12 @@ public class CommerceShippingOriginLocatorImpl
 		_commerceInventoryWarehouseLocalService;
 
 	@Reference
-	private CommerceRegionLocalService _commerceRegionLocalService;
+	private CountryLocalService _countryLocalService;
 
 	private final DistanceCalculator _distanceCalculator =
 		new DistanceCalculator();
+
+	@Reference
+	private RegionLocalService _regionLocalService;
 
 }

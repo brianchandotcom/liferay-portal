@@ -23,10 +23,8 @@ import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalServiceUtil;
@@ -44,16 +42,18 @@ import com.liferay.commerce.product.service.CommerceChannelRelLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
-import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
-import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
+import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -455,18 +455,16 @@ public class CommerceTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		CommerceCountry commerceCountry = _setUpCountry(serviceContext);
+		Country country = _setUpCountry(serviceContext);
 
-		CommerceRegion commerceRegion = _setUpRegion(
-			commerceCountry, serviceContext);
+		Region region = _setUpRegion(country, serviceContext);
 
 		return CommerceAddressLocalServiceUtil.addCommerceAddress(
 			User.class.getName(), userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), String.valueOf(30133),
-			commerceRegion.getCommerceRegionId(),
-			commerceCountry.getCommerceCountryId(),
+			region.getRegionId(), country.getCountryId(),
 			RandomTestUtil.randomString(), false, false, serviceContext);
 	}
 
@@ -551,42 +549,37 @@ public class CommerceTestUtil {
 		return cpDefinitionInventory;
 	}
 
-	private static CommerceCountry _setUpCountry(ServiceContext serviceContext)
+	private static Country _setUpCountry(ServiceContext serviceContext)
 		throws Exception {
 
-		CommerceCountry commerceCountry =
-			CommerceCountryLocalServiceUtil.fetchCommerceCountry(
-				serviceContext.getCompanyId(), 000);
+		Country country = CountryLocalServiceUtil.fetchCountryByNumber(
+			serviceContext.getCompanyId(), "000");
 
-		if (commerceCountry == null) {
-			commerceCountry =
-				CommerceCountryLocalServiceUtil.addCommerceCountry(
-					RandomTestUtil.randomLocaleStringMap(), true, true, "ZZ",
-					"ZZZ", 000, false, RandomTestUtil.randomDouble(), true,
-					serviceContext);
+		if (country == null) {
+			country = CountryLocalServiceUtil.addCountry(
+				"ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(),
+				"000", RandomTestUtil.randomDouble(), true, false, false,
+				serviceContext);
 		}
 
-		return commerceCountry;
+		return country;
 	}
 
-	private static CommerceRegion _setUpRegion(
-			CommerceCountry commerceCountry, ServiceContext serviceContext)
+	private static Region _setUpRegion(
+			Country country, ServiceContext serviceContext)
 		throws Exception {
 
-		CommerceRegion commerceRegion;
+		Region region = RegionLocalServiceUtil.fetchRegion(
+			country.getCountryId(), "ZZ");
 
-		try {
-			commerceRegion = CommerceRegionLocalServiceUtil.getCommerceRegion(
-				commerceCountry.getCommerceCountryId(), "ZZ");
-		}
-		catch (Exception exception) {
-			commerceRegion = CommerceRegionLocalServiceUtil.addCommerceRegion(
-				commerceCountry.getCommerceCountryId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomDouble(), true, serviceContext);
+		if (region != null) {
+			return region;
 		}
 
-		return commerceRegion;
+		return RegionLocalServiceUtil.addRegion(
+			country.getCountryId(), true, RandomTestUtil.randomString(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 }

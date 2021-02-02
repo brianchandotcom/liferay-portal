@@ -18,16 +18,17 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalServiceUtil;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalServiceUtil;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
-import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
+import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
@@ -35,16 +36,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
  * @author Luca Pellizzon
  */
 public class CommerceInventoryTestUtil {
-
-	public static CommerceCountry addCommerceCountry(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return CommerceCountryLocalServiceUtil.addCommerceCountry(
-			RandomTestUtil.randomLocaleStringMap(), true, true,
-			RandomTestUtil.randomString(2), RandomTestUtil.randomString(3),
-			RandomTestUtil.nextInt(), false, 0, true, serviceContext);
-	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse()
 		throws Exception {
@@ -91,40 +82,36 @@ public class CommerceInventoryTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		CommerceCountry commerceCountry = _setUpCountry(serviceContext);
+		Country country = _setUpCountry(serviceContext);
 
-		CommerceRegion commerceRegion = _setUpRegion(
-			commerceCountry, serviceContext);
+		Region region = _setUpRegion(country, serviceContext);
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
 				null, name, RandomTestUtil.randomString(), active,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), commerceRegion.getCode(),
-				commerceCountry.getTwoLettersISOCode(),
-				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(),
-				serviceContext);
+				RandomTestUtil.randomString(), region.getRegionCode(),
+				country.getA2(), RandomTestUtil.nextDouble(),
+				RandomTestUtil.nextDouble(), serviceContext);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
 			String name, boolean active, ServiceContext serviceContext)
 		throws Exception {
 
-		CommerceCountry commerceCountry = _setUpCountry(serviceContext);
+		Country country = _setUpCountry(serviceContext);
 
-		CommerceRegion commerceRegion = _setUpRegion(
-			commerceCountry, serviceContext);
+		Region region = _setUpRegion(country, serviceContext);
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
 				null, name, RandomTestUtil.randomString(), active,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), commerceRegion.getCode(),
-				commerceCountry.getTwoLettersISOCode(),
-				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(),
-				serviceContext);
+				RandomTestUtil.randomString(), region.getRegionCode(),
+				country.getA2(), RandomTestUtil.nextDouble(),
+				RandomTestUtil.nextDouble(), serviceContext);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
@@ -177,10 +164,9 @@ public class CommerceInventoryTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		CommerceCountry commerceCountry = addCommerceCountry(serviceContext);
+		Country country = addCountry(serviceContext);
 
-		CommerceRegion commerceRegion = addCommerceRegion(
-			commerceCountry.getCommerceCountryId(), serviceContext);
+		Region region = addRegion(country.getCountryId(), serviceContext);
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
@@ -188,19 +174,20 @@ public class CommerceInventoryTestUtil {
 				RandomTestUtil.randomString(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), commerceRegion.getCode(),
-				commerceCountry.getTwoLettersISOCode(),
-				RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-				serviceContext);
+				RandomTestUtil.randomString(), region.getRegionCode(),
+				country.getA2(), RandomTestUtil.randomDouble(),
+				RandomTestUtil.randomDouble(), serviceContext);
 	}
 
-	public static CommerceRegion addCommerceRegion(
-			long commerceCountryId, ServiceContext serviceContext)
-		throws PortalException {
+	public static Country addCountry(ServiceContext serviceContext)
+		throws Exception {
 
-		return CommerceRegionLocalServiceUtil.addCommerceRegion(
-			commerceCountryId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), 0, true, serviceContext);
+		return CountryLocalServiceUtil.addCountry(
+			String.valueOf(RandomTestUtil.randomInt(10, 99)),
+			String.valueOf(RandomTestUtil.randomInt(100, 999)), true, true,
+			null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
+			0, true, false, false, serviceContext);
 	}
 
 	public static CPInstance addRandomCPInstanceSku(long groupId)
@@ -213,42 +200,46 @@ public class CommerceInventoryTestUtil {
 		return CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
 	}
 
-	private static CommerceCountry _setUpCountry(ServiceContext serviceContext)
-		throws Exception {
+	public static Region addRegion(
+			long commerceCountryId, ServiceContext serviceContext)
+		throws PortalException {
 
-		CommerceCountry commerceCountry =
-			CommerceCountryLocalServiceUtil.fetchCommerceCountry(
-				serviceContext.getCompanyId(), 000);
-
-		if (commerceCountry == null) {
-			commerceCountry =
-				CommerceCountryLocalServiceUtil.addCommerceCountry(
-					RandomTestUtil.randomLocaleStringMap(), true, true, "ZZ",
-					"ZZZ", 000, false, RandomTestUtil.randomDouble(), true,
-					serviceContext);
-		}
-
-		return commerceCountry;
+		return RegionLocalServiceUtil.addRegion(
+			commerceCountryId, true, RandomTestUtil.randomString(), 0,
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	private static CommerceRegion _setUpRegion(
-			CommerceCountry commerceCountry, ServiceContext serviceContext)
+	private static Country _setUpCountry(ServiceContext serviceContext)
 		throws Exception {
 
-		CommerceRegion commerceRegion;
+		Country country = CountryLocalServiceUtil.fetchCountryByNumber(
+			serviceContext.getCompanyId(), "000");
 
-		try {
-			commerceRegion = CommerceRegionLocalServiceUtil.getCommerceRegion(
-				commerceCountry.getCommerceCountryId(), "ZZ");
-		}
-		catch (Exception exception) {
-			commerceRegion = CommerceRegionLocalServiceUtil.addCommerceRegion(
-				commerceCountry.getCommerceCountryId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomDouble(), true, serviceContext);
+		if (country == null) {
+			country = CountryLocalServiceUtil.addCountry(
+				"ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(),
+				"000", RandomTestUtil.randomDouble(), true, false, false,
+				serviceContext);
 		}
 
-		return commerceRegion;
+		return country;
+	}
+
+	private static Region _setUpRegion(
+			Country country, ServiceContext serviceContext)
+		throws Exception {
+
+		Region region = RegionLocalServiceUtil.fetchRegion(
+			country.getCountryId(), "ZZ");
+
+		if (region != null) {
+			return region;
+		}
+
+		return RegionLocalServiceUtil.addRegion(
+			country.getCountryId(), true, RandomTestUtil.randomString(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 }

@@ -379,6 +379,9 @@ public class MBMessageStagedModelDataHandlerTest
 		MBMessage message = (MBMessage)stagedModel;
 		MBMessage importedMessage = (MBMessage)importedStagedModel;
 
+		Assert.assertEquals(
+			message.getExternalReferenceCode(),
+			importedMessage.getExternalReferenceCode());
 		Assert.assertEquals(message.getSubject(), importedMessage.getSubject());
 		Assert.assertEquals(message.getFormat(), importedMessage.getFormat());
 		Assert.assertEquals(

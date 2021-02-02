@@ -393,6 +393,15 @@ renderResponse.setTitle(headerTitle);
 										module="document_library/js/LanguageSelector"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
+												"ddmStructureIds",
+												dlFileEntryType.getDDMStructures(
+												).stream(
+												).map(
+													DDMStructure::getStructureId
+												).collect(
+													Collectors.toList()
+												)
+											).put(
 												"languageIds",
 												LanguageUtil.getAvailableLocales(
 													themeDisplay.getSiteGroupId()

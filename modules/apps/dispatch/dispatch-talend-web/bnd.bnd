@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Dispatch Talend Web
 Bundle-SymbolicName: com.liferay.dispatch.talend.web
 Bundle-Version: 3.0.0
+Import-Package:\
+	com.liferay.petra.process.local,\
+	\
+	*
 Web-ContextPath: /dispatch-talend-web

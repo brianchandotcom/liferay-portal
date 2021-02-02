@@ -15,6 +15,7 @@
 package com.liferay.journal.test.util.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,6 +48,7 @@ public class JournalArticleBlueprint {
 			journalArticleBlueprint._journalArticleDescription);
 		_journalArticleTitle = getJournalArticleTitle(
 			journalArticleBlueprint._journalArticleTitle);
+		_serviceContext = journalArticleBlueprint._serviceContext;
 		_userId = journalArticleBlueprint._userId;
 		_workflowEnabled = journalArticleBlueprint._workflowEnabled;
 	}
@@ -73,6 +75,10 @@ public class JournalArticleBlueprint {
 
 	public long getGroupId() {
 		return _groupId;
+	}
+
+	public ServiceContext getServiceContext() {
+		return _serviceContext;
 	}
 
 	public Map<Locale, String> getTitleMap() {
@@ -140,6 +146,10 @@ public class JournalArticleBlueprint {
 		_journalArticleTitle = journalArticleTitle;
 	}
 
+	public void setServiceContext(ServiceContext serviceContext) {
+		_serviceContext = serviceContext;
+	}
+
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
@@ -197,6 +207,7 @@ public class JournalArticleBlueprint {
 	private JournalArticleContent _journalArticleContent;
 	private JournalArticleDescription _journalArticleDescription;
 	private JournalArticleTitle _journalArticleTitle;
+	private ServiceContext _serviceContext;
 	private long _userId;
 	private boolean _workflowEnabled;
 

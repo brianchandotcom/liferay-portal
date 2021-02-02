@@ -14,6 +14,8 @@
 
 package com.liferay.journal.test.util.search;
 
+import com.liferay.portal.kernel.service.ServiceContext;
+
 import java.io.Serializable;
 
 import java.util.Map;
@@ -59,6 +61,14 @@ public class JournalArticleBlueprintBuilder {
 		JournalArticleTitle journalArticleTitle) {
 
 		_journalArticleBlueprint.setJournalArticleTitle(journalArticleTitle);
+
+		return this;
+	}
+
+	public JournalArticleBlueprintBuilder serviceContext(
+		ServiceContext serviceContext) {
+
+		_journalArticleBlueprint.setServiceContext(serviceContext);
 
 		return this;
 	}

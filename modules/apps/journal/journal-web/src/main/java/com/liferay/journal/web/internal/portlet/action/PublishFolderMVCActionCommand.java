@@ -92,10 +92,7 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			for (Object childObject : childObjects) {
 				if (childObject instanceof JournalFolder) {
-					JournalFolder childJournalFolder =
-						(JournalFolder)childObject;
-
-					stagedModels.add(childJournalFolder);
+					stagedModels.add((JournalFolder)childObject);
 				}
 				else if (childObject instanceof JournalArticle) {
 					JournalArticle journalArticle = (JournalArticle)childObject;

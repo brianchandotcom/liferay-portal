@@ -283,8 +283,16 @@
 			INNER JOIN
 				CommercePriceList ON
 					CommercePriceListChannelRel.commercePriceListId = CommercePriceList.commercePriceListId
+			LEFT JOIN
+				CPLCommerceGroupAccountRel ON
+					CommercePriceList.commercePriceListId = CPLCommerceGroupAccountRel.commercePriceListId
+			LEFT JOIN
+				CommercePriceListAccountRel ON
+					CommercePriceList.commercePriceListId = CommercePriceListAccountRel.commercePriceListId
 			WHERE
 				(CommercePriceListChannelRel.commerceChannelId = ?) AND
+				(CommercePriceListAccountRel.commercePriceListAccountRelId IS NULL) AND
+				(CPLCommerceGroupAccountRel.cPLCommerceAccountGroupRelId IS NULL) AND
 				(CommercePriceList.groupId = ?) AND
 				(CommercePriceList.type_ = ?) AND
 				(CommercePriceList.status = 0)

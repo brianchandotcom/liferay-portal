@@ -91,6 +91,11 @@ definition {
 		}
 
 		AssertTextEquals(
+			key_text = "http://localhost:8080/canonical-url-test-page",
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+			value1 = "http://localhost:8080/canonical-url-test-page");
+
+		AssertTextEquals(
 			locator1 = "Message#INFO",
 			value1 = "Info:Due to the customization of the canonical URL, depending on the platform this page is shared, the Open Graph metadata shown might not be the one configured in this page.");
 

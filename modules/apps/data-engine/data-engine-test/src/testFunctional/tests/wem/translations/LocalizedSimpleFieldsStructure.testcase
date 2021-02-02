@@ -83,9 +83,7 @@ definition {
 	test CheckLocalizationOfFieldsUponLanguageChange {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -258,9 +256,7 @@ definition {
 	test TranslationDoesNotChangeAnother {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -364,9 +360,7 @@ definition {
 	test TranslationPersistsAfterEditingAnother {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -452,9 +446,7 @@ definition {
 	test TranslationsRemainUponSavingStructure {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 

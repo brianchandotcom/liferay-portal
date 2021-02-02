@@ -17,6 +17,8 @@ package com.liferay.portal.search.indexer.scores.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.blogs.test.util.search.BlogsEntryBlueprint.BlogsEntryBlueprintBuilder;
+import com.liferay.blogs.test.util.search.BlogsEntrySearchFixture;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.search.FileEntryBlueprint;
@@ -47,7 +49,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.test.blogs.util.BlogsEntrySearchFixture;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -97,8 +98,6 @@ public class IndexerScoreDistortionTest {
 
 		JournalArticleSearchFixture journalArticleSearchFixture =
 			new JournalArticleSearchFixture(journalArticleLocalService);
-
-		fileEntrySearchFixture.setUp();
 
 		_blogsEntries = blogsEntrySearchFixture.getBlogsEntries();
 		_blogsEntrySearchFixture = blogsEntrySearchFixture;
@@ -175,11 +174,21 @@ public class IndexerScoreDistortionTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected BlogsEntry addBlogsEntry(String title) throws Exception {
-		return _blogsEntrySearchFixture.addBlogsEntry(_group, _user, title);
+	protected BlogsEntry addBlogsEntry(String title) {
+		return _blogsEntrySearchFixture.addBlogsEntry(
+			BlogsEntryBlueprintBuilder.builder(
+			).content(
+				RandomTestUtil.randomString()
+			).groupId(
+				_group.getGroupId()
+			).title(
+				title
+			).userId(
+				_user.getUserId()
+			).build());
 	}
 
-	protected FileEntry addFileEntry(String title) throws Exception {
+	protected FileEntry addFileEntry(String title) {
 		return _fileEntrySearchFixture.addFileEntry(
 			new FileEntryBlueprint() {
 				{

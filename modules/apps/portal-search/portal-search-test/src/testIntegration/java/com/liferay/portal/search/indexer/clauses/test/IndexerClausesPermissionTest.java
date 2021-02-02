@@ -25,24 +25,25 @@ import com.liferay.journal.test.util.search.JournalArticleBlueprintBuilder;
 import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
-import com.liferay.message.boards.constants.MBCategoryConstants;
-import com.liferay.message.boards.constants.MBMessageConstants;
-import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
+import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -51,8 +52,14 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
+import com.liferay.users.admin.test.util.search.UserBlueprint;
+import com.liferay.users.admin.test.util.search.UserBlueprintImpl.UserBlueprintBuilderImpl;
+import com.liferay.users.admin.test.util.search.UserSearchFixture;
+
+import java.time.Month;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -69,12 +76,14 @@ import org.junit.runner.RunWith;
  * @author André de Oliveira
  */
 @RunWith(Arquillian.class)
-public class IndexerClausesTest {
+public class IndexerClausesPermissionTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -83,24 +92,29 @@ public class IndexerClausesTest {
 
 		GroupSearchFixture groupSearchFixture = new GroupSearchFixture();
 
+		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
+
 		JournalArticleSearchFixture journalArticleSearchFixture =
 			new JournalArticleSearchFixture(journalArticleLocalService);
 
+		UserSearchFixture userSearchFixture = new UserSearchFixture();
+
 		_blogsEntries = blogsEntrySearchFixture.getBlogsEntries();
 		_blogsEntrySearchFixture = blogsEntrySearchFixture;
-		_group = groupSearchFixture.addGroup(new GroupBlueprint());
+		_group = group;
 		_groups = groupSearchFixture.getGroups();
 		_journalArticles = journalArticleSearchFixture.getJournalArticles();
 		_journalArticleSearchFixture = journalArticleSearchFixture;
-		_user = TestPropsValues.getUser();
+		_users = userSearchFixture.getUsers();
+		_user1 = addUser("user1", group, userSearchFixture);
+		_user2 = addUser("user2", group, userSearchFixture);
 	}
 
 	@Test
 	public void testBaseIndexer() throws Exception {
 		Assert.assertTrue(journalArticleIndexer instanceof BaseIndexer);
 
-		addJournalArticle("Gamma Article");
-		addJournalArticle("Omega Article");
+		addJournalArticle(_user1, "Gamma Article");
 
 		Consumer<SearchRequestBuilder> consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
@@ -109,14 +123,16 @@ public class IndexerClausesTest {
 				"gamma"
 			);
 
-		assertSearch("[Gamma Article]", consumer);
+		assertSearch("[Gamma Article]", withPermissionCheck(_user1), consumer);
 
-		if (!_LPS_123611_FIXED) {
-			return;
-		}
+		assertSearch("[]", withPermissionCheck(_user2), consumer);
 
 		assertSearch(
-			"[Gamma Article, Omega Article]", withoutIndexerClauses(),
+			"[Gamma Article]", withoutIndexerClauses(),
+			withPermissionCheck(_user1), consumer);
+
+		assertSearch(
+			"[]", withoutIndexerClauses(), withPermissionCheck(_user2),
 			consumer);
 	}
 
@@ -126,8 +142,7 @@ public class IndexerClausesTest {
 			"class com.liferay.portal.search.internal.indexer.DefaultIndexer",
 			String.valueOf(blogsEntryIndexer.getClass()));
 
-		addBlogsEntry("Gamma Blog");
-		addBlogsEntry("Omega Blog");
+		addBlogsEntry(_user1, "Gamma Blog");
 
 		Consumer<SearchRequestBuilder> consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
@@ -136,24 +151,23 @@ public class IndexerClausesTest {
 				"gamma"
 			);
 
-		assertSearch("[Gamma Blog]", consumer);
+		assertSearch("[Gamma Blog]", withPermissionCheck(_user1), consumer);
 
-		if (!_LPS_123611_FIXED) {
-			return;
-		}
+		assertSearch("[]", withPermissionCheck(_user2), consumer);
 
 		assertSearch(
-			"[Gamma Blog, Omega Blog]", withoutIndexerClauses(), consumer);
+			"[Gamma Blog]", withoutIndexerClauses(),
+			withPermissionCheck(_user1), consumer);
+
+		assertSearch(
+			"[]", withoutIndexerClauses(), withPermissionCheck(_user2),
+			consumer);
 	}
 
 	@Test
 	public void testFacetedSearcher() throws Exception {
-		addBlogsEntry("Gamma Blog");
-		addBlogsEntry("Omega Blog");
-		addJournalArticle("Gamma Article");
-		addJournalArticle("Omega Article");
-		addMessage("Gamma Message");
-		addMessage("Omega Message");
+		addBlogsEntry(_user1, "Gamma Blog");
+		addJournalArticle(_user1, "Gamma Article");
 
 		Consumer<SearchRequestBuilder> consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
@@ -162,35 +176,41 @@ public class IndexerClausesTest {
 				"gamma"
 			);
 
-		assertSearch("[Gamma Article, Gamma Blog]", consumer);
+		assertSearch(
+			"[Gamma Article, Gamma Blog]", withPermissionCheck(_user1),
+			consumer);
 
-		if (!_LPS_123611_FIXED) {
-			return;
-		}
+		assertSearch("[]", withPermissionCheck(_user2), consumer);
 
 		assertSearch(
-			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog]",
-			withoutIndexerClauses(), consumer);
+			"[Gamma Article, Gamma Blog]", withoutIndexerClauses(),
+			withPermissionCheck(_user1), consumer);
+
+		assertSearch(
+			"[]", withoutIndexerClauses(), withPermissionCheck(_user2),
+			consumer);
 	}
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected BlogsEntry addBlogsEntry(String title) {
+	protected BlogsEntry addBlogsEntry(User user, String title) {
 		return _blogsEntrySearchFixture.addBlogsEntry(
 			BlogsEntryBlueprintBuilder.builder(
 			).content(
 				RandomTestUtil.randomString()
 			).groupId(
 				_group.getGroupId()
+			).serviceContext(
+				createServiceContext(_group, user)
 			).title(
 				title
 			).userId(
-				_user.getUserId()
+				user.getUserId()
 			).build());
 	}
 
-	protected JournalArticle addJournalArticle(String title) {
+	protected JournalArticle addJournalArticle(User user, String title) {
 		return _journalArticleSearchFixture.addArticle(
 			JournalArticleBlueprintBuilder.builder(
 			).groupId(
@@ -210,18 +230,47 @@ public class IndexerClausesTest {
 						put(LocaleUtil.US, title);
 					}
 				}
+			).serviceContext(
+				createServiceContext(_group, user)
 			).userId(
-				_user.getUserId()
+				user.getUserId()
 			).build());
 	}
 
-	protected MBMessage addMessage(String title) throws Exception {
-		return mbMessageLocalService.addMessage(
-			null, _user.getUserId(), RandomTestUtil.randomString(),
-			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			0L, MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, title,
-			RandomTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
-			null, false, 0.0, false, _createServiceContext());
+	protected User addUser(
+		String screenName, Group group, UserSearchFixture userSearchFixture) {
+
+		UserBlueprint.UserBlueprintBuilder userBlueprintBuilder =
+			new UserBlueprintBuilderImpl();
+
+		String password = RandomTestUtil.randomString();
+
+		return userSearchFixture.addUser(
+			userBlueprintBuilder.birthdayDay(
+				1
+			).birthdayMonth(
+				Month.JANUARY.getValue()
+			).birthdayYear(
+				1970
+			).companyId(
+				group.getCompanyId()
+			).emailAddress(
+				screenName + "@example.com"
+			).firstName(
+				RandomTestUtil.randomString()
+			).groupIds(
+				group.getGroupId()
+			).lastName(
+				RandomTestUtil.randomString()
+			).locale(
+				LocaleUtil.US
+			).password1(
+				password
+			).password2(
+				password
+			).screenName(
+				screenName
+			));
 	}
 
 	protected void assertSearch(
@@ -239,9 +288,40 @@ public class IndexerClausesTest {
 				consumers
 			).build());
 
+		String requestString = searchResponse.getRequestString();
+
+		String evidence = "{\"terms\":{\"groupRoleId\":";
+
+		if (!requestString.contains(evidence)) {
+			Assert.assertEquals(evidence, requestString);
+		}
+
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), _TITLE_EN_US, expected);
+			requestString, searchResponse.getDocumentsStream(), _TITLE_EN_US,
+			expected);
+	}
+
+	protected ModelPermissions createModelPermissions() {
+		ModelPermissions modelPermissions =
+			ModelPermissionsFactory.createForAllResources();
+
+		modelPermissions.addRolePermissions(
+			RoleConstants.OWNER, ActionKeys.VIEW);
+
+		return modelPermissions;
+	}
+
+	protected ServiceContext createServiceContext(Group group, User user) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setCompanyId(group.getCompanyId());
+		serviceContext.setModelPermissions(createModelPermissions());
+		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setUserId(user.getUserId());
+
+		return serviceContext;
 	}
 
 	protected Consumer<SearchRequestBuilder> withoutIndexerClauses() {
@@ -250,11 +330,19 @@ public class IndexerClausesTest {
 				"search.full.query.suppress.indexer.provided.clauses", true));
 	}
 
+	protected Consumer<SearchRequestBuilder> withPermissionCheck(User user) {
+		return searchRequestBuilder -> searchRequestBuilder.withSearchContext(
+			searchContext -> searchContext.setUserId(user.getUserId()));
+	}
+
 	@Inject(filter = "indexer.class.name=com.liferay.blogs.model.BlogsEntry")
 	protected Indexer<BlogsEntry> blogsEntryIndexer;
 
 	@Inject
 	protected BlogsEntryLocalService blogsEntryLocalService;
+
+	@Inject
+	protected ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory;
 
 	@Inject(filter = "component.name=*.JournalArticleIndexer")
 	protected Indexer<JournalArticle> journalArticleIndexer;
@@ -263,20 +351,16 @@ public class IndexerClausesTest {
 	protected JournalArticleLocalService journalArticleLocalService;
 
 	@Inject
-	protected MBMessageLocalService mbMessageLocalService;
+	protected PermissionCheckerFactory permissionCheckerFactory;
+
+	@Inject
+	protected Queries queries;
 
 	@Inject
 	protected Searcher searcher;
 
 	@Inject
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
-
-	private ServiceContext _createServiceContext() throws Exception {
-		return ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), _user.getUserId());
-	}
-
-	private static final boolean _LPS_123611_FIXED = false;
 
 	private static final String _TITLE_EN_US = StringBundler.concat(
 		Field.TITLE, StringPool.UNDERLINE, LocaleUtil.US);
@@ -294,6 +378,10 @@ public class IndexerClausesTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
-	private User _user;
+	private User _user1;
+	private User _user2;
+
+	@DeleteAfterTestRun
+	private List<User> _users;
 
 }

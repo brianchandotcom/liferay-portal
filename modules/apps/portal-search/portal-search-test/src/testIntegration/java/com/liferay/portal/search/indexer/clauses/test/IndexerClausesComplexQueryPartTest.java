@@ -36,17 +36,25 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
+import com.liferay.portal.search.query.MatchQuery;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -69,7 +77,7 @@ import org.junit.runner.RunWith;
  * @author André de Oliveira
  */
 @RunWith(Arquillian.class)
-public class IndexerClausesTest {
+public class IndexerClausesComplexQueryPartTest {
 
 	@ClassRule
 	@Rule
@@ -102,22 +110,35 @@ public class IndexerClausesTest {
 		addJournalArticle("Gamma Article");
 		addJournalArticle("Omega Article");
 
-		Consumer<SearchRequestBuilder> consumer =
+		_consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
 				JournalArticle.class
 			).queryString(
 				"gamma"
 			);
 
-		assertSearch("[Gamma Article]", consumer);
+		_query = _queries.match(_TITLE_EN_US, "omega");
+
+		assertSearch("[Gamma Article]");
+		assertSearch("[Gamma Article]", should());
+		assertSearch("[]", must());
+		assertSearch("[Gamma Article, Omega Article]", shouldAdditive());
+		assertSearch("[Omega Article]", mustAdditive());
 
 		if (!_LPS_123611_FIXED) {
 			return;
 		}
 
+		assertSearch("[Gamma Article, Omega Article]", withoutIndexerClauses());
 		assertSearch(
-			"[Gamma Article, Omega Article]", withoutIndexerClauses(),
-			consumer);
+			"[Gamma Article, Omega Article]", should(),
+			withoutIndexerClauses());
+		assertSearch("[Omega Article]", must(), withoutIndexerClauses());
+		assertSearch(
+			"[Gamma Article, Omega Article]", shouldAdditive(),
+			withoutIndexerClauses());
+		assertSearch(
+			"[Omega Article]", mustAdditive(), withoutIndexerClauses());
 	}
 
 	@Test
@@ -129,21 +150,33 @@ public class IndexerClausesTest {
 		addBlogsEntry("Gamma Blog");
 		addBlogsEntry("Omega Blog");
 
-		Consumer<SearchRequestBuilder> consumer =
+		_consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
 				BlogsEntry.class
 			).queryString(
 				"gamma"
 			);
 
-		assertSearch("[Gamma Blog]", consumer);
+		_query = _queries.match(_TITLE_EN_US, "omega");
+
+		assertSearch("[Gamma Blog]");
+		assertSearch("[Gamma Blog]", should());
+		assertSearch("[]", must());
+		assertSearch("[Gamma Blog, Omega Blog]", shouldAdditive());
+		assertSearch("[Omega Blog]", mustAdditive());
 
 		if (!_LPS_123611_FIXED) {
 			return;
 		}
 
+		assertSearch("[Gamma Blog, Omega Blog]", withoutIndexerClauses());
 		assertSearch(
-			"[Gamma Blog, Omega Blog]", withoutIndexerClauses(), consumer);
+			"[Gamma Blog, Omega Blog]", should(), withoutIndexerClauses());
+		assertSearch("[Omega Blog]", must(), withoutIndexerClauses());
+		assertSearch(
+			"[Gamma Blog, Omega Blog]", shouldAdditive(),
+			withoutIndexerClauses());
+		assertSearch("[Omega Blog]", mustAdditive(), withoutIndexerClauses());
 	}
 
 	@Test
@@ -155,14 +188,24 @@ public class IndexerClausesTest {
 		addMessage("Gamma Message");
 		addMessage("Omega Message");
 
-		Consumer<SearchRequestBuilder> consumer =
+		_consumer =
 			searchRequestBuilder -> searchRequestBuilder.modelIndexerClasses(
 				BlogsEntry.class, JournalArticle.class
 			).queryString(
 				"gamma"
 			);
 
-		assertSearch("[Gamma Article, Gamma Blog]", consumer);
+		_query = _queries.match(_TITLE_EN_US, "omega");
+
+		assertSearch("[Gamma Article, Gamma Blog]");
+		assertSearch("[Gamma Article, Gamma Blog]", should());
+		assertSearch("[]", must());
+		assertSearch(
+			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog, Omega " +
+				"Message]",
+			shouldAdditive());
+		assertSearch(
+			"[Omega Article, Omega Blog, Omega Message]", mustAdditive());
 
 		if (!_LPS_123611_FIXED) {
 			return;
@@ -170,7 +213,19 @@ public class IndexerClausesTest {
 
 		assertSearch(
 			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog]",
-			withoutIndexerClauses(), consumer);
+			withoutIndexerClauses());
+		assertSearch(
+			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog]", should(),
+			withoutIndexerClauses());
+		assertSearch(
+			"[Omega Article, Omega Blog]", must(), withoutIndexerClauses());
+		assertSearch(
+			"[Gamma Article, Gamma Blog, Omega Article, Omega Blog, Omega " +
+				"Message]",
+			shouldAdditive(), withoutIndexerClauses());
+		assertSearch(
+			"[Omega Article, Omega Blog, Omega Message]", mustAdditive(),
+			withoutIndexerClauses());
 	}
 
 	@Rule
@@ -236,18 +291,77 @@ public class IndexerClausesTest {
 			).groupIds(
 				_group.getGroupId()
 			).withSearchRequestBuilder(
-				consumers
+				ArrayUtil.append(consumers, _consumer)
 			).build());
 
+		String requestString = searchResponse.getRequestString();
+
+		String evidence = "match_all";
+
+		if (requestString.contains(evidence)) {
+			Assert.assertEquals("NOT " + evidence, requestString);
+		}
+
 		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), _TITLE_EN_US, expected);
+			requestString, searchResponse.getDocumentsStream(), _TITLE_EN_US,
+			expected);
+	}
+
+	protected ComplexQueryPart getComplexQueryPart(Query query) {
+		return _complexQueryPartBuilderFactory.builder(
+		).occur(
+			"must"
+		).query(
+			query
+		).build();
+	}
+
+	protected Consumer<SearchRequestBuilder> must() {
+		return withPart("must", _query);
+	}
+
+	protected Consumer<SearchRequestBuilder> mustAdditive() {
+		return withPartAdditive("must", _query);
+	}
+
+	protected Consumer<SearchRequestBuilder> should() {
+		return withPart("should", _query);
+	}
+
+	protected Consumer<SearchRequestBuilder> shouldAdditive() {
+		return withPartAdditive("should", _query);
 	}
 
 	protected Consumer<SearchRequestBuilder> withoutIndexerClauses() {
 		return searchRequestBuilder -> searchRequestBuilder.withSearchContext(
 			searchContext -> searchContext.setAttribute(
 				"search.full.query.suppress.indexer.provided.clauses", true));
+	}
+
+	protected Consumer<SearchRequestBuilder> withPart(
+		String occur, Query query) {
+
+		return searchRequestBuilder -> searchRequestBuilder.addComplexQueryPart(
+			_complexQueryPartBuilderFactory.builder(
+			).occur(
+				occur
+			).query(
+				query
+			).build());
+	}
+
+	protected Consumer<SearchRequestBuilder> withPartAdditive(
+		String occur, Query query) {
+
+		return searchRequestBuilder -> searchRequestBuilder.addComplexQueryPart(
+			_complexQueryPartBuilderFactory.builder(
+			).additive(
+				true
+			).occur(
+				occur
+			).query(
+				query
+			).build());
 	}
 
 	@Inject(filter = "indexer.class.name=com.liferay.blogs.model.BlogsEntry")
@@ -285,6 +399,15 @@ public class IndexerClausesTest {
 	private List<BlogsEntry> _blogsEntries;
 
 	private BlogsEntrySearchFixture _blogsEntrySearchFixture;
+
+	@Inject
+	private ComplexQueryPartBuilderFactory _complexQueryPartBuilderFactory;
+
+	private Consumer<SearchRequestBuilder> _consumer;
+
+	@Inject
+	private FacetedSearcherManager _facetedSearcherManager;
+
 	private Group _group;
 
 	@DeleteAfterTestRun
@@ -294,6 +417,18 @@ public class IndexerClausesTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+
+	@Inject
+	private Queries _queries;
+
+	private MatchQuery _query;
+
+	@Inject
+	private Sorts _sorts;
+
 	private User _user;
+
+	@DeleteAfterTestRun
+	private List<User> _users;
 
 }

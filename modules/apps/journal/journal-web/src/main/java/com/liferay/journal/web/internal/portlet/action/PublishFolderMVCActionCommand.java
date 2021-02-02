@@ -96,9 +96,6 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 						(JournalFolder)childObject;
 
 					stagedModels.add(childJournalFolder);
-
-					stagedModels.addAll(
-						_getFoldersAndArticles(childJournalFolder));
 				}
 				else if (childObject instanceof JournalArticle) {
 					JournalArticle journalArticle = (JournalArticle)childObject;

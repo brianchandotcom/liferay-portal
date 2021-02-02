@@ -304,7 +304,6 @@ paths:
             description:
                 Retrieves the site's structured contents latest version. Results can be paginated, filtered, searched,
                 flattened, and sorted.
-            operationId: getSiteStructuredContentsVersionInformationPage
             parameters:
                 - in: path
                   name: siteId

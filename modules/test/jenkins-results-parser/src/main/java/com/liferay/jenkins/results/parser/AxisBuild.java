@@ -41,12 +41,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -56,8 +53,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
-
-import org.json.JSONObject;
 
 /**
  * @author Peter Yoo
@@ -424,78 +419,21 @@ public class AxisBuild extends BaseBuild {
 		return startTime;
 	}
 
-	public TestResult getTestResult(String testName) {
-		TestResult targetTestResult = _testResults.get(testName);
-
-		if (targetTestResult != null) {
-			return targetTestResult;
-		}
-
-		for (TestResult testResult : getTestResults(null)) {
-			if (testName.equals(testResult.getTestName())) {
-				return testResult;
-			}
-		}
-
-		return null;
-	}
-
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
-		if (!isCompleted()) {
-			return Collections.emptyList();
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testStatus)) {
+			return getTestResults();
 		}
 
-		if (_testResultsPopulated && !_testResults.isEmpty()) {
-			List<TestResult> availableTestResults = new ArrayList<>(
-				_testResults.values());
+		List<TestResult> testResults = new ArrayList<>();
 
-			if (!availableTestResults.isEmpty()) {
-				List<TestResult> testResults = new ArrayList<>();
-
-				for (TestResult testResult : availableTestResults) {
-					if ((testStatus == null) ||
-						testStatus.equals(testResult.getStatus())) {
-
-						testResults.add(testResult);
-					}
-				}
-
-				return testResults;
+		for (TestResult testResult : getTestResults()) {
+			if (testStatus.equals(testResult.getStatus())) {
+				testResults.add(testResult);
 			}
 		}
 
-		JSONObject testReportJSONObject = null;
-
-		String result = getResult();
-
-		if (result.equals("SUCCESS") || result.equals("UNSTABLE")) {
-			testReportJSONObject = getTestReportJSONObject(true);
-		}
-
-		if (testReportJSONObject == null) {
-			System.out.println(
-				"Unable to get test results for: " + getBuildURL());
-
-			return Collections.emptyList();
-		}
-
-		synchronized (_testResults) {
-			for (TestResult testResult :
-					getTestResults(
-						this, testReportJSONObject.getJSONArray("suites"))) {
-
-				_testResults.put(testResult.getTestName(), testResult);
-			}
-
-			_testResultsPopulated = true;
-		}
-
-		if (_testResults.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		return getTestResults(testStatus);
+		return testResults;
 	}
 
 	@Override
@@ -708,9 +646,5 @@ public class AxisBuild extends BaseBuild {
 		"\\s*\\[echo\\] startTime: (?<startTime>[^\\n]+)");
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
-
-	private final Map<String, TestResult> _testResults =
-		new ConcurrentHashMap<>();
-	private boolean _testResultsPopulated;
 
 }

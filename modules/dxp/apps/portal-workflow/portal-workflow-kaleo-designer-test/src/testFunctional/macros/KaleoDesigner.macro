@@ -393,7 +393,9 @@ definition {
 
 		Pause(locator1 = "1000");
 
-		Click.javaScriptClick(locator1 = "Button#SAVE");
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 	}
 
 	macro editNodeScript {

@@ -1133,11 +1133,11 @@ definition {
 
 		Questions.viewPaginationResults(results = "Showing 1 to 4 of 10");
 
-		Click(locator1 = "Pagination#NEXT_LINK");
+		Click(locator1 = "Questions#PAGINATION_NEXT_LINK");
 
 		Questions.viewPaginationResults(results = "Showing 5 to 8 of 10");
 
-		Click(locator1 = "Pagination#NEXT_LINK");
+		Click(locator1 = "Questions#PAGINATION_NEXT_LINK");
 
 		Questions.viewPaginationResults(results = "Showing 9 to 10 of 10");
 	}

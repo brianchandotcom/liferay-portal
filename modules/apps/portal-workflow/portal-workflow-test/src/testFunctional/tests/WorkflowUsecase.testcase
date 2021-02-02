@@ -1010,13 +1010,13 @@ definition {
 
 		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 
-		AssertElementPresent(locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]");
+		AssertElementPresent(locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[@data-qa-id])[6]");
 
 		Pagination.changePagination(itemsPerPage = "4");
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 
-		AssertElementNotPresent(locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[contains(@class,'entry-display-style')])[6]");
+		AssertElementNotPresent(locator1 = "xpath=(//div[contains(@id,'workflowTasksSearchContainer')]//tr[@data-qa-id])[6]");
 	}
 
 	@priority = "3"

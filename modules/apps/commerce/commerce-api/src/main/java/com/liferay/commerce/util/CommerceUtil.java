@@ -22,25 +22,22 @@ import com.liferay.commerce.inventory.util.comparator.CommerceInventoryWarehouse
 import com.liferay.commerce.inventory.util.comparator.CommerceInventoryWarehouseNameComparator;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceAddressRestriction;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.util.comparator.CommerceAddressCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceAddressRestrictionCreateDateComparator;
-import com.liferay.commerce.util.comparator.CommerceCountryNameComparator;
-import com.liferay.commerce.util.comparator.CommerceCountryPriorityComparator;
-import com.liferay.commerce.util.comparator.CommerceRegionNameComparator;
-import com.liferay.commerce.util.comparator.CommerceRegionPriorityComparator;
 import com.liferay.commerce.util.comparator.CommerceShipmentCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceShipmentExpectedDateComparator;
 import com.liferay.commerce.util.comparator.CommerceShipmentIdComparator;
 import com.liferay.commerce.util.comparator.CommerceShipmentItemCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceShipmentShippingDateComparator;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -103,52 +100,6 @@ public class CommerceUtil {
 
 		if (orderByCol.equals("create-date")) {
 			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
-		}
-
-		return sort;
-	}
-
-	public static OrderByComparator<CommerceCountry>
-		getCommerceCountryOrderByComparator(
-			String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CommerceCountry> orderByComparator = null;
-
-		if (orderByCol.equals("name")) {
-			orderByComparator = new CommerceCountryNameComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("priority")) {
-			orderByComparator = new CommerceCountryPriorityComparator(
-				orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
-	public static Sort getCommerceCountrySort(
-		String orderByCol, String orderByType) {
-
-		boolean reverse = true;
-
-		if (orderByType.equals("asc")) {
-			reverse = false;
-		}
-
-		Sort sort = null;
-
-		if (orderByCol.equals("name")) {
-			sort = SortFactoryUtil.create(
-				Field.NAME, Sort.STRING_TYPE, reverse);
-		}
-		else if (orderByCol.equals("priority")) {
-			sort = SortFactoryUtil.create(
-				Field.PRIORITY + "_Number_sortable", reverse);
 		}
 
 		return sort;
@@ -264,29 +215,6 @@ public class CommerceUtil {
 		return SortFactoryUtil.getDefaultSorts();
 	}
 
-	public static OrderByComparator<CommerceRegion>
-		getCommerceRegionOrderByComparator(
-			String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CommerceRegion> orderByComparator = null;
-
-		if (orderByCol.equals("name")) {
-			orderByComparator = new CommerceRegionNameComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("priority")) {
-			orderByComparator = new CommerceRegionPriorityComparator(
-				orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
 	public static OrderByComparator<CommerceShipmentItem>
 		getCommerceShipmentItemOrderByComparator(
 			String orderByCol, String orderByType) {
@@ -331,6 +259,52 @@ public class CommerceUtil {
 		}
 
 		return null;
+	}
+
+	public static OrderByComparator<Country> getCountryOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<Country> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = OrderByComparatorFactoryUtil.create(
+				"Country", "name", orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
+			orderByComparator = OrderByComparatorFactoryUtil.create(
+				"Country", "position", orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<Region> getRegionOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<Region> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = OrderByComparatorFactoryUtil.create(
+				"Region", "name", orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
+			orderByComparator = OrderByComparatorFactoryUtil.create(
+				"Region", "position", orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 }

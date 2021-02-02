@@ -25,13 +25,61 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
 	@priority = "5"
 	test CheckDuplicatedRepeatableStructureOnWebContent {
-		property portal.acceptance = "false";
+		
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-123537 CheckDuplicatedRepeatableStructureOnWebContent pending implementation
+		NavItem.gotoStructures();
 
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text2",
+			fieldName = "Text",
+			targetFieldLabel = "Text");
+		
+		DataEngine.editFieldsGroupRepeatable();
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text2",
+			fieldFieldLabelEdit = "Texto2");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+            structureName = "WC Structure Name",
+            webContentTitle = "WC WebContent Title");
+		
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+        AssertElementPresent(locator1 = "DataEngineBuilder#WEB_CONTENT_REPETABLE_BUTTON_ADD");
+
+        Click(locator1 = "DataEngineBuilder#WEB_CONTENT_REPETABLE_BUTTON_ADD");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "Texto2",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

@@ -137,14 +137,14 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
+			fieldFieldLabel = "${fieldLabel2EN}",
 			fieldName = "Text",
-			targetFieldLabel = "${fieldLabel1EN}",
-			fieldFieldLabel = "${fieldLabel2EN}");
+			targetFieldLabel = "${fieldLabel1EN}");
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
 			localization1Name = "${structureTitlePT}");
-		
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldsGroupEN}",
 			label = "${fieldsGroupPT}");
@@ -152,15 +152,15 @@ definition {
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabel1EN}",
 			label = "${fieldLabel1PT}");
-		
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabel2EN}",
 			label = "${fieldLabel2PT}");
-		
+
 		WebContentStructures.addLocalization(
 			locale = "de-DE",
 			localization1Name = "${structureTitleDE}");
-		
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldsGroupEN}",
 			label = "${fieldsGroupDE}");
@@ -168,7 +168,7 @@ definition {
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabel1EN}",
 			label = "${fieldLabel1DE}");
-		
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabel2EN}",
 			label = "${fieldLabel2DE}");
@@ -182,7 +182,7 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "${fieldLabel1PT}",
 			fieldName = "Text");
-		
+
 		DataEngine.viewField(
 			fieldFieldLabel = "${fieldLabel2PT}",
 			fieldName = "Text");
@@ -192,7 +192,7 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "${fieldLabel1DE}",
 			fieldName = "Text");
-		
+
 		DataEngine.viewField(
 			fieldFieldLabel = "${fieldLabel2DE}",
 			fieldName = "Text");

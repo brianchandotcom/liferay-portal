@@ -699,41 +699,35 @@ AUI.add(
 				},
 
 				convertNumberLocale(number, sourceLocale, targetLocale) {
-					if (sourceLocale == targetLocale) {
-						return number;
+					if (sourceLocale != targetLocale) {
+						var test = 1.1;
+						var sourceDecimalSeparator = test
+							.toLocaleString(sourceLocale.replace('_', '-'))
+							.charAt(1);
+						var targetDecimalSeparator = test
+							.toLocaleString(targetLocale.replace('_', '-'))
+							.charAt(1);
+
+						if (sourceDecimalSeparator != targetDecimalSeparator) {
+							if (
+								['.', ','].includes(sourceDecimalSeparator) &&
+								['.', ','].includes(targetDecimalSeparator)
+							) {
+								number = number.replace(
+									/[,.]/g,
+									(separator) => {
+										if (targetDecimalSeparator == '.') {
+											return separator === '.' ? '' : '.';
+										}
+										else {
+											return separator === '.' ? ',' : '';
+										}
+									}
+								);
+							}
+						}
 					}
 
-					if (sourceLocale.includes('_')) {
-						sourceLocale = sourceLocale.replace('_', '-');
-					}
-
-					if (targetLocale.includes('_')) {
-						targetLocale = targetLocale.replace('_', '-');
-					}
-
-					var test = 1.1;
-					var sourceDecimal = test
-						.toLocaleString(sourceLocale)
-						.charAt(1);
-					var targetDecimal = test
-						.toLocaleString(targetLocale)
-						.charAt(1);
-
-					if (sourceDecimal == targetDecimal) {
-						return number;
-					}
-
-					if (
-						['.', ','].includes(sourceDecimal) &&
-						['.', ','].includes(targetDecimal)
-					) {
-						number = number.replace(/,/g, '|');
-						number = number.replace(/\./g, ',');
-						number = number.replace(/\|/g, '.');
-
-						return number;
-					}
- 
 					return number;
 				},
 

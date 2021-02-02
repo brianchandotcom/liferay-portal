@@ -660,7 +660,38 @@ definition {
 	test VerifyDefaultLanguageIsFirstShown {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123537 VerifyDefaultLanguageIsFirstShown pending implementation
+		var structureName = "WC Structure Name";
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		WebContentStructures.saveCP(structureName = "${structureName}");
+
+		Navigator.gotoNavTab(navTab = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.changeLocale(locale = "en-US");
 	}
 
 }

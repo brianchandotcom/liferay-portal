@@ -149,11 +149,7 @@ const Items = ({
 			{itemList.length > 0
 				? itemList.map((item, index) => (
 						<ClayDropDown.Item
-							disabled={
-								item.disabled ||
-								(item.missingRequiredFields?.missing &&
-									item.missingRequiredFields?.nativeField)
-							}
+							disabled={item.disabled}
 							key={index}
 							onClick={(event) => onClick(event, item)}
 						>

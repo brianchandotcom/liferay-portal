@@ -515,7 +515,12 @@ export default function DataAndViewsTab({
 								addButton={addFormViewButton(updateFormView)}
 								ariaLabelId="form-view-label"
 								isLoading={fetching}
-								items={formViews}
+								items={formViews.map((form) => ({
+									...form,
+									disabled:
+										form.missingRequiredFields?.missing &&
+										form.missingRequiredFields?.nativeField,
+								}))}
 								onSelect={updateFormView}
 								openButtonProps={{
 									disabled: !formView.name,

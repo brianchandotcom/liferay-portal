@@ -65,6 +65,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FIELDSET_MODAL-->
+<tr>
+	<td>FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL</td>
+	<td>//div[contains(@class,'modal-dialog')]//label[normalize-space(text())='${key_fieldFieldLabel}'] | //div[contains(@class,'modal-dialog')]//legend[normalize-space(text())='${key_fieldFieldLabel}']</td>
+	<td></td>
+</tr>
 <!--SETTINGS-->
 <tr>
 	<td>SETTINGS_LINK</td>

@@ -615,6 +615,39 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldsGroupLabel {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (isSet(fieldsetModal)) {
+			Click(
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
+		}
+		else {
+			Click(
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldsGroupLabelEdit}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldsGroupLabelEdit}");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "${fieldsGroupLabelEdit}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro editFieldsGroupRepeatable {
 		if (!(isSet(fieldsGroupLabel))) {
 			var fieldsGroupLabel = "Fields Group";

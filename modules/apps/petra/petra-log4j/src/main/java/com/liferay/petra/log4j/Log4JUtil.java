@@ -163,6 +163,10 @@ public class Log4JUtil {
 		return logLevelStrings;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String getOriginalLevel(String className) {
 		Map<String, String> logLevelStrings = getLogLevelStrings();
 

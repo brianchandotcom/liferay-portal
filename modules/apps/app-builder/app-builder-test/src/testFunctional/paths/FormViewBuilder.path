@@ -567,12 +567,6 @@
 </tr>
 
 <tr>
-	<td>SELECT_FIELD_SET</td>
-	<td>//div[contains(@class,'fieldset')]//label[contains(text(),'${key_fieldSetName}')]</td>
-	<td></td>
-</tr>
-
-<tr>
 	<td>FORM_FIELD_FIRST_ROW</td>
 	<td>//div[contains(@class,"placeholder row")]//div[contains(@data-ddm-field-page, "0") and contains(@data-ddm-field-row, "0")]//div[contains(@class, "ddm-target")]</td>
 	<td></td>

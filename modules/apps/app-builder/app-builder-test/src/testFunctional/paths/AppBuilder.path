@@ -22,11 +22,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BUTTON_EDIT_FIELDSET</td>
-	<td>//div[contains(@class, 'field-type disabled autofit-row autofit-row-center')]['${key_rowNumber}']//div[contains(@class, 'autofit-col pr-2')]//div[contains(@class, 'dropdown')]//button[contains(@class, 'dropdown-toggle page-link btn btn-monospaced btn-unstyled')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ITEM_ON_THE_TABLE</td>
 	<td>//table[contains(@class,'table')]//*[contains(text(),'${value1}')]</td>
 	<td></td>

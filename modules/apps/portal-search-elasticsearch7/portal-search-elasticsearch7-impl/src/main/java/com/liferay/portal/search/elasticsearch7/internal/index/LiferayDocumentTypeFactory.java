@@ -163,7 +163,22 @@ public class LiferayDocumentTypeFactory
 
 		JSONArray jsonArray3 = _jsonFactory.createJSONArray();
 
-		linkedHashMap.forEach((key, value) -> jsonArray3.put(value));
+		JSONObject defaultTemplateJSONObject = null;
+
+		for (Map.Entry<String, JSONObject> entry : linkedHashMap.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.equals("template_")) {
+				defaultTemplateJSONObject = entry.getValue();
+			}
+			else {
+				jsonArray3.put(entry.getValue());
+			}
+		}
+
+		if (defaultTemplateJSONObject != null) {
+			jsonArray3.put(defaultTemplateJSONObject);
+		}
 
 		return jsonArray3;
 	}

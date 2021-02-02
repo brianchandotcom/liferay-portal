@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionNotInitializedException;
 import com.liferay.portal.search.elasticsearch7.internal.index.contributor.IndexContributorReceiver;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
@@ -40,6 +41,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.BiConsumer;
 
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
@@ -160,6 +162,11 @@ public class CompanyIndexFactory
 			IndexSettingsContributor indexSettingsContributor) {
 
 		_elasticsearchIndexSettingsContributors.add(indexSettingsContributor);
+
+		processContributions(
+			(indexName, liferayDocumentTypeFactory) ->
+				indexSettingsContributor.contribute(
+					indexName, liferayDocumentTypeFactory));
 	}
 
 	@Reference(
@@ -171,6 +178,11 @@ public class CompanyIndexFactory
 		IndexSettingsContributor indexSettingsContributor) {
 
 		_indexSettingsContributors.add(indexSettingsContributor);
+
+		processContributions(
+			(indexName, liferayDocumentTypeFactory) ->
+				indexSettingsContributor.contribute(
+					indexName, liferayDocumentTypeFactory));
 	}
 
 	protected void addLiferayDocumentTypeMappings(
@@ -390,6 +402,41 @@ public class CompanyIndexFactory
 
 			indexSettingsContributor.contribute(
 				indexName, liferayDocumentTypeFactory);
+		}
+	}
+
+	protected void processContributions(
+		BiConsumer<String, LiferayDocumentTypeFactory> biConsumer) {
+
+		if (Validator.isNotNull(
+				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
+
+			return;
+		}
+
+		RestHighLevelClient restHighLevelClient = null;
+
+		try {
+			restHighLevelClient =
+				_elasticsearchConnectionManager.getRestHighLevelClient();
+		}
+		catch (ElasticsearchConnectionNotInitializedException
+					elasticsearchConnectionNotInitializedException) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Skipping processing of IndexSettingsContributor");
+			}
+
+			return;
+		}
+
+		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
+			new LiferayDocumentTypeFactory(
+				restHighLevelClient.indices(), _jsonFactory);
+
+		for (Long companyId : _companyIds) {
+			biConsumer.accept(
+				getIndexName(companyId), liferayDocumentTypeFactory);
 		}
 	}
 

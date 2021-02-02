@@ -472,8 +472,7 @@ definition {
 
 		AssertElementPresent(
 			key_fieldFieldLabel = "${fieldFieldLabelEdit}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldFieldLabelEdit}");
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Click(locator1 = "Sidebar#BACK");
 	}

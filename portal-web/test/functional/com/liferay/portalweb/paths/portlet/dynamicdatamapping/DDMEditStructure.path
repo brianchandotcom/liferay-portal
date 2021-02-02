@@ -168,6 +168,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_SETS_CONTAINER_COLLAPSIBLE_DOWN</td>
+	<td>//button/span[*[name()='svg'][contains(@class,'lexicon-icon-angle-down')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_SETS_CONTAINER_COLLAPSIBLE_UP</td>
+	<td>//button/span[*[name()='svg'][contains(@class,'lexicon-icon-angle-up')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_1_NO_LABEL</td>
 	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div)[1]</td>
 	<td></td>

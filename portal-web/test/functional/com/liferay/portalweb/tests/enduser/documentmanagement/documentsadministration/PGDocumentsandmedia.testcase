@@ -1742,7 +1742,7 @@ definition {
 			dmDocumentTitle = "Document_1.doc");
 
 		AssertVisible(
-			key_dmDocumentFileName = "Document_1.jpg",
+			key_dmDocumentFileName = "Document_2.jpg",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 

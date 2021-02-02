@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGINATION_NEXT_LINK</td>
+	<td>//a[contains(@class, 'page-link')]//*[contains(@class,'lexicon-icon-angle-right')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_RESULTS</td>
 	<td>//div[@class='pagination-results']</td>
 	<td></td>

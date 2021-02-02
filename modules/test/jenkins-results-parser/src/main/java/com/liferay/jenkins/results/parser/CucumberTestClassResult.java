@@ -14,12 +14,18 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.dom4j.Element;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Michael Hashimoto
  */
-public class CucumberTestResult extends BaseTestResult {
+public class CucumberTestClassResult implements TestClassResult {
+
+	@Override
+	public Build getBuild() {
+		return _build;
+	}
 
 	@Override
 	public String getClassName() {
@@ -34,57 +40,25 @@ public class CucumberTestResult extends BaseTestResult {
 		return _cucumberScenarioResult;
 	}
 
-	@Override
-	public String getDisplayName() {
-		return _cucumberScenarioResult.getScenarioName();
+	public String getCucumberTestName() {
+		return JenkinsResultsParserUtil.combine(
+			_cucumberFeatureResult.getName(), " > ",
+			_cucumberScenarioResult.getScenarioName());
+	}
+
+	public CucumberTestResult getCucumberTestResult(String testName) {
+		for (TestResult testResult : getTestResults()) {
+			if (testName.equals(testResult.getTestName())) {
+				return (CucumberTestResult)testResult;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
 	public long getDuration() {
 		return _cucumberScenarioResult.getDuration();
-	}
-
-	@Override
-	public String getErrorDetails() {
-		return _cucumberScenarioResult.getErrorDetails();
-	}
-
-	@Override
-	public String getErrorStackTrace() {
-		return _cucumberScenarioResult.getErrorStacktrace();
-	}
-
-	@Override
-	public Element getGitHubElement() {
-		String testReportURL = getTestReportURL();
-
-		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(
-			"div", null);
-
-		downstreamBuildListItemElement.add(
-			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
-
-		Dom4JUtil.addToElement(
-			downstreamBuildListItemElement, " - ",
-			Dom4JUtil.getNewAnchorElement(
-				getConsoleOutputURL(), "Console Output"));
-
-		String errorDetails = getErrorDetails();
-
-		if ((errorDetails != null) && !errorDetails.isEmpty()) {
-			Dom4JUtil.addToElement(
-				downstreamBuildListItemElement,
-				Dom4JUtil.toCodeSnippetElement(errorDetails));
-		}
-
-		if (hasLiferayLog()) {
-			Dom4JUtil.addToElement(
-				downstreamBuildListItemElement, " - ",
-				Dom4JUtil.getNewAnchorElement(
-					getLiferayLogURL(), "Liferay Log"));
-		}
-
-		return downstreamBuildListItemElement;
 	}
 
 	@Override
@@ -102,22 +76,36 @@ public class CucumberTestResult extends BaseTestResult {
 		return _cucumberScenarioResult.getStatus();
 	}
 
-	@Override
-	public String getTestName() {
-		return JenkinsResultsParserUtil.combine(
-			_cucumberFeatureResult.getName(), " > ",
-			_cucumberScenarioResult.getScenarioName());
+	public TestResult getTestResult(String testName) {
+		for (TestResult testResult : getTestResults()) {
+			if (testName.equals(testResult.getTestName())) {
+				return testResult;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
-	public String getTestReportURL() {
-		return _cucumberFeatureResult.getURL();
+	public List<TestResult> getTestResults() {
+		return _testResults;
 	}
 
-	protected CucumberTestResult(
+	@Override
+	public boolean isFailing() {
+		for (TestResult testResult : getTestResults()) {
+			if (testResult.isFailing()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected CucumberTestClassResult(
 		Build build, CucumberScenarioResult cucumberScenarioResult) {
 
-		super(build);
+		_build = build;
 
 		if (cucumberScenarioResult == null) {
 			throw new IllegalArgumentException("Scenario result is null");
@@ -127,9 +115,15 @@ public class CucumberTestResult extends BaseTestResult {
 
 		_cucumberFeatureResult =
 			cucumberScenarioResult.getCucumberFeatureResult();
+
+		_testResults.add(
+			TestResultFactory.newCucumberTestResultTestResult(
+				build, cucumberScenarioResult));
 	}
 
+	private final Build _build;
 	private final CucumberFeatureResult _cucumberFeatureResult;
 	private final CucumberScenarioResult _cucumberScenarioResult;
+	private final List<TestResult> _testResults = new ArrayList<>();
 
 }

@@ -469,15 +469,49 @@ describe('Field LocalizableText', () => {
 	});
 
 	describe('Submit Button Label', () => {
+		it('changes the placeholder according to the current editing locale', async () => {
+			const {getByTestId} = render(
+				<LocalizableTextWithProvider
+					{...defaultLocalizableTextConfig}
+					fieldName="submitLabel"
+					onChange={jest.fn()}
+					placeholdersSubmitLabel={[
+						{localeId: 'de_DE', placeholderSubmitLabel: 'Senden'},
+						{localeId: 'en_US', placeholderSubmitLabel: 'Submit'},
+						{localeId: 'es_ES', placeholderSubmitLabel: 'Enviar'},
+					]}
+				/>
+			);
+
+			const triggerButton = getByTestId('triggerButton');
+
+			fireEvent.click(triggerButton);
+
+			act(() => {
+				jest.runAllTimers();
+			});
+
+			const dropdownItem = await waitForElement(() =>
+				getByTestId('availableLocalesDropdownde_DE')
+			);
+
+			fireEvent.click(dropdownItem);
+
+			act(() => {
+				jest.runAllTimers();
+			});
+
+			const inputComponent = await waitForElement(() =>
+				getByTestId('visibleChangeInput')
+			);
+
+			expect(inputComponent.placeholder).toBe('Senden');
+		});
+
 		it('does not have the maxLength property equal to 25', () => {
 			const {getByTestId} = render(
 				<LocalizableTextWithProvider
 					{...defaultLocalizableTextConfig}
-					placeholdersSubmitLabel={[
-						{localeId: 'en_US', placeholderSubmitLabel: 'Submit'},
-						{localeId: 'es_ES', placeholderSubmitLabel: 'Enviar'},
-						{localeId: 'de_DE', placeholderSubmitLabel: 'Senden'},
-					]}
 				/>
 			);
 
@@ -486,15 +520,33 @@ describe('Field LocalizableText', () => {
 			expect(inputComponent.maxLength).not.toBe(25);
 		});
 
+		it('has by default the placeholder of the default locale', () => {
+			const {getByTestId} = render(
+				<LocalizableTextWithProvider
+					{...defaultLocalizableTextConfig}
+					fieldName="submitLabel"
+					placeholdersSubmitLabel={[
+						{localeId: 'de_DE', placeholderSubmitLabel: 'Senden'},
+						{localeId: 'en_US', placeholderSubmitLabel: 'Submit'},
+						{localeId: 'es_ES', placeholderSubmitLabel: 'Enviar'},
+					]}
+				/>
+			);
+
+			const inputComponent = getByTestId('visibleChangeInput');
+
+			expect(inputComponent.placeholder).toBe('Submit');
+		});
+
 		it('has the maxLength property equal to 25 for the Submit Button Label input', () => {
 			const {getByTestId} = render(
 				<LocalizableTextWithProvider
 					{...defaultLocalizableTextConfig}
 					fieldName="submitLabel"
 					placeholdersSubmitLabel={[
+						{localeId: 'de_DE', placeholderSubmitLabel: 'Senden'},
 						{localeId: 'en_US', placeholderSubmitLabel: 'Submit'},
 						{localeId: 'es_ES', placeholderSubmitLabel: 'Enviar'},
-						{localeId: 'de_DE', placeholderSubmitLabel: 'Senden'},
 					]}
 				/>
 			);

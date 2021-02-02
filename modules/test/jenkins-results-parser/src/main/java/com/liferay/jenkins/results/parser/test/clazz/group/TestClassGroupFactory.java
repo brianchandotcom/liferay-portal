@@ -110,8 +110,9 @@ public class TestClassGroupFactory {
 			else if (batchName.startsWith("modules-integration-") ||
 					 batchName.startsWith("subrepository-integration-")) {
 
-				batchTestClassGroup = new ModulesIntegrationJUnitBatchTestClassGroup(
-					batchName, portalTestClassJob);
+				batchTestClassGroup =
+					new ModulesIntegrationJUnitBatchTestClassGroup(
+						batchName, portalTestClassJob);
 			}
 			else if (batchName.startsWith("modules-unit-") ||
 					 batchName.startsWith("subrepository-unit-")) {

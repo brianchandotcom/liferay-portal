@@ -56,6 +56,7 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 				String classFileName = matcher.group("classFileName");
 
 				sb.append(classFileName.replace(".java", ".class"));
+
 				sb.append(",");
 			}
 

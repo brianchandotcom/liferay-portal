@@ -206,13 +206,14 @@ public class FunctionalAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 	}
 
 	public TestClassResult getTestClassResult() {
-		TestResult testResult = getTestResult();
+		AxisBuild axisBuild = getAxisBuild();
 
-		if (testResult == null) {
+		if (axisBuild == null) {
 			return null;
 		}
 
-		return testResult.getTestClassResult();
+		return axisBuild.getTestClassResult(
+			"com.liferay.poshi.runner.PoshiRunner");
 	}
 
 	@Override
@@ -223,17 +224,13 @@ public class FunctionalAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 	}
 
 	public TestResult getTestResult() {
-		if (_testResult != null) {
-			return _testResult;
-		}
+		TestClassResult testClassResult = getTestClassResult();
 
-		AxisBuild axisBuild = getAxisBuild();
-
-		if (axisBuild == null) {
+		if (testClassResult == null) {
 			return null;
 		}
 
-		return _testResult = axisBuild.getTestResult(
+		return testClassResult.getTestResult(
 			JenkinsResultsParserUtil.combine(
 				"test[", _functionalTestClass.getTestClassMethodName(), "]"));
 	}
@@ -262,6 +259,5 @@ public class FunctionalAxisSpiraTestResult extends BaseAxisSpiraTestResult {
 
 	private final FunctionalBatchTestClassGroup.FunctionalTestClass
 		_functionalTestClass;
-	private TestResult _testResult;
 
 }

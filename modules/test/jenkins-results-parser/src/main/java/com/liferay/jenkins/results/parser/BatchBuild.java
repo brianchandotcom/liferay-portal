@@ -36,7 +36,6 @@ import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -275,96 +274,22 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
-	public List<TestResult> getTestResults(String testStatus) {
-		String status = getStatus();
+	public synchronized List<TestClassResult> getTestClassResults() {
+		List<TestClassResult> testClassResults = new ArrayList<>();
 
-		if (!status.equals("completed")) {
-			return Collections.emptyList();
+		for (AxisBuild axisBuild : getDownstreamAxisBuilds()) {
+			testClassResults.addAll(axisBuild.getTestClassResults());
 		}
 
-		JSONObject testReportJSONObject = getTestReportJSONObject(false);
+		return testClassResults;
+	}
 
-		JSONArray childReportsJSONArray = testReportJSONObject.optJSONArray(
-			"childReports");
-
-		if (childReportsJSONArray == null) {
-			return Collections.emptyList();
-		}
-
+	@Override
+	public synchronized List<TestResult> getTestResults() {
 		List<TestResult> testResults = new ArrayList<>();
 
-		for (int i = 0; i < childReportsJSONArray.length(); i++) {
-			JSONObject childReportJSONObject =
-				childReportsJSONArray.optJSONObject(i);
-
-			if (childReportJSONObject == null) {
-				continue;
-			}
-
-			JSONObject childJSONObject = childReportJSONObject.optJSONObject(
-				"child");
-
-			if (childJSONObject == null) {
-				continue;
-			}
-
-			String axisBuildURL = childJSONObject.optString("url");
-
-			if (axisBuildURL == null) {
-				continue;
-			}
-
-			JSONObject resultJSONObject = childReportJSONObject.optJSONObject(
-				"result");
-
-			if (resultJSONObject == null) {
-				continue;
-			}
-
-			JSONArray suitesJSONArray = resultJSONObject.getJSONArray("suites");
-
-			if (suitesJSONArray == null) {
-				continue;
-			}
-
-			Matcher axisBuildURLMatcher;
-
-			if (fromArchive) {
-				Pattern archiveBuildURLPattern =
-					AxisBuild.archiveBuildURLPattern;
-
-				axisBuildURLMatcher = archiveBuildURLPattern.matcher(
-					axisBuildURL);
-
-				if (!axisBuildURLMatcher.find()) {
-					throw new RuntimeException(
-						JenkinsResultsParserUtil.combine(
-							"Unable to match archived axis build URL ",
-							axisBuildURL, " with archived build URL pattern.",
-							archiveBuildURLPattern.pattern()));
-				}
-			}
-			else {
-				MultiPattern buildURLMultiPattern =
-					AxisBuild.buildURLMultiPattern;
-
-				axisBuildURLMatcher = buildURLMultiPattern.find(axisBuildURL);
-
-				if (axisBuildURLMatcher == null) {
-					continue;
-				}
-			}
-
-			String axisVariable = axisBuildURLMatcher.group("axisVariable");
-
-			AxisBuild axisBuild = getAxisBuild(axisVariable);
-
-			if (axisBuild == null) {
-				continue;
-			}
-
-			testResults.addAll(
-				getTestResults(axisBuild, suitesJSONArray, testStatus));
+		for (AxisBuild axisBuild : getDownstreamAxisBuilds()) {
+			testResults.addAll(axisBuild.getTestResults());
 		}
 
 		return testResults;

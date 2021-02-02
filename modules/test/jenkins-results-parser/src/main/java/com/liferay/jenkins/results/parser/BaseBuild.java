@@ -733,7 +733,7 @@ public abstract class BaseBuild implements Build {
 			slaveName = "master";
 		}
 
-		return _jenkinsMaster.getJenkinsSlave(slaveName);
+		return _jenkinsSlave = _jenkinsMaster.getJenkinsSlave(slaveName);
 	}
 
 	@Override
@@ -1166,49 +1166,25 @@ public abstract class BaseBuild implements Build {
 			return null;
 		}
 
-		getTestClassResults();
+		_initTestClassResults();
+
+		if (_testClassResults == null) {
+			return null;
+		}
 
 		return _testClassResults.get(testClassName);
 	}
 
 	@Override
-	public synchronized List<TestClassResult> getTestClassResults() {
+	public List<TestClassResult> getTestClassResults() {
 		if (!isCompleted()) {
-			return null;
-		}
-
-		if (_testClassResults != null) {
-			return new ArrayList<>(_testClassResults.values());
-		}
-
-		JSONObject testReportJSONObject = null;
-
-		try {
-			testReportJSONObject = getTestReportJSONObject(true);
-		}
-		catch (RuntimeException runtimeException) {
 			return new ArrayList<>();
 		}
 
-		_testClassResults = new ConcurrentHashMap<>();
+		_initTestClassResults();
 
-		if ((testReportJSONObject == null) ||
-			!testReportJSONObject.has("suites")) {
-
+		if (_testClassResults == null) {
 			return new ArrayList<>();
-		}
-
-		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
-
-		for (int i = 0; i < suitesJSONArray.length(); i++) {
-			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
-
-			TestClassResult testClassResult =
-				TestClassResultFactory.newTestClassResult(
-					this, suiteJSONObject);
-
-			_testClassResults.put(
-				testClassResult.getClassName(), testClassResult);
 		}
 
 		return new ArrayList<>(_testClassResults.values());
@@ -1229,9 +1205,9 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public synchronized List<TestResult> getTestResults() {
+	public List<TestResult> getTestResults() {
 		if (!isCompleted()) {
-			return null;
+			return new ArrayList<>();
 		}
 
 		List<TestResult> testResults = new ArrayList<>();
@@ -1241,12 +1217,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return testResults;
-	}
-
-	public List<TestResult> getTestResults(
-		Build build, JSONArray suitesJSONArray) {
-
-		return getTestResults(build, suitesJSONArray, null);
 	}
 
 	public List<TestResult> getTestResults(
@@ -3822,6 +3792,46 @@ public abstract class BaseBuild implements Build {
 		return jobParameters;
 	}
 
+	private synchronized void _initTestClassResults() {
+		if (!isCompleted()) {
+			return;
+		}
+
+		if (_testClassResults != null) {
+			return;
+		}
+
+		JSONObject testReportJSONObject = null;
+
+		try {
+			testReportJSONObject = getTestReportJSONObject(true);
+		}
+		catch (RuntimeException runtimeException) {
+			return;
+		}
+
+		_testClassResults = new ConcurrentHashMap<>();
+
+		if ((testReportJSONObject == null) ||
+			!testReportJSONObject.has("suites")) {
+
+			return;
+		}
+
+		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
+
+		for (int i = 0; i < suitesJSONArray.length(); i++) {
+			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
+
+			TestClassResult testClassResult =
+				TestClassResultFactory.newTestClassResult(
+					this, suiteJSONObject);
+
+			_testClassResults.put(
+				testClassResult.getClassName(), testClassResult);
+		}
+	}
+
 	private boolean _isDifferent(String newValue, String oldValue) {
 		if (oldValue == null) {
 			if (newValue != null) {
@@ -3893,6 +3903,5 @@ public abstract class BaseBuild implements Build {
 	private String _result;
 	private String _status;
 	private Map<String, TestClassResult> _testClassResults;
-	private Map<String, TestResult> _testResults;
 
 }

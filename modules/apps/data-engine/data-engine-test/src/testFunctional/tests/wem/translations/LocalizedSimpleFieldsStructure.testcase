@@ -11,14 +11,6 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Test",
-			structureName = "Test");
 	}
 
 	tearDown {
@@ -131,6 +123,14 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
@@ -490,6 +490,14 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Test",
+			structureName = "Test");
+
 		DataEngine.addField(
 			fieldFieldLabel = "Text Test",
 			fieldName = "Text");

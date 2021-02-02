@@ -84,6 +84,14 @@ definition {
 		Click(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_ADVANCED_TAB");
 	}
 
+	macro validateCantInFieldset{
+	   var key_fieldLabel = "${key_fieldLabel}";
+	
+		Click(locator1 = "FormFields#LABEL");
+
+		AssertElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_TAB");
+	}
+
 	macro gotoBack {
 		Click.pauseClickAt(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_BACK");
 	}

@@ -167,13 +167,7 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "4"
 	test EditFieldGroupLabel {
-		property portal.acceptance = "false";
-
-		var structureName = "WC Structure Name";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -190,27 +184,17 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_FIRST");
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Fields Group Edit");
 
-		Type(
-			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
-			value1 = "Editing");
+		WebContentStructures.saveCP();
 
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
-			value1 = "Editing");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Structure Name");
-
-		Click(locator1 = "DataEngineBuilder#EDITING_FORM_FIELDS_GROUP_LABEL");
-
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
-			value1 = "Editing");
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group Edit",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

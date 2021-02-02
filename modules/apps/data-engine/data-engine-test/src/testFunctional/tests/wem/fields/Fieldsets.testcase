@@ -134,12 +134,66 @@ definition {
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
-	@ignore = "true"
 	@priority = "4"
 	test FieldsetSetAsCollapsible {
 		property portal.acceptance = "false";
 
-		// TODO LPS-107630 FieldsetSetAsCollapsible pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "CollapsibleFieldSetTest",
+			structureName = "CollapsibleFieldSetTest");
+
+		Navigator.gotoSidebarTab(tabName = "Builder");
+
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		DoubleClick(locator1 = "Modal#CREATE_DATE_FIELD");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "CollapsibleFieldSetTest");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		DataEngine.addFieldsets(
+			fieldsetsLabel = "CollapsibleFieldSetTest",
+			fieldsetsName = "CollapsibleFieldSetTest");
+
+		Click(
+			locator1 = "FormViewBuilder#SELECT_FIELD_SET",
+			key_fieldSetName = "CollapsibleFieldSetTest");
+
+		Check.checkToggleSwitch(
+			checkboxName = "Collapsible",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		WebContentStructures.saveCP(structureName = "CollapsibleFieldSetTest");
+
+		WebContentStructures.editStructureCP(structureName = "CollapsibleFieldSetTest");
+
+		Click(locator1 = "Button#COLLAPSIBLE");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_SET_COLLAPSIBLE");
+
+		WebContentStructures.saveCP(structureName = "CollapsibleFieldSetTest");
+
+		WebContentStructures.editStructureCP(structureName = "CollapsibleFieldSetTest");
+		
+		Navigator.gotoNavTab(navTab = "Fieldsets");
+
+		Click(locator1 = "AppBuilder#BUTTON_EDIT_FIELDSET");
+
+		Click(
+			key_selectAction = "Delete",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

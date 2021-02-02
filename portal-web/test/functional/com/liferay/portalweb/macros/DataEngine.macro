@@ -363,27 +363,34 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 	}
 
-	macro duplicateField {
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+	macro duplicate {
+		if (isSet(fieldFieldLabel)) {
+			Click(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
-		Click(
-			key_text = "${fieldFieldLabel}",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+			Click(
+				key_text = "${fieldFieldLabel}",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+		}
+		else if (isSet(fieldsetLabel)) {
+			Click(
+				key_fieldsetLabel = "${fieldsetLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
-		MenuItem.click(menuItem = "Duplicate");
-	}
+			Click(
+				key_text = "${fieldsetLabel}",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+		}
+		else if (isSet(fieldsGroupLabel)) {
+			Click(
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-	macro duplicateFieldsets {
-		Click(
-			key_fieldsetLabel = "${fieldsetLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
-
-		Click(
-			key_text = "${fieldsetLabel}",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+			Click(
+				key_text = "${fieldsGroupLabel}",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+		}
 
 		MenuItem.click(menuItem = "Duplicate");
 	}

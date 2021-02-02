@@ -136,14 +136,12 @@ definition {
 
 		DDLDataDefinition.save();
 
-		NavItem.click(navItem = "Documents and Media");
+		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
-
-		AssertTextEquals(
-			key_fieldFieldLabel = "Help Test",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Help Test");
+		DataEngine.viewField(
+			fieldFieldLabel = "Color",
+			fieldHelp = "Help Test",
+			fieldName = "Color");
 	}
 
 	@description = "This is a test for LPS-98070. As a Developer, I want to Implement the color field type"

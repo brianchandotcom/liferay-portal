@@ -115,6 +115,8 @@ definition {
 
 		var key_nodeType = "${nodeType}";
 
+		Pause(locator1 = "1000");
+
 		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DEFAULT");
 
 		KaleoDesigner.editNodeName(nodeName = "${nodeName}");

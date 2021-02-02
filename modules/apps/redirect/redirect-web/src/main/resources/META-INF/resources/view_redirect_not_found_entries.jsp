@@ -24,8 +24,10 @@ SearchContainer<RedirectNotFoundEntry> redirectNotFoundEntriesSearchContainer = 
 RedirectNotFoundEntriesManagementToolbarDisplayContext redirectNotFoundEntriesManagementToolbarDisplayContext = new RedirectNotFoundEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectNotFoundEntriesSearchContainer);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= redirectNotFoundEntriesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	additionalProps="<%= redirectNotFoundEntriesManagementToolbarDisplayContext.getAdditionalProps() %>"
+	managementToolbarDisplayContext="<%= redirectNotFoundEntriesManagementToolbarDisplayContext %>"
+	propsTransformer="js/RedirectNotFoundEntriesManagementToolbarPropsTransformer"
 />
 
 <aui:form action="<%= redirectNotFoundEntriesSearchContainer.getIteratorURL() %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
@@ -105,9 +107,3 @@ RedirectNotFoundEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 		</c:otherwise>
 	</c:choose>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= redirectNotFoundEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context="<%= redirectNotFoundEntriesManagementToolbarDisplayContext.getComponentContext() %>"
-	module="js/RedirectNotFoundEntriesManagementToolbarDefaultEventHandler.es"
-/>

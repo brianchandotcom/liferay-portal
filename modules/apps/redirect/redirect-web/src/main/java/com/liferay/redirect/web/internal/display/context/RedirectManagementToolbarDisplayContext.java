@@ -75,6 +75,22 @@ public class RedirectManagementToolbarDisplayContext
 		).build();
 	}
 
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"deleteRedirectEntriesURL",
+			() -> {
+				PortletURL deleteRedirectEntriesURL =
+					liferayPortletResponse.createActionURL();
+
+				deleteRedirectEntriesURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/redirect/delete_redirect_entry");
+
+				return deleteRedirectEntriesURL.toString();
+			}
+		).build();
+	}
+
 	public String getAvailableActions(RedirectEntry redirectEntry)
 		throws PortalException {
 
@@ -97,22 +113,6 @@ public class RedirectManagementToolbarDisplayContext
 		clearResultsURL.setParameter("orderByType", getOrderByType());
 
 		return clearResultsURL.toString();
-	}
-
-	public Map<String, Object> getComponentContext() {
-		return HashMapBuilder.<String, Object>put(
-			"deleteRedirectEntriesURL",
-			() -> {
-				PortletURL deleteRedirectEntriesURL =
-					liferayPortletResponse.createActionURL();
-
-				deleteRedirectEntriesURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/redirect/delete_redirect_entry");
-
-				return deleteRedirectEntriesURL.toString();
-			}
-		).build();
 	}
 
 	@Override

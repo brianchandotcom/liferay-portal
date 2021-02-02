@@ -86,26 +86,7 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		).build();
 	}
 
-	public String getAvailableActions(
-		RedirectNotFoundEntry redirectNotFoundEntry) {
-
-		if (redirectNotFoundEntry.isIgnored()) {
-			return "unignoreSelectedRedirectNotFoundEntries";
-		}
-
-		return "ignoreSelectedRedirectNotFoundEntries";
-	}
-
-	@Override
-	public String getClearResultsURL() {
-		PortletURL clearResultsURL = liferayPortletResponse.createRenderURL();
-
-		clearResultsURL.setParameter("navigation", "404-urls");
-
-		return clearResultsURL.toString();
-	}
-
-	public Map<String, Object> getComponentContext() {
+	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"editRedirectNotFoundEntriesURL",
 			() -> {
@@ -126,6 +107,25 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 				return editRedirectNotFoundEntriesURL.toString();
 			}
 		).build();
+	}
+
+	public String getAvailableActions(
+		RedirectNotFoundEntry redirectNotFoundEntry) {
+
+		if (redirectNotFoundEntry.isIgnored()) {
+			return "unignoreSelectedRedirectNotFoundEntries";
+		}
+
+		return "ignoreSelectedRedirectNotFoundEntries";
+	}
+
+	@Override
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = liferayPortletResponse.createRenderURL();
+
+		clearResultsURL.setParameter("navigation", "404-urls");
+
+		return clearResultsURL.toString();
 	}
 
 	@Override

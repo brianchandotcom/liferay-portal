@@ -12,28 +12,33 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-import {Config} from 'metal-state';
+import {postForm} from 'frontend-js-web';
 
-class RedirectManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteSelectedRedirectEntries() {
-		const form = this.one('#fm');
+export default function propsTransformer({
+	additionalProps: {deleteRedirectEntriesURL},
+	portletNamespace,
+	...otherProps
+}) {
+	const deleteSelectedRedirectEntries = () => {
+		const form = document.getElementById(`${portletNamespace}fm`);
 
-		Liferay.Util.postForm(form, {
+		postForm(form, {
 			data: {
 				deleteEntryIds: Liferay.Util.listCheckedExcept(
 					form,
-					this.ns('allRowIds')
+					`${portletNamespace}allRowIds`
 				),
 			},
-			url: this.deleteRedirectEntriesURL,
+			url: deleteRedirectEntriesURL,
 		});
-	}
+	};
+
+	return {
+		...otherProps,
+		onActionButtonClick: (event, {item}) => {
+			if (item.data.action === 'deleteSelectedRedirectEntries') {
+				deleteSelectedRedirectEntries();
+			}
+		},
+	};
 }
-
-RedirectManagementToolbarDefaultEventHandler.STATE = {
-	deleteRedirectEntriesURL: Config.string(),
-	spritemap: Config.string(),
-};
-
-export default RedirectManagementToolbarDefaultEventHandler;

@@ -128,7 +128,21 @@ definition {
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123539 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		PortletEntry.inputTitle(title = "BR Title");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		PortletEntry.inputTitle(title = "EN Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.viewWebContentTitle(title = "BR Title");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

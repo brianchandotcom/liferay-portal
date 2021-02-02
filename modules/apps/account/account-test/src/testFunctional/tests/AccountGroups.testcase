@@ -63,6 +63,72 @@ definition {
 		AccountGroups.viewAssignee(assigneeName = "Account for Account Group");
 	}
 
+	@description = "This is a use case for LPS-122414."
+	@priority = "4"
+	test AssignMultipleAccounts {
+		for (var accountNumber : list "1,2,3,4,5") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Applications",
+				portlet = "Accounts");
+
+			Accounts.addCP(
+				accountDescription = "Accounts Name ${accountNumber} Description",
+				accountName = "Accounts ${accountNumber} for AG");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		AccountGroups.addCP(
+			accountGroupDescription = "This is an Account Group with multiple accounts.",
+			accountGroupName = "Multiple Accounts AG");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		LexiconEntry.gotoEntry(rowEntry = "Multiple Accounts AG");
+
+		AccountGroups.viewDefault(tabName = "Accounts");
+
+		AccountGroups.addAssignee(
+			accountGroupName = "Multiple Accounts AG",
+			assigneeNames = "Accounts 1 for AG",
+			assigneeType = "Accounts");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		AccountGroups.viewEntry(
+			accountGroupAccount = "1",
+			accountGroupDescription = "This is an Account Group with multiple accounts.",
+			accountGroupName = "Multiple Accounts AG");
+
+		LexiconEntry.gotoEntry(rowEntry = "Multiple Accounts AG");
+
+		AccountGroups.addAssignee(
+			accountGroupName = "Multiple Accounts AG",
+			assigneeAll = "true",
+			assigneeNames = "Accounts ${accountNumber} for AG",
+			assigneeType = "Accounts");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Account Groups");
+
+		AccountGroups.viewEntry(
+			accountGroupAccount = "5",
+			accountGroupDescription = "This is an Account Group with multiple accounts.",
+			accountGroupName = "Multiple Accounts AG");
+	}
+
 	@priority = "4"
 	test DeleteAccountGroup {
 		ApplicationsMenu.gotoPortlet(

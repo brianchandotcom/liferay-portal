@@ -154,8 +154,7 @@ definition {
 			fieldsetLabel = "${fieldsetLabel}",
 			fieldsetName = "${fieldsetName}");
 
-        DMMetadataSet.validateCantInFieldset(key_fieldLabel = "${key_fieldLabel}");
-
+		DMMetadataSet.validateCantInFieldset(key_fieldLabel = "${key_fieldLabel}");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

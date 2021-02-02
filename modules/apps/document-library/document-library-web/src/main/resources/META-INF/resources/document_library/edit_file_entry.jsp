@@ -390,24 +390,30 @@ renderResponse.setTitle(headerTitle);
 							%>
 
 								<div>
+
+									<%
+									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+									Stream<DDMStructure> ddmStructuresStream = ddmStructures.stream();
+
+									Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+
+									Stream<Locale> localesStream = locales.stream();
+									%>
+
 									<react:component
 										module="document_library/js/LanguageSelector"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
 												"ddmStructureIds",
-												dlFileEntryType.getDDMStructures(
-												).stream(
-												).map(
+												ddmStructuresStream.map(
 													DDMStructure::getStructureId
 												).collect(
 													Collectors.toList()
 												)
 											).put(
 												"languageIds",
-												LanguageUtil.getAvailableLocales(
-													themeDisplay.getSiteGroupId()
-												).stream(
-												).map(
+												localesStream.map(
 													LanguageUtil::getLanguageId
 												).collect(
 													Collectors.toList()

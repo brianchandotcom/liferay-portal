@@ -154,7 +154,13 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
 		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 

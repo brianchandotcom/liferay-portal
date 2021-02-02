@@ -19,7 +19,6 @@ import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
 
 import java.io.PrintStream;
-import java.io.Serializable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,7 +28,8 @@ import java.security.Permission;
 /**
  * @author Igor Beslic
  */
-public class TalendProcessCallable implements ProcessCallable<Serializable> {
+public class TalendProcessCallable
+	implements ProcessCallable<TalendProcessOutput> {
 
 	public TalendProcessCallable(
 		String[] mainMethodArgs, String jobMainClassFQN) {
@@ -39,7 +39,7 @@ public class TalendProcessCallable implements ProcessCallable<Serializable> {
 	}
 
 	@Override
-	public Serializable call() throws ProcessException {
+	public TalendProcessOutput call() throws ProcessException {
 		PrintStream errPrintStream = System.err;
 		PrintStream outPrintStream = System.out;
 

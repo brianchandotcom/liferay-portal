@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
-import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Map;
@@ -83,18 +82,17 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		try {
-			ProcessChannel<Serializable> processChannel =
+			ProcessChannel<TalendProcessOutput> processChannel =
 				_processExecutor.execute(
 					talendProcess.getProcessConfig(),
 					new TalendProcessCallable(
 						talendProcess.getMainMethodArguments(),
 						talendArchive.getJobMainClassFQN()));
 
-			NoticeableFuture<Serializable> future =
+			NoticeableFuture<TalendProcessOutput> future =
 				processChannel.getProcessNoticeableFuture();
 
-			TalendProcessOutput talendProcessOutput =
-				(TalendProcessOutput)future.get();
+			TalendProcessOutput talendProcessOutput = future.get();
 
 			_checkTalendProcessOutput(
 				talendProcessOutput, dispatchTaskExecutorOutput);

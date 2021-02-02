@@ -387,6 +387,30 @@ renderResponse.setTitle(headerTitle);
 
 							<%
 							if (fileEntryTypeId > 0) {
+							%>
+
+								<div>
+									<react:component
+										module="document_library/js/LanguageSelector"
+										props='<%=
+											HashMapBuilder.<String, Object>put(
+												"languageIds",
+												LanguageUtil.getAvailableLocales(
+													themeDisplay.getSiteGroupId()
+												).stream(
+												).map(
+													LanguageUtil::getLanguageId
+												).collect(
+													Collectors.toList()
+												)
+											).put(
+												"selectedLanguageId", themeDisplay.getLanguageId()
+											).build()
+										%>'
+									/>
+								</div>
+
+							<%
 								try {
 									boolean localizable = true;
 

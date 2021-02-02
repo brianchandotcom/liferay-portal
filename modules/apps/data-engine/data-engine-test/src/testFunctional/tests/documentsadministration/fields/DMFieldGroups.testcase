@@ -355,7 +355,7 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
-		
+
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
@@ -366,7 +366,7 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "WC Structure Name");
-		
+
 		DataEngine.delete(fieldFieldLabel = "Text");
 
 		DataEngine.delete(fieldFieldLabel = "Numeric");
@@ -376,7 +376,7 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "WC Structure Name");
-		
+
 		AssertElementNotPresent(locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD");
 
 		AssertElementNotPresent(locator1 = "DataEngineBuilder#WEB_CONTENT_NUMERIC_FIELD");

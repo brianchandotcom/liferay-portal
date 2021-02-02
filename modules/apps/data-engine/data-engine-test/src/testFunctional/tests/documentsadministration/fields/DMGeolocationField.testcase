@@ -257,12 +257,11 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentsAndMedia();
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "DM Document Type Name");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
 		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
 	}
+
 }

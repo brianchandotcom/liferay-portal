@@ -257,9 +257,18 @@ public class BlogsEntryStagedModelDataHandler
 		if ((existingEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
+			String urlTitle = entry.getUrlTitle();
+
+			existingEntry = _blogsEntryLocalService.fetchEntry(
+				portletDataContext.getScopeGroupId(), entry.getUrlTitle());
+
+			if (existingEntry != null) {
+				urlTitle = null;
+			}
+
 			importedEntry = _blogsEntryLocalService.addEntry(
-				userId, entry.getTitle(), entry.getSubtitle(),
-				entry.getUrlTitle(), entry.getDescription(), entry.getContent(),
+				userId, entry.getTitle(), entry.getSubtitle(), urlTitle,
+				entry.getDescription(), entry.getContent(),
 				entry.getDisplayDate(), entry.isAllowPingbacks(),
 				entry.isAllowTrackbacks(), trackbacks,
 				entry.getCoverImageCaption(), null, null, serviceContext);

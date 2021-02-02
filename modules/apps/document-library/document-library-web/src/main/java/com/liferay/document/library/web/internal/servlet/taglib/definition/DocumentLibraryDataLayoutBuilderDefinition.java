@@ -29,11 +29,6 @@ public class DocumentLibraryDataLayoutBuilderDefinition
 	implements DataLayoutBuilderDefinition {
 
 	@Override
-	public boolean allowFieldSets() {
-		return true;
-	}
-
-	@Override
 	public boolean allowMultiplePages() {
 		return false;
 	}

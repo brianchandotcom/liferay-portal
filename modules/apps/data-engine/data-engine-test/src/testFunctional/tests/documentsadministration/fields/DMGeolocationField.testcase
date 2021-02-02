@@ -35,8 +35,6 @@ definition {
 	test DisableSearchableOfGeolocation {
 		property portal.acceptance = "false";
 
-		DMNavigator.gotoDocumentType();
-
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeFieldNames = "Geolocation",
 			dmDocumentTypeName = "DM Document Type Name");
@@ -87,8 +85,6 @@ definition {
 	test SetGeolocationAsRepeatable {
 		property portal.acceptance = "false";
 
-		DMNavigator.gotoDocumentType();
-
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeFieldNames = "Geolocation",
 			dmDocumentTypeName = "DM Document Type Name");
@@ -106,8 +102,6 @@ definition {
 	@priority = "5"
 	test SetGeolocationLabel {
 		property portal.acceptance = "false";
-
-		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeFieldNames = "Geolocation",
@@ -130,8 +124,6 @@ definition {
 	@priority = "5"
 	test SetHelpTextOfGeolocation {
 		property portal.acceptance = "false";
-
-		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeFieldNames = "Geolocation",
@@ -166,8 +158,6 @@ definition {
 	test SetSearchableOfGeolocationAsKeyword {
 		property portal.acceptance = "false";
 
-		DMNavigator.gotoDocumentType();
-
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeFieldNames = "Geolocation",
 			dmDocumentTypeName = "DM Document Type Name");
@@ -198,8 +188,6 @@ definition {
 	@priority = "4"
 	test SetSearchableOfGeolocationAsText {
 		property portal.acceptance = "false";
-
-		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeFieldNames = "Geolocation",

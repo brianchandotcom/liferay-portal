@@ -21,15 +21,12 @@ import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersistence;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityEstimatePersistence;
-import com.liferay.commerce.service.persistence.CommerceCountryFinder;
-import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
-import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
@@ -538,69 +535,6 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce country local service.
-	 *
-	 * @return the commerce country local service
-	 */
-	public com.liferay.commerce.service.CommerceCountryLocalService
-		getCommerceCountryLocalService() {
-
-		return commerceCountryLocalService;
-	}
-
-	/**
-	 * Sets the commerce country local service.
-	 *
-	 * @param commerceCountryLocalService the commerce country local service
-	 */
-	public void setCommerceCountryLocalService(
-		com.liferay.commerce.service.CommerceCountryLocalService
-			commerceCountryLocalService) {
-
-		this.commerceCountryLocalService = commerceCountryLocalService;
-	}
-
-	/**
-	 * Returns the commerce country persistence.
-	 *
-	 * @return the commerce country persistence
-	 */
-	public CommerceCountryPersistence getCommerceCountryPersistence() {
-		return commerceCountryPersistence;
-	}
-
-	/**
-	 * Sets the commerce country persistence.
-	 *
-	 * @param commerceCountryPersistence the commerce country persistence
-	 */
-	public void setCommerceCountryPersistence(
-		CommerceCountryPersistence commerceCountryPersistence) {
-
-		this.commerceCountryPersistence = commerceCountryPersistence;
-	}
-
-	/**
-	 * Returns the commerce country finder.
-	 *
-	 * @return the commerce country finder
-	 */
-	public CommerceCountryFinder getCommerceCountryFinder() {
-		return commerceCountryFinder;
-	}
-
-	/**
-	 * Sets the commerce country finder.
-	 *
-	 * @param commerceCountryFinder the commerce country finder
-	 */
-	public void setCommerceCountryFinder(
-		CommerceCountryFinder commerceCountryFinder) {
-
-		this.commerceCountryFinder = commerceCountryFinder;
-	}
-
-	/**
 	 * Returns the commerce order local service.
 	 *
 	 * @return the commerce order local service
@@ -813,49 +747,6 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 		CommerceOrderPaymentPersistence commerceOrderPaymentPersistence) {
 
 		this.commerceOrderPaymentPersistence = commerceOrderPaymentPersistence;
-	}
-
-	/**
-	 * Returns the commerce region local service.
-	 *
-	 * @return the commerce region local service
-	 */
-	public com.liferay.commerce.service.CommerceRegionLocalService
-		getCommerceRegionLocalService() {
-
-		return commerceRegionLocalService;
-	}
-
-	/**
-	 * Sets the commerce region local service.
-	 *
-	 * @param commerceRegionLocalService the commerce region local service
-	 */
-	public void setCommerceRegionLocalService(
-		com.liferay.commerce.service.CommerceRegionLocalService
-			commerceRegionLocalService) {
-
-		this.commerceRegionLocalService = commerceRegionLocalService;
-	}
-
-	/**
-	 * Returns the commerce region persistence.
-	 *
-	 * @return the commerce region persistence
-	 */
-	public CommerceRegionPersistence getCommerceRegionPersistence() {
-		return commerceRegionPersistence;
-	}
-
-	/**
-	 * Sets the commerce region persistence.
-	 *
-	 * @param commerceRegionPersistence the commerce region persistence
-	 */
-	public void setCommerceRegionPersistence(
-		CommerceRegionPersistence commerceRegionPersistence) {
-
-		this.commerceRegionPersistence = commerceRegionPersistence;
 	}
 
 	/**
@@ -1409,18 +1300,6 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 		commerceAvailabilityEstimatePersistence;
 
 	@BeanReference(
-		type = com.liferay.commerce.service.CommerceCountryLocalService.class
-	)
-	protected com.liferay.commerce.service.CommerceCountryLocalService
-		commerceCountryLocalService;
-
-	@BeanReference(type = CommerceCountryPersistence.class)
-	protected CommerceCountryPersistence commerceCountryPersistence;
-
-	@BeanReference(type = CommerceCountryFinder.class)
-	protected CommerceCountryFinder commerceCountryFinder;
-
-	@BeanReference(
 		type = com.liferay.commerce.service.CommerceOrderLocalService.class
 	)
 	protected com.liferay.commerce.service.CommerceOrderLocalService
@@ -1461,15 +1340,6 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 
 	@BeanReference(type = CommerceOrderPaymentPersistence.class)
 	protected CommerceOrderPaymentPersistence commerceOrderPaymentPersistence;
-
-	@BeanReference(
-		type = com.liferay.commerce.service.CommerceRegionLocalService.class
-	)
-	protected com.liferay.commerce.service.CommerceRegionLocalService
-		commerceRegionLocalService;
-
-	@BeanReference(type = CommerceRegionPersistence.class)
-	protected CommerceRegionPersistence commerceRegionPersistence;
 
 	@BeanReference(type = CommerceShipmentLocalService.class)
 	protected CommerceShipmentLocalService commerceShipmentLocalService;

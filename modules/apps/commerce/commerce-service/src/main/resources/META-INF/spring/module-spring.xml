@@ -16,10 +16,6 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceAvailabilityEstimateLocalServiceImpl" id="com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceAvailabilityEstimateServiceImpl" id="com.liferay.commerce.service.CommerceAvailabilityEstimateService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceAvailabilityEstimatePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceAvailabilityEstimatePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommerceCountryLocalServiceImpl" id="com.liferay.commerce.service.CommerceCountryLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommerceCountryServiceImpl" id="com.liferay.commerce.service.CommerceCountryService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCountryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCountryPersistence" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCountryFinderImpl" id="com.liferay.commerce.service.persistence.CommerceCountryFinder" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderServiceImpl" id="com.liferay.commerce.service.CommerceOrderService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderPersistence" />
@@ -33,9 +29,6 @@
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderNotePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderNotePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderPaymentLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderPaymentLocalService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderPaymentPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommerceRegionLocalServiceImpl" id="com.liferay.commerce.service.CommerceRegionLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommerceRegionServiceImpl" id="com.liferay.commerce.service.CommerceRegionService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceRegionPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceRegionPersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShipmentLocalServiceImpl" id="com.liferay.commerce.service.CommerceShipmentLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShipmentServiceImpl" id="com.liferay.commerce.service.CommerceShipmentService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShipmentPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShipmentPersistence" />

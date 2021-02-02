@@ -89,12 +89,57 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
 	@priority = "4"
 	test DefaultValuesDisplayedForNonTranslatedWebContent {
-		property portal.acceptance = "false";
+		var key_value = "1234";
+		var key_text = "My name";
 
-		// TODO LPS-123537 DefaultValuesDisplayedForNonTranslatedWebContent pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "My Structure Name 1");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DDLDataDefinition.save();
+
+		Navigator.gotoNavItem(navItem = "Web Content");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "My Structure Name 1");
+
+		PortletEntry.inputText(
+			fieldLabel = "Text",
+			text = "${key_text}");
+
+		Click(
+			key_fieldLabel = "Numeric",
+			locator1 = "TextInput#NUMERIC");
+
+		Type(
+			key_fieldLabel = "Numeric",
+			locator1 = "TextInput#NUMERIC",
+			value1 = "${key_value}");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		AssertTextEquals(
+            key_fieldLabel = "Text",
+            locator1 = "TextInput#GENERIC_TEXT_INPUT",
+            value1 = "${key_text}");
+
+		AssertTextEquals(
+            locator1 = "TextInput#INPUT",
+            value1 = "${key_value}");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

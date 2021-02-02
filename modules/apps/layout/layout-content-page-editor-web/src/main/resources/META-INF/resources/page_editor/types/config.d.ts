@@ -130,6 +130,7 @@ export interface Config {
 		[key: string]: 'ltr' | 'rtl';
 	};
 
+	layoutItemSelectorURL: String;
 	layoutConversionWarningMessages: string[] | null;
 	layoutType: LayoutTypes[keyof LayoutTypes];
 	lookAndFeelURL: string;

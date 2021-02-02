@@ -15,9 +15,12 @@
 package com.liferay.dispatch.talend.web.internal.process;
 
 import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessException;
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 import java.lang.reflect.InvocationTargetException;
@@ -44,15 +47,19 @@ public class TalendProcessCallable
 		PrintStream outPrintStream = System.out;
 
 		try {
-			SniffPrintStream errSniffPrintStream = new SniffPrintStream(
-				System.err);
+			UnsyncByteArrayOutputStream errUnsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
 
-			System.setErr(errSniffPrintStream);
+			System.setErr(
+				new TeePrintStream(
+					errUnsyncByteArrayOutputStream, errPrintStream));
 
-			SniffPrintStream outSniffPrintStream = new SniffPrintStream(
-				System.out);
+			UnsyncByteArrayOutputStream outUnsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
 
-			System.setOut(outSniffPrintStream);
+			System.setOut(
+				new TeePrintStream(
+					outUnsyncByteArrayOutputStream, outPrintStream));
 
 			TalendProcessException talendProcessException =
 				new TalendProcessException();
@@ -88,18 +95,18 @@ public class TalendProcessCallable
 				mainMethod.invoke(null, new Object[] {_mainMethodArgs});
 
 				return new TalendProcessOutput(
-					errSniffPrintStream._bytes,
+					errUnsyncByteArrayOutputStream.toString(),
 					talendProcessException.getStatus(),
-					outSniffPrintStream._bytes);
+					outUnsyncByteArrayOutputStream.toString());
 			}
 			catch (InvocationTargetException invocationTargetException) {
 				Throwable causeThrowable = invocationTargetException.getCause();
 
 				if (causeThrowable == talendProcessException) {
 					return new TalendProcessOutput(
-						errSniffPrintStream._bytes,
+						errUnsyncByteArrayOutputStream.toString(),
 						talendProcessException.getStatus(),
-						outSniffPrintStream._bytes);
+						outUnsyncByteArrayOutputStream.toString());
 				}
 
 				throw new ProcessException(causeThrowable);
@@ -119,25 +126,52 @@ public class TalendProcessCallable
 	private final String _jobMainClassFQN;
 	private final String[] _mainMethodArgs;
 
-	private class SniffPrintStream extends PrintStream {
+	private class TeePrintStream extends PrintStream {
 
-		public SniffPrintStream(PrintStream printStream) {
-			super(printStream);
+		@Override
+		public void close() {
+			super.close();
+
+			_printStream.flush();
 		}
 
 		@Override
-		public void write(byte[] buf, int off, int len) {
-			byte[] tempBytes = _bytes;
+		public void flush() {
+			super.flush();
 
-			_bytes = new byte[tempBytes.length + len];
-
-			System.arraycopy(tempBytes, 0, _bytes, 0, tempBytes.length);
-			System.arraycopy(buf, off, _bytes, tempBytes.length, len);
-
-			super.write(buf, off, len);
+			_printStream.flush();
 		}
 
-		private byte[] _bytes = new byte[0];
+		@Override
+		public void write(byte[] bytes) throws IOException {
+			super.write(bytes);
+
+			_printStream.write(bytes);
+		}
+
+		@Override
+		public void write(byte[] bytes, int offset, int length) {
+			super.write(bytes, offset, length);
+
+			_printStream.write(bytes, offset, length);
+		}
+
+		@Override
+		public void write(int integer) {
+			super.write(integer);
+
+			_printStream.write(integer);
+		}
+
+		private TeePrintStream(
+			OutputStream outputStream, PrintStream printStream) {
+
+			super(outputStream);
+
+			_printStream = printStream;
+		}
+
+		private final PrintStream _printStream;
 
 	}
 

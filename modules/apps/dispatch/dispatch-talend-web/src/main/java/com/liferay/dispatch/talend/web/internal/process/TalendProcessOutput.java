@@ -16,19 +16,19 @@ package com.liferay.dispatch.talend.web.internal.process;
 
 import java.io.Serializable;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * @author Matija Petanjek
  */
 public class TalendProcessOutput implements Serializable {
 
-	public TalendProcessOutput(byte[] errBytes, int exitCode, byte[] outBytes) {
-		_error = new String(errBytes, StandardCharsets.UTF_8);
+	public TalendProcessOutput(
+		String errString, int exitCode, String outString) {
+
+		_error = errString;
 
 		_exitCode = exitCode;
 
-		_output = new String(outBytes, StandardCharsets.UTF_8);
+		_output = outString;
 	}
 
 	public String getError() {

@@ -114,26 +114,24 @@ public class StructuredContentResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_ddmCompleteStructure = _addDDMStructure(
-			testGroup, "test-complete-content-structure.json");
+		_ddmComplexStructure = _addDDMStructure(
+			testGroup, "test-ddm-complex-structure.json");
 		_ddmLocalizedStructure = _addDDMStructure(
-			testGroup, "test-localized-structured-content-structure.json");
+			testGroup, "test-ddm-localized-structure.json");
 
-		_ddmStructure = _addDDMStructure(
-			testGroup, "test-structured-content-structure.json");
+		_ddmStructure = _addDDMStructure(testGroup, "test-ddm-structure.json");
 
 		_ddmTemplate = _addDDMTemplate(_ddmStructure);
 
 		_depotDDMStructure = _addDDMStructure(
-			testDepotEntry.getGroup(),
-			"test-structured-content-structure.json");
+			testDepotEntry.getGroup(), "test-ddm-structure.json");
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(testGroup.getGroupId());
 
 		_dlFileEntry = DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
 
 		_irrelevantDDMStructure = _addDDMStructure(
-			irrelevantGroup, "test-structured-content-structure.json");
+			irrelevantGroup, "test-ddm-structure.json");
 
 		_addDDMTemplate(_irrelevantDDMStructure);
 
@@ -799,7 +797,7 @@ public class StructuredContentResourceTest
 			});
 
 		structuredContent.setContentStructureId(
-			_ddmCompleteStructure.getStructureId());
+			_ddmComplexStructure.getStructureId());
 
 		return structuredContent;
 	}
@@ -880,7 +878,7 @@ public class StructuredContentResourceTest
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
 
-	private DDMStructure _ddmCompleteStructure;
+	private DDMStructure _ddmComplexStructure;
 	private DDMStructure _ddmLocalizedStructure;
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;

@@ -97,7 +97,7 @@ public class ContentStructureResourceTest
 		return ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class),
 			RandomTestUtil.randomString(), name,
-			_deserialize(_read("test-structured-content-structure.json")),
+			_deserialize(_read("test-ddm-structure.json")),
 			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}
 

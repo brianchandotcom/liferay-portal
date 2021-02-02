@@ -1,6 +1,9 @@
 @component-name = "portal-collaboration"
 definition {
 
+	property app.server.bundles.size = "1";
+	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
+	property databases.size = "1";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Documents Management";
@@ -12,13 +15,22 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging DM Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
-		SitePages.addPublicPage(pageName = "Staging DM Page");
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Staging.remoteStagingSetUp(
+			remotePort = "9080",
+			remoteStaging = "true",
+			siteName = "Site Name");
 	}
 
 	tearDown {
@@ -29,7 +41,10 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
 			JSONGroup.deleteGroupByName(groupName = "Remote Site");
+
+			User.logoutPG();
 		}
 	}
 
@@ -77,17 +92,9 @@ definition {
 	@description = "This is a use case for LPS-89175."
 	@priority = "3"
 	test StagingRemoteLiveDeleteDocumentWithWebContentField {
-		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-
-		Staging.remoteStagingSetUp(siteName = "Site Name");
-
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

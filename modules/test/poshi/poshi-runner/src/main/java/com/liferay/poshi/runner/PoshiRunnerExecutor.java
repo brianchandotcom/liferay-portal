@@ -862,7 +862,8 @@ public class PoshiRunnerExecutor {
 
 			if (argument == null) {
 				if (i == 0) {
-					if (selenium.equals("assertConfirmation") ||
+					if (selenium.equals("assertAlertText") ||
+						selenium.equals("assertConfirmation") ||
 						selenium.equals("assertConsoleTextNotPresent") ||
 						selenium.equals("assertConsoleTextPresent") ||
 						selenium.equals("assertHTMLSourceTextNotPresent") ||
@@ -876,6 +877,7 @@ public class PoshiRunnerExecutor {
 						selenium.equals("isConsoleTextNotPresent") ||
 						selenium.equals("isConsoleTextPresent") ||
 						selenium.equals("scrollBy") ||
+						selenium.equals("typeAlert") ||
 						selenium.equals("waitForConfirmation") ||
 						selenium.equals("waitForConsoleTextNotPresent") ||
 						selenium.equals("waitForConsoleTextPresent") ||

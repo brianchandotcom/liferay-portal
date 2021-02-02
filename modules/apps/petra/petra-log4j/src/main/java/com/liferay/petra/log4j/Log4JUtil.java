@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -163,21 +164,15 @@ public class Log4JUtil {
 	}
 
 	public static String getOriginalLevel(String className) {
-		Level level = Level.ALL;
+		Map<String, String> logLevelStrings = getLogLevelStrings();
 
-		Enumeration<Logger> enumeration = LogManager.getCurrentLoggers();
+		String logLevelString = logLevelStrings.get(className);
 
-		while (enumeration.hasMoreElements()) {
-			Logger logger = enumeration.nextElement();
-
-			if (className.equals(logger.getName())) {
-				level = logger.getLevel();
-
-				break;
-			}
+		if (Validator.isNull(logLevelString)) {
+			return String.valueOf(Level.ALL);
 		}
 
-		return level.toString();
+		return logLevelString;
 	}
 
 	public static void initLog4J(

@@ -169,7 +169,7 @@ const LocalizableText = ({
 		getInitialInternalValue({editingLocale: currentEditingLocale, value})
 	);
 
-	const getPlaceholder = (currentEditingLocale, placeholdersSubmitLabel) => {
+	const getPlaceholder = (currentEditingLocale) => {
 		if (fieldName !== 'submitLabel') {
 			return placeholder;
 		}
@@ -207,10 +207,7 @@ const LocalizableText = ({
 					onFieldChanged({event, value: newValue});
 				}}
 				onFieldFocused={onFieldFocused}
-				placeholder={getPlaceholder(
-					currentEditingLocale,
-					placeholdersSubmitLabel
-				)}
+				placeholder={getPlaceholder(currentEditingLocale)}
 				readOnly={readOnly}
 			/>
 

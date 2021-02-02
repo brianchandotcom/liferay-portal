@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
+import com.liferay.message.boards.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
@@ -171,6 +172,48 @@ public class MBMessageLocalServiceTest {
 		Assert.assertEquals(subject, mbMessage.getBody());
 	}
 
+	@Test(expected = DuplicateExternalReferenceCodeException.class)
+	public void testAddMessageWithExistingExternalReferenceCode()
+		throws Exception {
+
+		User user = TestPropsValues.getUser();
+
+		MBMessage message = addMessage();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			"externalReferenceCode", message.getExternalReferenceCode());
+
+		MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), user.getFullName(), _group.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+	}
+
+	@Test
+	public void testAddMessageWithExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+		User user = TestPropsValues.getUser();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			"externalReferenceCode", externalReferenceCode);
+
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), user.getFullName(), _group.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		Assert.assertEquals(
+			externalReferenceCode, mbMessage.getExternalReferenceCode());
+	}
+
 	@Test
 	public void testAddMessageWithNullBody() throws Exception {
 		User user = TestPropsValues.getUser();
@@ -196,6 +239,21 @@ public class MBMessageLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(body, mbMessage.getBody());
+	}
+
+	@Test
+	public void testAddMessageWithoutExternalReferenceCode() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), user.getFullName(), _group.getGroupId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			String.valueOf(mbMessage.getMessageId()),
+			mbMessage.getExternalReferenceCode());
 	}
 
 	@Test

@@ -126,10 +126,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "Teste");
-
-		WebContentStructures.saveCP(structureName = "Test");
-
-		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
@@ -343,10 +339,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "Test German");
-
-		WebContentStructures.saveCP(structureName = "Test");
-
-		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
@@ -427,10 +419,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "//span[@class='form-text' and contains(text(),'Text test help German')]",
 			value1 = "Text test help German");
-
-		WebContentStructures.saveCP(structureName = "Test");
-
-		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
@@ -497,10 +485,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "Teste");
-
-		WebContentStructures.saveCP(structureName = "Test");
-
-		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
@@ -535,10 +519,6 @@ definition {
 		LexiconEntry.gotoEntry(rowEntry = "Test");
 
 		PortletEntry.viewLocale(locale = "en-US");
-
-		WebContentStructures.saveCP(structureName = "Test");
-
-		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 }

@@ -100,6 +100,10 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Structure Name Test");
+
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		AssertTextEquals(

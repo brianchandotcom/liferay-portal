@@ -1022,12 +1022,57 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123536 VerifyDefaultLanguageIsFirstShown pending implementation
-	}
+		var structureTitle = "Structure Title";
+		var structureTitlePT = "Titulo da Estrutura";
+		var webTitle = "WC Title";
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "I'm a structure test",
+			structureName = "${structureTitle}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+		
+		DataEngine.addFieldNested(
+			fieldName = "Numeric",
+			fieldFieldLabel = "Numeric",
+			targetFieldLabel = "Image");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+				
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureTitlePT}");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Fields Group",
+			label = "Grupo de Campos");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Image",
+			label = "Imagem");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Numeric",
+			label = "Numero");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+
+		AssertTextEquals(
+            locator1 = "Button#LOCALIZATION_GENERIC",
+            value1 = "en-US");
+	}
 }

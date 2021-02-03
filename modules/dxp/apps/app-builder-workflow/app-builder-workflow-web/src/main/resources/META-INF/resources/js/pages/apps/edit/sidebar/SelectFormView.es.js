@@ -25,6 +25,9 @@ const Item = ({
 	missingRequiredFields: {missing: missingField = false, nativeField} = {},
 	name,
 }) => {
+	const {openFormViewModal, updateFormView} = useContext(
+		DataAndViewsTabContext
+	);
 	const {
 		config: {dataObject},
 	} = useContext(EditAppContext);
@@ -39,16 +42,17 @@ const Item = ({
 			},
 		},
 		native: {
-			popoverProps: {
-				onMouseEnter: () => setShowPopover(true),
-				onMouseLeave: () => setShowPopover(false),
-			},
 			triggerProps: {
 				className: 'error help-cursor tooltip-popover-icon',
 				fontSize: '26px',
 				symbol: 'exclamation-full',
 			},
 		},
+	};
+
+	const popoverProps = {
+		onMouseEnter: () => setShowPopover(true),
+		onMouseLeave: () => setShowPopover(false),
 	};
 
 	return (
@@ -64,7 +68,7 @@ const Item = ({
 				<IconWithPopover
 					className="dropdown-popover-form-view"
 					header={<PopoverHeader nativeField={nativeField} />}
-					popoverProps={nativeField && {...native.popoverProps}}
+					popoverProps={popoverProps}
 					show={showPopover}
 					trigger={
 						<div className="dropdown-button-asset help-cursor">
@@ -82,9 +86,19 @@ const Item = ({
 					}
 				>
 					<PopoverContent
-						buttonProps={{onClick: () => setShowPopover(false)}}
-						dataObject={dataObject}
-						id={id}
+						buttonProps={{
+							onClick: () => {
+								setShowPopover(false);
+
+								openFormViewModal(
+									dataObject.id,
+									dataObject.defaultLanguageId,
+									updateFormView,
+									id
+								);
+							},
+						}}
+						dataObjectName={dataObject.name}
 						nativeField={nativeField}
 					/>
 				</IconWithPopover>
@@ -95,50 +109,46 @@ const Item = ({
 
 const PopoverContent = ({
 	buttonProps: {onClick},
-	dataObject: {defaultLanguageId, id, name},
-	id: formViewId,
+	dataObjectName,
 	nativeField,
 }) => {
-	const {openFormViewModal, updateFormView} = useContext(
-		DataAndViewsTabContext
-	);
+	function getPopoverContent(message) {
+		return (
+			<>
+				{message}
+
+				<ClayButton
+					className="mt-3"
+					displayType="secondary"
+					onClick={onClick}
+				>
+					<span className="text-secondary">
+						{Liferay.Language.get('edit-form-view')}
+					</span>
+				</ClayButton>
+			</>
+		);
+	}
 
 	const {custom, native} = {
 		custom: {
-			content: sub(
-				Liferay.Language.get('this-form-view-does-not-contain-all-custom-required-fields-for-the-x-object'),
-				[name]
+			content: getPopoverContent(
+				sub(
+					Liferay.Language.get(
+						'this-form-view-does-not-contain-all-custom-required-fields-for-the-x-object'
+					),
+					[dataObjectName]
+				)
 			),
 		},
 		native: {
-			content: (
-				<>
-					{sub(
-						Liferay.Language.get(
-							'this-form-view-must-include-all-native-required-fields'
-						),
-						[name]
-					)}
-
-					<ClayButton
-						className="mt-3"
-						displayType="secondary"
-						onClick={() => {
-							onClick();
-
-							openFormViewModal(
-								id,
-								defaultLanguageId,
-								updateFormView,
-								formViewId
-							);
-						}}
-					>
-						<span className="text-secondary">
-							{Liferay.Language.get('edit-form-view')}
-						</span>
-					</ClayButton>
-				</>
+			content: getPopoverContent(
+				sub(
+					Liferay.Language.get(
+						'this-form-view-must-include-all-native-required-fields'
+					),
+					[dataObjectName]
+				)
 			),
 		},
 	};

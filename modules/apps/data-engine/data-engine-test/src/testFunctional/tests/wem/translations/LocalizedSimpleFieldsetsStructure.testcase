@@ -280,28 +280,28 @@ definition {
 			fieldFieldLabel = "Text Test Second",
 			fieldName = "Text",
 			targetFieldLabel = "Text Test");
-		
+
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Text Test Third",
 			fieldName = "Text",
 			targetFieldLabel = "Text Test Second");
-		
+
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
 			localization1Name = "Nome Fieldset Teste");
-		
+
 		DataEngine.editFieldLabel(
-            fieldFieldLabel = "Text Test",
-            fieldFieldLabelEdit = "Texto Teste pt_BR");
-		
+			fieldFieldLabel = "Text Test",
+			fieldFieldLabelEdit = "Texto Teste pt_BR");
+
 		DataEngine.editFieldLabel(
-            fieldFieldLabel = "Text Test Second",
-            fieldFieldLabelEdit = "Texto Teste Segundo pt_BR");
-		
+			fieldFieldLabel = "Text Test Second",
+			fieldFieldLabelEdit = "Texto Teste Segundo pt_BR");
+
 		DataEngine.editFieldLabel(
-            fieldFieldLabel = "Text Test Third",
-            fieldFieldLabelEdit = "Texto Teste Terceiro pt_BR");
-		
+			fieldFieldLabel = "Text Test Third",
+			fieldFieldLabelEdit = "Texto Teste Terceiro pt_BR");
+
 		WebContentStructures.saveCP(structureName = "Structure Name Test");
 
 		WebContentStructures.addCP(
@@ -317,16 +317,16 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
-		
+
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "Nome Fieldset Teste",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "Nome Fieldset Teste");
 
 		AssertElementPresent(
-            key_fieldFieldLabel = "Nome Fieldset Teste",
-            locator1 = "Sidebar#DDM_LABEL");
-		
+			key_fieldFieldLabel = "Nome Fieldset Teste",
+			locator1 = "Sidebar#DDM_LABEL");
+
 		AssertElementPresent(
 			key_fieldFieldLabel = "Texto Teste pt_BR",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
@@ -334,11 +334,10 @@ definition {
 		AssertElementPresent(
 			key_fieldFieldLabel = "Texto Teste Segundo pt_BR",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
-		
+
 		AssertElementPresent(
 			key_fieldFieldLabel = "Texto Teste Terceiro pt_BR",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
-
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

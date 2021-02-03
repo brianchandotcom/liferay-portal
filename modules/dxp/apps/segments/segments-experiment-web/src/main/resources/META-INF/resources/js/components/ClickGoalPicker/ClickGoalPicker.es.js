@@ -517,6 +517,8 @@ Overlay.propTypes = {
 function Target({allowEdit, element, geometry, mode, selector}) {
 	const dispatch = useContext(DispatchContext);
 
+	const {selectedTarget} = useContext(StateContext);
+
 	const {bottom, height, left, right, top, width} = getElementGeometry(
 		element
 	);
@@ -558,15 +560,16 @@ function Target({allowEdit, element, geometry, mode, selector}) {
 		>
 			<ClayTooltipProvider>
 				<div
-					className={classNames(
-						'lfr-segments-experiment-click-goal-target-overlay',
-						{
-							'lfr-segments-experiment-click-goal-target-overlay-editing':
-								mode === 'editing',
-							'lfr-segments-experiment-click-goal-target-overlay-selected':
-								mode === 'selected',
-						}
-					)}
+					className={classNames({
+						'lfr-segments-experiment-click-goal-target-overlay':
+							!selectedTarget ||
+							mode === 'editing' ||
+							mode === 'selected',
+						'lfr-segments-experiment-click-goal-target-overlay-editing':
+							mode === 'editing',
+						'lfr-segments-experiment-click-goal-target-overlay-selected':
+							mode === 'selected',
+					})}
 					data-target-selector={selector}
 					data-tooltip-align="bottom-left"
 					onClick={handleClick}

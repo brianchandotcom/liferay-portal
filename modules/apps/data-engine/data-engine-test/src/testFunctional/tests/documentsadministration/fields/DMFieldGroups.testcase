@@ -173,7 +173,7 @@ definition {
 			category = "Content & Data",
 			portlet = "Documents and Media");
 
-		AppBuilderAdmin.switchTab(tabName = "Document Types");
+		DMNavigator.gotoDocumentType();
 
 		DMDocumentType.add(
 			dmDocumentTypeFieldNames = "Text",

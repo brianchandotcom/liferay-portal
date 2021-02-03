@@ -29,7 +29,7 @@ import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEdit
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../../app/store/index';
 import canActivateEditable from '../../../app/utils/canActivateEditable';
-import {DragAndDropContextProvider} from '../../../app/utils/dragAndDrop/useDragAndDrop';
+import {DragAndDropContextProvider} from '../../../app/utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../../../app/utils/getLayoutDataItemLabel';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';

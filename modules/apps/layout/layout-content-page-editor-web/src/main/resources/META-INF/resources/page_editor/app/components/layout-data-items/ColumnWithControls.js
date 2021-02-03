@@ -23,7 +23,7 @@ import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStr
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
-import {NotDraggableArea} from '../../utils/dragAndDrop/useDragAndDrop';
+import {NotDraggableArea} from '../../utils/drag-and-drop/useDragAndDrop';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {useIsActive} from '../Controls';

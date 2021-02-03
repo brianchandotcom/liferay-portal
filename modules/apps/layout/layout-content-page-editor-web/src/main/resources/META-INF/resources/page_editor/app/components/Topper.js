@@ -28,8 +28,11 @@ import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStruct
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
-import {TARGET_POSITION} from '../utils/dragAndDrop/constants/targetPosition';
-import {useDragItem, useDropTarget} from '../utils/dragAndDrop/useDragAndDrop';
+import {TARGET_POSITION} from '../utils/drag-and-drop/constants/targetPosition';
+import {
+	useDragItem,
+	useDropTarget,
+} from '../utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
 import {
 	useHoverItem,

@@ -25,7 +25,7 @@ import {useDispatch, useSelector} from '../../../app/store/index';
 import addFragment from '../../../app/thunks/addFragment';
 import addItem from '../../../app/thunks/addItem';
 import addWidget from '../../../app/thunks/addWidget';
-import {useDragSymbol} from '../../../app/utils/dragAndDrop/useDragAndDrop';
+import {useDragSymbol} from '../../../app/utils/drag-and-drop/useDragAndDrop';
 
 export default function TabItem({item}) {
 	const dispatch = useDispatch();

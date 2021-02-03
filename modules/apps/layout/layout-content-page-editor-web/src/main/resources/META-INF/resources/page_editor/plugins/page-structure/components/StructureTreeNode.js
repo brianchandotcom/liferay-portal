@@ -36,17 +36,17 @@ import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 import moveItem from '../../../app/thunks/moveItem';
 import {deepEqual} from '../../../app/utils/checkDeepEqual';
-import checkAllowedChild from '../../../app/utils/dragAndDrop/checkAllowedChild';
-import {DRAG_DROP_TARGET_TYPE} from '../../../app/utils/dragAndDrop/constants/dragDropTargetType';
-import {TARGET_POSITION} from '../../../app/utils/dragAndDrop/constants/targetPosition';
-import getTargetPosition from '../../../app/utils/dragAndDrop/getTargetPosition';
-import itemIsAncestor from '../../../app/utils/dragAndDrop/itemIsAncestor';
-import toControlsId from '../../../app/utils/dragAndDrop/toControlsId';
+import checkAllowedChild from '../../../app/utils/drag-and-drop/checkAllowedChild';
+import {DRAG_DROP_TARGET_TYPE} from '../../../app/utils/drag-and-drop/constants/dragDropTargetType';
+import {TARGET_POSITION} from '../../../app/utils/drag-and-drop/constants/targetPosition';
+import getTargetPosition from '../../../app/utils/drag-and-drop/getTargetPosition';
+import itemIsAncestor from '../../../app/utils/drag-and-drop/itemIsAncestor';
+import toControlsId from '../../../app/utils/drag-and-drop/toControlsId';
 import {
 	initialDragDrop,
 	useDragItem,
 	useDropTarget,
-} from '../../../app/utils/dragAndDrop/useDragAndDrop';
+} from '../../../app/utils/drag-and-drop/useDragAndDrop';
 
 const HOVER_EXPAND_DELAY = 1000;
 

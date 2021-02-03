@@ -28,7 +28,7 @@ import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
-import {useDropClear} from '../utils/dragAndDrop/useDragAndDrop';
+import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
 import {useSelectItem} from './Controls';
 import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';

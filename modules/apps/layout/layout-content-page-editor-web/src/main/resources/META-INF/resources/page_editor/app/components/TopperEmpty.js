@@ -18,8 +18,8 @@ import React, {useRef} from 'react';
 import {getLayoutDataItemPropTypes} from '../../prop-types/index';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../store/index';
-import {TARGET_POSITION} from '../utils/dragAndDrop/constants/targetPosition';
-import {useDropTarget} from '../utils/dragAndDrop/useDragAndDrop';
+import {TARGET_POSITION} from '../utils/drag-and-drop/constants/targetPosition';
+import {useDropTarget} from '../utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
 
 export default function ({children, ...props}) {

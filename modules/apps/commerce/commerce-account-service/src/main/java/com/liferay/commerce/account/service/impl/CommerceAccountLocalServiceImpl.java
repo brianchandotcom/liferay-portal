@@ -24,7 +24,6 @@ import com.liferay.commerce.account.exception.CommerceAccountNameException;
 import com.liferay.commerce.account.exception.CommerceAccountOrdersException;
 import com.liferay.commerce.account.exception.DuplicateCommerceAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountOrganizationRelTable;
 import com.liferay.commerce.account.model.CommerceAccountUserRelTable;
 import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
 import com.liferay.commerce.account.service.base.CommerceAccountLocalServiceBaseImpl;
@@ -795,23 +794,9 @@ public class CommerceAccountLocalServiceImpl
 				AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
 					organizationIds));
 
-			// TODO Remove when CommerceAccountOrganizationRelTable is bridged
-
-			joinStep = joinStep.leftJoinOn(
-				CommerceAccountOrganizationRelTable.INSTANCE,
-				CommerceAccountOrganizationRelTable.INSTANCE.organizationId.in(
-					organizationIds));
-
 			accountEntryTablePredicate = accountEntryTablePredicate.or(
 				AccountEntryTable.INSTANCE.accountEntryId.eq(
 					AccountEntryOrganizationRelTable.INSTANCE.accountEntryId));
-
-			// TODO Remove when CommerceAccountOrganizationRelTable is bridged
-
-			accountEntryTablePredicate = accountEntryTablePredicate.or(
-				AccountEntryTable.INSTANCE.accountEntryId.eq(
-					CommerceAccountOrganizationRelTable.INSTANCE.
-						commerceAccountId));
 		}
 
 		joinStep = joinStep.leftJoinOn(
@@ -867,14 +852,6 @@ public class CommerceAccountLocalServiceImpl
 				AccountEntryOrganizationRelTable.INSTANCE,
 				AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
 					organizationIds));
-
-			// TODO Remove after bridging CommerceAccountOrganizationRel
-			// service
-
-			joinStep = joinStep.leftJoinOn(
-				CommerceAccountOrganizationRelTable.INSTANCE,
-				CommerceAccountOrganizationRelTable.INSTANCE.organizationId.in(
-					organizationIds));
 		}
 
 		Predicate accountEntryPredicate =
@@ -894,14 +871,6 @@ public class CommerceAccountLocalServiceImpl
 			accountEntryPredicate = accountEntryPredicate.or(
 				AccountEntryTable.INSTANCE.accountEntryId.eq(
 					AccountEntryOrganizationRelTable.INSTANCE.accountEntryId));
-
-			// TODO Remove after bridging CommerceAccountOrganizationRel
-			// serviceCommerceAccountPersistenceTest
-
-			accountEntryPredicate = accountEntryPredicate.or(
-				AccountEntryTable.INSTANCE.accountEntryId.eq(
-					CommerceAccountOrganizationRelTable.INSTANCE.
-						commerceAccountId));
 		}
 
 		joinStep = joinStep.leftJoinOn(

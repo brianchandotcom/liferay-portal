@@ -1031,7 +1031,7 @@ definition {
 		var webTitle = "WC Title";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-		
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
@@ -1041,16 +1041,16 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
-		
+
 		DataEngine.addFieldNested(
-			fieldName = "Numeric",
 			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
 			targetFieldLabel = "Image");
 
 		Button.clickSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
-				
+
 		WebContentStructures.addLocalization(
 			locale = "pt_BR",
 			localization1Name = "${structureTitlePT}");
@@ -1058,7 +1058,7 @@ definition {
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Fields Group",
 			label = "Grupo de Campos");
-		
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Image",
 			label = "Imagem");
@@ -1072,7 +1072,8 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
 		AssertTextEquals(
-            locator1 = "Button#LOCALIZATION_GENERIC",
-            value1 = "en-US");
+			locator1 = "Button#LOCALIZATION_GENERIC",
+			value1 = "en-US");
 	}
+
 }

@@ -2144,8 +2144,83 @@ definition {
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
 		property portal.acceptance = "false";
 
-		// TODO LPS-125933 ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields pending implementation
+		task ("Add a web content structure with all fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content template with all fields") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content based on new structure and template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name",
+				webContentTitle = "WC WebContent Title");
+
+			WebContent.addWithStructureCP(
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "This is a Text field");
+
+			PortletEntry.publish();
+		}
+
+		task ("View web content") {
+			WebContent.viewWithStructureCP(
+				webContentColor = "FF0D0D",
+				webContentDate = "10/10/2020",
+				webContentMultipleSelection = "Option 1",
+				webContentNumeric = "9",
+				webContentRichText = "This is a Rich Text field",
+				webContentSelectFromList = "Option 2",
+				webContentSingleSelection = "Option 3",
+				webContentText = "This is a Text field",
+				webContentTitle = "WC WebContent Title");
+		}
+
+		task ("Edit web content") {
+			WebContent.editCP(
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title Edit");
+		}
+
+		task ("Assert web content has been edited") {
+			WebContent.viewTitle(webContentTitle = "WC WebContent Title Edit");
+		}
+
+		task ("Delete web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.deleteCP(
+				siteURLKey = "test-site-name",
+				webContentTitle = "WC WebContent Title");
+		}
 	}
 
 	@description = "This is a use case for LRQA-61632. View structure field with predefined value."

@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -668,7 +668,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				_log.debug(exception, exception);
 			}
 
-			String errorMessage = themeDisplay.translate(
+			String errorMessage = _language.get(
+				themeDisplay.getLocale(),
 				"an-unexpected-error-occurred-while-deleting-the-file");
 
 			jsonObject.put(
@@ -696,7 +697,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			AntivirusScannerException antivirusScannerException =
 				(AntivirusScannerException)exception;
 
-			errorMessage = themeDisplay.translate(
+			errorMessage = _language.get(
+				themeDisplay.getLocale(),
 				antivirusScannerException.getMessageKey());
 		}
 		else if (exception instanceof AssetCategoryException) {
@@ -716,46 +718,54 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (assetCategoryException.getType() ==
 					AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
 
-				errorMessage = themeDisplay.translate(
+				errorMessage = _language.format(
+					themeDisplay.getLocale(),
 					"please-select-at-least-one-category-for-x",
 					vocabularyTitle);
 			}
 			else if (assetCategoryException.getType() ==
 						AssetCategoryException.TOO_MANY_CATEGORIES) {
 
-				errorMessage = themeDisplay.translate(
+				errorMessage = _language.format(
+					themeDisplay.getLocale(),
 					"you-cannot-select-more-than-one-category-for-x",
 					vocabularyTitle);
 			}
 		}
 		else if (exception instanceof DuplicateFileEntryException) {
-			errorMessage = themeDisplay.translate(
+			errorMessage = _language.get(
+				themeDisplay.getLocale(),
 				"the-folder-you-selected-already-has-an-entry-with-this-" +
 					"name.-please-select-a-different-folder");
 		}
 		else if (exception instanceof FileExtensionException) {
-			errorMessage = themeDisplay.translate(
+			errorMessage = _language.format(
+				themeDisplay.getLocale(),
 				"please-enter-a-file-with-a-valid-extension-x",
 				StringUtil.merge(
 					_getAllowedFileExtensions(portletConfig, actionRequest)));
 		}
 		else if (exception instanceof FileNameException) {
-			errorMessage = themeDisplay.translate(
+			errorMessage = _language.get(
+				themeDisplay.getLocale(),
 				"please-enter-a-file-with-a-valid-file-name");
 		}
 		else if (exception instanceof FileSizeException) {
-			errorMessage = themeDisplay.translate(
+			errorMessage = _language.format(
+				themeDisplay.getLocale(),
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				LanguageUtil.formatStorageSize(
+				_language.formatStorageSize(
 					_dlValidator.getMaxAllowableSize(),
 					themeDisplay.getLocale()));
 		}
 		else if (exception instanceof InvalidFileEntryTypeException) {
-			errorMessage = themeDisplay.translate(
+			errorMessage = _language.get(
+				themeDisplay.getLocale(),
 				"the-document-type-you-selected-is-not-valid-for-this-folder");
 		}
 		else {
-			errorMessage = themeDisplay.translate(
+			errorMessage = _language.get(
+				themeDisplay.getLocale(),
 				"an-unexpected-error-occurred-while-saving-your-document");
 		}
 
@@ -1207,6 +1217,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(upload.response.handler=multiple)")
 	private UploadResponseHandler _multipleUploadResponseHandler;

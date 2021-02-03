@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -109,7 +109,7 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 				errorMessage = themeDisplay.translate(
 					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
 						"than-x",
-					LanguageUtil.formatStorageSize(
+					_language.formatStorageSize(
 						_dlValidator.getMaxAllowableSize(),
 						themeDisplay.getLocale()));
 			}
@@ -164,5 +164,8 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 
 	@Reference
 	private DLValidator _dlValidator;
+
+	@Reference
+	private Language _language;
 
 }

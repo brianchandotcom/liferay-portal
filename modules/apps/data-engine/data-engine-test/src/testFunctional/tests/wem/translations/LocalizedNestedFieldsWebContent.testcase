@@ -356,8 +356,115 @@ definition {
 	@priority = "5"
 	test TranslateWebContentToNLanguages {
 		property portal.acceptance = "false";
+		
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		// TODO LPS-123537 TranslateWebContentToNLanguages pending implementation
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "My Structure Name 1");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Rich Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Text");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Fields Group",
+			fieldFieldLabelEdit = "Group");
+
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "Minha Estrutura Nome 1");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Texto");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Date",
+			label = "Data");
+
+		WebContentStructures.addLocalization(
+			locale = "es_ES",
+			localization1Name = "Mi Estructura Nombre 1");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Texto");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Date",
+			label = "Fecha");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Group",
+			fieldFieldLabelEdit = "Grupo");
+
+		DDLDataDefinition.save();
+
+		Navigator.gotoNavItem(navItem = "Web Content");
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "My Structure Name 1");
+		
+		CKEditor.addContentInWebContent(
+			content = "Hello",
+			fieldLabel = "Text");
+
+		WebContent.addWithStructureCP(webContentTitle = "WC Title");
+			
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		CKEditor.addContentInWebContent(
+			content = "Olá",
+			fieldLabel = "Text");
+			
+		WebContent.addWithStructureCP(webContentTitle = "WC Título");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		CKEditor.addContentInWebContent(
+			content = "Hola",
+			fieldLabel = "Text");
+
+		WebContent.addWithStructureCP(webContentTitle = "WC Título");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
+
+		CKEditor.assertContentIframe(
+            fieldLabel = "Text",
+            content = "Hello");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		CKEditor.assertContentIframe(
+            fieldLabel = "Texto",
+            content = "Olá");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC Título");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		CKEditor.assertContentIframe(
+            fieldLabel = "Texto",
+            content = "Hola");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC Título");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

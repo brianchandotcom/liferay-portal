@@ -111,6 +111,12 @@ definition {
 		}
 	}
 
+	macro editStructure {
+		LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${structureName}");
+	}
+
 	macro editStructureDefaultValuesCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Default Values",

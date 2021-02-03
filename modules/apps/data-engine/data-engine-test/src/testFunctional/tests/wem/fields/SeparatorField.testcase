@@ -61,7 +61,7 @@ definition {
 			fieldFieldLabel = "Test",
 			fieldName = "Separator");
 
-		DataEngine.deleteField(fieldFieldLabel = "Test");
+		DataEngine.delete(fieldFieldLabel = "Test");
 
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
 
@@ -93,7 +93,7 @@ definition {
 			fieldFieldLabel = "Separator test",
 			fieldName = "Separator");
 
-		DataEngine.duplicateField(fieldFieldLabel = "Separator test");
+		DataEngine.duplicate(fieldFieldLabel = "Separator test");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Copy of Separator test",

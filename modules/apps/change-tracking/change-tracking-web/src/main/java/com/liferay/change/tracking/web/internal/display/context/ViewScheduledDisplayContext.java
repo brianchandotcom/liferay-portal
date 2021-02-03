@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
 import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -27,11 +28,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -71,7 +75,22 @@ public class ViewScheduledDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		return ParamUtil.getString(_renderRequest, "displayStyle", "list");
+		String displayStyle = ParamUtil.getString(
+			_renderRequest, "displayStyle");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = portalPreferences.getValue(
+				CTPortletKeys.PUBLICATIONS, "display-style", "list");
+		}
+
+		portalPreferences.setValue(
+			CTPortletKeys.PUBLICATIONS, "display-style", displayStyle);
+
+		return displayStyle;
 	}
 
 	public Date getPublishingDate(long ctCollectionId) throws PortalException {

@@ -231,17 +231,9 @@ definition {
 			}
 
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER");
-
-			AssertTextEquals(
-				locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_TITLE_WITH_REMINDER",
-				value1 = "${eventTitle}");
 		}
 		else {
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY");
-
-			AssertTextEquals(
-				locator1 = "Calendar#SCHEDULER_EVENT_ALL_DAY_TITLE",
-				value1 = "${eventTitle}");
 		}
 	}
 

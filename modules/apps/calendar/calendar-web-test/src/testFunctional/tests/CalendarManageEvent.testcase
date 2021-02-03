@@ -244,6 +244,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
+		Calendar.hideCurrentSiteCalendar();
+
 		CalendarEvent.edit(
 			calendarName = "Test Test",
 			eventTitle = "Calendar Event All Day Title",

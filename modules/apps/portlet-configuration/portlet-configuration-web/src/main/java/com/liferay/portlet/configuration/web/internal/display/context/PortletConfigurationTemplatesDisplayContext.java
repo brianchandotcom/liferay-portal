@@ -18,6 +18,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationWebKeys;
 import com.liferay.portlet.configuration.web.internal.servlet.taglib.util.ArchivedSettingsActionDropdownItemsProvider;
 import com.liferay.portlet.configuration.web.internal.util.comparator.ArchivedSettingsModifiedDateComparator;
@@ -143,7 +146,20 @@ public class PortletConfigurationTemplatesDisplayContext {
 		}
 
 		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle", "list");
+			_httpServletRequest, "displayStyle");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_renderRequest);
+
+		if (Validator.isNull(_displayStyle)) {
+			_displayStyle = portalPreferences.getValue(
+				PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
+				"display-style", "list");
+		}
+
+		portalPreferences.setValue(
+			PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
+			"display-style", _displayStyle);
 
 		return _displayStyle;
 	}

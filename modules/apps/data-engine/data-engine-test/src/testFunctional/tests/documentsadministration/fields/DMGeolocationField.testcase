@@ -256,12 +256,42 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
-	@ignore = "true"
 	@priority = "4"
 	test ShowAndHideGeolocationLabel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98071 ShowAndHideGeolocationLabel pending implementation
+		var key_fieldLabel = "Geolocation";
+
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeFieldNames = "${key_fieldLabel}",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DataEngine.editFieldShowLabel(fieldFieldLabel = "${key_fieldLabel}");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		AssertElementPresent(locator1 = "FormFields#LABEL");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${key_fieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${key_fieldLabel}");
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+			Navigator.gotoNavTab(navTab = "Advanced");
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Show Label",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		AssertElementNotPresent(locator1 = "FormFields#LABEL");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

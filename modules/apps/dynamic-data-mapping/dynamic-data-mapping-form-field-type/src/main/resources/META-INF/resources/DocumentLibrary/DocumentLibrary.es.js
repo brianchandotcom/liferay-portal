@@ -57,6 +57,23 @@ const getValue = (value) => {
 	return JSON.stringify(value);
 };
 
+function getMessage({value}) {
+	let message = '';
+
+	if (value && typeof value === 'string') {
+		try {
+			const fileEntry = JSON.parse(value);
+
+			message = fileEntry.message;
+		}
+		catch (e) {
+			console.warn('Unable to parse JSON', value);
+		}
+	}
+
+	return message;
+}
+
 function transformFileEntryProperties({fileEntryTitle, fileEntryURL, value}) {
 	if (value && typeof value === 'string') {
 		try {
@@ -96,6 +113,8 @@ const DocumentLibrary = ({
 			}),
 		[fileEntryTitle, fileEntryURL, value]
 	);
+
+	const message = getMessage({value});
 
 	return (
 		<div className="liferay-ddm-form-field-document-library">
@@ -154,6 +173,8 @@ const DocumentLibrary = ({
 				type="hidden"
 				value={getValue(value)}
 			/>
+
+			{message && <div className="form-feedback-item">{message}</div>}
 		</div>
 	);
 };
@@ -179,6 +200,8 @@ const GuestUploadFile = ({
 			}),
 		[fileEntryTitle, fileEntryURL, value]
 	);
+
+	const message = getMessage({value});
 
 	return (
 		<div className="liferay-ddm-form-field-document-library">
@@ -236,6 +259,8 @@ const GuestUploadFile = ({
 			/>
 
 			{progress !== 0 && <ClayProgressBar value={progress} />}
+
+			{message && <div className="form-feedback-item">{message}</div>}
 		</div>
 	);
 };

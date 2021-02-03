@@ -50,10 +50,8 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.Dimensions;
 import com.liferay.commerce.product.constants.CPMeasurementUnitConstants;
@@ -67,6 +65,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -313,18 +313,17 @@ public class FedExCommerceShippingOptionHelper {
 	private Address _getAddress(CommerceAddress commerceAddress)
 		throws Exception {
 
-		CommerceCountry commerceCountry =
-			commerceAddress.fetchCommerceCountry();
+		Country country = commerceAddress.fetchCountry();
 
-		if (commerceCountry == null) {
+		if (country == null) {
 			return null;
 		}
 
 		Address address = new Address();
 
 		address.setCity(commerceAddress.getCity());
-		address.setCountryCode(commerceCountry.getTwoLettersISOCode());
-		address.setCountryName(commerceCountry.getName(LocaleUtil.US));
+		address.setCountryCode(country.getA2());
+		address.setCountryName(country.getTitle(LocaleUtil.US));
 
 		address.setPostalCode(commerceAddress.getZip());
 
@@ -334,10 +333,10 @@ public class FedExCommerceShippingOptionHelper {
 			address.setResidential(Boolean.TRUE);
 		}
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		if (commerceRegion != null) {
-			address.setStateOrProvinceCode(commerceRegion.getCode());
+		if (region != null) {
+			address.setStateOrProvinceCode(region.getRegionCode());
 		}
 
 		List<String> streetLines = new ArrayList<>(3);

@@ -16,8 +16,6 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
@@ -207,8 +205,7 @@ public class CommerceShippingFixedOptionSettingClayTable
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		CommerceCountry commerceCountry =
-			commerceShippingFixedOptionRel.getCommerceCountry();
+		Country commerceCountry = commerceShippingFixedOptionRel.getCountry();
 
 		if (commerceCountry == null) {
 			return StringPool.STAR;
@@ -221,8 +218,7 @@ public class CommerceShippingFixedOptionSettingClayTable
 			CommerceShippingFixedOptionRel commerceShippingFixedOptionRel)
 		throws PortalException {
 
-		CommerceRegion commerceRegion =
-			commerceShippingFixedOptionRel.getCommerceRegion();
+		Region commerceRegion = commerceShippingFixedOptionRel.getRegion();
 
 		if (commerceRegion == null) {
 			return StringPool.STAR;

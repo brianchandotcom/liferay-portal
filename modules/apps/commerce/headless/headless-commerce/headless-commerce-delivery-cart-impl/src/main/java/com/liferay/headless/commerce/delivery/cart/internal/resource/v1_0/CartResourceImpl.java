@@ -27,10 +27,8 @@ import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
@@ -42,10 +40,8 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
@@ -57,6 +53,10 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -236,19 +236,17 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		CommerceCountry commerceCountry =
-			_commerceCountryService.getCommerceCountry(
-				commerceOrder.getCompanyId(), address.getCountryISOCode());
+		Country country = _countryService.getCountryByA2(
+			commerceOrder.getCompanyId(), address.getCountryISOCode());
 
 		return _commerceAddressService.addCommerceAddress(
 			commerceOrder.getModelClassName(),
 			commerceOrder.getCommerceOrderId(), address.getName(),
 			address.getDescription(), address.getStreet1(),
 			address.getStreet2(), address.getStreet3(), address.getCity(),
-			address.getZip(),
-			_getCommerceRegionId(null, commerceCountry, address),
-			commerceCountry.getCommerceCountryId(), address.getPhoneNumber(),
-			type, serviceContext);
+			address.getZip(), _getRegionId(null, country, address),
+			country.getCountryId(), address.getPhoneNumber(), type,
+			serviceContext);
 	}
 
 	private CommerceOrder _addCommerceOrder(
@@ -273,9 +271,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceAccount.getCommerceAccountId(), commerceCurrencyId);
 	}
 
-	private long _getCommerceRegionId(
-			CommerceAddress commerceAddress, CommerceCountry commerceCountry,
-			Address address)
+	private long _getRegionId(
+			CommerceAddress commerceAddress, Country country, Address address)
 		throws Exception {
 
 		if (Validator.isNull(address.getRegionISOCode()) &&
@@ -284,18 +281,14 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			return commerceAddress.getCommerceRegionId();
 		}
 
-		if (Validator.isNull(address.getRegionISOCode()) ||
-			(commerceCountry == null)) {
-
+		if (Validator.isNull(address.getRegionISOCode()) || (country == null)) {
 			return 0;
 		}
 
-		CommerceRegion commerceRegion =
-			_commerceRegionLocalService.getCommerceRegion(
-				commerceCountry.getCommerceCountryId(),
-				address.getRegionISOCode());
+		Region region = _regionLocalService.getRegion(
+			country.getCountryId(), address.getRegionISOCode());
 
-		return commerceRegion.getCommerceRegionId();
+		return region.getRegionId();
 	}
 
 	private CartItem[] _getValidatedCommerceOrderItems(
@@ -388,7 +381,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			_commerceAddressService.getCommerceAddress(
 				commerceOrder.getShippingAddressId());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
 		_commerceAddressService.updateCommerceAddress(
 			commerceAddress.getCommerceAddressId(), address.getName(),
@@ -399,8 +392,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			GetterUtil.get(address.getStreet3(), commerceAddress.getStreet3()),
 			address.getCity(),
 			GetterUtil.get(address.getZip(), commerceAddress.getZip()),
-			_getCommerceRegionId(commerceAddress, commerceCountry, address),
-			commerceCountry.getCommerceCountryId(),
+			_getRegionId(commerceAddress, country, address),
+			country.getCountryId(),
 			GetterUtil.get(
 				address.getPhoneNumber(), commerceAddress.getPhoneNumber()),
 			type, serviceContext);
@@ -651,9 +644,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
@@ -672,9 +662,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Reference
-	private CommerceRegionLocalService _commerceRegionLocalService;
-
-	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;
 
 	@Reference
@@ -682,7 +669,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		_commerceShippingMethodLocalService;
 
 	@Reference
+	private CountryService _countryService;
+
+	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

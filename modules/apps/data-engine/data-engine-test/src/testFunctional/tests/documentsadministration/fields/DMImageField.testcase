@@ -117,7 +117,7 @@ definition {
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
 
-		DataEngine.duplicateField(fieldFieldLabel = "Image");
+		DataEngine.duplicate(fieldFieldLabel = "Image");
 
 		DDLDataDefinition.save();
 
@@ -390,7 +390,7 @@ definition {
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
 
-		DataEngine.editFieldShowOrHideLabel(
+		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Image",
 			showLabel = "false");
 

@@ -15,14 +15,19 @@
 package com.liferay.document.library.service.impl;
 
 import com.liferay.document.library.exception.DLStorageQuotaExceededException;
+import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.document.library.service.base.DLStorageQuotaLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Iterator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -47,18 +52,19 @@ public class DLStorageQuotaLocalServiceImpl
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	@Override
 	public void incrementStorageSize(long companyId, long increment) {
-		DLStorageQuota dlStorageQuota =
-			dlStorageQuotaPersistence.fetchByCompanyId(companyId);
-
-		if (dlStorageQuota == null) {
-			dlStorageQuota = dlStorageQuotaLocalService.createDLStorageQuota(
-				counterLocalService.increment());
-
-			dlStorageQuota.setCompanyId(companyId);
-		}
+		DLStorageQuota dlStorageQuota = _getDLStorageQuota(companyId);
 
 		dlStorageQuota.setStorageSize(
 			dlStorageQuota.getStorageSize() + increment);
+
+		dlStorageQuotaLocalService.updateDLStorageQuota(dlStorageQuota);
+	}
+
+	@Override
+	public void updateStorageSize(long companyId) {
+		DLStorageQuota dlStorageQuota = _getDLStorageQuota(companyId);
+
+		dlStorageQuota.setStorageSize(_getActualStorageSize(companyId));
 
 		dlStorageQuotaLocalService.updateDLStorageQuota(dlStorageQuota);
 	}
@@ -80,6 +86,41 @@ public class DLStorageQuotaLocalServiceImpl
 				"Unable to exceed maximum alowed document library storage " +
 					"size");
 		}
+	}
+
+	private long _getActualStorageSize(long companyId) {
+		Iterable<Long> iterable = dslQuery(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.sum(
+					DLFileVersionTable.INSTANCE.size
+				).as(
+					"SUM_VALUE"
+				)
+			).from(
+				DLFileVersionTable.INSTANCE
+			).where(
+				DLFileVersionTable.INSTANCE.companyId.eq(companyId)
+			));
+
+		Iterator<Long> iterator = iterable.iterator();
+
+		return iterator.next();
+	}
+
+	private DLStorageQuota _getDLStorageQuota(long companyId) {
+		DLStorageQuota dlStorageQuota =
+			dlStorageQuotaPersistence.fetchByCompanyId(companyId);
+
+		if (dlStorageQuota != null) {
+			return dlStorageQuota;
+		}
+
+		dlStorageQuota = dlStorageQuotaLocalService.createDLStorageQuota(
+			counterLocalService.increment());
+
+		dlStorageQuota.setCompanyId(companyId);
+
+		return dlStorageQuota;
 	}
 
 	private long _getStorageSize(long companyId) {

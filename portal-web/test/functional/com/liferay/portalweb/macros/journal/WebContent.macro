@@ -954,28 +954,6 @@ definition {
 		AssertTextNotPresent(value1 = "${webContentTitle}");
 	}
 
-	macro deleteElementsByPortlet {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "${category}",
-			portlet = "${portlet}");
-
-		if (isSet(navItem)) {
-			Navigator.gotoNavItem(navItem = "${navItem}");
-		}
-
-		Search.searchCP(searchTerm = "${searchTerm}");
-
-		PortletEntry.selectAll();
-
-		ClickNoError(locator1 = "Icon#DELETE");
-
-		AssertConfirm.assertConfirmationNoWait(value1 = "${confirmationMessage}");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro deleteStagedCP {
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",

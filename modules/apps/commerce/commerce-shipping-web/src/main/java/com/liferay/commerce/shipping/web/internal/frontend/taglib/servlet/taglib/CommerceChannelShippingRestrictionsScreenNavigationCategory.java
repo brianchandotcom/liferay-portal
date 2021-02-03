@@ -16,7 +16,6 @@ package com.liferay.commerce.shipping.web.internal.frontend.taglib.servlet.tagli
 
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;
@@ -25,6 +24,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -87,7 +87,7 @@ public class CommerceChannelShippingRestrictionsScreenNavigationCategory
 		CommerceShippingMethodsDisplayContext
 			commerceShippingMethodsDisplayContext =
 				new CommerceShippingMethodsDisplayContext(
-					_commerceChannelLocalService, _commerceCountryService,
+					_commerceChannelLocalService, _countryService,
 					_commerceShippingEngineRegistry,
 					_commerceShippingFixedOptionService,
 					_commerceShippingMethodService, httpServletRequest);
@@ -105,9 +105,6 @@ public class CommerceChannelShippingRestrictionsScreenNavigationCategory
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 	@Reference
@@ -116,6 +113,9 @@ public class CommerceChannelShippingRestrictionsScreenNavigationCategory
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

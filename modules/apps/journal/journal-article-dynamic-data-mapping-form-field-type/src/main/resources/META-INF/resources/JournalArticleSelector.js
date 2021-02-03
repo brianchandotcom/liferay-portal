@@ -34,6 +34,7 @@ const JournalArticleSelector = ({
 	disabled,
 	inputValue,
 	itemSelectorURL,
+	message,
 	name,
 	onChange,
 	portletNamespace,
@@ -112,15 +113,14 @@ const JournalArticleSelector = ({
 				)}
 			</ClayInput.Group>
 
-			{article.message && (
-				<div className="form-feedback-item">{article.message}</div>
-			)}
+			{message && <div className="form-feedback-item">{message}</div>}
 		</ClayForm.Group>
 	);
 };
 
 const Main = ({
 	itemSelectorURL,
+	message,
 	name,
 	onChange,
 	portletNamespace,
@@ -134,6 +134,7 @@ const Main = ({
 			disabled={readOnly}
 			inputValue={value && value !== '' ? value : predefinedValue}
 			itemSelectorURL={itemSelectorURL}
+			message={message}
 			name={name}
 			onChange={(value) => onChange({}, value)}
 			portletNamespace={portletNamespace}

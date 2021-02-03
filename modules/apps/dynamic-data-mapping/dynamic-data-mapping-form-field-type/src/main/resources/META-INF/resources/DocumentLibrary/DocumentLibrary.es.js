@@ -57,23 +57,6 @@ const getValue = (value) => {
 	return JSON.stringify(value);
 };
 
-function getMessage({value}) {
-	let message = '';
-
-	if (value && typeof value === 'string') {
-		try {
-			const fileEntry = JSON.parse(value);
-
-			message = fileEntry.message;
-		}
-		catch (e) {
-			console.warn('Unable to parse JSON', value);
-		}
-	}
-
-	return message;
-}
-
 function transformFileEntryProperties({fileEntryTitle, fileEntryURL, value}) {
 	if (value && typeof value === 'string') {
 		try {
@@ -97,6 +80,7 @@ const DocumentLibrary = ({
 	fileEntryTitle = '',
 	fileEntryURL = '',
 	id,
+	message,
 	name,
 	onClearButtonClicked,
 	onSelectButtonClicked,
@@ -113,8 +97,6 @@ const DocumentLibrary = ({
 			}),
 		[fileEntryTitle, fileEntryURL, value]
 	);
-
-	const message = getMessage({value});
 
 	return (
 		<div className="liferay-ddm-form-field-document-library">
@@ -183,6 +165,7 @@ const GuestUploadFile = ({
 	fileEntryTitle = '',
 	fileEntryURL = '',
 	id,
+	message,
 	name,
 	onClearButtonClicked,
 	onUploadSelectButtonClicked,
@@ -200,8 +183,6 @@ const GuestUploadFile = ({
 			}),
 		[fileEntryTitle, fileEntryURL, value]
 	);
-
-	const message = getMessage({value});
 
 	return (
 		<div className="liferay-ddm-form-field-document-library">
@@ -277,6 +258,7 @@ const Main = ({
 	itemSelectorURL,
 	maximumRepetitions,
 	maximumSubmissionLimitReached,
+	message,
 	name,
 	onBlur,
 	onChange,
@@ -489,6 +471,7 @@ const Main = ({
 					fileEntryTitle={fileEntryTitle}
 					fileEntryURL={fileEntryURL}
 					id={id}
+					message={message}
 					name={name}
 					onClearButtonClicked={(event) => {
 						setCurrentValue(null);
@@ -508,6 +491,7 @@ const Main = ({
 					fileEntryTitle={fileEntryTitle}
 					fileEntryURL={fileEntryURL}
 					id={id}
+					message={message}
 					name={name}
 					onClearButtonClicked={(event) => {
 						setCurrentValue(null);

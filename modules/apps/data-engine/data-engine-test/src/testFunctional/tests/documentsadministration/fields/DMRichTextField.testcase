@@ -91,16 +91,9 @@ definition {
 	test LocalizationOfRichTextPersists {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Rich Text",
-			dmDocumentTypeName = "Test");
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
@@ -108,7 +101,7 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		PortletEntry.inputName(name = "Teste");
+		PortletEntry.inputName(name = "My Document pt_BR");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Rich Text",
@@ -120,13 +113,13 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Test");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "Teste");
+			value1 = "My Document pt_BR");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Rich Texto",

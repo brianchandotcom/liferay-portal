@@ -183,44 +183,43 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content");
+			category = "Content & Data",
+			portlet = "Web Content");
 
-        NavItem.gotoStructures();
+		NavItem.gotoStructures();
 
-        WebContentStructures.addCP(
-            structureDescription = "Test",
-            structureName = "Test");
+		WebContentStructures.addCP(
+			structureDescription = "Test",
+			structureName = "Test");
 
-        DataEngine.addField(
-            fieldFieldLabel = "Text Test",
-            fieldName = "Text");
+		DataEngine.addField(
+			fieldFieldLabel = "Text Test",
+			fieldName = "Text");
 
-        DataEngine.addFieldNested(
-            fieldFieldLabel = "Text Test 2",
-            fieldName = "Text",
-            targetFieldLabel = "Text Test");
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text Test 2",
+			fieldName = "Text",
+			targetFieldLabel = "Text Test");
 
 		WebContentStructures.saveCP(structureName = "Test");
 
-        LexiconEntry.gotoEntry(rowEntry = "Test");
+		LexiconEntry.gotoEntry(rowEntry = "Test");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "Test");	
+			value1 = "Test");
 
 		PortletEntry.changeLocale(locale = "en-US");
-		
+
 		WebContentStructures.addName(structureName = "Test edited");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.saveCP(structureName = "Test");
 
-        WebContentStructures.deleteCP(structureName = "Test");
-		
+		WebContentStructures.deleteCP(structureName = "Test");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

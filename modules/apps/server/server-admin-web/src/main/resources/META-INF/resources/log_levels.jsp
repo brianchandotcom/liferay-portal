@@ -31,37 +31,21 @@ PortletURL clearResultsURL = PortletURLUtil.clone(searchURL, liferayPortletRespo
 clearResultsURL.setParameter("navigation", (String)null);
 clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
-SearchContainer<Map.Entry<String, Logger>> loggerSearchContainer = new SearchContainer(liferayPortletRequest, searchURL, null, null);
+SearchContainer<Map.Entry<String, String>> loggerSearchContainer = new SearchContainer(liferayPortletRequest, searchURL, null, null);
 
-Map<String, Logger> currentLoggerNames = new TreeMap<>();
+Map<String, String> currentLoggerNames = new TreeMap<>();
 
-Enumeration<Logger> enu = LogManager.getCurrentLoggers();
+Map<String, String> logLevelStrings = Log4JUtil.getLogLevelStrings();
 
-while (enu.hasMoreElements()) {
-	Logger logger = enu.nextElement();
-
-	String loggerName = logger.getName();
+for (Map.Entry<String, String> entry : logLevelStrings.entrySet()) {
+	String loggerName = entry.getKey();
 
 	if (Validator.isNull(keywords) || loggerName.contains(keywords)) {
-		currentLoggerNames.put(loggerName, logger);
+		currentLoggerNames.put(loggerName, entry.getValue());
 	}
 }
 
-List<Map.Entry<String, Logger>> currentLoggerNamesList = ListUtil.fromCollection(currentLoggerNames.entrySet());
-
-Iterator<Map.Entry<String, Logger>> itr = currentLoggerNamesList.iterator();
-
-while (itr.hasNext()) {
-	Map.Entry<String, Logger> entry = itr.next();
-
-	Logger logger = entry.getValue();
-
-	Level level = logger.getLevel();
-
-	if (level == null) {
-		itr.remove();
-	}
-}
+List<Map.Entry<String, String>> currentLoggerNamesList = ListUtil.fromCollection(currentLoggerNames.entrySet());
 
 loggerSearchContainer.setResults(ListUtil.subList(currentLoggerNamesList, loggerSearchContainer.getStart(), loggerSearchContainer.getEnd()));
 loggerSearchContainer.setTotal(currentLoggerNamesList.size());
@@ -117,9 +101,7 @@ CreationMenu creationMenu =
 			>
 
 				<%
-				Logger logger = (Logger)entry.getValue();
-
-				Level level = logger.getLevel();
+				String levelString = (String)entry.getValue();
 				%>
 
 				<select name="<%= liferayPortletResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>">
@@ -128,7 +110,7 @@ CreationMenu creationMenu =
 					for (int j = 0; j < Levels.ALL_LEVELS.length; j++) {
 					%>
 
-						<option <%= level.equals(Levels.ALL_LEVELS[j]) ? "selected" : StringPool.BLANK %> value="<%= Levels.ALL_LEVELS[j] %>"><%= Levels.ALL_LEVELS[j] %></option>
+						<option <%= levelString.equals(String.valueOf(Levels.ALL_LEVELS[j])) ? "selected" : StringPool.BLANK %> value="<%= String.valueOf(Levels.ALL_LEVELS[j]) %>"><%= String.valueOf(Levels.ALL_LEVELS[j]) %></option>
 
 					<%
 					}

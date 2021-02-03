@@ -32,6 +32,7 @@ page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu" %><%@
 page import="com.liferay.petra.log4j.Levels" %><%@
+page import="com.liferay.petra.log4j.Log4JUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.convert.ConvertProcess" %><%@
@@ -81,8 +82,6 @@ page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collection" %><%@
 page import="java.util.Date" %><%@
-page import="java.util.Enumeration" %><%@
-page import="java.util.Iterator" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Properties" %><%@
@@ -92,9 +91,7 @@ page import="java.util.TreeMap" %>
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
-<%@ page import="org.apache.log4j.Level" %><%@
-page import="org.apache.log4j.LogManager" %><%@
-page import="org.apache.log4j.Logger" %>
+<%@ page import="org.apache.log4j.Level" %>
 
 <liferay-frontend:defineObjects />
 

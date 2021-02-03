@@ -229,7 +229,7 @@ describe('EditableLinkPanel', () => {
 			target: {value: 'manual'},
 		});
 
-		expect(editableConfig.en).toEqual({});
+		expect(editableConfig).toEqual({});
 
 		expect(getByLabelText(document.body, 'url')).toHaveValue('');
 		expect(

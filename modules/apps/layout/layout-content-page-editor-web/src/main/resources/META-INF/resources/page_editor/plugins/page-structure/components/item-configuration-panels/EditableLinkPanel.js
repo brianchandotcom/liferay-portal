@@ -28,6 +28,7 @@ import {
 } from '../../../../app/store/index';
 import updateEditableValues from '../../../../app/thunks/updateEditableValues';
 import {deepEqual} from '../../../../app/utils/checkDeepEqual';
+import isMapped from '../../../../app/utils/editable-value/isMapped';
 import {getEditableItemPropTypes} from '../../../../prop-types/index';
 
 export default function EditableLinkPanel({item}) {
@@ -73,10 +74,14 @@ export default function EditableLinkPanel({item}) {
 	);
 
 	const handleValueSelect = (_, nextConfig) => {
-		const config = {
-			...editableValue.config,
-			[languageId]: nextConfig,
-		};
+		let config = nextConfig;
+
+		if (!isMapped(nextConfig) && !isMapped(editableValue.config)) {
+			config = {
+				...editableValue.config,
+				[languageId]: nextConfig,
+			};
+		}
 
 		if (
 			Object.keys(nextConfig).length > 0 &&

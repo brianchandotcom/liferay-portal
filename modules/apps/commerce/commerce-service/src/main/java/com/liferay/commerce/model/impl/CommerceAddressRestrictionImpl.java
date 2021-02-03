@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.model.impl;
 
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -28,9 +28,8 @@ public class CommerceAddressRestrictionImpl
 	}
 
 	@Override
-	public CommerceCountry getCommerceCountry() throws PortalException {
-		return CommerceCountryLocalServiceUtil.getCommerceCountry(
-			getCommerceCountryId());
+	public Country getCountry() throws PortalException {
+		return CountryLocalServiceUtil.getCountry(getCommerceCountryId());
 	}
 
 }

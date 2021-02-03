@@ -519,44 +519,28 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 			OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
 			ServiceContext serviceContext) {
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskInstanceToken.class, getClassLoader());
+		if (completed == null) {
+			return kaleoTaskInstanceTokenPersistence.findByC_U(
+				serviceContext.getCompanyId(), userId, start, end,
+				orderByComparator);
+		}
 
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(serviceContext.getCompanyId()));
-
-		Property workflowContextProperty = PropertyFactoryUtil.forName(
-			"workflowContext");
-
-		dynamicQuery.add(
-			workflowContextProperty.like("%\"userId\":\"" + userId + "\"%"));
-
-		addCompletedCriterion(dynamicQuery, completed);
-
-		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
+		return kaleoTaskInstanceTokenPersistence.findByC_U_C(
+			serviceContext.getCompanyId(), userId, completed, start, end,
+			orderByComparator);
 	}
 
 	@Override
 	public int getSubmittingUserKaleoTaskInstanceTokensCount(
 		long userId, Boolean completed, ServiceContext serviceContext) {
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			KaleoTaskInstanceToken.class, getClassLoader());
+		if (completed == null) {
+			return kaleoTaskInstanceTokenPersistence.countByC_U(
+				serviceContext.getCompanyId(), userId);
+		}
 
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(serviceContext.getCompanyId()));
-
-		Property workflowContextProperty = PropertyFactoryUtil.forName(
-			"workflowContext");
-
-		dynamicQuery.add(
-			workflowContextProperty.like("%\"userId\":\"" + userId + "\"%"));
-
-		addCompletedCriterion(dynamicQuery, completed);
-
-		return (int)dynamicQueryCount(dynamicQuery);
+		return kaleoTaskInstanceTokenPersistence.countByC_U_C(
+			serviceContext.getCompanyId(), userId, completed);
 	}
 
 	@Override

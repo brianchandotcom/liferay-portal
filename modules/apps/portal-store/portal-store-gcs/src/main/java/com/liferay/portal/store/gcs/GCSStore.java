@@ -30,7 +30,6 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.google.common.base.Stopwatch;
 
-import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.comparator.VersionNumberComparator;
 import com.liferay.petra.string.StringBundler;
@@ -68,6 +67,7 @@ import org.threeten.bp.Duration;
 
 /**
  * @author Shanon Mathai
+ * @author Alicia García
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
@@ -75,7 +75,7 @@ import org.threeten.bp.Duration;
 	property = "store.type=com.liferay.portal.store.gcs.GCSStore",
 	service = Store.class
 )
-public class GCSStore extends BaseStore {
+public class GCSStore implements Store {
 
 	public static final String KEY_PROPERTY = "dl.store.gcs.aes256.key";
 

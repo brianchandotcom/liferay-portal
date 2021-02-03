@@ -1035,10 +1035,6 @@ public class EditAssetListDisplayContext {
 		return false;
 	}
 
-	public boolean isShowSubtypeFieldsFilter() {
-		return true;
-	}
-
 	public boolean isSubtypeFieldsFilterEnabled() {
 		if (_subtypeFieldsFilterEnabled != null) {
 			return _subtypeFieldsFilterEnabled;

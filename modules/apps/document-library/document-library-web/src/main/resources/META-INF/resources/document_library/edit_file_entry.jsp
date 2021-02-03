@@ -389,7 +389,7 @@ renderResponse.setTitle(headerTitle);
 							if (fileEntryTypeId > 0) {
 							%>
 
-								<div>
+								<div class="mb-3">
 
 									<%
 									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();

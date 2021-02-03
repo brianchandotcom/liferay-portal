@@ -10,13 +10,13 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(	
-			category = "Content & Data",	
-			portlet = "Documents and Media");	
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
 
-		DMNavigator.gotoDocumentType();	
+		DMNavigator.gotoDocumentType();
 
-		LexiconEntry.gotoAdd();	
+		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = "New Document Type");
 	}

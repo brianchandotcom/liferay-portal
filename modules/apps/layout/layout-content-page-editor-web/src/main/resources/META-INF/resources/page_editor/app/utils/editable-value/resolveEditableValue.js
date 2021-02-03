@@ -14,7 +14,7 @@
 
 import {config} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
-import isMapped from '../../utils/editable-value/isMapped';
+import isMapped from './isMapped';
 
 export default function resolveEditableValue(
 	editableValue,

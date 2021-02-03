@@ -16,15 +16,11 @@ package com.liferay.commerce.health.status.web.internal;
 
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
@@ -53,16 +49,6 @@ public class CountriesCommerceHealthHttpStatus
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
 		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
-		try {
-			_commerceCountryLocalService.importDefaultCountries(serviceContext);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
 	}
 
 	@Override
@@ -102,17 +88,13 @@ public class CountriesCommerceHealthHttpStatus
 	public boolean isFixed(long companyId, long commerceChannelId)
 		throws PortalException {
 
-		List<CommerceCountry> commerceCountries =
-			_commerceCountryLocalService.getCommerceCountries(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<Country> countries = _countryLocalService.getCompanyCountries(
+			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		return !commerceCountries.isEmpty();
+		return !countries.isEmpty();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CountriesCommerceHealthHttpStatus.class);
-
 	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
+	private CountryService _countryLocalService;
 
 }

@@ -20,10 +20,8 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.paypal.internal.configuration.PayPalGroupServiceConfiguration;
@@ -41,6 +39,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1205,21 +1205,19 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		if (commerceAddress != null) {
 			shippingAddress.setCity(commerceAddress.getCity());
 
-			CommerceCountry commerceCountry =
-				commerceAddress.getCommerceCountry();
+			Country country = commerceAddress.getCountry();
 
-			shippingAddress.setCountryCode(
-				commerceCountry.getTwoLettersISOCode());
+			shippingAddress.setCountryCode(country.getA2());
 
 			shippingAddress.setLine1(commerceAddress.getStreet1());
 			shippingAddress.setLine2(commerceAddress.getStreet2());
 			shippingAddress.setPostalCode(commerceAddress.getZip());
 			shippingAddress.setRecipientName(commerceAddress.getName());
 
-			CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+			Region region = commerceAddress.getRegion();
 
-			if (commerceRegion != null) {
-				shippingAddress.setState(commerceRegion.getCode());
+			if (region != null) {
+				shippingAddress.setState(region.getRegionCode());
 			}
 		}
 

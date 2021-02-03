@@ -15,11 +15,11 @@
 package com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountAddress;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -50,12 +50,12 @@ public class AccountAddressDTOConverter
 			_commerceAddressService.getCommerceAddress(
 				(Long)dtoConverterContext.getId());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
 		return new AccountAddress() {
 			{
 				city = commerceAddress.getCity();
-				countryISOCode = commerceCountry.getTwoLettersISOCode();
+				countryISOCode = country.getA2();
 				defaultBilling = commerceAddress.isDefaultBilling();
 				defaultShipping = commerceAddress.isDefaultShipping();
 				description = commerceAddress.getDescription();
@@ -79,13 +79,13 @@ public class AccountAddressDTOConverter
 	private String _getRegionISOCode(CommerceAddress commerceAddress)
 		throws Exception {
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		if (commerceRegion == null) {
+		if (region == null) {
 			return StringPool.BLANK;
 		}
 
-		return commerceRegion.getCode();
+		return region.getRegionCode();
 	}
 
 	@Reference

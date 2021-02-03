@@ -19,7 +19,6 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.web.internal.model.Address;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
@@ -36,6 +35,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -208,9 +208,9 @@ public class CommerceAccountAddressClayDataSetDataSetDisplayView
 		sb.append(commerceAddress.getCity());
 		sb.append(" - ");
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
-		sb.append(commerceCountry.getThreeLettersISOCode());
+		sb.append(country.getA3());
 
 		return sb.toString();
 	}

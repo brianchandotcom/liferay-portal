@@ -15,13 +15,13 @@
 package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -129,14 +129,14 @@ public class CommerceAddressIndexer extends BaseIndexer<CommerceAddress> {
 		document.addNumber(Field.TYPE, commerceAddress.getType());
 		document.addText(FIELD_ZIP, commerceAddress.getZip());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
-		document.addText(FIELD_COUNTRY_NAME, commerceCountry.getName());
+		document.addText(FIELD_COUNTRY_NAME, country.getName());
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		if (commerceRegion != null) {
-			document.addText(FIELD_REGION_NAME, commerceRegion.getName());
+		if (region != null) {
+			document.addText(FIELD_REGION_NAME, region.getName());
 		}
 
 		if (_log.isDebugEnabled()) {

@@ -17,7 +17,6 @@ package com.liferay.commerce.order.web.internal.frontend;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.order.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.web.internal.model.Address;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -28,6 +27,7 @@ import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvide
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -106,17 +106,17 @@ public class CommerceBillingAddressDataSetDataProvider
 			return StringPool.BLANK;
 		}
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		StringBundler sb = new StringBundler((commerceRegion == null) ? 5 : 7);
+		StringBundler sb = new StringBundler((region == null) ? 5 : 7);
 
 		sb.append(commerceAddress.getStreet1());
 		sb.append(StringPool.SPACE);
 		sb.append(commerceAddress.getCity());
 		sb.append(StringPool.NEW_LINE);
 
-		if (commerceRegion != null) {
-			sb.append(commerceRegion.getCode());
+		if (region != null) {
+			sb.append(region.getRegionCode());
 			sb.append(StringPool.SPACE);
 		}
 

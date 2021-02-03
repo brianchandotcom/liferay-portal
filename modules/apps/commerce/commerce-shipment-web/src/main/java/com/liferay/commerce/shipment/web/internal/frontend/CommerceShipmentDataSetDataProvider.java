@@ -26,7 +26,6 @@ import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.frontend.model.Shipment;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -41,6 +40,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -220,17 +220,17 @@ public class CommerceShipmentDataSetDataProvider
 			return StringPool.BLANK;
 		}
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		StringBundler sb = new StringBundler((commerceRegion == null) ? 5 : 7);
+		StringBundler sb = new StringBundler((region == null) ? 5 : 7);
 
 		sb.append(commerceAddress.getStreet1());
 		sb.append(StringPool.SPACE);
 		sb.append(commerceAddress.getCity());
 		sb.append(StringPool.NEW_LINE);
 
-		if (commerceRegion != null) {
-			sb.append(commerceRegion.getCode());
+		if (region != null) {
+			sb.append(region.getRegionCode());
 			sb.append(StringPool.SPACE);
 		}
 

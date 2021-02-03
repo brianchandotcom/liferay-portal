@@ -512,18 +512,26 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 		'<portlet:namespace />ddmStructureFieldValue'
 	);
 
-	if (
-		assetSelector &&
-		ddmStructureFieldNameInput &&
-		ddmStructureFieldValueInput
-	) {
-		assetSelector.addEventListener('change', function (event) {
-			ddmStructureFieldNameInput.value = '';
-			ddmStructureFieldValueInput.value = '';
+	assetSelector.addEventListener('change', function (event) {
+		const assetSelectorEmpty = assetSelector.value === '';
+		const saveButton = document.getElementById(
+			'<portlet:namespace />saveButton'
+		);
 
-			<portlet:namespace />toggleSubclasses(true);
-		});
-	}
+		saveButton.disabled = assetSelectorEmpty;
+
+		if (assetSelectorEmpty) {
+			saveButton.classList.add('disabled');
+		}
+		else {
+			saveButton.classList.remove('disabled');
+		}
+
+		ddmStructureFieldNameInput.value = '';
+		ddmStructureFieldValueInput.value = '';
+
+		<portlet:namespace />toggleSubclasses(true);
+	});
 
 	var delegate = delegateModule.default;
 

@@ -294,8 +294,6 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "3"
 	test EditFieldOnDuplicatedFieldGroup {
-		var formGroupLabel = "Copy of Fields Group";
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Documents and Media");
@@ -327,7 +325,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "DataEngineBuilder#FORM_FIELD_LABEL",
-			value1 = "${formGroupLabel}");
+			value1 = "Copy of Fields Group");
 
 		for (var fieldName : list "Text,Numeric") {
 			DataEngine.editFieldLabel(

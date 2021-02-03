@@ -77,6 +77,10 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 			long accountEntryId, long[] organizationIds)
 		throws PortalException {
 
+		if (organizationIds == null) {
+			return;
+		}
+
 		for (long organizationId : organizationIds) {
 			addAccountEntryOrganizationRel(accountEntryId, organizationId);
 		}

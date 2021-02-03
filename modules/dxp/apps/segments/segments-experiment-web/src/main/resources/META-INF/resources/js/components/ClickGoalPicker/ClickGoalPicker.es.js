@@ -146,10 +146,12 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 	};
 
 	const handleBlur = (event) => {
-		const value = event.target.value;
+		if (!selectedTarget) {
+			const value = event.target.value;
 
-		if (isValidNewClickTargetElement(value)) {
-			selectNewClickTargetElement(event);
+			if (isValidNewClickTargetElement(value)) {
+				selectNewClickTargetElement(event);
+			}
 		}
 	};
 

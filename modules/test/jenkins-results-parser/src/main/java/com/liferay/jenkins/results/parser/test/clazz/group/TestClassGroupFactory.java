@@ -95,7 +95,11 @@ public class TestClassGroupFactory {
 				batchTestClassGroup = new IntegrationJUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
-			else if (batchName.startsWith("junit-test-")) {
+			else if (batchName.startsWith("junit-test-") ||
+					 batchName.startsWith(
+						 "modules-integration-project-templates-") ||
+					 batchName.startsWith("modules-unit-project-templates-")) {
+
 				batchTestClassGroup = new JUnitBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
@@ -107,14 +111,18 @@ public class TestClassGroupFactory {
 				batchTestClassGroup = new ModulesCompileBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
-			else if (batchName.startsWith("modules-integration-") ||
+			else if ((batchName.startsWith("modules-integration-") &&
+					  !batchName.startsWith(
+						  "modules-integration-project-templates-")) ||
 					 batchName.startsWith("subrepository-integration-")) {
 
 				batchTestClassGroup =
 					new ModulesIntegrationJUnitBatchTestClassGroup(
 						batchName, portalTestClassJob);
 			}
-			else if (batchName.startsWith("modules-unit-") ||
+			else if ((batchName.startsWith("modules-unit-") &&
+					  !batchName.startsWith(
+						  "modules-unit-project-templates-")) ||
 					 batchName.startsWith("subrepository-unit-")) {
 
 				batchTestClassGroup = new ModulesUnitJUnitBatchTestClassGroup(

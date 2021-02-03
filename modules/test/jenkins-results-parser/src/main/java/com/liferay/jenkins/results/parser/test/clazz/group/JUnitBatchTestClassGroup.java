@@ -717,7 +717,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		List<String> propertyValues = new ArrayList<>();
 
 		String propertyValue = JenkinsResultsParserUtil.getProperty(
-			getJobProperties(), propertyName, batchName, testSuiteName,
+			getJobProperties(), propertyName, testSuiteName, batchName,
 			getJobName());
 
 		if (propertyValue != null) {

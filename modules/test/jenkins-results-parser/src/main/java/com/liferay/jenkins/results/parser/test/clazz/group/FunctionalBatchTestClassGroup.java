@@ -166,8 +166,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.run.property.query", batchName,
-			testSuiteName, getJobName());
+			jobProperties, "test.batch.run.property.query", testSuiteName,
+			batchName, getJobName());
 	}
 
 	protected List<List<String>> getPoshiTestClassGroups(File testBaseDir) {
@@ -283,8 +283,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		String testSuiteName) {
 
 		return JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.run.property.global.query", batchName,
-			testSuiteName, getJobName());
+			jobProperties, "test.batch.run.property.global.query",
+			testSuiteName, batchName, getJobName());
 	}
 
 	private List<File> _getFunctionalRequiredModuleDirs(List<File> moduleDirs) {

@@ -79,8 +79,9 @@ public class PluginsFunctionalBatchTestClassGroup
 		}
 
 		return JenkinsResultsParserUtil.getProperty(
-			testProperties, "test.batch.run.property.query", batchName,
-			_getPortletName(testBaseDir), testSuiteName, getJobName());
+			testProperties, "test.batch.run.property.query",
+			_getPortletName(testBaseDir), testSuiteName, batchName,
+			getJobName());
 	}
 
 	protected List<List<String>> getPoshiTestClassGroups(File testBaseDir) {

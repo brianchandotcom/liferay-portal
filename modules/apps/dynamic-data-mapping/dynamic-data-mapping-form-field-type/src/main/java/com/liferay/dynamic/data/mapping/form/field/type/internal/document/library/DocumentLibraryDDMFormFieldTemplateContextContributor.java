@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -549,15 +548,13 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		}
 
 		try {
-			if (!ExportImportThreadLocal.isImportInProcess()) {
-				FileEntry fileEntry = dlAppService.getFileEntryByUuidAndGroupId(
-					uuid, groupId);
+			FileEntry fileEntry = dlAppService.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
 
-				if (fileEntry.isInTrash()) {
-					return LanguageUtil.get(
-						getResourceBundle(defaultLocale),
-						"the-selected-document-was-moved-to-the-recycle-bin");
-				}
+			if (fileEntry.isInTrash()) {
+				return LanguageUtil.get(
+					getResourceBundle(defaultLocale),
+					"the-selected-document-was-moved-to-the-recycle-bin");
 			}
 		}
 		catch (Exception exception) {

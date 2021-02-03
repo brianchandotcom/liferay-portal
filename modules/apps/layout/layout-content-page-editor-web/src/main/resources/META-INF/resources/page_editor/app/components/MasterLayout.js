@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef} from 'react';
 
@@ -29,7 +30,7 @@ import {Collection, Column, Container, Row} from './layout-data-items/index';
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: Collection,
 	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: CollectionItem,
-	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
+	[LAYOUT_DATA_ITEM_TYPES.column]: MasterColumn,
 	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneContainer,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
@@ -103,7 +104,6 @@ function Root({children}) {
 function CollectionItem({children}) {
 	return <div>{children}</div>;
 }
-
 function Fragment({item}) {
 	const ref = useRef(null);
 	const selectItem = useSelectItem();
@@ -185,3 +185,14 @@ Fragment.propTypes = {
 		}),
 	}).isRequired,
 };
+
+function MasterColumn({children, className, ...otherProps}) {
+	return (
+		<Column
+			{...otherProps}
+			className={classNames(className, 'page-editor__col--master')}
+		>
+			{children}
+		</Column>
+	);
+}

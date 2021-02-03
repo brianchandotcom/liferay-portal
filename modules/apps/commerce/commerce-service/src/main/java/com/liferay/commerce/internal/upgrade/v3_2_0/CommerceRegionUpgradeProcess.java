@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.upgrade.v3_2_0;
 
 import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
-import com.liferay.commerce.model.impl.CommerceRegionModelImpl;
+import com.liferay.commerce.internal.upgrade.v3_2_0.util.CommerceRegionTable;
 
 /**
  * @author Alessio Antonio Rendina
@@ -25,7 +25,10 @@ public class CommerceRegionUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		dropColumn(CommerceRegionModelImpl.TABLE_NAME, "groupId");
+		if (hasColumn("CommerceRegion", "groupId")) {
+			alter(
+				CommerceRegionTable.class, new AlterTableDropColumn("groupId"));
+		}
 	}
 
 }

@@ -59,7 +59,8 @@ function loadFields({
 	else if (
 		selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content &&
 		selectedItem.classNameId &&
-		selectedItem.classPK
+		selectedItem.classPK &&
+		selectedItem.title
 	) {
 		promise = InfoItemService.getAvailableInfoItemMappingFields({
 			classNameId: selectedItem.classNameId,

@@ -90,7 +90,7 @@ definition {
 	@priority = "4"
 	test LocalizationOfRichTextPersists {
 		property portal.acceptance = "false";
-		
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -113,7 +113,7 @@ definition {
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Rich Text",
 			label = "Rich Texto");
-		
+
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Texto",
 			fieldHelp = "Ajuda");

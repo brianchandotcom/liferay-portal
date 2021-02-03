@@ -72,19 +72,29 @@ public class LayoutDataConverter {
 					FragmentConstants.TYPE_COMPONENT) {
 
 				ContainerStyledLayoutStructureItem
-					containerStyledLayoutStructureItem =
+					outerContainerStyledLayoutStructureItem =
 						(ContainerStyledLayoutStructureItem)
 							layoutStructure.addContainerLayoutStructureItem(
 								rootLayoutStructureItem.getItemId(), i);
+
+				outerContainerStyledLayoutStructureItem.setWidthType("fluid");
+
+				ContainerStyledLayoutStructureItem
+					innerContainerStyledLayoutStructureItem =
+						(ContainerStyledLayoutStructureItem)
+							layoutStructure.addContainerLayoutStructureItem(
+								outerContainerStyledLayoutStructureItem.getItemId(), 0);
 
 				JSONObject inputRowConfigJSONObject =
 					inputRowJSONObject.getJSONObject("config");
 
 				if (inputRowConfigJSONObject != null) {
-					JSONObject stylesJSONObject = JSONUtil.put(
+					JSONObject outerStylesJSONObject = JSONUtil.put(
 						"backgroundImage",
 						_getBackgroundImageJSONObject(inputRowConfigJSONObject)
-					).put(
+					);
+
+					JSONObject innerStylesJSONObject = JSONUtil.put(
 						"paddingBottom",
 						inputRowConfigJSONObject.getInt("paddingVertical", 0)
 					).put(
@@ -99,30 +109,39 @@ public class LayoutDataConverter {
 					);
 
 					if (inputRowConfigJSONObject.has("containerType")) {
-						containerStyledLayoutStructureItem.setWidthType(
+						innerContainerStyledLayoutStructureItem.setWidthType(
 							inputRowConfigJSONObject.getString(
 								"containerType", "fixed"));
 					}
 					else {
-						containerStyledLayoutStructureItem.setWidthType(
+						innerContainerStyledLayoutStructureItem.setWidthType(
 							inputRowConfigJSONObject.getString(
 								"widthType", "fixed"));
 					}
 
-					containerStyledLayoutStructureItem.updateItemConfig(
+					outerContainerStyledLayoutStructureItem.updateItemConfig(
 						JSONUtil.put(
 							"backgroundColorCssClass",
 							inputRowConfigJSONObject.getString(
 								"backgroundColorCssClass")
 						).put(
-							"styles", stylesJSONObject
+							"styles", outerStylesJSONObject
+						));
+
+					innerContainerStyledLayoutStructureItem.updateItemConfig(
+						JSONUtil.put(
+							"backgroundColorCssClass",
+							inputRowConfigJSONObject.getString(
+								"backgroundColorCssClass")
+						).put(
+							"styles", innerStylesJSONObject
 						));
 				}
 
 				RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
 					(RowStyledLayoutStructureItem)
 						layoutStructure.addRowLayoutStructureItem(
-							containerStyledLayoutStructureItem.getItemId(), 0,
+							innerContainerStyledLayoutStructureItem.getItemId(), 0,
 							columnsJSONArray.length());
 
 				if (inputRowConfigJSONObject != null) {

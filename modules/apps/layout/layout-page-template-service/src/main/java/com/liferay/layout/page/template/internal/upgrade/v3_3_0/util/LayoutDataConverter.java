@@ -127,13 +127,7 @@ public class LayoutDataConverter {
 						));
 
 					innerContainerLayoutItem.updateItemConfig(
-						JSONUtil.put(
-							"backgroundColorCssClass",
-							inputRowConfigJSONObject.getString(
-								"backgroundColorCssClass")
-						).put(
-							"styles", innerStylesJSONObject
-						));
+						JSONUtil.put("styles", innerStylesJSONObject));
 				}
 
 				RowStyledLayoutStructureItem rowStyledLayoutStructureItem =

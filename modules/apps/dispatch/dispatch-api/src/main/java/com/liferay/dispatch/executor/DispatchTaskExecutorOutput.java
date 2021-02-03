@@ -14,8 +14,6 @@
 
 package com.liferay.dispatch.executor;
 
-import com.liferay.petra.string.StringPool;
-
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -47,7 +45,7 @@ public class DispatchTaskExecutorOutput {
 		_output = output;
 	}
 
-	private String _error = StringPool.BLANK;
-	private String _output = StringPool.BLANK;
+	private String _error;
+	private String _output;
 
 }

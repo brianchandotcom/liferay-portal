@@ -26,8 +26,8 @@ public class DispatchTriggerUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			DispatchTriggerTable.class,
-			new AlterColumnType(
-				"dispatchTaskExecutorType", "VARCHAR(75) null"));
+			new AlterColumnType("dispatchTaskExecutorType", "VARCHAR(75) null"),
+			new AlterColumnType("dispatchTaskSettings", "TEXT null"));
 	}
 
 }

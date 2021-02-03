@@ -71,17 +71,21 @@ public class LayoutDataConverter {
 			if (inputRowJSONObject.getInt("type") ==
 					FragmentConstants.TYPE_COMPONENT) {
 
-				ContainerStyledLayoutStructureItem outerContainerLayoutItem =
-					(ContainerStyledLayoutStructureItem)
-						layoutStructure.addContainerLayoutStructureItem(
-							rootLayoutStructureItem.getItemId(), i);
+				ContainerStyledLayoutStructureItem
+					outerContainerStyledLayoutStructureItem =
+						(ContainerStyledLayoutStructureItem)
+							layoutStructure.addContainerLayoutStructureItem(
+								rootLayoutStructureItem.getItemId(), i);
 
-				outerContainerLayoutItem.setWidthType("fluid");
+				outerContainerStyledLayoutStructureItem.setWidthType("fluid");
 
-				ContainerStyledLayoutStructureItem innerContainerLayoutItem =
-					(ContainerStyledLayoutStructureItem)
-						layoutStructure.addContainerLayoutStructureItem(
-							outerContainerLayoutItem.getItemId(), 0);
+				ContainerStyledLayoutStructureItem
+					innerContainerStyledLayoutStructureItem =
+						(ContainerStyledLayoutStructureItem)
+							layoutStructure.addContainerLayoutStructureItem(
+								outerContainerStyledLayoutStructureItem.
+									getItemId(),
+								0);
 
 				JSONObject inputRowConfigJSONObject =
 					inputRowJSONObject.getJSONObject("config");
@@ -107,17 +111,17 @@ public class LayoutDataConverter {
 					);
 
 					if (inputRowConfigJSONObject.has("containerType")) {
-						innerContainerLayoutItem.setWidthType(
+						innerContainerStyledLayoutStructureItem.setWidthType(
 							inputRowConfigJSONObject.getString(
 								"containerType", "fixed"));
 					}
 					else {
-						innerContainerLayoutItem.setWidthType(
+						innerContainerStyledLayoutStructureItem.setWidthType(
 							inputRowConfigJSONObject.getString(
 								"widthType", "fixed"));
 					}
 
-					outerContainerLayoutItem.updateItemConfig(
+					outerContainerStyledLayoutStructureItem.updateItemConfig(
 						JSONUtil.put(
 							"backgroundColorCssClass",
 							inputRowConfigJSONObject.getString(
@@ -126,15 +130,15 @@ public class LayoutDataConverter {
 							"styles", outerStylesJSONObject
 						));
 
-					innerContainerLayoutItem.updateItemConfig(
+					innerContainerStyledLayoutStructureItem.updateItemConfig(
 						JSONUtil.put("styles", innerStylesJSONObject));
 				}
 
 				RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
 					(RowStyledLayoutStructureItem)
 						layoutStructure.addRowLayoutStructureItem(
-							innerContainerLayoutItem.getItemId(), 0,
-							columnsJSONArray.length());
+							innerContainerStyledLayoutStructureItem.getItemId(),
+							0, columnsJSONArray.length());
 
 				if (inputRowConfigJSONObject != null) {
 					boolean columnSpacing = inputRowConfigJSONObject.getBoolean(

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 
 /**
  * @author Pavel Savinov
@@ -72,7 +73,7 @@ public interface JournalArticleDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%predefined-value",
-		type = "journal_article"
+		type = JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE
 	)
 	@Override
 	public LocalizedValue predefinedValue();

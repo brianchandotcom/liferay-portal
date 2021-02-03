@@ -15,14 +15,79 @@
 package com.liferay.headless.admin.workflow.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Assignee;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinition;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowInstance;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTask;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.AssigneeTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.ObjectReviewedTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowHandlerRegistryTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowInstanceTestUtil;
+import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowTaskTestUtil;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 
-import org.junit.Ignore;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AssigneeResourceTest extends BaseAssigneeResourceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseAssigneeResourceTestCase.setUpClass();
+
+		WorkflowHandlerRegistryTestUtil.registerWorkflowHandler();
+
+		_workflowDefinition =
+			WorkflowDefinitionTestUtil.deployWorkflowDefinition();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		WorkflowHandlerRegistryTestUtil.unregisterWorkflowHandler();
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_workflowInstance = WorkflowInstanceTestUtil.createWorkflowInstance(
+			testGroup.getGroupId(),
+			ObjectReviewedTestUtil.createObjectReviewed(), _workflowDefinition);
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"name"};
+	}
+
+	@Override
+	protected Assignee testGetWorkflowTaskAssignableUsersPage_addAssignee(
+			Long workflowTaskId, Assignee assignee)
+		throws Exception {
+
+		return AssigneeTestUtil.createAssignee(testGroup);
+	}
+
+	@Override
+	protected Long testGetWorkflowTaskAssignableUsersPage_getWorkflowTaskId()
+		throws Exception {
+
+		WorkflowTask workflowTask = WorkflowTaskTestUtil.getWorkflowTask(
+			_workflowInstance.getId());
+
+		return workflowTask.getId();
+	}
+
+	private static WorkflowDefinition _workflowDefinition;
+	private static WorkflowInstance _workflowInstance;
+
 }

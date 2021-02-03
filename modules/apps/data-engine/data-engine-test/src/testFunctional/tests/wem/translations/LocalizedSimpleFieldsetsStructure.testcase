@@ -135,7 +135,7 @@ definition {
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "4"
-	test VerifyFieldsetEditionOnStructure {
+	test VerifyFieldsetCannotBeEditedOnStructureBuilder {
 		property portal.acceptance = "false";
 
 		var key_fieldLabel = "Upload";

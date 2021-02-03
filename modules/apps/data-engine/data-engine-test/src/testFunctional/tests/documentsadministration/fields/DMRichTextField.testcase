@@ -303,12 +303,48 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "3"
 	test ShowAndHideRichTextLabel {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98076 ShowAndHideRichTextLabel pending implementation
+		var key_fieldFieldLabel = "Rich Text";
+
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeFieldNames = "Rich Text",
+			dmDocumentTypeName = "DM Document Type Name");  
+
+		DataEngine.editFieldShowOrHideLabel(
+			fieldFieldLabel = "Rich Text",
+			showLabel = "true");
+        
+        DDLDataDefinition.save(dmDocumentTypeName = "DM Document Type Name");
+
+	    LexiconEntry.openEntryMenu(rowEntry = "DM Document Type Name");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+	    AssertVisible(
+			fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		
+		DataEngine.editFieldShowOrHideLabel(
+			fieldFieldLabel = "Rich Text",
+			showLabel = "false");
+		
+		DDLDataDefinition.save(dmDocumentTypeName = "DM Document Type Name");
+
+	    LexiconEntry.openEntryMenu(rowEntry = "DM Document Type Name");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		AssertElementNotPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

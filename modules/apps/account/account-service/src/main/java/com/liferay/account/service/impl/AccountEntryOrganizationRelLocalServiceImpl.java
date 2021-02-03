@@ -125,6 +125,14 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 	}
 
 	@Override
+	public AccountEntryOrganizationRel fetchAccountEntryOrganizationRel(
+		long accountEntryId, long organizationId) {
+
+		return accountEntryOrganizationRelPersistence.fetchByA_O(
+			accountEntryId, organizationId);
+	}
+
+	@Override
 	public AccountEntryOrganizationRel getAccountEntryOrganizationRel(
 			long accountEntryId, long organizationId)
 		throws PortalException {

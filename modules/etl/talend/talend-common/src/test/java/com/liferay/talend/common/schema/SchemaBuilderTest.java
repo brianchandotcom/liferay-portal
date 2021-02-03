@@ -145,6 +145,15 @@ public class SchemaBuilderTest extends BaseTestCase {
 				_getSchema(endpoint, OASConstants.OPERATION_PATCH)));
 	}
 
+	@Test(expected = OASException.class)
+	public void testInferSchemaInvalidRequestContentBody() {
+		String endpoint = "/v1.0/organization";
+
+		_getSchema(
+			endpoint, OASConstants.OPERATION_POST,
+			readObject("openapi_data_types.json"));
+	}
+
 	@Test
 	public void testInferSchemaIterableRequestContentBody() {
 		String endpoint = "/v1.0/organization";

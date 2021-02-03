@@ -977,6 +977,39 @@ definition {
 			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
 	}
 
+	macro translateFieldsetNLanguages {
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+
+		MenuItem.click(menuItem = "Edit");
+
+		for (var locale : list "${localesList}") {
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC_MODAL");
+
+			Click(
+				key_locale = "${locale}",
+				locator1 = "Translation#LOCALIZATION_NAME_MODAL");
+
+			Type.clickAtType(
+				locator1 = "Modal#NAME_FIELDSET",
+				value1 = "${fieldsetName} ${locale}");
+
+			for (var fieldLabel : list "${fieldLabelsList}") {
+				DataEngine.editFieldLabel(
+					fieldFieldLabel = "${fieldLabel}",
+					fieldFieldLabelEdit = "${fieldLabel} ${locale}",
+					fieldsetModal = "true");
+			}
+		}
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Click(locator1 = "Modal#PROPAGATE_BUTTON");
+	
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro viewField {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_text = "${fieldName}";
@@ -1052,6 +1085,35 @@ definition {
 			key_fieldFieldLabel = "Searchable",
 			key_optionValue = "${searchableType}",
 			locator1 = "WCEditWebContent#SELECTION_OPTION_CHECKED");
+	}
+
+	macro viewFieldsetNTranslations {
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+
+		MenuItem.click(menuItem = "Edit");
+		
+		for (var locale : list "${localesList}") {
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC_MODAL");
+
+			Click(
+				key_locale = "${locale}",
+				locator1 = "Translation#LOCALIZATION_NAME_MODAL");
+
+			AssertTextEquals(
+				locator1 = "Modal#NAME_FIELDSET",
+				value1 = "${fieldsetName} ${locale}");
+
+			for (var fieldLabel : list "${fieldLabelsList}") {
+				Click(
+					key_fieldFieldLabel = "${fieldLabel} ${locale}",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
+				
+				AssertTextEquals(
+					key_fieldLabel = "Label",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "${fieldLabel} ${locale}");
+			}
+		}
 	}
 
 	macro viewNestedField {

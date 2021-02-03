@@ -214,12 +214,106 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
 	@priority = "4"
 	test DuplicateTranslatedField {
 		property portal.acceptance = "false";
+		
+		var fieldGroupLabel = "Grupo";
 
-		// TODO LPS-123536 DuplicateTranslatedField pending implementation
+		var key_text = "Help";
+
+		var key_fieldFieldLabel = "Date";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "My Structure Name 1");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Name",
+			fieldName = "Text");
+
+		DataEngine.editFieldTip(
+                fieldFieldLabel = "Name",
+                fieldHelp = "Help name");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Name");
+
+		Click(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		Click(locator1 = "Sidebar#DDM_ANY");
+
+		Type(
+			locator1 = "Sidebar#DDM_ANY",
+			value1 = "Help date");
+
+		DataEngine.editFieldLabel(
+            fieldFieldLabel = "Fields Group",
+            fieldFieldLabelEdit = "Group");
+
+		WebContentStructures.addLocalization(
+            locale = "pt_BR",
+            localization1Name = "Minha Estrutura Nome 1");
+
+		FormViewBuilder.editFieldLabel(
+            fieldLabel = "Name",
+            label = "Nome");
+
+        DataEngine.editFieldTip(
+                fieldFieldLabel = "Nome",
+                fieldHelp = "Ajuda nome");
+
+		FormViewBuilder.editFieldLabel(
+            fieldLabel = "Date",
+            label = "Data");
+
+		Click(locator1 = "Sidebar#DDM_ANY");
+
+		Type(
+			locator1 = "Sidebar#DDM_ANY",
+			value1 = "Ajuda data");
+
+		DataEngine.editFieldLabel(
+            fieldFieldLabel = "Group",
+            fieldFieldLabelEdit = "Grupo");
+
+		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
+
+		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Duplicate");
+
+		DDLDataDefinition.save();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		fieldGroupLabel = "Copy of Grupo";
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL",
+			value1 = "Copy of Grupo");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Copy of Nome",
+			fieldName = "Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Ajuda nome",
+			fieldName = "Text");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Copy of Data",
+			fieldName = "Date");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Ajuda data",
+			fieldName = "Date");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

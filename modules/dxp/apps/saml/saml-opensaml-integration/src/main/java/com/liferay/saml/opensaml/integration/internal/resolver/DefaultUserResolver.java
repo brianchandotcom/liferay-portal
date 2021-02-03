@@ -286,9 +286,10 @@ public class DefaultUserResolver implements UserResolver {
 		String format = userResolverSAMLContext.resolveSubjectNameFormat();
 
 		if (Validator.isNull(format)) {
-			return defaultSubjectNameIdentifierType;
+			format = defaultSubjectNameIdentifierType;
 		}
-		else if (format.equals(NameIDType.EMAIL)) {
+
+		if (format.equals(NameIDType.EMAIL)) {
 			return _SUBJECT_NAME_TYPE_EMAIL_ADDRESS;
 		}
 

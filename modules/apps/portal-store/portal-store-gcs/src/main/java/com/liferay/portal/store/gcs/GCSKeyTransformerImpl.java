@@ -90,7 +90,7 @@ public class GCSKeyTransformerImpl implements GCSKeyTransformer {
 		HashFunction hashFunction = Hashing.sha1();
 
 		HashCode hashCode = hashFunction.hashString(
-			fileName, StandardCharsets.UTF_8);
+			normalizedFileName, StandardCharsets.UTF_8);
 
 		return StringPool.SLASH + hashCode.toString();
 	}

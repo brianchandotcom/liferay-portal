@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.model.JournalArticle;
@@ -48,7 +47,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -424,15 +422,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		if (Objects.equals(
-				DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
-				ddmFormField.getType()) ||
-			Objects.equals(
-				DDMFormFieldTypeConstants.IMAGE, ddmFormField.getType())) {
-
-			return _getFileEntryValue(dynamicContentElement);
-		}
-
-		if (Objects.equals(
 				JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
 				ddmFormField.getType())) {
 
@@ -784,56 +773,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 		return FieldConstants.getSerializable(
 			ddmFormField.getDataType(), dynamicContentElement.getText());
-	}
-
-	private String _getFileEntryValue(Element dynamicContentElement) {
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(
-				dynamicContentElement.getText());
-		}
-		catch (JSONException jsonException) {
-			return StringPool.BLANK;
-		}
-
-		if (jsonObject == null) {
-			return StringPool.BLANK;
-		}
-
-		String uuid = jsonObject.getString("uuid");
-		long groupId = jsonObject.getLong("groupId");
-
-		if (Validator.isNull(uuid) || (groupId <= 0)) {
-			return StringPool.BLANK;
-		}
-
-		try {
-			if (!ExportImportThreadLocal.isImportInProcess()) {
-				FileEntry fileEntry =
-					_dlAppLocalService.getFileEntryByUuidAndGroupId(
-						uuid, groupId);
-
-				String title = fileEntry.getTitle();
-
-				if (fileEntry.isInTrash()) {
-					title = _trashHelper.getOriginalTitle(fileEntry.getTitle());
-				}
-
-				jsonObject.put("title", title);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to get file entry for UUID ", uuid,
-						" and group ID ", groupId),
-					exception);
-			}
-		}
-
-		return jsonObject.toString();
 	}
 
 	private String _getJournalArticleValue(

@@ -14,15 +14,19 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.trash.TrashHelper;
 
 import java.util.Locale;
 import java.util.function.IntFunction;
@@ -60,7 +64,18 @@ public class DocumentLibraryDDMFormFieldValueAccessor
 		}
 
 		try {
-			return jsonFactory.createJSONObject(value.getString(locale));
+			JSONObject valueJSONObject = jsonFactory.createJSONObject(
+				value.getString(locale));
+
+			FileEntry fileEntry = _getFileEntry(valueJSONObject);
+
+			if ((fileEntry != null) && fileEntry.isInTrash()) {
+				valueJSONObject.put(
+					"title",
+					_trashHelper.getOriginalTitle(fileEntry.getTitle()));
+			}
+
+			return valueJSONObject;
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -92,7 +107,30 @@ public class DocumentLibraryDDMFormFieldValueAccessor
 	@Reference
 	protected JSONFactory jsonFactory;
 
+	private FileEntry _getFileEntry(JSONObject valueJSONObject) {
+		if ((valueJSONObject == null) || (valueJSONObject.length() <= 0)) {
+			return null;
+		}
+
+		try {
+			return _dlAppService.getFileEntryByUuidAndGroupId(
+				valueJSONObject.getString("uuid"),
+				valueJSONObject.getLong("groupId"));
+		}
+		catch (PortalException portalException) {
+			_log.error("Unable to retrieve file entry ", portalException);
+
+			return null;
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentLibraryDDMFormFieldValueAccessor.class);
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

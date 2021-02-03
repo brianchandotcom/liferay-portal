@@ -22,12 +22,26 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -40,7 +54,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=" + JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
+	immediate = true,
+	property = "ddm.form.field.type.name=" + JournalArticleDDMFormFieldTypeConstants.JOURNAL_ARTICLE,
 	service = {
 		DDMFormFieldTemplateContextContributor.class,
 		JournalArticleDDMFormFieldTemplateContextContributor.class
@@ -70,6 +85,11 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 			getItemSelectorURL(
 				ddmFormFieldRenderingContext,
 				ddmFormFieldRenderingContext.getHttpServletRequest())
+		).put(
+			"message",
+			_getMessage(
+				ddmFormFieldRenderingContext.getLocale(),
+				ddmFormFieldRenderingContext.getValue())
 		).put(
 			"portletNamespace",
 			ddmFormFieldRenderingContext.getPortletNamespace()
@@ -105,7 +125,65 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 		return itemSelectorURL.toString();
 	}
 
+	private String _getMessage(Locale defaultLocale, String value) {
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			long classPK = jsonObject.getLong("classPK");
+
+			if (classPK <= 0) {
+				return StringPool.BLANK;
+			}
+
+			JournalArticle article =
+				_journalArticleLocalService.fetchLatestArticle(classPK);
+
+			if (article != null) {
+				if (article.isInTrash()) {
+					return LanguageUtil.get(
+						_getResourceBundle(defaultLocale),
+						"the-selected-web-content-was-moved-to-the-recycle-" +
+							"bin");
+				}
+
+				return StringPool.BLANK;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get article for  " + classPK);
+			}
+
+			return LanguageUtil.get(
+				_getResourceBundle(defaultLocale),
+				"the-selected-web-content-was-deleted");
+		}
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
+	}
+
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		ResourceBundle classResourceBundle = ResourceBundleUtil.getBundle(
+			locale, "com.liferay.journal.lang");
+
+		return new AggregateResourceBundle(
+			classResourceBundle, _portal.getResourceBundle(locale));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleDDMFormFieldTemplateContextContributor.class);
+
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

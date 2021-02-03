@@ -872,37 +872,15 @@ public class JournalConverterImpl implements JournalConverter {
 				_journalArticleLocalService.fetchLatestArticle(classPK);
 
 			if (article != null) {
-				jsonObject.put("groupId", article.getGroupId());
-
-				String title = article.getTitle(defaultLocale);
-
-				if (article.isInTrash()) {
-					jsonObject.put(
-						"message",
-						LanguageUtil.get(
-							_getResourceBundle(defaultLocale),
-							"the-selected-web-content-was-moved-to-the-" +
-								"recycle-bin"));
-				}
-
 				jsonObject.put(
-					"title", title
+					"groupId", article.getGroupId()
+				).put(
+					"title", article.getTitle(defaultLocale)
 				).put(
 					"titleMap", article.getTitleMap()
 				).put(
 					"uuid", article.getUuid()
 				);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to get article for  " + classPK);
-				}
-
-				jsonObject.put(
-					"message",
-					LanguageUtil.get(
-						_getResourceBundle(defaultLocale),
-						"the-selected-web-content-was-deleted"));
 			}
 
 			return jsonObject.toString();

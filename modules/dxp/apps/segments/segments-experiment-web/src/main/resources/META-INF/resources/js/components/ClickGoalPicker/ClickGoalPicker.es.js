@@ -62,11 +62,11 @@ const OVERLAY_TARGET_CLASS = 'lfr-segments-experiment-click-goal-target';
 function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 	const [state, dispatch] = useReducer(reducer, target, getInitialState);
 
-	const [selectorInputValue, setSelectorInputValue] = useState(
-		state.selectedTarget
-	);
+	const {isValidTarget, mode, selectedTarget} = state;
 
-	const {isValidTarget, selectedTarget} = state;
+	const [selectorInputValue, setSelectorInputValue] = useState(
+		selectedTarget
+	);
 
 	const {errors} = useContext(GlobalStateContext);
 
@@ -108,7 +108,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 	}
 
 	const scrollIntoView = (event) => {
-		const target = document.getElementById(state.selectedTarget);
+		const target = document.getElementById(selectedTarget);
 
 		if (target) {
 			target.scrollIntoView();
@@ -204,7 +204,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 						onClick={() => dispatch({type: 'activate'})}
 						small
 					>
-						{state.selectedTarget
+						{selectedTarget
 							? Liferay.Language.get('change-clickable-element')
 							: Liferay.Language.get('select-clickable-element')}
 					</ClayButton>
@@ -250,7 +250,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 							<ClayTooltipProvider>
 								<ClayButtonWithIcon
 									data-tooltip-align="bottom-right"
-									disabled={!state.selectedTarget}
+									disabled={!selectedTarget}
 									displayType="secondary"
 									onClick={scrollIntoView}
 									symbol="view"
@@ -269,7 +269,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 					</ClayInput.Group>
 				</ClayForm.Group>
 
-				{state.mode === 'active' ? (
+				{mode === 'active' ? (
 					<ClickGoalPicker.OverlayContainer
 						allowEdit={allowEdit}
 						root={root}

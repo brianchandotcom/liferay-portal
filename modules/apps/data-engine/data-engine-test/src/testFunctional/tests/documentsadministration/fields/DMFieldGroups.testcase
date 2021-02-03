@@ -407,8 +407,8 @@ definition {
 
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeFieldNames = "Text");
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Text1",

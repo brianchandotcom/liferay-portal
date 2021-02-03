@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService;
-import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,9 +36,6 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		try {
 			_commerceAvailabilityEstimateLocalService.
 				deleteCommerceAvailabilityEstimates(company.getCompanyId());
-
-			_commerceCountryLocalService.deleteCommerceCountries(
-				company.getCompanyId());
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -54,8 +50,5 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	@Reference
 	private CommerceAvailabilityEstimateLocalService
 		_commerceAvailabilityEstimateLocalService;
-
-	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
 
 }

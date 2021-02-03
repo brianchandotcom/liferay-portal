@@ -691,7 +691,9 @@ definition {
 			structureName = "WC Structure Name",
 			webContentTitle = "WC WebContent Title");
 
-		PortletEntry.changeLocale(locale = "en-US");
+		AssertTextEquals(
+			locator1 = "Button#LOCALIZATION_GENERIC",
+			value1 = "en-US");
 	}
 
 }

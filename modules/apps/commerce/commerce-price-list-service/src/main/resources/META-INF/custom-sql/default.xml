@@ -292,7 +292,7 @@
 			WHERE
 				(CommercePriceListChannelRel.commerceChannelId = ?) AND
 				(CommercePriceListAccountRel.commercePriceListAccountRelId IS NULL) AND
-				(CPLCommerceGroupAccountRel.cPLCommerceAccountGroupRelId IS NULL) AND
+				(CPLCommerceGroupAccountRel.CPLCommerceAccountGroupRelId IS NULL) AND
 				(CommercePriceList.groupId = ?) AND
 				(CommercePriceList.type_ = ?) AND
 				(CommercePriceList.status = 0)

@@ -699,7 +699,7 @@ AUI.add(
 				},
 
 				convertNumberLocale(number, sourceLocale, targetLocale) {
-					if (sourceLocale != targetLocale) {
+					if (sourceLocale !== targetLocale) {
 						var test = 1.1;
 						var sourceDecimalSeparator = test
 							.toLocaleString(sourceLocale.replace('_', '-'))
@@ -708,7 +708,7 @@ AUI.add(
 							.toLocaleString(targetLocale.replace('_', '-'))
 							.charAt(1);
 
-						if (sourceDecimalSeparator != targetDecimalSeparator) {
+						if (sourceDecimalSeparator !== targetDecimalSeparator) {
 							if (
 								['.', ','].includes(sourceDecimalSeparator) &&
 								['.', ','].includes(targetDecimalSeparator)
@@ -716,7 +716,7 @@ AUI.add(
 								number = number.replace(
 									/[,.]/g,
 									(separator) => {
-										if (targetDecimalSeparator == '.') {
+										if (targetDecimalSeparator === '.') {
 											return separator === '.' ? '' : '.';
 										}
 										else {

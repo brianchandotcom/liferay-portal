@@ -133,6 +133,14 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 	}
 
 	@Override
+	public List<AccountEntryOrganizationRel> getAccountEntryOrganizationRels(
+		long accountEntryId, int start, int end) {
+
+		return accountEntryOrganizationRelPersistence.findByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	@Override
 	public List<AccountEntryOrganizationRel>
 		getAccountEntryOrganizationRelsByOrganizationId(long organizationId) {
 

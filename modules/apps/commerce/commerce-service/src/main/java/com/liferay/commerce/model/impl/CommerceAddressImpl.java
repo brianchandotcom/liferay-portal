@@ -15,11 +15,11 @@
 package com.liferay.commerce.model.impl;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
-import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
-import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
+import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
 
 import java.util.Objects;
 
@@ -32,24 +32,21 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 	}
 
 	@Override
-	public CommerceCountry fetchCommerceCountry() {
-		return CommerceCountryLocalServiceUtil.fetchCommerceCountry(
-			getCommerceCountryId());
+	public Country fetchCountry() {
+		return CountryLocalServiceUtil.fetchCountry(getCommerceCountryId());
 	}
 
 	@Override
-	public CommerceCountry getCommerceCountry() throws PortalException {
-		return CommerceCountryLocalServiceUtil.getCommerceCountry(
-			getCommerceCountryId());
+	public Country getCountry() throws PortalException {
+		return CountryLocalServiceUtil.getCountry(getCommerceCountryId());
 	}
 
 	@Override
-	public CommerceRegion getCommerceRegion() throws PortalException {
+	public Region getRegion() throws PortalException {
 		long commerceRegionId = getCommerceRegionId();
 
 		if (commerceRegionId > 0) {
-			return CommerceRegionLocalServiceUtil.getCommerceRegion(
-				commerceRegionId);
+			return RegionLocalServiceUtil.getRegion(commerceRegionId);
 		}
 
 		return null;

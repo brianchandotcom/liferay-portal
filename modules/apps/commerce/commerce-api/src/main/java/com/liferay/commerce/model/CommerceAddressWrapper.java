@@ -226,8 +226,8 @@ public class CommerceAddressWrapper
 	}
 
 	@Override
-	public CommerceCountry fetchCommerceCountry() {
-		return model.fetchCommerceCountry();
+	public com.liferay.portal.kernel.model.Country fetchCountry() {
+		return model.fetchCountry();
 	}
 
 	/**
@@ -280,13 +280,6 @@ public class CommerceAddressWrapper
 		return model.getCommerceAddressId();
 	}
 
-	@Override
-	public CommerceCountry getCommerceCountry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getCommerceCountry();
-	}
-
 	/**
 	 * Returns the commerce country ID of this commerce address.
 	 *
@@ -295,13 +288,6 @@ public class CommerceAddressWrapper
 	@Override
 	public long getCommerceCountryId() {
 		return model.getCommerceCountryId();
-	}
-
-	@Override
-	public CommerceRegion getCommerceRegion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getCommerceRegion();
 	}
 
 	/**
@@ -322,6 +308,13 @@ public class CommerceAddressWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country getCountry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getCountry();
 	}
 
 	/**
@@ -442,6 +435,13 @@ public class CommerceAddressWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Region getRegion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getRegion();
 	}
 
 	/**

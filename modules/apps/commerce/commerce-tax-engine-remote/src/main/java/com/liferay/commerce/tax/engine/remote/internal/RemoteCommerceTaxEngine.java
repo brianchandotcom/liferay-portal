@@ -19,8 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.commerce.exception.CommerceTaxEngineException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.tax.CommerceTaxCalculateRequest;
 import com.liferay.commerce.tax.CommerceTaxEngine;
@@ -32,6 +30,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -188,11 +188,10 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 		_addParameter(
 			prefix + "AddressCity", commerceAddress.getCity(), uriBuilder);
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
 		_addParameter(
-			prefix + "AddressCountryISOCode",
-			commerceCountry.getThreeLettersISOCode(), uriBuilder);
+			prefix + "AddressCountryISOCode", country.getA3(), uriBuilder);
 
 		_addParameter(
 			prefix + "AddressExternalReferenceCode",
@@ -210,10 +209,10 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 			prefix + "AddressPhoneNumber", commerceAddress.getPhoneNumber(),
 			uriBuilder);
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
 		_addParameter(
-			prefix + "AddressRegionISOCode", commerceRegion.getCode(),
+			prefix + "AddressRegionISOCode", region.getRegionCode(),
 			uriBuilder);
 
 		_addParameter(

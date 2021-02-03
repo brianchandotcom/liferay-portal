@@ -14,7 +14,6 @@
 
 package com.liferay.dispatch.talend.web.internal.process;
 
-import com.liferay.dispatch.talend.web.internal.process.exception.TalendProcessException;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
@@ -27,6 +26,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.security.Permission;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Igor Beslic
@@ -58,17 +59,18 @@ public class TalendProcessCallable
 		System.setOut(
 			new TeePrintStream(outUnsyncByteArrayOutputStream, outPrintStream));
 
-		TalendProcessException talendProcessException =
-			new TalendProcessException();
+		RuntimeException runtimeException = new RuntimeException();
+
+		AtomicInteger exitStatusAtomicInteger = new AtomicInteger();
 
 		System.setSecurityManager(
 			new SecurityManager() {
 
 				@Override
 				public void checkExit(int status) {
-					talendProcessException.setStatus(status);
+					exitStatusAtomicInteger.set(status);
 
-					throw talendProcessException;
+					throw runtimeException;
 				}
 
 				@Override
@@ -92,10 +94,10 @@ public class TalendProcessCallable
 		catch (InvocationTargetException invocationTargetException) {
 			Throwable causeThrowable = invocationTargetException.getCause();
 
-			if (causeThrowable == talendProcessException) {
+			if (causeThrowable == runtimeException) {
 				return new TalendProcessOutput(
 					errUnsyncByteArrayOutputStream.toString(),
-					talendProcessException.getStatus(),
+					exitStatusAtomicInteger.get(),
 					outUnsyncByteArrayOutputStream.toString());
 			}
 

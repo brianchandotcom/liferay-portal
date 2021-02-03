@@ -52,7 +52,6 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.commerce.theme.speedwell.site.initializer.internal.dependencies.resolver.SpeedwellDependencyResolver;
@@ -297,7 +296,6 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 		_groupLocalService.updateGroup(group);
 
-		_commerceCountryLocalService.importDefaultCountries(serviceContext);
 		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 
@@ -996,9 +994,6 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Reference
-	private CommerceCountryLocalService _commerceCountryLocalService;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

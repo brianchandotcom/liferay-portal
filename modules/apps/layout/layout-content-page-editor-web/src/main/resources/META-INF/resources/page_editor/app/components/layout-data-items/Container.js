@@ -19,14 +19,14 @@ import React, {useEffect, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {config} from '../../config/index';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
-import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
+import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import loadBackgroundImage from '../../utils/loadBackgroundImage';
 import {useBackgroundImageMediaQueries} from '../../utils/useBackgroundImageQueries';
 import {useId} from '../../utils/useId';
+import {useGetFieldValue} from '../CollectionItemContext';
 
 const Container = React.forwardRef(
 	({children, className, data, item, withinTopper = false}, ref) => {
@@ -72,6 +72,7 @@ const Container = React.forwardRef(
 		const {widthType} = itemConfig;
 
 		const elementId = useId();
+		const getFieldValue = useGetFieldValue();
 		const languageId = useSelector(selectLanguageId);
 		const [backgroundImageValue, setBackgroundImageValue] = useState('');
 		const [link, setLink] = useState(null);
@@ -99,22 +100,12 @@ const Container = React.forwardRef(
 				return;
 			}
 
-			if (linkConfig.href) {
-				setLink(linkConfig);
-			}
-			else if (isMappedToInfoItem(linkConfig)) {
-				InfoItemService.getInfoItemFieldValue({
-					...linkConfig,
-					languageId,
-					onNetworkStatus: () => {},
-				}).then(({fieldValue}) => {
-					setLink({
-						href: fieldValue,
-						target: linkConfig.target,
-					});
-				});
-			}
-		}, [itemConfig.link, languageId]);
+			resolveEditableValue(linkConfig, languageId, getFieldValue).then(
+				(linkHref) => {
+					setLink({...linkConfig, ...linkHref});
+				}
+			);
+		}, [itemConfig.link, languageId, getFieldValue]);
 
 		const style = {
 			boxSizing: 'border-box',

@@ -24,11 +24,11 @@ import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import InfoItemService from '../../services/InfoItemService';
 import {useSelector} from '../../store/index';
 import isMapped from '../../utils/editable-value/isMapped';
-import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
+import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {useId} from '../../utils/useId';
+import {useGetFieldValue} from '../CollectionItemContext';
 
 const SOURCE_OPTIONS = {
 	fromContentField: {
@@ -50,6 +50,7 @@ export const TARGET_OPTIONS = {
 };
 
 export default function LinkField({field, onValueSelect, value}) {
+	const getFieldValue = useGetFieldValue();
 	const [nextValue, setNextValue] = useState({});
 	const [nextHref, setNextHref] = useState('');
 	const [openNewTab, setOpenNewTab] = useState('');
@@ -64,12 +65,13 @@ export default function LinkField({field, onValueSelect, value}) {
 		setNextHref(value.href);
 		setOpenNewTab(value.target === '_blank');
 
-		setSource(
-			isMapped(value) || source === SOURCE_OPTIONS.fromContentField.value
-				? SOURCE_OPTIONS.fromContentField.value
-				: SOURCE_OPTIONS.manual.value
-		);
-	}, [source, value]);
+		if (isMapped(value)) {
+			setSource(SOURCE_OPTIONS.fromContentField.value);
+		}
+		else if (value.href) {
+			setSource(SOURCE_OPTIONS.manual.value);
+		}
+	}, [value]);
 
 	const hrefInputId = useId();
 	const hrefPreviewInputId = useId();
@@ -77,21 +79,19 @@ export default function LinkField({field, onValueSelect, value}) {
 	const targetInputId = useId();
 
 	useEffect(() => {
-		if (isMappedToInfoItem(nextValue)) {
+		if (isMapped(nextValue)) {
 			setMappedHrefPreview('');
 
-			InfoItemService.getInfoItemFieldValue({
-				...nextValue,
-				languageId,
-				onNetworkStatus: () => {},
-			}).then(({fieldValue}) => {
-				setMappedHrefPreview(fieldValue || '');
-			});
+			resolveEditableValue(nextValue, languageId, getFieldValue).then(
+				(href) => {
+					setMappedHrefPreview(href || '');
+				}
+			);
 		}
 		else {
 			setMappedHrefPreview(null);
 		}
-	}, [languageId, nextValue]);
+	}, [languageId, nextValue, getFieldValue]);
 
 	const handleChange = (value) => {
 		const updatedValue = {
@@ -107,7 +107,6 @@ export default function LinkField({field, onValueSelect, value}) {
 		onValueSelect(field.name, {});
 		setNextValue({});
 		setSource(event.target.value);
-		setMappedHrefPreview(null);
 	};
 
 	return (

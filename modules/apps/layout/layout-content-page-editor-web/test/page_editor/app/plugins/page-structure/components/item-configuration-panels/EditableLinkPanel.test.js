@@ -208,6 +208,7 @@ describe('EditableLinkPanel', () => {
 
 	it('clear the config when changing source type', async () => {
 		let editableConfig;
+
 		updateEditableValues.mockImplementation(({editableValues}) => {
 			editableConfig = getEditableConfig(editableValues);
 		});
@@ -223,10 +224,12 @@ describe('EditableLinkPanel', () => {
 			});
 		});
 
-		const sourceTypeInput = getByLabelText(document.body, 'link');
+		await act(async () => {
+			const sourceTypeInput = getByLabelText(document.body, 'link');
 
-		fireEvent.change(sourceTypeInput, {
-			target: {value: 'manual'},
+			fireEvent.change(sourceTypeInput, {
+				target: {value: 'manual'},
+			});
 		});
 
 		expect(editableConfig).toEqual({});

@@ -566,6 +566,9 @@ public class OpenIdConnectServiceHandlerImpl
 
 		HTTPRequest httpRequest = userInfoRequest.toHTTPRequest();
 
+		httpRequest.setAccept(
+			"text/html, image/gif, image/jpeg, */*; q=0.2, */*; q=0.2");
+
 		try {
 			HTTPResponse httpResponse = httpRequest.send();
 

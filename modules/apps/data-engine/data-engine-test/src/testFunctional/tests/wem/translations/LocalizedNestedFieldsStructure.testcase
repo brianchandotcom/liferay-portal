@@ -40,7 +40,38 @@ definition {
 	test CheckLanguageSelector {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123536 CheckLanguageSelector pending implementation
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content"
+        );
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureDescription = "Test",
+            structureName = "Test Structure"
+        );
+
+        DataEngine.addField(
+            fieldFieldLabel = "Text",
+            fieldName = "Text"
+		);
+
+		DataEngine.addFieldNested(
+            fieldFieldLabel = "Numeric",
+            fieldName = "Numeric",
+            targetFieldLabel = "Text"
+		);
+
+		WebContentStructures.saveCP();
+		
+		LexiconEntry.gotoEntry(rowEntry = "Test Structure");
+		
+		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+		
+		AssertElementPresent(
+			locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH"
+		);
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

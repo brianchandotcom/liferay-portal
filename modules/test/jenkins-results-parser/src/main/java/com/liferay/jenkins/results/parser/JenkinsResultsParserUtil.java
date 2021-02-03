@@ -1874,13 +1874,14 @@ public class JenkinsResultsParserUtil {
 		Map<String, Set<String>> propertyOptRegexSets =
 			_getPropertyOptRegexSets(matchingProperties.stringPropertyNames());
 
-		for (Map.Entry<String, Set<String>> entry :
-				propertyOptRegexSets.entrySet()) {
+		for (Set<String> targetOptSet : targetOptSets) {
+			for (Map.Entry<String, Set<String>> propertyOptRegexEntry :
+					propertyOptRegexSets.entrySet()) {
 
-			Set<String> propertyOptRegexSet = entry.getValue();
+				Set<String> propertyOptRegexes =
+					propertyOptRegexEntry.getValue();
 
-			for (Set<String> targetOptSet : targetOptSets) {
-				if (propertyOptRegexSet.size() > targetOptSet.size()) {
+				if (targetOptSet.size() < propertyOptRegexes.size()) {
 					continue;
 				}
 
@@ -1889,25 +1890,21 @@ public class JenkinsResultsParserUtil {
 				for (String targetOpt : targetOptSet) {
 					boolean matchesPropertyOptRegex = false;
 
-					for (String propertyOptRegex : propertyOptRegexSet) {
-						if (!targetOpt.matches(propertyOptRegex)) {
-							continue;
+					for (String propertyOptRegex : propertyOptRegexes) {
+						if (targetOpt.matches(propertyOptRegex)) {
+							matchesPropertyOptRegex = true;
 						}
-
-						matchesPropertyOptRegex = true;
-
-						break;
 					}
 
 					if (!matchesPropertyOptRegex) {
 						matchesAllPropertyOptRegexes = false;
+
+						break;
 					}
 				}
 
 				if (matchesAllPropertyOptRegexes) {
-					propertyName = entry.getKey();
-
-					break;
+					propertyName = propertyOptRegexEntry.getKey();
 				}
 			}
 

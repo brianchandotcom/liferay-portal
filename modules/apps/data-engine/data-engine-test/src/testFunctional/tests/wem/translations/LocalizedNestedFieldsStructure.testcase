@@ -276,12 +276,91 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
 	@priority = "5"
 	test TranslationPersistsForTwoLevelNestedFields {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123536 TranslationPersistsForTwoLevelNestedFields pending implementation
+		var structureName = "WC Structure Name";
+
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content");
+    
+		NavItem.gotoStructures();
+        
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Rich Text1",
+			fieldName = "Rich Text",
+			targetFieldLabel = "Text");
+
+        DataEngine.addFieldNested(
+			fieldFieldLabel = "Rich Text2",
+			fieldName = "Rich Text",
+			targetFieldLabel = "Rich Text1");
+		
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContentStructures.addName(structureName = "Nome da Estrutura WC");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Rich Text1",
+			fieldFieldLabelEdit = "Rico Texto1");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Rich Text2",
+			fieldFieldLabelEdit = "Rico Texto2");
+	
+		WebContentStructures.saveCP(structureName = "${structureName}");
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		
+		AssertVisible(
+			key_fieldFieldLabel = "Rich Text1",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Rich Text2",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Nome da Estrutura WC");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		
+		AssertVisible(
+			key_fieldFieldLabel = "Rico Texto1",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		
+		AssertVisible(
+			key_fieldFieldLabel = "Rico Texto2",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		WebContentStructures.saveCP(structureName = "${structureName}");		
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

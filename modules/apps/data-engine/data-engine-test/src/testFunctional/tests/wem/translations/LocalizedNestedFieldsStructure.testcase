@@ -47,7 +47,7 @@ definition {
 	@priority = "5"
 	test CheckLocalizationOfStructureUponLanguageChange {
 		property portal.acceptance = "false";
-		
+
 		var structureTitleEN = "Test";
 		var structureTitlePT = "Teste";
 		var fieldsGroupEN = "Fields Group";
@@ -56,10 +56,10 @@ definition {
 		var fieldLabel2EN = "Second Text";
 		var fieldLabel1PT = "Primeiro Texto";
 		var fieldLabel2PT = "Segundo Texto";
-        var helpText1EN = "First Help Text";
-        var helpText2EN = "Second Help Text";
-        var helpText1PT = "Primeiro Texto de Ajuda";
-        var helpText2PT = "Segundo Texto de Ajuda";
+		var helpText1EN = "First Help Text";
+		var helpText2EN = "Second Help Text";
+		var helpText1PT = "Primeiro Texto de Ajuda";
+		var helpText2PT = "Segundo Texto de Ajuda";
 		var key_text = "Help";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -75,13 +75,13 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
+			fieldFieldLabel = "${fieldLabel2EN}",
 			fieldName = "Text",
-			targetFieldLabel = "${fieldLabel1EN}",
-			fieldFieldLabel = "${fieldLabel2EN}");
-        
-        DataEngine.editFieldTip(
-            fieldFieldLabel = "${fieldLabel1EN}",
-            fieldHelp = "${helpText1EN}");
+			targetFieldLabel = "${fieldLabel1EN}");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "${fieldLabel1EN}",
+			fieldHelp = "${helpText1EN}");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabel2EN}",
@@ -94,7 +94,7 @@ definition {
 		WebContentStructures.addLocalization(
 			locale = "pt_BR",
 			localization1Name = "${structureTitlePT}");
-		
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldsGroupEN}",
 			label = "${fieldsGroupPT}");
@@ -102,11 +102,11 @@ definition {
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabel1EN}",
 			label = "${fieldLabel1PT}");
-        
-         DataEngine.editFieldTip(
-            fieldFieldLabel = "${fieldLabel1PT}",
-            fieldHelp = "${helpText1PT}");
-		
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "${fieldLabel1PT}",
+			fieldHelp = "${helpText1PT}");
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabel2EN}",
 			label = "${fieldLabel2PT}");
@@ -114,7 +114,7 @@ definition {
 		Type(
 			locator1 = "Sidebar#DDM_ANY",
 			value1 = "${helpText2PT}");
-		
+
 		Button.clickSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitleEN}");
@@ -124,9 +124,8 @@ definition {
 		DataEngine.viewFieldHelpText(
 			fieldFieldLabel = "${fieldLabel1PT}",
 			fieldHelp = "${helpText1PT}",
-			fieldName = "Text"
-		);
-		
+			fieldName = "Text");
+
 		DataEngine.viewFieldHelpText(
 			fieldFieldLabel = "${fieldLabel2PT}",
 			fieldHelp = "${helpText2PT}",

@@ -38,6 +38,6 @@ public class HTMLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = {"**/*.html"};
+	private static final String[] _INCLUDES = {"**/*.html", "**/*.path"};
 
 }

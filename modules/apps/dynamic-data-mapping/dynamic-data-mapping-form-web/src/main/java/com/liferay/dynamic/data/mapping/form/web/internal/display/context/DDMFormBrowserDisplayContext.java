@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormWebRequestHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.DDMFormInstanceSearch;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -27,6 +28,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -123,8 +126,19 @@ public class DDMFormBrowserDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle", "list");
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
+
+		if (Validator.isNull(_displayStyle)) {
+			_displayStyle = portalPreferences.getValue(
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER,
+				"display-style", "list");
+		}
+
+		portalPreferences.setValue(
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER, "display-style",
+			_displayStyle);
 
 		return _displayStyle;
 	}

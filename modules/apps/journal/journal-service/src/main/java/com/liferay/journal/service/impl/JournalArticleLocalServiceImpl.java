@@ -9077,14 +9077,16 @@ public class JournalArticleLocalServiceImpl
 			String value = entry.getValue();
 
 			if (!urlTitleMap.containsKey(key) && Validator.isNotNull(value)) {
+				String languageId = LocaleUtil.toLanguageId(key);
+
 				String urlTitle =
 					friendlyURLEntryLocalService.getUniqueUrlTitle(
 						groupId,
 						classNameLocalService.getClassNameId(
 							JournalArticle.class),
-						resourcePrimKey, LocaleUtil.toLanguageId(key), value);
+						resourcePrimKey, languageId, value);
 
-				urlTitleMap.put(LocaleUtil.toLanguageId(key), urlTitle);
+				urlTitleMap.put(languageId, urlTitle);
 			}
 		}
 

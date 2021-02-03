@@ -56,12 +56,12 @@ public interface CommerceAddress extends CommerceAddressModel, PersistedModel {
 
 		};
 
-	public CommerceCountry fetchCommerceCountry();
+	public com.liferay.portal.kernel.model.Country fetchCountry();
 
-	public CommerceCountry getCommerceCountry()
+	public com.liferay.portal.kernel.model.Country getCountry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public CommerceRegion getCommerceRegion()
+	public com.liferay.portal.kernel.model.Region getRegion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isGeolocated();

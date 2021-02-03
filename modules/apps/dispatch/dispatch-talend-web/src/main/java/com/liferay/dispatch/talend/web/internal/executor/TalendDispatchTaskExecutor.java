@@ -136,8 +136,8 @@ public class TalendDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws ProcessException {
 
-		dispatchTaskExecutorOutput.setError(talendProcessOutput.getError());
-		dispatchTaskExecutorOutput.setOutput(talendProcessOutput.getOutput());
+		dispatchTaskExecutorOutput.setError(talendProcessOutput.getStdErr());
+		dispatchTaskExecutorOutput.setOutput(talendProcessOutput.getStdOut());
 
 		if (talendProcessOutput.hasException()) {
 			throw new ProcessException(

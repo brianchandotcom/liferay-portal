@@ -21,26 +21,22 @@ import java.io.Serializable;
  */
 public class TalendProcessOutput implements Serializable {
 
-	public TalendProcessOutput(
-		String errString, int exitCode, String outString) {
-
-		_error = errString;
-
+	public TalendProcessOutput(int exitCode, String stdOut, String stdErr) {
 		_exitCode = exitCode;
-
-		_output = outString;
-	}
-
-	public String getError() {
-		return _error;
+		_stdOut = stdOut;
+		_stdErr = stdErr;
 	}
 
 	public int getExitCode() {
 		return _exitCode;
 	}
 
-	public String getOutput() {
-		return _output;
+	public String getStdErr() {
+		return _stdErr;
+	}
+
+	public String getStdOut() {
+		return _stdOut;
 	}
 
 	public boolean hasException() {
@@ -53,8 +49,8 @@ public class TalendProcessOutput implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String _error;
-	private int _exitCode;
-	private final String _output;
+	private final int _exitCode;
+	private final String _stdErr;
+	private final String _stdOut;
 
 }

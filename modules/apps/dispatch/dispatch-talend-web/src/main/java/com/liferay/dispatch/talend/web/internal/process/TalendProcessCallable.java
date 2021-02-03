@@ -96,9 +96,9 @@ public class TalendProcessCallable
 
 			if (causeThrowable == runtimeException) {
 				return new TalendProcessOutput(
-					errUnsyncByteArrayOutputStream.toString(),
 					exitStatusAtomicInteger.get(),
-					outUnsyncByteArrayOutputStream.toString());
+					outUnsyncByteArrayOutputStream.toString(),
+					errUnsyncByteArrayOutputStream.toString());
 			}
 
 			throw new ProcessException(causeThrowable);

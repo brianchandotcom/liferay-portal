@@ -47,18 +47,20 @@ public class DLStorageQuotaLocalServiceImpl
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	@Override
 	public void incrementStorageSize(long companyId, long increment) {
-		DLStorageQuota dlStorageQuota =
-			dlStorageQuotaPersistence.fetchByCompanyId(companyId);
-
-		if (dlStorageQuota == null) {
-			dlStorageQuota = dlStorageQuotaLocalService.createDLStorageQuota(
-				counterLocalService.increment());
-
-			dlStorageQuota.setCompanyId(companyId);
-		}
+		DLStorageQuota dlStorageQuota = _getDLStorageQuota(companyId);
 
 		dlStorageQuota.setStorageSize(
 			dlStorageQuota.getStorageSize() + increment);
+
+		dlStorageQuotaLocalService.updateDLStorageQuota(dlStorageQuota);
+	}
+
+	@Override
+	public void updateStorageSize(long companyId) {
+		DLStorageQuota dlStorageQuota = _getDLStorageQuota(companyId);
+
+		dlStorageQuota.setStorageSize(
+			dlStorageQuotaFinder.countByCompanyId(companyId));
 
 		dlStorageQuotaLocalService.updateDLStorageQuota(dlStorageQuota);
 	}
@@ -80,6 +82,22 @@ public class DLStorageQuotaLocalServiceImpl
 				"Unable to exceed maximum alowed document library storage " +
 					"size");
 		}
+	}
+
+	private DLStorageQuota _getDLStorageQuota(long companyId) {
+		DLStorageQuota dlStorageQuota =
+			dlStorageQuotaPersistence.fetchByCompanyId(companyId);
+
+		if (dlStorageQuota != null) {
+			return dlStorageQuota;
+		}
+
+		dlStorageQuota = dlStorageQuotaLocalService.createDLStorageQuota(
+			counterLocalService.increment());
+
+		dlStorageQuota.setCompanyId(companyId);
+
+		return dlStorageQuota;
 	}
 
 	private long _getStorageSize(long companyId) {

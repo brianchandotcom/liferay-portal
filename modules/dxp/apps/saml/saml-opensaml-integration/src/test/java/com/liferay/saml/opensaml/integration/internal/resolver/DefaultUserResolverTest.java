@@ -133,7 +133,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			new GregorianCalendar()
 		);
 
-		_initMessageContext();
+		_initMessageContext(true);
 		_initUnknownUserHandling();
 	}
 
@@ -200,6 +200,31 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		User existingUser = _defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
 			"emailAddress", new UserResolverSAMLContextImpl(_messageContext),
+			new ServiceContext());
+
+		Assert.assertNotNull(existingUser);
+	}
+
+	@Test
+	public void testMatchingUserWithSAMLNameIDValue() throws Exception {
+		when(
+			_company.isStrangers()
+		).thenReturn(
+			true
+		);
+
+		when(
+			_company.isStrangersWithMx()
+		).thenReturn(
+			true
+		);
+
+		_initMessageContext(false);
+		_initMatchingUserHandling();
+
+		User existingUser = _defaultUserResolver.importUser(
+			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE, "screenName",
+			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
 		Assert.assertNotNull(existingUser);
@@ -291,6 +316,21 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		when(
+			_userLocalService.getUserByScreenName(
+				Mockito.anyLong(), Mockito.eq(_SAML_NAME_IDENTIFIER_VALUE))
+		).thenReturn(
+			existingUser
+		);
+
+		when(
+			_userLocalService.getUserByScreenName(
+				Mockito.anyLong(),
+				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))
+		).thenReturn(
+			existingUser
+		);
+
+		when(
 			_userLocalService.getUserByEmailAddress(
 				Mockito.anyLong(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS))
@@ -343,11 +383,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 	}
 
-	private void _initMessageContext() {
+	private void _initMessageContext(boolean addScreenNameAttribute) {
 		Assertion assertion = OpenSamlUtil.buildAssertion();
 
 		NameID subjectNameID = OpenSamlUtil.buildNameId(
-			NameIDType.ENTITY, null, "urn:liferay", "value");
+			NameIDType.ENTITY, null, "urn:liferay",
+			_SAML_NAME_IDENTIFIER_VALUE);
 
 		Subject subject = OpenSamlUtil.buildSubject(subjectNameID);
 
@@ -378,9 +419,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				"emailAddress", _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS));
 		attributes.add(OpenSamlUtil.buildAttribute("firstName", "test"));
 		attributes.add(OpenSamlUtil.buildAttribute("lastName", "test"));
-		attributes.add(
-			OpenSamlUtil.buildAttribute(
-				"screenName", _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME));
+
+		if (addScreenNameAttribute) {
+			attributes.add(
+				OpenSamlUtil.buildAttribute(
+					"screenName", _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME));
+		}
 
 		_messageContext = new MessageContext<>();
 
@@ -455,6 +499,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	private static final String _ATTRIBUTE_MAPPINGS =
 		"emailAddress=emailAddress\nfirstName=firstName\nlastName=lastName\n" +
 			"screenName=screenName";
+
+	private static final String _SAML_NAME_IDENTIFIER_VALUE = "testNameIdValue";
 
 	private static final String _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS =
 		"test@liferay.com";

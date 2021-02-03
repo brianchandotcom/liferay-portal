@@ -21,8 +21,8 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService
 import com.liferay.commerce.payment.web.internal.display.context.util.CommercePaymentMethodRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Locale;
@@ -36,14 +36,14 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 
 	public CommercePaymentMethodGroupRelsDisplayContext(
 		CommerceChannelLocalService commerceChannelLocalService,
-		CommerceCountryService commerceCountryService,
+		CountryService countryService,
 		CommercePaymentMethodGroupRelService
 			commercePaymentMethodGroupRelService,
 		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
 		HttpServletRequest httpServletRequest) {
 
 		_commerceChannelLocalService = commerceChannelLocalService;
-		_commerceCountryService = commerceCountryService;
+		_countryService = countryService;
 		_commercePaymentMethodGroupRelService =
 			commercePaymentMethodGroupRelService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
@@ -64,11 +64,6 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		return ParamUtil.getLong(
 			_commercePaymentMethodRequestHelper.getRequest(),
 			"commerceChannelId");
-	}
-
-	public int getCommerceCountriesCount() throws PortalException {
-		return _commerceCountryService.getCommerceCountriesCount(
-			_commercePaymentMethodRequestHelper.getCompanyId());
 	}
 
 	public String getCommercePaymentMethodEngineDescription(Locale locale) {
@@ -126,13 +121,18 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		return 0;
 	}
 
+	public int getCountriesCount() throws PortalException {
+		return _countryService.getCompanyCountriesCount(
+			_commercePaymentMethodRequestHelper.getCompanyId());
+	}
+
 	private final CommerceChannelLocalService _commerceChannelLocalService;
-	private final CommerceCountryService _commerceCountryService;
 	private CommercePaymentMethodGroupRel _commercePaymentMethodGroupRel;
 	private final CommercePaymentMethodGroupRelService
 		_commercePaymentMethodGroupRelService;
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 	private final CommercePaymentMethodRequestHelper
 		_commercePaymentMethodRequestHelper;
+	private final CountryService _countryService;
 
 }

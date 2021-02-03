@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import java.util.Objects;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -55,7 +53,28 @@ public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
 	public boolean verify(byte[] input, byte[] hash, byte[] salt)
 		throws CryptoHashException {
 
-		return Objects.equals(_digest(salt, input), hash);
+		return _compare(_digest(salt, input), hash);
+	}
+
+	/**
+	 * A comparison algorithm that prevents timing attack
+	 *
+	 * @param bytes1 the input bytes
+	 * @param bytes2 the expected bytes
+	 * @return true if two given arrays of bytes are the same, otherwise false
+	 */
+	private boolean _compare(byte[] bytes1, byte[] bytes2) {
+		int diff = bytes1.length ^ bytes2.length;
+
+		for (int i = 0; (i < bytes1.length) && (i < bytes2.length); ++i) {
+			diff |= bytes1[i] ^ bytes2[i];
+		}
+
+		if (diff == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private byte[] _digest(byte[] salt, byte[] input) {

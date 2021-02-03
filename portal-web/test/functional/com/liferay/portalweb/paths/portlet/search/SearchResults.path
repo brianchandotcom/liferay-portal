@@ -194,7 +194,7 @@
 </tr>
 <tr>
 	<td>FACET_PORTLET_CLEAR_PANEL_TITLE</td>
-	<td>//div[contains(@class,'search-facet') and contains(.,'Clear')]//div[contains(@class,'panel-title')]</td>
+	<td>//div[contains(@class,'search-facet') and contains(.,'Clear')]//span[contains(@class,'panel-title')]</td>
 	<td></td>
 </tr>
 <tr>

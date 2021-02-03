@@ -217,6 +217,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
+		Calendar.hideCurrentSiteCalendar();
+
 		CalendarEvent.addRSVP(
 			eventTitle = "Calendar Event All Day Title",
 			rsvp = "Yes");

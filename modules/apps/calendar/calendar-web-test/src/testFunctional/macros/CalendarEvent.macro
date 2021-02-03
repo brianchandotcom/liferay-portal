@@ -11,6 +11,8 @@ definition {
 
 			Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
 
+			Pause(locator1 = "3000");
+
 			AssertElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
 		}
 		else if (IsElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED")) {
@@ -22,6 +24,8 @@ definition {
 				ScrollWebElementIntoView(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
 
 				Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
+
+				Pause(locator1 = "3000");
 
 				AssertElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
 			}

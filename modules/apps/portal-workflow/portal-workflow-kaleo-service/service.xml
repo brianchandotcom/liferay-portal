@@ -937,6 +937,10 @@
 		<finder name="KaleoInstanceId" return-type="Collection">
 			<finder-column name="kaleoInstanceId" />
 		</finder>
+		<finder name="C_U" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+		</finder>
 		<finder name="KII_KTI" return-type="KaleoTaskInstanceToken">
 			<finder-column name="kaleoInstanceId" />
 			<finder-column name="kaleoTaskId" />
@@ -944,6 +948,11 @@
 		<finder name="CN_CPK" return-type="Collection">
 			<finder-column name="className" />
 			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_U_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+			<finder-column name="completed" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="KaleoTimer" remote-service="false">

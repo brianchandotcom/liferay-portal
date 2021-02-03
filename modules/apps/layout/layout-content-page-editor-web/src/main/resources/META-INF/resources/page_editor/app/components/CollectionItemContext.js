@@ -128,6 +128,10 @@ const useGetFieldValue = () => {
 				languageId,
 				onNetworkStatus: () => {},
 			}).then((response) => {
+				if (!response || !Object.keys(response).length) {
+					throw new Error('Field value not found');
+				}
+
 				const {fieldValue = ''} = response;
 
 				return fieldValue;

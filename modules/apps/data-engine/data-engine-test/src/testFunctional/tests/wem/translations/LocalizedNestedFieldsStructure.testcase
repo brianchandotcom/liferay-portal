@@ -217,7 +217,7 @@ definition {
 	@priority = "4"
 	test DuplicateTranslatedField {
 		property portal.acceptance = "false";
-		
+
 		var fieldGroupLabel = "Grupo";
 
 		var key_text = "Help";
@@ -235,8 +235,8 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.editFieldTip(
-                fieldFieldLabel = "Name",
-                fieldHelp = "Help name");
+			fieldFieldLabel = "Name",
+			fieldHelp = "Help name");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
@@ -252,24 +252,24 @@ definition {
 			value1 = "Help date");
 
 		DataEngine.editFieldLabel(
-            fieldFieldLabel = "Fields Group",
-            fieldFieldLabelEdit = "Group");
+			fieldFieldLabel = "Fields Group",
+			fieldFieldLabelEdit = "Group");
 
 		WebContentStructures.addLocalization(
-            locale = "pt_BR",
-            localization1Name = "Minha Estrutura Nome 1");
+			locale = "pt_BR",
+			localization1Name = "Minha Estrutura Nome 1");
 
 		FormViewBuilder.editFieldLabel(
-            fieldLabel = "Name",
-            label = "Nome");
+			fieldLabel = "Name",
+			label = "Nome");
 
-        DataEngine.editFieldTip(
-                fieldFieldLabel = "Nome",
-                fieldHelp = "Ajuda nome");
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Nome",
+			fieldHelp = "Ajuda nome");
 
 		FormViewBuilder.editFieldLabel(
-            fieldLabel = "Date",
-            label = "Data");
+			fieldLabel = "Date",
+			label = "Data");
 
 		Click(locator1 = "Sidebar#DDM_ANY");
 
@@ -278,8 +278,8 @@ definition {
 			value1 = "Ajuda data");
 
 		DataEngine.editFieldLabel(
-            fieldFieldLabel = "Group",
-            fieldFieldLabelEdit = "Grupo");
+			fieldFieldLabel = "Group",
+			fieldFieldLabelEdit = "Grupo");
 
 		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
 

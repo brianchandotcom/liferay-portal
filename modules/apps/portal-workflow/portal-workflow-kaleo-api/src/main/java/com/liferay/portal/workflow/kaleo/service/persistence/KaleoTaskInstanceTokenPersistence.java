@@ -477,6 +477,161 @@ public interface KaleoTaskInstanceTokenPersistence
 	public int countByKaleoInstanceId(long kaleoInstanceId);
 
 	/**
+	 * Returns all the kaleo task instance tokens where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching kaleo task instance tokens
+	 */
+	public java.util.List<KaleoTaskInstanceToken> findByC_U(
+		long companyId, long userId);
+
+	/**
+	 * Returns a range of all the kaleo task instance tokens where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTaskInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of kaleo task instance tokens
+	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	 * @return the range of matching kaleo task instance tokens
+	 */
+	public java.util.List<KaleoTaskInstanceToken> findByC_U(
+		long companyId, long userId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the kaleo task instance tokens where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTaskInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of kaleo task instance tokens
+	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo task instance tokens
+	 */
+	public java.util.List<KaleoTaskInstanceToken> findByC_U(
+		long companyId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the kaleo task instance tokens where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTaskInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of kaleo task instance tokens
+	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo task instance tokens
+	 */
+	public java.util.List<KaleoTaskInstanceToken> findByC_U(
+		long companyId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo task instance token
+	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
+	 */
+	public KaleoTaskInstanceToken findByC_U_First(
+			long companyId, long userId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException;
+
+	/**
+	 * Returns the first kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
+	 */
+	public KaleoTaskInstanceToken fetchByC_U_First(
+		long companyId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>
+			orderByComparator);
+
+	/**
+	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo task instance token
+	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
+	 */
+	public KaleoTaskInstanceToken findByC_U_Last(
+			long companyId, long userId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException;
+
+	/**
+	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
+	 */
+	public KaleoTaskInstanceToken fetchByC_U_Last(
+		long companyId, long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>
+			orderByComparator);
+
+	/**
+	 * Returns the kaleo task instance tokens before and after the current kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param kaleoTaskInstanceTokenId the primary key of the current kaleo task instance token
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo task instance token
+	 * @throws NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
+	 */
+	public KaleoTaskInstanceToken[] findByC_U_PrevAndNext(
+			long kaleoTaskInstanceTokenId, long companyId, long userId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException;
+
+	/**
+	 * Removes all the kaleo task instance tokens where companyId = &#63; and userId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 */
+	public void removeByC_U(long companyId, long userId);
+
+	/**
+	 * Returns the number of kaleo task instance tokens where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the number of matching kaleo task instance tokens
+	 */
+	public int countByC_U(long companyId, long userId);
+
+	/**
 	 * Returns the kaleo task instance token where kaleoInstanceId = &#63; and kaleoTaskId = &#63; or throws a <code>NoSuchTaskInstanceTokenException</code> if it could not be found.
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -683,6 +838,173 @@ public interface KaleoTaskInstanceTokenPersistence
 	 * @return the number of matching kaleo task instance tokens
 	 */
 	public int countByCN_CPK(String className, long classPK);
+
+	/**
+	 * Returns all the kaleo task instance tokens where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @return the matching kaleo task instance tokens
+	 */
+	public java.util.List<KaleoTaskInstanceToken> findByC_U_C(
+		long companyId, long userId, boolean completed);
+
+	/**
+	 * Returns a range of all the kaleo task instance tokens where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTaskInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @param start the lower bound of the range of kaleo task instance tokens
+	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	 * @return the range of matching kaleo task instance tokens
+	 */
+	public java.util.List<KaleoTaskInstanceToken> findByC_U_C(
+		long companyId, long userId, boolean completed, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the kaleo task instance tokens where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTaskInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @param start the lower bound of the range of kaleo task instance tokens
+	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo task instance tokens
+	 */
+	public java.util.List<KaleoTaskInstanceToken> findByC_U_C(
+		long companyId, long userId, boolean completed, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the kaleo task instance tokens where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTaskInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @param start the lower bound of the range of kaleo task instance tokens
+	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo task instance tokens
+	 */
+	public java.util.List<KaleoTaskInstanceToken> findByC_U_C(
+		long companyId, long userId, boolean completed, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo task instance token
+	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
+	 */
+	public KaleoTaskInstanceToken findByC_U_C_First(
+			long companyId, long userId, boolean completed,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException;
+
+	/**
+	 * Returns the first kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
+	 */
+	public KaleoTaskInstanceToken fetchByC_U_C_First(
+		long companyId, long userId, boolean completed,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>
+			orderByComparator);
+
+	/**
+	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo task instance token
+	 * @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
+	 */
+	public KaleoTaskInstanceToken findByC_U_C_Last(
+			long companyId, long userId, boolean completed,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException;
+
+	/**
+	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
+	 */
+	public KaleoTaskInstanceToken fetchByC_U_C_Last(
+		long companyId, long userId, boolean completed,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskInstanceToken>
+			orderByComparator);
+
+	/**
+	 * Returns the kaleo task instance tokens before and after the current kaleo task instance token in the ordered set where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * @param kaleoTaskInstanceTokenId the primary key of the current kaleo task instance token
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo task instance token
+	 * @throws NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
+	 */
+	public KaleoTaskInstanceToken[] findByC_U_C_PrevAndNext(
+			long kaleoTaskInstanceTokenId, long companyId, long userId,
+			boolean completed,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException;
+
+	/**
+	 * Removes all the kaleo task instance tokens where companyId = &#63; and userId = &#63; and completed = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 */
+	public void removeByC_U_C(long companyId, long userId, boolean completed);
+
+	/**
+	 * Returns the number of kaleo task instance tokens where companyId = &#63; and userId = &#63; and completed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param completed the completed
+	 * @return the number of matching kaleo task instance tokens
+	 */
+	public int countByC_U_C(long companyId, long userId, boolean completed);
 
 	/**
 	 * Caches the kaleo task instance token in the entity cache if it is enabled.

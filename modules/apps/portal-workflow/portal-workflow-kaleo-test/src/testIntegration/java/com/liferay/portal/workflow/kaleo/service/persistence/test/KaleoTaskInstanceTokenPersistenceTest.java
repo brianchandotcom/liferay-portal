@@ -274,6 +274,14 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_U() throws Exception {
+		_persistence.countByC_U(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_U(0L, 0L);
+	}
+
+	@Test
 	public void testCountByKII_KTI() throws Exception {
 		_persistence.countByKII_KTI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -288,6 +296,15 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 		_persistence.countByCN_CPK("null", 0L);
 
 		_persistence.countByCN_CPK((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByC_U_C() throws Exception {
+		_persistence.countByC_U_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_U_C(0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

@@ -70,7 +70,7 @@ create index IX_2A86346C on KaleoTaskFormInstance (kaleoTaskId);
 create index IX_2C81C992 on KaleoTaskFormInstance (kaleoTaskInstanceTokenId);
 
 create index IX_A3271995 on KaleoTaskInstanceToken (className[$COLUMN_LENGTH:200$], classPK);
-create index IX_997FE723 on KaleoTaskInstanceToken (companyId);
+create index IX_4B55EBE on KaleoTaskInstanceToken (companyId, userId, completed);
 create index IX_B2822979 on KaleoTaskInstanceToken (kaleoDefinitionVersionId);
 create index IX_B857A115 on KaleoTaskInstanceToken (kaleoInstanceId, kaleoTaskId);
 

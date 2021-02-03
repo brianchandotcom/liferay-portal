@@ -29,7 +29,7 @@ const ActionControls = ({
 	return (
 		<>
 			{actionDropdownItems && (
-				<ClayManagementToolbar.ItemList>
+				<>
 					{actionDropdownItems
 						.filter((item) => item.quickAction && item.icon)
 						.map((item, index) => (
@@ -52,7 +52,9 @@ const ActionControls = ({
 										disabled={disabled}
 										displayType="unstyled"
 										onClick={(event) => {
-											onActionButtonClick(event, {item});
+											onActionButtonClick(event, {
+												item,
+											});
 										}}
 										symbol={item.icon}
 										title={item.label}
@@ -90,7 +92,7 @@ const ActionControls = ({
 							}
 						/>
 					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+				</>
 			)}
 		</>
 	);

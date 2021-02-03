@@ -102,44 +102,43 @@ function ManagementToolbar({
 						/>
 					)}
 				</ClayManagementToolbar.ItemList>
-				{active ? (
-					<ActionControls
-						actionDropdownItems={actionDropdownItems}
+				{!active && showSearch && (
+					<SearchControls
 						disabled={disabled}
-						onActionButtonClick={onActionButtonClick}
+						searchActionURL={searchActionURL}
+						searchData={searchData}
+						searchFormMethod={searchFormMethod}
+						searchFormName={searchFormName}
+						searchInputName={searchInputName}
+						searchMobile={searchMobile}
+						searchValue={searchValue}
+						setSearchMobile={setSearchMobile}
 					/>
-				) : (
-					<>
-						{showSearch && (
-							<SearchControls
+				)}
+				<ClayManagementToolbar.ItemList>
+					{!active && showSearch && (
+						<SearchControls.ShowMobileButton
+							disabled={disabled}
+							setSearchMobile={setSearchMobile}
+						/>
+					)}
+					{showInfoButton && (
+						<InfoPanelControl
+							disabled={disabled}
+							infoPanelId={infoPanelId}
+							onInfoButtonClick={onInfoButtonClick}
+						/>
+					)}
+					{active ? (
+						<>
+							<ActionControls
+								actionDropdownItems={actionDropdownItems}
 								disabled={disabled}
-								searchActionURL={searchActionURL}
-								searchData={searchData}
-								searchFormMethod={searchFormMethod}
-								searchFormName={searchFormName}
-								searchInputName={searchInputName}
-								searchMobile={searchMobile}
-								searchValue={searchValue}
-								setSearchMobile={setSearchMobile}
+								onActionButtonClick={onActionButtonClick}
 							/>
-						)}
-
-						<ClayManagementToolbar.ItemList>
-							{showSearch && (
-								<SearchControls.ShowMobileButton
-									disabled={disabled}
-									setSearchMobile={setSearchMobile}
-								/>
-							)}
-
-							{showInfoButton && (
-								<InfoPanelControl
-									disabled={disabled}
-									infoPanelId={infoPanelId}
-									onInfoButtonClick={onInfoButtonClick}
-								/>
-							)}
-
+						</>
+					) : (
+						<>
 							{viewTypeItems && (
 								<ClayManagementToolbar.Item>
 									<ClayDropDownWithItems
@@ -170,9 +169,9 @@ function ManagementToolbar({
 									/>
 								</ClayManagementToolbar.Item>
 							)}
-						</ClayManagementToolbar.ItemList>
-					</>
-				)}
+						</>
+					)}
+				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
 
 			{showResultsBar && (

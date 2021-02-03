@@ -176,9 +176,7 @@ describe('FragmentContent', () => {
 		});
 
 		expect(resolveEditableValue).toBeCalledWith(
-			fragmentEntryLink.editableValues,
-			'editable-id',
-			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			{},
 			'en_US',
 			expect.any(Function)
 		);
@@ -195,9 +193,7 @@ describe('FragmentContent', () => {
 		});
 
 		expect(resolveEditableValue).toBeCalledWith(
-			fragmentEntryLink.editableValues,
-			'editable-id',
-			EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+			{},
 			'en_US',
 			expect.any(Function)
 		);
@@ -209,7 +205,9 @@ describe('FragmentContent', () => {
 
 			editableValues: {
 				[BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR]: {
-					'background-id': {},
+					'background-id': {
+						defaultValue: 'image.jpg',
+					},
 				},
 			},
 		});
@@ -219,9 +217,7 @@ describe('FragmentContent', () => {
 		});
 
 		expect(resolveEditableValue).toBeCalledWith(
-			fragmentEntryLink.editableValues,
-			'background-id',
-			BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+			{defaultValue: 'image.jpg'},
 			'en_US',
 			expect.any(Function)
 		);

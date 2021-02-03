@@ -15,78 +15,32 @@
 import {config} from '../../config/index';
 import InfoItemService from '../../services/InfoItemService';
 import isMapped from '../../utils/editable-value/isMapped';
-import isMappedToCollection from '../../utils/editable-value/isMappedToCollection';
-import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
 
 export default function resolveEditableValue(
 	editableValue,
-	languageId,
-	getFieldValue = null
+	languageId = null,
+	getFieldValue = InfoItemService.getInfoItemFieldValue
 ) {
-	let valuePromise;
-
-	if (isMapped(editableValue)) {
-		if (getFieldValue) {
-			valuePromise = getFieldValue({
-				...editableValue,
-				languageId,
-			}).catch(() => resolveRawEditableValue(editableValue, languageId));
-		}
-		else if (isMappedToInfoItem()) {
-			valuePromise =  InfoItemService.getInfoItemFieldValue({
-				...editableValue,
-				languageId,
-			}).catch(() => resolveRawEditableValue(editableValue, languageId));
-		}
-		else {
-			valuePromise = resolveRawEditableValue(editableValue, languageId);
-		}
-	}
-	else {
-		valuePromise = resolveRawEditableValue(editableValue, languageId);
-	}
-
-	let configPromise;
-
-	const editableConfig = editableValue.config
-		? editableValue.config[languageId] ||
-		  editableValue.config[config.defaultLanguageId] ||
-		  editableValue.config
-		: editableValue.config;
-
-	if (
-		isMappedToInfoItem(editableConfig) ||
-		isMappedToCollection(editableConfig)
-	) {
-		configPromise = getFieldValue({
-			...editableConfig,
-			languageId,
-		})
-			.then((href) => {
-				return {...editableConfig, href};
-			})
-			.catch(() => {
-				return {...editableConfig};
-			});
-	}
-	else {
-		configPromise = Promise.resolve(editableConfig);
-	}
-
-	return Promise.all([valuePromise, configPromise]);
+	return isMapped(editableValue) && getFieldValue
+		? getFieldValue({...editableValue, languageId}).catch(() =>
+				resolveRawEditableValue(editableValue, languageId)
+		  )
+		: resolveRawEditableValue(editableValue, languageId);
 }
 
-function resolveRawEditableValue(editableValue, languageId) {
+function resolveRawEditableValue(editableValue, languageId = null) {
 	let content = editableValue;
 
-	if (content[languageId]) {
-		content = content[languageId];
-	}
-	else if (content[config.defaultLanguageId]) {
-		content = content[config.defaultLanguageId];
+	if (languageId) {
+		if (content[languageId]) {
+			content = content[languageId];
+		}
+		else if (content[config.defaultLanguageId]) {
+			content = content[config.defaultLanguageId];
+		}
 	}
 
-	if (content == null || content.defaultValue) {
+	if (content === null || content.defaultValue) {
 		content = editableValue.defaultValue;
 	}
 

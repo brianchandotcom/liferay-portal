@@ -128,13 +128,22 @@ const FragmentContent = ({
 
 			Promise.all(
 				getAllEditables(fragmentElement).map((editable) =>
-					resolveEditableValue(
-						editableValues[editable.editableValueNamespace][
-							editable.editableId
-						],
-						languageId,
-						getFieldValue
-					).then(([value, editableConfig]) => {
+					Promise.all([
+						resolveEditableValue(
+							editableValues[editable.editableValueNamespace][
+								editable.editableId
+							],
+							languageId,
+							getFieldValue
+						),
+						resolveEditableValue(
+							editableValues[editable.editableValueNamespace][
+								editable.editableId
+							]?.config || {},
+							languageId,
+							getFieldValue
+						),
+					]).then(([value, editableConfig]) => {
 						editable.processor.render(
 							editable.element,
 							value,

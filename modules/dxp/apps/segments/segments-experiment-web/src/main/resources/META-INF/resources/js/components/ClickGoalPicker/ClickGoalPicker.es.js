@@ -167,6 +167,15 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 		setSelectorInputValue(event.target.value);
 	};
 
+	const handleDelete = (event) => {
+		stopImmediatePropagation(event);
+
+		dispatch({
+			selector: '',
+			type: 'selectTarget',
+		});
+	};
+
 	return (
 		<DispatchContext.Provider value={dispatch}>
 			<StateContext.Provider value={state}>
@@ -234,17 +243,37 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 						<ClayInput.GroupItem append>
 							<ClayTooltipProvider>
 								<ClayInput
+									className={classNames({
+										'input-group-inset input-group-inset-after': selectedTarget,
+									})}
 									data-tooltip-align="top"
 									id="clickableElement"
 									onBlur={handleBlur}
 									onChange={handleInputChange}
 									onKeyDown={handleKeyDown}
-									readOnly={!allowEdit}
+									readOnly={!allowEdit || selectedTarget}
 									title={selectorInputValue}
 									type="text"
 									value={selectorInputValue}
 								/>
 							</ClayTooltipProvider>
+							{selectedTarget && (
+								<ClayInput.GroupInsetItem after>
+									<ClayTooltipProvider>
+										<ClayButtonWithIcon
+											data-tooltip-align="bottom-right"
+											disabled={!selectedTarget}
+											displayType="unstyled"
+											monospaced={false}
+											onClick={handleDelete}
+											symbol="times-circle"
+											title={Liferay.Language.get(
+												'clear'
+											)}
+										/>
+									</ClayTooltipProvider>
+								</ClayInput.GroupInsetItem>
+							)}
 						</ClayInput.GroupItem>
 						<ClayInput.GroupItem shrink>
 							<ClayTooltipProvider>

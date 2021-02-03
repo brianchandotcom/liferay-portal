@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -32,6 +33,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -165,6 +167,11 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			"maximumSubmissionLimitReached",
 			GetterUtil.getBoolean(
 				ddmFormField.getProperty("maximumSubmissionLimitReached")));
+		parameters.put(
+			"message",
+			_getMessage(
+				ddmFormFieldRenderingContext.getLocale(),
+				ddmFormFieldRenderingContext.getValue()));
 
 		String value = ddmFormFieldRenderingContext.getValue();
 
@@ -520,6 +527,56 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 
+	private String _getMessage(Locale defaultLocale, String value) {
+		JSONObject jsonObject = null;
+
+		try {
+			jsonObject = JSONFactoryUtil.createJSONObject(value);
+		}
+		catch (JSONException jsonException) {
+			return StringPool.BLANK;
+		}
+
+		if (jsonObject == null) {
+			return StringPool.BLANK;
+		}
+
+		String uuid = jsonObject.getString("uuid");
+		long groupId = jsonObject.getLong("groupId");
+
+		if (Validator.isNull(uuid) || (groupId <= 0)) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			if (!ExportImportThreadLocal.isImportInProcess()) {
+				FileEntry fileEntry = dlAppService.getFileEntryByUuidAndGroupId(
+					uuid, groupId);
+
+				if (fileEntry.isInTrash()) {
+					return LanguageUtil.get(
+						getResourceBundle(defaultLocale),
+						"the-selected-document-was-moved-to-the-recycle-bin");
+				}
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get file entry for UUID ", uuid,
+						" and group ID ", groupId),
+					exception);
+			}
+
+			return LanguageUtil.get(
+				getResourceBundle(defaultLocale),
+				"the-selected-document-was-deleted");
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private Folder _getPrivateUserFolder(
 		long repositoryId, long parentFolderId,
 		HttpServletRequest httpServletRequest, User user) {
@@ -581,6 +638,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

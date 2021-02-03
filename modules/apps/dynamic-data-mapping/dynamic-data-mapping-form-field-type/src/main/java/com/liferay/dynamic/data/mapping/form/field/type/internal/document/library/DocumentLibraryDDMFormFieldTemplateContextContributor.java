@@ -32,7 +32,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -527,48 +526,28 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	}
 
 	private String _getMessage(Locale defaultLocale, String value) {
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(value);
-		}
-		catch (JSONException jsonException) {
+		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 
-		if (jsonObject == null) {
+		JSONObject valueJSONObject = getValueJSONObject(value);
+
+		if ((valueJSONObject == null) || (valueJSONObject.length() <= 0)) {
 			return StringPool.BLANK;
 		}
 
-		String uuid = jsonObject.getString("uuid");
-		long groupId = jsonObject.getLong("groupId");
+		FileEntry fileEntry = getFileEntry(valueJSONObject);
 
-		if (Validator.isNull(uuid) || (groupId <= 0)) {
-			return StringPool.BLANK;
-		}
-
-		try {
-			FileEntry fileEntry = dlAppService.getFileEntryByUuidAndGroupId(
-				uuid, groupId);
-
-			if (fileEntry.isInTrash()) {
-				return LanguageUtil.get(
-					getResourceBundle(defaultLocale),
-					"the-selected-document-was-moved-to-the-recycle-bin");
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to get file entry for UUID ", uuid,
-						" and group ID ", groupId),
-					exception);
-			}
-
+		if (fileEntry == null) {
 			return LanguageUtil.get(
 				getResourceBundle(defaultLocale),
 				"the-selected-document-was-deleted");
+		}
+
+		if (fileEntry.isInTrash()) {
+			return LanguageUtil.get(
+				getResourceBundle(defaultLocale),
+				"the-selected-document-was-moved-to-the-recycle-bin");
 		}
 
 		return StringPool.BLANK;

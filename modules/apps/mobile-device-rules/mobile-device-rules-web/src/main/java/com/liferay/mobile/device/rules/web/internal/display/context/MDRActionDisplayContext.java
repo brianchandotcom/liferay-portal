@@ -14,13 +14,17 @@
 
 package com.liferay.mobile.device.rules.web.internal.display.context;
 
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
 import com.liferay.mobile.device.rules.util.comparator.ActionCreateDateComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ResourceBundle;
 
@@ -88,8 +92,18 @@ public class MDRActionDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_renderRequest, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(_renderRequest, "displayStyle");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_renderRequest);
+
+		if (Validator.isNull(_displayStyle)) {
+			_displayStyle = portalPreferences.getValue(
+				MDRPortletKeys.MOBILE_DEVICE_RULES, "display-style", "list");
+		}
+
+		portalPreferences.setValue(
+			MDRPortletKeys.MOBILE_DEVICE_RULES, "display-style", _displayStyle);
 
 		return _displayStyle;
 	}

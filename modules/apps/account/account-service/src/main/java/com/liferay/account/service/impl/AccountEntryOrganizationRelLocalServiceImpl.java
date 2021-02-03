@@ -109,6 +109,22 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAccountEntryOrganizationRelsByAccountEntryId(
+		long accountEntryId) {
+
+		accountEntryOrganizationRelPersistence.removeByAccountEntryId(
+			accountEntryId);
+	}
+
+	@Override
+	public void deleteAccountEntryOrganizationRelsByOrganizationId(
+		long organizationId) {
+
+		accountEntryOrganizationRelPersistence.removeByOrganizationId(
+			organizationId);
+	}
+
+	@Override
 	public List<AccountEntryOrganizationRel> getAccountEntryOrganizationRels(
 		long accountEntryId) {
 

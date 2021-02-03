@@ -26,6 +26,8 @@ public class OASConstants {
 
 	public static final String INFO = "info";
 
+	public static final String ITEMS = "items";
+
 	public static final String LOCATOR_COMPONENTS_SCHEMAS =
 		"components>schemas";
 

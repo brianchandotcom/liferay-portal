@@ -55,51 +55,10 @@ public class SchemaBuilder {
 	public String extractEndpointSchemaName(
 		String endpoint, String operation, JsonObject oasJsonObject) {
 
-		if (Objects.equals(operation, OASConstants.OPERATION_GET)) {
-			String jsonFinderPath = StringUtil.replace(
-				OASConstants.
-					LOCATOR_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
-				"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+		SchemaInfo schemaInfo = _extractEndpointSchemaName(
+			endpoint, operation, oasJsonObject);
 
-			JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
-				jsonFinderPath, oasJsonObject);
-
-			String schemaName = _stripSchemaName(
-				schemaJsonObject.getString(OASConstants.REF));
-
-			JsonObject schemaDefinitionJsonObject = _extractSchemaJsonObject(
-				schemaName, oasJsonObject);
-
-			JsonObject itemsPropertiesJsonObject =
-				_jsonFinder.getDescendantJsonObject(
-					OASConstants.LOCATOR_PROPERTIES_ITEMS_ITEMS,
-					schemaDefinitionJsonObject);
-
-			if (!itemsPropertiesJsonObject.isEmpty() &&
-				itemsPropertiesJsonObject.containsKey(OASConstants.REF)) {
-
-				schemaName = _stripSchemaName(
-					itemsPropertiesJsonObject.getString(OASConstants.REF));
-			}
-
-			return schemaName;
-		}
-
-		if (!Objects.equals(operation, OASConstants.OPERATION_PATCH) &&
-			!Objects.equals(operation, OASConstants.OPERATION_POST)) {
-
-			return null;
-		}
-
-		String jsonFinderPath = StringUtil.replace(
-			OASConstants.
-				LOCATOR_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
-			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
-
-		JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
-			jsonFinderPath, oasJsonObject);
-
-		return _stripSchemaName(schemaJsonObject.getString(OASConstants.REF));
+		return schemaInfo._name;
 	}
 
 	public Schema getEntitySchema(String entityName, JsonObject oasJsonObject) {
@@ -134,6 +93,58 @@ public class SchemaBuilder {
 		return strings;
 	}
 
+	private SchemaInfo _extractEndpointSchemaName(
+		String endpoint, String operation, JsonObject oasJsonObject) {
+
+		if (Objects.equals(operation, OASConstants.OPERATION_GET)) {
+			String jsonFinderPath = StringUtil.replace(
+				OASConstants.
+					LOCATOR_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
+				"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+
+			JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
+				jsonFinderPath, oasJsonObject);
+
+			String schemaName = _stripSchemaName(
+				schemaJsonObject.getString(OASConstants.REF));
+
+			JsonObject schemaDefinitionJsonObject = _extractSchemaJsonObject(
+				schemaName, oasJsonObject);
+
+			JsonObject itemsPropertiesJsonObject =
+				_jsonFinder.getDescendantJsonObject(
+					OASConstants.LOCATOR_PROPERTIES_ITEMS_ITEMS,
+					schemaDefinitionJsonObject);
+
+			if (!itemsPropertiesJsonObject.isEmpty() &&
+				itemsPropertiesJsonObject.containsKey(OASConstants.REF)) {
+
+				return new SchemaInfo(
+					true,
+					_stripSchemaName(
+						itemsPropertiesJsonObject.getString(OASConstants.REF)));
+			}
+
+			return new SchemaInfo(schemaName);
+		}
+
+		if (!Objects.equals(operation, OASConstants.OPERATION_PATCH) &&
+			!Objects.equals(operation, OASConstants.OPERATION_POST)) {
+
+			return null;
+		}
+
+		String jsonFinderPath = StringUtil.replace(
+			OASConstants.
+				LOCATOR_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
+			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+
+		JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
+			jsonFinderPath, oasJsonObject);
+
+		return _getRequestBodySchemaInfo(schemaJsonObject);
+	}
+
 	private JsonObject _extractSchemaJsonObject(
 		String schemaName, JsonObject oasJsonObject) {
 
@@ -156,6 +167,29 @@ public class SchemaBuilder {
 		schemaFields.add(designField);
 
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
+	}
+
+	private SchemaInfo _getRequestBodySchemaInfo(JsonObject schemaJsonObject) {
+		if (schemaJsonObject.containsKey(OASConstants.REF)) {
+			return new SchemaInfo(
+				_stripSchemaName(schemaJsonObject.getString(OASConstants.REF)));
+		}
+
+		JsonObject itemsJsonObject = schemaJsonObject.getJsonObject(
+			OASConstants.ITEMS);
+
+		if (itemsJsonObject.isEmpty() ||
+			!itemsJsonObject.containsKey(OASConstants.REF)) {
+
+			throw new OASException(
+				String.format(
+					"Unable to locate schema %s in content body definition %s",
+					OASConstants.REF, schemaJsonObject.toString()));
+		}
+
+		return new SchemaInfo(
+			true,
+			_stripSchemaName(itemsJsonObject.getString(OASConstants.REF)));
 	}
 
 	private Schema _getSchema(String schemaName, JsonObject oasJsonObject) {
@@ -193,9 +227,16 @@ public class SchemaBuilder {
 	private Schema _getSchema(
 		String endpoint, String operation, JsonObject apiSpecJsonObject) {
 
-		return _getSchema(
-			extractEndpointSchemaName(endpoint, operation, apiSpecJsonObject),
-			apiSpecJsonObject);
+		SchemaInfo schemaInfo = _extractEndpointSchemaName(
+			endpoint, operation, apiSpecJsonObject);
+
+		Schema schema = _getSchema(schemaInfo._name, apiSpecJsonObject);
+
+		if (schemaInfo._iterable) {
+			schema.addProp("iterable", Boolean.TRUE);
+		}
+
+		return schema;
 	}
 
 	private Schema.Field _getSchemaField(
@@ -413,5 +454,21 @@ public class SchemaBuilder {
 		SchemaBuilder.class);
 
 	private static final JsonFinder _jsonFinder = new JsonFinder();
+
+	private static class SchemaInfo {
+
+		private SchemaInfo(boolean iterable, String name) {
+			_iterable = iterable;
+			_name = name;
+		}
+
+		private SchemaInfo(String name) {
+			this(false, name);
+		}
+
+		private final boolean _iterable;
+		private final String _name;
+
+	}
 
 }

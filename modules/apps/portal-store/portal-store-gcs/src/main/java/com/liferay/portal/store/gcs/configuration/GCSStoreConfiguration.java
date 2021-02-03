@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Shanon Mathai
  */
-@ExtendedObjectClassDefinition(category = "file-store")
+@ExtendedObjectClassDefinition(category = "file-storage")
 @Meta.OCD(
 	id = "com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
 	localization = "content/Language", name = "gcs-store-configuration-name"

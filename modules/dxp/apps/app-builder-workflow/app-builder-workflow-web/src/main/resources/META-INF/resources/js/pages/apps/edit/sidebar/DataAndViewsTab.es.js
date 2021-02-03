@@ -234,13 +234,13 @@ export default function DataAndViewsTab({
 			title: dataLayoutId
 				? Liferay.Language.get('edit-form-view')
 				: Liferay.Language.get('new-form-view'),
-			url: Liferay.Util.PortletURL.createRenderURL(objectsPortletURL, {
+			url: `${Liferay.Util.PortletURL.createRenderURL(objectsPortletURL, {
 				dataDefinitionId,
 				dataLayoutId,
 				mvcRenderCommandName: '/app_builder/edit_form_view',
 				newCustomObject: true,
 				p_p_state: 'pop_up',
-			}),
+			})}`,
 		});
 	};
 

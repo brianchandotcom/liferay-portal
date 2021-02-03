@@ -36,6 +36,7 @@ import java.util.Objects;
 import java.util.TimeZone;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
@@ -204,7 +205,23 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 				nestedJsonObjectBuilder.getValue());
 		}
 
-		return objectBuilder.build();
+		if (!_isIterable(indexedRecord)) {
+			return objectBuilder.build();
+		}
+
+		JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+		arrayBuilder.add(objectBuilder);
+
+		return arrayBuilder.build();
+	}
+
+	private boolean _isIterable(IndexedRecord indexedRecord) {
+		Schema schema = indexedRecord.getSchema();
+
+		Boolean iterable = (Boolean)schema.getObjectProp("iterable");
+
+		return iterable;
 	}
 
 	private String _asISO8601String(long timeMills) {

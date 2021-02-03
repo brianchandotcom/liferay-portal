@@ -138,6 +138,12 @@ public interface AccountEntryOrganizationRelLocalService
 			long accountEntryId, long[] organizationIds)
 		throws PortalException;
 
+	public void deleteAccountEntryOrganizationRelsByAccountEntryId(
+		long accountEntryId);
+
+	public void deleteAccountEntryOrganizationRelsByOrganizationId(
+		long organizationId);
+
 	/**
 	 * @throws PortalException
 	 */
@@ -218,6 +224,10 @@ public interface AccountEntryOrganizationRelLocalService
 	public AccountEntryOrganizationRel fetchAccountEntryOrganizationRel(
 		long accountEntryOrganizationRelId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntryOrganizationRel fetchAccountEntryOrganizationRel(
+		long accountEntryId, long organizationId);
+
 	/**
 	 * Returns the account entry organization rel with the primary key.
 	 *
@@ -228,6 +238,11 @@ public interface AccountEntryOrganizationRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountEntryOrganizationRel getAccountEntryOrganizationRel(
 			long accountEntryOrganizationRelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntryOrganizationRel getAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId)
 		throws PortalException;
 
 	/**
@@ -250,8 +265,21 @@ public interface AccountEntryOrganizationRelLocalService
 		long accountEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountEntryOrganizationRel> getAccountEntryOrganizationRels(
+		long accountEntryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountEntryOrganizationRel>
 		getAccountEntryOrganizationRelsByOrganizationId(long organizationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountEntryOrganizationRel>
+		getAccountEntryOrganizationRelsByOrganizationId(
+			long organizationId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountEntryOrganizationRelsByOrganizationIdCount(
+		long organizationId);
 
 	/**
 	 * Returns the number of account entry organization rels.

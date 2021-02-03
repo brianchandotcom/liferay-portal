@@ -152,6 +152,20 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 			accountEntryId, organizationIds);
 	}
 
+	public static void deleteAccountEntryOrganizationRelsByAccountEntryId(
+		long accountEntryId) {
+
+		getService().deleteAccountEntryOrganizationRelsByAccountEntryId(
+			accountEntryId);
+	}
+
+	public static void deleteAccountEntryOrganizationRelsByOrganizationId(
+		long organizationId) {
+
+		getService().deleteAccountEntryOrganizationRelsByOrganizationId(
+			organizationId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -261,6 +275,14 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 			accountEntryOrganizationRelId);
 	}
 
+	public static com.liferay.account.model.AccountEntryOrganizationRel
+		fetchAccountEntryOrganizationRel(
+			long accountEntryId, long organizationId) {
+
+		return getService().fetchAccountEntryOrganizationRel(
+			accountEntryId, organizationId);
+	}
+
 	/**
 	 * Returns the account entry organization rel with the primary key.
 	 *
@@ -274,6 +296,15 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 
 		return getService().getAccountEntryOrganizationRel(
 			accountEntryOrganizationRelId);
+	}
+
+	public static com.liferay.account.model.AccountEntryOrganizationRel
+			getAccountEntryOrganizationRel(
+				long accountEntryId, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountEntryOrganizationRel(
+			accountEntryId, organizationId);
 	}
 
 	/**
@@ -303,11 +334,37 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.account.model.AccountEntryOrganizationRel>
+			getAccountEntryOrganizationRels(
+				long accountEntryId, int start, int end) {
+
+		return getService().getAccountEntryOrganizationRels(
+			accountEntryId, start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.account.model.AccountEntryOrganizationRel>
 			getAccountEntryOrganizationRelsByOrganizationId(
 				long organizationId) {
 
 		return getService().getAccountEntryOrganizationRelsByOrganizationId(
 			organizationId);
+	}
+
+	public static java.util.List
+		<com.liferay.account.model.AccountEntryOrganizationRel>
+			getAccountEntryOrganizationRelsByOrganizationId(
+				long organizationId, int start, int end) {
+
+		return getService().getAccountEntryOrganizationRelsByOrganizationId(
+			organizationId, start, end);
+	}
+
+	public static int getAccountEntryOrganizationRelsByOrganizationIdCount(
+		long organizationId) {
+
+		return getService().
+			getAccountEntryOrganizationRelsByOrganizationIdCount(
+				organizationId);
 	}
 
 	/**

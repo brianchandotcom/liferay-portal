@@ -187,7 +187,20 @@ public class AssetBrowserDisplayContext {
 		}
 
 		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle", "list");
+			_httpServletRequest, "displayStyle");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				_httpServletRequest);
+
+		if (Validator.isNull(_displayStyle)) {
+			_displayStyle = portalPreferences.getValue(
+				AssetBrowserPortletKeys.ASSET_BROWSER, "display-style", "list");
+		}
+
+		portalPreferences.setValue(
+			AssetBrowserPortletKeys.ASSET_BROWSER, "display-style",
+			_displayStyle);
 
 		return _displayStyle;
 	}

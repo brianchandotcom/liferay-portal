@@ -793,7 +793,10 @@ AUI.add(
 							if (field) {
 								var type = field.type;
 
-								if (type === 'ddm-number') {
+								if (
+									type === 'ddm-number' ||
+									type === 'ddm-decimal'
+								) {
 									return instance.convertNumberLocale(
 										localizationMap[defaultLocale],
 										defaultLocale,

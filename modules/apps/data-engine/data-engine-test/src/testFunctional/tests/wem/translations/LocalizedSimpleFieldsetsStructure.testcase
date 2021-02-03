@@ -35,12 +35,60 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
 	@priority = "5"
 	test CheckFieldsetTranslationsOnStructure {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123538 CheckFieldsetTranslationsOnStructure pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		Navigator.gotoSidebarTab(tabName = "Builder");
+
+		DataEngine.addFieldsets(
+			createNewFieldset = "true",
+			fieldNameList = "Text",
+			fieldsetLabel = "Address",
+			fieldsetName = "Address Fieldset");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Address",
+			fieldFieldLabelEdit = "Endereço");
+
+		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Fieldsets");
+		}
+
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "Address Fieldset");
+
+		MenuItem.click(menuItem = "Edit");
+
+		PortletEntry.changeLocaleInModal(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto",
+			fieldsetModal = "true");
+		
+		Button.clickSaveModal(button = "Save");
+
+		Button.click(button = "Propagate");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		AssertElementPresent(locator1 = "FormFields#LABEL", key_fieldLabel = "Endereço");
+
+		AssertElementPresent(locator1 = "FormFields#LABEL", key_fieldLabel = "Texto");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

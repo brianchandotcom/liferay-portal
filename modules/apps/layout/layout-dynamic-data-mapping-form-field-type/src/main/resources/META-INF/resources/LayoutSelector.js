@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-import {ReactFieldBase} from 'dynamic-data-mapping-form-field-type';
+import {FieldBase} from 'dynamic-data-mapping-form-field-type/FieldBase/ReactFieldBase.es';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -128,7 +128,7 @@ const Main = ({
 	value,
 	...otherProps
 }) => (
-	<ReactFieldBase {...otherProps} name={name} readOnly={readOnly}>
+	<FieldBase {...otherProps} name={name} readOnly={readOnly}>
 		<LayoutSelector
 			disabled={readOnly}
 			inputValue={getInputValue(value, predefinedValue)}
@@ -137,7 +137,7 @@ const Main = ({
 			onChange={(value) => onChange({}, value)}
 			portletNamespace={portletNamespace}
 		/>
-	</ReactFieldBase>
+	</FieldBase>
 );
 
 Main.displayName = 'LayoutSelector';

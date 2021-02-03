@@ -14,8 +14,8 @@
 
 package com.liferay.portal.crypto.hash.internal;
 
-import com.liferay.portal.crypto.hash.CryptoHasher;
-import com.liferay.portal.crypto.hash.generation.CryptoHashGenerationResponse;
+import com.liferay.portal.crypto.hash.CryptoHashGenerator;
+import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 
 import org.junit.Assert;
@@ -26,33 +26,32 @@ import org.junit.Test;
  * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-public class CryptoHasherTest {
+public class CryptoHashGeneratorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_cryptoHasher = new CryptoHasherImpl();
+		_cryptoHashGenerator = new CryptoHashGeneratorImpl();
 	}
 
 	@Test
 	public void testGenerationAndVerification() throws Exception {
-		final CryptoHashGenerationResponse cryptoHashGenerationResponse =
-			_cryptoHasher.generate(_PASSWORD.getBytes());
+		final CryptoHashResponse cryptoHashResponse =
+			_cryptoHashGenerator.generate(_PASSWORD.getBytes());
 
 		Assert.assertTrue(
-			_cryptoHasher.verify(
-				_PASSWORD.getBytes(), cryptoHashGenerationResponse.getHash(),
-				cryptoHashGenerationResponse.getSalt()));
+			_cryptoHashGenerator.verify(
+				_PASSWORD.getBytes(), cryptoHashResponse.getHash(),
+				cryptoHashResponse.getSalt()));
 
 		Assert.assertFalse(
-			_cryptoHasher.verify(
-				_WRONG_PASSWORD.getBytes(),
-				cryptoHashGenerationResponse.getHash(),
-				cryptoHashGenerationResponse.getSalt()));
+			_cryptoHashGenerator.verify(
+				_WRONG_PASSWORD.getBytes(), cryptoHashResponse.getHash(),
+				cryptoHashResponse.getSalt()));
 	}
 
 	@Test
 	public void testVerificationWithFixedHashAndSalt() throws Exception {
-		_cryptoHasher.verify(
+		_cryptoHashGenerator.verify(
 			_PASSWORD.getBytes(), _PASSWORD_HASH_WITH_SALT, _SALT_1.getBytes());
 	}
 
@@ -68,6 +67,6 @@ public class CryptoHasherTest {
 
 	private static final String _WRONG_PASSWORD = "wrongPassword";
 
-	private CryptoHasher _cryptoHasher;
+	private CryptoHashGenerator _cryptoHashGenerator;
 
 }

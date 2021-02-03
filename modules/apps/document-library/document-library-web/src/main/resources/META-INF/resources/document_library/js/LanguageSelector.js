@@ -28,32 +28,9 @@ function getLanguage(id) {
 	};
 }
 
-function LanguageSelector(props) {
+function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const [selectedLanguageId, setSelectedLanguageId] = useState(
-		props.selectedLanguageId
-	);
 	const language = getLanguage(selectedLanguageId);
-
-	useEffect(() => {
-		props.ddmStructureIds.forEach((ddmStructureId) => {
-			Liferay.componentReady(
-				props.portletNamespace +
-					'dataEngineLayoutRenderer' +
-					ddmStructureId
-			).then((dataEngineLayoutRenderer) => {
-				const {
-					reactComponentRef: {current},
-				} = dataEngineLayoutRenderer;
-
-				if (current) {
-					current.updateEditingLanguageId({
-						editingLanguageId: selectedLanguageId,
-					});
-				}
-			});
-		});
-	}, [props, selectedLanguageId]);
 
 	return (
 		<ClayDropDown
@@ -69,7 +46,7 @@ function LanguageSelector(props) {
 			}
 		>
 			<ClayDropDown.ItemList>
-				{props.languageIds.map((id) => {
+				{languageIds.map((id) => {
 					const {icon, text} = getLanguage(id);
 
 					return (
@@ -77,7 +54,7 @@ function LanguageSelector(props) {
 							active={id === selectedLanguageId}
 							key={id}
 							onClick={() => {
-								setSelectedLanguageId(id);
+								onChange(id);
 								setIsDropdownOpen(false);
 							}}
 						>
@@ -94,10 +71,52 @@ function LanguageSelector(props) {
 }
 
 LanguageSelector.propTypes = {
-	ddmStructureIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 	languageIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+	onChange: PropTypes.func.isRequired,
+	selectedLanguageId: PropTypes.string.isRequired,
+};
+
+function DataEngineLanguageSelector({
+	ddmStructureIds,
+	portletNamespace,
+	selectedLanguageId: initialSelectedLanguageId,
+	...restProps
+}) {
+	const [selectedLanguageId, setSelectedLanguageId] = useState(
+		initialSelectedLanguageId
+	);
+
+	useEffect(() => {
+		ddmStructureIds.forEach((ddmStructureId) => {
+			Liferay.componentReady(
+				`${portletNamespace}dataEngineLayoutRenderer${ddmStructureId}`
+			).then((dataEngineLayoutRenderer) => {
+				const {
+					reactComponentRef: {current},
+				} = dataEngineLayoutRenderer;
+
+				if (current) {
+					current.updateEditingLanguageId({
+						editingLanguageId: selectedLanguageId,
+					});
+				}
+			});
+		});
+	}, [portletNamespace, selectedLanguageId, ddmStructureIds]);
+
+	return (
+		<LanguageSelector
+			{...restProps}
+			onChange={setSelectedLanguageId}
+			selectedLanguageId={selectedLanguageId}
+		/>
+	);
+}
+
+DataEngineLanguageSelector.propTypes = {
+	ddmStructureIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	selectedLanguageId: PropTypes.string.isRequired,
 };
 
-export default LanguageSelector;
+export default DataEngineLanguageSelector;

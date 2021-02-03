@@ -100,6 +100,10 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
 		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "New Fieldset");
 
 		MenuItem.click(menuItem = "Edit");
@@ -111,17 +115,15 @@ definition {
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
+		Click(
+			key_text = "Propagate",
+			locator1 = "Button#ANY");
+
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsets(
-			fieldsetLabel = "New Fieldset",
-			fieldsetName = "New Fieldset");
-
-		for (var fieldFieldLabel : list "Text,Text Edit") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		}
+		AssertVisible(
+			key_fieldFieldLabel = "Text Edit",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

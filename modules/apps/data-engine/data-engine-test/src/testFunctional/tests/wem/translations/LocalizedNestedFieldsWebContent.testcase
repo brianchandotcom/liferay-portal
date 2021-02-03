@@ -117,6 +117,10 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content Name 1");
 
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "My Web Content Name 1");
+
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		AssertTextEquals(

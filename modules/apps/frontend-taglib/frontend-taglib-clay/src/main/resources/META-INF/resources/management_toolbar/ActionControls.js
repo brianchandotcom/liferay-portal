@@ -49,7 +49,7 @@ const ActionControls = ({
 								) : (
 									<ClayButtonWithIcon
 										className="nav-link nav-link-monospaced"
-										disabled={disabled}
+										disabled={disabled || item.disabled}
 										displayType="unstyled"
 										onClick={(event) => {
 											onActionButtonClick(event, {

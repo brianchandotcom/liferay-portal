@@ -21,6 +21,7 @@ import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroup
 import com.liferay.commerce.account.internal.upgrade.v1_3_0.CommerceAccountNameUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v1_4_0.CommerceAccountDefaultAddressesUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v2_0_0.CommerceAccountGroupSystemUpgradeProcess;
+import com.liferay.commerce.account.internal.upgrade.v3_0_0.CommerceAccountOrganizationRelUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
@@ -68,6 +69,10 @@ public class CommerceAccountUpgradeStepRegistrator
 			"2.0.0", "3.0.0",
 			new com.liferay.commerce.account.internal.upgrade.v3_0_0.
 				CommerceAccountUpgradeProcess());
+
+		registry.register(
+			"3.0.0", "4.0.0",
+			new CommerceAccountOrganizationRelUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce account upgrade step registrator finished");

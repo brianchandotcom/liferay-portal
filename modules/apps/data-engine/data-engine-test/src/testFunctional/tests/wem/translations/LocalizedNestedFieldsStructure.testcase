@@ -282,12 +282,12 @@ definition {
 
 		var structureName = "WC Structure Name";
 
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content");
-    
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
 		NavItem.gotoStructures();
-        
+
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
 			structureName = "WC Structure Name");
@@ -301,11 +301,11 @@ definition {
 			fieldName = "Rich Text",
 			targetFieldLabel = "Text");
 
-        DataEngine.addFieldNested(
+		DataEngine.addFieldNested(
 			fieldFieldLabel = "Rich Text2",
 			fieldName = "Rich Text",
 			targetFieldLabel = "Rich Text1");
-		
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "Nome da Estrutura WC");
@@ -321,7 +321,7 @@ definition {
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Rich Text2",
 			fieldFieldLabelEdit = "Rico Texto2");
-	
+
 		WebContentStructures.saveCP(structureName = "${structureName}");
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
@@ -333,7 +333,7 @@ definition {
 		AssertVisible(
 			key_fieldFieldLabel = "Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		
+
 		AssertVisible(
 			key_fieldFieldLabel = "Rich Text1",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
@@ -351,16 +351,16 @@ definition {
 		AssertVisible(
 			key_fieldFieldLabel = "Texto",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		
+
 		AssertVisible(
 			key_fieldFieldLabel = "Rico Texto1",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		
+
 		AssertVisible(
 			key_fieldFieldLabel = "Rico Texto2",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");		
+		WebContentStructures.saveCP(structureName = "${structureName}");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

@@ -32,7 +32,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalServiceUtil;
-import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -951,9 +950,6 @@ public class CommerceInventoryEngineTest {
 
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	@Inject
-	private CommerceCountryLocalService _commerceCountryLocalService;
 
 	@Inject
 	private CommerceInventoryEngine _commerceInventoryEngine;

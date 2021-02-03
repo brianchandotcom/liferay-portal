@@ -20,31 +20,46 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
-	@description = "This is a test for LPS-125933. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@ignore = "true"
+	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = "5"
-	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher70 {
-		property portal.acceptance = "false";
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher704 {
+		property data.archive.type = "data-archive-web-content-with-fields";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
 
-		// TODO LPS-125933 ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher70 pending implementation
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+
+		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
+
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-125933. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@ignore = "true"
+	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = "5"
-	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher71 {
-		property portal.acceptance = "false";
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher713 {
+		property data.archive.type = "data-archive-web-content-with-fields";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
 
-		// TODO LPS-125933 ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher71 pending implementation
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+
+		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
+
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
-	@description = "This is a test for LPS-125933. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
-	@ignore = "true"
+	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
 	@priority = "5"
-	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher72 {
-		property portal.acceptance = "false";
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher721 {
+		property data.archive.type = "data-archive-web-content-with-fields";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
 
-		// TODO LPS-125933 ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher72 pending implementation
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+
+		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
+
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
 	}
 
 	@description = "This is a test for LPS-126656. Upgrade 7.3 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
@@ -67,6 +82,48 @@ definition {
 		property data.archive.type = "data-archive-web-content-with-fields";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
+
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+
+		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
+
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
+	}
+
+	@description = "This is a test for LPS-126654. Upgrade 7.1 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@priority = "5"
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher71103 {
+		property data.archive.type = "data-archive-web-content-with-fields";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+
+		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
+
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
+	}
+
+	@description = "This is a test for LPS-126655. Upgrade 7.2 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@priority = "5"
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher72101 {
+		property data.archive.type = "data-archive-web-content-with-fields";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.3";
+
+		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
+
+		Upgrade.EditWebContentAndViewInWCDandAssetPublisher();
+
+		Upgrade.EditWCStructureAndTemplateAndViewInWCDandAssetPublisher();
+	}
+
+	@description = "This is a test for LPS-126653. Upgrade 7.0 to Master with a Web Content, a Structure, a WC Template and a page with Web Content Display and Asset Publisher"
+	@priority = "5"
+	test ViewAndEditWebContentWCStructureWCTemplateWCDAndAssetPublisher701014 {
+		property data.archive.type = "data-archive-web-content-with-fields";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.14";
 
 		Upgrade.ViewWebContentWCStructureWCTemplateWCDandAssetPublisher();
 

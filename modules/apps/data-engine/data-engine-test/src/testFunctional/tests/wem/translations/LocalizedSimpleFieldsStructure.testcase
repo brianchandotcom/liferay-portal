@@ -63,35 +63,17 @@ definition {
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "4"
 	test CheckLanguageSelector {
-		property portal.acceptance = "false";
-
-		var locale = "ar-SA";
-		var localeLowerCase = "ar-sa";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Test",
-			structureName = "Test");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		Click(locator1 = "Button#LOCALIZATION_GENERIC");
+		PortletEntry.viewLocale(locale = "en-US");
 
-		AssertElementPresent(
-			key_locale = "${locale}",
-			key_localeUnderscore = StringUtil.replace("${locale}", "-", "_"),
-			locator1 = "Translation#TRANSLATION_LANGUAGE");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertElementPresent(
-			key_locale = "${locale}",
-			locator1 = "Translation#TRANSLATION_STATUS");
-
-		AssertElementPresent(
-			key_localeLowerCase = "${localeLowerCase}",
-			locator1 = "Translation#TRANSLATION_FLAG_LANGUAGE");
+		PortletEntry.viewLocale(locale = "pt-BR");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

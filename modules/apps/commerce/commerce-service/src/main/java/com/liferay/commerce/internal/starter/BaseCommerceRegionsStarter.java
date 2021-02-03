@@ -14,14 +14,14 @@
 
 package com.liferay.commerce.internal.starter;
 
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.service.CommerceCountryLocalService;
-import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.starter.CommerceRegionsStarter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,11 +43,10 @@ public abstract class BaseCommerceRegionsStarter
 	public void start(long userId) throws Exception {
 		User user = userLocalService.getUser(userId);
 
-		CommerceCountry commerceCountry =
-			commerceCountryLocalService.fetchCommerceCountry(
-				user.getCompanyId(), getCountryIsoCode());
+		Country country = countryLocalService.fetchCountryByNumber(
+			user.getCompanyId(), String.valueOf(getCountryIsoCode()));
 
-		if (commerceCountry == null) {
+		if (country == null) {
 			return;
 		}
 
@@ -55,7 +54,7 @@ public abstract class BaseCommerceRegionsStarter
 
 		serviceContext.setUserId(userId);
 
-		_importCommerceRegions(commerceCountry, serviceContext);
+		_importCommerceRegions(country, serviceContext);
 	}
 
 	protected abstract int getCountryIsoCode();
@@ -63,13 +62,13 @@ public abstract class BaseCommerceRegionsStarter
 	protected abstract String getFilePath();
 
 	@Reference
-	protected CommerceCountryLocalService commerceCountryLocalService;
-
-	@Reference
-	protected CommerceRegionLocalService commerceRegionLocalService;
+	protected CountryLocalService countryLocalService;
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected RegionLocalService regionLocalService;
 
 	@Reference
 	protected UserLocalService userLocalService;
@@ -84,7 +83,7 @@ public abstract class BaseCommerceRegionsStarter
 	}
 
 	private void _importCommerceRegions(
-			CommerceCountry commerceCountry, ServiceContext serviceContext)
+			Country country, ServiceContext serviceContext)
 		throws Exception {
 
 		JSONArray jsonArray = _getCommerceRegionsJSONArray();
@@ -96,9 +95,9 @@ public abstract class BaseCommerceRegionsStarter
 			String name = jsonObject.getString("name");
 			double priority = jsonObject.getDouble("priority");
 
-			commerceRegionLocalService.addCommerceRegion(
-				commerceCountry.getCommerceCountryId(), name, code, priority,
-				true, serviceContext);
+			regionLocalService.addRegion(
+				country.getCountryId(), true, name, priority, code,
+				serviceContext);
 		}
 	}
 

@@ -405,11 +405,11 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					<%= HtmlUtil.escape(shippingAddress.getCity()) %> <br />
 
 					<%
-					CommerceCountry commerceCountry = shippingAddress.getCommerceCountry();
+					Country country = shippingAddress.getCountry();
 					%>
 
-					<c:if test="<%= commerceCountry != null %>">
-						<%= HtmlUtil.escape(commerceCountry.getName(locale)) %><br />
+					<c:if test="<%= country != null %>">
+						<%= HtmlUtil.escape(country.getTitle(locale)) %><br />
 					</c:if>
 				</address>
 			</c:if>

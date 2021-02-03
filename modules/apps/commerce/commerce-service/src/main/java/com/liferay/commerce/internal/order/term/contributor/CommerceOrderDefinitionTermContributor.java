@@ -19,10 +19,8 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.order.CommerceDefinitionTermContributor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -30,10 +28,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -193,18 +194,18 @@ public class CommerceOrderDefinitionTermContributor
 		addressSB.append("<br/>");
 
 		try {
-			CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+			Region region = commerceAddress.getRegion();
 
-			if (commerceRegion != null) {
-				addressSB.append(commerceRegion.getName());
+			if (region != null) {
+				addressSB.append(region.getName());
 				addressSB.append(StringPool.COMMA_AND_SPACE);
 			}
 
-			CommerceCountry commerceCountry =
-				commerceAddress.getCommerceCountry();
+			Country country = commerceAddress.getCountry();
 
-			if (commerceCountry != null) {
-				addressSB.append(commerceCountry.getName(locale));
+			if (country != null) {
+				addressSB.append(
+					country.getTitle(LocaleUtil.toLanguageId(locale)));
 			}
 		}
 		catch (PortalException portalException) {

@@ -36,9 +36,9 @@ commerceAddress = commerceAddress.toEscapedModel();
 <p><%= commerceAddress.getCity() %></p>
 
 <%
-CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+Country country = commerceAddress.getCountry();
 %>
 
-<c:if test="<%= commerceCountry != null %>">
-	<p><%= HtmlUtil.escape(commerceCountry.getName(locale)) %></p>
+<c:if test="<%= country != null %>">
+	<p><%= HtmlUtil.escape(country.getTitle(locale)) %></p>
 </c:if>

@@ -15,11 +15,11 @@
 package com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -52,17 +52,17 @@ public class AddressDTOConverter
 			_commerceAddressService.getCommerceAddress(
 				(Long)dtoConverterContext.getId());
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country addressCountry = commerceAddress.getCountry();
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region addressRegion = commerceAddress.getRegion();
 
 		Locale locale = dtoConverterContext.getLocale();
 
 		Address address = new Address() {
 			{
 				city = commerceAddress.getCity();
-				country = commerceCountry.getName(locale);
-				countryISOCode = commerceCountry.getTwoLettersISOCode();
+				country = addressCountry.getTitle(locale);
+				countryISOCode = addressCountry.getA2();
 				description = commerceAddress.getDescription();
 				id = commerceAddress.getCommerceAddressId();
 				latitude = commerceAddress.getLatitude();
@@ -77,20 +77,20 @@ public class AddressDTOConverter
 			}
 		};
 
-		if (commerceRegion != null) {
-			address.setRegion(commerceRegion.getName());
-			address.setRegionISOCode(_getRegionISOCode(commerceRegion));
+		if (addressRegion != null) {
+			address.setRegion(addressRegion.getName());
+			address.setRegionISOCode(_getRegionISOCode(addressRegion));
 		}
 
 		return address;
 	}
 
-	private String _getRegionISOCode(CommerceRegion commerceRegion) {
-		if (commerceRegion == null) {
+	private String _getRegionISOCode(Region region) {
+		if (region == null) {
 			return StringPool.BLANK;
 		}
 
-		return commerceRegion.getCode();
+		return region.getRegionCode();
 	}
 
 	@Reference

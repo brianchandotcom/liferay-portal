@@ -16,11 +16,11 @@ package com.liferay.commerce.internal.address;
 
 import com.liferay.commerce.address.CommerceAddressFormatter;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,20 +55,20 @@ public class CommerceAddressFormatterImpl implements CommerceAddressFormatter {
 		sb.append(commerceAddress.getCity());
 		sb.append(StringPool.SPACE);
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		if (commerceRegion != null) {
-			sb.append(commerceRegion.getCode());
+		if (region != null) {
+			sb.append(region.getRegionCode());
 			sb.append(StringPool.SPACE);
 		}
 
 		sb.append(commerceAddress.getZip());
 		sb.append(StringPool.NEW_LINE);
 
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+		Country country = commerceAddress.getCountry();
 
-		if (commerceCountry != null) {
-			sb.append(commerceCountry.getName());
+		if (country != null) {
+			sb.append(country.getName());
 			sb.append(StringPool.NEW_LINE);
 		}
 
@@ -115,10 +115,10 @@ public class CommerceAddressFormatterImpl implements CommerceAddressFormatter {
 		sb.append(commerceAddress.getCity());
 		sb.append(StringPool.SPACE);
 
-		CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+		Region region = commerceAddress.getRegion();
 
-		if (commerceRegion != null) {
-			sb.append(commerceRegion.getCode());
+		if (region != null) {
+			sb.append(region.getRegionCode());
 			sb.append(StringPool.SPACE);
 		}
 

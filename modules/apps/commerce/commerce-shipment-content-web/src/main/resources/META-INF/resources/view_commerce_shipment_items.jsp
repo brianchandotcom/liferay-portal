@@ -41,10 +41,10 @@ if (commerceAddress != null) {
 	zip = commerceAddress.getZip();
 	phoneNumber = commerceAddress.getPhoneNumber();
 
-	CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+	Region region = commerceAddress.getRegion();
 
-	if (commerceRegion != null) {
-		regionCode = commerceRegion.getCode();
+	if (region != null) {
+		regionCode = region.getRegionCode();
 	}
 }
 %>

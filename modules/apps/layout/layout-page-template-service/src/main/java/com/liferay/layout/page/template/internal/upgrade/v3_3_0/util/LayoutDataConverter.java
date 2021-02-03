@@ -96,6 +96,26 @@ public class LayoutDataConverter {
 						_getBackgroundImageJSONObject(
 							inputRowConfigJSONObject));
 
+					outerContainerStyledLayoutStructureItem.updateItemConfig(
+						JSONUtil.put(
+							"backgroundColorCssClass",
+							inputRowConfigJSONObject.getString(
+								"backgroundColorCssClass")
+						).put(
+							"styles", outerStylesJSONObject
+						));
+
+					if (inputRowConfigJSONObject.has("containerType")) {
+						innerContainerStyledLayoutStructureItem.setWidthType(
+							inputRowConfigJSONObject.getString(
+								"containerType", "fixed"));
+					}
+					else {
+						innerContainerStyledLayoutStructureItem.setWidthType(
+							inputRowConfigJSONObject.getString(
+								"widthType", "fixed"));
+					}
+
 					JSONObject innerStylesJSONObject = JSONUtil.put(
 						"paddingBottom",
 						inputRowConfigJSONObject.getInt("paddingVertical", 0)
@@ -109,26 +129,6 @@ public class LayoutDataConverter {
 						"paddingTop",
 						inputRowConfigJSONObject.getInt("paddingVertical", 0)
 					);
-
-					if (inputRowConfigJSONObject.has("containerType")) {
-						innerContainerStyledLayoutStructureItem.setWidthType(
-							inputRowConfigJSONObject.getString(
-								"containerType", "fixed"));
-					}
-					else {
-						innerContainerStyledLayoutStructureItem.setWidthType(
-							inputRowConfigJSONObject.getString(
-								"widthType", "fixed"));
-					}
-
-					outerContainerStyledLayoutStructureItem.updateItemConfig(
-						JSONUtil.put(
-							"backgroundColorCssClass",
-							inputRowConfigJSONObject.getString(
-								"backgroundColorCssClass")
-						).put(
-							"styles", outerStylesJSONObject
-						));
 
 					innerContainerStyledLayoutStructureItem.updateItemConfig(
 						JSONUtil.put("styles", innerStylesJSONObject));

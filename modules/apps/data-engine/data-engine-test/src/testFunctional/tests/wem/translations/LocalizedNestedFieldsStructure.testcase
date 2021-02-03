@@ -44,12 +44,95 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
 	@priority = "5"
 	test CheckLocalizationOfStructureUponLanguageChange {
 		property portal.acceptance = "false";
+		
+		var structureTitleEN = "Test";
+		var structureTitlePT = "Teste";
+		var fieldsGroupEN = "Fields Group";
+		var fieldsGroupPT = "Grupo de Campos";
+		var fieldLabel1EN = "First Text";
+		var fieldLabel2EN = "Second Text";
+		var fieldLabel1PT = "Primeiro Texto";
+		var fieldLabel2PT = "Segundo Texto";
+        var helpText1EN = "First Help Text";
+        var helpText2EN = "Second Help Text";
+        var helpText1PT = "Primeiro Texto de Ajuda";
+        var helpText2PT = "Segundo Texto de Ajuda";
+		var key_text = "Help";
 
-		// TODO LPS-123536 CheckLocalizationOfStructureUponLanguageChange pending implementation
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "I'm a test",
+			structureName = "${structureTitleEN}");
+
+		DataEngine.addField(
+			fieldFieldLabel = "${fieldLabel1EN}",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldName = "Text",
+			targetFieldLabel = "${fieldLabel1EN}",
+			fieldFieldLabel = "${fieldLabel2EN}");
+        
+        DataEngine.editFieldTip(
+            fieldFieldLabel = "${fieldLabel1EN}",
+            fieldHelp = "${helpText1EN}");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "${fieldLabel2EN}",
+			label = "${fieldLabel2EN}");
+
+		Type(
+			locator1 = "Sidebar#DDM_ANY",
+			value1 = "${helpText2EN}");
+
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureTitlePT}");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "${fieldsGroupEN}",
+			label = "${fieldsGroupPT}");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "${fieldLabel1EN}",
+			label = "${fieldLabel1PT}");
+        
+         DataEngine.editFieldTip(
+            fieldFieldLabel = "${fieldLabel1PT}",
+            fieldHelp = "${helpText1PT}");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "${fieldLabel2EN}",
+			label = "${fieldLabel2PT}");
+
+		Type(
+			locator1 = "Sidebar#DDM_ANY",
+			value1 = "${helpText2PT}");
+		
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitleEN}");
+
+		PortletEntry.changeLocale(locale = "pt_BR");
+
+		DataEngine.viewFieldHelpText(
+			fieldFieldLabel = "${fieldLabel1PT}",
+			fieldHelp = "${helpText1PT}",
+			fieldName = "Text"
+		);
+		
+		DataEngine.viewFieldHelpText(
+			fieldFieldLabel = "${fieldLabel2PT}",
+			fieldHelp = "${helpText2PT}",
+			fieldName = "Text");
+
+		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

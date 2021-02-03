@@ -388,7 +388,7 @@ renderResponse.setTitle(headerTitle);
 							<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />
 
 							<c:if test="<%= fileEntryTypeId > 0 %>">
-								<div>
+								<div class="mb-3">
 
 									<%
 									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();

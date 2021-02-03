@@ -71,19 +71,17 @@ public class LayoutDataConverter {
 			if (inputRowJSONObject.getInt("type") ==
 					FragmentConstants.TYPE_COMPONENT) {
 
-				ContainerStyledLayoutStructureItem
-					outerContainerStyledLayoutStructureItem =
-						(ContainerStyledLayoutStructureItem)
-							layoutStructure.addContainerLayoutStructureItem(
-								rootLayoutStructureItem.getItemId(), i);
+				ContainerStyledLayoutStructureItem outerContainerLayoutItem =
+					(ContainerStyledLayoutStructureItem)
+						layoutStructure.addContainerLayoutStructureItem(
+							rootLayoutStructureItem.getItemId(), i);
 
-				outerContainerStyledLayoutStructureItem.setWidthType("fluid");
+				outerContainerLayoutItem.setWidthType("fluid");
 
-				ContainerStyledLayoutStructureItem
-					innerContainerStyledLayoutStructureItem =
-						(ContainerStyledLayoutStructureItem)
-							layoutStructure.addContainerLayoutStructureItem(
-								outerContainerStyledLayoutStructureItem.getItemId(), 0);
+				ContainerStyledLayoutStructureItem innerContainerLayoutItem =
+					(ContainerStyledLayoutStructureItem)
+						layoutStructure.addContainerLayoutStructureItem(
+							outerContainerLayoutItem.getItemId(), 0);
 
 				JSONObject inputRowConfigJSONObject =
 					inputRowJSONObject.getJSONObject("config");
@@ -109,17 +107,17 @@ public class LayoutDataConverter {
 					);
 
 					if (inputRowConfigJSONObject.has("containerType")) {
-						innerContainerStyledLayoutStructureItem.setWidthType(
+						innerContainerLayoutItem.setWidthType(
 							inputRowConfigJSONObject.getString(
 								"containerType", "fixed"));
 					}
 					else {
-						innerContainerStyledLayoutStructureItem.setWidthType(
+						innerContainerLayoutItem.setWidthType(
 							inputRowConfigJSONObject.getString(
 								"widthType", "fixed"));
 					}
 
-					outerContainerStyledLayoutStructureItem.updateItemConfig(
+					outerContainerLayoutItem.updateItemConfig(
 						JSONUtil.put(
 							"backgroundColorCssClass",
 							inputRowConfigJSONObject.getString(
@@ -128,7 +126,7 @@ public class LayoutDataConverter {
 							"styles", outerStylesJSONObject
 						));
 
-					innerContainerStyledLayoutStructureItem.updateItemConfig(
+					innerContainerLayoutItem.updateItemConfig(
 						JSONUtil.put(
 							"backgroundColorCssClass",
 							inputRowConfigJSONObject.getString(
@@ -141,7 +139,7 @@ public class LayoutDataConverter {
 				RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
 					(RowStyledLayoutStructureItem)
 						layoutStructure.addRowLayoutStructureItem(
-							innerContainerStyledLayoutStructureItem.getItemId(), 0,
+							innerContainerLayoutItem.getItemId(), 0,
 							columnsJSONArray.length());
 
 				if (inputRowConfigJSONObject != null) {

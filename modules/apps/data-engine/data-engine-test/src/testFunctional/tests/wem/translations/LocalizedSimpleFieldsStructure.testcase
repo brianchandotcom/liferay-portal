@@ -217,6 +217,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-122278 DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale pending implementation
+
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

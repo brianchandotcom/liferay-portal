@@ -19,6 +19,7 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstance;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.ObjectReviewedUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowInstanceResource;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -59,9 +60,20 @@ public class WorkflowInstanceResourceImpl
 	public WorkflowInstance getWorkflowInstance(Long workflowInstanceId)
 		throws Exception {
 
-		return _toWorkflowInstance(
-			_workflowInstanceManager.getWorkflowInstance(
-				contextCompany.getCompanyId(), workflowInstanceId));
+		try {
+			return _toWorkflowInstance(
+				_workflowInstanceManager.getWorkflowInstance(
+					contextCompany.getCompanyId(), workflowInstanceId));
+		}
+		catch (WorkflowException workflowException) {
+			Throwable throwable = workflowException.getCause();
+
+			if (throwable instanceof NoSuchModelException) {
+				throw (NoSuchModelException)throwable;
+			}
+
+			throw workflowException;
+		}
 	}
 
 	@Override

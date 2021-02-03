@@ -14,8 +14,63 @@
 
 package com.liferay.document.library.service.persistence.impl;
 
+import com.liferay.document.library.service.persistence.DLStorageQuotaFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
+
+import java.util.Iterator;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
-public class DLStorageQuotaFinderImpl {
+@Component(service = DLStorageQuotaFinder.class)
+public class DLStorageQuotaFinderImpl
+	extends DLStorageQuotaFinderBaseImpl implements DLStorageQuotaFinder {
+
+	public static final String COUNT_BY_COMPANY_ID =
+		DLStorageQuotaFinder.class.getName() + ".countByCompanyId";
+
+	@Override
+	public long countByCompanyId(long companyId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_COMPANY_ID);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			Iterator<Long> iterator = sqlQuery.iterate();
+
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
+
+				if (count != null) {
+					return count.longValue();
+				}
+			}
+
+			return 0;
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Reference
+	private CustomSQL _customSQL;
+
 }

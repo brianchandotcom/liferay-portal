@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.document.library.service.persistence.DLStorageQuotaFinder.countByCompanyId">
+		<![CDATA[
+			SELECT
+				SUM(size_) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			WHERE
+				DLFileVersion.companyId = ?
+		]]>
+	</sql>
+</custom-sql>

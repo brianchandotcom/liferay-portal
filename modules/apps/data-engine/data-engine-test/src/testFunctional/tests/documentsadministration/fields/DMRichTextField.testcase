@@ -100,9 +100,21 @@ definition {
 			dmDocumentTypeFieldNames = "Rich Text",
 			dmDocumentTypeName = "Test");
 
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Help");
+
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		PortletEntry.inputName(name = "Teste");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Rich Text",
+			label = "Rich Texto");
+		
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Texto",
+			fieldHelp = "Ajuda");
 
 		DDLDataDefinition.save();
 
@@ -113,6 +125,14 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "Teste");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Rich Texto",
+			fieldName = "Rich Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Ajuda",
+			fieldName = "Rich Text");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

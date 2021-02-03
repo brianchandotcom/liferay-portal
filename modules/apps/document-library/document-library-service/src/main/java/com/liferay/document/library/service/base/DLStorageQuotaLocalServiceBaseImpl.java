@@ -16,6 +16,7 @@ package com.liferay.document.library.service.base;
 
 import com.liferay.document.library.model.DLStorageQuota;
 import com.liferay.document.library.service.DLStorageQuotaLocalService;
+import com.liferay.document.library.service.persistence.DLStorageQuotaFinder;
 import com.liferay.document.library.service.persistence.DLStorageQuotaPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -427,6 +428,9 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 
 	@Reference
 	protected DLStorageQuotaPersistence dlStorageQuotaPersistence;
+
+	@Reference
+	protected DLStorageQuotaFinder dlStorageQuotaFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

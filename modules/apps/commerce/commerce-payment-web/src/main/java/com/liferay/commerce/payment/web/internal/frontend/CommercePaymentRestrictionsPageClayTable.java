@@ -15,14 +15,13 @@
 package com.liferay.commerce.payment.web.internal.frontend;
 
 import com.liferay.commerce.frontend.model.RestrictionField;
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.payment.web.internal.model.PaymentRestriction;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
-import com.liferay.commerce.service.CommerceCountryService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -30,8 +29,10 @@ import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvide
 import com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -101,23 +102,27 @@ public class CommercePaymentRestrictionsPageClayTable
 				getCommercePaymentMethodGroupRels(
 					commerceChannel.getGroupId(), true);
 
-		BaseModelSearchResult<CommerceCountry>
-			commerceCountryBaseModelSearchResult =
-				_commerceCountryService.searchCommerceCountries(
-					_portal.getCompanyId(httpServletRequest), true,
-					filter.getKeywords(), pagination.getStartPosition(),
-					pagination.getEndPosition(), sort);
+		String orderByType = "asc";
 
-		for (CommerceCountry commerceCountry :
-				commerceCountryBaseModelSearchResult.getBaseModels()) {
+		if (sort.isReverse()) {
+			orderByType = "desc";
+		}
 
+		BaseModelSearchResult<Country> baseModelSearchResult =
+			_countryService.searchCountries(
+				_portal.getCompanyId(httpServletRequest), true,
+				filter.getKeywords(), pagination.getStartPosition(),
+				pagination.getEndPosition(),
+				CommerceUtil.getCountryOrderByComparator(
+					sort.getFieldName(), orderByType));
+
+		for (Country country : baseModelSearchResult.getBaseModels()) {
 			paymentRestrictions.add(
 				new PaymentRestriction(
-					commerceCountry.getCommerceCountryId(),
-					commerceCountry.getName(themeDisplay.getLanguageId()),
+					country.getCountryId(),
+					country.getTitle(themeDisplay.getLanguageId()),
 					_getFields(
-						commerceCountry.getCommerceCountryId(),
-						commercePaymentMethodGroupRels,
+						country.getCountryId(), commercePaymentMethodGroupRels,
 						themeDisplay.getLanguageId())));
 		}
 
@@ -129,11 +134,10 @@ public class CommercePaymentRestrictionsPageClayTable
 			HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
-		BaseModelSearchResult<CommerceCountry>
-			commerceCountryBaseModelSearchResult =
-				_commerceCountryService.searchCommerceCountries(
-					_portal.getCompanyId(httpServletRequest), true,
-					filter.getKeywords(), 0, 0, null);
+		BaseModelSearchResult<Country> commerceCountryBaseModelSearchResult =
+			_countryService.searchCountries(
+				_portal.getCompanyId(httpServletRequest), true,
+				filter.getKeywords(), 0, 0, null);
 
 		return commerceCountryBaseModelSearchResult.getLength();
 	}
@@ -173,11 +177,11 @@ public class CommercePaymentRestrictionsPageClayTable
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
-	private CommerceCountryService _commerceCountryService;
-
-	@Reference
 	private CommercePaymentMethodGroupRelService
 		_commercePaymentMethodGroupRelService;
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private Portal _portal;

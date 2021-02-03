@@ -277,8 +277,8 @@ public class CommerceAddressLocalServiceImpl
 
 		double[] coordinates = _commerceGeocoder.getCoordinates(
 			commerceAddress.getStreet1(), commerceAddress.getCity(),
-			commerceAddress.getZip(), commerceAddress.getCommerceRegion(),
-			commerceAddress.getCommerceCountry());
+			commerceAddress.getZip(), commerceAddress.getRegion(),
+			commerceAddress.getCountry());
 
 		commerceAddress.setLatitude(coordinates[0]);
 		commerceAddress.setLongitude(coordinates[1]);

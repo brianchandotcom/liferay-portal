@@ -207,6 +207,10 @@
 		<finder name="OrganizationId" return-type="Collection">
 			<finder-column name="organizationId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="AccountEntryOrganizationRel" package-path="com.liferay.account" />
 	</entity>
 	<entity local-service="true" name="CommerceAccountUserRel" remote-service="true">
 

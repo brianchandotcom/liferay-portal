@@ -91,18 +91,17 @@ public class LayoutDataConverter {
 					inputRowJSONObject.getJSONObject("config");
 
 				if (inputRowConfigJSONObject != null) {
-					JSONObject outerStylesJSONObject = JSONUtil.put(
-						"backgroundImage",
-						_getBackgroundImageJSONObject(
-							inputRowConfigJSONObject));
-
 					outerContainerStyledLayoutStructureItem.updateItemConfig(
 						JSONUtil.put(
 							"backgroundColorCssClass",
 							inputRowConfigJSONObject.getString(
 								"backgroundColorCssClass")
 						).put(
-							"styles", outerStylesJSONObject
+							"styles",
+							JSONUtil.put(
+								"backgroundImage",
+								_getBackgroundImageJSONObject(
+									inputRowConfigJSONObject))
 						));
 
 					if (inputRowConfigJSONObject.has("containerType")) {
@@ -116,22 +115,26 @@ public class LayoutDataConverter {
 								"widthType", "fixed"));
 					}
 
-					JSONObject innerStylesJSONObject = JSONUtil.put(
-						"paddingBottom",
-						inputRowConfigJSONObject.getInt("paddingVertical", 0)
-					).put(
-						"paddingLeft",
-						inputRowConfigJSONObject.getInt("paddingHorizontal", 0)
-					).put(
-						"paddingRight",
-						inputRowConfigJSONObject.getInt("paddingHorizontal", 0)
-					).put(
-						"paddingTop",
-						inputRowConfigJSONObject.getInt("paddingVertical", 0)
-					);
-
 					innerContainerStyledLayoutStructureItem.updateItemConfig(
-						JSONUtil.put("styles", innerStylesJSONObject));
+						JSONUtil.put(
+							"styles",
+							JSONUtil.put(
+								"paddingBottom",
+								inputRowConfigJSONObject.getInt(
+									"paddingVertical", 0)
+							).put(
+								"paddingLeft",
+								inputRowConfigJSONObject.getInt(
+									"paddingHorizontal", 0)
+							).put(
+								"paddingRight",
+								inputRowConfigJSONObject.getInt(
+									"paddingHorizontal", 0)
+							).put(
+								"paddingTop",
+								inputRowConfigJSONObject.getInt(
+									"paddingVertical", 0)
+							)));
 				}
 
 				RowStyledLayoutStructureItem rowStyledLayoutStructureItem =

@@ -193,7 +193,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
 
 		AssertTextEquals(
-			locator1 = "DataEngineBuilder#FORM_FIELD_LABEL",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${formGroupLabel}");
 
 		Button.clickSave();
@@ -308,8 +308,8 @@ definition {
 			targetFieldLabel = "Text");
 
 		Click(
-			index = "1",
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_INDEX");
+			key_fieldFieldLabel = "1",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
 

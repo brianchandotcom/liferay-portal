@@ -443,7 +443,7 @@ public class ReportsEngineDisplayContext {
 				Objects.equals(_getNavigation(), navigation));
 			dropdownItem.setHref(
 				getPortletURL(), "navigation", navigation, "mvcPath",
-				"/addmin/view.jsp", "tabs1", _getTabs1());
+				"/admin/view.jsp", "tabs1", _getTabs1());
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_reportsEngineRequestHelper.getRequest(), navigation));

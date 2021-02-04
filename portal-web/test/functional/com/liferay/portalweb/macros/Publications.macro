@@ -187,12 +187,19 @@ definition {
 			Click(
 				key_publicationsName = "${publicationsName}",
 				locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Publish");
+		}
+		else if ("${gotoReviewPublications}" == "true") {
+			Publications.gotoReviewPublications();
+
+			Click(locator1 = "Publications#PUBLISH_NAV_BAR");
 		}
 		else {
 			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
-		}
 
-		MenuItem.click(menuItem = "Publish");
+			MenuItem.click(menuItem = "Publish");
+		}
 	}
 
 	macro gotoReviewPublications {

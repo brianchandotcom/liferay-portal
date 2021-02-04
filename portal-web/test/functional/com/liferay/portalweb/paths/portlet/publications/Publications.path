@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_NAV_BAR</td>
+	<td>//li[contains(@class,'tbar-item')]/a[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_TIME_HOURS</td>
 	<td>//input[contains(@class,'clay-time-hours') and @type='text']</td>
 	<td></td>
@@ -194,13 +199,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SCHEDULE_NAV_BAR</td>
-	<td>//li[contains(@class,'tbar-item')]/a[contains(.,'Schedule')]</td>
+	<td>SCHEDULE_DISABLED_NAV_BAR</td>
+	<td>//a[contains(@class,'btn-sm disabled') and contains(.,'Schedule')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SCHEDULE_DISABLED_NAV_BAR</td>
-	<td>//a[contains(@class,'btn-sm disabled') and contains(.,'Schedule')]</td>
+	<td>SCHEDULE_NAV_BAR</td>
+	<td>//li[contains(@class,'tbar-item')]/a[contains(.,'Schedule')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -22,7 +22,6 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-			WebContentStructures.tearDownCP(siteScopeName = "Global");
 		}
 	}
 
@@ -2142,7 +2141,26 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
-		property portal.acceptance = "false";
+		task ("Add a widget pages") {
+			JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name");
+
+			JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Edited Test Page Name");
+		}
+
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "WC Title");
+			JSONWebcontent.addWebContent(
+					content = "WC Content",
+					groupName = "Test Site Name",
+					title = "Edited WC Title");
+		}
 
 		task ("Add a web content structure with all fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -2153,7 +2171,7 @@ definition {
 				structureDescription = "WC Structure Description",
 				structureName = "WC Structure Name");
 
-			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page");
+			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -2174,19 +2192,25 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
+				column = "1",
+				navTab = "Web Content Images",
+				row = "1",
 				structureName = "WC Structure Name",
 				templateName = "WC Template Name",
-				webContentTitle = "WC WebContent Title");
-
-			WebContent.addWithStructureCP(
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Test Page Name",
 				webContentMultipleSelection = "Option 1",
 				webContentNumeric = "9",
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
 				webContentSingleSelection = "Option 3",
-				webContentText = "This is a Text field");
+				webContentText = "This is a Text field",
+				webContentTitle = "Web Content Title",
+				webContentUpload = "Document_1.doc",
+				webContentWebContent = "WC Title");
 
 			PortletEntry.publish();
 		}
@@ -2195,23 +2219,56 @@ definition {
 			WebContent.viewWithStructureCP(
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
+				webContentGrid = "true",
+				webContentImage = "Document_3.png",
+				webContentLinkToPage = "Test Page Name",
 				webContentMultipleSelection = "Option 1",
 				webContentNumeric = "9",
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
 				webContentSingleSelection = "Option 3",
 				webContentText = "This is a Text field",
-				webContentTitle = "WC WebContent Title");
+				webContentTitle = "WC WebContent Title",
+				webContentUpload = "Document_1.doc",
+				webContentWebContent = "WC Title");
 		}
 
 		task ("Edit web content") {
 			WebContent.editCP(
-				webContentTitle = "WC WebContent Title",
-				webContentTitleEdit = "WC WebContent Title Edit");
+					webContentColor = "DD0D0D",
+					webContentDate = "11/11/2019",
+					webContentGrid = "false",
+					webContentImage = "Document_1.png",
+					webContentLinkToPage = "Edited Test Page Name",
+					webContentMultipleSelection = "Option 2",
+					webContentNumeric = "8",
+					webContentRichText = "This is a Edited Rich Text field",
+					webContentSelectFromList = "Option 1",
+					webContentSingleSelection = "Option 4",
+					webContentText = "This is an edited Text field",
+					webContentTitle = "WC Edited WebContent Title",
+					webContentUpload = "Document_3.doc",
+					webContentWebContent = "EditedWC Title");
+
+			PortletEntry.publish();
 		}
 
 		task ("Assert web content has been edited") {
-			WebContent.viewTitle(webContentTitle = "WC WebContent Title Edit");
+			WebContent.viewWithStructureCP(
+					webContentColor = "DD0D0D",
+					webContentDate = "11/11/2019",
+					webContentGrid = "false",
+					webContentImage = "Document_1.png",
+					webContentLinkToPage = "Edited Test Page Name",
+					webContentMultipleSelection = "Option 2",
+					webContentNumeric = "8",
+					webContentRichText = "This is a Edited Rich Text field",
+					webContentSelectFromList = "Option 1",
+					webContentSingleSelection = "Option 4",
+					webContentText = "This is an edited Text field",
+					webContentTitle = "WC Edited WebContent Title",
+					webContentUpload = "Document_3.doc",
+					webContentWebContent = "EditedWC Title");
 		}
 
 		task ("Delete web content") {

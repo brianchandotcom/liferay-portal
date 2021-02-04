@@ -237,6 +237,11 @@ definition {
 					index = "1",
 					optionFieldLabel = "Options",
 					optionValue = "Option 1");
+
+				DataEngine.addFieldOption(
+					index = "2",
+					optionFieldLabel = "Options",
+					optionValue = "Option 2");
 			}
 			else if ("${fieldName}" == "Select from List") {
 				DataEngine.addFieldOption(
@@ -246,6 +251,14 @@ definition {
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldReferenceOfFieldOption = "Value2",
 					index = "1");
+
+				DataEngine.addFieldOption(
+						index = "2",
+						optionValue = "Option 1");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+						fieldReferenceOfFieldOption = "Value1",
+						index = "2");
 			}
 			else if ("${fieldName}" == "Single Selection") {
 				DataEngine.addFieldOption(
@@ -255,6 +268,14 @@ definition {
 				DataEngine.editFieldReferenceOfFieldOption(
 					fieldReferenceOfFieldOption = "Value3",
 					index = "1");
+
+				DataEngine.addFieldOption(
+						index = "2",
+						optionValue = "Option 4");
+
+				DataEngine.editFieldReferenceOfFieldOption(
+						fieldReferenceOfFieldOption = "Value4",
+						index = "2");
 			}
 
 			Navigator.gotoNavTab(navTab = "Advanced");

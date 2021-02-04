@@ -246,6 +246,7 @@ definition {
 
 	macro expandTree {
 		while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
+			Pause(locator1 = "3000");
 			Click(locator1 = "Treeview#NODE_COLLAPSED");
 		}
 

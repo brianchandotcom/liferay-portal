@@ -42,21 +42,26 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" name="name" />
+				<liferay-ui:input-localized
+					autoFocus="<%= true %>"
+					cssClass="form-group"
+					name="name"
+					xml="<%= (country == null) ? StringPool.BLANK : country.getTitleMapAsXML() %>"
+				/>
 
 				<aui:input checked="<%= (country == null) ? false : country.getBillingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="billingAllowed" type="toggle-switch" />
 
 				<aui:input checked="<%= (country == null) ? false : country.getShippingAllowed() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="shippingAllowed" type="toggle-switch" />
 
-				<aui:input label="two-letter-iso-code" name="twoLettersISOCode" />
+				<aui:input field="a2" fieldParam="twoLettersISOCode" label="two-letter-iso-code" name="twoLettersISOCode" />
 
-				<aui:input label="three-letter-iso-code" name="threeLettersISOCode" />
+				<aui:input field="a3" fieldParam="threeLettersISOCode" label="three-letter-iso-code" name="threeLettersISOCode" />
 
-				<aui:input name="numericISOCode" />
+				<aui:input field="number" fieldParam="numericISOCode" name="numericISOCode" />
 
 				<aui:input checked="<%= (country == null) ? false : country.getSubjectToVAT() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="subjectToVAT" type="toggle-switch" />
 
-				<aui:input name="priority" />
+				<aui:input field="position" fieldParam="priority" name="priority" />
 
 				<aui:input checked="<%= (country == null) ? false : country.isActive() %>" inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" />
 

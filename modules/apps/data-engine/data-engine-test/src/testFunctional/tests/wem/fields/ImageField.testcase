@@ -218,7 +218,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-98073 PublishWebContentWithUploadedImageWithoutDescription pending implementation
-
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"

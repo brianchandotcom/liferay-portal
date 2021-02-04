@@ -655,45 +655,87 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyDefaultLanguageIsFirstShown {
 		property portal.acceptance = "false";
+		
+		var structureTitle = "Structure Title";
 
-		var structureName = "WC Structure Name";
+		var structureTitlePT = "Titulo da Estrutura";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		var webTitle = "WC Title";
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+			structureDescription = "I'm a structure test",
+			structureName = "${structureTitle}");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
-			targetFieldLabel = "Text");
+			fieldFieldLabel = "Numeric",
+			targetFieldLabel = "Image");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
+		DataEngine.addFieldNested(
+			fieldName = "Text",
+			fieldFieldLabel = "Text",
+			targetFieldLabel = "Numeric");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+
+		WebContentStructures.addLocalization(
+			locale = "pt_BR",
+			localization1Name = "${structureTitlePT}");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Fields Group",
+			label = "Grupo de Campos");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Image",
+			label = "Imagem");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Numeric",
+			label = "Numero");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Texto");
+
+		Button.clickSave();
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
 
 		WebContent.addWithStructureCP(
 			structureName = "WC Structure Name",
 			webContentTitle = "WC WebContent Title");
 
 		AssertTextEquals(
-			locator1 = "Button#LOCALIZATION_GENERIC",
-			value1 = "en-US");
+            locator1 = "Button#LOCALIZATION_GENERIC",
+            value1 = "en-US");
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_FIRST",
+			value1 = "Fields Group");
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#NESTED_NUMERIC_STRUCTURE",
+			value1 = "Numeric");
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#NESTED_TEXT_STRUCTURE",
+			value1 = "Text");
 	}
 
 }

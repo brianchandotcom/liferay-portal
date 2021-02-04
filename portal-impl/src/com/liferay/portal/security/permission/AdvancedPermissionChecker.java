@@ -1346,20 +1346,19 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		if (_isGroupAdminImpl(group)) {
-			boolean hasLayoutManagerPermission = true;
 
 			// Check if the layout manager has permission to do this action for
 			// the current portlet
 
-			if (Validator.isNotNull(name) && Validator.isNotNull(primKey) &&
-				primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
+			if (Validator.isNull(name) || Validator.isNull(primKey) ||
+				!primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
 
-				hasLayoutManagerPermission =
-					PortletPermissionUtil.hasLayoutManagerPermission(
-						name, actionId);
+				return true;
 			}
 
-			if (hasLayoutManagerPermission) {
+			if (PortletPermissionUtil.hasLayoutManagerPermission(
+					name, actionId)) {
+
 				return true;
 			}
 		}

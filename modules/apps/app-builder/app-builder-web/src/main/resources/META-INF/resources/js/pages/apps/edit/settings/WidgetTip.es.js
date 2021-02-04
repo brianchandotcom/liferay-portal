@@ -14,9 +14,9 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
+import {sub} from 'data-engine-js-components-web/js/utils/lang.es';
 import React, {useState} from 'react';
 
-import {sub} from '../../../../utils/lang.es';
 import {COLORS} from '../../constants.es';
 
 const POPOVER_MAX_WIDTH = 362;

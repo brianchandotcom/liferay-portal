@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {sub} from 'app-builder-web/js/utils/lang.es';
+import {sub} from 'data-engine-js-components-web/js/utils/lang.es';
 
 import {getFormViewFields, validateSelectedFormViews} from './utils.es';
 

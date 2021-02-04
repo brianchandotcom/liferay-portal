@@ -15,8 +15,8 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {sub} from 'app-builder-web/js/utils/lang.es';
 import classNames from 'classnames';
+import {sub} from 'data-engine-js-components-web/js/utils/lang.es';
 import React, {useContext, useState} from 'react';
 
 import ButtonInfo from '../../../../components/button-info/ButtonInfo.es';

@@ -733,7 +733,9 @@ public abstract class BaseBuild implements Build {
 			slaveName = "master";
 		}
 
-		return _jenkinsSlave = _jenkinsMaster.getJenkinsSlave(slaveName);
+		_jenkinsSlave = _jenkinsMaster.getJenkinsSlave(slaveName);
+
+		return _jenkinsSlave;
 	}
 
 	@Override

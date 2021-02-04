@@ -14,12 +14,12 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ListView from 'data-engine-js-components-web/js/components/list-view/ListView.es';
+import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
 import useDataDefinition from '../../hooks/useDataDefinition.es';
 import {confirmDelete} from '../../utils/client.es';
-import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 
 const COLUMNS = [

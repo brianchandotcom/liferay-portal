@@ -17,9 +17,9 @@ import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {withLoading} from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import {withEmpty} from 'data-engine-js-components-web/js/components/table/EmptyState.es';
+import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import React from 'react';
 
-import {getLocalizedValue} from '../../../utils/lang.es';
 import {fromNow} from '../../../utils/time.es';
 
 const {Body, Cell, Head, Row} = ClayTable;

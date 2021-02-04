@@ -18,10 +18,10 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import useResource from 'data-engine-js-components-web/js/hooks/useResource.es';
+import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import {SearchInput} from 'data-engine-taglib';
 import React, {useEffect, useState} from 'react';
 
-import {getLocalizedValue} from '../../../utils/lang.es';
 import ListItems from './ListItems.es';
 
 const EditAppStepContent = ({

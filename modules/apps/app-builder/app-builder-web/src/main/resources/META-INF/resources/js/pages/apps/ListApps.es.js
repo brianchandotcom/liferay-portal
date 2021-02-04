@@ -15,6 +15,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import ListView from 'data-engine-js-components-web/js/components/list-view/ListView.es';
+import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import {compile} from 'path-to-regexp';
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
@@ -24,7 +25,6 @@ import useBackUrl from '../../hooks/useBackUrl.es';
 import useDataDefinition from '../../hooks/useDataDefinition.es';
 import useDeployApp from '../../hooks/useDeployApp.es';
 import {confirmDelete} from '../../utils/client.es';
-import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 import {concatValues} from '../../utils/utils.es';
 import {

@@ -15,6 +15,7 @@
 package com.liferay.account.internal.upgrade;
 
 import com.liferay.account.internal.upgrade.v1_1_0.UpgradeSchema;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,9 +51,7 @@ public class AccountServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.account.internal.upgrade.v1_1_1.
 				UpgradeAccountEntry());
 
-		registry.register(
-			"1.1.1", "1.2.0",
-			new com.liferay.account.internal.upgrade.v1_2_0.UpgradeSchema());
+		registry.register("1.1.1", "1.2.0", new DummyUpgradeStep());
 
 		registry.register(
 			"1.2.0", "1.2.1",
@@ -64,6 +63,11 @@ public class AccountServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeAccountEntry(),
 			new com.liferay.account.internal.upgrade.v1_3_0.
 				UpgradeAccountGroup());
+
+		registry.register(
+			"1.3.0", "2.0.0",
+			new com.liferay.account.internal.upgrade.v2_0_0.
+				UpgradeAccountGroupAccountEntryRel());
 	}
 
 }

@@ -12,22 +12,27 @@
  * details.
  */
 
-package com.liferay.account.internal.upgrade.v1_2_0;
+package com.liferay.account.internal.upgrade.v2_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Albert Lee
+ * @author Drew Brokke
  */
-public class UpgradeSchema extends UpgradeProcess {
+public class UpgradeAccountGroupAccountEntryRel extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		String template = StringUtil.read(
-			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
+			UpgradeAccountGroupAccountEntryRel.class.getResourceAsStream(
+				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false);
+
+		if (hasTable("AccountGroupAccountEntryRel")) {
+			runSQL("drop table AccountGroupAccountEntryRel");
+		}
 	}
 
 }

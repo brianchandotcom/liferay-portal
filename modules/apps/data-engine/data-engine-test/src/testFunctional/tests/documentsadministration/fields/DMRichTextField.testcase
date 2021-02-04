@@ -131,7 +131,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "5"
 	test RepeatRichTextOnUpload {
 		property portal.acceptance = "false";
@@ -150,10 +149,19 @@ definition {
 
 		DataEngine.addRepeatableField(fieldName = "Repeatable");
 
-		DataEngine.assertFieldRepeated(
-            fieldReference = "RichText",
-            index = "2");
+		PortletEntry.inputTitle(title = "Repeated Document Type");
 
+		PortletEntry.publish();
+
+		DMDocumentType.selectDocumentTypeFrame();
+
+		LexiconEntry.openEntryMenu(rowEntry = "Repeated Document Type");
+
+		MenuItem.click(menuItem = "Edit");
+
+		DataEngine.assertFieldRepeated(
+			key_fieldReference = "Rich Text",
+			key_index = "2");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

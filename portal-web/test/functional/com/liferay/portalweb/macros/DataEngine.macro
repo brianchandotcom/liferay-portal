@@ -274,6 +274,29 @@ definition {
 			Click(locator1 = "Sidebar#BACK");
 		}
 	}
+	macro createFieldset{
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Fieldsets");
+		}
+
+		if (isSet(createNewFieldset)) {
+			Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+			Type(
+				locator1 = "FormViewBuilder#FIELD_SET_NAME",
+				value1 = "${fieldsetName}");
+
+			DataEngine.addFields(fieldNameList = "${fieldNameList}");
+
+			Click(locator1 = "Modal#SAVE_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+	}
 
 	macro addFieldsets {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {

@@ -23,6 +23,17 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewSAMLConfigurationAfterUpgrade7310 {
+		property data.archive.type = "data-archive-saml";
+		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10";
+
+		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+
+		Upgrade.viewSAMLSPConnectionConfiguration();
+	}
+
+	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade71103 {
 		property data.archive.type = "data-archive-saml";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -42,6 +53,17 @@ definition {
 		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
 
 		Upgrade.viewSAMLSPConnectionConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
+		property data.archive.type = "data-archive-saml-encryption";
+		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10";
+
+		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+
+		Upgrade.viewSAMLSPConnectionConfiguration(forceEncryption = "true");
 	}
 
 	@priority = "5"

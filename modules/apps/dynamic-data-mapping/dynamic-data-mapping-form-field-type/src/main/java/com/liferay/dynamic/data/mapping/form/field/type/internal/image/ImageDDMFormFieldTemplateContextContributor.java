@@ -196,13 +196,13 @@ public class ImageDDMFormFieldTemplateContextContributor
 		if (fileEntry == null) {
 			return LanguageUtil.get(
 				_getResourceBundle(defaultLocale),
-				"the-selected-document-was-deleted");
+				"the-selected-image-was-deleted");
 		}
 
 		if (fileEntry.isInTrash()) {
 			return LanguageUtil.get(
 				_getResourceBundle(defaultLocale),
-				"the-selected-document-was-moved-to-the-recycle-bin");
+				"the-selected-image-was-moved-to-the-recycle-bin");
 		}
 
 		return StringPool.BLANK;

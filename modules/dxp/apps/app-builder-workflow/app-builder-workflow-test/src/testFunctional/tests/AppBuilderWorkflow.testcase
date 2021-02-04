@@ -269,19 +269,20 @@ definition {
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Continue");
 		AppBuilderWorkflow.cancelCustomObjectCreation();
 
+		AppBuilderWorkflow.assertObjectSelected(objectName = "Select Object");
+
 		AppBuilderWorkflow.clickOnSelectObject();
 		AppBuilderWorkflow.addNewObject(objectName = "my custom object");
 		AppBuilderAdmin.cancel();
+
+		AppBuilderWorkflow.assertObjectSelected(objectName = "my custom object");
+		AppBuilderWorkflow.assertFormViewSelected(
+			formViewName = "Select a Form",
+			positionNumber = "1");
+
 		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");
 		AppBuilderWorkflow.clickToCreateFormView(positionNumber = "1");
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
-		AppBuilderWorkflow.createSimpleFormView(
-			fieldType = "Text",
-			formViewName = "My Form View");
-
-		AppBuilderWorkflow.assertFormViewSelected(
-			formViewName = "My Form View",
-			positionNumber = "1");
 	}
 
 	@description = "Create a Basic Workflow App"

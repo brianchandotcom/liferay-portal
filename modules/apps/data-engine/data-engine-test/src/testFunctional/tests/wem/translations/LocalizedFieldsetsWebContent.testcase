@@ -24,37 +24,38 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
 	@priority = "5"
 	test CheckDefaultWebContentTitleOnWebContentList {
-
-		var structureTitle = "My Structure";
-		var newLabel = "Image";
-		var webTitle = "WC Title";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "I'm a Structure",
-			structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addFields(fieldNameList = "Image");
+		DataEngine.addFieldsets(
+			fieldsetLabel = "Basic Web Content",
+			fieldsetName = "Basic Web Content");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(webContentTitle = "${webTitle}");
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addCP(
+			webContentContent = "Conteúdo da web",
+			webContentTitle = "Título do conteúdo da web");
 
 		PortletEntry.publish();
 
-		WebContent.viewTitle(webContentTitle = "WC Title");
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

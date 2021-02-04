@@ -95,6 +95,7 @@ const ExperienceSelector = ({
 	const {observer: modalObserver, onClose: onModalClose} = useModal({
 		onClose: () => {
 			setOpenModal(false);
+			setEditingExperience({});
 		},
 	});
 
@@ -159,7 +160,6 @@ const ExperienceSelector = ({
 			)
 				.then(() => {
 					if (isMounted()) {
-						setEditingExperience({});
 						onModalClose();
 					}
 					openToast({

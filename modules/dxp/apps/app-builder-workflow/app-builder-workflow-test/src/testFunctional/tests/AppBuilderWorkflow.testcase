@@ -2026,6 +2026,7 @@ definition {
 	}
 
 	@description = "LRQA-61050 - Automate smoke tests from LPS-111006"
+	@ignore = "true"
 	@priority = "5"
 	test ViewWorkflowAppThroughNotifications {
 		property portal.acceptance = "true";
@@ -2136,6 +2137,7 @@ definition {
 	}
 
 	@description = "LRQA-61051 - Automate LPS-111006: As an App User, I want to my Workflowed App's notifications to redirect me to the App's entry (task) View instead of the "My Workflow Tasks""
+	@ignore = "true"
 	@priority = "4"
 	test ViewWorkflowAppThroughNotifications_SiteMenuAndOtherUser {
 		JSONLayout.addPublicLayout(

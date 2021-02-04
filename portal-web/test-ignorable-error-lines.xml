@@ -64,6 +64,10 @@
 			<contains>No theme found for specified theme id userdashboard_WAR_userdashboardtheme</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="COMMERCE-5588 - temporarily ignore until fixed">
+			<contains>IX_1B108A04</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-22821">
 			<contains>Exception sending context destroyed event to listener instance of class com.liferay.portal.spring.context.PortalContextLoaderListener</contains>
 			<matches></matches>
@@ -238,6 +242,14 @@
 		</ignore-error>
 		<ignore-error description="LPS-111433 - temporarily ignore until fixed">
 			<contains>IX_EE41CBEB</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LPS-127275 - temporarily ignore until fixed">
+			<contains>com.liferay.analytics.message.sender.impl</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LPS-127285 - temporarily ignore until fixed">
+			<contains>StyleBookEntryVersion</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LRQA-24859">

@@ -12,7 +12,10 @@
  * details.
  */
 
-import {addItem, updateItem} from 'data-engine-js-components-web/js/utils/client.es';
+import {
+	addItem,
+	updateItem,
+} from 'data-engine-js-components-web/js/utils/client.es';
 import {DataDefinitionUtils} from 'data-engine-taglib';
 
 export const getColumnIndex = (node) => {

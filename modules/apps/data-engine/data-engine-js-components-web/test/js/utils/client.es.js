@@ -22,7 +22,7 @@ import {
 	request,
 	updateItem,
 } from '../../../src/main/resources/META-INF/resources/js/utils/client.es';
-import * as toast from 'data-engine-js-components-web/js/utils/toast.es';
+import * as toast from '../../../src/main/resources/META-INF/resources/js/utils/toast.es';
 
 describe('client', () => {
 	beforeAll(() => {

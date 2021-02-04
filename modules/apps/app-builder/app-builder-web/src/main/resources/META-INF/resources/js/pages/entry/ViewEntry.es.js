@@ -16,13 +16,13 @@ import Loading from 'data-engine-js-components-web/js/components/loading/Loading
 import useQuery from 'data-engine-js-components-web/js/hooks/useQuery.es';
 import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
+import {isEqualObjects} from 'data-engine-js-components-web/js/utils/utils.es';
 import {usePrevious} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import useDataLayout from '../../hooks/useDataLayout.es';
-import {isEqualObjects} from '../../utils/utils.es';
 import FieldPreview, {SectionRenderer} from './FieldPreview.es';
 import ViewEntryInfoBar from './ViewEntryInfoBar.es';
 import ViewEntryUpperToolbar from './ViewEntryUpperToolbar.es';
@@ -215,7 +215,10 @@ export default function ViewEntry({
 				{dataRecord && <ViewEntryInfoBar {...dataRecord} />}
 			</ViewEntryUpperToolbar>
 
-			<Loading isLoading={isLoading || isFetching}>
+			<Loading
+				className="loading-wrapper"
+				isLoading={isLoading || isFetching}
+			>
 				<div className="container">
 					<div className="justify-content-center row">
 						<div className="col-lg-8">

@@ -15,8 +15,11 @@ import {AppContext} from 'app-builder-web/js/AppContext.es';
 import useDeployApp from 'app-builder-web/js/hooks/useDeployApp.es';
 import ListApps, {Actions} from 'app-builder-web/js/pages/apps/ListApps.es';
 import {COLUMNS, FILTERS} from 'app-builder-web/js/pages/apps/constants.es';
-import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
 import {parseResponse} from 'data-engine-js-components-web/js/utils/client.es';
+import {
+	errorToast,
+	successToast,
+} from 'data-engine-js-components-web/js/utils/toast.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import {compile} from 'path-to-regexp';
 import React, {useContext, useState} from 'react';

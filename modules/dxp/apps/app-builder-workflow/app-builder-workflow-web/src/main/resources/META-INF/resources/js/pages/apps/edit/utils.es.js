@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {isEqualObjects} from 'app-builder-web/js/utils/utils.es';
+import {isEqualObjects} from 'data-engine-js-components-web/js/utils/utils.es';
 
 export function canDeployApp(app, config) {
 	const isValidSteps = config.steps.every((step) => {

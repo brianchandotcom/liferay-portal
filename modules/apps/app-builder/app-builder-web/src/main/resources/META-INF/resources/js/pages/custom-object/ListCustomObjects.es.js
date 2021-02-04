@@ -14,7 +14,11 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import useQuery from 'data-engine-js-components-web/js/hooks/useQuery.es';
-import {addItem, parseResponse, updateItem} from 'data-engine-js-components-web/js/utils/client.es';
+import {
+	addItem,
+	parseResponse,
+	updateItem,
+} from 'data-engine-js-components-web/js/utils/client.es';
 import {
 	errorToast,
 	successToast,

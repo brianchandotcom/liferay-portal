@@ -319,9 +319,9 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#FORM_FIELD_LABEL",
-			value1 = "Copy of Fields Group");
+		AssertElementPresent(
+			key_fieldFieldLabel = "Copy of Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		for (var fieldName : list "Text,Numeric") {
 			DataEngine.editFieldLabel(

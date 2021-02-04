@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELD_LABEL</td>
-	<td>//div[contains(@class, 'fieldset')]//label[text()='${formGroupLabel}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DUPLICATED_FORM_FIELDS_GROUP_LABEL</td>
 	<td>//input[(@class='form-control ddm-field-text') and (@placeholder='Enter a field label.')]</td>
 	<td></td>

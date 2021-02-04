@@ -28,9 +28,10 @@ definition {
 			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
 
 		var key_publicationsName = "${publicationsName}";
+		var key_publicationStatus = "Published";
 
 		AssertTextEquals(
-			locator1 = "Publications#HISTORY_PUBLICATION_STATUS",
+			locator1 = "Publications#PUBLICATION_STATUS",
 			value1 = "Published");
 	}
 
@@ -243,9 +244,10 @@ definition {
 		Refresh();
 
 		var key_publicationsName = "${publicationsName}";
+		var key_publicationStatus = "Published";
 
 		AssertTextEquals(
-			locator1 = "Publications#HISTORY_PUBLICATION_STATUS",
+			locator1 = "Publications#PUBLICATION_STATUS",
 			value1 = "Published");
 	}
 

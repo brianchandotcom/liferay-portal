@@ -53,57 +53,53 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
-	@ignore = "true"
 	@priority = "5"
 	test CreateFieldGroup {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		property portal.acceptance = "false";
-
-        var structureName = "WC Structure Name";
-
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Web Content"
-		);
-        
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name"
-		);
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-        DataEngine.addField(
+		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
+			fieldName = "Text");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
-			targetFieldLabel = "Text"
-		);
+			targetFieldLabel = "Text");
 
-        DataEngine.addFieldNested(
+		DataEngine.addFieldToFieldsGroup(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			targetFieldLabel = "Numeric"
-		);
+			fieldsGroupLabel = "Fields Group");
 
-		AssertElementPresent(
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP"
-		);
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
+		for (var fieldFieldLabel : list "Text,Numeric,Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Structure Name");
-		
-		AssertElementPresent(
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP"
-		);
+		WebContentStructures.saveCP();
 
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Text,Numeric,Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

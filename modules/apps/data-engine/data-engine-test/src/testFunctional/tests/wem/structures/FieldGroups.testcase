@@ -35,12 +35,64 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
-	@ignore = "true"
 	@priority = "3"
 	test CheckIfFieldGroupDataPersists {
 		property portal.acceptance = "false";
+        var structureName = "WC Structure Name";
+        
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Web Content");
+        
+		NavItem.gotoStructures();
+        
+		WebContentStructures.addCP(
+            structureDescription = "WC Structure Description",
+            structureName = "WC Structure Name");
+        
+		DataEngine.addField(
+            fieldFieldLabel = "Text",
+            fieldName = "Text");
+        
+		DataEngine.addFieldNested(
+            fieldFieldLabel = "Numeric",
+            fieldName = "Numeric",
+            targetFieldLabel = "Text");
+        
+		WebContentStructures.saveCP(structureName = "${structureName}");
+        
+		Navigator.gotoNavTab(navTab = "Web Content");
+        
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+        
+		WebContent.addWithStructureCP(
+            structureName = "WC Structure Name",
+            webContentTitle = "WC Web Content Title");
 
-		// TODO LPS-98077 CheckIfFieldGroupDataPersists pending implementation
+		Type(
+			locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD",
+			value1 = "Test Editing"
+		);
+
+		Type(
+			locator1 = "DataEngineBuilder#WEB_CONTENT_NUMERIC_FIELD",
+			value1 = "12345"
+		);
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Web Content Title");
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD",
+			value1 = "Test Editing"
+		);
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#WEB_CONTENT_NUMERIC_FIELD",
+			value1 = "12345"
+		);
+
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

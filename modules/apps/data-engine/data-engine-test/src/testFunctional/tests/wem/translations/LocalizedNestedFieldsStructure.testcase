@@ -414,7 +414,7 @@ definition {
 
 		WebContentStructures.addLocalization(
 			locale = "pt_BR",
-			localization1Name = "Minha Estrutura Nome 1");
+			localization1Name = "Minha Estrutura Nome");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Name",
@@ -439,6 +439,30 @@ definition {
 		Button.clickSave();
 
 		Alert.viewErrorMessage(errorMessage = "Please enter a valid title for the default language: en-US");
+
+		PortletEntry.inputName(name = "My Structure Name");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Nome",
+			fieldName = "Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Ajuda nome",
+			fieldName = "Text");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Data",
+			fieldName = "Date");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Ajuda data",
+			fieldName = "Date");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

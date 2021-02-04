@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_CONTAINER_LABEL_ANY</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}'] | //legend[normalize-space(text())='${key_fieldFieldLabel}'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_SETS_COLLAPSE_BUTTON</td>
 	<td>//div[contains(@class,'fieldset')]//button[contains(@class,'collapse-icon')][//label[text()='${key_fieldsetLabel}']]</td>
 	<td></td>

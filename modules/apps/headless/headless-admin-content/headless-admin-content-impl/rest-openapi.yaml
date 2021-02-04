@@ -104,19 +104,19 @@ components:
             description:
                 Specific settings related to Open Graph
             properties:
-                descriptionMappingField:
+                descriptionMappingFieldKey:
                     description:
                         Field of the content type that will be used as the description
                     type: string
-                imageAltMappingField:
+                imageAltMappingFieldKey:
                     description:
                         Field of the content type that will be used as the alt property of the image
                     type: string
-                imageMappingField:
+                imageMappingFieldKey:
                     description:
                         Field of the content type that will be used as the image
                     type: string
-                titleMappingField:
+                titleMappingFieldKey:
                     description:
                         Field of the content type that will be used as the title
                     type: string
@@ -125,11 +125,11 @@ components:
             description:
                 Specific settings related to SEO
             properties:
-                descriptionMappingField:
+                descriptionMappingFieldKey:
                     description:
                         Field of the content type that will be used as the description
                     type: string
-                htmlTitleMappingField:
+                htmlTitleMappingFieldKey:
                     description:
                         Field of the content type that will be used as the HTML title
                     type: string

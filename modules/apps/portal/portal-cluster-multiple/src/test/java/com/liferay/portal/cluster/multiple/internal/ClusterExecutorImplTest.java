@@ -39,6 +39,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
 import org.junit.Assert;
@@ -381,6 +382,8 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 				).put(
 					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
 					"test-channel-properties-control"
+				).put(
+					"configuration.override.", new Properties()
 				).build()));
 
 		clusterExecutorImpl.setClusterChannelFactory(

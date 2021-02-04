@@ -13,10 +13,10 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ListView from 'data-engine-js-components-web/js/components/list-view/ListView.es';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import ListView from '../../components/list-view/ListView.es';
 import useDataDefinition from '../../hooks/useDataDefinition.es';
 import {confirmDelete} from '../../utils/client.es';
 import {getLocalizedValue} from '../../utils/lang.es';
@@ -89,6 +89,7 @@ export default ({
 				title: Liferay.Language.get('there-are-no-table-views-yet'),
 			}}
 			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-list-views`}
+			history={history}
 		>
 			{(item) => {
 				const {dateCreated, dateModified, id, name} = item;

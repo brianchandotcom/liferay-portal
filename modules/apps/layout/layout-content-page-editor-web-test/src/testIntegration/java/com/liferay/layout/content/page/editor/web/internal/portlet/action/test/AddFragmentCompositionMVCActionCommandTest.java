@@ -316,10 +316,10 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			layoutStructure.addRootLayoutStructureItem();
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 

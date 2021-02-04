@@ -237,7 +237,7 @@ public class UpdateItemConfigMVCActionCommandTest {
 		LayoutStructure layoutStructure = _getLayoutStructure();
 
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.addRowLayoutStructureItem(
+			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 6);
 
 		_layoutPageTemplateStructureLocalService.

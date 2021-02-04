@@ -152,14 +152,14 @@ public class LayoutCrawlerTest {
 				SegmentsExperienceConstants.ID_DEFAULT));
 
 		LayoutStructureItem rowLayoutStructureItem =
-			layoutStructure.addRowLayoutStructureItem(
+			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 1);
 
 		LayoutStructureItem columnLayoutStructureItem =
 			layoutStructure.addColumnLayoutStructureItem(
 				rowLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			inlineFragmentEntryLink.getFragmentEntryLinkId(),
 			columnLayoutStructureItem.getItemId(), 0);
 
@@ -196,7 +196,7 @@ public class LayoutCrawlerTest {
 				mappedValueJSONObject.toString(), StringPool.BLANK, 0,
 				contributedFragmentEntry.getFragmentEntryKey(), serviceContext);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			mappedFragmentEntryLink.getFragmentEntryLinkId(),
 			columnLayoutStructureItem.getItemId(), 1);
 
@@ -218,7 +218,7 @@ public class LayoutCrawlerTest {
 				StringPool.BLANK, widgetValueJSONObject.toString(),
 				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			widgetFragmentEntryLink.getFragmentEntryLinkId(),
 			columnLayoutStructureItem.getItemId(), 2);
 

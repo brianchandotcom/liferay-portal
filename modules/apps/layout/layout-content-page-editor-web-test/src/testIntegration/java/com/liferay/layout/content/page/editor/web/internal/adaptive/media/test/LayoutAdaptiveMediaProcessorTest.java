@@ -306,10 +306,10 @@ public class LayoutAdaptiveMediaProcessorTest {
 		layoutStructure.setMainItemId(rootLayoutStructureItem.getItemId());
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			_fragmentEntryLink.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 

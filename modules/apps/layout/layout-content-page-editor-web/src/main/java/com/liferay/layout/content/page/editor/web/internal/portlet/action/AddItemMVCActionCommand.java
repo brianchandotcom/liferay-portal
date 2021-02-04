@@ -82,8 +82,9 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getPlid(),
 					layoutStructure -> {
 						LayoutStructureItem layoutStructureItem =
-							layoutStructure.addCollectionLayoutStructureItem(
-								parentItemId, position);
+							layoutStructure.
+								addCollectionStyledLayoutStructureItem(
+									parentItemId, position);
 
 						jsonObject.put(
 							"addedItemId", layoutStructureItem.getItemId());
@@ -98,7 +99,7 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getPlid(),
 					layoutStructure -> {
 						LayoutStructureItem layoutStructureItem =
-							layoutStructure.addRowLayoutStructureItem(
+							layoutStructure.addRowStyledLayoutStructureItem(
 								parentItemId, position, _DEFAULT_ROW_COLUMNS);
 
 						for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {

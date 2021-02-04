@@ -93,7 +93,7 @@ public class DeleteItemMVCActionCommandTest {
 			layoutStructure.addRootLayoutStructureItem();
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
 		_addLayoutPageTemplateStructure(layoutStructure.toString());
@@ -167,7 +167,7 @@ public class DeleteItemMVCActionCommandTest {
 			layoutStructure.addRootLayoutStructureItem();
 
 		LayoutStructureItem fragmentLayoutStructureItem =
-			layoutStructure.addFragmentLayoutStructureItem(
+			layoutStructure.addFragmentStyledLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),
 				rootLayoutStructureItem.getItemId(), 0);
 
@@ -219,7 +219,7 @@ public class DeleteItemMVCActionCommandTest {
 			layoutStructure.addRootLayoutStructureItem();
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
 		layoutStructure.addDropZoneLayoutStructureItem(
@@ -252,10 +252,10 @@ public class DeleteItemMVCActionCommandTest {
 			layoutStructure.addRootLayoutStructureItem();
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 
@@ -323,14 +323,14 @@ public class DeleteItemMVCActionCommandTest {
 			layoutStructure.addRootLayoutStructureItem();
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink1.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink2.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 
@@ -402,18 +402,18 @@ public class DeleteItemMVCActionCommandTest {
 			layoutStructure.addRootLayoutStructureItem();
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
 		LayoutStructureItem columnLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				containerLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink1.getFragmentEntryLinkId(),
 			columnLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink2.getFragmentEntryLinkId(),
 			columnLayoutStructureItem.getItemId(), 0);
 

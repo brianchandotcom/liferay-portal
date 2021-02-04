@@ -55,7 +55,7 @@ public class ContainerLayoutStructureItemImporter
 
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
 			(ContainerStyledLayoutStructureItem)
-				layoutStructure.addContainerLayoutStructureItem(
+				layoutStructure.addContainerStyledLayoutStructureItem(
 					parentItemId, position);
 
 		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();

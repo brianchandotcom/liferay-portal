@@ -102,7 +102,7 @@ public class AddPortletMVCActionCommand
 				themeDisplay.getPlid(),
 				layoutStructure -> {
 					LayoutStructureItem layoutStructureItem =
-						layoutStructure.addFragmentLayoutStructureItem(
+						layoutStructure.addFragmentStyledLayoutStructureItem(
 							fragmentEntryLinkId, parentItemId, position);
 
 					jsonObject.put(

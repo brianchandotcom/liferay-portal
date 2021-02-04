@@ -184,6 +184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVERT_DISABLED</td>
+	<td>//td[contains(.,'${key_publicationsName}')]//following-sibling::td//a[contains(@class, 'btn-sm disabled') and contains(.,'Revert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVERT_SCREEN_RADIO_HELP</td>
 	<td>//div[contains(@class,'publications-radio-help') and contains(.,'${key_radioHelpMessage}')]</td>
 	<td></td>

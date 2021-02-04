@@ -59,7 +59,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "My Structure Name 1");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -70,47 +70,41 @@ definition {
 			fieldName = "Date",
 			targetFieldLabel = "Text");
 
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Fields Group",
-			fieldFieldLabelEdit = "Group");
-
 		WebContentStructures.addLocalization(
-			locale = "pt_BR",
-			localization1Name = "Minha Estrutura Nome 1");
+			locale = "pt-BR",
+			localization1Name = "Título do conteúdo da web");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text",
-			label = "Texto");
-
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Date",
-			label = "Data");
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Grupo de Campos");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Group",
-			fieldFieldLabelEdit = "Grupo");
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
 
-		DDLDataDefinition.save();
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Encontro");
+
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavItem(navItem = "Web Content");
 
-		LexiconEntry.gotoAdd();
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		MenuItem.click(menuItem = "My Structure Name 1");
+		for (var label : list "Fields Group,Text,Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${label}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertElementPresent(
-			fieldGroupLabel = "Grupo",
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
-
-		AssertElementPresent(
-			key_fieldLabel = "Texto",
-			locator1 = "FormFields#LABEL");
-
-		AssertElementPresent(
-			key_fieldLabel = "Data",
-			locator1 = "FormFields#LABEL");
+		for (var label : list "Grupo de Campos,Texto,Encontro") {
+			AssertVisible(
+				key_fieldFieldLabel = "${label}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

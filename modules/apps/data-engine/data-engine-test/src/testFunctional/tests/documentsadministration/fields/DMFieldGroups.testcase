@@ -469,12 +469,56 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
-	@ignore = "true"
 	@priority = "4"
 	test SetFieldGroupAsRepeatableAndExecuteOnUpload {
 		property portal.acceptance = "false";
+		
+		var dmDocumentTitle = "Title";
+        var newLabel = "Image";
+		var webTitle = "WC Title";
 
-		// TODO LPS-98077 SetFieldGroupAsRepeatableAndExecuteOnUpload pending implementation
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeFieldNames = "Upload",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Upload");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Image",
+			fieldName = "Image",
+			targetFieldLabel = "Upload");
+
+		DataEngine.editFieldsGroupRepeatable();
+
+		Button.clickSave();
+
+		Navigator.gotoNavItem(navItem = "Documents and Media");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+
+		PortletEntry.inputTitle(title = "${dmDocumentTitle}");
+
+		DataEngine.addRepeatableField(fieldName = "Upload");
+
+		DataEngine.addRepeatableFieldGroups(fieldName = "FieldsGroup",totalPortletCount = "1");
+	
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${dmDocumentTitle}");
+
+		WebContent.viewDuplicatedField(
+			fieldName = "Upload",
+			totalPortletCount = "2"
+		);
+		
 	}
 
 }

@@ -226,12 +226,62 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
 	@priority = "5"
 	test EditFieldset {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123538 EditFieldset pending implementation
+		var fieldsetLabel = "My New Fieldset";
+
+		ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Documents and Media");
+
+        AppBuilderAdmin.switchTab(tabName = "Document Types");
+
+		DMDocumentType.addWithoutSave(
+            dmDocumentTypeFieldNames = "Numeric",
+            dmDocumentTypeName = "Document Type Name"
+		);
+
+		DataEngine.addFieldsets(
+			createNewFieldset = "true",
+			fieldNameList = "Text",
+			fieldsetLabel = "${fieldsetLabel}",
+			fieldsetName = "${fieldsetLabel}"
+		);
+		
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
+
+		MenuItem.click(menuItem = "Edit");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Edit",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text Edit",
+			fieldHelpTextEdit = "Edited Help Text",
+			fieldsetModal = "true");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Click(locator1 = "Modal#PROPAGATE_BUTTON");
+
+		Alert.viewSuccessMessage();
+		
+		Button.clickSave();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text Edit",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_helpText = "Edited Help Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
+
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

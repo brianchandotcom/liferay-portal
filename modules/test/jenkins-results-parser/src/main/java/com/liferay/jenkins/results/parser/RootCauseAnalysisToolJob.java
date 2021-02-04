@@ -70,6 +70,11 @@ public class RootCauseAnalysisToolJob
 	}
 
 	@Override
+	public boolean isSegmentEnabled() {
+		return true;
+	}
+
+	@Override
 	protected Set<String> getRawBatchNames() {
 		return getSetFromString(
 			JenkinsResultsParserUtil.getProperty(

@@ -91,14 +91,11 @@ definition {
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "4"
 	test DefaultValuesDisplayedForNonTranslatedWebContent {
-		var key_value = "1234";
-		var key_text = "My name";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "My Structure Name 1");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -109,37 +106,58 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DDLDataDefinition.save();
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavItem(navItem = "Web Content");
 
-		LexiconEntry.gotoAdd();
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		MenuItem.click(menuItem = "My Structure Name 1");
+		WebContent.addWithStructureCP(
+			webContentNumeric = "8",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
 
-		PortletEntry.inputText(
-			fieldLabel = "Text",
-			text = "${key_text}");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-		Click(
-			key_fieldLabel = "Numeric",
-			locator1 = "TextInput#NUMERIC");
+		WebContent.addWithStructureCP(
+			webContentNumeric = "123",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Título do conteúdo da web");
 
-		Type(
-			key_fieldLabel = "Numeric",
-			locator1 = "TextInput#NUMERIC",
-			value1 = "${key_value}");
+		PortletEntry.publish();
 
-		PortletEntry.changeLocale(locale = "pt_BR");
-
-		AssertTextEquals(
-            key_fieldLabel = "Text",
-            locator1 = "TextInput#GENERIC_TEXT_INPUT",
-            value1 = "${key_text}");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		AssertTextEquals(
-            locator1 = "TextInput#INPUT",
-            value1 = "${key_value}");
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "8",
+			webContentText = "This is a Text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Título do conteúdo da web");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "123",
+			webContentText = "Este é um campo de texto");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "8",
+			webContentText = "This is a Text field");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

@@ -205,8 +205,6 @@ definition {
 			dmDocumentTypeFieldNames = "Rich Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		FormViewBuilder.switchToAdvancedTab();
-
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Searchable",
 			searchableType = "Disable");
@@ -214,13 +212,6 @@ definition {
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Rich Text",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Rich Text");
-
-		FormViewBuilder.switchToAdvancedTab();
 
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Searchable",

@@ -166,7 +166,7 @@
 
 		<!-- PK fields -->
 
-		<column name="AccountGroupRelId" primary="true" type="long" />
+		<column name="accountGroupRelId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

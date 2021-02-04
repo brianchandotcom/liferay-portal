@@ -75,7 +75,7 @@ definition {
 	@priority = "4"
 	test CheckLanguageSelector {
 		property portal.acceptance = "false";
-		
+
 		var fieldsetLabel = "My New Fieldset";
 		var structureTitle = "Structure Title";
 		var structureTitlePT = "Titulo da Estrutura";
@@ -88,25 +88,21 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "I'll be a field set",
-			structureName = "${structureFieldSet}"
-		);
+			structureName = "${structureFieldSet}");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
 			fieldsetLabel = "${fieldsetLabel}",
-			fieldsetName = "${fieldsetLabel}"
-		);
+			fieldsetName = "${fieldsetLabel}");
 
 		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
 
-        MenuItem.click(menuItem = "Edit");
+		MenuItem.click(menuItem = "Edit");
 
 		Click(locator1 = "Button#LOCALIZATION_MODAL");
 
-		AssertElementPresent(
-			locator1 = "WCD#WEB_CONTENT_MODAL_TRANSLATION_SPAN_LANGUAGE_ENGLISH"
-		);
+		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_MODAL_TRANSLATION_SPAN_LANGUAGE_ENGLISH");
 
 		Click(locator1 = "Modal#CLOSE_BUTTON");
 
@@ -118,14 +114,11 @@ definition {
 
 		WebContent.addWithStructureCP(
 			structureName = "${structureFieldSet}",
-			webContentTitle = "WC English"
-		);
-		
+			webContentTitle = "WC English");
+
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		AssertElementPresent(
-			locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH"
-		);
+		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

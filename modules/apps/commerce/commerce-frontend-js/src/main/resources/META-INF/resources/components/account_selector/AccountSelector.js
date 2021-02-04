@@ -21,7 +21,7 @@ import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';
 import {
@@ -36,6 +36,8 @@ const ORDERS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminOrderAPI('v1')
 	.baseURL;
 const ACCOUNTS_HEADLESS_API_ENDPOINT = ServiceProvider.AdminAccountAPI('v1')
 	.baseURL;
+
+const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function formatStickerName(name) {
 	const words = name.split(' ');
@@ -96,28 +98,27 @@ function AccountSelector(props) {
 	const accountsListWrapperRef = useRef();
 	const ordersListWrapperRef = useRef();
 
+	const updateOrderModel = useCallback(
+		({orderId}) => {
+			if (!currentOrder || currentOrder.id !== orderId) {
+				CartResource.getCartById(orderId).then((order) => {
+					updateCurrentOrder((current) => ({
+						...current,
+						...order,
+					}));
+				});
+			}
+		},
+		[currentOrder, updateCurrentOrder]
+	);
+
 	useEffect(() => {
-		function handleOrderUpdated({orderId, orderStatusInfo}) {
-			updateCurrentOrder((current) => {
-				if (
-					(!current && orderId) ||
-					(current && !orderId) ||
-					current.id !== orderId
-				) {
-					return {
-						orderId,
-						orderStatusInfo,
-					};
-				}
+		Liferay.on(CURRENT_ORDER_UPDATED, updateOrderModel);
 
-				return current;
-			});
-		}
-
-		Liferay.on(CURRENT_ORDER_UPDATED, handleOrderUpdated);
-
-		return () => Liferay.detach(CURRENT_ORDER_UPDATED, handleOrderUpdated);
-	}, [updateCurrentOrder]);
+		return () => {
+			Liferay.detach(CURRENT_ORDER_UPDATED, updateOrderModel);
+		};
+	}, [updateOrderModel]);
 
 	const loadingView = (
 		<ClayDropDown.Caption>

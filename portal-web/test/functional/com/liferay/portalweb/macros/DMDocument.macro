@@ -1113,6 +1113,14 @@ definition {
 			AssertElementNotPresent(locator1 = "Panel#PANEL_EXPANDED");
 		}
 
+		if (isSet(customFieldTextEdit)) {
+			Panel.expandPanel(panel = "Custom Fields");
+
+			Type(
+				locator1 = "TextInput#CUSTOM_FIELD",
+				value1 = "${customFieldTextEdit}");
+		}
+
 		if (isSet(checkedOut)) {
 			Click(locator1 = "Button#SAVE");
 		}
@@ -2526,6 +2534,22 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "APAsset#ASSET_CONTENT",
 				value1 = "${dmDocumentDescription}");
+		}
+
+		if (isSet(customFieldName)) {
+			AssertClick(
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "${dmDocumentTitle}");
+
+			DMDocument.expandInfo();
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#CUSTOM_FIELD_NAME",
+				value1 = "${customFieldName}");
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#CUSTOM_FIELD_VALUE",
+				value1 = "${customFieldValue}");
 		}
 	}
 

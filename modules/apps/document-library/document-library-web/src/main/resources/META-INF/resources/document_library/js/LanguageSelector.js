@@ -76,6 +76,22 @@ LanguageSelector.propTypes = {
 	selectedLanguageId: PropTypes.string.isRequired,
 };
 
+function addAvailableLocale(localeId, portletNamespace) {
+	const availableLocalesInput = document.getElementById(
+		`${portletNamespace}availableLocales`
+	);
+
+	if (availableLocalesInput) {
+		const availableLocales = availableLocalesInput.value
+			? availableLocalesInput.value.split(',')
+			: [];
+
+		availableLocalesInput.value = [
+			...new Set([...availableLocales, localeId]),
+		].join(',');
+	}
+}
+
 function DataEngineLanguageSelector({
 	ddmStructureIds,
 	portletNamespace,
@@ -85,6 +101,11 @@ function DataEngineLanguageSelector({
 	const [selectedLanguageId, setSelectedLanguageId] = useState(
 		initialSelectedLanguageId
 	);
+
+	const handleLocaleChange = (localeId) => {
+		setSelectedLanguageId(localeId);
+		addAvailableLocale(localeId, portletNamespace);
+	};
 
 	useEffect(() => {
 		ddmStructureIds.forEach((ddmStructureId) => {
@@ -107,7 +128,7 @@ function DataEngineLanguageSelector({
 	return (
 		<LanguageSelector
 			{...restProps}
-			onChange={setSelectedLanguageId}
+			onChange={handleLocaleChange}
 			selectedLanguageId={selectedLanguageId}
 		/>
 	);

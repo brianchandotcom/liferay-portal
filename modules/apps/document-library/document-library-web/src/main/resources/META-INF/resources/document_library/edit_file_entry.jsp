@@ -383,6 +383,7 @@ renderResponse.setTitle(headerTitle);
 								</c:otherwise>
 							</c:choose>
 
+							<aui:input name="availableLocales" type="hidden" />
 							<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />
 
 							<%

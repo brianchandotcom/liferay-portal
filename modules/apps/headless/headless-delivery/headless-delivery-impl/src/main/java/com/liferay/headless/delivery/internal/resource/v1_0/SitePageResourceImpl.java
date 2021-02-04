@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -177,7 +176,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.addVulcanAggregation(aggregation);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
 
 				searchContext.setAttribute(Field.TITLE, search);
 				searchContext.setAttribute(
@@ -195,10 +193,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				searchContext.setAttribute(
 					"privateLayout", Boolean.FALSE.toString());
 
-				Group group = groupLocalService.getGroup(siteId);
-
-				searchContext.setCompanyId(group.getCompanyId());
-
+				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
 				searchContext.setKeywords(search);
 			},

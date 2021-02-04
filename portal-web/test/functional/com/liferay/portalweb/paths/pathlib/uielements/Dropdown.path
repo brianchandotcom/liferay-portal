@@ -46,7 +46,7 @@
 <!--FILTER-->
 <tr>
 	<td>FILTER_AND_ORDER</td>
-	<td>//button[*[normalize-space(text())='Filter and Order']]</td>
+	<td>//button[contains(.,'Filter and Order') or contains(@class,'Filter and Order')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -30,4 +30,9 @@ public class TranslationDepotApplication implements DepotApplication {
 		return TranslationPortletKeys.TRANSLATION;
 	}
 
+	@Override
+	public boolean isCustomizable() {
+		return true;
+	}
+
 }

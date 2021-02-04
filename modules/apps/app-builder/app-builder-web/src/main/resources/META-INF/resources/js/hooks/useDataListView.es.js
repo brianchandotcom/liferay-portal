@@ -12,11 +12,11 @@
  * details.
  */
 
+import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
 import {DataDefinitionUtils} from 'data-engine-taglib';
 import {useEffect, useState} from 'react';
 
-import {getItem} from '../utils/client.es';
 
 export default function useDataListView(dataListViewId, dataDefinitionId) {
 	const [state, setState] = useState({

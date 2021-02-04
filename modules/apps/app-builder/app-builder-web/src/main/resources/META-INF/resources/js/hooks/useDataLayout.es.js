@@ -12,10 +12,9 @@
  * details.
  */
 
+import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
 import {useEffect, useState} from 'react';
-
-import {getItem} from '../utils/client.es';
 
 export default function useDataLayout(dataLayoutId, dataDefinitionId) {
 	const [state, setState] = useState({

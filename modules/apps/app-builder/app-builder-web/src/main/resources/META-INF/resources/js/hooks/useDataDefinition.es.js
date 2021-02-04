@@ -12,10 +12,9 @@
  * details.
  */
 
+import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import {useEffect, useState} from 'react';
-
-import {getItem} from '../utils/client.es';
 
 export default function useDataDefinition(dataDefinitionId) {
 	const [dataDefinition, setDataDefinition] = useState({});

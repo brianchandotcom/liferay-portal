@@ -15,11 +15,11 @@
 import ClayButton from '@clayui/button/lib/Button';
 import {Context as ClayModalContext} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
+import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import {DataDefinitionUtils} from 'data-engine-taglib';
 import React, {useContext} from 'react';
 
-import {getItem} from '../../utils/client.es';
 import FormViewContext from './FormViewContext.es';
 
 export default (callback) => {

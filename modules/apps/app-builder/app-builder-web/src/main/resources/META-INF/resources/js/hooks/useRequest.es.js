@@ -12,9 +12,8 @@
  * details.
  */
 
+import {request} from 'data-engine-js-components-web/js/utils/client.es';
 import {useEffect, useState} from 'react';
-
-import {request} from '../utils/client.es';
 
 export default (endpoint) => {
 	const [state, setState] = useState({

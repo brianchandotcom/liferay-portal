@@ -16,10 +16,10 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
+import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {SearchInput} from 'data-engine-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {getItem} from '../../../../utils/client.es';
 import {SCOPES} from '../../constants.es';
 import EditAppContext, {
 	PRODUCT_MENU,

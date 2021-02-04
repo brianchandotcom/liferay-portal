@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import {addItem, updateItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {
 	errorToast,
 	successToast,
@@ -22,7 +23,6 @@ import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../../AppContext.es';
-import {addItem, updateItem} from '../../../utils/client.es';
 import {normalizeNames} from '../../../utils/normalizers.es';
 import {isProductMenuValid} from '../utils.es';
 import EditAppContext from './EditAppContext.es';

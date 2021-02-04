@@ -269,7 +269,7 @@ definition {
 
 		PortletEntry.inputName(name = "WC Template Name Edit");
 
-		for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page") {
+		for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation") {
 			var key_fieldFieldLabel = "${fieldFieldLabel}";
 			var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
 
@@ -277,6 +277,10 @@ definition {
 				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 				value1 = "${fieldReference}.getData()");
 		}
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
+			value1 = "LinktoPage.getFriendlyUrl()");
 
 		DDLDataDefinition.save();
 

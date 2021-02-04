@@ -10,6 +10,7 @@
 	</parent>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.definition</artifactId>
+	<version>0.6.0-SNAPSHOT</version>
 	<name>Liferay Talend Definition</name>
 	<packaging>bundle</packaging>
 	<dependencies>
@@ -24,7 +25,7 @@
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.talend.common</artifactId>
-			<version>${project.parent.version}</version>
+			<version>0.6.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.activation</groupId>

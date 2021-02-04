@@ -28,6 +28,7 @@
 	</parent>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.runtime</artifactId>
+	<version>0.6.0-SNAPSHOT</version>
 	<name>Liferay Talend Runtime</name>
 	<packaging>jar</packaging>
 	<repositories>
@@ -55,7 +56,7 @@
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.talend.definition</artifactId>
-			<version>${project.parent.version}</version>
+			<version>0.6.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.activation</groupId>

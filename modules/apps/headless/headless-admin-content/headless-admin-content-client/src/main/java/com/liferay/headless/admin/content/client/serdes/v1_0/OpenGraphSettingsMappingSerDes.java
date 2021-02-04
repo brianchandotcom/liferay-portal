@@ -57,60 +57,63 @@ public class OpenGraphSettingsMappingSerDes {
 
 		sb.append("{");
 
-		if (openGraphSettingsMapping.getDescriptionMappingField() != null) {
+		if (openGraphSettingsMapping.getDescriptionMappingFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"descriptionMappingField\": ");
+			sb.append("\"descriptionMappingFieldKey\": ");
 
 			sb.append("\"");
 
 			sb.append(
-				_escape(openGraphSettingsMapping.getDescriptionMappingField()));
+				_escape(
+					openGraphSettingsMapping.getDescriptionMappingFieldKey()));
 
 			sb.append("\"");
 		}
 
-		if (openGraphSettingsMapping.getImageAltMappingField() != null) {
+		if (openGraphSettingsMapping.getImageAltMappingFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"imageAltMappingField\": ");
+			sb.append("\"imageAltMappingFieldKey\": ");
 
 			sb.append("\"");
 
 			sb.append(
-				_escape(openGraphSettingsMapping.getImageAltMappingField()));
+				_escape(openGraphSettingsMapping.getImageAltMappingFieldKey()));
 
 			sb.append("\"");
 		}
 
-		if (openGraphSettingsMapping.getImageMappingField() != null) {
+		if (openGraphSettingsMapping.getImageMappingFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"imageMappingField\": ");
+			sb.append("\"imageMappingFieldKey\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(openGraphSettingsMapping.getImageMappingField()));
+			sb.append(
+				_escape(openGraphSettingsMapping.getImageMappingFieldKey()));
 
 			sb.append("\"");
 		}
 
-		if (openGraphSettingsMapping.getTitleMappingField() != null) {
+		if (openGraphSettingsMapping.getTitleMappingFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"titleMappingField\": ");
+			sb.append("\"titleMappingFieldKey\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(openGraphSettingsMapping.getTitleMappingField()));
+			sb.append(
+				_escape(openGraphSettingsMapping.getTitleMappingFieldKey()));
 
 			sb.append("\"");
 		}
@@ -136,44 +139,44 @@ public class OpenGraphSettingsMappingSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (openGraphSettingsMapping.getDescriptionMappingField() == null) {
-			map.put("descriptionMappingField", null);
+		if (openGraphSettingsMapping.getDescriptionMappingFieldKey() == null) {
+			map.put("descriptionMappingFieldKey", null);
 		}
 		else {
 			map.put(
-				"descriptionMappingField",
+				"descriptionMappingFieldKey",
 				String.valueOf(
-					openGraphSettingsMapping.getDescriptionMappingField()));
+					openGraphSettingsMapping.getDescriptionMappingFieldKey()));
 		}
 
-		if (openGraphSettingsMapping.getImageAltMappingField() == null) {
-			map.put("imageAltMappingField", null);
+		if (openGraphSettingsMapping.getImageAltMappingFieldKey() == null) {
+			map.put("imageAltMappingFieldKey", null);
 		}
 		else {
 			map.put(
-				"imageAltMappingField",
+				"imageAltMappingFieldKey",
 				String.valueOf(
-					openGraphSettingsMapping.getImageAltMappingField()));
+					openGraphSettingsMapping.getImageAltMappingFieldKey()));
 		}
 
-		if (openGraphSettingsMapping.getImageMappingField() == null) {
-			map.put("imageMappingField", null);
+		if (openGraphSettingsMapping.getImageMappingFieldKey() == null) {
+			map.put("imageMappingFieldKey", null);
 		}
 		else {
 			map.put(
-				"imageMappingField",
+				"imageMappingFieldKey",
 				String.valueOf(
-					openGraphSettingsMapping.getImageMappingField()));
+					openGraphSettingsMapping.getImageMappingFieldKey()));
 		}
 
-		if (openGraphSettingsMapping.getTitleMappingField() == null) {
-			map.put("titleMappingField", null);
+		if (openGraphSettingsMapping.getTitleMappingFieldKey() == null) {
+			map.put("titleMappingFieldKey", null);
 		}
 		else {
 			map.put(
-				"titleMappingField",
+				"titleMappingFieldKey",
 				String.valueOf(
-					openGraphSettingsMapping.getTitleMappingField()));
+					openGraphSettingsMapping.getTitleMappingFieldKey()));
 		}
 
 		return map;
@@ -198,30 +201,34 @@ public class OpenGraphSettingsMappingSerDes {
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(
-					jsonParserFieldName, "descriptionMappingField")) {
+					jsonParserFieldName, "descriptionMappingFieldKey")) {
 
 				if (jsonParserFieldValue != null) {
-					openGraphSettingsMapping.setDescriptionMappingField(
+					openGraphSettingsMapping.setDescriptionMappingFieldKey(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "imageAltMappingField")) {
+						jsonParserFieldName, "imageAltMappingFieldKey")) {
 
 				if (jsonParserFieldValue != null) {
-					openGraphSettingsMapping.setImageAltMappingField(
+					openGraphSettingsMapping.setImageAltMappingFieldKey(
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "imageMappingField")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "imageMappingFieldKey")) {
+
 				if (jsonParserFieldValue != null) {
-					openGraphSettingsMapping.setImageMappingField(
+					openGraphSettingsMapping.setImageMappingFieldKey(
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "titleMappingField")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "titleMappingFieldKey")) {
+
 				if (jsonParserFieldValue != null) {
-					openGraphSettingsMapping.setTitleMappingField(
+					openGraphSettingsMapping.setTitleMappingFieldKey(
 						(String)jsonParserFieldValue);
 				}
 			}

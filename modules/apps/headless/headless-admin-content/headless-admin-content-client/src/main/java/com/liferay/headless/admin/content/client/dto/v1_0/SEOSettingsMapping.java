@@ -35,49 +35,53 @@ public class SEOSettingsMapping implements Cloneable, Serializable {
 		return SEOSettingsMappingSerDes.toDTO(json);
 	}
 
-	public String getDescriptionMappingField() {
-		return descriptionMappingField;
+	public String getDescriptionMappingFieldKey() {
+		return descriptionMappingFieldKey;
 	}
 
-	public void setDescriptionMappingField(String descriptionMappingField) {
-		this.descriptionMappingField = descriptionMappingField;
+	public void setDescriptionMappingFieldKey(
+		String descriptionMappingFieldKey) {
+
+		this.descriptionMappingFieldKey = descriptionMappingFieldKey;
 	}
 
-	public void setDescriptionMappingField(
+	public void setDescriptionMappingFieldKey(
 		UnsafeSupplier<String, Exception>
-			descriptionMappingFieldUnsafeSupplier) {
+			descriptionMappingFieldKeyUnsafeSupplier) {
 
 		try {
-			descriptionMappingField =
-				descriptionMappingFieldUnsafeSupplier.get();
+			descriptionMappingFieldKey =
+				descriptionMappingFieldKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String descriptionMappingField;
+	protected String descriptionMappingFieldKey;
 
-	public String getHtmlTitleMappingField() {
-		return htmlTitleMappingField;
+	public String getHtmlTitleMappingFieldKey() {
+		return htmlTitleMappingFieldKey;
 	}
 
-	public void setHtmlTitleMappingField(String htmlTitleMappingField) {
-		this.htmlTitleMappingField = htmlTitleMappingField;
+	public void setHtmlTitleMappingFieldKey(String htmlTitleMappingFieldKey) {
+		this.htmlTitleMappingFieldKey = htmlTitleMappingFieldKey;
 	}
 
-	public void setHtmlTitleMappingField(
-		UnsafeSupplier<String, Exception> htmlTitleMappingFieldUnsafeSupplier) {
+	public void setHtmlTitleMappingFieldKey(
+		UnsafeSupplier<String, Exception>
+			htmlTitleMappingFieldKeyUnsafeSupplier) {
 
 		try {
-			htmlTitleMappingField = htmlTitleMappingFieldUnsafeSupplier.get();
+			htmlTitleMappingFieldKey =
+				htmlTitleMappingFieldKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String htmlTitleMappingField;
+	protected String htmlTitleMappingFieldKey;
 
 	public String getRobots() {
 		return robots;

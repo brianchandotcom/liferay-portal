@@ -55,30 +55,32 @@ public class SEOSettingsMappingSerDes {
 
 		sb.append("{");
 
-		if (seoSettingsMapping.getDescriptionMappingField() != null) {
+		if (seoSettingsMapping.getDescriptionMappingFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"descriptionMappingField\": ");
+			sb.append("\"descriptionMappingFieldKey\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(seoSettingsMapping.getDescriptionMappingField()));
+			sb.append(
+				_escape(seoSettingsMapping.getDescriptionMappingFieldKey()));
 
 			sb.append("\"");
 		}
 
-		if (seoSettingsMapping.getHtmlTitleMappingField() != null) {
+		if (seoSettingsMapping.getHtmlTitleMappingFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"htmlTitleMappingField\": ");
+			sb.append("\"htmlTitleMappingFieldKey\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(seoSettingsMapping.getHtmlTitleMappingField()));
+			sb.append(
+				_escape(seoSettingsMapping.getHtmlTitleMappingFieldKey()));
 
 			sb.append("\"");
 		}
@@ -128,23 +130,24 @@ public class SEOSettingsMappingSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (seoSettingsMapping.getDescriptionMappingField() == null) {
-			map.put("descriptionMappingField", null);
+		if (seoSettingsMapping.getDescriptionMappingFieldKey() == null) {
+			map.put("descriptionMappingFieldKey", null);
 		}
 		else {
 			map.put(
-				"descriptionMappingField",
+				"descriptionMappingFieldKey",
 				String.valueOf(
-					seoSettingsMapping.getDescriptionMappingField()));
+					seoSettingsMapping.getDescriptionMappingFieldKey()));
 		}
 
-		if (seoSettingsMapping.getHtmlTitleMappingField() == null) {
-			map.put("htmlTitleMappingField", null);
+		if (seoSettingsMapping.getHtmlTitleMappingFieldKey() == null) {
+			map.put("htmlTitleMappingFieldKey", null);
 		}
 		else {
 			map.put(
-				"htmlTitleMappingField",
-				String.valueOf(seoSettingsMapping.getHtmlTitleMappingField()));
+				"htmlTitleMappingFieldKey",
+				String.valueOf(
+					seoSettingsMapping.getHtmlTitleMappingFieldKey()));
 		}
 
 		if (seoSettingsMapping.getRobots() == null) {
@@ -185,18 +188,18 @@ public class SEOSettingsMappingSerDes {
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(
-					jsonParserFieldName, "descriptionMappingField")) {
+					jsonParserFieldName, "descriptionMappingFieldKey")) {
 
 				if (jsonParserFieldValue != null) {
-					seoSettingsMapping.setDescriptionMappingField(
+					seoSettingsMapping.setDescriptionMappingFieldKey(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "htmlTitleMappingField")) {
+						jsonParserFieldName, "htmlTitleMappingFieldKey")) {
 
 				if (jsonParserFieldValue != null) {
-					seoSettingsMapping.setHtmlTitleMappingField(
+					seoSettingsMapping.setHtmlTitleMappingFieldKey(
 						(String)jsonParserFieldValue);
 				}
 			}

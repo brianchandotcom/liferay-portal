@@ -34,91 +34,95 @@ public class OpenGraphSettingsMapping implements Cloneable, Serializable {
 		return OpenGraphSettingsMappingSerDes.toDTO(json);
 	}
 
-	public String getDescriptionMappingField() {
-		return descriptionMappingField;
+	public String getDescriptionMappingFieldKey() {
+		return descriptionMappingFieldKey;
 	}
 
-	public void setDescriptionMappingField(String descriptionMappingField) {
-		this.descriptionMappingField = descriptionMappingField;
+	public void setDescriptionMappingFieldKey(
+		String descriptionMappingFieldKey) {
+
+		this.descriptionMappingFieldKey = descriptionMappingFieldKey;
 	}
 
-	public void setDescriptionMappingField(
+	public void setDescriptionMappingFieldKey(
 		UnsafeSupplier<String, Exception>
-			descriptionMappingFieldUnsafeSupplier) {
+			descriptionMappingFieldKeyUnsafeSupplier) {
 
 		try {
-			descriptionMappingField =
-				descriptionMappingFieldUnsafeSupplier.get();
+			descriptionMappingFieldKey =
+				descriptionMappingFieldKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String descriptionMappingField;
+	protected String descriptionMappingFieldKey;
 
-	public String getImageAltMappingField() {
-		return imageAltMappingField;
+	public String getImageAltMappingFieldKey() {
+		return imageAltMappingFieldKey;
 	}
 
-	public void setImageAltMappingField(String imageAltMappingField) {
-		this.imageAltMappingField = imageAltMappingField;
+	public void setImageAltMappingFieldKey(String imageAltMappingFieldKey) {
+		this.imageAltMappingFieldKey = imageAltMappingFieldKey;
 	}
 
-	public void setImageAltMappingField(
-		UnsafeSupplier<String, Exception> imageAltMappingFieldUnsafeSupplier) {
+	public void setImageAltMappingFieldKey(
+		UnsafeSupplier<String, Exception>
+			imageAltMappingFieldKeyUnsafeSupplier) {
 
 		try {
-			imageAltMappingField = imageAltMappingFieldUnsafeSupplier.get();
+			imageAltMappingFieldKey =
+				imageAltMappingFieldKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String imageAltMappingField;
+	protected String imageAltMappingFieldKey;
 
-	public String getImageMappingField() {
-		return imageMappingField;
+	public String getImageMappingFieldKey() {
+		return imageMappingFieldKey;
 	}
 
-	public void setImageMappingField(String imageMappingField) {
-		this.imageMappingField = imageMappingField;
+	public void setImageMappingFieldKey(String imageMappingFieldKey) {
+		this.imageMappingFieldKey = imageMappingFieldKey;
 	}
 
-	public void setImageMappingField(
-		UnsafeSupplier<String, Exception> imageMappingFieldUnsafeSupplier) {
+	public void setImageMappingFieldKey(
+		UnsafeSupplier<String, Exception> imageMappingFieldKeyUnsafeSupplier) {
 
 		try {
-			imageMappingField = imageMappingFieldUnsafeSupplier.get();
+			imageMappingFieldKey = imageMappingFieldKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String imageMappingField;
+	protected String imageMappingFieldKey;
 
-	public String getTitleMappingField() {
-		return titleMappingField;
+	public String getTitleMappingFieldKey() {
+		return titleMappingFieldKey;
 	}
 
-	public void setTitleMappingField(String titleMappingField) {
-		this.titleMappingField = titleMappingField;
+	public void setTitleMappingFieldKey(String titleMappingFieldKey) {
+		this.titleMappingFieldKey = titleMappingFieldKey;
 	}
 
-	public void setTitleMappingField(
-		UnsafeSupplier<String, Exception> titleMappingFieldUnsafeSupplier) {
+	public void setTitleMappingFieldKey(
+		UnsafeSupplier<String, Exception> titleMappingFieldKeyUnsafeSupplier) {
 
 		try {
-			titleMappingField = titleMappingFieldUnsafeSupplier.get();
+			titleMappingFieldKey = titleMappingFieldKeyUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String titleMappingField;
+	protected String titleMappingFieldKey;
 
 	@Override
 	public OpenGraphSettingsMapping clone() throws CloneNotSupportedException {

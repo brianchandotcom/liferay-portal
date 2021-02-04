@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELDS_GROUP_CONTAINER</td>
+	<td>//label[normalize-space(text())='${key_fieldsGroupLabel}']/parent::div/parent::div[contains(@class,'form-group')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_1_NO_LABEL</td>
 	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div)[1]</td>
 	<td></td>

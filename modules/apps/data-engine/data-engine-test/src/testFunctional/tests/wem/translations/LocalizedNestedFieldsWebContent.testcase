@@ -13,20 +13,16 @@ definition {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
-	//tearDown {
-	//	var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	//	if ("${testPortalInstance}" == "true") {
-	//		PortalInstances.tearDownCP();
-
-	//}
-
-	//	else {
-	//		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-	//}
-
-	//}
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "5"

@@ -411,8 +411,6 @@ definition {
 
 			Click(locator1 = "WCEditWebContent#REPEATABLE_BUTTON");
 		}
-
-		
 	}
 
 	macro addRepeatableFieldset {

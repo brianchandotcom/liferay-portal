@@ -472,9 +472,9 @@ definition {
 	@priority = "4"
 	test SetFieldGroupAsRepeatableAndExecuteOnUpload {
 		property portal.acceptance = "false";
-		
+
 		var dmDocumentTitle = "Title";
-        var newLabel = "Image";
+		var newLabel = "Image";
 		var webTitle = "WC Title";
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
@@ -506,8 +506,10 @@ definition {
 
 		DataEngine.addRepeatableField(fieldName = "Upload");
 
-		DataEngine.addRepeatableFieldGroups(fieldName = "FieldsGroup",totalPortletCount = "1");
-	
+		DataEngine.addRepeatableFieldGroups(
+			fieldName = "FieldsGroup",
+			totalPortletCount = "1");
+
 		PortletEntry.publish();
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -516,9 +518,7 @@ definition {
 
 		WebContent.viewDuplicatedField(
 			fieldName = "Upload",
-			totalPortletCount = "2"
-		);
-		
+			totalPortletCount = "2");
 	}
 
 }

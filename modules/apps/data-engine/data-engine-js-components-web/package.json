@@ -6,6 +6,17 @@
 	},
 	"main": "js/index.es.js",
 	"name": "data-engine-js-components-web",
+	"jest": {
+		"collectCoverageFrom": [
+			"src/main/resources/META-INF/resources/js/**/*.es.js"
+		],
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/js/[^/]+\\.js"
+		]
+	},
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

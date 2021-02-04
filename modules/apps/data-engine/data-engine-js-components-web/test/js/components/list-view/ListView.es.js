@@ -18,23 +18,28 @@ import {createMemoryHistory} from 'history';
 import React from 'react';
 
 import ListView from '../../../../src/main/resources/META-INF/resources/js/components/list-view/ListView.es';
-import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import {
 	ACTIONS,
 	COLUMNS,
 	EMPTY_STATE,
 	ENDPOINT,
 	RESPONSES,
-} from '../../constants.es';
+} from '../../constants';
 
 const BODY = (item) => ({
 	...item,
 	name: item.name.en_US,
 });
 
+let history;
+
 describe('ListView', () => {
-	afterEach(() => {
+	beforeEach(() => {
+		history = createMemoryHistory();
 		cleanup();
+	});
+
+	afterEach(() => {
 		jest.restoreAllMocks();
 	});
 
@@ -46,10 +51,10 @@ describe('ListView', () => {
 				columns={COLUMNS}
 				emptyState={EMPTY_STATE}
 				endpoint={ENDPOINT}
+				history={history}
 			>
 				{BODY}
-			</ListView>,
-			{wrapper: AppContextProviderWrapper}
+			</ListView>
 		);
 
 		await waitForElementToBeRemoved(() =>
@@ -71,10 +76,10 @@ describe('ListView', () => {
 				columns={COLUMNS}
 				emptyState={EMPTY_STATE}
 				endpoint={ENDPOINT}
+				history={history}
 			>
 				{BODY}
-			</ListView>,
-			{wrapper: AppContextProviderWrapper}
+			</ListView>
 		);
 
 		await waitForElementToBeRemoved(() =>
@@ -94,10 +99,10 @@ describe('ListView', () => {
 				columns={COLUMNS}
 				emptyState={EMPTY_STATE}
 				endpoint={ENDPOINT}
+				history={history}
 			>
 				{BODY}
-			</ListView>,
-			{wrapper: AppContextProviderWrapper}
+			</ListView>
 		);
 
 		await waitForElementToBeRemoved(() => {
@@ -114,21 +119,18 @@ describe('ListView', () => {
 	});
 
 	it('current page is greater than total pages', async () => {
-		const history = createMemoryHistory();
 		history.push('/test?page=2');
 		fetch.mockResponse(JSON.stringify(RESPONSES.ONE_ITEM));
 		const {container, queryAllByText} = render(
-			<AppContextProviderWrapper history={history}>
-				<ListView
-					actions={ACTIONS}
-					columns={COLUMNS}
-					emptyState={EMPTY_STATE}
-					endpoint={ENDPOINT}
-					history={history}
-				>
-					{BODY}
-				</ListView>
-			</AppContextProviderWrapper>
+			<ListView
+				actions={ACTIONS}
+				columns={COLUMNS}
+				emptyState={EMPTY_STATE}
+				endpoint={ENDPOINT}
+				history={history}
+			>
+				{BODY}
+			</ListView>
 		);
 
 		await waitForElementToBeRemoved(() => {
@@ -167,8 +169,7 @@ describe('ListView', () => {
 				history={history}
 			>
 				{BODY}
-			</ListView>,
-			{wrapper: AppContextProviderWrapper}
+			</ListView>
 		);
 
 		await waitForElementToBeRemoved(() => {
@@ -196,15 +197,5 @@ describe('ListView', () => {
 
 		expect(input.value).toBe('value');
 		expect(container.querySelector('.subnav-tbar')).toBeFalsy();
-
-		const submit = container.querySelector('span > button:nth-child(2)');
-
-		fireEvent.click(submit);
-
-		await waitForElementToBeRemoved(() => {
-			return document.querySelector('span.loading-animation');
-		});
-
-		expect(container.querySelector('.subnav-tbar')).toBeTruthy();
 	});
 });

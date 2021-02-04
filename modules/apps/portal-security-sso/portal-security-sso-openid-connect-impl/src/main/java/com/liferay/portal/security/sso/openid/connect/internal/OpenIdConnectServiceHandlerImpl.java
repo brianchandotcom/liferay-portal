@@ -36,11 +36,11 @@ import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWeb
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.proc.BadJOSEException;
+import com.nimbusds.jose.util.DefaultResourceRetriever;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.oauth2.sdk.AuthorizationCodeGrant;
 import com.nimbusds.oauth2.sdk.AuthorizationGrant;
 import com.nimbusds.oauth2.sdk.ErrorObject;
-import com.nimbusds.oauth2.sdk.GeneralException;
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.RefreshTokenGrant;
 import com.nimbusds.oauth2.sdk.ResponseType;
@@ -81,6 +81,7 @@ import com.nimbusds.openid.connect.sdk.validators.IDTokenValidator;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -644,23 +645,33 @@ public class OpenIdConnectServiceHandlerImpl
 		throws OpenIdConnectServiceException.TokenException {
 
 		try {
-			IDTokenValidator idTokenValidator = IDTokenValidator.create(
-				oidcProviderMetadata, oidcClientInformation, null);
+			OIDCClientMetadata oidcClientMetadata =
+				oidcClientInformation.getOIDCMetadata();
+
+			URI jwkSetURI = oidcProviderMetadata.getJWKSetURI();
+
+			DefaultResourceRetriever resourceRetriever =
+				new DefaultResourceRetriever(0, 0);
+
+			IDTokenValidator idTokenValidator = new IDTokenValidator(
+				oidcProviderMetadata.getIssuer(), oidcClientInformation.getID(),
+				oidcClientMetadata.getIDTokenJWSAlg(), jwkSetURI.toURL(),
+				resourceRetriever);
 
 			OIDCTokens oidcTokens = oidcTokenResponse.getOIDCTokens();
 
 			return idTokenValidator.validate(oidcTokens.getIDToken(), nonce);
 		}
-		catch (GeneralException generalException) {
-			throw new OpenIdConnectServiceException.TokenException(
-				"Unable to instantiate token validator: " +
-					generalException.getMessage(),
-				generalException);
-		}
 		catch (BadJOSEException | JOSEException exception) {
 			throw new OpenIdConnectServiceException.TokenException(
 				"Unable to validate tokens: " + exception.getMessage(),
 				exception);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new OpenIdConnectServiceException.TokenException(
+				"Invalid JSON web key URL: " +
+					malformedURLException.getMessage(),
+				malformedURLException);
 		}
 	}
 

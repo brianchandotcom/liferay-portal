@@ -266,7 +266,7 @@ jest.mock('frontend-js-web', () => ({
 	fetch: () => mockFetch(),
 }));
 
-jest.mock('app-builder-web/js/utils/client.es', () => ({
+jest.mock('data-engine-js-components-web/js/utils/client.es', () => ({
 	getItem: () => mockGetItem(),
 	parseResponse: (response) => response,
 }));

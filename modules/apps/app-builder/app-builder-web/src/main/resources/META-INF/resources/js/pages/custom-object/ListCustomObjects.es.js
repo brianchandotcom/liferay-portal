@@ -14,6 +14,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import useQuery from 'data-engine-js-components-web/js/hooks/useQuery.es';
+import {addItem, parseResponse, updateItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {
 	errorToast,
 	successToast,
@@ -24,7 +25,6 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {AppContext} from '../../AppContext.es';
 import {useKeyDown} from '../../hooks/index.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import {addItem, parseResponse, updateItem} from '../../utils/client.es';
 import {getValidName} from '../../utils/utils.es';
 import ListObjects from '../object/ListObjects.es';
 import CustomObjectPopover from './CustomObjectPopover.es';

@@ -12,9 +12,8 @@
  * details.
  */
 
+import {addItem, updateItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {DataDefinitionUtils} from 'data-engine-taglib';
-
-import {addItem, updateItem} from '../../utils/client.es';
 
 export const getColumnIndex = (node) => {
 	const rowNode = node.closest('tr');

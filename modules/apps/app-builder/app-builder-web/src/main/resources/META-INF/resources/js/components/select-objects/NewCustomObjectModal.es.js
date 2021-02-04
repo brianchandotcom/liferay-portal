@@ -17,9 +17,8 @@ import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
+import {addItem} from 'data-engine-js-components-web/js/utils/client.es';
 import React, {useState} from 'react';
-
-import {addItem} from '../../utils/client.es';
 
 export default function NewCustomObjectModal({onCloseModal, onCreateObject}) {
 	const [{hasError, isFetching}, setState] = useState({

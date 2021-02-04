@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {getItem} from 'app-builder-web/js/utils/client.es';
-import {formatDate} from 'app-builder-web/js/utils/time.es';
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
+import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
+import {formatDate} from 'data-engine-js-components-web/js/utils/time.es';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 

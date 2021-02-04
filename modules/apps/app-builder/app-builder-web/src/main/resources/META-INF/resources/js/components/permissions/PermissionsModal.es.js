@@ -18,14 +18,13 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import Table from 'data-engine-js-components-web/js/components/table/Table.es';
+import {getItem, updateItem} from 'data-engine-js-components-web/js/utils/client.es';
 import {
 	errorToast,
 	successToast,
 } from 'data-engine-js-components-web/js/utils/toast.es';
 import {SearchInput} from 'data-engine-taglib';
 import React, {useEffect, useState} from 'react';
-
-import {getItem, updateItem} from '../../utils/client.es';
 
 export default ({
 	actions,

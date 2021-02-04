@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {request} from 'app-builder-web/js/utils/client.es';
+import {request} from 'data-engine-js-components-web/js/utils/client.es';
 
 export const METRIC_INDEXES_KEY = 'Metric';
 

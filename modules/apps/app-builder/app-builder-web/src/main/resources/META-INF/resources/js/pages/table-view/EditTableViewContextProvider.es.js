@@ -12,10 +12,10 @@
  * details.
  */
 
+import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
 import React, {useEffect, useReducer} from 'react';
 import {withRouter} from 'react-router-dom';
 
-import {getItem} from '../../utils/client.es';
 import EditTableViewContext, {
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LIST_VIEW,

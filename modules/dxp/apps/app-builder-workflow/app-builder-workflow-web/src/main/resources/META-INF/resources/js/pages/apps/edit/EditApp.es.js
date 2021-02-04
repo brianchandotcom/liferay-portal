@@ -17,10 +17,13 @@ import EditAppContext, {
 	UPDATE_DATA_LAYOUT_ID,
 	reducer,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {getItem, parseResponse} from 'app-builder-web/js/utils/client.es';
 import {getLocalizedValue} from 'app-builder-web/js/utils/lang.es';
 import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
+import {
+	getItem,
+	parseResponse,
+} from 'data-engine-js-components-web/js/utils/client.es';
 import {createResourceURL, fetch, openModal} from 'frontend-js-web';
 import React, {useContext, useEffect, useReducer, useState} from 'react';
 

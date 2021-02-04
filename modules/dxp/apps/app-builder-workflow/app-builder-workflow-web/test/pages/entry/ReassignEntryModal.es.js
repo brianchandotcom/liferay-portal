@@ -70,7 +70,7 @@ const mockGetItem = jest
 	.mockResolvedValueOnce(workflowTasks)
 	.mockResolvedValueOnce(assignableUsers);
 
-jest.mock('app-builder-web/js/utils/client.es', () => ({
+jest.mock('data-engine-js-components-web/js/utils/client.es', () => ({
 	addItem: () => mockAddItem(),
 	getItem: () => mockGetItem(),
 }));

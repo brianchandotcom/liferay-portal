@@ -15,10 +15,10 @@
 import ClayButton from '@clayui/button';
 import ClayList from '@clayui/list';
 import {Context} from '@clayui/modal';
+import {updateItem} from 'data-engine-js-components-web/js/utils/client.es';
 import React, {useContext} from 'react';
 
 import {DEPLOYMENT_ACTION, DEPLOYMENT_TYPES} from '../pages/apps/constants.es';
-import {updateItem} from '../utils/client.es';
 import {concatValues} from '../utils/utils.es';
 
 export default () => {

@@ -124,83 +124,60 @@ definition {
 		// TODO LPS-123539 TranslateWebContentFromStructureWithFieldsetWithFieldGroup pending implementation
 	}
 
-	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
+	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
 	@priority = "5"
 	test TranslationPersistsAfterEditingAnother {
-		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure FieldSet Test");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text Test",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
-			fieldsetLabel = "Structure FieldSet Test",
-			fieldsetName = "Structure FieldSet Test");
+			fieldsetLabel = "Basic Web Content",
+			fieldsetName = "Basic Web Content");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		PortletEntry.inputTitle(title = "WC Title Test");
-
-		PortletEntry.inputText(
-			fieldLabel = "Text",
-			text = "Text test");
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		PortletEntry.inputText(
-			fieldLabel = "Text",
-			text = "Texto teste pt");
+		WebContent.addCP(
+			webContentContent = "Conteúdo da web",
+			webContentTitle = "Título do conteúdo da web");
 
 		PortletEntry.changeLocale(locale = "es_ES");
 
-		PortletEntry.inputText(
-			fieldLabel = "Text",
-			text = "Texto teste es");
+		WebContent.addCP(
+			webContentContent = "Contenido de contenido web",
+			webContentTitle = "Título del contenido web");
 
 		PortletEntry.publish();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Title Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		AssertTextEquals(
-			key_fieldLabel = "Text",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Text test");
+		WebContent.viewCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		AssertTextEquals(
-			key_fieldLabel = "Text",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Texto teste pt");
+		WebContent.viewCP(
+			webContentContent = "Conteúdo da web",
+			webContentTitle = "Título do conteúdo da web");
 
 		PortletEntry.changeLocale(locale = "es_ES");
 
-		AssertTextEquals(
-			key_fieldLabel = "Text",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Texto teste es");
+		WebContent.viewCP(
+			webContentContent = "Contenido de contenido web",
+			webContentTitle = "Título del contenido web");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

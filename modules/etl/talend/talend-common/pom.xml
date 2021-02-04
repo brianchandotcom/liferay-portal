@@ -10,6 +10,7 @@
 	</parent>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.common</artifactId>
+	<version>0.6.0-SNAPSHOT</version>
 	<name>Liferay Talend Common</name>
 	<packaging>jar</packaging>
 	<dependencies>

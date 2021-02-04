@@ -590,6 +590,128 @@ definition {
 			title = "Numeric Field - Table View Title");
 	}
 
+	@description = "Automate LPS-103467 Define object's fields at Form View Level"
+	@priority = "5"
+	test CheckNonRequiredForm {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Name");
+
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.setName(formViewName = "Form Non Required");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Name");
+
+		TableViewBuilder.setName(tableViewName = "Table Non Required");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.add();
+
+		AppBuilderAdmin.setName(title = "App Non Required");
+
+		App.selectFormView(formViewName = "Form Non Required");
+
+		App.selectTableView(tableViewName = "Table Non Required");
+
+		Button.clickNext();
+
+		App.toggleDeploy(deployOption = "Standalone");
+
+		App.clickDeploy();
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "App Non Required");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		AppBuilderAdmin.addEntry();
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "-");
+	}
+
+	@description = "Automate LPS-103467 Define object's fields at Form View Level"
+	@priority = "5"
+	test CheckRequiredForm {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Name");
+
+		FormViewBuilder.setFieldRequired();
+
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.setName(formViewName = "Form Required");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Name");
+
+		TableViewBuilder.setName(tableViewName = "Table Required");
+
+		TableViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.add();
+
+		AppBuilderAdmin.setName(title = "App Required");
+
+		App.selectFormView(formViewName = "Form Required");
+
+		App.selectTableView(tableViewName = "Table Required");
+
+		Button.clickNext();
+
+		App.toggleDeploy(deployOption = "Standalone");
+
+		App.clickDeploy();
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "App Required");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		AppBuilderAdmin.validateStandAloneApp();
+
+		AppBuilderAdmin.addEntry();
+
+		AppBuilderAdmin.save();
+
+		AppBuilderAdmin.validateRequiredValidNameMessageStandAloneApp();
+
+		AppBuilderAdmin.cancel();
+	}
+
 	@description = "This is a use case for LPS-119844"
 	@priority = "5"
 	test CreateAnEntryWithRepeatableField {

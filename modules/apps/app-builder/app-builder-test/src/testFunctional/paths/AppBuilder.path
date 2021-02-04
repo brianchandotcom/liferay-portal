@@ -75,6 +75,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MESSAGE_EXCLAMATION_REQUIRED_FIELD_FOR_STANDALONE_APP</td>
+	<td>//div[contains(@class,'form-feedback-item')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_TITLE_EMPTY_LIST</td>
 	<td>//h1[contains(@class,'taglib-empty-result-message-title') and contains(text(),'${value1}')]</td>
 	<td></td>

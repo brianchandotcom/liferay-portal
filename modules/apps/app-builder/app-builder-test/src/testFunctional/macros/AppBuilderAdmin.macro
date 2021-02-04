@@ -554,6 +554,12 @@ definition {
 			value1 = "This field is required.");
 	}
 
+	macro validateRequiredValidNameMessageStandAloneApp {
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD_FOR_STANDALONE_APP",
+			value1 = "This field is required.");
+	}
+
 	macro validateStandAloneApp {
 		AssertElementPresent(locator1 = "AppBuilder#STANDALONE_DEPLOYED");
 	}

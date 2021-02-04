@@ -28,6 +28,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.Response;
@@ -70,21 +71,21 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 	}
 
 	public Optional<JsonObject> doPatchRequest(
-		String resourceURL, JsonObject jsonObject) {
+		String resourceURL, JsonValue jsonValue) {
 
 		LiferayClient liferayClient = getLiferayClient();
 
 		return _getResponseContentJsonObjectOptional(
-			liferayClient.executePatchRequest(resourceURL, jsonObject));
+			liferayClient.executePatchRequest(resourceURL, jsonValue));
 	}
 
 	public Optional<JsonObject> doPostRequest(
-		String resourceURL, JsonObject jsonObject) {
+		String resourceURL, JsonValue jsonValue) {
 
 		LiferayClient liferayClient = getLiferayClient();
 
 		return _getResponseContentJsonObjectOptional(
-			liferayClient.executePostRequest(resourceURL, jsonObject));
+			liferayClient.executePostRequest(resourceURL, jsonValue));
 	}
 
 	@Override

@@ -110,13 +110,13 @@ public class DisplayPageTemplateSettingsUtil {
 
 		return new OpenGraphSettingsMapping() {
 			{
-				descriptionMappingField = layout.getTypeSettingsProperty(
+				descriptionMappingFieldKey = layout.getTypeSettingsProperty(
 					"mapped-openGraphDescription", "description");
-				imageAltMappingField = layout.getTypeSettingsProperty(
+				imageAltMappingFieldKey = layout.getTypeSettingsProperty(
 					"mapped-openGraphImageAlt", null);
-				imageMappingField = layout.getTypeSettingsProperty(
+				imageMappingFieldKey = layout.getTypeSettingsProperty(
 					"mapped-openGraphImage", null);
-				titleMappingField = layout.getTypeSettingsProperty(
+				titleMappingFieldKey = layout.getTypeSettingsProperty(
 					"mapped-openGraphTitle", "title");
 			}
 		};
@@ -127,9 +127,9 @@ public class DisplayPageTemplateSettingsUtil {
 
 		return new SEOSettingsMapping() {
 			{
-				descriptionMappingField = layout.getTypeSettingsProperty(
+				descriptionMappingFieldKey = layout.getTypeSettingsProperty(
 					"mapped-description", "description");
-				htmlTitleMappingField = layout.getTypeSettingsProperty(
+				htmlTitleMappingFieldKey = layout.getTypeSettingsProperty(
 					"mapped-title", "title");
 				robots = layout.getRobots(dtoConverterContext.getLocale());
 				robots_i18n = LocalizedMapUtil.getI18nMap(

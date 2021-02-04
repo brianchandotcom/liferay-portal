@@ -177,9 +177,9 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
+			dmDocumentTypeName = "${dmDocumentTypeName}");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
@@ -196,7 +196,7 @@ definition {
 
 		Button.clickSave();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
 
 		AssertTextEquals(
 			locator1 = "DataEngineBuilder#FORM_FIELD_LABEL",
@@ -294,6 +294,8 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "3"
 	test EditFieldOnDuplicatedFieldGroup {
+		var dmDocumentTypeName = "DM Document Type Name";
+
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Documents and Media");
@@ -335,7 +337,7 @@ definition {
 
 		Button.clickSave();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
 
 		for (var fieldName : list "Text,Numeric") {
 			DataEngine.viewField(

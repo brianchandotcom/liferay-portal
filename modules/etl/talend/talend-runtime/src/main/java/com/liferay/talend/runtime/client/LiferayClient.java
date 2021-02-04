@@ -32,6 +32,7 @@ import java.util.Objects;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 import javax.json.JsonWriter;
 
 import javax.ws.rs.HttpMethod;
@@ -75,12 +76,12 @@ public class LiferayClient {
 	}
 
 	public Response executePatchRequest(
-			String targetURIString, JsonObject jsonObject)
+			String targetURIString, JsonValue jsonValue)
 		throws ClientException {
 
 		return _execute(
 			HttpMethod.PATCH, _createBuilder(_toURI(targetURIString)),
-			Entity.json(_jsonObjectToPrettyString(jsonObject)));
+			Entity.json(_jsonObjectToPrettyString(jsonValue)));
 	}
 
 	public Response executePostRequest(String targetURIString, File file)
@@ -99,12 +100,12 @@ public class LiferayClient {
 	}
 
 	public Response executePostRequest(
-			String targetURIString, JsonObject jsonObject)
+			String targetURIString, JsonValue jsonValue)
 		throws ClientException {
 
 		return _execute(
 			HttpMethod.POST, _createBuilder(_toURI(targetURIString)),
-			Entity.json(_jsonObjectToPrettyString(jsonObject)));
+			Entity.json(_jsonObjectToPrettyString(jsonValue)));
 	}
 
 	public Response executePutRequest(
@@ -332,12 +333,12 @@ public class LiferayClient {
 		return clientConfig;
 	}
 
-	private String _jsonObjectToPrettyString(JsonObject jsonObject) {
+	private String _jsonObjectToPrettyString(JsonValue jsonValue) {
 		StringWriter stringWriter = new StringWriter();
 
 		JsonWriter jsonWriter = Json.createWriter(stringWriter);
 
-		jsonWriter.writeObject(jsonObject);
+		jsonWriter.write(jsonValue);
 
 		stringWriter.flush();
 

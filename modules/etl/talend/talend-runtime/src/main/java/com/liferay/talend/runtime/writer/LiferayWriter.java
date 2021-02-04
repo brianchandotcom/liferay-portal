@@ -105,7 +105,7 @@ public class LiferayWriter
 	public void doInsert(IndexedRecord indexedRecord) throws IOException {
 		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPostRequest(
 			_getEndpointUrl(),
-			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+			_indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
 
 		if (!jsonObjectOptional.isPresent()) {
 			_handleSuccessRecord(indexedRecord);
@@ -121,7 +121,7 @@ public class LiferayWriter
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
 		Optional<JsonObject> jsonObjectOptional = _liferaySink.doPatchRequest(
 			_getEndpointUrl(),
-			_indexedRecordJsonObjectConverter.toJsonObject(indexedRecord));
+			_indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
 
 		if (!jsonObjectOptional.isPresent()) {
 			_handleSuccessRecord(indexedRecord);

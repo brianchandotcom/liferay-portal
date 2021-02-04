@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_PUBLICATION_ELLIPSIS</td>
+	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationsName}')]//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANGE_PUBLICATIONS_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>
@@ -109,13 +114,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATION_DESCRIPTION</td>
+	<td>//textarea[contains(@name,'description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATION_NAME</td>
 	<td>//input[contains(@name,'name')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_PUBLICATION_ELLIPSIS</td>
-	<td>//li[@data-qa-id='row'][contains(.,'${key_publicationsName}')]//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
+	<td>PUBLICATION_NAME_IN_DIFF</td>
+	<td>//td[contains(@class,'publications-diff-td') and contains(.,'${key_publicationsName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,13 +134,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLICATION_DESCRIPTION</td>
-	<td>//textarea[contains(@name,'description')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATION_NAME_IN_DIFF</td>
-	<td>//td[contains(@class,'publications-diff-td') and contains(.,'${key_publicationsName}')]</td>
+	<td>PUBLICATIONS_PUBLISHED_BY</td>
+	<td>//td[contains(@class,'published-by')]/span[contains(@title,'${key_publicationPublishedBy}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -156,11 +161,6 @@
 <tr>
 	<td>PUBLISHED_PUBLICATIONS_NAME</td>
 	<td>//div[contains(@class,'publication-name') and contains(.,'${key_publicationsName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATIONS_PUBLISHED_BY</td>
-	<td>//td[contains(@class,'published-by')]/span[contains(@title,'${key_publicationPublishedBy}')]</td>
 	<td></td>
 </tr>
 <tr>

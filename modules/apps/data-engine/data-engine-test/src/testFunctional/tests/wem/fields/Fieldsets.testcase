@@ -333,15 +333,9 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
+	@description = "This is a test for LPS-123538. As Content Creator, I cannot edit fieldset on the Advanced panel"
 	@priority = "4"
 	test VerifyFieldsetCannotBeEditedOnStructureBuilder {
-		property portal.acceptance = "false";
-
-		var key_fieldLabel = "Upload";
-		var fieldsetLabel = "Fieldset";
-		var fieldsetName = "Fieldset";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -350,11 +344,21 @@ definition {
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
-			fieldNameList = "${key_fieldLabel}",
-			fieldsetLabel = "${fieldsetLabel}",
-			fieldsetName = "${fieldsetName}");
+			fieldNameList = "Upload",
+			fieldsetLabel = "New Fieldset",
+			fieldsetName = "New Fieldset");
 
-		DMMetadataSet.validateCantInFieldset(key_fieldLabel = "${key_fieldLabel}");
+		Click(
+			key_fieldsetLabel = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_tab = "Basic",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		AssertElementNotPresent(
+			key_tab = "Advanced",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
 	}
 
 }

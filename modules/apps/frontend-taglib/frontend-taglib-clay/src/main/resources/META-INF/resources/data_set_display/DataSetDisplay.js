@@ -493,7 +493,9 @@ function DataSetDisplay({
 				}));
 
 				return refreshData({
-					message: Liferay.Language.get('item-was-successfully-created'),
+					message: Liferay.Language.get(
+						'item-was-successfully-created'
+					),
 					showSuccessNotification: true,
 				});
 			})
@@ -542,7 +544,9 @@ function DataSetDisplay({
 				toggleItemInlineEdit(itemKey);
 
 				return refreshData({
-					message: Liferay.Language.get('item-was-successfully-updated'),
+					message: Liferay.Language.get(
+						'item-was-successfully-updated'
+					),
 					showSuccessNotification: true,
 				});
 			})

@@ -15,6 +15,8 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
+import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -77,10 +79,19 @@ public class DefineObjectsTag extends TagSupport {
 				pageContext.getServletContext());
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
-			if (_log.isDebugEnabled()) {
+			try {
+				JSModuleResolver jsModuleResolver =
+					ServicesProvider.getJSModuleResolver();
+
+				npmResolvedPackageName = jsModuleResolver.resolveModule(
+					pageContext.getServletContext(), null);
+			}
+			catch(
+				UnsupportedOperationException unsupportedOperationException1) {
+
 				_log.debug(
-					unsupportedOperationException,
-					unsupportedOperationException);
+					unsupportedOperationException1,
+					unsupportedOperationException1);
 			}
 		}
 

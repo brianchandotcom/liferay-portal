@@ -15,12 +15,11 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductChannel;
+import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductChannelHelper;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelResource;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -66,23 +65,13 @@ public class ProductChannelResourceImpl
 			return Page.of(Collections.emptyList());
 		}
 
-		int commerceChannelRelsCount =
-			_commerceChannelRelService.getCommerceChannelRelsCount(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
-
-		return Page.of(
-			transform(
-				_commerceChannelRelService.getCommerceChannelRels(
-					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(), null,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				commerceChannelRel -> _toProductChannel(commerceChannelRel)),
-			pagination, commerceChannelRelsCount);
+		return _productChannelHelper.getProductChannelsPage(
+			cpDefinition.getCPDefinitionId(), pagination);
 	}
 
 	@Override
 	public ProductChannel getProductChannel(Long id) throws Exception {
-		return _toProductChannel(
+		return _productChannelHelper.toProductChannel(
 			_commerceChannelRelService.getCommerceChannelRel(id));
 	}
 
@@ -99,38 +88,8 @@ public class ProductChannelResourceImpl
 			return Page.of(Collections.emptyList());
 		}
 
-		int commerceChannelRelsCount =
-			_commerceChannelRelService.getCommerceChannelRelsCount(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
-
-		return Page.of(
-			transform(
-				_commerceChannelRelService.getCommerceChannelRels(
-					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(), null,
-					pagination.getStartPosition(), pagination.getEndPosition()),
-				commerceChannelRel -> _toProductChannel(commerceChannelRel)),
-			pagination, commerceChannelRelsCount);
-	}
-
-	private ProductChannel _toProductChannel(
-			CommerceChannelRel commerceChannelRel)
-		throws Exception {
-
-		CommerceChannel commerceChannel =
-			commerceChannelRel.getCommerceChannel();
-
-		return new ProductChannel() {
-			{
-				channelId = commerceChannel.getCommerceChannelId();
-				currencyCode = commerceChannel.getCommerceCurrencyCode();
-				externalReferenceCode =
-					commerceChannel.getExternalReferenceCode();
-				id = commerceChannelRel.getCommerceChannelRelId();
-				name = commerceChannel.getName();
-				type = commerceChannel.getType();
-			}
-		};
+		return _productChannelHelper.getProductChannelsPage(
+			cpDefinition.getCPDefinitionId(), pagination);
 	}
 
 	@Reference
@@ -138,5 +97,8 @@ public class ProductChannelResourceImpl
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private ProductChannelHelper _productChannelHelper;
 
 }

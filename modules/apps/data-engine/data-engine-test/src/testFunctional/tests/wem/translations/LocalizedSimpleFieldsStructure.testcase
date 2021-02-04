@@ -141,7 +141,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "Test");
+			value1 = "WC Structure Name");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

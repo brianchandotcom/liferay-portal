@@ -144,12 +144,11 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 	}
 
 	protected FunctionalSegmentTestClassGroup(
-		FunctionalBatchTestClassGroup parentFunctionalBatchTestClassGroup) {
+		BatchTestClassGroup parentBatchTestClassGroup) {
 
-		super(parentFunctionalBatchTestClassGroup);
+		super(parentBatchTestClassGroup);
 
-		_parentFunctionalBatchTestClassGroup =
-			parentFunctionalBatchTestClassGroup;
+		_parentBatchTestClassGroup = parentBatchTestClassGroup;
 	}
 
 	protected Map.Entry<String, String> getEnvironmentVariableEntry(
@@ -162,8 +161,8 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		}
 
 		String value = JenkinsResultsParserUtil.getProperty(
-			_parentFunctionalBatchTestClassGroup.getJobProperties(), name,
-			_parentFunctionalBatchTestClassGroup.getBatchName());
+			_parentBatchTestClassGroup.getJobProperties(), name,
+			_parentBatchTestClassGroup.getBatchName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
 			return null;
@@ -172,7 +171,6 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		return new AbstractMap.SimpleEntry<>(key, value);
 	}
 
-	private final FunctionalBatchTestClassGroup
-		_parentFunctionalBatchTestClassGroup;
+	private final BatchTestClassGroup _parentBatchTestClassGroup;
 
 }

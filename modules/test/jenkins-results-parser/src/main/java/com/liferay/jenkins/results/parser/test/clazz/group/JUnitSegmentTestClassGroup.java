@@ -75,9 +75,9 @@ public class JUnitSegmentTestClassGroup extends SegmentTestClassGroup {
 	}
 
 	protected JUnitSegmentTestClassGroup(
-		JUnitBatchTestClassGroup parentJUnitBatchTestClassGroup) {
+		BatchTestClassGroup parentBatchTestClassGroup) {
 
-		super(parentJUnitBatchTestClassGroup);
+		super(parentBatchTestClassGroup);
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

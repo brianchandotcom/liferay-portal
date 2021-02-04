@@ -53,9 +53,9 @@ public class AWSFunctionalSegmentTestClassGroup
 	}
 
 	protected AWSFunctionalSegmentTestClassGroup(
-		FunctionalBatchTestClassGroup parentFunctionalBatchTestClassGroup) {
+		BatchTestClassGroup parentBatchTestClassGroup) {
 
-		super(parentFunctionalBatchTestClassGroup);
+		super(parentBatchTestClassGroup);
 	}
 
 	private Map.Entry<String, String> _getAppServerTypeEntry() {

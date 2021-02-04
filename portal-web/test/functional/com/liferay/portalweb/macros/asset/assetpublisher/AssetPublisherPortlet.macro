@@ -464,18 +464,25 @@ definition {
 
 			var key_assetTitle = "${assetTitle}";
 
-			Click(
-				key_rowEntry = "${assetTitle}",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+			if (isSet(viewNoRelatedAsset)) {
+				AssertElementNotPresent(
+					key_rowEntry = "${assetTitle}",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+			}
+			else {
+				Click(
+					key_rowEntry = "${assetTitle}",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
 
-			SelectFrameTop();
+				SelectFrameTop();
 
-			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+				SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-			Button.clickAdd();
+				Button.clickAdd();
+
+				Alert.viewSuccessMessage();
+			}
 		}
-
-		Alert.viewSuccessMessage();
 
 		SelectFrameTop();
 	}

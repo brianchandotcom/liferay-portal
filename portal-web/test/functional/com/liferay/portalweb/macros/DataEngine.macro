@@ -402,6 +402,19 @@ definition {
 		Click(locator1 = "DDMField#FIELD_DUPLICATE");
 	}
 
+	macro addRepeatableFieldGroups {
+		var fieldName = "${fieldName}";
+		var i = "0";
+
+		while ("${i}" != "${totalPortletCount}") {
+			var i = ${i} + 1;
+
+			Click(locator1 = "WCEditWebContent#REPEATABLE_BUTTON");
+		}
+
+		
+	}
+
 	macro addRepeatableFieldset {
 		Click(
 			key_fieldsetLabel = "${fieldsetLabel}",

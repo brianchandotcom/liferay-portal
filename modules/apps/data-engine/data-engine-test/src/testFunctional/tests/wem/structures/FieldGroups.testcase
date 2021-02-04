@@ -162,22 +162,13 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
-	@ignore = "true"
 	@priority = "5"
 	test DuplicateAFieldGroup {
-		property portal.acceptance = "false";
-
-		var structureName = "WC Structure Name";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -188,32 +179,60 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DataEngine.addFieldNested(
+		DataEngine.addFieldToFieldsGroup(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			targetFieldLabel = "Numeric");
+			fieldsGroupLabel = "Fields Group");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP");
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+		for (var fieldFieldLabel : list "Text,Numeric,Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 
-		MenuItem.clickNoError(menuItem = "Duplicate");
+		DataEngine.duplicate(fieldsGroupLabel = "Fields Group");
 
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
-			value1 = "Copy of Fields Group");
+		AssertVisible(
+			key_fieldFieldLabel = "Copy of Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
+		for (var fieldFieldLabel : list "Copy of Text,Copy of Numeric,Copy of Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Structure Name");
+		WebContentStructures.saveCP();
 
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#NESTED_DUPLICATED_FORM_FIELDS_GROUP",
-			value1 = "Copy of Fields Group");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Text,Numeric,Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		AssertVisible(
+			key_fieldFieldLabel = "Copy of Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Copy of Text,Copy of Numeric,Copy of Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

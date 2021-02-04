@@ -21,6 +21,7 @@ import handleSectionAdded from './sectionAddedHandler.es';
 
 const handleFieldSetAdded = (props, state, event) => {
 	const {
+		defaultLanguageId,
 		fieldName,
 		fieldSet,
 		indexes,
@@ -35,7 +36,12 @@ const handleFieldSetAdded = (props, state, event) => {
 
 	visitor.mapFields((nestedField) => {
 		nestedFields.push(
-			updateField(props, nestedField, 'label', nestedField.label)
+			updateField(
+				{...props, defaultLanguageId},
+				nestedField,
+				'label',
+				nestedField.label
+			)
 		);
 	});
 
@@ -95,7 +101,7 @@ const handleFieldSetAdded = (props, state, event) => {
 	return addField(props, {
 		indexes,
 		newField: updateField(
-			props,
+			{...props, defaultLanguageId},
 			fieldSetField,
 			'label',
 			fieldSet.localizedTitle

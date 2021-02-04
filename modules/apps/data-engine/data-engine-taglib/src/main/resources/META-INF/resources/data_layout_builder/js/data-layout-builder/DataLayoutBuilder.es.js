@@ -442,6 +442,8 @@ class DataLayoutBuilder extends React.Component {
 
 				return {
 					...field,
+					defaultLanguageId,
+					locale: defaultLanguageId,
 					localizedValue,
 					options,
 					value,

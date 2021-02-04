@@ -67,6 +67,7 @@ export const setFieldReferenceErrorMessage = (
 };
 
 export const updateSettingsContextProperty = (
+	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
 	editingLanguageId,
 	settingsContext,
 	propertyName,
@@ -128,6 +129,7 @@ export const updateSettingsContextInstanceId = ({settingsContext}) => {
 };
 
 export const updateFieldName = (
+	defaultLanguageId,
 	editingLanguageId,
 	fieldNameGenerator,
 	focusedField,
@@ -163,6 +165,7 @@ export const updateFieldName = (
 			fieldName: newFieldName,
 			name: newFieldName,
 			settingsContext: updateSettingsContextProperty(
+				defaultLanguageId,
 				editingLanguageId,
 				settingsContext,
 				'name',
@@ -194,7 +197,12 @@ export const updateFieldReference = (
 	return focusedField;
 };
 
-export const updateFieldDataType = (editingLanguageId, focusedField, value) => {
+export const updateFieldDataType = (
+	defaultLanguageId,
+	editingLanguageId,
+	focusedField,
+	value
+) => {
 	let {settingsContext} = focusedField;
 
 	settingsContext = {
@@ -211,6 +219,7 @@ export const updateFieldDataType = (editingLanguageId, focusedField, value) => {
 		...focusedField,
 		dataType: value,
 		settingsContext: updateSettingsContextProperty(
+			defaultLanguageId,
 			editingLanguageId,
 			settingsContext,
 			'dataType',
@@ -235,6 +244,7 @@ export const updateFieldLabel = (
 		defaultLanguageId === editingLanguageId
 	) {
 		const updates = updateFieldName(
+			defaultLanguageId,
 			editingLanguageId,
 			fieldNameGenerator,
 			focusedField,
@@ -254,6 +264,7 @@ export const updateFieldLabel = (
 		fieldName,
 		label,
 		settingsContext: updateSettingsContextProperty(
+			defaultLanguageId,
 			editingLanguageId,
 			settingsContext,
 			'label',
@@ -263,6 +274,7 @@ export const updateFieldLabel = (
 };
 
 export const updateFieldProperty = (
+	defaultLanguageId,
 	editingLanguageId,
 	focusedField,
 	propertyName,
@@ -272,6 +284,7 @@ export const updateFieldProperty = (
 		...focusedField,
 		[propertyName]: propertyValue,
 		settingsContext: updateSettingsContextProperty(
+			defaultLanguageId,
 			editingLanguageId,
 			focusedField.settingsContext,
 			propertyName,
@@ -280,13 +293,19 @@ export const updateFieldProperty = (
 	};
 };
 
-export const updateFieldOptions = (editingLanguageId, focusedField, value) => {
+export const updateFieldOptions = (
+	defaultLanguageId,
+	editingLanguageId,
+	focusedField,
+	value
+) => {
 	const options = value[editingLanguageId];
 
 	return {
 		...focusedField,
 		options,
 		settingsContext: updateSettingsContextProperty(
+			defaultLanguageId,
 			editingLanguageId,
 			focusedField.settingsContext,
 			'options',
@@ -309,7 +328,12 @@ export const updateField = (
 	if (propertyName === 'dataType') {
 		field = {
 			...field,
-			...updateFieldDataType(editingLanguageId, field, propertyValue),
+			...updateFieldDataType(
+				defaultLanguageId,
+				editingLanguageId,
+				field,
+				propertyValue
+			),
 		};
 	}
 	else if (propertyName === 'label') {
@@ -329,6 +353,7 @@ export const updateField = (
 		field = {
 			...field,
 			...updateFieldName(
+				defaultLanguageId,
 				editingLanguageId,
 				fieldNameGenerator,
 				field,
@@ -339,13 +364,19 @@ export const updateField = (
 	else if (propertyName === 'options') {
 		field = {
 			...field,
-			...updateFieldOptions(editingLanguageId, field, propertyValue),
+			...updateFieldOptions(
+				defaultLanguageId,
+				editingLanguageId,
+				field,
+				propertyValue
+			),
 		};
 	}
 	else {
 		field = {
 			...field,
 			...updateFieldProperty(
+				defaultLanguageId,
 				editingLanguageId,
 				field,
 				propertyName,

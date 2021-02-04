@@ -154,11 +154,11 @@ class LayoutProvider extends Component {
 	}
 
 	getLocalizedPages(pages) {
-		const {defaultLanguageId, editingLanguageId} = this.props;
+		const {editingLanguageId} = this.props;
 		const settingsVisitor = new PagesVisitor(pages);
 
 		return settingsVisitor.mapFields((field) =>
-			localizeField(field, defaultLanguageId, editingLanguageId)
+			localizeField(field, field.locale, editingLanguageId)
 		);
 	}
 

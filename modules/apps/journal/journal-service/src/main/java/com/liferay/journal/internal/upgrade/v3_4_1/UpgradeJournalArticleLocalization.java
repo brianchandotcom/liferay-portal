@@ -24,7 +24,7 @@ public class UpgradeJournalArticleLocalization extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
-			"create unique index IX_F1F3A975 on JournalArticleLocalization " +
+			"create index IX_F1F3A975 on JournalArticleLocalization " +
 				"(companyId, articlePK, ctCollectionId);");
 	}
 

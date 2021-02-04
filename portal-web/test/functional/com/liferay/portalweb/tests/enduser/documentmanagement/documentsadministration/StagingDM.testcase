@@ -508,11 +508,103 @@ definition {
 	}
 
 	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
-	@ignore = "true"
 	@priority = "5"
 	test PublishEditsToMetadataSet {
+		DMNavigator.gotoMetadataSets();
 
-		// TODO LPS-127173 PublishEditsToMetadataSet pending implementation
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Numeric",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			numericField = "123",
+			textField = "DM Document Text");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name");
+
+		DMDocument.viewDocumentTypePG(
+			numericValue = "123",
+			textContent = "DM Document Text");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMNavigator.gotoMetadataSets();
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Company",
+			dmDocumentTypeFieldRequiredEdit = "Company",
+			dmDocumentTypeName = "DM Metadata Set Name",
+			dmDocumentTypeNameEdit = "DM Metadata Set Name Edit",
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Company");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name");
+
+		DMDocument.viewDocumentTypePG(
+			numericValue = "123",
+			textContent = "DM Document Text",
+			textFieldLabel = "Company");
 	}
 
 	@description = "This test covers LPS-82539."
@@ -730,27 +822,297 @@ definition {
 	}
 
 	@description = "This ensures that the document info is displayed correctly after publishing and republishing."
-	@ignore = "true"
 	@priority = "5"
 	test ViewRepublishedDocumentInfo {
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			portlet = "Tags");
 
-		// TODO LPS-127173 ViewRepublishedDocumentInfo pending implementation
+		Tag.addCP(tagName = "tag1");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			tagNameList = "tag1");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		var siteID = Site.getSiteId();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.viewPG(
+			averageRatingStarCount = "0.0",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentExtension = "jpg",
+			dmDocumentFileName = "Document_1.jpg",
+			dmDocumentFileType = "Image",
+			dmDocumentFileTypeInfo = "Image",
+			dmDocumentSize = "13 KB",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "Basic Document",
+			dmDocumentUploader = "Test Test",
+			dmDocumentVersionNumber = "1.0",
+			dmFolderName = "Home",
+			locationFieldName = "true",
+			tagNameList = "tag1");
+
+		DMDocument.viewLatestVersionURL(
+			dmDocumentFileName = "Document_1.jpg",
+			siteID = "${siteID}");
+
+		DMDocument.viewWebDAVURL(
+			dmDocumentFileName = "Document_1.jpg",
+			siteName = "site-name");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "image/jpeg",
+			metadataLabel = "Content Type");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.editCP(
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_3.png",
+			dmDocumentFileNameEdit = "Document_3Edit.png",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.viewPG(
+			averageRatingStarCount = "0.0",
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentExtension = "png",
+			dmDocumentFileName = "Document_3Edit.png",
+			dmDocumentFileType = "Image",
+			dmDocumentFileTypeInfo = "Image",
+			dmDocumentSize = "6 KB",
+			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentType = "Basic Document",
+			dmDocumentUploader = "Test Test",
+			dmDocumentVersionNumber = "2.0",
+			dmFolderName = "Home",
+			locationFieldName = "true",
+			tagNameList = "tag1");
+
+		DMDocument.viewLatestVersionURL(
+			dmDocumentFileName = "Document_3Edit.png",
+			siteID = "${siteID}");
+
+		DMDocument.viewWebDAVURL(
+			dmDocumentFileName = "Document_3Edit.png",
+			siteName = "site-name");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "image/png",
+			metadataLabel = "Content Type");
 	}
 
 	@description = "This ensures that the image can be deleted and republished in web content."
-	@ignore = "true"
 	@priority = "4"
 	test ViewWebContentWithDeletedImage {
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
 
-		// TODO LPS-127173 ViewWebContentWithDeletedImage pending implementation
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected document?",
+			entry = "Document_2.jpg");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		Button.clickSave();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media",
+			structureName = "WC Structure Name",
+			webContentImage = "Document_2.jpg",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name-staging");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_2.jpg",
+			assetType = "Document");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		AssertElementNotPresent(
+			key_image = "Document_2.jpg",
+			locator1 = "WCD#WEB_CONTENT_CONTENT_IMAGE");
 	}
 
 	@description = "This ensures that the image can be edited and republished in web content."
-	@ignore = "true"
 	@priority = "4"
 	test ViewWebContentWithRepublishedImage {
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
 
-		// TODO LPS-127173 ViewWebContentWithRepublishedImage pending implementation
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected document?",
+			entry = "Document_2.jpg");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		Button.clickSave();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media",
+			structureName = "WC Structure Name",
+			webContentImage = "Document_2.jpg",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_3.jpg",
+			dmDocumentFileNameEdit = "Document_3.jpg",
+			dmDocumentTitle = "Document_2.jpg",
+			dmDocumentTitleEdit = "Document_3.jpg");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		WebContent.viewPGViaWCD(
+			image = "true",
+			key_image = "Document_3.jpg");
 	}
 
 }

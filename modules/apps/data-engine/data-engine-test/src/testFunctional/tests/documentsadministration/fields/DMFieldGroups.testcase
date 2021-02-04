@@ -346,8 +346,8 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-    		category = "Content & Data",
-    		portlet = "Documents and Media");
+			category = "Content & Data",
+			portlet = "Documents and Media");
 
 		NavItem.click(navItem = "Document Types");
 
@@ -370,9 +370,9 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "Testing");
 
-		 DataEngine.delete(fieldFieldLabel = "Text");
+		DataEngine.delete(fieldFieldLabel = "Text");
 
-		 DataEngine.delete(fieldFieldLabel = "Numeric");
+		DataEngine.delete(fieldFieldLabel = "Numeric");
 
 		WebContentStructures.saveCP();
 

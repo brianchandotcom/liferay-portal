@@ -55,6 +55,11 @@ public class JunitPortalTestBatch
 				portalBatchBuildData.getTopLevelJobName());
 		}
 
+		environmentVariables.putAll(
+			portalBatchBuildData.getTopLevelBuildParameters());
+
+		environmentVariables.putAll(portalBatchBuildData.getBuildParameters());
+
 		AntUtil.callTarget(
 			getPrimaryPortalWorkspaceDirectory(), "build-test-batch.xml",
 			portalBatchBuildData.getBatchName(), buildParameters,

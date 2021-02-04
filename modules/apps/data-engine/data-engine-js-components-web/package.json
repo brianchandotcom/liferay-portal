@@ -4,8 +4,6 @@
 		"react": "16.12.0",
 		"react-dom": "16.12.0"
 	},
-	"main": "js/index.es.js",
-	"name": "data-engine-js-components-web",
 	"jest": {
 		"collectCoverageFrom": [
 			"src/main/resources/META-INF/resources/js/**/*.es.js"
@@ -17,6 +15,9 @@
 			"<rootDir>/test/js/[^/]+\\.js"
 		]
 	},
+	"main": "js/index.es.js",
+	"name": "data-engine-js-components-web",
+	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

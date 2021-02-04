@@ -174,6 +174,7 @@ export default ({history, scope, ...props}) => {
 	return (
 		<>
 			<ListApps
+				history={history}
 				listViewProps={{
 					actions,
 					addButton: () => (

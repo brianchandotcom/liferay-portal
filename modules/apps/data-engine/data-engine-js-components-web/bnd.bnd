@@ -1,8 +1,8 @@
 Bundle-Name: Liferay Data Engine JS Components Web
 Bundle-SymbolicName: com.liferay.data.engine.js.components.web
 Bundle-Version: 1.0.0
-Web-ContextPath: /data-engine-js-components-web
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.app.builder.lang),(bundle.symbolic.name=com.liferay.data.engine.lang),(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
-		resource.bundle.base.name="content.Language",\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /data-engine-js-components-web

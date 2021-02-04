@@ -14,10 +14,13 @@
 
 package com.liferay.portal.template.soy.renderer.internal;
 
+import com.liferay.frontend.js.module.launcher.JSModuleDependency;
+import com.liferay.frontend.js.module.launcher.JSModuleLauncher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.servlet.taglib.aui.VariableUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -31,7 +34,10 @@ import com.liferay.portal.template.soy.renderer.SoyRenderer;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,11 +51,13 @@ public class SoyComponentRendererHelper {
 	public SoyComponentRendererHelper(
 		HttpServletRequest httpServletRequest,
 		ComponentDescriptor componentDescriptor, Map<String, ?> context,
-		Portal portal, SoyRenderer soyRenderer) {
+		JSModuleLauncher jsModuleLauncher, Portal portal, 
+		SoyRenderer soyRenderer) {
 
 		_httpServletRequest = httpServletRequest;
 		_componentDescriptor = componentDescriptor;
 		_context = new HashMap<>(context);
+		_jsModuleLauncher = jsModuleLauncher;
 		_portal = portal;
 		_soyRenderer = soyRenderer;
 
@@ -133,45 +141,75 @@ public class SoyComponentRendererHelper {
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
 			(Map)_context, _wrapperId, _moduleName,
 			_componentDescriptor.isWrapper());
+		
+		if (_jsModuleLauncher.isValidModule(_componentDescriptor.getModule())) {
+			List<JSModuleDependency> jsModuleDependencies = new ArrayList<>();
 
-		StringBundler sb = new StringBundler(5);
+			jsModuleDependencies.add(
+				new JSModuleDependency(
+					_componentDescriptor.getModule(), _moduleName));
 
-		sb.append(_componentDescriptor.getModule());
-		sb.append(" as ");
-		sb.append(_moduleName);
+			Set<String> usedVariables = new HashSet<>();
 
-		Set<String> dependencies = _componentDescriptor.getDependencies();
-
-		if (!dependencies.isEmpty()) {
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.append(StringUtil.merge(dependencies));
-
-		if (_componentDescriptor.isPositionInLine()) {
-			ScriptData scriptData = new ScriptData();
-
-			scriptData.append(
-				_portal.getPortletId(_httpServletRequest), componentJavaScript,
-				sb.toString(), ScriptData.ModulesType.ES6);
-
-			scriptData.writeTo(writer);
-		}
-		else {
-			ScriptData scriptData =
-				(ScriptData)_httpServletRequest.getAttribute(
-					WebKeys.AUI_SCRIPT_DATA);
-
-			if (scriptData == null) {
-				scriptData = new ScriptData();
-
-				_httpServletRequest.setAttribute(
-					WebKeys.AUI_SCRIPT_DATA, scriptData);
+			for(String dependency : _componentDescriptor.getDependencies()) {
+				jsModuleDependencies.add(
+					new JSModuleDependency(
+						dependency, VariableUtil.generateVariable(
+							dependency, usedVariables)));
 			}
 
-			scriptData.append(
-				_portal.getPortletId(_httpServletRequest), componentJavaScript,
-				sb.toString(), ScriptData.ModulesType.ES6);
+			if (_componentDescriptor.isPositionInLine()) {
+				_jsModuleLauncher.writeScript(
+					writer, jsModuleDependencies, componentJavaScript);
+			} else {
+				_jsModuleLauncher.appendPortletScript(
+					_httpServletRequest,
+					_portal.getPortletId(_httpServletRequest),
+					jsModuleDependencies, componentJavaScript);
+			}
+		}
+		else {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_componentDescriptor.getModule());
+			sb.append(" as ");
+			sb.append(_moduleName);
+
+			Set<String> dependencies = _componentDescriptor.getDependencies();
+
+			if (!dependencies.isEmpty()) {
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.append(StringUtil.merge(dependencies));
+
+			if (_componentDescriptor.isPositionInLine()) {
+				ScriptData scriptData = new ScriptData();
+
+				scriptData.append(
+					_portal.getPortletId(_httpServletRequest),
+					componentJavaScript,
+					sb.toString(), ScriptData.ModulesType.ES6);
+
+				scriptData.writeTo(writer);
+			}
+			else {
+				ScriptData scriptData =
+					(ScriptData) _httpServletRequest.getAttribute(
+						WebKeys.AUI_SCRIPT_DATA);
+
+				if (scriptData == null) {
+					scriptData = new ScriptData();
+
+					_httpServletRequest.setAttribute(
+						WebKeys.AUI_SCRIPT_DATA, scriptData);
+				}
+
+				scriptData.append(
+					_portal.getPortletId(_httpServletRequest),
+					componentJavaScript,
+					sb.toString(), ScriptData.ModulesType.ES6);
+			}
 		}
 	}
 
@@ -210,6 +248,7 @@ public class SoyComponentRendererHelper {
 	private final Map<String, Object> _context;
 	private final String _elementSelector;
 	private final HttpServletRequest _httpServletRequest;
+	private final JSModuleLauncher _jsModuleLauncher;
 	private final String _moduleName;
 	private final Portal _portal;
 	private final SoyRenderer _soyRenderer;

@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.PortalAWSJob;
 import com.liferay.jenkins.results.parser.PortalEnvironmentJob;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
+import com.liferay.jenkins.results.parser.RootCauseAnalysisToolJob;
 
 import java.io.File;
 
@@ -202,22 +203,17 @@ public class TestClassGroupFactory {
 		}
 
 		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
-			FunctionalBatchTestClassGroup functionalBatchTestClassGroup =
-				(FunctionalBatchTestClassGroup)batchTestClassGroup;
-
 			Job job = batchTestClassGroup.getJob();
 
 			if (job instanceof PortalAWSJob) {
 				return new AWSFunctionalSegmentTestClassGroup(
-					functionalBatchTestClassGroup);
+					batchTestClassGroup);
 			}
 
-			return new FunctionalSegmentTestClassGroup(
-				functionalBatchTestClassGroup);
+			return new FunctionalSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
-			return new JUnitSegmentTestClassGroup(
-				(JUnitBatchTestClassGroup)batchTestClassGroup);
+			return new JUnitSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
 			return new PluginsSegmentTestClassGroup(

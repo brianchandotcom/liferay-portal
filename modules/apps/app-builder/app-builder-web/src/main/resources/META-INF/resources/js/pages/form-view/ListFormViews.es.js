@@ -12,17 +12,18 @@
  * details.
  */
 
+import ListView from 'data-engine-js-components-web/js/components/list-view/ListView.es';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
-import ListView from '../../components/list-view/ListView.es';
 import useDataDefinition from '../../hooks/useDataDefinition.es';
 import {confirmDelete} from '../../utils/client.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 
 export default ({
+	history,
 	match: {
 		params: {dataDefinitionId},
 	},
@@ -107,6 +108,7 @@ export default ({
 				title: Liferay.Language.get('there-are-no-form-views-yet'),
 			}}
 			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`}
+			history={history}
 		>
 			{(item) => {
 				const {dateCreated, dateModified, id, name} = item;

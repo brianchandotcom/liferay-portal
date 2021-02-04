@@ -471,7 +471,7 @@ public abstract class BasePortletExportImportTestCase
 			ExportImportThreadLocal.setPortletExportInProcess(false);
 		}
 	}
-	
+
 	protected PortletPreferences getImportedPortletPreferences(
 			Map<String, String[]> preferenceMap)
 		throws Exception {

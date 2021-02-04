@@ -131,8 +131,6 @@ definition {
 	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
 		property portal.acceptance = "false";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(webContentTitle = "Test");

@@ -240,9 +240,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -252,39 +250,39 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Texto teste");
+			fieldFieldLabelEdit = "Texto");
 
 		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			webContentText = "Test",
-			webContentTitle = "Test");
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
-			webContentText = "Nome do teste",
-			webContentTextFieldLabel = "Texto teste",
-			webContentTitle = "Nome do teste");
+			webContentText = "Este é um campo de texto",
+			webContentTextFieldLabel = "Texto",
+			webContentTitle = "Título do conteúdo da web");
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "Nome do teste");
+			value1 = "Título do conteúdo da web");
 
 		AssertTextEquals.assertValue(
-			key_fieldFieldLabel = "Texto teste",
+			key_fieldFieldLabel = "Texto",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "Nome do teste");
+			value1 = "Este é um campo de texto");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

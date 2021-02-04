@@ -9,6 +9,16 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "New Document Type");
 	}
 
 	tearDown {
@@ -148,16 +158,6 @@ definition {
 	@priority = "5"
 	test SetLabelOfRichText {
 		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "New Document Type");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Edited Test",

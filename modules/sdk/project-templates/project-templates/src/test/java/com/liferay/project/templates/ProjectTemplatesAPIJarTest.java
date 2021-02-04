@@ -28,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -92,10 +93,13 @@ public class ProjectTemplatesAPIJarTest {
 
 		Assert.assertFalse(javaPaths.isEmpty());
 
+		List<String> missingClassList = new ArrayList<>();
+
 		for (String clazz : classes) {
-			if (!clazz.contains("$") && !_ignoreJavaPaths.contains(clazz)) {
-				Assert.assertTrue(
-					"Missing class " + clazz, javaPaths.contains(clazz));
+			if (!clazz.contains("$") && !_ignoreJavaPaths.contains(clazz) &&
+				!javaPaths.contains(clazz)) {
+
+				missingClassList.add(clazz);
 			}
 		}
 
@@ -123,13 +127,27 @@ public class ProjectTemplatesAPIJarTest {
 			Collectors.toList()
 		);
 
+		List<String> missingServiceClassList = new ArrayList<>();
+
 		for (String serviceClassName : serviceClassNames) {
 			String servicePath = serviceClassName.replace(".", "/");
 
-			Assert.assertTrue(
-				"Missing service class " + servicePath,
-				classes.contains(servicePath));
+			if (!classes.contains(servicePath)) {
+				missingServiceClassList.add(servicePath);
+			}
 		}
+
+		String missingClassStrings = missingClassList.toString();
+
+		String missingServiceClassStrings = missingServiceClassList.toString();
+
+		Assert.assertTrue(
+			"Sources jar missing: " + missingClassStrings.replace(",", ",\n"),
+			missingClassList.isEmpty());
+		Assert.assertTrue(
+			"Sources jar missing service classes: " +
+				missingServiceClassStrings.replace(",", ",\n"),
+			missingServiceClassList.isEmpty());
 	}
 
 	@Rule

@@ -135,7 +135,18 @@ public class LayoutStructure {
 		return collectionItemLayoutStructureItem;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addCollectionStyledLayoutStructureItem(String, int)}
+	 */
+	@Deprecated
 	public LayoutStructureItem addCollectionLayoutStructureItem(
+		String parentItemId, int position) {
+
+		return addCollectionStyledLayoutStructureItem(parentItemId, position);
+	}
+
+	public LayoutStructureItem addCollectionStyledLayoutStructureItem(
 		String parentItemId, int position) {
 
 		CollectionStyledLayoutStructureItem
@@ -163,7 +174,18 @@ public class LayoutStructure {
 		return columnLayoutStructureItem;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addContainerStyledLayoutStructureItem(String, int)}
+	 */
+	@Deprecated
 	public LayoutStructureItem addContainerLayoutStructureItem(
+		String parentItemId, int position) {
+
+		return addContainerStyledLayoutStructureItem(parentItemId, position);
+	}
+
+	public LayoutStructureItem addContainerStyledLayoutStructureItem(
 		String parentItemId, int position) {
 
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
@@ -197,7 +219,19 @@ public class LayoutStructure {
 		return fragmentDropZoneLayoutStructureItem;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFragmentStyledLayoutStructureItem(long, String, int)}
+	 */
+	@Deprecated
 	public LayoutStructureItem addFragmentLayoutStructureItem(
+		long fragmentEntryLinkId, String parentItemId, int position) {
+
+		return addFragmentStyledLayoutStructureItem(
+			fragmentEntryLinkId, parentItemId, position);
+	}
+
+	public LayoutStructureItem addFragmentStyledLayoutStructureItem(
 		long fragmentEntryLinkId, String parentItemId, int position) {
 
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
@@ -244,7 +278,19 @@ public class LayoutStructure {
 		return rootLayoutStructureItem;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addRowStyledLayoutStructureItem(String, int, int)}
+	 */
+	@Deprecated
 	public LayoutStructureItem addRowLayoutStructureItem(
+		String parentItemId, int position, int numberOfColumns) {
+
+		return addRowStyledLayoutStructureItem(
+			parentItemId, position, numberOfColumns);
+	}
+
+	public LayoutStructureItem addRowStyledLayoutStructureItem(
 		String parentItemId, int position, int numberOfColumns) {
 
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =

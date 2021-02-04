@@ -240,6 +240,7 @@ const LocalizableText = ({
 							getEditingValue({
 								defaultLocale,
 								editingLocale: newEditingLocale,
+								fieldName,
 								value: currentValue,
 							})
 						);

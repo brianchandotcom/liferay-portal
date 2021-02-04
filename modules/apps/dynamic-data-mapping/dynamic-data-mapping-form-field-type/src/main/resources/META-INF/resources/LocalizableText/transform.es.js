@@ -25,15 +25,25 @@ export const convertValueToJSON = (value) => {
 	return value;
 };
 
-export const getEditingValue = ({defaultLocale, editingLocale, value}) => {
+export const getEditingValue = ({
+	defaultLocale,
+	editingLocale,
+	fieldName,
+	value,
+}) => {
 	const valueJSON = convertValueToJSON(value);
 
 	if (valueJSON) {
-		return (
-			valueJSON[editingLocale.localeId] ||
-			valueJSON[defaultLocale.localeId] ||
-			''
-		);
+		if (fieldName === 'submitLabel') {
+			return valueJSON[editingLocale.localeId] || '';
+		}
+		else {
+			return (
+				valueJSON[editingLocale.localeId] ||
+				valueJSON[defaultLocale.localeId] ||
+				''
+			);
+		}
 	}
 
 	return editingLocale;

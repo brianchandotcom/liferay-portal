@@ -13,11 +13,11 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ListView from 'data-engine-js-components-web/js/components/list-view/ListView.es';
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
-import ListView from '../../components/list-view/ListView.es';
 import useDataListView from '../../hooks/useDataListView.es';
 import useEntriesActions from '../../hooks/useEntriesActions.es';
 import usePermissions from '../../hooks/usePermissions.es';
@@ -107,6 +107,7 @@ export default function ListEntries({history}) {
 					title: Liferay.Language.get('there-are-no-entries-yet'),
 				}}
 				endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`}
+				history={history}
 				noActionsMessage={Liferay.Language.get(
 					'you-do-not-have-the-permission-to-manage-this-entry'
 				)}

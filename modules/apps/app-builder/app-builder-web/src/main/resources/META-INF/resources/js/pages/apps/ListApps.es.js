@@ -14,12 +14,12 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
+import ListView from 'data-engine-js-components-web/js/components/list-view/ListView.es';
 import {compile} from 'path-to-regexp';
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import ListView from '../../components/list-view/ListView.es';
 import useBackUrl from '../../hooks/useBackUrl.es';
 import useDataDefinition from '../../hooks/useDataDefinition.es';
 import useDeployApp from '../../hooks/useDeployApp.es';
@@ -72,7 +72,7 @@ export const Actions = (validateFormViewMissingRequiredFields) => {
 	];
 };
 
-export default ({
+const ListApps = ({
 	editPath = [
 		`/:objectType/:dataDefinitionId(\\d+)/apps/deploy`,
 		`/:objectType/:dataDefinitionId(\\d+)/apps/:appId(\\d+)`,
@@ -81,6 +81,7 @@ export default ({
 	match: {
 		params: {dataDefinitionId, objectType},
 	},
+	history,
 }) => {
 	const {scope} = useContext(AppContext);
 	const withBackUrl = useBackUrl();
@@ -132,6 +133,7 @@ export default ({
 			columns={COLUMNS}
 			emptyState={EMPTY_STATE}
 			endpoint={ENDPOINT}
+			history={history}
 			{...listViewProps}
 		>
 			{(app) => {
@@ -160,3 +162,5 @@ export default ({
 		</ListView>
 	);
 };
+
+export default ListApps;

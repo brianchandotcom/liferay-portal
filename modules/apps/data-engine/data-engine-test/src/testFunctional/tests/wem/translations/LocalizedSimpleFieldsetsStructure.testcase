@@ -134,30 +134,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@priority = "4"
-	test VerifyFieldsetCannotBeEditedOnStructureBuilder {
-		property portal.acceptance = "false";
-
-		var key_fieldLabel = "Upload";
-		var fieldsetLabel = "Fieldset";
-		var fieldsetName = "Fieldset";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldNameList = "${key_fieldLabel}",
-			fieldsetLabel = "${fieldsetLabel}",
-			fieldsetName = "${fieldsetName}");
-
-		DMMetadataSet.validateCantInFieldset(key_fieldLabel = "${key_fieldLabel}");
-	}
-
-	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@ignore = "true"
 	@priority = "4"
 	test VerifyNestedFieldsetEditionOnStructure {

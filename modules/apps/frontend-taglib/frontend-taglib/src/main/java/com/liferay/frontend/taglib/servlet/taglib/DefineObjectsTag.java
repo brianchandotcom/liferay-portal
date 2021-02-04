@@ -78,7 +78,7 @@ public class DefineObjectsTag extends TagSupport {
 			npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
 				pageContext.getServletContext());
 		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
+		catch (UnsupportedOperationException unsupportedOperationException1) {
 			try {
 				JSModuleResolver jsModuleResolver =
 					ServicesProvider.getJSModuleResolver();
@@ -86,12 +86,14 @@ public class DefineObjectsTag extends TagSupport {
 				npmResolvedPackageName = jsModuleResolver.resolveModule(
 					pageContext.getServletContext(), null);
 			}
-			catch(
-				UnsupportedOperationException unsupportedOperationException1) {
+			catch (UnsupportedOperationException
+						unsupportedOperationException2) {
 
-				_log.debug(
-					unsupportedOperationException1,
-					unsupportedOperationException1);
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						unsupportedOperationException2,
+						unsupportedOperationException2);
+				}
 			}
 		}
 

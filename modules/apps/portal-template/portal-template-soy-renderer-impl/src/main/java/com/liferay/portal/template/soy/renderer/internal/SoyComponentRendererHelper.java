@@ -51,7 +51,7 @@ public class SoyComponentRendererHelper {
 	public SoyComponentRendererHelper(
 		HttpServletRequest httpServletRequest,
 		ComponentDescriptor componentDescriptor, Map<String, ?> context,
-		JSModuleLauncher jsModuleLauncher, Portal portal, 
+		JSModuleLauncher jsModuleLauncher, Portal portal,
 		SoyRenderer soyRenderer) {
 
 		_httpServletRequest = httpServletRequest;
@@ -141,7 +141,7 @@ public class SoyComponentRendererHelper {
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
 			(Map)_context, _wrapperId, _moduleName,
 			_componentDescriptor.isWrapper());
-		
+
 		if (_jsModuleLauncher.isValidModule(_componentDescriptor.getModule())) {
 			List<JSModuleDependency> jsModuleDependencies = new ArrayList<>();
 
@@ -151,17 +151,19 @@ public class SoyComponentRendererHelper {
 
 			Set<String> usedVariables = new HashSet<>();
 
-			for(String dependency : _componentDescriptor.getDependencies()) {
+			for (String dependency : _componentDescriptor.getDependencies()) {
 				jsModuleDependencies.add(
 					new JSModuleDependency(
-						dependency, VariableUtil.generateVariable(
+						dependency,
+						VariableUtil.generateVariable(
 							dependency, usedVariables)));
 			}
 
 			if (_componentDescriptor.isPositionInLine()) {
 				_jsModuleLauncher.writeScript(
 					writer, jsModuleDependencies, componentJavaScript);
-			} else {
+			}
+			else {
 				_jsModuleLauncher.appendPortletScript(
 					_httpServletRequest,
 					_portal.getPortletId(_httpServletRequest),
@@ -188,14 +190,14 @@ public class SoyComponentRendererHelper {
 
 				scriptData.append(
 					_portal.getPortletId(_httpServletRequest),
-					componentJavaScript,
-					sb.toString(), ScriptData.ModulesType.ES6);
+					componentJavaScript, sb.toString(),
+					ScriptData.ModulesType.ES6);
 
 				scriptData.writeTo(writer);
 			}
 			else {
 				ScriptData scriptData =
-					(ScriptData) _httpServletRequest.getAttribute(
+					(ScriptData)_httpServletRequest.getAttribute(
 						WebKeys.AUI_SCRIPT_DATA);
 
 				if (scriptData == null) {
@@ -207,8 +209,8 @@ public class SoyComponentRendererHelper {
 
 				scriptData.append(
 					_portal.getPortletId(_httpServletRequest),
-					componentJavaScript,
-					sb.toString(), ScriptData.ModulesType.ES6);
+					componentJavaScript, sb.toString(),
+					ScriptData.ModulesType.ES6);
 			}
 		}
 	}

@@ -13,7 +13,6 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import NoPermissionState from 'app-builder-web/js/components/empty-state/NoPermissionState.es';
-import TableWithPagination from 'app-builder-web/js/components/table/TableWithPagination.es';
 import useDataListView from 'app-builder-web/js/hooks/useDataListView.es';
 import useEntriesActions from 'app-builder-web/js/hooks/useEntriesActions.es';
 import usePermissions from 'app-builder-web/js/hooks/usePermissions.es';
@@ -32,6 +31,7 @@ import ManagementToolbarResultsBar from 'data-engine-js-components-web/js/compon
 import SearchContext, {
 	reducer,
 } from 'data-engine-js-components-web/js/components/management-toolbar/SearchContext.es';
+import TableWithPagination from 'data-engine-js-components-web/js/components/table/TableWithPagination.es';
 import {usePrevious, useTimeout} from 'frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 

@@ -16,9 +16,9 @@ import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {withLoading} from 'data-engine-js-components-web/js/components/loading/Loading.es';
+import {withEmpty} from 'data-engine-js-components-web/js/components/table/EmptyState.es';
 import React from 'react';
 
-import {withEmpty} from '../../../components/table/EmptyState.es';
 import {getLocalizedValue} from '../../../utils/lang.es';
 import {fromNow} from '../../../utils/time.es';
 

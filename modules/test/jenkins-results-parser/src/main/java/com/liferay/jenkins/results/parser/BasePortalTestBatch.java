@@ -52,6 +52,13 @@ public abstract class BasePortalTestBatch
 			environmentVariables.put("PATH", getPath(batchName));
 		}
 
+		PortalBatchBuildData portalBatchBuildData = getBatchBuildData();
+
+		environmentVariables.putAll(
+			portalBatchBuildData.getTopLevelBuildParameters());
+
+		environmentVariables.putAll(portalBatchBuildData.getBuildParameters());
+
 		AntUtil.callTarget(
 			getPrimaryPortalWorkspaceDirectory(), "build-test-batch.xml",
 			batchBuildData.getBatchName(), buildParameters,

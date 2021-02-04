@@ -10,7 +10,7 @@
  */
 
 import {getItem} from 'app-builder-web/js/utils/client.es';
-import {getLocalizedValue} from 'app-builder-web/js/utils/lang.es';
+import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 
 import {
 	checkRequiredFields,

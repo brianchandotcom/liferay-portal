@@ -16,10 +16,10 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import React, {useEffect, useState} from 'react';
 
 import {getItem} from '../../utils/client.es';
-import {getLocalizedValue} from '../../utils/lang.es';
 import DropDownWithSearch from '../dropdown-with-search/DropDownWithSearch.es';
 import NewCustomObjectModal from './NewCustomObjectModal.es';
 

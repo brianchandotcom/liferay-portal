@@ -381,7 +381,7 @@ public class AccountGroupRelPersistenceImpl
 	/**
 	 * Returns the account group rels before and after the current account group rel in the ordered set where accountGroupId = &#63;.
 	 *
-	 * @param AccountGroupRelId the primary key of the current account group rel
+	 * @param accountGroupRelId the primary key of the current account group rel
 	 * @param accountGroupId the account group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next account group rel
@@ -389,11 +389,11 @@ public class AccountGroupRelPersistenceImpl
 	 */
 	@Override
 	public AccountGroupRel[] findByAccountGroupId_PrevAndNext(
-			long AccountGroupRelId, long accountGroupId,
+			long accountGroupRelId, long accountGroupId,
 			OrderByComparator<AccountGroupRel> orderByComparator)
 		throws NoSuchGroupRelException {
 
-		AccountGroupRel accountGroupRel = findByPrimaryKey(AccountGroupRelId);
+		AccountGroupRel accountGroupRel = findByPrimaryKey(accountGroupRelId);
 
 		Session session = null;
 
@@ -907,7 +907,7 @@ public class AccountGroupRelPersistenceImpl
 	/**
 	 * Returns the account group rels before and after the current account group rel in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param AccountGroupRelId the primary key of the current account group rel
+	 * @param accountGroupRelId the primary key of the current account group rel
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -916,11 +916,11 @@ public class AccountGroupRelPersistenceImpl
 	 */
 	@Override
 	public AccountGroupRel[] findByC_C_PrevAndNext(
-			long AccountGroupRelId, long classNameId, long classPK,
+			long accountGroupRelId, long classNameId, long classPK,
 			OrderByComparator<AccountGroupRel> orderByComparator)
 		throws NoSuchGroupRelException {
 
-		AccountGroupRel accountGroupRel = findByPrimaryKey(AccountGroupRelId);
+		AccountGroupRel accountGroupRel = findByPrimaryKey(accountGroupRelId);
 
 		Session session = null;
 
@@ -1512,15 +1512,15 @@ public class AccountGroupRelPersistenceImpl
 	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *
-	 * @param AccountGroupRelId the primary key for the new account group rel
+	 * @param accountGroupRelId the primary key for the new account group rel
 	 * @return the new account group rel
 	 */
 	@Override
-	public AccountGroupRel create(long AccountGroupRelId) {
+	public AccountGroupRel create(long accountGroupRelId) {
 		AccountGroupRel accountGroupRel = new AccountGroupRelImpl();
 
 		accountGroupRel.setNew(true);
-		accountGroupRel.setPrimaryKey(AccountGroupRelId);
+		accountGroupRel.setPrimaryKey(accountGroupRelId);
 
 		accountGroupRel.setCompanyId(CompanyThreadLocal.getCompanyId());
 
@@ -1530,15 +1530,15 @@ public class AccountGroupRelPersistenceImpl
 	/**
 	 * Removes the account group rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel that was removed
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
 	@Override
-	public AccountGroupRel remove(long AccountGroupRelId)
+	public AccountGroupRel remove(long accountGroupRelId)
 		throws NoSuchGroupRelException {
 
-		return remove((Serializable)AccountGroupRelId);
+		return remove((Serializable)accountGroupRelId);
 	}
 
 	/**
@@ -1699,26 +1699,26 @@ public class AccountGroupRelPersistenceImpl
 	/**
 	 * Returns the account group rel with the primary key or throws a <code>NoSuchGroupRelException</code> if it could not be found.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
 	@Override
-	public AccountGroupRel findByPrimaryKey(long AccountGroupRelId)
+	public AccountGroupRel findByPrimaryKey(long accountGroupRelId)
 		throws NoSuchGroupRelException {
 
-		return findByPrimaryKey((Serializable)AccountGroupRelId);
+		return findByPrimaryKey((Serializable)accountGroupRelId);
 	}
 
 	/**
 	 * Returns the account group rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel, or <code>null</code> if a account group rel with the primary key could not be found
 	 */
 	@Override
-	public AccountGroupRel fetchByPrimaryKey(long AccountGroupRelId) {
-		return fetchByPrimaryKey((Serializable)AccountGroupRelId);
+	public AccountGroupRel fetchByPrimaryKey(long accountGroupRelId) {
+		return fetchByPrimaryKey((Serializable)accountGroupRelId);
 	}
 
 	/**
@@ -1909,7 +1909,7 @@ public class AccountGroupRelPersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "AccountGroupRelId";
+		return "accountGroupRelId";
 	}
 
 	@Override

@@ -265,19 +265,19 @@ public class AccountGroupRelUtil {
 	/**
 	 * Returns the account group rels before and after the current account group rel in the ordered set where accountGroupId = &#63;.
 	 *
-	 * @param AccountGroupRelId the primary key of the current account group rel
+	 * @param accountGroupRelId the primary key of the current account group rel
 	 * @param accountGroupId the account group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next account group rel
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
 	public static AccountGroupRel[] findByAccountGroupId_PrevAndNext(
-			long AccountGroupRelId, long accountGroupId,
+			long accountGroupRelId, long accountGroupId,
 			OrderByComparator<AccountGroupRel> orderByComparator)
 		throws com.liferay.account.exception.NoSuchGroupRelException {
 
 		return getPersistence().findByAccountGroupId_PrevAndNext(
-			AccountGroupRelId, accountGroupId, orderByComparator);
+			accountGroupRelId, accountGroupId, orderByComparator);
 	}
 
 	/**
@@ -449,7 +449,7 @@ public class AccountGroupRelUtil {
 	/**
 	 * Returns the account group rels before and after the current account group rel in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param AccountGroupRelId the primary key of the current account group rel
+	 * @param accountGroupRelId the primary key of the current account group rel
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -457,12 +457,12 @@ public class AccountGroupRelUtil {
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
 	public static AccountGroupRel[] findByC_C_PrevAndNext(
-			long AccountGroupRelId, long classNameId, long classPK,
+			long accountGroupRelId, long classNameId, long classPK,
 			OrderByComparator<AccountGroupRel> orderByComparator)
 		throws com.liferay.account.exception.NoSuchGroupRelException {
 
 		return getPersistence().findByC_C_PrevAndNext(
-			AccountGroupRelId, classNameId, classPK, orderByComparator);
+			accountGroupRelId, classNameId, classPK, orderByComparator);
 	}
 
 	/**
@@ -587,24 +587,24 @@ public class AccountGroupRelUtil {
 	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *
-	 * @param AccountGroupRelId the primary key for the new account group rel
+	 * @param accountGroupRelId the primary key for the new account group rel
 	 * @return the new account group rel
 	 */
-	public static AccountGroupRel create(long AccountGroupRelId) {
-		return getPersistence().create(AccountGroupRelId);
+	public static AccountGroupRel create(long accountGroupRelId) {
+		return getPersistence().create(accountGroupRelId);
 	}
 
 	/**
 	 * Removes the account group rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel that was removed
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
-	public static AccountGroupRel remove(long AccountGroupRelId)
+	public static AccountGroupRel remove(long accountGroupRelId)
 		throws com.liferay.account.exception.NoSuchGroupRelException {
 
-		return getPersistence().remove(AccountGroupRelId);
+		return getPersistence().remove(accountGroupRelId);
 	}
 
 	public static AccountGroupRel updateImpl(AccountGroupRel accountGroupRel) {
@@ -614,24 +614,24 @@ public class AccountGroupRelUtil {
 	/**
 	 * Returns the account group rel with the primary key or throws a <code>NoSuchGroupRelException</code> if it could not be found.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
-	public static AccountGroupRel findByPrimaryKey(long AccountGroupRelId)
+	public static AccountGroupRel findByPrimaryKey(long accountGroupRelId)
 		throws com.liferay.account.exception.NoSuchGroupRelException {
 
-		return getPersistence().findByPrimaryKey(AccountGroupRelId);
+		return getPersistence().findByPrimaryKey(accountGroupRelId);
 	}
 
 	/**
 	 * Returns the account group rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel, or <code>null</code> if a account group rel with the primary key could not be found
 	 */
-	public static AccountGroupRel fetchByPrimaryKey(long AccountGroupRelId) {
-		return getPersistence().fetchByPrimaryKey(AccountGroupRelId);
+	public static AccountGroupRel fetchByPrimaryKey(long accountGroupRelId) {
+		return getPersistence().fetchByPrimaryKey(accountGroupRelId);
 	}
 
 	/**

@@ -72,13 +72,13 @@ public class AccountGroupRelLocalServiceUtil {
 	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *
-	 * @param AccountGroupRelId the primary key for the new account group rel
+	 * @param accountGroupRelId the primary key for the new account group rel
 	 * @return the new account group rel
 	 */
 	public static com.liferay.account.model.AccountGroupRel
-		createAccountGroupRel(long AccountGroupRelId) {
+		createAccountGroupRel(long accountGroupRelId) {
 
-		return getService().createAccountGroupRel(AccountGroupRelId);
+		return getService().createAccountGroupRel(accountGroupRelId);
 	}
 
 	/**
@@ -115,15 +115,15 @@ public class AccountGroupRelLocalServiceUtil {
 	 * <strong>Important:</strong> Inspect AccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel that was removed
 	 * @throws PortalException if a account group rel with the primary key could not be found
 	 */
 	public static com.liferay.account.model.AccountGroupRel
-			deleteAccountGroupRel(long AccountGroupRelId)
+			deleteAccountGroupRel(long accountGroupRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().deleteAccountGroupRel(AccountGroupRelId);
+		return getService().deleteAccountGroupRel(accountGroupRelId);
 	}
 
 	public static void deleteAccountGroupRels(
@@ -237,9 +237,9 @@ public class AccountGroupRelLocalServiceUtil {
 	}
 
 	public static com.liferay.account.model.AccountGroupRel
-		fetchAccountGroupRel(long AccountGroupRelId) {
+		fetchAccountGroupRel(long accountGroupRelId) {
 
-		return getService().fetchAccountGroupRel(AccountGroupRelId);
+		return getService().fetchAccountGroupRel(accountGroupRelId);
 	}
 
 	public static com.liferay.account.model.AccountGroupRel
@@ -253,15 +253,15 @@ public class AccountGroupRelLocalServiceUtil {
 	/**
 	 * Returns the account group rel with the primary key.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel
 	 * @throws PortalException if a account group rel with the primary key could not be found
 	 */
 	public static com.liferay.account.model.AccountGroupRel getAccountGroupRel(
-			long AccountGroupRelId)
+			long accountGroupRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getAccountGroupRel(AccountGroupRelId);
+		return getService().getAccountGroupRel(accountGroupRelId);
 	}
 
 	/**

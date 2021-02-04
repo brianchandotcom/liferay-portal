@@ -53,7 +53,7 @@ create table AccountGroup (
 
 create table AccountGroupRel (
 	mvccVersion LONG default 0 not null,
-	AccountGroupRelId LONG not null primary key,
+	accountGroupRelId LONG not null primary key,
 	companyId LONG,
 	accountGroupId LONG,
 	classNameId LONG,

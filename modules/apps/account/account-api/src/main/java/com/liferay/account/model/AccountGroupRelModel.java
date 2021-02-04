@@ -82,9 +82,9 @@ public interface AccountGroupRelModel
 	/**
 	 * Sets the account group rel ID of this account group rel.
 	 *
-	 * @param AccountGroupRelId the account group rel ID of this account group rel
+	 * @param accountGroupRelId the account group rel ID of this account group rel
 	 */
-	public void setAccountGroupRelId(long AccountGroupRelId);
+	public void setAccountGroupRelId(long accountGroupRelId);
 
 	/**
 	 * Returns the company ID of this account group rel.

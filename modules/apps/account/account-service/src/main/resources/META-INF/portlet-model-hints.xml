@@ -62,7 +62,7 @@
 	</model>
 	<model name="com.liferay.account.model.AccountGroupRel">
 		<field name="mvccVersion" type="long" />
-		<field name="AccountGroupRelId" type="long" />
+		<field name="accountGroupRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="accountGroupId" type="long" />
 		<field name="classNameId" type="long" />

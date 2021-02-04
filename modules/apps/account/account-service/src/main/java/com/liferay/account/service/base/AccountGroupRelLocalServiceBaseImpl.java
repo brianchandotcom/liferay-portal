@@ -93,13 +93,13 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *
-	 * @param AccountGroupRelId the primary key for the new account group rel
+	 * @param accountGroupRelId the primary key for the new account group rel
 	 * @return the new account group rel
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public AccountGroupRel createAccountGroupRel(long AccountGroupRelId) {
-		return accountGroupRelPersistence.create(AccountGroupRelId);
+	public AccountGroupRel createAccountGroupRel(long accountGroupRelId) {
+		return accountGroupRelPersistence.create(accountGroupRelId);
 	}
 
 	/**
@@ -109,16 +109,16 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 	 * <strong>Important:</strong> Inspect AccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel that was removed
 	 * @throws PortalException if a account group rel with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AccountGroupRel deleteAccountGroupRel(long AccountGroupRelId)
+	public AccountGroupRel deleteAccountGroupRel(long accountGroupRelId)
 		throws PortalException {
 
-		return accountGroupRelPersistence.remove(AccountGroupRelId);
+		return accountGroupRelPersistence.remove(accountGroupRelId);
 	}
 
 	/**
@@ -232,22 +232,22 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 	}
 
 	@Override
-	public AccountGroupRel fetchAccountGroupRel(long AccountGroupRelId) {
-		return accountGroupRelPersistence.fetchByPrimaryKey(AccountGroupRelId);
+	public AccountGroupRel fetchAccountGroupRel(long accountGroupRelId) {
+		return accountGroupRelPersistence.fetchByPrimaryKey(accountGroupRelId);
 	}
 
 	/**
 	 * Returns the account group rel with the primary key.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel
 	 * @throws PortalException if a account group rel with the primary key could not be found
 	 */
 	@Override
-	public AccountGroupRel getAccountGroupRel(long AccountGroupRelId)
+	public AccountGroupRel getAccountGroupRel(long accountGroupRelId)
 		throws PortalException {
 
-		return accountGroupRelPersistence.findByPrimaryKey(AccountGroupRelId);
+		return accountGroupRelPersistence.findByPrimaryKey(accountGroupRelId);
 	}
 
 	@Override
@@ -259,7 +259,7 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AccountGroupRel.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("AccountGroupRelId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("accountGroupRelId");
 
 		return actionableDynamicQuery;
 	}
@@ -277,7 +277,7 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(AccountGroupRel.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"AccountGroupRelId");
+			"accountGroupRelId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -289,7 +289,7 @@ public abstract class AccountGroupRelLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AccountGroupRel.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("AccountGroupRelId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("accountGroupRelId");
 	}
 
 	/**

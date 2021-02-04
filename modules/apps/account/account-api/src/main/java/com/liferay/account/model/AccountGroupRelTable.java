@@ -33,9 +33,9 @@ public class AccountGroupRelTable extends BaseTable<AccountGroupRelTable> {
 
 	public final Column<AccountGroupRelTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<AccountGroupRelTable, Long> AccountGroupRelId =
+	public final Column<AccountGroupRelTable, Long> accountGroupRelId =
 		createColumn(
-			"AccountGroupRelId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+			"accountGroupRelId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AccountGroupRelTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AccountGroupRelTable, Long> accountGroupId =

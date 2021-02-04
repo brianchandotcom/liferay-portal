@@ -70,7 +70,7 @@ public class AccountGroupRelModelImpl
 	public static final String TABLE_NAME = "AccountGroupRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"AccountGroupRelId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"accountGroupRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"accountGroupId", Types.BIGINT},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
 	};
@@ -80,7 +80,7 @@ public class AccountGroupRelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("AccountGroupRelId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("accountGroupRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -88,15 +88,15 @@ public class AccountGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountGroupRel (mvccVersion LONG default 0 not null,AccountGroupRelId LONG not null primary key,companyId LONG,accountGroupId LONG,classNameId LONG,classPK LONG)";
+		"create table AccountGroupRel (mvccVersion LONG default 0 not null,accountGroupRelId LONG not null primary key,companyId LONG,accountGroupId LONG,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountGroupRel";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY accountGroupRel.AccountGroupRelId ASC";
+		" ORDER BY accountGroupRel.accountGroupRelId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY AccountGroupRel.AccountGroupRelId ASC";
+		" ORDER BY AccountGroupRel.accountGroupRelId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -198,7 +198,7 @@ public class AccountGroupRelModelImpl
 
 	@Override
 	public long getPrimaryKey() {
-		return _AccountGroupRelId;
+		return _accountGroupRelId;
 	}
 
 	@Override
@@ -208,7 +208,7 @@ public class AccountGroupRelModelImpl
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _AccountGroupRelId;
+		return _accountGroupRelId;
 	}
 
 	@Override
@@ -324,9 +324,9 @@ public class AccountGroupRelModelImpl
 			"mvccVersion",
 			(BiConsumer<AccountGroupRel, Long>)AccountGroupRel::setMvccVersion);
 		attributeGetterFunctions.put(
-			"AccountGroupRelId", AccountGroupRel::getAccountGroupRelId);
+			"accountGroupRelId", AccountGroupRel::getAccountGroupRelId);
 		attributeSetterBiConsumers.put(
-			"AccountGroupRelId",
+			"accountGroupRelId",
 			(BiConsumer<AccountGroupRel, Long>)
 				AccountGroupRel::setAccountGroupRelId);
 		attributeGetterFunctions.put(
@@ -374,16 +374,16 @@ public class AccountGroupRelModelImpl
 	@JSON
 	@Override
 	public long getAccountGroupRelId() {
-		return _AccountGroupRelId;
+		return _accountGroupRelId;
 	}
 
 	@Override
-	public void setAccountGroupRelId(long AccountGroupRelId) {
+	public void setAccountGroupRelId(long accountGroupRelId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_AccountGroupRelId = AccountGroupRelId;
+		_accountGroupRelId = accountGroupRelId;
 	}
 
 	@JSON
@@ -635,7 +635,7 @@ public class AccountGroupRelModelImpl
 
 		accountGroupRelCacheModel.mvccVersion = getMvccVersion();
 
-		accountGroupRelCacheModel.AccountGroupRelId = getAccountGroupRelId();
+		accountGroupRelCacheModel.accountGroupRelId = getAccountGroupRelId();
 
 		accountGroupRelCacheModel.companyId = getCompanyId();
 
@@ -719,7 +719,7 @@ public class AccountGroupRelModelImpl
 	}
 
 	private long _mvccVersion;
-	private long _AccountGroupRelId;
+	private long _accountGroupRelId;
 	private long _companyId;
 	private long _accountGroupId;
 	private long _classNameId;
@@ -753,7 +753,7 @@ public class AccountGroupRelModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
-		_columnOriginalValues.put("AccountGroupRelId", _AccountGroupRelId);
+		_columnOriginalValues.put("accountGroupRelId", _accountGroupRelId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("accountGroupId", _accountGroupId);
 		_columnOriginalValues.put("classNameId", _classNameId);
@@ -773,7 +773,7 @@ public class AccountGroupRelModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("AccountGroupRelId", 2L);
+		columnBitmasks.put("accountGroupRelId", 2L);
 
 		columnBitmasks.put("companyId", 4L);
 

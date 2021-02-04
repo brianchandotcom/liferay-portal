@@ -158,14 +158,14 @@ public interface AccountGroupRelPersistence
 	/**
 	 * Returns the account group rels before and after the current account group rel in the ordered set where accountGroupId = &#63;.
 	 *
-	 * @param AccountGroupRelId the primary key of the current account group rel
+	 * @param accountGroupRelId the primary key of the current account group rel
 	 * @param accountGroupId the account group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next account group rel
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
 	public AccountGroupRel[] findByAccountGroupId_PrevAndNext(
-			long AccountGroupRelId, long accountGroupId,
+			long accountGroupRelId, long accountGroupId,
 			com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
 				orderByComparator)
 		throws NoSuchGroupRelException;
@@ -310,7 +310,7 @@ public interface AccountGroupRelPersistence
 	/**
 	 * Returns the account group rels before and after the current account group rel in the ordered set where classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param AccountGroupRelId the primary key of the current account group rel
+	 * @param accountGroupRelId the primary key of the current account group rel
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -318,7 +318,7 @@ public interface AccountGroupRelPersistence
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
 	public AccountGroupRel[] findByC_C_PrevAndNext(
-			long AccountGroupRelId, long classNameId, long classPK,
+			long accountGroupRelId, long classNameId, long classPK,
 			com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
 				orderByComparator)
 		throws NoSuchGroupRelException;
@@ -417,19 +417,19 @@ public interface AccountGroupRelPersistence
 	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *
-	 * @param AccountGroupRelId the primary key for the new account group rel
+	 * @param accountGroupRelId the primary key for the new account group rel
 	 * @return the new account group rel
 	 */
-	public AccountGroupRel create(long AccountGroupRelId);
+	public AccountGroupRel create(long accountGroupRelId);
 
 	/**
 	 * Removes the account group rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel that was removed
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
-	public AccountGroupRel remove(long AccountGroupRelId)
+	public AccountGroupRel remove(long accountGroupRelId)
 		throws NoSuchGroupRelException;
 
 	public AccountGroupRel updateImpl(AccountGroupRel accountGroupRel);
@@ -437,20 +437,20 @@ public interface AccountGroupRelPersistence
 	/**
 	 * Returns the account group rel with the primary key or throws a <code>NoSuchGroupRelException</code> if it could not be found.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel
 	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
 	 */
-	public AccountGroupRel findByPrimaryKey(long AccountGroupRelId)
+	public AccountGroupRel findByPrimaryKey(long accountGroupRelId)
 		throws NoSuchGroupRelException;
 
 	/**
 	 * Returns the account group rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param AccountGroupRelId the primary key of the account group rel
+	 * @param accountGroupRelId the primary key of the account group rel
 	 * @return the account group rel, or <code>null</code> if a account group rel with the primary key could not be found
 	 */
-	public AccountGroupRel fetchByPrimaryKey(long AccountGroupRelId);
+	public AccountGroupRel fetchByPrimaryKey(long accountGroupRelId);
 
 	/**
 	 * Returns all the account group rels.

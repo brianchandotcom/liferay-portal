@@ -207,7 +207,7 @@ public class AccountGroupRelPersistenceTest {
 
 	protected OrderByComparator<AccountGroupRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AccountGroupRel", "mvccVersion", true, "AccountGroupRelId", true,
+			"AccountGroupRel", "mvccVersion", true, "accountGroupRelId", true,
 			"companyId", true, "accountGroupId", true, "classNameId", true,
 			"classPK", true);
 	}
@@ -357,7 +357,7 @@ public class AccountGroupRelPersistenceTest {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"AccountGroupRelId",
+				"accountGroupRelId",
 				newAccountGroupRel.getAccountGroupRelId()));
 
 		List<AccountGroupRel> result = _persistence.findWithDynamicQuery(
@@ -377,7 +377,7 @@ public class AccountGroupRelPersistenceTest {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"AccountGroupRelId", RandomTestUtil.nextLong()));
+				"accountGroupRelId", RandomTestUtil.nextLong()));
 
 		List<AccountGroupRel> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
@@ -393,13 +393,13 @@ public class AccountGroupRelPersistenceTest {
 			AccountGroupRel.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("AccountGroupRelId"));
+			ProjectionFactoryUtil.property("accountGroupRelId"));
 
 		Object newAccountGroupRelId = newAccountGroupRel.getAccountGroupRelId();
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"AccountGroupRelId", new Object[] {newAccountGroupRelId}));
+				"accountGroupRelId", new Object[] {newAccountGroupRelId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -416,11 +416,11 @@ public class AccountGroupRelPersistenceTest {
 			AccountGroupRel.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("AccountGroupRelId"));
+			ProjectionFactoryUtil.property("accountGroupRelId"));
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"AccountGroupRelId", new Object[] {RandomTestUtil.nextLong()}));
+				"accountGroupRelId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -469,7 +469,7 @@ public class AccountGroupRelPersistenceTest {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"AccountGroupRelId",
+				"accountGroupRelId",
 				newAccountGroupRel.getAccountGroupRelId()));
 
 		List<AccountGroupRel> result = _persistence.findWithDynamicQuery(

@@ -90,7 +90,7 @@ public class AccountGroupRelSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _AccountGroupRelId;
+		return _accountGroupRelId;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -106,11 +106,11 @@ public class AccountGroupRelSoap implements Serializable {
 	}
 
 	public long getAccountGroupRelId() {
-		return _AccountGroupRelId;
+		return _accountGroupRelId;
 	}
 
-	public void setAccountGroupRelId(long AccountGroupRelId) {
-		_AccountGroupRelId = AccountGroupRelId;
+	public void setAccountGroupRelId(long accountGroupRelId) {
+		_accountGroupRelId = accountGroupRelId;
 	}
 
 	public long getCompanyId() {
@@ -146,7 +146,7 @@ public class AccountGroupRelSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
-	private long _AccountGroupRelId;
+	private long _accountGroupRelId;
 	private long _companyId;
 	private long _accountGroupId;
 	private long _classNameId;

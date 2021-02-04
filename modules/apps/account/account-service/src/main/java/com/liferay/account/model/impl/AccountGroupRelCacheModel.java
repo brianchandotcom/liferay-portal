@@ -47,8 +47,8 @@ public class AccountGroupRelCacheModel
 		AccountGroupRelCacheModel accountGroupRelCacheModel =
 			(AccountGroupRelCacheModel)object;
 
-		if ((AccountGroupRelId ==
-				accountGroupRelCacheModel.AccountGroupRelId) &&
+		if ((accountGroupRelId ==
+				accountGroupRelCacheModel.accountGroupRelId) &&
 			(mvccVersion == accountGroupRelCacheModel.mvccVersion)) {
 
 			return true;
@@ -59,7 +59,7 @@ public class AccountGroupRelCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, AccountGroupRelId);
+		int hashCode = HashUtil.hash(0, accountGroupRelId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -80,8 +80,8 @@ public class AccountGroupRelCacheModel
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", AccountGroupRelId=");
-		sb.append(AccountGroupRelId);
+		sb.append(", accountGroupRelId=");
+		sb.append(accountGroupRelId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", accountGroupId=");
@@ -100,7 +100,7 @@ public class AccountGroupRelCacheModel
 		AccountGroupRelImpl accountGroupRelImpl = new AccountGroupRelImpl();
 
 		accountGroupRelImpl.setMvccVersion(mvccVersion);
-		accountGroupRelImpl.setAccountGroupRelId(AccountGroupRelId);
+		accountGroupRelImpl.setAccountGroupRelId(accountGroupRelId);
 		accountGroupRelImpl.setCompanyId(companyId);
 		accountGroupRelImpl.setAccountGroupId(accountGroupId);
 		accountGroupRelImpl.setClassNameId(classNameId);
@@ -115,7 +115,7 @@ public class AccountGroupRelCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		AccountGroupRelId = objectInput.readLong();
+		accountGroupRelId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -130,7 +130,7 @@ public class AccountGroupRelCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(AccountGroupRelId);
+		objectOutput.writeLong(accountGroupRelId);
 
 		objectOutput.writeLong(companyId);
 
@@ -142,7 +142,7 @@ public class AccountGroupRelCacheModel
 	}
 
 	public long mvccVersion;
-	public long AccountGroupRelId;
+	public long accountGroupRelId;
 	public long companyId;
 	public long accountGroupId;
 	public long classNameId;

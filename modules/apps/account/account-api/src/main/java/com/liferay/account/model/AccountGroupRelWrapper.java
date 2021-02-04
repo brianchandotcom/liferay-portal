@@ -42,7 +42,7 @@ public class AccountGroupRelWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("AccountGroupRelId", getAccountGroupRelId());
+		attributes.put("accountGroupRelId", getAccountGroupRelId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("accountGroupId", getAccountGroupId());
 		attributes.put("classNameId", getClassNameId());
@@ -59,10 +59,10 @@ public class AccountGroupRelWrapper
 			setMvccVersion(mvccVersion);
 		}
 
-		Long AccountGroupRelId = (Long)attributes.get("AccountGroupRelId");
+		Long accountGroupRelId = (Long)attributes.get("accountGroupRelId");
 
-		if (AccountGroupRelId != null) {
-			setAccountGroupRelId(AccountGroupRelId);
+		if (accountGroupRelId != null) {
+			setAccountGroupRelId(accountGroupRelId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -188,11 +188,11 @@ public class AccountGroupRelWrapper
 	/**
 	 * Sets the account group rel ID of this account group rel.
 	 *
-	 * @param AccountGroupRelId the account group rel ID of this account group rel
+	 * @param accountGroupRelId the account group rel ID of this account group rel
 	 */
 	@Override
-	public void setAccountGroupRelId(long AccountGroupRelId) {
-		model.setAccountGroupRelId(AccountGroupRelId);
+	public void setAccountGroupRelId(long accountGroupRelId) {
+		model.setAccountGroupRelId(accountGroupRelId);
 	}
 
 	@Override

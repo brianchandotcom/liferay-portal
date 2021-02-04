@@ -14,10 +14,10 @@
 
 import ClayButton from '@clayui/button';
 import {cleanup, fireEvent, render} from '@testing-library/react';
+import EmptyState from 'data-engine-js-components-web/js/components/table/EmptyState.es';
 import React, {useState} from 'react';
 
 import DropDownWithSearch from '../../../../src/main/resources/META-INF/resources/js/components/dropdown-with-search/DropDownWithSearch.es';
-import EmptyState from '../../../../src/main/resources/META-INF/resources/js/components/table/EmptyState.es';
 
 import '@testing-library/jest-dom/extend-expect';
 

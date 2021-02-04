@@ -20,7 +20,7 @@ import EditAppContext, {
 	UPDATE_APP,
 	UPDATE_NAME,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {errorToast} from 'app-builder-web/js/utils/toast.es';
+import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
 import {TranslationManager} from 'data-engine-taglib';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 

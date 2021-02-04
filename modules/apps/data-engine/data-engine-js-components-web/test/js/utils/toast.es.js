@@ -18,7 +18,7 @@ import {openToast} from 'frontend-js-web';
 import {
 	errorToast,
 	successToast,
-} from 'data-engine-js-components-web/js/utils/toast.es';
+} from '../../../src/main/resources/META-INF/resources/js/utils/toast.es';
 
 jest.mock('frontend-js-web', () => {
 	return {

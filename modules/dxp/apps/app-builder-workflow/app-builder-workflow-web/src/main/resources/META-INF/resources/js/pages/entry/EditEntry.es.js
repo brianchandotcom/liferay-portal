@@ -15,9 +15,12 @@ import {AppContext} from 'app-builder-web/js/AppContext.es';
 import {ControlMenuBase} from 'app-builder-web/js/components/control-menu/ControlMenu.es';
 import useDataDefinition from 'app-builder-web/js/hooks/useDataDefinition.es';
 import {getLocalizedUserPreferenceValue} from 'app-builder-web/js/utils/lang.es';
-import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
+import {
+	errorToast,
+	successToast,
+} from 'data-engine-js-components-web/js/utils/toast.es';
 import {useTimeout} from 'frontend-js-react-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {

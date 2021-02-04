@@ -21,8 +21,6 @@ import {
 	navigateToEditPage,
 } from 'app-builder-web/js/pages/entry/utils.es';
 import {getLocalizedUserPreferenceValue} from 'app-builder-web/js/utils/lang.es';
-import {errorToast} from 'app-builder-web/js/utils/toast.es';
-import {concatValues, isEqualObjects} from 'app-builder-web/js/utils/utils.es';
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import ManagementToolbar from 'data-engine-js-components-web/js/components/management-toolbar/ManagementToolbar.es';
 import ManagementToolbarResultsBar from 'data-engine-js-components-web/js/components/management-toolbar/ManagementToolbarResultsBar.es';
@@ -32,6 +30,11 @@ import SearchContext, {
 import TableWithPagination from 'data-engine-js-components-web/js/components/table/TableWithPagination.es';
 import useQuery from 'data-engine-js-components-web/js/hooks/useQuery.es';
 import {getItem} from 'data-engine-js-components-web/js/utils/client.es';
+import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
+import {
+	concatValues,
+	isEqualObjects,
+} from 'data-engine-js-components-web/js/utils/utils.es';
 import {usePrevious, useTimeout} from 'frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 

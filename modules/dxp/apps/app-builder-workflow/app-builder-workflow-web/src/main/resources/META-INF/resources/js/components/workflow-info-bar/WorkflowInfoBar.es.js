@@ -11,8 +11,8 @@
 
 import ClayLabel from '@clayui/label';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {concatValues} from 'app-builder-web/js/utils/utils.es';
 import classNames from 'classnames';
+import {concatValues} from 'data-engine-js-components-web/js/utils/utils.es';
 import React from 'react';
 
 import '../../../css/WorkflowInfoBar.scss';

@@ -326,6 +326,76 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro addFieldToFieldsGroup {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(key_tab = "Fields", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Fields");
+		}
+
+		DragAndDrop.javaScriptDragAndDropToBottom(
+			key_fieldName = "${fieldName}",
+			key_fieldsGroupLabel = "${fieldsGroupLabel}",
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "DDMEditStructure#FORM_FIELDS_GROUP_CONTAINER");
+
+		Pause(locator1 = "3000");
+
+		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Basic");
+		}
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldFieldLabel}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldFieldLabel}");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldFieldLabel}");
+
+		if ("${fieldName}" == "Text") {
+			if (isSet(fieldType)) {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "${fieldType}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+		else if ("${fieldName}" == "Numeric") {
+			if (isSet(numericType)) {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "${numericType}",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		var fieldReference = StringUtil.replace("${fieldFieldLabel}", " ", "");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		Type(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "${fieldReference}");
+
+		AssertTextEquals.assertValue(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "${fieldReference}");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro addRepeatableField {
 		var key_fieldName = "${fieldName}";
 

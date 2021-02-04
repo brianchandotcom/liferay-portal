@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPEATABLE_BUTTON</td>
+	<td>//div[contains(@data-field-name,'${fieldName}')][${i}]//button[contains(@class,'ddm-form-field-repeatable-add-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_REQUIRED_ALERT</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::span[contains(@class,'form-feedback-group')]//div[contains(@class,'form-feedback-item')] | //legend[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::span[contains(@class,'form-feedback-group')]//div[contains(@class,'form-feedback-item')]</td>
 	<td></td>

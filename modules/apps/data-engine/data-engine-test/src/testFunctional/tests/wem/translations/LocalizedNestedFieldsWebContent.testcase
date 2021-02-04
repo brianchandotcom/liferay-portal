@@ -13,16 +13,20 @@ definition {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
-	// tearDown {
-	// 	var testPortalInstance = PropsUtil.get("test.portal.instance");
+	//tearDown {
+	//	var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-	// 	if ("${testPortalInstance}" == "true") {
-	// 		PortalInstances.tearDownCP();
-	// 	}
-	// 	else {
-	// 		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-	// 	}
-	// }
+	//	if ("${testPortalInstance}" == "true") {
+	//		PortalInstances.tearDownCP();
+
+	//}
+
+	//	else {
+	//		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+	//}
+
+	//}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "5"
@@ -631,6 +635,7 @@ definition {
 	@priority = "5"
 	test TranslationDoesNotChangeAnother {
 		property portal.acceptance = "false";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -645,7 +650,7 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text",
 			targetFieldLabel = "Text");
-	
+
 		WebContentStructures.saveCP();
 
 		Navigator.gotoNavTab(navTab = "Web Content");
@@ -653,28 +658,28 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			webContentTitle = "WC WebContent English",
+			webContentRichText = "English Rich Text",
 			webContentText = "English Text",
-			webContentRichText = "English Rich Text");
+			webContentTitle = "WC WebContent English");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContent.addWithStructureCP(
-			webContentTitle = "WC WebContent ptBR",
+			webContentRichText = "ptBR Rich Text",
 			webContentText = "ptBR Text",
-			webContentRichText = "ptBR Rich Text");
+			webContentTitle = "WC WebContent ptBR");
 
 		PortletEntry.changeLocale(locale = "fr-FR");
 
 		WebContent.addWithStructureCP(
-			webContentTitle = "WC WebContent frFR",
+			webContentRichText = "frFR Rich Text",
 			webContentText = "frFR Text",
-			webContentRichText = "frFR Rich Text");
+			webContentTitle = "WC WebContent frFR");
 
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent English");
-		
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
@@ -699,9 +704,9 @@ definition {
 		PortletEntry.changeLocale(locale = "fr-FR");
 
 		AssertTextEquals(
-				locator1 = "TextInput#TITLE",
-				value1 = "WC WebContent frFR");
-		
+			locator1 = "TextInput#TITLE",
+			value1 = "WC WebContent frFR");
+
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT",

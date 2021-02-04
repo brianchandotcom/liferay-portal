@@ -17,7 +17,6 @@ import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
 import {DataDefinitionUtils} from 'data-engine-taglib';
 import {useEffect, useState} from 'react';
 
-
 export default function useDataListView(dataListViewId, dataDefinitionId) {
 	const [state, setState] = useState({
 		columns: [],

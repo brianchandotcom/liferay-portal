@@ -52,12 +52,12 @@ const ListView = ({
 		scope
 	);
 
-	const dispatch = useCallback((action) => {
-		setQuery(reducer(query, action))
-	}, [
-		query,
-		setQuery,
-	]);
+	const dispatch = useCallback(
+		(action) => {
+			setQuery(reducer(query, action));
+		},
+		[query, setQuery]
+	);
 
 	const params = {...query, ...query.filters};
 

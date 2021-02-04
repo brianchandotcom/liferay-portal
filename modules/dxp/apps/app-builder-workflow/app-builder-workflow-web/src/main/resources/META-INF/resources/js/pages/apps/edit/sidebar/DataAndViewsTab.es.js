@@ -22,10 +22,13 @@ import EditAppContext, {
 	UPDATE_DATA_LAYOUT_ID,
 	UPDATE_DATA_LIST_VIEW_ID,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {successToast} from 'app-builder-web/js/utils/toast.es';
-import {concatValues} from 'app-builder-web/js/utils/utils.es';
 import classNames from 'classnames';
-import {getLocalizedValue, sub} from 'data-engine-js-components-web/js/utils/lang.es';
+import {
+	getLocalizedValue,
+	sub,
+} from 'data-engine-js-components-web/js/utils/lang.es';
+import {successToast} from 'data-engine-js-components-web/js/utils/toast.es';
+import {concatValues} from 'data-engine-js-components-web/js/utils/utils.es';
 import {DataDefinitionUtils} from 'data-engine-taglib';
 import {openModal} from 'frontend-js-web';
 import React, {createContext, useContext} from 'react';

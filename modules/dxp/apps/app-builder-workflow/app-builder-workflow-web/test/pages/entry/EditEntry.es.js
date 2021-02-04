@@ -102,7 +102,7 @@ jest.mock('data-engine-js-components-web/js/utils/client.es', () => ({
 	request: jest.fn().mockResolvedValue(),
 }));
 
-jest.mock('app-builder-web/js/utils/toast.es', () => ({
+jest.mock('data-engine-js-components-web/js/utils/toast.es', () => ({
 	__esModule: true,
 	errorToast: (title) => mockToast(title),
 	successToast: (title) => mockToast(title),

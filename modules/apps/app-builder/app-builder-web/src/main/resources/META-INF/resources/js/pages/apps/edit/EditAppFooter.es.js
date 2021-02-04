@@ -13,7 +13,10 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import {addItem, updateItem} from 'data-engine-js-components-web/js/utils/client.es';
+import {
+	addItem,
+	updateItem,
+} from 'data-engine-js-components-web/js/utils/client.es';
 import {
 	errorToast,
 	successToast,

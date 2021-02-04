@@ -16,12 +16,15 @@ import EditAppContext, {
 	UPDATE_APP,
 	reducer,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import {
 	getItem,
 	parseResponse,
 } from 'data-engine-js-components-web/js/utils/client.es';
+import {
+	errorToast,
+	successToast,
+} from 'data-engine-js-components-web/js/utils/toast.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useReducer, useState} from 'react';
 

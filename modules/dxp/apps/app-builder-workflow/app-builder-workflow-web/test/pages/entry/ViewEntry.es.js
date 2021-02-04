@@ -28,7 +28,7 @@ const context = {
 
 const mockToast = jest.fn();
 
-jest.mock('app-builder-web/js/utils/toast.es', () => ({
+jest.mock('data-engine-js-components-web/js/utils/toast.es', () => ({
 	__esModule: true,
 	errorToast: () => mockToast(),
 }));

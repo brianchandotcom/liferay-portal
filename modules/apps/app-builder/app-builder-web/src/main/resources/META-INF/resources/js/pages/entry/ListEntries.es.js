@@ -78,7 +78,7 @@ export default function ListEntries({history}) {
 	);
 
 	return (
-		<Loading isLoading={isLoading}>
+		<Loading className="loading-wrapper" isLoading={isLoading}>
 			<ListView
 				actions={actions}
 				addButton={() =>

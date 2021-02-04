@@ -12,6 +12,6 @@
  * details.
  */
 
-import * as Loading from './components/loading';
+import * as Loading from './components/loading/Loading.es';
 
 export {Loading};

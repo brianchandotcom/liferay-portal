@@ -12,31 +12,19 @@
  * details.
  */
 
-export const getValidName = (defaultName, name) => {
-	if (name?.toLowerCase() === 'null') {
-		return defaultName;
-	}
+import {createMemoryHistory} from 'history';
+import React, {cloneElement} from 'react';
+import {Route, Router} from 'react-router-dom';
 
-	return name;
-};
-
-export const normalizeNames = ({
-	allowEmptyKeys = true,
-	defaultName = '',
-	localizableValue,
-}) => {
-	const name = {};
-
-	Object.keys(localizableValue).forEach((languageId) => {
-		const value = localizableValue[languageId];
-		const normalizedValue = getValidName(defaultName, value)?.trim();
-
-		if (!allowEmptyKeys && !normalizedValue) {
-			return;
-		}
-
-		name[languageId] = normalizedValue;
-	});
-
-	return name;
-};
+export default ({
+	children,
+	path = '/',
+	initialEntries = [{pathname: '/', search: ''}],
+}) => (
+	<Router history={createMemoryHistory({initialEntries})}>
+		<Route
+			component={(props) => cloneElement(children, props)}
+			path={path}
+		/>
+	</Router>
+);

@@ -13,7 +13,10 @@
  */
 
 import ListView from 'data-engine-js-components-web/js/components/list-view/ListView.es';
-import {getItem, updateItem} from 'data-engine-js-components-web/js/utils/client.es';
+import {
+	getItem,
+	updateItem,
+} from 'data-engine-js-components-web/js/utils/client.es';
 import {getLocalizedValue} from 'data-engine-js-components-web/js/utils/lang.es';
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';

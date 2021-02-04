@@ -161,7 +161,7 @@ describe('ListView', () => {
 			},
 		];
 
-		const {container, debug, getAllByRole, queryByPlaceholderText} = render(
+		const {container, getAllByRole, queryByPlaceholderText} = render(
 			<RouteWrapper>
 				<ListView
 					actions={actions}

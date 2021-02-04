@@ -32,6 +32,22 @@ import org.json.JSONObject;
 public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 
 	@Override
+	public String getBaseGitRepositoryName() {
+		String branchName = getBranchName();
+
+		if (branchName.equals("master")) {
+			return "liferay-portal";
+		}
+
+		return "liferay-portal-ee";
+	}
+
+	@Override
+	public String getBranchName() {
+		return getParameterValue("PORTAL_UPSTREAM_BRANCH_NAME");
+	}
+
+	@Override
 	public Element getJenkinsReportElement() {
 		if (_workspaceGitRepository == null) {
 			throw new IllegalStateException(

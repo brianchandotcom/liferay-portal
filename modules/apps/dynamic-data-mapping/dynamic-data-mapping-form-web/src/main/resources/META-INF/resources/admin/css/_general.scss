@@ -92,6 +92,13 @@ td.lfr-name-column {
 		}
 	}
 
+	.input-group-item.input-group-append:first-child {
+		.ddm-field-text.form-control {
+			border-bottom-right-radius: 0.25rem;
+			border-top-right-radius: 0.25rem;
+		}
+	}
+
 	.modal-body {
 		padding: 0;
 

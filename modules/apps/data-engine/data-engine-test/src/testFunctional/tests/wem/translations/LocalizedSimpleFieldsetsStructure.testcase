@@ -268,12 +268,47 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyNestedFieldsetEditionOnStructure {
 		property portal.acceptance = "false";
 
-		// TODO LPS-123538 VerifyNestedFieldsetEditionOnStructure pending implementation
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(structureName = "WC Structure Name");
+
+    	DataEngine.addFields(fieldNameList = "Upload");
+
+        DataEngine.addFieldNested(
+            fieldFieldLabel = "Image",
+            fieldName = "Image",
+            targetFieldLabel = "Upload");
+
+        DataEngine.createFieldset(
+			createNewFieldset = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+        Navigator.gotoNavTab(navTab = "Fieldsets");
+
+    	DragAndDrop.javaScriptDragAndDropToUp(
+            key_fieldName = "New Fieldset",
+			fieldLabel = "Upload",
+            locator1 = "Sidebar#ADD_FIELD_NAME",
+            locator2 = "FormViewBuilder#FIELD_LABEL");
+
+		Click(
+			key_fieldsetLabel = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_tab = "Basic",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		AssertElementNotPresent(
+			key_tab = "Advanced",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

@@ -183,7 +183,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoEditStructure(structureName = "Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test");
 
 		WebContent.addCP(webContentTitle = "Web Content Title");
 

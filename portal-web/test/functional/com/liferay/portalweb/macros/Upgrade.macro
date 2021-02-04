@@ -2598,6 +2598,71 @@ definition {
 			threadSubject = "Message Boards Subject 3");
 	}
 
+	macro viewOutOfDatePublications {
+		AssertTextPresent(
+			key_publicationsName = "Production",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+			value1 = "Production");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Navigator.gotoNavTab(navTab = "Ongoing");
+
+		var key_publicationsName = "Publication 2 Name";
+		var key_publicationStatus = "Out of Date";
+
+		AssertTextEquals(
+			locator1 = "Publications#PUBLICATION_STATUS",
+			value1 = "Out of Date");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(
+			key_publicationsName = "Publication 2 Name",
+			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+
+		AssertVisible(
+			key_menuItem = "Publish",
+			locator1 = "MenuItem#DISABLED_MENU_ITEM");
+
+		AssertVisible(
+			key_menuItem = "Schedule",
+			locator1 = "MenuItem#DISABLED_MENU_ITEM");
+
+		Publications.gotoReviewPublications(
+			gotoManagePublications = "true",
+			key_publicationsName = "Publication 2 Name");
+
+		AssertVisible(
+			key_warningMessage = "This publication was created on a previous Liferay version. You cannot publish, revert, or make additional changes. You can only view or delete it.",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		AssertVisible(locator1 = "Publications#PUBLISH_DISABLED_NAV_BAR");
+
+		AssertVisible(locator1 = "Publications#SCHEDULE_DISABLED_NAV_BAR");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Publications.deletePublication(publicationsName = "Publication 2 Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Publications");
+
+		Navigator.gotoNavTab(navTab = "History");
+
+		AssertVisible(
+			key_publicationsName = "Publication 1 Name",
+			locator1 = "Publications#REVERT_DISABLED");
+	}
+
 	macro viewPolls {
 		Navigator.gotoPage(pageName = "Polls");
 

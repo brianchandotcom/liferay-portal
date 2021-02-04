@@ -1508,6 +1508,12 @@ war.path=${app.server.portal.dir}/</echo>
 					</execute>
 				</else>
 			</if>
+
+			<execute>
+				<![CDATA[
+					tail -n 100 "${patching.tool.dir}/logs/patching-tool.log"
+				]]>
+			</execute>
 		</sequential>
 	</macrodef>
 
@@ -5453,7 +5459,11 @@ war.path=${app.server.portal.dir}/</echo>
 				</else>
 			</if>
 
-			<print-file file.name="${patching.tool.dir}/logs/patching-tool.log" />
+			<execute>
+				<![CDATA[
+					tail -n 100 "${patching.tool.dir}/logs/patching-tool.log"
+				]]>
+			</execute>
 
 			<delete file="@{patching.tool.dir}/logs/patching-tool.log" />
 
@@ -8113,8 +8123,6 @@ virtualHostname="localhost"
 				<install-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
 
 				<validate-installed-patches patching.tool.dir="${patching.tool.dir}" />
-
-				<print-file file.name="${patching.tool.dir}/logs/patching-tool.log" />
 
 				<delete file="@{patching.tool.dir}/logs/patching-tool.log" />
 			</else>

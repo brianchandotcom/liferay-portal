@@ -78,7 +78,31 @@ public class TestClassGroupFactory {
 			batchTestClassGroup = new EnvironmentFunctionalBatchTestClassGroup(
 				batchName, (PortalEnvironmentJob)job);
 		}
-		else if (job instanceof PortalTestClassJob) {
+
+		if ((batchTestClassGroup == null) &&
+			(job instanceof RootCauseAnalysisToolJob)) {
+
+			if (batchName.startsWith("functional-")) {
+				batchTestClassGroup = new FunctionalRCABatchTestClassGroup(
+					batchName, (RootCauseAnalysisToolJob)job);
+			}
+			else if (batchName.startsWith("integration-") ||
+					 batchName.startsWith("modules-integration-") ||
+					 batchName.startsWith("modules-unit-") ||
+					 batchName.startsWith("unit-")) {
+
+				batchTestClassGroup = new JUnitRCABatchTestClassGroup(
+					batchName, (RootCauseAnalysisToolJob)job);
+			}
+			else {
+				batchTestClassGroup = new RCABatchTestClassGroup(
+					batchName, (RootCauseAnalysisToolJob)job);
+			}
+		}
+
+		if ((batchTestClassGroup == null) &&
+			(job instanceof PortalTestClassJob)) {
+
 			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
 			if (batchName.contains("cucumber-")) {
@@ -202,7 +226,9 @@ public class TestClassGroupFactory {
 				(QAWebsitesFunctionalBatchTestClassGroup)batchTestClassGroup);
 		}
 
-		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
+		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup ||
+			batchTestClassGroup instanceof FunctionalRCABatchTestClassGroup) {
+
 			Job job = batchTestClassGroup.getJob();
 
 			if (job instanceof PortalAWSJob) {
@@ -212,7 +238,9 @@ public class TestClassGroupFactory {
 
 			return new FunctionalSegmentTestClassGroup(batchTestClassGroup);
 		}
-		else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+		else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup ||
+				 batchTestClassGroup instanceof JUnitRCABatchTestClassGroup) {
+
 			return new JUnitSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {

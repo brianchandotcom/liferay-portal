@@ -27,35 +27,36 @@ definition {
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "5"
 	test CheckDuplicatedRepeatableStructureOnWebContent {
-		
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text2",
-			fieldName = "Text",
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
 			targetFieldLabel = "Text");
-		
+
 		DataEngine.editFieldsGroupRepeatable();
 
 		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Grupo de Campos");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "Texto");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text2",
-			fieldFieldLabelEdit = "Texto2");
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numérica");
 
 		WebContentStructures.saveCP();
 
@@ -63,23 +64,55 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-            structureName = "WC Structure Name",
-            webContentTitle = "WC WebContent Title");
-		
+		WebContent.addCP(webContentTitle = "WC WebContent Title");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-        AssertElementPresent(locator1 = "DataEngineBuilder#WEB_CONTENT_REPETABLE_BUTTON_ADD");
+		DataEngine.addRepeatableFieldsGroup(fieldsGroupLabel = "Grupo de Campos");
 
-        Click(locator1 = "DataEngineBuilder#WEB_CONTENT_REPETABLE_BUTTON_ADD");
+		PortletEntry.publish();
 
-		AssertElementPresent(
-			key_fieldsetLabel = "Texto",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		AssertElementPresent(
-			key_fieldsetLabel = "Texto2",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+		for (var n : list "1,2") {
+			for (var label : list "Fields Group,Text,Numeric") {
+				AssertVisible(
+					key_fieldFieldLabel = "${label}",
+					key_index = "${n}",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
+			}
+		}
+
+		AssertElementNotPresent(
+			key_fieldName = "FieldsGroup",
+			key_index = "1",
+			locator1 = "FormFields#FIELD_REMOVE");
+
+		AssertVisible(
+			key_fieldName = "FieldsGroup",
+			key_index = "2",
+			locator1 = "FormFields#FIELD_REMOVE");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		for (var n : list "1,2") {
+			for (var label : list "Grupo de Campos,Texto,Numérica") {
+				AssertVisible(
+					key_fieldFieldLabel = "${label}",
+					key_index = "${n}",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY");
+			}
+		}
+
+		AssertElementNotPresent(
+			key_fieldName = "FieldsGroup",
+			key_index = "1",
+			locator1 = "FormFields#FIELD_REMOVE");
+
+		AssertVisible(
+			key_fieldName = "FieldsGroup",
+			key_index = "2",
+			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

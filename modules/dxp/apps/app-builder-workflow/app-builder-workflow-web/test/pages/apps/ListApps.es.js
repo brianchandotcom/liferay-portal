@@ -13,6 +13,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {waitForElementToBeRemoved} from '@testing-library/dom';
 import {act, fireEvent, render} from '@testing-library/react';
 import * as time from 'app-builder-web/js/utils/time.es';
+import {createMemoryHistory} from 'history';
 import React from 'react';
 
 import ListApps from '../../../src/main/resources/META-INF/resources/js/pages/apps/ListApps.es';
@@ -39,6 +40,8 @@ const routeProps = {
 	match: {params: {}},
 	scope: 'workflow',
 };
+
+let history;
 
 window.confirm = jest.fn(() => true);
 
@@ -80,12 +83,16 @@ describe('ListApps', () => {
 	describe('Rendering', () => {
 		beforeEach(() => {
 			jest.spyOn(time, 'fromNow').mockImplementation(() => 'months ago');
+			history = {...createMemoryHistory(), push: jest.fn()};
 		});
 
 		it('with 5 apps on list and opens a new app tooltip', async () => {
-			const {container} = render(<ListApps {...routeProps} />, {
-				wrapper: AppContextProviderWrapper,
-			});
+			const {container} = render(
+				<ListApps {...routeProps} history={history} />,
+				{
+					wrapper: AppContextProviderWrapper,
+				}
+			);
 
 			const newAppButton = container.querySelector(
 				'.nav-btn.nav-btn-monospaced.btn.btn-monospaced.btn-primary'
@@ -114,7 +121,6 @@ describe('ListApps', () => {
 		});
 
 		it('with empty state', async () => {
-			const history = {push: jest.fn()};
 			const {container, queryByText} = render(
 				<AppContextProviderWrapper history={history}>
 					<ListApps {...routeProps} />

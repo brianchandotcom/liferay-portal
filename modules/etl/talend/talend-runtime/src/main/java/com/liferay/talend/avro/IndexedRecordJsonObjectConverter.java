@@ -37,9 +37,9 @@ import java.util.TimeZone;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
+import javax.json.JsonValue;
 
 import org.apache.avro.LogicalTypes;
 import org.apache.avro.Schema;
@@ -64,7 +64,7 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 		_schema = schema;
 	}
 
-	public JsonObject toJsonObject(IndexedRecord indexedRecord)
+	public JsonValue toJsonValue(IndexedRecord indexedRecord)
 		throws IOException {
 
 		JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
@@ -205,7 +205,7 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 				nestedJsonObjectBuilder.getValue());
 		}
 
-		if (!_isIterable(indexedRecord)) {
+		if (!_isIterable()) {
 			return objectBuilder.build();
 		}
 
@@ -214,14 +214,6 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 		arrayBuilder.add(objectBuilder);
 
 		return arrayBuilder.build();
-	}
-
-	private boolean _isIterable(IndexedRecord indexedRecord) {
-		Schema schema = indexedRecord.getSchema();
-
-		Boolean iterable = (Boolean)schema.getObjectProp("iterable");
-
-		return iterable;
 	}
 
 	private String _asISO8601String(long timeMills) {
@@ -252,6 +244,16 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 		nameParts[nameParts.length - 1] = i18nFieldName;
 
 		return nameParts;
+	}
+
+	private boolean _isIterable() {
+		Object iterablePropObject = _schema.getObjectProp("iterable");
+
+		if (iterablePropObject == null) {
+			return false;
+		}
+
+		return (Boolean)iterablePropObject;
 	}
 
 	private boolean _isJsonArrayFormattedString(String value) {

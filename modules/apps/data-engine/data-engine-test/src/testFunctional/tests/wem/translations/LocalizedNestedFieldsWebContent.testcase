@@ -86,7 +86,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "My Structure Name 1");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -97,35 +97,49 @@ definition {
 			fieldName = "Date",
 			targetFieldLabel = "Text");
 
-		DDLDataDefinition.save();
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavItem(navItem = "Web Content");
 
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "My Structure Name 1");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		PortletEntry.inputTitle(title = "Minha conta web nome 1");
+		WebContent.addWithStructureCP(
+			webContentDate = "10/10/2020",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Título do conteúdo da web");
 
 		PortletEntry.changeLocale(locale = "en_US");
 
-		PortletEntry.inputTitle(title = "My Web Content Name 1");
+		WebContent.addWithStructureCP(
+			webContentDate = "01/01/2021",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content Name 1");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "My Web Content Name 1");
-
-		PortletEntry.changeLocale(locale = "pt_BR");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "Minha conta web nome 1");
+			value1 = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentDate = "01/01/2021",
+			webContentText = "This is a Text field");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Título do conteúdo da web");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentDate = "10/10/2020",
+			webContentText = "Este é um campo de texto");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

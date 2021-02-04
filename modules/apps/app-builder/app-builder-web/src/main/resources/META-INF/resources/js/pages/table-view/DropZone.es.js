@@ -16,11 +16,11 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
+import Table from 'data-engine-js-components-web/js/components/table/Table.es';
 import {DragTypes} from 'data-engine-taglib';
 import React, {useContext, useLayoutEffect, useRef, useState} from 'react';
 import {useDrop} from 'react-dnd';
 
-import Table from '../../components/table/Table.es';
 import ColumnOverlay from './ColumnOverlay.es';
 import DropZonePlaceholder from './DropZonePlaceholder.es';
 import EditTableViewContext from './EditTableViewContext.es';

@@ -14,12 +14,12 @@
 
 import {waitForElementToBeRemoved} from '@testing-library/dom';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import * as toast from 'data-engine-js-components-web/js/utils/toast.es';
 import {createMemoryHistory} from 'history';
 import React from 'react';
 
 import ListNativeObjects from '../../../../src/main/resources/META-INF/resources/js/pages/native-object/ListNativeObjects.es';
 import * as time from '../../../../src/main/resources/META-INF/resources/js/utils/time.es';
-import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import {RESPONSES} from '../../constants.es';
 

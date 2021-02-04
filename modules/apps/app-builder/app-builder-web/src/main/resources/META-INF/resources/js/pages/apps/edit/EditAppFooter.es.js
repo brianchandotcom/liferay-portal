@@ -13,13 +13,16 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import {
+	errorToast,
+	successToast,
+} from 'data-engine-js-components-web/js/utils/toast.es';
 import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../../AppContext.es';
 import Button from '../../../components/button/Button.es';
 import {addItem, updateItem} from '../../../utils/client.es';
-import {errorToast, successToast} from '../../../utils/toast.es';
 import {normalizeNames} from '../../../utils/utils.es';
 import {isProductMenuValid} from '../utils.es';
 import EditAppContext from './EditAppContext.es';

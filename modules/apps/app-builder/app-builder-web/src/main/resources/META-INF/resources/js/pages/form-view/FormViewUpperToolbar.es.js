@@ -14,6 +14,10 @@
 
 import ClayButton from '@clayui/button';
 import {
+	errorToast,
+	successToast,
+} from 'data-engine-js-components-web/js/utils/toast.es';
+import {
 	DataDefinitionUtils,
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
@@ -23,7 +27,6 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
-import {errorToast, successToast} from '../../utils/toast.es';
 import {normalizeNames} from '../../utils/utils.es';
 import FormViewContext from './FormViewContext.es';
 

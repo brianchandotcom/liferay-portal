@@ -64,7 +64,7 @@ exports[`ListCustomObjects renders 1`] = `
         >
           <button
             class="nav-link nav-link-monospaced order-arrow-down-active btn btn-monospaced btn-unstyled"
-            data-title="reverse-sort-direction"
+            title="reverse-sort-direction"
             type="button"
           >
             <svg
@@ -249,7 +249,7 @@ exports[`ListCustomObjects renders 1`] = `
                   class="dropdown dropdown-action"
                 >
                   <button
-                    class="dropdown-toggle page-link btn btn-unstyled"
+                    class="dropdown-toggle page-link btn btn-monospaced btn-unstyled"
                     type="button"
                   >
                     <svg

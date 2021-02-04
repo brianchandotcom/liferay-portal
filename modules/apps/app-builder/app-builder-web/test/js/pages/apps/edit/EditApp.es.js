@@ -14,10 +14,10 @@
 
 import {waitForElementToBeRemoved} from '@testing-library/dom';
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import * as toast from 'data-engine-js-components-web/js/utils/toast.es';
 import React from 'react';
 
 import EditApp from '../../../../../src/main/resources/META-INF/resources/js/pages/apps/edit/EditApp.es';
-import * as toast from '../../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
 import AppContextProviderWrapper from '../../../AppContextProviderWrapper.es';
 import Router from '../../../RouterWrapper.es';
 import {RESPONSES} from '../../../constants.es';

@@ -13,10 +13,10 @@
  */
 
 import ClayLabel from '@clayui/label';
+import {toQueryString} from 'data-engine-js-components-web/js/hooks/useQuery.es';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import {toQueryString} from '../../hooks/useQuery.es';
 import {FieldValuePreview} from './FieldPreview.es';
 import {ENTRY_STATUS_LABEL} from './constants.es';
 

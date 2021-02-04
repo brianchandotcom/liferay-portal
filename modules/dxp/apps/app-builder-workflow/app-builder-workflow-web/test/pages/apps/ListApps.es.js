@@ -61,7 +61,7 @@ const mockRequest = jest
 	.mockResolvedValueOnce(RESPONSES.MANY_ITEMS({active: false, size: 5}))
 	.mockResolvedValueOnce(RESPONSES.MANY_ITEMS({active: false, size: 4}));
 
-jest.mock('app-builder-web/js/utils/client.es', () => ({
+jest.mock('data-engine-js-components-web/js/utils/client.es', () => ({
 	confirmDelete: jest.fn(),
 	getItem: () => mockGetItem(),
 	parseResponse: (response) => response,

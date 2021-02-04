@@ -11,7 +11,6 @@
 
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import ControlMenu from 'app-builder-web/js/components/control-menu/ControlMenu.es';
-import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
 import {getDataObjects} from 'app-builder-web/js/components/select-objects/SelectObjects.es';
 import EditAppContext, {
 	UPDATE_APP,
@@ -19,6 +18,7 @@ import EditAppContext, {
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
 import {getItem, parseResponse} from 'app-builder-web/js/utils/client.es';
 import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
+import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useReducer, useState} from 'react';
 

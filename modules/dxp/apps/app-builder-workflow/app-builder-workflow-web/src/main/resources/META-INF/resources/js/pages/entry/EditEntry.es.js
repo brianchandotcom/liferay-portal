@@ -13,11 +13,11 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import {ControlMenuBase} from 'app-builder-web/js/components/control-menu/ControlMenu.es';
-import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
 import useDataDefinition from 'app-builder-web/js/hooks/useDataDefinition.es';
 import {getItem} from 'app-builder-web/js/utils/client.es';
 import {getLocalizedUserPreferenceValue} from 'app-builder-web/js/utils/lang.es';
 import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
+import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {
 	useCallback,

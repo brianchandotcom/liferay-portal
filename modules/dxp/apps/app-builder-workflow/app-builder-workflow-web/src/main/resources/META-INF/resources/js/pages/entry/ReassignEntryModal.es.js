@@ -14,9 +14,9 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
 import {addItem, getItem} from 'app-builder-web/js/utils/client.es';
 import {successToast} from 'app-builder-web/js/utils/toast.es';
+import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import SelectDropdown from '../../components/select-dropdown/SelectDropdown.es';

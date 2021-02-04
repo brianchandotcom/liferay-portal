@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
+import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import {TranslationManager} from 'data-engine-taglib';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -21,7 +22,6 @@ import {withRouter} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import DragLayer from '../../components/drag-and-drop/DragLayer.es';
-import {Loading} from '../../components/loading/Loading.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {errorToast, successToast} from '../../utils/toast.es';
 import {normalizeNames} from '../../utils/utils.es';

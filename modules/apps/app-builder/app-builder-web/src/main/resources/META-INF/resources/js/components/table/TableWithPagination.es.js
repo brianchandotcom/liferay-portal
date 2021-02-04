@@ -14,10 +14,10 @@
 
 import ClayLayout from '@clayui/layout';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {withLoading} from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
-import {withLoading} from '../loading/Loading.es';
 import SearchContext from '../management-toolbar/SearchContext.es';
 import {withEmpty} from './EmptyState.es';
 import Table from './Table.es';

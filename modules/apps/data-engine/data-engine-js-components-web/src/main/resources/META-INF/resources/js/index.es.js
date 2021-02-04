@@ -12,3 +12,6 @@
  * details.
  */
 
+import * as Loading from './components/loading';
+
+export {Loading};

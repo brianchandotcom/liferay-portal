@@ -13,7 +13,6 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import ControlMenu from 'app-builder-web/js/components/control-menu/ControlMenu.es';
-import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
 import useDataDefinition from 'app-builder-web/js/hooks/useDataDefinition.es';
 import useQuery from 'app-builder-web/js/hooks/useQuery.es';
 import {ViewDataLayoutPageValues} from 'app-builder-web/js/pages/entry/ViewEntry.es';
@@ -22,6 +21,7 @@ import {addItem, getItem} from 'app-builder-web/js/utils/client.es';
 import {getLocalizedUserPreferenceValue} from 'app-builder-web/js/utils/lang.es';
 import {errorToast} from 'app-builder-web/js/utils/toast.es';
 import {isEqualObjects} from 'app-builder-web/js/utils/utils.es';
+import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
 import {usePrevious} from 'frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 

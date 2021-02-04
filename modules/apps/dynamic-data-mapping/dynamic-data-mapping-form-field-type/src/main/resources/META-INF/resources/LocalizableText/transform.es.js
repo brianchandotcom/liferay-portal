@@ -104,3 +104,15 @@ export const transformAvailableLocalesAndValue = ({
 	})),
 	value: convertValueToString(value),
 });
+
+export const transformEditingLocale = ({
+	defaultLocale,
+	editingLocale,
+	value,
+}) => ({
+	displayName: editingLocale.label,
+	icon: editingLocale.icon,
+	isDefault: isDefaultLocale({defaultLocale, localeId: editingLocale.id}),
+	isTranslated: isTranslated({localeId: editingLocale.id, value}),
+	localeId: editingLocale.id,
+});

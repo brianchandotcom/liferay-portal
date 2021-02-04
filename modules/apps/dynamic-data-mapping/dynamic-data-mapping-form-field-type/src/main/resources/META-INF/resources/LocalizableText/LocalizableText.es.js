@@ -19,7 +19,9 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import React, {useRef, useState} from 'react';
+import {usePage} from 'dynamic-data-mapping-form-renderer';
+import {delegate} from 'frontend-js-web';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import InputComponent from './InputComponent.es';
@@ -29,6 +31,7 @@ import {
 	getInitialInternalValue,
 	normalizeLocaleId,
 	transformAvailableLocalesAndValue,
+	transformEditingLocale,
 } from './transform.es';
 
 const INITIAL_DEFAULT_LOCALE = {
@@ -195,6 +198,44 @@ const LocalizableText = ({
 	const inputValue = currentInternalValue
 		? currentInternalValue
 		: predefinedValue;
+
+	const {portletNamespace} = usePage();
+
+	useEffect(() => {
+		const onClickDDMFormSettingsButton = function () {
+			const translationManager = Liferay.component('translationManager');
+
+			const newAvailableLocales = translationManager.get(
+				'availableLocales'
+			);
+			const newEditingLocale = transformEditingLocale({
+				defaultLocale,
+				editingLocale: newAvailableLocales.get(
+					translationManager.get('editingLocale')
+				),
+				value: currentValue,
+			});
+
+			setCurrentEditingLocale(newEditingLocale);
+
+			setCurrentInternalValue(
+				getEditingValue({
+					defaultLocale,
+					editingLocale: newEditingLocale,
+					value: currentValue,
+				})
+			);
+		};
+
+		const clickDDMFormSettingsButton = delegate(
+			document.body,
+			'click',
+			`#${portletNamespace}ddmFormInstanceSettingsIcon`,
+			onClickDDMFormSettingsButton
+		);
+
+		return () => clickDDMFormSettingsButton.dispose();
+	}, [currentValue, defaultLocale, portletNamespace]);
 
 	return (
 		<ClayInput.Group>

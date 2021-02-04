@@ -40,6 +40,11 @@ public class DDMFormInstanceSettingsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
+	public String getId() {
+		return "ddmFormInstanceSettingsIcon";
+	}
+
+	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
 			getResourceBundle(getLocale(portletRequest)), "settings");

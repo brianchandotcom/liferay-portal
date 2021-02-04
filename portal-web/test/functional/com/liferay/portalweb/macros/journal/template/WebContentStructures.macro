@@ -113,8 +113,8 @@ definition {
 
 	macro editStructure {
 		LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "${structureName}");
+			menuItem = "Edit",
+			rowEntry = "${structureName}");
 	}
 
 	macro editStructureDefaultValuesCP {

@@ -13,12 +13,12 @@
  */
 
 import ClayButton from '@clayui/button';
+import {errorToast} from 'data-engine-js-components-web/js/utils/toast.es';
 import {fetch, openModal} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import NoPermissionState from '../../components/empty-state/NoPermissionState.es';
-import {errorToast} from '../../utils/toast.es';
 
 export default () => {
 	const {appDeploymentType} = useContext(AppContext);

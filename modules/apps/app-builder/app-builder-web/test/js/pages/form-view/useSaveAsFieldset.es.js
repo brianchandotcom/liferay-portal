@@ -13,12 +13,12 @@
  */
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import * as toast from 'data-engine-js-components-web/js/utils/toast.es';
 import {DataLayoutBuilder, DataLayoutBuilderActions} from 'data-engine-taglib';
 import React from 'react';
 
 import FormViewContext from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/FormViewContext.es';
 import useSaveAsFieldset from '../../../../src/main/resources/META-INF/resources/js/pages/form-view/useSaveAsFieldset.es';
-import * as toast from '../../../../src/main/resources/META-INF/resources/js/utils/toast.es';
 import {FORM_VIEW, dataLayoutBuilderConfig} from '../../constants.es';
 
 const {FORM_VIEW_CONTEXT} = FORM_VIEW;

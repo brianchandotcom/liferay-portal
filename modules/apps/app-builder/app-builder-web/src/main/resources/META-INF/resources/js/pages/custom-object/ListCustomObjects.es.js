@@ -13,15 +13,18 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import useQuery from 'data-engine-js-components-web/js/hooks/useQuery.es';
+import {
+	errorToast,
+	successToast,
+} from 'data-engine-js-components-web/js/utils/toast.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import {useKeyDown} from '../../hooks/index.es';
-import useQuery from '../../hooks/useQuery.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem, parseResponse, updateItem} from '../../utils/client.es';
-import {errorToast, successToast} from '../../utils/toast.es';
 import {getValidName} from '../../utils/utils.es';
 import ListObjects from '../object/ListObjects.es';
 import CustomObjectPopover from './CustomObjectPopover.es';

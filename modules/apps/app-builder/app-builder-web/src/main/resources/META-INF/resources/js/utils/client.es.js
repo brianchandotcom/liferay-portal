@@ -12,9 +12,11 @@
  * details.
  */
 
+import {
+	errorToast,
+	successToast,
+} from 'data-engine-js-components-web/js/utils/toast.es';
 import {fetch} from 'frontend-js-web';
-
-import {errorToast, successToast} from '../utils/toast.es';
 
 const HEADERS = {
 	Accept: 'application/json',

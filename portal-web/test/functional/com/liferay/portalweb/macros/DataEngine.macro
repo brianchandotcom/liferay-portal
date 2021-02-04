@@ -1077,7 +1077,19 @@ definition {
 				value1 = "${fieldPlaceholder}");
 		}
 
-		if (isSet(fieldHelp)) {
+		if (isSet(fieldsetModal) && isSet(fieldHelpTextEdit)) {
+			Click(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
+			
+			Type(
+				key_fieldLabel = "Help Text",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldHelpTextEdit}");
+				
+		}
+
+		else if(isSet(fieldHelp)) {
 			var key_fieldFieldLabel = "${fieldFieldLabel}";
 			var key_text = "Help";
 

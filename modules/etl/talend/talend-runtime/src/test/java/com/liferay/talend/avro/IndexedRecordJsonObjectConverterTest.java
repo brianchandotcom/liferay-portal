@@ -57,8 +57,8 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 					OASConstants.OPERATION_POST, readObject("openapi.json")),
 				null, new Result());
 
-		JsonObject jsonObject = indexedRecordJsonObjectConverter.toJsonObject(
-			indexedRecord);
+		JsonObject jsonObject = _requireJsonObject(
+			indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
 
 		JsonArray imagesJsonArray = jsonObject.getJsonArray("images");
 
@@ -111,8 +111,8 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 					OASConstants.OPERATION_POST, readObject("openapi.json")),
 				null, new Result());
 
-		JsonObject jsonObject = indexedRecordJsonObjectConverter.toJsonObject(
-			indexedRecord);
+		JsonObject jsonObject = _requireJsonObject(
+			indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
 
 		JsonObject descriptionJsonObject = jsonObject.getJsonObject(
 			"description");
@@ -143,8 +143,8 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 					readObject("openapi_data_types.json")),
 				null, new Result());
 
-		JsonObject jsonObject = indexedRecordJsonObjectConverter.toJsonObject(
-			indexedRecord);
+		JsonObject jsonObject = _requireJsonObject(
+			indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
 
 		Assert.assertEquals(
 			"timestamp1 value", "2019-12-02T05:17:09Z",
@@ -155,6 +155,12 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 		Assert.assertEquals(
 			"timestamp3 value", "2019-12-02T04:17:09Z",
 			jsonObject.getString("timestamp3"));
+	}
+
+	private JsonObject _requireJsonObject(JsonValue jsonValue) {
+		Assert.assertTrue(jsonValue instanceof JsonObject);
+
+		return jsonValue.asJsonObject();
 	}
 
 }

@@ -35,6 +35,7 @@ import java.util.List;
 
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.IndexedRecord;
@@ -84,8 +85,12 @@ public class LiferayWriterTest extends BaseTestCase {
 			_createIndexedRecordFromFile(
 				"product_content.json", postContentSchema));
 
-		JsonObject outputJsonObject =
-			liferayRequestContentAggregatorSink.getOutputJsonObject();
+		JsonValue outputJsonValue =
+			liferayRequestContentAggregatorSink.getOutputJsonValue();
+
+		Assert.assertTrue(outputJsonValue instanceof JsonObject);
+
+		JsonObject outputJsonObject = outputJsonValue.asJsonObject();
 
 		Assert.assertTrue(
 			"Output has name", outputJsonObject.containsKey("name"));
@@ -133,8 +138,10 @@ public class LiferayWriterTest extends BaseTestCase {
 			_createIndexedRecordFromFile(
 				"bigdecimal_content.json", patchContentSchema));
 
-		JsonObject outputJsonObject =
-			liferayRequestContentAggregatorSink.getOutputJsonObject();
+		JsonValue outputJsonValue =
+			liferayRequestContentAggregatorSink.getOutputJsonValue();
+
+		JsonObject outputJsonObject = outputJsonValue.asJsonObject();
 
 		Assert.assertTrue(
 			"Output has bigDecimal1",
@@ -225,8 +232,10 @@ public class LiferayWriterTest extends BaseTestCase {
 
 		liferayWriter.write(indexedRecord);
 
-		JsonObject outputJsonObject =
-			liferayRequestContentAggregatorSink.getOutputJsonObject();
+		JsonValue outputJsonValue =
+			liferayRequestContentAggregatorSink.getOutputJsonValue();
+
+		JsonObject outputJsonObject = outputJsonValue.asJsonObject();
 
 		Assert.assertTrue(
 			"Output has name", outputJsonObject.containsKey("name"));

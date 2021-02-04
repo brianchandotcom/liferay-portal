@@ -16,7 +16,6 @@ import NoPermissionState from 'app-builder-web/js/components/empty-state/NoPermi
 import useDataListView from 'app-builder-web/js/hooks/useDataListView.es';
 import useEntriesActions from 'app-builder-web/js/hooks/useEntriesActions.es';
 import usePermissions from 'app-builder-web/js/hooks/usePermissions.es';
-import useQuery from 'app-builder-web/js/hooks/useQuery.es';
 import {
 	buildEntries,
 	navigateToEditPage,
@@ -32,6 +31,7 @@ import SearchContext, {
 	reducer,
 } from 'data-engine-js-components-web/js/components/management-toolbar/SearchContext.es';
 import TableWithPagination from 'data-engine-js-components-web/js/components/table/TableWithPagination.es';
+import useQuery from 'data-engine-js-components-web/js/hooks/useQuery.es';
 import {usePrevious, useTimeout} from 'frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 

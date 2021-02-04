@@ -18,13 +18,14 @@ import {createMemoryHistory} from 'history';
 import React from 'react';
 
 import ListView from '../../../../src/main/resources/META-INF/resources/js/components/list-view/ListView.es';
+import RouteWrapper from '../../RouterWrapper.es';
 import {
 	ACTIONS,
 	COLUMNS,
 	EMPTY_STATE,
 	ENDPOINT,
 	RESPONSES,
-} from '../../constants';
+} from '../../constants.es';
 
 const BODY = (item) => ({
 	...item,
@@ -160,16 +161,18 @@ describe('ListView', () => {
 			},
 		];
 
-		const {container, getAllByRole, queryByPlaceholderText} = render(
-			<ListView
-				actions={actions}
-				columns={COLUMNS}
-				emptyState={EMPTY_STATE}
-				endpoint={ENDPOINT}
-				history={history}
-			>
-				{BODY}
-			</ListView>
+		const {container, debug, getAllByRole, queryByPlaceholderText} = render(
+			<RouteWrapper>
+				<ListView
+					actions={actions}
+					columns={COLUMNS}
+					emptyState={EMPTY_STATE}
+					endpoint={ENDPOINT}
+					history={history}
+				>
+					{BODY}
+				</ListView>
+			</RouteWrapper>
 		);
 
 		await waitForElementToBeRemoved(() => {
@@ -193,9 +196,20 @@ describe('ListView', () => {
 		expect(fetch.mock.calls.length).toEqual(2);
 
 		const input = queryByPlaceholderText('search...');
-		fireEvent.change(input, {target: {value: 'value'}});
+
+		await act(async () => {
+			await fireEvent.change(input, {target: {value: 'value'}});
+		});
 
 		expect(input.value).toBe('value');
 		expect(container.querySelector('.subnav-tbar')).toBeFalsy();
+
+		const submit = container.querySelector('button[type="submit"]');
+
+		await act(async () => {
+			await fireEvent.click(submit);
+		});
+
+		expect(container.querySelector('.subnav-tbar')).toBeTruthy();
 	});
 });

@@ -12,11 +12,14 @@
  * details.
  */
 
+import {
+	errorToast,
+	successToast,
+} from 'data-engine-js-components-web/js/utils/toast.es';
 import {DataLayoutBuilderActions} from 'data-engine-taglib';
 import {useContext} from 'react';
 
 import {addItem} from '../../utils/client.es';
-import {errorToast, successToast} from '../../utils/toast.es';
 import FormViewContext from './FormViewContext.es';
 
 export default ({dataLayoutBuilder}) => {

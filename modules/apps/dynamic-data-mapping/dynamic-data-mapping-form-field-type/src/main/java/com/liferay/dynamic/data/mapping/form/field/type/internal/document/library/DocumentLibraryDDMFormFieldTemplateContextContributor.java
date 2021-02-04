@@ -189,7 +189,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				valueJSONObject.getLong("groupId"));
 		}
 		catch (PortalException portalException) {
-			_log.error("Unable to retrieve file entry ", portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to retrieve file entry ", portalException);
+			}
 
 			return null;
 		}

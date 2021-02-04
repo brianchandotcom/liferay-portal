@@ -26,17 +26,24 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -68,6 +75,11 @@ public class ImageDDMFormFieldTemplateContextContributor
 			getItemSelectorURL(
 				ddmFormFieldRenderingContext.getHttpServletRequest(),
 				ddmFormFieldRenderingContext)
+		).put(
+			"message",
+			_getMessage(
+				ddmFormFieldRenderingContext.getLocale(),
+				ddmFormFieldRenderingContext.getValue())
 		).put(
 			"portletNamespace",
 			ddmFormFieldRenderingContext.getPortletNamespace()
@@ -115,27 +127,28 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 	protected String getValue(String value) {
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(value);
+			JSONObject valueJSONObject = _getValueJSONObject(value);
 
-			if (Validator.isNotNull(jsonObject.getString("uuid")) &&
-				Validator.isNotNull(jsonObject.getLong("groupId"))) {
-
-				FileEntry fileEntry =
-					_dlAppService.getFileEntryByUuidAndGroupId(
-						GetterUtil.getString(jsonObject.getString("uuid")),
-						GetterUtil.getLong(jsonObject.getString("groupId")));
-
-				jsonObject.put(
-					"description", jsonObject.getString("alt")
-				).put(
-					"url",
-					_dlURLHelper.getDownloadURL(
-						fileEntry, fileEntry.getFileVersion(), null,
-						StringPool.BLANK)
-				);
-
-				return jsonObject.toString();
+			if ((valueJSONObject == null) || (valueJSONObject.length() <= 0)) {
+				return value;
 			}
+
+			FileEntry fileEntry = _getFileEntry(valueJSONObject);
+
+			if (fileEntry == null) {
+				return value;
+			}
+
+			valueJSONObject.put(
+				"description", valueJSONObject.getString("alt")
+			).put(
+				"url",
+				_dlURLHelper.getDownloadURL(
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK)
+			);
+
+			return valueJSONObject.toString();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -144,6 +157,76 @@ public class ImageDDMFormFieldTemplateContextContributor
 		}
 
 		return value;
+	}
+
+	private FileEntry _getFileEntry(JSONObject valueJSONObject) {
+		try {
+			return _dlAppService.getFileEntryByUuidAndGroupId(
+				valueJSONObject.getString("uuid"),
+				valueJSONObject.getLong("groupId"));
+		}
+		catch (PortalException portalException) {
+			_log.error("Unable to retrieve file entry ", portalException);
+
+			return null;
+		}
+	}
+
+	private String _getMessage(Locale defaultLocale, String value) {
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		JSONObject valueJSONObject = _getValueJSONObject(value);
+
+		if ((valueJSONObject == null) || (valueJSONObject.length() <= 0)) {
+			return StringPool.BLANK;
+		}
+
+		if (Validator.isNull(valueJSONObject.getString("uuid")) ||
+			Validator.isNull(valueJSONObject.getLong("groupId"))) {
+
+			return StringPool.BLANK;
+		}
+
+		FileEntry fileEntry = _getFileEntry(valueJSONObject);
+
+		if (fileEntry == null) {
+			return LanguageUtil.get(
+				_getResourceBundle(defaultLocale),
+				"the-selected-document-was-deleted");
+		}
+
+		if (fileEntry.isInTrash()) {
+			return LanguageUtil.get(
+				_getResourceBundle(defaultLocale),
+				"the-selected-document-was-moved-to-the-recycle-bin");
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		ResourceBundle portalResourceBundle = _portal.getResourceBundle(locale);
+
+		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return new AggregateResourceBundle(
+			moduleResourceBundle, portalResourceBundle);
+	}
+
+	private JSONObject _getValueJSONObject(String value) {
+		try {
+			return _jsonFactory.createJSONObject(value);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException, jsonException);
+			}
+
+			return null;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -160,5 +243,8 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 }

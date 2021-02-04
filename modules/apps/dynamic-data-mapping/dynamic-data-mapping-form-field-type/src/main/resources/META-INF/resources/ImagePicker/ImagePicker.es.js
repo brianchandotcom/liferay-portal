@@ -27,6 +27,7 @@ const ImagePicker = ({
 	id,
 	inputValue,
 	itemSelectorURL,
+	message,
 	name,
 	onClearClick,
 	onDescriptionChange,
@@ -159,6 +160,8 @@ const ImagePicker = ({
 						</ClayInput.GroupItem>
 					)}
 				</ClayInput.Group>
+
+				{message && <div className="form-feedback-item">{message}</div>}
 			</ClayForm.Group>
 
 			{imageValues.url && modalVisible ? (
@@ -228,6 +231,7 @@ const Main = ({
 	id,
 	inputValue,
 	itemSelectorURL,
+	message,
 	name,
 	onChange,
 	portletNamespace,
@@ -283,6 +287,7 @@ const Main = ({
 					defaultValue
 				}
 				itemSelectorURL={itemSelectorURL}
+				message={message}
 				name={name}
 				onClearClick={({event, ...data}) => onChange(event, data)}
 				onDescriptionChange={({event, ...data}) =>

@@ -74,7 +74,7 @@ class MBPortlet {
 
 	_attachEvents() {
 		const publishButton = this.rootNode.querySelector(
-			'.button-holder button[type="submit"]'
+			'.sheet-footer button[type="submit"]'
 		);
 
 		if (publishButton) {

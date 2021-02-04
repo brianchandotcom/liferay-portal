@@ -134,7 +134,7 @@ definition {
 	@priority = "5"
 	test RepeatRichTextOnUpload {
 		property portal.acceptance = "false";
-		
+
 		DataEngine.addField(
 			fieldFieldLabel = "Repeatable",
 			fieldName = "Rich Text");
@@ -144,7 +144,7 @@ definition {
 		DDLDataDefinition.save();
 
 		Navigator.gotoNavItem(navItem = "Documents and Media");
-		
+
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "New Document Type");
 
 		DataEngine.addRepeatableField(fieldName = "Repeatable");

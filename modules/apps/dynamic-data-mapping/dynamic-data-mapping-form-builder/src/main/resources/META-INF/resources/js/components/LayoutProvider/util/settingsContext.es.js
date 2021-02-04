@@ -85,7 +85,9 @@ export const updateSettingsContextProperty = (
 				let value = propertyValue;
 
 				if (isLocalizableLabel) {
-					value = propertyValue[editingLanguageId];
+					value =
+						propertyValue[editingLanguageId] ||
+						propertyValue[defaultLanguageId];
 				}
 
 				field = {

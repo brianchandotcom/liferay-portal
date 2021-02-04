@@ -343,6 +343,7 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "4"
 	test EmptyAFieldGroup {
+		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
     		category = "Content & Data",
@@ -351,6 +352,8 @@ definition {
 		NavItem.click(navItem = "Document Types");
 
 		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Testing");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -361,21 +364,19 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
+		WebContentStructures.saveCP();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "WC Structure Name");
+			rowEntry = "Testing");
 
-		DataEngine.delete(fieldFieldLabel = "Text");
+		 DataEngine.delete(fieldFieldLabel = "Text");
 
-		DataEngine.delete(fieldFieldLabel = "Numeric");
+		 DataEngine.delete(fieldFieldLabel = "Numeric");
 
-		WebContentStructures.saveCP(structureName = "${structureName}");
+		WebContentStructures.saveCP();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Structure Name");
+		LexiconEntry.gotoEntry(rowEntry = "Testing");
 
 		AssertElementNotPresent(locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD");
 

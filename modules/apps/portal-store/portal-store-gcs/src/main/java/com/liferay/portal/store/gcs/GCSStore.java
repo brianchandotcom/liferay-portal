@@ -25,7 +25,6 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.BucketInfo;
-import com.google.cloud.storage.CopyWriter;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.google.common.base.Stopwatch;
@@ -80,42 +79,6 @@ public class GCSStore implements Store {
 	public static final String KEY_PROPERTY = "dl.store.gcs.aes256.key";
 
 	@Override
-	public void addDirectory(
-		long companyId, long repositoryId, String dirName) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Liferay GCS adapter does not support creating empty " +
-					"directory structures");
-		}
-	}
-
-	@Override
-	public void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException {
-
-		if (_log.isDebugEnabled()) {
-			String fileKey = _keyTransformer.getFileKey(
-				companyId, repositoryId, fileName);
-
-			_log.debug("Creating file with default version for: " + fileKey);
-		}
-
-		addFileWithVersion(
-			companyId, repositoryId, fileName, VERSION_DEFAULT, is);
-	}
-
-	@Override
-	public void checkRoot(long companyId) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Liferay GCS adapter does not support \"check root\" " +
-					"operations");
-		}
-	}
-
-	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
@@ -155,15 +118,6 @@ public class GCSStore implements Store {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Deleting from bucket with fileName: " + fileName);
-		}
-
-		deleteDirectory(companyId, repositoryId, fileName);
-	}
-
-	@Override
 	public void deleteFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -193,11 +147,6 @@ public class GCSStore implements Store {
 		}
 
 		return Channels.newInputStream(_getReader(blob));
-	}
-
-	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		return getFileNames(companyId, repositoryId, StringPool.BLANK);
 	}
 
 	@Override
@@ -293,19 +242,6 @@ public class GCSStore implements Store {
 	}
 
 	@Override
-	public boolean hasDirectory(
-		long companyId, long repositoryId, String dirName) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Liferay GCS adapter does not support check for directory, " +
-					"returning true");
-		}
-
-		return true;
-	}
-
-	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
@@ -351,66 +287,6 @@ public class GCSStore implements Store {
 		}
 
 		return hasFile;
-	}
-
-	@Override
-	public void updateFile(
-		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
-
-		String[] fileNames = getFileNames(companyId, repositoryId, fileName);
-
-		for (String oldPath : fileNames) {
-			String version = _getVersionFromFullPath(oldPath);
-
-			Blob oldBlob = _getBlob(_getBlobId(oldPath));
-
-			String newPath = _keyTransformer.getFileVersionKey(
-				companyId, newRepositoryId, fileName, version);
-
-			_move(oldBlob, newPath);
-		}
-	}
-
-	@Override
-	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
-
-		String[] fileNames = getFileNames(companyId, repositoryId, fileName);
-
-		for (String oldPath : fileNames) {
-			String version = _getVersionFromFullPath(oldPath);
-
-			Blob oldBlob = _getBlob(companyId, repositoryId, fileName, version);
-
-			String newPath = _keyTransformer.getFileVersionKey(
-				companyId, repositoryId, newFileName, version);
-
-			_move(oldBlob, newPath);
-		}
-	}
-
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
-		throws PortalException {
-
-		if (_log.isTraceEnabled()) {
-			String filePath = _keyTransformer.getFileKey(
-				companyId, repositoryId, fileName);
-			String fileVersion = _keyTransformer.getFileVersionKey(
-				companyId, repositoryId, fileName, versionLabel);
-
-			String msg = String.format(
-				"Updating file \"%s\" to version \"%s\"", filePath,
-				fileVersion);
-
-			_log.trace(msg);
-		}
-
-		addFileWithVersion(companyId, repositoryId, fileName, versionLabel, is);
 	}
 
 	@Activate
@@ -643,21 +519,6 @@ public class GCSStore implements Store {
 		return _gcsStoreConfiguration.bucketName();
 	}
 
-	private Storage.CopyRequest _getCopyRequest(
-		BlobId newBlobId, BlobId oldBlobId,
-		Storage.BlobSourceOption sourceOption,
-		Storage.BlobTargetOption targetOption) {
-
-		Storage.CopyRequest.Builder copyRequestBuilder =
-			Storage.CopyRequest.newBuilder();
-
-		copyRequestBuilder.setSource(oldBlobId);
-		copyRequestBuilder.setSourceOptions(sourceOption);
-		copyRequestBuilder.setTarget(newBlobId, targetOption);
-
-		return copyRequestBuilder.build();
-	}
-
 	private InputStream _getCredentialsInputStream()
 		throws FileNotFoundException {
 
@@ -707,12 +568,6 @@ public class GCSStore implements Store {
 		return blob.reader(_blobDecryptSourceOption);
 	}
 
-	private String _getVersionFromFullPath(String fullPath) {
-		int indexOfLastSlash = fullPath.lastIndexOf(StringPool.FORWARD_SLASH);
-
-		return fullPath.substring(indexOfLastSlash + 1);
-	}
-
 	private WriteChannel _getWriter(BlobInfo blobInfo) {
 		if (_blobEncryptWriteOption == null) {
 			return _gcsStore.writer(blobInfo);
@@ -732,57 +587,6 @@ public class GCSStore implements Store {
 		else if (deleted && _log.isTraceEnabled()) {
 			_log.trace("Deleted \"" + blob.getBlobId() + "\" from file store");
 		}
-	}
-
-	private void _move(Blob oldBlob, String newPath) {
-		BlobId newBlobId = _getBlobId(newPath);
-
-		BlobId oldBlobId = oldBlob.getBlobId();
-
-		if (_log.isTraceEnabled()) {
-			String msg = String.format(
-				"Updating file from (name) \"%s\" to \"%s\"",
-				oldBlobId.getName(), newBlobId.getName());
-
-			_log.trace(msg);
-		}
-
-		Storage.CopyRequest copyRequest = _getCopyRequest(
-			newBlobId, oldBlobId, _storageDecryptionSourceOption,
-			_blobEncryptTargetOption);
-
-		Stopwatch stopwatch = null;
-
-		if (_log.isTraceEnabled()) {
-			stopwatch = Stopwatch.createStarted();
-		}
-
-		CopyWriter copyWriter = _gcsStore.copy(copyRequest);
-
-		// block until complete
-
-		while (!copyWriter.isDone()) {
-			copyWriter.copyChunk();
-		}
-
-		if (_log.isTraceEnabled()) {
-			stopwatch.stop();
-
-			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-
-			String traceMsg = String.format(
-				"Copying of %s to %s took %d milliseconds", oldBlobId.getName(),
-				newBlobId.getName(), elapsed);
-
-			_log.trace(traceMsg);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat("Copied ", oldBlob, " to ", newBlobId));
-		}
-
-		_logAndDeleteBlob(oldBlob);
 	}
 
 	private void _setGcsStore() throws PortalException {
@@ -832,16 +636,10 @@ public class GCSStore implements Store {
 			_blobEncryptWriteOption = null;
 		}
 		else {
-			_storageDecryptionSourceOption =
-				Storage.BlobSourceOption.decryptionKey(keyValue);
-
 			_blobDecryptSourceOption = Blob.BlobSourceOption.decryptionKey(
 				keyValue);
 
 			_blobEncryptWriteOption = Storage.BlobWriteOption.encryptionKey(
-				keyValue);
-
-			_blobEncryptTargetOption = Storage.BlobTargetOption.encryptionKey(
 				keyValue);
 		}
 	}
@@ -915,7 +713,6 @@ public class GCSStore implements Store {
 	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
 
 	private Blob.BlobSourceOption _blobDecryptSourceOption;
-	private Storage.BlobTargetOption _blobEncryptTargetOption;
 	private Storage.BlobWriteOption _blobEncryptWriteOption;
 	private BucketInfo _bucketInfo;
 	private Storage _gcsStore;
@@ -923,7 +720,5 @@ public class GCSStore implements Store {
 
 	@Reference
 	private GCSKeyTransformer _keyTransformer;
-
-	private Storage.BlobSourceOption _storageDecryptionSourceOption;
 
 }

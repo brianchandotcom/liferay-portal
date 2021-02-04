@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-    <td>FORM_FIELDS_GROUP_INDEX</td>
-    <td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[${index}]</td>
-    <td></td>
-</tr>
-<tr>
 	<td>FORM_FIELDS_GROUP_FIRST</td>
 	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])</td>
 	<td></td>

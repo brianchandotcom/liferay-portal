@@ -18,8 +18,8 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 
-import SearchContext from '../management-toolbar/SearchContext.es';
 import DropDown, {CheckboxGroup, ItemsGroup, RadioGroup} from './DropDown.es';
+import SearchContext from './SearchContext.es';
 import {FILTER_NAMES} from './constants.es';
 
 const getSortable = (columns, sort = '') => {

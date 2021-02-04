@@ -9,6 +9,15 @@ definition {
 
 		PortletEntry.publish();
 	}
+	macro viewDuplicatedField{
+		var i = "0";
+
+		while ("${i}" != "${totalPortletCount}") {
+			var i = ${i} + 1;
+
+			AssertElementPresent(locator1 = "WCEditWebContent#REPEATABLE_BUTTON");
+		}
+	}
 
 	macro addCP {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");

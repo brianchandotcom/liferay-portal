@@ -233,23 +233,21 @@ definition {
 		var fieldsetLabel = "My New Fieldset";
 
 		ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Documents and Media");
+			category = "Content & Data",
+			portlet = "Documents and Media");
 
-        AppBuilderAdmin.switchTab(tabName = "Document Types");
+		AppBuilderAdmin.switchTab(tabName = "Document Types");
 
 		DMDocumentType.addWithoutSave(
-            dmDocumentTypeFieldNames = "Numeric",
-            dmDocumentTypeName = "Document Type Name"
-		);
+			dmDocumentTypeFieldNames = "Numeric",
+			dmDocumentTypeName = "Document Type Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
 			fieldsetLabel = "${fieldsetLabel}",
-			fieldsetName = "${fieldsetLabel}"
-		);
-		
+			fieldsetName = "${fieldsetLabel}");
+
 		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
 
 		MenuItem.click(menuItem = "Edit");
@@ -269,7 +267,7 @@ definition {
 		Click(locator1 = "Modal#PROPAGATE_BUTTON");
 
 		Alert.viewSuccessMessage();
-		
+
 		Button.clickSave();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
@@ -281,7 +279,6 @@ definition {
 		AssertVisible(
 			key_helpText = "Edited Help Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_HELP_TEXT");
-
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

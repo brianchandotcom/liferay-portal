@@ -133,16 +133,16 @@ public class FragmentStyledLayoutStructureItemTest {
 			layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT));
 
-		LayoutStructureItem rowLayoutStructureItem =
-			layoutStructure.addRowLayoutStructureItem(
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 1);
 
 		LayoutStructureItem columnLayoutStructureItem =
 			layoutStructure.addColumnLayoutStructureItem(
-				rowLayoutStructureItem.getItemId(), 0);
+				rowStyledLayoutStructureItem.getItemId(), 0);
 
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.addFragmentLayoutStructureItem(
+			layoutStructure.addFragmentStyledLayoutStructureItem(
 				_contributedFragmentEntryLink.getFragmentEntryLinkId(),
 				columnLayoutStructureItem.getItemId(), 0);
 
@@ -162,16 +162,16 @@ public class FragmentStyledLayoutStructureItemTest {
 			layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT));
 
-		LayoutStructureItem rowLayoutStructureItem =
-			layoutStructure.addRowLayoutStructureItem(
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 1);
 
 		LayoutStructureItem columnLayoutStructureItem =
 			layoutStructure.addColumnLayoutStructureItem(
-				rowLayoutStructureItem.getItemId(), 0);
+				rowStyledLayoutStructureItem.getItemId(), 0);
 
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.addFragmentLayoutStructureItem(
+			layoutStructure.addFragmentStyledLayoutStructureItem(
 				_fragmentEntryLink.getFragmentEntryLinkId(),
 				columnLayoutStructureItem.getItemId(), 0);
 

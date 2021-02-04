@@ -176,7 +176,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 			themeDisplay.getPlid(),
 			layoutStructure -> {
 				LayoutStructureItem layoutStructureItem =
-					layoutStructure.addFragmentLayoutStructureItem(
+					layoutStructure.addFragmentStyledLayoutStructureItem(
 						fragmentEntryLink.getFragmentEntryLinkId(),
 						parentItemId, position);
 

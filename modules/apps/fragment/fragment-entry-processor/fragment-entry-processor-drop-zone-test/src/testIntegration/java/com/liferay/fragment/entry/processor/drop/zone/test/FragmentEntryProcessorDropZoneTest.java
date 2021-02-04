@@ -95,20 +95,20 @@ public class FragmentEntryProcessorDropZoneTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
 
-		LayoutStructureItem fragmentLayoutStructureItem =
-			layoutStructure.addFragmentLayoutStructureItem(
+		LayoutStructureItem fragmentStyledLayoutStructureItem =
+			layoutStructure.addFragmentStyledLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),
-				containerLayoutStructureItem.getItemId(), 0);
+				containerStyledLayoutStructureItem.getItemId(), 0);
 
 		LayoutStructureItem fragmentDropZoneLayoutStructureItem =
 			layoutStructure.addFragmentDropZoneLayoutStructureItem(
-				fragmentLayoutStructureItem.getItemId(), 0);
+				fragmentStyledLayoutStructureItem.getItemId(), 0);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(), _layout.getPlid(),

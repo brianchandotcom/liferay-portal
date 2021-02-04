@@ -142,7 +142,7 @@ public class AddItemMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
-		_layoutStructure.addContainerLayoutStructureItem(
+		_layoutStructure.addContainerStyledLayoutStructureItem(
 			_layoutStructure.getMainItemId(), 0);
 
 		_layoutPageTemplateStructureLocalService.

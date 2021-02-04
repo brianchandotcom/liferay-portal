@@ -134,7 +134,7 @@ public class LayoutCopyHelperTest {
 		layoutStructure.addRootLayoutStructureItem();
 
 		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0);
 
 		FragmentEntryLink fragmentEntryLink =
@@ -144,7 +144,7 @@ public class LayoutCopyHelperTest {
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, 0, null, _serviceContext);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 
@@ -154,7 +154,7 @@ public class LayoutCopyHelperTest {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, 0, null, _serviceContext);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 

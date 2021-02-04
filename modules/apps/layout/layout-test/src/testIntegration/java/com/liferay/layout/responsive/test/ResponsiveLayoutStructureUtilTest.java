@@ -153,15 +153,15 @@ public class ResponsiveLayoutStructureUtilTest {
 			layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT));
 
-		LayoutStructureItem rowLayoutStructureItem =
-			layoutStructure.addRowLayoutStructureItem(
+		LayoutStructureItem rowStyledLayoutStructureItem =
+			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 1);
 
 		LayoutStructureItem columnLayoutStructureItem =
 			layoutStructure.addColumnLayoutStructureItem(
-				rowLayoutStructureItem.getItemId(), 0);
+				rowStyledLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			_fragmentEntryLink.getFragmentEntryLinkId(),
 			columnLayoutStructureItem.getItemId(), 0);
 
@@ -227,7 +227,7 @@ public class ResponsiveLayoutStructureUtilTest {
 
 		StyledLayoutStructureItem rowStyledLayoutStructureItem =
 			(StyledLayoutStructureItem)
-				layoutStructure.addRowLayoutStructureItem(
+				layoutStructure.addRowStyledLayoutStructureItem(
 					layoutStructure.getMainItemId(), 0, 1);
 
 		for (ViewportSize viewportSize : ViewportSize.values()) {

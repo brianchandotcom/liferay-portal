@@ -92,8 +92,8 @@ public class DeleteItemMVCActionCommandTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
 		_addLayoutPageTemplateStructure(layoutStructure.toString());
@@ -104,7 +104,7 @@ public class DeleteItemMVCActionCommandTest {
 				long.class, long.class, String.class, long.class, long.class
 			},
 			_group.getCompanyId(), _group.getGroupId(),
-			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			containerStyledLayoutStructureItem.getItemId(), _layout.getPlid(),
 			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
@@ -166,8 +166,8 @@ public class DeleteItemMVCActionCommandTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem fragmentLayoutStructureItem =
-			layoutStructure.addFragmentLayoutStructureItem(
+		LayoutStructureItem fragmentStyledLayoutStructureItem =
+			layoutStructure.addFragmentStyledLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),
 				rootLayoutStructureItem.getItemId(), 0);
 
@@ -179,7 +179,7 @@ public class DeleteItemMVCActionCommandTest {
 				long.class, long.class, String.class, long.class, long.class
 			},
 			_group.getCompanyId(), _group.getGroupId(),
-			fragmentLayoutStructureItem.getItemId(), _layout.getPlid(),
+			fragmentStyledLayoutStructureItem.getItemId(), _layout.getPlid(),
 			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
@@ -218,12 +218,12 @@ public class DeleteItemMVCActionCommandTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
 		layoutStructure.addDropZoneLayoutStructureItem(
-			containerLayoutStructureItem.getItemId(), 0);
+			containerStyledLayoutStructureItem.getItemId(), 0);
 
 		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
@@ -233,7 +233,7 @@ public class DeleteItemMVCActionCommandTest {
 				long.class, long.class, String.class, long.class, long.class
 			},
 			_group.getCompanyId(), _group.getGroupId(),
-			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			containerStyledLayoutStructureItem.getItemId(), _layout.getPlid(),
 			SegmentsExperienceConstants.ID_DEFAULT);
 	}
 
@@ -251,13 +251,13 @@ public class DeleteItemMVCActionCommandTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			containerLayoutStructureItem.getItemId(), 0);
+			containerStyledLayoutStructureItem.getItemId(), 0);
 
 		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
@@ -267,7 +267,7 @@ public class DeleteItemMVCActionCommandTest {
 				long.class, long.class, String.class, long.class, long.class
 			},
 			_group.getCompanyId(), _group.getGroupId(),
-			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			containerStyledLayoutStructureItem.getItemId(), _layout.getPlid(),
 			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
@@ -322,17 +322,17 @@ public class DeleteItemMVCActionCommandTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink1.getFragmentEntryLinkId(),
-			containerLayoutStructureItem.getItemId(), 0);
+			containerStyledLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink2.getFragmentEntryLinkId(),
-			containerLayoutStructureItem.getItemId(), 0);
+			containerStyledLayoutStructureItem.getItemId(), 0);
 
 		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
@@ -342,7 +342,7 @@ public class DeleteItemMVCActionCommandTest {
 				long.class, long.class, String.class, long.class, long.class
 			},
 			_group.getCompanyId(), _group.getGroupId(),
-			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			containerStyledLayoutStructureItem.getItemId(), _layout.getPlid(),
 			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
@@ -401,21 +401,21 @@ public class DeleteItemMVCActionCommandTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		LayoutStructureItem columnLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
-				containerLayoutStructureItem.getItemId(), 0);
+		LayoutStructureItem innerContainerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
+				containerStyledLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink1.getFragmentEntryLinkId(),
-			columnLayoutStructureItem.getItemId(), 0);
+			innerContainerStyledLayoutStructureItem.getItemId(), 0);
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink2.getFragmentEntryLinkId(),
-			columnLayoutStructureItem.getItemId(), 0);
+			innerContainerStyledLayoutStructureItem.getItemId(), 0);
 
 		_addLayoutPageTemplateStructure(layoutStructure.toString());
 
@@ -425,7 +425,7 @@ public class DeleteItemMVCActionCommandTest {
 				long.class, long.class, String.class, long.class, long.class
 			},
 			_group.getCompanyId(), _group.getGroupId(),
-			containerLayoutStructureItem.getItemId(), _layout.getPlid(),
+			containerStyledLayoutStructureItem.getItemId(), _layout.getPlid(),
 			SegmentsExperienceConstants.ID_DEFAULT);
 
 		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(

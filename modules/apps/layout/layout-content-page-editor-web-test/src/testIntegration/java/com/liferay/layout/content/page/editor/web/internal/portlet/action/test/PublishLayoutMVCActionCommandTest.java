@@ -94,15 +94,15 @@ public class PublishLayoutMVCActionCommandTest {
 		LayoutStructure layoutStructure = _getLayoutStructure(draftLayout);
 
 		LayoutStructureItem layoutStructureItem1 =
-			layoutStructure.addContainerLayoutStructureItem(
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0);
 
 		LayoutStructureItem layoutStructureItem2 =
-			layoutStructure.addRowLayoutStructureItem(
+			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 3);
 
 		LayoutStructureItem layoutStructureItem3 =
-			layoutStructure.addRowLayoutStructureItem(
+			layoutStructure.addRowStyledLayoutStructureItem(
 				layoutStructure.getMainItemId(), 0, 3);
 
 		layoutStructure.markLayoutStructureItemForDeletion(

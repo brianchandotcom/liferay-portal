@@ -65,7 +65,7 @@ public class WidgetLayoutStructureItemImporter
 			return null;
 		}
 
-		return layoutStructure.addFragmentLayoutStructureItem(
+		return layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(), parentItemId, position);
 	}
 

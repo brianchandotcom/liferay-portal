@@ -65,16 +65,16 @@ public class LayoutPageTemplateStructureHelperUtil {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutStructureItem containerLayoutStructureItem =
-			layoutStructure.addContainerLayoutStructureItem(
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
 		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
 			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
 
-			layoutStructure.addFragmentLayoutStructureItem(
+			layoutStructure.addFragmentStyledLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),
-				containerLayoutStructureItem.getItemId(), i);
+				containerStyledLayoutStructureItem.getItemId(), i);
 		}
 
 		return layoutStructure.toJSONObject();

@@ -74,8 +74,9 @@ public class LayoutDataConverter {
 				ContainerStyledLayoutStructureItem
 					outerContainerStyledLayoutStructureItem =
 						(ContainerStyledLayoutStructureItem)
-							layoutStructure.addContainerLayoutStructureItem(
-								rootLayoutStructureItem.getItemId(), i);
+							layoutStructure.
+								addContainerStyledLayoutStructureItem(
+									rootLayoutStructureItem.getItemId(), i);
 
 				outerContainerStyledLayoutStructureItem.setWidthType("fluid");
 
@@ -139,7 +140,7 @@ public class LayoutDataConverter {
 
 				RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
 					(RowStyledLayoutStructureItem)
-						layoutStructure.addRowLayoutStructureItem(
+						layoutStructure.addRowStyledLayoutStructureItem(
 							innerContainerStyledLayoutStructureItem.getItemId(),
 							0, columnsJSONArray.length());
 
@@ -219,7 +220,7 @@ public class LayoutDataConverter {
 			return;
 		}
 
-		layoutStructure.addFragmentLayoutStructureItem(
+		layoutStructure.addFragmentStyledLayoutStructureItem(
 			GetterUtil.getLong(fragmentEntryLinkId), parentItemId, position);
 	}
 

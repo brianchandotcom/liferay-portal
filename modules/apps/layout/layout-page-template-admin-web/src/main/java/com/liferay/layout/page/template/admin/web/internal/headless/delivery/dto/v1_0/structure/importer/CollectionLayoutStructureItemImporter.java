@@ -61,7 +61,7 @@ public class CollectionLayoutStructureItemImporter
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)
-					layoutStructure.addCollectionLayoutStructureItem(
+					layoutStructure.addCollectionStyledLayoutStructureItem(
 						parentItemId, position);
 
 		Map<String, Object> definitionMap = getDefinitionMap(

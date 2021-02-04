@@ -206,7 +206,7 @@ definition {
 			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Searchable",
+			fieldFieldLabel = "Rich Text",
 			searchableType = "Disable");
 
 		DDLDataDefinition.save();
@@ -214,7 +214,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Searchable",
+			fieldFieldLabel = "Rich Text",
 			searchableType = "Text");
 
 		DDLDataDefinition.save();

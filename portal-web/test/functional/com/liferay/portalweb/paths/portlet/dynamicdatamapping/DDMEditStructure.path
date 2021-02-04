@@ -186,6 +186,13 @@
 <tr>
 	<td>FORM_COLLAPSE_BUTTON</td>
 	<td>//button[contains(@class,'collapse-icon')][//label[normalize-space(text())='${key_label}']]</td>
+	<td>FORM_FIELD_CONTAINER_HELP_TEXT</td>
+	<td>//span[@class='form-text' and normalize-space(text())='${key_helpText}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_SETS_COLLAPSE_BUTTON</td>
+	<td>//div[contains(@class,'fieldset')]//button[contains(@class,'collapse-icon')][//label[text()='${key_fieldsetLabel}']]</td>
 	<td></td>
 </tr>
 <tr>

@@ -233,6 +233,10 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 						fragmentStyledLayoutStructureItem.
 							getFragmentEntryLinkId());
 
+				if (fragmentEntryLink == null) {
+					continue;
+				}
+
 				JSONObject editableValuesJSONObject =
 					JSONFactoryUtil.createJSONObject(
 						fragmentEntryLink.getEditableValues());

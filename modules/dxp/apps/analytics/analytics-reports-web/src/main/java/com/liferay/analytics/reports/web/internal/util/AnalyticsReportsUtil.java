@@ -91,6 +91,10 @@ public class AnalyticsReportsUtil {
 			companyId, "liferayAnalyticsFaroBackendURL");
 	}
 
+	public static String getAsahProjectId(long companyId) {
+		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsProjectId");
+	}
+
 	public static boolean isAnalyticsConnected(long companyId) {
 		if (Validator.isNull(
 				PrefsPropsUtil.getString(

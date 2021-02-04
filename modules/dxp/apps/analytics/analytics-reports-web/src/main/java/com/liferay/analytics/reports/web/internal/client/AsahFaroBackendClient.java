@@ -81,6 +81,13 @@ public class AsahFaroBackendClient {
 			"OSB-Asah-Faro-Backend-Security-Signature",
 			AnalyticsReportsUtil.getAsahFaroBackendSecuritySignature(
 				companyId));
+
+		String projectId = AnalyticsReportsUtil.getAsahProjectId(companyId);
+
+		if (projectId != null) {
+			options.addHeader("OSB-Asah-Project-ID", projectId);
+		}
+
 		options.setLocation(url);
 
 		String response = _http.URLtoString(options);

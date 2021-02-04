@@ -589,7 +589,7 @@ definition {
 		if (isSet(fieldReference)) {
 			Navigator.gotoNavTab(navTab = "Advanced");
 
-			Type(
+			Type.sendKeys(
 				key_fieldLabel = "Field Reference",
 				key_fieldName = "fieldReference",
 				locator1 = "Sidebar#TEXT_INPUT",

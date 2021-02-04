@@ -67,7 +67,7 @@ definition {
 
 		Button.clickSave();
 
-		WebContentStructures.editStructure(structureName = "Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
 
@@ -101,7 +101,7 @@ definition {
 
 		Button.clickSave();
 
-		WebContentStructures.editStructure(structureName = "Test");
+		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Copy of Separator test",

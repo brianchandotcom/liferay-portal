@@ -167,6 +167,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_DETAILS_LATEST_VERSION_URL</td>
+	<td>//input[contains(@id,'urlInput') and contains(@value,'${key_latestVersionURL}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_DETAILS_IMAGE_PREVIEW</td>
 	<td>//div[contains(@class,'preview-file-container')]//img[contains(@src,'${key_dmDocumentFileName}')]</td>
 	<td></td>
@@ -199,6 +204,11 @@
 <tr>
 	<td>DOCUMENT_DETAILS_WEBDAV_URL</td>
 	<td>//div[contains(@class,'sidebar-section')]//label[contains(.,'WebDAV URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_WEBDAV_URL_LINK</td>
+	<td>//input[contains(@id,'webDavURLInput') and contains(@value,'${key_webDAVURL}')]</td>
 	<td></td>
 </tr>
 <tr>

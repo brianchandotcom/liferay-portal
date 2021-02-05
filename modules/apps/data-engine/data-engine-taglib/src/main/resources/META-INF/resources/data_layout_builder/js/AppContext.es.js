@@ -138,24 +138,24 @@ const editFocusedCustomObjectField = ({
 	focusedCustomObjectField,
 	propertyName,
 	propertyValue,
-}) => {
-	let localizableProperty = false;
+}, editingLanguageId, dataLayoutBuilder) => {
+	let localizedValue;
 	const {settingsContext} = focusedCustomObjectField;
 	const visitor = new PagesVisitor(settingsContext.pages);
 	const newSettingsContext = {
 		...settingsContext,
 		pages: visitor.mapFields((field) => {
-			const {fieldName, localizable} = field;
+			const {fieldName} = field;
 
 			if (fieldName === propertyName) {
-				localizableProperty = localizable;
+				localizedValue = {
+					...field.localizedValue,
+					[editingLanguageId || themeDisplay.getLanguageId()]: propertyValue,
+				};
 
 				return {
 					...field,
-					localizedValue: {
-						...field.localizedValue,
-						[themeDisplay.getLanguageId()]: propertyValue,
-					},
+					localizedValue,
 					value: propertyValue,
 				};
 			}
@@ -164,15 +164,12 @@ const editFocusedCustomObjectField = ({
 		}),
 	};
 
-	if (localizableProperty) {
-		propertyValue = {
-			[themeDisplay.getLanguageId()]: propertyValue,
-		};
-	}
+	const newFocusedCustomObjectField = dataLayoutBuilder.getDataDefinitionField(
+		{...focusedCustomObjectField, settingsContext: newSettingsContext}
+	);
 
 	return {
-		...focusedCustomObjectField,
-		[propertyName]: propertyValue,
+		...newFocusedCustomObjectField,
 		settingsContext: newSettingsContext,
 	};
 };
@@ -363,12 +360,14 @@ const createReducer = (dataLayoutBuilder) => {
 				};
 			}
 			case EDIT_CUSTOM_OBJECT_FIELD: {
-				const {dataDefinition, focusedCustomObjectField} = state;
+				const {dataDefinition, editingLanguageId, focusedCustomObjectField} = state;
 				const editedFocusedCustomObjectField = editFocusedCustomObjectField(
 					{
 						...action.payload,
 						focusedCustomObjectField,
-					}
+					},
+					editingLanguageId,
+					dataLayoutBuilder
 				);
 				const {
 					nestedDataDefinitionFields,

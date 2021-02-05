@@ -5,7 +5,9 @@ definition {
 
 		AssertVisible(locator1 = "Sidebar#FORM_BUILDER");
 
-		WebContentStructures.addName(structureName = "${structureName}");
+		if (isSet(structureName)) {
+			WebContentStructures.addName(structureName = "${structureName}");
+		}
 
 		if (isSet(structureKey)) {
 			if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB", key_tabName = "Properties")) {

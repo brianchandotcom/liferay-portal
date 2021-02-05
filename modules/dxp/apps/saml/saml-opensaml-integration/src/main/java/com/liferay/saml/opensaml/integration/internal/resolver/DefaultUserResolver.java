@@ -105,14 +105,13 @@ public class DefaultUserResolver implements UserResolver {
 			userResolverSAMLContext, samlSpIdpConnection.getNameIdFormat());
 
 		if (_samlProviderConfigurationHelper.isLDAPImportEnabled()) {
-			user = importLdapUser(
-				companyId, subjectNameIdentifier, authType);
+			user = importLdapUser(companyId, subjectNameIdentifier, authType);
 		}
 
 		if (user == null) {
 			return importUser(
-				companyId, samlSpIdpConnection, subjectNameIdentifier,
-				authType, userResolverSAMLContext, serviceContext);
+				companyId, samlSpIdpConnection, subjectNameIdentifier, authType,
+				userResolverSAMLContext, serviceContext);
 		}
 
 		return user;
@@ -273,6 +272,23 @@ public class DefaultUserResolver implements UserResolver {
 		return Collections.emptyMap();
 	}
 
+	protected String getAuthType(
+		UserResolverSAMLContext userResolverSAMLContext,
+		String defaultNameIdFormat) {
+
+		String format = userResolverSAMLContext.resolveSubjectNameFormat();
+
+		if (Validator.isNull(format)) {
+			format = defaultNameIdFormat;
+		}
+
+		if (format.equals(NameIDType.EMAIL)) {
+			return CompanyConstants.AUTH_TYPE_EA;
+		}
+
+		return CompanyConstants.AUTH_TYPE_SN;
+	}
+
 	protected String getSubjectNameIdentifier(
 		UserResolverSAMLContext userResolverSAMLContext) {
 
@@ -280,8 +296,7 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	protected User getUser(
-			long companyId, String subjectNameIdentifier,
-			String authType)
+			long companyId, String subjectNameIdentifier, String authType)
 		throws PortalException {
 
 		try {
@@ -303,23 +318,6 @@ public class DefaultUserResolver implements UserResolver {
 		}
 
 		return null;
-	}
-
-	protected String getAuthType(
-		UserResolverSAMLContext userResolverSAMLContext,
-		String defaultNameIdFormat) {
-
-		String format = userResolverSAMLContext.resolveSubjectNameFormat();
-
-		if (Validator.isNull(format)) {
-			format = defaultNameIdFormat;
-		}
-
-		if (format.equals(NameIDType.EMAIL)) {
-			return CompanyConstants.AUTH_TYPE_EA;
-		}
-
-		return CompanyConstants.AUTH_TYPE_SN;
 	}
 
 	protected Date getValueAsDate(
@@ -349,8 +347,7 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	protected User importLdapUser(
-			long companyId, String subjectNameIdentifier,
-			String authType)
+			long companyId, String subjectNameIdentifier, String authType)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -392,12 +389,10 @@ public class DefaultUserResolver implements UserResolver {
 			userResolverSAMLContext);
 
 		if (attributesMap.containsKey(authType)) {
-			subjectNameIdentifier = getValueAsString(
-				authType, attributesMap);
+			subjectNameIdentifier = getValueAsString(authType, attributesMap);
 		}
 
-		User user = getUser(
-			companyId, subjectNameIdentifier, authType);
+		User user = getUser(companyId, subjectNameIdentifier, authType);
 
 		if (user != null) {
 			if (_log.isDebugEnabled()) {

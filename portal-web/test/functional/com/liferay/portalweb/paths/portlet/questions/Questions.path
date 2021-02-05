@@ -294,6 +294,11 @@
 	<td>//h2[contains(@class,'text-secondary') and contains(.,'No related questions were found.')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RELATED_QUESTIONS_QUESTIONS_TITLE</td>
+	<td>//a[contains(@class,'questions-title')]/h3[contains(.,'${key_questionTitle}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

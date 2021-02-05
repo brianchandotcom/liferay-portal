@@ -1090,4 +1090,5 @@ definition {
 			locator1 = "DataEngineBuilder#NESTED_NUMERIC_STRUCTURE",
 			value1 = "Numeric");
 	}
+
 }

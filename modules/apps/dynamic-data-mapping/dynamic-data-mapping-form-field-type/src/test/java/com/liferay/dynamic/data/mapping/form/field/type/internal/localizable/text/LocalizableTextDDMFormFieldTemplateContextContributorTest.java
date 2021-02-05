@@ -22,19 +22,25 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.language.LanguageImpl;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import org.hamcrest.CoreMatchers;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Matchers;
 import org.mockito.Mock;
 
 import org.powermock.api.support.membermodification.MemberMatcher;
@@ -53,6 +59,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		super.setUp();
 
 		_setUpJSONFactory();
+		_setUpJSONFactoryUtil();
 		_setUpLanguage();
 		_setUpPortal();
 	}
@@ -64,7 +71,8 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		JSONArray availableLocalesJSONArray = (JSONArray)parameters.get(
 			"availableLocales");
 
-		Assert.assertFalse(availableLocalesJSONArray.length() == 0);
+		Assert.assertEquals(
+			_availableLocales.length, availableLocalesJSONArray.length());
 	}
 
 	@Test
@@ -72,6 +80,27 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		Map<String, Object> parameters = _getParameters();
 
 		Assert.assertNull(parameters.get("predefinedValue"));
+	}
+
+	@Test
+	public void testGetPlaceholdersSubmitLabel() {
+		_mockLanguageGet();
+
+		Map<String, Object> parameters = _getParameters();
+
+		JSONArray placeholdersSubmitLabelJSONArray = (JSONArray)parameters.get(
+			"placeholdersSubmitLabel");
+
+		for (Locale availableLocale : _availableLocales) {
+			Assert.assertThat(
+				placeholdersSubmitLabelJSONArray.toString(),
+				CoreMatchers.containsString(
+					JSONUtil.put(
+						"localeId", LocaleUtil.toLanguageId(availableLocale)
+					).put(
+						"placeholderSubmitLabel", "submit-form"
+					).toString()));
+		}
 	}
 
 	@Test
@@ -112,6 +141,15 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 			getParameters(_ddmFormField, ddmFormFieldRenderingContext);
 	}
 
+	private void _mockLanguageGet() {
+		when(
+			language.get(
+				Matchers.any(ResourceBundle.class), Matchers.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArguments()[1]
+		);
+	}
+
 	private void _setUpJSONFactory() throws Exception {
 		MemberMatcher.field(
 			LocalizableTextDDMFormFieldTemplateContextContributor.class,
@@ -121,12 +159,24 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
+	private void _setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
 	private void _setUpLanguage() throws Exception {
 		MemberMatcher.field(
 			LocalizableTextDDMFormFieldTemplateContextContributor.class,
 			"language"
 		).set(
-			_localizableTextDDMFormFieldTemplateContextContributor, _language
+			_localizableTextDDMFormFieldTemplateContextContributor, language
+		);
+
+		when(
+			language.getAvailableLocales()
+		).thenReturn(
+			SetUtil.fromArray(_availableLocales)
 		);
 	}
 
@@ -139,10 +189,13 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
+	private final Locale[] _availableLocales = {
+		LocaleUtil.BRAZIL, LocaleUtil.CANADA, LocaleUtil.FRANCE,
+		LocaleUtil.SPAIN, LocaleUtil.US
+	};
 	private final DDMFormField _ddmFormField = new DDMFormField(
 		"field", "localizableText");
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
-	private final Language _language = new LanguageImpl();
 	private final LocalizableTextDDMFormFieldTemplateContextContributor
 		_localizableTextDDMFormFieldTemplateContextContributor =
 			new LocalizableTextDDMFormFieldTemplateContextContributor();

@@ -304,9 +304,7 @@ definition {
 			fieldLabel = "Copy of Nome",
 			fieldName = "Text");
 
-		FormFields.viewTextLabel(
-			fieldLabel = "Copy of Data",
-			fieldName = "Date");
+		FormFields.viewTextLabel(fieldLabel = "Copy of Data");
 
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "Ajuda data",

@@ -890,7 +890,6 @@ definition {
 	macro viewTextLabel {
 		AssertTextEquals.assertText(
 			key_fieldLabel = "${fieldLabel}",
-			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#LABEL",
 			value1 = "${fieldLabel}");
 	}

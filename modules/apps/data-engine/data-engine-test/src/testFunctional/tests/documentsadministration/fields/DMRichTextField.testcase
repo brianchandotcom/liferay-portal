@@ -305,8 +305,6 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "3"
 	test ShowAndHideRichTextLabel {
-		var key_fieldFieldLabel = "Rich Text";
-
 		DataEngine.addField(
 			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text");
@@ -320,7 +318,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
 
 		AssertVisible(
-			fieldFieldLabel = "Rich Text",
+			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		DataEngine.editShowOrHideLabel(
@@ -331,7 +329,9 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
 
-		AssertElementNotPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

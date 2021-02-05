@@ -180,8 +180,6 @@ definition {
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
-		property portal.acceptance = "false";
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");

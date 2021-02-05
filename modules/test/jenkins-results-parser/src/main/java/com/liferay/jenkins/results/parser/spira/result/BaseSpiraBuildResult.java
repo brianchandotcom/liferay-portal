@@ -128,6 +128,19 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		return _topLevelBuild;
 	}
 
+	@Override
+	public String replaceEnvVars(String string) {
+		string = _replaceEnvVarsControllerBuild(string);
+		string = _replaceEnvVarsPluginsTopLevelBuild(string);
+		string = _replaceEnvVarsPortalAppReleaseTopLevelBuild(string);
+		string = _replaceEnvVarsPortalBranchInformationBuild(string);
+		string = _replaceEnvVarsPullRequestBuild(string);
+		string = _replaceEnvVarsQAWebsitesTopLevelBuild(string);
+		string = _replaceEnvVarsTopLevelBuild(string);
+
+		return string;
+	}
+
 	protected BaseSpiraBuildResult(TopLevelBuild topLevelBuild) {
 		_topLevelBuild = topLevelBuild;
 
@@ -149,18 +162,6 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		return JenkinsResultsParserUtil.getProperty(
 			_portalGitWorkingDirectory.getTestProperties(), propertyName,
 			_topLevelBuild.getJobName(), _topLevelBuild.getTestSuiteName());
-	}
-
-	protected String replaceEnvVars(String string) {
-		string = _replaceEnvVarsControllerBuild(string);
-		string = _replaceEnvVarsPluginsTopLevelBuild(string);
-		string = _replaceEnvVarsPortalAppReleaseTopLevelBuild(string);
-		string = _replaceEnvVarsPortalBranchInformationBuild(string);
-		string = _replaceEnvVarsPullRequestBuild(string);
-		string = _replaceEnvVarsQAWebsitesTopLevelBuild(string);
-		string = _replaceEnvVarsTopLevelBuild(string);
-
-		return string;
 	}
 
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {

@@ -54,4 +54,6 @@ public interface SpiraBuildResult {
 
 	public TopLevelBuild getTopLevelBuild();
 
+	public String replaceEnvVars(String string);
+
 }

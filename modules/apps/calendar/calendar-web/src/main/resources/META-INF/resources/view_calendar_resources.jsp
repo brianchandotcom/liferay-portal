@@ -20,13 +20,12 @@
 CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(renderRequest);
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= calendarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= calendarDisplayContext.getCreationMenu() %>"
 	disabled="<%= calendarDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= calendarDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= calendarDisplayContext.getTotalItems() %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	searchActionURL="<%= calendarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= calendarDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"

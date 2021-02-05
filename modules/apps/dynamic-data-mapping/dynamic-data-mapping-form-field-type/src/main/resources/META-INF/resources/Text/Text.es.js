@@ -165,7 +165,12 @@ const Autocomplete = ({
 	const inputRef = useRef(null);
 	const itemListRef = useRef(null);
 
-	const filteredItems = options.filter((item) => item && item.match(value));
+	const escapeChars = (string) =>
+		string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+
+	const filteredItems = options.filter(
+		(item) => item && item.match(escapeChars(value))
+	);
 
 	useEffect(() => {
 		if (filteredItems.length === 1 && filteredItems.includes(value)) {

@@ -26,6 +26,61 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-127049. It ensures that a document can be created with duplicate fields."
+	@priority = "4"
+	test AddDuplicateFields {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "DM Document Type Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Numeric");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+
+		PortletEntry.inputTitle(title = "DM Document Title");
+
+		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
+		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
+
+		AssertElementNotPresent(
+			key_fieldName = "Numeric",
+			key_repeatableFieldNumber = "2",
+			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
+
+		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
+		Type(
+			key_fieldName = "Numeric",
+			locator1 = "TextInput#NUMERIC",
+			value1 = "123");
+
+		Type(
+			key_fieldName = "Numeric",
+			locator1 = "TextInput#NUMERIC_2",
+			value1 = "456");
+
+		PortletEntry.publish();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+	}
+
 	@priority = "5"
 	test AddEntryWithMetadataSet {
 		property portal.acceptance = "true";

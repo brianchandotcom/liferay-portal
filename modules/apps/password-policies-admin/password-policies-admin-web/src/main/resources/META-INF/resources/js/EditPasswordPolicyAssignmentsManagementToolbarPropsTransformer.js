@@ -14,57 +14,47 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
-const ACTIONS = {
-	deleteOrganizations(portletNamespace) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			const form = document[`${portletNamespace}fm`];
+function addEntity(portletNamespace, inputName, entity) {
+	const addUserIdsInput = document.getElementById(
+		`${portletNamespace}${inputName}`
+	);
 
-			const removeOrganizationIdsInput = document.getElementById(
-				`${portletNamespace}removeOrganizationIds`
+	if (addUserIdsInput) {
+		addUserIdsInput.setAttribute('value', entity);
+	}
+
+	submitForm(document[`${portletNamespace}fm`]);
+}
+
+function deleteEntities(portletNamespace, inputName) {
+	if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
+		const form = document[`${portletNamespace}fm`];
+
+		const input = document.getElementById(
+			`${portletNamespace}${inputName}`
+		);
+
+		if (input) {
+			input.setAttribute(
+				'value',
+				Liferay.Util.listCheckedExcept(
+					form,
+					`${portletNamespace}allRowIds`
+				)
 			);
 
-			if (removeOrganizationIdsInput) {
-				removeOrganizationIdsInput.setAttribute(
-					'value',
-					Liferay.Util.listCheckedExcept(
-						form,
-						`${portletNamespace}allRowIds`
-					)
-				);
-
-				submitForm(form);
-			}
+			submitForm(form);
 		}
+	}
+}
+
+const ACTIONS = {
+	deleteOrganizations(portletNamespace) {
+		deleteEntities(portletNamespace, 'removeOrganizationIds');
 	},
 
 	deleteUsers(portletNamespace) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			const form = document[`${portletNamespace}fm`];
-
-			const removeUserIdsInput = document.getElementById(
-				`${portletNamespace}removeUserIds`
-			);
-
-			if (removeUserIdsInput) {
-				removeUserIdsInput.setAttribute(
-					'value',
-					Liferay.Util.listCheckedExcept(
-						form,
-						`${portletNamespace}allRowIds`
-					)
-				);
-
-				submitForm(form);
-			}
-		}
+		deleteEntities(portletNamespace, 'removeUserIds');
 	},
 };
 
@@ -89,32 +79,12 @@ export default function propsTransformer({
 				multiple: true,
 				onSelect(result) {
 					if (result && result.item) {
-						if (result.memberType == 'users') {
-							const addUserIdsInput = document.getElementById(
-								`${portletNamespace}addUserIds`
-							);
+						const inputName = {
+							organizations: 'addOrganizationIds',
+							users: 'addUserIds',
+						}[result.memberType];
 
-							if (addUserIdsInput) {
-								addUserIdsInput.setAttribute(
-									'value',
-									result.item
-								);
-							}
-						}
-						else if (result.memberType == 'organizations') {
-							const addOrganizationIdsInput = document.getElementById(
-								`${portletNamespace}addOrganizationIds`
-							);
-
-							if (addOrganizationIdsInput) {
-								addOrganizationIdsInput.setAttribute(
-									'value',
-									result.item
-								);
-							}
-						}
-
-						submitForm(document[`${portletNamespace}fm`]);
+						addEntity(portletNamespace, inputName, result.item);
 					}
 				},
 				selectEventName: `${portletNamespace}selectMember`,

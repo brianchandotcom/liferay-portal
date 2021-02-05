@@ -277,10 +277,6 @@ public class UpgradeExecutor {
 
 			UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
 
-			if (upgradeStep instanceof DummyUpgradeStep) {
-				return false;
-			}
-
 			String fromSchemaVersion = upgradeInfo.getFromSchemaVersionString();
 
 			String upgradeStepName = upgradeStep.toString();

@@ -309,21 +309,15 @@ definition {
 
 		var key_fieldFieldLabel = "Rich Text";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Rich Text",
-			dmDocumentTypeName = "DM Document Type Name");
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");	
 
 		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Rich Text",
 			showLabel = "true");
 
-		DDLDataDefinition.save(dmDocumentTypeName = "DM Document Type Name");
+		DDLDataDefinition.save();
 
 		LexiconEntry.openEntryMenu(rowEntry = "DM Document Type Name");
 

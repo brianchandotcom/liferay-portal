@@ -311,18 +311,6 @@ definition {
 
 		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Rich Text",
-			showLabel = "true");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Rich Text",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		DataEngine.editShowOrHideLabel(
-			fieldFieldLabel = "Rich Text",
 			showLabel = "false");
 
 		DDLDataDefinition.save();
@@ -330,6 +318,18 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
 
 		AssertElementNotPresent(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		DataEngine.editShowOrHideLabel(
+			fieldLabelHidden = "true",
+			showLabel = "true");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
+
+		AssertVisible(
 			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}

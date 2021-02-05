@@ -920,6 +920,13 @@ definition {
 				Navigator.gotoNavTab(navTab = "Advanced");
 			}
 		}
+		else if (isSet(fieldLabelHidden)) {
+			Click(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_FIRST");
+
+			if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
+				Navigator.gotoNavTab(navTab = "Advanced");
+			}
+		}
 		else if (isSet(fieldsetLabel)) {
 			Click(
 				key_fieldsetLabel = "${fieldsetLabel}",

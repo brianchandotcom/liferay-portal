@@ -43,6 +43,8 @@ import com.liferay.jenkins.results.parser.spira.SpiraTestSet;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -150,7 +152,9 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		string = _replaceEnvVarsPluginsTopLevelBuild(string);
 		string = _replaceEnvVarsPortalAppReleaseTopLevelBuild(string);
 		string = _replaceEnvVarsPortalBranchInformationBuild(string);
+		string = _replaceEnvVarsPortalRelease(string);
 		string = _replaceEnvVarsPullRequestBuild(string);
+		string = _replaceEnvVarsSpiraArtifacts(string);
 		string = _replaceEnvVarsQAWebsitesTopLevelBuild(string);
 		string = _replaceEnvVarsTopLevelBuild(string);
 
@@ -611,6 +615,75 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			"$(portal.sha)", portalBranchInformation.getSenderBranchSHA());
 	}
 
+	private String _replaceEnvVarsPortalRelease(String string) {
+		PortalRelease portalRelease = getPortalRelease();
+
+		if (portalRelease != null) {
+			String tomcatURL = String.valueOf(portalRelease.getTomcatURL());
+
+			string = string.replace("$(portal.release.tomcat.url)", tomcatURL);
+
+			string = string.replace(
+				"$(portal.release.version)", portalRelease.getPortalVersion());
+
+			Matcher matcher = _releaseArtifactURLPattern.matcher(tomcatURL);
+
+			if (matcher.find()) {
+				string = string.replace(
+					"$(portal.release.tomcat.name)",
+					matcher.group("releaseFileName"));
+			}
+		}
+
+		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
+
+		if (portalFixpackRelease != null) {
+			String portalFixpackURL = String.valueOf(
+				portalFixpackRelease.getPortalFixpackURL());
+
+			string = string.replace(
+				"$(portal.fixpack.release.url)", portalFixpackURL);
+
+			string = string.replace(
+				"$(portal.fixpack.release.version)",
+				portalFixpackRelease.getPortalFixpackVersion());
+
+			Matcher matcher = _releaseArtifactURLPattern.matcher(
+				portalFixpackURL);
+
+			if (matcher.find()) {
+				string = string.replace(
+					"$(portal.fixpack.release.name)",
+					matcher.group("releaseFileName"));
+			}
+		}
+
+		PortalHotfixRelease portalHotfixRelease = getPortalHotfixRelease();
+
+		if (portalHotfixRelease != null) {
+			String portalHotfixURL = String.valueOf(
+				portalHotfixRelease.getPortalHotfixReleaseURL());
+
+			string = string.replace(
+				"$(portal.hotfix.release.url)", portalHotfixURL);
+
+			string = string.replace(
+				"$(portal.hotfix.release.version)",
+				portalHotfixRelease.getPortalHotfixReleaseVersion());
+
+			Matcher matcher = _releaseArtifactURLPattern.matcher(
+				portalHotfixURL);
+
+			if (matcher.find()) {
+				string = string.replace(
+					"$(portal.hotfix.release.name)",
+					matcher.group("releaseFileName"));
+			}
+		}
+
+		return string;
+	}
+
 	private String _replaceEnvVarsPullRequestBuild(String string) {
 		PullRequest pullRequest = getPullRequest();
 
@@ -620,6 +693,9 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 
 		string = string.replace(
 			"$(pull.request.number)", pullRequest.getNumber());
+
+		string = string.replace(
+			"$(pull.request.url)", pullRequest.getHtmlURL());
 
 		string = string.replace(
 			"$(pull.request.receiver.username)",
@@ -641,6 +717,54 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			"$(qa.websites.project.name)",
 			JenkinsResultsParserUtil.join(
 				",", qaWebsitesTopLevelBuild.getProjectNames()));
+	}
+
+	private String _replaceEnvVarsSpiraArtifacts(String string) {
+		SpiraProject spiraProject = getSpiraProject();
+
+		string = string.replace(
+			"$(spira.project.name)", spiraProject.getName());
+		string = string.replace("$(spira.project.url)", spiraProject.getURL());
+
+		SpiraRelease spiraRelease = getSpiraRelease();
+
+		if (spiraRelease != null) {
+			string = string.replace(
+				"$(spira.release.name)", spiraRelease.getName());
+			string = string.replace(
+				"$(spira.release.path)", spiraRelease.getPath());
+			string = string.replace(
+				"$(spira.release.url)", spiraRelease.getURL());
+		}
+
+		SpiraReleaseBuild spiraReleaseBuild = getSpiraReleaseBuild();
+
+		if (spiraReleaseBuild != null) {
+			string = string.replace(
+				"$(spira.release.build.name)", spiraReleaseBuild.getName());
+			string = string.replace(
+				"$(spira.release.build.url)", spiraReleaseBuild.getURL());
+		}
+
+		String buildURL = System.getenv("BUILD_URL");
+
+		Matcher matcher = _jenkinsBuildURLPattern.matcher(buildURL);
+
+		if (matcher.find()) {
+			string = string.replace(
+				"$(spira.jenkins.build.number)", matcher.group("buildNumber"));
+			string = string.replace(
+				"$(spira.jenkins.job.name)", matcher.group("jobName"));
+
+			string = string.replace(
+				"$(spira.jenkins.url)",
+				JenkinsResultsParserUtil.combine(
+					"https://", matcher.group("hostname"), ".liferay.com/job/",
+					matcher.group("jobName"), "/", matcher.group("buildNumber"),
+					"/"));
+		}
+
+		return string;
 	}
 
 	private String _replaceEnvVarsTopLevelBuild(String string) {
@@ -671,6 +795,12 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 		return string.replace(
 			"$(jenkins.report.url)", _topLevelBuild.getJenkinsReportURL());
 	}
+
+	private static final Pattern _jenkinsBuildURLPattern = Pattern.compile(
+		"https?://(?<hostname>test-\\d+-\\d+)(\\.liferay\\.com)?[^/]+/job/" +
+			"(?<jobName>[^/]+)/(?<buildNumber>\\d+)/?");
+	private static final Pattern _releaseArtifactURLPattern = Pattern.compile(
+		"https?://.+/(?<releaseFileName>[^/]+)");
 
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
 	private final SpiraProject _spiraProject;

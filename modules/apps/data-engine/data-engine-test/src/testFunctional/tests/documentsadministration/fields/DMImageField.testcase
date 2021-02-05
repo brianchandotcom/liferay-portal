@@ -332,13 +332,43 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
-	@ignore = "true"
 	@priority = "4"
 	test SetImageFieldAsRepeatable {
 		property portal.acceptance = "false";
 
-		// TODO LPS-98073 SetImageFieldAsRepeatable pending implementation (blocker by LPS-127049)
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		DMNavigator.gotoDocumentType();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "DM Document Type Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Image");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+
+		Click(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
+
+		AssertVisible(
+			key_fieldName = "Image",
+			key_repeatableFieldNumber = "2",
+			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
+
+		Click(locator1 = "FormFields#FIELD_ADD_REMOVE");
+
+		AssertElementNotPresent(
+			key_fieldName = "Image",
+			key_repeatableFieldNumber = "2",
+			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"

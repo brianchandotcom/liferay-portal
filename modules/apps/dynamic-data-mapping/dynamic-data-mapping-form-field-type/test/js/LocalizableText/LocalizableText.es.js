@@ -520,6 +520,27 @@ describe('Field LocalizableText', () => {
 			expect(inputComponent.maxLength).not.toBe(25);
 		});
 
+		it('has by default the dropdown description equal to translated/not-translated for non-default locales', () => {
+			const {queryAllByText} = render(
+				<LocalizableTextWithProvider
+					{...defaultLocalizableTextConfig}
+					value={{
+						de_DE: 'Test DE',
+						es_ES: 'Test ES',
+					}}
+				/>
+			);
+
+			expect(queryAllByText('default')).toHaveLength(1);
+
+			const {availableLocales} = defaultLocalizableTextConfig;
+
+			expect(queryAllByText('not-translated')).toHaveLength(
+				availableLocales.length - 3
+			);
+			expect(queryAllByText('translated')).toHaveLength(2);
+		});
+
 		it('has by default the placeholder of the default locale', () => {
 			const {getByTestId} = render(
 				<LocalizableTextWithProvider
@@ -536,6 +557,32 @@ describe('Field LocalizableText', () => {
 			const inputComponent = getByTestId('visibleChangeInput');
 
 			expect(inputComponent.placeholder).toBe('Submit');
+		});
+
+		it('has the dropdown description equal to customized/not-customized for the Submit Button Label input', () => {
+			const {queryAllByText} = render(
+				<LocalizableTextWithProvider
+					{...defaultLocalizableTextConfig}
+					fieldName="submitLabel"
+					placeholdersSubmitLabel={[
+						{localeId: 'de_DE', placeholderSubmitLabel: 'Senden'},
+						{localeId: 'en_US', placeholderSubmitLabel: 'Submit'},
+						{localeId: 'es_ES', placeholderSubmitLabel: 'Enviar'},
+					]}
+					value={{
+						de_DE: 'Test DE',
+						es_ES: 'Test ES',
+					}}
+				/>
+			);
+
+			expect(queryAllByText('customized')).toHaveLength(2);
+
+			const {availableLocales} = defaultLocalizableTextConfig;
+
+			expect(queryAllByText('not-customized')).toHaveLength(
+				availableLocales.length - 2
+			);
 		});
 
 		it('has the maxLength property equal to 25 for the Submit Button Label input', () => {

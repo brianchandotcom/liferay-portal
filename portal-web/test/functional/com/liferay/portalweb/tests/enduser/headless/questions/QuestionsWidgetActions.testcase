@@ -1215,4 +1215,33 @@ definition {
 			questionTitle = "Question 2");
 	}
 
+	@description = "Validate if the user can view the related question."
+	@priority = "4"
+	test ViewRelatedQuestion {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		for (var titleField : list "What is your name,How about your experience") {
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Body AddQuestionForTestRelatedQuestion",
+				titleField = "${titleField}");
+		}
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "How about your experience");
+
+		AssertElementPresent(
+			key_questionTitle = "What is your name",
+			locator1 = "Questions#RELATED_QUESTIONS_QUESTIONS_TITLE");
+
+		AssertElementNotPresent(locator1 = "Questions#RELATED_QUESTIONS_EMPTY_TEXT");
+	}
+
 }

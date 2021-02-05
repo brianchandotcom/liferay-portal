@@ -109,7 +109,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_TEXT</td>
-	<td>//*[contains(.,'${key_fieldFieldLabel}')]//following-sibling::span[contains(@class,'form-text')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::span[contains(@class,'form-text')] | //legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::span[contains(@class,'form-text')]</td>
 	<td></td>
 </tr>
 <tr>

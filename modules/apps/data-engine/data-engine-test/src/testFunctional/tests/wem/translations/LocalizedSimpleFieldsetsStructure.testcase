@@ -75,7 +75,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "Texto",
 			fieldsetModal = "true");
-		
+
 		Button.clickSaveModal(button = "Save");
 
 		Button.click(button = "Propagate");
@@ -86,9 +86,13 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		AssertElementPresent(locator1 = "FormFields#LABEL", key_fieldLabel = "Endereço");
+		AssertElementPresent(
+			key_fieldLabel = "Endereço",
+			locator1 = "FormFields#LABEL");
 
-		AssertElementPresent(locator1 = "FormFields#LABEL", key_fieldLabel = "Texto");
+		AssertElementPresent(
+			key_fieldLabel = "Texto",
+			locator1 = "FormFields#LABEL");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

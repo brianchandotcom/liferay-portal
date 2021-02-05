@@ -14,6 +14,8 @@
 
 package com.liferay.password.policies.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -23,7 +25,6 @@ import com.liferay.password.policies.admin.web.internal.search.AddOrganizationPa
 import com.liferay.password.policies.admin.web.internal.search.AddUserPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.DeleteOrganizationPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.DeleteUserPasswordPolicyChecker;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -82,19 +83,16 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				String methodName = StringPool.BLANK;
+				String action = StringPool.BLANK;
 
 				if (_tabs2.equals("users")) {
-					methodName = "deleteUsers();";
+					action = "deleteUsers";
 				}
 				else if (_tabs2.equals("organizations")) {
-					methodName = "deleteOrganizations();";
+					action = "deleteOrganizations";
 				}
 
-				dropdownItem.setHref(
-					StringBundler.concat(
-						"javascript:", _renderResponse.getNamespace(),
-						methodName));
+				dropdownItem.putData("action", action);
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
@@ -109,6 +107,13 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+			}
+		).build();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

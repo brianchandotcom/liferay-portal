@@ -50,6 +50,7 @@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@

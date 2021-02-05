@@ -59,12 +59,28 @@ SearchContainer<?> searchContainer = editPasswordPolicyAssignmentsManagementTool
 	navigationItems="<%= passwordPolicyDisplayContext.getEditPasswordPolicyAssignmentsNavigationItems(editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getPortletURL()) %>"
 />
 
-<clay:management-toolbar-v2
+<portlet:renderURL var="selectMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/select_members.jsp" />
+	<portlet:param name="tabs1" value="<%= tabs1 %>" />
+	<portlet:param name="tabs2" value="<%= tabs2 %>" />
+	<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicyId) %>" />
+</portlet:renderURL>
+
+<clay:management-toolbar
 	actionDropdownItems="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"passwordPolicyName", HtmlUtil.escape(passwordPolicy.getName())
+		).put(
+			"selectMembersURL", selectMembersURL.toString()
+		).build()
+	%>'
 	clearResultsURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="editPasswordPolicyAssignmentsManagementToolbar"
+	creationMenu="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
+	propsTransformer="js/EditPasswordPolicyAssignmentsManagementToolbarPropsTransformer"
 	searchActionURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="passwordPolicyMembers"
 	searchFormName="searchFm"
@@ -119,119 +135,5 @@ SearchContainer<?> searchContainer = editPasswordPolicyAssignmentsManagementTool
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script sandbox="<%= true %>">
-	<portlet:renderURL var="selectMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_members.jsp" />
-		<portlet:param name="tabs1" value="<%= tabs1 %>" />
-		<portlet:param name="tabs2" value="<%= tabs2 %>" />
-		<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicyId) %>" />
-	</portlet:renderURL>
-
-	var addAssignees = function (event) {
-		Liferay.Util.openSelectionModal({
-			multiple: true,
-			onSelect: function (result) {
-				if (result && result.item) {
-					var form = document.getElementById('<portlet:namespace />fm');
-
-					if (form) {
-						if (result.memberType == 'users') {
-							var addUserIdsInput = form.querySelector(
-								'#<portlet:namespace />addUserIds'
-							);
-
-							if (addUserIdsInput) {
-								addUserIdsInput.setAttribute('value', result.item);
-							}
-						}
-						else if (result.memberType == 'organizations') {
-							var addOrganizationIdsInput = form.querySelector(
-								'#<portlet:namespace />addOrganizationIds'
-							);
-
-							if (addOrganizationIdsInput) {
-								addOrganizationIdsInput.setAttribute(
-									'value',
-									result.item
-								);
-							}
-						}
-
-						submitForm(form);
-					}
-				}
-			},
-			selectEventName: '<portlet:namespace />selectMember',
-			title:
-				'<liferay-ui:message arguments="<%= HtmlUtil.escape(passwordPolicy.getName()) %>" key="add-assignees-to-x" />',
-			url: '<%= selectMembersURL %>',
-		});
-	};
-
-	Liferay.componentReady('editPasswordPolicyAssignmentsManagementToolbar').then(
-		function (managementToolbar) {
-			managementToolbar.on('creationButtonClicked', addAssignees);
-		}
-	);
-</aui:script>
-
-<aui:script>
-	function <portlet:namespace />deleteOrganizations() {
-		if (
-			confirm(
-				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
-			)
-		) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			if (form) {
-				var removeOrganizationIdsInput = form.querySelector(
-					'#<portlet:namespace />removeOrganizationIds'
-				);
-
-				if (removeOrganizationIdsInput) {
-					removeOrganizationIdsInput.setAttribute(
-						'value',
-						Liferay.Util.listCheckedExcept(
-							form,
-							'<portlet:namespace />allRowIds'
-						)
-					);
-
-					submitForm(form);
-				}
-			}
-		}
-	}
-
-	function <portlet:namespace />deleteUsers() {
-		if (
-			confirm(
-				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
-			)
-		) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			if (form) {
-				var removeUserIdsInput = form.querySelector(
-					'#<portlet:namespace />removeUserIds'
-				);
-
-				if (removeUserIdsInput) {
-					removeUserIdsInput.setAttribute(
-						'value',
-						Liferay.Util.listCheckedExcept(
-							form,
-							'<portlet:namespace />allRowIds'
-						)
-					);
-
-					submitForm(form);
-				}
-			}
-		}
-	}
-</aui:script>
 
 <%@ include file="/action/delete_password_policy.jspf" %>

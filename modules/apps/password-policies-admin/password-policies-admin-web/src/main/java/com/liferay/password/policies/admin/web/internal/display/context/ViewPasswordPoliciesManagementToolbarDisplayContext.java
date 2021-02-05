@@ -23,7 +23,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.password.policies.admin.web.internal.search.PasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.PasswordPolicyDisplayTerms;
 import com.liferay.password.policies.admin.web.internal.search.PasswordPolicySearch;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,10 +63,7 @@ public class ViewPasswordPoliciesManagementToolbarDisplayContext {
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				dropdownItem.setHref(
-					StringBundler.concat(
-						"javascript:", _renderResponse.getNamespace(),
-						"deletePasswordPolicies();"));
+				dropdownItem.putData("action", "deletePasswordPolicies");
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));

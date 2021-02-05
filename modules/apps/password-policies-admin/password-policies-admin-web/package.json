@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
+	"name": "password-policies-admin-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "5.0.0"
+}

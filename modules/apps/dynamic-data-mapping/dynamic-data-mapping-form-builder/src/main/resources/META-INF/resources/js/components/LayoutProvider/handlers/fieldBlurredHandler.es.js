@@ -12,8 +12,9 @@
  * details.
  */
 
+import {findInvalidFieldReference} from '../util/fields.es';
 import {updateField, updateFieldReference} from '../util/settingsContext.es';
-import {findInvalidFieldReference, updateState} from './fieldEditedHandler.es';
+import {updateState} from './fieldEditedHandler.es';
 
 export const handleFieldBlurred = (props, state, event) => {
 	let newState = {

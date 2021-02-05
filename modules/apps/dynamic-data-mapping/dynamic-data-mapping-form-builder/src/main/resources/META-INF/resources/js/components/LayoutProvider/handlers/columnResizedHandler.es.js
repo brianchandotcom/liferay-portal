@@ -16,7 +16,7 @@ import {FormSupport} from 'dynamic-data-mapping-form-renderer';
 
 import {updateField} from '../util/settingsContext.es';
 
-const getColumn = (pages, nestedIndexes = []) => {
+export const getColumn = (pages, nestedIndexes = []) => {
 	let column;
 	let context = pages;
 

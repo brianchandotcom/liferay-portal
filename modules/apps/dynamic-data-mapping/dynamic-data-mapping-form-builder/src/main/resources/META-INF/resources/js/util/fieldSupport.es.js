@@ -13,12 +13,14 @@
  */
 
 import {
+	FormSupport,
 	PagesVisitor,
 	generateName,
 	getRepeatedIndex,
 	normalizeFieldName,
 } from 'dynamic-data-mapping-form-renderer';
 
+import {updateField} from '../components/LayoutProvider/util/settingsContext.es';
 import {FIELD_TYPE_FIELDSET} from './constants.es';
 
 export const generateId = (length, allowOnlyNumbers = false) => {
@@ -47,6 +49,77 @@ export const getDefaultFieldName = (isOptionField = false, fieldType = '') => {
 		: Liferay.Language.get('field');
 
 	return defaultFieldName + generateId(8, true);
+};
+
+export const removeField = (
+	props,
+	pages,
+	fieldName,
+	removeEmptyRows = true
+) => {
+	const visitor = new PagesVisitor(pages);
+
+	const filter = (fields) =>
+		fields
+			.filter((field) => field.fieldName !== fieldName)
+			.map((field) => {
+				const nestedFields = field.nestedFields
+					? filter(field.nestedFields)
+					: [];
+
+				field = updateField(props, field, 'nestedFields', nestedFields);
+
+				if (field.type !== FIELD_TYPE_FIELDSET) {
+					return {
+						...field,
+						nestedFields,
+					};
+				}
+
+				let rows = [];
+
+				if (field.rows) {
+					const visitor = new PagesVisitor([
+						{
+							rows:
+								typeof field.rows === 'string'
+									? JSON.parse(field.rows)
+									: field.rows || [],
+						},
+					]);
+
+					const pages = visitor.mapColumns((column) => ({
+						...column,
+						fields: column.fields.filter(
+							(nestedFieldName) => fieldName !== nestedFieldName
+						),
+					}));
+
+					rows = removeEmptyRows
+						? FormSupport.removeEmptyRows(pages, 0)
+						: pages[0].rows;
+
+					field = updateField(props, field, 'rows', rows);
+				}
+
+				return {
+					...field,
+					nestedFields,
+					rows,
+				};
+			})
+			.filter(({nestedFields = [], type}) => {
+				if (type === FIELD_TYPE_FIELDSET && !nestedFields.length) {
+					return false;
+				}
+
+				return true;
+			});
+
+	return visitor.mapColumns((column) => ({
+		...column,
+		fields: filter(column.fields),
+	}));
 };
 
 export const getFieldProperties = (

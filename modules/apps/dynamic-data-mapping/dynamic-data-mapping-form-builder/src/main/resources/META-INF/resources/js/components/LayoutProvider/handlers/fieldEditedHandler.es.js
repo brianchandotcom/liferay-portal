@@ -15,9 +15,9 @@
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 import {getField} from '../../../util/fieldSupport.es';
+import {findInvalidFieldReference} from '../util/fields.es';
 import {updateRulesReferences} from '../util/rules.es';
 import {
-	getSettingsContextProperty,
 	updateField,
 	updateFieldReference,
 	updateSettingsContextProperty,
@@ -127,28 +127,6 @@ export const updateState = (props, state, propertyName, propertyValue) => {
 			newFocusedField
 		),
 	};
-};
-
-export const findInvalidFieldReference = (focusedField, pages, value) => {
-	let hasInvalidFieldReference = false;
-
-	const visitor = new PagesVisitor(pages);
-
-	visitor.mapFields((field) => {
-		const fieldReference = getSettingsContextProperty(
-			field.settingsContext,
-			'fieldReference'
-		);
-
-		if (
-			focusedField.fieldName !== field.fieldName &&
-			fieldReference === value
-		) {
-			hasInvalidFieldReference = true;
-		}
-	});
-
-	return hasInvalidFieldReference;
 };
 
 export const handleFieldEdited = (props, state, event) => {

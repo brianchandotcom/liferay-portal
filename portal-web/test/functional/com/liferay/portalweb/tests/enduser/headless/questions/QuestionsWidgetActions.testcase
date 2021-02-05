@@ -123,6 +123,10 @@ definition {
 		AssertVisible(
 			key_imageFileName = "Document_1.svg",
 			locator1 = "Questions#QUESTIONS_IMAGE_NAME");
+
+		AssertTextEquals(
+			locator1 = "Questions#RELATED_QUESTIONS_EMPTY_TEXT",
+			value1 = "No related questions were found.");
 	}
 
 	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"

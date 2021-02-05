@@ -288,6 +288,12 @@
 	<td>//a[contains(@href, '${key_tagName}')]//*[contains(.,'Used ${key_amountOfUsedTimes} Times')]</td>
 	<td></td>
 </tr>
+<!--RELATED_QUESTIONS-->
+<tr>
+	<td>RELATED_QUESTIONS_EMPTY_TEXT</td>
+	<td>//h2[contains(@class,'text-secondary') and contains(.,'No related questions were found.')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

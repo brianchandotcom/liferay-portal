@@ -211,15 +211,33 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = "Test");
 
+		WebContentStructures.addName(structureName = "Test edited");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Test edited");
+
 		PortletEntry.changeLocale(locale = "en-US");
 
-		WebContentStructures.addName(structureName = "Test edited");
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Test");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContentStructures.saveCP(structureName = "Test");
+		WebContentStructures.saveCP();
 
-		WebContentStructures.deleteCP(structureName = "Test");
+		LexiconEntry.gotoEntry(rowEntry = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Test");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Test edited");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

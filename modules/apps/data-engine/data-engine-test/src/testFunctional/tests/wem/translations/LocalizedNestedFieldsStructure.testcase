@@ -66,9 +66,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "I'm a test",
-			structureName = "${structureTitleEN}");
+		WebContentStructures.addCP(structureName = "${structureTitleEN}");
 
 		DataEngine.addField(
 			fieldFieldLabel = "${fieldLabel1EN}",

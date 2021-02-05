@@ -77,14 +77,21 @@ public class PortalFixpackReleasePortalTopLevelBuild
 
 	@Override
 	public PortalRelease getPortalRelease() {
+		if (_portalRelease != null) {
+			return _portalRelease;
+		}
+
 		PortalFixpackRelease portalFixpackRelease = getPortalFixpackRelease();
 
-		return portalFixpackRelease.getPortalRelease();
+		_portalRelease = portalFixpackRelease.getPortalRelease();
+
+		return _portalRelease;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(?<major>\\d)\\.(?<minor>\\d)\\.(?<fix>\\d+)");
 
 	private PortalFixpackRelease _portalFixpackRelease;
+	private PortalRelease _portalRelease;
 
 }

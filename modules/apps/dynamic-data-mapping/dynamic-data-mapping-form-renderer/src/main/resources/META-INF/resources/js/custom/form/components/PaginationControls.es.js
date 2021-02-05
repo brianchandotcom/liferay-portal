@@ -16,12 +16,12 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {useEvaluate} from '../hooks/useEvaluate.es';
-import {useForm} from '../hooks/useForm.es';
-import {usePage} from '../hooks/usePage.es';
+import {useEvaluate} from '../../../core/hooks/useEvaluate.es';
+import {useForm} from '../../../core/hooks/useForm.es';
+import {usePage} from '../../../core/hooks/usePage.es';
+import {getFormId, getFormNode} from '../../../util/formId.es';
 import nextPage from '../thunks/nextPage.es';
 import previousPage from '../thunks/previousPage.es';
-import {getFormId, getFormNode} from '../util/formId.es';
 
 export const PaginationControls = ({
 	activePage,

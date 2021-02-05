@@ -18,10 +18,11 @@ import ClayLayout from '@clayui/layout';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
-import {EVENT_TYPES} from '../../actions/eventTypes.es';
-import {useForm} from '../../hooks/useForm.es';
-import {usePage} from '../../hooks/usePage.es';
-import {setValue} from '../../util/i18n.es';
+import {useConfig} from '../../../core/hooks/useConfig.es';
+import {useForm} from '../../../core/hooks/useForm.es';
+import {usePage} from '../../../core/hooks/usePage.es';
+import {setValue} from '../../../util/i18n.es';
+import {EVENT_TYPES} from '../eventTypes.es';
 
 export const Container = ({children, pages, strings = {}}) => {
 	const {editingLanguageId} = usePage();
@@ -53,11 +54,11 @@ export const Container = ({children, pages, strings = {}}) => {
 										enabled: false,
 										title: {[editingLanguageId]: ''},
 									},
-									type: EVENT_TYPES.SUCCESS_CHANGED,
+									type: EVENT_TYPES.SUCCESS_PAGE,
 								});
 								dispatch({
-									payload: pages.length - 1,
-									type: EVENT_TYPES.CHANGE_ACTIVE_PAGE,
+									payload: {activePage: pages.length - 1},
+									type: EVENT_TYPES.PAGE.CHANGE,
 								});
 							},
 						},
@@ -77,11 +78,11 @@ export const Container = ({children, pages, strings = {}}) => {
 
 Container.displayName = 'SuccessVariant.Container';
 
-export const Page = ({page}) => {
+export const Page = ({page: {successPageSettings}}) => {
+	const {defaultLanguageId} = useConfig();
 	const {editingLanguageId} = usePage();
-	const dispatch = useForm();
 
-	const {defaultLanguageId, successPageSettings} = page;
+	const dispatch = useForm();
 
 	const prevEditingLanguageId = usePrevious(editingLanguageId);
 
@@ -116,7 +117,7 @@ export const Page = ({page}) => {
 				setting,
 				event.target.value
 			),
-			type: EVENT_TYPES.SUCCESS_CHANGED,
+			type: EVENT_TYPES.SUCCESS_PAGE,
 		});
 	};
 

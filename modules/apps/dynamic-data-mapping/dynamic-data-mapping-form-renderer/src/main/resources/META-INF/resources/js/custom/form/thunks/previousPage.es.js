@@ -12,8 +12,8 @@
  * details.
  */
 
-import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {evaluate} from '../util/evaluation.es';
+import {evaluate} from '../../../util/evaluation.es';
+import {EVENT_TYPES} from '../eventTypes.es';
 
 export default function previousPage({
 	activePage,
@@ -50,7 +50,7 @@ export default function previousPage({
 
 			dispatch({
 				payload: activePageUpdated,
-				type: EVENT_TYPES.CHANGE_ACTIVE_PAGE,
+				type: EVENT_TYPES.PAGE.CHANGE,
 			});
 
 			Liferay.fire('ddmFormPageShow', {

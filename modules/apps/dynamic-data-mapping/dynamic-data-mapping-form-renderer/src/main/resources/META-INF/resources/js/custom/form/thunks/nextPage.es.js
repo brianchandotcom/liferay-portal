@@ -12,9 +12,9 @@
  * details.
  */
 
-import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {evaluate} from '../util/evaluation.es';
-import {PagesVisitor} from '../util/visitors.es';
+import {evaluate} from '../../../util/evaluation.es';
+import {PagesVisitor} from '../../../util/visitors.es';
+import {EVENT_TYPES} from '../eventTypes.es';
 
 export default function nextPage({
 	activePage,
@@ -62,7 +62,7 @@ export default function nextPage({
 
 				dispatch({
 					payload: activePageUpdated,
-					type: EVENT_TYPES.CHANGE_ACTIVE_PAGE,
+					type: EVENT_TYPES.PAGE.CHANGE,
 				});
 
 				Liferay.fire('ddmFormPageShow', {
@@ -74,7 +74,7 @@ export default function nextPage({
 			else {
 				dispatch({
 					payload: {newPages: evaluatedPages, pageIndex: activePage},
-					type: EVENT_TYPES.PAGE_VALIDATION_FAILED,
+					type: EVENT_TYPES.PAGE.VALIDATION_FAILED,
 				});
 			}
 		});

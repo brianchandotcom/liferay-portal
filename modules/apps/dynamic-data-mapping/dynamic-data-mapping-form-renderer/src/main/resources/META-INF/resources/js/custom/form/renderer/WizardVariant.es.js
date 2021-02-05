@@ -13,42 +13,55 @@
  */
 
 import ClayButton from '@clayui/button';
+import classnames from 'classnames';
 import React from 'react';
 
-import {Pagination} from '../Pagination.es';
-import {PaginationControls} from '../PaginationControls.es';
-import * as DefaultVariant from './DefaultVariant.es';
+import {MultiStep} from '../components/MultiStep.es';
+import {PaginationControls} from '../components/PaginationControls.es';
 
 /* eslint-disable react/jsx-fragments */
 export const Container = ({
 	activePage,
 	children,
+	editable,
 	pageIndex,
 	pages,
 	readOnly,
 	showSubmitButton,
-	strings,
+	strings = null,
 	submitLabel,
 }) => (
-	<div className="ddm-form-page-container paginated">
-		<DefaultVariant.Container activePage={activePage} pageIndex={pageIndex}>
-			{children}
-		</DefaultVariant.Container>
+	<div className="ddm-form-page-container wizard">
+		{pages.length > 1 && pageIndex === activePage && (
+			<MultiStep
+				activePage={activePage}
+				editable={editable}
+				pages={pages}
+			/>
+		)}
+
+		<div
+			className={classnames(
+				'ddm-layout-builder ddm-page-container-layout',
+				{
+					hide: activePage !== pageIndex,
+				}
+			)}
+		>
+			<div className="form-builder-layout">{children}</div>
+		</div>
 
 		{pageIndex === activePage && (
 			<React.Fragment>
 				{pages.length > 0 && (
-					<React.Fragment>
-						<Pagination activePage={activePage} pages={pages} />
-						<PaginationControls
-							activePage={activePage}
-							readOnly={readOnly}
-							showSubmitButton={showSubmitButton}
-							strings={strings}
-							submitLabel={submitLabel}
-							total={pages.length}
-						/>
-					</React.Fragment>
+					<PaginationControls
+						activePage={activePage}
+						readOnly={readOnly}
+						showSubmitButton={showSubmitButton}
+						strings={strings}
+						submitLabel={submitLabel}
+						total={pages.length}
+					/>
 				)}
 
 				{!pages.length && showSubmitButton && (
@@ -65,4 +78,4 @@ export const Container = ({
 	</div>
 );
 
-Container.displayName = 'PaginatedVariant.Container';
+Container.displayName = 'WizardVariant.Container';

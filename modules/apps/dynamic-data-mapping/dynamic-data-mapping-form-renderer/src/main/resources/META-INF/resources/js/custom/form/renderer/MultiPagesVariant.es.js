@@ -15,14 +15,15 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayLayout from '@clayui/layout';
+import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 import React from 'react';
 
-import {EVENT_TYPES} from '../../actions/eventTypes.es';
-import {useForm} from '../../hooks/useForm.es';
-import {usePage} from '../../hooks/usePage.es';
+import {useForm} from '../../../core/hooks/useForm.es';
+import {usePage} from '../../../core/hooks/usePage.es';
+import {EVENT_TYPES} from '../eventTypes.es';
 
 /* eslint-disable react/jsx-fragments */
-export const Container = ({children, empty, page, pageIndex, pages}) => {
+export const Container = ({children, empty, pageIndex, pages}) => {
 	const {editingLanguageId, successPageSettings} = usePage();
 	const dispatch = useForm();
 
@@ -38,7 +39,7 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 					onClick: () =>
 						dispatch({
 							payload: {pageIndex},
-							type: EVENT_TYPES.PAGE_RESET,
+							type: EVENT_TYPES.PAGE.RESET,
 						}),
 			  },
 		pageIndex > 0
@@ -46,8 +47,8 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 					label: Liferay.Language.get('remove-page'),
 					onClick: () =>
 						dispatch({
-							payload: pageIndex,
-							type: EVENT_TYPES.PAGE_DELETED,
+							payload: {pageIndex},
+							type: EVENT_TYPES.PAGE.DELETE,
 						}),
 			  }
 			: false,
@@ -68,9 +69,9 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 
 		dispatch({
 			payload: successPageSettings,
-			type: EVENT_TYPES.SUCCESS_CHANGED,
+			type: EVENT_TYPES.SUCCESS_PAGE,
 		});
-		dispatch({payload: pages.length, type: EVENT_TYPES.CHANGE_ACTIVE_PAGE});
+		dispatch({payload: pages.length, type: EVENT_TYPES.PAGE.CHANGE});
 	};
 
 	return (
@@ -83,7 +84,15 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 					role="tabpanel"
 				>
 					<div className="form-builder-layout">
-						<h5 className="pagination">{page.pagination}</h5>
+						<h5 className="pagination">
+							{sub(Liferay.Language.get('page-x-of-x'), [
+								pageIndex + 1,
+								pages[pages.length - 1].contentRenderer ===
+								'success'
+									? pages.length - 1
+									: pages.length,
+							])}
+						</h5>
 
 						{children}
 					</div>
@@ -100,7 +109,7 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 									firstIndex: pageIndex,
 									secondIndex: pageIndex - 1,
 								},
-								type: EVENT_TYPES.PAGE_SWAPPED,
+								type: EVENT_TYPES.PAGE.SWAP,
 							})
 						}
 						small
@@ -122,7 +131,7 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 									firstIndex: pageIndex,
 									secondIndex: pageIndex + 1,
 								},
-								type: EVENT_TYPES.PAGE_SWAPPED,
+								type: EVENT_TYPES.PAGE.SWAP,
 							})
 						}
 						small
@@ -153,7 +162,7 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 						onClick={() =>
 							dispatch({
 								payload: {pageIndex},
-								type: EVENT_TYPES.PAGE_ADDED,
+								type: EVENT_TYPES.PAGE.ADD,
 							})
 						}
 						small

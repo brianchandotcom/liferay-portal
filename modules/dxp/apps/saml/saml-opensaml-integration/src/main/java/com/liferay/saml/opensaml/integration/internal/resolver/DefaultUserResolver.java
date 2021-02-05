@@ -285,19 +285,13 @@ public class DefaultUserResolver implements UserResolver {
 		throws PortalException {
 
 		try {
-			if (authType.endsWith(CompanyConstants.AUTH_TYPE_EA)) {
+			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
 				return _userLocalService.getUserByEmailAddress(
 					companyId, subjectNameIdentifier);
 			}
-			else if (authType.endsWith(CompanyConstants.AUTH_TYPE_SN)) {
 
-				return _userLocalService.getUserByScreenName(
-					companyId, subjectNameIdentifier);
-			}
-			else if (authType.endsWith("uuid")) {
-				return _userLocalService.getUserByUuidAndCompanyId(
-					subjectNameIdentifier, companyId);
-			}
+			return _userLocalService.getUserByScreenName(
+				companyId, subjectNameIdentifier);
 		}
 		catch (NoSuchUserException noSuchUserException) {
 

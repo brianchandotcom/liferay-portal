@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
@@ -54,6 +56,7 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderResponse;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletSession;
@@ -80,7 +83,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Adam Brandizzi
  */
-@PrepareForTest(LocaleUtil.class)
+@PrepareForTest({LocaleUtil.class, ResourceBundleUtil.class})
 @RunWith(PowerMockRunner.class)
 public class DDMFormDisplayContextTest extends PowerMockito {
 
@@ -95,6 +98,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		setUpLanguageUtil();
 		setUpLocaleUtil();
 		setUpPortalUtil();
+		setUpResourceBundleUtil();
 	}
 
 	@Test
@@ -288,6 +292,40 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetSubmitLabel() throws Exception {
+		mockDDMFormInstance(mock(DDMFormInstanceSettings.class));
+
+		String submitLabel = "Submit";
+
+		mockLanguageGet("submit-form", submitLabel);
+
+		mockWorkflowDefinitionLinkLocalService(false);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			createDDMFormDisplayContext(mockRenderRequest());
+
+		Assert.assertEquals(
+			submitLabel, ddmFormDisplayContext.getSubmitLabel());
+	}
+
+	@Test
+	public void testGetSubmitLabelWithWorkflow() throws Exception {
+		mockDDMFormInstance(mock(DDMFormInstanceSettings.class));
+
+		String submitLabel = "Submit For Publication";
+
+		mockLanguageGet("submit-for-publication", submitLabel);
+
+		mockWorkflowDefinitionLinkLocalService(true);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			createDDMFormDisplayContext(mockRenderRequest());
+
+		Assert.assertEquals(
+			submitLabel, ddmFormDisplayContext.getSubmitLabel());
+	}
+
+	@Test
 	public void testIsFormAvailableForGuest() throws Exception {
 		DDMFormInstance ddmFormInstance = mockDDMFormInstance();
 
@@ -393,8 +431,8 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
 			mock(DDMFormValuesMerger.class), _ddmFormWebConfiguration,
 			mock(DDMStorageAdapterTracker.class), mock(GroupLocalService.class),
-			new JSONFactoryImpl(),
-			mock(WorkflowDefinitionLinkLocalService.class), mock(Portal.class));
+			new JSONFactoryImpl(), _workflowDefinitionLinkLocalService,
+			mock(Portal.class));
 	}
 
 	protected DDMFormInstance mockDDMFormInstance() throws PortalException {
@@ -480,11 +518,20 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		return ddmStructure;
 	}
 
-	protected MockRenderRequest mockRenderRequest() {
+	protected void mockLanguageGet(String key, String value) {
+		when(
+			_language.get(Matchers.any(ResourceBundle.class), Matchers.eq(key))
+		).thenReturn(
+			value
+		);
+	}
+
+	protected MockRenderRequest mockRenderRequest() throws PortalException {
 		MockRenderRequest mockRenderRequest = new MockRenderRequest();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(mock(Company.class));
 		themeDisplay.setLayout(mock(Layout.class));
 		themeDisplay.setLocale(LocaleUtil.SPAIN);
 
@@ -533,6 +580,18 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		);
 
 		return renderRequest;
+	}
+
+	protected void mockWorkflowDefinitionLinkLocalService(
+		boolean hasWorkflowDefinitionLink) {
+
+		when(
+			_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
+				Matchers.anyLong())
+		).thenReturn(
+			hasWorkflowDefinitionLink
+		);
 	}
 
 	protected void setUpJSONFactoryUtil() {
@@ -587,6 +646,18 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		);
 	}
 
+	protected void setUpResourceBundleUtil() {
+		mockStatic(ResourceBundleUtil.class);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				Matchers.anyString(), Matchers.any(Locale.class),
+				Matchers.any(ClassLoader.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
+	}
+
 	private static final String _DEFAULT_LANGUAGE_ID = "es_ES";
 
 	@Mock
@@ -603,5 +674,9 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Mock
 	private MockHttpServletRequest _request;
+
+	@Mock
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

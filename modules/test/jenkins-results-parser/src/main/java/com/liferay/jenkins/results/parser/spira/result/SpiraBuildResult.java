@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.spira.result;
 
 import com.liferay.jenkins.results.parser.PortalFixpackRelease;
+import com.liferay.jenkins.results.parser.PortalHotfixRelease;
 import com.liferay.jenkins.results.parser.PortalRelease;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -33,6 +34,8 @@ import java.util.Properties;
 public interface SpiraBuildResult {
 
 	public PortalFixpackRelease getPortalFixpackRelease();
+
+	public PortalHotfixRelease getPortalHotfixRelease();
 
 	public PortalRelease getPortalRelease();
 

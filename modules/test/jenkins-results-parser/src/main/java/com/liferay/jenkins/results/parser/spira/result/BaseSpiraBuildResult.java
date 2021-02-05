@@ -25,6 +25,8 @@ import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
 import com.liferay.jenkins.results.parser.PortalFixpackRelease;
 import com.liferay.jenkins.results.parser.PortalFixpackReleaseBuild;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PortalHotfixRelease;
+import com.liferay.jenkins.results.parser.PortalHotfixReleaseBuild;
 import com.liferay.jenkins.results.parser.PortalRelease;
 import com.liferay.jenkins.results.parser.PortalReleaseBuild;
 import com.liferay.jenkins.results.parser.PullRequest;
@@ -59,6 +61,20 @@ public class BaseSpiraBuildResult implements SpiraBuildResult {
 			(PortalFixpackReleaseBuild)topLevelBuild;
 
 		return portalFixpackReleaseBuild.getPortalFixpackRelease();
+	}
+
+	@Override
+	public PortalHotfixRelease getPortalHotfixRelease() {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (!(topLevelBuild instanceof PortalHotfixReleaseBuild)) {
+			return null;
+		}
+
+		PortalHotfixReleaseBuild portalHotfixReleaseBuild =
+			(PortalHotfixReleaseBuild)topLevelBuild;
+
+		return portalHotfixReleaseBuild.getPortalHotfixRelease();
 	}
 
 	@Override

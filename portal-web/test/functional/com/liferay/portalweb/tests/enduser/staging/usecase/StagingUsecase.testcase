@@ -798,6 +798,33 @@ definition {
 			teamName = "Site Team Name");
 	}
 
+	@description = "This is a use case for LPS-127207."
+	@priority = "4"
+	test PublishWebContentFolderWithChildFolders {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		WebContentFolder.addCP(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name");
+
+		for (var subfolderCount : list "1,2,3") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			WebContentFolder.addSubfolderCP(
+				folderName = "WC Folder Name",
+				subfolderDescription = "WC SubFolder Description",
+				subfolderName = "WC SubFolder Name ${subfolderCount}");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected folder?",
+			entry = "WC Folder Name");
+
+		AssertConsoleTextNotPresent(value1 = "OutOfMemoryError");
+	}
+
 	@priority = "3"
 	test PublishWebContentFriendlyURLEncoding {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");

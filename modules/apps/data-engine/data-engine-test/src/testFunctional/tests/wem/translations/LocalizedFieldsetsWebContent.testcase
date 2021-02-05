@@ -137,6 +137,14 @@ definition {
 
 		PortletEntry.inputTitle(title = "WC Title Test");
 
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试标题");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Test");
+
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		AssertTextEquals(

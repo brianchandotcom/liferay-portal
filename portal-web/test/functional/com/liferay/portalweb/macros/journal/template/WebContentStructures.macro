@@ -126,7 +126,6 @@ definition {
 
 		if (isSet(cancel)) {
 			Confirm.dismissAlert();
-
 		}
 		else {
 			AssertConfirm(value1 = "Are you sure you want to reset the default values?");

@@ -1028,7 +1028,6 @@ definition {
 
 		var structureTitle = "Structure Title";
 		var structureTitlePT = "Titulo da Estrutura";
-		var webTitle = "WC Title";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1039,13 +1038,13 @@ definition {
 			structureName = "${structureTitle}");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
-			targetFieldLabel = "Image");
+			targetFieldLabel = "Text");
 
 		Button.clickSave();
 
@@ -1060,8 +1059,8 @@ definition {
 			label = "Grupo de Campos");
 
 		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Image",
-			label = "Imagem");
+			fieldLabel = "Text",
+			label = "Texto");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Numeric",
@@ -1074,6 +1073,21 @@ definition {
 		AssertTextEquals(
 			locator1 = "Button#LOCALIZATION_GENERIC",
 			value1 = "en-US");
-	}
 
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${structureTitle}");
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_FIRST",
+			value1 = "Fields Group");
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#NESTED_TEXT_STRUCTURE",
+			value1 = "Text");
+
+		AssertTextEquals(
+			locator1 = "DataEngineBuilder#NESTED_NUMERIC_STRUCTURE",
+			value1 = "Numeric");
+	}
 }

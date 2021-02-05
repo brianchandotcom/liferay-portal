@@ -817,7 +817,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		DynamicServletRequest dynamicServletRequest = new DynamicServletRequest(
 			httpServletRequest, new HashMap<>());
 
-		String namespace = String.valueOf(structureId);
+		String namespace = String.valueOf(structureId) + StringPool.UNDERLINE;
 
 		Map<String, String[]> parameterMap =
 			httpServletRequest.getParameterMap();

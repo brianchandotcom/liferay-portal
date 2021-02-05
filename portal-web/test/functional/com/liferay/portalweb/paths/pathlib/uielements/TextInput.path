@@ -404,6 +404,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NUMERIC_2</td>
+	<td>//div[@class="ddm-field"][2]//label[contains(.,'Numeric')]/following-sibling::input[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPEN_GRAPH_CUSTOM_TITLE</td>
 	<td>//div[input[contains(@id,'openGraphTitle')]]//input[@type='text']</td>
 	<td></td>

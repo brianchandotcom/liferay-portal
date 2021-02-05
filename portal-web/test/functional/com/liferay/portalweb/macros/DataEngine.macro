@@ -651,30 +651,25 @@ definition {
 	}
 
 	macro editFieldReferenceWithInvalidCharacters {
-		AssertClick.assertPartialTextClickAt(
+		Click(
 			key_fieldFieldLabel = "${fieldFieldLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "${fieldFieldLabel}");
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
-		if (isSet(fieldReference)) {
-			Navigator.gotoNavTab(navTab = "Advanced");
+		Navigator.gotoNavTab(navTab = "Advanced");
 
-			Type.sendKeys(
-				key_fieldLabel = "Field Reference",
-				key_fieldName = "fieldReference",
-				locator1 = "Sidebar#TEXT_INPUT",
-				value1 = "${fieldReference}");
+		Type.sendKeys(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "${fieldReference}");
 
-			AssertTextEquals.assertValue(
-				key_fieldLabel = "Field Reference",
-				key_fieldName = "fieldReference",
-				locator1 = "Sidebar#TEXT_INPUT",
-				value1 = "${assertFieldReference}");
-		}
+		AssertTextEquals.assertValue(
+			key_fieldLabel = "Field Reference",
+			key_fieldName = "fieldReference",
+			locator1 = "Sidebar#TEXT_INPUT",
+			value1 = "${assertFieldReference}");
 
-		if (isSet(fieldFieldLabel)) {
-			Click(locator1 = "Sidebar#BACK");
-		}
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro editFieldRepeatable {

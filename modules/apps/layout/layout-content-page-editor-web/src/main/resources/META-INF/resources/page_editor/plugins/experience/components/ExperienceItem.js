@@ -100,66 +100,70 @@ const ExperienceItem = ({
 		>
 			<ClayList.ItemField expand>
 				<ClayButton displayType="unstyled" onClick={handleSelect}>
-					<ClayLayout.ContentRow verticalAlign="center">
-						<ClayLayout.ContentCol
-							style={{flexShrink: 1, minWidth: 0}}
-						>
-							<ClayLayout.ContentSection>
-								<span className="text-truncate-inline">
-									<ClayTooltipProvider>
-										<span
-											className="font-weight-semi-bold text-truncate"
-											data-tooltip-align="top"
-											title={experience.name}
-										>
-											{experience.name}
-										</span>
-									</ClayTooltipProvider>
+					<div className="c-inner" tabIndex="-1">
+						<ClayLayout.ContentRow verticalAlign="center">
+							<ClayLayout.ContentCol
+								style={{flexShrink: 1, minWidth: 0}}
+							>
+								<ClayLayout.ContentSection>
+									<span className="text-truncate-inline">
+										<ClayTooltipProvider>
+											<span
+												className="font-weight-semi-bold text-truncate"
+												data-tooltip-align="top"
+												title={experience.name}
+											>
+												{experience.name}
+											</span>
+										</ClayTooltipProvider>
 
-									{experience.hasLockedSegmentsExperiment && (
-										<ExperienceLockIcon />
-									)}
+										{experience.hasLockedSegmentsExperiment && (
+											<ExperienceLockIcon />
+										)}
 
-									{experience.active && (
-										<ClayLabel
-											className="inline-item-after"
-											displayType="success"
-										>
-											{Liferay.Language.get('active')}
-										</ClayLabel>
-									)}
-								</span>
-
-								<span className="text-truncate">
-									<span className="mr-1 text-secondary">
-										{Liferay.Language.get('audience')}
+										{experience.active && (
+											<ClayLabel
+												className="inline-item-after"
+												displayType="success"
+											>
+												{Liferay.Language.get('active')}
+											</ClayLabel>
+										)}
 									</span>
-									{experience.segmentsEntryName}
-								</span>
 
-								{experience.segmentsExperimentStatus && (
-									<div>
-										<span className="font-weight-normal inline-item-before text-secondary">
-											{Liferay.Language.get('ab-test')}
+									<span className="text-truncate">
+										<span className="mr-1 text-secondary">
+											{Liferay.Language.get('audience')}
 										</span>
+										{experience.segmentsEntryName}
+									</span>
 
-										<ExperimentLabel
-											label={
-												experience
-													.segmentsExperimentStatus
-													.label
-											}
-											value={
-												experience
-													.segmentsExperimentStatus
-													.value
-											}
-										/>
-									</div>
-								)}
-							</ClayLayout.ContentSection>
-						</ClayLayout.ContentCol>
-					</ClayLayout.ContentRow>
+									{experience.segmentsExperimentStatus && (
+										<div>
+											<span className="font-weight-normal inline-item-before text-secondary">
+												{Liferay.Language.get(
+													'ab-test'
+												)}
+											</span>
+
+											<ExperimentLabel
+												label={
+													experience
+														.segmentsExperimentStatus
+														.label
+												}
+												value={
+													experience
+														.segmentsExperimentStatus
+														.value
+												}
+											/>
+										</div>
+									)}
+								</ClayLayout.ContentSection>
+							</ClayLayout.ContentCol>
+						</ClayLayout.ContentRow>
+					</div>
 				</ClayButton>
 			</ClayList.ItemField>
 			<ClayList.ItemField className="align-self-center">

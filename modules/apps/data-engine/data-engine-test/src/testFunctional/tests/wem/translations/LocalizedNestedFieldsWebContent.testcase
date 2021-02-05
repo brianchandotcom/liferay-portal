@@ -707,117 +707,100 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			portlet = "Web Content"
-		);
+			portlet = "Web Content");
 
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
 			structureDescription = "Test",
-			structureName = "Test Structure"
-		);
-		
+			structureName = "Test Structure");
+
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
-			fieldName = "Text"
-		);
-		
+			fieldName = "Text");
+
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
-			targetFieldLabel = "Text"
-		);
-		
+			targetFieldLabel = "Text");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
-		
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Text",
-			label = "Texto"
-		);
-		
+			label = "Texto");
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Numeric",
-			label = "Numerico"
-		);
-		
+			label = "Numerico");
+
 		WebContentStructures.addName(structureName = "Estrutura teste");
-		
+
 		WebContentStructures.saveCP();
-		
+
 		Navigator.gotoNavTab(navTab = "Web Content");
-		
+
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
-		
+
 		WebContent.addWithStructureCP(
 			structureName = "Test Structure",
-			webContentTitle = "WC English"
-		);
-		
+			webContentTitle = "WC English");
+
 		Type(
 			locator1 = "WCD#WEB_CONTENT_TEXT_INPUT_LOCATOR",
-			value1 = "Text English"
-		);
-		
+			value1 = "Text English");
+
 		Type(
 			locator1 = "WCD#WEB_CONTENT_NUMERIC_INPUT_LOCATOR",
-			value1 = "1234"
-		);
-		
+			value1 = "1234");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
-		
+
 		PortletEntry.inputTitle(title = "WC Português");
-		
+
 		Type(
 			locator1 = "WCD#WEB_CONTENT_TEXT_INPUT_LOCATOR",
-			value1 = "Texto Portugês"
-		);
-		
+			value1 = "Texto Portugês");
+
 		Type(
 			locator1 = "WCD#WEB_CONTENT_NUMERIC_INPUT_LOCATOR",
-			value1 = "4321"
-		);
-		
+			value1 = "4321");
+
 		PortletEntry.publish();
-		
+
 		LexiconEntry.gotoEntry(rowEntry = "WC English");
-		
+
 		PortletEntry.changeLocale(locale = "pt-BR");
-		
+
 		Type(
 			locator1 = "WCD#WEB_CONTENT_TEXT_INPUT_LOCATOR",
-			value1 = "Texto Português Editado"
-		);
-		
+			value1 = "Texto Português Editado");
+
 		Type(
 			locator1 = "WCD#WEB_CONTENT_NUMERIC_INPUT_LOCATOR",
-			value1 = "9876"
-		);
-		
+			value1 = "9876");
+
 		PortletEntry.publish();
-		
+
 		LexiconEntry.gotoEntry(rowEntry = "WC English");
-		
+
 		AssertTextEquals(
 			locator1 = "WCD#WEB_CONTENT_TEXT_INPUT_LOCATOR",
-			value1 = "Text English"
-		);
-		
+			value1 = "Text English");
+
 		AssertTextEquals(
 			locator1 = "WCD#WEB_CONTENT_NUMERIC_INPUT_LOCATOR",
-			value1 = "1234"
-		);
-		
+			value1 = "1234");
+
 		PortletEntry.changeLocale(locale = "pt-BR");
-		
+
 		AssertTextEquals(
 			locator1 = "WCD#WEB_CONTENT_TEXT_INPUT_LOCATOR",
-			value1 = "Texto Português Editado"
-		);
-		
+			value1 = "Texto Português Editado");
+
 		AssertTextEquals(
 			locator1 = "WCD#WEB_CONTENT_NUMERIC_INPUT_LOCATOR",
-			value1 = "9876"
-		);
+			value1 = "9876");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

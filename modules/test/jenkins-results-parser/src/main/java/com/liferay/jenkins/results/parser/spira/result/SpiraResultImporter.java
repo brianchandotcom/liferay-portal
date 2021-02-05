@@ -70,8 +70,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 /**
  * @author Michael Hashimoto
  */
@@ -798,6 +796,131 @@ public class SpiraResultImporter {
 			_topLevelBuild.getBranchName());
 	}
 
+	private String _getSlackBody() {
+		Job job = _topLevelBuild.getJob();
+
+		String slackBody = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "test.batch.spira.slack.body",
+			_topLevelBuild.getTestSuiteName(), _topLevelBuild.getJobName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackBody)) {
+			return _spiraBuildResult.replaceEnvVars(slackBody);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("*Jenkins Build:* <");
+		sb.append(_topLevelBuild.getBuildURL());
+		sb.append("|");
+		sb.append(_topLevelBuild.getJobName());
+		sb.append("#");
+		sb.append(_topLevelBuild.getBuildNumber());
+		sb.append(">\n");
+
+		sb.append("*Jenkins Report:* <");
+		sb.append(_topLevelBuild.getJenkinsReportURL());
+		sb.append("|jenkins-report.html>\n");
+
+		String testSuiteName = _topLevelBuild.getTestSuiteName();
+
+		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
+			sb.append("*Jenkins Suite:* ");
+			sb.append(testSuiteName);
+			sb.append("\n");
+		}
+
+		PullRequest pullRequest = _spiraBuildResult.getPullRequest();
+
+		if (pullRequest != null) {
+			sb.append("*Pull Request:* <");
+			sb.append(pullRequest.getHtmlURL());
+			sb.append("|");
+			sb.append(pullRequest.getReceiverUsername());
+			sb.append("#");
+			sb.append(pullRequest.getNumber());
+			sb.append(">\n");
+		}
+
+		SpiraRelease spiraRelease = _spiraBuildResult.getSpiraRelease();
+
+		if (spiraRelease != null) {
+			sb.append("*Spira Release:* <");
+			sb.append(spiraRelease.getURL());
+			sb.append("|");
+			sb.append(spiraRelease.getPath());
+			sb.append(">\n");
+		}
+
+		SpiraReleaseBuild spiraReleaseBuild =
+			_spiraBuildResult.getSpiraReleaseBuild();
+
+		if (spiraReleaseBuild != null) {
+			sb.append("*Spira Release Build:* <");
+			sb.append(spiraReleaseBuild.getURL());
+			sb.append("|");
+			sb.append(spiraReleaseBuild.getName());
+			sb.append(">\n");
+		}
+
+		String currentJobName = System.getenv("JOB_NAME");
+
+		if (currentJobName.equals("publish-spira-report")) {
+			sb.append("*Spira Jenkins Build:* <");
+			sb.append(System.getenv("BUILD_URL"));
+			sb.append("|");
+			sb.append(currentJobName);
+			sb.append("#");
+			sb.append(System.getenv("BUILD_NUMBER"));
+			sb.append(">\n");
+		}
+
+		return sb.toString();
+	}
+
+	private String _getSlackIconEmoji() {
+		Job job = _topLevelBuild.getJob();
+
+		String slackIconEmoji = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "test.batch.spira.slack.icon.emoji",
+			_topLevelBuild.getTestSuiteName(), _topLevelBuild.getJobName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackIconEmoji)) {
+			return _spiraBuildResult.replaceEnvVars(slackIconEmoji);
+		}
+
+		return ":liferay-ci:";
+	}
+
+	private String _getSlackSubject() {
+		Job job = _topLevelBuild.getJob();
+
+		String slackSubject = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "test.batch.spira.slack.subject",
+			_topLevelBuild.getTestSuiteName(), _topLevelBuild.getJobName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackSubject)) {
+			return _spiraBuildResult.replaceEnvVars(slackSubject);
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			_topLevelBuild.getJobName(), "#",
+			String.valueOf(_topLevelBuild.getBuildNumber()));
+	}
+
+	private String _getSlackUsername() {
+		Job job = _topLevelBuild.getJob();
+
+		String slackUsername = JenkinsResultsParserUtil.getProperty(
+			job.getJobProperties(), "test.batch.spira.slack.username",
+			_topLevelBuild.getTestSuiteName(), _topLevelBuild.getJobName());
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slackUsername)) {
+			return _spiraBuildResult.replaceEnvVars(slackUsername);
+		}
+
+		return "Liferay CI";
+	}
+
 	private SpiraAutomationHost _getSpiraAutomationHost(
 		JenkinsNode jenkinsNode) {
 
@@ -949,92 +1072,20 @@ public class SpiraResultImporter {
 	}
 
 	private void _updateSlackChannel() {
-		String buildName = JenkinsResultsParserUtil.combine(
-			_topLevelBuild.getJobName(), "#",
-			String.valueOf(_topLevelBuild.getBuildNumber()));
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("*Jenkins Build:* <");
-		sb.append(_topLevelBuild.getBuildURL());
-		sb.append("|");
-		sb.append(StringEscapeUtils.escapeHtml(buildName));
-		sb.append(">\n");
-
-		sb.append("*Jenkins Report:* <");
-		sb.append(_topLevelBuild.getJenkinsReportURL());
-		sb.append("|jenkins-report.html>\n");
-
-		String testSuiteName = _topLevelBuild.getTestSuiteName();
-
-		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
-			sb.append("*Jenkins Suite:* ");
-			sb.append(testSuiteName);
-			sb.append("\n");
-		}
-
-		PullRequest pullRequest = _spiraBuildResult.getPullRequest();
-
-		if (pullRequest != null) {
-			sb.append("*Pull Request:* <");
-			sb.append(pullRequest.getHtmlURL());
-			sb.append("|");
-			sb.append(pullRequest.getReceiverUsername());
-			sb.append("#");
-			sb.append(pullRequest.getNumber());
-			sb.append(">\n");
-		}
-
-		SpiraRelease spiraRelease = _spiraBuildResult.getSpiraRelease();
-
-		if (spiraRelease != null) {
-			sb.append("*Spira Release:* <");
-			sb.append(spiraRelease.getURL());
-			sb.append("|");
-			sb.append(StringEscapeUtils.escapeHtml(spiraRelease.getPath()));
-			sb.append(">\n");
-		}
-
-		SpiraReleaseBuild spiraReleaseBuild =
-			_spiraBuildResult.getSpiraReleaseBuild();
-
-		if (spiraReleaseBuild != null) {
-			sb.append("*Spira Release Build:* <");
-			sb.append(spiraReleaseBuild.getURL());
-			sb.append("|");
-			sb.append(
-				StringEscapeUtils.escapeHtml(spiraReleaseBuild.getName()));
-			sb.append(">\n");
-		}
-
-		String currentJobName = System.getenv("JOB_NAME");
-
-		if (currentJobName.equals("publish-spira-report")) {
-			sb.append("*Spira Jenkins Build:* <");
-			sb.append(System.getenv("BUILD_URL"));
-			sb.append("|");
-			sb.append(currentJobName);
-			sb.append("#");
-			sb.append(System.getenv("BUILD_NUMBER"));
-			sb.append(">\n");
-		}
-
-		NotificationUtil.sendSlackNotification(
-			sb.toString(), "#spira-reports", ":liferay-ci:", buildName,
-			"Liferay CI");
-
 		Job job = _topLevelBuild.getJob();
 
-		String spiraSlackChannels = JenkinsResultsParserUtil.getProperty(
+		String slackChannels = JenkinsResultsParserUtil.getProperty(
 			job.getJobProperties(), "test.batch.spira.slack.channels",
-			_topLevelBuild.getJobName(), _topLevelBuild.getTestSuiteName());
+			_topLevelBuild.getTestSuiteName(), _topLevelBuild.getJobName());
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(spiraSlackChannels)) {
-			for (String spiraSlackChannel : spiraSlackChannels.split(",")) {
-				NotificationUtil.sendSlackNotification(
-					sb.toString(), spiraSlackChannel, ":liferay-ci:", buildName,
-					"Liferay CI");
-			}
+		if (JenkinsResultsParserUtil.isNullOrEmpty(slackChannels)) {
+			slackChannels = "spira-reports";
+		}
+
+		for (String slackChannel : slackChannels.split(",")) {
+			NotificationUtil.sendSlackNotification(
+				_getSlackBody(), slackChannel, _getSlackIconEmoji(),
+				_getSlackSubject(), _getSlackUsername());
 		}
 	}
 

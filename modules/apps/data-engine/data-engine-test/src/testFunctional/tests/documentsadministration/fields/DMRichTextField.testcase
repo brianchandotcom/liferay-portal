@@ -319,7 +319,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		LexiconEntry.openEntryMenu(rowEntry = "DM Document Type Name");
+		LexiconEntry.openEntryMenu(rowEntry = "New Document Type");
 
 		MenuItem.clickNoError(menuItem = "Edit");
 
@@ -331,9 +331,9 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			showLabel = "false");
 
-		DDLDataDefinition.save(dmDocumentTypeName = "DM Document Type Name");
+		DDLDataDefinition.save(dmDocumentTypeName = "New Document Type");
 
-		LexiconEntry.openEntryMenu(rowEntry = "DM Document Type Name");
+		LexiconEntry.openEntryMenu(rowEntry = "New Document Type");
 
 		MenuItem.clickNoError(menuItem = "Edit");
 

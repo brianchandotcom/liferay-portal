@@ -32,14 +32,13 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlProviderConfigurationKeys;
@@ -70,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -615,15 +615,12 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected void setupProps() {
-		props = mock(Props.class);
-
-		PropsUtil.setProps(props);
-
-		when(
-			props.get(PropsKeys.LIFERAY_HOME)
-		).thenReturn(
-			System.getProperty("java.io.tmpdir")
-		);
+		PropsTestUtil.setProps(
+			HashMapBuilder.<String, Object>put(
+				PropsKeys.LIFERAY_HOME, System.getProperty("java.io.tmpdir")
+			).put(
+				"configuration.override.", new Properties()
+			).build());
 	}
 
 	protected void setupSamlBindings() {
@@ -688,7 +685,6 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected Portal portal;
 	protected BeanLocator portalBeanLocator;
 	protected BeanLocator portletBeanLocator;
-	protected Props props;
 	protected List<SamlBinding> samlBindings;
 	protected IdentifierGenerationStrategy samlIdentifierGenerator;
 	protected SamlProviderConfiguration samlProviderConfiguration;

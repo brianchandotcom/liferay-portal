@@ -16,18 +16,18 @@ import ClayIcon from '@clayui/icon';
 import {isObject} from 'frontend-js-web';
 import React from 'react';
 
+import * as MultiPages from '../../../custom/form/renderer/MultiPagesVariant.es';
+import * as Paginated from '../../../custom/form/renderer/PaginatedVariant.es';
+import * as SuccessPage from '../../../custom/form/renderer/SuccessVariant.es';
+import * as Wizard from '../../../custom/form/renderer/WizardVariant.es';
+import {PagesVisitor} from '../../../util/visitors.es';
 import {PageProvider} from '../../hooks/usePage.es';
-import {PagesVisitor} from '../../util/visitors.es';
 import * as DefaultVariant from './DefaultVariant.es';
 import * as EditablePageHeader from './EditablePageHeader.es';
 import * as EditorVariant from './EditorVariant.es';
 import {Layout} from './Layout.es';
-import * as MultiPages from './MultiPagesVariant.es';
-import * as Paginated from './PaginatedVariant.es';
-import * as SuccessPage from './SuccessVariant.es';
 import * as Tabbed from './TabbedVariant.es';
 import {VariantsProvider} from './VariantsContext.es';
-import * as Wizard from './WizardVariant.es';
 
 const LAYOUT_TYPES = {
 	MULTI_PAGES: 'multi_pages',
@@ -101,7 +101,7 @@ const normalizePage = (page, editingLanguageId) => {
 	return page;
 };
 
-const getVariant = ({page, pages, paginationMode, view, viewMode}) => {
+const getVariant = ({page, pages, paginationMode}) => {
 	if (
 		page.contentRenderer &&
 		page.contentRenderer !== null &&
@@ -116,13 +116,6 @@ const getVariant = ({page, pages, paginationMode, view, viewMode}) => {
 		else {
 			return LAYOUT_TYPES.SINGLE_PAGE;
 		}
-	}
-	else if (
-		paginationMode === LAYOUT_TYPES.WIZARD &&
-		!viewMode &&
-		view === 'formBuilder'
-	) {
-		return LAYOUT_TYPES.MULTI_PAGES;
 	}
 	else {
 		return paginationMode;
@@ -151,13 +144,13 @@ const getVariant = ({page, pages, paginationMode, view, viewMode}) => {
  *
  * Use the `overrides` API to pass the components you want to replace,
  * an example of Page.
- * <Renderer
+ * <Page
  * 	overrides={{
  * 	  Page: ({children}) => children
  * 	}}
  * />
  */
-const Renderer = ({
+const Page = ({
 	activePage = 0,
 	editable = false,
 	editingLanguageId,
@@ -173,20 +166,18 @@ const Renderer = ({
 	showSubmitButton,
 	strings,
 	submitLabel,
-	view,
-	viewMode,
 }) => {
 	const empty = isEmptyPage(defaultPage);
 	const page = normalizePage(defaultPage, editingLanguageId);
 
-	const variant = getVariant({page, pages, paginationMode, view, viewMode});
+	const variant = getVariant({page, pages, paginationMode});
 	const variantComponents = LAYOUT_COMPONENTS_TYPES[variant] || {};
 
-	const formBuilderVariant = editable ? EditorVariant : {};
+	const variantEditable = editable ? EditorVariant : {};
 
 	const Components = {
 		...DefaultVariant,
-		...formBuilderVariant,
+		...variantEditable,
 		...variantComponents,
 		...overrides,
 	};
@@ -233,7 +224,6 @@ const Renderer = ({
 						variant === LAYOUT_TYPES.SINGLE_PAGE ? null : (
 							<Header
 								description={page.description}
-								placeholder={page.placeholder}
 								title={page.title}
 							/>
 						)
@@ -261,8 +251,10 @@ const Renderer = ({
 	);
 };
 
-export default (props) => (
+const PageWithProvider = (props) => (
 	<PageProvider value={props}>
-		<Renderer {...props} />
+		<Page {...props} />
 	</PageProvider>
 );
+
+export default PageWithProvider;

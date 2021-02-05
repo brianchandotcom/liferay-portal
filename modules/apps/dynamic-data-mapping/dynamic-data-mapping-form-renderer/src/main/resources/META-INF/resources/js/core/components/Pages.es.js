@@ -14,13 +14,14 @@
 
 import './PageRenderer.soy';
 
-import {ClayIconSpriteContext} from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 
+import {useConfig} from '../hooks/useConfig.es';
+import {useFormState} from '../hooks/useForm.es';
 import {useFieldTypesResource} from '../hooks/useResource.es';
 import {ActionsProvider} from './Actions.es';
-import Page from './PageRenderer/index';
+import Page from './PageRenderer/Page.es';
 
 function getDisplayableValue({containerId, readOnly, viewMode}) {
 	return (
@@ -31,23 +32,28 @@ function getDisplayableValue({containerId, readOnly, viewMode}) {
 const Pages = React.forwardRef(
 	(
 		{
-			activePage = 0,
 			cancelLabel = Liferay.Language.get('cancel'),
-			containerId,
-			displayable: initialDisplayableValue,
 			editable,
-			editingLanguageId = themeDisplay.getLanguageId(),
-			focusedField,
-			pages = [],
-			paginationMode = 'wizard',
-			readOnly,
 			submitLabel = Liferay.Language.get('submit'),
-			view,
-			viewMode,
 			...otherProps
 		},
 		ref
 	) => {
+		const {portletNamespace, view} = useConfig();
+		const {
+			activePage,
+			containerId,
+			displayable: initialDisplayableValue,
+			editingLanguageId,
+			focusedField,
+			forceAriaUpdate,
+			invalidFormMessage,
+			pages,
+			paginationMode,
+			readOnly,
+			viewMode,
+		} = useFormState();
+
 		const {resource: fieldTypes} = useFieldTypesResource();
 
 		const containerFallbackRef = useRef();
@@ -85,11 +91,14 @@ const Pages = React.forwardRef(
 								editable={editable}
 								editingLanguageId={editingLanguageId}
 								fieldTypes={fieldTypes}
-								key={index}
+								forceAriaUpdate={forceAriaUpdate}
+								invalidFormMessage={invalidFormMessage}
+								key={page.id}
 								page={page}
 								pageIndex={index}
 								pages={pages}
 								paginationMode={paginationMode}
+								portletNamespace={portletNamespace}
 								readOnly={readOnly}
 								submitLabel={submitLabel}
 								total={pages.length}
@@ -106,12 +115,4 @@ const Pages = React.forwardRef(
 
 Pages.displayName = 'Pages';
 
-const PagesWithProviders = React.forwardRef((props, ref) => (
-	<ClayIconSpriteContext.Provider value={props.spritemap}>
-		<Pages {...props} ref={ref} />
-	</ClayIconSpriteContext.Provider>
-));
-
-PagesWithProviders.displayName = 'PagesWithProviders';
-
-export default React.memo(PagesWithProviders);
+export default React.memo(Pages);

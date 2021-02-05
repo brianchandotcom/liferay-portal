@@ -312,8 +312,7 @@ export default function ({classTypes, namespace}) {
 	});
 
 	const openModal = ({delegateTarget}) => {
-		const btn = delegateTarget.querySelector('.btn');
-		let url = btn.dataset.href;
+		let url = delegateTarget.dataset.href;
 
 		url = Liferay.Util.addParams(
 			`${namespace}ddmStructureDisplayFieldValue=${encodeURIComponent(
@@ -358,7 +357,7 @@ export default function ({classTypes, namespace}) {
 	const clickOpenModal = delegate(
 		sourcePanel,
 		'click',
-		'.asset-subtypefields-popup',
+		'.asset-subtypefields-popup .btn',
 		openModal
 	);
 

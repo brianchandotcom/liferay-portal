@@ -24,7 +24,6 @@ page import="com.liferay.portal.kernel.cluster.ClusterNode" %><%@
 page import="com.liferay.portal.kernel.dao.db.DBManagerUtil" %><%@
 page import="com.liferay.portal.kernel.dao.db.DBType" %><%@
 page import="com.liferay.portal.kernel.exception.LayoutPermissionException" %><%@
-page import="com.liferay.portal.kernel.exception.NoSuchLayoutException" %><%@
 page import="com.liferay.portal.kernel.exception.PortletActiveException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredLayoutException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredRoleException" %><%@

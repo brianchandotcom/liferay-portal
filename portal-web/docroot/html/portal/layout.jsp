@@ -17,7 +17,7 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= SessionErrors.contains(request, NoSuchLayoutException.class) %>">
+	<c:when test="<%= Validator.isNotNull(request.getAttribute(NoSuchLayoutException.class.getName())) %>">
 		<div class="container pb-3 pt-3">
 			<%@ include file="/html/portal/status.jsp" %>
 		</div>

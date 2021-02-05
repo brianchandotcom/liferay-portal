@@ -43,7 +43,10 @@ for (String key : SessionErrors.keySet(request)) {
 	}
 }
 
-if (Validator.isNotNull(exception)) {
+if (GetterUtil.getBoolean(request.getAttribute(NoSuchLayoutException.class.getName()))) {
+	noSuchResourceException = true;
+}
+else if (Validator.isNotNull(exception)) {
 	exception = exception.substring(exception.lastIndexOf(StringPool.PERIOD) + 1);
 
 	if (exception.startsWith("NoSuch") && exception.endsWith("Exception")) {

@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -183,8 +182,8 @@ public class FriendlyURLServlet extends HttpServlet {
 					httpServletRequest.getRequestURI(),
 					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
-				SessionErrors.remove(
-					httpServletRequest, NoSuchLayoutException.class);
+				httpServletRequest.removeAttribute(
+					NoSuchLayoutException.class.getName());
 			}
 
 			String layoutFriendlyURLSeparatorCompositeFriendlyURL =
@@ -299,9 +298,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
-			SessionErrors.add(
-				httpServletRequest, noSuchLayoutException.getClass(),
-				noSuchLayoutException);
+			httpServletRequest.setAttribute(
+				NoSuchLayoutException.class.getName(), Boolean.TRUE);
 
 			layoutFriendlyURL = null;
 		}

@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -107,7 +108,11 @@ public class LayoutCommonTag extends IncludeTag {
 		jspWriter.write(
 			"<form action=\"#\" aria-hidden=\"true\" class=\"hide\" " +
 				"id=\"hrefFm\" method=\"post\" name=\"hrefFm\"><span>" +
-					"</span><input hidden type=\"submit\"/></form>");
+					"</span><button hidden type=\"submit\">");
+
+		jspWriter.write(LanguageUtil.get(httpServletRequest, "hidden"));
+
+		jspWriter.write("</button></form>");
 
 		return EVAL_PAGE;
 	}

@@ -29,6 +29,7 @@ export default ({children, dataLayoutBuilder}) => {
 			config: {allowNestedFields},
 			dataDefinition,
 			editingLanguageId,
+			focusedCustomObjectField,
 			hoveredField,
 		},
 		dispatch,
@@ -50,6 +51,19 @@ export default ({children, dataLayoutBuilder}) => {
 			editingLanguageId,
 		});
 	}, [dataLayoutBuilder, defaultLanguageId, editingLanguageId]);
+
+	useEffect(() => {
+		if (Object.keys(focusedCustomObjectField).length > 0) {
+			const dataDefinitionField = focusedCustomObjectField;
+
+			dispatch({
+				payload: {dataDefinitionField},
+				type:
+					DataLayoutBuilderActions.UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dispatch, defaultLanguageId, editingLanguageId]);
 
 	useEffect(() => {
 		const duplicateAction = {

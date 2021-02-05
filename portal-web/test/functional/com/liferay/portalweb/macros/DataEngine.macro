@@ -741,6 +741,32 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro editFieldsetsLabel {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		Click(
+			key_fieldsetLabel = "${fieldsetLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldsetLabelEdit}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldsetLabelEdit}");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "${fieldsetLabelEdit}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro editFieldsetsRepeatable {
 		Click(
 			key_fieldsetLabel = "${fieldsetLabel}",

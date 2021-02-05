@@ -144,12 +144,10 @@ const QuestionsEditor = ({
 						CKEDITOR.dtd.$removeEmpty.span = 0;
 
 						CKEDITOR.on('instanceCreated', ({editor}) => {
-							editor.name = name;
-
 							if (context.imageBrowseURL) {
 								editor.config.filebrowserImageBrowseUrl = context.imageBrowseURL.replace(
 									'EDITOR_NAME_',
-									name
+									editor.name
 								);
 							}
 

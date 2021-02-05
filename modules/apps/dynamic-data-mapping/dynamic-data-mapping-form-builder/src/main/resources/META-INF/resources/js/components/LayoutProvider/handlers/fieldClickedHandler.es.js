@@ -17,35 +17,25 @@ import {FormSupport, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {getParentFieldSet, localizeField} from '../../../util/fieldSupport.es';
 
 const handleFieldClicked = (props, state, event) => {
-	let {fieldName} = event;
-	const {activePage} = event;
-	const {pages} = state;
+	const {defaultLanguageId, editingLanguageId} = props;
+	const {activePage, field} = event;
 
-	const parentFieldSet = getParentFieldSet(pages, fieldName);
-
-	if (parentFieldSet) {
-		fieldName = parentFieldSet.fieldName;
-	}
-
-	const fieldProperties = FormSupport.findFieldByFieldName(pages, fieldName);
-	const {settingsContext} = fieldProperties;
-	const visitor = new PagesVisitor(settingsContext.pages);
+	const visitor = new PagesVisitor(field.settingsContext.pages);
 
 	const focusedField = {
-		...fieldProperties,
+		...field,
 		settingsContext: {
-			...settingsContext,
+			...field.settingsContext,
 			currentPage: activePage,
 			pages: visitor.mapFields((field) => {
 				const {fieldName} = field;
-				const {defaultLanguageId, editingLanguageId} = props;
 
 				if (fieldName === 'validation') {
 					field = {
 						...field,
 						validation: {
 							...field.validation,
-							fieldName: fieldProperties.fieldName,
+							fieldName: field.fieldName,
 						},
 					};
 				}

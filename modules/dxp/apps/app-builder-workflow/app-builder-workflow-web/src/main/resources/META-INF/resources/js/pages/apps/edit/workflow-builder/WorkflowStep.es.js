@@ -118,7 +118,7 @@ const Card = ({
 				</ClayTooltipProvider>
 			)}
 
-			{initial && formView.missingRequiredFields?.missing && (
+			{initial && formView.missingRequiredFields?.customField && (
 				<IconWithPopover
 					header={<PopoverHeader />}
 					show={showPopover}

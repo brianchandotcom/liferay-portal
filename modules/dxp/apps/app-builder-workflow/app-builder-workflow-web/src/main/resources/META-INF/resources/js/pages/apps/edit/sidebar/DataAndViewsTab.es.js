@@ -117,9 +117,7 @@ export default function DataAndViewsTab({
 
 	const mainFormViews = formViews.map((form) => ({
 		...form,
-		disabled:
-			form.missingRequiredFields?.missing &&
-			form.missingRequiredFields?.nativeField,
+		disabled: form.missingRequiredFields?.nativeField,
 	}));
 
 	const removeStepFormView = (index) => {
@@ -214,15 +212,15 @@ export default function DataAndViewsTab({
 							type: UPDATE_LIST_ITEMS,
 						});
 
-						const currFormView = checkedFormViews.find(
+						const currentFormView = checkedFormViews.find(
 							({id}) => id === newFormView.id
 						);
 
 						if (
-							!(currFormView.nativeField && currFormView.missing)
+							!currentFormView.missingRequiredFields?.nativeField
 						) {
 							selectFormView({
-								...currFormView,
+								...currentFormView,
 								name: getLocalizedValue(
 									defaultLanguageId,
 									newFormView.name
@@ -230,7 +228,7 @@ export default function DataAndViewsTab({
 							});
 						}
 						else if (newFormView.id === app.dataLayoutId) {
-							updateFormView({});
+							selectFormView({});
 						}
 					}
 				);
@@ -558,7 +556,7 @@ export default function DataAndViewsTab({
 								}}
 								selectedValue={formView.name}
 								showWarningIcon={
-									formView.missingRequiredFields?.missing
+									formView.missingRequiredFields?.customField
 								}
 							>
 								{SelectFormView.Item}

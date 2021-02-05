@@ -22,7 +22,7 @@ import {DataAndViewsTabContext, OpenButton} from './DataAndViewsTab.es';
 
 const Item = ({
 	id,
-	missingRequiredFields: {missing: missingField = false, nativeField} = {},
+	missingRequiredFields: {customField = false, nativeField} = {},
 	name,
 }) => {
 	const {openFormViewModal, updateFormView} = useContext(
@@ -64,7 +64,7 @@ const Item = ({
 				{name}
 			</span>
 
-			{missingField && (
+			{(customField || nativeField) && (
 				<IconWithPopover
 					className="dropdown-popover-form-view"
 					header={<PopoverHeader nativeField={nativeField} />}

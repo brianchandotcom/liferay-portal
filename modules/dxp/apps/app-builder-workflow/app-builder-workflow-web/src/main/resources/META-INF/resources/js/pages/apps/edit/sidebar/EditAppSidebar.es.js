@@ -112,7 +112,7 @@ export default function EditAppSidebar() {
 			},
 			show: stepIndex !== steps.length - 1,
 			showPopoverIcon:
-				stepIndex == 0 && formView.missingRequiredFields?.missing,
+				stepIndex == 0 && formView.missingRequiredFields?.customField,
 			title: Liferay.Language.get('data-and-views'),
 		},
 		{

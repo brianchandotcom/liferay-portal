@@ -98,6 +98,7 @@ Property Name | Type | Default Value | Description
 `nodeDir` | `File` | `null` | The directory where the Node.js distribution is unpacked.
 `nodeUrl` | `String` | `null` | The URL of the Node.js distribution to download.
 `npmUrl` | `String` | `null` | The URL of the NPM version to download.
+`yarnUrl` | `String` | `null` | The URL of the Yarn version to download.
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
 Moreover, it is possible to use Closures and Callables as values for the

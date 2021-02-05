@@ -216,99 +216,140 @@ definition {
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "4"
 	test DuplicateTranslatedField {
-		property portal.acceptance = "false";
-
-		var fieldGroupLabel = "Grupo";
-
-		var key_text = "Help";
-
-		var key_fieldFieldLabel = "Date";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "My Structure Name 1");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Name",
+			fieldFieldLabel = "Text",
 			fieldName = "Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Name",
-			fieldHelp = "Help name");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			targetFieldLabel = "Name");
-
-		Click(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
-
-		Click(locator1 = "Sidebar#DDM_ANY");
-
-		Type(
-			locator1 = "Sidebar#DDM_ANY",
-			value1 = "Help date");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Fields Group",
-			fieldFieldLabelEdit = "Group");
-
-		WebContentStructures.addLocalization(
-			locale = "pt_BR",
-			localization1Name = "Minha Estrutura Nome 1");
-
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Name",
-			label = "Nome");
+			targetFieldLabel = "Text");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Nome",
-			fieldHelp = "Ajuda nome");
+			fieldFieldLabel = "Text",
+			fieldHelp = "Text Field Help Text");
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Date",
-			label = "Data");
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Date",
+			fieldHelp = "Date Field Help Text");
 
-		Click(locator1 = "Sidebar#DDM_ANY");
-
-		Type(
-			locator1 = "Sidebar#DDM_ANY",
-			value1 = "Ajuda data");
+		WebContentStructures.addLocalization(
+			locale = "pt-BR",
+			localization1Name = "Nome da Estrutura WC");
 
 		DataEngine.editFieldsGroupLabel(
-			fieldsGroupLabel = "Group",
-			fieldsGroupLabelEdit = "Grupo");
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Grupo de Campos");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Encontro");
 
-		MenuItem.click(menuItem = "Duplicate");
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Texto",
+			fieldHelp = "Texto de ajuda do campo de texto");
 
-		DDLDataDefinition.save();
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Encontro",
+			fieldHelp = "Texto de ajuda do campo de data");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		DataEngine.duplicate(fieldsGroupLabel = "Grupo de Campos");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Text,Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		AssertVisible(
+			key_fieldFieldLabel = "Copy of Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Copy of Text,Copy of Date") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Copy of Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		for (var fieldFieldLabel : list "Text,Date") {
+			AssertTextEquals(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#SETTINGS_TEXT",
+				value1 = "${fieldFieldLabel} Field Help Text");
+		}
+
+		for (var fieldFieldLabel : list "Text,Date") {
+			AssertTextEquals(
+				key_fieldFieldLabel = "Copy of ${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#SETTINGS_TEXT",
+				value1 = "${fieldFieldLabel} Field Help Text");
+		}
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		fieldGroupLabel = "Copy of Grupo";
-
 		AssertTextEquals(
-			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL",
-			value1 = "Copy of Grupo");
+			locator1 = "TextInput#NAME",
+			value1 = "Nome da Estrutura WC");
 
-		FormFields.viewTextField(
-			fieldHelpText = "Ajuda nome",
-			fieldLabel = "Copy of Nome",
-			fieldName = "Text");
+		AssertVisible(
+			key_fieldFieldLabel = "Grupo de Campos",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		FormFields.viewTextLabel(fieldLabel = "Copy of Data");
+		for (var fieldFieldLabel : list "Texto,Encontro") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Grupo de Campos",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
 
-		FormFields.viewFieldHelpText(
-			fieldHelpText = "Ajuda data",
-			fieldName = "Date");
+		AssertVisible(
+			key_fieldFieldLabel = "Copy of Grupo de Campos",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Copy of Texto,Copy of Encontro") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Copy of Grupo de Campos",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		for (var fieldFieldLabel : list "Texto,Copy of Texto") {
+			AssertTextEquals(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#SETTINGS_TEXT",
+				value1 = "Texto de ajuda do campo de texto");
+		}
+
+		for (var fieldFieldLabel : list "Encontro,Copy of Encontro") {
+			AssertTextEquals(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#SETTINGS_TEXT",
+				value1 = "Texto de ajuda do campo de data");
+		}
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

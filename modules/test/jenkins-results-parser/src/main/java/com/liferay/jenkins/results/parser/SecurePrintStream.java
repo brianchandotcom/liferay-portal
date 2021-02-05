@@ -76,7 +76,7 @@ public class SecurePrintStream extends PrintStream {
 		String redactedString = _redact(new String(chars));
 
 		if (redactedString != null) {
-			_printStream.print(redactedString);
+			_print(redactedString, false);
 
 			return;
 		}
@@ -145,7 +145,7 @@ public class SecurePrintStream extends PrintStream {
 		String redactedString = _redact(object.toString());
 
 		if (redactedString != null) {
-			_printStream.print(redactedString);
+			_print(redactedString, false);
 
 			return;
 		}
@@ -158,12 +158,12 @@ public class SecurePrintStream extends PrintStream {
 		String redactedString = _redact(string);
 
 		if (redactedString != null) {
-			_printStream.print(redactedString);
+			_print(redactedString, false);
 
 			return;
 		}
 
-		_printStream.print(string);
+		_print(string, false);
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class SecurePrintStream extends PrintStream {
 		String redactedString = _redact(new String(chars));
 
 		if (redactedString != null) {
-			_printStream.println(redactedString);
+			_print(redactedString, true);
 
 			return;
 		}
@@ -255,7 +255,7 @@ public class SecurePrintStream extends PrintStream {
 		String redactedString = _redact(object.toString());
 
 		if (redactedString != null) {
-			_printStream.println(redactedString);
+			println(redactedString);
 
 			return;
 		}
@@ -268,12 +268,11 @@ public class SecurePrintStream extends PrintStream {
 		String redactedString = _redact(string);
 
 		if (redactedString != null) {
-			_printStream.println(redactedString);
-
-			return;
+			_print(redactedString, true);
 		}
-
-		_printStream.println(string);
+		else {
+			_print(string, true);
+		}
 	}
 
 	@Override
@@ -281,7 +280,7 @@ public class SecurePrintStream extends PrintStream {
 		String redactedString = _redact(new String(bytes));
 
 		if (redactedString != null) {
-			_printStream.write(redactedString.getBytes());
+			_print(redactedString, false);
 
 			return;
 		}
@@ -295,7 +294,7 @@ public class SecurePrintStream extends PrintStream {
 			new String(Arrays.copyOfRange(buffer, offset, offset + length)));
 
 		if (redactedString != null) {
-			_printStream.print(redactedString);
+			_print(redactedString, false);
 
 			return;
 		}
@@ -308,12 +307,45 @@ public class SecurePrintStream extends PrintStream {
 		String redactedString = _redact(String.valueOf(b));
 
 		if (redactedString != null) {
-			_printStream.print(redactedString);
+			_print(redactedString, false);
 
 			return;
 		}
 
 		_printStream.write(b);
+	}
+
+	private void _print(String string, boolean appendNewLine) {
+		if ((string == null) && appendNewLine) {
+			_printStream.println();
+
+			return;
+		}
+
+		String[] lines = string.split("\n");
+
+		String lastLine = lines[lines.length - 1];
+
+		for (String line : lines) {
+			if (line.length() > _MAX_PRINT_LINE_LENGTH) {
+				_printStream.print(line.substring(0, _MAX_PRINT_LINE_LENGTH));
+
+				_printStream.print(
+					JenkinsResultsParserUtil.combine(
+						"[TRUNCATED ",
+						String.valueOf(line.length() - _MAX_PRINT_LINE_LENGTH),
+						" CHARACTERS]"));
+
+				_printStream.flush();
+			}
+			else {
+				_printStream.print(line);
+			}
+
+			if ((line != lastLine) || ((line == lastLine) && appendNewLine)) {
+				_printStream.println();
+			}
+		}
 	}
 
 	private String _redact(String string) {
@@ -329,6 +361,8 @@ public class SecurePrintStream extends PrintStream {
 
 		return redactedString;
 	}
+
+	private static final int _MAX_PRINT_LINE_LENGTH = 25000;
 
 	private final PrintStream _printStream;
 

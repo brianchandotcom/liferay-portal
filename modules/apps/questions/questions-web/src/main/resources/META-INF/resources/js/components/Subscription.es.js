@@ -18,9 +18,16 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useEffect, useState} from 'react';
 
-import {subscribeQuery, unsubscribeQuery} from '../utils/client.es';
+import {
+	getThreadQuery,
+	subscribeQuery,
+	unsubscribeQuery,
+} from '../utils/client.es';
 
-export default ({question: {id: messageBoardThreadId, subscribed}}) => {
+export default ({
+	question: {friendlyUrlPath, id: messageBoardThreadId, subscribed},
+	siteKey,
+}) => {
 	const [subscription, setSubscription] = useState(false);
 
 	useEffect(() => {
@@ -31,8 +38,37 @@ export default ({question: {id: messageBoardThreadId, subscribed}}) => {
 		setSubscription(!subscription);
 	};
 
-	const [subscribe] = useMutation(subscribeQuery, {onCompleted});
-	const [unsubscribe] = useMutation(unsubscribeQuery, {onCompleted});
+	const update = (cache) => {
+		var question = cache.readQuery({
+			query: getThreadQuery,
+			variables: {
+				friendlyUrlPath,
+				siteKey,
+			},
+		});
+
+		const newQuestion = {
+			messageBoardThreadByFriendlyUrlPath: {
+				...question.messageBoardThreadByFriendlyUrlPath,
+				subscribed: !subscription,
+			},
+		};
+
+		cache.writeQuery({
+			context: {
+				uri: '/o/graphql?nestedFields=lastPostDate',
+			},
+			data: {...newQuestion},
+			query: getThreadQuery,
+			variables: {
+				friendlyUrlPath,
+				siteKey,
+			},
+		});
+	};
+
+	const [subscribe] = useMutation(subscribeQuery, {onCompleted, update});
+	const [unsubscribe] = useMutation(unsubscribeQuery, {onCompleted, update});
 
 	const changeSubscription = () => {
 		if (subscription) {

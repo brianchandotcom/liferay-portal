@@ -182,7 +182,8 @@ public class OpenIdConnectProviderRegistryImpl
 				openIdConnectProviderConfiguration.openIdConnectClientSecret(),
 				openIdConnectProviderConfiguration.scopes(),
 				getOpenIdConnectMetadataFactory(
-					openIdConnectProviderConfiguration));
+					openIdConnectProviderConfiguration),
+				openIdConnectProviderConfiguration.tokenConnectionTimeout());
 		}
 		catch (Exception exception) {
 			throw new ConfigurationException(

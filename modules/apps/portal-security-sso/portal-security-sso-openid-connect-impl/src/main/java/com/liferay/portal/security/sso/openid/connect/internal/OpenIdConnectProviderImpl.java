@@ -29,13 +29,15 @@ public class OpenIdConnectProviderImpl
 
 	public OpenIdConnectProviderImpl(
 		String name, String clientId, String clientSecret, String scopes,
-		OpenIdConnectMetadataFactory openIdConnectMetadataFactory) {
+		OpenIdConnectMetadataFactory openIdConnectMetadataFactory,
+		int tokenConnectionTimeout) {
 
 		_name = name;
 		_clientId = clientId;
 		_clientSecret = clientSecret;
 		_scopes = scopes;
 		_openIdConnectMetadataFactory = openIdConnectMetadataFactory;
+		_tokenConnectionTimeout = tokenConnectionTimeout;
 	}
 
 	@Override
@@ -66,6 +68,11 @@ public class OpenIdConnectProviderImpl
 	}
 
 	@Override
+	public int geTokenConnectionTimeout() {
+		return _tokenConnectionTimeout;
+	}
+
+	@Override
 	public String getScopes() {
 		return _scopes;
 	}
@@ -75,5 +82,6 @@ public class OpenIdConnectProviderImpl
 	private final String _name;
 	private final OpenIdConnectMetadataFactory _openIdConnectMetadataFactory;
 	private final String _scopes;
+	private final int _tokenConnectionTimeout;
 
 }

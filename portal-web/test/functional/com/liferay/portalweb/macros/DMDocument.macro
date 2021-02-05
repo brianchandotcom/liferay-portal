@@ -2327,6 +2327,10 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
+		if (isSet(remoteStaging)) {
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", ":9080");
+		}
+
 		var latestVersionURL = "${portalURL}/documents/${siteID}/0/${dmDocumentFileName}";
 
 		AssertElementPresent(
@@ -2861,6 +2865,10 @@ definition {
 			value1 = "WebDAV URL");
 
 		var portalURL = PropsUtil.get("portal.url");
+
+		if (isSet(remoteStaging)) {
+			var portalURL = StringUtil.replace("${portalURL}", ":8080", ":9080");
+		}
 
 		var webDAVURL = "${portalURL}/webdav/${siteName}/document_library/${dmDocumentFileName}";
 

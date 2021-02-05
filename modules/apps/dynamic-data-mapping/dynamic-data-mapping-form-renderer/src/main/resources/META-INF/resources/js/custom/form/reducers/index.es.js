@@ -12,8 +12,9 @@
  * details.
  */
 
-export const getFormNode = (element) => element.closest('form');
-
-export const getFormId = (form) => form?.dataset.ddmforminstanceid;
-
-export const getUid = () => Math.random().toString(36).substr(2, 9);
+export {default as elementSetReducer} from './elementSetReducer.es';
+export {default as pageReducer} from './pageReducer.es';
+export {default as pageValidationReducer} from './pageValidationReducer.es';
+export {default as paginationReducer} from './paginationReducer.es';
+export {default as rulesReducer} from './rulesReducer.es';
+export {default as sidebarReducer} from './sidebarReducer.es';

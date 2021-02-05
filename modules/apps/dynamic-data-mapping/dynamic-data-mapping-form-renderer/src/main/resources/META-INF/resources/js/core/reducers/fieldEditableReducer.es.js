@@ -1,0 +1,666 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import {
+	FieldSetUtil,
+	FieldSupport,
+	FieldUtil,
+	RulesSupport,
+	RulesUtil,
+	SettingsContext,
+} from 'dynamic-data-mapping-form-builder';
+import sectionAdded from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/handlers/sectionAddedHandler.es';
+
+import * as FormSupport from '../../util/FormSupport.es';
+import {PagesVisitor} from '../../util/visitors.es';
+import {EVENT_TYPES} from '../actions/eventTypes.es';
+
+export const addField = ({
+	defaultLanguageId,
+	editingLanguageId,
+	fieldNameGenerator,
+	generateFieldNameUsingFieldLabel,
+	indexes,
+	newField,
+	pages,
+	parentFieldName,
+}) => {
+	const {columnIndex, pageIndex, rowIndex} = indexes;
+
+	if (parentFieldName) {
+		const visitor = new PagesVisitor(pages);
+
+		return visitor.mapFields(
+			(field) => {
+				if (field.fieldName === parentFieldName) {
+					const nestedFields = field.nestedFields
+						? [...field.nestedFields, newField]
+						: [newField];
+
+					field = SettingsContext.updateField(
+						{
+							defaultLanguageId,
+							editingLanguageId,
+							fieldNameGenerator,
+							generateFieldNameUsingFieldLabel,
+						},
+						field,
+						'nestedFields',
+						nestedFields
+					);
+
+					const pages = FormSupport.addFieldToColumn(
+						[{rows: field.rows}],
+						0,
+						rowIndex,
+						columnIndex,
+						newField.fieldName
+					);
+
+					return SettingsContext.updateField(
+						{
+							defaultLanguageId,
+							editingLanguageId,
+							fieldNameGenerator,
+							generateFieldNameUsingFieldLabel,
+						},
+						field,
+						'rows',
+						pages[0].rows
+					);
+				}
+
+				return field;
+			},
+			true,
+			true
+		);
+	}
+
+	return FormSupport.addFieldToColumn(
+		pages,
+		pageIndex,
+		rowIndex,
+		columnIndex,
+		newField
+	);
+};
+
+export const deleteField = ({
+	clean = false,
+	defaultLanguageId,
+	editingLanguageId,
+	fieldName,
+	fieldNameGenerator,
+	fieldPage,
+	generateFieldNameUsingFieldLabel,
+	pages,
+}) =>
+	pages.map((page, pageIndex) => {
+		if (fieldPage === pageIndex) {
+			const pagesWithFieldRemoved = FieldSupport.removeField(
+				{
+					defaultLanguageId,
+					editingLanguageId,
+					fieldNameGenerator,
+					generateFieldNameUsingFieldLabel,
+				},
+				pages,
+				fieldName,
+				clean
+			);
+
+			return {
+				...page,
+				rows: clean
+					? FormSupport.removeEmptyRows(
+							pagesWithFieldRemoved,
+							pageIndex
+					  )
+					: pagesWithFieldRemoved[pageIndex].rows,
+			};
+		}
+
+		return page;
+	});
+
+/**
+ * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes
+ * were made only to adapt to the reducer.
+ */
+export default (state, action, config) => {
+	switch (action.type) {
+		case EVENT_TYPES.FIELD.ADD: {
+			const {
+				data: {parentFieldName},
+				indexes,
+			} = action.payload;
+
+			const {availableLanguageIds, editingLanguageId, pages} = state;
+			const {
+				defaultLanguageId,
+				generateFieldNameUsingFieldLabel,
+				getFieldNameGenerator,
+			} = config;
+
+			const fieldNameGenerator = getFieldNameGenerator(
+				pages,
+				generateFieldNameUsingFieldLabel
+			);
+
+			const field =
+				action.payload.newField ||
+				FieldSupport.createField(
+					{defaultLanguageId, editingLanguageId, fieldNameGenerator},
+					action.payload
+				);
+
+			const settingsVisitor = new PagesVisitor(
+				field.settingsContext.pages
+			);
+
+			const newField = {
+				...field,
+				settingsContext: {
+					...field.settingsContext,
+					availableLanguageIds,
+					defaultLanguageId,
+					pages: settingsVisitor.mapFields((field) =>
+						FieldSupport.localizeField(
+							field,
+							defaultLanguageId,
+							editingLanguageId
+						)
+					),
+				},
+			};
+
+			const newPages = addField({
+				defaultLanguageId,
+				editingLanguageId,
+				fieldNameGenerator,
+				generateFieldNameUsingFieldLabel,
+				indexes,
+				newField,
+				pages,
+				parentFieldName,
+			});
+
+			return {
+				activePage: indexes.pageIndex,
+				focusedField: {
+					...newField,
+				},
+				pages: newPages,
+				previousFocusedField: newField,
+			};
+		}
+		case EVENT_TYPES.FIELD.BLUR: {
+			const {fieldInstance, value} = action.payload;
+
+			let focusedField = state.focusedField;
+
+			if (
+				fieldInstance.fieldName === 'fieldReference' &&
+				(value === '' ||
+					FieldUtil.findInvalidFieldReference(
+						focusedField,
+						state.pages,
+						value
+					))
+			) {
+				focusedField = SettingsContext.updateFieldReference(
+					focusedField,
+					false,
+					true
+				);
+			}
+
+			return {
+				fieldHovered: {},
+				focusedField,
+			};
+		}
+		case EVENT_TYPES.FIELD.CLICK: {
+			const {activePage, field} = action.payload;
+			const {editingLanguageId} = state;
+			const {defaultLanguageId} = config;
+
+			const visitor = new PagesVisitor(field.settingsContext.pages);
+
+			const focusedField = {
+				...field,
+				settingsContext: {
+					...field.settingsContext,
+					currentPage: activePage,
+					pages: visitor.mapFields((currentfield) => {
+						const {fieldName} = currentfield;
+
+						if (fieldName === 'validation') {
+							currentfield = {
+								...currentfield,
+								validation: {
+									...currentfield.validation,
+									fieldName: field.fieldName,
+								},
+							};
+						}
+
+						return FieldSupport.localizeField(
+							currentfield,
+							defaultLanguageId,
+							editingLanguageId
+						);
+					}),
+				},
+			};
+
+			return {
+				activePage,
+				focusedField,
+				previousFocusedField: focusedField,
+			};
+		}
+		case EVENT_TYPES.FIELD.CHANGE: {
+			const {fieldName, propertyName, propertyValue} = action.payload;
+			const {editingLanguageId, focusedField, pages, rules} = state;
+			const {
+				defaultLanguageId,
+				generateFieldNameUsingFieldLabel,
+				getFieldNameGenerator,
+			} = config;
+
+			const fieldNameGenerator = getFieldNameGenerator(
+				pages,
+				generateFieldNameUsingFieldLabel
+			);
+
+			if (propertyName === 'name' || propertyValue === '') {
+				return state;
+			}
+
+			let newFocusedField = fieldName
+				? FieldSupport.getField(pages, fieldName)
+				: focusedField;
+
+			if (
+				propertyName === 'fieldReference' &&
+				propertyValue !== '' &&
+				propertyValue !== newFocusedField.fieldName
+			) {
+				newFocusedField = SettingsContext.updateFieldReference(
+					newFocusedField,
+					FieldUtil.findInvalidFieldReference(
+						newFocusedField,
+						pages,
+						propertyValue
+					),
+					false
+				);
+			}
+
+			newFocusedField = SettingsContext.updateField(
+				{
+					defaultLanguageId,
+					editingLanguageId,
+					fieldNameGenerator,
+					generateFieldNameUsingFieldLabel,
+				},
+				newFocusedField,
+				propertyName,
+				propertyValue
+			);
+
+			const visitor = new PagesVisitor(pages);
+
+			return {
+				focusedField: newFocusedField,
+				pages: visitor.mapFields(
+					(field) => {
+						if (field.fieldName === newFocusedField.fieldName) {
+							return newFocusedField;
+						}
+
+						return field;
+					},
+					true,
+					true
+				),
+				rules: RulesUtil.updateRulesReferences(
+					rules || [],
+					focusedField,
+					newFocusedField
+				),
+			};
+		}
+		case EVENT_TYPES.FIELD.DELETE: {
+			const {
+				activePage,
+				editRule = true,
+				fieldName,
+				removeEmptyRows = true,
+			} = action.payload;
+			const {editingLanguageId, pages, rules} = state;
+			const {
+				defaultLanguageId,
+				generateFieldNameUsingFieldLabel,
+				getFieldNameGenerator,
+			} = config;
+
+			const fieldNameGenerator = getFieldNameGenerator(
+				pages,
+				generateFieldNameUsingFieldLabel
+			);
+
+			const newPages = deleteField({
+				clean: removeEmptyRows,
+				defaultLanguageId,
+				editingLanguageId,
+				fieldName,
+				fieldNameGenerator,
+				fieldPage: activePage ?? state.activePage,
+				generateFieldNameUsingFieldLabel,
+				pages,
+			});
+
+			return {
+				focusedField: {},
+				pages: newPages,
+				rules: editRule
+					? RulesSupport.formatRules(newPages, rules)
+					: rules,
+			};
+		}
+		case EVENT_TYPES.FIELD.DUPLICATE: {
+			const {activePage, fieldName, parentFieldName} = action.payload;
+			const {availableLanguageIds, pages} = state;
+			const {
+				defaultLanguageId,
+				generateFieldNameUsingFieldLabel,
+				getFieldNameGenerator,
+			} = config;
+
+			const fieldNameGenerator = getFieldNameGenerator(
+				pages,
+				generateFieldNameUsingFieldLabel
+			);
+
+			const originalField = JSON.parse(
+				JSON.stringify(
+					FormSupport.findFieldByFieldName(pages, fieldName)
+				)
+			);
+
+			const newField = FieldUtil.createDuplicatedField(originalField, {
+				availableLanguageIds,
+				defaultLanguageId,
+				fieldNameGenerator,
+				generateFieldNameUsingFieldLabel,
+			});
+
+			let newPages = null;
+
+			if (parentFieldName) {
+				const visitor = new PagesVisitor(pages);
+
+				newPages = visitor.mapFields(
+					(field) => {
+						if (field.fieldName === parentFieldName) {
+							const nestedFields = field.nestedFields
+								? [...field.nestedFields, newField]
+								: [newField];
+
+							field = SettingsContext.updateField(
+								{
+									availableLanguageIds,
+									defaultLanguageId,
+									fieldNameGenerator,
+									generateFieldNameUsingFieldLabel,
+								},
+								field,
+								'nestedFields',
+								nestedFields
+							);
+
+							let pages = [{rows: field.rows}];
+
+							const {rowIndex} = FormSupport.getFieldIndexes(
+								pages,
+								originalField.fieldName
+							);
+
+							const newRow = FormSupport.implAddRow(12, [
+								newField.fieldName,
+							]);
+
+							pages = FormSupport.addRow(
+								pages,
+								rowIndex + 1,
+								activePage,
+								newRow
+							);
+
+							return SettingsContext.updateField(
+								{
+									availableLanguageIds,
+									defaultLanguageId,
+									fieldNameGenerator,
+									generateFieldNameUsingFieldLabel,
+								},
+								field,
+								'rows',
+								pages[0].rows
+							);
+						}
+
+						return field;
+					},
+					true,
+					true
+				);
+			}
+			else {
+				const {rowIndex} = FormSupport.getFieldIndexes(
+					pages,
+					originalField.fieldName
+				);
+
+				const newRow = FormSupport.implAddRow(12, [newField]);
+
+				newPages = FormSupport.addRow(
+					pages,
+					rowIndex + 1,
+					activePage,
+					newRow
+				);
+			}
+
+			return {
+				focusedField: {
+					...newField,
+				},
+				pages: newPages,
+			};
+		}
+		case EVENT_TYPES.FIELD_SET.ADD: {
+			const {
+				fieldSet,
+				indexes,
+				parentFieldName,
+				properties,
+				rows,
+				useFieldName,
+			} = action.payload;
+			const {availableLanguageIds, editingLanguageId, pages} = state;
+			const {
+				defaultLanguageId,
+				generateFieldNameUsingFieldLabel,
+				getFieldNameGenerator,
+			} = config;
+
+			const fieldNameGenerator = getFieldNameGenerator(
+				pages,
+				generateFieldNameUsingFieldLabel
+			);
+
+			const visitor = new PagesVisitor(fieldSet.pages);
+			const nestedFields = [];
+
+			visitor.mapFields((nestedField) => {
+				nestedFields.push(
+					SettingsContext.updateField(
+						{
+							availableLanguageIds,
+							defaultLanguageId,
+							fieldNameGenerator,
+							generateFieldNameUsingFieldLabel,
+						},
+						nestedField,
+						'label',
+						nestedField.label
+					)
+				);
+			});
+
+			let fieldSetField = FieldSetUtil.createFieldSet(
+				{
+					availableLanguageIds,
+					defaultLanguageId,
+					editingLanguageId,
+					fieldNameGenerator,
+					generateFieldNameUsingFieldLabel,
+				},
+				{skipFieldNameGeneration: false, useFieldName},
+				nestedFields
+			);
+
+			if (properties) {
+				Object.keys(properties).forEach((key) => {
+					fieldSetField = SettingsContext.updateField(
+						{
+							availableLanguageIds,
+							defaultLanguageId,
+							fieldNameGenerator,
+							generateFieldNameUsingFieldLabel,
+						},
+						fieldSetField,
+						key,
+						properties[key]
+					);
+				});
+			}
+
+			if (fieldSet.id) {
+				fieldSetField = SettingsContext.updateField(
+					{
+						availableLanguageIds,
+						defaultLanguageId,
+						fieldNameGenerator,
+						generateFieldNameUsingFieldLabel,
+					},
+					fieldSetField,
+					'ddmStructureId',
+					fieldSet.id
+				);
+			}
+
+			if (rows && rows.length) {
+				fieldSetField = SettingsContext.updateField(
+					{
+						availableLanguageIds,
+						defaultLanguageId,
+						fieldNameGenerator,
+						generateFieldNameUsingFieldLabel,
+					},
+					fieldSetField,
+					'rows',
+					rows
+				);
+			}
+
+			const newField = SettingsContext.updateField(
+				{
+					availableLanguageIds,
+					defaultLanguageId,
+					fieldNameGenerator,
+					generateFieldNameUsingFieldLabel,
+				},
+				fieldSetField,
+				'label',
+				fieldSet.localizedTitle
+			);
+
+			return {
+				activePage: indexes.pageIndex,
+				focusedField: {
+					...newField,
+				},
+				pages: addField({
+					defaultLanguageId,
+					editingLanguageId,
+					fieldNameGenerator,
+					generateFieldNameUsingFieldLabel,
+					indexes,
+					newField,
+					pages,
+					parentFieldName,
+				}),
+				previousFocusedField: newField,
+			};
+		}
+		case EVENT_TYPES.FIELD.HOVER:
+			return {
+				fieldHovered: action.payload,
+			};
+		case EVENT_TYPES.SECTION.ADD: {
+			const {
+				activePage,
+				availableLanguageIds,
+				editingLanguageId,
+				fieldTypes,
+				pages,
+				rules,
+			} = state;
+			const {
+				defaultLanguageId,
+				generateFieldNameUsingFieldLabel,
+				getFieldNameGenerator,
+			} = config;
+
+			const fieldNameGenerator = getFieldNameGenerator(
+				pages,
+				generateFieldNameUsingFieldLabel
+			);
+
+			return sectionAdded(
+				{
+					availableLanguageIds,
+					defaultLanguageId,
+					editingLanguageId,
+					fieldNameGenerator,
+					fieldTypes,
+					generateFieldNameUsingFieldLabel,
+				},
+				{
+					activePage,
+					pages,
+					rules,
+				},
+				action.payload
+			);
+		}
+		default:
+			return state;
+	}
+};

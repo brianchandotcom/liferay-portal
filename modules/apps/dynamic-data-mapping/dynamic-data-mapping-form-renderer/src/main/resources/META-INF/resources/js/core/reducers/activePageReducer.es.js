@@ -12,8 +12,16 @@
  * details.
  */
 
-export const getFormNode = (element) => element.closest('form');
+import {EVENT_TYPES} from '../actions/eventTypes.es';
 
-export const getFormId = (form) => form?.dataset.ddmforminstanceid;
+export default (state, action) => {
+	switch (action.type) {
+		case EVENT_TYPES.PAGE.CHANGE: {
+			const {activePage} = action.payload;
 
-export const getUid = () => Math.random().toString(36).substr(2, 9);
+			return {activePage};
+		}
+		default:
+			return state;
+	}
+};

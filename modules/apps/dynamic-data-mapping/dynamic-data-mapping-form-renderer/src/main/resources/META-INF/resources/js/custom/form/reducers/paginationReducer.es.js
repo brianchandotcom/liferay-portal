@@ -12,8 +12,29 @@
  * details.
  */
 
-export const getFormNode = (element) => element.closest('form');
+import {EVENT_TYPES} from '../eventTypes.es';
 
-export const getFormId = (form) => form?.dataset.ddmforminstanceid;
+/**
+ * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes
+ * were made only to adapt to the reducer.
+ */
+export default (state, action) => {
+	switch (action.type) {
+		case EVENT_TYPES.PAGINATION.NEXT: {
+			const {activePage, pages} = state;
 
-export const getUid = () => Math.random().toString(36).substr(2, 9);
+			return {
+				activePage: Math.min(activePage + 1, pages.length - 1),
+			};
+		}
+		case EVENT_TYPES.PAGINATION.CHANGE: {
+			const {activePage} = state;
+
+			return {
+				activePage: Math.max(activePage - 1, 0),
+			};
+		}
+		default:
+			return state;
+	}
+};

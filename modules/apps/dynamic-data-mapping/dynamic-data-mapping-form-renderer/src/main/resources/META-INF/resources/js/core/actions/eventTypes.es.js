@@ -14,7 +14,6 @@
 
 const LEGACY_EVENTS = {
 	FIELD_EVALUATION_ERROR: 'evaluationError',
-	FIELD_HOVERED: 'fieldHovered',
 	PAGE_VALIDATION_FAILED: 'pageValidationFailed',
 };
 
@@ -32,6 +31,7 @@ const FIELD = {
 	DUPLICATE: 'field_duplicate',
 	EVALUATE: 'field_evaluate',
 	FOCUS: 'field_focus',
+	HOVER: 'field_hover',
 	REMOVED: 'field_removed',
 	REPEATED: 'field_repeated',
 };
@@ -39,6 +39,10 @@ const FIELD = {
 const DND = {
 	MOVE: 'field_move',
 	RESIZE: 'field_resize',
+};
+
+const SECTION = {
+	ADD: 'section_add',
 };
 
 const FIELD_SET = {
@@ -50,9 +54,13 @@ const FIELD_SET = {
  * the LayoutProvider component.
  */
 export const MAPPED_EVENT_TYPES = {
-	[FIELD.CHANGE]: 'fieldEdited',
 	[FIELD.BLUR]: 'fieldBlurred',
+	[FIELD.CHANGE]: 'fieldEdited',
 	[FIELD.CLICK]: 'fieldClicked',
+	[FIELD.DELETE]: 'fieldDeleted',
+	[FIELD.DUPLICATE]: 'fieldDuplicated',
+	[FIELD.HOVER]: 'fieldHovered',
+	[SECTION.ADD]: 'sectionAdded',
 };
 
 export const EVENT_TYPES = {
@@ -61,5 +69,6 @@ export const EVENT_TYPES = {
 	FIELD,
 	FIELD_SET,
 	PAGE,
+	SECTION,
 	UPDATE_EDITING_LANGUAGE: 'update_editing_language',
 };

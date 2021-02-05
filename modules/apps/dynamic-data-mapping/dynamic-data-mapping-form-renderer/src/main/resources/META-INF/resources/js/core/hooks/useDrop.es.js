@@ -92,7 +92,7 @@ export const useDrop = ({
 						type:
 							origin === DND_ORIGIN_TYPE.EMPTY
 								? EVENT_TYPES.FIELD.ADD
-								: EVENT_TYPES.SECTION_ADD,
+								: EVENT_TYPES.SECTION.ADD,
 					});
 					break;
 				case DragTypes.DRAG_FIELD_TYPE_MOVE:
@@ -136,7 +136,7 @@ export const useDrop = ({
 						type:
 							origin === DND_ORIGIN_TYPE.EMPTY
 								? EVENT_TYPES.FIELD.ADD
-								: EVENT_TYPES.SECTION_ADD,
+								: EVENT_TYPES.SECTION.ADD,
 					});
 					break;
 				case DragTypes.DRAG_FIELDSET_ADD:

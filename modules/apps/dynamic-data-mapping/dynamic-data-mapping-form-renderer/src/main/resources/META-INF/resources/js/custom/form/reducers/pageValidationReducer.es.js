@@ -14,20 +14,16 @@
 
 import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 
-import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {PagesVisitor} from '../util/visitors.es';
+import {PagesVisitor} from '../../../util/visitors.es';
+import {EVENT_TYPES} from '../eventTypes.es';
 
+/**
+ * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes
+ * were made only to adapt to the reducer.
+ */
 export default (state, action) => {
 	switch (action.type) {
-		case EVENT_TYPES.UPDATE_PAGES:
-			return {
-				pages: action.payload,
-			};
-		case EVENT_TYPES.CHANGE_ACTIVE_PAGE:
-			return {
-				activePage: action.payload,
-			};
-		case EVENT_TYPES.PAGE_VALIDATION_FAILED: {
+		case EVENT_TYPES.PAGE.VALIDATION_FAILED: {
 			const {newPages, pageIndex} = action.payload;
 			const visitor = new PagesVisitor(newPages ?? state.pages);
 

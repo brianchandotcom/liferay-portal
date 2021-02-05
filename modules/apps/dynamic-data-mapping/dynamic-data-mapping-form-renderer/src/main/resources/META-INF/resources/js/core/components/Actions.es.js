@@ -84,7 +84,7 @@ export const ActionsProvider = ({children, focusedFieldId}) => {
 				case ACTIONS_TYPES.HOVER: {
 					dispatchForm({
 						payload: {activePage, fieldName: field?.fieldName},
-						type: EVENT_TYPES.FIELD_HOVERED,
+						type: EVENT_TYPES.FIELD.HOVER,
 					});
 					break;
 				}

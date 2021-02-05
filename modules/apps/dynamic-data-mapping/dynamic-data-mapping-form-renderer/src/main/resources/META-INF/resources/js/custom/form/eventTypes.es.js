@@ -24,7 +24,6 @@ const PAGE = {
 	DELETE: 'page_delete',
 	RESET: 'page_reset',
 	SWAP: 'page_swap',
-	VALIDATION_FAILED: 'page_validation_failed',
 };
 
 const RULE = {
@@ -33,10 +32,17 @@ const RULE = {
 	DELETE: 'rule_delete',
 };
 
+const SIDEBAR = {
+	BLUR: 'sidebar_blur',
+	CHANGES_CANCEL: 'sidebar_changes_cancel',
+	EVALUATE: 'sidebar_evaluate',
+};
+
 export const EVENT_TYPES = {
 	ELEMENT_SET_ADD: 'element_set_add',
 	PAGE,
 	PAGINATION,
 	RULE,
+	SIDEBAR,
 	SUCCESS_PAGE: 'success_page',
 };

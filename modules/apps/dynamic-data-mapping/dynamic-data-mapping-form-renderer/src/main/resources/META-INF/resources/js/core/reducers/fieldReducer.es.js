@@ -12,14 +12,14 @@
  * details.
  */
 
-import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {
 	generateInstanceId,
 	generateName,
 	generateNestedFieldName,
 	parseNestedFieldName,
-} from '../util/repeatable.es';
-import {PagesVisitor} from '../util/visitors.es';
+} from '../../util/repeatable.es';
+import {PagesVisitor} from '../../util/visitors.es';
+import {EVENT_TYPES} from '../actions/eventTypes.es';
 
 export const createRepeatedField = (sourceField, repeatedIndex) => {
 	const instanceId = generateInstanceId();
@@ -70,7 +70,7 @@ export const updateNestedFieldNames = (parentFieldName, nestedFields) => {
 
 export default (state, action) => {
 	switch (action.type) {
-		case EVENT_TYPES.FIELD_BLUR: {
+		case EVENT_TYPES.FIELD.BLUR: {
 			const {fieldInstance} = action.payload;
 			const pageVisitor = new PagesVisitor(state.pages);
 
@@ -89,7 +89,7 @@ export default (state, action) => {
 				}),
 			};
 		}
-		case EVENT_TYPES.FIELD_FOCUS: {
+		case EVENT_TYPES.FIELD.FOCUS: {
 			const {fieldInstance} = action.payload;
 			const pageVisitor = new PagesVisitor(state.pages);
 
@@ -104,7 +104,7 @@ export default (state, action) => {
 				}),
 			};
 		}
-		case EVENT_TYPES.FIELD_REMOVED: {
+		case EVENT_TYPES.FIELD.REMOVED: {
 			const pageVisitor = new PagesVisitor(state.pages);
 
 			return {
@@ -128,7 +128,7 @@ export default (state, action) => {
 				}),
 			};
 		}
-		case EVENT_TYPES.FIELD_REPEATED: {
+		case EVENT_TYPES.FIELD.REPEATED: {
 			const pageVisitor = new PagesVisitor(state.pages);
 
 			return {

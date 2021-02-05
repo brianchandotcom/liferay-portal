@@ -891,16 +891,16 @@ definition {
 	test ViewWebContentWithRepublishedImage {
 		property test.name.skip.portal.instance = "RemoteStagingDM#ViewWebContentWithRepublishedImage";
 
-		//DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
-		//DMDocument.addCP(
-		//	dmDocumentDescription = "DM Document Description",
-		//	dmDocumentFile = "Document_2.jpg",
-		//	dmDocumentTitle = "Document_2.jpg");
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
 
-		//Staging.publishViaSAP(
-		//	confirmMessage = "Are you sure you want to publish the selected document?",
-		//	entry = "Document_2.jpg");
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected document?",
+			entry = "Document_2.jpg");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

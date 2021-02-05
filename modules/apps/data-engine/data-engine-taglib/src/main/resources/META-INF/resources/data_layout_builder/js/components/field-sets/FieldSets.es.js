@@ -133,7 +133,7 @@ export default function FieldSets({keywords}) {
 	const deleteFieldSet = useDeleteFieldSet({dataLayoutBuilder});
 	const propagateFieldSet = usePropagateFieldSet();
 
-	const onDoubleClick = ({fieldSet: {name: fieldName}, fieldSet}) => {
+	const onDoubleClick = ({fieldSet}) => {
 		const {activePage, pages} = dataLayoutBuilder.getStore();
 
 		dataLayoutBuilder.dispatch(
@@ -142,7 +142,6 @@ export default function FieldSets({keywords}) {
 				availableLanguageIds: dataDefinition.availableLanguageIds,
 				dataLayoutBuilder,
 				defaultLanguageId: dataDefinition.defaultLanguageId,
-				fieldName,
 				fieldSet,
 				indexes: {
 					columnIndex: 0,

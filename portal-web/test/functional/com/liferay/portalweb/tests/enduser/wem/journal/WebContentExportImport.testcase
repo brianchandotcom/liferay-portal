@@ -751,7 +751,7 @@ definition {
 
 		WebContentStructures.resetStructureDefaultValuesCP(
 			assetTitle = "Blogs Entry Title",
-			clickCancel = "true",
+			cancel = "true",
 			templateName = "WC Template Name");
 
 		AssertTextEquals.assertValue(

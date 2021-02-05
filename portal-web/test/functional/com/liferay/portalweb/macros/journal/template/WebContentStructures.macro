@@ -124,9 +124,8 @@ definition {
 	macro resetStructureDefaultValuesCP {
 		ClickNoError(locator1 = "Button#RESET_VALUES");
 
-		if ("${clickCancel}" == "true") {
-			Pause(locator1 = "3000");
-			// TODO Remove Pause add new method to be implemented in POSHI-12
+		if (isSet(cancel)) {
+			Confirm.dismissAlert();
 
 		}
 		else {

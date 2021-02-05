@@ -12,4 +12,20 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	function acceptAlert {
+   		selenium.acceptAlert();
+   	}
+
+   	function dismissAlert {
+   		selenium.dismissAlert();
+   	}
+
+    function assertAlertText {
+    	selenium.assertAlertText();
+    }
+
+    function typeAlert {
+    	selenium.typeAlert();
+    }
+
 }

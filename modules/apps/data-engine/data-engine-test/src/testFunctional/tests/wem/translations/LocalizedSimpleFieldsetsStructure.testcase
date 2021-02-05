@@ -37,62 +37,74 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "5"
 	test CheckFieldsetTranslationsOnStructure {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		Navigator.gotoSidebarTab(tabName = "Builder");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
-			fieldsetLabel = "Address",
-			fieldsetName = "Address Fieldset");
+			fieldsetLabel = "New Fieldset",
+			fieldsetName = "New Fieldset");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Address",
-			fieldFieldLabelEdit = "Endereço");
+		DataEngine.editFieldsetsLabel(
+			fieldsetLabel = "New Fieldset",
+			fieldsetLabelEdit = "Novo Fieldset");
 
-		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fieldsets");
-		}
-
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "Address Fieldset");
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "New Fieldset");
 
 		MenuItem.click(menuItem = "Edit");
 
-		PortletEntry.changeLocaleInModal(locale = "pt-BR");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			modal = "true");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "Texto",
 			fieldsetModal = "true");
 
-		Button.clickSaveModal(button = "Save");
+		Click(locator1 = "Modal#SAVE_BUTTON");
 
-		Button.click(button = "Propagate");
+		Click(
+			key_text = "Propagate",
+			locator1 = "Button#ANY");
 
-		Button.clickSave();
+		Alert.viewSuccessMessage();
 
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+		WebContentStructures.saveCP();
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertElementPresent(
-			key_fieldLabel = "Endereço",
-			locator1 = "FormFields#LABEL");
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
 
-		AssertElementPresent(
-			key_fieldLabel = "Texto",
-			locator1 = "FormFields#LABEL");
+		AssertVisible(
+			key_fieldsetLabel = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldsetLabel = "Novo Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Texto",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

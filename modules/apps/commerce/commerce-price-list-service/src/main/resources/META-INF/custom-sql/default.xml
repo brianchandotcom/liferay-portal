@@ -285,14 +285,14 @@
 					CommercePriceListChannelRel.commercePriceListId = CommercePriceList.commercePriceListId
 			LEFT JOIN
 				CPLCommerceGroupAccountRel ON
-					CommercePriceList.commercePriceListId = CPLCommerceGroupAccountRel.commercePriceListId
+					CPLCommerceGroupAccountRel.commercePriceListId = CommercePriceList.commercePriceListId
 			LEFT JOIN
 				CommercePriceListAccountRel ON
-					CommercePriceList.commercePriceListId = CommercePriceListAccountRel.commercePriceListId
+					CommercePriceListAccountRel.commercePriceListId = CommercePriceList.commercePriceListId
 			WHERE
 				(CommercePriceListChannelRel.commerceChannelId = ?) AND
-				(CommercePriceListAccountRel.commercePriceListAccountRelId IS NULL) AND
 				(CPLCommerceGroupAccountRel.CPLCommerceAccountGroupRelId IS NULL) AND
+				(CommercePriceListAccountRel.commercePriceListAccountRelId IS NULL) AND
 				(CommercePriceList.groupId = ?) AND
 				(CommercePriceList.type_ = ?) AND
 				(CommercePriceList.status = 0)

@@ -86,7 +86,7 @@ const ResizableColumn = ({
 							direction: resizeInfoRef.current.direction,
 							loc: [...loc, currentLoc],
 						},
-						type: EVENT_TYPES.COLUMN_RESIZED,
+						type: EVENT_TYPES.DND.RESIZE,
 					});
 				}
 			}

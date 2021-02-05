@@ -16,7 +16,7 @@ import {DataConverter, DragTypes} from 'data-engine-taglib';
 import {useDrop as useDndDrop} from 'react-dnd';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {useForm} from '../hooks/useForm.es';
+import {useForm} from './useForm.es';
 import {usePage} from './usePage.es';
 
 export const DND_ORIGIN_TYPE = {
@@ -91,7 +91,7 @@ export const useDrop = ({
 						},
 						type:
 							origin === DND_ORIGIN_TYPE.EMPTY
-								? EVENT_TYPES.FIELD_ADD
+								? EVENT_TYPES.FIELD.ADD
 								: EVENT_TYPES.SECTION_ADD,
 					});
 					break;
@@ -108,7 +108,7 @@ export const useDrop = ({
 							},
 							targetParentFieldName: parentField?.fieldName,
 						},
-						type: EVENT_TYPES.FIELD_MOVED,
+						type: EVENT_TYPES.DND.MOVE,
 					});
 					break;
 				case DragTypes.DRAG_DATA_DEFINITION_FIELD_ADD:
@@ -135,7 +135,7 @@ export const useDrop = ({
 						},
 						type:
 							origin === DND_ORIGIN_TYPE.EMPTY
-								? EVENT_TYPES.FIELD_ADD
+								? EVENT_TYPES.FIELD.ADD
 								: EVENT_TYPES.SECTION_ADD,
 					});
 					break;
@@ -158,7 +158,7 @@ export const useDrop = ({
 								fieldTypes: fieldTypesMetadata,
 							}),
 						},
-						type: EVENT_TYPES.FIELD_SET_ADD,
+						type: EVENT_TYPES.FIELD_SET.ADD,
 					});
 					break;
 				default:

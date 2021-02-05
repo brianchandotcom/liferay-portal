@@ -12,9 +12,9 @@
  * details.
  */
 
+import {evaluate} from '../../util/evaluation.es';
+import {PagesVisitor} from '../../util/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {evaluate} from '../util/evaluation.es';
-import {PagesVisitor} from '../util/visitors.es';
 
 export default function formValidate({
 	activePage,

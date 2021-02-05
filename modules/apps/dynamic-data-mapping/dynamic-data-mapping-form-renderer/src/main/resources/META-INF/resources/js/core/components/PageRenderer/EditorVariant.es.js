@@ -25,8 +25,8 @@ import React, {
 import {useDrag} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
+import {hasFieldSet} from '../../../util/fields.es';
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
-import {hasFieldSet} from '../../util/fields.es';
 import {Actions, ActionsControls, useActions} from '../Actions.es';
 import {ParentFieldContext} from '../Field/ParentFieldContext.es';
 import FieldDragPreview from '../FieldDragPreview.es';
@@ -100,17 +100,17 @@ export const Column = ({
 	const isFieldSelected =
 		firstField.fieldName === activeId || firstField.fieldName === hoveredId;
 
-	const fieldId =
+	const fieldRootOrCurrent =
 		!editable && hasFieldSet(parentField.root)
-			? parentField.root.fieldName
-			: firstField.fieldName;
+			? parentField.root
+			: firstField;
 
 	return (
 		<ActionsControls
 			actionsRef={actionsRef}
 			activePage={pageIndex}
 			columnRef={columnRef}
-			fieldId={fieldId}
+			field={fieldRootOrCurrent}
 		>
 			<DefaultVariant.Column
 				className={classNames({
@@ -138,6 +138,7 @@ export const Column = ({
 						fieldId={firstField.fieldName}
 						fieldType={firstField.type}
 						isFieldSet={isFieldSet}
+						parentFieldName={parentField?.fieldName}
 						ref={actionsRef}
 					/>
 				)}

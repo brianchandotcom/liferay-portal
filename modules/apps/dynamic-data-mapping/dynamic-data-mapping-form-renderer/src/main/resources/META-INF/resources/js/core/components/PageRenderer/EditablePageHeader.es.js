@@ -15,14 +15,13 @@
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
+import {PagesVisitor} from '../../../util/visitors.es';
 import {EVENT_TYPES} from '../../actions/eventTypes.es';
 import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
-import {PagesVisitor} from '../../util/visitors.es';
 
 export const PageHeader = ({
 	description: initialDescription,
-	placeholder,
 	title: initialTitle,
 }) => {
 	const [description, setDescription] = useState(initialDescription);
@@ -63,7 +62,7 @@ export const PageHeader = ({
 
 				return page;
 			}),
-			type: EVENT_TYPES.PAGE_UPDATED,
+			type: EVENT_TYPES.PAGE.UPDATE,
 		});
 	};
 
@@ -85,7 +84,7 @@ export const PageHeader = ({
 
 				return page;
 			}),
-			type: EVENT_TYPES.PAGE_UPDATED,
+			type: EVENT_TYPES.PAGE.UPDATE,
 		});
 	};
 
@@ -100,7 +99,7 @@ export const PageHeader = ({
 					setTitle(value);
 					handlePageTitleChanged(value);
 				}}
-				placeholder={placeholder}
+				placeholder={Liferay.Language.get('page-title')}
 				value={title}
 			/>
 			<input

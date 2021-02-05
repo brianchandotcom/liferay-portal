@@ -18,7 +18,7 @@ export default function fieldFocus({activePage, formId, properties}) {
 	return (dispatch) => {
 		const {fieldInstance} = properties;
 
-		dispatch({payload: properties, type: EVENT_TYPES.FIELD_FOCUS});
+		dispatch({payload: properties, type: EVENT_TYPES.FIELD.FOCUS});
 
 		Liferay.fire('ddmFieldFocus', {
 			fieldName: fieldInstance.fieldName,

@@ -27,9 +27,9 @@ import React, {
 	useReducer,
 } from 'react';
 
+import {useConfig} from '../../core/hooks/useConfig.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {useForm} from '../hooks/useForm.es';
-import {usePage} from '../hooks/usePage.es';
+import {useForm, useFormState} from '../hooks/useForm.es';
 import {useResizeObserver} from '../hooks/useResizeObserver.es';
 
 const ActionsContext = createContext({});
@@ -69,12 +69,12 @@ export const ActionsProvider = ({children, focusedFieldId}) => {
 	const dispatchForm = useForm();
 
 	const newDispatch = useCallback(
-		({payload: {activePage, fieldId}, type}) => {
+		({payload: {activePage, field}, type}) => {
 			switch (type) {
 				case ACTIONS_TYPES.ACTIVE:
 					dispatchForm({
-						payload: {activePage, fieldName: fieldId},
-						type: EVENT_TYPES.FIELD_CLICKED,
+						payload: {activePage, field},
+						type: EVENT_TYPES.FIELD.CLICK,
 					});
 					break;
 
@@ -83,7 +83,7 @@ export const ActionsProvider = ({children, focusedFieldId}) => {
 
 				case ACTIONS_TYPES.HOVER: {
 					dispatchForm({
-						payload: {activePage, fieldName: fieldId},
+						payload: {activePage, fieldName: field?.fieldName},
 						type: EVENT_TYPES.FIELD_HOVERED,
 					});
 					break;
@@ -92,7 +92,7 @@ export const ActionsProvider = ({children, focusedFieldId}) => {
 					break;
 			}
 
-			dispatch({payload: fieldId, type});
+			dispatch({payload: field?.fieldName, type});
 		},
 		[dispatchForm, dispatch]
 	);
@@ -121,7 +121,7 @@ export const ActionsControls = ({
 	activePage,
 	children,
 	columnRef,
-	fieldId,
+	field,
 }) => {
 	const [{activeId, hoveredId}, dispatch] = useActions();
 	const contentRect = useResizeObserver(columnRef);
@@ -148,7 +148,7 @@ export const ActionsControls = ({
 		switch (event.type) {
 			case 'click':
 				dispatch({
-					payload: {activePage, fieldId},
+					payload: {activePage, field},
 					type: ACTIONS_TYPES.ACTIVE,
 				});
 
@@ -156,7 +156,7 @@ export const ActionsControls = ({
 
 			case 'mouseover':
 				dispatch({
-					payload: {activePage, fieldId},
+					payload: {activePage, field},
 					type: ACTIONS_TYPES.HOVER,
 				});
 
@@ -164,7 +164,7 @@ export const ActionsControls = ({
 
 			case 'mouseleave':
 				dispatch({
-					payload: {activePage, fieldId: null},
+					payload: {activePage, field: null},
 					type: ACTIONS_TYPES.HOVER,
 				});
 
@@ -183,17 +183,21 @@ export const ActionsControls = ({
 };
 
 export const Actions = forwardRef(
-	({activePage, fieldId, fieldType, isFieldSet}, actionsRef) => {
-		const {fieldActions, fieldTypesMetadata} = usePage();
+	(
+		{activePage, fieldId, fieldType, isFieldSet, parentFieldName},
+		actionsRef
+	) => {
+		const {fieldTypes} = useConfig();
+		const {fieldActions} = useFormState();
+		const dispatch = useForm();
 
 		const label = useMemo(() => {
 			if (isFieldSet) {
 				return Liferay.Language.get('fieldset');
 			}
 
-			return fieldTypesMetadata.find(({name}) => name === fieldType)
-				.label;
-		}, [fieldType, isFieldSet, fieldTypesMetadata]);
+			return fieldTypes.find(({name}) => name === fieldType).label;
+		}, [fieldType, isFieldSet, fieldTypes]);
 
 		return (
 			<div
@@ -206,20 +210,30 @@ export const Actions = forwardRef(
 
 				<ClayDropDownWithItems
 					className="dropdown-action"
-					items={fieldActions.map(({action, ...otherProps}) => {
-						if (action) {
-							return {
-								onClick: () =>
+					items={fieldActions.map(
+						({action, type, ...otherProps}) => ({
+							onClick: () => {
+								if (action) {
 									action({
 										activePage,
 										fieldName: fieldId,
-									}),
-								...otherProps,
-							};
-						}
-
-						return otherProps;
-					})}
+										parentFieldName,
+									});
+								}
+								else {
+									dispatch({
+										payload: {
+											activePage,
+											fieldName: fieldId,
+											parentFieldName,
+										},
+										type,
+									});
+								}
+							},
+							...otherProps,
+						})
+					)}
 					trigger={
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('actions')}

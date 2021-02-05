@@ -14,7 +14,8 @@
 
 import {useCallback} from 'react';
 
-import {usePage} from './usePage.es';
+import {useConfig} from './useConfig.es';
+import {useFormState} from './useForm.es';
 
 /**
  * This hook is a partial function that removes the need to pass the same
@@ -22,15 +23,8 @@ import {usePage} from './usePage.es';
  * the `evaluate` function.
  */
 export const useEvaluate = (thunk) => {
-	const {
-		defaultLanguageId,
-		editingLanguageId,
-		groupId,
-		pages,
-		portletNamespace,
-		rules,
-		viewMode,
-	} = usePage();
+	const {defaultLanguageId, portletNamespace, viewMode} = useConfig();
+	const {editingLanguageId, groupId, pages, rules} = useFormState();
 
 	return useCallback(
 		(args) =>

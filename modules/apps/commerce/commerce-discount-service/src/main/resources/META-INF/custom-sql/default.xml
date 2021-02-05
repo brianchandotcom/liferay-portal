@@ -348,15 +348,15 @@
 				CommerceDiscountRel ON
 					CommerceDiscountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
 			LEFT JOIN
-				CommerceDiscountAccountRel ON
-					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
-			LEFT JOIN
 				CDiscountCAccountGroupRel ON
 					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
 			WHERE
 				(CommerceDiscount.active_ = [$TRUE$]) AND
-				(CommerceDiscountAccountRel.commerceAccountId IS NULL) AND
 				(CDiscountCAccountGroupRel.commerceAccountGroupId IS NULL) AND
+				(CommerceDiscountAccountRel.commerceAccountId IS NULL) AND
 				(CommerceChannelRel.commerceChannelId = ?) AND
 				(
 					(
@@ -388,15 +388,15 @@
 					(CommerceChannelRel.classPK = CommerceDiscount.commerceDiscountId) AND
 					(CommerceChannelRel.classNameId = ?)
 			LEFT JOIN
-				CommerceDiscountAccountRel ON
-					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
-			LEFT JOIN
 				CDiscountCAccountGroupRel ON
 					CDiscountCAccountGroupRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
+			LEFT JOIN
+				CommerceDiscountAccountRel ON
+					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
 			WHERE
 				(CommerceDiscount.active_ = [$TRUE$]) AND
-				(CommerceDiscountAccountRel.commerceAccountId IS NULL) AND
 				(CDiscountCAccountGroupRel.commerceAccountGroupId IS NULL) AND
+				(CommerceDiscountAccountRel.commerceAccountId IS NULL) AND
 				(CommerceChannelRel.commerceChannelId = ?) AND
 				(CommerceDiscount.target = ?)
 		]]>

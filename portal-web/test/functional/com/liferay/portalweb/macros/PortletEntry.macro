@@ -8,11 +8,12 @@ definition {
 				key_fieldName = "${fieldName}",
 				locator1 = "Button#LOCALIZATION");
 		}
-
 		else if (isSet(friendlyURLHistory)) {
 			Click.clickNoMouseOver(locator1 = "Icon#FRIENDLY_URL_HISTORY_LOCALIZATION");
 		}
-
+		else if (isSet(modal)) {
+			Click(locator1 = "Modal#LOCALIZATION_DROPDOWN_TOGGLE");
+		}
 		else {
 			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 		}
@@ -20,7 +21,11 @@ definition {
 		if (isSet(localizedFriendlyURL)) {
 			Click.clickNoMouseOver(locator1 = "Icon#FRIENDLY_URL_HISTORY_SPANISH_LOCALIZATION");
 		}
-
+		else if (isSet(modal)) {
+			Click(
+				key_locale = "${locale}",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+		}
 		else {
 			Click(
 				key_locale = StringUtil.replace("${locale}", "-", "_"),

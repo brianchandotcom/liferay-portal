@@ -56,9 +56,9 @@ public class ObjectWriterFactory {
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
+			disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 			enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
 			enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
-			disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};

@@ -156,8 +156,8 @@ repositories {
 	if (project.hasProperty("releaseApiJarRepoUsername")) {
 		maven {
 			credentials {
-				username "${releaseApiJarRepoUsername}" ?: ""
 				password "${releaseApiJarRepoPassword}" ?: ""
+				username "${releaseApiJarRepoUsername}" ?: ""
 			}
 
 			url "${releaseApiJarRepo}"

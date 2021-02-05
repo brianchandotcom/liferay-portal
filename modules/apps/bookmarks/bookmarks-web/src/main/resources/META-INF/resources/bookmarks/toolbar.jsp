@@ -20,8 +20,21 @@
 BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContext = new BookmarksManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, bookmarksGroupServiceOverriddenConfiguration, portalPreferences, trashHelper);
 %>
 
-<clay:management-toolbar-v2
+<portlet:actionURL name="/bookmarks/edit_entry" var="deleteEntriesURL" />
+
+<clay:management-toolbar
 	actionDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"deleteEntriesURL", deleteEntriesURL.toString()
+		).put(
+			"inputId", Constants.CMD
+		).put(
+			"inputValue", trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE
+		).put(
+			"trashEnabled", trashHelper.isTrashEnabled(scopeGroupId)
+		).build()
+	%>'
 	clearResultsURL="<%= bookmarksManagementToolbarDisplayContext.getClearResultsURL() %>"
 	componentId="bookmarksManagementToolbar"
 	creationMenu="<%= bookmarksManagementToolbarDisplayContext.getCreationMenu() %>"
@@ -30,6 +43,7 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 	filterLabelItems="<%= bookmarksManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= bookmarksManagementToolbarDisplayContext.getTotalItems() %>"
+	propsTransformer="bookmarks/js/BookmarksManagementToolbarPropsTransformer"
 	searchActionURL="<%= String.valueOf(bookmarksManagementToolbarDisplayContext.getSearchActionURL()) %>"
 	searchContainerId="<%= bookmarksManagementToolbarDisplayContext.getSearchContainerId() %>"
 	selectable="<%= bookmarksManagementToolbarDisplayContext.isSelectable() %>"
@@ -37,52 +51,3 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 	showSearch="<%= bookmarksManagementToolbarDisplayContext.isShowSearch() %>"
 	viewTypeItems="<%= bookmarksManagementToolbarDisplayContext.getViewTypes() %>"
 />
-
-<aui:script>
-	var deleteEntries = function () {
-		if (
-			<%= trashHelper.isTrashEnabled(scopeGroupId) %> ||
-			confirm(
-				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
-			)
-		) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			if (form) {
-				form.setAttribute('method', 'post');
-
-				var cmd = form.querySelector(
-					'#<portlet:namespace /><%= Constants.CMD %>'
-				);
-
-				if (cmd) {
-					cmd.setAttribute(
-						'value',
-						'<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>'
-					);
-
-					submitForm(
-						form,
-						'<portlet:actionURL name="/bookmarks/edit_entry" />'
-					);
-				}
-			}
-		}
-	};
-
-	var ACTIONS = {
-		deleteEntries: deleteEntries,
-	};
-
-	Liferay.componentReady('bookmarksManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
-			var itemData = event.data.item.data;
-
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
-</aui:script>

@@ -425,7 +425,11 @@ export default function DataAndViewsTab({
 											openFormViewModal(
 												dataObject.id,
 												dataObject.defaultLanguageId,
-												updateFormView,
+												(formView) =>
+													updateStepFormView(
+														formView,
+														index
+													),
 												dataLayoutId
 											),
 									}}

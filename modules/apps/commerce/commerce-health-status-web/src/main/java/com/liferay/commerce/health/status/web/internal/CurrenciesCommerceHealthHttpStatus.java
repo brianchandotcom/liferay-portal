@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.health.status.web.internal.util;
+package com.liferay.commerce.health.status.web.internal;
 
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;

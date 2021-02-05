@@ -20,5 +20,5 @@ export default function loadBackgroundImage(backgroundImage) {
 		{...(backgroundImage || {}), defaultValue: backgroundImage?.url || ''},
 		null,
 		InfoItemService.getInfoItemFieldValue
-	);
+	).then((editableValue) => editableValue.fieldValue?.url);
 }

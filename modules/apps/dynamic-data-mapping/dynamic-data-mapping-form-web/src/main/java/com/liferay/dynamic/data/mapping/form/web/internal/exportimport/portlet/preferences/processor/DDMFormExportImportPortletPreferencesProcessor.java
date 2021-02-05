@@ -127,7 +127,7 @@ public class DDMFormExportImportPortletPreferencesProcessor
 				return portletPreferences;
 			}
 
-			if (!(group.isStagingGroup() || group.isCompanyStagingGroup())) {
+			if (!group.isCompanyStagingGroup() && !group.isStagingGroup()) {
 				return portletPreferences;
 			}
 		}

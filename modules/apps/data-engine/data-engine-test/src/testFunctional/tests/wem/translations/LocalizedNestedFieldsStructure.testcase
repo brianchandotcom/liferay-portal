@@ -277,9 +277,9 @@ definition {
 			locator1 = "Sidebar#DDM_ANY",
 			value1 = "Ajuda data");
 
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Group",
-			fieldFieldLabelEdit = "Grupo");
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Group",
+			fieldsGroupLabelEdit = "Grupo");
 
 		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
 

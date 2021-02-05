@@ -398,6 +398,51 @@ public class SiteNavigationMenuItemLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteSiteNavigationMenuItemSiblingReorder()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		SiteNavigationMenuItem siteNavigationMenuItem1 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem2 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem3 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem4 =
+			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+				serviceContext);
+
+		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItem2.getSiteNavigationMenuItemId());
+		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId());
+
+		Assert.assertEquals(0, siteNavigationMenuItem1.getOrder());
+		Assert.assertEquals(1, siteNavigationMenuItem4.getOrder());
+	}
+
+	@Test
 	public void testGetSiteNavigationMenuItems() throws PortalException {
 		List<SiteNavigationMenuItem> originalSiteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(

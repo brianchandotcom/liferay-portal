@@ -62,6 +62,8 @@ export default function propsTransformer({
 	portletNamespace,
 	...props
 }) {
+	const {basePortletURL} = additionalProps;
+
 	return {
 		...props,
 		initialActionDropdownItems: initialActionDropdownItems.map((item) => {
@@ -69,14 +71,12 @@ export default function propsTransformer({
 				...item,
 				onClick() {
 					const action = item.data.action;
-					const {basePortletURL} = additionalProps;
 
 					ACTIONS[action](portletNamespace, basePortletURL);
 				},
 			};
 		}),
 		onActionButtonClick() {
-			const {basePortletURL} = additionalProps;
 			ACTIONS.deletePasswordPolicies(portletNamespace, basePortletURL);
 		},
 	};

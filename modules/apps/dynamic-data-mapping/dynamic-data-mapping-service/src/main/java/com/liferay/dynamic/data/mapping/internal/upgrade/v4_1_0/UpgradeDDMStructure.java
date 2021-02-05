@@ -217,7 +217,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 								rs.getString("definition"), parentStructureId,
 								parentStructureLayoutId));
 
-					ps2.setLong(2, rs.getLong("structureId"));
+					ps2.setLong(2, rs.getLong("structureVersionId"));
 					ps2.addBatch();
 				}
 

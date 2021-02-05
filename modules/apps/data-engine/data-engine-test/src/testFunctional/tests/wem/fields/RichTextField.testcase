@@ -203,22 +203,20 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text");
 
+		DataEngine.editFieldReferenceWithInvalidCharacters(
+			assertFieldReference = "TestInvalidReference",
+			fieldFieldLabel = "Rich Text",
+			fieldReference = "Test!Invalid@#Reference");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
 		Click(
 			key_fieldFieldLabel = "Rich Text",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
-
-		DoubleClick(
-			key_fieldLabel = "Field Reference",
-			key_fieldName = "fieldReference",
-			locator1 = "Sidebar#TEXT_INPUT");
-
-		Type.sendKeys(
-			key_fieldLabel = "Field Reference",
-			key_fieldName = "fieldReference",
-			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "Test!Invalid@#Reference");
 
 		AssertTextEquals.assertValue(
 			key_fieldLabel = "Field Reference",

@@ -200,25 +200,22 @@ definition {
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@priority = "4"
 	test EditReferenceOfSeparatorWithInvalidCharacters {
-		property portal.acceptance = "false";
-
 		DataEngine.addField(
-			fieldFieldLabel = "Separator test",
+			fieldFieldLabel = "Separator",
 			fieldName = "Separator");
 
 		DataEngine.editFieldReferenceWithInvalidCharacters(
 			assertFieldReference = "example123A",
-			fieldFieldLabel = "Separator test",
-			fieldReference = "example123A@#@$%$%%");
+			fieldFieldLabel = "Separator",
+			fieldReference = "example 123A@#@$%$%%");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "Test");
 
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Separator test",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Separator test");
+		Click(
+			key_fieldFieldLabel = "Separator",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -227,8 +224,6 @@ definition {
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "example123A");
-
-		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

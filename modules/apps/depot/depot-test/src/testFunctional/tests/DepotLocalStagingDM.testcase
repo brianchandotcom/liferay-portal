@@ -1606,6 +1606,86 @@ definition {
 			value1 = "This is an edit DM Document Description");
 	}
 
+	@description = "This ensures that the latest version of an image in a depot can be published in blogs when local staging is enabled."
+	@priority = "5"
+	test PublishImageWithLatestVersionInBlogs {
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Staging");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Staging");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "Edit DM Document Description",
+			dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Staging");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "Edit DM Document Description",
+			dmDocumentDescriptionEdit = "This is an edit DM Document Description",
+			dmDocumentTitle = "Document_2.jpg");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		BlogsNavigator.gotoAddEntry();
+
+		Pause(locator1 = "3000");
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.selectRepositoryImage(
+			depotName = "Test Depot Name",
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		AlloyEditor.addContent(content = "Blogs Entry Content");
+
+		Button.clickPublish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssertVisible(
+			key_uploadFileName = "Document_2.jpg",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+	}
+
 	@description = "This ensures that the thumbnail of a video shortcut in depot can be published through AP when enabling local staging."
 	@priority = "3"
 	test PublishVideoShortcutThumbnail {

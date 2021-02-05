@@ -169,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_CONTAINER_FIRST</td>
+	<td>xpath=(//div[contains(@class, 'ddm-field-container')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_CONTAINER_LABEL</td>
 	<td>//label[normalize-space(text())='${key_fieldFieldLabel}'] | //legend[normalize-space(text())='${key_fieldFieldLabel}']</td>
 	<td></td>

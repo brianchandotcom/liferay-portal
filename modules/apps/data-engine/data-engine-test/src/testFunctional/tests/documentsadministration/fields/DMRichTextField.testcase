@@ -319,7 +319,7 @@ definition {
 			dmDocumentTypeFieldNames = "Rich Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DataEngine.editFieldShowOrHideLabel(
+		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Rich Text",
 			showLabel = "true");
 
@@ -333,7 +333,7 @@ definition {
 			fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		DataEngine.editFieldShowOrHideLabel(
+		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Rich Text",
 			showLabel = "false");
 

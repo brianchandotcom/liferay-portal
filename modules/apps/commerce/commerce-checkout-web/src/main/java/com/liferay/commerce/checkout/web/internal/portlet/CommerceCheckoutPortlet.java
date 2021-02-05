@@ -134,11 +134,23 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 					httpServletResponse.sendRedirect(
 						getOrderDetailsURL(renderRequest));
 				}
-				else if (!commerceOrder.isOpen() && continueAsGuest) {
+				else if (!commerceOrder.isOpen() &&
+						 (continueAsGuest || commerceOrder.isGuestOrder())) {
+
 					CookieKeys.deleteCookies(
 						httpServletRequest, httpServletResponse,
 						CookieKeys.getDomain(httpServletRequest),
 						"continueAsGuest");
+
+					String domain = CookieKeys.getDomain(httpServletRequest);
+
+					String commerceOrderUuidWebKey =
+						CommerceOrder.class.getName() + StringPool.POUND +
+							commerceOrder.getGroupId();
+
+					CookieKeys.deleteCookies(
+						httpServletRequest, httpServletResponse, domain,
+						commerceOrderUuidWebKey);
 				}
 
 				renderRequest.setAttribute(

@@ -722,7 +722,6 @@ class LayoutProvider extends Component {
 				return {
 					...field,
 					localizedValue: {},
-					readOnly: true,
 					settingsContext: {
 						...this._setInitialSettingsContext(settingsContext),
 					},

@@ -128,6 +128,7 @@ const mountStruct = (event, field, value) => {
 };
 
 const FieldLazy = ({
+	editable,
 	field,
 	fieldTypes,
 	onBlur,
@@ -159,6 +160,7 @@ const FieldLazy = ({
 			}}
 			visible
 			{...field}
+			readOnly={editable ? true : field.readOnly}
 			{...otherProps}
 			{...configuration}
 		/>

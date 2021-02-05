@@ -299,12 +299,9 @@ definition {
 			locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL",
 			value1 = "Copy of Grupo");
 
-		FormFields.viewTextLabel(
-			fieldLabel = "Copy of Nome",
-			fieldName = "Text");
-
-		FormFields.viewFieldHelpText(
+		FormFields.viewTextField(
 			fieldHelpText = "Ajuda nome",
+			fieldLabel = "Copy of Nome",
 			fieldName = "Text");
 
 		FormFields.viewTextLabel(

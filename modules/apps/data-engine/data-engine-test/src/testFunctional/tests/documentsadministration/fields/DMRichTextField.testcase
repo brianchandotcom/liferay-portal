@@ -160,8 +160,8 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 
 		DataEngine.assertFieldRepeated(
-			key_fieldReference = "Rich Text",
-			key_index = "2");
+			fieldName = "Rich Text",
+			index = "2");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

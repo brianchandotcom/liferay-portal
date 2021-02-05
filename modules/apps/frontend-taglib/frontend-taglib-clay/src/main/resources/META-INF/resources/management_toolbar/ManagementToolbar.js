@@ -42,6 +42,7 @@ function ManagementToolbar({
 	onActionButtonClick = () => {},
 	onCheckboxChange = () => {},
 	onClearSelectionButtonClick = () => {},
+	onCreateButtonClick = () => {},
 	onInfoButtonClick = () => {},
 	onSelectAllButtonClick = () => {},
 	onShowMoreButtonClick,
@@ -163,6 +164,9 @@ function ManagementToolbar({
 								<ClayManagementToolbar.Item>
 									<CreationMenu
 										{...creationMenu}
+										onCreateButtonClick={
+											onCreateButtonClick
+										}
 										onShowMoreButtonClick={
 											onShowMoreButtonClick
 										}
@@ -207,6 +211,7 @@ ManagementToolbar.propTypes = {
 	]),
 	itemsTotal: PropTypes.number,
 	onCheckboxChange: PropTypes.func,
+	onCreateButtonClick: PropTypes.func,
 	onInfoButtonClick: PropTypes.func,
 	onViewTypeSelect: PropTypes.func,
 	searchActionURL: PropTypes.string,

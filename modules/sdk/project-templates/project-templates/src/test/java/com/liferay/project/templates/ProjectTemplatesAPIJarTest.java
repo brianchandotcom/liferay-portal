@@ -14,6 +14,7 @@
 
 package com.liferay.project.templates;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.project.templates.util.ZipUtil;
 
 import java.io.File;
@@ -85,31 +86,33 @@ public class ProjectTemplatesAPIJarTest {
 
 		Path classesPath = classesDir.toPath();
 
-		Set<String> classes = _getPaths(classesPath, ".class");
+		Set<String> classNames = _getPaths(classesPath, ".class");
 
-		Assert.assertFalse(classes.isEmpty());
+		Assert.assertFalse(classNames.isEmpty());
 
-		Set<String> javaPaths = _getPaths(sourcesDir.toPath(), ".java");
+		Set<String> sourceClassNames = _getPaths(sourcesDir.toPath(), ".java");
 
-		Assert.assertFalse(javaPaths.isEmpty());
+		Assert.assertFalse(sourceClassNames.isEmpty());
 
-		List<String> missingClassList = new ArrayList<>();
+		List<String> missingClassNames = new ArrayList<>();
 
-		for (String clazz : classes) {
-			if (!clazz.contains("$") && !_ignoreJavaPaths.contains(clazz) &&
-				!javaPaths.contains(clazz)) {
+		for (String className : classNames) {
+			if (!className.contains("$") &&
+				!_ignoreSourceClassNames.contains(className) &&
+				!sourceClassNames.contains(className)) {
 
-				missingClassList.add(clazz);
+				missingClassNames.add(className);
 			}
 		}
 
-		_assertTLDClasses("/taglib/tag/tag-class", classesPath, classes);
+		_assertTLDClasses("/taglib/tag/tag-class", classesPath, classNames);
 
-		_assertTLDClasses("/taglib/tag/tei-class", classesPath, classes);
+		_assertTLDClasses("/taglib/tag/tei-class", classesPath, classNames);
 
-		Set<Path> servicesPaths = _getServicesPaths(classesDir.toPath());
+		Set<Path> sourceServicesClassNames = _getServicesPaths(
+			classesDir.toPath());
 
-		Stream<Path> serviceFilesStream = servicesPaths.stream();
+		Stream<Path> serviceFilesStream = sourceServicesClassNames.stream();
 
 		List<String> serviceClassNames = serviceFilesStream.map(
 			filePath -> {
@@ -127,27 +130,23 @@ public class ProjectTemplatesAPIJarTest {
 			Collectors.toList()
 		);
 
-		List<String> missingServiceClassList = new ArrayList<>();
+		List<String> missingServiceClassNames = new ArrayList<>();
 
 		for (String serviceClassName : serviceClassNames) {
-			String servicePath = serviceClassName.replace(".", "/");
+			String sourceServiceClassName = serviceClassName.replace(".", "/");
 
-			if (!classes.contains(servicePath)) {
-				missingServiceClassList.add(servicePath);
+			if (!classNames.contains(sourceServiceClassName)) {
+				missingServiceClassNames.add(sourceServiceClassName);
 			}
 		}
 
-		String missingClassStrings = missingClassList.toString();
-
-		String missingServiceClassStrings = missingServiceClassList.toString();
-
 		Assert.assertTrue(
-			"Sources jar missing: " + missingClassStrings.replace(",", ",\n"),
-			missingClassList.isEmpty());
+			"Sources jar missing: " + _getClassNames(missingClassNames),
+			missingClassNames.isEmpty());
 		Assert.assertTrue(
 			"Sources jar missing service classes: " +
-				missingServiceClassStrings.replace(",", ",\n"),
-			missingServiceClassList.isEmpty());
+				_getClassNames(missingServiceClassNames),
+			missingServiceClassNames.isEmpty());
 	}
 
 	@Rule
@@ -190,6 +189,19 @@ public class ProjectTemplatesAPIJarTest {
 		Assert.assertTrue(
 			"Missing TLD classes:\n" + sb.toString(),
 			Objects.equals("", sb.toString()));
+	}
+
+	private String _getClassNames(List<String> classNames) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		sb.append("\n");
+
+		for (String className : classNames) {
+			sb.append(className);
+			sb.append("\n");
+		}
+
+		return sb.toString();
 	}
 
 	private Set<String> _getPaths(Path sourcePath, String extension)
@@ -333,7 +345,7 @@ public class ProjectTemplatesAPIJarTest {
 	private static final String _RELEASE_API_JAR_SOURCES_FILE =
 		System.getProperty("releaseApiJarSourcesFile");
 
-	private static final List<String> _ignoreJavaPaths = Arrays.asList(
+	private static final List<String> _ignoreSourceClassNames = Arrays.asList(
 		"com/fasterxml/jackson/databind/deser/std/BaseNodeDeserializer",
 		"javax/servlet/http/NoBodyOutputStream",
 		"javax/servlet/http/NoBodyResponse",

@@ -238,6 +238,30 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
+	public void testGetCustomizedSubmitLabel() throws Exception {
+		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+			DDMFormInstanceSettings.class);
+
+		mockDDMFormInstance(ddmFormInstanceSettings);
+
+		String submitLabel = "Enviar Personalizado";
+
+		when(
+			ddmFormInstanceSettings.submitLabel()
+		).thenReturn(
+			JSONUtil.put(
+				_DEFAULT_LANGUAGE_ID, submitLabel
+			).toString()
+		);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			createDDMFormDisplayContext(mockRenderRequest());
+
+		Assert.assertEquals(
+			submitLabel, ddmFormDisplayContext.getSubmitLabel());
+	}
+
+	@Test
 	public void testGetLocale() throws PortalException {
 		DDMFormDisplayContext ddmFormDisplayContext =
 			createDDMFormDisplayContext();
@@ -261,30 +285,6 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 		Assert.assertEquals(
 			expectedLocale,
 			ddmFormDisplayContext.getLocale(httpServletRequest, ddmForm));
-	}
-
-	@Test
-	public void testGetSubmitLabel() throws Exception {
-		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
-			DDMFormInstanceSettings.class);
-
-		mockDDMFormInstance(ddmFormInstanceSettings);
-
-		String submitLabel = "Enviar";
-
-		when(
-			ddmFormInstanceSettings.submitLabel()
-		).thenReturn(
-			JSONUtil.put(
-				_DEFAULT_LANGUAGE_ID, submitLabel
-			).toString()
-		);
-
-		DDMFormDisplayContext ddmFormDisplayContext =
-			createDDMFormDisplayContext(mockRenderRequest());
-
-		Assert.assertEquals(
-			submitLabel, ddmFormDisplayContext.getSubmitLabel());
 	}
 
 	@Test

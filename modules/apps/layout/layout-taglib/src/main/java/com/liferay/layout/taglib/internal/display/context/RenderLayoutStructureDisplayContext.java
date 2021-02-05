@@ -628,9 +628,24 @@ public class RenderLayoutStructureDisplayContext {
 			styleSB.append(");");
 		}
 
+		long fileEntryId = 0;
+
 		if (backgroundImageJSONObject.has("fileEntryId")) {
+			fileEntryId = backgroundImageJSONObject.getLong("fileEntryId");
+		}
+		else if (backgroundImageJSONObject.has("classNameId") &&
+				 backgroundImageJSONObject.has("classPK") &&
+				 backgroundImageJSONObject.has("fieldId")) {
+
+			fileEntryId = _getFileEntryId(
+				backgroundImageJSONObject.getLong("classNameId"),
+				backgroundImageJSONObject.getLong("classPK"),
+				backgroundImageJSONObject.getString("fieldId"));
+		}
+
+		if (fileEntryId != 0) {
 			styleSB.append("--background-image-file-entry-id:");
-			styleSB.append(backgroundImageJSONObject.getLong("fileEntryId"));
+			styleSB.append(fileEntryId);
 			styleSB.append(StringPool.SEMICOLON);
 		}
 

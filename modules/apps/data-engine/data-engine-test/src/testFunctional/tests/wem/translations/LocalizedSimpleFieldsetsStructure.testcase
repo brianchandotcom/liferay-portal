@@ -183,15 +183,9 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC_MODAL");
-
-		Click(
-			key_locale = "pt-BR",
-			locator1 = "Translation#LOCALIZATION_NAME_MODAL");
-
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "New FieldSet PT");
+			value1 = "New FieldSet");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

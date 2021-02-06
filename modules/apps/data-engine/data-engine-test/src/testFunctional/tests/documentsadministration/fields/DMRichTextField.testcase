@@ -153,11 +153,9 @@ definition {
 
 		PortletEntry.publish();
 
-		DMDocumentType.selectDocumentTypeFrame();
-
-		LexiconEntry.openEntryMenu(rowEntry = "Document with Repeated Field");
-
-		MenuItem.click(menuItem = "Edit");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document with Repeated Field");
 
 		DataEngine.assertFieldRepeated(
 			fieldName = "Repeatable Rich Text",

@@ -136,10 +136,10 @@ definition {
 		property portal.acceptance = "false";
 
 		DataEngine.addField(
-			fieldFieldLabel = "Repeatable",
+			fieldFieldLabel = "Repeatable Rich Text",
 			fieldName = "Rich Text");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Repeatable");
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Repeatable Rich Text");
 
 		DDLDataDefinition.save();
 
@@ -147,7 +147,7 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "New Document Type");
 
-		DataEngine.addRepeatableField(fieldName = "Repeatable");
+		DataEngine.addRepeatableField(fieldName = "Repeatable Rich Text");
 
 		PortletEntry.inputTitle(title = "Repeated Document Type");
 
@@ -160,7 +160,7 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 
 		DataEngine.assertFieldRepeated(
-			fieldName = "Repeatable",
+			fieldName = "Repeatable Rich Text",
 			index = "2");
 	}
 

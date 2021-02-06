@@ -20,8 +20,8 @@
 SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = AccountEntryDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new SelectAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new SelectAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer) %>"
 />
 
 <clay:container-fluid>

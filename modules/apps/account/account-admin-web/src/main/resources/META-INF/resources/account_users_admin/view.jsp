@@ -33,8 +33,9 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 	}
 </style>
 
-<clay:management-toolbar-v2
-	displayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= accountUsersAdminManagementToolbarDisplayContext %>"
+	propsTransformer="account_users_admin/js/AccountUsersAdminManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>
@@ -118,8 +119,3 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= accountUsersAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="account_users_admin/js/ManagementToolbarDefaultEventHandler.es"
-/>

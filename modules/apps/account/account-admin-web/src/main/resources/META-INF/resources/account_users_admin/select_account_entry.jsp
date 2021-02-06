@@ -32,8 +32,8 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 }
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= selectAccountEntryManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= selectAccountEntryManagementToolbarDisplayContext %>"
 />
 
 <clay:container-fluid

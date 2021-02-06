@@ -143,7 +143,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		Navigator.gotoNavItem(navItem = "Documents and Media");
+		DMNavigator.gotoDocumentsAndMedia();
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "New Document Type");
 

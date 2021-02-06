@@ -414,6 +414,39 @@ definition {
 			locator1 = "WCEditWebContent#FIELDSET_REPEATABLE_BUTTON");
 	}
 
+	macro addTranslationToFieldset {
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+
+		MenuItem.click(menuItem = "Edit");
+
+		for (var locale : list "${localeList}") {
+			PortletEntry.changeLocale(
+				locale = "${locale}",
+				modal = "true");
+
+			Type(
+				locator1 = "FormViewBuilder#FIELD_SET_NAME",
+				value1 = "${fieldsetName} ${locale}");
+
+			for (var fieldName : list "${fieldNameList}") {
+				DataEngine.editFieldLabel(
+					fieldFieldLabel = "${fieldName}",
+					fieldFieldLabelEdit = "${fieldName} ${locale}",
+					fieldsetModal = "true");
+			}
+		}
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Click(
+			key_text = "Propagate",
+			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro assertFieldRepeated {
 		AssertElementPresent(
 			key_fieldName = "${fieldName}",
@@ -975,39 +1008,6 @@ definition {
 		Click(
 			key_fieldsetName = "${fieldsetName}",
 			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
-	}
-
-	macro translateFieldsetNLanguages {
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
-
-		MenuItem.click(menuItem = "Edit");
-
-		for (var locale : list "${localesList}") {
-			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC_MODAL");
-
-			Click(
-				key_locale = "${locale}",
-				locator1 = "Translation#LOCALIZATION_NAME_MODAL");
-
-			Type.clickAtType(
-				locator1 = "Modal#NAME_FIELDSET",
-				value1 = "${fieldsetName} ${locale}");
-
-			for (var fieldLabel : list "${fieldLabelsList}") {
-				DataEngine.editFieldLabel(
-					fieldFieldLabel = "${fieldLabel}",
-					fieldFieldLabelEdit = "${fieldLabel} ${locale}",
-					fieldsetModal = "true");
-			}
-		}
-
-		Click(locator1 = "Modal#SAVE_BUTTON");
-
-		Click(locator1 = "Modal#PROPAGATE_BUTTON");
-	
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro viewField {

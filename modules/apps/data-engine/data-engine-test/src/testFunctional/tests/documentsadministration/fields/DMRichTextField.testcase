@@ -147,15 +147,15 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "New Document Type");
 
-		DataEngine.addRepeatableField(fieldName = "Repeatable Rich Text");
+		PortletEntry.inputTitle(title = "Document with Repeated Field");
 
-		PortletEntry.inputTitle(title = "Repeated Document Type");
+		DataEngine.addRepeatableField(fieldName = "Repeatable Rich Text");
 
 		PortletEntry.publish();
 
 		DMDocumentType.selectDocumentTypeFrame();
 
-		LexiconEntry.openEntryMenu(rowEntry = "Repeated Document Type");
+		LexiconEntry.openEntryMenu(rowEntry = "Document with Repeated Field");
 
 		MenuItem.click(menuItem = "Edit");
 

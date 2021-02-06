@@ -34,17 +34,11 @@ import java.util.Locale;
  */
 public class UpgradeGroup extends UpgradeProcess {
 
-	protected void createIndex() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL("create index IX_8257E37B on Group_ (classNameId, classPK)");
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		alter(GroupTable.class, new AlterColumnType("name", "STRING null"));
 
-		createIndex();
+		updateIndexes(GroupTable.class);
 
 		updateGlobalGroupName();
 	}

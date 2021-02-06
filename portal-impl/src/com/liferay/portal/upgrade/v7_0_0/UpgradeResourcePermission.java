@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.upgrade.v7_0_0.util.ResourcePermissionTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,18 +37,9 @@ import java.util.List;
  */
 public class UpgradeResourcePermission extends UpgradeProcess {
 
-	protected void createIndex() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQLTemplateString(
-				"create index IX_D5F1E2A2 on ResourcePermission " +
-					"(name[$COLUMN_LENGTH:255$])",
-				false);
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		createIndex();
+		updateIndexes(ResourcePermissionTable.class);
 
 		upgradeResourcePermissions();
 	}

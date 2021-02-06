@@ -51,25 +51,31 @@ public class UpstreamFailureUtil {
 	public static int getUpstreamJobFailuresBuildNumber(
 		TopLevelBuild topLevelBuild, String sha) {
 
-		int buildNumber = _getLastUpstreamBuildNumber(topLevelBuild);
+		int lastUpstreamBuildNumber = _getLastUpstreamBuildNumber(
+			topLevelBuild);
 
-		int oldestBuildNumber = Math.max(0, buildNumber - 10);
+		int buildNumber = lastUpstreamBuildNumber;
 
 		String jobURL = getUpstreamJobFailuresJobURL(topLevelBuild);
 
-		while (buildNumber > oldestBuildNumber) {
-			String upstreamBranchSHA =
-				JenkinsResultsParserUtil.getBuildParameter(
-					jobURL + "/" + buildNumber, "PORTAL_GIT_COMMIT");
+		while (buildNumber > Math.max(0, buildNumber - 10)) {
+			try {
+				String upstreamBranchSHA =
+					JenkinsResultsParserUtil.getBuildParameter(
+						jobURL + "/" + buildNumber, "PORTAL_GIT_COMMIT");
 
-			if (upstreamBranchSHA.equals(sha)) {
-				return buildNumber;
+				if (upstreamBranchSHA.equals(sha)) {
+					return buildNumber;
+				}
+			}
+			catch (RuntimeException runtimeException) {
+				System.out.println(runtimeException.getMessage());
 			}
 
 			buildNumber--;
 		}
 
-		return 0;
+		return lastUpstreamBuildNumber;
 	}
 
 	public static String getUpstreamJobFailuresJobURL(

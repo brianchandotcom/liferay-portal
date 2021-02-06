@@ -34,10 +34,23 @@ public class PortalAppReleaseJob extends BaseJob implements PortalTestClassJob {
 		return _portalGitWorkingDirectory;
 	}
 
+	@Override
+	public boolean isSegmentEnabled() {
+		return true;
+	}
+
 	protected PortalAppReleaseJob(
 		String jobName, BuildProfile buildProfile, String portalBranchName) {
 
 		super(jobName, buildProfile);
+
+		GitWorkingDirectory jenkinsGitWorkingDirectory =
+			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
+
+		jobPropertiesFiles.add(
+			new File(
+				jenkinsGitWorkingDirectory.getWorkingDirectory(),
+				"commands/build.properties"));
 
 		_portalGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
@@ -59,10 +72,18 @@ public class PortalAppReleaseJob extends BaseJob implements PortalTestClassJob {
 			buildProfile = BuildProfile.PORTAL;
 		}
 
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names", getJobName(),
-				buildProfile.toString()));
+		String testBatchName = JenkinsResultsParserUtil.getProperty(
+			getJobProperties(), "test.batch.names", false, getJobName(),
+			buildProfile.toString());
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testBatchName)) {
+			testBatchName = JenkinsResultsParserUtil.getProperty(
+				getJobProperties(), "test.batch.names", false, getJobName(),
+				_portalGitWorkingDirectory.getUpstreamBranchName(),
+				buildProfile.toString());
+		}
+
+		return getSetFromString(testBatchName);
 	}
 
 	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;

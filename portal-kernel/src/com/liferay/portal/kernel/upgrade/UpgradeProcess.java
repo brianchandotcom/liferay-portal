@@ -646,6 +646,21 @@ public abstract class UpgradeProcess
 		}
 	}
 
+	protected void updateIndexes(Class<?> tableClass) throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		Field tableSQLCreateField = tableClass.getField("TABLE_SQL_CREATE");
+		Field tableSQLAddIndexesField = tableClass.getField(
+			"TABLE_SQL_ADD_INDEXES");
+
+		db.updateIndexes(
+			connection, (String)tableSQLCreateField.get(null),
+			StringUtil.merge(
+				(String[])tableSQLAddIndexesField.get(null),
+				System.lineSeparator()),
+			true);
+	}
+
 	protected void upgradeTable(String tableName, Object[][] tableColumns)
 		throws Exception {
 

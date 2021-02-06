@@ -160,7 +160,7 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 
 		DataEngine.assertFieldRepeated(
-			fieldName = "Rich Text",
+			fieldName = "Repeatable",
 			index = "2");
 	}
 

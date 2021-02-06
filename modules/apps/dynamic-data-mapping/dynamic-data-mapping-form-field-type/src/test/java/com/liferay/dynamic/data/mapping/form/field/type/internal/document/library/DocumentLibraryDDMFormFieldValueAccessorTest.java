@@ -18,9 +18,9 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -60,18 +60,22 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest extends PowerMockito {
 
 	@Test
 	public void testNotEmpty() {
-		StringBundler sb = new StringBundler(6);
+		JSONObject valueJSONObject = _jsonFactory.createJSONObject();
 
-		sb.append("{\"groupId\":\"");
-		sb.append(_GROUP_ID);
-		sb.append("\",\"title\":\"Welcome to Liferay Forms!\",\"type\":\"");
-		sb.append("document\",\"uuid\":\"");
-		sb.append(_FILE_ENTRY_UUID);
-		sb.append("\"}");
+		valueJSONObject.put(
+			"groupId", _GROUP_ID
+		).put(
+			"title", "Welcome to Liferay Forms!"
+		).put(
+			"type", "document"
+		).put(
+			"uuid", _FILE_ENTRY_UUID
+		);
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"documentLibrary", new UnlocalizedValue(sb.toString()));
+				"documentLibrary",
+				new UnlocalizedValue(valueJSONObject.toString()));
 
 		Assert.assertFalse(
 			_documentLibraryDDMFormFieldValueAccessor.isEmpty(

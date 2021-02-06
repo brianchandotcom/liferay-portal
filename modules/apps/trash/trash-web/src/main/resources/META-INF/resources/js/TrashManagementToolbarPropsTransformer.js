@@ -23,18 +23,30 @@ export default function propsTransformer({
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			)
 		) {
-			submitForm(document[`${portletNamespace}fm`]);
+			const form = document.getElementById(`${portletNamespace}fm`);
+
+			if (!form) {
+				return;
+			}
+
+			submitForm(form);
 		}
 	};
 
 	const restoreSelectedEntries = () => {
-		submitForm(document[`${portletNamespace}fm`], restoreEntriesURL);
+		const form = document.getElementById(`${portletNamespace}fm`);
+
+		if (!form) {
+			return;
+		}
+
+		submitForm(form, restoreEntriesURL);
 	};
 
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
-			const action = item?.data?.action;
+			const action = item.data?.action;
 
 			if (action === 'deleteSelectedEntries') {
 				deleteSelectedEntries();

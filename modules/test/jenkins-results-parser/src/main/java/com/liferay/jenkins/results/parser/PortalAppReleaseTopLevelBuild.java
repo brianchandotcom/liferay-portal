@@ -25,6 +25,11 @@ public class PortalAppReleaseTopLevelBuild extends PortalTopLevelBuild {
 		super(url, topLevelBuild);
 	}
 
+	@Override
+	public String getBranchName() {
+		return getParameterValue("TEST_PORTAL_BRANCH_NAME");
+	}
+
 	public String getPortalAppName() {
 		return getParameterValue("TEST_PORTAL_APP_NAME");
 	}

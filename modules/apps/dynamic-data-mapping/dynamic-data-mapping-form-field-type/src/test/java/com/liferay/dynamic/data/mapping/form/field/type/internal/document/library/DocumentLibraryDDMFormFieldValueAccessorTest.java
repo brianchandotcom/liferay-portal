@@ -14,12 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.junit.Assert;
@@ -27,7 +29,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Mock;
+
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.api.support.membermodification.MemberMatcher;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
@@ -39,6 +44,7 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest extends PowerMockito {
 	@Before
 	public void setUp() throws Exception {
 		setUpDocumentLibraryDDMFormFieldValueAccessor();
+		setUpFileEntry();
 	}
 
 	@Test
@@ -54,12 +60,14 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest extends PowerMockito {
 
 	@Test
 	public void testNotEmpty() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
-		sb.append("{\"groupId\":\"32964\",");
-		sb.append("\"title\":\"Welcome to Liferay Forms!\",");
-		sb.append("\"type\":\"document\",");
-		sb.append("\"uuid\":\"f85c8ae1-603b-04eb-1132-12645d73519e\"}");
+		sb.append("{\"groupId\":\"");
+		sb.append(_GROUP_ID);
+		sb.append("\",\"title\":\"Welcome to Liferay Forms!\",\"type\":\"");
+		sb.append("document\",\"uuid\":\"");
+		sb.append(_FILE_ENTRY_UUID);
+		sb.append("\"}");
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
@@ -81,10 +89,46 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest extends PowerMockito {
 		).set(
 			_documentLibraryDDMFormFieldValueAccessor, _jsonFactory
 		);
+
+		MemberMatcher.field(
+			DocumentLibraryDDMFormFieldValueAccessor.class, "_dlAppService"
+		).set(
+			_documentLibraryDDMFormFieldValueAccessor, _dlAppService
+		);
+
+		PowerMockito.when(
+			_dlAppService.getFileEntryByUuidAndGroupId(
+				_FILE_ENTRY_UUID, _GROUP_ID)
+		).thenReturn(
+			_fileEntry
+		);
 	}
+
+	protected void setUpFileEntry() {
+		_fileEntry.setUuid(_FILE_ENTRY_UUID);
+		_fileEntry.setGroupId(_GROUP_ID);
+
+		PowerMockito.when(
+			_fileEntry.isInTrash()
+		).thenReturn(
+			false
+		);
+	}
+
+	private static final String _FILE_ENTRY_UUID =
+		"f85c8ae1-603b-04eb-1132-12645d73519e";
+
+	private static final long _GROUP_ID = 32964;
+
+	@Mock
+	private DLAppService _dlAppService;
 
 	private DocumentLibraryDDMFormFieldValueAccessor
 		_documentLibraryDDMFormFieldValueAccessor;
+
+	@Mock
+	private FileEntry _fileEntry;
+
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

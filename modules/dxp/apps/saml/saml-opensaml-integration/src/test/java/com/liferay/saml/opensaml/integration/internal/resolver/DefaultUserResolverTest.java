@@ -323,14 +323,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		when(
-			_userLocalService.getUserByScreenName(
-				Mockito.anyLong(),
-				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))
-		).thenReturn(
-			existingUser
-		);
-
-		when(
 			_userLocalService.getUserByEmailAddress(
 				Mockito.anyLong(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS))

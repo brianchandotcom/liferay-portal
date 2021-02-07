@@ -177,9 +177,9 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "${dmDocumentTypeName}");
+			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
@@ -190,9 +190,10 @@ definition {
 
 		Button.clickSave();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
+		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
 		AssertTextEquals(
+			key_fieldFieldLabel = "${formGroupLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${formGroupLabel}");
 

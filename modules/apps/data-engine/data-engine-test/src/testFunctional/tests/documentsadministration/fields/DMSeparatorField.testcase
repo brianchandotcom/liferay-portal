@@ -86,19 +86,18 @@ definition {
 	test EditReferenceOfSeparator {
 		property portal.acceptance = "false";
 
-		DMDocumentType.addWithoutSave(
+		DMDocumentType.add(
 			dmDocumentTypeDescription = "Document Type Description",
+			dmDocumentTypeFieldNames = "Separator",
 			dmDocumentTypeName = "Document Type Name");
+
+		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "Document Type Name");
 
 		var assertFieldReference = "Myreference123";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Separator test",
-			fieldName = "Separator");
-
 		DataEngine.editFieldReference(
 			assertFieldReference = "${assertFieldReference}",
-			fieldFieldLabel = "Separator test",
+			fieldFieldLabel = "Separator",
 			fieldName = "Separator",
 			fieldReference = "${assertFieldReference}");
 
@@ -107,7 +106,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
 
 		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Separator test",
+			fieldFieldLabel = "Separator",
 			fieldName = "Separator",
 			fieldReference = "${assertFieldReference}");
 
@@ -125,17 +124,16 @@ definition {
 
 		DMNavigator.gotoDocumentType();
 
-		DMDocumentType.addWithoutSave(
+		DMDocumentType.add(
 			dmDocumentTypeDescription = "Document Type Description",
+			dmDocumentTypeFieldNames = "Separator",
 			dmDocumentTypeName = "Document Type Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Separator test",
-			fieldName = "Separator");
+		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "Document Type Name");
 
 		DataEngine.editFieldReference(
 			assertFieldReference = "${assertFieldReference}",
-			fieldFieldLabel = "Separator test",
+			fieldFieldLabel = "Separator",
 			fieldName = "Separator",
 			fieldReference = "${fieldReferenceWithInvalidChars}");
 
@@ -144,7 +142,7 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
 
 		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Separator test",
+			fieldFieldLabel = "Separator",
 			fieldName = "Separator",
 			fieldReference = "${assertFieldReference}");
 

@@ -80,11 +80,11 @@ definition {
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
 			dmDocumentTypeFieldNames = "Color,Text",
-			dmDocumentTypeName = "DM Document Type Name");
+			dmDocumentTypeName = "DM Document Type Name New");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "DM Document Type Name");
+			rowEntry = "DM Document Type Name New");
 
 		DataEngine.delete(fieldFieldLabel = "Color");
 
@@ -92,7 +92,7 @@ definition {
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "DM Document Type Name");
+			rowEntry = "DM Document Type Name New");
 
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Color",

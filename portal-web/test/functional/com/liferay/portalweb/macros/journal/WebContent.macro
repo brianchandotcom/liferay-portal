@@ -1266,6 +1266,11 @@ definition {
 		}
 	}
 
+	macro editWithStructureCP {
+		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+		WebContent.addWithStructureCP();
+	}
+
 	macro expireCP {
 		for (var webContentTitle : list "${webContentTitleList}") {
 			Check(

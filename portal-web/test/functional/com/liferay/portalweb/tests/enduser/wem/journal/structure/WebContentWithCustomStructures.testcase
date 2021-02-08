@@ -2155,11 +2155,11 @@ definition {
 			JSONWebcontent.addWebContent(
 					content = "WC Content",
 					groupName = "Test Site Name",
-					title = "WC Title");
+					title = "WC 1");
 			JSONWebcontent.addWebContent(
 					content = "WC Content",
 					groupName = "Test Site Name",
-					title = "Edited WC Title");
+					title = "WC 2");
 		}
 
 		task ("Add a web content structure with all fields") {
@@ -2193,6 +2193,7 @@ definition {
 
 			WebContent.addWithStructureCP(
 				column = "1",
+				dmNavTab = "User Personal Folder",
 				navTab = "Web Content Images",
 				row = "1",
 				structureName = "WC Structure Name",
@@ -2210,7 +2211,7 @@ definition {
 				webContentText = "This is a Text field",
 				webContentTitle = "Web Content Title",
 				webContentUpload = "Document_1.doc",
-				webContentWebContent = "WC Title");
+				webContentWebContent = "WC 1");
 
 			PortletEntry.publish();
 		}
@@ -2219,26 +2220,30 @@ definition {
 			WebContent.viewWithStructureCP(
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
-				webContentGrid = "true",
+				webContentGeolocation = "true",
 				webContentImage = "Document_3.png",
 				webContentLinkToPage = "Test Page Name",
 				webContentMultipleSelection = "Option 1",
 				webContentNumeric = "9",
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
+				webContentSeparator = "true",
 				webContentSingleSelection = "Option 3",
 				webContentText = "This is a Text field",
-				webContentTitle = "WC WebContent Title",
+				webContentTitle = "Web Content Title",
 				webContentUpload = "Document_1.doc",
-				webContentWebContent = "WC Title");
+				webContentWebContent = "WC 1");
 		}
 
 		task ("Edit web content") {
-			WebContent.editCP(
+
+			WebContent.editWithStructureCP(
+					column = "2",
+					dmNavTab = "User Personal Folder",
+					navTab = "Web Content Images",
+					row = "2",
 					webContentColor = "DD0D0D",
 					webContentDate = "11/11/2019",
-					webContentGrid = "false",
-					webContentImage = "Document_1.png",
 					webContentLinkToPage = "Edited Test Page Name",
 					webContentMultipleSelection = "Option 2",
 					webContentNumeric = "8",
@@ -2246,9 +2251,9 @@ definition {
 					webContentSelectFromList = "Option 1",
 					webContentSingleSelection = "Option 4",
 					webContentText = "This is an edited Text field",
-					webContentTitle = "WC Edited WebContent Title",
+					webContentTitle = "Web Content Title",
 					webContentUpload = "Document_3.doc",
-					webContentWebContent = "EditedWC Title");
+					webContentWebContent = "WC 2");
 
 			PortletEntry.publish();
 		}
@@ -2257,8 +2262,6 @@ definition {
 			WebContent.viewWithStructureCP(
 					webContentColor = "DD0D0D",
 					webContentDate = "11/11/2019",
-					webContentGrid = "false",
-					webContentImage = "Document_1.png",
 					webContentLinkToPage = "Edited Test Page Name",
 					webContentMultipleSelection = "Option 2",
 					webContentNumeric = "8",
@@ -2266,9 +2269,9 @@ definition {
 					webContentSelectFromList = "Option 1",
 					webContentSingleSelection = "Option 4",
 					webContentText = "This is an edited Text field",
-					webContentTitle = "WC Edited WebContent Title",
+					webContentTitle = "Web Content Title",
 					webContentUpload = "Document_3.doc",
-					webContentWebContent = "EditedWC Title");
+					webContentWebContent = "WC 2");
 		}
 
 		task ("Delete web content") {
@@ -2276,7 +2279,7 @@ definition {
 
 			WebContent.deleteCP(
 				siteURLKey = "test-site-name",
-				webContentTitle = "WC WebContent Title");
+				webContentTitle = "Web Content Title");
 		}
 	}
 

@@ -2588,6 +2588,10 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES));
 
+	public static final int SEARCH_CONTAINER_PAGE_MAX_DELTA =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_MAX_DELTA), 200);
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */

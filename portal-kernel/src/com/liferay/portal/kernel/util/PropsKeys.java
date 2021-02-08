@@ -2872,6 +2872,9 @@ public interface PropsKeys {
 	public static final String SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES =
 		"search.container.page.iterator.max.pages";
 
+	public static final String SEARCH_CONTAINER_PAGE_MAX_DELTA =
+		"search.container.page.max.delta";	
+
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */

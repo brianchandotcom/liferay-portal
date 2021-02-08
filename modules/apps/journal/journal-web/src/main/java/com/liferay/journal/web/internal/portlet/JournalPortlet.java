@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
@@ -163,6 +164,9 @@ public class JournalPortlet extends MVCPortlet {
 			_ddmFormValuesToMapConverter);
 		renderRequest.setAttribute(
 			DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
+		renderRequest.setAttribute(
+			FieldsToDDMFormValuesConverter.class.getName(),
+			_fieldsToDDMFormValuesConverter);
 		renderRequest.setAttribute(
 			JournalFileUploadsConfiguration.class.getName(),
 			_journalFileUploadsConfiguration);
@@ -324,6 +328,9 @@ public class JournalPortlet extends MVCPortlet {
 	private DDMTemplateHelper _ddmTemplateHelper;
 
 	private volatile DDMWebConfiguration _ddmWebConfiguration;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private ItemSelector _itemSelector;

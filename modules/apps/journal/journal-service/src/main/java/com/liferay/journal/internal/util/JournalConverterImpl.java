@@ -19,13 +19,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.model.JournalArticle;
@@ -168,14 +166,6 @@ public class JournalConverterImpl implements JournalConverter {
 		catch (DocumentException documentException) {
 			throw new PortalException(documentException);
 		}
-	}
-
-	@Override
-	public DDMFormValues getDDMFormValues(
-			DDMStructure ddmStructure, Fields fields)
-		throws PortalException {
-
-		return _fieldsToDDMFormValuesConverter.convert(ddmStructure, fields);
 	}
 
 	protected void addDDMFields(
@@ -870,9 +860,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalConverterImpl.class);
-
-	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

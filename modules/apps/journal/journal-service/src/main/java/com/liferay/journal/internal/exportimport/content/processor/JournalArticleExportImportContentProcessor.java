@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -114,7 +115,7 @@ public class JournalArticleExportImportContentProcessor
 			return processedContent;
 		}
 
-		DDMFormValues ddmFormValues = _journalConverter.getDDMFormValues(
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
 		ddmFormValues =
@@ -171,7 +172,7 @@ public class JournalArticleExportImportContentProcessor
 		content = replaceImportJournalArticleReferences(
 			ddmStructure, fields, portletDataContext, stagedModel);
 
-		DDMFormValues ddmFormValues = _journalConverter.getDDMFormValues(
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
 		List<String> originalContents = _fetchContentsFromDDMFormValues(
@@ -652,6 +653,9 @@ public class JournalArticleExportImportContentProcessor
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

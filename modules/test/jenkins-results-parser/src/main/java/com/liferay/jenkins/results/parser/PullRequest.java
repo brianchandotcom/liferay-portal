@@ -503,7 +503,7 @@ public class PullRequest {
 			for (int i = 0; i < commitsJSONArray.length(); i++) {
 				_gitHubRemoteGitCommits.add(
 					GitCommitFactory.newGitHubRemoteGitCommit(
-						getSenderUsername(), getGitRepositoryName(),
+						getOwnerUsername(), getGitRepositoryName(),
 						commitsJSONArray.getJSONObject(i)));
 			}
 

@@ -185,7 +185,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_SETS_CONTAINER_LABEL</td>
-	<td>//div[contains(@class,'fieldset')]//label[text()='${key_fieldsetLabel}']</td>
+	<td>//div[contains(@class,'fieldset')]//label[normalize-space(text())='${key_fieldsetLabel}']</td>
 	<td></td>
 </tr>
 <tr>

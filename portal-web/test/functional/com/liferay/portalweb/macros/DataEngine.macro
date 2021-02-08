@@ -274,29 +274,6 @@ definition {
 			Click(locator1 = "Sidebar#BACK");
 		}
 	}
-	macro createFieldset{
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
-
-		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fieldsets");
-		}
-
-		if (isSet(createNewFieldset)) {
-			Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
-
-			Type(
-				locator1 = "FormViewBuilder#FIELD_SET_NAME",
-				value1 = "${fieldsetName}");
-
-			DataEngine.addFields(fieldNameList = "${fieldNameList}");
-
-			Click(locator1 = "Modal#SAVE_BUTTON");
-
-			Alert.viewSuccessMessage();
-		}
-	}
 
 	macro addFieldsets {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
@@ -534,6 +511,58 @@ definition {
 				checkboxName = "Show Label",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
+	}
+
+	macro createNewFieldset {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Fieldsets");
+		}
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "${fieldsetName}");
+
+		DataEngine.addFields(fieldNameList = "${fieldNameList}");
+
+		if (isSet(localeList)) {
+			for (var locale : list "${localeList}") {
+				PortletEntry.changeLocale(
+					locale = "${locale}",
+					modal = "true");
+
+				Type(
+					locator1 = "FormViewBuilder#FIELD_SET_NAME",
+					value1 = "${fieldsetName} ${locale}");
+
+				for (var fieldName : list "${fieldNameList}") {
+					DataEngine.editFieldLabel(
+						fieldFieldLabel = "${fieldName}",
+						fieldFieldLabelEdit = "${fieldName} ${locale}",
+						fieldsetModal = "true");
+
+					if (isSet(fieldHelp)) {
+						DataEngine.editFieldTip(
+							fieldFieldLabel = "${fieldName} ${locale}",
+							fieldHelp = "${fieldName} Help Text ${locale}");
+					}
+					else if (isSet(fieldPlaceholder)) {
+						DataEngine.editFieldTip(
+							fieldFieldLabel = "${fieldName} ${locale}",
+							fieldPlaceholder = "${fieldName} Placeholder ${locale}");
+					}
+				}
+			}
+		}
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro delete {

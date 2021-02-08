@@ -267,7 +267,7 @@ definition {
 
 		AppBuilderWorkflow.assertObjectSelected(objectName = "my custom object");
 		AppBuilderWorkflow.assertFormViewSelected(
-			formViewName = "Select a Form",
+			formViewName = "Select a Form View",
 			positionNumber = "1");
 
 		AppBuilderWorkflow.clickOnSelectFormView(positionNumber = "1");

@@ -293,6 +293,21 @@ definition {
 
 			DataEngine.addFields(fieldNameList = "${fieldNameList}");
 
+			if (isSet(fieldHelp)) {
+				for (var fieldName : list "${fieldNameList}") {
+					DataEngine.editFieldTip(
+						fieldFieldLabel = "${fieldName}",
+						fieldHelp = "${fieldName} Help Text");
+				}
+			}
+			else if (isSet(fieldPlaceholder)) {
+				for (var fieldName : list "${fieldNameList}") {
+					DataEngine.editFieldTip(
+						fieldFieldLabel = "${fieldName}",
+						fieldPlaceholder = "${fieldName} Placeholder");
+				}
+			}
+
 			Click(locator1 = "Modal#SAVE_BUTTON");
 
 			Alert.viewSuccessMessage();

@@ -62,8 +62,8 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			long commerceCountryId, String code)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
 		return commerceRegionLocalService.fetchCommerceRegion(

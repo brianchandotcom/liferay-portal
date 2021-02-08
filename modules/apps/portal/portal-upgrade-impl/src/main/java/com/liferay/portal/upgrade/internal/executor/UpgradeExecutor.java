@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
@@ -275,11 +274,10 @@ public class UpgradeExecutor {
 
 			UpgradeInfo upgradeInfo = _upgradeInfos.get(0);
 
-			UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
-
 			String fromSchemaVersion = upgradeInfo.getFromSchemaVersionString();
 
-			String upgradeStepName = upgradeStep.toString();
+			String upgradeStepName = String.valueOf(
+				upgradeInfo.getUpgradeStep());
 
 			if (fromSchemaVersion.equals("0.0.0") &&
 				upgradeStepName.equals("Initial Database Creation")) {

@@ -14,6 +14,7 @@
 
 package com.liferay.microblogs.internal.upgrade.v1_0_2;
 
+import com.liferay.microblogs.internal.upgrade.v1_0_2.util.MicroblogsEntryTable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -34,9 +35,9 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 				return;
 			}
 
-			runSQL("drop index IX_7ABB0AB3 on MicroblogsEntry");
-
-			runSQL("alter table MicroblogsEntry drop column receiverUserId");
+			alter(
+				MicroblogsEntryTable.class,
+				new AlterTableDropColumn("receiverUserId"));
 		}
 	}
 
@@ -46,22 +47,17 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 				return;
 			}
 
-			runSQL(
-				"alter table MicroblogsEntry add parentMicroblogsEntryId LONG");
+			alter(
+				MicroblogsEntryTable.class,
+				new AlterTableAddColumn("parentMicroblogsEntryId", "LONG"));
 
 			runSQL(
 				"update MicroblogsEntry set parentMicroblogsEntryId = " +
 					"receiverMicroblogsEntryId");
 
-			runSQL("drop index IX_36CA3D37 on MicroblogsEntry");
-
-			runSQL(
-				"alter table MicroblogsEntry drop column " +
-					"receiverMicroblogsEntryId");
-
-			runSQL(
-				"create index IX_6BD29B9C on MicroblogsEntry (type_, " +
-					"parentMicroblogsEntryId)");
+			alter(
+				MicroblogsEntryTable.class,
+				new AlterTableDropColumn("receiverMicroblogsEntryId"));
 		}
 	}
 

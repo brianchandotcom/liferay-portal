@@ -67,7 +67,7 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 	public JsonValue toJsonValue(IndexedRecord indexedRecord)
 		throws IOException {
 
-		JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+		JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
 
 		Map<String, JsonObjectBuilder> nestedJsonObjectBuilders =
 			new HashMap<>();
@@ -91,7 +91,7 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 				continue;
 			}
 
-			JsonObjectBuilder currentJsonObjectBuilder = objectBuilder;
+			JsonObjectBuilder currentJsonObjectBuilder = jsonObjectBuilder;
 
 			if (_isNestedFieldName(fieldName)) {
 				String[] nameParts = _getNameParts(fieldName);
@@ -200,20 +200,20 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 		for (Map.Entry<String, JsonObjectBuilder> nestedJsonObjectBuilder :
 				nestedJsonObjectBuilders.entrySet()) {
 
-			objectBuilder.add(
+			jsonObjectBuilder.add(
 				nestedJsonObjectBuilder.getKey(),
 				nestedJsonObjectBuilder.getValue());
 		}
 
 		if (!_isIterable()) {
-			return objectBuilder.build();
+			return jsonObjectBuilder.build();
 		}
 
-		JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
 
-		arrayBuilder.add(objectBuilder);
+		jsonArrayBuilder.add(jsonObjectBuilder);
 
-		return arrayBuilder.build();
+		return jsonArrayBuilder.build();
 	}
 
 	private String _asISO8601String(long timeMills) {

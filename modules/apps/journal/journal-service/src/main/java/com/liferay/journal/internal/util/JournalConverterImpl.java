@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.util;
 
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
 
@@ -874,9 +872,6 @@ public class JournalConverterImpl implements JournalConverter {
 		JournalConverterImpl.class);
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
@@ -884,8 +879,5 @@ public class JournalConverterImpl implements JournalConverter {
 
 	@Reference(unbind = "-")
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private TrashHelper _trashHelper;
 
 }

@@ -109,13 +109,10 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertTextEquals(
-			locator1 = "//label[@class='ddm-label' and contains(text(),'Texto Teste')]",
-			value1 = "Texto Teste");
-
-		AssertTextEquals(
-			locator1 = "//span[@class='form-text' and contains(text(),'Texto teste ajuda')]",
-			value1 = "Texto teste ajuda");
+		DataEngine.viewField(
+			fieldFieldLabel = "Texto Teste",
+			fieldHelp = "Texto teste ajuda",
+			fieldName = "Text");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -171,15 +168,10 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = "WC Structure Name");
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "Text");
-
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Text Help Text");
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Text Help Text",
+			fieldName = "Text");
 
 		WebContentStructures.saveCP();
 
@@ -191,15 +183,10 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = "WC Structure Name");
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "Text");
-
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Text Help Text");
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Text Help Text",
+			fieldName = "Text");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
@@ -283,13 +270,13 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertVisible(
-			key_fieldFieldLabel = "Texto",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Copy of Texto",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		DataEngine.viewField(
+			fieldFieldLabel = "Texto",
+			fieldName = "Text");
+		
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Texto",
+			fieldName = "Text");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
@@ -477,15 +464,10 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Test");
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text Test",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "Text Test");
-
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text Test",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Help Text test");
+		DataEngine.viewField(
+			fieldFieldLabel = "Text Test",
+			fieldHelp = "Help Text test",
+			fieldName = "Text");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -493,15 +475,10 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Texto Teste",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "Texto Teste");
-
-		AssertTextEquals(
-			key_fieldFieldLabel = "Texto Teste",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Texto teste ajuda");
+		DataEngine.viewField(
+			fieldFieldLabel = "Texto Teste",
+			fieldHelp = "Texto teste ajuda",
+			fieldName = "Text");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -509,15 +486,10 @@ definition {
 
 		PortletEntry.changeLocale(locale = "de-DE");
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text test German",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "Text test German");
-
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text test German",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Text test help German");
+		DataEngine.viewField(
+			fieldFieldLabel = "Text test German",
+			fieldHelp = "Text test help German",
+			fieldName = "Text");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -593,13 +565,10 @@ definition {
 
 		PortletEntry.changeLocale(locale = "de-DE");
 
-		AssertTextEquals(
-			locator1 = "//label[@class='ddm-label' and contains(text(),'Text test German')]",
-			value1 = "Text test German");
-
-		AssertTextEquals(
-			locator1 = "//span[@class='form-text' and contains(text(),'Text test help German')]",
-			value1 = "Text test help German");
+		DataEngine.viewField(
+			fieldFieldLabel = "Text test German",
+			fieldHelp = "Text test help German",
+			fieldName = "Text");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
@@ -639,13 +608,10 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Test");
 
-		AssertTextEquals(
-			locator1 = "//label[@class='ddm-label' and contains(text(),'Text Test')]",
-			value1 = "Text Test");
-
-		AssertTextEquals(
-			locator1 = "//span[@class='form-text' and contains(text(),'Help Text test')]",
-			value1 = "Help Text test");
+		DataEngine.viewField(
+			fieldFieldLabel = "Text Test",
+			fieldHelp = "Help Text test",
+			fieldName = "Text");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -653,13 +619,10 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertTextEquals(
-			locator1 = "//label[@class='ddm-label' and contains(text(),'Texto Teste')]",
-			value1 = "Texto Teste");
-
-		AssertTextEquals(
-			locator1 = "//span[@class='form-text' and contains(text(),'Texto teste ajuda')]",
-			value1 = "Texto teste ajuda");
+		DataEngine.viewField(
+			fieldFieldLabel = "Texto Teste",
+			fieldHelp = "Texto teste ajuda",
+			fieldName = "Text");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",

@@ -63,14 +63,6 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletRespons
 	</aui:input>
 </div>
 
-<clay:button
-	cssClass="mb-4"
-	displayType="secondary"
-	id='<%= liferayPortletResponse.getNamespace() + "chooseLayout" %>'
-	label='<%= LanguageUtil.get(resourceBundle, "choose") %>'
-	small="<%= true %>"
-/>
-
 <%
 String eventName = liferayPortletResponse.getNamespace() + "selectLayout";
 
@@ -87,15 +79,24 @@ if (selLayout != null) {
 }
 %>
 
-<liferay-frontend:component
-	componentId='<%= liferayPortletResponse.getNamespace() + "editLayout" %>'
-	context='<%=
+<clay:button
+	additionalProps='<%=
 		HashMapBuilder.<String, Object>put(
 			"eventName", eventName
 		).put(
 			"itemSelectorURL", itemSelectorURL.toString()
 		).build()
 	%>'
+	cssClass="mb-4"
+	displayType="secondary"
+	id='<%= liferayPortletResponse.getNamespace() + "chooseLayout" %>'
+	label='<%= LanguageUtil.get(resourceBundle, "choose") %>'
+	propsTransformer="js/ChooseLayoutButtonPropsTransformer"
+	small="<%= true %>"
+/>
+
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "editLayout" %>'
 	module="js/EditLayout"
 	servletContext="<%= application %>"
 />

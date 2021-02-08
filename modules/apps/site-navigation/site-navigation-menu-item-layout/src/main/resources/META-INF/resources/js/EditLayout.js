@@ -12,61 +12,15 @@
  * details.
  */
 
-export default function ({
-	eventName,
-	itemSelectorURL: initialItemSelectorURL,
-	namespace,
-}) {
-	const namespaceId = (id) => `${namespace}${id}`;
-
-	const groupIdInput = document.getElementById(namespaceId('groupId'));
-
+export default function ({namespace}) {
 	const layoutItemRemoveButton = document.getElementById(
-		namespaceId('layoutItemRemove')
+		`${namespace}layoutItemRemove`
 	);
 	const layoutNameInput = document.getElementById(
-		namespaceId('layoutNameInput')
+		`${namespace}layoutNameInput`
 	);
 
-	const layoutUuidInput = document.getElementById(namespaceId('layoutUuid'));
-
-	const privateLayoutInput = document.getElementById(
-		namespaceId('privateLayout')
-	);
-
-	const chooseLayoutButton = document.getElementById(
-		namespaceId('chooseLayout')
-	);
-
-	const itemSelectorURL = new URL(initialItemSelectorURL);
-
-	const onChooseLayoutButtonClick = () => {
-		Liferay.Util.openSelectionModal({
-			multiple: true,
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
-					groupIdInput.value = selectedItem.groupId;
-					layoutUuidInput.value = selectedItem.id;
-					layoutNameInput.textContent = selectedItem.name;
-					privateLayoutInput.value = selectedItem.privateLayout;
-
-					itemSelectorURL.searchParams.set(
-						`${Liferay.Util.getPortletNamespace(
-							Liferay.PortletKeys.ITEM_SELECTOR
-						)}layoutUuid`,
-						selectedItem.id
-					);
-
-					layoutItemRemoveButton.classList.remove('hide');
-				}
-			},
-			selectEventName: eventName,
-			title: Liferay.Language.get('select-layout'),
-			url: itemSelectorURL.href,
-		});
-	};
-
-	chooseLayoutButton.addEventListener('click', onChooseLayoutButtonClick);
+	const layoutUuidInput = document.getElementById(`${namespace}layoutUuid`);
 
 	const onLayoutItemRemoveButtonClick = () => {
 		layoutNameInput.textContent = Liferay.Language.get('none');
@@ -82,10 +36,6 @@ export default function ({
 
 	return {
 		dispose() {
-			chooseLayoutButton.removeEventListener(
-				'click',
-				onChooseLayoutButtonClick
-			);
 			layoutItemRemoveButton.removeEventListener(
 				'click',
 				onLayoutItemRemoveButtonClick

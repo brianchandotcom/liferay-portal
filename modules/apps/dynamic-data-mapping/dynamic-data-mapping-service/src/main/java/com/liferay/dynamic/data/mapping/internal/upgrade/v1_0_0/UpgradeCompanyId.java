@@ -22,15 +22,6 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId;
 public class UpgradeCompanyId extends BaseUpgradeCompanyId {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		super.doUpgrade();
-
-		runSQL(
-			"create index IX_DB81EB42 on DDMStorageLink " +
-				"(uuid_[$COLUMN_LENGTH:75$], companyId)");
-	}
-
-	@Override
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
 			new TableUpdater("DDMStorageLink", "DDMStructure", "structureId"),

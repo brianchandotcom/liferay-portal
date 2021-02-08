@@ -38,4 +38,4 @@ export const COLORS = [
 	'#7785FF',
 ];
 
-export const DEFAULT_COLOR = '#6B6C7E';
+export const DEFAULT_COLOR = '#CDCED9';

@@ -82,72 +82,71 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "5"
 	test CheckStructureTranslationOnWebContent {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure FieldSet Name Test");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.gotoNewFieldset(fieldsetName = "Text Fieldset Test Name");
+		DataEngine.addFieldsets(
+			createNewFieldset = "true",
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFields(fieldNameList = "Text");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Text Test");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Help Text");
-
-		DataEngine.changeFieldsetLocale(locale = "pt-BR");
-
-		DataEngine.changeFiledsetName(fieldsetName = "Texto Fieldset Nome de Teste");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text Test",
-			fieldFieldLabelEdit = "Texto");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Texto",
-			fieldHelp = "Ajuda Texto");
-
-		Click(locator1 = "Modal#SAVE_BUTTON");
-
-		DoubleClick(
-			key_fieldName = "Text Fieldset Test Name",
-			locator1 = "Sidebar#ADD_FIELD_NAME");
+		DataEngine.addTranslationToFieldset(
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");
 
 		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure FieldSet Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		PortletEntry.inputTitle(title = "WC Title Test");
+		WebContent.addCP(webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Title Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		AssertVisible(
+			key_fieldsetLabel = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
+			value1 = "Text Help Text");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertElementPresent(
-			key_fieldFieldLabel = "Texto",
-			key_index = "1",
-			locator1 = "WCEditWebContent#FIELD_LABEL");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
 
-		AssertElementPresent(
-			key_fieldFieldHelp = "Ajuda Texto",
-			key_fieldFieldLabel = "Texto",
-			key_index = "1",
-			locator1 = "WCEditWebContent#FIELD_HELP");
+		AssertVisible(
+			key_fieldsetLabel = "New Fieldset pt-BR",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text pt-BR",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "Text pt-BR",
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
+			value1 = "Text Help Text pt-BR");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

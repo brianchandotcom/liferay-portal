@@ -275,6 +275,49 @@ definition {
 		}
 	}
 
+	macro addFieldsetNested {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Fieldsets");
+		}
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fieldFieldLabel = "${targetFieldLabel}",
+			key_fieldName = "${fieldsetName}",
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		Pause(locator1 = "3000");
+
+		if (isSet(fieldsetLabel)) {
+			Type(
+				key_fieldLabel = "Label",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldsetLabel}");
+
+			AssertTextEquals(
+				key_fieldLabel = "Label",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldsetLabel}");
+
+			AssertElementPresent(
+				key_fieldsetLabel = "${fieldsetLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+				value1 = "${fieldsetLabel}");
+		}
+		else {
+			AssertElementPresent(
+				key_fieldsetLabel = "${fieldsetName}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+				value1 = "${fieldsetName}");
+		}
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro addFieldsets {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");

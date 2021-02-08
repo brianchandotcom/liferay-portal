@@ -308,20 +308,28 @@ definition {
 			Navigator.gotoNavTab(navTab = "Basic");
 		}
 
-		Type(
-			key_fieldLabel = "Label",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldsetLabel}");
+		if (isSet(fieldsetLabel)) {
+			Type(
+				key_fieldLabel = "Label",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldsetLabel}");
 
-		AssertTextEquals(
-			key_fieldLabel = "Label",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "${fieldsetLabel}");
+			AssertTextEquals(
+				key_fieldLabel = "Label",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${fieldsetLabel}");
 
-		AssertElementPresent(
-			key_fieldFieldLabel = "${fieldsetLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldsetLabel}");
+			AssertElementPresent(
+				key_fieldsetLabel = "${fieldsetLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+				value1 = "${fieldsetLabel}");
+		}
+		else {
+			AssertElementPresent(
+				key_fieldsetLabel = "${fieldsetName}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL",
+				value1 = "${fieldsetName}");
+		}
 
 		Click(locator1 = "Sidebar#BACK");
 	}

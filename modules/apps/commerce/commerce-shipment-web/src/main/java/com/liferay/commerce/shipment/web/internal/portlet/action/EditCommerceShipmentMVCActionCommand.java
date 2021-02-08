@@ -15,6 +15,7 @@
 package com.liferay.commerce.shipment.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.CommerceShipmentShippingDateException;
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
@@ -371,6 +372,11 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "commerceShipmentId");
 
 		int status = ParamUtil.getInteger(actionRequest, "transitionName");
+
+		if (status == CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING) {
+			return _commerceShipmentService.reprocessShipment(
+				commerceShipmentId);
+		}
 
 		return _commerceShipmentService.updateStatus(
 			commerceShipmentId, status);

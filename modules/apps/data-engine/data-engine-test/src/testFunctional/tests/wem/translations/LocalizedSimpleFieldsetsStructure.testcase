@@ -270,45 +270,68 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "4"
 	test VerifyNestedFieldsetEditionOnStructure {
-		property portal.acceptance = "false";
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		NavItem.gotoStructures();
 
-        NavItem.gotoStructures();
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-        WebContentStructures.addCP(structureName = "WC Structure Name");
+		DataEngine.addField(
+			fieldFieldLabel = "Upload",
+			fieldName = "Upload");
 
-    	DataEngine.addFields(fieldNameList = "Upload");
-
-        DataEngine.addFieldNested(
-            fieldFieldLabel = "Image",
-            fieldName = "Image",
-            targetFieldLabel = "Upload");
-
-        DataEngine.createFieldset(
-			createNewFieldset = "true",
+		DataEngine.createNewFieldset(
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");
 
-        Navigator.gotoNavTab(navTab = "Fieldsets");
+		DataEngine.addFieldsetNested(
+			fieldsetName = "New Fieldset",
+			targetFieldLabel = "Upload");
 
-    	DragAndDrop.javaScriptDragAndDropToUp(
-            key_fieldName = "New Fieldset",
-			fieldLabel = "Upload",
-            locator1 = "Sidebar#ADD_FIELD_NAME",
-            locator2 = "FormViewBuilder#FIELD_LABEL");
+		WebContentStructures.saveCP();
 
-		Click(
-			key_fieldsetLabel = "New Fieldset",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
 
 		AssertVisible(
-			key_tab = "Basic",
-			locator1 = "NavTab#ACTIVE_TAB_LINK");
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		AssertElementNotPresent(
-			key_tab = "Advanced",
-			locator1 = "NavTab#ACTIVE_TAB_LINK");
+		for (var fieldFieldLabel : list "Upload,New Fieldset") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Upload,New Fieldset pt-BR") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text pt-BR",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

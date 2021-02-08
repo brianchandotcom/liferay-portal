@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,18 @@ public class SearchContainer<R> {
 
 	public static final String DEFAULT_VAR = "searchContainer";
 
-	public static final int MAX_DELTA = 200;
+	public static final int MAX_DELTA;
+	
+	static {
+		int maxDelta = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_MAX_DELTA), 200);
+
+		if (maxDelta <= 0) {
+			maxDelta = 200;
+		}
+
+		MAX_DELTA = maxDelta;
+	}
 
 	public SearchContainer() {
 		_curParam = DEFAULT_CUR_PARAM;

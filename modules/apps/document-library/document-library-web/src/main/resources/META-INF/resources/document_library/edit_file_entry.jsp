@@ -393,8 +393,6 @@ renderResponse.setTitle(headerTitle);
 								List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 							%>
 
-								<aui:input name="availableLocales" type="hidden" value="<%= DDMStructureUtil.getAvailableLocales(ddmStructures) %>" />
-
 								<div class="mb-3">
 									<react:component
 										module="document_library/js/LanguageSelector"

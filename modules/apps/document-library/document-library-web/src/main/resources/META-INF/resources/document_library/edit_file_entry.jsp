@@ -385,22 +385,23 @@ renderResponse.setTitle(headerTitle);
 								</c:otherwise>
 							</c:choose>
 
-							<aui:input name="availableLocales" type="hidden" />
 							<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />
 
 							<c:if test="<%= fileEntryTypeId > 0 %>">
+
+							<%
+							List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+							Stream<DDMStructure> ddmStructuresStream = ddmStructures.stream();
+
+							Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+
+							Stream<Locale> localesStream = locales.stream();
+							%>
+
+								<aui:input name="availableLocales" type="hidden" value="<%= DDMStructureUtil.getAvailableLocales(ddmStructures) %>" />
+
 								<div class="mb-3">
-
-									<%
-									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-									Stream<DDMStructure> ddmStructuresStream = ddmStructures.stream();
-
-									Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
-
-									Stream<Locale> localesStream = locales.stream();
-									%>
-
 									<react:component
 										module="document_library/js/LanguageSelector"
 										props='<%=

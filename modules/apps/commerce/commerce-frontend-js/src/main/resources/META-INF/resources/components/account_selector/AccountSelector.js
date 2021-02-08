@@ -165,7 +165,7 @@ function AccountSelector(props) {
 												<Col className="order-label">
 													{
 														currentOrder
-															.orderStatusInfo
+															.workflowStatusInfo
 															.label_i18n
 													}
 												</Col>
@@ -355,7 +355,7 @@ AccountSelector.propTypes = {
 	}),
 	currentOrder: PropTypes.shape({
 		orderId: PropTypes.number,
-		orderStatusInfo: PropTypes.shape({
+		workflowStatusInfo: PropTypes.shape({
 			label_i18n: PropTypes.string,
 		}),
 	}),

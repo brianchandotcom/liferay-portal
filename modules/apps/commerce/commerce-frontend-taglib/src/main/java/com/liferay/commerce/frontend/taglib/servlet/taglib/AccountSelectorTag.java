@@ -20,7 +20,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.taglib.internal.model.CurrentAccountModel;
 import com.liferay.commerce.frontend.taglib.internal.model.CurrentOrderModel;
-import com.liferay.commerce.frontend.taglib.internal.model.OrderStatusModel;
+import com.liferay.commerce.frontend.taglib.internal.model.WorkflowStatusModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.petra.string.StringBundler;
@@ -127,16 +127,17 @@ public class AccountSelectorTag extends IncludeTag {
 			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 			if (commerceOrder != null) {
-				String orderStatusInfoLabel = WorkflowConstants.getStatusLabel(
-					commerceOrder.getStatus());
+				String workflowStatusInfoLabel =
+					WorkflowConstants.getStatusLabel(commerceOrder.getStatus());
 
-				OrderStatusModel orderStatusModel = new OrderStatusModel(
-					commerceOrder.getOrderStatus(), orderStatusInfoLabel,
-					LanguageUtil.get(
-						themeDisplay.getLocale(), orderStatusInfoLabel));
+				WorkflowStatusModel workflowStatusModel =
+					new WorkflowStatusModel(
+						commerceOrder.getStatus(), workflowStatusInfoLabel,
+						LanguageUtil.get(
+							themeDisplay.getLocale(), workflowStatusInfoLabel));
 
 				CurrentOrderModel currentOrderModel = new CurrentOrderModel(
-					commerceOrder.getCommerceOrderId(), orderStatusModel);
+					commerceOrder.getCommerceOrderId(), workflowStatusModel);
 
 				httpServletRequest.setAttribute(
 					"liferay-commerce:account-selector:currentOrder",

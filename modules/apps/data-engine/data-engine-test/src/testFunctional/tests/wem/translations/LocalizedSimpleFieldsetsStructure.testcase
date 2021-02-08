@@ -137,55 +137,64 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		Navigator.gotoSidebarTab(tabName = "Builder");
+		WebContentStructures.addCP();
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
 
 		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
 
-		DataEngine.addFields(fieldNameList = "Text");
+		Navigator.gotoNavTab(navTab = "Fields");
 
-		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC_MODAL");
+		DoubleClick(
+			key_fieldName = "Text",
+			locator1 = "Sidebar#ADD_FIELD_NAME");
 
-		Click(
-			key_locale = "pt-BR",
-			locator1 = "Translation#LOCALIZATION_NAME_MODAL");
+		Pause(locator1 = "3000");
 
-		Type(
-			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "New FieldSet PT");
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC_MODAL");
-
-		Click(
-			key_locale = "en-US",
-			locator1 = "Translation#LOCALIZATION_NAME_MODAL");
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			modal = "true");
 
 		Type(
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "New FieldSet");
+			value1 = "New Fieldset pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text pt-BR",
+			fieldsetModal = "true");
+
+		PortletEntry.changeLocale(
+			locale = "en-US",
+			modal = "true");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "New Fieldset en-US");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text en-US",
+			fieldsetModal = "true");
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "New FieldSet");
+		DataEngine.addFieldsets(fieldsetName = "New Fieldset en-US");
 
-		MenuItem.click(menuItem = "Edit");
-
-		AssertTextEquals(
-			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "New FieldSet");
+		DataEngine.viewFieldsetTranslation(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset",
+			localeList = "en-US,pt-BR");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

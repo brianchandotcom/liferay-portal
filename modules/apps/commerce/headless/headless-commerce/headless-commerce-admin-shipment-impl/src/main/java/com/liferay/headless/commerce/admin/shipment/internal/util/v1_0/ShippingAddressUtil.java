@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class ShippingAddressUtil {
 
-	public static CommerceShipment upsertShippingAddress(
+	public static CommerceShipment updateShippingAddress(
 			CommerceAddressService commerceAddressService,
 			CommerceCountryService commerceCountryService,
 			CommerceRegionService commerceRegionService,

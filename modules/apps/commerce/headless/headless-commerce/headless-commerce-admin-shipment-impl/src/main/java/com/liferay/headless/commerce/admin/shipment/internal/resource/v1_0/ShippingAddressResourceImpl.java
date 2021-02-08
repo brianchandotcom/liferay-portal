@@ -78,7 +78,7 @@ public class ShippingAddressResourceImpl
 		CommerceShipment commerceShipment =
 			_commerceShipmentService.getCommerceShipment(shipmentId);
 
-		commerceShipment = ShippingAddressUtil.upsertShippingAddress(
+		commerceShipment = ShippingAddressUtil.updateShippingAddress(
 			_commerceAddressService, _commerceCountryService,
 			_commerceRegionService, _commerceShipmentService, commerceShipment,
 			shippingAddress, _serviceContextHelper);

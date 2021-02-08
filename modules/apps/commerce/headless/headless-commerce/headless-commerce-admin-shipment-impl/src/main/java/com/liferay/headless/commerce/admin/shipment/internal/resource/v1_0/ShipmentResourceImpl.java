@@ -230,7 +230,7 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 		ShippingAddress shippingAddress = shipment.getShippingAddress();
 
 		if (shippingAddress != null) {
-			ShippingAddressUtil.upsertShippingAddress(
+			ShippingAddressUtil.updateShippingAddress(
 				_commerceAddressService, _commerceCountryService,
 				_commerceRegionService, _commerceShipmentService,
 				commerceShipment, shippingAddress, _serviceContextHelper);

@@ -36,7 +36,7 @@ export default function propsTransformer({
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {
-			if (item.data.action === 'deleteSelectedRedirectEntries') {
+			if (item?.data?.action === 'deleteSelectedRedirectEntries') {
 				deleteSelectedRedirectEntries();
 			}
 		},

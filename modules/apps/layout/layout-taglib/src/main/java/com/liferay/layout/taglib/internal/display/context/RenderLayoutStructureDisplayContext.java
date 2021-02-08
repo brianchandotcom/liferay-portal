@@ -642,6 +642,10 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getLong("classPK"),
 				backgroundImageJSONObject.getString("fieldId"));
 		}
+		else if (backgroundImageJSONObject.has("mappedField")) {
+			fileEntryId = _getFileEntryId(
+				backgroundImageJSONObject.getString("mappedField"));
+		}
 
 		if (fileEntryId != 0) {
 			styleSB.append("--background-image-file-entry-id:");
@@ -1018,6 +1022,37 @@ public class RenderLayoutStructureDisplayContext {
 			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
 
 		return classPKInfoItemIdentifier.getClassPK();
+	}
+
+	private long _getFileEntryId(String mappedField) throws Exception {
+		InfoItemDetails infoItemDetails =
+			(InfoItemDetails)_httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
+		if (infoItemDetails == null) {
+			return 0;
+		}
+
+		InfoItemReference infoItemReference =
+			infoItemDetails.getInfoItemReference();
+
+		if (infoItemReference == null) {
+			return 0;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return 0;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+		return _getFileEntryId(
+			PortalUtil.getClassNameId(infoItemReference.getClassName()),
+			classPKInfoItemIdentifier.getClassPK(), mappedField);
 	}
 
 	private JSONObject _getFrontendTokensJSONObject() throws Exception {

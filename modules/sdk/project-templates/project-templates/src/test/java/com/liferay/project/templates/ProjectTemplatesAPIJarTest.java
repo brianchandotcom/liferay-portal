@@ -114,7 +114,9 @@ public class ProjectTemplatesAPIJarTest {
 
 		Stream<Path> serviceFilesStream = sourceServicesClassNames.stream();
 
-		List<String> serviceClassNames = serviceFilesStream.map(
+		List<String> missingServiceClassNames = new ArrayList<>();
+
+		serviceFilesStream.map(
 			filePath -> {
 				try {
 					return Files.readAllLines(filePath);
@@ -126,19 +128,15 @@ public class ProjectTemplatesAPIJarTest {
 			}
 		).flatMap(
 			services -> services.stream()
-		).collect(
-			Collectors.toList()
-		);
-
-		List<String> missingServiceClassNames = new ArrayList<>();
-
-		for (String serviceClassName : serviceClassNames) {
-			String sourceServiceClassName = serviceClassName.replace(".", "/");
-
-			if (!classNames.contains(sourceServiceClassName)) {
-				missingServiceClassNames.add(sourceServiceClassName);
+		).map(
+			serviceClassName -> serviceClassName.replace(".", "/")
+		).forEach(
+			sourceServiceClassName -> {
+				if (!classNames.contains(sourceServiceClassName)) {
+					missingServiceClassNames.add(sourceServiceClassName);
+				}
 			}
-		}
+		);
 
 		Assert.assertTrue(
 			"Sources jar missing: " + _getClassNames(missingClassNames),

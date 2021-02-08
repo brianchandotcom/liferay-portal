@@ -441,6 +441,17 @@ definition {
 					fieldFieldLabel = "${fieldName}",
 					fieldFieldLabelEdit = "${fieldName} ${locale}",
 					fieldsetModal = "true");
+
+				if (isSet(fieldHelp)) {
+					DataEngine.editFieldTip(
+						fieldFieldLabel = "${fieldName} ${locale}",
+						fieldHelp = "${fieldName} Help Text ${locale}");
+				}
+				else if (isSet(fieldPlaceholder)) {
+					DataEngine.editFieldTip(
+						fieldFieldLabel = "${fieldName} ${locale}",
+						fieldPlaceholder = "${fieldName} Placeholder ${locale}");
+				}
 			}
 		}
 

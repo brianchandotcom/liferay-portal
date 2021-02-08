@@ -444,8 +444,7 @@ public class JournalArticleStagedModelDataHandler
 					_dlReferencesExportImportContentProcessor.
 						replaceExportContentReferences(
 							portletDataContext, article,
-							article.getSmallImageURL() + StringPool.SPACE, true,
-							false);
+							article.getSmallImageURL(), true, false);
 
 				article.setSmallImageURL(smallImageURL);
 			}

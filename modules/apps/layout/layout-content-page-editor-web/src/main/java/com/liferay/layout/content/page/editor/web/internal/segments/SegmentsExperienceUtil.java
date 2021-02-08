@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -62,8 +63,10 @@ import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -128,11 +131,23 @@ public class SegmentsExperienceUtil {
 				addedDefault = true;
 			}
 
+			Set<Locale> locales = LanguageUtil.getAvailableLocales(
+				segmentsExperience.getGroupId());
+
+			Stream<Locale> stream = locales.stream();
+
 			availableSegmentsExperiences.put(
 				String.valueOf(segmentsExperience.getSegmentsExperienceId()),
 				HashMapBuilder.<String, Object>put(
 					"hasLockedSegmentsExperiment",
 					segmentsExperience.hasSegmentsExperiment()
+				).put(
+					"languageIds",
+					stream.map(
+						LocaleUtil::toLanguageId
+					).toArray(
+						String[]::new
+					)
 				).put(
 					"name", segmentsExperience.getName(themeDisplay.getLocale())
 				).put(
@@ -168,8 +183,20 @@ public class SegmentsExperienceUtil {
 	public static JSONObject getSegmentsExperienceJSONObject(
 		SegmentsExperience segmentsExperience) {
 
+		Set<Locale> locales = LanguageUtil.getAvailableLocales(
+			segmentsExperience.getGroupId());
+
+		Stream<Locale> stream = locales.stream();
+
 		return JSONUtil.put(
 			"active", segmentsExperience.isActive()
+		).put(
+			"languageIds",
+			stream.map(
+				LocaleUtil::toLanguageId
+			).toArray(
+				String[]::new
+			)
 		).put(
 			"name", segmentsExperience.getNameCurrentValue()
 		).put(

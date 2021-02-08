@@ -141,13 +141,17 @@ public abstract class BaseBatchEngineExportTaskItemWriterTestCase {
 
 		sb.append("{");
 
-		if (fieldNames.contains("createDate")) {
+		if (fieldNames.contains("createDate") &&
+			(item.getCreateDate() != null)) {
+
 			sb.append("\"createDate\": ");
 			sb.append(_formatJSONValue(item.getCreateDate()));
 			sb.append(StringPool.COMMA);
 		}
 
-		if (fieldNames.contains("description")) {
+		if (fieldNames.contains("description") &&
+			(item.getDescription() != null)) {
+
 			sb.append("\"description\": ");
 			sb.append(_formatJSONValue(item.getDescription()));
 			sb.append(StringPool.COMMA);
@@ -165,6 +169,10 @@ public abstract class BaseBatchEngineExportTaskItemWriterTestCase {
 			sb.append("\"name\": {");
 
 			for (Map.Entry<String, String> entry : name.entrySet()) {
+				if (entry.getValue() == null) {
+					continue;
+				}
+
 				sb.append("\"");
 				sb.append(entry.getKey());
 				sb.append("\": ");

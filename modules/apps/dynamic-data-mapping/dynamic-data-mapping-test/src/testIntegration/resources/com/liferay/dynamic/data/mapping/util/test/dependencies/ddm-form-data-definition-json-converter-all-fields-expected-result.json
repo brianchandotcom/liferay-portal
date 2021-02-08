@@ -134,7 +134,7 @@
 			"label": {
 				"en_US": "Geolocation"
 			},
-			"localizable": false,
+			"localizable": true,
 			"name": "Geolocation",
 			"predefinedValue": {
 				"en_US": ""

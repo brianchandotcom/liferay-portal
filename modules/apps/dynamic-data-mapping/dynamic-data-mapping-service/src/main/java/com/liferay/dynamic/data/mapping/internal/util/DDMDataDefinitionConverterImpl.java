@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -393,7 +394,9 @@ public class DDMDataDefinitionConverterImpl
 			ddmFormField.setIndexType("none");
 		}
 
-		ddmFormField.setLocalizable(true);
+		if (!StringUtil.equals(ddmFormField.getType(), "fieldset")) {
+			ddmFormField.setLocalizable(true);
+		}
 
 		_upgradeFields(ddmFormField.getNestedDDMFormFields(), defaultLocale);
 	}

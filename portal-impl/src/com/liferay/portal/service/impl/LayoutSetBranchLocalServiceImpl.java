@@ -285,20 +285,22 @@ public class LayoutSetBranchLocalServiceImpl
 
 		// Layout
 
-		List<Long> deletablePlids = _getDeletablePlids(
-			layoutSetBranch.getLayoutSetBranchId());
+		if (!layoutSetBranch.isMaster()) {
+			List<Long> deletablePlids = _getDeletablePlids(
+				layoutSetBranch.getLayoutSetBranchId());
 
-		if ((currentLayoutPlid != LayoutConstants.DEFAULT_PLID) &&
-			deletablePlids.contains(currentLayoutPlid)) {
+			if ((currentLayoutPlid != LayoutConstants.DEFAULT_PLID) &&
+				deletablePlids.contains(currentLayoutPlid)) {
 
-			throw new PortalException();
-		}
+				throw new PortalException();
+			}
 
-		for (long plid : deletablePlids) {
-			Layout layout = layoutLocalService.fetchLayout(plid);
+			for (long plid : deletablePlids) {
+				Layout layout = layoutLocalService.fetchLayout(plid);
 
-			if (layout != null) {
-				layoutLocalService.deleteLayout(layout);
+				if (layout != null) {
+					layoutLocalService.deleteLayout(layout);
+				}
 			}
 		}
 

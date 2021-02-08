@@ -1561,6 +1561,13 @@
     strip-ansi "6.0.0"
     xml "^1.0.1"
 
+"@liferay/jquery-form@3.51.0-liferay.1":
+  version "3.51.0-liferay.1"
+  resolved "https://registry.yarnpkg.com/@liferay/jquery-form/-/jquery-form-3.51.0-liferay.1.tgz#a8e2e2fce01d1e57cd4577c20cdfc9e848c25de3"
+  integrity sha512-azhkvLNK1PSCjboBTmixl82PzTvnoF7ofJv1UvPG2hT33mAuJYaGIgPp+AzGNpcuPhlU2b1X3PoOYsrNlh4D0g==
+  dependencies:
+    jquery ">=1.5"
+
 "@liferay/js-toolkit-core@3.0.1-pre.1":
   version "3.0.1-pre.1"
   resolved "https://registry.yarnpkg.com/@liferay/js-toolkit-core/-/js-toolkit-core-3.0.1-pre.1.tgz#d48bf67845a23232c9eac00ae49323be7928e746"
@@ -9057,7 +9064,7 @@ jest@^25.1.0:
     import-local "^3.0.2"
     jest-cli "^25.1.0"
 
-jquery@3.5.1:
+jquery@3.5.1, jquery@>=1.5:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
   integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==

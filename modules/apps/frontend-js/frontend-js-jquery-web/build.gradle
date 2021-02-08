@@ -2,6 +2,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildBootstrapJS(type: Copy)
 task buildJQuery(type: Copy)
+task buildJQueryForm(type: Copy)
 task buildPopperJS(type: Copy)
 
 File jsDestinationDir = file("tmp/META-INF/resources")
@@ -39,6 +40,21 @@ buildJQuery {
 	into jqueryDestinationDir
 }
 
+buildJQueryForm {
+	dependsOn buildJQuery
+
+	eachFile new StripPathSegmentsAction(2)
+
+	from npmInstall.nodeModulesDir
+
+	include "@liferay/jquery-form/jquery.form.js"
+
+	includeEmptyDirs = false
+	into jqueryDestinationDir
+
+	rename "jquery.form.js", "form.js"
+}
+
 buildPopperJS {
 	dependsOn buildJQuery
 
@@ -56,6 +72,7 @@ buildPopperJS {
 classes {
 	dependsOn buildBootstrapJS
 	dependsOn buildJQuery
+	dependsOn buildJQueryForm
 	dependsOn buildPopperJS
 }
 

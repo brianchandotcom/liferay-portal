@@ -393,6 +393,8 @@ public class DDMDataDefinitionConverterImpl
 			ddmFormField.setIndexType("none");
 		}
 
+		ddmFormField.setLocalizable(true);
+
 		_upgradeFields(ddmFormField.getNestedDDMFormFields(), defaultLocale);
 	}
 

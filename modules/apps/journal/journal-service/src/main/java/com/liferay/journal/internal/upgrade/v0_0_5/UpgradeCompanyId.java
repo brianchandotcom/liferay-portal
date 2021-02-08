@@ -22,15 +22,6 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId;
 public class UpgradeCompanyId extends BaseUpgradeCompanyId {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		super.doUpgrade();
-
-		runSQL(
-			"create index IX_CC7576C7 on JournalArticleResource " +
-				"(uuid_[$COLUMN_LENGTH:75$], companyId)");
-	}
-
-	@Override
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
 			new TableUpdater("JournalArticleImage", "Group_", "groupId"),

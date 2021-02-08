@@ -15,9 +15,6 @@
 package com.liferay.layout.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -51,20 +48,6 @@ public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 	@Override
 	public boolean isPrivateLayout() {
 		return false;
-	}
-
-	@Override
-	public boolean isVisible(
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		Group group = themeDisplay.getScopeGroup();
-
-		if (group.getPublicLayoutsPageCount() <= 0) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Reference(

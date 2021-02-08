@@ -35,10 +35,16 @@ export const AutoFocus = ({children}) => {
 			}
 			else {
 				const firstInput = childRef.current.querySelector('input');
+				const sidebarOpen = document.querySelector(
+					'.ddm-form-builder--sidebar-open'
+				);
 
 				if (
 					firstInput &&
-					!containerElement.current.contains(document.activeElement)
+					!containerElement.current.contains(
+						document.activeElement
+					) &&
+					sidebarOpen
 				) {
 					firstInput.focus();
 

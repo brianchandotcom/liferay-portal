@@ -12,7 +12,7 @@
  * details.
  */
 
-import EventEmitter from './EventEmitter';
+import EventEmitter from './events/EventEmitter';
 
 /**
  * Options

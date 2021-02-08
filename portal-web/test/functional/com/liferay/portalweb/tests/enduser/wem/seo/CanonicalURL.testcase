@@ -91,9 +91,9 @@ definition {
 		}
 
 		AssertTextEquals(
-			key_text = "http://localhost:8080/canonical-url-test-page",
+			key_text = "http://localhost:8080/web/guest/canonical-url-test-page",
 			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
-			value1 = "http://localhost:8080/canonical-url-test-page");
+			value1 = "http://localhost:8080/web/guest/canonical-url-test-page");
 
 		AssertTextEquals(
 			locator1 = "Message#INFO",

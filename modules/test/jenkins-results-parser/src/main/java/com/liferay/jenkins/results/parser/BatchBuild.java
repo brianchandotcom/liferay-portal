@@ -476,7 +476,7 @@ public class BatchBuild extends BaseBuild {
 				String.valueOf(failCount),
 				JenkinsResultsParserUtil.getNounForm(
 					failCount, " Tests", " Test"),
-				" Failed.", getFailureMessageElement()));
+				" Failed."));
 	}
 
 	@Override

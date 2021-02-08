@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalWebKeys;
@@ -234,7 +235,11 @@ public class JournalEditArticleDisplayContext {
 			return _ddmFormValues;
 		}
 
-		_ddmFormValues = journalConverter.getDDMFormValues(
+		FieldsToDDMFormValuesConverter fieldsToDDMFormValuesConverter =
+			(FieldsToDDMFormValuesConverter)_httpServletRequest.getAttribute(
+				FieldsToDDMFormValuesConverter.class.getName());
+
+		_ddmFormValues = fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
 		return _ddmFormValues;

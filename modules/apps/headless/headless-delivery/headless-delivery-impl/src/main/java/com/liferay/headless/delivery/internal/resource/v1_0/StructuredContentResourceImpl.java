@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -990,7 +991,7 @@ public class StructuredContentResourceImpl
 			}
 		}
 
-		DDMFormValues ddmFormValues = _journalConverter.getDDMFormValues(
+		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
 			ddmStructure, fields);
 
 		_validateDDMFormValues(ddmFormValues);
@@ -1152,6 +1153,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

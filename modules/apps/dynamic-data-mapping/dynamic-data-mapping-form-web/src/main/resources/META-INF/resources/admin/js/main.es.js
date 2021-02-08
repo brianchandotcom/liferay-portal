@@ -20,6 +20,7 @@ import withMoveableFields from 'dynamic-data-mapping-form-builder/js/components/
 import withMultiplePages from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMultiplePages.es';
 import withResizeableColumns from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withResizeableColumns.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
+import RulesSupport from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RulesSupport.es';
 import Sidebar from 'dynamic-data-mapping-form-builder/js/components/Sidebar/Sidebar.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {
@@ -517,6 +518,12 @@ class Form extends Component {
 			ref: 'store',
 		};
 
+		const state = this._stateSyncronizer?.getState();
+
+		const formattedRules = state
+			? RulesSupport.formatRules(state.pages, rules)
+			: rules;
+
 		const LayoutProviderTag = LayoutProvider;
 
 		return (
@@ -535,7 +542,7 @@ class Form extends Component {
 							portletNamespace={namespace}
 							ref="ruleBuilder"
 							rolesURL={rolesURL}
-							rules={rules}
+							rules={formattedRules}
 							spritemap={spritemap}
 							visible={this.isShowRuleBuilder()}
 						/>
@@ -547,7 +554,7 @@ class Form extends Component {
 						groupId={groupId}
 						portletNamespace={namespace}
 						ref="formBuilder"
-						rules={rules}
+						rules={formattedRules}
 						spritemap={spritemap}
 						view={view}
 						visible={

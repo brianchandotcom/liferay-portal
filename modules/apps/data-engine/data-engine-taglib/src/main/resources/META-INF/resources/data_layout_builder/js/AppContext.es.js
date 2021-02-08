@@ -134,11 +134,15 @@ const deleteDataLayoutField = (dataLayout, fieldName) => {
 	};
 };
 
-const editFocusedCustomObjectField = ({
-	focusedCustomObjectField,
-	propertyName,
-	propertyValue,
-}, editingLanguageId, dataLayoutBuilder) => {
+const editFocusedCustomObjectField = (
+	{propertyName, propertyValue},
+	{
+		dataDefinition: {defaultLanguageId},
+		editingLanguageId,
+		focusedCustomObjectField,
+	},
+	dataLayoutBuilder
+) => {
 	let localizedValue;
 	const {settingsContext} = focusedCustomObjectField;
 	const visitor = new PagesVisitor(settingsContext.pages);
@@ -150,7 +154,7 @@ const editFocusedCustomObjectField = ({
 			if (fieldName === propertyName) {
 				localizedValue = {
 					...field.localizedValue,
-					[editingLanguageId || themeDisplay.getLanguageId()]: propertyValue,
+					[editingLanguageId || defaultLanguageId]: propertyValue,
 				};
 
 				return {
@@ -360,19 +364,13 @@ const createReducer = (dataLayoutBuilder) => {
 				};
 			}
 			case EDIT_CUSTOM_OBJECT_FIELD: {
-				const {dataDefinition, editingLanguageId, focusedCustomObjectField} = state;
-				const editedFocusedCustomObjectField = editFocusedCustomObjectField(
-					{
-						...action.payload,
-						focusedCustomObjectField,
-					},
-					editingLanguageId,
+				const {dataDefinition, focusedCustomObjectField} = state;
+
+				const focusedDataDefinitionField = editFocusedCustomObjectField(
+					action.payload,
+					state,
 					dataLayoutBuilder
 				);
-				const {
-					nestedDataDefinitionFields,
-					settingsContext,
-				} = editedFocusedCustomObjectField;
 
 				return {
 					...state,
@@ -384,22 +382,14 @@ const createReducer = (dataLayoutBuilder) => {
 									dataDefinitionField.name ===
 									focusedCustomObjectField.name
 								) {
-									return {
-										...dataLayoutBuilder.getDataDefinitionField(
-											editedFocusedCustomObjectField
-										),
-										nestedDataDefinitionFields,
-									};
+									return focusedDataDefinitionField;
 								}
 
 								return dataDefinitionField;
 							}
 						),
 					},
-					focusedCustomObjectField: {
-						...editedFocusedCustomObjectField,
-						settingsContext,
-					},
+					focusedCustomObjectField: focusedDataDefinitionField,
 				};
 			}
 			case SET_FORM_RENDERER_CUSTOM_FIELDS: {

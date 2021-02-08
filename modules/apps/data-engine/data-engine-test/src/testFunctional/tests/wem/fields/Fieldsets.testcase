@@ -163,8 +163,8 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Click(
-			key_fieldsetLabel = "New Fieldset",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_COLLAPSE_BUTTON");
+			key_label = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_COLLAPSE_BUTTON");
 
 		AssertNotVisible(
 			key_fieldFieldLabel = "Numeric",

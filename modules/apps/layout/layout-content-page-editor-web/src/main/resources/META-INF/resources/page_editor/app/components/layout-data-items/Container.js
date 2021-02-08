@@ -180,7 +180,7 @@ const Container = React.forwardRef(
 			</div>
 		);
 
-		return link ? (
+		return link?.href ? (
 			<a
 				{...data}
 				href={link.href}

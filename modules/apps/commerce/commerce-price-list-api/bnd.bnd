@@ -14,3 +14,7 @@ Export-Package:\
 	com.liferay.commerce.price.list.service.persistence,\
 	com.liferay.commerce.price.list.util.comparator
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\
+		resource.bundle.base.name="content.Language"

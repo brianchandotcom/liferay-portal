@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.upgrade.v7_0_0.util.GroupTable;
 

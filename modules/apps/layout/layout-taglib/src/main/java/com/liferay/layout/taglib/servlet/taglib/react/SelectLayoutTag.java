@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -320,6 +321,14 @@ public class SelectLayoutTag extends IncludeTag {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if ((_privateLayout && !group.hasPrivateLayouts()) ||
+			(!_privateLayout && !group.hasPublicLayouts())) {
+
+			return JSONFactoryUtil.createJSONArray();
+		}
 
 		return JSONUtil.put(
 			JSONUtil.put(

@@ -369,7 +369,7 @@ public class DBPartitionUtil {
 			"lpartition_");
 
 	private static final Set<String> _controlTableNames = new HashSet<>(
-		Arrays.asList("Company", "Portlet", "VirtualHost"));
+		Arrays.asList("Company", "VirtualHost"));
 	private static volatile long _defaultCompanyId;
 	private static String _defaultSchemaName;
 

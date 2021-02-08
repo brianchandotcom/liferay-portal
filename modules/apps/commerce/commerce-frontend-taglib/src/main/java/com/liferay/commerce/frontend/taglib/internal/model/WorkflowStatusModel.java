@@ -15,27 +15,31 @@
 package com.liferay.commerce.frontend.taglib.internal.model;
 
 /**
- * @author Marco Leo
- * @author Luca Pellizzon
+ * @author Gianmarco Brunialti Masera
  */
-public class CurrentOrderModel {
+public class WorkflowStatusModel {
 
-	public CurrentOrderModel(
-		long orderId, WorkflowStatusModel workflowStatusInfo) {
+	public WorkflowStatusModel(int code, String label, String localizedLabel) {
+		_code = code;
+		_label = label;
 
-		_orderId = orderId;
-		_workflowStatusInfo = workflowStatusInfo;
+		_label_i18n = localizedLabel;
 	}
 
-	public long getOrderId() {
-		return _orderId;
+	public int getCode() {
+		return _code;
 	}
 
-	public WorkflowStatusModel getWorkflowStatusInfo() {
-		return _workflowStatusInfo;
+	public String getLabel() {
+		return _label;
 	}
 
-	private final long _orderId;
-	private final WorkflowStatusModel _workflowStatusInfo;
+	public String getLabel_i18n() {
+		return _label_i18n;
+	}
+
+	private final int _code;
+	private final String _label;
+	private final String _label_i18n;
 
 }

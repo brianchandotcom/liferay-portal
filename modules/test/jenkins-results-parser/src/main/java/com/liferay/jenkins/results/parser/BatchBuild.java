@@ -342,21 +342,25 @@ public class BatchBuild extends BaseBuild {
 
 		boolean reinvoked = false;
 
-		for (Build downstreamBuild : getDownstreamBuilds("completed")) {
+		List<Build> builds = new ArrayList<>();
+
+		builds.add(this);
+
+		builds.addAll(getDownstreamBuilds("completed"));
+
+		for (Build build : builds) {
 			if (reinvoked) {
 				break;
 			}
 
 			for (ReinvokeRule reinvokeRule : reinvokeRules) {
-				String downstreamBuildResult = downstreamBuild.getResult();
+				String buildResult = build.getResult();
 
-				if ((downstreamBuildResult == null) ||
-					downstreamBuildResult.equals("SUCCESS")) {
-
+				if ((buildResult == null) || buildResult.equals("SUCCESS")) {
 					continue;
 				}
 
-				if (!reinvokeRule.matches(downstreamBuild)) {
+				if (!reinvokeRule.matches(build)) {
 					continue;
 				}
 

@@ -174,7 +174,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		User resolvedUser = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME,
+			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
 			"screenName", new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
@@ -182,7 +182,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	}
 
 	@Test
-	public void testMatchingUserWithEmailAddress() throws Exception {
+	public void testMatchingUserWithEmailAddressAttribute() throws Exception {
 		when(
 			_company.isStrangers()
 		).thenReturn(
@@ -198,7 +198,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		_initMatchingUserHandling();
 
 		User existingUser = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
+			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
 			"emailAddress", new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
@@ -223,9 +223,9 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		_initMatchingUserHandling();
 
 		User existingUser = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE, "screenName",
-			new UserResolverSAMLContextImpl(_messageContext),
-			new ServiceContext());
+			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME,
+			"screenName",
+			new UserResolverSAMLContextImpl(_messageContext), new ServiceContext());
 
 		Assert.assertNotNull(existingUser);
 	}
@@ -247,7 +247,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		_initMatchingUserHandling();
 
 		User existingUser = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME,
+			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
 			"screenName", new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
@@ -311,13 +311,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_userLocalService.getUserByScreenName(
 				Mockito.anyLong(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))
-		).thenReturn(
-			existingUser
-		);
-
-		when(
-			_userLocalService.getUserByScreenName(
-				Mockito.anyLong(), Mockito.eq(_SAML_NAME_IDENTIFIER_VALUE))
 		).thenReturn(
 			existingUser
 		);

@@ -307,13 +307,7 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		Click(
-			key_fieldFieldLabel = "1",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Duplicate");
+		DataEngine.duplicate(fieldsGroupLabel = "Fields Group");
 
 		Button.clickSave();
 

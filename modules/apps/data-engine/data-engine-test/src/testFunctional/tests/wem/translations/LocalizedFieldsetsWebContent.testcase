@@ -71,54 +71,53 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
-	@ignore = "true"
 	@priority = "4"
 	test CheckLanguageSelector {
-		property portal.acceptance = "false";
-
-		var fieldsetLabel = "My New Fieldset";
-		var structureTitle = "Structure Title";
-		var structureTitlePT = "Titulo da Estrutura";
-		var structureFieldSet = "Field Set Structure";
-		var structureFieldSetPT = "Estrutura de Field Set";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "I'll be a field set",
-			structureName = "${structureFieldSet}");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
-			fieldsetLabel = "${fieldsetLabel}",
-			fieldsetName = "${fieldsetLabel}");
+			fieldsetName = "New Fieldset");
 
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
-
-		MenuItem.click(menuItem = "Edit");
-
-		Click(locator1 = "Button#LOCALIZATION_MODAL");
-
-		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_MODAL_TRANSLATION_SPAN_LANGUAGE_ENGLISH");
-
-		Click(locator1 = "Modal#CLOSE_BUTTON");
+		DataEngine.addTranslationToFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");
 
 		WebContentStructures.saveCP();
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureFieldSet}");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			structureName = "${structureFieldSet}",
-			webContentTitle = "WC English");
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
-		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+		PortletEntry.viewLocale(locale = "en-US");
 
-		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH");
+		AssertVisible(
+			key_fieldsetLabel = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		PortletEntry.viewLocale(locale = "pt-BR");
+
+		AssertVisible(
+			key_fieldsetLabel = "New Fieldset pt-BR",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text pt-BR",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

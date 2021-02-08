@@ -1087,31 +1087,18 @@ definition {
 			locator1 = "WCEditWebContent#SELECTION_OPTION_CHECKED");
 	}
 
-	macro viewFieldsetNTranslations {
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetName}");
+	macro viewFieldsetTranslation {
+		for (var locale : list "${localeList}") {
+			PortletEntry.changeLocale(locale = "${locale}");
 
-		MenuItem.click(menuItem = "Edit");
-		
-		for (var locale : list "${localesList}") {
-			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC_MODAL");
+			AssertVisible(
+				key_fieldsetLabel = "${fieldsetName} ${locale}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
-			Click(
-				key_locale = "${locale}",
-				locator1 = "Translation#LOCALIZATION_NAME_MODAL");
-
-			AssertTextEquals(
-				locator1 = "Modal#NAME_FIELDSET",
-				value1 = "${fieldsetName} ${locale}");
-
-			for (var fieldLabel : list "${fieldLabelsList}") {
-				Click(
-					key_fieldFieldLabel = "${fieldLabel} ${locale}",
-					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
-				
-				AssertTextEquals(
-					key_fieldLabel = "Label",
-					locator1 = "TextInput#GENERIC_TEXT_INPUT",
-					value1 = "${fieldLabel} ${locale}");
+			for (var fieldName : list "${fieldNameList}") {
+				AssertVisible(
+					key_fieldFieldLabel = "${fieldName} ${locale}",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 			}
 		}
 	}

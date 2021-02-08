@@ -85,6 +85,26 @@ export const normalizeLocaleId = (localeId) => {
 	return localeId.replace('_', '-').toLowerCase();
 };
 
+export const transformAvailableLocales = (
+	availableLocales,
+	defaultLocale,
+	value
+) => ({
+	availableLocales: availableLocales.map((availableLocale) => ({
+		displayName: availableLocale[1].label,
+		icon: normalizeLocaleId(availableLocale[0]),
+		isDefault: isDefaultLocale({
+			defaultLocale,
+			localeId: availableLocale[0],
+		}),
+		isTranslated: isTranslated({
+			localeId: availableLocale[0],
+			value,
+		}),
+		localeId: availableLocale[0],
+	})),
+});
+
 export const transformAvailableLocalesAndValue = ({
 	availableLocales,
 	defaultLocale,

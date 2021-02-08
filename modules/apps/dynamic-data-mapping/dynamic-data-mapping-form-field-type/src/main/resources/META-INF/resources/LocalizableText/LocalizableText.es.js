@@ -30,6 +30,7 @@ import {
 	getEditingValue,
 	getInitialInternalValue,
 	normalizeLocaleId,
+	transformAvailableLocales,
 	transformAvailableLocalesAndValue,
 	transformEditingLocale,
 } from './transform.es';
@@ -175,6 +176,10 @@ const LocalizableText = ({
 	readOnly,
 	value,
 }) => {
+	const [currentAvailableLocales, setCurrentAvailableLocales] = useState(
+		availableLocales
+	);
+
 	const [currentEditingLocale, setCurrentEditingLocale] = useState(
 		editingLocale
 	);
@@ -208,6 +213,15 @@ const LocalizableText = ({
 			const newAvailableLocales = translationManager.get(
 				'availableLocales'
 			);
+
+			const {availableLocales} = {
+				...transformAvailableLocales(
+					[...newAvailableLocales],
+					defaultLocale,
+					currentValue
+				),
+			};
+
 			const newEditingLocale = transformEditingLocale({
 				defaultLocale,
 				editingLocale: newAvailableLocales.get(
@@ -215,6 +229,8 @@ const LocalizableText = ({
 				),
 				value: currentValue,
 			});
+
+			setCurrentAvailableLocales(availableLocales);
 
 			setCurrentEditingLocale(newEditingLocale);
 
@@ -235,7 +251,12 @@ const LocalizableText = ({
 		);
 
 		return () => clickDDMFormSettingsButton.dispose();
-	}, [currentValue, defaultLocale, portletNamespace]);
+	}, [
+		currentAvailableLocales,
+		currentValue,
+		defaultLocale,
+		portletNamespace,
+	]);
 
 	return (
 		<ClayInput.Group>
@@ -277,11 +298,11 @@ const LocalizableText = ({
 				shrink
 			>
 				<LocalesDropdown
-					availableLocales={availableLocales}
+					availableLocales={currentAvailableLocales}
 					editingLocale={currentEditingLocale}
 					fieldName={fieldName}
 					onLanguageClicked={({localeId}) => {
-						const newEditingLocale = availableLocales.find(
+						const newEditingLocale = currentAvailableLocales.find(
 							(availableLocale) =>
 								availableLocale.localeId === localeId
 						);

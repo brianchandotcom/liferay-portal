@@ -468,16 +468,29 @@ public class SegmentsExperienceLocalServiceTest {
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
 		boolean active = RandomTestUtil.randomBoolean();
 
+		UnicodeProperties initialTypeSettingsUnicodeProperties =
+			new UnicodeProperties(true);
+
+		initialTypeSettingsUnicodeProperties.setProperty("property", "value");
+
 		SegmentsExperience updatedSegmentsExperience =
 			_segmentsExperienceLocalService.updateSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId(),
-				segmentsEntry.getSegmentsEntryId(), nameMap, active);
+				segmentsEntry.getSegmentsEntryId(), nameMap, active,
+				initialTypeSettingsUnicodeProperties);
 
 		Assert.assertEquals(
 			segmentsEntry.getSegmentsEntryId(),
 			updatedSegmentsExperience.getSegmentsEntryId());
 		Assert.assertEquals(nameMap, updatedSegmentsExperience.getNameMap());
 		Assert.assertEquals(active, updatedSegmentsExperience.isActive());
+
+		UnicodeProperties actualTypeSettingsUnicodeProperties =
+			updatedSegmentsExperience.getTypeSettingsUnicodeProperties();
+
+		Assert.assertEquals(
+			"value",
+			actualTypeSettingsUnicodeProperties.getProperty("property"));
 	}
 
 	@Test
@@ -710,6 +723,37 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(
 			SegmentsExperienceConstants.PRIORITY_DEFAULT - 2,
 			segmentsExperience2.getPriority());
+	}
+
+	@Test
+	public void testUpdateSegmentsExperienceWithoutTypeSettings()
+		throws Exception {
+
+		UnicodeProperties initialTypeSettingsUnicodeProperties =
+			new UnicodeProperties(true);
+
+		initialTypeSettingsUnicodeProperties.setProperty("property", "value");
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.appendSegmentsExperience(
+				SegmentsEntryConstants.ID_DEFAULT, _classNameId, _classPK,
+				RandomTestUtil.randomLocaleStringMap(), true,
+				initialTypeSettingsUnicodeProperties,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperience updatedSegmentsExperience =
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId(),
+				SegmentsEntryConstants.ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomBoolean());
+
+		UnicodeProperties actualTypeSettingsUnicodeProperties =
+			updatedSegmentsExperience.getTypeSettingsUnicodeProperties();
+
+		Assert.assertEquals(
+			"value",
+			actualTypeSettingsUnicodeProperties.getProperty("property"));
 	}
 
 	@Test(expected = LockedSegmentsExperimentException.class)

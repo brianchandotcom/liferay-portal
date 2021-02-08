@@ -627,6 +627,74 @@ public class SegmentsExperienceServiceTest {
 		}
 	}
 
+	@Test
+	public void testUpdateSegmentsExperience() throws Exception {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceService.addSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+				RandomTestUtil.randomLocaleStringMap(), true,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+		UnicodeProperties initialTypeSettingsUnicodeProperties =
+			new UnicodeProperties(true);
+
+		initialTypeSettingsUnicodeProperties.setProperty("property", "value");
+
+		SegmentsExperience updatedSegmentsExperience =
+			_segmentsExperienceService.updateSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId(),
+				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomBoolean(),
+				initialTypeSettingsUnicodeProperties);
+
+		UnicodeProperties actualTypeSettingsUnicodeProperties =
+			updatedSegmentsExperience.getTypeSettingsUnicodeProperties();
+
+		Assert.assertEquals(
+			"value",
+			actualTypeSettingsUnicodeProperties.getProperty("property"));
+	}
+
+	@Test
+	public void testUpdateSegmentsExperienceWithoutTypeSettings()
+		throws Exception {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		UnicodeProperties initialTypeSettingsUnicodeProperties =
+			new UnicodeProperties(true);
+
+		initialTypeSettingsUnicodeProperties.setProperty("property", "value");
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceService.addSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+				RandomTestUtil.randomLocaleStringMap(), true,
+				initialTypeSettingsUnicodeProperties,
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
+
+		SegmentsExperience updatedSegmentsExperience =
+			_segmentsExperienceService.updateSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId(),
+				RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomBoolean());
+
+		UnicodeProperties actualTypeSettingsUnicodeProperties =
+			updatedSegmentsExperience.getTypeSettingsUnicodeProperties();
+
+		Assert.assertEquals(
+			"value",
+			actualTypeSettingsUnicodeProperties.getProperty("property"));
+	}
+
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testUpdateSegmentsExperienceWithoutUpdatePermission()
 		throws Exception {

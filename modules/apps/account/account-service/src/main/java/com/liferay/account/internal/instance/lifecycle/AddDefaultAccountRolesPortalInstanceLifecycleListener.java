@@ -16,7 +16,6 @@ package com.liferay.account.internal.instance.lifecycle;
 
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
@@ -26,7 +25,6 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -187,15 +185,6 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				ActionKeys.UPDATE
 			}
 		).put(
-			AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-			new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
-		).put(
-			AccountPortletKeys.ACCOUNT_USERS_ADMIN,
-			new String[] {
-				AccountActionKeys.ASSIGN_ACCOUNTS,
-				ActionKeys.ACCESS_IN_CONTROL_PANEL
-			}
-		).put(
 			Organization.class.getName(),
 			new String[] {
 				AccountActionKeys.MANAGE_ACCOUNTS,
@@ -226,18 +215,8 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 					"that account.")
 		).build();
 
-	@Reference(
-		target = "(javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + ")"
-	)
-	private Portlet _accountEntriesAdminPortlet;
-
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
-
-	@Reference(
-		target = "(javax.portlet.name=" + AccountPortletKeys.ACCOUNT_USERS_ADMIN + ")"
-	)
-	private Portlet _accountUsersAdminPortlet;
 
 	@Reference
 	private CounterLocalService _counterLocalService;

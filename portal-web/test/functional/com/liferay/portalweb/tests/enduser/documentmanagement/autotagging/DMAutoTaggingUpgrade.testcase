@@ -35,7 +35,7 @@ definition {
 
 		Upgrade.addAutoTaggedDM(
 			dmDocumentFile = "Commerce_Black.jpg",
-			dmDocumentTitle = "DM Document JPG",
+			dmDocumentTitle = "DM Document JPG New",
 			tagName = "jersey");
 
 		Upgrade.addAutoTaggedDM(

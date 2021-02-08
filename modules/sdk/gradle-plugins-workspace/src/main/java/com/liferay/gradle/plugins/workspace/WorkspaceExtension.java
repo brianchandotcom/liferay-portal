@@ -25,7 +25,6 @@ import com.liferay.gradle.plugins.workspace.configurators.PluginsProjectConfigur
 import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.ThemesProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.WarsProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.bundle.support.commands.DownloadCommand;
@@ -81,6 +80,8 @@ public class WorkspaceExtension {
 			_getDefaultAppServerVersion());
 		_bundleCacheDir = _getProperty(
 			settings, "bundle.cache.dir", _BUNDLE_CACHE_DIR);
+		_bundleChecksumMD5 = _getProperty(
+			settings, "bundle.checksum.md5", _getDefaultBundleChecksumMD5());
 		_bundleDistRootDirName = _getProperty(
 			settings, "bundle.dist.root.dir", _BUNDLE_DIST_ROOT_DIR_NAME);
 		_bundleTokenDownload = _getProperty(
@@ -95,12 +96,8 @@ public class WorkspaceExtension {
 		_bundleTokenPasswordFile = _getProperty(
 			settings, "bundle.token.password.file",
 			_BUNDLE_TOKEN_PASSWORD_FILE);
-
 		_bundleUrl = _getProperty(
-			settings, "bundle.url", _getDefaultProductBundleUrl());
-
-		_bundleChecksumMD5Default = _getBundleChecksumMD5(_bundleUrl);
-
+			settings, "bundle.url", _getDefaultBundleUrl());
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
@@ -160,7 +157,17 @@ public class WorkspaceExtension {
 					}
 
 					if (!Objects.equals(
-							getBundleUrl(), _getDefaultProductBundleUrl())) {
+							getBundleChecksumMD5(),
+							_getDefaultBundleChecksumMD5())) {
+
+						logger.lifecycle(
+							String.format(
+								overridePropertyInfo,
+								"liferay.workspace.bundle.checksum.md5"));
+					}
+
+					if (!Objects.equals(
+							getBundleUrl(), _getDefaultBundleUrl())) {
 
 						logger.lifecycle(
 							String.format(
@@ -201,11 +208,7 @@ public class WorkspaceExtension {
 	}
 
 	public String getBundleChecksumMD5() {
-		if (_bundleChecksumMD5 != null) {
-			return GradleUtil.toString(_bundleChecksumMD5);
-		}
-
-		return GradleUtil.toString(_bundleChecksumMD5Default);
+		return GradleUtil.toString(_bundleChecksumMD5);
 	}
 
 	public String getBundleDistRootDirName() {
@@ -329,8 +332,6 @@ public class WorkspaceExtension {
 
 	public void setBundleUrl(Object bundleUrl) {
 		_bundleUrl = bundleUrl;
-
-		_bundleChecksumMD5Default = _getBundleChecksumMD5(bundleUrl);
 	}
 
 	public void setConfigsDir(Object configsDir) {
@@ -384,47 +385,6 @@ public class WorkspaceExtension {
 		}
 	}
 
-	private String _getBundleChecksumMD5(Object bundleUrl) {
-		String bundleUrlString = bundleUrl.toString();
-
-		if (Objects.isNull(bundleUrlString) || bundleUrlString.isEmpty()) {
-			return null;
-		}
-
-		try {
-			DownloadCommand downloadCommand = new DownloadCommand();
-
-			downloadCommand.setCacheDir(_workspaceCacheDir);
-			downloadCommand.setPassword(null);
-			downloadCommand.setQuiet(true);
-			downloadCommand.setToken(false);
-			downloadCommand.setUrl(new URL(bundleUrlString + ".MD5"));
-			downloadCommand.setUserName(null);
-
-			downloadCommand.execute();
-
-			Path md5FilePath = downloadCommand.getDownloadPath();
-
-			String md5Content = FileUtil.read(md5FilePath.toFile());
-
-			if (Objects.isNull(md5Content)) {
-				return null;
-			}
-
-			String[] md5Contents = md5Content.split(" ");
-
-			if (md5Contents.length < 1) {
-				return null;
-			}
-
-			return md5Contents[0].trim();
-		}
-		catch (Exception exception) {
-		}
-
-		return null;
-	}
-
 	private String _getDefaultAppServerVersion() {
 		return Optional.ofNullable(
 			_getProductInfo(getProduct())
@@ -435,6 +395,26 @@ public class WorkspaceExtension {
 		);
 	}
 
+	private String _getDefaultBundleChecksumMD5() {
+		return Optional.ofNullable(
+			_getProductInfo(getProduct())
+		).map(
+			ProductInfo::getBundleChecksumMD5
+		).orElse(
+			null
+		);
+	}
+
+	private String _getDefaultBundleUrl() {
+		return Optional.ofNullable(
+			_getProductInfo(getProduct())
+		).map(
+			this::_decodeBundleUrl
+		).orElse(
+			BundleSupportConstants.DEFAULT_BUNDLE_URL
+		);
+	}
+
 	private String _getDefaultDockerImage() {
 		return Optional.ofNullable(
 			_getProductInfo(getProduct())
@@ -442,16 +422,6 @@ public class WorkspaceExtension {
 			ProductInfo::getLiferayDockerImage
 		).orElse(
 			_DOCKER_IMAGE_LIFERAY
-		);
-	}
-
-	private String _getDefaultProductBundleUrl() {
-		return Optional.ofNullable(
-			_getProductInfo(getProduct())
-		).map(
-			this::_decodeBundleUrl
-		).orElse(
-			BundleSupportConstants.DEFAULT_BUNDLE_URL
 		);
 	}
 
@@ -574,7 +544,6 @@ public class WorkspaceExtension {
 	private final Object _appServerTomcatVersion;
 	private Object _bundleCacheDir;
 	private Object _bundleChecksumMD5;
-	private String _bundleChecksumMD5Default;
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;
 	private Object _bundleTokenEmailAddress;
@@ -607,6 +576,10 @@ public class WorkspaceExtension {
 			return _appServerTomcatVersion;
 		}
 
+		public String getBundleChecksumMD5() {
+			return _bundleChecksumMD5;
+		}
+
 		public String getBundleUrl() {
 			return _bundleUrl;
 		}
@@ -629,6 +602,9 @@ public class WorkspaceExtension {
 
 		@SerializedName("appServerTomcatVersion")
 		private String _appServerTomcatVersion;
+
+		@SerializedName("bundleChecksumMD5")
+		private String _bundleChecksumMD5;
 
 		@SerializedName("bundleUrl")
 		private String _bundleUrl;

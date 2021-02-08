@@ -9943,6 +9943,32 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
+    "/structured-contents/{structuredContentId}/rendered-content-by-display-page/{displayPageKey}":
+        get:
+            description:
+                Retrieves the structured content's rendered display page
+            operationId: getStructuredContentRenderedContentByDisplayPageDisplayPageKey
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: displayPageKey
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}/rendered-content/{contentTemplateId}":
         get:
             description:

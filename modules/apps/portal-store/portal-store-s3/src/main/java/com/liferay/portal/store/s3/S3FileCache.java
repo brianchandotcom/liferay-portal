@@ -119,6 +119,8 @@ public class S3FileCache {
 		if (cacheFile.exists() &&
 			(cacheFile.lastModified() >= lastModifiedDate.getTime())) {
 
+			s3Object.close();
+
 			return new FileInputStream(cacheFile);
 		}
 

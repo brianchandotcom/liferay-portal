@@ -76,35 +76,26 @@ LanguageSelector.propTypes = {
 	selectedLanguageId: PropTypes.string.isRequired,
 };
 
-function addAvailableLocale(localeId, portletNamespace) {
-	const availableLocalesInput = document.getElementById(
-		`${portletNamespace}availableLocales`
-	);
-
-	if (availableLocalesInput) {
-		const availableLocales = availableLocalesInput.value
-			? availableLocalesInput.value.split(',')
-			: [];
-
-		availableLocalesInput.value = [
-			...new Set([...availableLocales, localeId]),
-		].join(',');
-	}
-}
-
 function DataEngineLanguageSelector({
 	ddmStructureIds,
 	portletNamespace,
 	selectedLanguageId: initialSelectedLanguageId,
+	translatedLanguageIds: initialTranslatedLanguageIds,
 	...restProps
 }) {
 	const [selectedLanguageId, setSelectedLanguageId] = useState(
 		initialSelectedLanguageId
 	);
+	const [translatedLanguageIds, setTranslatedLanguageIds] = useState(
+		initialTranslatedLanguageIds
+	);
 
 	const handleLocaleChange = (localeId) => {
 		setSelectedLanguageId(localeId);
-		addAvailableLocale(localeId, portletNamespace);
+
+		if (translatedLanguageIds.indexOf(localeId) === -1) {
+			setTranslatedLanguageIds([...translatedLanguageIds, localeId]);
+		}
 	};
 
 	useEffect(() => {
@@ -126,11 +117,18 @@ function DataEngineLanguageSelector({
 	}, [portletNamespace, selectedLanguageId, ddmStructureIds]);
 
 	return (
-		<LanguageSelector
-			{...restProps}
-			onChange={handleLocaleChange}
-			selectedLanguageId={selectedLanguageId}
-		/>
+		<>
+			<input
+				name={`${portletNamespace}availableLocales`}
+				type="hidden"
+				value={translatedLanguageIds.join(',')}
+			/>
+			<LanguageSelector
+				{...restProps}
+				onChange={handleLocaleChange}
+				selectedLanguageId={selectedLanguageId}
+			/>
+		</>
 	);
 }
 
@@ -138,6 +136,7 @@ DataEngineLanguageSelector.propTypes = {
 	ddmStructureIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	selectedLanguageId: PropTypes.string.isRequired,
+	translatedLanguageIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default DataEngineLanguageSelector;

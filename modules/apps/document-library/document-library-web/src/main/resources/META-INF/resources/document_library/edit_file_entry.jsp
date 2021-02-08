@@ -390,13 +390,7 @@ renderResponse.setTitle(headerTitle);
 							<c:if test="<%= fileEntryTypeId > 0 %>">
 
 							<%
-							List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-							Stream<DDMStructure> ddmStructuresStream = ddmStructures.stream();
-
-							Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
-
-							Stream<Locale> localesStream = locales.stream();
+								List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 							%>
 
 								<aui:input name="availableLocales" type="hidden" value="<%= DDMStructureUtil.getAvailableLocales(ddmStructures) %>" />
@@ -406,19 +400,9 @@ renderResponse.setTitle(headerTitle);
 										module="document_library/js/LanguageSelector"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
-												"ddmStructureIds",
-												ddmStructuresStream.map(
-													DDMStructure::getStructureId
-												).collect(
-													Collectors.toList()
-												)
+												"ddmStructureIds", DDMStructureUtil.getDDMStructureIds(ddmStructures)
 											).put(
-												"languageIds",
-												localesStream.map(
-													LanguageUtil::getLanguageId
-												).collect(
-													Collectors.toList()
-												)
+												"languageIds", DDMStructureUtil.getAvailableLanguageIds(themeDisplay)
 											).put(
 												"selectedLanguageId", themeDisplay.getLanguageId()
 											).build()

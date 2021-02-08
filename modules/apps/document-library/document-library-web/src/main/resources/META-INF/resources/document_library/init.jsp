@@ -50,11 +50,7 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.view.count.ViewCountManagerUtil" %><%@
 page import="com.liferay.taglib.util.PortalIncludeUtil" %>
 
-<%@ page import="java.util.Collections" %><%@
-page import="java.util.Locale" %><%@
-page import="java.util.Set" %><%@
-page import="java.util.stream.Collectors" %><%@
-page import="java.util.stream.Stream" %>
+<%@ page import="java.util.Collections" %>
 
 <%
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);

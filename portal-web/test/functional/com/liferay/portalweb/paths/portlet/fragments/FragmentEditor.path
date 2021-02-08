@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>FRAGMENTS_TOOLKIT_LINK</td>
-	<td>//a[@title='Fragments Toolkit']</td>
+	<td>//a[normalize-space(text())='Fragments Toolkit']</td>
 	<td></td>
 </tr>
 <tr>

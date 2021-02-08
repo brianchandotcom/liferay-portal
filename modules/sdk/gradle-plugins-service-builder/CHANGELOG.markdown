@@ -1,5 +1,76 @@
 # Liferay Gradle Plugins Service Builder Change Log
 
+## 4.0.45 - 2021-01-26
+
+### Dependencies
+- [LPS-125672] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.375.
+
+## 4.0.44 - 2021-01-07
+
+### Dependencies
+- [LPS-62084] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.374.
+
+## 4.0.43 - 2020-12-03
+
+### Dependencies
+- [LPS-124347] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.373.
+
+## 4.0.42 - 2020-11-29
+
+### Dependencies
+- [LPS-98680] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.372.
+
+## 4.0.41 - 2020-11-09
+
+### Dependencies
+- [LPS-122896] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.371.
+
+## 4.0.40 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+
+## 4.0.39 - 2020-10-27
+
+### Dependencies
+- [LPS-122032] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.370.
+
+## 4.0.38 - 2020-10-19
+
+### Commits
+- [LPS-121824] force referesh maven (0fe31dcef7)
+
+### Dependencies
+- [LPS-122190] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.369.
+- [LPS-121824] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.368.
+
+## 4.0.37 - 2020-10-15
+
+### Dependencies
+- [LPS-122127] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.367.
+
+## 4.0.36 - 2020-10-07
+
+### Dependencies
+- [LPS-121714] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.366.
+
 ## 4.0.35 - 2020-09-09
 
 ### Dependencies
@@ -1822,6 +1893,7 @@ version 2.4.
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-61420]: https://issues.liferay.com/browse/LPS-61420
 [LPS-61848]: https://issues.liferay.com/browse/LPS-61848
+[LPS-62084]: https://issues.liferay.com/browse/LPS-62084
 [LPS-62606]: https://issues.liferay.com/browse/LPS-62606
 [LPS-62883]: https://issues.liferay.com/browse/LPS-62883
 [LPS-63943]: https://issues.liferay.com/browse/LPS-63943
@@ -1993,6 +2065,7 @@ version 2.4.
 [LPS-96830]: https://issues.liferay.com/browse/LPS-96830
 [LPS-97094]: https://issues.liferay.com/browse/LPS-97094
 [LPS-97169]: https://issues.liferay.com/browse/LPS-97169
+[LPS-98680]: https://issues.liferay.com/browse/LPS-98680
 [LPS-99252]: https://issues.liferay.com/browse/LPS-99252
 [LPS-99807]: https://issues.liferay.com/browse/LPS-99807
 [LPS-100077]: https://issues.liferay.com/browse/LPS-100077
@@ -2036,6 +2109,7 @@ version 2.4.
 [LPS-110414]: https://issues.liferay.com/browse/LPS-110414
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
 [LPS-111193]: https://issues.liferay.com/browse/LPS-111193
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-112226]: https://issues.liferay.com/browse/LPS-112226
 [LPS-112857]: https://issues.liferay.com/browse/LPS-112857
@@ -2056,6 +2130,14 @@ version 2.4.
 [LPS-119879]: https://issues.liferay.com/browse/LPS-119879
 [LPS-120266]: https://issues.liferay.com/browse/LPS-120266
 [LPS-120350]: https://issues.liferay.com/browse/LPS-120350
+[LPS-121714]: https://issues.liferay.com/browse/LPS-121714
+[LPS-121824]: https://issues.liferay.com/browse/LPS-121824
+[LPS-122032]: https://issues.liferay.com/browse/LPS-122032
+[LPS-122127]: https://issues.liferay.com/browse/LPS-122127
+[LPS-122190]: https://issues.liferay.com/browse/LPS-122190
+[LPS-122896]: https://issues.liferay.com/browse/LPS-122896
+[LPS-124347]: https://issues.liferay.com/browse/LPS-124347
+[LPS-125672]: https://issues.liferay.com/browse/LPS-125672
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319
 [LRDOCS-5050]: https://issues.liferay.com/browse/LRDOCS-5050

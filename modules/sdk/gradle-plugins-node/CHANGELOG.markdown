@@ -1,5 +1,25 @@
 # Liferay Gradle Plugins Node Change Log
 
+## 7.2.5 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+
+## 7.2.4 - 2020-10-13
+
+### Commits
+- [LPS-105380] Revert "LPS-105380 Remove static" (51f026ea07)
+- [LPS-105380] Revert "LPS-105380 Sort" (6b61f951ee)
+- [LPS-105380] Sort (9769746a1e)
+- [LPS-105380] Remove static (05f9037b31)
+
 ## 7.2.3 - 2020-10-02
 
 ### Commits
@@ -1251,6 +1271,7 @@ symbolic links in it will be lost (0a1438b324)
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
 [LPS-110486]: https://issues.liferay.com/browse/LPS-110486
 [LPS-111192]: https://issues.liferay.com/browse/LPS-111192
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020

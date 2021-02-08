@@ -1,5 +1,136 @@
 # Liferay Gradle Plugins Workspace Change Log
 
+## 3.4.1 - 2021-01-12
+
+### Commits
+- [LPS-125632] Sort (106f710ccd)
+- [LPS-125632] don't overwrite dockerImageId and dockerContainerId if they have
+already been set (c8837bfa56)
+- [LPS-125580] use Set for the field type (f16bf9c441)
+- [LPS-125580] Preserve order for configurators (5ff5c783ad)
+
+## 3.4.0 - 2020-12-30
+
+### Dependencies
+- [LPS-124343] Update the com.liferay.gradle.plugins.target.platform dependency
+to version 2.1.28.
+
+## 3.3.3 - 2020-12-30
+
+### Commits
+- [LPS-124343] fix tests (5dbd19f540)
+- [LPS-124343] make bundleChecksumMD5 backward compatible (454a41286d)
+- [LPS-124343] assert that verifyBundle fails when bad md5sum is given
+(5415d4fb91)
+- [LPS-124343] assert the existence of MD5 file (be0de24207)
+- [LPS-124343] lets instead just use the liferay.workspace.bundle.url that is
+set globally (2e778be501)
+- [LPS-124343] rename task (d76085903c)
+- [LPS-124343] move to gradle.properties file like other tests (0ad0b4b806)
+- [LPS-124343] add gradle test (211f4c72dd)
+- [LPS-124343] configure verify task via afterEvaluate so we can use taskOutputs
+(658456263c)
+- [LPS-124343] fixed setter name (e63b5f3543)
+- [LPS-124343] Use bundle checksum data from product_infos to verify bundle
+downloads (6db20e0fa5)
+- [LPS-105380] Inline (e47639f436)
+- [LPS-123871] rename (dba6a5d7e7)
+
+## 3.3.2 - 2020-12-02
+
+### Commits
+- [LPS-123871] feel free to rename this, but the nesting was too deep
+(ad79802d17)
+- [LPS-123871] fix the filename extension of marketplace/override (4d3085f653)
+
+## 3.3.1 - 2020-12-01
+
+### Commits
+- [LPS-123937] sort (cebd4efa82)
+- [LPS-123937] Failed to run createDockerContainer task due to invalid volume
+specification on Windows (424c71923b)
+
+## 3.2.1 - 2020-11-30
+
+### Commits
+- [LPS-123871] Baseline (4a2406ba16)
+- [LPS-123871] Whitespace (7874bfed5f)
+- [LPS-123871] fix test (246f4731b6)
+- [LPS-123871] copy modules_ext jar into each deployed docker config
+osgi/marketplace/override folder (350c68104f)
+
+## 3.2.0 - 2020-11-25
+
+### Dependencies
+- [LPS-123192] Update the com.liferay.gradle.plugins.target.platform dependency
+to version 2.1.27.
+
+## 3.1.1 - 2020-11-25
+
+### Commits
+- [LPS-123192] Backward compatibility (tests) (8e3c12bffe)
+- [LPS-123192] Backward compatibility (5cb1401f3c)
+
+## 3.1.0 - 2020-11-16
+
+### Dependencies
+- [LPS-123192 LPS-82091] Update the com.liferay.gradle.plugins.target.platform
+dependency to version 2.1.26.
+
+## 3.0.17 - 2020-11-16
+
+### Commits
+- [LPS-123192] Fix tests (a0769d730f)
+- [LPS-123192] Backward compatibility (tests) (f16b34fa77)
+- [LPS-123192] Backward compatibility (d6076deb36)
+
+## 3.0.16 - 2020-11-13
+
+### Commits
+- [LPS-122967] use afterEvaluate and avoid using concrete type (f9c16beb11)
+- [LPS-122967] configure processResources only if buildCSS exists (3fbf5e0b99)
+- [LPS-122967] remove problematic eclipse build/gradleTest/src/groovy folder
+(de7af5d29a)
+- [LPS-122967] configure processResources task to process scss and sass-cache
+files (ff759d231d)
+
+## 3.0.15 - 2020-11-04
+
+### Commits
+- [LPS-122958] Source formatting (a57da45918)
+- [LPS-122958] allow developers to append instructions to dockerfile via a file
+(fdb013e43d)
+- [LPS-122958] upgrade gradle-docker-plugin to 6.6.1 (b22f5164b7)
+- [LPS-111291] Fix tests (01ce02be78)
+
+### Dependencies
+- [LPS-122958] Update the gradle-docker-plugin dependency to version 6.6.1.
+
+## 3.0.14 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.plugins.target.platform dependency
+to version 2.1.25.
+
+## 3.0.13 - 2020-10-27
+
+### Commits
+- [LPS-121824] Update workspace and project templates for 7.4 (7cf8361f15)
+
+## 3.0.12 - 2020-10-08
+
+### Commits
+- [POSHI-115] Update com.liferay.gradle.plugins.workspace to 3.0.12 (aaa56944bc)
+- [POSHI-115] Update com.liferay.gradle.plugins.poshi.runner to 3.0.6
+(a3bf78c6e7)
+
 ## 3.0.10 - 2020-10-01
 
 ### Commits
@@ -4707,6 +4838,7 @@ from settings.gradle (b4be4c57fd)
 [LPS-81895]: https://issues.liferay.com/browse/LPS-81895
 [LPS-81944]: https://issues.liferay.com/browse/LPS-81944
 [LPS-82001]: https://issues.liferay.com/browse/LPS-82001
+[LPS-82091]: https://issues.liferay.com/browse/LPS-82091
 [LPS-82121]: https://issues.liferay.com/browse/LPS-82121
 [LPS-82178]: https://issues.liferay.com/browse/LPS-82178
 [LPS-82261]: https://issues.liferay.com/browse/LPS-82261
@@ -4958,6 +5090,7 @@ from settings.gradle (b4be4c57fd)
 [LPS-110131]: https://issues.liferay.com/browse/LPS-110131
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
 [LPS-110835]: https://issues.liferay.com/browse/LPS-110835
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111460]: https://issues.liferay.com/browse/LPS-111460
 [LPS-111461]: https://issues.liferay.com/browse/LPS-111461
 [LPS-111700]: https://issues.liferay.com/browse/LPS-111700
@@ -4984,6 +5117,15 @@ from settings.gradle (b4be4c57fd)
 [LPS-118918]: https://issues.liferay.com/browse/LPS-118918
 [LPS-118936]: https://issues.liferay.com/browse/LPS-118936
 [LPS-119389]: https://issues.liferay.com/browse/LPS-119389
+[LPS-121824]: https://issues.liferay.com/browse/LPS-121824
+[LPS-122958]: https://issues.liferay.com/browse/LPS-122958
+[LPS-122967]: https://issues.liferay.com/browse/LPS-122967
+[LPS-123192]: https://issues.liferay.com/browse/LPS-123192
+[LPS-123871]: https://issues.liferay.com/browse/LPS-123871
+[LPS-123937]: https://issues.liferay.com/browse/LPS-123937
+[LPS-124343]: https://issues.liferay.com/browse/LPS-124343
+[LPS-125580]: https://issues.liferay.com/browse/LPS-125580
+[LPS-125632]: https://issues.liferay.com/browse/LPS-125632
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350
@@ -5002,4 +5144,5 @@ from settings.gradle (b4be4c57fd)
 [LRQA-46630]: https://issues.liferay.com/browse/LRQA-46630
 [LRQA-46662]: https://issues.liferay.com/browse/LRQA-46662
 [LRQA-47104]: https://issues.liferay.com/browse/LRQA-47104
+[POSHI-115]: https://issues.liferay.com/browse/POSHI-115
 [RELEASE-1607]: https://issues.liferay.com/browse/RELEASE-1607

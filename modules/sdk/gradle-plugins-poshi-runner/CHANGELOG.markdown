@@ -1,5 +1,35 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
+## 3.0.10 - 2021-02-04
+
+### Commits
+- [POSHI-146] Update default poshi runner to 1.0.296 (3b41bb94e7)
+
+## 3.0.9 - 2021-01-05
+
+### Commits
+- [POSHI-137] Update poshi runner to 1.0.291 (d199b403ee)
+
+## 3.0.8 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+
+## 3.0.7 - 2020-10-27
+
+### Commits
+- [LPS-111291] Default poshi runner version (0cf75d319d)
+
+## 3.0.6 - 2020-10-08
+
+### Commits
+- [POSHI-115] Update references to poshi classes to match 1.0.283 (c5cd0392f9)
+- [POSHI-115] Update com.liferay.poshi.runner to 1.0.283 (6586db4cc1)
+
 ## 3.0.5 - 2020-10-01
 
 ### Commits
@@ -505,6 +535,7 @@ up-to-date check (59fd9e696c)
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111647]: https://issues.liferay.com/browse/LPS-111647
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
@@ -533,4 +564,7 @@ up-to-date check (59fd9e696c)
 [POSHI-97]: https://issues.liferay.com/browse/POSHI-97
 [POSHI-100]: https://issues.liferay.com/browse/POSHI-100
 [POSHI-107]: https://issues.liferay.com/browse/POSHI-107
+[POSHI-115]: https://issues.liferay.com/browse/POSHI-115
 [POSHI-118]: https://issues.liferay.com/browse/POSHI-118
+[POSHI-137]: https://issues.liferay.com/browse/POSHI-137
+[POSHI-146]: https://issues.liferay.com/browse/POSHI-146

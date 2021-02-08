@@ -1,5 +1,24 @@
 # Liferay Gradle Plugins Baseline Change Log
 
+## 6.0.3 - 2020-11-02
+
+### Commits
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+- [LPS-116282] Update the com.liferay.ant.bnd dependency to version 3.2.6.
+- [LPS-115020] Update the com.liferay.gradle.util dependency to version 1.0.43.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.42.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.41.
+- [LPS-113624] Update the com.liferay.gradle.util dependency to version 1.0.40.
+- [LPS-110422] Update the com.liferay.gradle.util dependency to version 1.0.39.
+- [LPS-111896] Update the com.liferay.gradle.util dependency to version 1.0.38.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.37.
+
 ## 6.0.2 - 2020-04-06
 
 ### Dependencies
@@ -557,6 +576,7 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 [LPS-87776]: https://issues.liferay.com/browse/LPS-87776
 [LPS-87839]: https://issues.liferay.com/browse/LPS-87839
 [LPS-88382]: https://issues.liferay.com/browse/LPS-88382
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-88903]: https://issues.liferay.com/browse/LPS-88903
 [LPS-95330]: https://issues.liferay.com/browse/LPS-95330
 [LPS-96247]: https://issues.liferay.com/browse/LPS-96247
@@ -572,8 +592,14 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 [LPS-109820]: https://issues.liferay.com/browse/LPS-109820
 [LPS-110200]: https://issues.liferay.com/browse/LPS-110200
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
 [LPS-110781]: https://issues.liferay.com/browse/LPS-110781
 [LPS-110835]: https://issues.liferay.com/browse/LPS-110835
 [LPS-111070]: https://issues.liferay.com/browse/LPS-111070
 [LPS-111135]: https://issues.liferay.com/browse/LPS-111135
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-116282]: https://issues.liferay.com/browse/LPS-116282
 [LRQA-39761]: https://issues.liferay.com/browse/LRQA-39761

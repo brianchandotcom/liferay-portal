@@ -1,5 +1,90 @@
 # Liferay Gradle Plugins REST Builder Change Log
 
+## 1.1.24 - 2021-01-14
+
+### Dependencies
+- [LPS-125556] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.149.
+
+## 1.1.23 - 2021-01-14
+
+### Dependencies
+- [LPS-125866] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.148.
+
+## 1.1.22 - 2021-01-14
+
+### Dependencies
+- [LPS-125794] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.147.
+
+## 1.1.21 - 2021-01-11
+
+### Dependencies
+- [LPS-125660] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.146.
+
+## 1.1.20 - 2021-01-11
+
+### Dependencies
+- [LPS-125629] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.145.
+
+## 1.1.19 - 2021-01-09
+
+### Dependencies
+- [LPS-125352] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.144.
+
+## 1.1.18 - 2021-01-09
+
+### Dependencies
+- [LPS-125071] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.143.
+
+## 1.1.17 - 2020-12-15
+
+### Dependencies
+- [LPS-124476] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.142.
+
+## 1.1.16 - 2020-12-14
+
+### Dependencies
+- [LPS-124476] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.141.
+- [LPS-124733] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.140.
+
+## 1.1.15 - 2020-12-05
+
+### Dependencies
+- [LPS-124335] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.139.
+
+## 1.1.14 - 2020-11-16
+
+### Dependencies
+- [LPS-82091] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.138.
+
+## 1.1.13 - 2020-11-02
+
+### Commits
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+
+## 1.1.12 - 2020-10-23
+
+### Dependencies
+- [LPS-122605] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.137.
+
 ## 1.1.11 - 2020-10-02
 
 ### Dependencies
@@ -907,6 +992,7 @@ version 1.0.1.
 
 [COMMERCE-1067]: https://issues.liferay.com/browse/COMMERCE-1067
 [COMMERCE-4052]: https://issues.liferay.com/browse/COMMERCE-4052
+[LPS-82091]: https://issues.liferay.com/browse/LPS-82091
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-85855]: https://issues.liferay.com/browse/LPS-85855
 [LPS-88645]: https://issues.liferay.com/browse/LPS-88645
@@ -975,6 +1061,7 @@ version 1.0.1.
 [LPS-111084]: https://issues.liferay.com/browse/LPS-111084
 [LPS-111138]: https://issues.liferay.com/browse/LPS-111138
 [LPS-111236]: https://issues.liferay.com/browse/LPS-111236
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-112013]: https://issues.liferay.com/browse/LPS-112013
 [LPS-112101]: https://issues.liferay.com/browse/LPS-112101
@@ -1016,4 +1103,15 @@ version 1.0.1.
 [LPS-120603]: https://issues.liferay.com/browse/LPS-120603
 [LPS-121245]: https://issues.liferay.com/browse/LPS-121245
 [LPS-121712]: https://issues.liferay.com/browse/LPS-121712
+[LPS-122605]: https://issues.liferay.com/browse/LPS-122605
+[LPS-124335]: https://issues.liferay.com/browse/LPS-124335
+[LPS-124476]: https://issues.liferay.com/browse/LPS-124476
+[LPS-124733]: https://issues.liferay.com/browse/LPS-124733
+[LPS-125071]: https://issues.liferay.com/browse/LPS-125071
+[LPS-125352]: https://issues.liferay.com/browse/LPS-125352
+[LPS-125556]: https://issues.liferay.com/browse/LPS-125556
+[LPS-125629]: https://issues.liferay.com/browse/LPS-125629
+[LPS-125660]: https://issues.liferay.com/browse/LPS-125660
+[LPS-125794]: https://issues.liferay.com/browse/LPS-125794
+[LPS-125866]: https://issues.liferay.com/browse/LPS-125866
 [LRDOCS-6650]: https://issues.liferay.com/browse/LRDOCS-6650

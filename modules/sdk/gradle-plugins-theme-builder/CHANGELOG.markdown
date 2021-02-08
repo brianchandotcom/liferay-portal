@@ -1,5 +1,17 @@
 # Liferay Gradle Plugins Theme Builder Change Log
 
+## 2.0.14 - 2020-10-28
+
+### Commits
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+- [LPS-105380] Change to throw Exception, since that's what the calling method
+is doing, so throwing *Exception is not adding value (216100ecdd)
+
+### Dependencies
+- [LPS-122393 LPS-109374] Update the com.liferay.gradle.plugins.css.builder
+dependency to version 5.0.0.
+
 ## 2.0.13 - 2020-05-04
 
 ### Dependencies
@@ -245,8 +257,11 @@ aren't mixed in with source files (fb7f330f69)
 [LPS-103051]: https://issues.liferay.com/browse/LPS-103051
 [LPS-103169]: https://issues.liferay.com/browse/LPS-103169
 [LPS-104028]: https://issues.liferay.com/browse/LPS-104028
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-109055]: https://issues.liferay.com/browse/LPS-109055
 [LPS-109374]: https://issues.liferay.com/browse/LPS-109374
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-112922]: https://issues.liferay.com/browse/LPS-112922
+[LPS-122393]: https://issues.liferay.com/browse/LPS-122393
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

@@ -1,5 +1,14 @@
 # Liferay Gradle Utilities Change Log
 
+## 1.0.44 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Gradle 5.6.4 compatibility (08135c863d)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+- [LPS-108380] SF, use String.valueOf (7ca7e14c1f)
+- [LPS-105380] SF, inline (2c4ba62dc9)
+
 ## 1.0.43 - 2020-06-08
 
 ### Commits
@@ -333,9 +342,11 @@ up-to-date check (59fd9e696c)
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
 [LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
+[LPS-108380]: https://issues.liferay.com/browse/LPS-108380
 [LPS-109812]: https://issues.liferay.com/browse/LPS-109812
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020

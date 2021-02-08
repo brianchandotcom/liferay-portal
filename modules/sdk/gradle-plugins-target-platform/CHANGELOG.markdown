@@ -1,5 +1,25 @@
 # Liferay Gradle Plugins Target Platform Change Log
 
+## 2.1.26 - 2020-11-16
+
+### Commits
+- [LPS-123192] Fix tests (a0769d730f)
+- [LPS-123192] Fix tests (2efdaffa7b)
+
+## 2.1.25 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+- [LPS-121824] force referesh maven (0fe31dcef7)
+- [LPS-105380] Methods don't need to be static (c42da838cc)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+
 ## 2.1.23 - 2020-07-06
 
 ### Commits
@@ -480,6 +500,7 @@ and unit tests) (045479bf7c)
 [LPS-107155]: https://issues.liferay.com/browse/LPS-107155
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111461]: https://issues.liferay.com/browse/LPS-111461
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-112500]: https://issues.liferay.com/browse/LPS-112500
@@ -488,3 +509,5 @@ and unit tests) (045479bf7c)
 [LPS-114570]: https://issues.liferay.com/browse/LPS-114570
 [LPS-114882]: https://issues.liferay.com/browse/LPS-114882
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-121824]: https://issues.liferay.com/browse/LPS-121824
+[LPS-123192]: https://issues.liferay.com/browse/LPS-123192

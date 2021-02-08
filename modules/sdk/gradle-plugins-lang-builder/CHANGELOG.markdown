@@ -1,5 +1,34 @@
 # Liferay Gradle Plugins Lang Builder Change Log
 
+## 3.0.24 - 2020-11-04
+
+### Dependencies
+- [LPS-122403] Update the com.liferay.lang.builder dependency to version 1.0.41.
+
+## 3.0.23 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+
+## 3.0.22 - 2020-10-28
+
+### Commits
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-122599] Update the com.liferay.lang.builder dependency to version 1.0.40.
+
+## 3.0.21 - 2020-10-21
+
+### Dependencies
+- [LPS-122403] Update the com.liferay.lang.builder dependency to version 1.0.39.
+
 ## 3.0.20 - 2020-09-04
 
 ### Dependencies
@@ -514,10 +543,13 @@ version 2.4.
 [LPS-108328]: https://issues.liferay.com/browse/LPS-108328
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-115366]: https://issues.liferay.com/browse/LPS-115366
 [LPS-115438]: https://issues.liferay.com/browse/LPS-115438
 [LPS-117015]: https://issues.liferay.com/browse/LPS-117015
+[LPS-122403]: https://issues.liferay.com/browse/LPS-122403
+[LPS-122599]: https://issues.liferay.com/browse/LPS-122599
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

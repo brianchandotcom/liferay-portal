@@ -1,5 +1,20 @@
 # Liferay Gradle Plugins JSDoc Change Log
 
+## 2.0.58 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.5.
+- [LPS-105380 LPS-121824] Update the com.liferay.gradle.plugins.node dependency
+to version 7.2.4.
+
 ## 2.0.57 - 2020-10-02
 
 ### Dependencies
@@ -488,8 +503,10 @@ the same application.
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
 [LPS-110486]: https://issues.liferay.com/browse/LPS-110486
 [LPS-111192]: https://issues.liferay.com/browse/LPS-111192
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-116808]: https://issues.liferay.com/browse/LPS-116808
 [LPS-121567]: https://issues.liferay.com/browse/LPS-121567
+[LPS-121824]: https://issues.liferay.com/browse/LPS-121824
 [LRDOCS-4111]: https://issues.liferay.com/browse/LRDOCS-4111
 [LRDOCS-6412]: https://issues.liferay.com/browse/LRDOCS-6412
 [LRQA-52072]: https://issues.liferay.com/browse/LRQA-52072

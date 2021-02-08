@@ -1,5 +1,35 @@
 # Liferay Gradle Plugins CSS Builder Change Log
 
+## 5.0.1 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Update readme (a87d2593e9)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+
+## 4.0.0 - 2020-10-28
+
+### Commits
+- [LPS-122393] [LPS-109374] 4.0.0 already exists, so make it 5.0.0 (63a6c80227)
+
+## 3.1.4 - 2020-10-28
+
+### Commits
+- [LPS-122393] Revert "LPS-109374 don't fork the jvm when running buildCSS"
+(e0e79b6ce7)
+- [LPS-111291] Update README.markdown (eea12b7f8f)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-122393] Update the com.liferay.css.builder dependency to version 3.0.2.
+- [LPS-115020] Update the com.liferay.gradle.util dependency to version 1.0.43.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.42.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.41.
+- [LPS-113624] Update the com.liferay.gradle.util dependency to version 1.0.40.
+
 ## 3.1.3 - 2020-05-04
 
 ### Commits
@@ -566,7 +596,11 @@ version 2.4.
 [LPS-109374]: https://issues.liferay.com/browse/LPS-109374
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-112922]: https://issues.liferay.com/browse/LPS-112922
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-122393]: https://issues.liferay.com/browse/LPS-122393
 [LRDOCS-3956]: https://issues.liferay.com/browse/LRDOCS-3956
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

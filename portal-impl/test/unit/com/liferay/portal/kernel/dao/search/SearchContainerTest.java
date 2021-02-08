@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.dao.search;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -113,6 +116,21 @@ public class SearchContainerTest {
 
 		Assert.assertEquals(20, _searchContainer.getStart());
 		Assert.assertEquals(40, _searchContainer.getEnd());
+	}
+
+	@SuppressWarnings("static-access")
+	@Test
+	public void testMaxDelta() {
+		buildSearchContainer(1);
+
+		int maxDelta = GetterUtil.getInteger(
+				PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_MAX_DELTA), 200);
+
+		if (maxDelta <= 0) {
+			Assert.assertEquals(200, _searchContainer.MAX_DELTA);
+		} else {
+			Assert.assertEquals(maxDelta, _searchContainer.MAX_DELTA);
+		}
 	}
 
 	@Test

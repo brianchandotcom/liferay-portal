@@ -822,7 +822,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish the selected folder?",
 			entry = "WC Folder Name");
 
-		AssertConsoleTextNotPresent(value1 = "OutOfMemoryError");
+		AssertConsoleTextNotPresent(value1 = "java.lang.OutOfMemoryError");
 	}
 
 	@priority = "3"

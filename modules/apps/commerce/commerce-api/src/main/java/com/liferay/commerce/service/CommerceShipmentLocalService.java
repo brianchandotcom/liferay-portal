@@ -332,6 +332,10 @@ public interface CommerceShipmentLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceShipment reprocessShipment(long commerceShipmentId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceShipment> searchCommerceShipments(
 			SearchContext searchContext)

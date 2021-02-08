@@ -365,6 +365,25 @@ public class CommerceShipmentServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceShipmentSoap
+			reprocessShipment(long commerceShipmentId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceShipment returnValue =
+				CommerceShipmentServiceUtil.reprocessShipment(
+					commerceShipmentId);
+
+			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceShipmentSoap updateAddress(
 			long commerceShipmentId, String name, String description,
 			String street1, String street2, String street3, String city,

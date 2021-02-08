@@ -1682,7 +1682,7 @@ public class ContentPageEditorDisplayContext {
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
-		layoutItemSelectorCriterion.setShowHiddenPages(true);
+		layoutItemSelectorCriterion.setMultiSelection(false);
 		layoutItemSelectorCriterion.setMultiSelection(false);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(

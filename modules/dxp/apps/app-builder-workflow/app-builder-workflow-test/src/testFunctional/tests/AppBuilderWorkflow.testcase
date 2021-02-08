@@ -275,6 +275,40 @@ definition {
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
 	}
 
+	@description = "LRQA-63305 Automate LPS-112673: As an App Admin, I want to create a new Table View for an existing Object in the Workflow App creation UX"
+	@priority = "4"
+	test CancelCreationOfTableView {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Apps");
+
+		AppBuilderAppAdmin.goToWorkflowPoweredTab();
+		AppBuilderAppAdmin.clickOnPlusButton();
+		AppBuilderWorkflow.selectDataAndViewsCard();
+		AppBuilderWorkflow.clickOnSelectObject();
+		AppBuilderWorkflow.selectObject(objectName = "my custom object");
+		AppBuilderWorkflow.clickOnSelectTableView();
+		AppBuilderWorkflow.clickToCreateTableView();
+		AppBuilderAdmin.cancel();
+		AppBuilderWorkflow.assertTableViewSelected(tableViewName = "Select a Table View");
+		AppBuilderWorkflow.clickToCreateTableView();
+		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
+		AppBuilderWorkflow.createSimpleTableView(
+			fieldType = "Text",
+			tableViewName = "My Table View");
+		AppBuilderWorkflow.assertTableViewSelected(tableViewName = "My Table View");
+	}
+
 	@description = "Create a Basic Workflow App"
 	@priority = "5"
 	test CreateBasicWorkflowApp {

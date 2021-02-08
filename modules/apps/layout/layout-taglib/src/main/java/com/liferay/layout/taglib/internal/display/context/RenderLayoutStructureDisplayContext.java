@@ -642,6 +642,10 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getLong("classPK"),
 				backgroundImageJSONObject.getString("fieldId"));
 		}
+		else if (backgroundImageJSONObject.has("collectionFieldId")) {
+			fileEntryId = _getMappedCollectionFileEntryId(
+				backgroundImageJSONObject.getString("collectionFieldId"));
+		}
 		else if (backgroundImageJSONObject.has("mappedField")) {
 			fileEntryId = _getFileEntryId(
 				backgroundImageJSONObject.getString("mappedField"));
@@ -1200,6 +1204,20 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return _layoutStructure.getMainItemId();
+	}
+
+	private long _getMappedCollectionFileEntryId(String fieldId) {
+		Object displayObject = _httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+
+		if (!(displayObject instanceof ClassedModel)) {
+			return 0;
+		}
+
+		ClassedModel classedModel = (ClassedModel)displayObject;
+
+		return _getFileEntryId(
+			classedModel.getModelClassName(), displayObject, fieldId);
 	}
 
 	private String _getMappedCollectionValue(

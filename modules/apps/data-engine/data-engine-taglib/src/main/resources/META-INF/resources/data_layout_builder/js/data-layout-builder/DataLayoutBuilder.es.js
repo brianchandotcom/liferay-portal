@@ -388,7 +388,7 @@ class DataLayoutBuilder extends React.Component {
 	) {
 		const {
 			editingLanguageId = themeDisplay.getDefaultLanguageId(),
-		} = this.props;
+		} = this.getState();
 		const fieldTypes = this.getFieldTypes();
 		const {settingsContext} = fieldTypes.find(({name}) => {
 			return name === dataDefinitionField.fieldType;
@@ -406,16 +406,10 @@ class DataLayoutBuilder extends React.Component {
 
 				let value = propertyValue || field.value;
 
-				if (
-					localizable &&
-					propertyValue &&
-					Object.prototype.hasOwnProperty.call(
-						propertyValue,
-						editingLanguageId
-					) &&
-					fieldName !== 'label'
-				) {
-					value = propertyValue[editingLanguageId];
+				if (localizable && propertyValue && fieldName !== 'label') {
+					value =
+						propertyValue[editingLanguageId] ||
+						propertyValue[defaultLanguageId];
 				}
 
 				let localizedValue = {};

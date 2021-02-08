@@ -16,6 +16,7 @@ package com.liferay.segments.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -112,6 +114,8 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(_classPK, segmentsExperience.getClassPK());
 		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
 		Assert.assertEquals(active, segmentsExperience.isActive());
+		Assert.assertEquals(
+			StringPool.BLANK, segmentsExperience.getTypeSettings());
 
 		Assert.assertEquals(
 			1,
@@ -192,6 +196,77 @@ public class SegmentsExperienceLocalServiceTest {
 			1,
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
 				_group.getGroupId(), _classNameId, _classPK, active));
+	}
+
+	@Test
+	public void testAddSegmentsExperienceWithTypeSetting() throws Exception {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		UnicodeProperties initialTypeSettingsUnicodeProperties =
+			new UnicodeProperties(true);
+
+		initialTypeSettingsUnicodeProperties.setProperty("property", "value");
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomInt(), RandomTestUtil.randomBoolean(),
+				initialTypeSettingsUnicodeProperties,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		UnicodeProperties actualTypeSettingsUnicodeProperties =
+			segmentsExperience.getTypeSettingsUnicodeProperties();
+
+		Assert.assertEquals(
+			"value",
+			actualTypeSettingsUnicodeProperties.getProperty("property"));
+	}
+
+	@Test
+	public void testAppendSegmentsExperience() throws Exception {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
+		boolean active = RandomTestUtil.randomBoolean();
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.appendSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+				nameMap, active,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			segmentsEntry.getSegmentsEntryId(),
+			segmentsExperience.getSegmentsEntryId());
+		Assert.assertEquals(_classNameId, segmentsExperience.getClassNameId());
+		Assert.assertEquals(_classPK, segmentsExperience.getClassPK());
+		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
+		Assert.assertEquals(active, segmentsExperience.isActive());
+		Assert.assertEquals(
+			SegmentsExperienceConstants.PRIORITY_DEFAULT + 1,
+			segmentsExperience.getPriority());
+		Assert.assertEquals(
+			StringPool.BLANK, segmentsExperience.getTypeSettings());
+	}
+
+	@Test
+	public void testAppendSegmentsExperienceWithoutTypeSettings()
+		throws Exception {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.appendSegmentsExperience(
+				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomBoolean(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			StringPool.BLANK, segmentsExperience.getTypeSettings());
 	}
 
 	@Test

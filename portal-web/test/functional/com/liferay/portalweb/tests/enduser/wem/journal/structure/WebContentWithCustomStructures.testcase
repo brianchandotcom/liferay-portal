@@ -2229,6 +2229,7 @@ definition {
 			WebContentStructures.editStructureDefaultValuesCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
+				dmNavTab = "User Personal Folder",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentMultipleSelection = "Boolean",

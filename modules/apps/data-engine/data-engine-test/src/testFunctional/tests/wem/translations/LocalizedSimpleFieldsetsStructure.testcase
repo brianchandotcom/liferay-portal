@@ -155,8 +155,6 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "5"
 	test TranslateFieldsetToNLanguages {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -166,18 +164,17 @@ definition {
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text,Numeric",
-			fieldsetLabel = "Fieldset Name",
 			fieldsetName = "Fieldset Name");
 
-		DataEngine.translateFieldsetNLanguages(
+		DataEngine.addTranslationToFieldset(
+			fieldNameList = "Text,Numeric",
 			fieldsetName = "Fieldset Name",
-			fieldLabelsList = "Text,Numeric",
-			localesList = "pt-BR,de-DE,es-ES");
+			localeList = "pt-BR,de-DE,es-ES");
 
-		DataEngine.viewFieldsetNTranslations(
+		DataEngine.viewFieldsetTranslation(
+			fieldNameList = "Text,Numeric",
 			fieldsetName = "Fieldset Name",
-			fieldLabelsList = "Text,Numeric",
-			localesList = "pt-BR,de-DE,es-ES");
+			localeList = "pt-BR,de-DE,es-ES");
 	}
 
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"

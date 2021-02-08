@@ -217,7 +217,7 @@ definition {
 			portlet = "Settings");
 
 		Depot.configureApplication(
-			applicationList = "Collections,Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content,Translation",
 			status = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
@@ -230,7 +230,7 @@ definition {
 			locator1 = "ControlMenu#HEADING",
 			value1 = "Asset Libraries");
 
-		for (var portletName : list "Web Content,Documents and Media,Collections,Recycle Bin") {
+		for (var portletName : list "Web Content,Documents and Media,Collections,Translation,Recycle Bin") {
 			AssertElementNotPresent(
 				key_card = "${portletName}",
 				locator1 = "Card#CARD");

@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.failure.message.generator.ClosedChannelExceptionFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
+
 import java.io.IOException;
 
 import java.net.MalformedURLException;
@@ -123,6 +126,12 @@ public class BatchBuild extends BaseBuild {
 
 		Map<Build, Element> downstreamBuildFailureMessages =
 			getDownstreamBuildMessages(getFailedDownstreamBuilds());
+
+		if (result.equals("FAILURE") &&
+			downstreamBuildFailureMessages.isEmpty()) {
+
+			return messageElement;
+		}
 
 		List<Element> failureElements = new ArrayList<>();
 		List<Element> upstreamJobFailureElements = new ArrayList<>();
@@ -405,7 +414,23 @@ public class BatchBuild extends BaseBuild {
 
 	@Override
 	protected Element getFailureMessageElement() {
+		for (FailureMessageGenerator failureMessageGenerator :
+				getFailureMessageGenerators()) {
+
+			Element failureMessage = failureMessageGenerator.getMessageElement(
+				this);
+
+			if (failureMessage != null) {
+				return failureMessage;
+			}
+		}
+
 		return null;
+	}
+
+	@Override
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return _FAILURE_MESSAGE_GENERATORS;
 	}
 
 	@Override
@@ -553,6 +578,9 @@ public class BatchBuild extends BaseBuild {
 
 		return targetPropertyName;
 	}
+
+	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
+		{new ClosedChannelExceptionFailureMessageGenerator()};
 
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(10, true);

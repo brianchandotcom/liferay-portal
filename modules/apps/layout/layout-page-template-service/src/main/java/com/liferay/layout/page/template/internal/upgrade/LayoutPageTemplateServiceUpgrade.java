@@ -111,11 +111,7 @@ public class LayoutPageTemplateServiceUpgrade
 
 		registry.register("3.1.1", "3.1.2", new DummyUpgradeStep());
 
-		registry.register(
-			"3.1.2", "3.1.3",
-			new com.liferay.layout.page.template.internal.upgrade.v3_1_3.
-				UpgradeLayoutPageTemplateEntry(),
-			new UpgradeResourcePermission());
+		registry.register("3.1.2", "3.1.3", new UpgradeResourcePermission());
 
 		registry.register(
 			"3.1.3", "3.2.0",

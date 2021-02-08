@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -69,7 +68,8 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);
 
 			_addResourcePermissions(
-				accountRole.getRoleId(), _accountMemberResourceActionsMap);
+				companyId, accountRole.getRoleId(),
+				_accountMemberResourceActionsMap);
 		}
 
 		if (!_exists(
@@ -82,9 +82,10 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 
 			_addResourcePermissions(
-				accountRole.getRoleId(), _accountMemberResourceActionsMap);
+				companyId, accountRole.getRoleId(),
+				_accountMemberResourceActionsMap);
 			_addResourcePermissions(
-				accountRole.getRoleId(),
+				companyId, accountRole.getRoleId(),
 				_accountAdministratorResourceActionsMap);
 		}
 
@@ -100,9 +101,9 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				RoleConstants.TYPE_ORGANIZATION, null, null);
 
 			_addResourcePermissions(
-				role.getRoleId(), _accountMemberResourceActionsMap);
+				companyId, role.getRoleId(), _accountMemberResourceActionsMap);
 			_addResourcePermissions(
-				role.getRoleId(), _accountManagerResourceActionsMap);
+				companyId, role.getRoleId(), _accountManagerResourceActionsMap);
 		}
 	}
 
@@ -127,7 +128,8 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 	}
 
 	private void _addResourcePermissions(
-			long roleId, Map<String, String[]> resourceActionsMap)
+			long companyId, long roleId,
+			Map<String, String[]> resourceActionsMap)
 		throws Exception {
 
 		for (Map.Entry<String, String[]> entry :
@@ -137,7 +139,7 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				String resourceName = entry.getKey();
 
 				_resourcePermissionLocalService.addResourcePermission(
-					CompanyThreadLocal.getCompanyId(), resourceName,
+					companyId, resourceName,
 					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", roleId,
 					resourceAction);
 			}

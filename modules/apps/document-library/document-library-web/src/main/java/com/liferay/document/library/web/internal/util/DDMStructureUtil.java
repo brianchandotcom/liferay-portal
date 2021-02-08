@@ -15,9 +15,12 @@
 package com.liferay.document.library.web.internal.util;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,13 +29,30 @@ import java.util.stream.Stream;
  */
 public class DDMStructureUtil {
 
-	public static String getAvailableLocales(List<DDMStructure> ddmStructures) {
+	public static List<String> getAvailableLanguageIds(
+		ThemeDisplay themeDisplay) {
+
+		Set<Locale> locales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
+
+		Stream<Locale> stream = locales.stream();
+
+		return stream.map(
+			LanguageUtil::getLanguageId
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	public static List<Long> getDDMStructureIds(
+		List<DDMStructure> ddmStructures) {
+
 		Stream<DDMStructure> stream = ddmStructures.stream();
 
-		return stream.flatMap(
-			ddmStructure -> Stream.of(ddmStructure.getAvailableLanguageIds())
+		return stream.map(
+			DDMStructure::getStructureId
 		).collect(
-			Collectors.joining(StringPool.COMMA)
+			Collectors.toList()
 		);
 	}
 

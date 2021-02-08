@@ -39,12 +39,6 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 
 			runSQL("alter table MicroblogsEntry add creatorClassNameId LONG");
 			runSQL("alter table MicroblogsEntry add creatorClassPK LONG");
-			runSQL(
-				"create index IX_6AA6B164 on MicroblogsEntry (" +
-					"creatorClassNameId, type_)");
-			runSQL(
-				"create index IX_14ACFA9 on MicroblogsEntry (" +
-					"creatorClassNameId, creatorClassPK, type_)");
 
 			runSQL(
 				"update MicroblogsEntry set creatorClassNameId = " +

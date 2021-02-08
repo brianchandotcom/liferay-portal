@@ -32,7 +32,7 @@ public class MFAFIDO2CredentialUpgradeProcess extends UpgradeProcess {
 		if (hasColumn("MFAFIDO2CredentialEntry", "credentialKey")) {
 			alter(
 				MFAFIDO2CredentialEntryTable.class,
-				new AlterColumnType("credentialKey", "LONGTEXT null"));
+				new AlterColumnType("credentialKey", "TEXT null"));
 		}
 
 		if (!hasColumn("MFAFIDO2CredentialEntry", "credentialKeyHash")) {

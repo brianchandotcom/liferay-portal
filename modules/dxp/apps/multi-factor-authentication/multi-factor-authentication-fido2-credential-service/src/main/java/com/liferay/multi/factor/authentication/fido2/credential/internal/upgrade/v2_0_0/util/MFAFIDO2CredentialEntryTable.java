@@ -72,7 +72,7 @@ public class MFAFIDO2CredentialEntryTable {
 		};
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MFAFIDO2CredentialEntry (mfaFIDO2CredentialEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,credentialKey LONGTEXT null,credentialKeyHash LONG,credentialType INTEGER,failedAttempts INTEGER,publicKeyCOSE VARCHAR(128) null,signatureCount LONG)";
+		"create table MFAFIDO2CredentialEntry (mfaFIDO2CredentialEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,credentialKey TEXT null,credentialKeyHash LONG,credentialType INTEGER,failedAttempts INTEGER,publicKeyCOSE VARCHAR(128) null,signatureCount LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table MFAFIDO2CredentialEntry";

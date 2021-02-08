@@ -303,10 +303,6 @@ definition {
 		AppBuilderWorkflow.assertTableViewSelected(tableViewName = "Select a Table View");
 		AppBuilderWorkflow.clickToCreateTableView();
 		AppBuilderWorkflow.assertButtonDisabled(buttonName = "Save");
-		AppBuilderWorkflow.createSimpleTableView(
-			fieldType = "Text",
-			tableViewName = "My Table View");
-		AppBuilderWorkflow.assertTableViewSelected(tableViewName = "My Table View");
 	}
 
 	@description = "Create a Basic Workflow App"

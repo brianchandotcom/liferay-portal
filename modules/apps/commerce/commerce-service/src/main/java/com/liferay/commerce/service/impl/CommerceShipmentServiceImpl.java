@@ -294,6 +294,18 @@ public class CommerceShipmentServiceImpl
 	}
 
 	@Override
+	public CommerceShipment reprocessShipment(long commerceShipmentId)
+		throws PortalException {
+
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentLocalService.reprocessShipment(
+			commerceShipmentId);
+	}
+
+	@Override
 	public CommerceShipment updateAddress(
 			long commerceShipmentId, String name, String description,
 			String street1, String street2, String street3, String city,

@@ -72,22 +72,6 @@ export default function ({classTypes, namespace}) {
 		saveButton.disabled = valueIsEmpty;
 	};
 
-	const toggle = (removeOrderBySubtype, className, classNameId) => {
-		const assetOptions = assetMultipleSelector.options;
-		const showOptions =
-			assetSelector.value == `${classNameId}` ||
-			(assetSelector.value == 'false' &&
-				assetOptions.length == 1 &&
-				assetOptions[0].value == `${classNameId}`);
-
-		if (showOptions) {
-			options[className].classList.remove('hide');
-		}
-		else {
-			options[className].classList.add('hide');
-		}
-	};
-
 	const toggleSubclassesFields = (hideSubtypeFieldsWrapper, className) => {
 		const selectedSubtype = subtypeSelector[className].value;
 		const structureOptions = document.getElementById(
@@ -142,6 +126,32 @@ export default function ({classTypes, namespace}) {
 			else if (hideSubtypeFieldsWrapper) {
 				subtypeFieldsWrapper.classList.add('hide');
 			}
+		});
+	};
+
+	const toggle = (assetSelectorValue, {className, classNameId}) => {
+		const assetOptions = assetMultipleSelector.options;
+		const showOptions =
+			assetSelector.value == `${classNameId}` ||
+			(assetSelector.value == 'false' &&
+				assetOptions.length == 1 &&
+				assetOptions[0].value == `${classNameId}`);
+
+		if (showOptions) {
+			options[className].classList.remove('hide');
+		}
+		else {
+			options[className].classList.add('hide');
+		}
+
+		if (assetSelectorValue && classNameId === assetSelectorValue) {
+			toggleSubclassesFields(true, className);
+		}
+	};
+
+	const toggleSubclasses = (assetSelectorValue) => {
+		classTypes.forEach((classType) => {
+			toggle(assetSelectorValue, classType);
 		});
 	};
 
@@ -243,13 +253,7 @@ export default function ({classTypes, namespace}) {
 		eventDelegates.push(changeSubtypeSelector);
 	});
 
-	const toggleSubclasses = (removeOrderBySubtype) => {
-		classTypes.forEach(({className, classNameId}) => {
-			toggle(removeOrderBySubtype, className, classNameId);
-		});
-	};
-
-	toggleSubclasses(false);
+	toggleSubclasses(assetSelector.value);
 
 	const onChangeAssetSelector = () => {
 		const assetSelectorValueIsEmpty = assetSelector.value === '';
@@ -258,7 +262,7 @@ export default function ({classTypes, namespace}) {
 		ddmStructureFieldNameInput.value = '';
 		ddmStructureFieldValueInput.value = '';
 
-		toggleSubclasses(true);
+		toggleSubclasses(assetSelector.value);
 	};
 
 	const changeAssetSelector = delegate(

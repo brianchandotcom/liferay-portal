@@ -56,6 +56,18 @@
 				<required>false</required>
 			</attribute>
 			<attribute>
+				<name>module</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>moduleServletContext</name>
+				<inputType>javax.servlet.ServletContext</inputType>
+				<outputType>javax.servlet.ServletContext</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>namespace</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

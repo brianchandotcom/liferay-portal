@@ -2040,6 +2040,25 @@ definition {
 			value1 = "${expirationDate}");
 	}
 
+	macro assertFieldOnWebContent {
+		key_fieldFieldLabel = "${fieldFieldLabel}";
+		key_fieldName = "${fieldName}";
+
+		AssertElementPresent(	
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldFieldLabel}");
+		
+		if(isSet(fieldHelpText)){
+
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#HELP_TEXT",
+				value1 = "${fieldHelpText}");
+		}
+	}
+
 	macro viewFieldRepeated {
 		AssertTextEquals(
 			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",

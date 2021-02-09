@@ -43,6 +43,10 @@ public class JunitPortalTestBatch
 
 		Map<String, String> environmentVariables = new HashMap<>();
 
+		environmentVariables.put(
+			"TEST_PORTAL_BRANCH_NAME",
+			portalBatchBuildData.getPortalUpstreamBranchName());
+
 		if (JenkinsResultsParserUtil.isCINode()) {
 			String batchName = portalBatchBuildData.getBatchName();
 
@@ -63,7 +67,7 @@ public class JunitPortalTestBatch
 		AntUtil.callTarget(
 			getPrimaryPortalWorkspaceDirectory(), "build-test-batch.xml",
 			portalBatchBuildData.getBatchName(), buildParameters,
-			environmentVariables);
+			environmentVariables, getAntLibDir());
 	}
 
 }

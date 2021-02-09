@@ -33,26 +33,31 @@ public abstract class BasePortalTestBatch
 
 	@Override
 	protected void executeBatch() throws AntException {
-		BatchBuildData batchBuildData = getBatchBuildData();
+		PortalBatchBuildData portalBatchBuildData = getBatchBuildData();
 
 		Map<String, String> buildParameters = new HashMap<>();
 
 		buildParameters.put(
 			"axis.variable",
-			JenkinsResultsParserUtil.join(",", batchBuildData.getTestList()));
-		buildParameters.put("test.batch.name", batchBuildData.getBatchName());
+			JenkinsResultsParserUtil.join(
+				",", portalBatchBuildData.getTestList()));
+
+		buildParameters.put(
+			"test.batch.name", portalBatchBuildData.getBatchName());
 
 		Map<String, String> environmentVariables = new HashMap<>();
 
+		environmentVariables.put(
+			"TEST_PORTAL_BRANCH_NAME",
+			portalBatchBuildData.getPortalUpstreamBranchName());
+
 		if (JenkinsResultsParserUtil.isCINode()) {
-			String batchName = batchBuildData.getBatchName();
+			String batchName = portalBatchBuildData.getBatchName();
 
 			environmentVariables.put("ANT_OPTS", getAntOpts(batchName));
 			environmentVariables.put("JAVA_HOME", getJavaHome(batchName));
 			environmentVariables.put("PATH", getPath(batchName));
 		}
-
-		PortalBatchBuildData portalBatchBuildData = getBatchBuildData();
 
 		environmentVariables.putAll(
 			portalBatchBuildData.getTopLevelBuildParameters());
@@ -61,8 +66,18 @@ public abstract class BasePortalTestBatch
 
 		AntUtil.callTarget(
 			getPrimaryPortalWorkspaceDirectory(), "build-test-batch.xml",
-			batchBuildData.getBatchName(), buildParameters,
-			environmentVariables);
+			portalBatchBuildData.getBatchName(), buildParameters,
+			environmentVariables, getAntLibDir());
+	}
+
+	protected File getAntLibDir() {
+		File antLibDir = new File(System.getenv("WORKSPACE"), "lib");
+
+		if (antLibDir.exists()) {
+			return antLibDir;
+		}
+
+		return null;
 	}
 
 	@Override
@@ -84,7 +99,7 @@ public abstract class BasePortalTestBatch
 		try {
 			AntUtil.callTarget(
 				getPrimaryPortalWorkspaceDirectory(), "build-test.xml",
-				"merge-test-results");
+				"merge-test-results", null, null, getAntLibDir());
 		}
 		catch (AntException antException) {
 			throw new RuntimeException(antException);

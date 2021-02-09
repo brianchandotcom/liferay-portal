@@ -3,7 +3,9 @@
 definition {
 
 	function assertConfirmation {
-		selenium.assertConfirmation();
+		selenium.assertAlertText();
+
+		selenium.acceptAlert();
 
 		selenium.assertJavaScriptErrors();
 
@@ -13,11 +15,15 @@ definition {
 	}
 
 	function assertConfirmationNoError {
-		selenium.assertConfirmation();
+		selenium.assertAlertText();
+
+		selenium.acceptAlert();
 	}
 
 	function assertConfirmationNoWait {
-		selenium.assertConfirmation();
+		selenium.assertAlertText();
+
+		selenium.acceptAlert();
 
 		selenium.assertJavaScriptErrors();
 

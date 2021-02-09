@@ -163,8 +163,15 @@ definition {
 	@description = "This is a test for LPS-98081. Verify Repeatable behavior on Web Content"
 	@priority = "5"
 	test RepeatSeparatorOnWebContent {
-
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.assertFieldRepeated(
+			fieldName = "Separator",
+			index = "1");
 
 		WebContentStructures.saveCP();
 
@@ -183,20 +190,6 @@ definition {
 		DataEngine.assertFieldRepeated(
 			fieldName = "Separator",
 			index = "2");
-	}
-
-	@description = "This is a test for LPS-98081. Define 'Repeatable' toggle button (Enabled/Disabled)"
-	@priority = "4"
-	test SetSeparatorRepeatable {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 	}
 
 	@description = "This is a test for LPS-98081. Verify 'Show label' toggle button"

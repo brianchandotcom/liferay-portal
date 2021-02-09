@@ -79,6 +79,24 @@ public abstract class BaseShippingAddressResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orderItems/{id}/shippingAddress'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/orderItems/{id}/shippingAddress")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ShippingAddress")})
+	public ShippingAddress getOrderItemShippingAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
+		throws Exception {
+
+		return new ShippingAddress();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/shippingAddress'  -u 'test@liferay.com:test'
 	 */
 	@Override

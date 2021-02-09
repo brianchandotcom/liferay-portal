@@ -37,6 +37,13 @@ public interface ShippingAddressResource {
 		return new Builder();
 	}
 
+	public ShippingAddress getOrderItemShippingAddress(Long id)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getOrderItemShippingAddressHttpResponse(
+			Long id)
+		throws Exception;
+
 	public ShippingAddress getOrderByExternalReferenceCodeShippingAddress(
 			String externalReferenceCode)
 		throws Exception;
@@ -124,6 +131,71 @@ public interface ShippingAddressResource {
 
 	public static class ShippingAddressResourceImpl
 		implements ShippingAddressResource {
+
+		public ShippingAddress getOrderItemShippingAddress(Long id)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getOrderItemShippingAddressHttpResponse(id);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.headless.commerce.admin.order.client.serdes.
+					v1_0.ShippingAddressSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse getOrderItemShippingAddressHttpResponse(
+				Long id)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-order/v1.0/orderItems/{id}/shippingAddress");
+
+			httpInvoker.path("id", id);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
 
 		public ShippingAddress getOrderByExternalReferenceCodeShippingAddress(
 				String externalReferenceCode)

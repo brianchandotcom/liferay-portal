@@ -105,40 +105,26 @@ definition {
 		// TODO LPS-98081 DuplicateSeparatorOnSidebar pending implementation
 	}
 
-	@description = "This is a test for LPS-98081. Edit the help text of Separator Field"
+	@description = "This is a test for LPS-98081. Edit the label and help text of Separator Field"
 	@priority = "5"
-	test EditHelpTextOfSeparator {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Separator",
-			fieldHelp = "Text Field Help Separator");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		DataEngine.viewFieldHelpText(
-			fieldFieldLabel = "Separator",
-			fieldHelp = "Text Field Help Separator",
-			fieldName = "Separator");
-	}
-
-	@description = "This is a test for LPS-98081. Edit the label of Separator Field"
-	@priority = "5"
-	test EditLabelOfSeparator {
+	test EditLabelAndHelpTextOfSeparator {
 		property portal.acceptance = "false";
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Separator",
 			fieldFieldLabelEdit = "Edited Separator");
 
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Edited Separator",
+			fieldHelp = "Text Field Help Separator");
+
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
+		
 		DataEngine.viewField(
 			fieldFieldLabel = "Edited Separator",
+			fieldHelp = "Text Field Help Separator",
 			fieldName = "Separator");
 	}
 

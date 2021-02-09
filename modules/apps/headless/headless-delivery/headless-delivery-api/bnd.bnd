@@ -3,4 +3,7 @@ Bundle-SymbolicName: com.liferay.headless.delivery.api
 Bundle-Version: 29.0.0
 Export-Package:\
 	com.liferay.headless.delivery.dto.v1_0,\
-	com.liferay.headless.delivery.resource.v1_0
+	com.liferay.headless.delivery.resource.v1_0,\
+	com.liferay.headless.delivery.search.aggregation,\
+	com.liferay.headless.delivery.search.filter,\
+	com.liferay.headless.delivery.search.sort

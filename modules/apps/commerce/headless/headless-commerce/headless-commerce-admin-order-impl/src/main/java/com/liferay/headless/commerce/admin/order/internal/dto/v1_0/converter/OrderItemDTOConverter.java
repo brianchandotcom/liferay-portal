@@ -20,14 +20,10 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
-import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,9 +103,6 @@ public class OrderItemDTOConverter
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
 				shippedQuantity = commerceOrderItem.getShippedQuantity();
-				shippingAddress = _getShippingAddress(
-					dtoConverterContext.getLocale(),
-					commerceOrderItem.getShippingAddressId());
 				shippingAddressId = commerceOrderItem.getShippingAddressId();
 				sku = commerceOrderItem.getSku();
 				skuExternalReferenceCode = _getSkuExternalReferenceCode(
@@ -121,18 +114,6 @@ public class OrderItemDTOConverter
 					commerceOrderItem.getUnitPriceWithTaxAmount();
 			}
 		};
-	}
-
-	private ShippingAddress _getShippingAddress(
-			Locale locale, long shippingAddressId)
-		throws Exception {
-
-		if (shippingAddressId <= 0) {
-			return new ShippingAddress();
-		}
-
-		return _shippingAddressDTOConverter.toDTO(
-			new DefaultDTOConverterContext(shippingAddressId, locale));
 	}
 
 	private String _getSkuExternalReferenceCode(CPInstance cpInstance) {
@@ -153,8 +134,5 @@ public class OrderItemDTOConverter
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
-
-	@Reference
-	private ShippingAddressDTOConverter _shippingAddressDTOConverter;
 
 }

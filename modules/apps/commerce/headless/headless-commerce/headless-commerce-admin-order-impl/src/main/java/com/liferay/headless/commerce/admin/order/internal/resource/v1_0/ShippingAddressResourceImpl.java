@@ -17,9 +17,12 @@ package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.ShippingAddressDTOConverter;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.ShippingAddressUtil;
@@ -92,6 +95,24 @@ public class ShippingAddressResourceImpl
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
+	@NestedField(parentClass = OrderItem.class, value = "shippingAddress")
+	@Override
+	public ShippingAddress getOrderItemShippingAddress(Long id)
+		throws Exception {
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.getCommerceOrderItem(id);
+
+		if (commerceOrderItem.getShippingAddressId() == 0) {
+			return new ShippingAddress();
+		}
+
+		return _shippingAddressDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				commerceOrderItem.getShippingAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
 	@Override
 	public Response patchOrderByExternalReferenceCodeShippingAddress(
 			String externalReferenceCode, ShippingAddress shippingAddress)
@@ -133,6 +154,9 @@ public class ShippingAddressResourceImpl
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

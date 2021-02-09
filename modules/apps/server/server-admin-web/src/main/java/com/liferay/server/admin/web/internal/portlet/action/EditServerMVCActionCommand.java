@@ -117,7 +117,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 import javax.portlet.WindowState;
 
-import org.apache.log4j.Level;
+import org.apache.logging.log4j.Level;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

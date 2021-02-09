@@ -92,7 +92,7 @@ page import="java.util.TreeMap" %>
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
-<%@ page import="org.apache.log4j.Level" %>
+<%@ page import="org.apache.logging.log4j.Level" %>
 
 <liferay-frontend:defineObjects />
 

@@ -99,7 +99,7 @@ public class TrafficChannelUtilTest {
 
 		DirectTrafficChannelImpl directTrafficChannelImpl =
 			(DirectTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, null);
+				acquisitionChannel, null, null);
 
 		Assert.assertEquals(
 			acquisitionChannel.getTrafficAmount(),
@@ -115,7 +115,7 @@ public class TrafficChannelUtilTest {
 			new AcquisitionChannel(
 				"invalid", RandomTestUtil.randomInt(),
 				RandomTestUtil.randomDouble()),
-			null);
+			null, null);
 	}
 
 	@Test
@@ -139,7 +139,9 @@ public class TrafficChannelUtilTest {
 
 		OrganicTrafficChannelImpl organicTrafficChannelImpl =
 			(OrganicTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, trafficSource);
+				acquisitionChannel, null,
+				Collections.singletonMap(
+					acquisitionChannel.getName(), trafficSource));
 
 		Assert.assertEquals(
 			trafficSource.getCountrySearchKeywordsList(),
@@ -172,7 +174,9 @@ public class TrafficChannelUtilTest {
 
 		PaidTrafficChannelImpl paidTrafficChannelImpl =
 			(PaidTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, trafficSource);
+				acquisitionChannel, null,
+				Collections.singletonMap(
+					acquisitionChannel.getName(), trafficSource));
 
 		Assert.assertEquals(
 			trafficSource.getCountrySearchKeywordsList(),
@@ -193,7 +197,7 @@ public class TrafficChannelUtilTest {
 
 		ReferralTrafficChannelImpl referralTrafficChannelImpl =
 			(ReferralTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, null);
+				acquisitionChannel, null, null);
 
 		Assert.assertEquals(
 			acquisitionChannel.getTrafficAmount(),
@@ -211,7 +215,7 @@ public class TrafficChannelUtilTest {
 
 		SocialTrafficChannelImpl socialTrafficChannelImpl =
 			(SocialTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, null);
+				acquisitionChannel, null, null);
 
 		Assert.assertEquals(
 			acquisitionChannel.getTrafficAmount(),

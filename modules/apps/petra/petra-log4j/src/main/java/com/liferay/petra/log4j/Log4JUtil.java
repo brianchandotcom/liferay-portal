@@ -81,31 +81,9 @@ public class Log4JUtil {
 			return;
 		}
 
-		String urlContent = null;
+		Document document = null;
 
 		try (InputStream inputStream = url.openStream()) {
-			byte[] bytes = _getBytes(inputStream);
-
-			urlContent = new String(bytes, StringPool.UTF8);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return;
-		}
-
-		urlContent = StringUtil.replace(
-			urlContent, "@liferay.home@", _getLiferayHome());
-
-		if (ServerDetector.getServerId() == null) {
-			urlContent = _removeAppender(urlContent, "TEXT_FILE");
-
-			urlContent = _removeAppender(urlContent, "XML_FILE");
-		}
-
-		Map<String, String> logLevelStrings = new HashMap<>();
-
-		try {
 			SAXReader saxReader = new SAXReader();
 
 			saxReader.setEntityResolver(
@@ -126,23 +104,38 @@ public class Log4JUtil {
 
 				});
 
-			Document document = saxReader.read(
-				new UnsyncStringReader(urlContent), url.toExternalForm());
-
-			Element rootElement = document.getRootElement();
-
-			List<Element> categoryElements = rootElement.elements("category");
-
-			for (Element categoryElement : categoryElements) {
-				Element priorityElement = categoryElement.element("priority");
-
-				logLevelStrings.put(
-					categoryElement.attributeValue("name"),
-					priorityElement.attributeValue("value"));
-			}
+			document = saxReader.read(
+				new UnsyncStringReader(
+					new String(_getBytes(inputStream), StringPool.UTF8)),
+				url.toExternalForm());
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+
+			return;
+		}
+
+		String urlContent = StringUtil.replace(
+			document.asXML(), "@liferay.home@", _getLiferayHome());
+
+		if (ServerDetector.getServerId() == null) {
+			urlContent = _removeAppender(urlContent, "TEXT_FILE");
+
+			urlContent = _removeAppender(urlContent, "XML_FILE");
+		}
+
+		Map<String, String> logLevelStrings = new HashMap<>();
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> categoryElements = rootElement.elements("category");
+
+		for (Element categoryElement : categoryElements) {
+			Element priorityElement = categoryElement.element("priority");
+
+			logLevelStrings.put(
+				categoryElement.attributeValue("name"),
+				priorityElement.attributeValue("value"));
 		}
 
 		// See LPS-6029, LPS-8865, and LPS-24280

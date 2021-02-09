@@ -31,7 +31,6 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -51,29 +50,15 @@ public class InceptionModelUtil {
 		try {
 			_downloadFailed = false;
 
-			File tempFile = FileUtil.createTempFile();
+			_downloadFile(
+				_getFileName(),
+				tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+					modelDownloadURL());
 
-			JarUtil.downloadAndInstallJar(
-				new URL(
-					tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-						modelDownloadURL()),
-				tempFile.toPath());
-
-			DLStoreUtil.addFile(
-				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-				_getFileName(), false, tempFile);
-
-			File tempFile2 = FileUtil.createTempFile();
-
-			JarUtil.downloadAndInstallJar(
-				new URL(
-					tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-						nativeLibraryDownloadURL()),
-				tempFile2.toPath());
-
-			DLStoreUtil.addFile(
-				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-				_getNativeLibraryFileName(), false, tempFile2);
+			_downloadFile(
+				_getNativeLibraryFileName(),
+				tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+					nativeLibraryDownloadURL());
 		}
 		catch (Exception exception) {
 			_downloadFailed = true;
@@ -111,6 +96,18 @@ public class InceptionModelUtil {
 		return _downloadFailed;
 	}
 
+	private static void _downloadFile(String fileName, String url)
+		throws Exception {
+
+		File tempFile = FileUtil.createTempFile();
+
+		JarUtil.downloadAndInstallJar(new URL(url), tempFile.toPath());
+
+		DLStoreUtil.addFile(
+			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+			fileName, false, tempFile);
+	}
+
 	private static InputStream _getFileInputStream(String fileName)
 		throws IOException, PortalException {
 
@@ -123,19 +120,18 @@ public class InceptionModelUtil {
 	}
 
 	private static String _getFileName() {
-		Path path = Paths.get(
-			"com.liferay.document.library.asset.auto.tagger.tensorflow",
-			"org.tensorflow.models.inception-5h.jar");
+		return _getFileName("org.tensorflow.models.inception-5h.jar");
+	}
 
-		return path.toString();
+	private static String _getFileName(String fileName) {
+		return String.valueOf(
+			Paths.get(
+				"com.liferay.document.library.asset.auto.tagger.tensorflow",
+				fileName));
 	}
 
 	private static String _getNativeLibraryFileName() {
-		Path path = Paths.get(
-			"com.liferay.document.library.asset.auto.tagger.tensorflow",
-			"libtensorflow_jni-1.15.0.jar");
-
-		return path.toString();
+		return _getFileName("libtensorflow_jni-1.15.0.jar");
 	}
 
 	private static boolean _downloadFailed;

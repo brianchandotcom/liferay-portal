@@ -52,8 +52,7 @@ public class TensorflowModelDownloadMessageListener
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		InceptionModelUtil.download(
-			_tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
-				modelDownloadURL());
+			_tensorFlowImageAssetAutoTagProviderDownloadConfiguration);
 	}
 
 	private volatile TensorFlowImageAssetAutoTagProviderDownloadConfiguration

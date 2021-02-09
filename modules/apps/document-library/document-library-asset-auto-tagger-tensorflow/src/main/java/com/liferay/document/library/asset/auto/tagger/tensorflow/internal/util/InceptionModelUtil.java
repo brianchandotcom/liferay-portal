@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderDownloadConfiguration;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +39,11 @@ import java.nio.file.Paths;
  */
 public class InceptionModelUtil {
 
-	public static void download(String modelDownloadURL) throws Exception {
+	public static void download(
+			TensorFlowImageAssetAutoTagProviderDownloadConfiguration
+				tensorFlowImageAssetAutoTagProviderDownloadConfiguration)
+		throws Exception {
+
 		if (isDownloaded()) {
 			return;
 		}
@@ -49,7 +54,10 @@ public class InceptionModelUtil {
 			File tempFile = FileUtil.createTempFile();
 
 			JarUtil.downloadAndInstallJar(
-				new URL(modelDownloadURL), tempFile.toPath());
+				new URL(
+					tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+						modelDownloadURL()),
+				tempFile.toPath());
 
 			DLStoreUtil.addFile(
 				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,

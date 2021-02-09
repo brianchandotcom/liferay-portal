@@ -53,7 +53,6 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.internal.util.SearchUtil;
-import com.liferay.portal.search.web.search.result.SearchResultImage;
 import com.liferay.portal.search.web.search.result.SearchResultImageContributor;
 
 import java.text.DateFormat;
@@ -338,11 +337,13 @@ public class SearchResultSummaryDisplayBuilder {
 			return null;
 		}
 
-		return build(summary, className, classPK, assetRenderer);
+		return build(
+			summary, className, classPK, assetRendererFactory, assetRenderer);
 	}
 
 	protected SearchResultSummaryDisplayContext build(
 			Summary summary, String className, long classPK,
+			AssetRendererFactory<?> assetRendererFactory,
 			AssetRenderer<?> assetRenderer)
 		throws PortalException, PortletException {
 
@@ -377,7 +378,9 @@ public class SearchResultSummaryDisplayBuilder {
 		buildCreationDateString(searchResultSummaryDisplayContext);
 		buildCreatorUserName(searchResultSummaryDisplayContext);
 		buildDocumentForm(searchResultSummaryDisplayContext);
-		buildImage(searchResultSummaryDisplayContext, className, classPK);
+		buildImage(
+			searchResultSummaryDisplayContext, assetRendererFactory,
+			assetRenderer);
 		buildLocaleReminder(searchResultSummaryDisplayContext, summary);
 		buildModelResource(searchResultSummaryDisplayContext, className);
 		buildUserPortrait(
@@ -577,44 +580,34 @@ public class SearchResultSummaryDisplayBuilder {
 
 	protected void buildImage(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		String className, long classPK) {
+		AssetRendererFactory<?> assetRendererFactory,
+		AssetRenderer<?> assetRenderer) {
 
 		if (!_imageRequested) {
 			return;
 		}
 
-		SearchResultImage searchResultImage = new SearchResultImage() {
+		String iconCssClass = assetRendererFactory.getIconCssClass();
 
-			@Override
-			public String getClassName() {
-				return className;
-			}
+		if (Validator.isNotNull(iconCssClass)) {
+			searchResultSummaryDisplayContext.setIconId(iconCssClass);
+			searchResultSummaryDisplayContext.setIconVisible(true);
+			searchResultSummaryDisplayContext.setPathThemeImages(
+				_themeDisplay.getPathThemeImages());
+		}
 
-			@Override
-			public long getClassPK() {
-				return classPK;
-			}
+		try {
+			String thumbnailURLString = assetRenderer.getThumbnailPath(
+				_renderRequest);
 
-			@Override
-			public void setIcon(String iconName) {
-				searchResultSummaryDisplayContext.setIconId(iconName);
-				searchResultSummaryDisplayContext.setIconVisible(true);
-				searchResultSummaryDisplayContext.setPathThemeImages(
-					_themeDisplay.getPathThemeImages());
-			}
-
-			@Override
-			public void setThumbnail(String thumbnailURLString) {
+			if (Validator.isNotNull(thumbnailURLString)) {
 				searchResultSummaryDisplayContext.setThumbnailURLString(
 					thumbnailURLString);
 				searchResultSummaryDisplayContext.setThumbnailVisible(true);
 			}
-
-		};
-
-		_searchResultImageContributorsStream.forEach(
-			searchResultImageContributor ->
-				searchResultImageContributor.contribute(searchResultImage));
+		}
+		catch (Exception exception) {
+		}
 	}
 
 	protected void buildLocaleReminder(

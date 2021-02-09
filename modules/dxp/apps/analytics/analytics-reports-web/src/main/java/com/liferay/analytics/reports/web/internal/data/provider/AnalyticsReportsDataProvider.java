@@ -241,8 +241,7 @@ public class AnalyticsReportsDataProvider {
 
 			return stream.map(
 				acquisitionChannel -> TrafficChannelUtil.toTrafficChannel(
-					acquisitionChannel,
-					trafficSourceMap.get(acquisitionChannel.getName()))
+					acquisitionChannel, trafficSourceMap)
 			).map(
 				trafficChannel -> new AbstractMap.SimpleEntry<>(
 					trafficChannel.getName(), trafficChannel)

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -60,11 +61,12 @@ public final class TrafficChannelUtil {
 	}
 
 	public static TrafficChannel toTrafficChannel(
-		AcquisitionChannel acquisitionChannel, TrafficSource trafficSource) {
+		AcquisitionChannel acquisitionChannel,
+		Map<String, TrafficSource> trafficSourceMap) {
 
 		List<CountrySearchKeywords> countrySearchKeywordsList =
 			Optional.ofNullable(
-				trafficSource
+				trafficSourceMap.get(acquisitionChannel.getName())
 			).map(
 				TrafficSource::getCountrySearchKeywordsList
 			).orElse(

@@ -1593,7 +1593,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 					this, upstreamBranchSHA);
 
 			if ((result != null) && !result.matches("(APPROVED|SUCCESS)") &&
-				(buildNumber != 0) &&
+				(downstreamBuilds.size() != 0) &&
 				!upstreamBranchSHA.equals(
 					UpstreamFailureUtil.getUpstreamJobFailuresSHA(this))) {
 

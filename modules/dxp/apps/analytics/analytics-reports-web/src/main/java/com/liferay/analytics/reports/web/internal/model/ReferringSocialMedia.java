@@ -61,6 +61,15 @@ public class ReferringSocialMedia {
 		);
 	}
 
+	@Override
+	public String toString() {
+		return JSONUtil.put(
+			"name", _name
+		).put(
+			"trafficAmount", _trafficAmount
+		).toString();
+	}
+
 	private final String _name;
 	private final int _trafficAmount;
 

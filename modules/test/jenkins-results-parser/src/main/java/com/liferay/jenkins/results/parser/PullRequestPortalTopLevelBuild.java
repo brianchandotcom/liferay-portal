@@ -194,10 +194,16 @@ public class PullRequestPortalTopLevelBuild
 
 	@Override
 	public boolean isUniqueFailure() {
-		for (Build downstreamBuild : getFailedDownstreamBuilds()) {
+		List<Build> failedDownstreamBuilds = getFailedDownstreamBuilds();
+
+		for (Build downstreamBuild : failedDownstreamBuilds) {
 			if (downstreamBuild.isUniqueFailure()) {
 				return true;
 			}
+		}
+
+		if (failedDownstreamBuilds.isEmpty()) {
+			return true;
 		}
 
 		return false;

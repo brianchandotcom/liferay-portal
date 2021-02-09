@@ -906,6 +906,23 @@ definition {
 			value1 = "${webContentTitle} is not approved.");
 	}
 
+	macro assertFieldOnWebContent {
+		key_fieldFieldLabel = "${fieldFieldLabel}";
+		key_fieldName = "${fieldName}";
+
+		AssertVisible(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		AssertTextEquals(
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+			value1 = "${fieldFieldLabel}");
+
+		if (isSet(fieldHelpText)) {
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#HELP_TEXT",
+				value1 = "${fieldHelpText}");
+		}
+	}
+
 	macro clickMarginOfContentContainer {
 		var elementHeight = selenium.getElementHeight("WCEditWebContent#CONTENT_CONTAINER");
 		var offSetY = MathUtil.product("50","${elementHeight}");
@@ -2038,25 +2055,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#EXPIRATION_DATE",
 			value1 = "${expirationDate}");
-	}
-
-	macro assertFieldOnWebContent {
-		key_fieldFieldLabel = "${fieldFieldLabel}";
-		key_fieldName = "${fieldName}";
-
-		AssertVisible(
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
-
-		AssertTextEquals(
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldFieldLabel}");
-		
-		if(isSet(fieldHelpText)){
-
-			AssertTextEquals(
-				locator1 = "WCEditWebContent#HELP_TEXT",
-				value1 = "${fieldHelpText}");
-		}
 	}
 
 	macro viewFieldRepeated {

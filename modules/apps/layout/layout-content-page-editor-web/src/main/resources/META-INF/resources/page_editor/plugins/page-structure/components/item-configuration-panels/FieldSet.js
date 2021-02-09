@@ -22,6 +22,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../app/config/constants/layoutDat
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../app/config/index';
 import {useSelector} from '../../../../app/store/index';
+import getSegmentsExperienceLanguages from '../../../../app/utils/getSegmentsExperienceLanguages';
 import {ConfigurationFieldPropTypes} from '../../../../prop-types/index';
 
 const DISPLAY_SIZES = {
@@ -34,6 +35,7 @@ const fieldIsDisabled = (item, field) =>
 	(field.name === 'marginRight' || field.name === 'marginLeft');
 
 export const FieldSet = ({
+	availableLanguages,
 	fields,
 	item = {},
 	label,
@@ -41,9 +43,13 @@ export const FieldSet = ({
 	onValueSelect,
 	values,
 }) => {
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
+	const store = useSelector((state) => state);
+
+	const {
+		availableSegmentsExperiences,
+		segmentsExperienceId,
+		selectedViewportSize,
+	} = store;
 
 	const availableFields =
 		selectedViewportSize === VIEWPORT_SIZES.desktop
@@ -53,7 +59,11 @@ export const FieldSet = ({
 						field.responsive || field.name === 'backgroundImage'
 			  );
 
-	const availableLanguages = config.availableLanguages;
+	const availableExperienceLanguages = getSegmentsExperienceLanguages(
+		availableLanguages,
+		availableSegmentsExperiences,
+		segmentsExperienceId
+	);
 
 	return (
 		availableFields.length > 0 && (
@@ -135,16 +145,16 @@ export const FieldSet = ({
 										>
 											<ClayIcon
 												symbol={
-													availableLanguages[
+													availableExperienceLanguages[
 														languageId
 													].languageIcon
 												}
 											/>
 											<span className="sr-only">
 												{
-													availableLanguages[
+													availableExperienceLanguages[
 														languageId
-													].languageLabel
+													].w3cLanguageId
 												}
 											</span>
 										</div>
@@ -160,6 +170,15 @@ export const FieldSet = ({
 };
 
 FieldSet.propTypes = {
+	availableLanguages: PropTypes.objectOf(
+		PropTypes.shape({
+			default: PropTypes.bool.isRequired,
+			displayName: PropTypes.string.isRequired,
+			languageIcon: PropTypes.string.isRequired,
+			languageId: PropTypes.string.isRequired,
+			w3cLanguageId: PropTypes.string.isRequired,
+		})
+	).isRequired,
 	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
 	item: PropTypes.object,
 	label: PropTypes.string,

@@ -23,6 +23,8 @@ import {updateLanguageId} from '../actions/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {TRANSLATION_STATUS_TYPE} from '../config/constants/translationStatusType';
+import {useSelector} from '../store/index';
+import getSegmentsExperienceLanguages from '../utils/getSegmentsExperienceLanguages';
 
 const getEditableValues = (fragmentEntryLinks) =>
 	Object.values(fragmentEntryLinks)
@@ -127,6 +129,7 @@ export default function Translation({
 	dispatch,
 	fragmentEntryLinks,
 	languageId,
+	segmentsExperienceId,
 	showNotTranslated = true,
 }) {
 	const [active, setActive] = useState(false);
@@ -134,10 +137,21 @@ export default function Translation({
 		() => getEditableValues(fragmentEntryLinks),
 		[fragmentEntryLinks]
 	);
-	const languageValues = useMemo(() => {
-		const availableLanguagesMut = {...availableLanguages};
 
-		const defaultLanguage = availableLanguages[defaultLanguageId];
+	const availableSegmentsExperiences = useSelector(
+		(state) => state.availableSegmentsExperiences
+	);
+
+	const availableExperienceLanguages = getSegmentsExperienceLanguages(
+		availableLanguages,
+		availableSegmentsExperiences,
+		segmentsExperienceId
+	);
+
+	const languageValues = useMemo(() => {
+		const availableLanguagesMut = {...availableExperienceLanguages};
+
+		const defaultLanguage = availableExperienceLanguages[defaultLanguageId];
 
 		delete availableLanguagesMut[defaultLanguageId];
 
@@ -161,13 +175,38 @@ export default function Translation({
 				),
 			}));
 	}, [
-		availableLanguages,
+		availableExperienceLanguages,
 		defaultLanguageId,
 		editableValues,
 		showNotTranslated,
 	]);
 
-	const {languageIcon, languageLabel} = availableLanguages[languageId];
+	const selectedExperienceLanguage = (
+		availableExperienceLanguages,
+		defaultLanguageId,
+		languageId
+	) => {
+		if (!availableExperienceLanguages[languageId]) {
+			dispatch(
+				updateLanguageId({
+					languageId: defaultLanguageId,
+				})
+			);
+
+			return availableExperienceLanguages[defaultLanguageId];
+		}
+
+		return availableExperienceLanguages[languageId];
+	};
+
+	const {
+		languageIcon,
+		w3cLanguageId: languageLabel,
+	} = selectedExperienceLanguage(
+		availableExperienceLanguages,
+		defaultLanguageId,
+		languageId
+	);
 
 	return (
 		<ClayDropDown
@@ -198,12 +237,13 @@ export default function Translation({
 						key={language.languageId}
 						language={language}
 						languageIcon={
-							availableLanguages[language.languageId].languageIcon
+							availableExperienceLanguages[language.languageId]
+								.languageIcon
 						}
 						languageId={languageId}
 						languageLabel={
-							availableLanguages[language.languageId]
-								.languageLabel
+							availableExperienceLanguages[language.languageId]
+								.w3cLanguageId
 						}
 						onClick={() => {
 							dispatch(
@@ -224,12 +264,17 @@ export default function Translation({
 Translation.propTypes = {
 	availableLanguages: PropTypes.objectOf(
 		PropTypes.shape({
+			default: PropTypes.bool.isRequired,
+			displayName: PropTypes.string.isRequired,
 			languageIcon: PropTypes.string.isRequired,
-			languageLabel: PropTypes.string.isRequired,
+			languageId: PropTypes.string.isRequired,
+			w3cLanguageId: PropTypes.string.isRequired,
 		})
 	).isRequired,
 	defaultLanguageId: PropTypes.string.isRequired,
 	dispatch: PropTypes.func.isRequired,
 	fragmentEntryLinks: PropTypes.object.isRequired,
 	languageId: PropTypes.string.isRequired,
+	segmentsExperienceId: PropTypes.string.isRequired,
+	showNotTranslated: PropTypes.bool,
 };

@@ -44,6 +44,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.converter.StructuredConte
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMValueUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DisplayPageRendererUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RenderedContentValueUtil;
@@ -53,6 +54,7 @@ import com.liferay.headless.delivery.internal.search.aggregation.AggregationUtil
 import com.liferay.headless.delivery.internal.search.filter.FilterUtil;
 import com.liferay.headless.delivery.internal.search.sort.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -61,6 +63,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -348,6 +351,25 @@ public class StructuredContentResourceImpl
 		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
 
 		return spiRatingResource.getRating(structuredContentId);
+	}
+
+	@Override
+	public String
+			getStructuredContentRenderedContentByDisplayPageDisplayPageKey(
+				Long structuredContentId, String displayPageKey)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentId);
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		return DisplayPageRendererUtil.toHTML(
+			JournalArticle.class.getName(), ddmStructure.getStructureId(),
+			displayPageKey, journalArticle.getGroupId(),
+			contextHttpServletRequest, contextHttpServletResponse,
+			journalArticle, _infoItemServiceTracker, _layoutLocalService,
+			_layoutPageTemplateEntryService);
 	}
 
 	@Override
@@ -1161,6 +1183,9 @@ public class StructuredContentResourceImpl
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference(
@@ -1186,6 +1211,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

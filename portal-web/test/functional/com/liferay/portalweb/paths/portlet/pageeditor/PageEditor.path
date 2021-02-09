@@ -320,6 +320,11 @@
 	<td>//input[contains(@id,'segmentsExperienceName')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EXPERIENCE_NEW_EXPERIENCE_MODAL_TITLE</td>
+	<td>//*[contains(@class,'modal-title') and contains(text(), 'New Experience')]</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR_BACK</td>

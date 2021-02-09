@@ -104,6 +104,52 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "The Add new experience modals appears after click on cancel in the Edit experience modal"
+	@priority = "5"
+	test AddNewExperienceAfterCancelEdit {
+		property portal.acceptance = "true";
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addExperience(
+			experienceName = "NewExp1",
+			segmentName = "Anyone");
+
+		Refresh();
+
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+		Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
+
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+		
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+		Click(
+			key_text = "New Experience",
+			locator1 = "Button#ANY");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+				locator1 = "PageEditor#EXPERIENCE_NEW_EXPERIENCE_MODAL_TITLE",
+				value1 = "New Experience");
+
+		AssertTextEquals(
+				locator1 = "PageEditor#EXPERIENCE_NAME",
+				value1 = "");
+
+		AssertClick(
+			locator1 = "Button#CANCEL",
+			value1 = "Cancel");
+
+		PageEditor.clickPublish();
+	}
+
 	@description = "When the user clicks on the Duplicate option of an experience, a new experience with [the same name] + Copy and the same audience (Segment) appears in the last position of the list, always below the default experience"
 	@priority = "5"
 	test DuplicateExperience {

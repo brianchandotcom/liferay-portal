@@ -107,7 +107,7 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Rich Text Help Text");
+			fieldHelp = "Help Text");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -115,11 +115,11 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Rich Text",
-			fieldFieldLabelEdit = "Rico Texto");
+			fieldFieldLabelEdit = "Texto Rico");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Rico Texto",
-			fieldHelp = "Rico Texto Socorro Texto");
+			fieldFieldLabel = "Texto Rico",
+			fieldHelp = "Texto Ajuda");
 
 		WebContentStructures.saveCP();
 
@@ -136,7 +136,7 @@ definition {
 		AssertTextEquals(
 			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Rich Text Help Text");
+			value1 = "Help Text");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -145,13 +145,13 @@ definition {
 			value1 = "Nome da Estrutura WC");
 
 		AssertVisible(
-			key_fieldFieldLabel = "Rico Texto",
+			key_fieldFieldLabel = "Texto Rico",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		AssertTextEquals(
-			key_fieldFieldLabel = "Rico Texto",
+			key_fieldFieldLabel = "Texto Rico",
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Rico Texto Socorro Texto");
+			value1 = "Texto Ajuda");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
@@ -245,7 +245,7 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Choose as many content pieces as you would like to feature.");
+			fieldHelp = "Help Text");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Rich Text",
@@ -254,7 +254,7 @@ definition {
 		AssertTextEquals(
 			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Choose as many content pieces as you would like to feature.");
+			value1 = "Help Text");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
@@ -384,7 +384,7 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Rich Text Help Text");
+			fieldHelp = "Help Text");
 
 		WebContentStructures.saveCP();
 
@@ -397,7 +397,7 @@ definition {
 			webContentTitle = "Web Content Title");
 
 		FormFields.viewFieldHelpText(
-			fieldHelpText = "Rich Text Help Text",
+			fieldHelpText = "Help Text",
 			fieldName = "RichText");
 	}
 

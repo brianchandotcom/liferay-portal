@@ -212,6 +212,72 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderItemShippingAddress() throws Exception {
+		ShippingAddress postShippingAddress =
+			testGetOrderItemShippingAddress_addShippingAddress();
+
+		ShippingAddress getShippingAddress =
+			shippingAddressResource.getOrderItemShippingAddress(
+				postShippingAddress.getId());
+
+		assertEquals(postShippingAddress, getShippingAddress);
+		assertValid(getShippingAddress);
+	}
+
+	protected ShippingAddress
+			testGetOrderItemShippingAddress_addShippingAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetOrderItemShippingAddress() throws Exception {
+		ShippingAddress shippingAddress =
+			testGraphQLShippingAddress_addShippingAddress();
+
+		Assert.assertTrue(
+			equals(
+				shippingAddress,
+				ShippingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"orderItemShippingAddress",
+								new HashMap<String, Object>() {
+									{
+										put("id", shippingAddress.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/orderItemShippingAddress"))));
+	}
+
+	@Test
+	public void testGraphQLGetOrderItemShippingAddressNotFound()
+		throws Exception {
+
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"orderItemShippingAddress",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
 	public void testGetOrderByExternalReferenceCodeShippingAddress()
 		throws Exception {
 

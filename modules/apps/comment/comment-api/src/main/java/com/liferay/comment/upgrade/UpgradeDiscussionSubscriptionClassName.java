@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -83,7 +82,9 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 	}
 
 	public enum DeletionMode {
+
 		ADD_NEW, DELETE_OLD, UPDATE
+
 	}
 
 	@Override
@@ -115,10 +116,10 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		_customFunction = customFunction;
 	}
 
-	private void _addSubscriptions() throws PortalException {
+	private void _addSubscriptions() throws Exception {
 		String newSubscriptionClassName =
 			MBDiscussion.class.getName() + StringPool.UNDERLINE +
-			_oldSubscriptionClassName;
+				_oldSubscriptionClassName;
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_subscriptionLocalService.getActionableDynamicQuery();

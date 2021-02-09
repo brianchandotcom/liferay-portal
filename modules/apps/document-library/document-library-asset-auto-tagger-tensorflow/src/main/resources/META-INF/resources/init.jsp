@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration" %><%@
-page import="com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.InceptionModelUtil" %>
+page import="com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil" %>
 
 <liferay-frontend:defineObjects />
 

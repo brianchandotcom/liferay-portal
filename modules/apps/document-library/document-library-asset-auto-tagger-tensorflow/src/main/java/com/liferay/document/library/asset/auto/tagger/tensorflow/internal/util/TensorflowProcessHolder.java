@@ -136,10 +136,10 @@ public class TensorflowProcessHolder {
 		}
 
 		try (InputStream inputStream =
-				InceptionModelUtil.getNativeLibraryInputStream()) {
+				TensorFlowDownloadUtil.getNativeLibraryInputStream()) {
 
 			Path targetPath = tempPath.resolve(
-				InceptionModelUtil.NATIVE_LIBRARY_FILE_NAME);
+				TensorFlowDownloadUtil.NATIVE_LIBRARY_FILE_NAME);
 
 			sb.append(targetPath);
 
@@ -245,7 +245,7 @@ public class TensorflowProcessHolder {
 
 				Future<String> future = _processChannel.write(
 					new InitializeProcessCallable(
-						InceptionModelUtil.getGraphBytes()));
+						TensorFlowDownloadUtil.getGraphBytes()));
 
 				future.get();
 			}

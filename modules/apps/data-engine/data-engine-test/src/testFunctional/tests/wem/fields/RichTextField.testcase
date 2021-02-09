@@ -274,71 +274,62 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test SetRichTextSearchableAsByText {
-		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Test Structure",
-			structureName = "Test Structure");
-
 		DataEngine.addField(
-			fieldFieldLabel = "Rich Text Test",
+			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text");
 
+		Click(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldFieldLabel = "Searchable",
+			key_optionValue = "Text",
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
+
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Rich Text Test",
+			fieldFieldLabel = "Rich Text",
 			searchableType = "Disable");
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.viewCP(structureName = "Test Structure");
+		WebContentStructures.viewCP(structureName = "WC Structure Name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Test Structure");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Rich Text Test",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Rich Text Test");
+		Click(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
-		AssertElementPresent(
+		AssertChecked.assertCheckedNotVisible(
 			key_fieldFieldLabel = "Searchable",
 			key_optionValue = "Disable",
-			locator1 = "WCEditWebContent#SELECTION_OPTION_CHECKED");
-
-		WebContentStructures.saveCP();
-
-		WebContentStructures.viewCP(structureName = "Test Structure");
-
-		LexiconEntry.gotoEntry(rowEntry = "Test Structure");
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
 
 		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Rich Text Test",
+			fieldFieldLabel = "Rich Text",
 			searchableType = "Text");
 
 		WebContentStructures.saveCP();
 
-		WebContentStructures.viewCP(structureName = "Test Structure");
+		WebContentStructures.viewCP(structureName = "WC Structure Name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Test Structure");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Rich Text Test",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Rich Text Test");
+		Click(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
-		AssertElementPresent(
+		AssertChecked.assertCheckedNotVisible(
 			key_fieldFieldLabel = "Searchable",
 			key_optionValue = "Text",
-			locator1 = "WCEditWebContent#SELECTION_OPTION_CHECKED");
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

@@ -34,7 +34,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Add a Separator field on a form using drag and drop"
 	@priority = "5"
 	test AddSeparatorOnFormByDragAndDrop {
 		property portal.acceptance = "false";
@@ -44,7 +44,7 @@ definition {
 			fieldName = "Separator");
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Delete Separator Field (sing kebab on the top of the field)"
 	@priority = "5"
 	test DeleteSeparatorOnBuilder {
 		property portal.acceptance = "false";
@@ -76,7 +76,7 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Duplicate Separator Field (using kebab on the top of the field)"
 	@priority = "4"
 	test DuplicateSeparatorOnBuilder {
 		property portal.acceptance = "false";
@@ -105,7 +105,7 @@ definition {
 		// TODO LPS-98081 DuplicateSeparatorOnSidebar pending implementation
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Edit the help text of Separator Field"
 	@priority = "5"
 	test EditHelpTextOfSeparator {
 		property portal.acceptance = "false";
@@ -124,7 +124,7 @@ definition {
 			fieldName = "Separator");
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Edit the label of Separator Field"
 	@priority = "5"
 	test EditLabelOfSeparator {
 		property portal.acceptance = "false";
@@ -142,7 +142,7 @@ definition {
 			fieldName = "Separator");
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Edit Field Reference with valid characters"
 	@ignore = "true"
 	@priority = "5"
 	test EditReferenceOfSeparator {
@@ -165,7 +165,7 @@ definition {
 		// TODO LPS-98081 EditReferenceOfSeparator pending implementation
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Edit Field Reference with invalid characters"
 	@priority = "4"
 	test EditReferenceOfSeparatorWithInvalidCharacters {
 		DataEngine.editFieldReference(
@@ -183,7 +183,7 @@ definition {
 			fieldReference = "EditedSeparator");
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Verify Repeatable behavior on Web Content"
 	@priority = "5"
 	test RepeatSeparatorOnWebContent {
 
@@ -208,7 +208,7 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Define 'Repeatable' toggle button (Enabled/Disabled)"
 	@priority = "4"
 	test SetSeparatorRepeatable {
 		property portal.acceptance = "false";
@@ -222,7 +222,7 @@ definition {
 		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 	}
 
-	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
+	@description = "This is a test for LPS-98081. Verify 'Show label' toggle button"
 	@priority = "3"
 	test ShowAndHideSeparatorLabel {
 		property portal.acceptance = "false";

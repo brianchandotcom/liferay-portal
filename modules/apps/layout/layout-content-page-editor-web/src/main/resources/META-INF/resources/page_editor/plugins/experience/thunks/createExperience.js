@@ -16,10 +16,11 @@ import ExperienceService from '../../../app/services/ExperienceService';
 import createExperienceAction from '../actions/createExperience';
 import selectExperienceAction from '../actions/selectExperience';
 
-export default function createExperience({name, segmentsEntryId}) {
+export default function createExperience({languageIds, name, segmentsEntryId}) {
 	return (dispatch) => {
 		return ExperienceService.createExperience({
 			body: {
+				languageIds,
 				name,
 				segmentsEntryId,
 			},

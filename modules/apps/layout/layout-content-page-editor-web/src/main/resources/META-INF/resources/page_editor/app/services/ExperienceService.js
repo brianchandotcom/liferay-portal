@@ -40,10 +40,11 @@ export default {
 	 * @param {function} options.dispatch
 	 */
 	createExperience({body, dispatch}) {
-		const {name, segmentsEntryId} = body;
+		const {languageIds, name, segmentsEntryId} = body;
 
 		const payload = {
 			active: true,
+			languageIds,
 			name,
 			segmentsEntryId,
 		};

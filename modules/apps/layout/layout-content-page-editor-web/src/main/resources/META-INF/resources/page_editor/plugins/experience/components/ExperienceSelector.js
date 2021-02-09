@@ -150,6 +150,7 @@ const ExperienceSelector = ({
 	}, []);
 
 	const handleExperienceCreation = ({
+		languageIds,
 		name,
 		segmentsEntryId,
 		segmentsExperienceId,
@@ -185,6 +186,7 @@ const ExperienceSelector = ({
 		else {
 			return dispatch(
 				createExperience({
+					languageIds,
 					name,
 					segmentsEntryId,
 				})
@@ -206,6 +208,7 @@ const ExperienceSelector = ({
 							error: Liferay.Language.get(
 								'an-unexpected-error-occurred-while-creating-the-experience'
 							),
+							languageIds,
 							name,
 							segmentsEntryId,
 							segmentsExperienceId,

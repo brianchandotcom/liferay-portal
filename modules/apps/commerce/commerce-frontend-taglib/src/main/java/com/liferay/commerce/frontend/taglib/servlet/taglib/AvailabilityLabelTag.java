@@ -15,9 +15,17 @@
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.commerce.product.constants.CPContentContributorConstants;
+import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -25,12 +33,32 @@ import javax.servlet.jsp.PageContext;
  */
 public class AvailabilityLabelTag extends IncludeTag {
 
-	public int getStockQuantity() {
-		return _stockQuantity;
+	@Override
+	public int doStartTag() throws JspException {
+		try {
+			Map<String, String> availabilityMap =
+				_cpContentHelper.getAvailabilityMap(getRequest());
+
+			_label = availabilityMap.getOrDefault(
+				CPContentContributorConstants.AVAILABILITY_NAME,
+				StringPool.BLANK);
+			_labelType = availabilityMap.getOrDefault(
+				CPContentContributorConstants.AVAILABILITY_DISPLAY_TYPE,
+				"default");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return SKIP_BODY;
+		}
+
+		return super.doStartTag();
 	}
 
-	public boolean isLowStock() {
-		return _lowStock;
+	public String getNamespace() {
+		return _namespace;
 	}
 
 	public boolean isWillUpdate() {
@@ -41,25 +69,22 @@ public class AvailabilityLabelTag extends IncludeTag {
 	public void setAttributes(HttpServletRequest httpServletRequest) {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		setNamespacedAttribute(httpServletRequest, "lowStock", _lowStock);
-		setNamespacedAttribute(
-			httpServletRequest, "stockQuantity", _stockQuantity);
+		setNamespacedAttribute(httpServletRequest, "label", _label);
+		setNamespacedAttribute(httpServletRequest, "labelType", _labelType);
+		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
 		setNamespacedAttribute(httpServletRequest, "willUpdate", _willUpdate);
 	}
 
-	public void setLowStock(boolean lowStock) {
-		_lowStock = lowStock;
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
 	}
 
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		servletContext = ServletContextUtil.getServletContext();
-	}
-
-	public void setStockQuantity(int stockQuantity) {
-		_stockQuantity = stockQuantity;
 	}
 
 	public void setWillUpdate(boolean willUpdate) {
@@ -70,8 +95,10 @@ public class AvailabilityLabelTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_lowStock = false;
-		_stockQuantity = 0;
+		_cpContentHelper = null;
+		_label = StringPool.BLANK;
+		_labelType = "default";
+		_namespace = StringPool.BLANK;
 		_willUpdate = false;
 	}
 
@@ -85,8 +112,13 @@ public class AvailabilityLabelTag extends IncludeTag {
 
 	private static final String _PAGE = "/availability_label/page.jsp";
 
-	private boolean _lowStock;
-	private int _stockQuantity;
+	private static final Log _log = LogFactoryUtil.getLog(
+		AvailabilityLabelTag.class);
+
+	private CPContentHelper _cpContentHelper;
+	private String _label = StringPool.BLANK;
+	private String _labelType = "default";
+	private String _namespace = StringPool.BLANK;
 	private boolean _willUpdate;
 
 }

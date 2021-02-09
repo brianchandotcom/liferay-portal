@@ -15,8 +15,10 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
+import com.liferay.portal.util.PropsImpl;
 
 import java.util.Arrays;
 
@@ -34,6 +36,8 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropsUtil.setProps(new PropsImpl());
+
 		_elasticsearchFixture = new ElasticsearchFixture(
 			UpdateIndexSettingsIndexRequestExecutorTest.class.getSimpleName());
 

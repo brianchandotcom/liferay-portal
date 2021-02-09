@@ -6,7 +6,6 @@ dependencies {
 	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils", version: "1.9.4"
 	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	testIntegrationCompile group: "log4j", name: "log4j", version: "1.2.17"
 	testIntegrationCompile project(":apps:app-builder:app-builder-api")
 	testIntegrationCompile project(":apps:app-builder:app-builder-rest-api")
 	testIntegrationCompile project(":apps:app-builder:app-builder-rest-client")

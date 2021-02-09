@@ -29,6 +29,7 @@ import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
+import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.exception.SubjectException;
 
 import java.util.Arrays;
@@ -79,6 +80,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_defaultUserResolver.setUserLocalService(_userLocalService);
 
+		_samlProviderConfigurationHelper = mock(
+			SamlProviderConfigurationHelper.class);
+
+		_defaultUserResolver.setSamlProviderConfigurationHelper(
+			_samlProviderConfigurationHelper);
+
 		when(
 			metadataManager.getUserAttributeMappings(Mockito.eq(IDP_ENTITY_ID))
 		).thenReturn(
@@ -101,6 +108,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			_samlSpIdpConnection
+		);
+
+		when(
+			_samlProviderConfigurationHelper.isLDAPImportEnabled()
+		).thenReturn(
+			false
 		);
 
 		_defaultUserResolver.setSamlSpIdpConnectionLocalService(
@@ -496,6 +509,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	private final DefaultUserResolver _defaultUserResolver =
 		new DefaultUserResolver();
 	private MessageContext<Response> _messageContext;
+	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 	private SamlSpIdpConnection _samlSpIdpConnection;
 	private UserLocalService _userLocalService;
 

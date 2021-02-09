@@ -89,8 +89,6 @@ public class DefaultUserResolver implements UserResolver {
 					" and value ", subjectNameIdentifier));
 		}
 
-		User user = null;
-
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		String subjectNameIdentifier = getSubjectNameIdentifier(
@@ -104,17 +102,9 @@ public class DefaultUserResolver implements UserResolver {
 		String authType = getAuthType(
 			userResolverSAMLContext, samlSpIdpConnection.getNameIdFormat());
 
-		if (_samlProviderConfigurationHelper.isLDAPImportEnabled()) {
-			user = importLdapUser(companyId, subjectNameIdentifier, authType);
-		}
-
-		if (user == null) {
-			return importUser(
-				companyId, samlSpIdpConnection, subjectNameIdentifier, authType,
-				userResolverSAMLContext, serviceContext);
-		}
-
-		return user;
+		return importUser(
+			companyId, samlSpIdpConnection, subjectNameIdentifier, authType,
+			userResolverSAMLContext, serviceContext);
 	}
 
 	@Reference(unbind = "-")
@@ -376,7 +366,7 @@ public class DefaultUserResolver implements UserResolver {
 			String subjectNameIdentifier, String authType,
 			UserResolverSAMLContext userResolverSAMLContext,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -385,24 +375,36 @@ public class DefaultUserResolver implements UserResolver {
 					" of type ", authType));
 		}
 
+		User user = null;
+
 		Map<String, List<Serializable>> attributesMap = getAttributesMap(
 			userResolverSAMLContext);
 
-		User user = getUser(companyId, subjectNameIdentifier, authType);
+		if (attributesMap.containsKey(authType)) {
+			subjectNameIdentifier = getValueAsString(authType, attributesMap);
+		}
 
-		if (user != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Found user " + user.toString());
-			}
-
-			user = updateUser(user, attributesMap, serviceContext);
+		if (_samlProviderConfigurationHelper.isLDAPImportEnabled()) {
+			user = importLdapUser(companyId, subjectNameIdentifier, authType);
 		}
 		else {
-			user = addUser(
-				companyId, samlSpIdpConnection, attributesMap, serviceContext);
+			user = getUser(companyId, subjectNameIdentifier, authType);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Added user " + user.toString());
+			if (user != null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Found user " + user.toString());
+				}
+
+				user = updateUser(user, attributesMap, serviceContext);
+			}
+			else {
+				user = addUser(
+					companyId, samlSpIdpConnection, attributesMap,
+					serviceContext);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Added user " + user.toString());
+				}
 			}
 		}
 

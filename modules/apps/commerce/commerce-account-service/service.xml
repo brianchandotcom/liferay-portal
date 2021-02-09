@@ -244,6 +244,7 @@
 
 		<!-- References -->
 
+		<reference entity="AccountEntryUserRel" package-path="com.liferay.account" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
 	</entity>

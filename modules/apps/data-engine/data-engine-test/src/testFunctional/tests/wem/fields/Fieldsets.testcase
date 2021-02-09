@@ -49,33 +49,24 @@ definition {
 		// TODO LPS-107630 AddFieldsetOnOtherFieldsetAlreadyOnBuilder pending implementation
 	}
 
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@description = "This is a test for LPS-107630. Make sure Fieldsets can be duplicated"
 	@priority = "5"
 	test DuplicateFieldset {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "DuplicateTest",
-			structureName = "DuplicateTest");
 
 		DataEngine.addFields(fieldNameList = "Text,Image,Upload");
 
-		WebContentStructures.saveCP(structureName = "DuplicateTest");
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContentStructures.addCP(
-			structureDescription = "DuplicateTest1",
-			structureName = "DuplicateTest1");
+		WebContentStructures.addCP(structureName = "WC Structure Name Duplicate");
 
 		DataEngine.addFieldsets(
-			fieldsetLabel = "DuplicateTest",
-			fieldsetName = "DuplicateTest");
+			fieldsetLabel = "WC Structure Name",
+			fieldsetName = "WC Structure Name");
 
-		DataEngine.duplicate(fieldsetLabel = "DuplicateTest");
+		DataEngine.duplicate(fieldsetLabel = "WC Structure Name");
 
 		AssertElementPresent(
-			key_fieldsetLabel = "Copy of DuplicateTest",
+			key_fieldsetLabel = "Copy of WC Structure Name",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		for (var fieldLabelList : list "Copy of Text,Copy of Image,Copy of Upload") {
@@ -84,7 +75,7 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		WebContentStructures.saveCP(structureName = "DuplicateTest1");
+		WebContentStructures.saveCP(structureName = "WC Structure Name Duplicate");
 	}
 
 	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"

@@ -78,14 +78,9 @@ definition {
 		WebContentStructures.saveCP(structureName = "WC Structure Name Duplicate");
 	}
 
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@description = "This is a test for LPS-107630. Make sure the Fieldset does not crash when editing its properties directly from Object sidebar during reuse in a new form view"
 	@priority = "4"
 	test EditFieldsetPropertiesFromSideBar {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
@@ -115,11 +110,9 @@ definition {
 			fieldHelp = "Edited Help Text",
 			fieldsetModal = "true");
 
-		Click(locator1 = "Modal#SAVE_BUTTON");
+		Modal.save();
 
-		Click(
-			key_text = "Propagate",
-			locator1 = "Button#ANY");
+		FormViewBuilder.propagateChange();
 
 		Alert.viewSuccessMessage();
 

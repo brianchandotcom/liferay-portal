@@ -22,6 +22,7 @@ import com.liferay.analytics.reports.web.internal.model.OrganicTrafficChannelImp
 import com.liferay.analytics.reports.web.internal.model.PaidTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.ReferringSocialMedia;
 import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
+import com.liferay.analytics.reports.web.internal.model.SocialTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
@@ -297,7 +298,11 @@ public class AnalyticsReportsDataProviderTest {
 							"organic", 3849L
 						).put(
 							"paid", 235L
+						).put(
+							"social", 389L
 						).toString()
+					).put(
+						"/social-page-referrers", "{}"
 					).put(
 						"/traffic-sources",
 						JSONUtil.putAll(
@@ -323,13 +328,16 @@ public class AnalyticsReportsDataProviderTest {
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			trafficChannels.toString(), 2, trafficChannels.size());
+			trafficChannels.toString(), 3, trafficChannels.size());
 		Assert.assertEquals(
-			String.valueOf(new OrganicTrafficChannelImpl(null, 3849L, 94.2D)),
+			String.valueOf(new OrganicTrafficChannelImpl(null, 3849L, 86.0D)),
 			String.valueOf(trafficChannels.get("organic")));
 		Assert.assertEquals(
-			String.valueOf(new PaidTrafficChannelImpl(null, 235L, 5.8D)),
+			String.valueOf(new PaidTrafficChannelImpl(null, 235L, 5.3D)),
 			String.valueOf(trafficChannels.get("paid")));
+		Assert.assertEquals(
+			String.valueOf(new SocialTrafficChannelImpl(null, 389L, 8.7D)),
+			String.valueOf(trafficChannels.get("social")));
 	}
 
 	@Test(expected = PortalException.class)
@@ -357,6 +365,8 @@ public class AnalyticsReportsDataProviderTest {
 						).put(
 							"paid", 206L
 						).toString()
+					).put(
+						"/social-page-referrers", "{}"
 					).put(
 						"/traffic-sources",
 						JSONUtil.putAll(
@@ -455,6 +465,60 @@ public class AnalyticsReportsDataProviderTest {
 									"dxp enterprises", 1, 4400, 206L)))),
 					206L, 6.06D)),
 			String.valueOf(trafficChannels.get("paid")));
+	}
+
+	@Test
+	public void testGetTrafficChannelsWithReferringSocialMedia()
+		throws Exception {
+
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			new AnalyticsReportsDataProvider(
+				_getHttp(
+					HashMapBuilder.put(
+						"/acquisition-channels",
+						JSONUtil.put(
+							"organic", 3849L
+						).put(
+							"paid", 235L
+						).put(
+							"social", 389L
+						).toString()
+					).put(
+						"/social-page-referrers",
+						JSONUtil.put(
+							"facebook", 389.0
+						).toString()
+					).put(
+						"/traffic-sources",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"name", "organic"
+							).put(
+								"trafficAmount", 7849L
+							).put(
+								"trafficShare", 97.25D
+							),
+							JSONUtil.put(
+								"name", "paid"
+							).put(
+								"trafficAmount", 135L
+							).put(
+								"trafficShare", 56.75D
+							)
+						).toString()
+					).build()));
+
+		Map<String, TrafficChannel> trafficChannels =
+			analyticsReportsDataProvider.getTrafficChannels(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			String.valueOf(
+				new SocialTrafficChannelImpl(
+					Collections.singletonList(
+						new ReferringSocialMedia("facebook", 389)),
+					389L, 8.7D)),
+			String.valueOf(trafficChannels.get("social")));
 	}
 
 	@Test

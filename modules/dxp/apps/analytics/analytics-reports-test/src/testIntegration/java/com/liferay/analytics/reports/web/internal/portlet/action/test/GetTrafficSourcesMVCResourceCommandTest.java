@@ -115,6 +115,13 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					"/api/1.0/pages/acquisition-channels",
 					() -> JSONUtil.put(
 						"organic", 3192L
+					).put(
+						"social", 385L
+					).toString()
+				).put(
+					"/api/1.0/pages/social-page-referrers",
+					() -> JSONUtil.put(
+						"facebook", 385.0
 					).toString()
 				).put(
 					"/api/seo/1.0/traffic-sources",
@@ -195,7 +202,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					Assert.assertEquals("organic", jsonObject1.get("name"));
 
 					Assert.assertEquals(
-						100.00D, Double.valueOf(jsonObject1.getString("share")),
+						89.2D, Double.valueOf(jsonObject1.getString("share")),
 						0.0);
 
 					Assert.assertEquals(3192, jsonObject1.get("value"));
@@ -227,13 +234,26 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 					JSONObject jsonObject2 = jsonArray.getJSONObject(1);
 
-					Assert.assertEquals("referral", jsonObject2.get("name"));
+					Assert.assertEquals("social", jsonObject2.get("name"));
 
-					Assert.assertEquals(0, jsonObject2.getInt("value"));
+					Assert.assertEquals(385, jsonObject2.getInt("value"));
+
+					JSONArray referringSocialMediaJSONArray =
+						jsonObject2.getJSONArray("referringSocialMedia");
+
+					JSONObject referringSocialMediaJSONObject =
+						referringSocialMediaJSONArray.getJSONObject(0);
+
+					Assert.assertEquals(
+						"facebook", referringSocialMediaJSONObject.get("name"));
+
+					Assert.assertEquals(
+						385,
+						referringSocialMediaJSONObject.get("trafficAmount"));
 
 					JSONObject jsonObject3 = jsonArray.getJSONObject(2);
 
-					Assert.assertEquals("social", jsonObject3.get("name"));
+					Assert.assertEquals("referral", jsonObject3.get("name"));
 
 					Assert.assertEquals(0, jsonObject3.getInt("value"));
 

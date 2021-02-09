@@ -17,10 +17,12 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.image;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.form.field.type.image.ImageDDMFormFieldItemSelectorCriterionContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
@@ -44,9 +46,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletURL;
 
@@ -54,6 +59,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Carlos Lancha
@@ -107,6 +114,8 @@ public class ImageDDMFormFieldTemplateContextContributor
 			return null;
 		}
 
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
 		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
@@ -120,17 +129,36 @@ public class ImageDDMFormFieldTemplateContextContributor
 		journalItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
+		itemSelectorCriteria.add(journalItemSelectorCriterion);
+
 		ImageItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
 
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new DownloadFileEntryItemSelectorReturnType());
 
+		itemSelectorCriteria.add(imageItemSelectorCriterion);
+
+		for (ImageDDMFormFieldItemSelectorCriterionContributor
+				imageDDMFormFieldItemSelectorCriterionContributor :
+					_imageDDMFormFieldItemSelectorCriterionContributors) {
+
+			if (!imageDDMFormFieldItemSelectorCriterionContributor.isVisible(
+					ddmFormFieldRenderingContext)) {
+
+				continue;
+			}
+
+			itemSelectorCriteria.add(
+				imageDDMFormFieldItemSelectorCriterionContributor.
+					getItemSelectorCriterion(ddmFormFieldRenderingContext));
+		}
+
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			ddmFormFieldRenderingContext.getPortletNamespace() +
 				"selectDocumentLibrary",
-			journalItemSelectorCriterion, imageItemSelectorCriterion);
+			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
 
 		return itemSelectorURL.toString();
 	}
@@ -167,6 +195,26 @@ public class ImageDDMFormFieldTemplateContextContributor
 		}
 
 		return value;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC
+	)
+	protected void setImageDDMFormFieldItemSelectorCriterionContributor(
+		ImageDDMFormFieldItemSelectorCriterionContributor
+			imageDDMFormFieldItemSelectorCriterionContributor) {
+
+		_imageDDMFormFieldItemSelectorCriterionContributors.add(
+			imageDDMFormFieldItemSelectorCriterionContributor);
+	}
+
+	protected void unsetImageDDMFormFieldItemSelectorCriterionContributor(
+		ImageDDMFormFieldItemSelectorCriterionContributor
+			imageDDMFormFieldItemSelectorCriterionContributor) {
+
+		_imageDDMFormFieldItemSelectorCriterionContributors.remove(
+			imageDDMFormFieldItemSelectorCriterionContributor);
 	}
 
 	private FileEntry _getFileEntry(JSONObject valueJSONObject) {
@@ -260,6 +308,10 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	private final List<ImageDDMFormFieldItemSelectorCriterionContributor>
+		_imageDDMFormFieldItemSelectorCriterionContributors =
+			new CopyOnWriteArrayList<>();
 
 	@Reference
 	private ItemSelector _itemSelector;

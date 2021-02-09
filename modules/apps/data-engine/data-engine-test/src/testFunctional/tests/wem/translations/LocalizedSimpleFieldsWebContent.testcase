@@ -338,7 +338,277 @@ definition {
 	test TranslateWebContentWithAllFields {
 		property portal.acceptance = "false";
 
-		// TODO LPS-122317 TranslateWebContentWithAllFields pending implementation
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Separator,Link to Page");
+
+		WebContentStructures.addLocalization(
+			locale = "zh-CN",
+			localization1Name = "网页内容结构");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "文本框");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Select from List",
+			label = "下拉列表");
+
+		DataEngine.addFieldOption(
+			index = "1",
+			optionValue = "选择 2");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Single Selection",
+			label = "单选列表框");
+
+		DataEngine.addFieldOption(
+			index = "1",
+			optionValue = "选择 3");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Multiple Selection",
+			label = "复选列表框");
+
+		DataEngine.addFieldOption(
+			index = "1",
+			optionValue = "选择 1");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Grid",
+			label = "网格");
+
+		var index = "1";
+
+		for (var optionValue : list "R1,R2") {
+			DataEngine.addFieldOption(
+				index = "${index}",
+				optionFieldLabel = "Rows",
+				optionValue = "行 ${index}");
+
+			DataEngine.editFieldReferenceOfFieldOption(
+				fieldReferenceOfFieldOption = "${optionValue}",
+				index = "${index}",
+				optionFieldLabel = "Rows");
+
+			var index = ${index} + 1;
+		}
+
+		var index = "1";
+
+		for (var optionValue : list "C1,C2") {
+			DataEngine.addFieldOption(
+				index = "${index}",
+				optionFieldLabel = "Columns",
+				optionValue = "列 ${index}");
+
+			DataEngine.editFieldReferenceOfFieldOption(
+				fieldReferenceOfFieldOption = "${optionValue}",
+				index = "${index}",
+				optionFieldLabel = "Rows");
+
+			var index = ${index} + 1;
+		}
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Date",
+			label = "日期");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Numeric",
+			label = "数字");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Image",
+			label = "图片");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Rich Text",
+			label = "多格式文本框");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Upload",
+			label = "文件");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Color",
+			label = "颜色");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Web Content",
+			label = "网页");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Geolocation",
+			label = "地理位置");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Separator",
+			label = "分割线");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Link to Page",
+			label = "网页链接");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
+			templateName = "WC Template Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "WC Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			column = "1",
+			navTab = "Web Content Images",
+			row = "1",
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentColor = "FF0D0D",
+			webContentDate = "10/10/2020",
+			webContentGrid = "true",
+			webContentImage = "Document_3.png",
+			webContentLinkToPage = "Site Page",
+			webContentMultipleSelection = "Option 1",
+			webContentNumeric = "9",
+			webContentRichText = "This is a Rich Text field",
+			webContentSelectFromList = "Option 2",
+			webContentSingleSelection = "Option 3",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title",
+			webContentUpload = "Document_1.jpg",
+			webContentWebContent = "WC Title");
+
+		PortletEntry.publish();
+
+		WebContentAdmin.gotoEntry(entry = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addTranslateWithStructureCP(
+			column = "1",
+			navTab = "Web Content Images",
+			row = "1",
+			webContentColor = "FF0D0D",
+			webContentDate = "10/10/2020",
+			webContentGrid = "true",
+			webContentImage = "Document_3.png",
+			webContentLinkToPage = "Site Page",
+			webContentMultipleSelection = "选择 1",
+			webContentNumeric = "9",
+			webContentRichText = "这是多格式文本框",
+			webContentSelectFromList = "选择 2",
+			webContentSingleSelection = "选择 3",
+			webContentText = "这是文本框",
+			webContentTitle = "中文网页题目",
+			webContentUpload = "Document_1.jpg",
+			webContentWebContent = "WC Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentAdmin.gotoEntry(entry = "Web Content Title3");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "中文网页题目");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "文本框",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "这是文本框");
+
+		AssertElementPresent(
+			key_field = "选择 2",
+			key_fieldFieldLabel = "下拉列表",
+			locator1 = "WCEditWebContent#SELECT_FIELD_VALUE");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "单选列表框",
+			key_optionValue = "选择 3",
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "网格",
+			locator1 = "WCEditWebContent#GRID_OPTION_1");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "日期",
+			locator1 = "WCEditWebContent#DATE_INPUT",
+			value1 = "2020/10/10");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "数字",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "9");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "图片",
+			locator1 = "WCEditWebContent#SELECT_BUTTON_1",
+			value1 = "Document_3.png");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "这是多格式文本框");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "文件",
+			locator1 = "WCEditWebContent#SELECT_BUTTON_2",
+			value1 = "Document_1.jpg");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "颜色",
+			locator1 = "WCEditWebContent#SELECT_BUTTON_2",
+			value1 = "FF0D0D");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "网页",
+			locator1 = "WCEditWebContent#SELECT_BUTTON_3",
+			value1 = "WC Title");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "地理位置",
+			locator1 = "WCEditWebContent#ANY_INPUT_LABEL");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "分割线",
+			locator1 = "WCEditWebContent#ANY_INPUT_LABEL");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "网页链接",
+			locator1 = "WCEditWebContent#SELECT_BUTTON_3",
+			value1 = "Public Pages > Site Page");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

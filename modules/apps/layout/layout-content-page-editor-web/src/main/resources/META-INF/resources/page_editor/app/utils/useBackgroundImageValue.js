@@ -48,7 +48,13 @@ function loadBackgroundImage(backgroundImage, getFieldValue) {
 		{...(backgroundImage || {}), defaultValue: backgroundImage?.url || ''},
 		null,
 		getFieldValue
-	).then((editableValue) => editableValue.fieldValue?.url);
+	).then(
+		(editableValue) =>
+			editableValue.fieldValue?.url ||
+			editableValue.url ||
+			editableValue ||
+			''
+	);
 }
 
 function loadBackgroundImageMediaQueries(elementId, backgroundImage) {

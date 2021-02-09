@@ -129,9 +129,9 @@ definition {
 	test EditLabelOfSeparator {
 		property portal.acceptance = "false";
 
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Separator",
-			label = "Edited Separator");
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Separator",
+			fieldFieldLabelEdit = "Edited Separator");
 
 		WebContentStructures.saveCP();
 

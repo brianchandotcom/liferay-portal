@@ -17,6 +17,10 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
 	}
 
 	tearDown {
@@ -33,23 +37,17 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "5"
 	test DragAndDropRichTextToBuilder {
-		DataEngine.addField(
-			fieldFieldLabel = "LPS98076",
-			fieldName = "Rich Text");
-
+		
 		DataEngine.viewField(
-			fieldFieldLabel = "LPS98076",
+			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "5"
 	test ExcludeRepeatedRichTextOnWebContent {
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Rich Text");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Test");
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Rich Text");
 
 		WebContentStructures.saveCP();
 
@@ -59,7 +57,7 @@ definition {
 
 		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
-		DataEngine.addRepeatableField(fieldName = "Test");
+		DataEngine.addRepeatableField(fieldName = "Rich Text");
 
 		DataEngine.assertFieldRepeated(
 			fieldName = "RichText",
@@ -75,11 +73,8 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "5"
 	test InsertTextOnRichTextOnWebContent {
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Rich Text");
 
-		DataEngine.editFieldRequired(fieldFieldLabel = "Test");
+		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
 
 		WebContentStructures.saveCP();
 
@@ -91,14 +86,14 @@ definition {
 
 		CKEditor.addContentInWebContent(
 			content = "Hello",
-			fieldLabel = "Test");
+			fieldLabel = "Rich Text");
 
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		SelectFrame.selectFrameNoLoading(
-			key_fieldLabel = "Test",
+			key_fieldLabel = "Rich Text",
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 		AssertTextEquals(
@@ -109,9 +104,6 @@ definition {
 	@description = "This is a test for LPS-98076. Verify that a user can localize the field data."
 	@priority = "4"
 	test LocalizationOfRichTextPersists {
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
@@ -193,11 +185,8 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "5"
 	test RepeatRichTextOnWebContent {
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Rich Text");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Test");
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Rich Text");
 
 		WebContentStructures.saveCP();
 
@@ -207,7 +196,7 @@ definition {
 
 		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
 
-		DataEngine.addRepeatableField(fieldName = "Test");
+		DataEngine.addRepeatableField(fieldName = "Rich Text");
 
 		DataEngine.assertFieldRepeated(
 			fieldName = "RichText",
@@ -227,9 +216,6 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "3"
 	test SetFieldReferenceOfRichTextWithInvalidCharacters {
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
 
 		DataEngine.editFieldReferenceWithInvalidCharacters(
 			assertFieldReference = "TestInvalidReference",
@@ -256,20 +242,17 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "5"
 	test SetHelpTextOfRichText {
-		DataEngine.addField(
-			fieldFieldLabel = "FieldTest",
-			fieldName = "Rich Text");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "FieldTest",
+			fieldFieldLabel = "Rich Text",
 			fieldHelp = "Choose as many content pieces as you would like to feature.");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "FieldTest",
+			fieldFieldLabel = "Rich Text",
 			fieldName = "Rich Text");
 
 		AssertTextEquals(
-			key_fieldFieldLabel = "FieldTest",
+			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
 			value1 = "Choose as many content pieces as you would like to feature.");
 	}
@@ -282,12 +265,12 @@ definition {
 			fieldName = "Rich Text");
 
 		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Test",
-			label = "LPS98076 Tests");
+			fieldLabel = "Rich Text",
+			label = "Rich Text Edited");
 
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#SIDEBAR_BASIC_LABEL",
-			value1 = "LPS98076 Tests");
+			value1 = "Rich Text Edited");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
@@ -302,9 +285,6 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test SetRichTextSearchableAsByText {
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
 
 		Click(
 			key_fieldFieldLabel = "Rich Text",
@@ -372,9 +352,6 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "3"
 	test ShowAndHideRichTextLabel {
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
 
 		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Rich Text",
@@ -404,9 +381,6 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test VerifyHelpTextofRichTextOnWebContent {
-		DataEngine.addField(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
@@ -430,16 +404,13 @@ definition {
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test VerifyRequiredPropertyOfRichText {
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Rich Text");
 
-		DataEngine.editFieldRequired(fieldFieldLabel = "Test");
+		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
 
 		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Test",
+			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Test");
+			value1 = "Rich Text");
 
 		Uncheck.uncheckToggleSwitch(
 			checkboxName = "Required Field",

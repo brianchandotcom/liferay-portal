@@ -17,7 +17,7 @@ package com.liferay.portal.crypto.hash.internal;
 import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.exception.CryptoHashException;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.security.MessageDigest;
@@ -55,10 +55,10 @@ public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
 			_messageDigestCryptoHashProvider.generate(salt, input), hash);
 	}
 
-	private final MessageDigestCryptoHashProvider
-		_messageDigestCryptoHashProvider;
+	private final CryptoHashProvider _messageDigestCryptoHashProvider;
 
-	private static class MessageDigestCryptoHashProvider {
+	private static class MessageDigestCryptoHashProvider
+		implements CryptoHashProvider {
 
 		public MessageDigestCryptoHashProvider()
 			throws NoSuchAlgorithmException {
@@ -68,16 +68,6 @@ public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
 
 		public byte[] generate(byte[] salt, byte[] input) {
 			return _messageDigest.digest(ArrayUtil.append(salt, input));
-		}
-
-		public byte[] generateSalt() {
-			byte[] salt = new byte[16];
-
-			for (int i = 0; i < 16; ++i) {
-				salt[i] = SecureRandomUtil.nextByte();
-			}
-
-			return salt;
 		}
 
 		private final MessageDigest _messageDigest;

@@ -1063,6 +1063,15 @@ public class StructuredContentResourceImpl
 						JournalArticle.class.getName(),
 						journalArticle.getGroupId())
 				).put(
+					"get-rendered-content-by-display-page",
+					addAction(
+						"VIEW", journalArticle.getResourcePrimKey(),
+						"getStructuredContentRenderedContentByDisplayPage" +
+							"DisplayPageKey",
+						journalArticle.getUserId(),
+						JournalArticle.class.getName(),
+						journalArticle.getGroupId())
+				).put(
 					"replace",
 					addAction(
 						"UPDATE", journalArticle.getResourcePrimKey(),

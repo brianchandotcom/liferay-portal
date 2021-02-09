@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.search.sort;
+package com.liferay.headless.delivery.search.sort;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;
+import com.liferay.headless.delivery.dynamic.data.mapping.DDMStructureField;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;

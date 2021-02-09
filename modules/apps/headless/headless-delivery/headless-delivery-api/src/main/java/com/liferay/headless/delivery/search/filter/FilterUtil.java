@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.search.filter;
+package com.liferay.headless.delivery.search.filter;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;
+import com.liferay.headless.delivery.dynamic.data.mapping.DDMStructureField;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.LocaleUtil;

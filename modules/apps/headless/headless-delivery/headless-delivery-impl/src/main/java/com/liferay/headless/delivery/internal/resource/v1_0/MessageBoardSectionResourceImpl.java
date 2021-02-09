@@ -23,10 +23,10 @@ import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardSec
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
-import com.liferay.headless.delivery.internal.search.aggregation.AggregationUtil;
-import com.liferay.headless.delivery.internal.search.filter.FilterUtil;
-import com.liferay.headless.delivery.internal.search.sort.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
+import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
+import com.liferay.headless.delivery.search.filter.FilterUtil;
+import com.liferay.headless.delivery.search.sort.SortUtil;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.petra.function.UnsafeConsumer;

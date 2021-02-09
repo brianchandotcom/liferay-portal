@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.search.aggregation;
+package com.liferay.headless.delivery.search.aggregation;
 
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.headless.delivery.internal.dynamic.data.mapping.DDMStructureField;
+import com.liferay.headless.delivery.dynamic.data.mapping.DDMStructureField;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;

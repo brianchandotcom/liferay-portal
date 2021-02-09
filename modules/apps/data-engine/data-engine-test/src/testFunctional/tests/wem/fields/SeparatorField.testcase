@@ -128,33 +128,10 @@ definition {
 			fieldName = "Separator");
 	}
 
-	@description = "This is a test for LPS-98081. Edit Field Reference with valid characters"
-	@ignore = "true"
-	@priority = "5"
-	test EditReferenceOfSeparator {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldReference(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator",
-			fieldReference = "EditedSeparator");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		DataEngine.viewFieldReference(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator",
-			fieldReference = "EditedSeparator");
-
-		// TODO LPS-98081 EditReferenceOfSeparator pending implementation
-	}
-
-	@description = "This is a test for LPS-98081. Edit Field Reference with invalid characters"
+	@description = "This is a test for LPS-98081. Edit Field Reference with valid and invalid characters"
 	@priority = "4"
-	test EditReferenceOfSeparatorWithInvalidCharacters {
-		DataEngine.editFieldReference(
+	test EditReferenceOfSeparatorWithValidAndInvalidCharacters {
+		DataEngine.editFieldReferenceWithInvalidCharacters(
 			assertFieldReference = "EditedSeparator",
 			fieldFieldLabel = "Separator",
 			fieldReference = "Edited Separator @#@$%$%%");
@@ -167,6 +144,20 @@ definition {
 			fieldFieldLabel = "Separator",
 			fieldName = "Separator",
 			fieldReference = "EditedSeparator");
+		
+		DataEngine.editFieldReferenceWithInvalidCharacters(
+			assertFieldReference = "EditedSeparatorValidCharacters",
+			fieldFieldLabel = "Separator",
+			fieldReference = "EditedSeparatorValidCharacters");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.viewFieldReference(
+			fieldFieldLabel = "Separator",
+			fieldName = "Separator",
+			fieldReference = "EditedSeparatorValidCharacters");
 	}
 
 	@description = "This is a test for LPS-98081. Verify Repeatable behavior on Web Content"

@@ -72,7 +72,7 @@ public class DLFileEntryAutoTaggerTest {
 
 	@Test
 	public void testAutoTagsABMPImage() throws Exception {
-		_withTensorflowAutoTagProviderEnabled(
+		_withTensorFlowAutoTagProviderEnabled(
 			() -> {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
@@ -93,7 +93,7 @@ public class DLFileEntryAutoTaggerTest {
 
 	@Test
 	public void testAutoTagsAJPEGImage() throws Exception {
-		_withTensorflowAutoTagProviderEnabled(
+		_withTensorFlowAutoTagProviderEnabled(
 			() -> {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
@@ -113,7 +113,7 @@ public class DLFileEntryAutoTaggerTest {
 
 	@Test
 	public void testAutoTagsAPNGImage() throws Exception {
-		_withTensorflowAutoTagProviderEnabled(
+		_withTensorFlowAutoTagProviderEnabled(
 			() -> {
 				FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 					_serviceContext.getScopeGroupId(),
@@ -141,7 +141,7 @@ public class DLFileEntryAutoTaggerTest {
 		throw new AssertionError("The asset entry was not tagged with " + tag);
 	}
 
-	private void _withTensorflowAutoTagProviderEnabled(
+	private void _withTensorFlowAutoTagProviderEnabled(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 

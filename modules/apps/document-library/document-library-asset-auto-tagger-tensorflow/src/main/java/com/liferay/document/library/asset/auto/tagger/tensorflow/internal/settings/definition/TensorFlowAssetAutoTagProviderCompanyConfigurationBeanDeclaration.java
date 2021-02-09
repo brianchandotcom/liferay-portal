@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class TensorflowAssetAutoTagProviderCompanyConfigurationBeanDeclaration
+public class TensorFlowAssetAutoTagProviderCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override

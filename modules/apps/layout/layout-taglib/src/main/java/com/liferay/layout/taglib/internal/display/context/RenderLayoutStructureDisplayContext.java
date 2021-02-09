@@ -839,16 +839,16 @@ public class RenderLayoutStructureDisplayContext {
 		return _assetCategoryIds;
 	}
 
-	private String _getBackgroundImage(JSONObject rowConfigJSONObject)
+	private String _getBackgroundImage(JSONObject jsonObject)
 		throws Exception {
 
-		if (rowConfigJSONObject == null) {
+		if (jsonObject == null) {
 			return StringPool.BLANK;
 		}
 
 		String mappedCollectionValue = StringPool.BLANK;
 
-		String collectionFieldId = rowConfigJSONObject.getString(
+		String collectionFieldId = jsonObject.getString(
 			"collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
@@ -863,7 +863,7 @@ public class RenderLayoutStructureDisplayContext {
 			return mappedCollectionValue;
 		}
 
-		String mappedField = rowConfigJSONObject.getString("mappedField");
+		String mappedField = jsonObject.getString("mappedField");
 
 		if (Validator.isNotNull(mappedField)) {
 			Object infoItem = _httpServletRequest.getAttribute(
@@ -909,11 +909,11 @@ public class RenderLayoutStructureDisplayContext {
 			}
 		}
 
-		String fieldId = rowConfigJSONObject.getString("fieldId");
+		String fieldId = jsonObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
-			long classNameId = rowConfigJSONObject.getLong("classNameId");
-			long classPK = rowConfigJSONObject.getLong("classPK");
+			long classNameId = jsonObject.getLong("classNameId");
+			long classPK = jsonObject.getLong("classPK");
 
 			if ((classNameId != 0L) && (classPK != 0L)) {
 				String className = PortalUtil.getClassName(classNameId);
@@ -966,7 +966,7 @@ public class RenderLayoutStructureDisplayContext {
 			}
 		}
 
-		String backgroundImageURL = rowConfigJSONObject.getString("url");
+		String backgroundImageURL = jsonObject.getString("url");
 
 		if (Validator.isNotNull(backgroundImageURL)) {
 			return backgroundImageURL;

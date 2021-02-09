@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipFileUtil;
 import com.liferay.portal.util.JarUtil;
-import com.liferay.portal.util.PortalInstances;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,16 +85,14 @@ public class TensorFlowDownloadUtil {
 		throws PortalException {
 
 		return DLStoreUtil.getFileAsStream(
-			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			_getNativeLibraryFileName());
+			_COMPANY_ID, CompanyConstants.SYSTEM, _getNativeLibraryFileName());
 	}
 
 	public static boolean isDownloaded() throws PortalException {
 		if (DLStoreUtil.hasFile(
-				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-				_getModelFileName()) &&
+				_COMPANY_ID, CompanyConstants.SYSTEM, _getModelFileName()) &&
 			DLStoreUtil.hasFile(
-				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+				_COMPANY_ID, CompanyConstants.SYSTEM,
 				_getNativeLibraryFileName())) {
 
 			return true;
@@ -116,8 +113,7 @@ public class TensorFlowDownloadUtil {
 		JarUtil.downloadAndInstallJar(new URL(url), tempFile.toPath());
 
 		DLStoreUtil.addFile(
-			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			fileName, false, tempFile);
+			_COMPANY_ID, CompanyConstants.SYSTEM, fileName, false, tempFile);
 	}
 
 	private static String _getFileName(String fileName) {
@@ -133,8 +129,7 @@ public class TensorFlowDownloadUtil {
 		return ZipFileUtil.openInputStream(
 			FileUtil.createTempFile(
 				DLStoreUtil.getFileAsStream(
-					PortalInstances.getDefaultCompanyId(),
-					CompanyConstants.SYSTEM, _getModelFileName())),
+					_COMPANY_ID, CompanyConstants.SYSTEM, _getModelFileName())),
 			fileName);
 	}
 
@@ -145,6 +140,8 @@ public class TensorFlowDownloadUtil {
 	private static String _getNativeLibraryFileName() {
 		return _getFileName(NATIVE_LIBRARY_FILE_NAME);
 	}
+
+	private static final long _COMPANY_ID = 0;
 
 	private static boolean _downloadFailed;
 

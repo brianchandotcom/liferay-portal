@@ -47,8 +47,7 @@ if (cpSku != null) {
 				<div class="availability d-flex mb-4">
 					<div>
 						<commerce-ui:availability-label
-							lowStock="<%= cpContentModel.isLowStock() %>"
-							stockQuantity="<%= cpContentModel.getStockQuantity() %>"
+							namespace="<%= liferayPortletResponse.getNamespace() %>"
 							willUpdate="<%= true %>"
 						/>
 					</div>

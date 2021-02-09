@@ -216,7 +216,8 @@ const FragmentContent = ({
 	const elementId = useId();
 	const backgroundImageValue = useBackgroundImageValue(
 		elementId,
-		backgroundImage
+		backgroundImage,
+		getFieldValue
 	);
 
 	const style = {};

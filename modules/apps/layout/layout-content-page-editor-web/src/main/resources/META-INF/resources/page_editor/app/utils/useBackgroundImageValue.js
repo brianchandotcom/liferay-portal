@@ -16,10 +16,13 @@ import {useIsMounted} from 'frontend-js-react-web';
 import {useEffect, useState} from 'react';
 
 import ImageService from '../services/ImageService';
-import InfoItemService from '../services/InfoItemService';
 import resolveEditableValue from './editable-value/resolveEditableValue';
 
-export default function useBackgroundImageValue(elementId, backgroundImage) {
+export default function useBackgroundImageValue(
+	elementId,
+	backgroundImage,
+	getFieldValue
+) {
 	const isMounted = useIsMounted();
 	const [backgroundImageValue, setBackgroundImageValue] = useState({
 		mediaQueries: '',
@@ -28,23 +31,23 @@ export default function useBackgroundImageValue(elementId, backgroundImage) {
 
 	useEffect(() => {
 		Promise.all([
-			loadBackgroundImage(backgroundImage),
+			loadBackgroundImage(backgroundImage, getFieldValue),
 			loadBackgroundImageMediaQueries(elementId, backgroundImage),
 		]).then(([url, mediaQueries]) => {
 			if (isMounted()) {
 				setBackgroundImageValue({mediaQueries, url});
 			}
 		});
-	}, [elementId, backgroundImage, isMounted]);
+	}, [elementId, backgroundImage, isMounted, getFieldValue]);
 
 	return backgroundImageValue;
 }
 
-function loadBackgroundImage(backgroundImage) {
+function loadBackgroundImage(backgroundImage, getFieldValue) {
 	return resolveEditableValue(
 		{...(backgroundImage || {}), defaultValue: backgroundImage?.url || ''},
 		null,
-		InfoItemService.getInfoItemFieldValue
+		getFieldValue
 	).then((editableValue) => editableValue.fieldValue?.url);
 }
 

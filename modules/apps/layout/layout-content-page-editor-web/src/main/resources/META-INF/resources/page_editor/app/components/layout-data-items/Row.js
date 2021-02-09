@@ -24,6 +24,7 @@ import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
+import {useGetFieldValue} from '../CollectionItemContext';
 
 const Row = React.forwardRef(
 	({children, className, item, withinTopper = false}, ref) => {
@@ -68,9 +69,11 @@ const Row = React.forwardRef(
 		} = itemConfig.styles;
 
 		const elementId = useId();
+		const getFieldValue = useGetFieldValue();
 		const backgroundImageValue = useBackgroundImageValue(
 			elementId,
-			backgroundImage
+			backgroundImage,
+			getFieldValue
 		);
 
 		const style = {};

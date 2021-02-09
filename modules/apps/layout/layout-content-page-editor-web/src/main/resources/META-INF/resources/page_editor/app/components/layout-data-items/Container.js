@@ -76,7 +76,8 @@ const Container = React.forwardRef(
 
 		const backgroundImageValue = useBackgroundImageValue(
 			elementId,
-			backgroundImage
+			backgroundImage,
+			getFieldValue
 		);
 
 		useEffect(() => {

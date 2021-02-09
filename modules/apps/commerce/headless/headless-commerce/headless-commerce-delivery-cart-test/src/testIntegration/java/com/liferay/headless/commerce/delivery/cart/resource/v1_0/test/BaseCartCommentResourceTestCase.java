@@ -72,7 +72,6 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -242,7 +241,7 @@ public abstract class BaseCartCommentResourceTestCase {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"graphql.execution.SimpleDataFetcherExceptionHandler",
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 				invokeGraphQLQuery(

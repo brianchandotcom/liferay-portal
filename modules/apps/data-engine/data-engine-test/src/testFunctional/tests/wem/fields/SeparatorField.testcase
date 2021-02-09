@@ -168,7 +168,7 @@ definition {
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@priority = "4"
 	test EditReferenceOfSeparatorWithInvalidCharacters {
-		DataEngine.editFieldReferenceWithInvalidCharacters(
+		DataEngine.editFieldReference(
 			assertFieldReference = "EditedSeparator",
 			fieldFieldLabel = "Separator",
 			fieldReference = "Edited Separator @#@$%$%%");
@@ -177,17 +177,10 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		Click(
-			key_fieldFieldLabel = "Separator",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		AssertTextEquals.assertValue(
-			key_fieldLabel = "Field Reference",
-			key_fieldName = "fieldReference",
-			locator1 = "Sidebar#TEXT_INPUT",
-			value1 = "EditedSeparator");
+		DataEngine.viewFieldReference(
+			fieldFieldLabel = "Separator",
+			fieldName = "Separator",
+			fieldReference = "EditedSeparator");
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

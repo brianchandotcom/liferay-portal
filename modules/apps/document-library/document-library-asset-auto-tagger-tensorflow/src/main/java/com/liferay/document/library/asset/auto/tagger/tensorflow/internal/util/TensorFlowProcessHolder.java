@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util;
 
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.osgi.commands.TensorflowAssetAutoTagProviderOSGiCommands;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.osgi.commands.TensorFlowAssetAutoTagProviderOSGiCommands;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.InitializeProcessCallable;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.TensorFlowDaemonProcessCallable;
 import com.liferay.petra.process.ProcessCallable;
@@ -55,28 +55,28 @@ import org.osgi.framework.Constants;
 /**
  * @author Shuyang Zhou
  */
-public class TensorflowProcessHolder {
+public class TensorFlowProcessHolder {
 
 	public static void resetCounter() {
 		_relanuchCounter = 0;
 	}
 
-	public TensorflowProcessHolder(
+	public TensorFlowProcessHolder(
 			ProcessExecutor processExecutor, Bundle bundle)
 		throws Exception {
 
 		_processExecutor = processExecutor;
 		_bundle = bundle;
 
-		_tensorflowWorkDir = bundle.getDataFile("tensorflow-workdir");
+		_tensorFlowWorkDir = bundle.getDataFile("tensorflow-workdir");
 
-		_tensorflowWorkDir.mkdirs();
+		_tensorFlowWorkDir.mkdirs();
 	}
 
 	public void destroy() {
 		_stop();
 
-		FileUtil.deltree(_tensorflowWorkDir);
+		FileUtil.deltree(_tensorFlowWorkDir);
 	}
 
 	public <T extends Serializable> T execute(
@@ -150,7 +150,7 @@ public class TensorflowProcessHolder {
 		}
 
 		ProtectionDomain protectionDomain =
-			TensorflowProcessHolder.class.getProtectionDomain();
+			TensorFlowProcessHolder.class.getProtectionDomain();
 
 		CodeSource codeSource = protectionDomain.getCodeSource();
 
@@ -203,7 +203,7 @@ public class TensorflowProcessHolder {
 				}
 			});
 		builder.setReactClassLoader(
-			TensorflowProcessHolder.class.getClassLoader());
+			TensorFlowProcessHolder.class.getClassLoader());
 		builder.setRuntimeClassPath(classPath);
 
 		return builder.build();
@@ -221,13 +221,13 @@ public class TensorflowProcessHolder {
 				if (_relanuchCounter >= maxRelaunch) {
 					throw new SystemException(
 						StringBundler.concat(
-							"The Tensorflow process has crashed more than ",
+							"The TensorFlow process has crashed more than ",
 							maxRelaunch,
 							" times. It is now disabled. To enable it again ",
 							"please open the Gogo shell and run ",
-							TensorflowAssetAutoTagProviderOSGiCommands.SCOPE,
+							TensorFlowAssetAutoTagProviderOSGiCommands.SCOPE,
 							StringPool.COLON,
-							TensorflowAssetAutoTagProviderOSGiCommands.
+							TensorFlowAssetAutoTagProviderOSGiCommands.
 								RESET_PROCESS_COUNTER));
 				}
 
@@ -235,7 +235,7 @@ public class TensorflowProcessHolder {
 
 				if (_processConfig == null) {
 					_processConfig = _createProcessConfig(
-						_bundle, _tensorflowWorkDir.toPath());
+						_bundle, _tensorFlowWorkDir.toPath());
 				}
 
 				_processChannel = processExecutor.execute(
@@ -268,7 +268,7 @@ public class TensorflowProcessHolder {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TensorflowProcessHolder.class);
+		TensorFlowProcessHolder.class);
 
 	private static long _lastLaunchTime;
 	private static volatile int _relanuchCounter;
@@ -277,6 +277,6 @@ public class TensorflowProcessHolder {
 	private volatile ProcessChannel<String> _processChannel;
 	private ProcessConfig _processConfig;
 	private final ProcessExecutor _processExecutor;
-	private final File _tensorflowWorkDir;
+	private final File _tensorFlowWorkDir;
 
 }

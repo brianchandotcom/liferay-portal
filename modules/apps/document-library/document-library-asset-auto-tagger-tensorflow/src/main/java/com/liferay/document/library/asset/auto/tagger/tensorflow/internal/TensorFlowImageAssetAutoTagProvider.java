@@ -19,7 +19,7 @@ import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.config
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.GetLabelProbabilitiesProcessCallable;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcessHolder;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowProcessHolder;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -106,13 +106,13 @@ public class TensorFlowImageAssetAutoTagProvider
 
 		modified(properties);
 
-		_tensorflowProcessHolder = new TensorflowProcessHolder(
+		_tensorFlowProcessHolder = new TensorFlowProcessHolder(
 			_processExecutor, bundleContext.getBundle());
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_tensorflowProcessHolder.destroy();
+		_tensorFlowProcessHolder.destroy();
 	}
 
 	@Modified
@@ -158,7 +158,7 @@ public class TensorFlowImageAssetAutoTagProvider
 			_tensorFlowImageAssetAutoTagProviderProcessConfiguration.
 				maximumNumberOfRelaunchesTimeout();
 
-		float[] labelProbabilities = _tensorflowProcessHolder.execute(
+		float[] labelProbabilities = _tensorFlowProcessHolder.execute(
 			new GetLabelProbabilitiesProcessCallable(imageBytes, mimeType),
 			maximumNumberOfRelaunches, maximumNumberOfRelaunchesTimeout * 1000);
 
@@ -190,6 +190,6 @@ public class TensorFlowImageAssetAutoTagProvider
 
 	private volatile TensorFlowImageAssetAutoTagProviderProcessConfiguration
 		_tensorFlowImageAssetAutoTagProviderProcessConfiguration;
-	private TensorflowProcessHolder _tensorflowProcessHolder;
+	private TensorFlowProcessHolder _tensorFlowProcessHolder;
 
 }

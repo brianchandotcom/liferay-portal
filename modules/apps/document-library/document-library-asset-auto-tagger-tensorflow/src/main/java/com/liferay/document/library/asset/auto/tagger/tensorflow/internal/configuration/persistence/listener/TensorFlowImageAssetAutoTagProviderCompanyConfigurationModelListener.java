@@ -15,7 +15,7 @@
 package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.persistence.listener;
 
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorflowDestinationNames;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorFlowDestinationNames;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -57,7 +57,7 @@ public class
 
 		if (tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled()) {
 			_messageBus.sendMessage(
-				TensorflowDestinationNames.TENSORFLOW_MODEL_DOWNLOAD,
+				TensorFlowDestinationNames.TENSORFLOW_MODEL_DOWNLOAD,
 				new Message());
 		}
 	}
@@ -67,7 +67,7 @@ public class
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				TensorflowDestinationNames.TENSORFLOW_MODEL_DOWNLOAD);
+				TensorFlowDestinationNames.TENSORFLOW_MODEL_DOWNLOAD);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);

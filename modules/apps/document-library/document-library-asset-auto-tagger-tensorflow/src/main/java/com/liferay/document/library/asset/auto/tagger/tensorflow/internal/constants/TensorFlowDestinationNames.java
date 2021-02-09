@@ -17,7 +17,7 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.const
 /**
  * @author Alejandro Tardín
  */
-public class TensorflowDestinationNames {
+public class TensorFlowDestinationNames {
 
 	public static final String TENSORFLOW_MODEL_DOWNLOAD =
 		"liferay/tensorflow_model_download";

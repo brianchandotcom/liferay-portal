@@ -57,13 +57,13 @@ definition {
 
 		DataEngine.delete(fieldFieldLabel = "Separator");
 
-		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+		AssertElementNotPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Button.clickSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
+		AssertElementNotPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		Button.clickSave();
 	}

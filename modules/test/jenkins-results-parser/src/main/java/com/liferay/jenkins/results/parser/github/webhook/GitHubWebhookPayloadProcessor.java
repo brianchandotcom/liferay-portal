@@ -17,10 +17,10 @@ package com.liferay.jenkins.results.parser.github.webhook;
 import com.liferay.jenkins.results.parser.GitCommit;
 import com.liferay.jenkins.results.parser.GitHubRemoteGitCommit;
 import com.liferay.jenkins.results.parser.GitHubRemoteGitRepository;
+import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 import com.liferay.jenkins.results.parser.JenkinsStopBuildUtil;
-import com.liferay.jenkins.results.parser.LoadBalancerUtil;
 import com.liferay.jenkins.results.parser.MultiPattern;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.RemoteGitBranch;
@@ -316,24 +316,26 @@ public class GitHubWebhookPayloadProcessor {
 		return false;
 	}
 
-	public void process(Payload payload) {
-		if (payload instanceof PushEventPayload) {
-			PushEventPayload pushEventPayload = (PushEventPayload)payload;
+	public void process() {
+		if (_payload instanceof PushEventPayload) {
+			PushEventPayload pushEventPayload = (PushEventPayload)_payload;
 
 			syncAutopull(pushEventPayload);
 			syncRepository(pushEventPayload);
 			syncSubrepo(pushEventPayload);
 		}
 
-		if (payload instanceof PullRequestCommentPayload) {
+		if (_payload instanceof PullRequestCommentPayload) {
 			_processCommentCreated((PullRequestCommentPayload)_payload);
 
 			return;
 		}
 
-		if (payload instanceof PullRequestPayload) {
-			PullRequestPayload pullRequestPayload = (PullRequestPayload)payload;
-			String action = payload.getAction();
+		if (_payload instanceof PullRequestPayload) {
+			PullRequestPayload pullRequestPayload =
+				(PullRequestPayload)_payload;
+
+			String action = _payload.getAction();
 
 			if (action.equals("opened")) {
 				_processPullRequestOpened(pullRequestPayload);
@@ -1621,9 +1623,14 @@ public class GitHubWebhookPayloadProcessor {
 
 		String masterURL;
 
+		String blacklistString = _jenkinsBuildProperties.getProperty(
+			"jenkins.load.balancer.blacklist", "");
+
 		try {
-			masterURL = LoadBalancerUtil.getMostAvailableMasterURL(
-				"base.invocation.url", "http://test-1.liferay.com");
+			masterURL = JenkinsResultsParserUtil.getMostAvailableMasterURL(
+				"http://test-1.liferay.com", blacklistString, 1,
+				JenkinsMaster.getSlaveRAMMinimumDefault(),
+				JenkinsMaster.getSlavesPerHostDefault());
 		}
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {
@@ -2375,22 +2382,28 @@ public class GitHubWebhookPayloadProcessor {
 			"/liferay-jenkins-ee/commands/build.properties"
 	};
 
-	private static Log _log = LogFactory.getLog(
+	private static final Log _log = LogFactory.getLog(
 		GitHubWebhookPayloadProcessor.class);
 
-	private static Pattern _buildURLPattern = Pattern.compile(
+	private static final Pattern _buildURLPattern = Pattern.compile(
 		"Build[\\w\\s]*started.*Job Link: <a href=\"(?<buildURL>[^\"]+)\"");
-	private static List<String> _gauntletUsernames = Arrays.asList(
+	private static final List<String> _gauntletUsernames = Arrays.asList(
 		"CsabaTurcsan", "Hanlf", "HarryC0204", "Songyuewen", "SylviaLuan",
 		"ZoltanTakacs", "brianchandotcom", "brianwulbern", "ctampoya",
 		"gergelyszaz", "jpince", "kiyoshilee", "lesliewong92",
 		"liferay-continuous-integration-hu", "michaelhashimoto",
 		"michaelprigge", "pyoo47", "sharonchoi", "shuyangzhou", "stsquared99",
 		"suilin", "vicnate5", "xbrianlee", "yunlinsun");
+	private static final Pattern _gitrepoRepoPattern = Pattern.compile(
+		"remote = .*/([^\\.]*)\\.git");
+	private static final Pattern _gitrepoSHAPattern = Pattern.compile(
+		"commit = ([0-9a-f]{40})");
 	private static Set<String> _passingTestSuites;
-	private static Pattern _reevaluatePattern = Pattern.compile(
+	private static final Pattern _passingTestSuiteStatusDescriptionPattern =
+		Pattern.compile("\"ci:test:(?<testSuiteName>[^\"]+)\"\\s*has PASSED.");
+	private static final Pattern _reevaluatePattern = Pattern.compile(
 		"ci:reevaluate:(?<buildID>[\\d]+_[\\d]+)");
-	private static Pattern _testPattern = Pattern.compile(
+	private static final Pattern _testPattern = Pattern.compile(
 		"ci:(re)?test:(?<testOption1>[^:\\s]+)(:(?<testOption2>[^:\\s]+))?");
 	private static final List<String> _whiteListedOwnerNames =
 		Collections.emptyList();
@@ -2400,14 +2413,8 @@ public class GitHubWebhookPayloadProcessor {
 			"liferay-portal(-ee)?", "com-liferay-.*");
 
 	private boolean _ciForwardEligible;
-	private Pattern _gitrepoRepoPattern = Pattern.compile(
-		"remote = .*/([^\\.]*)\\.git");
-	private Pattern _gitrepoSHAPattern = Pattern.compile(
-		"commit = ([0-9a-f]{40})");
 	private final Properties _jenkinsBuildProperties;
 	private List<String> _jiraProjectKeys;
-	private Pattern _passingTestSuiteStatusDescriptionPattern = Pattern.compile(
-		"\"ci:test:(?<testSuiteName>[^\"]+)\"\\s*has PASSED.");
 	private final Payload _payload;
 	private final Map<String, Long> _testPullRequestQueryStrings =
 		new ConcurrentHashMap<>(100);

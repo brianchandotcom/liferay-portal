@@ -18,12 +18,16 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionNotInitializedException;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.HashMap;
 
 import org.elasticsearch.client.RestHighLevelClient;
+
+import org.mockito.Mockito;
 
 /**
  * @author Adam Brandizzi
@@ -36,6 +40,15 @@ public class CompanyIndexFactoryFixture {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 		_indexName = indexName;
+
+		_elasticsearchConnectionManager = Mockito.mock(
+			ElasticsearchConnectionManager.class);
+
+		Mockito.when(
+			_elasticsearchConnectionManager.getRestHighLevelClient()
+		).thenThrow(
+			ElasticsearchConnectionNotInitializedException.class
+		);
 	}
 
 	public void createIndices() {
@@ -65,6 +78,8 @@ public class CompanyIndexFactoryFixture {
 				setJsonFactory(new JSONFactoryImpl());
 				setElasticsearchConfigurationWrapper(
 					createElasticsearchConfigurationWrapper());
+				setElasticsearchConnectionManager(
+					_elasticsearchConnectionManager);
 			}
 		};
 	}
@@ -95,6 +110,8 @@ public class CompanyIndexFactoryFixture {
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
+	private final ElasticsearchConnectionManager
+		_elasticsearchConnectionManager;
 	private final String _indexName;
 
 }

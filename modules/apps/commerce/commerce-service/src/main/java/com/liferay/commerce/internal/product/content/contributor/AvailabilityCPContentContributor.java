@@ -29,8 +29,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,10 +75,6 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 			return jsonObject;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
@@ -89,10 +88,22 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 			cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance);
 
 		boolean available = false;
+		int stockQuantity;
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			cpInstance.getCompanyId(), commerceChannel.getGroupId(),
-			cpInstance.getSku());
+		Map<String, Integer> stockQuantities =
+			(Map<String, Integer>)httpServletRequest.getAttribute(
+				"stockQuantities");
+
+		if (MapUtil.isNotEmpty(stockQuantities)) {
+			stockQuantity = MapUtil.getInteger(
+				stockQuantities, cpInstance.getSku());
+		}
+		else {
+			stockQuantity = _commerceInventoryEngine.getStockQuantity(
+				cpInstance.getCompanyId(), commerceChannel.getGroupId(),
+				cpInstance.getSku());
+		}
+
 		int minStockQuantity = cpDefinitionInventoryEngine.getMinStockQuantity(
 			cpInstance);
 
@@ -100,20 +111,33 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 			available = true;
 		}
 
-		if (displayAvailability && available) {
-			jsonObject.put(
-				CPContentContributorConstants.AVAILABILITY_NAME,
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					CPContentContributorConstants.AVAILABLE));
-		}
+		if (displayAvailability) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		if (displayAvailability && !available) {
+			String availabilityDisplayType = "success";
+
+			if (available) {
+				jsonObject.put(
+					CPContentContributorConstants.AVAILABILITY_NAME,
+					LanguageUtil.get(
+						themeDisplay.getLocale(),
+						CPContentContributorConstants.AVAILABLE));
+			}
+			else {
+				jsonObject.put(
+					CPContentContributorConstants.AVAILABILITY_NAME,
+					LanguageUtil.get(
+						themeDisplay.getLocale(),
+						CPContentContributorConstants.UNAVAILABLE));
+
+				availabilityDisplayType = "danger";
+			}
+
 			jsonObject.put(
-				CPContentContributorConstants.AVAILABILITY_NAME,
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					CPContentContributorConstants.UNAVAILABLE));
+				CPContentContributorConstants.AVAILABILITY_DISPLAY_TYPE,
+				availabilityDisplayType);
 		}
 
 		return jsonObject;

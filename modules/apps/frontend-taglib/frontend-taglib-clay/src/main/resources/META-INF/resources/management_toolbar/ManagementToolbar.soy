@@ -113,6 +113,13 @@
 		label: string
 	]>}
 
+	{let $cssClasses kind="text"}
+		management-bar-v2
+		{if $elementClasses}
+			{sp}{$elementClasses}
+		{/if}
+	{/let}
+
 	{call ClayManagementToolbar.render}
 		{param defaultEventHandler: $defaultEventHandler /}
 		{param actionItems: $actionItems /}
@@ -126,7 +133,7 @@
 			'searchData': $searchData
 		] /}
 		{param disabled: $disabled /}
-		{param elementClasses: $elementClasses /}
+		{param elementClasses: $cssClasses /}
 		{param events: [
 			'clearSelectionButtonClicked': $_handleClearSelectionButtonClicked,
 			'creationMenuMoreButtonClicked': $_handleCreationMenuMoreButtonClicked,

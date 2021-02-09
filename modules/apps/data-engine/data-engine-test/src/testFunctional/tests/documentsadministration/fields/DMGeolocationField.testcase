@@ -57,17 +57,15 @@ definition {
 	test DuplicateGeolocation {
 		property portal.acceptance = "false";
 
-		var key_Label = "Geolocation";
-
-		var key_fieldLabel = "Copy of ${key_Label}";
-
-		DataEngine.duplicate(fieldFieldLabel = "${key_Label}");
+		DataEngine.duplicate(fieldFieldLabel = "Geolocation");
 
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		AssertElementPresent(locator1 = "FormFields#LABEL");
+		DataEngine.viewField(
+			fieldFieldLabel = "Copy of Geolocation",
+			fieldName = "Geolocation");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

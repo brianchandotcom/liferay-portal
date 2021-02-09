@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -50,6 +51,10 @@ public interface CPContentHelper {
 		throws Exception;
 
 	public String getAvailabilityLabel(HttpServletRequest httpServletRequest)
+		throws Exception;
+
+	public Map<String, String> getAvailabilityMap(
+			HttpServletRequest httpServletRequest)
 		throws Exception;
 
 	public List<CPDefinitionSpecificationOptionValue>

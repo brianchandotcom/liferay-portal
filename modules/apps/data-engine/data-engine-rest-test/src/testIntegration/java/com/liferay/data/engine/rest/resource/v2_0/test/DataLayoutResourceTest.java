@@ -478,16 +478,16 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	private DataLayout _createRandomDataLayoutFieldsWithVisualProps() {
-		DataDefinitionField firstDataDefinitionField =
+		DataDefinitionField dataDefinitionField =
 			_dataDefinition.getDataDefinitionFields()[0];
 
 		String defaultLanguageId = _dataDefinition.getDefaultLanguageId();
 
-		DataLayout randomDataLayoutWithVisualProps = randomDataLayout();
+		DataLayout dataLayout = randomDataLayout();
 
-		randomDataLayoutWithVisualProps.setDataLayoutFields(
+		dataLayout.setDataLayoutFields(
 			HashMapBuilder.<String, Object>put(
-				firstDataDefinitionField.getName(),
+				dataDefinitionField.getName(),
 				HashMapBuilder.<String, Object>put(
 					"label",
 					HashMapBuilder.<String, Object>put(
@@ -515,7 +515,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 				).build()
 			).build());
 
-		return randomDataLayoutWithVisualProps;
+		return dataLayout;
 	}
 
 	private void _testGetDataDefinitionDataLayoutsPage(

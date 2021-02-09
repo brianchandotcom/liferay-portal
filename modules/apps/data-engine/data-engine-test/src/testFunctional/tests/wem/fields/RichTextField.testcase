@@ -35,6 +35,48 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@priority = "4"
+	test EditRichTextSearchable {
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Rich Text",
+			searchableType = "Disable");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		Click(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldFieldLabel = "Searchable",
+			key_optionValue = "Disable",
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Rich Text",
+			searchableType = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		Click(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_fieldFieldLabel = "Searchable",
+			key_optionValue = "Text",
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
+	}
+
+	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "5"
 	test ExcludeRepeatedRichTextOnWebContent {
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Rich Text");
@@ -230,33 +272,6 @@ definition {
 			fieldFieldLabel = "Test Edited",
 			fieldHelp = "Help Text",
 			fieldName = "Rich Text");
-	}
-
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@priority = "4"
-	test SetRichTextSearchableAsByText {
-		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Rich Text",
-			searchableType = "Disable");
-
-		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Rich Text",
-			searchableType = "Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		Click(
-			key_fieldFieldLabel = "Rich Text",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		AssertChecked.assertCheckedNotVisible(
-			key_fieldFieldLabel = "Searchable",
-			key_optionValue = "Text",
-			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

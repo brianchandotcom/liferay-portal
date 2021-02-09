@@ -100,6 +100,11 @@ public class LayoutAssetRendererFactory
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "page";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

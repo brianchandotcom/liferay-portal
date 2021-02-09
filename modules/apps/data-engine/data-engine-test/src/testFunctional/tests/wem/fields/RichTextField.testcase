@@ -34,7 +34,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies that a user can set Searchable as Disabled and as Text."
 	@priority = "4"
 	test EditRichTextSearchable {
 		DataEngine.editFieldSearchable(
@@ -76,7 +76,7 @@ definition {
 			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies if the user can repeat and exclude a Rich Text Field."
 	@priority = "5"
 	test ExcludeRepeatedRichTextOnWebContent {
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Rich Text");
@@ -110,7 +110,7 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies if the user can write a text on the Rich Text Field."
 	@priority = "5"
 	test InsertTextOnRichTextOnWebContent {
 		WebContentStructures.saveCP();
@@ -138,7 +138,7 @@ definition {
 			value1 = "Hello");
 	}
 
-	@description = "This is a test for LPS-98076. Verify that a user can localize the field data."
+	@description = "This test verifies that a user can localize the field data."
 	@priority = "4"
 	test LocalizationOfRichTextPersists {
 		DataEngine.editFieldTip(
@@ -173,7 +173,7 @@ definition {
 			fieldName = "Rich Text");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies that is not possible to publish a Web Content with an empty required Rich Text."
 	@priority = "4"
 	test PublishWebContentWithEmptyRequiredRichText {
 		property portal.acceptance = "false";
@@ -201,7 +201,7 @@ definition {
 			value1 = "This field is required.");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test ensure is possible to repeat a rich text on a Web Content."
 	@priority = "5"
 	test RepeatRichTextOnWebContent {
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Rich Text");
@@ -221,7 +221,7 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies the field reference with valid and invalid characters."
 	@priority = "3"
 	test SetFieldReferenceOfRichTextWithValidAndInvalidCharacters {
 		DataEngine.editFieldReference(
@@ -253,7 +253,7 @@ definition {
 			fieldReference = "TestInvalidReference");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies that a user can define a Field Label and a Help Text."
 	@priority = "5"
 	test SetLabelOfRichTextAndHelpText {
 		DataEngine.editFieldLabel(
@@ -274,7 +274,7 @@ definition {
 			fieldName = "Rich Text");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies that a user can toggle hide/show the field label."
 	@priority = "3"
 	test ShowAndHideRichTextLabel {
 		DataEngine.editShowOrHideLabel(
@@ -302,7 +302,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies that a user can see the Tip(Help Text) if it was defined."
 	@priority = "4"
 	test VerifyHelpTextofRichTextOnWebContent {
 		DataEngine.editFieldTip(
@@ -321,7 +321,7 @@ definition {
 			fieldName = "RichText");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This test verifies that a user can set the field as Required or Not Required on Web Content."
 	@priority = "4"
 	test VerifyRichTextIsSetAsRequiredOnWebContent {
 		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
@@ -350,5 +350,4 @@ definition {
 			locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 			value1 = "This field is required.");
 	}
-
 }

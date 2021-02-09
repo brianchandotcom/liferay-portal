@@ -26,8 +26,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		WebContentStructures.deleteCP(structureName = "WC Structure Name");
-
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}

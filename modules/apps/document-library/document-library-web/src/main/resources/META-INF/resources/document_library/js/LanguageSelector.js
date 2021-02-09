@@ -61,7 +61,7 @@ function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
 							<span className="inline-item inline-item-before">
 								<ClayIcon symbol={icon} />
 							</span>
-							{text}{' '}
+							{text}
 						</ClayDropDown.Item>
 					);
 				})}

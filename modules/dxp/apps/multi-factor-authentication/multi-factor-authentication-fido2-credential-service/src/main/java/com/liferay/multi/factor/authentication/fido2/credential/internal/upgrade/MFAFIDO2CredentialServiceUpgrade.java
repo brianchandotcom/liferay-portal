@@ -32,7 +32,7 @@ public class MFAFIDO2CredentialServiceUpgrade
 		registry.register("1.0.0", "2.0.0", new UpgradeSchema());
 
 		registry.register(
-			"2.0.0", "3.0.0", new MFAFIDO2CredentialUpgradeProcess());
+			"2.0.0", "2.1.0", new MFAFIDO2CredentialUpgradeProcess());
 	}
 
 }

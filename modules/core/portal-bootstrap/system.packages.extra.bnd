@@ -347,7 +347,6 @@ Provide-Capability:\
 	@../../../lib/portal/dom4j.jar,\
 	@../../../lib/portal/hibernate-commons-annotations.jar,\
 	@../../../lib/portal/hibernate-core.jar,\
-	@../../../lib/portal/jackson-databind.jar,\
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jaxrpc.jar,\
 	@../../../lib/portal/jdom.jar!/org/**,\

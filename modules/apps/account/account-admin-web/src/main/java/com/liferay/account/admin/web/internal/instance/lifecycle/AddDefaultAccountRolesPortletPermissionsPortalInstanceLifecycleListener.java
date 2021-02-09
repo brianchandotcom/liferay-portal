@@ -17,11 +17,9 @@ package com.liferay.account.admin.web.internal.instance.lifecycle;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.exception.NoSuchRoleException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Release;
@@ -51,35 +49,30 @@ public class
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		long companyId = company.getCompanyId();
+		_accountRoleLocalService.checkCompanyAccountRoles(
+			company.getCompanyId());
 
-		try {
-			Role role = _roleLocalService.getRole(
-				companyId,
-				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
-
-			_checkResourcePermissions(
-				companyId, role.getRoleId(),
-				HashMapBuilder.put(
-					AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
-					new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
-				).put(
-					AccountPortletKeys.ACCOUNT_USERS_ADMIN,
-					new String[] {
-						AccountActionKeys.ASSIGN_ACCOUNTS,
-						ActionKeys.ACCESS_IN_CONTROL_PANEL
-					}
-				).build());
-		}
-		catch (NoSuchRoleException noSuchRoleException) {
-			_log.error(noSuchRoleException, noSuchRoleException);
-		}
+		_checkResourcePermissions(
+			company.getCompanyId(),
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+			HashMapBuilder.put(
+				AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+				new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL}
+			).put(
+				AccountPortletKeys.ACCOUNT_USERS_ADMIN,
+				new String[] {
+					AccountActionKeys.ASSIGN_ACCOUNTS,
+					ActionKeys.ACCESS_IN_CONTROL_PANEL
+				}
+			).build());
 	}
 
 	private void _checkResourcePermissions(
-			long companyId, long roleId,
+			long companyId, String roleName,
 			Map<String, String[]> resourceActionsMap)
 		throws Exception {
+
+		Role role = _roleLocalService.fetchRole(companyId, roleName);
 
 		for (Map.Entry<String, String[]> entry :
 				resourceActionsMap.entrySet()) {
@@ -90,28 +83,28 @@ public class
 				ResourcePermission resourcePermission =
 					_resourcePermissionLocalService.fetchResourcePermission(
 						companyId, resourceName,
-						ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", roleId);
+						ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+						role.getRoleId());
 
 				if ((resourcePermission == null) ||
 					!resourcePermission.hasActionId(resourceAction)) {
 
 					_resourcePermissionLocalService.addResourcePermission(
 						companyId, resourceName,
-						ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", roleId,
-						resourceAction);
+						ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+						role.getRoleId(), resourceAction);
 				}
 			}
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddDefaultAccountRolesPortletPermissionsPortalInstanceLifecycleListener.
-			class);
-
 	@Reference(
 		target = "(javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + ")"
 	)
 	private Portlet _accountEntriesAdminPortlet;
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference(
 		target = "(javax.portlet.name=" + AccountPortletKeys.ACCOUNT_USERS_ADMIN + ")"

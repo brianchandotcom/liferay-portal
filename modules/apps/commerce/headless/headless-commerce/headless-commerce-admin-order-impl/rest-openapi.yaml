@@ -1123,6 +1123,72 @@ paths:
             summary: Updates an Order Item by ID.
             tags:
                 - OrderItem
+    /orderItems/{id}/shippingAddress:
+        get:
+            operationId: getOrderItemShippingAddress
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ShippingAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ShippingAddress"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets an Order Item by ID.
+            tags:
+                - ShippingAddress
     /orderNotes/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             operationId: deleteOrderNoteByExternalReferenceCode

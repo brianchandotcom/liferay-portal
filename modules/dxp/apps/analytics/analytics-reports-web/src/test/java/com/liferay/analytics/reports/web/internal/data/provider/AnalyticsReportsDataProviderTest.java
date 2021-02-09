@@ -20,6 +20,7 @@ import com.liferay.analytics.reports.web.internal.model.HistogramMetric;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.OrganicTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.PaidTrafficChannelImpl;
+import com.liferay.analytics.reports.web.internal.model.ReferringSocialMedia;
 import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
@@ -168,6 +169,39 @@ public class AnalyticsReportsDataProviderTest {
 		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
 
 		Assert.assertEquals(localDate, zonedDateTime.toLocalDate());
+	}
+
+	@Test
+	public void testGetReferringSocialMediaList() throws Exception {
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			new AnalyticsReportsDataProvider(
+				_getHttp(
+					Collections.singletonMap(
+						"/social-page-referrers",
+						JSONUtil.put(
+							"facebook", 6.0
+						).put(
+							"instagram", 3.0
+						).put(
+							"linkedin", 1.0
+						).toString())));
+
+		List<ReferringSocialMedia> referringSocialMediaList =
+			analyticsReportsDataProvider.getReferringSocialMediaList(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			referringSocialMediaList.toString(), 3,
+			referringSocialMediaList.size());
+		Assert.assertEquals(
+			String.valueOf(new ReferringSocialMedia("facebook", 6)),
+			String.valueOf(referringSocialMediaList.get(0)));
+		Assert.assertEquals(
+			String.valueOf(new ReferringSocialMedia("instagram", 3)),
+			String.valueOf(referringSocialMediaList.get(1)));
+		Assert.assertEquals(
+			String.valueOf(new ReferringSocialMedia("linkedin", 1)),
+			String.valueOf(referringSocialMediaList.get(2)));
 	}
 
 	@Test

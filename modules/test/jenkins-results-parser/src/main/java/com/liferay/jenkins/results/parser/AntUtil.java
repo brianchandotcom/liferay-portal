@@ -127,21 +127,6 @@ public class AntUtil {
 
 		sb.append("ant");
 
-		if ((antLibDir != null) && antLibDir.exists()) {
-			sb.append(" -lib ");
-			sb.append(JenkinsResultsParserUtil.getCanonicalPath(antLibDir));
-		}
-
-		if (buildFileName != null) {
-			sb.append(" -f ");
-			sb.append(buildFileName);
-		}
-
-		if (targetName != null) {
-			sb.append(" ");
-			sb.append(targetName);
-		}
-
 		if (parameters != null) {
 			for (Map.Entry<String, String> parameter : parameters.entrySet()) {
 				sb.append(" -D");
@@ -158,6 +143,21 @@ public class AntUtil {
 				sb.append(value);
 				sb.append("\"");
 			}
+		}
+
+		if (buildFileName != null) {
+			sb.append(" -f ");
+			sb.append(buildFileName);
+		}
+
+		if ((antLibDir != null) && antLibDir.exists()) {
+			sb.append(" -lib ");
+			sb.append(JenkinsResultsParserUtil.getCanonicalPath(antLibDir));
+		}
+
+		if (targetName != null) {
+			sb.append(" ");
+			sb.append(targetName);
 		}
 
 		System.out.println(sb.toString());

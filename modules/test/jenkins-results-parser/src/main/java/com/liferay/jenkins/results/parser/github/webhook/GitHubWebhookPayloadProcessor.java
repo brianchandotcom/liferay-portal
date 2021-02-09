@@ -301,14 +301,14 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	public boolean isValidCIMergeFile(PullRequest pullRequest) {
-		List<String> filenames = pullRequest.getFilenames();
+		List<String> fileNames = pullRequest.getFileNames();
 
-		if (filenames.size() > 1) {
+		if (fileNames.size() > 1) {
 			return false;
 		}
 
-		for (String filename : filenames) {
-			if (filename.endsWith("/ci-merge")) {
+		for (String fileName : fileNames) {
+			if (fileName.endsWith("/ci-merge")) {
 				return true;
 			}
 		}

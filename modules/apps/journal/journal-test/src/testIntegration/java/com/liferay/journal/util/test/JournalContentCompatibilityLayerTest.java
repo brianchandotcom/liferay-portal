@@ -61,6 +61,62 @@ public class JournalContentCompatibilityLayerTest {
 	}
 
 	@Test
+	public void testComplexNestedFieldsCompatibilityLayer() throws Exception {
+		String content = read(
+			"test-journal-content-complex-nested-fields-compatibility.xml");
+
+		Document document = SAXReaderUtil.read(content);
+
+		_journalContentCompatibilityLayer.convertDocumentContent(document);
+
+		String expectedContent = read(
+			"test-journal-content-complex-nested-fields-compatibility-" +
+				"expected-results.xml");
+
+		Document expectedDocument = SAXReaderUtil.read(expectedContent);
+
+		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+	}
+
+	@Test
+	public void testNestedFieldsCompatibilityLayer() throws Exception {
+		String content = read(
+			"test-journal-content-nested-fields-compatibility.xml");
+
+		Document document = SAXReaderUtil.read(content);
+
+		_journalContentCompatibilityLayer.convertDocumentContent(document);
+
+		String expectedContent = read(
+			"test-journal-content-nested-fields-compatibility-expected-" +
+				"results.xml");
+
+		Document expectedDocument = SAXReaderUtil.read(expectedContent);
+
+		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+	}
+
+	@Test
+	public void testRepeatableNestedFieldsCompatibilityLayer()
+		throws Exception {
+
+		String content = read(
+			"test-journal-content-repeatable-nested-fields-compatibility.xml");
+
+		Document document = SAXReaderUtil.read(content);
+
+		_journalContentCompatibilityLayer.convertDocumentContent(document);
+
+		String expectedContent = read(
+			"test-journal-content-repeatable-nested-fields-compatibility-" +
+				"expected-results.xml");
+
+		Document expectedDocument = SAXReaderUtil.read(expectedContent);
+
+		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+	}
+
+	@Test
 	public void testVersionCompatibilityLayer() throws Exception {
 		String content = read("test-journal-content-version-compatibility.xml");
 

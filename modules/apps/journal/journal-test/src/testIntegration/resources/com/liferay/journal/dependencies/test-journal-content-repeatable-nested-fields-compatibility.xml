@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="bixkrosh" name="Text11" type="text">
+		<dynamic-element index-type="keyword" instance-id="imgpklfm" name="Text12" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Text 1.2]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content language-id="en_US"><![CDATA[Text 1.1]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="iigyjyyp" name="Text21" type="text">
+		<dynamic-element index-type="keyword" instance-id="aajdpuhc" name="Text22" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Text 2.2]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content language-id="en_US"><![CDATA[Text 2.1]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="wpbvsxrm" name="Text31" type="text">
+		<dynamic-element index-type="keyword" instance-id="hjslnuja" name="Text32" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[Text 3.2]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content language-id="en_US"><![CDATA[Text 3.1]]></dynamic-content>
+	</dynamic-element>
+</root>

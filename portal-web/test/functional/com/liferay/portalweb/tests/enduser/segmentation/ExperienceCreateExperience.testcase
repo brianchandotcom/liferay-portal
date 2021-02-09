@@ -126,7 +126,7 @@ definition {
 		AssertClick(
 			locator1 = "Button#CANCEL",
 			value1 = "Cancel");
-		
+
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 
 		Click(
@@ -136,12 +136,12 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		AssertTextEquals(
-				locator1 = "PageEditor#EXPERIENCE_NEW_EXPERIENCE_MODAL_TITLE",
-				value1 = "New Experience");
+			locator1 = "PageEditor#EXPERIENCE_NEW_EXPERIENCE_MODAL_TITLE",
+			value1 = "New Experience");
 
 		AssertTextEquals(
-				locator1 = "PageEditor#EXPERIENCE_NAME",
-				value1 = "");
+			locator1 = "PageEditor#EXPERIENCE_NAME",
+			value1 = "");
 
 		AssertClick(
 			locator1 = "Button#CANCEL",

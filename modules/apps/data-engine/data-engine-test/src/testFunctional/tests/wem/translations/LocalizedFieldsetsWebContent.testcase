@@ -329,104 +329,144 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
-	@ignore = "true"
 	@priority = "5"
 	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
-		property portal.acceptance = "false";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure FieldSet Name Test");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.gotoNewFieldset(fieldsetName = "Text Fieldset Test Name");
+		DataEngine.gotoCreateNewFieldset();
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "New Fieldset");
 
 		DataEngine.addFields(fieldNameList = "Text");
 
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text",
+			targetFieldLabel = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Text Field Help Text",
+			fieldsetModal = "true");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Rich Text Field Help Text",
+			fieldsetModal = "true");
+
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			modal = "true");
+
+		Type(
+			locator1 = "FormViewBuilder#FIELD_SET_NAME",
+			value1 = "Novo Fieldset");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsetModal = "true",
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Grupo de Campos");
+
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Text Test");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Help Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text Test Second",
-			fieldName = "Text",
-			targetFieldLabel = "Text Test");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test Second",
-			fieldHelp = "Help Text");
-
-		DataEngine.changeFieldsetLocale(locale = "pt-BR");
-
-		DataEngine.changeFiledsetName(fieldsetName = "Texto Fieldset Nome de Teste");
+			fieldFieldLabelEdit = "Texto",
+			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text Test",
-			fieldFieldLabelEdit = "Texto");
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "Rico Texto",
+			fieldsetModal = "true");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Texto",
-			fieldHelp = "Ajuda Texto");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text Test Second",
-			fieldFieldLabelEdit = "Segundo Texto");
+			fieldHelp = "Texto de ajuda do campo de texto",
+			fieldsetModal = "true");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Segundo Texto",
-			fieldHelp = "Ajuda Texto");
+			fieldFieldLabel = "Rico Texto",
+			fieldHelp = "Texto de ajuda do campo Rico Texto",
+			fieldsetModal = "true");
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
-		DragAndDrop.javaScriptDragAndDropToBottom(
-			key_fieldName = "Text Fieldset Test Name",
-			locator1 = "Sidebar#ADD_FIELD_NAME",
-			locator2 = "DDMEditStructure#FORM_FIELD_DROP_TARGET");
+		Alert.viewSuccessMessage();
+
+		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure FieldSet Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		PortletEntry.inputTitle(title = "WC Title Test");
+		WebContent.addCP(webContentTitle = "Web Content Title");
 
 		PortletEntry.publish();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Title Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		AssertVisible(
+			key_fieldsetLabel = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Text,Rich Text") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Fields Group",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		for (var fieldFieldLabel : list "Text,Rich Text") {
+			AssertTextEquals(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				locator1 = "DDMEditStructure#SETTINGS_TEXT",
+				value1 = "${fieldFieldLabel} Field Help Text");
+		}
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		AssertElementPresent(
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		AssertVisible(
+			key_fieldsetLabel = "Novo Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Grupo de Campos",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		for (var fieldFieldLabel : list "Texto,Rico Texto") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldFieldLabel}",
+				key_fieldsGroupLabel = "Grupo de Campos",
+				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+
+		AssertTextEquals(
 			key_fieldFieldLabel = "Texto",
-			key_index = "1",
-			locator1 = "WCEditWebContent#FIELD_LABEL");
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
+			value1 = "Texto de ajuda do campo de texto");
 
-		AssertElementPresent(
-			key_fieldFieldHelp = "Ajuda Texto",
-			key_fieldFieldLabel = "Texto",
-			key_index = "1",
-			locator1 = "WCEditWebContent#FIELD_HELP");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "Segundo Texto",
-			key_index = "1",
-			locator1 = "WCEditWebContent#FIELD_LABEL");
-
-		AssertElementPresent(
-			key_fieldFieldHelp = "Ajuda Texto",
-			key_fieldFieldLabel = "Segundo Texto",
-			key_index = "1",
-			locator1 = "WCEditWebContent#FIELD_HELP");
+		AssertTextEquals(
+			key_fieldFieldLabel = "Rico Texto",
+			locator1 = "DDMEditStructure#SETTINGS_TEXT",
+			value1 = "Texto de ajuda do campo Rico Texto");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"

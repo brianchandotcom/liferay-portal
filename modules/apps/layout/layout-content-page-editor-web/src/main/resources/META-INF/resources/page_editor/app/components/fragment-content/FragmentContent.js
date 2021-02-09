@@ -25,7 +25,8 @@ import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import loadBackgroundImage from '../../utils/loadBackgroundImage';
+import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
+import {useId} from '../../utils/useId';
 import {
 	useGetContent,
 	useGetFieldValue,
@@ -212,11 +213,11 @@ const FragmentContent = ({
 		width,
 	} = responsiveConfig.styles;
 
-	const [backgroundImageValue, setBackgroundImageValue] = useState('');
-
-	useEffect(() => {
-		loadBackgroundImage(backgroundImage).then(setBackgroundImageValue);
-	}, [backgroundImage]);
+	const elementId = useId();
+	const backgroundImageValue = useBackgroundImageValue(
+		elementId,
+		backgroundImage
+	);
 
 	const style = {};
 
@@ -241,42 +242,53 @@ const FragmentContent = ({
 		style.width = width;
 	}
 
-	if (backgroundImageValue) {
-		style.backgroundImage = `url(${backgroundImageValue})`;
+	if (backgroundImageValue.url) {
+		style.backgroundImage = `url(${backgroundImageValue.url})`;
 		style.backgroundPosition = '50% 50%';
 		style.backgroundRepeat = 'no-repeat';
 		style.backgroundSize = 'cover';
+
+		if (backgroundImage?.fileEntryId) {
+			style['--background-image-file-entry-id'] =
+				backgroundImage.fileEntryId;
+		}
 	}
 
 	return (
-		<UnsafeHTML
-			className={classNames(
-				className,
-				`mb-${marginBottom || 0}`,
-				`mt-${marginTop || 0}`,
-				`pb-${paddingBottom || 0}`,
-				`pl-${paddingLeft || 0}`,
-				`pr-${paddingRight || 0}`,
-				`pt-${paddingTop || 0}`,
-				'page-editor__fragment-content',
-				{
-					'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
-					[`ml-${marginLeft || 0}`]: !withinTopper,
-					[`mr-${marginRight || 0}`]: !withinTopper,
-					[textAlign
-						? textAlign.startsWith('text-')
-							? textAlign
-							: `text-${textAlign}`
-						: '']: textAlign,
-				}
-			)}
-			contentRef={elementRef}
-			getPortals={getPortals}
-			globalContext={globalContext}
-			markup={content}
-			onRender={withinTopper ? onRender : () => {}}
-			style={style}
-		/>
+		<>
+			<UnsafeHTML
+				className={classNames(
+					className,
+					`mb-${marginBottom || 0}`,
+					`mt-${marginTop || 0}`,
+					`pb-${paddingBottom || 0}`,
+					`pl-${paddingLeft || 0}`,
+					`pr-${paddingRight || 0}`,
+					`pt-${paddingTop || 0}`,
+					'page-editor__fragment-content',
+					{
+						'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
+						[`ml-${marginLeft || 0}`]: !withinTopper,
+						[`mr-${marginRight || 0}`]: !withinTopper,
+						[textAlign
+							? textAlign.startsWith('text-')
+								? textAlign
+								: `text-${textAlign}`
+							: '']: textAlign,
+					}
+				)}
+				contentRef={elementRef}
+				getPortals={getPortals}
+				globalContext={globalContext}
+				id={elementId}
+				markup={content}
+				onRender={withinTopper ? onRender : () => {}}
+				style={style}
+			/>
+			{backgroundImageValue.mediaQueries ? (
+				<style>{backgroundImageValue.mediaQueries}</style>
+			) : null}
+		</>
 	);
 };
 

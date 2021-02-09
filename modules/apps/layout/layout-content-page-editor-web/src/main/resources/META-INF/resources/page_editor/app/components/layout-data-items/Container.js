@@ -23,13 +23,16 @@ import {useSelector} from '../../store/index';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import loadBackgroundImage from '../../utils/loadBackgroundImage';
-import {useBackgroundImageMediaQueries} from '../../utils/useBackgroundImageQueries';
+import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
 import {useGetFieldValue} from '../CollectionItemContext';
 
 const Container = React.forwardRef(
 	({children, className, data, item, withinTopper = false}, ref) => {
+		const elementId = useId();
+		const getFieldValue = useGetFieldValue();
+		const languageId = useSelector(selectLanguageId);
+		const [link, setLink] = useState(null);
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
@@ -71,20 +74,10 @@ const Container = React.forwardRef(
 
 		const {widthType} = itemConfig;
 
-		const elementId = useId();
-		const getFieldValue = useGetFieldValue();
-		const languageId = useSelector(selectLanguageId);
-		const [backgroundImageValue, setBackgroundImageValue] = useState('');
-		const [link, setLink] = useState(null);
-
-		const backgroundImageMediaQueries = useBackgroundImageMediaQueries(
+		const backgroundImageValue = useBackgroundImageValue(
 			elementId,
 			backgroundImage
 		);
-
-		useEffect(() => {
-			loadBackgroundImage(backgroundImage).then(setBackgroundImageValue);
-		}, [backgroundImage]);
 
 		useEffect(() => {
 			if (!itemConfig.link) {
@@ -137,8 +130,8 @@ const Container = React.forwardRef(
 			style.width = width;
 		}
 
-		if (backgroundImageValue) {
-			style.backgroundImage = `url(${backgroundImageValue})`;
+		if (backgroundImageValue.url) {
+			style.backgroundImage = `url(${backgroundImageValue.url})`;
 			style.backgroundPosition = '50% 50%';
 			style.backgroundRepeat = 'no-repeat';
 			style.backgroundSize = 'cover';
@@ -180,7 +173,10 @@ const Container = React.forwardRef(
 				ref={ref}
 				style={style}
 			>
-				<style>{backgroundImageMediaQueries}</style>
+				{backgroundImageValue.mediaQueries ? (
+					<style>{backgroundImageValue.mediaQueries}</style>
+				) : null}
+
 				{children}
 			</div>
 		);

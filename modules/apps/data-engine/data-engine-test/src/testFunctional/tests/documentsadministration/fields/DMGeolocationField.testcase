@@ -15,6 +15,10 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.addWithoutSave(
+			dmDocumentTypeFieldNames = "Geolocation",
+			dmDocumentTypeName = "DM Document Type Name");
 	}
 
 	tearDown {
@@ -34,10 +38,6 @@ definition {
 	@priority = "5"
 	test DisableSearchableOfGeolocation {
 		property portal.acceptance = "false";
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Geolocation",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Geolocation",
@@ -70,12 +70,6 @@ definition {
 
 		var key_fieldLabel = "Copy of ${key_Label}";
 
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "${key_Label}",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.duplicate(fieldFieldLabel = "${key_Label}");
 
 		DDLDataDefinition.save();
@@ -100,10 +94,6 @@ definition {
 	test SetGeolocationAsRepeatable {
 		property portal.acceptance = "false";
 
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Geolocation",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Geolocation");
 
 		DDLDataDefinition.save();
@@ -117,10 +107,6 @@ definition {
 	@priority = "5"
 	test SetGeolocationLabel {
 		property portal.acceptance = "false";
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Geolocation",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Geolocation",
@@ -139,10 +125,6 @@ definition {
 	@priority = "5"
 	test SetHelpTextOfGeolocation {
 		property portal.acceptance = "false";
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Geolocation",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Geolocation",
@@ -163,12 +145,6 @@ definition {
 	@priority = "4"
 	test SetReferenceOfGeolocation {
 		property portal.acceptance = "false";
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Geolocation",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldReference(
 			assertFieldReference = "GeolocationReference",
@@ -198,10 +174,6 @@ definition {
 	test SetSearchableOfGeolocationAsKeyword {
 		property portal.acceptance = "false";
 
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Geolocation",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Geolocation",
 			searchableType = "Keyword");
@@ -228,10 +200,6 @@ definition {
 	@priority = "4"
 	test SetSearchableOfGeolocationAsText {
 		property portal.acceptance = "false";
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Geolocation",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Geolocation",
@@ -261,10 +229,6 @@ definition {
 		property portal.acceptance = "false";
 
 		var key_fieldLabel = "Geolocation";
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "${key_fieldLabel}",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldShowLabel(fieldFieldLabel = "${key_fieldLabel}");
 
@@ -304,12 +268,6 @@ definition {
 
 		var key_fieldLabel = "Copy of ${key_Label}";
 
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "${key_Label}",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.duplicate(fieldFieldLabel = "${key_Label}");
 
 		DDLDataDefinition.save();
@@ -338,10 +296,6 @@ definition {
 		property portal.acceptance = "false";
 
 		var fieldLabel = "Geolocation";
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "${fieldLabel}",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "${fieldLabel}");
 

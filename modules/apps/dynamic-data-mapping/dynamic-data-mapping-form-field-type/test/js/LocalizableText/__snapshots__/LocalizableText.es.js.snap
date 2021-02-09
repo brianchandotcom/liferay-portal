@@ -505,12 +505,12 @@ exports[`Field LocalizableText adds a new translation for an untranslated item 1
                         class="autofit-col"
                       >
                         <span
-                          class="label label-warning"
+                          class="label label-success"
                         >
                           <span
                             class="label-item label-item-expand"
                           >
-                            not-translated
+                            translated
                           </span>
                         </span>
                       </span>
@@ -5855,12 +5855,12 @@ exports[`Field LocalizableText removes the translation of an item already transl
                         class="autofit-col"
                       >
                         <span
-                          class="label label-success"
+                          class="label label-warning"
                         >
                           <span
                             class="label-item label-item-expand"
                           >
-                            translated
+                            not-translated
                           </span>
                         </span>
                       </span>

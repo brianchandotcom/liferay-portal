@@ -17,6 +17,10 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Separator",
+			fieldName = "Separator");
 	}
 
 	tearDown {
@@ -37,10 +41,6 @@ definition {
 	test AddSeparatorOnFormByDragAndDrop {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Separator");
-
 		DataEngine.viewField(
 			fieldFieldLabel = "Test",
 			fieldName = "Separator");
@@ -56,10 +56,6 @@ definition {
 		DataEngine.addField(
 			fieldFieldLabel = "Text field",
 			fieldName = "Text");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Separator");
 
 		DataEngine.delete(fieldFieldLabel = "Test");
 
@@ -88,10 +84,6 @@ definition {
 	@priority = "4"
 	test DuplicateSeparatorOnBuilder {
 		property portal.acceptance = "false";
-
-		DataEngine.addField(
-			fieldFieldLabel = "Separator test",
-			fieldName = "Separator");
 
 		DataEngine.duplicate(fieldFieldLabel = "Separator test");
 
@@ -124,10 +116,6 @@ definition {
 	test EditHelpTextOfSeparator {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Separator");
-
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Test",
 			fieldHelp = "Choose as many content pieces as you would like to feature.");
@@ -149,10 +137,6 @@ definition {
 	test EditLabelOfSeparator {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Separator");
-
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Test",
 			label = "Edited label");
@@ -173,10 +157,6 @@ definition {
 	@priority = "5"
 	test EditReferenceOfSeparator {
 		property portal.acceptance = "false";
-
-		DataEngine.addField(
-			fieldFieldLabel = "Test",
-			fieldName = "Separator");
 
 		DataEngine.editFieldReference(
 			fieldFieldLabel = "Test",
@@ -200,10 +180,6 @@ definition {
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@priority = "4"
 	test EditReferenceOfSeparatorWithInvalidCharacters {
-		DataEngine.addField(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator");
-
 		DataEngine.editFieldReferenceWithInvalidCharacters(
 			assertFieldReference = "example123A",
 			fieldFieldLabel = "Separator",
@@ -229,9 +205,6 @@ definition {
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
 	@priority = "5"
 	test RepeatSeparatorOnWebContent {
-		DataEngine.addField(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator");
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
 
@@ -266,10 +239,6 @@ definition {
 	test SetSeparatorRepeatable {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Separator test",
-			fieldName = "Separator");
-
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator test");
 
 		Button.clickSave();
@@ -285,11 +254,6 @@ definition {
 	@priority = "3"
 	test ShowAndHideSeparatorLabel {
 		property portal.acceptance = "false";
-
-		DataEngine.addField(
-			fieldFieldLabel = "Separator Label",
-			fieldName = "Separator",
-			fieldReference = "Test");
 
 		FormFields.viewSwitcherLabel(
 			fieldLabel = "Separator Label",

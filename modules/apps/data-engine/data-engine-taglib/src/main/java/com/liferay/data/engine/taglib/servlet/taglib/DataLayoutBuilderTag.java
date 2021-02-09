@@ -36,6 +36,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -119,6 +120,10 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				(HttpServletResponse)pageContext.getResponse()));
 		setNamespacedAttribute(
 			httpServletRequest, "defaultLanguageId", _getDefaultLanguageId());
+		setNamespacedAttribute(httpServletRequest, "module", _getModule());
+		setNamespacedAttribute(
+			httpServletRequest, "moduleServletContext",
+			_getModuleServletContext());
 	}
 
 	private String _getDefaultLanguageId() {
@@ -149,6 +154,22 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		).toArray(
 			String[]::new
 		);
+	}
+
+	private String _getModule() {
+		if (Validator.isBlank(getModule())) {
+			return "data_layout_builder/js/App.es";
+		}
+
+		return getModule();
+	}
+
+	private ServletContext _getModuleServletContext() {
+		if (getModuleServletContext() == null) {
+			return pageContext.getServletContext();
+		}
+
+		return getModuleServletContext();
 	}
 
 	private Map<String, Object> _getSidebarPanels() {

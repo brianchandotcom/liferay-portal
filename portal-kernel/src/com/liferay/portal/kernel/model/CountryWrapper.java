@@ -425,6 +425,11 @@ public class CountryWrapper
 	}
 
 	@Override
+	public String getTitle(java.util.Locale locale) {
+		return model.getTitle(locale);
+	}
+
+	@Override
 	public String getTitle(String languageId) {
 		return model.getTitle(languageId);
 	}

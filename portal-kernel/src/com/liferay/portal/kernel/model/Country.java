@@ -62,6 +62,8 @@ public interface Country extends CountryModel, PersistedModel {
 	@com.liferay.portal.kernel.json.JSON
 	public String getNameCurrentValue();
 
+	public String getTitle(java.util.Locale locale);
+
 	public void setNameCurrentLanguageId(String languageId);
 
 }

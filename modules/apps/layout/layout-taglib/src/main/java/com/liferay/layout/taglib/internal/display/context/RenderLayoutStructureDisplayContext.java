@@ -846,6 +846,23 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
+		String mappedCollectionValue = StringPool.BLANK;
+
+		String collectionFieldId = rowConfigJSONObject.getString(
+			"collectionFieldId");
+
+		if (Validator.isNotNull(collectionFieldId)) {
+			Object displayObject = _httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+
+			mappedCollectionValue = _getMappedCollectionValue(
+				collectionFieldId, displayObject);
+		}
+
+		if (Validator.isNotNull(mappedCollectionValue)) {
+			return mappedCollectionValue;
+		}
+
 		String mappedField = rowConfigJSONObject.getString("mappedField");
 
 		if (Validator.isNotNull(mappedField)) {
@@ -1259,7 +1276,8 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		Object value = infoFieldValue.getValue();
+		Object value = infoFieldValue.getValue(
+			LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
 
 		if (value instanceof ContentAccessor) {
 			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
@@ -1269,6 +1287,18 @@ public class RenderLayoutStructureDisplayContext {
 
 		if (value instanceof String) {
 			return (String)value;
+		}
+
+		if (!(value instanceof WebImage)) {
+			return StringPool.BLANK;
+		}
+
+		WebImage webImage = (WebImage)value;
+
+		String url = webImage.getUrl();
+
+		if (Validator.isNotNull(url)) {
+			return url;
 		}
 
 		return StringPool.BLANK;

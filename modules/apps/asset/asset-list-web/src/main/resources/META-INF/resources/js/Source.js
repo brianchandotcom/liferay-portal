@@ -156,6 +156,20 @@ export default function ({classTypes, namespace}) {
 			options[className].classList.add('hide');
 		}
 
+		let selectedSubtype = null;
+
+		const classTypeSelected = classTypes.find(
+			(classType) => classType.classNameId === assetSelector.value
+		);
+
+		if (classTypeSelected) {
+			selectedSubtype = subtypeSelector[classTypeSelected.className];
+		}
+
+		toggleSaveButton(
+			assetSelector.value === '' || selectedSubtype?.value === ''
+		);
+
 		if (assetSelectorValue && classNameId === assetSelectorValue) {
 			toggleSubclassesFields(true, className);
 		}
@@ -270,9 +284,6 @@ export default function ({classTypes, namespace}) {
 	toggleSubclasses(assetSelector.value);
 
 	const onChangeAssetSelector = () => {
-		const assetSelectorValueIsEmpty = assetSelector.value === '';
-		toggleSaveButton(assetSelectorValueIsEmpty);
-
 		ddmStructureFieldNameInput.value = '';
 		ddmStructureFieldValueInput.value = '';
 

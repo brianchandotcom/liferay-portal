@@ -87,13 +87,9 @@ export default {
 	removeExperience({body, dispatch}) {
 		const {segmentsExperienceId} = body;
 
-		const payload = {
-			segmentsExperienceId,
-		};
-
 		return serviceFetch(
 			config.deleteSegmentsExperienceURL,
-			{body: payload},
+			{body: {segmentsExperienceId}},
 			dispatch
 		);
 	},

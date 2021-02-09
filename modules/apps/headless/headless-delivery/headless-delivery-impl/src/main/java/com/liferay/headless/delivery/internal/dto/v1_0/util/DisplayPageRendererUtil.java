@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
+import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -35,11 +36,19 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.util.ThemeUtil;
+
+import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.UriInfo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -49,6 +58,78 @@ import org.jsoup.nodes.Element;
  * @author Jürgen Kappler
  */
 public class DisplayPageRendererUtil {
+
+	public static RenderedContent[] getRenderedContent(
+		Class<?> baseClass, String itemClassName, long itemClassPK,
+		long itemClassTypeId, DTOConverterContext dtoConverterContext,
+		long groupId, Object item,
+		InfoItemServiceTracker infoItemServiceTracker,
+		LayoutLocalService layoutLocalService,
+		LayoutPageTemplateEntryService layoutPageTemplateEntryService,
+		String methodName) {
+
+		Optional<UriInfo> uriInfoOptional =
+			dtoConverterContext.getUriInfoOptional();
+
+		if (!uriInfoOptional.isPresent()) {
+			return null;
+		}
+
+		UriInfo uriInfo = uriInfoOptional.get();
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+			layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
+				groupId, PortalUtil.getClassNameId(itemClassName),
+				itemClassTypeId,
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		return TransformUtil.transformToArray(
+			layoutPageTemplateEntries,
+			layoutPageTemplateEntry -> new RenderedContent() {
+				{
+					contentTemplateId =
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
+					contentTemplateName = layoutPageTemplateEntry.getName();
+					renderedContentURL = JaxRsLinkUtil.getJaxRsLink(
+						"headless-delivery", baseClass, methodName, uriInfo,
+						itemClassPK,
+						layoutPageTemplateEntry.
+							getLayoutPageTemplateEntryKey());
+
+					setRenderedContentValue(
+						() -> {
+							if (!uriInfoOptional.map(
+									UriInfo::getQueryParameters
+								).map(
+									parameters -> parameters.getFirst(
+										"nestedFields")
+								).map(
+									fields -> fields.contains(
+										"renderedContentValue")
+								).orElse(
+									false
+								)) {
+
+								return null;
+							}
+
+							HttpServletResponse httpServletResponse =
+								new DummyHttpServletResponse();
+
+							return toHTML(
+								itemClassName, itemClassTypeId,
+								layoutPageTemplateEntry.
+									getLayoutPageTemplateEntryKey(),
+								groupId,
+								dtoConverterContext.getHttpServletRequest(),
+								httpServletResponse, item,
+								infoItemServiceTracker, layoutLocalService,
+								layoutPageTemplateEntryService);
+						});
+				}
+			},
+			RenderedContent.class);
+	}
 
 	public static String toHTML(
 			String itemClassName, long itemClassTypeId, String displayPageKey,

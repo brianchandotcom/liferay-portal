@@ -34,14 +34,17 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentFieldUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DisplayPageRendererUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RenderedContentValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.delivery.internal.resource.v1_0.BaseStructuredContentResourceImpl;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Group;
@@ -49,6 +52,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -157,10 +161,7 @@ public class StructuredContentDTOConverter
 					journalArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				renderedContents = _toRenderedContents(
-					dtoConverterContext.isAcceptAllLanguages(), ddmStructure,
-					dtoConverterContext.getHttpServletRequest(), journalArticle,
-					dtoConverterContext.getLocale(),
-					dtoConverterContext.getUriInfoOptional());
+					ddmStructure, dtoConverterContext, journalArticle);
 				siteId = GroupUtil.getSiteId(group);
 				subscribed = _subscriptionLocalService.isSubscribed(
 					journalArticle.getCompanyId(),
@@ -226,17 +227,24 @@ public class StructuredContentDTOConverter
 	}
 
 	private RenderedContent[] _toRenderedContents(
-		boolean acceptAllLanguages, DDMStructure ddmStructure,
-		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
-		Locale locale, Optional<UriInfo> uriInfoOptional) {
+		DDMStructure ddmStructure, DTOConverterContext dtoConverterContext,
+		JournalArticle journalArticle) {
+
+		Optional<UriInfo> uriInfoOptional =
+			dtoConverterContext.getUriInfoOptional();
 
 		if (!uriInfoOptional.isPresent()) {
 			return null;
 		}
 
+		boolean acceptAllLanguages = dtoConverterContext.isAcceptAllLanguages();
+		HttpServletRequest httpServletRequest =
+			dtoConverterContext.getHttpServletRequest();
+		Locale locale = dtoConverterContext.getLocale();
+
 		UriInfo uriInfo = uriInfoOptional.get();
 
-		return TransformUtil.transformToArray(
+		RenderedContent[] renderedContents = TransformUtil.transformToArray(
 			ddmStructure.getTemplates(),
 			ddmTemplate -> new RenderedContent() {
 				{
@@ -279,6 +287,20 @@ public class StructuredContentDTOConverter
 				}
 			},
 			RenderedContent.class);
+
+		RenderedContent[] displayPagesRenderedContents =
+			DisplayPageRendererUtil.getRenderedContent(
+				BaseStructuredContentResourceImpl.class,
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(),
+				ddmStructure.getStructureId(), dtoConverterContext,
+				journalArticle.getGroupId(), journalArticle,
+				_infoItemServiceTracker, _layoutLocalService,
+				_layoutPageTemplateEntryService,
+				"getStructuredContentRenderedContentByDisplayPageDisplayPage" +
+					"Key");
+
+		return ArrayUtil.append(renderedContents, displayPagesRenderedContents);
 	}
 
 	@Reference
@@ -315,6 +337,9 @@ public class StructuredContentDTOConverter
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
 	private JournalArticleService _journalArticleService;
 
 	@Reference
@@ -325,6 +350,9 @@ public class StructuredContentDTOConverter
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

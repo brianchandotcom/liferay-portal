@@ -439,6 +439,10 @@ public abstract class AccountRoleLocalServiceBaseImpl
 		counterLocalService;
 
 	@Reference
+	protected com.liferay.portal.kernel.service.CompanyLocalService
+		companyLocalService;
+
+	@Reference
 	protected com.liferay.portal.kernel.service.RoleLocalService
 		roleLocalService;
 

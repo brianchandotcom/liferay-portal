@@ -78,6 +78,12 @@ public class AccountRoleLocalServiceUtil {
 		getService().associateUser(accountEntryId, accountRoleIds, userId);
 	}
 
+	public static void checkCompanyAccountRoles(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().checkCompanyAccountRoles(companyId);
+	}
+
 	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *

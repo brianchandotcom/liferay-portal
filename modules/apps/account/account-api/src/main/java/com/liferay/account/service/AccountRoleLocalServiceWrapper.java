@@ -79,6 +79,13 @@ public class AccountRoleLocalServiceWrapper
 			accountEntryId, accountRoleIds, userId);
 	}
 
+	@Override
+	public void checkCompanyAccountRoles(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountRoleLocalService.checkCompanyAccountRoles(companyId);
+	}
+
 	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *

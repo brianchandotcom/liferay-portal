@@ -839,17 +839,14 @@ public class RenderLayoutStructureDisplayContext {
 		return _assetCategoryIds;
 	}
 
-	private String _getBackgroundImage(JSONObject jsonObject)
-		throws Exception {
-
+	private String _getBackgroundImage(JSONObject jsonObject) throws Exception {
 		if (jsonObject == null) {
 			return StringPool.BLANK;
 		}
 
 		String mappedCollectionValue = StringPool.BLANK;
 
-		String collectionFieldId = jsonObject.getString(
-			"collectionFieldId");
+		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
 			Object displayObject = _httpServletRequest.getAttribute(

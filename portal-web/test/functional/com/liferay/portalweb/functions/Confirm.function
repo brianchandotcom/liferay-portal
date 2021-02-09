@@ -6,10 +6,6 @@ definition {
 		selenium.acceptAlert();
 	}
 
-	function assertAlertText {
-		selenium.assertAlertText();
-	}
-
 	function confirm {
 		selenium.getConfirmation();
 

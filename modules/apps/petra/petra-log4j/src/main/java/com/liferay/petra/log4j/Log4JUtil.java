@@ -103,13 +103,7 @@ public class Log4JUtil {
 			urlContent = _removeAppender(urlContent, "XML_FILE");
 		}
 
-		// See LPS-6029, LPS-8865, and LPS-24280
-
-		DOMConfigurator domConfigurator = new DOMConfigurator();
-
-		domConfigurator.doConfigure(
-			new UnsyncStringReader(urlContent),
-			LogManager.getLoggerRepository());
+		Map<String, String> logLevelStrings = new HashMap<>();
 
 		try {
 			SAXReader saxReader = new SAXReader();
@@ -140,20 +134,30 @@ public class Log4JUtil {
 			List<Element> categoryElements = rootElement.elements("category");
 
 			for (Element categoryElement : categoryElements) {
-				String name = categoryElement.attributeValue("name");
-
 				Element priorityElement = categoryElement.element("priority");
 
-				String priority = priorityElement.attributeValue("value");
-
-				java.util.logging.Logger jdkLogger =
-					java.util.logging.Logger.getLogger(name);
-
-				jdkLogger.setLevel(_getJdkLevel(priority));
+				logLevelStrings.put(
+					categoryElement.attributeValue("name"),
+					priorityElement.attributeValue("value"));
 			}
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+		}
+
+		// See LPS-6029, LPS-8865, and LPS-24280
+
+		DOMConfigurator domConfigurator = new DOMConfigurator();
+
+		domConfigurator.doConfigure(
+			new UnsyncStringReader(urlContent),
+			LogManager.getLoggerRepository());
+
+		for (Map.Entry<String, String> entry : logLevelStrings.entrySet()) {
+			java.util.logging.Logger jdkLogger =
+				java.util.logging.Logger.getLogger(entry.getKey());
+
+			jdkLogger.setLevel(_getJdkLevel(entry.getValue()));
 		}
 	}
 

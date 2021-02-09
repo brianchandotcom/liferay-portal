@@ -451,6 +451,21 @@ public interface SegmentsExperienceModel
 	public void setActive(boolean active);
 
 	/**
+	 * Returns the type settings of this segments experience.
+	 *
+	 * @return the type settings of this segments experience
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this segments experience.
+	 *
+	 * @param typeSettings the type settings of this segments experience
+	 */
+	public void setTypeSettings(String typeSettings);
+
+	/**
 	 * Returns the last publish date of this segments experience.
 	 *
 	 * @return the last publish date of this segments experience

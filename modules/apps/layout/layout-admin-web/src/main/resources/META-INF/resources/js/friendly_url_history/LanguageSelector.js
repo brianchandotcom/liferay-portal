@@ -36,7 +36,7 @@ function LanguageSelector({
 	selectedLanguageId,
 }) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const language = getLanguage(selectedLanguageId);
+	const selectedLanguage = getLanguage(selectedLanguageId);
 
 	return (
 		<ClayDropDown
@@ -45,9 +45,9 @@ function LanguageSelector({
 			trigger={
 				<ClayButton displayType="secondary" monospaced>
 					<span className="inline-item">
-						<ClayIcon symbol={language.icon} />
+						<ClayIcon symbol={selectedLanguage.icon} />
 					</span>
-					<span className="btn-section">{language.text}</span>
+					<span className="btn-section">{selectedLanguage.text}</span>
 				</ClayButton>
 			}
 		>

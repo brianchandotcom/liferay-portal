@@ -63,6 +63,10 @@ public class SegmentsServiceUpgrade implements UpgradeStepRegistrator {
 				"SegmentsEntry", "SegmentsEntryRel", "SegmentsEntryRole",
 				"SegmentsExperience", "SegmentsExperiment",
 				"SegmentsExperimentRel"));
+
+		registry.register(
+			"2.3.0", "2.4.0",
+			new com.liferay.segments.internal.upgrade.v2_4_0.UpgradeSchema());
 	}
 
 	@Reference

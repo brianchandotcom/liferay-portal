@@ -33,33 +33,55 @@ import org.osgi.service.component.annotations.Component;
 public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
 
 	public CryptoHashGeneratorImpl() throws NoSuchAlgorithmException {
-		_messageDigest = MessageDigest.getInstance("SHA-256");
+		_messageDigestCryptoHashProvider =
+			new MessageDigestCryptoHashProvider();
 	}
 
 	@Override
 	public CryptoHashResponse generate(byte[] input)
 		throws CryptoHashException {
 
-		byte[] salt = new byte[16];
+		byte[] salt = _messageDigestCryptoHashProvider.generateSalt();
 
-		for (int i = 0; i < 16; ++i) {
-			salt[i] = SecureRandomUtil.nextByte();
-		}
-
-		return new CryptoHashResponse(_digest(salt, input), salt);
+		return new CryptoHashResponse(
+			_messageDigestCryptoHashProvider.generate(salt, input), salt);
 	}
 
 	@Override
 	public boolean verify(byte[] input, byte[] hash, byte[] salt)
 		throws CryptoHashException {
 
-		return MessageDigest.isEqual(_digest(salt, input), hash);
+		return MessageDigest.isEqual(
+			_messageDigestCryptoHashProvider.generate(salt, input), hash);
 	}
 
-	private byte[] _digest(byte[] salt, byte[] input) {
-		return _messageDigest.digest(ArrayUtil.append(salt, input));
-	}
+	private final MessageDigestCryptoHashProvider
+		_messageDigestCryptoHashProvider;
 
-	private final MessageDigest _messageDigest;
+	private static class MessageDigestCryptoHashProvider {
+
+		public MessageDigestCryptoHashProvider()
+			throws NoSuchAlgorithmException {
+
+			_messageDigest = MessageDigest.getInstance("SHA-256");
+		}
+
+		public byte[] generate(byte[] salt, byte[] input) {
+			return _messageDigest.digest(ArrayUtil.append(salt, input));
+		}
+
+		public byte[] generateSalt() {
+			byte[] salt = new byte[16];
+
+			for (int i = 0; i < 16; ++i) {
+				salt[i] = SecureRandomUtil.nextByte();
+			}
+
+			return salt;
+		}
+
+		private final MessageDigest _messageDigest;
+
+	}
 
 }

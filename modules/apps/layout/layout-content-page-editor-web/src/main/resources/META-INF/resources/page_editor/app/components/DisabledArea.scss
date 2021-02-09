@@ -4,11 +4,14 @@
 
 .page-editor__disabled-area {
 	cursor: not-allowed;
-	padding-right: 40px;
 	position: relative;
 	transition: padding-left ease $defaultTransitionDuration,
 		padding-right ease $defaultTransitionDuration;
 	will-change: padding-left, padding-right;
+
+	&--padded {
+		padding-right: $sidebarButtonWidth;
+	}
 
 	&::after {
 		background-color: rgba(255, 255, 255, 0);

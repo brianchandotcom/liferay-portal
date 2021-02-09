@@ -51,7 +51,7 @@ public class InceptionModelUtil {
 			_downloadFailed = false;
 
 			_downloadFile(
-				_getFileName(),
+				_getModelFileName(),
 				tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
 					modelDownloadURL());
 
@@ -69,19 +69,20 @@ public class InceptionModelUtil {
 
 	public static byte[] getGraphBytes() throws IOException, PortalException {
 		return StreamUtil.toByteArray(
-			_getFileInputStream("tensorflow_inception_graph.pb"));
+			_getModelFileInputStream("tensorflow_inception_graph.pb"));
 	}
 
 	public static String[] getLabels() throws IOException, PortalException {
 		return StringUtil.splitLines(
 			StringUtil.read(
-				_getFileInputStream("imagenet_comp_graph_label_strings.txt")));
+				_getModelFileInputStream(
+					"imagenet_comp_graph_label_strings.txt")));
 	}
 
 	public static boolean isDownloaded() throws PortalException {
 		if (DLStoreUtil.hasFile(
 				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-				_getFileName()) &&
+				_getModelFileName()) &&
 			DLStoreUtil.hasFile(
 				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
 				_getNativeLibraryFileName())) {
@@ -108,26 +109,26 @@ public class InceptionModelUtil {
 			fileName, false, tempFile);
 	}
 
-	private static InputStream _getFileInputStream(String fileName)
+	private static String _getFileName(String fileName) {
+		return String.valueOf(
+			Paths.get(
+				"com.liferay.document.library.asset.auto.tagger.tensorflow",
+				fileName));
+	}
+
+	private static InputStream _getModelFileInputStream(String fileName)
 		throws IOException, PortalException {
 
 		return ZipFileUtil.openInputStream(
 			FileUtil.createTempFile(
 				DLStoreUtil.getFileAsStream(
 					PortalInstances.getDefaultCompanyId(),
-					CompanyConstants.SYSTEM, _getFileName())),
+					CompanyConstants.SYSTEM, _getModelFileName())),
 			fileName);
 	}
 
-	private static String _getFileName() {
+	private static String _getModelFileName() {
 		return _getFileName("org.tensorflow.models.inception-5h.jar");
-	}
-
-	private static String _getFileName(String fileName) {
-		return String.valueOf(
-			Paths.get(
-				"com.liferay.document.library.asset.auto.tagger.tensorflow",
-				fileName));
 	}
 
 	private static String _getNativeLibraryFileName() {

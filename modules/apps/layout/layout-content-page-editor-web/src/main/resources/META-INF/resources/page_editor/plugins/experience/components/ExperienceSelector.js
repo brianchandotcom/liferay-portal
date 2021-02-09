@@ -139,6 +139,7 @@ const ExperienceSelector = ({
 			) {
 				setOpenModal(true);
 				setEditingExperience({
+					languageIds: modalExperienceState.languageIds,
 					name: modalExperienceState.experienceName,
 					segmentsEntryId:
 						config.selectedSegmentsEntryId ||
@@ -157,7 +158,12 @@ const ExperienceSelector = ({
 	}) => {
 		if (segmentsExperienceId) {
 			return dispatch(
-				updateExperience({name, segmentsEntryId, segmentsExperienceId})
+				updateExperience({
+					languageIds,
+					name,
+					segmentsEntryId,
+					segmentsExperienceId,
+				})
 			)
 				.then(() => {
 					if (isMounted()) {
@@ -176,6 +182,7 @@ const ExperienceSelector = ({
 							error: Liferay.Language.get(
 								'an-unexpected-error-occurred-while-updating-the-experience'
 							),
+							languageIds,
 							name,
 							segmentsEntryId,
 							segmentsExperienceId,
@@ -221,11 +228,17 @@ const ExperienceSelector = ({
 	const handleOnNewExperiecneClick = () => setOpenModal(true);
 
 	const handleEditExperienceClick = (experienceData) => {
-		const {name, segmentsEntryId, segmentsExperienceId} = experienceData;
+		const {
+			languageIds,
+			name,
+			segmentsEntryId,
+			segmentsExperienceId,
+		} = experienceData;
 
 		setOpenModal(true);
 
 		setEditingExperience({
+			languageIds,
 			name,
 			segmentsEntryId,
 			segmentsExperienceId,
@@ -373,6 +386,7 @@ const ExperienceSelector = ({
 					errorMessage={editingExperience.error}
 					experienceId={editingExperience.segmentsExperienceId}
 					initialName={editingExperience.name}
+					languageIds={editingExperience.languageIds}
 					observer={modalObserver}
 					onClose={onModalClose}
 					onErrorDismiss={() => setEditingExperience({error: null})}

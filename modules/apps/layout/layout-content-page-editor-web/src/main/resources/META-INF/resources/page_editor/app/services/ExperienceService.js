@@ -117,9 +117,18 @@ export default {
 	 * @param {function} options.dispatch
 	 */
 	updateExperience({body, dispatch}) {
+		const {languageIds, name, segmentsEntryId, segmentsExperienceId} = body;
+
+		const payload = {
+			languageIds,
+			name,
+			segmentsEntryId,
+			segmentsExperienceId,
+		};
+
 		return serviceFetch(
 			config.updateSegmentsExperienceURL,
-			{body},
+			{body: payload},
 			dispatch
 		);
 	},

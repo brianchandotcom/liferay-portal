@@ -33,4 +33,10 @@ public interface TensorFlowImageAssetAutoTagProviderDownloadConfiguration {
 	)
 	public String modelDownloadURL();
 
+	@Meta.AD(
+		deflt = "https://repository-cdn.liferay.com/nexus/service/local/repositories/public/content/org/tensorflow/libtensorflow_jni/1.15.0/libtensorflow_jni-1.15.0.jar",
+		required = false
+	)
+	public String nativeLibraryDownloadURL();
+
 }

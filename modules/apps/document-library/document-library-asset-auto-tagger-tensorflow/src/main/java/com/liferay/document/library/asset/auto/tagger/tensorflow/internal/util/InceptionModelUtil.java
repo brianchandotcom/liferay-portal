@@ -62,6 +62,18 @@ public class InceptionModelUtil {
 			DLStoreUtil.addFile(
 				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
 				_getFileName(), false, tempFile);
+
+			File tempFile2 = FileUtil.createTempFile();
+
+			JarUtil.downloadAndInstallJar(
+				new URL(
+					tensorFlowImageAssetAutoTagProviderDownloadConfiguration.
+						nativeLibraryDownloadURL()),
+				tempFile2.toPath());
+
+			DLStoreUtil.addFile(
+				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+				_getNativeLibraryFileName(), false, tempFile2);
 		}
 		catch (Exception exception) {
 			_downloadFailed = true;
@@ -82,9 +94,17 @@ public class InceptionModelUtil {
 	}
 
 	public static boolean isDownloaded() throws PortalException {
-		return DLStoreUtil.hasFile(
-			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			_getFileName());
+		if (DLStoreUtil.hasFile(
+				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+				_getFileName()) &&
+			DLStoreUtil.hasFile(
+				PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+				_getNativeLibraryFileName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isDownloadFailed() {
@@ -106,6 +126,14 @@ public class InceptionModelUtil {
 		Path path = Paths.get(
 			"com.liferay.document.library.asset.auto.tagger.tensorflow",
 			"org.tensorflow.models.inception-5h.jar");
+
+		return path.toString();
+	}
+
+	private static String _getNativeLibraryFileName() {
+		Path path = Paths.get(
+			"com.liferay.document.library.asset.auto.tagger.tensorflow",
+			"libtensorflow_jni-1.15.0.jar");
 
 		return path.toString();
 	}

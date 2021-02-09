@@ -12,7 +12,7 @@
  * details.
  */
 
-import {buildFragment, delegate} from 'frontend-js-web';
+import {delegate} from 'frontend-js-web';
 
 export default function ({classTypes, namespace}) {
 	const mapDDMStructures = {};
@@ -62,6 +62,30 @@ export default function ({classTypes, namespace}) {
 
 	const eventDelegates = [];
 
+	const createElement = (label, classNames, attributes, content) => {
+		const element = document.createElement(label);
+
+		if (classNames) {
+			element.classList.add(classNames);
+		}
+
+		Object.keys(attributes).forEach((key) => {
+			element.setAttribute(key, attributes[key]);
+		});
+
+		if (content) {
+			element.innerHTML = content;
+		}
+
+		return element;
+	};
+
+	const createOptgroup = (attributes) =>
+		createElement('optgroup', 'order-by-subtype', attributes);
+
+	const createOption = (attributes, content) =>
+		createElement('option', null, attributes, content);
+
 	const togglePopupButtons = (enabledInput, enabledInputChecked) => {
 		const popupButtons = document.querySelectorAll(
 			'.asset-subtypefields-popup .btn'
@@ -107,24 +131,20 @@ export default function ({classTypes, namespace}) {
 							option.remove();
 						});
 
-					const optTextOrderByColumn1 =
+					const optOrderByColumn1 =
 						mapDDMStructures[
-							`${className}_${selectedSubtype}_optTextOrderByColumn1`
+							`${className}_${selectedSubtype}_column1`
 						];
-					const optTextOrderByColumn2 =
+					const optOrderByColumn2 =
 						mapDDMStructures[
-							`${className}_${selectedSubtype}_optTextOrderByColumn2`
+							`${className}_${selectedSubtype}_column2`
 						];
 
-					if (optTextOrderByColumn1) {
-						orderByColumn1.append(
-							buildFragment(optTextOrderByColumn1)
-						);
+					if (optOrderByColumn1) {
+						orderByColumn1.append(optOrderByColumn1);
 					}
-					if (optTextOrderByColumn2) {
-						orderByColumn2.append(
-							buildFragment(optTextOrderByColumn2)
-						);
+					if (optOrderByColumn2) {
+						orderByColumn2.append(optOrderByColumn2);
 					}
 				}
 
@@ -211,11 +231,8 @@ export default function ({classTypes, namespace}) {
 		);
 
 		classSubtypes.forEach(({classTypeFields, classTypeId, name}) => {
-			const optgroupClose = '</optgroup>';
-			const optgroupOpen = `<optgroup class="order-by-subtype" label="${name}">`;
-
-			const columnBuffer1 = [optgroupOpen];
-			const columnBuffer2 = [optgroupOpen];
+			const columnBuffer1 = createOptgroup({label: name});
+			const columnBuffer2 = createOptgroup({label: name});
 
 			classTypeFields.forEach(
 				({
@@ -224,24 +241,38 @@ export default function ({classTypes, namespace}) {
 					selectedOrderByColumn2,
 					value,
 				}) => {
-					columnBuffer1.push(
-						`<option ${selectedOrderByColumn1} value="${value}">${label}</option>`
+					const option1 = createOption(
+						{
+							value,
+							...(selectedOrderByColumn1 && {
+								selected: '',
+							}),
+						},
+						label
 					);
-					columnBuffer2.push(
-						`<option ${selectedOrderByColumn2} value="${value}">${label}</option>`
+
+					const option2 = createOption(
+						{
+							value,
+							...(selectedOrderByColumn2 && {
+								selected: '',
+							}),
+						},
+						label
 					);
+
+					columnBuffer1.append(option1);
+					columnBuffer2.append(option2);
 				}
 			);
 
-			columnBuffer1.push(optgroupClose);
-			columnBuffer2.push(optgroupClose);
+			mapDDMStructures[
+				`${className}_${classTypeId}_column1`
+			] = columnBuffer1;
 
 			mapDDMStructures[
-				`${className}_${classTypeId}_optTextOrderByColumn1`
-			] = columnBuffer1.join('');
-			mapDDMStructures[
-				`${className}_${classTypeId}_optTextOrderByColumn2`
-			] = columnBuffer2.join('');
+				`${className}_${classTypeId}_column2`
+			] = columnBuffer2;
 		});
 
 		const onChangeSubtypeSelector = () => {

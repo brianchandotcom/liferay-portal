@@ -65,13 +65,14 @@ definition {
 	test CheckLanguageSelector {
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Title");
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
 
-		PortletEntry.viewLocale(locale = "en-US");
+		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		PortletEntry.viewLocale(locale = "pt-BR");
+		AssertElementPresent(
+			locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

@@ -38,6 +38,9 @@ import java.nio.file.Paths;
  */
 public class InceptionModelUtil {
 
+	public static final String NATIVE_LIBRARY_FILE_NAME =
+		"libtensorflow_jni-1.15.0.jar";
+
 	public static void download(
 			TensorFlowImageAssetAutoTagProviderDownloadConfiguration
 				tensorFlowImageAssetAutoTagProviderDownloadConfiguration)
@@ -77,6 +80,14 @@ public class InceptionModelUtil {
 			StringUtil.read(
 				_getModelFileInputStream(
 					"imagenet_comp_graph_label_strings.txt")));
+	}
+
+	public static InputStream getNativeLibraryInputStream()
+		throws PortalException {
+
+		return DLStoreUtil.getFileAsStream(
+			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
+			_getNativeLibraryFileName());
 	}
 
 	public static boolean isDownloaded() throws PortalException {
@@ -132,7 +143,7 @@ public class InceptionModelUtil {
 	}
 
 	private static String _getNativeLibraryFileName() {
-		return _getFileName("libtensorflow_jni-1.15.0.jar");
+		return _getFileName(NATIVE_LIBRARY_FILE_NAME);
 	}
 
 	private static boolean _downloadFailed;

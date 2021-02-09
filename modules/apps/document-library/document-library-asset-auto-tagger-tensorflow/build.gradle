@@ -1,6 +1,5 @@
 dependencies {
 	compileInclude group: "org.tensorflow", name: "libtensorflow", version: "1.15.0"
-	compileInclude group: "org.tensorflow", name: "libtensorflow_jni", version: "1.15.0"
 	compileInclude group: "org.tensorflow", name: "tensorflow", version: "1.15.0"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"

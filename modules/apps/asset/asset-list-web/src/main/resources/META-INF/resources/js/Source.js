@@ -108,6 +108,11 @@ export default function ({classTypes, namespace}) {
 		saveButton.disabled = valueIsEmpty;
 	};
 
+	const removeOptionsOrderByFilter = () => {
+		const options = orderingPanel.querySelectorAll('.order-by-subtype');
+		options.forEach((option) => option.remove());
+	};
+
 	const toggleSubclassesFields = (hideSubtypeFieldsWrapper, className) => {
 		const selectedSubtype = subtypeSelector[className].value;
 		const structureOptions = document.getElementById(
@@ -125,11 +130,7 @@ export default function ({classTypes, namespace}) {
 		subtypeFieldsWrappers.forEach((subtypeFieldsWrapper) => {
 			if (selectedSubtype != 'false' && selectedSubtype != 'true') {
 				if (orderingPanel) {
-					orderingPanel
-						.querySelectorAll('.order-by-subtype')
-						.forEach((option) => {
-							option.remove();
-						});
+					removeOptionsOrderByFilter();
 
 					const optOrderByColumn1 =
 						mapDDMStructures[
@@ -317,6 +318,10 @@ export default function ({classTypes, namespace}) {
 	const onChangeAssetSelector = () => {
 		ddmStructureFieldNameInput.value = '';
 		ddmStructureFieldValueInput.value = '';
+
+		if (orderingPanel) {
+			removeOptionsOrderByFilter();
+		}
 
 		toggleSubclasses(assetSelector.value);
 	};

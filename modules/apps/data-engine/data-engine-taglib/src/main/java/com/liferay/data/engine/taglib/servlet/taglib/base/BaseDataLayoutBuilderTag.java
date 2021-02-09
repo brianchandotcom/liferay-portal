@@ -66,6 +66,14 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		return _localizable;
 	}
 
+	public java.lang.String getModule() {
+		return _module;
+	}
+
+	public javax.servlet.ServletContext getModuleServletContext() {
+		return _moduleServletContext;
+	}
+
 	public java.lang.String getNamespace() {
 		return _namespace;
 	}
@@ -106,6 +114,14 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_localizable = localizable;
 	}
 
+	public void setModule(java.lang.String module) {
+		_module = module;
+	}
+
+	public void setModuleServletContext(javax.servlet.ServletContext moduleServletContext) {
+		_moduleServletContext = moduleServletContext;
+	}
+
 	public void setNamespace(java.lang.String namespace) {
 		_namespace = namespace;
 	}
@@ -133,6 +149,8 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_fieldSetContentType = null;
 		_groupId = null;
 		_localizable = false;
+		_module = null;
+		_moduleServletContext = null;
 		_namespace = null;
 		_scopes = null;
 	}
@@ -157,6 +175,8 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		setNamespacedAttribute(request, "fieldSetContentType", _fieldSetContentType);
 		setNamespacedAttribute(request, "groupId", _groupId);
 		setNamespacedAttribute(request, "localizable", _localizable);
+		setNamespacedAttribute(request, "module", _module);
+		setNamespacedAttribute(request, "moduleServletContext", _moduleServletContext);
 		setNamespacedAttribute(request, "namespace", _namespace);
 		setNamespacedAttribute(request, "scopes", _scopes);
 	}
@@ -177,6 +197,8 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 	private java.lang.String _fieldSetContentType = null;
 	private java.lang.Long _groupId = null;
 	private boolean _localizable = false;
+	private java.lang.String _module = null;
+	private javax.servlet.ServletContext _moduleServletContext = null;
 	private java.lang.String _namespace = null;
 	private java.util.Set _scopes = null;
 

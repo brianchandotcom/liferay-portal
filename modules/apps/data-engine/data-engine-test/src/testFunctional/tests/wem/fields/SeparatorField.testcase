@@ -176,7 +176,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 		
-		AssertVisible(
+		AssertElementPresent(
 			key_fieldFieldLabel = "Separator",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		

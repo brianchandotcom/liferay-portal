@@ -186,14 +186,9 @@ definition {
 			value1 = "${textValue}");
 	}
 
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@description = "This is a test for LPS-107630. Make sure Fieldsets can be set as collapsible"
 	@priority = "4"
 	test FieldsetSetAsCollapsible {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",

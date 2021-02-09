@@ -71,6 +71,17 @@ const renderComponent = ({
 		<StoreAPIContextProvider
 			dispatch={dispatch}
 			getState={() => ({
+				availableSegmentsExperiences: {
+					0: {
+						hasLockedSegmentsExperiment: false,
+						name: 'Default Experience',
+						priority: -1,
+						segmentsEntryId: 'test-segment-id-00',
+						segmentsExperienceId: '0',
+						segmentsExperimentStatus: undefined,
+						segmentsExperimentURL: 'https//:default-experience.com',
+					},
+				},
 				fragmentEntryLinks: {
 					[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink,
 				},
@@ -102,6 +113,29 @@ jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
+			availableLanguages: {
+				ar_SA: {
+					default: false,
+					displayName: 'Arabic (Saudi Arabia)',
+					languageIcon: 'ar-sa',
+					languageId: 'ar_SA',
+					w3cLanguageId: 'ar-SA',
+				},
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+				es_ES: {
+					default: true,
+					displayName: 'Spanish (Spain)',
+					languageIcon: 'es-es',
+					languageId: 'es_ES',
+					w3cLanguageId: 'es-ES',
+				},
+			},
 			availableViewportSizes: {
 				desktop: {label: 'Desktop', sizeId: 'desktop'},
 				mobile: {label: 'Mobile', sizeId: 'mobile'},
@@ -135,6 +169,7 @@ jest.mock(
 					],
 				},
 			],
+			defaultLanguageId: 'es_ES',
 			defaultSegmentsExperienceId: 0,
 			marginOptions: [],
 			paddingOptions: [],

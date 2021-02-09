@@ -31,13 +31,26 @@ jest.mock(
 	() => ({
 		config: {
 			availableLanguages: {
-				language_1: {
-					languageIcon: 'language-1',
-					languageLabel: 'language-1',
+				ar_SA: {
+					default: false,
+					displayName: 'Arabic (Saudi Arabia)',
+					languageIcon: 'ar-sa',
+					languageId: 'ar_SA',
+					w3cLanguageId: 'ar-SA',
 				},
-				language_2: {
-					languageIcon: 'langauge-2',
-					languageLabel: 'langauge-2',
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+				es_ES: {
+					default: true,
+					displayName: 'Spanish (Spain)',
+					languageIcon: 'es-es',
+					languageId: 'es_ES',
+					w3cLanguageId: 'es-ES',
 				},
 			},
 			availableViewportSizes: {
@@ -45,7 +58,8 @@ jest.mock(
 				mobile: {label: 'Mobile', sizeId: 'mobile'},
 				tablet: {label: 'Tablet', sizeId: 'tablet'},
 			},
-			defaultLanguageId: 'language_1',
+			defaultLanguageId: 'es_ES',
+			defaultSegmentsExperienceId: '0',
 		},
 	})
 );
@@ -125,8 +139,19 @@ const renderGeneralPanel = ({
 	fragmentEntryLink = defaultFragmentEntryLink(),
 }) => {
 	const state = {
+		availableSegmentsExperiences: {
+			0: {
+				hasLockedSegmentsExperiment: false,
+				name: 'Default Experience',
+				priority: -1,
+				segmentsEntryId: 'test-segment-id-00',
+				segmentsExperienceId: '0',
+				segmentsExperimentStatus: undefined,
+				segmentsExperimentURL: 'https//:default-experience.com',
+			},
+		},
 		fragmentEntryLinks: {[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink},
-		languageId: 'language_1',
+		languageId: 'en_US',
 		segmentsExperienceId,
 		selectedViewportSize: VIEWPORT_SIZES.desktop,
 	};
@@ -323,8 +348,6 @@ describe('FragmentGeneralPanel', () => {
 
 		const wrapperDiv = input.parentElement.parentElement.parentElement;
 
-		expect(wrapperDiv.querySelector('.sr-only')).toHaveTextContent(
-			'language-1'
-		);
+		expect(wrapperDiv.querySelector('.sr-only')).toHaveTextContent('en-US');
 	});
 });

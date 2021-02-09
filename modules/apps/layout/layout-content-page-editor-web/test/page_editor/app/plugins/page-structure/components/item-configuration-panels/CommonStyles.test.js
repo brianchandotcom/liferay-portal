@@ -21,6 +21,17 @@ import updateItemConfig from '../../../../../../../src/main/resources/META-INF/r
 import {CommonStyles} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/CommonStyles';
 
 const STATE = {
+	availableSegmentsExperiences: {
+		0: {
+			hasLockedSegmentsExperiment: false,
+			name: 'Default Experience',
+			priority: -1,
+			segmentsEntryId: 'test-segment-id-00',
+			segmentsExperienceId: '0',
+			segmentsExperimentStatus: undefined,
+			segmentsExperimentURL: 'https//:default-experience.com',
+		},
+	},
 	segmentsExperienceId: '0',
 	selectedViewportSize: 'desktop',
 };
@@ -57,6 +68,29 @@ jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
+			availableLanguages: {
+				ar_SA: {
+					default: false,
+					displayName: 'Arabic (Saudi Arabia)',
+					languageIcon: 'ar-sa',
+					languageId: 'ar_SA',
+					w3cLanguageId: 'ar-SA',
+				},
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+				es_ES: {
+					default: true,
+					displayName: 'Spanish (Spain)',
+					languageIcon: 'es-es',
+					languageId: 'es_ES',
+					w3cLanguageId: 'es-ES',
+				},
+			},
 			availableViewportSizes: {
 				desktop: {label: 'Desktop'},
 				tablet: {label: 'tablet'},
@@ -108,6 +142,8 @@ jest.mock(
 					],
 				},
 			],
+			defaultLanguageId: 'es_ES',
+			defaultSegmentsExperienceId: '0',
 			responsiveEnabled: true,
 		},
 	})

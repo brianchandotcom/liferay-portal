@@ -34,10 +34,34 @@ jest.mock(
 );
 
 const availableLanguages = {
-	language_1: {languageIcon: 'language-1', languageLabel: 'language-1'},
-	language_2: {languageIcon: 'langauge-2', languageLabel: 'langauge-2'},
-	language_3: {languageIcon: 'language-3', languageLabel: 'language-3'},
-	language_4: {languageIcon: 'language-4', languageLabel: 'language-4'},
+	language_1: {
+		default: true,
+		displayName: 'language-1',
+		languageIcon: 'language-1',
+		languageId: 'language-1',
+		w3cLanguageId: 'language-1',
+	},
+	language_2: {
+		default: true,
+		displayName: 'language-2',
+		languageIcon: 'language-2',
+		languageId: 'language-2',
+		w3cLanguageId: 'language-2',
+	},
+	language_3: {
+		default: true,
+		displayName: 'language-3',
+		languageIcon: 'language-3',
+		languageId: 'language-3',
+		w3cLanguageId: 'language-3',
+	},
+	language_4: {
+		default: true,
+		displayName: 'language-4',
+		languageIcon: 'language-4',
+		languageId: 'language-4',
+		w3cLanguageId: 'language-4',
+	},
 };
 const FRAGMENT_ENTRY_LINK_ID = '1';
 const FRAGMENT_ENTRY_LINK_ID_2 = '2';
@@ -77,9 +101,22 @@ const fragmentEntryLink2 = {
 		},
 	},
 };
+
 const languageId = 'language_2';
 
 const defaultState = {
+	availableSegmentsExperiences: {
+		0: {
+			hasLockedSegmentsExperiment: false,
+			name: 'Default Experience',
+			priority: -1,
+			segmentsEntryId: 'test-segment-id-00',
+			segmentsExperienceId: '0',
+			segmentsExperimentStatus: undefined,
+			segmentsExperimentURL: 'https//:default-experience.com',
+		},
+	},
+	defaultSegmentsExperienceId: '0',
 	fragmentEntryLinks: {[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink},
 };
 
@@ -92,6 +129,7 @@ const renderTranslation = ({state}) => {
 				dispatch={() => {}}
 				fragmentEntryLinks={state.fragmentEntryLinks}
 				languageId={languageId}
+				segmentsExperienceId={state.defaultSegmentsExperienceId}
 			/>
 		</StoreAPIContextProvider>
 	);

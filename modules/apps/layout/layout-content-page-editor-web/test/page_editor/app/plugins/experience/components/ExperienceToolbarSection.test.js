@@ -77,7 +77,6 @@ function renderExperienceToolbarSection(
 const mockState = {
 	availableSegmentsExperiences: {
 		0: {
-			active: true,
 			hasLockedSegmentsExperiment: false,
 			name: 'Default Experience',
 			priority: -1,
@@ -87,8 +86,8 @@ const mockState = {
 			segmentsExperimentURL: 'https//:default-experience.com',
 		},
 		'test-experience-id-01': {
-			active: true,
 			hasLockedSegmentsExperiment: false,
+			languageIds: ['en_US', 'es_ES'],
 			name: 'Experience #1',
 			priority: 3,
 			segmentsEntryId: 'test-segment-id-00',
@@ -97,8 +96,8 @@ const mockState = {
 			segmentsExperimentURL: 'https//:experience-1.com',
 		},
 		'test-experience-id-02': {
-			active: true,
 			hasLockedSegmentsExperiment: false,
+			languageIds: ['en_US', 'es_ES', 'ar_SA'],
 			name: 'Experience #2',
 			priority: 1,
 			segmentsEntryId: 'test-segment-id-01',
@@ -117,6 +116,29 @@ const mockState = {
 
 const mockConfig = {
 	addSegmentsExperienceURL: MOCK_CREATE_URL,
+	availableLanguages: {
+		ar_SA: {
+			default: false,
+			displayName: 'Arabic (Saudi Arabia)',
+			languageIcon: 'ar-sa',
+			languageId: 'ar_SA',
+			w3cLanguageId: 'ar-SA',
+		},
+		en_US: {
+			default: false,
+			displayName: 'English (United States)',
+			languageIcon: 'en-us',
+			languageId: 'en_US',
+			w3cLanguageId: 'en-US',
+		},
+		es_ES: {
+			default: true,
+			displayName: 'Spanish (Spain)',
+			languageIcon: 'es-es',
+			languageId: 'es_ES',
+			w3cLanguageId: 'es-ES',
+		},
+	},
 	availableSegmentsEntries: {
 		'test-segment-id-00': {
 			name: 'A segment 0',
@@ -184,7 +206,6 @@ describe('ExperienceToolbarSection', () => {
 			availableSegmentsExperiences: {
 				...mockState.availableSegmentsExperiences,
 				'test-experience-id-03': {
-					active: true,
 					hasLockedSegmentsExperiment: true,
 					name: 'Experience #3',
 					priority: 5,
@@ -539,7 +560,6 @@ describe('ExperienceToolbarSection', () => {
 			expect.stringContaining(MOCK_UPDATE_URL),
 			expect.objectContaining({
 				body: expect.objectContaining({
-					active: true,
 					name: 'New Experience #1',
 					segmentsEntryId: 'test-segment-id-00',
 					segmentsExperienceId: 'test-experience-id-01',

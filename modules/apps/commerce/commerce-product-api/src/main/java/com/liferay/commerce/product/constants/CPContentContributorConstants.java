@@ -19,6 +19,9 @@ package com.liferay.commerce.product.constants;
  */
 public class CPContentContributorConstants {
 
+	public static final String AVAILABILITY_DISPLAY_TYPE =
+		"availabilityDisplayType";
+
 	public static final String AVAILABILITY_ESTIMATE_NAME =
 		"availabilityEstimate";
 

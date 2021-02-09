@@ -238,6 +238,7 @@ const LocalizableText = ({
 				getEditingValue({
 					defaultLocale,
 					editingLocale: newEditingLocale,
+					fieldName,
 					value: currentValue,
 				})
 			);
@@ -255,6 +256,7 @@ const LocalizableText = ({
 		currentAvailableLocales,
 		currentValue,
 		defaultLocale,
+		fieldName,
 		portletNamespace,
 	]);
 
@@ -278,6 +280,16 @@ const LocalizableText = ({
 
 					setCurrentValue(newValue);
 					setCurrentInternalValue(target.value);
+
+					const {availableLocales} = {
+						...transformAvailableLocalesAndValue({
+							availableLocales: currentAvailableLocales,
+							defaultLocale,
+							value: newValue,
+						}),
+					};
+
+					setCurrentAvailableLocales(availableLocales);
 
 					onFieldChanged({event, value: newValue});
 				}}

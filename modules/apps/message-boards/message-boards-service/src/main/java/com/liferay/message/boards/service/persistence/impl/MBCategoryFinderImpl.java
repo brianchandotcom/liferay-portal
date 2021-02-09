@@ -535,7 +535,7 @@ public class MBCategoryFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addEntity("MBCategory", MBCategoryImpl.class);
+			sqlQuery.addScalar("modelId", Type.LONG);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
@@ -547,9 +547,18 @@ public class MBCategoryFinderImpl
 				queryPos.add(queryDefinition.getStatus());
 			}
 
-			List<MBCategory> list = (List<MBCategory>)QueryUtil.list(
-				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				false);
+			List<MBCategory> list = new ArrayList<>();
+
+			Iterator<Long> iterator = (Iterator<Long>)QueryUtil.iterate(
+				sqlQuery, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			while (iterator.hasNext()) {
+				long modelId = iterator.next();
+
+				MBCategory category = MBCategoryUtil.findByPrimaryKey(modelId);
+
+				list.add(category);
+			}
 
 			Group group = _groupLocalService.getGroup(groupId);
 

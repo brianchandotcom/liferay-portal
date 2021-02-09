@@ -57,7 +57,7 @@
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.findC_ByS_G_U_P">
 		<![CDATA[
 			SELECT
-				{MBCategory.*}
+				MBCategory.categoryId AS modelId
 			FROM
 				MBCategory
 			INNER JOIN
@@ -73,7 +73,7 @@
 				(MBCategory.parentCategoryId = ?) AND
 				(Subscription.userId = ?)
 			GROUP BY
-				MBCategory.ctCollectionId, MBCategory.categoryId
+				MBCategory.ctCollectionId, MBCategory.categoryId, MBCategory.modifiedDate
 			ORDER BY
 				(
 					CASE WHEN

@@ -77,6 +77,8 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 					dataDefinitionId="<%= dataDefinitionId %>"
 					dataLayoutId="<%= dataLayoutId %>"
 					fieldSetContentType="app-builder-fieldset"
+					module="js/pages/form-view/EditFormViewPropsTransformer.es"
+					moduleServletContext="<%= application %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					scopes='<%= SetUtil.fromCollection(Arrays.asList("app-builder")) %>'
 				/>

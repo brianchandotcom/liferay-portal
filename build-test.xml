@@ -2421,7 +2421,6 @@ jdbc.default.password=${database.password}</echo>
 			>
 				<filterchain>
 					<filterreader classname="org.apache.tools.ant.filters.LineContains">
-						<param type="contains" value="registry" />
 						<param type="contains" value="resource-root" />
 						<param type="contains" value="petra" />
 					</filterreader>
@@ -2447,7 +2446,7 @@ jdbc.default.password=${database.password}</echo>
 						<then>
 							<local name="regex" />
 
-							<property name="regex" value="\s*&lt;resource-root path=&quot;@{petra.jar.file}&quot;\s/&gt;[\n\r]" />
+							<property name="regex" value="\s*&lt;resource-root path=&quot;@{petra.jar.file}&quot;\s/&gt;" />
 
 							<replaceregexp
 								file="${module.configuration.path}"

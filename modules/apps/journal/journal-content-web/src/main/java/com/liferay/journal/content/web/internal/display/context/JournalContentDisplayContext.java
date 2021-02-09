@@ -548,14 +548,14 @@ public class JournalContentDisplayContext {
 			return _latestArticle;
 		}
 
-		JournalArticleDisplay articleDisplay = getArticleDisplay();
+		JournalArticle article = getArticle();
 
-		if (articleDisplay == null) {
+		if (article == null) {
 			return null;
 		}
 
 		_latestArticle = JournalArticleLocalServiceUtil.fetchLatestArticle(
-			articleDisplay.getGroupId(), articleDisplay.getArticleId(),
+			article.getGroupId(), article.getArticleId(),
 			WorkflowConstants.STATUS_ANY);
 
 		return _latestArticle;
@@ -1076,15 +1076,15 @@ public class JournalContentDisplayContext {
 	private DDMTemplate _getDDMTemplate(String ddmTemplateKey)
 		throws PortalException {
 
-		JournalArticleDisplay articleDisplay = getArticleDisplay();
+		JournalArticle article = getArticle();
 
-		if (articleDisplay == null) {
+		if (article == null) {
 			return null;
 		}
 
 		return DDMTemplateLocalServiceUtil.fetchTemplate(
-			articleDisplay.getGroupId(), _ddmStructureClassNameId,
-			ddmTemplateKey, true);
+			article.getGroupId(), _ddmStructureClassNameId, ddmTemplateKey,
+			true);
 	}
 
 	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =

@@ -18,7 +18,7 @@ import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderProcessConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.petra.process.GetLabelProbabilitiesProcessCallable;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.InceptionModelUtil;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorflowProcessHolder;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -72,10 +72,11 @@ public class TensorFlowImageAssetAutoTagProvider
 
 			if (tensorFlowImageAssetAutoTagProviderCompanyConfiguration.
 					enabled() &&
-				!_isTemporary(fileEntry) && InceptionModelUtil.isDownloaded()) {
+				!_isTemporary(fileEntry) &&
+				TensorFlowDownloadUtil.isDownloaded()) {
 
 				if (_labels == null) {
-					_labels = InceptionModelUtil.getLabels();
+					_labels = TensorFlowDownloadUtil.getLabels();
 				}
 
 				FileVersion fileVersion = fileEntry.getFileVersion();

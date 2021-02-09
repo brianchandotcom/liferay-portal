@@ -16,7 +16,7 @@ package com.liferay.document.library.asset.auto.tagger.tensorflow.internal.messa
 
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderDownloadConfiguration;
 import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.constants.TensorflowDestinationNames;
-import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.InceptionModelUtil;
+import com.liferay.document.library.asset.auto.tagger.tensorflow.internal.util.TensorFlowDownloadUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -37,8 +37,7 @@ import org.osgi.service.component.annotations.Modified;
 	property = "destination.name=" + TensorflowDestinationNames.TENSORFLOW_MODEL_DOWNLOAD,
 	service = MessageListener.class
 )
-public class TensorflowModelDownloadMessageListener
-	extends BaseMessageListener {
+public class TensorFlowDownloadMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
@@ -51,7 +50,7 @@ public class TensorflowModelDownloadMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		InceptionModelUtil.download(
+		TensorFlowDownloadUtil.download(
 			_tensorFlowImageAssetAutoTagProviderDownloadConfiguration);
 	}
 

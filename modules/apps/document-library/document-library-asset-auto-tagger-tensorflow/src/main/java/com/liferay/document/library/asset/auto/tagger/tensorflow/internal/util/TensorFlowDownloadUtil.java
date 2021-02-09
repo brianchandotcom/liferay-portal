@@ -36,7 +36,7 @@ import java.nio.file.Paths;
 /**
  * @author Alejandro Tardín
  */
-public class InceptionModelUtil {
+public class TensorFlowDownloadUtil {
 
 	public static final String NATIVE_LIBRARY_FILE_NAME =
 		"libtensorflow_jni-1.15.0.jar";

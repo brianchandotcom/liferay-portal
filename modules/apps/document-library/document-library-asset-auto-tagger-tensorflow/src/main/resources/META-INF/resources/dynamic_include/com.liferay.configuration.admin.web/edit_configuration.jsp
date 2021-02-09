@@ -20,10 +20,10 @@
 TensorFlowImageAssetAutoTagProviderCompanyConfiguration tensorFlowImageAssetAutoTagProviderCompanyConfiguration = (TensorFlowImageAssetAutoTagProviderCompanyConfiguration)request.getAttribute(TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class.getName());
 %>
 
-<c:if test="<%= !InceptionModelUtil.isDownloaded() %>">
-	<aui:alert closeable="<%= false %>" type='<%= InceptionModelUtil.isDownloadFailed() ? "danger" : "info" %>'>
+<c:if test="<%= !TensorFlowDownloadUtil.isDownloaded() %>">
+	<aui:alert closeable="<%= false %>" type='<%= TensorFlowDownloadUtil.isDownloadFailed() ? "danger" : "info" %>'>
 		<c:choose>
-			<c:when test="<%= InceptionModelUtil.isDownloadFailed() %>">
+			<c:when test="<%= TensorFlowDownloadUtil.isDownloadFailed() %>">
 				<liferay-ui:message key="the-tensorflow-model-could-not-be-downloaded.-please-contact-your-administrator" />
 			</c:when>
 			<c:when test="<%= (tensorFlowImageAssetAutoTagProviderCompanyConfiguration != null) && tensorFlowImageAssetAutoTagProviderCompanyConfiguration.enabled() %>">

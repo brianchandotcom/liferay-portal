@@ -373,7 +373,7 @@ definition {
 				}
 			}
 
-			Click(locator1 = "Modal#SAVE_BUTTON");
+			Modal.save();
 
 			Alert.viewSuccessMessage();
 		}
@@ -547,7 +547,7 @@ definition {
 			}
 		}
 
-		Click(locator1 = "Modal#SAVE_BUTTON");
+		Modal.save();
 
 		Click(
 			key_text = "Propagate",
@@ -646,7 +646,7 @@ definition {
 			}
 		}
 
-		Click(locator1 = "Modal#SAVE_BUTTON");
+		Modal.save();
 
 		Alert.viewSuccessMessage();
 	}

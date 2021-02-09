@@ -14,6 +14,8 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.base.AccountRoleLocalServiceBaseImpl;
@@ -25,12 +27,16 @@ import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -100,6 +106,33 @@ public class AccountRoleLocalServiceImpl
 
 		for (long accountRoleId : accountRoleIds) {
 			associateUser(accountEntryId, accountRoleId, userId);
+		}
+	}
+
+	@Override
+	public void checkCompanyAccountRoles(long companyId)
+		throws PortalException {
+
+		Company company = companyLocalService.getCompany(companyId);
+
+		_checkAccountRole(
+			company, AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);
+		_checkAccountRole(
+			company,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
+
+		Role role = roleLocalService.fetchRole(
+			companyId, AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+
+		if (role == null) {
+			User defaultUser = company.getDefaultUser();
+
+			roleLocalService.addRole(
+				defaultUser.getUserId(), null, 0,
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, null,
+				_roleDescriptionsMaps.get(
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),
+				RoleConstants.TYPE_ORGANIZATION, null, null);
 		}
 	}
 
@@ -270,6 +303,43 @@ public class AccountRoleLocalServiceImpl
 			new long[] {accountRole.getRoleId()});
 	}
 
+	private void _checkAccountRole(Company company, String roleName)
+		throws PortalException {
+
+		Role role = roleLocalService.fetchRole(
+			company.getCompanyId(), roleName);
+
+		if (role != null) {
+			if (MapUtil.isEmpty(role.getDescriptionMap())) {
+				role.setDescriptionMap(
+					_roleDescriptionsMaps.get(role.getName()));
+
+				roleLocalService.updateRole(role);
+			}
+
+			return;
+		}
+
+		User defaultUser = company.getDefaultUser();
+
+		AccountRole accountRole = createAccountRole(
+			counterLocalService.increment());
+
+		role = roleLocalService.addRole(
+			defaultUser.getUserId(), AccountRole.class.getName(),
+			accountRole.getAccountRoleId(), roleName, null,
+			_roleDescriptionsMaps.get(roleName), RoleConstants.TYPE_ACCOUNT,
+			null, null);
+
+		accountRole.setCompanyId(role.getCompanyId());
+
+		accountRole.setAccountEntryId(
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+		accountRole.setRoleId(role.getRoleId());
+
+		addAccountRole(accountRole);
+	}
+
 	private DynamicQuery _getRoleDynamicQuery(
 		long companyId, long[] accountEntryIds, String keywords,
 		OrderByComparator<?> orderByComparator) {
@@ -318,5 +388,25 @@ public class AccountRoleLocalServiceImpl
 
 		return roleDynamicQuery;
 	}
+
+	private static final Map<String, Map<Locale, String>>
+		_roleDescriptionsMaps = HashMapBuilder.<String, Map<Locale, String>>put(
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
+			Collections.singletonMap(
+				LocaleUtil.US,
+				"Account Administrators are super users of their account.")
+		).put(
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+			Collections.singletonMap(
+				LocaleUtil.US,
+				"Account Managers who belong to an organization can " +
+					"administer all accounts associated to that organization.")
+		).put(
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
+			Collections.singletonMap(
+				LocaleUtil.US,
+				"All users who belong to an account have this role within " +
+					"that account.")
+		).build();
 
 }

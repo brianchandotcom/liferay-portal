@@ -57,11 +57,19 @@ definition {
 
 		DataEngine.addRepeatableField(fieldName = "Rich Text");
 
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
 		DataEngine.assertFieldRepeated(
 			fieldName = "RichText",
 			index = "2");
 
 		Click(locator1 = "DDMField#REMOVE_REPEATED_FIELD");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
 		DataEngine.assertFieldRepeatedNotPresent(
 			fieldName = "RichText",

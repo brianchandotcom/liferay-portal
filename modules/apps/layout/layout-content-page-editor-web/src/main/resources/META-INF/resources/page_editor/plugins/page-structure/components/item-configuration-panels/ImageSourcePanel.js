@@ -92,12 +92,7 @@ export default function ImageSourcePanel({item}) {
 	let ConfigurationPanel = DirectImagePanel;
 
 	if (source === SOURCE_OPTIONS.mapping.value) {
-		if (selectedViewportSize === VIEWPORT_SIZES.desktop) {
-			ConfigurationPanel = MappingImagePanel;
-		}
-		else {
-			ConfigurationPanel = null;
-		}
+		ConfigurationPanel = MappingImagePanel;
 	}
 
 	return (
@@ -279,9 +274,15 @@ DirectImagePanel.propTypes = {
 };
 
 function MappingImagePanel({item}) {
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
+
 	return (
 		<>
-			<MappingPanel item={item} />
+			{selectedViewportSize === VIEWPORT_SIZES.desktop ? (
+				<MappingPanel item={item} />
+			) : null}
 			<ImagePanelSizeSelector item={item} />
 		</>
 	);

@@ -24,11 +24,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -41,7 +37,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -115,21 +110,6 @@ public class ImageDDMFormFieldTemplateContextContributor
 		}
 
 		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
-
-		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
-		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-
-		long resourcePrimaryKey = _getResourcePrimaryKey(articleId, groupId);
-
-		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
-
-		JournalItemSelectorCriterion journalItemSelectorCriterion =
-			new JournalItemSelectorCriterion(resourcePrimaryKey, folderId);
-
-		journalItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new FileEntryItemSelectorReturnType());
-
-		itemSelectorCriteria.add(journalItemSelectorCriterion);
 
 		ImageItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
@@ -276,17 +256,6 @@ public class ImageDDMFormFieldTemplateContextContributor
 			moduleResourceBundle, portalResourceBundle);
 	}
 
-	private long _getResourcePrimaryKey(String articleId, long groupId) {
-		JournalArticle journalArticle =
-			_journalArticleLocalService.fetchArticle(groupId, articleId);
-
-		if (journalArticle != null) {
-			return journalArticle.getResourcePrimKey();
-		}
-
-		return 0L;
-	}
-
 	private JSONObject _getValueJSONObject(String value) {
 		try {
 			return _jsonFactory.createJSONObject(value);
@@ -315,9 +284,6 @@ public class ImageDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

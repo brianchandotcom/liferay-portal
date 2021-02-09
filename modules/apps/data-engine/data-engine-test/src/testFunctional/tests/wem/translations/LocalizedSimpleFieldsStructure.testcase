@@ -378,59 +378,53 @@ definition {
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
 	@priority = "5"
-	test TranslationDoesNotChangeAnother {
+	test TranslationDoesNotInterfereWithAnother {
+		var defaultStructureName = "WC Structure Name";
+		var fieldLabelDefault = "Text Test";
+
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Title");
+			structureName = "${defaultStructureName}");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Text Test",
+			fieldFieldLabel = "${fieldLabelDefault}",
 			fieldName = "Text");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
+			fieldFieldLabel = "${fieldLabelDefault}",
 			fieldHelp = "Help Text test");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
+			fieldFieldLabel = "${fieldLabelDefault}",
 			fieldHelp = "Texto teste ajuda");
 
 		WebContentStructures.addName(structureName = "Nome da Estrutura WC");
 
 		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text Test",
+			fieldLabel = "${fieldLabelDefault}",
 			label = "Texto Teste");
 
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
+			fieldFieldLabel = "${fieldLabelDefault}",
 			fieldHelp = "Text test help German");
 
-		WebContentStructures.addName(structureName = "WC Structure Title German");
+		WebContentStructures.addName(structureName = "${defaultStructureName} German");
 
 		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text Test",
+			fieldLabel = "${fieldLabelDefault}",
 			label = "Text test German");
 
 		WebContentStructures.saveCP();
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Title");
+			structureName = "${defaultStructureName}");
 
-		LexiconEntry.gotoEntry(rowEntry = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Help Text test",
-			fieldName = "Text");
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Title");
+		LexiconEntry.gotoEntry(rowEntry = "${defaultStructureName}");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -438,71 +432,6 @@ definition {
 			fieldFieldLabel = "Texto Teste",
 			fieldHelp = "Texto teste ajuda",
 			fieldName = "Text");
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "Nome da Estrutura WC");
-
-		PortletEntry.changeLocale(locale = "de-DE");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Text test German",
-			fieldHelp = "Text test help German",
-			fieldName = "Text");
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Title German");
-	}
-
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
-	@priority = "5"
-	test TranslationPersistsAfterEditingAnother {
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text Test",
-			fieldName = "Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Help Text test");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Texto teste ajuda");
-
-		WebContentStructures.addName(structureName = "Nome da Estrutura WC");
-
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text Test",
-			label = "Texto Teste");
-
-		PortletEntry.changeLocale(locale = "de-DE");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Text test help German");
-
-		WebContentStructures.addName(structureName = "WC Structure Title German");
-
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text Test",
-			label = "Text test German");
-
-		WebContentStructures.saveCP();
-
-		WebContentStructures.viewCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Title");
-
-		LexiconEntry.gotoEntry(rowEntry = "WC Structure Title");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Texto Teste",
@@ -516,9 +445,9 @@ definition {
 
 		WebContentStructures.viewCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Title");
+			structureName = "${defaultStructureName}");
 
-		LexiconEntry.gotoEntry(rowEntry = "WC Structure Title");
+		LexiconEntry.gotoEntry(rowEntry = "${defaultStructureName}");
 
 		PortletEntry.changeLocale(locale = "de-DE");
 
@@ -526,53 +455,6 @@ definition {
 			fieldFieldLabel = "Text test German",
 			fieldHelp = "Text test help German",
 			fieldName = "Text");
-	}
-
-	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"
-	@priority = "5"
-	test TranslationsRemainUponSavingStructure {
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Title");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text Test",
-			fieldName = "Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Help Text test");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text Test",
-			fieldHelp = "Texto teste ajuda");
-
-		WebContentStructures.addName(structureName = "Nome da Estrutura WC");
-
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Text Test",
-			label = "Texto Teste");
-
-		WebContentStructures.saveCP();
-
-		WebContentStructures.viewCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Title");
-
-		LexiconEntry.gotoEntry(rowEntry = "WC Structure Title");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Texto Teste",
-			fieldHelp = "Texto teste ajuda",
-			fieldName = "Text");
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "Nome da Estrutura WC");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

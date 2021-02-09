@@ -21,7 +21,6 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
 		}
 	}
 
@@ -2143,23 +2142,23 @@ definition {
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
 		task ("Add two widget pages") {
 			JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Test Page Name");
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
 
 			JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Edited Test Page Name");
+				groupName = "Test Site Name",
+				layoutName = "Edited Test Page Name");
 		}
 
 		task ("Add two web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Test Site Name",
-					title = "WC 1");
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC 1");
 			JSONWebcontent.addWebContent(
-					content = "WC Content",
-					groupName = "Test Site Name",
-					title = "WC 2");
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC 2");
 		}
 
 		task ("Add a web content structure with all fields") {
@@ -2222,8 +2221,8 @@ definition {
 				row = "1",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
-				webContentGrid = "true",
 				webContentGeolocation = "true",
+				webContentGrid = "true",
 				webContentImage = "Document_3.png",
 				webContentLinkToPage = "Test Page Name",
 				webContentMultipleSelection = "Option 1",
@@ -2242,39 +2241,38 @@ definition {
 
 		task ("Edit web content") {
 			WebContent.editWithStructureCP(
-					column = "2",
-					dmNavTab = "User Personal Folder",
-					navTab = "Web Content Images",
-					row = "2",
-					webContentColor = "5F5F5F",
-					webContentDate = "11/11/2019",
-					webContentLinkToPage = "Edited Test Page Name",
-					webContentMultipleSelection = "Option 2",
-					webContentNumeric = "8",
-					webContentRichText = "This is a Edited Rich Text field",
-					webContentSelectFromList = "Option 1",
-					webContentSingleSelection = "Option 4",
-					webContentText = "This is an edited Text field",
-					webContentTitle = "Web Content Title",
-					webContentUpload = "Document_3.doc",
-					webContentWebContent = "WC 2");
-
+				column = "2",
+				dmNavTab = "User Personal Folder",
+				navTab = "Web Content Images",
+				row = "2",
+				webContentColor = "5F5F5F",
+				webContentDate = "11/11/2019",
+				webContentLinkToPage = "Edited Test Page Name",
+				webContentMultipleSelection = "Option 2",
+				webContentNumeric = "8",
+				webContentRichText = "This is a Edited Rich Text field",
+				webContentSelectFromList = "Option 1",
+				webContentSingleSelection = "Option 4",
+				webContentText = "This is an edited Text field",
+				webContentTitle = "Web Content Title",
+				webContentUpload = "Document_3.doc",
+				webContentWebContent = "WC 2");
 		}
 
 		task ("Assert web content has been edited") {
 			WebContent.viewWithStructureCP(
-					webContentColor = "5F5F5F",
-					webContentDate = "11/11/2019",
-					webContentLinkToPage = "Edited Test Page Name",
-					webContentMultipleSelection = "Option 2",
-					webContentNumeric = "8",
-					webContentRichText = "This is a Edited Rich Text field",
-					webContentSelectFromList = "Option 1",
-					webContentSingleSelection = "Option 4",
-					webContentText = "This is an edited Text field",
-					webContentTitle = "Web Content Title",
-					webContentUpload = "Document_3.doc",
-					webContentWebContent = "WC 2");
+				webContentColor = "5F5F5F",
+				webContentDate = "11/11/2019",
+				webContentLinkToPage = "Edited Test Page Name",
+				webContentMultipleSelection = "Option 2",
+				webContentNumeric = "8",
+				webContentRichText = "This is a Edited Rich Text field",
+				webContentSelectFromList = "Option 1",
+				webContentSingleSelection = "Option 4",
+				webContentText = "This is an edited Text field",
+				webContentTitle = "Web Content Title",
+				webContentUpload = "Document_3.doc",
+				webContentWebContent = "WC 2");
 
 			Button.clickCancel();
 		}

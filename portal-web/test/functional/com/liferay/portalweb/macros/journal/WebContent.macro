@@ -2044,7 +2044,7 @@ definition {
 		key_fieldFieldLabel = "${fieldFieldLabel}";
 		key_fieldName = "${fieldName}";
 
-		AssertElementPresent(	
+		AssertVisible(
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
 
 		AssertTextEquals(

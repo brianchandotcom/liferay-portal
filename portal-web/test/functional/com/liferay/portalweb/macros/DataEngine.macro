@@ -1228,10 +1228,10 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
-		AssertElementPresent(
+		AssertChecked.assertCheckedNotVisible(
 			key_fieldFieldLabel = "Searchable",
 			key_optionValue = "${searchableType}",
-			locator1 = "WCEditWebContent#SELECTION_OPTION_CHECKED");
+			locator1 = "WCEditWebContent#SELECTION_OPTION");
 	}
 
 	macro viewFieldsetTranslation {

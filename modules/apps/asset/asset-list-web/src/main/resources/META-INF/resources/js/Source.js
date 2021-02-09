@@ -62,6 +62,18 @@ export default function ({classTypes, namespace}) {
 
 	const eventDelegates = [];
 
+	const togglePopupButtons = (enabledInput, enabledInputChecked) => {
+		const popupButtons = document.querySelectorAll(
+			'.asset-subtypefields-popup .btn'
+		);
+
+		if (enabledInput) {
+			popupButtons.forEach((popupButton) => {
+				Liferay.Util.toggleDisabled(popupButton, !enabledInputChecked);
+			});
+		}
+	};
+
 	const toggleSaveButton = (valueIsEmpty) => {
 		if (valueIsEmpty) {
 			saveButton.classList.add('disabled');
@@ -232,6 +244,8 @@ export default function ({classTypes, namespace}) {
 
 			if (enableCheckbox) {
 				enableCheckbox.checked = false;
+
+				togglePopupButtons(enableCheckbox, false);
 			}
 
 			sourcePanel
@@ -277,15 +291,7 @@ export default function ({classTypes, namespace}) {
 	const enablePopupButtons = ({delegateTarget}) => {
 		const enabledInput = delegateTarget.querySelector('input');
 
-		const popupButtons = document.querySelectorAll(
-			'.asset-subtypefields-popup .btn'
-		);
-
-		if (enabledInput) {
-			popupButtons.forEach((popupButton) => {
-				Liferay.Util.toggleDisabled(popupButton, !enabledInput.checked);
-			});
-		}
+		togglePopupButtons(enabledInput, enabledInput.checked);
 	};
 
 	const clickEnablePopupButtons = delegate(

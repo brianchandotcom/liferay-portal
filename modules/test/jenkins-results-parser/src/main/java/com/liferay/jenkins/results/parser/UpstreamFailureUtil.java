@@ -58,7 +58,7 @@ public class UpstreamFailureUtil {
 
 		String jobURL = getUpstreamJobFailuresJobURL(topLevelBuild);
 
-		while (buildNumber > Math.max(0, buildNumber - 10)) {
+		while (buildNumber > Math.max(0, lastUpstreamBuildNumber - 10)) {
 			try {
 				String upstreamBranchSHA =
 					JenkinsResultsParserUtil.getBuildParameter(

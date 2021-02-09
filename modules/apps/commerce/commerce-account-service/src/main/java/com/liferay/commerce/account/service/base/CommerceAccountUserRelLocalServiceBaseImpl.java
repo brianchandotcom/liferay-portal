@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.account.service.base;
 
+import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountUserRelLocalService;
 import com.liferay.commerce.account.service.persistence.CommerceAccountFinder;
@@ -729,6 +730,49 @@ public abstract class CommerceAccountUserRelLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the account entry user rel local service.
+	 *
+	 * @return the account entry user rel local service
+	 */
+	public com.liferay.account.service.AccountEntryUserRelLocalService
+		getAccountEntryUserRelLocalService() {
+
+		return accountEntryUserRelLocalService;
+	}
+
+	/**
+	 * Sets the account entry user rel local service.
+	 *
+	 * @param accountEntryUserRelLocalService the account entry user rel local service
+	 */
+	public void setAccountEntryUserRelLocalService(
+		com.liferay.account.service.AccountEntryUserRelLocalService
+			accountEntryUserRelLocalService) {
+
+		this.accountEntryUserRelLocalService = accountEntryUserRelLocalService;
+	}
+
+	/**
+	 * Returns the account entry user rel persistence.
+	 *
+	 * @return the account entry user rel persistence
+	 */
+	public AccountEntryUserRelPersistence getAccountEntryUserRelPersistence() {
+		return accountEntryUserRelPersistence;
+	}
+
+	/**
+	 * Sets the account entry user rel persistence.
+	 *
+	 * @param accountEntryUserRelPersistence the account entry user rel persistence
+	 */
+	public void setAccountEntryUserRelPersistence(
+		AccountEntryUserRelPersistence accountEntryUserRelPersistence) {
+
+		this.accountEntryUserRelPersistence = accountEntryUserRelPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1061,6 +1105,15 @@ public abstract class CommerceAccountUserRelLocalServiceBaseImpl
 	@BeanReference(type = CommerceAccountUserRelPersistence.class)
 	protected CommerceAccountUserRelPersistence
 		commerceAccountUserRelPersistence;
+
+	@ServiceReference(
+		type = com.liferay.account.service.AccountEntryUserRelLocalService.class
+	)
+	protected com.liferay.account.service.AccountEntryUserRelLocalService
+		accountEntryUserRelLocalService;
+
+	@ServiceReference(type = AccountEntryUserRelPersistence.class)
+	protected AccountEntryUserRelPersistence accountEntryUserRelPersistence;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class

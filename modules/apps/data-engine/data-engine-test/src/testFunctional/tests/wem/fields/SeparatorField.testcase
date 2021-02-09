@@ -59,13 +59,11 @@ definition {
 
 		AssertElementNotPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		AssertElementNotPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
@@ -89,15 +87,13 @@ definition {
 			fieldFieldLabel = "Copy of Separator",
 			fieldName = "Separator");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Copy of Separator",
 			fieldName = "Separator");
-
-		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
@@ -118,7 +114,7 @@ definition {
 			fieldFieldLabel = "Separator",
 			fieldHelp = "Text Field Help Separator");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
@@ -126,8 +122,6 @@ definition {
 			fieldFieldLabel = "Separator",
 			fieldHelp = "Text Field Help Separator",
 			fieldName = "Separator");
-
-		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
@@ -139,15 +133,13 @@ definition {
 			fieldLabel = "Separator",
 			label = "Edited Separator");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Edited Separator",
 			fieldName = "Separator");
-
-		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
@@ -161,7 +153,7 @@ definition {
 			fieldName = "Separator",
 			fieldReference = "EditedSeparator");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
@@ -169,8 +161,6 @@ definition {
 			fieldFieldLabel = "Separator",
 			fieldName = "Separator",
 			fieldReference = "EditedSeparator");
-
-		Button.clickSave();
 
 		// TODO LPS-98081 EditReferenceOfSeparator pending implementation
 	}
@@ -206,7 +196,7 @@ definition {
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
@@ -239,13 +229,11 @@ definition {
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
-
-		Button.clickSave();
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"
@@ -265,15 +253,13 @@ definition {
 			fieldLabel = "Separator",
 			fieldName = "Separator");
 
-		Button.clickSave();
+		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		FormFields.viewSwitcherLabelNotPresent(
 			fieldLabel = "Separator",
 			fieldName = "Separator");
-
-		Button.clickSave();
 	}
 
 }

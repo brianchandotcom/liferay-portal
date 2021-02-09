@@ -165,14 +165,14 @@ public class AnalyticsReportsDataProvider {
 
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
-			Map<String, Long> socialTrafficChannels = _objectMapper.readValue(
+			Map<String, Long> socialPageReferrers = _objectMapper.readValue(
 				response,
 				typeFactory.constructMapType(
 					Map.class, typeFactory.constructType(String.class),
 					typeFactory.constructType(Long.class)));
 
 			Set<Map.Entry<String, Long>> entries =
-				socialTrafficChannels.entrySet();
+				socialPageReferrers.entrySet();
 
 			Stream<Map.Entry<String, Long>> entriesStream = entries.stream();
 
@@ -231,6 +231,9 @@ public class AnalyticsReportsDataProvider {
 			Map<String, TrafficSource> trafficSourceMap = getTrafficSources(
 				companyId, url);
 
+			List<ReferringSocialMedia> referringSocialMediaList =
+				getReferringSocialMediaList(companyId, url);
+
 			Map<String, AcquisitionChannel> acquisitionChannels =
 				getAcquisitionChannels(companyId, url);
 
@@ -241,7 +244,8 @@ public class AnalyticsReportsDataProvider {
 
 			return stream.map(
 				acquisitionChannel -> TrafficChannelUtil.toTrafficChannel(
-					acquisitionChannel, trafficSourceMap)
+					acquisitionChannel, referringSocialMediaList,
+					trafficSourceMap)
 			).map(
 				trafficChannel -> new AbstractMap.SimpleEntry<>(
 					trafficChannel.getName(), trafficChannel)

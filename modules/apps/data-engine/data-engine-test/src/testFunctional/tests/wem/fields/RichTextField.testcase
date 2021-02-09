@@ -317,15 +317,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
-	@priority = "5"
-	test VerifyRichTextIsSetAsRequired {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98081 VerifyRichTextIsSetAsRequired pending implementation
-	}
-
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test VerifyRichTextIsSetAsRequiredOnWebContent {
 		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");

@@ -64,15 +64,6 @@ public final class TrafficChannelUtil {
 		AcquisitionChannel acquisitionChannel,
 		Map<String, TrafficSource> trafficSourceMap) {
 
-		List<CountrySearchKeywords> countrySearchKeywordsList =
-			Optional.ofNullable(
-				trafficSourceMap.get(acquisitionChannel.getName())
-			).map(
-				TrafficSource::getCountrySearchKeywordsList
-			).orElse(
-				Collections.emptyList()
-			);
-
 		if (Objects.equals("direct", acquisitionChannel.getName())) {
 			return new DirectTrafficChannelImpl(
 				acquisitionChannel.getTrafficAmount(),
@@ -80,13 +71,15 @@ public final class TrafficChannelUtil {
 		}
 		else if (Objects.equals("organic", acquisitionChannel.getName())) {
 			return new OrganicTrafficChannelImpl(
-				countrySearchKeywordsList,
+				_getCountrySearchKeywords(
+					trafficSourceMap, acquisitionChannel.getName()),
 				acquisitionChannel.getTrafficAmount(),
 				acquisitionChannel.getTrafficShare());
 		}
 		else if (Objects.equals("paid", acquisitionChannel.getName())) {
 			return new PaidTrafficChannelImpl(
-				countrySearchKeywordsList,
+				_getCountrySearchKeywords(
+					trafficSourceMap, acquisitionChannel.getName()),
 				acquisitionChannel.getTrafficAmount(),
 				acquisitionChannel.getTrafficShare());
 		}
@@ -104,6 +97,18 @@ public final class TrafficChannelUtil {
 
 		throw new IllegalArgumentException(
 			"Invalid acquisition channel name " + acquisitionChannel.getName());
+	}
+
+	private static List<CountrySearchKeywords> _getCountrySearchKeywords(
+		Map<String, TrafficSource> trafficSourceMap, String name) {
+
+		return Optional.ofNullable(
+			trafficSourceMap.get(name)
+		).map(
+			TrafficSource::getCountrySearchKeywordsList
+		).orElse(
+			Collections.emptyList()
+		);
 	}
 
 	private TrafficChannelUtil() {

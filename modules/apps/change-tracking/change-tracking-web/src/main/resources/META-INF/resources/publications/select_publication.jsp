@@ -22,8 +22,8 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 searchContainer.setId("selectPublication");
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new SelectPublicationManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new SelectPublicationManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer) %>"
 />
 
 <c:if test="<%= !searchContainer.hasResults() %>">

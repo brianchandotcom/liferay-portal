@@ -24,8 +24,8 @@ SearchContainer<CTCollection> searchContainer = publicationsDisplayContext.getSe
 	navigationItems="<%= publicationsDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:management-toolbar-v2
-	displayContext="<%= new PublicationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, publicationsDisplayContext, searchContainer) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new PublicationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, publicationsDisplayContext, searchContainer) %>"
 />
 
 <clay:container-fluid>

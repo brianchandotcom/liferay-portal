@@ -335,7 +335,7 @@ definition {
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
-	test VerifyRequiredPropertyOfRichText {
+	test VerifyRichTextIsSetAsRequiredOnWebContent {
 		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
 
 		AssertClick.assertPartialTextClickAt(
@@ -343,9 +343,24 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
 			value1 = "Rich Text");
 
-		Uncheck.uncheckToggleSwitch(
+		AssertElementPresent(
 			checkboxName = "Required Field",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+		WebContentStructures.saveCP();
+
+		Navigator.gotoNavTab(navTab = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+
+		Button.clickPublish();
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "Rich Text",
+			locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
+			value1 = "This field is required.");
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

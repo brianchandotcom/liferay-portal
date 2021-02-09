@@ -415,33 +415,6 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("MustSetOptionsForField", problem.getType());
 		}
 
-		// MustSetValidAvailableLocalesForProperty
-
-		try {
-			dataDefinitionResource.postDataDefinitionByContentType(
-				_CONTENT_TYPE,
-				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read(
-						"data-definition-must-set-valid-available-locales-" +
-							"for-property.json")));
-
-			Assert.fail("An exception must be thrown");
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals(
-				JSONUtil.put(
-					"fieldName", "select1"
-				).put(
-					"property", "options"
-				).toJSONString(),
-				problem.getDetail());
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals(
-				"MustSetValidAvailableLocalesForProperty", problem.getType());
-		}
-
 		// MustSetValidCharactersForFieldName
 
 		try {

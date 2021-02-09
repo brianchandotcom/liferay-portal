@@ -203,16 +203,9 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		for (var n : list "1,2") {
-			DataEngine.assertFieldRepeated(
-				fieldName = "Separator",
-				index = "${n}");
-		}
-
-		AssertVisible(
-			key_fieldName = "Separator",
-			key_index = "2",
-			locator1 = "FormFields#FIELD_REMOVE");
+		DataEngine.assertFieldRepeated(
+			fieldName = "Separator",
+			index = "2");
 	}
 
 	@description = "This is a test for LPS-98081. As a Developer, I want to use separators"

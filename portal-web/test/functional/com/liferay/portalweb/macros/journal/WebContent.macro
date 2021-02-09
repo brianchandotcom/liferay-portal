@@ -2400,6 +2400,20 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
+		if (isSet(webContentGrid)) {
+			if (!(isSet(webContentGridFieldLabel))) {
+				var webContentGridFieldLabel = "Grid";
+			}
+
+			var column = ${column} + 1;
+
+			AssertChecked.assertCheckedNotVisible(
+				key_column = "${column}",
+				key_fieldFieldLabel = "${webContentGridFieldLabel}",
+				key_row = "${row}",
+				locator1 = "WCEditWebContent#GRID_OPTION");
+		}
+
 		if (isSet(webContentImage)) {
 			if (!(isSet(webContentImageFieldLabel))) {
 				var webContentImageFieldLabel = "Image";

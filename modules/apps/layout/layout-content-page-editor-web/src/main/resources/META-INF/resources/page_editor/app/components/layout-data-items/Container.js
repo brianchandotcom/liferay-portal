@@ -102,7 +102,12 @@ const Container = React.forwardRef(
 
 			resolveEditableValue(linkConfig, languageId, getFieldValue).then(
 				(linkHref) => {
-					setLink({...linkConfig, ...linkHref});
+					if (typeof linkHref === 'string') {
+						setLink({...linkConfig, href: linkHref});
+					}
+					else if (linkHref) {
+						setLink({...linkConfig, ...linkHref});
+					}
 				}
 			);
 		}, [itemConfig.link, languageId, getFieldValue]);

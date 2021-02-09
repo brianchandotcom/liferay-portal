@@ -11117,16 +11117,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</if>
 
 				<delete file="liferay-portal-tools.zip" />
-
-				<if>
-					<or>
-						<equals arg1="${app.server.type}" arg2="jboss" />
-						<equals arg1="${app.server.type}" arg2="wildfly" />
-					</or>
-					<then>
-						<prepare-jboss-module-configuration />
-					</then>
-				</if>
 			</else>
 		</if>
 
@@ -11276,19 +11266,20 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 								</antcall>
 							</else>
 						</if>
-						<if>
-							<or>
-								<equals arg1="${app.server.type}" arg2="jboss" />
-								<equals arg1="${app.server.type}" arg2="wildfly" />
-							</or>
-							<then>
-								<prepare-jboss-module-configuration />
-
-								<print-file file.name="${app.server.lib.global.dir}/module.xml" />
-							</then>
-						</if>
 					</then>
 				</if>
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<equals arg1="${app.server.type}" arg2="wildfly" />
+			</or>
+			<then>
+				<prepare-jboss-module-configuration />
+
+				<print-file file.name="${app.server.lib.global.dir}/module.xml" />
 			</then>
 		</if>
 

@@ -22,9 +22,13 @@ export default function getSegmentsExperienceLanguages(
 		Object.keys(availableLanguages);
 
 	return experienceLanguages.reduce((acc, languageId) => {
-		return {
-			...acc,
-			[languageId]: {...availableLanguages[languageId]},
-		};
+		if (availableLanguages[languageId]) {
+			return {
+				...acc,
+				[languageId]: {...availableLanguages[languageId]},
+			};
+		}
+
+		return {...acc};
 	}, {});
 }

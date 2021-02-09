@@ -324,6 +324,18 @@ public class SecurePrintStream extends PrintStream {
 
 		String[] lines = string.split("\n");
 
+		if (lines.length == 0) {
+			if (!string.isEmpty()) {
+				_printStream.print(string);
+			}
+
+			if (appendNewLine) {
+				_printStream.println();
+			}
+
+			return;
+		}
+
 		String lastLine = lines[lines.length - 1];
 
 		for (String line : lines) {

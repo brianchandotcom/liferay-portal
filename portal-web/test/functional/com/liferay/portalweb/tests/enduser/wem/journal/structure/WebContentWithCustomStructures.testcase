@@ -2141,7 +2141,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
-		task ("Add a widget pages") {
+		task ("Add two widget pages") {
 			JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
 					layoutName = "Test Page Name");
@@ -2151,7 +2151,7 @@ definition {
 					layoutName = "Edited Test Page Name");
 		}
 
-		task ("Add a web content based on Basic Web Content") {
+		task ("Add two web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 					content = "WC Content",
 					groupName = "Test Site Name",
@@ -2218,8 +2218,11 @@ definition {
 
 		task ("View web content") {
 			WebContent.viewWithStructureCP(
+				column = "1",
+				row = "1",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
+				webContentGrid = "true",
 				webContentGeolocation = "true",
 				webContentImage = "Document_3.png",
 				webContentLinkToPage = "Test Page Name",
@@ -2233,16 +2236,17 @@ definition {
 				webContentTitle = "Web Content Title",
 				webContentUpload = "Document_1.doc",
 				webContentWebContent = "WC 1");
+
+			Button.clickCancel();
 		}
 
 		task ("Edit web content") {
-
 			WebContent.editWithStructureCP(
 					column = "2",
 					dmNavTab = "User Personal Folder",
 					navTab = "Web Content Images",
 					row = "2",
-					webContentColor = "DD0D0D",
+					webContentColor = "5F5F5F",
 					webContentDate = "11/11/2019",
 					webContentLinkToPage = "Edited Test Page Name",
 					webContentMultipleSelection = "Option 2",
@@ -2255,12 +2259,11 @@ definition {
 					webContentUpload = "Document_3.doc",
 					webContentWebContent = "WC 2");
 
-			PortletEntry.publish();
 		}
 
 		task ("Assert web content has been edited") {
 			WebContent.viewWithStructureCP(
-					webContentColor = "DD0D0D",
+					webContentColor = "5F5F5F",
 					webContentDate = "11/11/2019",
 					webContentLinkToPage = "Edited Test Page Name",
 					webContentMultipleSelection = "Option 2",
@@ -2272,6 +2275,8 @@ definition {
 					webContentTitle = "Web Content Title",
 					webContentUpload = "Document_3.doc",
 					webContentWebContent = "WC 2");
+
+			Button.clickCancel();
 		}
 
 		task ("Delete web content") {

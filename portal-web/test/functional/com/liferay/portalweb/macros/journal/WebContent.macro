@@ -1268,7 +1268,40 @@ definition {
 
 	macro editWithStructureCP {
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
-		WebContent.addWithStructureCP();
+		WebContent.addWithStructureCP(
+				column = "${column}",
+				dmNavTab = "${dmNavTab}",
+				navTab = "${navTab}",
+				row = "${row}",
+				structureName = "${structureName}",
+				templateName = "${templateName}",
+				webContentColor = "${webContentColor}",
+				webContentDate = "${webContentDate}",
+				webContentGrid = "${webContentGrid}",
+				webContentImage = "${webContentImage}",
+				webContentLinkToPage = "${webContentLinkToPage}",
+				webContentMultipleSelection = "${webContentMultipleSelection}",
+				webContentNumeric = "${webContentNumeric}",
+				webContentRichText = "${webContentRichText}",
+				webContentSelectFromList = "${webContentSelectFromList}",
+				webContentSingleSelection = "${webContentSingleSelection}",
+				webContentText = "${webContentText}",
+				webContentTitle = "${webContentTitle}",
+				webContentUpload = "${webContentUpload}",
+				webContentWebContent = "${webContentWebContent}"
+		);
+
+		if ("${saveAsDraft}" == "true") {
+			PortletEntry.saveAsDraft();
+
+			AssertTextEquals.assertPartialText(
+					key_status = "Draft",
+					locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+					value1 = "Draft");
+		}
+		else {
+			PortletEntry.publish();
+		}
 	}
 
 	macro expireCP {

@@ -1143,6 +1143,18 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
+	macro gotoCreateNewFieldset {
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
+			Navigator.gotoSidebarTab(tabName = "Builder");
+		}
+
+		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Fieldsets");
+		}
+
+		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+	}
+
 	macro gotoFieldsetItemEllipsis {
 		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
 			Navigator.gotoSidebarTab(tabName = "Builder");

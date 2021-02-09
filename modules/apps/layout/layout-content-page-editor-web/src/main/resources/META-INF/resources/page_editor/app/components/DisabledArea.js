@@ -29,6 +29,7 @@ import {useSelectItem} from './Controls';
 import {useGlobalContext} from './GlobalContext';
 
 const DEFAULT_DISABLED_AREA_CLASS = 'page-editor__disabled-area';
+const DEFAULT_DISABLED_AREA_PADDED_CLASS = `${DEFAULT_DISABLED_AREA_CLASS}--padded`;
 const DEFAULT_ORIGIN = '#content';
 
 const DEFAULT_WHITELIST = [
@@ -60,6 +61,8 @@ const DisabledArea = () => {
 	const sidebarOpen = useSelector((state) => state.sidebar.open);
 	const selectItem = useSelectItem();
 
+	const withinIframe = globalContext.window !== window;
+
 	const isDisabled = useCallback(
 		(element) => {
 			const {height} = element.getBoundingClientRect();
@@ -89,14 +92,14 @@ const DisabledArea = () => {
 		);
 
 		if (element) {
-			if (sidebarOpen) {
+			if (sidebarOpen && !withinIframe) {
 				element.classList.add('collapsed');
 			}
 			else {
 				element.classList.remove('collapsed');
 			}
 		}
-	}, [globalContext, sidebarOpen]);
+	}, [globalContext, sidebarOpen, withinIframe]);
 
 	useEventListener(
 		'scroll',
@@ -163,11 +166,15 @@ const DisabledArea = () => {
 			element.parentElement &&
 			element !== globalContext.document.body
 		) {
-			Array.from(element.parentElement.children).forEach(
-				(child) =>
-					isDisabled(child) &&
-					child.classList.add(DEFAULT_DISABLED_AREA_CLASS)
-			);
+			Array.from(element.parentElement.children).forEach((child) => {
+				if (isDisabled(child)) {
+					child.classList.add(DEFAULT_DISABLED_AREA_CLASS);
+
+					if (!withinIframe) {
+						child.classList.add(DEFAULT_DISABLED_AREA_PADDED_CLASS);
+					}
+				}
+			});
 
 			element = element.parentElement;
 		}
@@ -178,10 +185,13 @@ const DisabledArea = () => {
 			);
 
 			elements.forEach((element) =>
-				element.classList.remove(DEFAULT_DISABLED_AREA_CLASS)
+				element.classList.remove(
+					DEFAULT_DISABLED_AREA_CLASS,
+					DEFAULT_DISABLED_AREA_PADDED_CLASS
+				)
 			);
 		};
-	}, [globalContext, isDisabled]);
+	}, [globalContext, isDisabled, withinIframe]);
 
 	return (
 		show &&

@@ -18,10 +18,14 @@ import com.liferay.dynamic.data.mapping.form.field.type.image.ImageDDMFormFieldI
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,7 +69,14 @@ public class JournalImageDDMFormFieldItemSelectorCriterionContributor
 	public boolean isVisible(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		return true;
+		if (Objects.equals(
+				ddmFormFieldRenderingContext.getPortletNamespace(),
+				_portal.getPortletNamespace(JournalPortletKeys.JOURNAL))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private long _getResourcePrimaryKey(String articleId, long groupId) {
@@ -81,5 +92,8 @@ public class JournalImageDDMFormFieldItemSelectorCriterionContributor
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

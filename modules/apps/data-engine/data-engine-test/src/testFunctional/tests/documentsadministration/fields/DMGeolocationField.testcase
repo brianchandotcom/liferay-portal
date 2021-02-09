@@ -36,7 +36,7 @@ definition {
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
 	@priority = "5"
-	test DisableSearchableOfGeolocation {
+	test SetSearchableOfGeolocation {
 		property portal.acceptance = "false";
 
 		DataEngine.editFieldSearchable(
@@ -50,6 +50,30 @@ definition {
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Geolocation",
 			searchableType = "Disable");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Keyword");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Keyword");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Text");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Text");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
@@ -156,60 +180,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Form#FIELD_REFERENCE",
 			value1 = "GeolocationReference");
-	}
-
-	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
-	@priority = "4"
-	test SetSearchableOfGeolocationAsKeyword {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Geolocation",
-			searchableType = "Keyword");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Geolocation",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Geolocation");
-
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-
-		FormFields.viewRadioValue(
-			fieldName = "indexType",
-			fieldValue = "Keyword");
-	}
-
-	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
-	@priority = "4"
-	test SetSearchableOfGeolocationAsText {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Geolocation",
-			searchableType = "Text");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "Geolocation",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = "Geolocation");
-
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Advanced")) {
-			Navigator.gotoNavTab(navTab = "Advanced");
-		}
-
-		FormFields.viewRadioValue(
-			fieldName = "indexType",
-			fieldValue = "Text");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

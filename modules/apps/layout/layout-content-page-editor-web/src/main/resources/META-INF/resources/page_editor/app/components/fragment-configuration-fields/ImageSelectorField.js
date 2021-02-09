@@ -99,11 +99,13 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 				</>
 			) : (
 				<>
-					<MappingSelector
-						fieldType={EDITABLE_TYPES.backgroundImage}
-						mappedItem={value}
-						onMappingSelect={handleImageChanged}
-					/>
+					{selectedViewportSize === VIEWPORT_SIZES.desktop ? (
+						<MappingSelector
+							fieldType={EDITABLE_TYPES.backgroundImage}
+							mappedItem={value}
+							onMappingSelect={handleImageChanged}
+						/>
+					) : null}
 
 					{config.adaptiveMediaEnabled &&
 						value?.className === FILE_ENTRY_CLASS_NAME &&

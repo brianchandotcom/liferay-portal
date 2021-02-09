@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.liferay.analytics.reports.web.internal.client.AsahFaroBackendClient;
 import com.liferay.analytics.reports.web.internal.model.AcquisitionChannel;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
+import com.liferay.analytics.reports.web.internal.model.ReferringSocialMedia;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
@@ -149,6 +150,42 @@ public class AnalyticsReportsDataProvider {
 		catch (Exception exception) {
 			throw new PortalException(
 				"Unable to get historical views", exception);
+		}
+	}
+
+	public List<ReferringSocialMedia> getReferringSocialMediaList(
+			long companyId, String url)
+		throws PortalException {
+
+		try {
+			String response = _asahFaroBackendClient.doGet(
+				companyId,
+				"api/1.0/pages/social-page-referrers?canonicalURL=" + url +
+					"&interval=D&rangeKey=30");
+
+			TypeFactory typeFactory = _objectMapper.getTypeFactory();
+
+			Map<String, Long> socialTrafficChannels = _objectMapper.readValue(
+				response,
+				typeFactory.constructMapType(
+					Map.class, typeFactory.constructType(String.class),
+					typeFactory.constructType(Long.class)));
+
+			Set<Map.Entry<String, Long>> entries =
+				socialTrafficChannels.entrySet();
+
+			Stream<Map.Entry<String, Long>> entriesStream = entries.stream();
+
+			return entriesStream.map(
+				entry -> new ReferringSocialMedia(
+					entry.getKey(), Math.toIntExact(entry.getValue()))
+			).collect(
+				Collectors.toList()
+			);
+		}
+		catch (Exception exception) {
+			throw new PortalException(
+				"Unable to get referring social media", exception);
 		}
 	}
 

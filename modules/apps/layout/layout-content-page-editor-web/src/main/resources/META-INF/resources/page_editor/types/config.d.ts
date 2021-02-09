@@ -30,8 +30,11 @@ export interface Config {
 
 	availableLanguages: {
 		[key: string]: {
+			default: boolean;
+			displayName: string;
 			languageIcon: string;
-			languageLabel: string;
+			languageId: string;
+			w3cLanguageId: string;
 		};
 	};
 

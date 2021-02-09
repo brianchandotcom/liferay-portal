@@ -227,25 +227,29 @@ definition {
 	test ShowAndHideSeparatorLabel {
 		property portal.acceptance = "false";
 
-		FormFields.viewSwitcherLabel(
-			fieldLabel = "Separator",
-			fieldName = "Separator");
-
-		DataEngine.editFieldHide(
+		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Separator",
-			fieldLabel = "Test");
-
-		FormFields.viewSwitcherLabelNotPresent(
-			fieldLabel = "Separator",
-			fieldName = "Separator");
+			showLabel = "true");
 
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		FormFields.viewSwitcherLabelNotPresent(
-			fieldLabel = "Separator",
-			fieldName = "Separator");
+		
+		AssertVisible(
+			key_fieldFieldLabel = "Separator",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		
+		DataEngine.editShowOrHideLabel(
+			fieldFieldLabel = "Separator",
+			showLabel = "false");
+		
+		WebContentStructures.saveCP();
+		
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+		
+		AssertElementNotPresent(
+			key_fieldFieldLabel = "Separator",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 }

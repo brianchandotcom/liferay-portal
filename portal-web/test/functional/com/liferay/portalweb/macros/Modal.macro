@@ -1,7 +1,7 @@
 definition {
 
 	macro save {
-		Button.clickSave();
+		Click(locator1 = "Modal#SAVE_BUTTON");
 
 		Alert.viewSuccessMessage();
 	}

@@ -66,7 +66,7 @@
 
 <div id="<%= componentId %>container">
 	<react:component
-		module="data_layout_builder/js/App.es"
+		module="<%= module %>"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"availableLanguageIds", availableLanguageIds
@@ -104,5 +104,6 @@
 				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).build()
 		%>'
+		servletContext="<%= moduleServletContext %>"
 	/>
 </div>

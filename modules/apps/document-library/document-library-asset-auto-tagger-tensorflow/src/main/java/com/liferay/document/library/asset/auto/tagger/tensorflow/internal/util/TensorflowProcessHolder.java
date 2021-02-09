@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -64,16 +63,14 @@ public class TensorflowProcessHolder {
 
 	public TensorflowProcessHolder(
 			ProcessExecutor processExecutor, Bundle bundle)
-		throws IOException {
+		throws Exception {
 
 		_processExecutor = processExecutor;
+		_bundle = bundle;
 
 		_tensorflowWorkDir = bundle.getDataFile("tensorflow-workdir");
 
 		_tensorflowWorkDir.mkdirs();
-
-		_processConfig = _createProcessConfig(
-			bundle, _tensorflowWorkDir.toPath());
 	}
 
 	public void destroy() {
@@ -107,7 +104,7 @@ public class TensorflowProcessHolder {
 	}
 
 	private String _createClassPath(Bundle bundle, Path tempPath)
-		throws IOException {
+		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
@@ -138,6 +135,20 @@ public class TensorflowProcessHolder {
 			}
 		}
 
+		try (InputStream inputStream =
+				InceptionModelUtil.getNativeLibraryInputStream()) {
+
+			Path targetPath = tempPath.resolve(
+				InceptionModelUtil.NATIVE_LIBRARY_FILE_NAME);
+
+			sb.append(targetPath);
+
+			sb.append(File.pathSeparator);
+
+			Files.copy(
+				inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+		}
+
 		ProtectionDomain protectionDomain =
 			TensorflowProcessHolder.class.getProtectionDomain();
 
@@ -158,7 +169,7 @@ public class TensorflowProcessHolder {
 	}
 
 	private ProcessConfig _createProcessConfig(Bundle bundle, Path tempPath)
-		throws IOException {
+		throws Exception {
 
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
@@ -222,6 +233,11 @@ public class TensorflowProcessHolder {
 
 				_relanuchCounter++;
 
+				if (_processConfig == null) {
+					_processConfig = _createProcessConfig(
+						_bundle, _tensorflowWorkDir.toPath());
+				}
+
 				_processChannel = processExecutor.execute(
 					_processConfig, new TensorFlowDaemonProcessCallable());
 
@@ -257,8 +273,9 @@ public class TensorflowProcessHolder {
 	private static long _lastLaunchTime;
 	private static volatile int _relanuchCounter;
 
+	private final Bundle _bundle;
 	private volatile ProcessChannel<String> _processChannel;
-	private final ProcessConfig _processConfig;
+	private ProcessConfig _processConfig;
 	private final ProcessExecutor _processExecutor;
 	private final File _tensorflowWorkDir;
 

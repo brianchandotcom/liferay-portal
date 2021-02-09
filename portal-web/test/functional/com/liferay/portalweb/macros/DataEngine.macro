@@ -568,15 +568,7 @@ definition {
 	}
 
 	macro createNewFieldset {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Sidebar#ACTIVE_TAB")) {
-			Navigator.gotoSidebarTab(tabName = "Builder");
-		}
-
-		if (IsElementNotPresent(key_tab = "Fieldsets", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-			Navigator.gotoNavTab(navTab = "Fieldsets");
-		}
-
-		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
+		DataEngine.gotoCreateNewFieldset();
 
 		Type(
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",

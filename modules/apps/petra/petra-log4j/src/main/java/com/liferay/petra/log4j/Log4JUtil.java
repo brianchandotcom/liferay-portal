@@ -35,8 +35,8 @@ import java.net.URL;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Level;
@@ -115,27 +115,23 @@ public class Log4JUtil {
 			return;
 		}
 
-		String urlContent = StringUtil.replace(
-			document.asXML(), "@liferay.home@", _getLiferayHome());
-
-		if (ServerDetector.getServerId() == null) {
-			urlContent = _removeAppender(urlContent, "TEXT_FILE");
-
-			urlContent = _removeAppender(urlContent, "XML_FILE");
-		}
-
 		Map<String, String> logLevelStrings = new HashMap<>();
 
 		Element rootElement = document.getRootElement();
 
-		List<Element> categoryElements = rootElement.elements("category");
+		for (Element element : rootElement.elements()) {
+			if (ServerDetector.getServerId() == null) {
+				_removeAppender(rootElement, element, "TEXT_FILE");
+				_removeAppender(rootElement, element, "XML_FILE");
+			}
 
-		for (Element categoryElement : categoryElements) {
-			Element priorityElement = categoryElement.element("priority");
+			if (Objects.equals("category", element.getName())) {
+				Element priorityElement = element.element("priority");
 
-			logLevelStrings.put(
-				categoryElement.attributeValue("name"),
-				priorityElement.attributeValue("value"));
+				logLevelStrings.put(
+					element.attributeValue("name"),
+					priorityElement.attributeValue("value"));
+			}
 		}
 
 		// See LPS-6029, LPS-8865, and LPS-24280
@@ -143,7 +139,9 @@ public class Log4JUtil {
 		DOMConfigurator domConfigurator = new DOMConfigurator();
 
 		domConfigurator.doConfigure(
-			new UnsyncStringReader(urlContent),
+			new UnsyncStringReader(
+				StringUtil.replace(
+					document.asXML(), "@liferay.home@", _getLiferayHome())),
 			LogManager.getLoggerRepository());
 
 		for (Map.Entry<String, String> entry : logLevelStrings.entrySet()) {
@@ -286,21 +284,23 @@ public class Log4JUtil {
 		return _liferayHome;
 	}
 
-	private static String _removeAppender(String content, String appenderName) {
-		int x = content.indexOf("<appender name=\"" + appenderName + "\"");
+	private static void _removeAppender(
+		Element rootElement, Element element, String appenderName) {
 
-		int y = content.indexOf("</appender>", x);
+		if (Objects.equals("appender", element.getName()) &&
+			Objects.equals(appenderName, element.attributeValue("name"))) {
 
-		if (y != -1) {
-			y = content.indexOf("<", y + 1);
+			rootElement.remove(element);
 		}
 
-		if ((x != -1) && (y != -1)) {
-			content = content.substring(0, x) + content.substring(y);
-		}
+		for (Element childElement : element.elements()) {
+			if (Objects.equals("appender-ref", childElement.getName()) &&
+				Objects.equals(
+					appenderName, childElement.attributeValue("ref"))) {
 
-		return StringUtil.removeSubstring(
-			content, "<appender-ref ref=\"" + appenderName + "\" />");
+				element.remove(childElement);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(Log4JUtil.class);

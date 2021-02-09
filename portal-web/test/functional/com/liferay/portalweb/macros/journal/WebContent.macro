@@ -1020,6 +1020,49 @@ definition {
 			}
 		}
 
+		if (isSet(webContentImage)) {
+			if (!(isSet(webContentImageFieldLabel))) {
+				var webContentImageFieldLabel = "Image";
+			}
+
+			AssertClick(
+				key_fieldFieldLabel = "${webContentImageFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
+
+			if ("${navTab}" == "Documents and Media") {
+				if (isSet(depotName)) {
+					ItemSelector.selectRepositoryImage(
+						depotName = "${depotName}",
+						folderName = "${folderName}",
+						imageFileName = "${webContentImage}",
+						navTab = "${navTab}");
+				}
+				else if (isSet(imageFileName)) {
+					ItemSelector.selectDMImage(
+						imageFileName = "${webContentImage}",
+						navTab = "${navTab}");
+				}
+				else {
+					ItemSelector.uploadFile(
+						navTab = "${navTab}",
+						uploadFileName = "${webContentImage}");
+				}
+			}
+			else if ("${navTab}" == "Web Content Images") {
+				ItemSelector.uploadFile(
+					navTab = "${navTab}",
+					uploadFileName = "${webContentImage}");
+			}
+
+			if (isSet(webContentImageDescription)) {
+				Type(
+					key_fieldFieldLabel = "${webContentImageFieldLabel}",
+					locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+					value1 = "${webContentImageDescription}");
+			}
+		}
+
 		if (isSet(embedVideo)) {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 

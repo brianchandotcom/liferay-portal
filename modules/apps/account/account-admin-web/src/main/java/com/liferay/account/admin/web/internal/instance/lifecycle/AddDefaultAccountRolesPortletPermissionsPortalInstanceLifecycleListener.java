@@ -41,7 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(
+	immediate = true, property = "service.ranking:Integer=100",
+	service = PortalInstanceLifecycleListener.class
+)
 public class
 	AddDefaultAccountRolesPortletPermissionsPortalInstanceLifecycleListener
 		extends BasePortalInstanceLifecycleListener {

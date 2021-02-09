@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.article.dynamic.data.mapping.form.field.type.internal;
+package com.liferay.journal.article.dynamic.data.mapping.form.field.type.internal.journal.article;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;

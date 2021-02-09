@@ -108,6 +108,7 @@ export default class UnsafeHTML extends React.PureComponent {
 	_syncRefProps() {
 		const ref = this.state.ref;
 		ref.className = this.props.className;
+		ref.id = this.props.id;
 
 		ref.removeAttribute('style');
 
@@ -168,6 +169,7 @@ UnsafeHTML.defaultProps = {
 		document,
 		window,
 	},
+	id: '',
 	markup: '',
 	onRender: () => {},
 	style: {},
@@ -185,6 +187,7 @@ UnsafeHTML.propTypes = {
 		document: PropTypes.object,
 		window: PropTypes.object,
 	}),
+	id: PropTypes.string,
 	markup: PropTypes.string,
 	onRender: PropTypes.func,
 	style: PropTypes.object,

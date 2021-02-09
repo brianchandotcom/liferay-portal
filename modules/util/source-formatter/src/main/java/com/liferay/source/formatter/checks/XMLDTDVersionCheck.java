@@ -15,12 +15,12 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.dom4j.DocumentException;
 
 /**
  * @author Alan Huang
@@ -29,45 +29,37 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
-		_checkDTDVersion(fileName, content);
+		if (fileName.endsWith(".xml")) {
+			return _checkDTDVersion(content);
+		}
 
 		return content;
 	}
 
-	private void _checkDTDVersion(String fileName, String content) {
+	private String _checkDTDVersion(String content) {
 		Matcher matcher = _doctypePattern.matcher(content);
 
 		if (!matcher.find()) {
-			return;
+			return content;
 		}
 
-		String mainMajorReleaseVersion = _getMainMajorReleaseVersion();
+		String version = ReleaseInfo.getVersion();
 
-		if (!mainMajorReleaseVersion.equals(matcher.group(1)) ||
-			!mainMajorReleaseVersion.equals(matcher.group(2))) {
-
-			addMessage(
-				fileName,
-				"Major version for dtd should be '" + mainMajorReleaseVersion +
-					"'",
-				getLineNumber(content, matcher.start()));
-		}
-	}
-
-	private String _getMainMajorReleaseVersion() {
-		String releaseVersion = ReleaseInfo.getVersion();
-
-		int pos = releaseVersion.indexOf(CharPool.PERIOD);
-
-		return releaseVersion.substring(0, pos);
+		return StringUtil.replaceFirst(
+			content, matcher.group(),
+			StringBundler.concat(
+				matcher.group(1), version, matcher.group(3),
+				StringUtil.replace(
+					version, CharPool.PERIOD, CharPool.UNDERLINE),
+				matcher.group(5)),
+			matcher.start());
 	}
 
 	private static final Pattern _doctypePattern = Pattern.compile(
-		"DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL Routes " +
-			"([0-9]+)\\.[0-9]+\\.[0-9]+//EN\" \"http://www.liferay.com/dtd/" +
-				"liferay-friendly-url-routes_([0-9]+)_[0-9]+_[0-9]+\\.dtd");
+		"(<!DOCTYPE .+ PUBLIC \"-//Liferay//DTD .+ )" +
+			"([0-9]+\\.[0-9]+\\.[0-9]+)(//EN\" \"http://www.liferay.com/dtd/" +
+				".+_)([0-9]+_[0-9]+_[0-9]+)(\\.dtd\">)");
 
 }

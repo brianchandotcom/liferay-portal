@@ -81,10 +81,26 @@ public class Log4JUtil {
 			return;
 		}
 
-		String urlContent = _getURLContent(url);
+		String urlContent = null;
 
-		if (urlContent == null) {
+		try (InputStream inputStream = url.openStream()) {
+			byte[] bytes = _getBytes(inputStream);
+
+			urlContent = new String(bytes, StringPool.UTF8);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
 			return;
+		}
+
+		urlContent = StringUtil.replace(
+			urlContent, "@liferay.home@", _getLiferayHome());
+
+		if (ServerDetector.getServerId() == null) {
+			urlContent = _removeAppender(urlContent, "TEXT_FILE");
+
+			urlContent = _removeAppender(urlContent, "XML_FILE");
 		}
 
 		// See LPS-6029, LPS-8865, and LPS-24280
@@ -271,32 +287,6 @@ public class Log4JUtil {
 		}
 
 		return _liferayHome;
-	}
-
-	private static String _getURLContent(URL url) {
-		String urlContent = null;
-
-		try (InputStream inputStream = url.openStream()) {
-			byte[] bytes = _getBytes(inputStream);
-
-			urlContent = new String(bytes, StringPool.UTF8);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return null;
-		}
-
-		urlContent = StringUtil.replace(
-			urlContent, "@liferay.home@", _getLiferayHome());
-
-		if (ServerDetector.getServerId() != null) {
-			return urlContent;
-		}
-
-		urlContent = _removeAppender(urlContent, "TEXT_FILE");
-
-		return _removeAppender(urlContent, "XML_FILE");
 	}
 
 	private static String _removeAppender(String content, String appenderName) {

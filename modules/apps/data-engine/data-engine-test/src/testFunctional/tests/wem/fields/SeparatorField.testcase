@@ -34,16 +34,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98081. Add a Separator field on a form using drag and drop"
-	@priority = "5"
-	test AddSeparatorOnFormByDragAndDrop {
-		property portal.acceptance = "false";
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator");
-	}
-
 	@description = "This is a test for LPS-98081. Delete Separator Field (sing kebab on the top of the field)"
 	@priority = "5"
 	test DeleteSeparatorOnBuilder {

@@ -93,7 +93,7 @@ function DataEngineLanguageSelector({
 	const handleLocaleChange = (localeId) => {
 		setSelectedLanguageId(localeId);
 
-		if (translatedLanguageIds.indexOf(localeId) === -1) {
+		if (!translatedLanguageIds.includes(localeId)) {
 			setTranslatedLanguageIds([...translatedLanguageIds, localeId]);
 		}
 	};
@@ -123,6 +123,7 @@ function DataEngineLanguageSelector({
 				type="hidden"
 				value={translatedLanguageIds.join(',')}
 			/>
+
 			<LanguageSelector
 				{...restProps}
 				onChange={handleLocaleChange}

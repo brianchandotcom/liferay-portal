@@ -1,0 +1,9 @@
+{
+	"config": {
+		"imports": {
+			"commerce-frontend-js": {
+				"/": ">=4.0.0"
+			}
+		}
+	}
+}

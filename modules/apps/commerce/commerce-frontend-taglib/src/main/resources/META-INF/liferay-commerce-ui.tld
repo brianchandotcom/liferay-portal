@@ -150,13 +150,8 @@
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.AvailabilityLabelTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>lowStock</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>stockQuantity</name>
-			<required>true</required>
+			<name>namespace</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

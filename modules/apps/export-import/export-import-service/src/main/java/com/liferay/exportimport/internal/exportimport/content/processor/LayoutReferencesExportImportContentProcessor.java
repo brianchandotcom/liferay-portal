@@ -774,6 +774,7 @@ public class LayoutReferencesExportImportContentProcessor
 		Group group = _groupLocalService.getGroup(groupId);
 
 		String[] patterns = {"href=", "[[", "{{"};
+		String[] friendlyURLSeparators = {"/-/", "/b/", "/d/", "/w/"};
 
 		int beginPos = -1;
 		int endPos = content.length();
@@ -832,7 +833,7 @@ public class LayoutReferencesExportImportContentProcessor
 				continue;
 			}
 
-			endPos = url.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+			endPos = StringUtil.indexOfAny(url, friendlyURLSeparators);
 
 			if (endPos != -1) {
 				url = url.substring(0, endPos);

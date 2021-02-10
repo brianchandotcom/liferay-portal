@@ -1592,11 +1592,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 				UpstreamFailureUtil.getUpstreamJobFailuresBuildNumber(
 					this, upstreamBranchSHA);
 
-			if ((result != null) && !result.matches("(APPROVED|SUCCESS)") &&
-				(downstreamBuilds.size() != 0) &&
-				!upstreamBranchSHA.equals(
-					UpstreamFailureUtil.getUpstreamJobFailuresSHA(this))) {
-
+			if (isEligibleForReevaluation(result, upstreamBranchSHA)) {
 				Dom4JUtil.addToElement(
 					detailsElement, Dom4JUtil.getNewElement("br"),
 					getReevaluationDetailsElement(buildNumber));
@@ -1671,6 +1667,20 @@ public abstract class TopLevelBuild extends BaseBuild {
 					buildNumber));
 
 		return upstreamComparisonDetailsElement;
+	}
+
+	protected boolean isEligibleForReevaluation(
+		String result, String upstreamBranchSHA) {
+
+		if ((result != null) && !result.matches("(APPROVED|SUCCESS)") &&
+			(downstreamBuilds.size() != 0) &&
+			!upstreamBranchSHA.equals(
+				UpstreamFailureUtil.getUpstreamJobFailuresSHA(this))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void sendBuildMetrics(String message) {

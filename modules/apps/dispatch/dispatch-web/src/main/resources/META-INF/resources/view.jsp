@@ -74,6 +74,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							value='<%= dispatchTrigger.isSystem() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
 						/>
 
+						<liferay-ui:search-container-column-date
+							cssClass="table-cell-expand"
+							name="create-date"
+							property="createDate"
+						/>
+
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand"
 							name="next-fire-date"

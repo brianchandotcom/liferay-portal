@@ -324,7 +324,7 @@ definition {
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "4"
-	test DefaultTitlePersistsAndValuesDisplayedForAnotherLocaleAndNonTranslatedWebContent {
+	test DefaultTitleAndTranslationsPersists {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
@@ -344,6 +344,11 @@ definition {
 		NavItem.click(navItem = "Web Content");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		PortletEntry.viewLocale(
+			locale = "en-US",
+			portletName = "Web Content"
+		);
 
 		WebContent.addWithStructureCP(
 			webContentText = "This is a Text field",

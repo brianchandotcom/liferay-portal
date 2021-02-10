@@ -192,6 +192,12 @@ public class AccountEntryUserRelLocalServiceWrapper
 			deleteAccountEntryUserRelsByAccountEntryId(accountEntryId);
 	}
 
+	@Override
+	public void deleteAccountEntryUserRelsByAccountUserId(long accountUserId) {
+		_accountEntryUserRelLocalService.
+			deleteAccountEntryUserRelsByAccountUserId(accountUserId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

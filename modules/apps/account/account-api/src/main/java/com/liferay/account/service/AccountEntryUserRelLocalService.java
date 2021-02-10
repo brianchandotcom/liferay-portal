@@ -155,6 +155,8 @@ public interface AccountEntryUserRelLocalService
 
 	public void deleteAccountEntryUserRelsByAccountEntryId(long accountEntryId);
 
+	public void deleteAccountEntryUserRelsByAccountUserId(long accountUserId);
+
 	/**
 	 * @throws PortalException
 	 */

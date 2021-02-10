@@ -178,6 +178,12 @@ public class AccountEntryUserRelLocalServiceUtil {
 		getService().deleteAccountEntryUserRelsByAccountEntryId(accountEntryId);
 	}
 
+	public static void deleteAccountEntryUserRelsByAccountUserId(
+		long accountUserId) {
+
+		getService().deleteAccountEntryUserRelsByAccountUserId(accountUserId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

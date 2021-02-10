@@ -36,6 +36,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,8 +92,7 @@ public class Log4JUtil {
 		}
 
 		for (Map.Entry<String, String> entry : priorities.entrySet()) {
-			java.util.logging.Logger jdkLogger =
-				java.util.logging.Logger.getLogger(entry.getKey());
+			Logger jdkLogger = Logger.getLogger(entry.getKey());
 
 			jdkLogger.setLevel(Log4jConfigUtil.getJDKLevel(entry.getValue()));
 		}
@@ -149,8 +149,7 @@ public class Log4JUtil {
 	public static void setLevel(String name, String priority, boolean custom) {
 		Log4jConfigUtil.setLevel(name, priority);
 
-		java.util.logging.Logger jdkLogger = java.util.logging.Logger.getLogger(
-			name);
+		Logger jdkLogger = Logger.getLogger(name);
 
 		jdkLogger.setLevel(Log4jConfigUtil.getJDKLevel(priority));
 

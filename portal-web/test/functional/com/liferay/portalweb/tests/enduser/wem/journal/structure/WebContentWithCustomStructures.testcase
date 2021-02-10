@@ -2255,6 +2255,7 @@ definition {
 				webContentSingleSelection = "Option 4",
 				webContentText = "This is an edited Text field",
 				webContentTitle = "Web Content Title",
+				webContentTitleEdit = "Web Content Title Edit",
 				webContentUpload = "Document_3.doc",
 				webContentWebContent = "WC 2");
 		}
@@ -2270,7 +2271,7 @@ definition {
 				webContentSelectFromList = "Option 1",
 				webContentSingleSelection = "Option 4",
 				webContentText = "This is an edited Text field",
-				webContentTitle = "Web Content Title",
+				webContentTitle = "Web Content Title Edit",
 				webContentUpload = "Document_3.doc",
 				webContentWebContent = "WC 2");
 
@@ -2282,7 +2283,7 @@ definition {
 
 			WebContent.deleteCP(
 				siteURLKey = "test-site-name",
-				webContentTitle = "Web Content Title");
+				webContentTitle = "Web Content Title Edit");
 		}
 	}
 

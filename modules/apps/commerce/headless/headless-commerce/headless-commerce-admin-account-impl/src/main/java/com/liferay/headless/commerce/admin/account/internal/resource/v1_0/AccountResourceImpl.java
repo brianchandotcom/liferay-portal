@@ -201,7 +201,7 @@ public class AccountResourceImpl
 
 		return SearchUtil.search(
 			booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
-			CommerceAccount.class, search, pagination,
+			AccountEntry.class, search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			new UnsafeConsumer() {

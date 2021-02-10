@@ -590,6 +590,24 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro assertFieldsVisibleInFieldGroup {
+		for (var fieldFieldLabel : list "${fieldGroupLabelList}") {
+		AssertVisible(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldsGroupLabel = "${fieldGroupLabel}",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+	}
+
+	macro assertFieldsNotVisibleInFieldGroup {
+		for (var fieldFieldLabel : list "${fieldGroupLabelList}") {
+		AssertNotVisible(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			key_fieldsGroupLabel = "${fieldGroupLabel}",
+			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		}
+	}
+
 	macro viewFieldName {
 		if (isSet(localeAdvanced)) {
 			Form.gotoAdvancedTab(key_localeAdvanced = "${localeAdvanced}");

@@ -27,9 +27,12 @@ import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -198,9 +201,25 @@ public class AccountRoleLocalServiceImpl
 		AccountEntry accountEntry = accountEntryPersistence.findByPrimaryKey(
 			accountEntryId);
 
-		return TransformUtil.transform(
+		List<UserGroupRole> userGroupRoles =
 			userGroupRoleLocalService.getUserGroupRoles(
-				userId, accountEntry.getAccountEntryGroupId()),
+				userId, accountEntry.getAccountEntryGroupId());
+
+		return TransformUtil.transform(
+			ListUtil.filter(
+				userGroupRoles,
+				userGroupRole -> {
+					try {
+						Role role = userGroupRole.getRole();
+
+						return role.getType() == RoleConstants.TYPE_ACCOUNT;
+					}
+					catch (PortalException portalException) {
+						_log.error(portalException, portalException);
+
+						return false;
+					}
+				}),
 			userGroupRole -> getAccountRoleByRoleId(userGroupRole.getRoleId()));
 	}
 
@@ -388,6 +407,9 @@ public class AccountRoleLocalServiceImpl
 
 		return roleDynamicQuery;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountRoleLocalServiceImpl.class);
 
 	private static final Map<String, Map<Locale, String>>
 		_roleDescriptionsMaps = HashMapBuilder.<String, Map<Locale, String>>put(

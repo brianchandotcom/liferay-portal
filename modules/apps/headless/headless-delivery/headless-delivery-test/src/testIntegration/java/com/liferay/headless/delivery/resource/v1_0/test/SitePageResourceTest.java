@@ -167,6 +167,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetSiteSitePagesPageWithFilterStringEquals() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetSiteSitePagesPageWithSortString() {
 	}
 

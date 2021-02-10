@@ -84,6 +84,12 @@ definition {
 		Button.click(button = "Publish");
 	}
 
+	macro clickCollapse {
+		Click(
+			key_label = "${label}",
+			locator1 = "DDMEditStructure#FORM_COLLAPSE_BUTTON");
+	}
+
 	macro clickRemove {
 		Button.click(button = "Remove");
 	}

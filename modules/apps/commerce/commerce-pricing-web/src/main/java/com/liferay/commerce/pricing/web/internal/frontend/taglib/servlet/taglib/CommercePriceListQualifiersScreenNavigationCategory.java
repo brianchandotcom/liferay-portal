@@ -16,12 +16,12 @@ package com.liferay.commerce.pricing.web.internal.frontend.taglib.servlet.taglib
 
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
+import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.web.internal.display.context.CommercePriceListQualifiersDisplayContext;
 import com.liferay.commerce.pricing.web.internal.servlet.taglib.ui.constants.CommercePriceListScreenNavigationConstants;
 import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -122,8 +122,9 @@ public class CommercePriceListQualifiersScreenNavigationCategory
 			CommercePriceListQualifiersDisplayContext
 				commercePriceListQualifiersDisplayContext =
 					new CommercePriceListQualifiersDisplayContext(
-						_commerceCatalogService, _commerceChannelRelService,
+						_commerceCatalogService,
 						_commercePriceListAccountRelService,
+						_commercePriceListChannelRelService,
 						_commercePriceListCommerceAccountGroupRelService,
 						_commercePriceListModelResourcePermission,
 						_commercePriceListService, httpServletRequest);
@@ -148,11 +149,12 @@ public class CommercePriceListQualifiersScreenNavigationCategory
 	private CommerceCatalogService _commerceCatalogService;
 
 	@Reference
-	private CommerceChannelRelService _commerceChannelRelService;
-
-	@Reference
 	private CommercePriceListAccountRelService
 		_commercePriceListAccountRelService;
+
+	@Reference
+	private CommercePriceListChannelRelService
+		_commercePriceListChannelRelService;
 
 	@Reference
 	private CommercePriceListCommerceAccountGroupRelService

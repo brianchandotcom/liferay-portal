@@ -17,11 +17,11 @@ package com.liferay.commerce.pricing.web.internal.display.context;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
+import com.liferay.commerce.price.list.service.CommercePriceListChannelRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,8 +44,8 @@ public class CommercePriceListQualifiersDisplayContext
 
 	public CommercePriceListQualifiersDisplayContext(
 		CommerceCatalogService commerceCatalogService,
-		CommerceChannelRelService commerceChannelRelService,
 		CommercePriceListAccountRelService commercePriceListAccountRelService,
+		CommercePriceListChannelRelService commercePriceListChannelRelService,
 		CommercePriceListCommerceAccountGroupRelService
 			commercePriceListCommerceAccountGroupRelService,
 		ModelResourcePermission<CommercePriceList>
@@ -57,9 +57,10 @@ public class CommercePriceListQualifiersDisplayContext
 			commerceCatalogService, commercePriceListModelResourcePermission,
 			commercePriceListService, httpServletRequest);
 
-		_commerceChannelRelService = commerceChannelRelService;
 		_commercePriceListAccountRelService =
 			commercePriceListAccountRelService;
+		_commercePriceListChannelRelService =
+			commercePriceListChannelRelService;
 		_commercePriceListCommerceAccountGroupRelService =
 			commercePriceListCommerceAccountGroupRelService;
 	}
@@ -88,11 +89,11 @@ public class CommercePriceListQualifiersDisplayContext
 	}
 
 	public String getActiveChannelEligibility() throws PortalException {
-		long commerceChannelRelsCount =
-			_commerceChannelRelService.getCommerceChannelRelsCount(
-				CommercePriceList.class.getName(), getCommercePriceListId());
+		int commercePriceListChannelRelsCount =
+			_commercePriceListChannelRelService.
+				getCommercePriceListChannelRelsCount(getCommercePriceListId());
 
-		if (commerceChannelRelsCount > 0) {
+		if (commercePriceListChannelRelsCount > 0) {
 			return "channels";
 		}
 
@@ -163,9 +164,10 @@ public class CommercePriceListQualifiersDisplayContext
 				"/price-list-channels?nestedFields=channel";
 	}
 
-	private final CommerceChannelRelService _commerceChannelRelService;
 	private final CommercePriceListAccountRelService
 		_commercePriceListAccountRelService;
+	private final CommercePriceListChannelRelService
+		_commercePriceListChannelRelService;
 	private final CommercePriceListCommerceAccountGroupRelService
 		_commercePriceListCommerceAccountGroupRelService;
 

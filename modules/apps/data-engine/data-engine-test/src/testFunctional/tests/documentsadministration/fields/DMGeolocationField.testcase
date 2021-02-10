@@ -233,7 +233,7 @@ definition {
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
 	@priority = "4"
-	test VerifyRequiredPropertyOfGeolocation {
+	test VerifyRequiredPropertyOfGeolocationOnRenderer {
 		property portal.acceptance = "false";
 
 		var fieldLabel = "Geolocation";
@@ -242,7 +242,13 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentsAndMedia();
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 

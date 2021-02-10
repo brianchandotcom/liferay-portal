@@ -4514,6 +4514,32 @@ paths:
                     description:
                         ""
             tags: ["BlogPosting"]
+    "/blog-postings/{blogPostingId}/rendered-content-by-display-page/{displayPageKey}":
+        get:
+            description:
+                Retrieves the blog post's rendered display page
+            operationId: getBlogPostingRenderedContentByDisplayPageDisplayPageKey
+            parameters:
+                - in: path
+                  name: blogPostingId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: displayPageKey
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: ["BlogPosting"]
     "/comments/{commentId}":
         delete:
             description:

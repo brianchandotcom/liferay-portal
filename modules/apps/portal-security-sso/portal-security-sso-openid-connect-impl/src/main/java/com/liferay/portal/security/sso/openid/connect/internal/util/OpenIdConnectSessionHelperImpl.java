@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.util;
+package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
+import com.liferay.portal.security.sso.openid.connect.util.OpenIdConnectSessionHelper;
 
 import java.io.Serializable;
 
@@ -27,12 +28,28 @@ import java.nio.ByteBuffer;
 
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Istvan Sajtos
  */
-public class OpenIdConnectUtil {
+@Component(
+	service = {
+		OpenIdConnectSessionHelper.class, OpenIdConnectSessionHelperImpl.class
+	}
+)
+public class OpenIdConnectSessionHelperImpl
+	implements OpenIdConnectSessionHelper {
 
-	public static OpenIdConnectSession getOpenIdConnectSession(
+	public static void setOpenIdConnectSession(
+		HttpSession httpSession, OpenIdConnectSession openIdConnectSession) {
+
+		httpSession.setAttribute(
+			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION,
+			_getData((Serializable)openIdConnectSession));
+	}
+
+	public OpenIdConnectSession getOpenIdConnectSession(
 		HttpSession httpSession) {
 
 		byte[] data = (byte[])httpSession.getAttribute(
@@ -45,14 +62,6 @@ public class OpenIdConnectUtil {
 		return (OpenIdConnectSession)_getSerializable(data);
 	}
 
-	public static void setOpenIdConnectSession(
-		HttpSession httpSession, OpenIdConnectSession openIdConnectSession) {
-
-		httpSession.setAttribute(
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION,
-			_getData((Serializable)openIdConnectSession));
-	}
-
 	private static byte[] _getData(Serializable serializable) {
 		Serializer serializer = new Serializer();
 
@@ -63,7 +72,7 @@ public class OpenIdConnectUtil {
 		return byteBuffer.array();
 	}
 
-	private static Serializable _getSerializable(byte[] data) {
+	private Serializable _getSerializable(byte[] data) {
 		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
 
 		try {
@@ -77,6 +86,6 @@ public class OpenIdConnectUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectUtil.class);
+		OpenIdConnectSessionHelperImpl.class);
 
 }

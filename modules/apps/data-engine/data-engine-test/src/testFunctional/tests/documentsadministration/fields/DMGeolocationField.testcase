@@ -145,13 +145,13 @@ definition {
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"
 	@priority = "4"
-	test SetReferenceOfGeolocation {
+	test EditReferenceOfGeolocationWithValidAndInvalidCharacters {
 		property portal.acceptance = "false";
 
 		DataEngine.editFieldReference(
 			assertFieldReference = "GeolocationReference",
 			fieldFieldLabel = "Geolocation",
-			fieldReference = "GeolocationReference");
+			fieldReference = "Geolocation Reference @#@$%$%%");
 
 		DDLDataDefinition.save();
 
@@ -161,6 +161,20 @@ definition {
 			fieldFieldLabel = "Geolocation",
 			fieldName = "Geolocation",
 			fieldReference = "GeolocationReference");
+
+		DataEngine.editFieldReference(
+			assertFieldReference = "GeolocationReferenceValidCharacters",
+			fieldFieldLabel = "Geolocation",
+			fieldReference = "GeolocationReferenceValidCharacters");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		DataEngine.viewFieldReference(
+			fieldFieldLabel = "Geolocation",
+			fieldName = "Geolocation",
+			fieldReference = "GeolocationReferenceValidCharacters");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

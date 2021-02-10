@@ -93,12 +93,6 @@ definition {
 	@description = "This is a test for LPS-98077. Group two or more fields into a FieldGroup"
 	@priority = "5"
 	test CreateFieldGroup {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -143,14 +137,6 @@ definition {
 	@description = "This is a test for LPS-98077. Delete a field from a FieldGroup then save and reopen the Structure"
 	@priority = "4"
 	test DeleteAFieldFromAFieldGroup {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -180,14 +166,6 @@ definition {
 	@description = "This is a test for LPS-98077. Delete a FieldGroup (remove from form view only - via kebab menu)"
 	@priority = "5"
 	test DeleteFieldGroupOnStructure {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -209,14 +187,6 @@ definition {
 	@description = "This is a test for LPS-98077. Delete a nested FieldGroup (a FieldGroup that is placed inside another section)"
 	@priority = "5"
 	test DeleteNestedFieldGroupOnStructure {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -243,12 +213,6 @@ definition {
 	@description = "This is a test for LPS-98077. Duplicate a Field Group"
 	@priority = "5"
 	test DuplicateAFieldGroup {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -317,16 +281,6 @@ definition {
 	@description = "This is a test for LPS-98077. Duplicate a nested Field Group (a Field Group that is placed inside another Field Group)"
 	@priority = "5"
 	test DuplicateANestedFieldGroup {
-		property portal.acceptance = "false";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -366,14 +320,6 @@ definition {
 	@description = "This is a test for LPS-98077. Edit the label of the FieldGroup"
 	@priority = "4"
 	test EditFieldGroupLabel {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -399,14 +345,6 @@ definition {
 	@description = "This is a test for LPS-98077. Edit a field placed in a duplicated FieldGroup"
 	@priority = "3"
 	test EditFieldOnDuplicatedFieldGroup {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -443,16 +381,6 @@ definition {
 	@description = "This is a test for LPS-98077. FieldGroup empty (remove all the fields from a section)"
 	@priority = "4"
 	test EmptyAFieldGroup {
-		property portal.upstream = "quarantine";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -484,14 +412,6 @@ definition {
 	@description = "This is a test for LPS-98077. Add a section inside of another section (nesting)"
 	@priority = "3"
 	test NestAFieldGroupOnAnotherFieldGroup {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -536,12 +456,6 @@ definition {
 	@description = "This is a test for LPS-98077. Set a FieldGroup as collapsible and perform this action in a WebContent"
 	@priority = "4"
 	test SetFieldGroupAsCollapsibleAndExecuteOnAWebContent {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
@@ -593,16 +507,6 @@ definition {
 	@description = "This is a test for LPS-98077. Set a FieldGroup as repeatable and perform this action in a WebContent"
 	@priority = "4"
 	test SetFieldGroupAsRepeatableAndExecuteOnAWebContent {
-		property portal.acceptance = "true";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");

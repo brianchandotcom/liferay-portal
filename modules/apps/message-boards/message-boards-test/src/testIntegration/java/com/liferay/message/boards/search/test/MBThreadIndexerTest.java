@@ -49,7 +49,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
@@ -87,7 +86,7 @@ public class MBThreadIndexerTest {
 	public void testNotReindexGroupNotContainingMBMessages() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_LOG_NAME, Level.DEBUG)) {
+					_LOG_NAME, Log4JLoggerTestUtil.DEBUG)) {
 
 			GroupTestUtil.addGroup(
 				_company1.getCompanyId(), _user1.getUserId(),
@@ -108,7 +107,7 @@ public class MBThreadIndexerTest {
 	public void testReindexGroupContainingMBDiscussion() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_LOG_NAME, Level.DEBUG)) {
+					_LOG_NAME, Log4JLoggerTestUtil.DEBUG)) {
 
 			Group group = GroupTestUtil.addGroup(
 				_company1.getCompanyId(), _user1.getUserId(),
@@ -147,7 +146,7 @@ public class MBThreadIndexerTest {
 	public void testReindexGroupContainingMBMessage() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_LOG_NAME, Level.DEBUG)) {
+					_LOG_NAME, Log4JLoggerTestUtil.DEBUG)) {
 
 			Group group = GroupTestUtil.addGroup(
 				_company1.getCompanyId(), _user1.getUserId(),

@@ -35,8 +35,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -69,7 +67,8 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			Assert.assertEquals(
 				403,
@@ -105,7 +104,8 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			response = invocationBuilder.post(Entity.form(formData));
 
@@ -134,7 +134,8 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			Assert.assertEquals(
 				403,

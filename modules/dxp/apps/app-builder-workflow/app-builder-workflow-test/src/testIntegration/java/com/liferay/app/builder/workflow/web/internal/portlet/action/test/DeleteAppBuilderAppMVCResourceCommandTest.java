@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +50,8 @@ public class DeleteAppBuilderAppMVCResourceCommandTest
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(), Level.OFF)) {
+					ProxyMessageListener.class.getName(),
+					Log4JLoggerTestUtil.OFF)) {
 
 			Assert.assertFalse(deleteApp(app));
 		}

@@ -39,8 +39,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -97,7 +95,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			webTarget2InvocationBuilder.get(String.class);
 
@@ -124,7 +123,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			webTarget2InvocationBuilder.get(String.class);
 
@@ -147,7 +147,8 @@ public class TOCTOUTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			webTarget2InvocationBuilder.get(String.class);
 

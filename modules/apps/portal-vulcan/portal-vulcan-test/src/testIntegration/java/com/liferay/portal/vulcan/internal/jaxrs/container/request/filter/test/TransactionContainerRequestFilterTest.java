@@ -40,8 +40,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Application;
 
-import org.apache.log4j.Level;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -103,7 +101,7 @@ public class TransactionContainerRequestFilterTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_EXCEPTION_MAPPER, Level.ERROR)) {
+					_CLASS_NAME_EXCEPTION_MAPPER, Log4JLoggerTestUtil.ERROR)) {
 
 			Assert.assertEquals(
 				500,

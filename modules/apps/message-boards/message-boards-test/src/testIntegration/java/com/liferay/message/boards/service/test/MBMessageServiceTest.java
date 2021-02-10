@@ -58,7 +58,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.hibernate.util.JDBCExceptionReporter;
@@ -147,23 +146,25 @@ public class MBMessageServiceTest {
 
 		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					BasePersistenceImpl.class.getName(), Level.ERROR);
+					BasePersistenceImpl.class.getName(),
+					Log4JLoggerTestUtil.ERROR);
 			CaptureAppender captureAppender2 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.spring.transaction." +
 						"DefaultTransactionExecutor",
-					Level.ERROR);
+					Log4JLoggerTestUtil.ERROR);
 			CaptureAppender captureAppender3 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					DoAsUserThread.class.getName(), Level.ERROR);
+					DoAsUserThread.class.getName(), Log4JLoggerTestUtil.ERROR);
 			CaptureAppender captureAppender4 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					JDBCExceptionReporter.class.getName(), Level.ERROR);
+					JDBCExceptionReporter.class.getName(),
+					Log4JLoggerTestUtil.ERROR);
 			CaptureAppender captureAppender5 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.messaging.internal." +
 						"SynchronousDestination",
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			for (DoAsUserThread doAsUserThread : doAsUserThreads) {
 				doAsUserThread.start();

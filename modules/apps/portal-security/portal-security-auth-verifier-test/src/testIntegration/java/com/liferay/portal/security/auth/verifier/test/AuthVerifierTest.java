@@ -46,8 +46,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Level;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -277,7 +275,8 @@ public class AuthVerifierTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN);
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN);
 			InputStream inputStream = url.openStream()) {
 
 			Assert.fail();

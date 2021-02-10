@@ -50,7 +50,6 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.zip.ZipInputStream;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -106,7 +105,7 @@ public class BatchEngineExportTaskExecutorTest
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_BATCH_ENGINE_EXPORT_TASK_EXECUTOR_IMPL,
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_testExportBlogPostingsToCSVFile(
 				Collections.emptyList(), line -> new Object[0], _parameters);
@@ -248,7 +247,7 @@ public class BatchEngineExportTaskExecutorTest
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_BATCH_ENGINE_EXPORT_TASK_EXECUTOR_IMPL,
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_testExportBlogPostingsToXLSFile(
 				Collections.emptyList(), rowValues -> new Object[0],
@@ -292,7 +291,8 @@ public class BatchEngineExportTaskExecutorTest
 
 		LoggingEvent loggingEvent = loggingEvents.get(0);
 
-		Assert.assertEquals(Level.ERROR, loggingEvent.getLevel());
+		Assert.assertEquals(
+			Log4JLoggerTestUtil.ERROR, String.valueOf(loggingEvent.getLevel()));
 
 		String message = (String)loggingEvent.getMessage();
 

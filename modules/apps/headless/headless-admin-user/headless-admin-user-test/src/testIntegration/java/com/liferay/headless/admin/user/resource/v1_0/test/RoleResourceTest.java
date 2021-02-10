@@ -38,8 +38,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -169,7 +167,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_EXCEPTION_MAPPER, Level.ERROR)) {
+					_CLASS_NAME_EXCEPTION_MAPPER, Log4JLoggerTestUtil.ERROR)) {
 
 			assertHttpResponseStatusCode(
 				500,
@@ -203,7 +201,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_EXCEPTION_MAPPER, Level.ERROR)) {
+					_CLASS_NAME_EXCEPTION_MAPPER, Log4JLoggerTestUtil.ERROR)) {
 
 			assertHttpResponseStatusCode(
 				500,
@@ -235,7 +233,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_EXCEPTION_MAPPER, Level.ERROR)) {
+					_CLASS_NAME_EXCEPTION_MAPPER, Log4JLoggerTestUtil.ERROR)) {
 
 			assertHttpResponseStatusCode(
 				500,

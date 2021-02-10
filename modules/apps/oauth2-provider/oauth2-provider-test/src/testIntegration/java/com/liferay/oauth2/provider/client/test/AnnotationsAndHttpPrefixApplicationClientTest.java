@@ -33,8 +33,6 @@ import java.util.Dictionary;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -80,7 +78,8 @@ public class AnnotationsAndHttpPrefixApplicationClientTest
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			Assert.assertEquals(
 				403,

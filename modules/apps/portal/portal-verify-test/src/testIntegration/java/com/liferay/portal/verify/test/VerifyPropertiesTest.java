@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
@@ -60,7 +59,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
+					VerifyProperties.class.getName(),
+					Log4JLoggerTestUtil.ERROR)) {
 
 			doVerify();
 
@@ -95,7 +95,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
+					VerifyProperties.class.getName(),
+					Log4JLoggerTestUtil.ERROR)) {
 
 			doVerify();
 
@@ -135,7 +136,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
+					VerifyProperties.class.getName(),
+					Log4JLoggerTestUtil.ERROR)) {
 
 			doVerify();
 
@@ -169,7 +171,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
+					VerifyProperties.class.getName(),
+					Log4JLoggerTestUtil.ERROR)) {
 
 			doVerify();
 
@@ -200,7 +203,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
+					VerifyProperties.class.getName(),
+					Log4JLoggerTestUtil.ERROR)) {
 
 			doVerify();
 
@@ -232,7 +236,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
+					VerifyProperties.class.getName(),
+					Log4JLoggerTestUtil.ERROR)) {
 
 			doVerify();
 
@@ -265,7 +270,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
+					VerifyProperties.class.getName(),
+					Log4JLoggerTestUtil.ERROR)) {
 
 			doVerify();
 
@@ -293,7 +299,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 	public void testVerify() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
+					VerifyProperties.class.getName(),
+					Log4JLoggerTestUtil.ERROR)) {
 
 			doVerify();
 

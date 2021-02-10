@@ -53,7 +53,6 @@ import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
 
@@ -556,7 +555,7 @@ public class LayoutCTTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
@@ -615,7 +614,7 @@ public class LayoutCTTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
@@ -839,7 +838,7 @@ public class LayoutCTTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());

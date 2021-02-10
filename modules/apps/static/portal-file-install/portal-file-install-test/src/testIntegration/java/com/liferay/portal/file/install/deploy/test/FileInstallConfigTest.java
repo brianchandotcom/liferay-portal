@@ -36,7 +36,6 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
@@ -161,7 +160,7 @@ public class FileInstallConfigTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.file.install.internal.configuration." +
 						"ConfigurationFileInstaller",
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			Files.write(configPathDeprecated, contentDeprecated.getBytes());
 

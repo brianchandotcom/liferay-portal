@@ -100,7 +100,7 @@ public class ProductOptionResourceImpl
 			_toProductOptions(cpDefinitionOptionRels), pagination, totalItems);
 	}
 
-	@NestedField(parentClass = Product.class, value = "options")
+	@NestedField(parentClass = Product.class, value = "productOptions")
 	@Override
 	public Page<ProductOption> getProductIdProductOptionsPage(
 			@NestedFieldId(value = "productId") Long id, Pagination pagination)

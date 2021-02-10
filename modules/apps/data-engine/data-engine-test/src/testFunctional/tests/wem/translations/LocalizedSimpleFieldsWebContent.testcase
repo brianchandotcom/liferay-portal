@@ -179,24 +179,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
-	@priority = "4"
-	test CheckLanguageSelector {
-		property portal.acceptance = "false";
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Test Content",
-			webContentTitle = "WC Title");
-
-		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
-
-		AssertElementPresent(
-			locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH"
-		);
-	}
-
-	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "5"
 	test CheckLocalizationOfWebContentUponLanguageChange {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -263,6 +245,7 @@ definition {
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "5"
 	test CheckStructureTranslationsOnWebContent {
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
@@ -278,6 +261,13 @@ definition {
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Text",
 			fieldFieldLabelEdit = "文本");
+
+
+		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+		AssertElementPresent(
+			locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH"
+		);
 
 		WebContentStructures.saveCP();
 
@@ -311,6 +301,7 @@ definition {
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "测试");
 	}
+
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@ignore = "true"

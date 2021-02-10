@@ -39,6 +39,7 @@ import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.internal.dto.v1_0.converter.DocumentDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.DDMFormValuesUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DisplayPageRendererUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityModel;
@@ -46,7 +47,9 @@ import com.liferay.headless.delivery.internal.search.aggregation.AggregationUtil
 import com.liferay.headless.delivery.internal.search.filter.FilterUtil;
 import com.liferay.headless.delivery.internal.search.sort.SortUtil;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -194,6 +197,20 @@ public class DocumentResourceImpl
 		SPIRatingResource<Rating> spiRatingResource = _getSPIRatingResource();
 
 		return spiRatingResource.getRating(documentId);
+	}
+
+	@Override
+	public String getDocumentRenderedContentByDisplayPageDisplayPageKey(
+			Long documentId, String displayPageKey)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(documentId);
+
+		return DisplayPageRendererUtil.toHTML(
+			FileEntry.class.getName(), _getDDMStructureId(fileEntry),
+			displayPageKey, fileEntry.getGroupId(), contextHttpServletRequest,
+			contextHttpServletResponse, fileEntry, _infoItemServiceTracker,
+			_layoutLocalService, _layoutPageTemplateEntryService);
 	}
 
 	@Override
@@ -434,6 +451,30 @@ public class DocumentResourceImpl
 		};
 	}
 
+	private long _getDDMStructureId(FileEntry fileEntry) throws Exception {
+		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
+			return 0;
+		}
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				dlFileEntry.getFileEntryTypeId());
+
+		if ((dlFileEntryType == null) ||
+			(dlFileEntryType.getDataDefinitionId() == 0)) {
+
+			return 0;
+		}
+
+		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
+			_ddmStructureService.getStructure(
+				dlFileEntryType.getDataDefinitionId());
+
+		return ddmStructure.getStructureId();
+	}
+
 	private Optional<DLFileEntryType> _getDLFileEntryTypeOptional(
 		long documentFolderId, Optional<Document> documentOptional,
 		Long groupId) {
@@ -672,6 +713,14 @@ public class DocumentResourceImpl
 						"com.liferay.document.library.kernel.model.DLFileEntry",
 						fileEntry.getGroupId())
 				).put(
+					"get-rendered-content-by-display-page",
+					addAction(
+						"VIEW", fileEntry.getPrimaryKey(),
+						"getDocumentRenderedContentByDisplayPageDisplayPageKey",
+						fileEntry.getUserId(),
+						"com.liferay.document.library.kernel.model.DLFileEntry",
+						fileEntry.getGroupId())
+				).put(
 					"replace",
 					addAction(
 						"UPDATE", fileEntry.getPrimaryKey(), "putDocument",
@@ -731,10 +780,16 @@ public class DocumentResourceImpl
 	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
 	private JournalArticleService _journalArticleService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

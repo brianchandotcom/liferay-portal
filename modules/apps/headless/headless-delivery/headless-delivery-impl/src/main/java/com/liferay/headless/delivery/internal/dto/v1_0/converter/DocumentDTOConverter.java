@@ -32,9 +32,11 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
@@ -48,9 +50,13 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentFieldUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DisplayPageRendererUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
+import com.liferay.headless.delivery.internal.resource.v1_0.BaseDocumentResourceImpl;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -161,6 +167,17 @@ public class DocumentDTOConverter
 							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
 				title = fileEntry.getTitle();
+
+				setRenderedContents(
+					() -> DisplayPageRendererUtil.getRenderedContent(
+						BaseDocumentResourceImpl.class,
+						FileEntry.class.getName(), fileEntry.getFileEntryId(),
+						_getDDMStructureId(fileEntry), dtoConverterContext,
+						fileEntry.getGroupId(), fileEntry,
+						_infoItemServiceTracker, _layoutLocalService,
+						_layoutPageTemplateEntryService,
+						"getDocumentRenderedContentByDisplayPageDisplayPage" +
+							"Key"));
 			}
 		};
 	}
@@ -216,6 +233,30 @@ public class DocumentDTOConverter
 		}
 
 		return ddmFormValues;
+	}
+
+	private long _getDDMStructureId(FileEntry fileEntry) throws Exception {
+		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
+			return 0;
+		}
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				dlFileEntry.getFileEntryTypeId());
+
+		if ((dlFileEntryType == null) ||
+			(dlFileEntryType.getDataDefinitionId() == 0)) {
+
+			return 0;
+		}
+
+		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
+			_ddmStructureService.getStructure(
+				dlFileEntryType.getDataDefinitionId());
+
+		return ddmStructure.getStructureId();
 	}
 
 	private <T, S> T _getValue(
@@ -341,10 +382,16 @@ public class DocumentDTOConverter
 	private DDMBeanTranslator _ddmBeanTranslator;
 
 	@Reference
+	private DDMStructureService _ddmStructureService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
@@ -353,10 +400,16 @@ public class DocumentDTOConverter
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
 	private JournalArticleService _journalArticleService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

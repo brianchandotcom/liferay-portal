@@ -14,9 +14,9 @@
 
 package com.liferay.petra.log4j;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactory;
@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -106,7 +105,7 @@ public class Log4JUtil {
 
 			document = saxReader.read(
 				new UnsyncStringReader(
-					new String(_getBytes(inputStream), StringPool.UTF8)),
+					StreamUtil.toString(inputStream, StringPool.UTF8)),
 				url.toExternalForm());
 		}
 		catch (Exception exception) {
@@ -243,20 +242,6 @@ public class Log4JUtil {
 				CharPool.QUOTE
 			},
 			new String[] {"&amp;", "&apos;", "&lt;", "&quot;"});
-	}
-
-	/**
-	 * @see com.liferay.portal.util.FileImpl#getBytes(InputStream, int, boolean)
-	 */
-	private static byte[] _getBytes(InputStream inputStream)
-		throws IOException {
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		StreamUtil.transfer(inputStream, unsyncByteArrayOutputStream, -1, true);
-
-		return unsyncByteArrayOutputStream.toByteArray();
 	}
 
 	private static java.util.logging.Level _getJdkLevel(String priority) {

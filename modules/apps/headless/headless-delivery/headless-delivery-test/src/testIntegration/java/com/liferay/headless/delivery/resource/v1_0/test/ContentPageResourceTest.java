@@ -96,6 +96,12 @@ public class ContentPageResourceTest extends BaseContentPageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetSiteContentPagesPageWithFilterStringEquals() {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetSiteContentPagesPageWithSortString() {
 	}
 

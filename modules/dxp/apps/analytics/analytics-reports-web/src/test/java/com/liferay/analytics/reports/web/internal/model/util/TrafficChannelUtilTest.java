@@ -20,6 +20,7 @@ import com.liferay.analytics.reports.web.internal.model.DirectTrafficChannelImpl
 import com.liferay.analytics.reports.web.internal.model.OrganicTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.PaidTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.ReferralTrafficChannelImpl;
+import com.liferay.analytics.reports.web.internal.model.ReferringURL;
 import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
 import com.liferay.analytics.reports.web.internal.model.SocialTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -99,7 +101,7 @@ public class TrafficChannelUtilTest {
 
 		DirectTrafficChannelImpl directTrafficChannelImpl =
 			(DirectTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, null, null);
+				acquisitionChannel, null, null, null, null);
 
 		Assert.assertEquals(
 			acquisitionChannel.getTrafficAmount(),
@@ -115,7 +117,7 @@ public class TrafficChannelUtilTest {
 			new AcquisitionChannel(
 				"invalid", RandomTestUtil.randomInt(),
 				RandomTestUtil.randomDouble()),
-			null, null);
+			null, null, null, null);
 	}
 
 	@Test
@@ -139,7 +141,7 @@ public class TrafficChannelUtilTest {
 
 		OrganicTrafficChannelImpl organicTrafficChannelImpl =
 			(OrganicTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, null,
+				acquisitionChannel, null, null, null,
 				Collections.singletonMap(
 					acquisitionChannel.getName(), trafficSource));
 
@@ -174,7 +176,7 @@ public class TrafficChannelUtilTest {
 
 		PaidTrafficChannelImpl paidTrafficChannelImpl =
 			(PaidTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, null,
+				acquisitionChannel, null, null, null,
 				Collections.singletonMap(
 					acquisitionChannel.getName(), trafficSource));
 
@@ -197,7 +199,11 @@ public class TrafficChannelUtilTest {
 
 		ReferralTrafficChannelImpl referralTrafficChannelImpl =
 			(ReferralTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, null, null);
+				acquisitionChannel,
+				Collections.singletonList(new ReferringURL(1, "liferay.com")),
+				Collections.singletonList(
+					new ReferringURL(1, "http://liferay.com/")),
+				null, null);
 
 		Assert.assertEquals(
 			acquisitionChannel.getTrafficAmount(),
@@ -205,6 +211,18 @@ public class TrafficChannelUtilTest {
 		Assert.assertEquals(
 			acquisitionChannel.getTrafficShare(),
 			referralTrafficChannelImpl.getTrafficShare(), 0);
+
+		List<ReferringURL> domainReferringURLs =
+			referralTrafficChannelImpl.getReferringDomains();
+
+		Assert.assertEquals(
+			new ReferringURL(1, "liferay.com"), domainReferringURLs.get(0));
+
+		List<ReferringURL> pageReferralURLs =
+			referralTrafficChannelImpl.getReferringPages();
+
+		Assert.assertEquals(
+			new ReferringURL(1, "http://liferay.com/"), pageReferralURLs.get(0));
 	}
 
 	@Test
@@ -215,7 +233,7 @@ public class TrafficChannelUtilTest {
 
 		SocialTrafficChannelImpl socialTrafficChannelImpl =
 			(SocialTrafficChannelImpl)TrafficChannelUtil.toTrafficChannel(
-				acquisitionChannel, null, null);
+				acquisitionChannel, null, null, null, null);
 
 		Assert.assertEquals(
 			acquisitionChannel.getTrafficAmount(),

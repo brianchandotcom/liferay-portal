@@ -125,6 +125,35 @@ public class IndexedRecordJsonObjectConverterTest extends BaseConverterTest {
 	}
 
 	@Test
+	public void testToJsonObjectWithNestedObject() throws Exception {
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/branch", OASConstants.OPERATION_POST,
+				readObject("openapi_data_types.json"));
+
+		IndexedRecord indexedRecord =
+			jsonObjectIndexedRecordConverter.toIndexedRecord(
+				readObject("branch_content.json"));
+
+		IndexedRecordJsonObjectConverter indexedRecordJsonObjectConverter =
+			new IndexedRecordJsonObjectConverter(
+				true,
+				getSchema(
+					"/v1.0/branch", OASConstants.OPERATION_POST,
+					readObject("openapi_data_types.json")),
+				null, new Result());
+
+		JsonObject jsonObject = _requireJsonObject(
+			indexedRecordJsonObjectConverter.toJsonValue(indexedRecord));
+
+		Assert.assertTrue(jsonObject.containsKey("parentBranch"));
+
+		jsonObject = jsonObject.getJsonObject("parentBranch");
+
+		Assert.assertEquals("parent branch id", 2006, jsonObject.getInt("id"));
+	}
+
+	@Test
 	public void testToJsonObjectWithTimeProperties() throws Exception {
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
 			getJsonObjectIndexedRecordConverter(

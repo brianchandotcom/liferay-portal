@@ -190,6 +190,10 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Fields Group Edit");
+
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
@@ -197,7 +201,7 @@ definition {
 
 		DataEngine.delete(fieldsGroupLabel = "Fields Group");
 
-		for (var label : list "Fields Group,Text,Numeric,Date") {
+		for (var label : list "Fields Group,Numeric,Date") {
 			AssertElementNotPresent(
 				key_fieldFieldLabel = "${label}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");

@@ -40,7 +40,11 @@ function resolveRawEditableValue(editableValue, languageId = null) {
 		}
 	}
 
-	if (content === null || content.defaultValue) {
+	if (
+		content === null ||
+		content.defaultValue ||
+		content.defaultValue === ''
+	) {
 		content = editableValue.defaultValue;
 	}
 

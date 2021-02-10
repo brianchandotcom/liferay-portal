@@ -114,20 +114,29 @@ public class DDMFormBuilderContextFactoryHelper {
 	}
 
 	protected Map<String, Object> createEmptyStateContext() {
-		return HashMapBuilder.<String, Object>put(
-			"pages", new ArrayList<>()
-		).put(
-			"rules", new ArrayList<>()
-		).put(
-			"successPage",
+		Map<String, Object> emptyStateContext =
 			HashMapBuilder.<String, Object>put(
-				"body", StringPool.BLANK
+				"dataEngineSidebar", _isDataEngineSidebar()
 			).put(
-				"enabled", Boolean.FALSE
+				"pages", new ArrayList<>()
 			).put(
-				"title", StringPool.BLANK
-			).build()
-		).build();
+				"rules", new ArrayList<>()
+			).put(
+				"successPage",
+				HashMapBuilder.<String, Object>put(
+					"body", StringPool.BLANK
+				).put(
+					"enabled", Boolean.FALSE
+				).put(
+					"title", StringPool.BLANK
+				).build()
+			).build();
+
+		if (_isDataEngineSidebar()) {
+			emptyStateContext.put("sidebarPanels", _getSidebarPanels());
+		}
+
+		return emptyStateContext;
 	}
 
 	protected Map<String, Object> createFormContext(
@@ -363,12 +372,9 @@ public class DDMFormBuilderContextFactoryHelper {
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout)
 		throws PortalException {
 
-		boolean dataEngineSidebar =
-			_ffDDMFormSidebarConfigurationActivator.isDataEngineSidebar();
-
 		Map<String, Object> fullFormContext =
 			HashMapBuilder.<String, Object>put(
-				"dataEngineSidebar", dataEngineSidebar
+				"dataEngineSidebar", _isDataEngineSidebar()
 			).put(
 				"pages",
 				() -> {
@@ -397,7 +403,7 @@ public class DDMFormBuilderContextFactoryHelper {
 				}
 			).build();
 
-		if (dataEngineSidebar) {
+		if (_isDataEngineSidebar()) {
 			fullFormContext.put("sidebarPanels", _getSidebarPanels());
 		}
 
@@ -487,6 +493,10 @@ public class DDMFormBuilderContextFactoryHelper {
 				"sidebarPanelId", "fields"
 			).build()
 		).build();
+	}
+
+	private boolean _isDataEngineSidebar() {
+		return _ffDDMFormSidebarConfigurationActivator.isDataEngineSidebar();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

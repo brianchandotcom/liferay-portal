@@ -42,7 +42,7 @@ public class DLStorageQuotaOSGiCommands {
 
 				System.out.printf(
 					"Successfully updated document library storage quota for " +
-						"company %d%n",
+						"company %s%n",
 					companyId);
 			}
 			catch (Exception exception) {
@@ -50,7 +50,7 @@ public class DLStorageQuotaOSGiCommands {
 
 				System.out.printf(
 					"Unable to update document library storage quota for " +
-						"company %d. See server log for more details.%n",
+						"company %s. See server log for more details.%n",
 					companyId);
 			}
 		}

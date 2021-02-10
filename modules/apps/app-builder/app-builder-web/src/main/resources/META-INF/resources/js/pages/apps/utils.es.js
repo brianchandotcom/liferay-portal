@@ -12,7 +12,7 @@
  * details.
  */
 
-import {SITE_MENU_SCOPE_VALUE} from './constants.es';
+import {ADMINISTRATION_SCOPE_VALUE} from './constants.es';
 
 /**
  * @description Verifiy if appDeployments contains type productMenu
@@ -30,7 +30,7 @@ export function isProductMenuValid({appDeployments}) {
 			settings: {scope, siteIds = []},
 		} = productMenuDeployment;
 
-		if (scope.includes(SITE_MENU_SCOPE_VALUE)) {
+		if (scope.includes(ADMINISTRATION_SCOPE_VALUE)) {
 			return siteIds.length > 0;
 		}
 	}

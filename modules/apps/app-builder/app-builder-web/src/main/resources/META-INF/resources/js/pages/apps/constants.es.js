@@ -12,6 +12,9 @@
  * details.
  */
 
+const ADMINISTRATION_SCOPE_VALUE = 'site_administration.content';
+const APPLICATIONS_SCOPE_VALUE = 'applications_menu.applications';
+
 const COLORS = {
 	secondary: '#A7A9BC',
 };
@@ -95,20 +98,18 @@ const FILTERS = [
 	},
 ];
 
-const SITE_MENU_SCOPE_VALUE = 'site_administration.content';
-
 const SCOPES = [
 	{
 		label: Liferay.Language.get('applications'),
-		value: ['applications_menu.applications'],
+		value: [APPLICATIONS_SCOPE_VALUE],
 	},
 	{
 		label: Liferay.Language.get('site-menu'),
-		value: [SITE_MENU_SCOPE_VALUE],
+		value: [ADMINISTRATION_SCOPE_VALUE],
 	},
 	{
 		label: Liferay.Language.get('applications-and-site-menu'),
-		value: ['applications_menu.applications', SITE_MENU_SCOPE_VALUE],
+		value: [APPLICATIONS_SCOPE_VALUE, ADMINISTRATION_SCOPE_VALUE],
 	},
 ];
 
@@ -119,7 +120,7 @@ export {
 	DEPLOYMENT_TYPES,
 	FILTERS,
 	FILTER_NAMES,
-	SITE_MENU_SCOPE_VALUE,
+	ADMINISTRATION_SCOPE_VALUE,
 	STATUSES,
 	SCOPES,
 };

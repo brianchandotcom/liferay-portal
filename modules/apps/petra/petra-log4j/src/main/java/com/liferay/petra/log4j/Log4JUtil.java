@@ -98,7 +98,7 @@ public class Log4JUtil {
 			java.util.logging.Logger jdkLogger =
 				java.util.logging.Logger.getLogger(entry.getKey());
 
-			jdkLogger.setLevel(_getJdkLevel(entry.getValue()));
+			jdkLogger.setLevel(Log4jConfigUtil.getJDKLevel(entry.getValue()));
 		}
 	}
 
@@ -156,7 +156,7 @@ public class Log4JUtil {
 		java.util.logging.Logger jdkLogger = java.util.logging.Logger.getLogger(
 			name);
 
-		jdkLogger.setLevel(_getJdkLevel(priority));
+		jdkLogger.setLevel(Log4jConfigUtil.getJDKLevel(priority));
 
 		if (custom) {
 			_customLogSettings.put(name, priority);
@@ -177,22 +177,6 @@ public class Log4JUtil {
 				CharPool.QUOTE
 			},
 			new String[] {"&amp;", "&apos;", "&lt;", "&quot;"});
-	}
-
-	private static java.util.logging.Level _getJdkLevel(String priority) {
-		if (StringUtil.equalsIgnoreCase(priority, Level.DEBUG.toString())) {
-			return java.util.logging.Level.FINE;
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					priority, Level.ERROR.toString())) {
-
-			return java.util.logging.Level.SEVERE;
-		}
-		else if (StringUtil.equalsIgnoreCase(priority, Level.WARN.toString())) {
-			return java.util.logging.Level.WARNING;
-		}
-
-		return java.util.logging.Level.INFO;
 	}
 
 	private static String _getLiferayHome() {

@@ -17,6 +17,7 @@ package com.liferay.petra.log4j.internal;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -79,6 +80,24 @@ public class Log4jConfigUtil {
 			LogManager.getLoggerRepository());
 
 		return priorities;
+	}
+
+	public static java.util.logging.Level getJDKLevel(String levelString) {
+		if (StringUtil.equalsIgnoreCase(levelString, Level.DEBUG.toString())) {
+			return java.util.logging.Level.FINE;
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					levelString, Level.ERROR.toString())) {
+
+			return java.util.logging.Level.SEVERE;
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					levelString, Level.WARN.toString())) {
+
+			return java.util.logging.Level.WARNING;
+		}
+
+		return java.util.logging.Level.INFO;
 	}
 
 	public static Map<String, String> getPriorities() {

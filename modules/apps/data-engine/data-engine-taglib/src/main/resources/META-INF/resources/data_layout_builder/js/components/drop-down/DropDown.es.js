@@ -48,7 +48,7 @@ export default ({actions, className, disabled}) => {
 	return (
 		<ClayDropDown
 			active={active}
-			alignmentPosition={Align.RightCenter}
+			alignmentPosition={Align.BottomRight}
 			className={classNames('dropdown-action', className)}
 			onActiveChange={(item) => setActive(item)}
 			trigger={DropdownButton}

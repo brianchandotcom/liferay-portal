@@ -63,7 +63,7 @@ definition {
 	test CheckDuplicatedRepeatableStructureOnWebContent {
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -89,7 +89,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
 
@@ -185,7 +185,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -195,7 +195,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
 			webContentText = "This is a Text field",
@@ -249,8 +249,8 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
+			structureDescription = "Structure Description",
+			structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -273,10 +273,10 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
-			webContentText = "Content test",
+			webContentText = "Content Text",
 			webContentTitle = "WC Title");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
@@ -327,7 +327,7 @@ definition {
 	test DefaultTitleAndTranslationsPersists {
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -343,7 +343,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		PortletEntry.viewLocale(
 			locale = "en-US",
@@ -669,8 +669,8 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
+			structureDescription = "Structure Description",
+			structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -686,7 +686,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
 			webContentText = "Text Content",
@@ -760,5 +760,5 @@ definition {
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "测试文本");
 	}
-	
+
 }

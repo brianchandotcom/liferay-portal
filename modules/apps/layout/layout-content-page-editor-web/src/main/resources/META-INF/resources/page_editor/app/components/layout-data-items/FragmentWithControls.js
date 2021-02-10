@@ -36,8 +36,10 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	const [setRef, itemElement] = useSetRef(ref);
 
 	const {
+		marginBottom,
 		marginLeft,
 		marginRight,
+		marginTop,
 		maxWidth,
 		minWidth,
 		shadow,
@@ -54,8 +56,10 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
+				[`mb-${marginBottom}`]: marginBottom != null,
 				[`ml-${marginLeft}`]: marginLeft != null,
 				[`mr-${marginRight}`]: marginRight != null,
+				[`mt-${marginTop}`]: marginTop != null,
 			})}
 			item={item}
 			itemElement={itemElement}

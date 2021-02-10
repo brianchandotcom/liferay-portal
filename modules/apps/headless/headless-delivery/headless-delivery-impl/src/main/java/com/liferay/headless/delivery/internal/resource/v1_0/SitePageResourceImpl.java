@@ -199,31 +199,29 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	private Map<String, Map<String, String>> _getBasicActions(Layout layout) {
-		Map<String, Map<String, String>> actions =
-			HashMapBuilder.<String, Map<String, String>>put(
-				"get",
-				addAction(
-					"VIEW", "getSiteSitePage",
-					"com.liferay.portal.kernel.model.Group",
-					layout.getGroupId())
-			).put(
-				"get-rendered-page",
-				addAction(
-					"VIEW", "getSiteSitePageRenderedPage",
-					"com.liferay.portal.kernel.model.Group",
-					layout.getGroupId())
-			).build();
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"get",
+			addAction(
+				"VIEW", "getSiteSitePage",
+				"com.liferay.portal.kernel.model.Group", layout.getGroupId())
+		).put(
+			"get-experiences",
+			() -> {
+				if (!layout.isTypeContent()) {
+					return null;
+				}
 
-		if (layout.isTypeContent()) {
-			actions.put(
-				"get-experiences",
-				addAction(
+				return addAction(
 					"VIEW", "getSiteSitePageFriendlyUrlPathExperiencesPage",
 					"com.liferay.portal.kernel.model.Group",
-					layout.getGroupId()));
-		}
-
-		return actions;
+					layout.getGroupId());
+			}
+		).put(
+			"get-rendered-page",
+			addAction(
+				"VIEW", "getSiteSitePageRenderedPage",
+				"com.liferay.portal.kernel.model.Group", layout.getGroupId())
+		).build();
 	}
 
 	private SegmentsExperience _getDefaultSegmentsExperience(long groupId) {

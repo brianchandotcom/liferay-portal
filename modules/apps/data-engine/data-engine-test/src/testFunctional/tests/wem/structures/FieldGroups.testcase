@@ -225,17 +225,6 @@ definition {
 			fieldName = "Date",
 			fieldsGroupLabel = "Fields Group");
 
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
-
 		DataEngine.duplicate(fieldsGroupLabel = "Fields Group");
 
 		FormFields.assertFieldsVisibleInFieldGroup(

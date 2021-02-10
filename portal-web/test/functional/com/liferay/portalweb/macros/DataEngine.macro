@@ -1078,10 +1078,10 @@ definition {
 		}
 
 		if (isSet(fieldHelp)) {
-			if(isSet(fieldsetModal)){
+			if (isSet(fieldsetModal)) {
 				Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
+					key_fieldFieldLabel = "${fieldFieldLabel}",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
 
 				Type(
 					key_fieldLabel = "Help Text",

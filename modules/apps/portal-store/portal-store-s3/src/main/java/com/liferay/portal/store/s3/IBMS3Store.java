@@ -93,6 +93,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "store.type=com.liferay.portal.store.s3.IBMS3Store",
 	service = Store.class
 )
+@Generated("")
 public class IBMS3Store implements Store {
 
 	@Override

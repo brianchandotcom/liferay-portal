@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {DeploySettings} from 'app-builder-web/js/pages/apps/edit/DeployApp.es';
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
+import {isProductMenuValid} from 'app-builder-web/js/pages/apps/utils.es';
 import React, {useContext, useState} from 'react';
 
 export default function DeployAppModal({onSave}) {
@@ -71,7 +72,9 @@ export default function DeployAppModal({onSave}) {
 
 						<ClayButton
 							disabled={
-								isDeploying || app.appDeployments.length === 0
+								isDeploying ||
+								app.appDeployments.length === 0 ||
+								!isProductMenuValid(app)
 							}
 							onClick={onDone}
 							small

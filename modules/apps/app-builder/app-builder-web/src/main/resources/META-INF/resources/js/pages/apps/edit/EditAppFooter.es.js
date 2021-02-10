@@ -21,6 +21,7 @@ import Button from '../../../components/button/Button.es';
 import {addItem, updateItem} from '../../../utils/client.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 import {normalizeNames} from '../../../utils/utils.es';
+import {isProductMenuValid} from '../utils.es';
 import EditAppContext from './EditAppContext.es';
 
 export default withRouter(
@@ -159,7 +160,8 @@ export default withRouter(
 								disabled={
 									appDeployments.length === 0 ||
 									!name[editingLanguageId]?.trim() ||
-									isDeploying
+									isDeploying ||
+									!isProductMenuValid(app)
 								}
 								displayType="primary"
 								onClick={onDeploy}

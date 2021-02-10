@@ -21,6 +21,7 @@ import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.OrganicTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.PaidTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.ReferringSocialMedia;
+import com.liferay.analytics.reports.web.internal.model.ReferringURL;
 import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
 import com.liferay.analytics.reports.web.internal.model.SocialTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
@@ -123,6 +124,37 @@ public class AnalyticsReportsDataProviderTest {
 	}
 
 	@Test
+	public void testGetDomainReferringURLs() throws Exception {
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			new AnalyticsReportsDataProvider(
+				_getHttp(
+					Collections.singletonMap(
+						"/page-referrer-hosts",
+						JSONUtil.put(
+							"abc.com", 3.0
+						).put(
+							"google.com", 6.0
+						).put(
+							"liferay.com", 1.0
+						).toString())));
+
+		List<ReferringURL> referringURLS =
+			analyticsReportsDataProvider.getDomainReferringURLs(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(referringURLS.toString(), 3, referringURLS.size());
+		Assert.assertEquals(
+			String.valueOf(new ReferringURL(1, "liferay.com")),
+			String.valueOf(referringURLS.get(0)));
+		Assert.assertEquals(
+			String.valueOf(new ReferringURL(6, "google.com")),
+			String.valueOf(referringURLS.get(1)));
+		Assert.assertEquals(
+			String.valueOf(new ReferringURL(3, "abc.com")),
+			String.valueOf(referringURLS.get(2)));
+	}
+
+	@Test
 	public void testGetHistoricalReadsHistoricalMetric() throws Exception {
 		LocalDate localDate = LocalDate.now();
 
@@ -170,6 +202,46 @@ public class AnalyticsReportsDataProviderTest {
 		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
 
 		Assert.assertEquals(localDate, zonedDateTime.toLocalDate());
+	}
+
+	@Test
+	public void testGetPageReferringURLs() throws Exception {
+		AnalyticsReportsDataProvider analyticsReportsDataProvider =
+			new AnalyticsReportsDataProvider(
+				_getHttp(
+					Collections.singletonMap(
+						"/page-referrers",
+						JSONUtil.put(
+							"https://slickdeals.net/computer-deals", 6.0
+						).put(
+							"https://slickdeals.net/credit-card-offers/", 1.0
+						).put(
+							"https://www.tomshardware.com/news/toms-hardware-" +
+								"live-events-ces-2021",
+							3.0
+						).toString())));
+
+		List<ReferringURL> referringURLS =
+			analyticsReportsDataProvider.getPageReferringURLs(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(referringURLS.toString(), 3, referringURLS.size());
+		Assert.assertEquals(
+			String.valueOf(
+				new ReferringURL(
+					1, "https://slickdeals.net/credit-card-offers/")),
+			String.valueOf(referringURLS.get(0)));
+		Assert.assertEquals(
+			String.valueOf(
+				new ReferringURL(
+					3,
+					"https://www.tomshardware.com/news/toms-hardware-live-" +
+						"events-ces-2021")),
+			String.valueOf(referringURLS.get(1)));
+		Assert.assertEquals(
+			String.valueOf(
+				new ReferringURL(6, "https://slickdeals.net/computer-deals")),
+			String.valueOf(referringURLS.get(2)));
 	}
 
 	@Test
@@ -301,6 +373,10 @@ public class AnalyticsReportsDataProviderTest {
 						).put(
 							"social", 389L
 						).toString()
+					).put(
+						"/page-referrer-hosts", "{}"
+					).put(
+						"/page-referrers", "{}"
 					).put(
 						"/social-page-referrers", "{}"
 					).put(

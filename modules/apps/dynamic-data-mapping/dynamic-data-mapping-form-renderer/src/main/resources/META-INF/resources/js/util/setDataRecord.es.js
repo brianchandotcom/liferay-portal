@@ -36,14 +36,7 @@ export default (
 		return;
 	}
 
-	let _value = null;
-
-	try {
-		_value = JSON.parse(value);
-	}
-	catch (e) {
-		_value = value;
-	}
+	let _value = value;
 
 	if (!visible) {
 		_value = '';

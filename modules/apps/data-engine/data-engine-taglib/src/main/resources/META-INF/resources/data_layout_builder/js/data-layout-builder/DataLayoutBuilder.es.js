@@ -404,7 +404,7 @@ class DataLayoutBuilder extends React.Component {
 					this._fromDDMFormToDataDefinitionPropertyName(fieldName)
 				);
 
-				let value = propertyValue || field.value;
+				let value = propertyValue ?? field.value;
 
 				if (localizable && propertyValue && fieldName !== 'label') {
 					value =

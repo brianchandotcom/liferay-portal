@@ -261,6 +261,23 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	@Override
+	public AccountEntryUserRel fetchAccountEntryUserRel(
+		long accountEntryId, long accountUserId) {
+
+		return accountEntryUserRelPersistence.fetchByAEI_AUI(
+			accountEntryId, accountUserId);
+	}
+
+	@Override
+	public AccountEntryUserRel getAccountEntryUserRel(
+			long accountEntryId, long accountUserId)
+		throws PortalException {
+
+		return accountEntryUserRelPersistence.findByAEI_AUI(
+			accountEntryId, accountUserId);
+	}
+
+	@Override
 	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
 		long accountEntryId) {
 

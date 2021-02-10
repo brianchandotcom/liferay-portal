@@ -11,7 +11,7 @@ buildIBMS3Store {
 		line.replace "S3Store.class", "IBMS3Store.class"
 	}
 	filter { line ->
-		line.replace "class S3Store", "class IBMS3Store"
+		line.replace "public class S3Store", "@Generated(\"\")\npublic class IBMS3Store"
 	}
 	filter { line ->
 		line.replace "com.liferay.portal.store.s3.S3Store", "com.liferay.portal.store.s3.IBMS3Store"

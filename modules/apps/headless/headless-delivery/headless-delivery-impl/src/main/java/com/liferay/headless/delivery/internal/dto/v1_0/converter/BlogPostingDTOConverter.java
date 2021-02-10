@@ -30,10 +30,15 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.DisplayPageRendererUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
+import com.liferay.headless.delivery.internal.resource.v1_0.BaseBlogPostingResourceImpl;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -110,6 +115,16 @@ public class BlogPostingDTOConverter
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
 							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
+
+				setRenderedContents(
+					() -> DisplayPageRendererUtil.getRenderedContent(
+						BaseBlogPostingResourceImpl.class,
+						BlogsEntry.class.getName(), blogsEntry.getEntryId(), 0,
+						dtoConverterContext, blogsEntry.getGroupId(),
+						blogsEntry, _infoItemServiceTracker,
+						_layoutLocalService, _layoutPageTemplateEntryService,
+						"getBlogPostingRenderedContentByDisplayPageDisplay" +
+							"PageKey"));
 			}
 		};
 	}
@@ -163,6 +178,15 @@ public class BlogPostingDTOConverter
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

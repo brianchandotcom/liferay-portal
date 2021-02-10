@@ -300,6 +300,12 @@ public class AnalyticsReportsDataProvider {
 			Map<String, TrafficSource> trafficSourceMap = getTrafficSources(
 				companyId, url);
 
+			List<ReferringURL> referringDomains = getReferringDomains(
+				companyId, url);
+
+			List<ReferringURL> referringPages = getReferringPages(
+				companyId, url);
+
 			List<ReferringSocialMedia> referringSocialMediaList =
 				getReferringSocialMediaList(companyId, url);
 
@@ -313,8 +319,8 @@ public class AnalyticsReportsDataProvider {
 
 			return stream.map(
 				acquisitionChannel -> TrafficChannelUtil.toTrafficChannel(
-					acquisitionChannel, referringSocialMediaList,
-					trafficSourceMap)
+					acquisitionChannel, referringDomains, referringPages,
+					referringSocialMediaList, trafficSourceMap)
 			).map(
 				trafficChannel -> new AbstractMap.SimpleEntry<>(
 					trafficChannel.getName(), trafficChannel)

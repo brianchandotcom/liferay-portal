@@ -286,16 +286,20 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Fields Group Edit");
+
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
 			targetFieldLabel = "Numeric");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP");
+		DataEngine.duplicate(fieldsGroupLabel = "Fields Group");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
+		WebContentStructures.saveCP();
 
-		MenuItem.clickNoError(menuItem = "Duplicate");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		FormFields.assertFieldsVisibleInFieldGroup(
 			fieldGroupLabel= "Fields Group",

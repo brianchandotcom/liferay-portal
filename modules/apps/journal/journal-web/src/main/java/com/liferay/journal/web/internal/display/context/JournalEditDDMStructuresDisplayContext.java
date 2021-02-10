@@ -153,7 +153,7 @@ public class JournalEditDDMStructuresDisplayContext {
 			return _script;
 		}
 
-		_script = ParamUtil.getString(_httpServletRequest, "definition");
+		_script = ParamUtil.getString(_httpServletRequest, "dataDefinition");
 
 		if (Validator.isNotNull(_script)) {
 			return _script;

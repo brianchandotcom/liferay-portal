@@ -30,7 +30,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.product.content.util.CPContentHelper;
-import com.liferay.commerce.product.util.CPCompareHelperUtil;
+import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.string.StringPool;
@@ -153,11 +153,11 @@ public class DefaultCPContentListEntryRenderer
 			HttpServletRequest originalHttpServletRequest =
 				_portal.getOriginalServletRequest(httpServletRequest);
 
-			List<Long> cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(
+			List<Long> cpDefinitionIds = _cpCompareHelper.getCPDefinitionIds(
 				commerceContext.getCommerceChannelGroupId(), accountId,
 				CookieKeys.getCookie(
 					originalHttpServletRequest,
-					CPCompareHelperUtil.getCPDefinitionIdsCookieKey(
+					_cpCompareHelper.getCPDefinitionIdsCookieKey(
 						commerceContext.getCommerceChannelGroupId())));
 
 			compareStateJSONObject.put(
@@ -255,6 +255,9 @@ public class DefaultCPContentListEntryRenderer
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CPCompareHelper _cpCompareHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

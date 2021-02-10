@@ -26,6 +26,7 @@ import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.io.Serializable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +50,13 @@ import java.util.stream.Stream;
  */
 public class CommerceAccountUserRelLocalServiceImpl
 	extends CommerceAccountUserRelLocalServiceBaseImpl {
+
+	@Override
+	public CommerceAccountUserRel addCommerceAccountUserRel(
+		CommerceAccountUserRel commerceAccountUserRel) {
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public CommerceAccountUserRel addCommerceAccountUserRel(
@@ -183,6 +193,45 @@ public class CommerceAccountUserRelLocalServiceImpl
 	}
 
 	@Override
+	public CommerceAccountUserRel createCommerceAccountUserRel(
+		CommerceAccountUserRelPK commerceAccountUserRelPK) {
+
+		AccountEntryUserRel accountEntryUserRel =
+			accountEntryUserRelLocalService.createAccountEntryUserRel(
+				counterLocalService.increment());
+
+		accountEntryUserRel.setAccountEntryId(
+			commerceAccountUserRelPK.getCommerceAccountId());
+		accountEntryUserRel.setAccountUserId(
+			commerceAccountUserRelPK.getCommerceAccountUserId());
+
+		return CommerceAccountUserRelImpl.fromAccountEntryUserRel(
+			accountEntryUserRel);
+	}
+
+	@Override
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		return createCommerceAccountUserRel(
+			(CommerceAccountUserRelPK)primaryKeyObj);
+	}
+
+	@Override
+	public CommerceAccountUserRel deleteCommerceAccountUserRel(
+		CommerceAccountUserRel commerceAccountUserRel) {
+
+		AccountEntryUserRel accountEntryUserRel =
+			accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				commerceAccountUserRel.getCommerceAccountId(),
+				commerceAccountUserRel.getCommerceAccountUserId());
+
+		return CommerceAccountUserRelImpl.fromAccountEntryUserRel(
+			accountEntryUserRelLocalService.deleteAccountEntryUserRel(
+				accountEntryUserRel));
+	}
+
+	@Override
 	public CommerceAccountUserRel deleteCommerceAccountUserRel(
 			CommerceAccountUserRelPK commerceAccountUserRelPK)
 		throws PortalException {
@@ -229,6 +278,17 @@ public class CommerceAccountUserRelLocalServiceImpl
 	}
 
 	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+
+		CommerceAccountUserRel commerceAccountUserRel =
+			(CommerceAccountUserRel)persistedModel;
+
+		return deleteCommerceAccountUserRel(
+			commerceAccountUserRel.getPrimaryKey());
+	}
+
+	@Override
 	public CommerceAccountUserRel fetchCommerceAccountUserRel(
 		CommerceAccountUserRelPK commerceAccountUserRelPK) {
 
@@ -247,6 +307,15 @@ public class CommerceAccountUserRelLocalServiceImpl
 			accountEntryUserRelLocalService.getAccountEntryUserRel(
 				commerceAccountUserRelPK.getCommerceAccountId(),
 				commerceAccountUserRelPK.getCommerceAccountUserId()));
+	}
+
+	@Override
+	public List<CommerceAccountUserRel> getCommerceAccountUserRels(
+		int start, int end) {
+
+		return TransformUtil.transform(
+			accountEntryUserRelLocalService.getAccountEntryUserRels(start, end),
+			CommerceAccountUserRelImpl::fromAccountEntryUserRel);
 	}
 
 	@Override
@@ -282,6 +351,11 @@ public class CommerceAccountUserRelLocalServiceImpl
 	}
 
 	@Override
+	public int getCommerceAccountUserRelsCount() {
+		return accountEntryUserRelLocalService.getAccountEntryUserRelsCount();
+	}
+
+	@Override
 	public int getCommerceAccountUserRelsCount(long commerceAccountId) {
 		Long count =
 			(Long)
@@ -290,6 +364,19 @@ public class CommerceAccountUserRelLocalServiceImpl
 						commerceAccountId);
 
 		return count.intValue();
+	}
+
+	@Override
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
+
+		CommerceAccountUserRelPK commerceAccountUserRelPK =
+			(CommerceAccountUserRelPK)primaryKeyObj;
+
+		return CommerceAccountUserRelImpl.fromAccountEntryUserRel(
+			accountEntryUserRelLocalService.getAccountEntryUserRel(
+				commerceAccountUserRelPK.getCommerceAccountId(),
+				commerceAccountUserRelPK.getCommerceAccountUserId()));
 	}
 
 	@Override
@@ -343,6 +430,13 @@ public class CommerceAccountUserRelLocalServiceImpl
 			commerceAccountUserRel.getCommerceAccountUserId(), roleIds);
 
 		return commerceAccountUserRel;
+	}
+
+	@Override
+	public CommerceAccountUserRel updateCommerceAccountUserRel(
+		CommerceAccountUserRel commerceAccountUserRel) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	protected void updateRoles(

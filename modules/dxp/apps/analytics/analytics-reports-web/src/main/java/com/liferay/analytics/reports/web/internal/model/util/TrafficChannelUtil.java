@@ -21,6 +21,7 @@ import com.liferay.analytics.reports.web.internal.model.OrganicTrafficChannelImp
 import com.liferay.analytics.reports.web.internal.model.PaidTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.ReferralTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.ReferringSocialMedia;
+import com.liferay.analytics.reports.web.internal.model.ReferringURL;
 import com.liferay.analytics.reports.web.internal.model.SocialTrafficChannelImpl;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
@@ -63,6 +64,8 @@ public final class TrafficChannelUtil {
 
 	public static TrafficChannel toTrafficChannel(
 		AcquisitionChannel acquisitionChannel,
+		List<ReferringURL> domainReferringURLs,
+		List<ReferringURL> pageReferringURLs,
 		List<ReferringSocialMedia> referringSocialMediaList,
 		Map<String, TrafficSource> trafficSourceMap) {
 
@@ -87,7 +90,7 @@ public final class TrafficChannelUtil {
 		}
 		else if (Objects.equals("referral", acquisitionChannel.getName())) {
 			return new ReferralTrafficChannelImpl(
-				Collections.emptyList(), Collections.emptyList(),
+				domainReferringURLs, pageReferringURLs,
 				acquisitionChannel.getTrafficAmount(),
 				acquisitionChannel.getTrafficShare());
 		}

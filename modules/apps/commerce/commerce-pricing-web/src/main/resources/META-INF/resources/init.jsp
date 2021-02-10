@@ -42,6 +42,7 @@ page import="com.liferay.commerce.price.list.constants.CommercePriceListConstant
 page import="com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListParentPriceListGroupIdException" %><%@
+page import="com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException" %><%@
 page import="com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException" %><%@
 page import="com.liferay.commerce.price.list.model.CommercePriceEntry" %><%@
 page import="com.liferay.commerce.price.list.model.CommercePriceList" %><%@
@@ -57,6 +58,8 @@ page import="com.liferay.commerce.pricing.web.internal.constants.CommercePricing
 page import="com.liferay.commerce.pricing.web.internal.display.context.AddedAllCommerceDiscountRuleDisplayContext" %><%@
 page import="com.liferay.commerce.pricing.web.internal.display.context.AddedAnyCommerceDiscountRuleDisplayContext" %><%@
 page import="com.liferay.commerce.pricing.web.internal.display.context.CPDefinitionPricingClassDisplayContext" %><%@
+page import="com.liferay.commerce.pricing.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext" %><%@
+page import="com.liferay.commerce.pricing.web.internal.display.context.CPInstanceCommerceTierPriceEntryDisplayContext" %><%@
 page import="com.liferay.commerce.pricing.web.internal.display.context.CartTotalCommerceDiscountRuleDisplayContext" %><%@
 page import="com.liferay.commerce.pricing.web.internal.display.context.CommerceDiscountDisplayContext" %><%@
 page import="com.liferay.commerce.pricing.web.internal.display.context.CommerceDiscountQualifiersDisplayContext" %><%@
@@ -71,8 +74,10 @@ page import="com.liferay.commerce.pricing.web.internal.display.context.CommerceP
 page import="com.liferay.commerce.pricing.web.internal.display.context.CommerceTierCommercePriceEntryDisplayContext" %><%@
 page import="com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants" %><%@
 page import="com.liferay.commerce.pricing.web.internal.servlet.taglib.ui.constants.CommercePriceListScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCatalogException" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+page import="com.liferay.commerce.product.model.CPInstance" %><%@
 page import="com.liferay.commerce.product.model.CProduct" %><%@
 page import="com.liferay.commerce.product.model.CommerceCatalog" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -85,6 +90,7 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -107,6 +113,8 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
+String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);

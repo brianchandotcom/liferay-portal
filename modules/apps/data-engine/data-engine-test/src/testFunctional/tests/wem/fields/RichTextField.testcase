@@ -257,11 +257,11 @@ definition {
 	@priority = "5"
 	test SetLabelOfRichTextAndHelpText {
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Test",
-			fieldFieldLabelEdit = "Test Edited");
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "Rich Text Edited");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Test Edited",
+			fieldFieldLabel = "Rich Text Edited",
 			fieldHelp = "Help Text");
 
 		WebContentStructures.saveCP();
@@ -269,7 +269,7 @@ definition {
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		DataEngine.viewField(
-			fieldFieldLabel = "Test Edited",
+			fieldFieldLabel = "Rich Text Edited",
 			fieldHelp = "Help Text",
 			fieldName = "Rich Text");
 	}

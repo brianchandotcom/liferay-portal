@@ -234,13 +234,13 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			portlet = "Documents and Media");
+			portlet = "Web Content");
 
-		AppBuilderAdmin.switchTab(tabName = "Document Types");
+		AppBuilderAdmin.switchTab(tabName = "Structures");
 
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeFieldNames = "Numeric",
-			dmDocumentTypeName = "Document Type Name");
+			dmDocumentTypeName = "Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
@@ -259,7 +259,7 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text Edit",
-			fieldHelpTextEdit = "Edited Help Text",
+			fieldHelp = "Edited Help Text",
 			fieldsetModal = "true");
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
@@ -270,7 +270,7 @@ definition {
 
 		Button.clickSave();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Structure Name");
 
 		AssertVisible(
 			key_fieldFieldLabel = "Text Edit",

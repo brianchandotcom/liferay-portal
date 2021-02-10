@@ -365,11 +365,6 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I cannot edit fieldset on the Advanced panel"
 	@priority = "4"
 	test VerifyFieldsetCannotBeEditedOnStructureBuilder {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",

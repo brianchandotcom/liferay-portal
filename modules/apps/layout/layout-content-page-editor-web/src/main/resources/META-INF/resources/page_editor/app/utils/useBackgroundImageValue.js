@@ -67,7 +67,7 @@ function loadBackgroundImage(backgroundImage, getFieldValue) {
 
 function loadBackgroundImageMediaQueries(elementId, backgroundImage) {
 	if (!elementId || !backgroundImage?.fileEntryId) {
-		return '';
+		return Promise.resolve('');
 	}
 
 	return ImageService.getAvailableImageConfigurations({

@@ -41,14 +41,8 @@ import java.util.List;
 public class CommerceOrderFinderImpl
 	extends CommerceOrderFinderBaseImpl implements CommerceOrderFinder {
 
-	public static final String COUNT_BY_G_U_C_O =
-		CommerceOrderFinder.class.getName() + ".countByG_U_C_O";
-
 	public static final String FIND_BY_G_O =
 		CommerceOrderFinder.class.getName() + ".findByG_O";
-
-	public static final String FIND_BY_G_U_C_O =
-		CommerceOrderFinder.class.getName() + ".findByG_U_C_O";
 
 	public static final String FIND_BY_G_U_C_O_S =
 		CommerceOrderFinder.class.getName() + ".findByG_U_C_O_S";
@@ -57,106 +51,6 @@ public class CommerceOrderFinderImpl
 		GET_SHIPPED_COMMERCE_ORDERS_BY_COMMERCE_SHIPMENT_ID =
 			CommerceOrderFinder.class.getName() +
 				".getShippedCommerceOrdersByCommerceShipmentId";
-
-	@Override
-	public int countByG_U_C_O(
-		long userId, QueryDefinition<CommerceOrder> queryDefinition) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_C_O);
-
-			sql = StringUtil.replace(
-				sql, "[$USER_ID$]", String.valueOf(userId));
-
-			long commerceAccountId = (Long)queryDefinition.getAttribute(
-				"commerceAccountId");
-
-			if (commerceAccountId > 0) {
-				sql = StringUtil.replace(
-					sql, "[$ACCOUNT_ID$]",
-					_getAccountIdClause(commerceAccountId));
-			}
-			else {
-				sql = StringUtil.removeSubstring(sql, "[$ACCOUNT_ID$]");
-			}
-
-			Integer orderStatus = (Integer)queryDefinition.getAttribute(
-				"orderStatus");
-
-			if (orderStatus != null) {
-				boolean excludeOrderStatus =
-					(boolean)queryDefinition.getAttribute("excludeOrderStatus");
-
-				sql = StringUtil.replace(
-					sql, "[$ORDER_STATUS$]",
-					_getOrderStatusClause(orderStatus, excludeOrderStatus));
-			}
-			else {
-				sql = StringUtil.removeSubstring(sql, "[$ORDER_STATUS$]");
-			}
-
-			String[] names = new String[0];
-
-			String keywords = (String)queryDefinition.getAttribute("keywords");
-
-			if (Validator.isNotNull(keywords)) {
-				keywords = StringUtil.quote(
-					StringUtil.lowerCase(keywords), StringPool.PERCENT);
-
-				names = ArrayUtil.append(names, keywords);
-
-				sql = _customSQL.replaceKeywords(
-					sql, "lower(CommerceAccount.name)", StringPool.LIKE, false,
-					names);
-
-				sql = _customSQL.replaceAndOperator(sql, true);
-			}
-			else {
-				sql = StringUtil.removeSubstring(
-					sql,
-					"AND (LOWER(CommerceAccount.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])");
-			}
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			long groupId = (Long)queryDefinition.getAttribute("groupId");
-
-			queryPos.add(groupId);
-
-			if (Validator.isNotNull(keywords)) {
-				queryPos.add(names, 2);
-			}
-
-			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			int count = 0;
-
-			Iterator<Long> iterator = sqlQuery.iterate();
-
-			while (iterator.hasNext()) {
-				Long l = iterator.next();
-
-				if (l != null) {
-					count += l.intValue();
-				}
-			}
-
-			return count;
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
 
 	@Override
 	public CommerceOrder fetchByG_U_C_O_S_First(
@@ -210,97 +104,6 @@ public class CommerceOrderFinderImpl
 		long groupId, int[] orderStatuses, int start, int end) {
 
 		return doFindByG_O(groupId, orderStatuses, start, end);
-	}
-
-	@Override
-	public List<CommerceOrder> findByG_U_C_O(
-		long userId, QueryDefinition<CommerceOrder> queryDefinition) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C_O);
-
-			sql = StringUtil.replace(
-				sql, "[$USER_ID$]", String.valueOf(userId));
-
-			long commerceAccountId = (Long)queryDefinition.getAttribute(
-				"commerceAccountId");
-
-			if (commerceAccountId > 0) {
-				sql = StringUtil.replace(
-					sql, "[$ACCOUNT_ID$]",
-					_getAccountIdClause(commerceAccountId));
-			}
-			else {
-				sql = StringUtil.removeSubstring(sql, "[$ACCOUNT_ID$]");
-			}
-
-			Integer orderStatus = (Integer)queryDefinition.getAttribute(
-				"orderStatus");
-
-			if (orderStatus != null) {
-				boolean excludeOrderStatus =
-					(boolean)queryDefinition.getAttribute("excludeOrderStatus");
-
-				sql = StringUtil.replace(
-					sql, "[$ORDER_STATUS$]",
-					_getOrderStatusClause(orderStatus, excludeOrderStatus));
-			}
-			else {
-				sql = StringUtil.removeSubstring(sql, "[$ORDER_STATUS$]");
-			}
-
-			String[] names = new String[0];
-
-			String keywords = (String)queryDefinition.getAttribute("keywords");
-
-			if (Validator.isNotNull(keywords)) {
-				keywords = StringUtil.quote(
-					StringUtil.lowerCase(keywords), StringPool.PERCENT);
-
-				names = ArrayUtil.append(names, keywords);
-
-				sql = _customSQL.replaceKeywords(
-					sql, "lower(CommerceAccount.name)", StringPool.LIKE, true,
-					names);
-
-				sql = _customSQL.replaceAndOperator(sql, true);
-			}
-			else {
-				sql = StringUtil.removeSubstring(
-					sql,
-					"AND (LOWER(CommerceAccount.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])");
-			}
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity(
-				CommerceOrderImpl.TABLE_NAME, CommerceOrderImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			long groupId = (Long)queryDefinition.getAttribute("groupId");
-
-			queryPos.add(groupId);
-
-			if (Validator.isNotNull(keywords)) {
-				queryPos.add(names, 2);
-			}
-
-			return (List<CommerceOrder>)QueryUtil.list(
-				sqlQuery, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -378,23 +181,6 @@ public class CommerceOrderFinderImpl
 		}
 
 		return StringUtil.replace(sql, "[$ORDER_STATUS$]", sb.toString());
-	}
-
-	private String _getAccountIdClause(long commerceAccountId) {
-		return "(CommerceAccount.commerceAccountId = " + commerceAccountId +
-			" ) AND";
-	}
-
-	private String _getOrderStatusClause(int orderStatus, boolean exclude) {
-		if (orderStatus < 0) {
-			return StringPool.BLANK;
-		}
-
-		if (exclude) {
-			return "(CommerceOrder.orderStatus != " + orderStatus + ") AND";
-		}
-
-		return "(CommerceOrder.orderStatus = " + orderStatus + ") AND";
 	}
 
 	@ServiceReference(type = CustomSQL.class)

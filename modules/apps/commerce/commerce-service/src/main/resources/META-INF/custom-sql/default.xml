@@ -42,43 +42,6 @@
 				CommerceCountry.priority
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.countByG_U_C_O">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT CommerceOrder.commerceOrderId) AS COUNT_VALUE
-			FROM
-				User_
-			LEFT JOIN
-				CommerceAccountUserRel ON
-					CommerceAccountUserRel.commerceAccountUserId = User_.userId
-			LEFT JOIN
-				Users_Orgs ON
-					Users_Orgs.userId = User_.userId
-			LEFT JOIN
-				Organization_ Org1 ON
-					Org1.organizationId = Users_Orgs.organizationId
-			LEFT JOIN
-				Organization_ Org2 ON
-					(Org1.treePath IS NOT NULL) AND
-					(Org2.treePath LIKE CONCAT(Org1.treePath, '%'))
-			LEFT JOIN
-				CommerceAccountOrganizationRel ON
-					CommerceAccountOrganizationRel.organizationId = Org2.organizationId
-			LEFT JOIN
-				CommerceAccount ON
-					(CommerceAccount.commerceAccountId = CommerceAccountUserRel.commerceAccountId) OR
-					(CommerceAccount.commerceAccountId = CommerceAccountOrganizationRel.commerceAccountId)
-			LEFT JOIN
-				CommerceOrder ON
-					CommerceOrder.commerceAccountId = CommerceAccount.commerceAccountId
-			WHERE
-				[$ORDER_STATUS$]
-				[$ACCOUNT_ID$]
-				(CommerceOrder.groupId = ?) AND
-				(User_.userId = [$USER_ID$]) AND
-				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
-		]]>
-	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.findByG_O">
 		<![CDATA[
 			SELECT
@@ -92,45 +55,6 @@
 				(CommerceOrder.groupId = ?) AND
 				(CommerceOrder.orderStatus IN ([$ORDER_STATUS$])) AND
 				(CommerceOrderItem.quantity > CommerceOrderItem.shippedQuantity)
-		]]>
-	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.findByG_U_C_O">
-		<![CDATA[
-			SELECT
-				DISTINCT {CommerceOrder.*}
-			FROM
-				User_
-			LEFT JOIN
-				CommerceAccountUserRel ON
-					CommerceAccountUserRel.commerceAccountUserId = User_.userId
-			LEFT JOIN
-				Users_Orgs ON
-					Users_Orgs.userId = User_.userId
-			LEFT JOIN
-				Organization_ Org1 ON
-					Org1.organizationId = Users_Orgs.organizationId
-			LEFT JOIN
-				Organization_ Org2 ON
-					(Org1.treePath IS NOT NULL) AND
-					(Org2.treePath LIKE CONCAT(Org1.treePath, '%'))
-			LEFT JOIN
-				CommerceAccountOrganizationRel ON
-					CommerceAccountOrganizationRel.organizationId = Org2.organizationId
-			LEFT JOIN
-				CommerceAccount ON
-					(CommerceAccount.commerceAccountId = CommerceAccountUserRel.commerceAccountId) OR
-					(CommerceAccount.commerceAccountId = CommerceAccountOrganizationRel.commerceAccountId)
-			LEFT JOIN
-				CommerceOrder ON
-					CommerceOrder.commerceAccountId = CommerceAccount.commerceAccountId
-			WHERE
-				[$ORDER_STATUS$]
-				[$ACCOUNT_ID$]
-				(CommerceOrder.groupId = ?) AND
-				(User_.userId = [$USER_ID$]) AND
-				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
-			ORDER BY
-				CommerceOrder.modifieddate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.findByG_U_C_O_S">

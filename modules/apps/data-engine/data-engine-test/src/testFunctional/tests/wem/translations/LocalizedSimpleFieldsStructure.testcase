@@ -210,6 +210,12 @@ definition {
 		WebContentStructures.viewCP(structureName = "${defaultStructureName}");
 
 		LexiconEntry.gotoEntry(rowEntry = "${defaultStructureName}");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "Nome da Estrutura WC");
 	}
 
 	@description = "This is a test for LPS-122278. As Content Creator, I want to define reusable translations when creating WEM Structures without nested fields or fieldsets"

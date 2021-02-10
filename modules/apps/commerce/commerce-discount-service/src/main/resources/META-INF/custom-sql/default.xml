@@ -8,14 +8,14 @@
 			FROM
 				CommerceDiscountAccountRel
 			JOIN
+				AccountEntry ON
+					CommerceDiscountAccountRel.commerceAccountId = AccountEntry.accountEntryId
+			JOIN
 				CommerceDiscount ON
 					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
-			JOIN
-				CommerceAccount ON
-					CommerceDiscountAccountRel.commerceAccountId = CommerceAccount.commerceAccountId
 			WHERE
 				(CommerceDiscount.commerceDiscountId = ?) AND
-				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(AccountEntry.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountAccountRelFinder.findByCommerceDiscountId">
@@ -25,14 +25,14 @@
 			FROM
 				CommerceDiscountAccountRel
 			JOIN
+				AccountEntry ON
+					CommerceDiscountAccountRel.commerceAccountId = AccountEntry.accountEntryId
+			JOIN
 				CommerceDiscount ON
 					CommerceDiscountAccountRel.commerceDiscountId = CommerceDiscount.commerceDiscountId
-			JOIN
-				CommerceAccount ON
-					CommerceDiscountAccountRel.commerceAccountId = CommerceAccount.commerceAccountId
 			WHERE
 				(CommerceDiscount.commerceDiscountId = ?) AND
-				(LOWER(CommerceAccount.name) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(AccountEntry.name) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelFinder.countByCommerceDiscountId">

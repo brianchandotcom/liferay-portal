@@ -77,14 +77,14 @@ public class CommerceDiscountAccountRelFinderImpl
 
 			if (Validator.isNotNull(name)) {
 				sql = _customSQL.replaceKeywords(
-					sql, "(LOWER(CommerceAccount.name)", StringPool.LIKE, true,
+					sql, "(LOWER(AccountEntry.name)", StringPool.LIKE, true,
 					keywords);
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
 			else {
 				sql = StringUtil.removeSubstring(
 					sql,
-					" AND (LOWER(CommerceAccount.name) LIKE ? " +
+					" AND (LOWER(AccountEntry.name) LIKE ? " +
 						"[$AND_OR_NULL_CHECK$])");
 			}
 
@@ -152,14 +152,14 @@ public class CommerceDiscountAccountRelFinderImpl
 
 			if (Validator.isNotNull(name)) {
 				sql = _customSQL.replaceKeywords(
-					sql, "(LOWER(CommerceAccount.name)", StringPool.LIKE, true,
+					sql, "(LOWER(AccountEntry.name)", StringPool.LIKE, true,
 					keywords);
 				sql = _customSQL.replaceAndOperator(sql, false);
 			}
 			else {
 				sql = StringUtil.removeSubstring(
 					sql,
-					" AND (LOWER(CommerceAccount.name) LIKE ? " +
+					" AND (LOWER(AccountEntry.name) LIKE ? " +
 						"[$AND_OR_NULL_CHECK$])");
 			}
 

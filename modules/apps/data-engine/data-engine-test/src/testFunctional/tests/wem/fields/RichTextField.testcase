@@ -238,7 +238,7 @@ definition {
 			fieldName = "Rich Text",
 			fieldReference = "TestValidReference");
 
-		DataEngine.editFieldReferenceWithInvalidCharacters(
+		DataEngine.editFieldReference(
 			assertFieldReference = "TestInvalidReference",
 			fieldFieldLabel = "Rich Text",
 			fieldReference = "Test!Invalid@#Reference");
@@ -350,4 +350,5 @@ definition {
 			locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
 			value1 = "This field is required.");
 	}
+
 }

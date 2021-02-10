@@ -272,13 +272,13 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 					continue;
 				}
 
-				args[i] = _getMethodArgValueFromRequest(
-					fieldName, nestedFieldsContext, pathParameters,
-					queryParameters, resourceMethodArgNameTypeEntries[i]);
+				args[i] = _getMethodArgValueFromItem(
+					item, resourceMethodArgNameTypeEntries[i]);
 
 				if (args[i] == null) {
-					args[i] = _getMethodArgValueFromItem(
-						item, resourceMethodArgNameTypeEntries[i]);
+					args[i] = _getMethodArgValueFromRequest(
+						fieldName, nestedFieldsContext, pathParameters,
+						queryParameters, resourceMethodArgNameTypeEntries[i]);
 				}
 			}
 

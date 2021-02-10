@@ -17,11 +17,13 @@ export default function getSegmentsExperienceLanguages(
 	availableSegmentsExperiences,
 	segmentsExperienceId
 ) {
-	const experienceLanguages =
-		availableSegmentsExperiences[segmentsExperienceId]?.languageIds ||
+	const languages =
+		(availableSegmentsExperiences &&
+			segmentsExperienceId &&
+			availableSegmentsExperiences[segmentsExperienceId]?.languageIds) ||
 		Object.keys(availableLanguages);
 
-	return experienceLanguages.reduce((acc, languageId) => {
+	return languages.reduce((acc, languageId) => {
 		if (availableLanguages[languageId]) {
 			return {
 				...acc,

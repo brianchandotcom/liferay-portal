@@ -10,9 +10,11 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentType();
 
@@ -28,9 +30,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			DMDocument.tearDownCP();
 
-			User.logoutPG();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

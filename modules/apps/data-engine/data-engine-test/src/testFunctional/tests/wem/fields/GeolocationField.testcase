@@ -18,7 +18,7 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "My Structure Description",
-			structureName = "My Structure Name 1");
+			structureName = "My Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Localization",
@@ -45,9 +45,9 @@ definition {
 			fieldFieldLabel = "Localization",
 			searchableType = "Disable");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Localization",
@@ -57,9 +57,9 @@ definition {
 			fieldFieldLabel = "Localization",
 			searchableType = "Keyword");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Localization",
@@ -69,9 +69,9 @@ definition {
 			fieldFieldLabel = "Localization",
 			searchableType = "Text");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Localization",
@@ -93,9 +93,9 @@ definition {
 
 		DataEngine.duplicate(fieldFieldLabel = "${key_Label}");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		AssertElementPresent(
 			key_fieldsetLabel = "${key_Label}",
@@ -143,9 +143,9 @@ definition {
 	test SetGeolocationLabel {
 		property portal.acceptance = "false";
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Localization",
@@ -161,9 +161,9 @@ definition {
 			fieldFieldLabel = "Localization",
 			fieldHelp = "your localization");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "your localization",
@@ -176,9 +176,9 @@ definition {
 	test SetReferenceOfGeolocation {
 		property portal.acceptance = "false";
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "Localization",
@@ -207,7 +207,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		AssertElementPresent(
 			key_fieldFieldLabel = "Geolocation",
@@ -217,9 +217,9 @@ definition {
 			fieldFieldLabel = "Geolocation",
 			showLabel = "false");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Geolocation",
@@ -242,13 +242,13 @@ definition {
 
 		DataEngine.duplicate(fieldFieldLabel = "${key_Label}");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
 		Navigator.gotoNavItem(navItem = "Web Content");
 
 		LexiconEntry.gotoAdd();
 
-		MenuItem.click(menuItem = "My Structure Name 1");
+		MenuItem.click(menuItem = "My Structure Name");
 
 		WebContent.addCP(webContentTitle = "My Web Content Name 1");
 
@@ -273,9 +273,9 @@ definition {
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "${key_fieldLabel}");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		AssertElementPresent(locator1 = "Icon#ASTERISK");
 
@@ -288,9 +288,9 @@ definition {
 			key_toggleSwitchLabel = "Required Field",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		WebContentStructures.saveCP(structureName = "My Structure Name 1");
+		WebContentStructures.saveCP(structureName = "My Structure Name");
 
-		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
+		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name");
 
 		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
 	}

@@ -32,8 +32,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -56,7 +54,8 @@ public class WorkflowDefinitionManagerTest {
 	public void testDeleteSaveWorkflowDefinition() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(), Level.OFF)) {
+					ProxyMessageListener.class.getName(),
+					Log4JLoggerTestUtil.OFF)) {
 
 			WorkflowDefinition workflowDefinition = _saveWorkflowDefinition();
 
@@ -452,7 +451,8 @@ public class WorkflowDefinitionManagerTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(), Level.OFF)) {
+					ProxyMessageListener.class.getName(),
+					Log4JLoggerTestUtil.OFF)) {
 
 			_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 

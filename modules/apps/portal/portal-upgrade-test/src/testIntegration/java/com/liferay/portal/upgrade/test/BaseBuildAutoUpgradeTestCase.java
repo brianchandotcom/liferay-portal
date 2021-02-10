@@ -55,7 +55,6 @@ import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
@@ -510,10 +509,11 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.service.impl." +
 						"ServiceComponentLocalServiceImpl",
-					Level.WARN);
+					Log4JLoggerTestUtil.WARN);
 			CaptureAppender baseDBCaptureHandler =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.dao.db.BaseDB", Level.WARN)) {
+					"com.liferay.portal.dao.db.BaseDB",
+					Log4JLoggerTestUtil.WARN)) {
 
 			_bundle.update(inputStream);
 

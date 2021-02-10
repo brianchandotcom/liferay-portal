@@ -24,7 +24,6 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
 
@@ -103,7 +102,7 @@ public class SanitizerLogWrapperTest {
 		String loggerName = "test.logger";
 
 		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
-			loggerName, Level.ALL);
+			loggerName, Log4JLoggerTestUtil.ALL);
 
 		LogFactory logFactory = LogFactoryUtil.getLogFactory();
 

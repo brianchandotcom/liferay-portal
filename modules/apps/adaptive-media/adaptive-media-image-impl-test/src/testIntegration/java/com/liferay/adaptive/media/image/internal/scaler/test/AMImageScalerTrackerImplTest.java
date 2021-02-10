@@ -33,7 +33,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
@@ -68,7 +67,7 @@ public class AMImageScalerTrackerImplTest {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER_IMPL,
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			_disableAMDefaultImageScaler();
 
@@ -101,7 +100,7 @@ public class AMImageScalerTrackerImplTest {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_ADAPTIVE_MEDIA_IMAGE_SCALER_TRACKER_IMPL,
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			_disableAMDefaultImageScaler();
 

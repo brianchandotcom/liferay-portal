@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
@@ -149,7 +148,7 @@ public class LogAssertionTestRule
 
 			captureAppenders.add(
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					clazz.getName(), Level.toLevel(expectedLogs.level())));
+					clazz.getName(), expectedLogs.level()));
 		}
 
 		installJdk14Handler();

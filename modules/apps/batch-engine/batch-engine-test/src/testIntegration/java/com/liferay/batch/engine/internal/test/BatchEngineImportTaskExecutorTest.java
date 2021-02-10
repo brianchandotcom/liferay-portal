@@ -43,7 +43,6 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -118,7 +117,7 @@ public class BatchEngineImportTaskExecutorTest
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
@@ -151,7 +150,7 @@ public class BatchEngineImportTaskExecutorTest
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
@@ -180,7 +179,7 @@ public class BatchEngineImportTaskExecutorTest
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE,
@@ -210,7 +209,7 @@ public class BatchEngineImportTaskExecutorTest
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_importBlogPostings(
 				BatchEngineTaskOperation.CREATE, _toContent(xssfWorkbook),
@@ -432,7 +431,8 @@ public class BatchEngineImportTaskExecutorTest
 
 		LoggingEvent loggingEvent = loggingEvents.get(0);
 
-		Assert.assertEquals(Level.ERROR, loggingEvent.getLevel());
+		Assert.assertEquals(
+			Log4JLoggerTestUtil.ERROR, String.valueOf(loggingEvent.getLevel()));
 
 		String message = (String)loggingEvent.getMessage();
 

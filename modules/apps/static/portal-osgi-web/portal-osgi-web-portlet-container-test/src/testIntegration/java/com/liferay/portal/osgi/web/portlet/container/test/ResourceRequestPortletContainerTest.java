@@ -47,7 +47,6 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
@@ -81,7 +80,7 @@ public class ResourceRequestPortletContainerTest
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					SecurityPortletContainerWrapper.class.getName(),
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			PortletContainerTestUtil.Response response =
 				PortletContainerTestUtil.request(url);

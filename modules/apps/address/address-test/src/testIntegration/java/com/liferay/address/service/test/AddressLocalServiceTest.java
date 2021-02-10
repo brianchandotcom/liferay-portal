@@ -48,7 +48,6 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
@@ -141,7 +140,7 @@ public class AddressLocalServiceTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_LOG_NAME, Level.DEBUG)) {
+					_LOG_NAME, Log4JLoggerTestUtil.DEBUG)) {
 
 			String typeName = RandomTestUtil.randomString();
 

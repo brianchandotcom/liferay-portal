@@ -35,7 +35,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
 
@@ -103,7 +102,7 @@ public class ReleaseModelListenerTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.background.task.internal.messaging." +
 						"BackgroundTaskMessageListener",
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
 				TestPropsValues.getUserId(), _ctCollection.getCtCollectionId());

@@ -56,8 +56,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Level;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -195,7 +193,7 @@ public class CTClosureFactoryImplTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.change.tracking.service.impl." +
 						"CTCollectionLocalServiceImpl",
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			_ctCollectionLocalService.deleteCTCollection(
 				_ctCollection.getCtCollectionId());

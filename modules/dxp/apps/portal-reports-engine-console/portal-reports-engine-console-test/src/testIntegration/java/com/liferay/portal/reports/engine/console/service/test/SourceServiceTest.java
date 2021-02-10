@@ -47,8 +47,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
-import org.apache.log4j.Level;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -169,7 +167,7 @@ public class SourceServiceTest {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.portal.spring.hibernate.DialectDetector",
-					Level.OFF)) {
+					Log4JLoggerTestUtil.OFF)) {
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext();

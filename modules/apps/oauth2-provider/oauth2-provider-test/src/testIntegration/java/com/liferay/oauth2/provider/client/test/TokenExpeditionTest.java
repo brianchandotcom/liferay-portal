@@ -34,8 +34,6 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -71,16 +69,16 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.oauth2.provider.rest.internal.endpoint." +
 						"liferay.LiferayOAuthDataProvider",
-					Level.WARN);
+					Log4JLoggerTestUtil.WARN);
 			CaptureAppender captureAppender2 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"org.apache.cxf.jaxrs.impl.WebApplicationExceptionMapper",
-					Level.WARN);
+					Log4JLoggerTestUtil.WARN);
 			CaptureAppender captureAppender3 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"org.apache.cxf.rs.security.oauth2.services." +
 						"AbstractOAuthService",
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			Response response = invocationBuilder.post(Entity.form(formData));
 
@@ -153,7 +151,8 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			Response response = invocationBuilder.get();
 

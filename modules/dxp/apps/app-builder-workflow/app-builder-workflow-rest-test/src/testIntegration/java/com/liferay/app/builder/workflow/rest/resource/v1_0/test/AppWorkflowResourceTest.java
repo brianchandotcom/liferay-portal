@@ -42,8 +42,6 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.util.List;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -78,7 +76,8 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(), Level.OFF)) {
+					ProxyMessageListener.class.getName(),
+					Log4JLoggerTestUtil.OFF)) {
 
 			assertHttpResponseStatusCode(
 				404,
@@ -178,10 +177,11 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"graphql.execution.SimpleDataFetcherExceptionHandler",
-					Level.WARN);
+					Log4JLoggerTestUtil.WARN);
 			CaptureAppender captureAppender2 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					ProxyMessageListener.class.getName(), Level.OFF)) {
+					ProxyMessageListener.class.getName(),
+					Log4JLoggerTestUtil.OFF)) {
 
 			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 				invokeGraphQLQuery(

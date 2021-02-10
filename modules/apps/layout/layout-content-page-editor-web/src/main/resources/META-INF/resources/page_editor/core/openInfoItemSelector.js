@@ -24,22 +24,30 @@ export function openInfoItemSelector({
 	openSelectionModal({
 		onClose: destroyedCallback,
 		onSelect: (selectedItem) => {
+			let infoItem = {
+				...selectedItem,
+				type: selectedItem.returnType || '',
+			};
+
 			let value;
 
 			if (typeof selectedItem.value === 'string') {
 				try {
 					value = JSON.parse(selectedItem.value);
 				}
-				catch (error) {
-					value = {};
-				}
+				catch (error) {}
+			}
+			else if (
+				selectedItem.value &&
+				typeof selectedItem.value === 'object'
+			) {
+				value = selectedItem.value;
 			}
 
-			const infoItem = {
-				...selectedItem,
-				...value,
-				type: selectedItem.returnType,
-			};
+			if (value) {
+				delete infoItem.value;
+				infoItem = {...infoItem, ...value};
+			}
 
 			callback(infoItem);
 		},

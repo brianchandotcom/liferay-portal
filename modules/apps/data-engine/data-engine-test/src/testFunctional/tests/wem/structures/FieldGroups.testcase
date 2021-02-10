@@ -107,31 +107,21 @@ definition {
 			fieldName = "Date",
 			fieldsGroupLabel = "Fields Group");
 
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Fields Group",
+			fieldGroupLabelList = "Text,Numeric,Date");
 
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertVisible(
+		AssertElementPresent(
 			key_fieldFieldLabel = "Fields Group",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Fields Group",
+			fieldGroupLabelList = "Text,Numeric,Date");
 	}
 
 	@description = "This is a test for LPS-98077. Delete a field from a FieldGroup then save and reopen the Structure"
@@ -240,16 +230,14 @@ definition {
 
 		DataEngine.duplicate(fieldsGroupLabel = "Fields Group");
 
-		AssertVisible(
-			key_fieldFieldLabel = "Copy of Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Fields Group",
+			fieldGroupLabelList = "Text,Numeric,Date");
 
-		for (var fieldFieldLabel : list "Copy of Text,Copy of Numeric,Copy of Date") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Copy of Fields Group",
+			fieldGroupLabelList = "Copy of Text,Copy of Numeric,Copy of Date");
+	}
 
 		WebContentStructures.saveCP();
 
@@ -301,11 +289,13 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Duplicate");
 
-		AssertTextEquals(
-			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",
-			value1 = "Copy of Fields Group");
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Fields Group",
+			fieldGroupLabelList = "Numeric,Date");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Copy of Fields Group",
+			fieldGroupLabelList = "Copy of Numeric,Copy of Date");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
@@ -371,11 +361,9 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		for (var fieldName : list "Text,Numeric,Date") {
-			DataEngine.viewField(
-				fieldFieldLabel = "Duplicated ${fieldName}",
-				fieldName = "${fieldName}");
-		}
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Copy of Fields Group",
+			fieldGroupLabelList = "Duplicated Text,Duplicated Numeric");
 	}
 
 	@description = "This is a test for LPS-98077. FieldGroup empty (remove all the fields from a section)"
@@ -441,16 +429,9 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Fields Group",
+			fieldGroupLabelList = "Numeric,Date");
 	}
 
 	@description = "This is a test for LPS-98077. Set a FieldGroup as collapsible and perform this action in a WebContent"
@@ -477,31 +458,15 @@ definition {
 
 		WebContent.addCP();
 
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		FormFields.assertFieldsVisibleInFieldGroup(
+			fieldGroupLabel= "Fields Group",
+			fieldGroupLabelList = "Text,Numeric");
 
-		for (var fieldFieldLabel : list "Text,Numeric") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		Button.clickCollapse(label = "Fields Group");
 
-		Click(
-			key_label = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_COLLAPSE_BUTTON");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Text,Numeric") {
-			AssertNotVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		FormFields.assertFieldsNotVisibleInFieldGroup(
+			fieldGroupLabel= "Fields Group",
+			fieldGroupLabelList = "Text,Numeric");
 	}
 
 	@description = "This is a test for LPS-98077. Set a FieldGroup as repeatable and perform this action in a WebContent"

@@ -37,8 +37,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.log4j.Level;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
@@ -114,7 +112,7 @@ public class Log4JUtil {
 		String logLevelString = priorities.get(className);
 
 		if (Validator.isNull(logLevelString)) {
-			return String.valueOf(Level.ALL);
+			return "ALL";
 		}
 
 		return logLevelString;

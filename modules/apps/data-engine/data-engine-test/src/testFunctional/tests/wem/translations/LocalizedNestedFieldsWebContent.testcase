@@ -205,7 +205,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "My Structure Name 1");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -216,27 +216,30 @@ definition {
 			fieldName = "Date",
 			targetFieldLabel = "Text");
 
-		DDLDataDefinition.save();
+		WebContentStructures.saveCP();
 
 		Navigator.gotoNavItem(navItem = "Web Content");
 
-		LexiconEntry.gotoAdd();
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		MenuItem.click(menuItem = "My Structure Name 1");
+		WebContent.addWithStructureCP(
+			webContentDate = "10/10/2020",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
 
-		PortletEntry.inputTitle(title = "My Web Content Name 1");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		WebContent.addWithStructureCP(
+			webContentDate = "01/01/2021",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Título do conteúdo da web");
 
-		PortletEntry.inputTitle(title = "Minha conta web nome 1");
+		PortletEntry.publish();
 
-		Button.clickPublish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content Name 1");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "My Web Content Name 1");
+		WebContent.viewWithStructureCP(
+			webContentDate = "10/10/2020",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

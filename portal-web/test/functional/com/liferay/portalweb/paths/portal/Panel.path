@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'panel')]//*[@aria-expanded='false' and contains(@class,'collapsed')]//parent::*[normalize-space(text())='${key_panel}'][not(contains(@data-qa-id,'app'))]</td>
+	<td>//div[contains(@class,'panel')]//*[@aria-expanded='false']//parent::*[normalize-space(text())='${key_panel}'][not(contains(@data-qa-id,'app'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'panel')]//*[@aria-expanded='true' and not(contains(@class,'collapsed'))]//parent::*[normalize-space(text())='${key_panel}'][not(contains(@data-qa-id,'app'))]</td>
+	<td>//div[contains(@class,'panel')]//*[@aria-expanded='true']//parent::*[normalize-space(text())='${key_panel}'][not(contains(@data-qa-id,'app'))]</td>
 	<td></td>
 </tr>
 <tr>

@@ -18,7 +18,6 @@ import React, {useState} from 'react';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../app/config/constants/editableTypes';
-import {FILE_ENTRY_CLASS_NAME} from '../../../../app/config/constants/fileEntryClassName';
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../app/config/index';
 import selectEditableValueContent from '../../../../app/selectors/selectEditableValueContent';
@@ -27,6 +26,7 @@ import selectSegmentsExperienceId from '../../../../app/selectors/selectSegments
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
 import isMapped from '../../../../app/utils/editable-value/isMapped';
+import isMappedToInfoItem from '../../../../app/utils/editable-value/isMappedToInfoItem';
 import {setIn} from '../../../../app/utils/setIn';
 import {updateIn} from '../../../../app/utils/updateIn';
 import {useId} from '../../../../app/utils/useId';
@@ -349,13 +349,10 @@ function ImagePanelSizeSelector({item}) {
 	return (
 		config.adaptiveMediaEnabled &&
 		(editableContent?.fileEntryId ||
-			(editableContent?.className === FILE_ENTRY_CLASS_NAME &&
-				editableContent?.classPK)) && (
+			isMappedToInfoItem(editableContent)) && (
 			<ImageSelectorSize
 				editableElement={editableElement}
-				fileEntryId={
-					editableContent.fileEntryId || editableContent.classPK
-				}
+				fieldValue={editableContent}
 				imageSizeId={imageSizeId}
 				onImageSizeIdChanged={
 					item.type === EDITABLE_TYPES.image

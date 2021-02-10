@@ -21,11 +21,11 @@ import {ImageSelectorSize} from '../../../common/components/ImageSelectorSize';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import {FILE_ENTRY_CLASS_NAME} from '../../config/constants/fileEntryClassName';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
 import {useSelector} from '../../store/index';
 import isMapped from '../../utils/editable-value/isMapped';
+import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
 import {useId} from '../../utils/useId';
 
 const IMAGE_SOURCES = {
@@ -93,7 +93,7 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 
 					{config.adaptiveMediaEnabled && value?.fileEntryId && (
 						<ImageSelectorSize
-							fileEntryId={value.fileEntryId}
+							fieldValue={{fileEntryId: value.fileEntryId}}
 							imageSizeId="auto"
 						/>
 					)}
@@ -109,10 +109,9 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 					) : null}
 
 					{config.adaptiveMediaEnabled &&
-						value?.className === FILE_ENTRY_CLASS_NAME &&
-						value?.classPK && (
+						(value?.fileEntryId || isMappedToInfoItem(value)) && (
 							<ImageSelectorSize
-								fileEntryId={value.classPK}
+								fieldValue={value}
 								imageSizeId="auto"
 							/>
 						)}

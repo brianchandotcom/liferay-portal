@@ -30,8 +30,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -132,22 +131,9 @@ public class SiteNavigationAdminDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_httpServletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-				"display-style", "list");
-		}
-
-		portalPreferences.setValue(
-			SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-			"display-style", _displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest,
+			SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN, "list");
 
 		return _displayStyle;
 	}

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
@@ -186,21 +187,8 @@ public class AssetBrowserDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_httpServletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				AssetBrowserPortletKeys.ASSET_BROWSER, "display-style", "list");
-		}
-
-		portalPreferences.setValue(
-			AssetBrowserPortletKeys.ASSET_BROWSER, "display-style",
-			_displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, AssetBrowserPortletKeys.ASSET_BROWSER, "list");
 
 		return _displayStyle;
 	}

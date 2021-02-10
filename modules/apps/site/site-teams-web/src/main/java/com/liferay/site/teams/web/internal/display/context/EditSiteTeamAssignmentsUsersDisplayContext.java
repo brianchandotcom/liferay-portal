@@ -17,8 +17,7 @@ package com.liferay.site.teams.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -58,20 +57,9 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(httpServletRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				httpServletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				SiteTeamsPortletKeys.SITE_TEAMS, "users-display-style", "icon");
-		}
-
-		portalPreferences.setValue(
-			SiteTeamsPortletKeys.SITE_TEAMS, "users-display-style",
-			_displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"users-display-style", "icon");
 
 		return _displayStyle;
 	}

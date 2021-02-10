@@ -23,8 +23,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.util.SiteConnectedGroupUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -81,22 +80,9 @@ public class JournalSelectDDMTemplateDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_httpServletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				JournalPortletKeys.JOURNAL, "ddm-template-display-style",
-				"icon");
-		}
-
-		portalPreferences.setValue(
-			JournalPortletKeys.JOURNAL, "ddm-template-display-style",
-			_displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, JournalPortletKeys.JOURNAL,
+			"ddm-template-display-style", "icon");
 
 		return _displayStyle;
 	}

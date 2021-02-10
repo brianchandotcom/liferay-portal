@@ -17,8 +17,7 @@ package com.liferay.site.teams.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -59,21 +58,9 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(httpServletRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				httpServletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				SiteTeamsPortletKeys.SITE_TEAMS, "usergroup-display-style",
-				"list");
-		}
-
-		portalPreferences.setValue(
-			SiteTeamsPortletKeys.SITE_TEAMS, "usergroup-display-style",
-			_displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"usergroup-display-style", "list");
 
 		return _displayStyle;
 	}

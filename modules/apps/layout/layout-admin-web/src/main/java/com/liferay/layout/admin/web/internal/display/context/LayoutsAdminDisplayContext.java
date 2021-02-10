@@ -56,10 +56,9 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -374,21 +373,9 @@ public class LayoutsAdminDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_liferayPortletRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_liferayPortletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				LayoutAdminPortletKeys.GROUP_PAGES, "display-style",
-				"miller-columns");
-		}
-
-		portalPreferences.setValue(
-			LayoutAdminPortletKeys.GROUP_PAGES, "display-style", _displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest),
+			LayoutAdminPortletKeys.GROUP_PAGES, "miller-columns");
 
 		return _displayStyle;
 	}

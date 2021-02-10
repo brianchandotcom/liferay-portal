@@ -21,11 +21,10 @@ import com.liferay.journal.web.internal.search.FeedSearch;
 import com.liferay.journal.web.internal.search.FeedSearchTerms;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -51,18 +50,9 @@ public class JournalFeedsDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_renderRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_renderRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				JournalPortletKeys.JOURNAL, "feeds-display-style", "list");
-		}
-
-		portalPreferences.setValue(
-			JournalPortletKeys.JOURNAL, "feeds-display-style", _displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			PortalUtil.getHttpServletRequest(_renderRequest),
+			JournalPortletKeys.JOURNAL, "feeds-display-style", "list");
 
 		return _displayStyle;
 	}

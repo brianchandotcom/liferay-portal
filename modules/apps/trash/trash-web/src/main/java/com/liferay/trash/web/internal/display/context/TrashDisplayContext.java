@@ -26,9 +26,8 @@ import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -212,20 +211,8 @@ public class TrashDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle", "list");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_httpServletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				TrashPortletKeys.TRASH, "display-style", "list");
-		}
-
-		portalPreferences.setValue(
-			TrashPortletKeys.TRASH, "display-style", _displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, TrashPortletKeys.TRASH, "list");
 
 		return _displayStyle;
 	}

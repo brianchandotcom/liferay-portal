@@ -25,8 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -80,18 +79,9 @@ public class SelectOrganizationsDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_renderRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_renderRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				SegmentsPortletKeys.SEGMENTS, "org-display-style", "list");
-		}
-
-		portalPreferences.setValue(
-			SegmentsPortletKeys.SEGMENTS, "org-display-style", _displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			PortalUtil.getHttpServletRequest(_renderRequest),
+			SegmentsPortletKeys.SEGMENTS, "org-display-style", "list");
 
 		return _displayStyle;
 	}

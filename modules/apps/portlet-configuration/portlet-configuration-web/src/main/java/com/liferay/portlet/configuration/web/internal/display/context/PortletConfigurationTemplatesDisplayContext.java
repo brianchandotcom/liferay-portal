@@ -18,8 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -145,21 +144,9 @@ public class PortletConfigurationTemplatesDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_renderRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
-				"display-style", "list");
-		}
-
-		portalPreferences.setValue(
-			PortletConfigurationPortletKeys.PORTLET_CONFIGURATION,
-			"display-style", _displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest,
+			PortletConfigurationPortletKeys.PORTLET_CONFIGURATION, "list");
 
 		return _displayStyle;
 	}

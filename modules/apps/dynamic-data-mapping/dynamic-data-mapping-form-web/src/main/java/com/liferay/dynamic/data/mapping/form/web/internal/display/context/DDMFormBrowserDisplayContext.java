@@ -28,9 +28,8 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -126,19 +125,9 @@ public class DDMFormBrowserDisplayContext {
 			return _displayStyle;
 		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_httpServletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER,
-				"display-style", "list");
-		}
-
-		portalPreferences.setValue(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER, "display-style",
-			_displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest,
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER, "list");
 
 		return _displayStyle;
 	}

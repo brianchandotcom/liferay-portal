@@ -25,8 +25,7 @@ import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
@@ -149,20 +148,8 @@ public class SiteAdminDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle");
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_httpServletRequest);
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				SiteAdminPortletKeys.SITE_ADMIN, "display-style", "list");
-		}
-
-		portalPreferences.setValue(
-			SiteAdminPortletKeys.SITE_ADMIN, "display-style", _displayStyle);
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, SiteAdminPortletKeys.SITE_ADMIN, "list");
 
 		return _displayStyle;
 	}

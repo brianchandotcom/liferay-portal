@@ -8,6 +8,7 @@ XMLCheckstyleFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-pre
 XMLCustomSQLOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `custom-sql` file. |
 XMLCustomSQLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consisteny in code style for `.xml` files in directory `custom-sql`. |
 XMLDDLStructuresFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `-structures.xml` file. |
+XMLDTDVersionCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the DTD version in `*.xml` file. |
 XMLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary empty lines. |
 XMLFSBExcludeFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `fsb-exclude.xml` file. |
 XMLFriendlyURLRoutesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Performs several checks on `*-routes.xml` file. |

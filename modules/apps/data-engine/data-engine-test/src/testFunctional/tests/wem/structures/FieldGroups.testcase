@@ -167,6 +167,10 @@ definition {
 
 		DataEngine.delete(fieldsGroupLabel = "Fields Group");
 
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
 		for (var label : list "Fields Group,Text,Numeric") {
 			AssertElementNotPresent(
 				key_fieldFieldLabel = "${label}",

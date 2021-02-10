@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function getSegmentsExperienceLanguages(
+export default function getLanguages(
 	availableLanguages,
 	availableSegmentsExperiences,
 	segmentsExperienceId

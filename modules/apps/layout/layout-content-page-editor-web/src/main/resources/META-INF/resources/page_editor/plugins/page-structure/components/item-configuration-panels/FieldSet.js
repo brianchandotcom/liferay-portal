@@ -22,7 +22,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../app/config/constants/layoutDat
 import {VIEWPORT_SIZES} from '../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../app/config/index';
 import {useSelector} from '../../../../app/store/index';
-import getSegmentsExperienceLanguages from '../../../../app/utils/getSegmentsExperienceLanguages';
+import getLanguages from '../../../../app/utils/getLanguages';
 import {ConfigurationFieldPropTypes} from '../../../../prop-types/index';
 
 const DISPLAY_SIZES = {
@@ -59,7 +59,7 @@ export const FieldSet = ({
 						field.responsive || field.name === 'backgroundImage'
 			  );
 
-	const availableExperienceLanguages = getSegmentsExperienceLanguages(
+	const languages = getLanguages(
 		availableLanguages,
 		availableSegmentsExperiences,
 		segmentsExperienceId
@@ -145,16 +145,14 @@ export const FieldSet = ({
 										>
 											<ClayIcon
 												symbol={
-													availableExperienceLanguages[
-														languageId
-													].languageIcon
+													languages[languageId]
+														.languageIcon
 												}
 											/>
 											<span className="sr-only">
 												{
-													availableExperienceLanguages[
-														languageId
-													].w3cLanguageId
+													languages[languageId]
+														.w3cLanguageId
 												}
 											</span>
 										</div>

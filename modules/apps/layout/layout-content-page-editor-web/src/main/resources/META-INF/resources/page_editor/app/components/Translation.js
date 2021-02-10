@@ -24,7 +24,7 @@ import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/bac
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {TRANSLATION_STATUS_TYPE} from '../config/constants/translationStatusType';
 import {useSelector} from '../store/index';
-import getSegmentsExperienceLanguages from '../utils/getSegmentsExperienceLanguages';
+import getLanguages from '../utils/getLanguages';
 
 const getEditableValues = (fragmentEntryLinks) =>
 	Object.values(fragmentEntryLinks)
@@ -142,16 +142,16 @@ export default function Translation({
 		(state) => state.availableSegmentsExperiences
 	);
 
-	const availableExperienceLanguages = getSegmentsExperienceLanguages(
+	const languages = getLanguages(
 		availableLanguages,
 		availableSegmentsExperiences,
 		segmentsExperienceId
 	);
 
 	const languageValues = useMemo(() => {
-		const availableLanguagesMut = {...availableExperienceLanguages};
+		const availableLanguagesMut = {...languages};
 
-		const defaultLanguage = availableExperienceLanguages[defaultLanguageId];
+		const defaultLanguage = languages[defaultLanguageId];
 
 		delete availableLanguagesMut[defaultLanguageId];
 
@@ -174,39 +174,30 @@ export default function Translation({
 					isTranslated(editableValue, languageId)
 				),
 			}));
-	}, [
-		availableExperienceLanguages,
-		defaultLanguageId,
-		editableValues,
-		showNotTranslated,
-	]);
+	}, [defaultLanguageId, editableValues, languages, showNotTranslated]);
 
 	const selectedExperienceLanguage = (
-		availableExperienceLanguages,
 		defaultLanguageId,
-		languageId
+		languageId,
+		languages
 	) => {
-		if (!availableExperienceLanguages[languageId]) {
+		if (!languages[languageId]) {
 			dispatch(
 				updateLanguageId({
 					languageId: defaultLanguageId,
 				})
 			);
 
-			return availableExperienceLanguages[defaultLanguageId];
+			return languages[defaultLanguageId];
 		}
 
-		return availableExperienceLanguages[languageId];
+		return languages[languageId];
 	};
 
 	const {
 		languageIcon,
 		w3cLanguageId: languageLabel,
-	} = selectedExperienceLanguage(
-		availableExperienceLanguages,
-		defaultLanguageId,
-		languageId
-	);
+	} = selectedExperienceLanguage(defaultLanguageId, languageId, languages);
 
 	return (
 		<ClayDropDown
@@ -237,13 +228,11 @@ export default function Translation({
 						key={language.languageId}
 						language={language}
 						languageIcon={
-							availableExperienceLanguages[language.languageId]
-								.languageIcon
+							languages[language.languageId].languageIcon
 						}
 						languageId={languageId}
 						languageLabel={
-							availableExperienceLanguages[language.languageId]
-								.w3cLanguageId
+							languages[language.languageId].w3cLanguageId
 						}
 						onClick={() => {
 							dispatch(

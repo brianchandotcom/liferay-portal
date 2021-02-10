@@ -14,9 +14,6 @@
 
 package com.liferay.portal.store.s3;
 
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
-
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
@@ -50,6 +47,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -95,7 +93,8 @@ public class S3FileCache {
 	}
 
 	public InputStream getCacheFileInputStream(
-			S3Object s3Object, String fileName)
+			String fileName, Supplier<InputStream> inputStreamSupplier,
+			Date lastModifiedDate)
 		throws IOException {
 
 		StringBundler sb = new StringBundler(4);
@@ -105,10 +104,6 @@ public class S3FileCache {
 			DateUtil.getCurrentDate(
 				_CACHE_DIR_PATTERN, LocaleUtil.getDefault()));
 		sb.append(_s3KeyTransformer.getNormalizedFileName(fileName));
-
-		ObjectMetadata objectMetadata = s3Object.getObjectMetadata();
-
-		Date lastModifiedDate = objectMetadata.getLastModified();
 
 		sb.append(lastModifiedDate.getTime());
 
@@ -123,7 +118,7 @@ public class S3FileCache {
 		}
 
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			InputStream inputStream = s3Object.getObjectContent();
+			InputStream inputStream = inputStreamSupplier.get();
 
 			if (inputStream == null) {
 				throw new IOException("S3 object input stream is null");
@@ -132,7 +127,7 @@ public class S3FileCache {
 			return inputStream;
 		}
 
-		try (InputStream inputStream = s3Object.getObjectContent()) {
+		try (InputStream inputStream = inputStreamSupplier.get()) {
 			if (inputStream == null) {
 				throw new IOException("S3 object input stream is null");
 			}

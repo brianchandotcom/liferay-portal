@@ -154,10 +154,14 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		DataEngine.addFieldNested(
+		DataEngine.addField(
 			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
+			fieldName = "Numeric");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Date",
+			fieldName = "Date",
+			targetFieldLabel = "Numeric");
 
 		DataEngine.delete(fieldsGroupLabel = "Fields Group");
 
@@ -165,7 +169,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		for (var label : list "Fields Group,Text,Numeric") {
+		for (var label : list "Fields Group,Numeric,Date") {
 			AssertElementNotPresent(
 				key_fieldFieldLabel = "${label}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");

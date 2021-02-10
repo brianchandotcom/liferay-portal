@@ -30,14 +30,21 @@ export default function useBackgroundImageValue(
 	});
 
 	useEffect(() => {
-		Promise.all([
-			loadBackgroundImage(backgroundImage, getFieldValue),
-			loadBackgroundImageMediaQueries(elementId, backgroundImage),
-		]).then(([url, mediaQueries]) => {
-			if (isMounted()) {
-				setBackgroundImageValue({mediaQueries, url});
-			}
-		});
+		loadBackgroundImage(backgroundImage, getFieldValue)
+			.then(({fileEntryId, url}) =>
+				loadBackgroundImageMediaQueries(elementId, {
+					...backgroundImage,
+					fileEntryId: fileEntryId || backgroundImage.fileEntryId,
+				}).then((mediaQueries) => ({
+					mediaQueries,
+					url,
+				}))
+			)
+			.then((nextBackgroundImageValue) => {
+				if (isMounted()) {
+					setBackgroundImageValue(nextBackgroundImageValue);
+				}
+			});
 	}, [elementId, backgroundImage, isMounted, getFieldValue]);
 
 	return backgroundImageValue;
@@ -48,13 +55,14 @@ function loadBackgroundImage(backgroundImage, getFieldValue) {
 		{...(backgroundImage || {}), defaultValue: backgroundImage?.url || ''},
 		null,
 		getFieldValue
-	).then(
-		(editableValue) =>
+	).then((editableValue) => ({
+		fileEntryId: editableValue.fileEntryId || '',
+		url:
 			editableValue.fieldValue?.url ||
 			editableValue.url ||
 			editableValue ||
-			''
-	);
+			'',
+	}));
 }
 
 function loadBackgroundImageMediaQueries(elementId, backgroundImage) {

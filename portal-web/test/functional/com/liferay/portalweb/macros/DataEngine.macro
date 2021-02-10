@@ -1077,30 +1077,31 @@ definition {
 				value1 = "${fieldPlaceholder}");
 		}
 
-		if (isSet(fieldsetModal) && isSet(fieldHelpTextEdit)) {
-			Click(
+		if (isSet(fieldHelp)) {
+			if(isSet(fieldsetModal)){
+				Click(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
 
-			Type(
-				key_fieldLabel = "Help Text",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "${fieldHelpTextEdit}");
-		}
+				Type(
+					key_fieldLabel = "Help Text",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "${fieldHelp}");
+			}
+			else {
+				var key_fieldFieldLabel = "${fieldFieldLabel}";
+				var key_text = "Help";
 
-		else if (isSet(fieldHelp)) {
-			var key_fieldFieldLabel = "${fieldFieldLabel}";
-			var key_text = "Help";
+				Click(locator1 = "Sidebar#DDM_ANY");
 
-			Click(locator1 = "Sidebar#DDM_ANY");
+				Type(
+					locator1 = "Sidebar#DDM_ANY",
+					value1 = "${fieldHelp}");
 
-			Type(
-				locator1 = "Sidebar#DDM_ANY",
-				value1 = "${fieldHelp}");
-
-			AssertTextEquals(
-				locator1 = "DDMEditStructure#SETTINGS_TEXT",
-				value1 = "${fieldHelp}");
+				AssertTextEquals(
+					locator1 = "DDMEditStructure#SETTINGS_TEXT",
+					value1 = "${fieldHelp}");
+			}
 		}
 
 		Click(locator1 = "Sidebar#BACK");

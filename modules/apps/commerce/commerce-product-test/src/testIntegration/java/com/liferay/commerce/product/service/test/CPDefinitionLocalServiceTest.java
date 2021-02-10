@@ -394,7 +394,7 @@ public class CPDefinitionLocalServiceTest {
 		).given(
 			"I add a product definition"
 		).when(
-			"externa reference code is set"
+			"external reference code is set"
 		).then(
 			"product definition should have that external reference code"
 		);
@@ -405,7 +405,7 @@ public class CPDefinitionLocalServiceTest {
 
 		long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
-		_cpDefinitionLocalService.updateCPDefinitionExternalReferenceCode(
+		_cpDefinitionLocalService.updateExternalReferenceCode(
 			cpDefinitionId, "ERC");
 
 		cpDefinition = _cpDefinitionLocalService.getCPDefinition(

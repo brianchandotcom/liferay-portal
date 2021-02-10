@@ -1268,6 +1268,7 @@ definition {
 
 	macro editWithStructureCP {
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webContentTitle}");
+
 		WebContent.addWithStructureCP(
 			column = "${column}",
 			dmNavTab = "${dmNavTab}",
@@ -1286,7 +1287,7 @@ definition {
 			webContentSelectFromList = "${webContentSelectFromList}",
 			webContentSingleSelection = "${webContentSingleSelection}",
 			webContentText = "${webContentText}",
-			webContentTitle = "${webContentTitle}",
+			webContentTitle = "${webContentTitleEdit}",
 			webContentUpload = "${webContentUpload}",
 			webContentWebContent = "${webContentWebContent}");
 

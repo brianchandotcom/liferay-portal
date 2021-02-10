@@ -24,7 +24,6 @@ import com.liferay.commerce.account.exception.CommerceAccountNameException;
 import com.liferay.commerce.account.exception.CommerceAccountOrdersException;
 import com.liferay.commerce.account.exception.DuplicateCommerceAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountUserRelTable;
 import com.liferay.commerce.account.model.impl.CommerceAccountImpl;
 import com.liferay.commerce.account.service.base.CommerceAccountLocalServiceBaseImpl;
 import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
@@ -766,25 +765,12 @@ public class CommerceAccountLocalServiceImpl
 				UserTable.INSTANCE.userId)
 		);
 
-		// TODO Remove when CommerceAccountUserRelTable is bridged
-
-		joinStep = joinStep.leftJoinOn(
-			CommerceAccountUserRelTable.INSTANCE,
-			CommerceAccountUserRelTable.INSTANCE.commerceAccountUserId.eq(
-				UserTable.INSTANCE.userId));
-
 		Predicate accountEntryTablePredicate =
 			AccountEntryTable.INSTANCE.accountEntryId.eq(
 				AccountEntryUserRelTable.INSTANCE.accountEntryId
 			).or(
 				AccountEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
 			);
-
-		// TODO Remove when CommerceAccountUserRelTable is bridged
-
-		accountEntryTablePredicate = accountEntryTablePredicate.or(
-			AccountEntryTable.INSTANCE.accountEntryId.eq(
-				CommerceAccountUserRelTable.INSTANCE.commerceAccountId));
 
 		Long[] organizationIds = _getOrganizationIds(userId);
 
@@ -838,13 +824,6 @@ public class CommerceAccountLocalServiceImpl
 				UserTable.INSTANCE.userId)
 		);
 
-		// TODO Remove after bridging CommerceAccountUserRel service
-
-		joinStep = joinStep.leftJoinOn(
-			CommerceAccountUserRelTable.INSTANCE,
-			CommerceAccountUserRelTable.INSTANCE.commerceAccountUserId.eq(
-				UserTable.INSTANCE.userId));
-
 		Long[] organizationIds = _getOrganizationIds(userId);
 
 		if (ArrayUtil.isNotEmpty(organizationIds)) {
@@ -860,12 +839,6 @@ public class CommerceAccountLocalServiceImpl
 			).or(
 				AccountEntryTable.INSTANCE.userId.eq(userId)
 			);
-
-		// TODO Remove after bridging CommerceAccountUserRel service
-
-		accountEntryPredicate = accountEntryPredicate.or(
-			AccountEntryTable.INSTANCE.accountEntryId.eq(
-				CommerceAccountUserRelTable.INSTANCE.commerceAccountId));
 
 		if (ArrayUtil.isNotEmpty(organizationIds)) {
 			accountEntryPredicate = accountEntryPredicate.or(

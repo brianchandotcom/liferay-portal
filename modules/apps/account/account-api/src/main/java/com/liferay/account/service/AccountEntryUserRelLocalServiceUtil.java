@@ -292,6 +292,13 @@ public class AccountEntryUserRelLocalServiceUtil {
 		return getService().fetchAccountEntryUserRel(accountEntryUserRelId);
 	}
 
+	public static com.liferay.account.model.AccountEntryUserRel
+		fetchAccountEntryUserRel(long accountEntryId, long accountUserId) {
+
+		return getService().fetchAccountEntryUserRel(
+			accountEntryId, accountUserId);
+	}
+
 	/**
 	 * Returns the account entry user rel with the primary key.
 	 *
@@ -304,6 +311,14 @@ public class AccountEntryUserRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getAccountEntryUserRel(accountEntryUserRelId);
+	}
+
+	public static com.liferay.account.model.AccountEntryUserRel
+			getAccountEntryUserRel(long accountEntryId, long accountUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getAccountEntryUserRel(
+			accountEntryId, accountUserId);
 	}
 
 	/**

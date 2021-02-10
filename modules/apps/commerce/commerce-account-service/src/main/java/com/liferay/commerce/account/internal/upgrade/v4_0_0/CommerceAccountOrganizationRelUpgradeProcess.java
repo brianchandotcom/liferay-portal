@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.account.internal.upgrade.v3_0_0;
+package com.liferay.commerce.account.internal.upgrade.v4_0_0;
 
 import com.liferay.account.service.AccountEntryOrganizationRelLocalServiceUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;

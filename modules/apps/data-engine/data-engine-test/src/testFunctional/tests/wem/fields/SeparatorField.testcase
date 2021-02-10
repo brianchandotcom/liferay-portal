@@ -92,7 +92,7 @@ definition {
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-		
+
 		DataEngine.viewField(
 			fieldFieldLabel = "Edited Separator",
 			fieldHelp = "Text Field Help Separator",
@@ -175,19 +175,19 @@ definition {
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-		
+
 		AssertElementPresent(
 			key_fieldFieldLabel = "Separator",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		
+
 		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Separator",
 			showLabel = "false");
-		
+
 		WebContentStructures.saveCP();
-		
+
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-		
+
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Separator",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");

@@ -189,7 +189,7 @@
 							"label": {
 								"en_US": "Geolocation"
 							},
-							"localizable": true,
+							"localizable": false,
 							"name": "Geolocation",
 							"predefinedValue": {
 								"en_US": ""

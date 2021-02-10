@@ -154,6 +154,14 @@ components:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
                     type: array
+                renderedContents:
+                    description:
+                        A list of rendered blogs posts, which results from using a display page to process the blogs
+                        post and return HTML.
+                    items:
+                        $ref: "#/components/schemas/RenderedContent"
+                    readOnly: true
+                    type: array
                 siteId:
                     description:
                         The ID of the site to which this blog post is scoped.
@@ -1078,6 +1086,14 @@ components:
                 relatedContents:
                     items:
                         $ref: "#/components/schemas/RelatedContent"
+                    readOnly: true
+                    type: array
+                renderedContents:
+                    description:
+                        A list of rendered documents, which results from using a display page to process the document
+                        and return HTML.
+                    items:
+                        $ref: "#/components/schemas/RenderedContent"
                     readOnly: true
                     type: array
                 siteId:
@@ -2778,6 +2794,34 @@ components:
                         The title of the content.
                     readOnly: true
                     type: string
+        RenderedContent:
+            # @review
+            description:
+                Rendered content, which results from using a template or display page to process the content and return
+                HTML.
+            properties:
+                contentTemplateId:
+                    readOnly: true
+                    type: string
+                contentTemplateName:
+                    description:
+                        The name of the template or display page used to render the content.
+                    type: string
+                contentTemplateName_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                renderedContentURL:
+                    description:
+                        An absolute URL to the rendered content.
+                    format: uri
+                    type: string
+                renderedContentValue:
+                    # @review
+                    description:
+                        optional field with the rendered content, can be embedded with nestedFields
+                    type: string
+            type: object
         RenderedPage:
             description:
                 A list of rendered pages, which results from using a page template and the appropriate viewport to
@@ -3119,32 +3163,10 @@ components:
                     type: array
                 renderedContents:
                     description:
-                        A list of rendered structured content, which results from using a template to process the
-                        content and return HTML.
+                        A list of rendered content, which results from using a template to process the content and
+                        return HTML.
                     items:
-                        properties:
-                            contentTemplateId:
-                                readOnly: true
-                                type: string
-                            contentTemplateName:
-                                description:
-                                    The name of the template used to render the content.
-                                type: string
-                            contentTemplateName_i18n:
-                                additionalProperties:
-                                    type: string
-                                type: object
-                            renderedContentURL:
-                                description:
-                                    An absolute URL to the rendered content.
-                                format: uri
-                                type: string
-                            renderedContentValue:
-                                # @review
-                                description:
-                                    optional field with the rendered content, can be embedded with nestedFields
-                                type: string
-                        type: object
+                        $ref: "#/components/schemas/RenderedContent"
                     readOnly: true
                     type: array
                 siteId:

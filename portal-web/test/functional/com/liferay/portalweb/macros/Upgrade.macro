@@ -1996,7 +1996,7 @@ definition {
 			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]",
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3 pt-3')]//parent::div",
 				locator2 = "background-color",
 				value1 = "rgba(46, 90, 172, 1)");
 
@@ -2153,7 +2153,7 @@ definition {
 				containerWidth = "Fixed Width",
 				paddingBottom = "3",
 				paddingTop = "3",
-				position = "1");
+				position = "2");
 
 			AssertCssValue(
 				key_position = "1",

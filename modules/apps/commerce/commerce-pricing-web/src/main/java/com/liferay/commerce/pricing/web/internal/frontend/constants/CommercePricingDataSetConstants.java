@@ -52,6 +52,13 @@ public class CommercePricingDataSetConstants {
 	public static final String COMMERCE_DATA_SET_KEY_DISCOUNTS =
 		"commerceDiscounts";
 
+	public static final String COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES =
+		"cpInstancePriceEntries";
+
+	public static final String
+		COMMERCE_DATA_SET_KEY_INSTANCE_TIER_PRICE_ENTRIES =
+			"cpInstanceTierPriceEntries";
+
 	public static final String COMMERCE_DATA_SET_KEY_PRICE_LIST_ENTRIES =
 		"commercePriceListEntries";
 

@@ -359,6 +359,15 @@ public class AccountEntryUserRelLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.account.model.AccountEntryUserRel>
+		getAccountEntryUserRelsByAccountEntryId(
+			long accountEntryId, int start, int end) {
+
+		return _accountEntryUserRelLocalService.
+			getAccountEntryUserRelsByAccountEntryId(accountEntryId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntryUserRel>
 		getAccountEntryUserRelsByAccountUserId(long accountUserId) {
 
 		return _accountEntryUserRelLocalService.

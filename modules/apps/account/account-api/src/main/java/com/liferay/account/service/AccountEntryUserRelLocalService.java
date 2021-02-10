@@ -269,6 +269,10 @@ public interface AccountEntryUserRelLocalService
 		long accountEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
+		long accountEntryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountUserId(
 		long accountUserId);
 

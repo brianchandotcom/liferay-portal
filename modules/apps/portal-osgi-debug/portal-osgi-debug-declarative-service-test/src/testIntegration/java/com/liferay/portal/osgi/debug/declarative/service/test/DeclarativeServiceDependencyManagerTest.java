@@ -250,7 +250,7 @@ public class DeclarativeServiceDependencyManagerTest {
 		return Log4JLoggerTestUtil.configureLog4JLogger(
 			"com.liferay.portal.osgi.debug.declarative.service.internal." +
 				"UnsatisfiedComponentScanner",
-			Level.INFO);
+			Log4JLoggerTestUtil.INFO);
 	}
 
 	private static void _ensureStopScanning() throws Exception {

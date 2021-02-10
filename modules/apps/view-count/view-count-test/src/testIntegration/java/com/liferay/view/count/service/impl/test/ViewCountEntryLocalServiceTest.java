@@ -44,8 +44,6 @@ import java.util.Objects;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.FutureTask;
 
-import org.apache.log4j.Level;
-
 import org.hibernate.util.JDBCExceptionReporter;
 
 import org.junit.Assert;
@@ -102,7 +100,8 @@ public class ViewCountEntryLocalServiceTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					JDBCExceptionReporter.class.getName(), Level.OFF)) {
+					JDBCExceptionReporter.class.getName(),
+					Log4JLoggerTestUtil.OFF)) {
 
 			FutureTask<Void> futureTask = new FutureTask<>(
 				() -> {

@@ -33,8 +33,6 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.apache.log4j.Level;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -365,7 +363,8 @@ public class ConfiguratorExtenderTest {
 		Class<?> clazz = _bundle.loadClass(name);
 
 		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(name, Level.ERROR)) {
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					name, Log4JLoggerTestUtil.ERROR)) {
 
 			ReflectionTestUtil.invoke(
 				clazz, "_process",

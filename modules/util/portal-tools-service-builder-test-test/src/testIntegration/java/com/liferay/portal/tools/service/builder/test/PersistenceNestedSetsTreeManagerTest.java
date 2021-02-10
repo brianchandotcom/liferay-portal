@@ -45,8 +45,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.log4j.Level;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -247,7 +245,8 @@ public class PersistenceNestedSetsTreeManagerTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					BasePersistenceImpl.class.getName(), Level.OFF)) {
+					BasePersistenceImpl.class.getName(),
+					Log4JLoggerTestUtil.OFF)) {
 
 			try {
 				ReflectionTestUtil.invoke(

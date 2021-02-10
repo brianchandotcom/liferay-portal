@@ -39,8 +39,6 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Level;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -72,7 +70,8 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			testApplication(
 				"/annotated-guest-not-allowed/", "everything.read", 403);
@@ -87,7 +86,8 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			testApplication(
 				"/default-jaxrs-app-guest-not-allowed/", "get", 403);
@@ -99,7 +99,8 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"portal_web.docroot.errors.code_jsp", Level.WARN)) {
+					"portal_web.docroot.errors.code_jsp",
+					Log4JLoggerTestUtil.WARN)) {
 
 			testApplication("/methods-guest-not-allowed/", "get", 403);
 		}

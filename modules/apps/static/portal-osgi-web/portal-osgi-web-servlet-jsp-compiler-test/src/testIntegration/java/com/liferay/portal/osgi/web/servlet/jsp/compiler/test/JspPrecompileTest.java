@@ -64,7 +64,6 @@ import javax.portlet.Portlet;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
@@ -194,7 +193,7 @@ public class JspPrecompileTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_JSP_COMPILER, Level.DEBUG)) {
+					_CLASS_NAME_JSP_COMPILER, Log4JLoggerTestUtil.DEBUG)) {
 
 			_invokeJSP(_PRECOMPILE_JSP_FILE_NAME, "Precompiled");
 
@@ -212,7 +211,7 @@ public class JspPrecompileTest {
 	public void testRuntimeCompiledJsp() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					_CLASS_NAME_JSP_COMPILER, Level.DEBUG)) {
+					_CLASS_NAME_JSP_COMPILER, Log4JLoggerTestUtil.DEBUG)) {
 
 			_invokeJSP(_RUNTIME_COMPILE_JSP_FILE_NAME, "Runtime Compiled");
 

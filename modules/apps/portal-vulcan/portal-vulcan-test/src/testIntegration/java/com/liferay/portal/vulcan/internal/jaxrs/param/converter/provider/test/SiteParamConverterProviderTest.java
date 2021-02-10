@@ -43,8 +43,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Application;
 
-import org.apache.log4j.Level;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -93,7 +91,7 @@ public class SiteParamConverterProviderTest {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME_WEB_APPLICATION_EXCEPTION_MAPPER,
-					Level.ERROR)) {
+					Log4JLoggerTestUtil.ERROR)) {
 
 			URLConnectionUtil.read(
 				"http://localhost:8080/o/test-vulcan/0/name");

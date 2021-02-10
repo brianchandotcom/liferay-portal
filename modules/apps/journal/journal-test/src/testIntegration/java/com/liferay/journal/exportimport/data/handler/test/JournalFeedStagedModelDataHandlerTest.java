@@ -51,7 +51,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
@@ -142,7 +141,7 @@ public class JournalFeedStagedModelDataHandlerTest
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.journal.internal.exportimport.data.handler." +
 						"JournalFeedStagedModelDataHandler",
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			super.testCleanStagedModelDataHandler();
 
@@ -207,7 +206,7 @@ public class JournalFeedStagedModelDataHandlerTest
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					"com.liferay.journal.internal.exportimport.data.handler." +
 						"JournalFeedStagedModelDataHandler",
-					Level.WARN)) {
+					Log4JLoggerTestUtil.WARN)) {
 
 			super.testStagedModelDataHandler();
 

@@ -659,7 +659,7 @@ definition {
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"
 	@priority = "5"
-	test TranslationPersistsAfterEditingAnother {
+	test TranslationDoesNotChangeAnotherAndPersistsAfterEditingAnother {
 
 		NavItem.gotoStructures();
 
@@ -684,8 +684,8 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
 
 		WebContent.addWithStructureCP(
-			webContentText = "Test",
-			webContentTitle = "Test");
+			webContentText = "Text Content",
+			webContentTitle = "WC Title");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -696,7 +696,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -713,16 +713,16 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "WC Structured");
+			value1 = "WC Title");
 
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "Test Text");
+			value1 = "Text Content");
 
 		WebContent.addWithStructureCP(
-			webContentText = "Test Text",
-			webContentTitle = "Test Title");
+			webContentText = "Test Content Edited",
+			webContentTitle = "WC Title Edited");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -733,16 +733,16 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Edited");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "Test Title");
+			value1 = "WC Title Edited");
 
 		AssertTextEquals.assertValue(
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "Test Text");
+			value1 = "Test Content Edited");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 

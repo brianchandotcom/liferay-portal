@@ -264,10 +264,10 @@ export default function Translation({
 Translation.propTypes = {
 	availableLanguages: PropTypes.objectOf(
 		PropTypes.shape({
-			default: PropTypes.bool.isRequired,
-			displayName: PropTypes.string.isRequired,
+			default: PropTypes.bool,
+			displayName: PropTypes.string,
 			languageIcon: PropTypes.string.isRequired,
-			languageId: PropTypes.string.isRequired,
+			languageId: PropTypes.string,
 			w3cLanguageId: PropTypes.string.isRequired,
 		})
 	).isRequired,
@@ -275,6 +275,6 @@ Translation.propTypes = {
 	dispatch: PropTypes.func.isRequired,
 	fragmentEntryLinks: PropTypes.object.isRequired,
 	languageId: PropTypes.string.isRequired,
-	segmentsExperienceId: PropTypes.string.isRequired,
+	segmentsExperienceId: PropTypes.string,
 	showNotTranslated: PropTypes.bool,
 };

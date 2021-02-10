@@ -159,7 +159,7 @@ DisplayPageModal.propTypes = {
 	mappingTypes: PropTypes.array,
 	namespace: PropTypes.string.isRequired,
 	onClose: PropTypes.func.isRequired,
-	title: PropTypes.func.isRequired,
+	title: PropTypes.string.isRequired,
 };
 
 export {DisplayPageModal};

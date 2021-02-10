@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE plugin-package PUBLIC "-//Liferay//DTD Plugin Package 6.1.0//EN" "http://www.liferay.com/dtd/liferay-plugin-package_6_1_0.dtd">
+<!DOCTYPE plugin-package PUBLIC "-//Liferay//DTD Plugin Package 7.4.0//EN" "http://www.liferay.com/dtd/liferay-plugin-package_7_4_0.dtd">
 
 <plugin-package>
 	<name>Liferay Core Plugins</name>

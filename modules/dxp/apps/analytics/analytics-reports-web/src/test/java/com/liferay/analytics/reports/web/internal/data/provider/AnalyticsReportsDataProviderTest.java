@@ -442,6 +442,10 @@ public class AnalyticsReportsDataProviderTest {
 							"paid", 206L
 						).toString()
 					).put(
+						"/page-referrer-hosts", "{}"
+					).put(
+						"/page-referrers", "{}"
+					).put(
 						"/social-page-referrers", "{}"
 					).put(
 						"/traffic-sources",
@@ -559,6 +563,10 @@ public class AnalyticsReportsDataProviderTest {
 						).put(
 							"social", 389L
 						).toString()
+					).put(
+						"/page-referrer-hosts", "{}"
+					).put(
+						"/page-referrers", "{}"
 					).put(
 						"/social-page-referrers",
 						JSONUtil.put(

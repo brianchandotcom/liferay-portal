@@ -14,11 +14,14 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,7 +32,8 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
 		if (fileName.endsWith(".xml")) {
 			return _checkDTDVersion(content);
@@ -38,24 +42,46 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _checkDTDVersion(String content) {
+	private String _checkDTDVersion(String content) throws IOException {
 		Matcher matcher = _doctypePattern.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
 		}
 
-		String version = ReleaseInfo.getVersion();
+		File releasePropertiesFile = new File(
+			getPortalDir(), _RELEASE_PROPERTIES_FILE_NAME);
+
+		if (!releasePropertiesFile.exists()) {
+			return content;
+		}
+
+		Properties properties = new Properties();
+
+		properties.load(new FileInputStream(releasePropertiesFile));
+
+		String lpVersion = properties.getProperty("lp.version");
+
+		if (lpVersion == null) {
+			return content;
+		}
+
+		String lpVersionDTD = properties.getProperty("lp.version.dtd");
+
+		if (lpVersionDTD == null) {
+			return content;
+		}
 
 		return StringUtil.replaceFirst(
 			content, matcher.group(),
 			StringBundler.concat(
-				matcher.group(1), version, matcher.group(3),
-				StringUtil.replace(
-					version, CharPool.PERIOD, CharPool.UNDERLINE),
+				matcher.group(1), lpVersion, matcher.group(3), lpVersionDTD,
 				matcher.group(5)),
 			matcher.start());
 	}
+
+	private static final String _RELEASE_PROPERTIES_FILE_NAME =
+		"release.properties";
 
 	private static final Pattern _doctypePattern = Pattern.compile(
 		"(<!DOCTYPE .+ PUBLIC \"-//Liferay//DTD .+ )" +

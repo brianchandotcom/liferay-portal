@@ -39,6 +39,7 @@ import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -776,7 +777,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 				BigDecimal price = commercePriceEntry.getPrice();
 
-				if (lowestPrice.compareTo(price) < 0) {
+				if (CommerceBigDecimalUtil.lt(price, lowestPrice)) {
 					lowestPrice = price;
 				}
 			}

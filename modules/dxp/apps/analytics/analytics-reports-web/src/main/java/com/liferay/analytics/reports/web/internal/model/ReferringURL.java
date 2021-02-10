@@ -71,6 +71,15 @@ public class ReferringURL {
 		);
 	}
 
+	@Override
+	public String toString() {
+		return JSONUtil.put(
+			"trafficAmount", _trafficAmount
+		).put(
+			"url", _url
+		).toString();
+	}
+
 	private final int _trafficAmount;
 	private final String _url;
 

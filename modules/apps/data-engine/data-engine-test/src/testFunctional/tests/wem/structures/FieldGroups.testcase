@@ -490,9 +490,7 @@ definition {
 			DataEngine.assertFieldRepeated(
 				fieldName = "${fieldName}",
 				index = "1");
-		}
 
-		for (var fieldName : list "Text,Numeric") {
 			DataEngine.assertFieldRepeated(
 				fieldName = "${fieldName}",
 				index = "2");

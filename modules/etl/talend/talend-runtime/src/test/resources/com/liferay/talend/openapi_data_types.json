@@ -38,6 +38,26 @@
 					"name": "BigDecimal"
 				}
 			},
+			"Branch": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"parentBranch": {
+						"$ref": "#/components/schemas/Branch",
+						"description": "Example of property that refers to host schema that would allow only one level of object nesting"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"xml": {
+					"name": "LocalizedInvalid2"
+				}
+			},
 			"Localized1": {
 				"properties": {
 					"description": {
@@ -269,6 +289,40 @@
 				},
 				"tags": [
 					"BigDecimal"
+				]
+			}
+		},
+		"/v1.0/branch": {
+			"post": {
+				"operationId": "addBranch",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Branch"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Branch"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Branch"
+								}
+							}
+						},
+						"description": "created branch"
+					}
+				},
+				"tags": [
+					"Nested"
 				]
 			}
 		},

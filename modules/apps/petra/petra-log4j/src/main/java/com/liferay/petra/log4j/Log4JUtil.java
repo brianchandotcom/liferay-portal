@@ -114,7 +114,7 @@ public class Log4JUtil {
 			return;
 		}
 
-		Map<String, String> logLevelStrings = new HashMap<>();
+		Map<String, String> logLevels = new HashMap<>();
 
 		Element rootElement = document.getRootElement();
 
@@ -127,7 +127,7 @@ public class Log4JUtil {
 			if (Objects.equals("category", element.getName())) {
 				Element priorityElement = element.element("priority");
 
-				logLevelStrings.put(
+				logLevels.put(
 					element.attributeValue("name"),
 					priorityElement.attributeValue("value"));
 			}
@@ -143,7 +143,7 @@ public class Log4JUtil {
 					document.asXML(), "@liferay.home@", _getLiferayHome())),
 			LogManager.getLoggerRepository());
 
-		for (Map.Entry<String, String> entry : logLevelStrings.entrySet()) {
+		for (Map.Entry<String, String> entry : logLevels.entrySet()) {
 			java.util.logging.Logger jdkLogger =
 				java.util.logging.Logger.getLogger(entry.getKey());
 

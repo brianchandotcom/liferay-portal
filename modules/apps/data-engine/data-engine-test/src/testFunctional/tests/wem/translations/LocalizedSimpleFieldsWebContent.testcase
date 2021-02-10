@@ -182,62 +182,61 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Text Test",
+			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		PortletEntry.inputTitle(title = "WC Title Test");
+		WebContent.addWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
 
-		PortletEntry.inputText(
-			fieldLabel = "Text",
-			text = "Text test");
+		PortletEntry.changeLocale(locale = "pt-BR");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		WebContent.addWithStructureCP(
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Título do conteúdo da web");
 
-		PortletEntry.inputText(
-			fieldLabel = "Text",
-			text = "Texto teste pt_BR");
+		PortletEntry.changeLocale(locale = "es-ES");
 
-		PortletEntry.changeLocale(locale = "es_ES");
-
-		PortletEntry.inputText(
-			fieldLabel = "Text",
-			text = "Texto teste es_ES");
+		WebContent.addWithStructureCP(
+			webContentText = "Este es un campo de texto",
+			webContentTitle = "Título de contenido web");
 
 		PortletEntry.publish();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC Title Test");
+		WebContent.viewWithStructureCP(
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
-			key_fieldLabel = "Text",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Text test");
+			locator1 = "TextInput#TITLE",
+			value1 = "Título do conteúdo da web");
 
-		PortletEntry.changeLocale(locale = "pt_BR");
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Este é um campo de texto");
 
-		AssertTextEquals(
-			key_fieldLabel = "Text",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Texto teste pt_BR");
-
-		PortletEntry.changeLocale(locale = "es_ES");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		AssertTextEquals(
-			key_fieldLabel = "Text",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Texto teste es_ES");
+			locator1 = "TextInput#TITLE",
+			value1 = "Título de contenido web");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Text",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Este es un campo de texto");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

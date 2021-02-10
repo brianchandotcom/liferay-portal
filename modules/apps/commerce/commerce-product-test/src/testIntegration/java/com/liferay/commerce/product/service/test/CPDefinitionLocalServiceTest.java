@@ -19,6 +19,7 @@ import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
@@ -384,6 +385,35 @@ public class CPDefinitionLocalServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, cpDefinition.getStatus());
+	}
+
+	@Test
+	public void testUpdateCPDefinitionExternalReferenceCode() throws Exception {
+		frutillaRule.scenario(
+			"Update product definition external reference code"
+		).given(
+			"I add a product definition"
+		).when(
+			"externa reference code is set"
+		).then(
+			"product definition should have that external reference code"
+		);
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+
+		long cpDefinitionId = cpDefinition.getCPDefinitionId();
+
+		_cpDefinitionLocalService.updateCPDefinitionExternalReferenceCode(
+			cpDefinitionId, "ERC");
+
+		cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
+
+		CProduct cProduct = cpDefinition.getCProduct();
+
+		Assert.assertEquals("ERC", cProduct.getExternalReferenceCode());
 	}
 
 	@Rule

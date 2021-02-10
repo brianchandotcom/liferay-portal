@@ -164,25 +164,25 @@ definition {
 	test ShowAndHideGeolocationLabel {
 		property portal.acceptance = "false";
 
-		var key_fieldLabel = "Geolocation";
+		var key_fieldFieldLabel = "Geolocation";
 
-		DataEngine.editFieldShowLabel(fieldFieldLabel = "${key_fieldLabel}");
+		DataEngine.editFieldShowLabel(fieldFieldLabel = "${key_fieldFieldLabel}");
 
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		AssertElementPresent(locator1 = "FormFields#LABEL");
+		AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		DataEngine.editShowOrHideLabel(
-			fieldFieldLabel = "${key_fieldLabel}",
+			fieldFieldLabel = "${key_fieldFieldLabel}",
 			showLabel = "false");
 
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		AssertElementNotPresent(locator1 = "FormFields#LABEL");
+		AssertElementNotPresent(locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 	@description = "This is a test for LPS-98071. As a Developer, I want to Implement the geolocation field type"

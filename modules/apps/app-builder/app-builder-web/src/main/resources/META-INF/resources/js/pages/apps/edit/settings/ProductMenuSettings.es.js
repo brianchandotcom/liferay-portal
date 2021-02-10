@@ -20,6 +20,7 @@ import {SearchInput} from 'data-engine-taglib';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {getItem} from '../../../../utils/client.es';
+import {SCOPES} from '../../constants.es';
 import EditAppContext, {
 	PRODUCT_MENU,
 	SITE_ID_ALL,
@@ -28,24 +29,6 @@ import EditAppContext, {
 } from '../EditAppContext.es';
 
 const {Divider, Item, ItemList} = ClayDropDown;
-
-const SCOPES = [
-	{
-		label: Liferay.Language.get('applications'),
-		value: ['applications_menu.applications'],
-	},
-	{
-		label: Liferay.Language.get('site-menu'),
-		value: ['site_administration.content'],
-	},
-	{
-		label: Liferay.Language.get('applications-and-site-menu'),
-		value: [
-			'applications_menu.applications',
-			'site_administration.content',
-		],
-	},
-];
 
 export default () => {
 	const {

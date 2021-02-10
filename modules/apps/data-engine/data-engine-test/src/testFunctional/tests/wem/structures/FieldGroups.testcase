@@ -47,12 +47,6 @@ definition {
 	test CheckIfFieldGroupDataPersists {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");

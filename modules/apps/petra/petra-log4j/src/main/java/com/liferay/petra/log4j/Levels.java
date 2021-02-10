@@ -18,7 +18,9 @@ import org.apache.log4j.Level;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class Levels {
 
 	public static final Level[] ALL_LEVELS = {

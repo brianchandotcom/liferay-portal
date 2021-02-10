@@ -19,6 +19,10 @@ definition {
 		WebContentStructures.addCP(
 			structureDescription = "My Structure Description",
 			structureName = "My Structure Name 1");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Localization",
+			fieldName = "Geolocation");
 	}
 
 	tearDown {
@@ -36,10 +40,6 @@ definition {
 	@priority = "5"
 	test EditSearchableOfGeolocation {
 		property portal.acceptance = "false";
-
-		DataEngine.addField(
-			fieldFieldLabel = "Localization",
-			fieldName = "Geolocation");
 
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Localization",
@@ -111,10 +111,6 @@ definition {
 	test DuplicateRepeatableGeolocationOnWebContent {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Localization",
-			fieldName = "Geolocation");
-
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Localization");
 
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
@@ -142,10 +138,6 @@ definition {
 	test SetGeolocationAsRepeatable {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Localization",
-			fieldName = "Geolocation");
-
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Localization");
 
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
@@ -160,10 +152,6 @@ definition {
 	test SetGeolocationLabel {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(
-			fieldFieldLabel = "Localization",
-			fieldName = "Geolocation");
-
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
 
 		WebContentNavigator.gotoEditStructure(structureName = "My Structure Name 1");
@@ -177,10 +165,6 @@ definition {
 	@priority = "5"
 	test SetHelpTextOfGeolocation {
 		property portal.acceptance = "false";
-
-		DataEngine.addField(
-			fieldFieldLabel = "Localization",
-			fieldName = "Geolocation");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Localization",
@@ -200,10 +184,6 @@ definition {
 	@priority = "4"
 	test SetReferenceOfGeolocation {
 		property portal.acceptance = "false";
-
-		DataEngine.addField(
-			fieldFieldLabel = "Localization",
-			fieldName = "Geolocation");
 
 		WebContentStructures.saveCP(structureName = "My Structure Name 1");
 

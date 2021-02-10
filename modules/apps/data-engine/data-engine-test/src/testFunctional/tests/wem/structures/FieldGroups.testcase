@@ -234,33 +234,6 @@ definition {
 			fieldGroupLabelList = "Copy of Text,Copy of Numeric,Copy of Date");
 	}
 
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Text,Numeric,Date") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
-
-		AssertVisible(
-			key_fieldFieldLabel = "Copy of Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Copy of Text,Copy of Numeric,Copy of Date") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
-	}
-
 	@description = "This is a test for LPS-98077. Duplicate a nested Field Group (a Field Group that is placed inside another Field Group)"
 	@priority = "5"
 	test DuplicateANestedFieldGroup {

@@ -10,7 +10,6 @@
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountLocalService" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountService" />
 	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountPersistence" />
-	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountFinderImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountFinder" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupLocalService" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupService" />
 	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupPersistence" />

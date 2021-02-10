@@ -17,7 +17,6 @@ package com.liferay.commerce.account.service.base;
 import com.liferay.account.service.persistence.AccountEntryOrganizationRelPersistence;
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelService;
-import com.liferay.commerce.account.service.persistence.CommerceAccountFinder;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupFinder;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupPersistence;
@@ -125,26 +124,6 @@ public abstract class CommerceAccountOrganizationRelServiceBaseImpl
 		CommerceAccountPersistence commerceAccountPersistence) {
 
 		this.commerceAccountPersistence = commerceAccountPersistence;
-	}
-
-	/**
-	 * Returns the commerce account finder.
-	 *
-	 * @return the commerce account finder
-	 */
-	public CommerceAccountFinder getCommerceAccountFinder() {
-		return commerceAccountFinder;
-	}
-
-	/**
-	 * Sets the commerce account finder.
-	 *
-	 * @param commerceAccountFinder the commerce account finder
-	 */
-	public void setCommerceAccountFinder(
-		CommerceAccountFinder commerceAccountFinder) {
-
-		this.commerceAccountFinder = commerceAccountFinder;
 	}
 
 	/**
@@ -834,9 +813,6 @@ public abstract class CommerceAccountOrganizationRelServiceBaseImpl
 
 	@BeanReference(type = CommerceAccountPersistence.class)
 	protected CommerceAccountPersistence commerceAccountPersistence;
-
-	@BeanReference(type = CommerceAccountFinder.class)
-	protected CommerceAccountFinder commerceAccountFinder;
 
 	@BeanReference(
 		type = com.liferay.commerce.account.service.CommerceAccountGroupLocalService.class

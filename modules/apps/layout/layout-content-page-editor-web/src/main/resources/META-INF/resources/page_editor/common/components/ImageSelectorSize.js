@@ -98,12 +98,14 @@ export const ImageSelectorSize = ({
 
 				setImageSize({
 					...autoSize,
-					width:
+					width: parseInt(
 						autoSize.width ||
-						editableElement?.naturalWidth ||
-						editableElement?.getBoundingClientRect().width ||
-						globalContext.document.body.getBoundingClientRect()
-							.width,
+							editableElement?.naturalWidth ||
+							editableElement?.getBoundingClientRect().width ||
+							globalContext.document.body.getBoundingClientRect()
+								.width,
+						10
+					),
 				});
 			};
 

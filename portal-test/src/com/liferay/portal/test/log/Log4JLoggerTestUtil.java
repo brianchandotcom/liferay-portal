@@ -27,6 +27,22 @@ import org.apache.log4j.Logger;
  */
 public class Log4JLoggerTestUtil {
 
+	public static final String ALL = String.valueOf(Level.ALL);
+
+	public static final String DEBUG = String.valueOf(Level.DEBUG);
+
+	public static final String ERROR = String.valueOf(Level.ERROR);
+
+	public static final String FATAL = String.valueOf(Level.FATAL);
+
+	public static final String INFO = String.valueOf(Level.INFO);
+
+	public static final String OFF = String.valueOf(Level.OFF);
+
+	public static final String TRACE = String.valueOf(Level.TRACE);
+
+	public static final String WARN = String.valueOf(Level.WARN);
+
 	public static CaptureAppender configureLog4JLogger(
 		String name, Level level) {
 
@@ -51,6 +67,12 @@ public class Log4JLoggerTestUtil {
 		logger.setLevel(level);
 
 		return captureAppender;
+	}
+
+	public static CaptureAppender configureLog4JLogger(
+		String name, String priority) {
+
+		return configureLog4JLogger(name, Level.toLevel(priority));
 	}
 
 	public static Level setLoggerLevel(String name, Level level) {

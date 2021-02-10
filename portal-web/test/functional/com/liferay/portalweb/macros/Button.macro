@@ -29,6 +29,12 @@ definition {
 	macro clickCheckOut {
 		Click(locator1 = "Button#CHECKOUT");
 	}
+	
+	macro clickCollapse {
+		Click(
+			key_label = "${label}",
+			locator1 = "DDMEditStructure#FORM_COLLAPSE_BUTTON");
+	}
 
 	macro clickComment {
 		Click(locator1 = "Button#COMMENT");
@@ -82,12 +88,6 @@ definition {
 			locator1 = "Button#ANY");
 
 		Button.click(button = "Publish");
-	}
-
-	macro clickCollapse {
-		Click(
-			key_label = "${label}",
-			locator1 = "DDMEditStructure#FORM_COLLAPSE_BUTTON");
 	}
 
 	macro clickRemove {

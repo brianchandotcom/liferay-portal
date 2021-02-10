@@ -16,12 +16,12 @@ package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
-import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
@@ -152,15 +153,19 @@ public class JournalEditDDMStructuresDisplayContext {
 			return _script;
 		}
 
+		_script = ParamUtil.getString(_httpServletRequest, "definition");
+
+		if (Validator.isNotNull(_script)) {
+			return _script;
+		}
+
 		DDMStructure ddmStructure = getDDMStructure();
 
 		if (ddmStructure != null) {
-			_script = BeanParamUtil.getString(
-				ddmStructure.getLatestStructureVersion(), _httpServletRequest,
-				"definition");
-		}
-		else {
-			_script = ParamUtil.getString(_httpServletRequest, "definition");
+			DDMStructureVersion ddmStructureVersion =
+				ddmStructure.getLatestStructureVersion();
+
+			_script = ddmStructureVersion.getDefinition();
 		}
 
 		return _script;

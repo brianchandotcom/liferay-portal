@@ -241,7 +241,7 @@ definition {
 
 		for (var n : list "1,2") {
 			DataEngine.assertFieldRepeated(
-				fieldName = "Rich Text",
+				fieldName = "FieldsGroup",
 				index = "${n}");
 		}
 
@@ -261,7 +261,7 @@ definition {
 
 		for (var n : list "1,2") {
 			DataEngine.assertFieldRepeated(
-				fieldName = "Rich Text",
+				fieldName = "FieldsGroup",
 				index = "${n}");
 		}
 

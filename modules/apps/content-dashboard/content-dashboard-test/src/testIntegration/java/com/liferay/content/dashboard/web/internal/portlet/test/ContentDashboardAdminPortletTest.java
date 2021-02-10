@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -75,6 +76,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -1418,6 +1420,79 @@ public class ContentDashboardAdminPortletTest {
 			ReflectionTestUtil.invoke(
 				results.get(1), "getTitle", new Class<?>[] {Locale.class},
 				LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetSearchContainerWithExpiredJournalArticle()
+		throws Exception {
+
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		Group group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _user.getUserId(), 0);
+
+		try {
+			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+				_getMockLiferayPortletRenderRequest();
+
+			SearchContainer<Object> searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			int initialCount = searchContainer.getTotal();
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), user.getUserId());
+
+			DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
+				"content", "string", "text", true, "textarea",
+				new Locale[] {LocaleUtil.getSiteDefault()},
+				LocaleUtil.getSiteDefault());
+
+			DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+				group.getGroupId(), JournalArticle.class.getName(), 0, ddmForm,
+				LocaleUtil.getSiteDefault(),
+				ServiceContextTestUtil.getServiceContext());
+
+			DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+				group.getGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(),
+				PortalUtil.getClassNameId(JournalArticle.class));
+
+			JournalArticle journalArticle =
+				_journalArticleLocalService.addArticle(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), 0,
+					JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
+					StringPool.BLANK, true, 2.0,
+					Collections.singletonMap(
+						LocaleUtil.getSiteDefault(), "Test Article"),
+					null,
+					DDMStructureTestUtil.getSampleStructuredContent(
+						Collections.singletonMap(
+							LocaleUtil.getSiteDefault(),
+							RandomTestUtil.randomString()),
+						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault())),
+					ddmStructure.getStructureKey(),
+					ddmTemplate.getTemplateKey(), null, 1, 1, 1965, 0, 0, 0, 0,
+					0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
+					null, null, serviceContext);
+
+			JournalTestUtil.expireArticle(
+				_group.getGroupId(), journalArticle, 2.0);
+
+			searchContainer = _getSearchContainer(
+				mockLiferayPortletRenderRequest);
+
+			int actualCount = searchContainer.getTotal();
+
+			Assert.assertEquals(initialCount + 1, actualCount);
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group);
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	@Test

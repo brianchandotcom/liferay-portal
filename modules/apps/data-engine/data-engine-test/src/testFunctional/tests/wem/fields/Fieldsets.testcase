@@ -327,14 +327,9 @@ definition {
 		// TODO LPS-107630 SaveStructureAddingBackFieldset pending implementation
 	}
 
-	@description = "This is a test for LPS-107630. As an App Adm, I want to use an existing fieldset"
+	@description = "This is a test for LPS-107630. Make sure Fieldset Label can be shown or hidden"
 	@priority = "4"
 	test ShowAndHideFieldsetLabel {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
@@ -346,7 +341,7 @@ definition {
 			fieldsetLabel = "New Fieldset",
 			showLabel = "true");
 
-		WebContentStructures.saveCP();
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
@@ -358,7 +353,7 @@ definition {
 			fieldsetLabel = "New Fieldset",
 			showLabel = "false");
 
-		WebContentStructures.saveCP();
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 

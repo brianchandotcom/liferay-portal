@@ -43,6 +43,7 @@ const SOCIAL_MEDIA_COLORS = {
 export default function SocialDetail({
 	currentPage,
 	languageTag,
+	showTimeSpanSelector = false,
 	timeSpanOptions,
 	trafficShareDataProvider,
 	trafficVolumeDataProvider,
@@ -100,21 +101,27 @@ export default function SocialDetail({
 
 	return (
 		<div className="c-p-3 traffic-source-detail">
-			<div className="c-mb-3 c-mt-2">
-				<TimeSpanSelector
-					disabledNextTimeSpan={chartState.timeSpanOffset === 0}
-					disabledPreviousPeriodButton={
-						isPreviousPeriodButtonDisabled
-					}
-					onNextTimeSpanClick={nextTimeSpan}
-					onPreviousTimeSpanClick={previousTimeSpan}
-					onTimeSpanChange={handleTimeSpanChange}
-					timeSpanKey={chartState.timeSpanKey}
-					timeSpanOptions={timeSpanOptions}
-				/>
-			</div>
+			{showTimeSpanSelector && (
+				<>
+					<div className="c-mb-3 c-mt-2">
+						<TimeSpanSelector
+							disabledNextTimeSpan={
+								chartState.timeSpanOffset === 0
+							}
+							disabledPreviousPeriodButton={
+								isPreviousPeriodButtonDisabled
+							}
+							onNextTimeSpanClick={nextTimeSpan}
+							onPreviousTimeSpanClick={previousTimeSpan}
+							onTimeSpanChange={handleTimeSpanChange}
+							timeSpanKey={chartState.timeSpanKey}
+							timeSpanOptions={timeSpanOptions}
+						/>
+					</div>
 
-			{title && <h5 className="c-mb-4">{title}</h5>}
+					{title && <h5 className="c-mb-4">{title}</h5>}
+				</>
+			)}
 
 			<TotalCount
 				className="c-mb-2"
@@ -212,6 +219,7 @@ export default function SocialDetail({
 SocialDetail.propTypes = {
 	currentPage: PropTypes.object.isRequired,
 	languageTag: PropTypes.string.isRequired,
+	showTimeSpanSelector: PropTypes.bool,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,

@@ -188,13 +188,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		setSelectedItem(selectedInfoItem);
 
 		if (isMapped(mappedItem)) {
-			onMappingSelect({
-				className: '',
-				classNameId: '',
-				classPK: '',
-				fieldId: '',
-				mappedField: '',
-			});
+			onMappingSelect({});
 		}
 	};
 
@@ -203,20 +197,9 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 		const data =
 			fieldValue === UNMAPPED_OPTION.value
-				? {
-						className: '',
-						classNameId: '',
-						classPK: '',
-						fieldId: '',
-						mappedField: '',
-				  }
+				? {}
 				: selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content
-				? {
-						className: selectedItem.className,
-						classNameId: selectedItem.classNameId,
-						classPK: selectedItem.classPK,
-						fieldId: fieldValue,
-				  }
+				? {...selectedItem, fieldId: fieldValue}
 				: {mappedField: fieldValue};
 
 		if (selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
@@ -307,12 +290,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 							setSelectedItem({});
 
 							if (isMapped(mappedItem)) {
-								onMappingSelect({
-									classNameId: '',
-									classPK: '',
-									fieldId: '',
-									mappedField: '',
-								});
+								onMappingSelect({});
 							}
 						}}
 						options={[
@@ -443,6 +421,11 @@ MappingSelector.propTypes = {
 			classNameId: PropTypes.string,
 			classPK: PropTypes.string,
 			fieldId: PropTypes.string,
+			fileEntryId: PropTypes.string,
+		}),
+		PropTypes.shape({
+			collectionFieldId: PropTypes.string,
+			fileEntryId: PropTypes.string,
 		}),
 		PropTypes.shape({mappedField: PropTypes.string}),
 	]),

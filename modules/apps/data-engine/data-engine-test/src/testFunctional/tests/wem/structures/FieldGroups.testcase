@@ -345,14 +345,9 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Date",
-			fieldName = "Date",
-			targetFieldLabel = "Numeric");
-
 		DataEngine.duplicate(fieldsGroupLabel = "Fields Group");
 
-		for (var fieldName : list "Text,Numeric,Date") {
+		for (var fieldName : list "Text,Numeric") {
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "Copy of ${fieldName}",
 				fieldFieldLabelEdit = "Duplicated ${fieldName}");

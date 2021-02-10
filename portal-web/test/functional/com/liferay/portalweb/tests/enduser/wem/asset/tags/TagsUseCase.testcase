@@ -466,7 +466,7 @@ definition {
 
 		BlogsNavigator.gotoEditPG(entryTitle = "Entry Title");
 
-		Panel.expandUnstyledPanel(panel = "Categorization");
+		Panel.expandPanel(panel = "Categorization");
 
 		AssetCategorization.removeTag(tagName = "tag name 1");
 

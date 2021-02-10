@@ -814,7 +814,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry with Small Image");
 
-		Panel.expandUnstyledPanel(panel = "Configuration");
+		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addSmallImage(
 			navTab = "Documents and Media",

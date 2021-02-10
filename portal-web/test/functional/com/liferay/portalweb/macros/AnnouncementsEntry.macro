@@ -169,7 +169,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Panel.expandUnstyledPanel(panel = "Configuration");
+		Panel.expandPanel(panel = "Configuration");
 
 		Type(
 			locator1 = "TextInput#URL",

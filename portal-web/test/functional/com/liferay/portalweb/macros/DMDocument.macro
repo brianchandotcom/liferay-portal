@@ -2069,7 +2069,7 @@ definition {
 
 		AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL");
 
-		Panel.expandUnstyledPanel(panel = "Automatically Extracted Metadata");
+		Panel.expandPanel(panel = "Automatically Extracted Metadata");
 	}
 
 	macro viewDocumentMetadataCP {

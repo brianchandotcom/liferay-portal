@@ -27,13 +27,13 @@ definition {
 		}
 
 		if ((isSet(installXuggler)) && (IsElementNotPresent(locator1 = "ServerAdministrationExternalServices#XUGGLER_ENABLED_CHECKBOX"))) {
-			Panel.expandUnstyledPanel(panel = "Enabling Xuggler provides video conversion functionality.");
+			Panel.expandPanel(panel = "Enabling Xuggler provides video conversion functionality.");
 
 			AssertClick(
 				locator1 = "ServerAdministrationExternalServices#XUGGLER_INSTALL_BUTTON",
 				value1 = "Install");
 
-			Panel.expandUnstyledPanel(panel = "Enabling Xuggler provides video conversion functionality.");
+			Panel.expandPanel(panel = "Enabling Xuggler provides video conversion functionality.");
 
 			AssertTextNotEquals(
 				locator1 = "Message#INFO",
@@ -161,7 +161,7 @@ definition {
 	macro executeServerResourcesActions {
 		Navigator.gotoNavItem(navItem = "Resources");
 
-		Panel.expandUnstyledPanel(panel = "Clean Up Actions");
+		Panel.expandPanel(panel = "Clean Up Actions");
 
 		var key_actionsDescription = "${actionsDescription}";
 

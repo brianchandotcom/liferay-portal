@@ -127,7 +127,7 @@ definition {
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}");
 
-		Panel.expandUnstyledPanel(panel = "Categorization");
+		Panel.expandPanel(panel = "Categorization");
 
 		AssetCategorization.addTag(tagName = "${tagName}");
 
@@ -144,7 +144,7 @@ definition {
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}");
 
-		Panel.expandUnstyledPanel(panel = "Categorization");
+		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list "${tagNameList}") {
 			AssetCategorization.addTag(tagName = "${tagName}");
@@ -238,7 +238,7 @@ definition {
 			entrySubtitle = "${entrySubtitle}",
 			entryTitle = "${entryTitle}");
 
-		Panel.expandUnstyledPanel(panel = "Configuration");
+		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addCustomAbstract(entryAbstractDescription = "${entryAbstractDescription}");
 

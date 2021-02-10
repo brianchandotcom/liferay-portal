@@ -453,7 +453,7 @@ definition {
 
 		WikiEntry.addPageTitle(wikiPageTitle = "Wiki Page Title");
 
-		Panel.expandUnstyledPanel(panel = "Configuration");
+		Panel.expandPanel(panel = "Configuration");
 
 		SelectNoError(
 			locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN",

@@ -5456,6 +5456,32 @@ paths:
                     description:
                         ""
             tags: ["Document"]
+    "/documents/{documentId}/rendered-content-by-display-page/{displayPageKey}":
+        get:
+            description:
+                Retrieves the document's rendered display page
+            operationId: getDocumentRenderedContentByDisplayPageDisplayPageKey
+            parameters:
+                - in: path
+                  name: documentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: displayPageKey
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/html:
+                            schema:
+                                type: string
+                    description:
+                        ""
+            tags: ["Document"]
     "/knowledge-base-articles/{knowledgeBaseArticleId}":
         delete:
             description:

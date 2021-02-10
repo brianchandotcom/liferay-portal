@@ -406,14 +406,13 @@ public class DataLayoutTaglibUtil {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			if (Validator.isNull(dataDefinitionId) &&
-				Validator.isNull(dataLayoutId)) {
+			String dataLayoutString = httpServletRequest.getParameter(
+				"dataLayout");
 
+			if (Validator.isNotNull(dataLayoutString)) {
 				DataLayoutDDMFormAdapter dataLayoutDDMFormAdapter =
 					new DataLayoutDDMFormAdapter(
-						availableLocales,
-						DataLayout.toDTO(
-							httpServletRequest.getParameter("dataLayout")),
+						availableLocales, DataLayout.toDTO(dataLayoutString),
 						httpServletRequest, httpServletResponse);
 
 				return dataLayoutDDMFormAdapter.toJSONObject();

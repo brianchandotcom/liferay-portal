@@ -19,6 +19,7 @@ import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
@@ -59,6 +60,10 @@ public class ServletContextUtil {
 
 	public static final ConfigurationProvider getConfigurationProvider() {
 		return _servletContextUtil._getConfigurationProvider();
+	}
+
+	public static final CPCompareHelper getCPCompareHelper() {
+		return _servletContextUtil._getCPCompareHelper();
 	}
 
 	public static final CPContentHelper getCPContentHelper() {
@@ -130,6 +135,11 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCPCompareHelper(CPCompareHelper cpCompareHelper) {
+		_cpCompareHelper = cpCompareHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setCPContentHelper(CPContentHelper cpContentHelper) {
 		_cpContentHelper = cpContentHelper;
 	}
@@ -189,6 +199,10 @@ public class ServletContextUtil {
 		return _configurationProvider;
 	}
 
+	private CPCompareHelper _getCPCompareHelper() {
+		return _cpCompareHelper;
+	}
+
 	private CPContentHelper _getCPContentHelper() {
 		return _cpContentHelper;
 	}
@@ -223,6 +237,7 @@ public class ServletContextUtil {
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 	private ConfigurationProvider _configurationProvider;
+	private CPCompareHelper _cpCompareHelper;
 	private CPContentHelper _cpContentHelper;
 	private CPDefinitionHelper _cpDefinitionHelper;
 	private CPInstanceHelper _cpInstanceHelper;

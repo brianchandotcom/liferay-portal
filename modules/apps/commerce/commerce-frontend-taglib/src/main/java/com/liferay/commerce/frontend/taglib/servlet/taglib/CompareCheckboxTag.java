@@ -20,8 +20,9 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
-import com.liferay.commerce.product.util.CPCompareHelperUtil;
+import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -59,11 +60,11 @@ public class CompareCheckboxTag extends IncludeTag {
 				commerceAccountId = commerceAccount.getCommerceAccountId();
 			}
 
-			List<Long> cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(
+			List<Long> cpDefinitionIds = _getCPDefinitionIds(
 				commerceContext.getCommerceChannelGroupId(), commerceAccountId,
 				CookieKeys.getCookie(
 					request,
-					CPCompareHelperUtil.getCPDefinitionIdsCookieKey(
+					_getCPDefinitionIdsCookieKey(
 						commerceContext.getCommerceChannelGroupId())));
 
 			_inCompare = cpDefinitionIds.contains(_cpDefinitionId);
@@ -126,6 +127,26 @@ public class CompareCheckboxTag extends IncludeTag {
 			"liferay-commerce:compare-checkbox:label", _label);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:compare-checkbox:pictureUrl", _pictureUrl);
+	}
+
+	private List<Long> _getCPDefinitionIds(
+			long groupId, long commerceAccountId,
+			String cpDefinitionIdsCookieValue)
+		throws PortalException {
+
+		CPCompareHelper cpCompareHelper =
+			ServletContextUtil.getCPCompareHelper();
+
+		return cpCompareHelper.getCPDefinitionIds(
+			groupId, commerceAccountId, cpDefinitionIdsCookieValue);
+	}
+
+	private String _getCPDefinitionIdsCookieKey(long commerceChannelGroupId) {
+		CPCompareHelper cpCompareHelper =
+			ServletContextUtil.getCPCompareHelper();
+
+		return cpCompareHelper.getCPDefinitionIdsCookieKey(
+			commerceChannelGroupId);
 	}
 
 	private static final String _PAGE = "/compare_checkbox/page.jsp";

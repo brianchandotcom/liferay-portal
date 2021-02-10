@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -656,11 +657,18 @@ public class AddContentPanelDisplayContext {
 		LayoutTypePortlet layoutTypePortlet =
 			_themeDisplay.getLayoutTypePortlet();
 
-		if (layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
-			return true;
+		boolean portletUsed = false;
+
+		for (Portlet layoutPortlet : layoutTypePortlet.getPortlets()) {
+			String decodedPortletName = PortletIdCodec.decodePortletName(
+				layoutPortlet.getPortletId());
+
+			if (decodedPortletName.equals(portlet.getPortletId())) {
+				portletUsed = true;
+			}
 		}
 
-		return false;
+		return portletUsed;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

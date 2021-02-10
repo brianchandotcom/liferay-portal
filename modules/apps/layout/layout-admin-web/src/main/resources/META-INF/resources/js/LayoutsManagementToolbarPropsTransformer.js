@@ -12,10 +12,8 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
-
-class LayoutsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	convertSelectedPages(itemData) {
+export default function propsTransformer({portletNamespace, ...otherProps}) {
+	const convertSelectedPages = (itemData) => {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -23,11 +21,15 @@ class LayoutsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				)
 			)
 		) {
-			this._send(itemData.convertLayoutURL);
-		}
-	}
+			const form = document.getElementById(`${portletNamespace}fm`);
 
-	deleteSelectedPages(itemData) {
+			if (form) {
+				submitForm(form, itemData?.convertLayoutURL);
+			}
+		}
+	};
+
+	const deleteSelectedPages = (itemData) => {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -35,13 +37,27 @@ class LayoutsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 				)
 			)
 		) {
-			this._send(itemData.deleteLayoutURL);
+			const form = document.getElementById(`${portletNamespace}fm`);
+
+			if (form) {
+				submitForm(form, itemData?.deleteLayoutURL);
+			}
 		}
-	}
+	};
 
-	_send(url) {
-		submitForm(this.one('#fm'), url);
-	}
+	return {
+		...otherProps,
+		onActionButtonClick: (event, {item}) => {
+			const data = item?.data;
+
+			const action = data?.action;
+
+			if (action === 'deleteSelectedPages') {
+				deleteSelectedPages(data);
+			}
+			else if (action === 'convertSelectedPages') {
+				convertSelectedPages(data);
+			}
+		},
+	};
 }
-
-export default LayoutsManagementToolbarDefaultEventHandler;

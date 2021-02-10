@@ -89,11 +89,6 @@ public class SelectCollectionManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "selectCollectionManagementToolbarDefaultEventHandler";
-	}
-
-	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL =
 			_selectLayoutCollectionDisplayContext.getPortletURL();

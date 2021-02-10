@@ -61,11 +61,6 @@ public class OrphanPortletsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "ORPHAN_PORTLETS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
-	}
-
-	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"list", "descriptive"};
 	}

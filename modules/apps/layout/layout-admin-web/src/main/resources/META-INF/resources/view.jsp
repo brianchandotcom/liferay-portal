@@ -18,8 +18,6 @@
 
 <%
 portletDisplay.setShowStagingIcon(false);
-
-LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayContext = new LayoutsAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutsAdminDisplayContext);
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-succesfully") %>' />
@@ -28,8 +26,9 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 
 <liferay-ui:error embed="<%= false %>" exception="<%= GroupInheritContentException.class %>" message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-with-a-site-template" />
 
-<clay:management-toolbar-v2
-	displayContext="<%= layoutsManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new LayoutsAdminManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, layoutsAdminDisplayContext) %>"
+	propsTransformer="js/LayoutsManagementToolbarPropsTransformer"
 />
 
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">
@@ -76,8 +75,3 @@ LayoutsAdminManagementToolbarDisplayContext layoutsManagementToolbarDisplayConte
 		</c:otherwise>
 	</c:choose>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= layoutsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/LayoutsManagementToolbarDefaultEventHandler.es"
-/>

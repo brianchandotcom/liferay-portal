@@ -30,8 +30,9 @@ portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
 renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= orphanPortletsManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= orphanPortletsManagementToolbarDisplayContext %>"
+	propsTransformer="js/OrphanPortletsManagementToolbarPropsTransformer"
 />
 
 <portlet:actionURL name="/layout_admin/delete_orphan_portlets" var="deleteOrphanPortletsURL">
@@ -130,8 +131,3 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:component
-	componentId="<%= orphanPortletsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="js/OrphanPortletsManagementToolbarDefaultEventHandler.es"
-/>

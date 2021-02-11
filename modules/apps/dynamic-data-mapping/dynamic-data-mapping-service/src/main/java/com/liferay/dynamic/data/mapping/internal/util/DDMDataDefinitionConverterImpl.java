@@ -335,6 +335,14 @@ public class DDMDataDefinitionConverterImpl
 	private void _upgradeField(
 		DDMFormField ddmFormField, Locale defaultLocale) {
 
+		if (ddmFormField.hasProperty("validation")) {
+			Object object = ddmFormField.getProperty("validation");
+
+			if (Validator.isNull(object)) {
+				ddmFormField.removeProperty("validation");
+			}
+		}
+
 		if (Objects.equals(ddmFormField.getType(), "checkbox")) {
 			_upgradeBooleanField(ddmFormField);
 		}

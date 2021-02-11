@@ -398,6 +398,54 @@ definition {
 			fieldFieldLabel = "Numeric",
 			fieldFieldLabelEdit = "Numérico");
 
+		WebContentStructures.addLocalization(
+			locale = "de-DE",
+			localization1Name = "WC Structure Name German");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "First Level Fields Group",
+			fieldsGroupLabelEdit = "First Level Fields Group German");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Second Level Fields Group",
+			fieldsGroupLabelEdit = "Second Level Fields Group German");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text German");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "Rich Text German");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numeric German");
+		
+		WebContentStructures.addLocalization(
+			locale = "ja-JP",
+			localization1Name = "WC Structure Name Japan");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "First Level Fields Group",
+			fieldsGroupLabelEdit = "First Level Fields Group Japan");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Second Level Fields Group",
+			fieldsGroupLabelEdit = "Second Level Fields Group Japan");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text Japan");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "Rich Text Japan");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numeric Japan");
+
 		WebContentStructures.saveCP();
 
 		Navigator.gotoNavTab(navTab = "Web Content");
@@ -422,6 +470,28 @@ definition {
 			webContentText = "Este é um campo de texto",
 			webContentTextFieldLabel = "Texto",
 			webContentTitle = "Título do conteúdo da web");
+		
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "543",
+			webContentNumericFieldLabel = "Numeric German",
+			webContentRichText = "This is a Rich Text field in German",
+			webContentRichTextFieldLabel = "Rich Text German",
+			webContentText = "This is a Text field in German",
+			webContentTextFieldLabel = "Text German",
+			webContentTitle = "WC Structure Name German");
+		
+		PortletEntry.changeLocale(locale = "ja-JP");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "321",
+			webContentNumericFieldLabel = "Numeric Japan",
+			webContentRichText = "This is a Rich Text field in Japan",
+			webContentRichTextFieldLabel = "Rich Text Japan",
+			webContentText = "This is a Text field in Japan",
+			webContentTextFieldLabel = "Text Japan",
+			webContentTitle = "WC Structure Name Japan");
 
 		PortletEntry.publish();
 
@@ -457,6 +527,49 @@ definition {
 				key_fieldFieldLabel = "${fieldsGroupLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC Structure Name German");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "543",
+			webContentNumericFieldLabel = "Numeric German",
+			webContentRichText = "This is a Rich Text field in German",
+			webContentRichTextFieldLabel = "Rich Text German",
+			webContentText = "This is a Text field in German",
+			webContentTextFieldLabel = "Text German");
+
+		for (var fieldsGroupLabel : list "First Level Fields Group German,Second Level Fields Group German") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+
+		PortletEntry.changeLocale(locale = "ja-JP");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC Structure Name Japan");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "321",
+			webContentNumericFieldLabel = "Numeric Japan",
+			webContentRichText = "This is a Rich Text field in Japan",
+			webContentRichTextFieldLabel = "Rich Text Japan",
+			webContentText = "This is a Text field in Japan",
+			webContentTextFieldLabel = "Text Japan");
+
+		for (var fieldsGroupLabel : list "First Level Fields Group Japan,Second Level Fields Group Japan") {
+			AssertVisible(
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
+		
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"

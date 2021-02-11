@@ -77,7 +77,7 @@ definition {
 	macro configureEmailNotifications {
 		AssertClick(
 			locator1 = "Form#SETTINGS_TAB_EMAIL_NOTIFICATIONS",
-			value1 = "Email Notifications");
+			value1 = "Notifications");
 
 		FormFields.enableSwitcher(fieldName = "sendEmailNotification");
 

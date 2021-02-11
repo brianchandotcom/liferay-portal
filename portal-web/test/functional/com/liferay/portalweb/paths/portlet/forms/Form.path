@@ -226,7 +226,7 @@
 <!--SETTINGS_TAB-->
 <tr>
     <td>SETTINGS_TAB_EMAIL_NOTIFICATIONS</td>
-    <td>//a[contains(@class,'tab-content') and contains(.,'Email Notifications')] | //span[contains(text(),'Email Notifications')]</td>
+    <td>//a[contains(@class,'tab-content') and contains(.,'Notifications')] | //span[contains(text(),'Notifications')]</td>
     <td></td>
 </tr>
 <tr>

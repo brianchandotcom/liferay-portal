@@ -29,6 +29,14 @@ buildIBMS3Store {
 	}
 }
 
+clean {
+	delete "src/main/java/com/liferay/portal/store/s3/IBMS3Store.java"
+}
+
+compileJava {
+	dependsOn buildIBMS3Store
+}
+
 dependencies {
 	compileInclude group: "com.amazonaws", name: "aws-java-sdk-core", version: "1.11.790"
 	compileInclude group: "com.amazonaws", name: "aws-java-sdk-kms", version: "1.11.790"

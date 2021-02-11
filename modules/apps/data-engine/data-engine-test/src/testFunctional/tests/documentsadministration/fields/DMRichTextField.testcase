@@ -283,29 +283,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@priority = "5"
-	test UploadDocumentTypetWithRequiredRichText {
-
-		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
-
-		DDLDataDefinition.save();
-
-		Navigator.gotoNavTab(navTab = "Documents and Media");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
-
-		PortletEntry.inputTitle(title = "DM Document Type Name");
-
-		CKEditor.addContentInWebContent(
-			content = "Hello",
-			fieldLabel = "Rich Text");
-
-		Button.clickPublish();
-
-		Alert.viewSuccessMessage();
-	}
-
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "4"
 	test UploadWithRequiredRichText {
 		property portal.acceptance = "false";
@@ -325,6 +302,14 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#WARNING_FEEDBACK",
 			value1 = "This field is required.");
+		
+		CKEditor.addContentInWebContent(
+			content = "Hello",
+			fieldLabel = "Rich Text");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"

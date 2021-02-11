@@ -693,6 +693,10 @@ public class AssetHelperImpl implements AssetHelper {
 			String orderByType, String sortField, Locale locale)
 		throws Exception {
 
+		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+			return _getSearchSortDDMField(orderByType, sortField, locale);
+		}
+
 		Sort sort = SortFactoryUtil.getSort(
 			AssetEntry.class, _getSortType(sortField),
 			_getOrderByCol(sortField, locale), true, orderByType);
@@ -703,22 +707,25 @@ public class AssetHelperImpl implements AssetHelper {
 			fieldSort.setSortOrder(SortOrder.DESC);
 		}
 
-		if (!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
-			return fieldSort;
-		}
+		return fieldSort;
+	}
+
+	private com.liferay.portal.search.sort.Sort _getSearchSortDDMField(
+			String orderByType, String sortField, Locale locale)
+		throws Exception {
 
 		DDMFormField ddmFormField = _getDDMFormField(sortField);
 
 		int sortType = _getDDMFormFieldTypeSortType(ddmFormField);
 
-		sort = SortFactoryUtil.getSort(
+		Sort sort = SortFactoryUtil.getSort(
 			AssetEntry.class, sortType,
 			_getDDMFormFieldTypeOrderByCol(
 				ddmFormField, sortField,
 				_getDDMFormFieldLocalizable(sortField), sortType, locale),
 			false, orderByType);
 
-		fieldSort = _sorts.field(sort.getFieldName());
+		FieldSort fieldSort = _sorts.field(sort.getFieldName());
 
 		if (sort.isReverse()) {
 			fieldSort.setSortOrder(SortOrder.DESC);

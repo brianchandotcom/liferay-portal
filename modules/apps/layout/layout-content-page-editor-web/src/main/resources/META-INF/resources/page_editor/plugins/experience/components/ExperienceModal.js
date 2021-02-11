@@ -22,7 +22,7 @@ import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {config} from '../../../app/config/index';
 import Button from '../../../common/components/Button';
@@ -53,35 +53,29 @@ const ExperienceModal = ({
 	const [requiredNameError, setRequiredNameError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const [selectedLanguages, setSelectedLanguages] = useState(
-		Object.values(config.availableLanguages).filter(
-			({default: isDefault, languageId}) =>
-				isDefault || languageIds.includes(languageId)
-		)
-	);
-
 	const [selectedLanguagesIds, setSelectedLanguagesIds] = useState(
-		selectedLanguages.map(({languageId}) => languageId)
+		Object.values(config.availableLanguages)
+			.filter(
+				({default: isDefault, languageId}) =>
+					isDefault || languageIds.includes(languageId)
+			)
+			.map(({languageId}) => languageId)
 	);
 
-	const onChangeLocale = (isChecked, selectedLocale) => {
+	const onChangeLocale = (isChecked, selectedLenguageId) => {
 		if (!isChecked) {
-			setSelectedLanguages(selectedLanguages.concat(selectedLocale));
+			setSelectedLanguagesIds(
+				selectedLanguagesIds.concat(selectedLenguageId)
+			);
 		}
 		else {
-			setSelectedLanguages(
-				selectedLanguages.filter(
-					({languageId}) => languageId != selectedLocale.languageId
+			setSelectedLanguagesIds(
+				selectedLanguagesIds.filter(
+					(languageId) => languageId != selectedLenguageId
 				)
 			);
 		}
 	};
-
-	useEffect(() => {
-		setSelectedLanguagesIds(
-			selectedLanguages.map(({languageId}) => languageId)
-		);
-	}, [selectedLanguages]);
 
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
@@ -288,7 +282,7 @@ const ExperienceModal = ({
 												onChange={() => {
 													onChangeLocale(
 														isChecked,
-														locale
+														languageId
 													);
 												}}
 											>

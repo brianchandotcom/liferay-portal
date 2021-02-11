@@ -241,7 +241,6 @@ definition {
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
-			fieldsetLabel = "${fieldsetLabel}",
 			fieldsetName = "${fieldsetLabel}");
 
 		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");

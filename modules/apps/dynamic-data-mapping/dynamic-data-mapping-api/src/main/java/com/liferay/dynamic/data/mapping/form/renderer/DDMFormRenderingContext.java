@@ -32,6 +32,7 @@ public class DDMFormRenderingContext {
 
 	public DDMFormRenderingContext() {
 		setContainerId(_getDefaultContainerId());
+		setEditOnlyInDefaultLanguage(false);
 		setReturnFullContext(true);
 	}
 
@@ -87,6 +88,10 @@ public class DDMFormRenderingContext {
 		return _submitLabel;
 	}
 
+	public boolean isEditOnlyInDefaultLanguage() {
+		return MapUtil.getBoolean(_properties, "editOnlyInDefaultLanguage");
+	}
+
 	public boolean isReadOnly() {
 		return _readOnly;
 	}
@@ -129,6 +134,12 @@ public class DDMFormRenderingContext {
 
 	public void setDDMStructureLayoutId(long ddmStructureLayoutId) {
 		_ddmStructureLayoutId = ddmStructureLayoutId;
+	}
+
+	public void setEditOnlyInDefaultLanguage(
+		boolean editOnlyInDefaultLanguage) {
+
+		_properties.put("editOnlyInDefaultLanguage", editOnlyInDefaultLanguage);
 	}
 
 	public void setGroupId(long groupId) {

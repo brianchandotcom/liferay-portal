@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.info.item;
 
+import com.liferay.info.type.WebImage;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collections;
@@ -30,6 +31,10 @@ public interface AnalyticsReportsInfoItem<T> {
 
 	public default long getAuthorUserId(T model) {
 		return 0L;
+	}
+
+	public default WebImage getAuthorWebImage(T model, Locale locale) {
+		return null;
 	}
 
 	public default List<Locale> getAvailableLocales(T model) {

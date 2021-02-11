@@ -19,10 +19,8 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.info.item.FileEntryInfoItemFields;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
@@ -134,39 +132,14 @@ public class FileEntryInfoItemFormProvider
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchDLFileEntryType(fileEntryTypeId);
 
-		if (dlFileEntryType == null) {
+		if ((dlFileEntryType == null) ||
+			(dlFileEntryType.getDataDefinitionId() == 0)) {
+
 			return null;
 		}
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
-			dlFileEntryType.getDataDefinitionId());
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		ddmStructure = _ddmStructureLocalService.fetchStructure(
-			dlFileEntryType.getGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class),
-			DLUtil.getDDMStructureKey(dlFileEntryType));
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
-		ddmStructure = _ddmStructureLocalService.fetchStructure(
-			dlFileEntryType.getGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class),
-			DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
-
-		if (ddmStructure != null) {
-			return ddmStructure;
-		}
-
 		return _ddmStructureLocalService.fetchStructure(
-			dlFileEntryType.getGroupId(),
-			_portal.getClassNameId(DLFileEntryMetadata.class),
-			dlFileEntryType.getFileEntryTypeKey());
+			dlFileEntryType.getDataDefinitionId());
 	}
 
 	private InfoFieldSet _getBasicInformationFieldSet() {

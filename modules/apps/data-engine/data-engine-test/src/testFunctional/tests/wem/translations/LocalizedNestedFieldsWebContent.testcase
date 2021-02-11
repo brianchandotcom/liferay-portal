@@ -507,6 +507,22 @@ definition {
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Numeric",
 			fieldFieldLabelEdit = "Numérique");
+		
+		WebContentStructures.addLocalization(
+			locale = "de-DE",
+			localization1Name = "WC Structure Name German");
+
+		DataEngine.editFieldsGroupLabel(
+			fieldsGroupLabel = "Fields Group",
+			fieldsGroupLabelEdit = "Field Group German");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "Rich Text German");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numeric German");
 
 		WebContentStructures.saveCP();
 
@@ -536,6 +552,15 @@ definition {
 			webContentRichText = "Ceci est un champ de texte enrichi",
 			webContentRichTextFieldLabel = "Texte riche",
 			webContentTitle = "Titre du contenu Web");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "543",
+			webContentNumericFieldLabel = "Numeric German",
+			webContentRichText = "This is a Rich Text field in German",
+			webContentRichTextFieldLabel = "Rich Text German",
+			webContentTitle = "Web Content Title German");
 
 		PortletEntry.publish();
 
@@ -580,6 +605,23 @@ definition {
 
 		AssertVisible(
 			key_fieldFieldLabel = "Groupe de champs",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		PortletEntry.changeLocale(locale = "de-DE");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title German");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "543",
+			webContentNumericFieldLabel = "Numeric German",
+			webContentRichText = "This is a Rich Text field in German",
+			webContentRichTextFieldLabel = "Rich Text German");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Field Group German",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 

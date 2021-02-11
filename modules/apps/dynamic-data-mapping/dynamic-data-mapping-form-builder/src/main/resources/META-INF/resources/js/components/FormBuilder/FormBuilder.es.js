@@ -13,11 +13,11 @@
  */
 
 import {
-	FormNoop,
 	PagesVisitor,
 	compose,
 	getConnectedReactComponentAdapter,
 } from 'dynamic-data-mapping-form-renderer';
+import {FormNoop} from 'dynamic-data-mapping-form-renderer/js/containers/FormNoop.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 

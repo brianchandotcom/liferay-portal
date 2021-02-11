@@ -189,7 +189,7 @@ definition {
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
 	@priority = "5"
-	test SetHelpTextOfRichText {
+	test SetLabelTextOfRichTextAndHelpText {
 		property portal.acceptance = "false";
 
 		DataEngine.editFieldTip(
@@ -203,20 +203,6 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "Rich Text",
 			fieldHelp = "Help Text",
-			fieldName = "Rich Text");
-	}
-
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@priority = "5"
-	test SetLabelOfRichText {
-		property portal.acceptance = "false";
-
-		Button.clickSave();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Rich Test",
 			fieldName = "Rich Text");
 	}
 

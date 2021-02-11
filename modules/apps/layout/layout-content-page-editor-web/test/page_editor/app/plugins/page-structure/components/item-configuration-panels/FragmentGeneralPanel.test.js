@@ -21,7 +21,6 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 
 import {VIEWPORT_SIZES} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
-import {config} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import FragmentService from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import {FragmentGeneralPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/FragmentGeneralPanel';
@@ -149,7 +148,28 @@ const renderGeneralPanel = ({
 				segmentsExperimentStatus: undefined,
 				segmentsExperimentURL: 'https//:default-experience.com',
 			},
+			1: {
+				hasLockedSegmentsExperiment: false,
+				languageIds: ['es_ES', 'en_US'],
+				name: 'Experience #1',
+				priority: 3,
+				segmentsEntryId: 'test-segment-id-00',
+				segmentsExperienceId: 'test-experience-id-01',
+				segmentsExperimentStatus: undefined,
+				segmentsExperimentURL: 'https//:experience-1.com',
+			},
+			2: {
+				hasLockedSegmentsExperiment: false,
+				languageIds: ['es_ES', 'en_US', 'ar_SA'],
+				name: 'Experience #2',
+				priority: 1,
+				segmentsEntryId: 'test-segment-id-01',
+				segmentsExperienceId: 'test-experience-id-02',
+				segmentsExperimentStatus: undefined,
+				segmentsExperimentURL: 'https//:experience-2.com',
+			},
 		},
+		defaultSegmentsExperienceId: '0',
 		fragmentEntryLinks: {[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink},
 		languageId: 'en_US',
 		segmentsExperienceId,
@@ -172,8 +192,6 @@ describe('FragmentGeneralPanel', () => {
 	});
 
 	it('does not prefix values with segments if we do not have experiences', async () => {
-		config.defaultSegmentsExperienceId = null;
-
 		const {getByLabelText} = renderGeneralPanel({
 			segmentsExperienceId: null,
 		});
@@ -197,8 +215,6 @@ describe('FragmentGeneralPanel', () => {
 	});
 
 	it('does not show flag icon when localizable property is false', async () => {
-		config.defaultSegmentsExperienceId = null;
-
 		const {getByLabelText} = renderGeneralPanel({
 			fragmentEntryLink: defaultFragmentEntryLink(false),
 			segmentsExperienceId: null,
@@ -212,8 +228,6 @@ describe('FragmentGeneralPanel', () => {
 	});
 
 	it('prefix values with segments when we have experiences', async () => {
-		config.defaultSegmentsExperienceId = '2';
-
 		const {getByLabelText} = renderGeneralPanel({
 			segmentsExperienceId: '1',
 		});
@@ -237,8 +251,6 @@ describe('FragmentGeneralPanel', () => {
 	});
 
 	it('prefix values with default experience when segmentsExperience is null', async () => {
-		config.defaultSegmentsExperienceId = '2';
-
 		const {getByLabelText} = renderGeneralPanel({
 			segmentsExperienceId: null,
 		});
@@ -262,8 +274,6 @@ describe('FragmentGeneralPanel', () => {
 	});
 
 	it('merges configuration values when a new one is added', async () => {
-		config.defaultSegmentsExperienceId = '0';
-
 		const fragmentEntryLink = {
 			comments: [],
 			configuration: {
@@ -337,8 +347,6 @@ describe('FragmentGeneralPanel', () => {
 	});
 
 	it('shows corresponding flag icon when localizable property is true', async () => {
-		config.defaultSegmentsExperienceId = null;
-
 		const {getByLabelText} = renderGeneralPanel({
 			fragmentEntryLink: defaultFragmentEntryLink(true),
 			segmentsExperienceId: null,

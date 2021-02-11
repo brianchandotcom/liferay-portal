@@ -60,7 +60,7 @@ jest.mock(
 				tablet: {label: 'Tablet', sizeId: 'tablet'},
 			},
 			commonStyles: [],
-			defaultSegmentsExperienceId: 0,
+			defaultSegmentsExperienceId: '0',
 			marginOptions: [],
 			paddingOptions: [],
 		},

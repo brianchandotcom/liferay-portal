@@ -154,7 +154,7 @@ definition {
 	macro gotoSettings {
 		AssertElementPresent(locator1 = "Form#NAME_FIELD");
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Settings");
+		Click(locator1 = "Form#SETTINGS_FORM_BUTTON");
 	}
 
 	macro gotoView {

@@ -34,6 +34,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>SETTINGS_FORM_BUTTON</td>
+    <td>//button[contains(@id,'ddmFormInstanceSettingsIcon')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>NAME_FIELD</td>
     <td>//div[contains(@class,'ddm-form-basic-info')]//textarea[contains(@id, 'nameEditor')]</td>
     <td></td>

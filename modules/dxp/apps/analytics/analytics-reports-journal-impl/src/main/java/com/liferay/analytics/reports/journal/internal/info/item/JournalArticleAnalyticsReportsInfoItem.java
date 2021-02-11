@@ -17,6 +17,11 @@ package com.liferay.analytics.reports.journal.internal.info.item;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.type.WebImage;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
@@ -65,6 +70,24 @@ public class JournalArticleAnalyticsReportsInfoItem
 		).orElse(
 			0L
 		);
+	}
+
+	@Override
+	public WebImage getAuthorWebImage(
+		JournalArticle journalArticle, Locale locale) {
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				JournalArticle.class.getName());
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(journalArticle);
+
+		InfoFieldValue<Object> authorProfileImageInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("authorProfileImage");
+
+		return (WebImage)authorProfileImageInfoFieldValue.getValue(locale);
 	}
 
 	@Override
@@ -140,6 +163,9 @@ public class JournalArticleAnalyticsReportsInfoItem
 	@Reference
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

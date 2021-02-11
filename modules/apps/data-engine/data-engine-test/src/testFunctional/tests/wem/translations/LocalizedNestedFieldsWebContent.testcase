@@ -376,7 +376,7 @@ definition {
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
-			localization1Name = "Nome da Estrutura WC");
+			localization1Name = "WC Nome da Estrutura");
 
 		DataEngine.editFieldsGroupLabel(
 			fieldsGroupLabel = "First Level Fields Group",
@@ -392,11 +392,11 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Rich Text",
-			fieldFieldLabelEdit = "Rico Texto");
+			fieldFieldLabelEdit = "Texto Rico");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "Numérica");
+			fieldFieldLabelEdit = "Numérico");
 
 		WebContentStructures.saveCP();
 
@@ -404,7 +404,7 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+		WebContent.addWithStructureCP(webContentTitle = "WC Title");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = "123",
@@ -416,9 +416,9 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = "5",
-			webContentNumericFieldLabel = "Numérica",
-			webContentRichText = "Este é um campo Rico Texto",
-			webContentRichTextFieldLabel = "Rico Texto",
+			webContentNumericFieldLabel = "Numérico",
+			webContentRichText = "Este é um campo de Texto Rico",
+			webContentRichTextFieldLabel = "Texto Rico",
 			webContentText = "Este é um campo de texto",
 			webContentTextFieldLabel = "Texto",
 			webContentTitle = "Título do conteúdo da web");
@@ -446,9 +446,9 @@ definition {
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
 			webContentNumeric = "5",
-			webContentNumericFieldLabel = "Numérica",
-			webContentRichText = "Este é um campo Rico Texto",
-			webContentRichTextFieldLabel = "Rico Texto",
+			webContentNumericFieldLabel = "Numérico",
+			webContentRichText = "Este é um campo de Texto Rico",
+			webContentRichTextFieldLabel = "Texto Rico",
 			webContentText = "Este é um campo de texto",
 			webContentTextFieldLabel = "Texto");
 

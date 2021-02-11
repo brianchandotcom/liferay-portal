@@ -181,7 +181,7 @@ public class GetCollectionFieldMVCResourceCommand
 				if (infoItemFieldValuesProvider == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to get info item form provdier for class " +
+							"Unable to get info item form provider for class " +
 								itemType);
 					}
 

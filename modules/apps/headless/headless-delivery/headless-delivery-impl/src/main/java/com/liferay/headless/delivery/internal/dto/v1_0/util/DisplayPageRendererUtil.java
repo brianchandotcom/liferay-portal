@@ -90,6 +90,8 @@ public class DisplayPageRendererUtil {
 					contentTemplateId =
 						layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
 					contentTemplateName = layoutPageTemplateEntry.getName();
+					markedAsDefault =
+						layoutPageTemplateEntry.isDefaultTemplate();
 					renderedContentURL = JaxRsLinkUtil.getJaxRsLink(
 						"headless-delivery", baseClass, methodName, uriInfo,
 						itemClassPK,

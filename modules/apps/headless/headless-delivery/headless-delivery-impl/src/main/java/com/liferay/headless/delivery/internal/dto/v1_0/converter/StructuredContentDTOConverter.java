@@ -67,6 +67,7 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -258,6 +259,18 @@ public class StructuredContentDTOConverter
 						"getStructuredContentRenderedContentTemplate", uriInfo,
 						journalArticle.getResourcePrimKey(),
 						ddmTemplate.getTemplateKey());
+
+					setMarkedAsDefault(
+						() -> {
+							if (Objects.equals(
+									ddmTemplate.getTemplateKey(),
+									journalArticle.getDDMTemplateKey())) {
+
+								return true;
+							}
+
+							return false;
+						});
 
 					setRenderedContentValue(
 						() -> {

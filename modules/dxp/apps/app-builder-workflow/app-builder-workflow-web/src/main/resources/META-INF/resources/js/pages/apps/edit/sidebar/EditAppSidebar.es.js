@@ -30,6 +30,7 @@ export default function EditAppSidebar() {
 	const editAppContext = useContext(EditAppContext);
 
 	const {
+		appId,
 		config: {
 			currentStep,
 			dataObject,
@@ -40,6 +41,7 @@ export default function EditAppSidebar() {
 			tableView,
 		},
 		dispatchConfig,
+		state: {app},
 	} = editAppContext;
 	const [currentTab, setCurrentTab] = useState();
 	const [showPopover, setShowPopover] = useState(false);
@@ -112,7 +114,10 @@ export default function EditAppSidebar() {
 			},
 			show: stepIndex !== steps.length - 1,
 			showPopoverIcon:
-				stepIndex == 0 && formView.missingRequiredFields?.customField,
+				!app.active &&
+				appId &&
+				formView.missingRequiredFields?.customField &&
+				stepIndex == 0,
 			title: Liferay.Language.get('data-and-views'),
 		},
 		{

@@ -67,7 +67,9 @@ const Card = ({
 	stepInfo,
 }) => {
 	const {
+		appId,
 		config: {dataObject, formView},
+		state: {app},
 	} = useContext(EditAppContext);
 	const [active, setActive] = useState(false);
 	const [showPopover, setShowPopover] = useState(false);
@@ -118,29 +120,32 @@ const Card = ({
 				</ClayTooltipProvider>
 			)}
 
-			{initial && formView.missingRequiredFields?.customField && (
-				<IconWithPopover
-					header={<PopoverHeader />}
-					show={showPopover}
-					trigger={
-						<div className="dropdown-button-asset help-cursor">
-							<IconWithPopover.TriggerIcon
-								iconProps={custom.triggerProps}
-								onMouseEnter={() => setShowPopover(true)}
-								onMouseLeave={() => setShowPopover(false)}
-								onMouseOver={() => setShowPopover(true)}
-							/>
-						</div>
-					}
-				>
-					{sub(
-						Liferay.Language.get(
-							'this-form-view-does-not-contain-all-custom-required-fields-for-the-x-object'
-						),
-						[dataObject.name]
-					)}
-				</IconWithPopover>
-			)}
+			{!app.active &&
+				appId &&
+				formView.missingRequiredFields?.customField &&
+				initial && (
+					<IconWithPopover
+						header={<PopoverHeader />}
+						show={showPopover}
+						trigger={
+							<div className="dropdown-button-asset help-cursor">
+								<IconWithPopover.TriggerIcon
+									iconProps={custom.triggerProps}
+									onMouseEnter={() => setShowPopover(true)}
+									onMouseLeave={() => setShowPopover(false)}
+									onMouseOver={() => setShowPopover(true)}
+								/>
+							</div>
+						}
+					>
+						{sub(
+							Liferay.Language.get(
+								'this-form-view-does-not-contain-all-custom-required-fields-for-the-x-object'
+							),
+							[dataObject.name]
+						)}
+					</IconWithPopover>
+				)}
 
 			<div className="d-flex">
 				{!isInitialOrFinalSteps && (

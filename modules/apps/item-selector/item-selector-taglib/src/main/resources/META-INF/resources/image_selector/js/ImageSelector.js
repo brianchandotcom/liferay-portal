@@ -12,9 +12,10 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import DropHereInfo from '../../drop_here_info/js/DropHereInfo';
 import BrowseImage from './BrowseImage';
@@ -35,10 +36,11 @@ const TPL_PROGRESS_DATA =
 	'<strong>{0}</strong> {1} of <strong>{2}</strong> {3}';
 
 const ImageSelector = ({
-	draggableImage,
-	cropRegion,
 	fileEntryId = 0,
+	imageCropDirection,
+	imageCropRegion: initialImageCropRegion,
 	imageURL,
+	isDraggable,
 	itemSelectorEventName,
 	itemSelectorURL,
 	maxFileSize = Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
@@ -47,93 +49,136 @@ const ImageSelector = ({
 	uploadURL,
 	validExtensions,
 }) => {
-	const isDraggable = draggableImage !== 'none';
-
+	const [errorMessage, setErrorMessage] = useState('');
+	const [fileName, setFileName] = useState('');
 	const [image, setImage] = useState({
 		fileEntryId,
 		src: imageURL,
 	});
-
-	const [imageCropRegion, setImageCropRegion] = useState(cropRegion);
-	const [fileName, setFileName] = useState('');
-	const [progressValue, setProgressValue] = useState(0);
+	const [imageCropRegion, setImageCropRegion] = useState(
+		initialImageCropRegion
+	);
 	const [progressData, setProgressData] = useState();
-	const [errorMessage, setErrorMessage] = useState('');
+	const [progressValue, setProgressValue] = useState(0);
 
 	const rootNodeRef = useRef(null);
-
 	const uploaderRef = useRef(null);
-
 	const uploaderStatusStoppedRef = useRef(null);
 
-	const _getErrorMessage = useCallback(
-		(errorObj) => {
-			let message = Liferay.Language.get(
-				'an-unexpected-error-occurred-while-uploading-your-file'
+	const getErrorMessage = (errorObj) => {
+		let message = Liferay.Language.get(
+			'an-unexpected-error-occurred-while-uploading-your-file'
+		);
+
+		const errorType = errorObj.errorType;
+
+		if (
+			errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION ||
+			errorType === STATUS_CODE.SC_FILE_CUSTOM_EXCEPTION
+		) {
+			message = errorObj.message;
+		}
+		else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
+			if (validExtensions) {
+				message = Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-file-with-a-valid-extension-x'
+					),
+					[validExtensions]
+				);
+			}
+			else {
+				message = Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-file-with-a-valid-file-type'
+					)
+				);
+			}
+		}
+		else if (errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION) {
+			message = Liferay.Language.get(
+				'please-enter-a-file-with-a-valid-file-name'
 			);
+		}
+		else if (errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION) {
+			message = Liferay.Util.sub(
+				Liferay.Language.get(
+					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+				),
+				[Liferay.Util.formatStorage(parseInt(maxFileSize, 10))]
+			);
+		}
+		else if (errorType === STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION) {
+			const maxUploadRequestSize =
+				Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
-			const errorType = errorObj.errorType;
+			message = Liferay.Util.sub(
+				Liferay.Language.get(
+					'request-is-larger-than-x-and-could-not-be-processed'
+				),
+				[Liferay.Util.formatStorage(maxUploadRequestSize)]
+			);
+		}
 
-			if (
-				errorType === STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION ||
-				errorType === STATUS_CODE.SC_FILE_CUSTOM_EXCEPTION
-			) {
-				message = errorObj.message;
-			}
-			else if (errorType === STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION) {
-				if (validExtensions) {
-					message = Liferay.Util.sub(
-						Liferay.Language.get(
-							'please-enter-a-file-with-a-valid-extension-x'
-						),
-						[validExtensions]
-					);
-				}
-				else {
-					message = Liferay.Util.sub(
-						Liferay.Language.get(
-							'please-enter-a-file-with-a-valid-file-type'
-						)
-					);
-				}
-			}
-			else if (errorType === STATUS_CODE.SC_FILE_NAME_EXCEPTION) {
-				message = Liferay.Language.get(
-					'please-enter-a-file-with-a-valid-file-name'
-				);
-			}
-			else if (errorType === STATUS_CODE.SC_FILE_SIZE_EXCEPTION) {
-				message = Liferay.Util.sub(
-					Liferay.Language.get(
-						'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
-					),
-					[Liferay.Util.formatStorage(parseInt(maxFileSize, 10))]
-				);
-			}
-			else if (
-				errorType === STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION
-			) {
-				const maxUploadRequestSize =
-					Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
+		return message;
+	};
 
-				message = Liferay.Util.sub(
-					Liferay.Language.get(
-						'request-is-larger-than-x-and-could-not-be-processed'
-					),
-					[Liferay.Util.formatStorage(maxUploadRequestSize)]
-				);
-			}
+	const showImagePreview = (file) => {
+		const reader = new FileReader();
 
-			return message;
-		},
-		[maxFileSize, validExtensions]
-	);
+		reader.addEventListener('loadend', () => {
+			if (progressValue < 100) {
+				setImage({
+					fileEntryId: '-1',
+					src: reader.result,
+				});
+			}
+		});
+
+		reader.readAsDataURL(file);
+	};
+
+	const stopProgress = () => {
+		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
+
+		setProgressValue(0);
+	};
+
+	const handleDeleteImageClick = () => {
+		setImage({
+			fileEntryId: 0,
+			src: '',
+		});
+
+		Liferay.fire(STR_IMAGE_DELETED, {
+			imageData: null,
+		});
+	};
+
+	const handleFileSelect = (event) => {
+		rootNodeRef.current.classList.remove(CSS_DROP_ACTIVE);
+
+		const file = event.fileList[0];
+
+		setFileName(file.get('name'));
+
+		showImagePreview(file.get('file'));
+
+		const uploader = uploaderRef.current;
+		const queue = uploader.queue;
+
+		if (queue && queue._currentState === uploaderStatusStoppedRef.current) {
+			queue.startUpload();
+		}
+
+		uploader.uploadThese(event.fileList);
+	};
 
 	const handleImageCropped = (cropRegion) => {
 		setImageCropRegion(JSON.stringify(cropRegion));
 	};
 
-	const handleSelectFileClick = useCallback(() => {
+	const handleSelectFileClick = () => {
 		Liferay.Util.openSelectionModal({
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
@@ -151,109 +196,46 @@ const ImageSelector = ({
 			title: Liferay.Language.get('select-file'),
 			url: itemSelectorURL,
 		});
-	}, [itemSelectorEventName, itemSelectorURL]);
+	};
 
-	const handleDeleteImageClick = useCallback(() => {
-		setImage({
-			fileEntryId: 0,
-			src: '',
-		});
-
-		Liferay.fire(STR_IMAGE_DELETED, {
-			imageData: null,
-		});
-	}, []);
-
-	const showImagePreview = useCallback(
-		(file) => {
-			const reader = new FileReader();
-
-			reader.addEventListener('loadend', () => {
-				if (progressValue < 100) {
-					setImage({
-						fileEntryId: '-1',
-						src: reader.result,
-					});
-				}
-			});
-
-			reader.readAsDataURL(file);
-		},
-		[progressValue]
-	);
-
-	const onFileSelect = useCallback(
-		(event) => {
-			rootNodeRef.current.classList.remove(CSS_DROP_ACTIVE);
-
-			const file = event.fileList[0];
-
-			setFileName(file.get('name'));
-
-			showImagePreview(file.get('file'));
-
-			const uploader = uploaderRef.current;
-			const queue = uploader.queue;
-
-			if (
-				queue &&
-				queue._currentState === uploaderStatusStoppedRef.current
-			) {
-				queue.startUpload();
-			}
-
-			uploader.uploadThese(event.fileList);
-		},
-		[showImagePreview]
-	);
-
-	const stopProgress = useCallback(() => {
-		rootNodeRef.current.classList.remove(CSS_PROGRESS_ACTIVE);
-
-		setProgressValue(0);
-	}, []);
-
-	const onUploadCancel = useCallback(() => {
+	const handleUploadCancel = () => {
 		uploaderRef.current.queue.cancelUpload();
 		stopProgress();
-	}, [stopProgress]);
+	};
 
-	const onUploadComplete = useCallback(
-		(event) => {
-			stopProgress();
+	const handleUploadComplete = (event) => {
+		stopProgress();
 
-			const data = JSON.parse(event.data);
+		const data = JSON.parse(event.data);
 
-			const image = data.file;
-			const success = data.success;
+		const image = data.file;
+		const success = data.success;
 
-			let fireEvent = STR_IMAGE_DELETED;
+		let fireEvent = STR_IMAGE_DELETED;
 
-			if (success) {
-				fireEvent = STR_IMAGE_UPLOADED;
+		if (success) {
+			fireEvent = STR_IMAGE_UPLOADED;
 
-				setImage({
-					fileEntryId: image.fileEntryId,
-					src: image.url,
-				});
-			}
-			else {
-				setImage({
-					fileEntryId: 0,
-					src: '',
-				});
-
-				setErrorMessage(_getErrorMessage(data.error));
-			}
-
-			Liferay.fire(fireEvent, {
-				imageData: success ? image : null,
+			setImage({
+				fileEntryId: image.fileEntryId,
+				src: image.url,
 			});
-		},
-		[_getErrorMessage, stopProgress]
-	);
+		}
+		else {
+			setImage({
+				fileEntryId: 0,
+				src: '',
+			});
 
-	const onUploadProgress = useCallback((event) => {
+			setErrorMessage(getErrorMessage(data.error));
+		}
+
+		Liferay.fire(fireEvent, {
+			imageData: success ? image : null,
+		});
+	};
+
+	const handleUploadProgressChange = (event) => {
 		const percentLoaded = Math.round(event.percentLoaded);
 
 		setProgressValue(Math.ceil(percentLoaded));
@@ -275,7 +257,7 @@ const ImageSelector = ({
 				bytesTotal.substring(bytesTotalSpaceIndex + 1)
 			)
 		);
-	}, []);
+	};
 
 	useEffect(() => {
 		AUI().use('uploader', (A) => {
@@ -292,9 +274,9 @@ const ImageSelector = ({
 					dragover() {
 						rootNode.classList.add(CSS_DROP_ACTIVE);
 					},
-					fileselect: onFileSelect,
-					uploadcomplete: onUploadComplete,
-					uploadprogress: onUploadProgress,
+					fileselect: handleFileSelect,
+					uploadcomplete: handleUploadComplete,
+					uploadprogress: handleUploadProgressChange,
 					uploadstart() {
 						rootNode.classList.add(CSS_PROGRESS_ACTIVE);
 					},
@@ -318,7 +300,7 @@ const ImageSelector = ({
 			className={classNames(
 				'drop-zone',
 				{'draggable-image': isDraggable},
-				{[`${draggableImage}`]: isDraggable},
+				{[`${imageCropDirection}`]: isDraggable},
 				{'drop-enabled': image.fileEntryId == 0},
 				'taglib-image-selector'
 			)}
@@ -329,6 +311,7 @@ const ImageSelector = ({
 				type="hidden"
 				value={image.fileEntryId}
 			/>
+
 			<input
 				name={`${portletNamespace}${paramName}CropRegion`}
 				type="hidden"
@@ -337,7 +320,7 @@ const ImageSelector = ({
 
 			{image.src && (
 				<ImageSelectorImage
-					direction={draggableImage}
+					direction={imageCropDirection}
 					imageSrc={image.src}
 					isCroppable={isDraggable}
 					onImageCrop={handleImageCropped}
@@ -355,6 +338,10 @@ const ImageSelector = ({
 				/>
 			)}
 
+			<span className="selection-status">
+				<ClayIcon symbol="check" />
+			</span>
+
 			{image.fileEntryId != 0 && (
 				<ChangeImageControls
 					handleClickDelete={handleDeleteImageClick}
@@ -363,9 +350,10 @@ const ImageSelector = ({
 			)}
 
 			<DropHereInfo />
+
 			<ProgressWrapper
 				fileName={fileName}
-				onCancel={onUploadCancel}
+				onCancel={handleUploadCancel}
 				progressData={progressData}
 				progressValue={progressValue}
 			/>
@@ -385,9 +373,10 @@ const ImageSelector = ({
 
 ImageSelector.propTypes = {
 	cropRegion: PropTypes.string,
-	draggableImage: PropTypes.string,
 	fileEntryId: PropTypes.string.isRequired,
+	imageCropDirection: PropTypes.string,
 	imageURL: PropTypes.string,
+	isDraggable: PropTypes.bool,
 	itemSelectorEventName: PropTypes.string,
 	itemSelectorURL: PropTypes.string,
 	maxFileSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

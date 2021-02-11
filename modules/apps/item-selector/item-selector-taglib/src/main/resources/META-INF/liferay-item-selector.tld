@@ -34,7 +34,7 @@
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.ImageSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A CSS class to specify the direction of the image drag. Possible values are <![CDATA[<code>vertical</code>]]>, <![CDATA[<code>horizontal</code>]]>, <![CDATA[<code>both</code>]]>, or <![CDATA[<code>none</code>]]>.</description>
+			<description>Deprecated as of 7.4.0, replaced by the attribute <![CDATA[<code>imageCropDirection</code>]]>.</description>
 			<name>draggableImage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -43,6 +43,12 @@
 			<description>The ID of a previously selected file entry.</description>
 			<name>fileEntryId</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The direction of the image drag to crop it. Possible values are <![CDATA[<code>vertical</code>]]>, <![CDATA[<code>horizontal</code>]]>, <![CDATA[<code>both</code>]]>, or <![CDATA[<code>none</code>]]>.</description>
+			<name>imageCropDirection</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

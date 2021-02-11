@@ -14,24 +14,72 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
+ * @author Carlos Lancha
  */
 public class ImageSelectorTag extends IncludeTag {
 
+	@Override
+	public int doStartTag() throws JspException {
+		if (_fileEntryId != 0) {
+			try {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					_fileEntryId);
+
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				_imageURL = DLURLHelperUtil.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), themeDisplay,
+					StringPool.BLANK);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to get HTML preview entry image URL", exception);
+			}
+		}
+
+		if (Validator.isNotNull(_paramName)) {
+			_imageCropRegion = ParamUtil.getString(
+				request, _paramName + "CropRegion");
+		}
+
+		return super.doStartTag();
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getImageCropDirection()}
+	 */
+	@Deprecated
 	public String getDraggableImage() {
-		return _draggableImage;
+		return getImageCropDirection();
 	}
 
 	public long getFileEntryId() {
 		return _fileEntryId;
+	}
+
+	public String getImageCropDirection() {
+		return _imageCropDirection;
 	}
 
 	public String getItemSelectorEventName() {
@@ -58,12 +106,24 @@ public class ImageSelectorTag extends IncludeTag {
 		return _validExtensions;
 	}
 
+	public boolean isDraggable() {
+		return !_imageCropDirection.equals("none");
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #setImageCropDirection()}
+	 */
+	@Deprecated
 	public void setDraggableImage(String draggableImage) {
-		_draggableImage = draggableImage;
+		setImageCropDirection(draggableImage);
 	}
 
 	public void setFileEntryId(long fileEntryId) {
 		_fileEntryId = fileEntryId;
+	}
+
+	public void setImageCropDirection(String imageCropDirection) {
+		_imageCropDirection = imageCropDirection;
 	}
 
 	public void setItemSelectorEventName(String itemSelectorEventName) {
@@ -101,8 +161,10 @@ public class ImageSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_draggableImage = "none";
 		_fileEntryId = 0;
+		_imageCropDirection = "none";
+		_imageCropRegion = null;
+		_imageURL = null;
 		_itemSelectorEventName = null;
 		_itemSelectorURL = null;
 		_maxFileSize = 0;
@@ -119,9 +181,16 @@ public class ImageSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-ui:image-selector:draggableImage", _draggableImage);
-		httpServletRequest.setAttribute(
 			"liferay-ui:image-selector:fileEntryId", _fileEntryId);
+		httpServletRequest.setAttribute(
+			"liferay-ui:image-selector:imageCropDirection",
+			_imageCropDirection);
+		httpServletRequest.setAttribute(
+			"liferay-ui:image-selector:imageCropRegion", _imageCropRegion);
+		httpServletRequest.setAttribute(
+			"liferay-ui:image-selector:imageURL", _imageURL);
+		httpServletRequest.setAttribute(
+			"liferay-ui:image-selector:isDraggable", isDraggable());
 		httpServletRequest.setAttribute(
 			"liferay-ui:image-selector:itemSelectorEventName",
 			_itemSelectorEventName);
@@ -139,8 +208,13 @@ public class ImageSelectorTag extends IncludeTag {
 
 	private static final String _PAGE = "/image_selector/page.jsp";
 
-	private String _draggableImage = "none";
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImageSelectorTag.class);
+
 	private long _fileEntryId;
+	private String _imageCropDirection = "none";
+	private String _imageCropRegion;
+	private String _imageURL;
 	private String _itemSelectorEventName;
 	private String _itemSelectorURL;
 	private long _maxFileSize;

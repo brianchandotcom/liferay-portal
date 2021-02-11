@@ -63,21 +63,11 @@ public abstract class BaseModelUserNotificationHandler
 		AssetRenderer<?> assetRenderer = null;
 
 		try {
-			assetRenderer = assetRendererFactory.getAssetRenderer(
-				classPK, AssetRendererFactory.TYPE_LATEST_APPROVED);
+			assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception, exception);
-			}
-		}
-
-		if (assetRenderer == null) {
-			try {
-				assetRenderer = assetRendererFactory.getAssetRenderer(
-					classPK, AssetRendererFactory.TYPE_LATEST);
-			}
-			catch (Exception exception) {
 			}
 		}
 

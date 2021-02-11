@@ -14,7 +14,9 @@
 
 package com.liferay.comment.web.internal.notifications;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.comment.web.internal.constants.CommentPortletKeys;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
@@ -76,8 +78,28 @@ public class CommentUserNotificationHandler
 			return null;
 		}
 
-		return getAssetRenderer(
+		AssetRenderer<?> assetRenderer = getAssetRenderer(
 			mbDiscussion.getClassName(), mbDiscussion.getClassPK());
+
+		if (assetRenderer == null) {
+			try {
+				AssetRendererFactory<?> assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							mbDiscussion.getClassName());
+
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					mbDiscussion.getClassPK(),
+					AssetRendererFactory.TYPE_LATEST);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
+			}
+		}
+
+		return assetRenderer;
 	}
 
 	@Override

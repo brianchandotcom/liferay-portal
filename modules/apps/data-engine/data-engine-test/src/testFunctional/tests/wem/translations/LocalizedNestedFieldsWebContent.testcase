@@ -226,50 +226,7 @@ definition {
 
 		// TODO LPS-123537 DefaultTitleIsDisplayedUponLocaleChange pending implementation
 	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@priority = "4"
-	test DefaultTitlePersistsAfterTranslatingForAnotherLocale {
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Date",
-			fieldName = "Date",
-			targetFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		Navigator.gotoNavItem(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		WebContent.addWithStructureCP(
-			webContentDate = "10/10/2020",
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		WebContent.addWithStructureCP(
-			webContentDate = "01/01/2021",
-			webContentText = "Este é um campo de texto",
-			webContentTitle = "Título do conteúdo da web");
-
-		PortletEntry.publish();
-
-		WebContent.viewWithStructureCP(
-			webContentDate = "10/10/2020",
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-	}
-
+	
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
@@ -334,7 +291,7 @@ definition {
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "4"
-	test DefaultValuesDisplayedForNonTranslatedWebContent {
+	test DefaultTitleAndValuesDisplayedForAnotherLocaleAndForNonTranslatedWebContent {
 
 		NavItem.gotoStructures();
 
@@ -370,6 +327,10 @@ definition {
 		PortletEntry.publish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 

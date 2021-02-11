@@ -46,4 +46,9 @@ public class DocumentLibraryDataLayoutBuilderDefinition
 		};
 	}
 
+	@Override
+	public String[] getVisibleProperties() {
+		return new String[] {"localizable"};
+	}
+
 }

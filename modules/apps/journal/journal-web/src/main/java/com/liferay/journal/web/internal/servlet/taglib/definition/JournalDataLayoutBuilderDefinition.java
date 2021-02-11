@@ -61,4 +61,9 @@ public class JournalDataLayoutBuilderDefinition
 		};
 	}
 
+	@Override
+	public String[] getVisibleProperties() {
+		return new String[] {"localizable"};
+	}
+
 }

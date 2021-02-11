@@ -181,8 +181,24 @@ const getRootParentField = (field, {root}) => {
 
 export const Field = ({field, ...otherProps}) => {
 	const parentField = useContext(ParentFieldContext);
-	const {fieldTypes} = usePage();
+	const {defaultLanguageId, editingLanguageId, fieldTypes} = usePage();
 	const [hasError, setHasError] = useState();
+
+	const getReadOnly = ({
+		editOnlyInDefaultLanguage = false,
+		localizable,
+		readOnly,
+	}) => {
+		if (
+			editOnlyInDefaultLanguage &&
+			!localizable &&
+			editingLanguageId !== defaultLanguageId
+		) {
+			return true;
+		}
+
+		return readOnly;
+	};
 
 	if (!fieldTypes) {
 		return <ClayLoadingIndicator />;
@@ -222,7 +238,10 @@ export const Field = ({field, ...otherProps}) => {
 							value={getRootParentField(field, parentField)}
 						>
 							<FieldLazy
-								field={field}
+								field={{
+									...field,
+									readOnly: getReadOnly(field),
+								}}
 								fieldTypes={fieldTypes}
 								{...otherProps}
 							/>

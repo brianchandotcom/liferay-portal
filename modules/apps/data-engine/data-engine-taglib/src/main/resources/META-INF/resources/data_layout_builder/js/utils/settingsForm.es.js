@@ -83,6 +83,13 @@ export const getFilteredSettingsContext = ({
 						};
 					}
 
+					if (fieldName === 'localizable') {
+						return {
+							...updatedField,
+							showAsSwitcher: true,
+						};
+					}
+
 					if (fieldName === 'name') {
 						return {
 							...updatedField,

@@ -405,6 +405,7 @@ export default withRouter(
 							<ClayInput.Group className="c-mt-3 c-mt-md-0">
 								<ClayInput.GroupItem>
 									<ClayInput
+										autoFocus={search ? true : false}
 										className="bg-transparent form-control input-group-inset input-group-inset-after"
 										defaultValue={
 											(search && slugToText(search)) || ''

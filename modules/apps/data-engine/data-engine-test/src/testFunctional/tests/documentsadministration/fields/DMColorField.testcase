@@ -17,6 +17,8 @@ definition {
 		DMDocumentType.add(
 			dmDocumentTypeFieldNames = "Color",
 			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 	}
 
 	tearDown {
@@ -77,15 +79,6 @@ definition {
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Color,Text",
-			dmDocumentTypeName = "DM Document Type Name New");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Type Name New");
-
 		DataEngine.delete(fieldFieldLabel = "Color");
 
 		DDLDataDefinition.save();
@@ -104,8 +97,6 @@ definition {
 	test DisableSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
 
-		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Color",
 			searchableType = "Disable");
@@ -123,17 +114,6 @@ definition {
 	@priority = "4"
 	test DuplicateColorFieldOnBuilder {
 		property portal.acceptance = "false";
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Color",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Type Name");
 
 		DataEngine.duplicate(fieldFieldLabel = "Color");
 
@@ -157,8 +137,6 @@ definition {
 	@priority = "3"
 	test EditColorFieldNameWithInvalidCharacters {
 		property portal.acceptance = "false";
-
-		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldReference(
 			assertFieldReference = "ColorTest1",
@@ -188,8 +166,6 @@ definition {
 	test EditColorFieldNameWithValidCharacters {
 		property portal.acceptance = "false";
 
-		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.editFieldReference(
 			assertFieldReference = "Color_Test",
 			fieldFieldLabel = "Color",
@@ -218,8 +194,6 @@ definition {
 	test EditHelpTextOfColorField {
 		property portal.acceptance = "false";
 
-		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Color",
 			fieldHelp = "Help Test");
@@ -239,26 +213,6 @@ definition {
 	test EditLabelOfColorField {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Color",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMDocumentType.edit(
-			dmDocumentTypeName = "DM Document Type Name",
-			fieldFieldLabel = "Color",
-			fieldFieldLabelEdit = "Color Test Name");
-
-		Navigator.gotoNavItem(navItem = "Documents and Media");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
-
 		AssertElementPresent(
 			key_fieldFieldLabel = "Color Test Name",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
@@ -268,15 +222,6 @@ definition {
 	@priority = "4"
 	test SetColorFieldAsRequired {
 		property portal.acceptance = "false";
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Color",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "DM Document Type Name");
 
 		DataEngine.editFieldRequired(fieldFieldLabel = "Color");
 
@@ -311,15 +256,6 @@ definition {
 	test SetColorWithPicker {
 		property portal.acceptance = "false";
 
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Color",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		NavItem.click(navItem = "Documents and Media");
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
-
 		PortletEntry.inputTitle(title = "DM Title Test");
 
 		DMDocument.selectColorRGB(
@@ -344,8 +280,6 @@ definition {
 	@priority = "4"
 	test SetSearchablePropertyOfColorField {
 		property portal.acceptance = "false";
-
-		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Color",

@@ -87,31 +87,31 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 		boolean displayAvailability =
 			cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance);
 
-		boolean available = false;
-		int stockQuantity;
-
-		Map<String, Integer> stockQuantities =
-			(Map<String, Integer>)httpServletRequest.getAttribute(
-				"stockQuantities");
-
-		if (MapUtil.isNotEmpty(stockQuantities)) {
-			stockQuantity = MapUtil.getInteger(
-				stockQuantities, cpInstance.getSku());
-		}
-		else {
-			stockQuantity = _commerceInventoryEngine.getStockQuantity(
-				cpInstance.getCompanyId(), commerceChannel.getGroupId(),
-				cpInstance.getSku());
-		}
-
-		int minStockQuantity = cpDefinitionInventoryEngine.getMinStockQuantity(
-			cpInstance);
-
-		if (stockQuantity > minStockQuantity) {
-			available = true;
-		}
-
 		if (displayAvailability) {
+			boolean available = false;
+			int stockQuantity;
+
+			Map<String, Integer> stockQuantities =
+				(Map<String, Integer>)httpServletRequest.getAttribute(
+					"stockQuantities");
+
+			if (MapUtil.isEmpty(stockQuantities)) {
+				stockQuantity = _commerceInventoryEngine.getStockQuantity(
+					cpInstance.getCompanyId(), commerceChannel.getGroupId(),
+					cpInstance.getSku());
+			}
+			else {
+				stockQuantity = MapUtil.getInteger(
+					stockQuantities, cpInstance.getSku());
+			}
+
+			int minStockQuantity =
+				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance);
+
+			if (stockQuantity > minStockQuantity) {
+				available = true;
+			}
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);

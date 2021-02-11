@@ -134,12 +134,13 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public Map<String, String> getAvailabilityMap(
+			CPCatalogEntry cpCatalogEntry,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		JSONObject availabilityJSONObject =
 			(JSONObject)getCPContentContributorValue(
-				CPContentContributorConstants.AVAILABILITY_NAME,
+				CPContentContributorConstants.AVAILABILITY_NAME, cpCatalogEntry,
 				httpServletRequest);
 
 		if (availabilityJSONObject == null) {
@@ -239,7 +240,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public Object getCPContentContributorValue(
-			String contributorKey, HttpServletRequest httpServletRequest)
+			String contributorKey, CPCatalogEntry cpCatalogEntry,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		CPContentContributor cpContentContributor =
@@ -251,7 +253,17 @@ public class CPContentHelperImpl implements CPContentHelper {
 		}
 
 		return cpContentContributor.getValue(
-			getDefaultCPInstance(httpServletRequest), httpServletRequest);
+			getDefaultCPInstance(cpCatalogEntry), httpServletRequest);
+	}
+
+	@Override
+	public Object getCPContentContributorValue(
+			String contributorKey, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return getCPContentContributorValue(
+			contributorKey, getCPCatalogEntry(httpServletRequest),
+			httpServletRequest);
 	}
 
 	@Override
@@ -311,22 +323,25 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
-	public CPInstance getDefaultCPInstance(
-			HttpServletRequest httpServletRequest)
+	public CPInstance getDefaultCPInstance(CPCatalogEntry cpCatalogEntry)
 		throws Exception {
 
-		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry(httpServletRequest);
+		if ((cpCatalogEntry == null) ||
+			!cpCatalogEntry.isIgnoreSKUCombinations()) {
 
-		if (cpCatalogEntry == null) {
-			return null;
-		}
-
-		if (!cpCatalogEntry.isIgnoreSKUCombinations()) {
 			return null;
 		}
 
 		return _cpInstanceHelper.getDefaultCPInstance(
 			cpCatalogEntry.getCPDefinitionId());
+	}
+
+	@Override
+	public CPInstance getDefaultCPInstance(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return getDefaultCPInstance(getCPCatalogEntry(httpServletRequest));
 	}
 
 	@Override

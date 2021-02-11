@@ -47,8 +47,8 @@ if (cpSku != null) {
 				<div class="availability d-flex mb-4">
 					<div>
 						<commerce-ui:availability-label
+							cpCatalogEntry="<%= cpCatalogEntry %>"
 							namespace="<%= liferayPortletResponse.getNamespace() %>"
-							willUpdate="<%= true %>"
 						/>
 					</div>
 

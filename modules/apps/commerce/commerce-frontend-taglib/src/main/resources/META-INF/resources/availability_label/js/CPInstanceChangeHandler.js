@@ -14,19 +14,21 @@
 
 import * as Events from 'commerce-frontend-js/utilities/eventsDefinitions';
 
-function updateAvailability({cpInstance, namespace}) {
-	const availabilityLabel = document.querySelector(
-		`.${namespace}-availability`
-	);
+const COMPONENT_NAME = 'availability-label';
 
-	if (availabilityLabel) {
+function updateAvailability({cpInstance, namespace}) {
+	const elementClassName = `${namespace}${COMPONENT_NAME}`;
+
+	const componentElement = document.querySelector(`.${elementClassName}`);
+
+	if (componentElement) {
 		const {availability, availabilityDisplayType} = cpInstance;
 
-		availabilityLabel.querySelector('.label-item').innerHTML = availability;
+		componentElement.querySelector('.label-item').innerHTML = availability;
 
-		availabilityLabel.className = `label label-${
+		componentElement.className = `label label-${
 			availabilityDisplayType || 'default'
-		} m-0`;
+		} m-0 ${elementClassName}`;
 	}
 }
 

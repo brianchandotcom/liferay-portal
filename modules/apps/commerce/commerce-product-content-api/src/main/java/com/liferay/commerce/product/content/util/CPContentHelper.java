@@ -54,6 +54,7 @@ public interface CPContentHelper {
 		throws Exception;
 
 	public Map<String, String> getAvailabilityMap(
+			CPCatalogEntry cpCatalogEntry,
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 
@@ -71,6 +72,11 @@ public interface CPContentHelper {
 		throws PortalException;
 
 	public Object getCPContentContributorValue(
+			String contributorKey, CPCatalogEntry cpCatalogEntry,
+			HttpServletRequest httpServletRequest)
+		throws Exception;
+
+	public Object getCPContentContributorValue(
 			String contributorKey, HttpServletRequest httpServletRequest)
 		throws Exception;
 
@@ -86,6 +92,9 @@ public interface CPContentHelper {
 	public List<CPOptionCategory> getCPOptionCategories(long companyId);
 
 	public List<CPType> getCPTypes();
+
+	public CPInstance getDefaultCPInstance(CPCatalogEntry cpCatalogEntry)
+		throws Exception;
 
 	public CPInstance getDefaultCPInstance(
 			HttpServletRequest httpServletRequest)

@@ -20,6 +20,8 @@
 
 <c:if test="<%= cpContentListEntryModel.getSkuId() != 0 %>">
 	<div class="aspect-ratio-item-bottom-left">
-		<commerce-ui:availability-label />
+		<commerce-ui:availability-label
+			cpCatalogEntry="<%= cpCatalogEntry %>"
+		/>
 	</div>
 </c:if>

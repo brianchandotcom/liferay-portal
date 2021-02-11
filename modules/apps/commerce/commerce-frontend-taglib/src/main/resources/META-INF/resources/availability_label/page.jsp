@@ -16,11 +16,11 @@
 
 <%@ include file="/availability_label/init.jsp" %>
 
-<span class="label label-<%= labelType %> m-0 <%= namespace %>availability-label">
+<span class="<%= Validator.isNull(label) ? "hide" + StringPool.SPACE : StringPool.BLANK %>label label-<%= labelType %> m-0 <%= namespace %>availability-label">
 	<span class="label-item label-item-expand"><%= label %></span>
 </span>
 
-<c:if test="<%= GetterUtil.getBoolean(willUpdate) %>">
+<c:if test="<%= Validator.isNotNull(namespace) %>">
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(

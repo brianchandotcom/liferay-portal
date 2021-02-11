@@ -16,8 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
+%>
+
 <div class="cp-renderer">
 	<commerce-ui:product-card
+		cpCatalogEntry="<%= cpContentHelper.getCPCatalogEntry(request) %>"
 		cpContentListEntryModel='<%= (CPContentListEntryModel)request.getAttribute("cpContentListEntryModel") %>'
 	/>
 </div>

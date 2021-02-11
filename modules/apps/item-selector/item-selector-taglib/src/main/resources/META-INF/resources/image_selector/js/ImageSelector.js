@@ -307,12 +307,14 @@ const ImageSelector = ({
 			ref={rootNodeRef}
 		>
 			<input
+				id={`${portletNamespace}${paramName}Id`}
 				name={`${portletNamespace}${paramName}Id`}
 				type="hidden"
 				value={image.fileEntryId}
 			/>
 
 			<input
+				id={`${portletNamespace}${paramName}CropRegion`}
 				name={`${portletNamespace}${paramName}CropRegion`}
 				type="hidden"
 				value={imageCropRegion}

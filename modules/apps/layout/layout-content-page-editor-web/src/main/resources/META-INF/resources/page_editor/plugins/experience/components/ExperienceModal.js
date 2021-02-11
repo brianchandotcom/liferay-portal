@@ -62,7 +62,7 @@ const ExperienceModal = ({
 			.map(({languageId}) => languageId)
 	);
 
-	const onChangeLocale = (isChecked, selectedLenguageId) => {
+	const onChangeLanguage = (isChecked, selectedLenguageId) => {
 		if (!isChecked) {
 			setSelectedLanguagesIds(
 				selectedLanguagesIds.concat(selectedLenguageId)
@@ -127,7 +127,7 @@ const ExperienceModal = ({
 
 	const nameInputId = `${config.portletNamespace}segmentsExperienceName`;
 	const segmentSelectId = `${config.portletNamespace}segmentsExperienceSegment`;
-	const localesChexboxesId = `${config.portletNamespace}segmentsExperienceLocales`;
+	const languagesCheckboxesId = `${config.portletNamespace}segmentsExperienceLanguages`;
 
 	const nameGroupClassName = classNames('c-mb-4', {
 		'has-error': requiredNameError,
@@ -244,7 +244,7 @@ const ExperienceModal = ({
 					</ClayForm.Group>
 
 					<ClayForm.Group>
-						<label htmlFor={localesChexboxesId}>
+						<label htmlFor={languagesCheckboxesId}>
 							{Liferay.Language.get('languages')}
 
 							<ClayIcon
@@ -254,14 +254,14 @@ const ExperienceModal = ({
 								symbol="asterisk"
 							/>
 						</label>
-						<ClayLayout.Row id={localesChexboxesId}>
+						<ClayLayout.Row id={languagesCheckboxesId}>
 							{Object.values(config.availableLanguages).map(
-								(locale) => {
+								(language) => {
 									const {
 										default: isDefault,
 										displayName,
 										languageId,
-									} = locale;
+									} = language;
 
 									const isChecked =
 										selectedLanguagesIds.indexOf(
@@ -280,7 +280,7 @@ const ExperienceModal = ({
 												disabled={isDefault}
 												label={displayName}
 												onChange={() => {
-													onChangeLocale(
+													onChangeLanguage(
 														isChecked,
 														languageId
 													);

@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.6.0",
-		"@clayui/form": "3.14.3",
+		"@clayui/form": "3.14.4",
 		"dynamic-data-mapping-form-field-type": "*",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",

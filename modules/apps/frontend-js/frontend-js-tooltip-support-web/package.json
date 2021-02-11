@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/tooltip": "3.4.4",
+		"@clayui/tooltip": "3.4.5",
 		"frontend-js-react-web": "*",
 		"metal-position": "2.1.2",
 		"react": "16.12.0"

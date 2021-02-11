@@ -1,12 +1,12 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.6.0",
-		"@clayui/color-picker": "3.4.5",
-		"@clayui/drop-down": "3.9.0",
-		"@clayui/form": "3.14.3",
+		"@clayui/color-picker": "3.5.0",
+		"@clayui/drop-down": "3.9.1",
+		"@clayui/form": "3.14.4",
 		"@clayui/icon": "3.1.0",
 		"@clayui/loading-indicator": "3.2.0",
-		"@clayui/popover": "3.5.4",
+		"@clayui/popover": "3.5.5",
 		"classnames": "2.2.6",
 		"frontend-js-web": "*",
 		"metal-state": "2.16.8",

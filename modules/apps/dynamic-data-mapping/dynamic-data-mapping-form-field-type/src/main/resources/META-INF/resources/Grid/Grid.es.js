@@ -14,9 +14,10 @@
 
 import {ClayInput, ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const TableHead = ({columns}) => (
 	<ClayTable.Head>
@@ -139,7 +140,7 @@ const Main = ({
 	value = {},
 	...otherProps
 }) => {
-	const [state, setState] = useState(value);
+	const [state, setState] = useSyncValue(value, false);
 
 	return (
 		<FieldBase name={name} readOnly={readOnly} {...otherProps}>

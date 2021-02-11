@@ -371,26 +371,6 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Web Content Title");
-
-		WebContent.viewWithStructureCP(
-			predefinedValue = "true",
-			webContentNumeric = "8",
-			webContentText = "This is a Text field");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Título do conteúdo da web");
-
-		WebContent.viewWithStructureCP(
-			predefinedValue = "true",
-			webContentNumeric = "123",
-			webContentText = "Este é um campo de texto");
-
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		AssertTextEquals(

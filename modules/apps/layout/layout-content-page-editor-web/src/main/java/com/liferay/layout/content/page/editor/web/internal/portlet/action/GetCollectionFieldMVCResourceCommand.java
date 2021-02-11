@@ -19,7 +19,9 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -264,6 +266,15 @@ public class GetCollectionFieldMVCResourceCommand
 				WebImage webImage = (WebImage)value;
 
 				value = webImage.toJSONObject();
+
+				long fileEntryId = _getFileEntryId(webImage);
+
+				if (fileEntryId != 0) {
+					JSONObject valueJSONObject = (JSONObject)value;
+
+					valueJSONObject.put(
+						"fileEntryId", String.valueOf(fileEntryId));
+				}
 			}
 			else {
 				value = _fragmentEntryProcessorHelper.formatMappedValue(
@@ -287,6 +298,31 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		return displayObjectJSONObject;
+	}
+
+	private long _getFileEntryId(WebImage webImage) {
+		InfoItemReference infoItemReference = webImage.getInfoItemReference();
+
+		if ((infoItemReference == null) ||
+			!Objects.equals(
+				infoItemReference.getClassName(), FileEntry.class.getName())) {
+
+			return 0;
+		}
+
+		InfoItemIdentifier fileEntryInfoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(fileEntryInfoItemIdentifier instanceof
+				ClassPKInfoItemIdentifier)) {
+
+			return 0;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
+
+		return classPKInfoItemIdentifier.getClassPK();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

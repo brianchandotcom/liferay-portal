@@ -154,6 +154,10 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 					"redirect",
 					ParamUtil.getString(_httpServletRequest, "redirect"));
 
+				addSegmentEntryURL.setParameter(
+					"backURL",
+					ParamUtil.getString(_httpServletRequest, "backURL"));
+
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)_httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);

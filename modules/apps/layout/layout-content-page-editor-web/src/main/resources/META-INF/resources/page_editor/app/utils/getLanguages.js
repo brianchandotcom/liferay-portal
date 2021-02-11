@@ -12,16 +12,23 @@
  * details.
  */
 
+import {config} from '../../app/config/index';
+
 export default function getLanguages(
 	availableLanguages,
 	availableSegmentsExperiences,
 	segmentsExperienceId
 ) {
+	if (
+		!availableSegmentsExperiences ||
+		!segmentsExperienceId ||
+		segmentsExperienceId === config.defaultSegmentsExperienceId
+	) {
+		return availableLanguages;
+	}
+
 	const languages =
-		(availableSegmentsExperiences &&
-			segmentsExperienceId &&
-			availableSegmentsExperiences[segmentsExperienceId]?.languageIds) ||
-		Object.keys(availableLanguages);
+		availableSegmentsExperiences[segmentsExperienceId].languageIds;
 
 	return languages.reduce((acc, languageId) => {
 		if (availableLanguages[languageId]) {

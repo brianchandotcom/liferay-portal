@@ -45,8 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -69,7 +67,7 @@ public class OptionValueResourceImpl
 	extends BaseOptionValueResourceImpl implements NestedFieldSupport {
 
 	@Override
-	public Response deleteOptionValue(@NotNull Long id) throws Exception {
+	public Response deleteOptionValue(Long id) throws Exception {
 		_cpOptionValueService.deleteCPOptionValue(id);
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -79,7 +77,7 @@ public class OptionValueResourceImpl
 
 	@Override
 	public Response deleteOptionValueByExternalReferenceCode(
-			@NotNull String externalReferenceCode)
+			String externalReferenceCode)
 		throws Exception {
 
 		CPOptionValue cpOptionValue =
@@ -145,13 +143,13 @@ public class OptionValueResourceImpl
 	}
 
 	@Override
-	public OptionValue getOptionValue(@NotNull Long id) throws Exception {
+	public OptionValue getOptionValue(Long id) throws Exception {
 		return _toOptionValue(id);
 	}
 
 	@Override
 	public OptionValue getOptionValueByExternalReferenceCode(
-			@NotNull String externalReferenceCode)
+			String externalReferenceCode)
 		throws Exception {
 
 		CPOptionValue cpOptionValue =
@@ -168,7 +166,7 @@ public class OptionValueResourceImpl
 	}
 
 	@Override
-	public Response patchOptionValue(@NotNull Long id, OptionValue optionValue)
+	public Response patchOptionValue(Long id, OptionValue optionValue)
 		throws Exception {
 
 		CPOptionValue cpOptionValue = _cpOptionValueService.getCPOptionValue(
@@ -183,7 +181,7 @@ public class OptionValueResourceImpl
 
 	@Override
 	public Response patchOptionValueByExternalReferenceCode(
-			@NotNull String externalReferenceCode, OptionValue optionValue)
+			String externalReferenceCode, OptionValue optionValue)
 		throws Exception {
 
 		CPOptionValue cpOptionValue =

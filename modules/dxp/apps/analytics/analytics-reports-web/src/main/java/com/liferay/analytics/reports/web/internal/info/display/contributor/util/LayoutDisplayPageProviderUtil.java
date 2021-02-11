@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutDisplayPageProviderUtil {
 
 	public static LayoutDisplayPageObjectProvider<?>
-		getLayoutDisplayPageObjectProvider(
+		initLayoutDisplayPageObjectProvider(
 			HttpServletRequest httpServletRequest,
 			LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
 			Portal portal) {

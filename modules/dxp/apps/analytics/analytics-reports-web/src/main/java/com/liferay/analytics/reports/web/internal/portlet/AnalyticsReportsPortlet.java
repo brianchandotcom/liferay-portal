@@ -85,7 +85,7 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		}
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			LayoutDisplayPageProviderUtil.getLayoutDisplayPageObjectProvider(
+			LayoutDisplayPageProviderUtil.initLayoutDisplayPageObjectProvider(
 				httpServletRequest, _layoutDisplayPageProviderTracker, _portal);
 
 		ThemeDisplay themeDisplay =

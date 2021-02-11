@@ -94,7 +94,7 @@ public class GetTrafficSourcesMVCResourceCommand
 				layoutDisplayPageObjectProvider =
 					(LayoutDisplayPageObjectProvider<Object>)
 						LayoutDisplayPageProviderUtil.
-							getLayoutDisplayPageObjectProvider(
+							initLayoutDisplayPageObjectProvider(
 								httpServletRequest,
 								_layoutDisplayPageProviderTracker, _portal);
 

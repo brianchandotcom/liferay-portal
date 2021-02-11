@@ -100,7 +100,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			layoutDisplayPageObjectProvider =
 				(LayoutDisplayPageObjectProvider<Object>)
 					LayoutDisplayPageProviderUtil.
-						getLayoutDisplayPageObjectProvider(
+						initLayoutDisplayPageObjectProvider(
 							httpServletRequest,
 							_layoutDisplayPageProviderTracker, _portal);
 

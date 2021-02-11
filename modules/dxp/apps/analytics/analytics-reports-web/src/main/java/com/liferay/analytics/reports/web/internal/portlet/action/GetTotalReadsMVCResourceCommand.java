@@ -71,7 +71,7 @@ public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 			layoutDisplayPageObjectProvider =
 				(LayoutDisplayPageObjectProvider<Object>)
 					LayoutDisplayPageProviderUtil.
-						getLayoutDisplayPageObjectProvider(
+						initLayoutDisplayPageObjectProvider(
 							httpServletRequest,
 							_layoutDisplayPageProviderTracker, _portal);
 

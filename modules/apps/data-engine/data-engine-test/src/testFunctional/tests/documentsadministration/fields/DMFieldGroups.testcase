@@ -49,14 +49,14 @@ definition {
 		Navigator.gotoNavItem(navItem = "Documents and Media");
 
 		DMDocument.addCP(
-			dmDocumentTitle = "DM Name",
+			dmDocumentTitle = "DM Title",
 			dmDocumentTypeName = "DM Document Type Name",
 			numericField = "123",
 			textField = "Test Text");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "DM Name");
+			rowEntry = "DM Title");
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#TEXT_SPECIFIC",

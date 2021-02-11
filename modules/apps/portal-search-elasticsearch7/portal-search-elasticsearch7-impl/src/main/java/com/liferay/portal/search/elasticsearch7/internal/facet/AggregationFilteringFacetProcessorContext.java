@@ -114,13 +114,13 @@ public class AggregationFilteringFacetProcessorContext
 			if ((facet instanceof com.liferay.portal.search.facet.Facet) &&
 				!facet.isStatic()) {
 
-				com.liferay.portal.search.facet.Facet facet2 =
+				com.liferay.portal.search.facet.Facet osgiFacet =
 					(com.liferay.portal.search.facet.Facet)facet;
 
-				if (!ArrayUtil.isEmpty(facet2.getSelections())) {
+				if (!ArrayUtil.isEmpty(osgiFacet.getSelections())) {
 					map.put(
-						facet2.getAggregationName(),
-						getSelectionFilters(facet2));
+						osgiFacet.getAggregationName(),
+						getSelectionFilters(osgiFacet));
 				}
 			}
 		}

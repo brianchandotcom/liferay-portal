@@ -429,6 +429,14 @@ public class DDMFormFieldTemplateContextFactory {
 			"dir", LanguageUtil.get(_locale, LanguageConstants.KEY_DIR));
 	}
 
+	protected void setDDMFormFieldTemplateContextEditOnlyInDefaultLanguage(
+		Map<String, Object> ddmFormFieldTemplateContext,
+		boolean editOnlyInDefaultLanguage) {
+
+		ddmFormFieldTemplateContext.put(
+			"editOnlyInDefaultLanguage", editOnlyInDefaultLanguage);
+	}
+
 	protected void setDDMFormFieldTemplateContextEnabled(
 		Map<String, Object> ddmFormFieldTemplateContext,
 		Map<String, Object> changedProperties, boolean defaultValue) {
@@ -836,6 +844,10 @@ public class DDMFormFieldTemplateContextFactory {
 			ddmFormField.getDDMFormFieldValidation());
 		setDDMFormFieldTemplateContextVisible(
 			ddmFormFieldTemplateContext, changedProperties, true);
+
+		setDDMFormFieldTemplateContextEditOnlyInDefaultLanguage(
+			ddmFormFieldTemplateContext,
+			_ddmFormRenderingContext.isEditOnlyInDefaultLanguage());
 	}
 
 	private Stream<Map<String, Object>> _getColumnsStream(

@@ -25,6 +25,7 @@ import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
 import {useSelector} from '../../store/index';
 import isMapped from '../../utils/editable-value/isMapped';
+import isMappedToCollection from '../../utils/editable-value/isMappedToCollection';
 import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';
 import {useId} from '../../utils/useId';
 
@@ -109,7 +110,9 @@ export const ImageSelectorField = ({field, onValueSelect, value = {}}) => {
 					) : null}
 
 					{config.adaptiveMediaEnabled &&
-						(value?.fileEntryId || isMappedToInfoItem(value)) && (
+						(value?.fileEntryId ||
+							isMappedToInfoItem(value) ||
+							isMappedToCollection(value)) && (
 							<ImageSelectorSize
 								fieldValue={value}
 								imageSizeId="auto"

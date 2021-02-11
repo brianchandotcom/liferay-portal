@@ -26,6 +26,7 @@ import selectSegmentsExperienceId from '../../../../app/selectors/selectSegments
 import {useDispatch, useSelector} from '../../../../app/store/index';
 import updateEditableValuesThunk from '../../../../app/thunks/updateEditableValues';
 import isMapped from '../../../../app/utils/editable-value/isMapped';
+import isMappedToCollection from '../../../../app/utils/editable-value/isMappedToCollection';
 import isMappedToInfoItem from '../../../../app/utils/editable-value/isMappedToInfoItem';
 import {setIn} from '../../../../app/utils/setIn';
 import {updateIn} from '../../../../app/utils/updateIn';
@@ -348,7 +349,8 @@ function ImagePanelSizeSelector({item}) {
 
 	return config.adaptiveMediaEnabled &&
 		(editableContent?.fileEntryId ||
-			isMappedToInfoItem(editableContent)) ? (
+			isMappedToInfoItem(editableContent) ||
+			isMappedToCollection(editableContent)) ? (
 		<ImageSelectorSize
 			editableElement={editableElement}
 			fieldValue={editableContent}

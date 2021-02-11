@@ -17,12 +17,13 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import {useGetFieldValue} from '../../app/components/CollectionItemContext';
 import {useGlobalContext} from '../../app/components/GlobalContext';
 import selectLanguageId from '../../app/selectors/selectLanguageId';
 import ImageService from '../../app/services/ImageService';
-import InfoItemService from '../../app/services/InfoItemService';
 import {useSelector} from '../../app/store/index';
-import isMappedToInfoItem from '../../app/utils/editable-value/isMappedToInfoItem';
+import isMapped from '../../app/utils/editable-value/isMapped';
+import resolveEditableValue from '../../app/utils/editable-value/resolveEditableValue';
 import {useId} from '../../app/utils/useId';
 
 export const DEFAULT_IMAGE_SIZE_ID = 'auto';
@@ -42,6 +43,8 @@ export const ImageSelectorSize = ({
 	const [fileEntryId, setFileEntryId] = useState(
 		fieldValue.fileEntryId || ''
 	);
+	const getFieldValue = useGetFieldValue();
+	const globalContext = useGlobalContext();
 	const imageSizeSelectId = useId();
 	const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_SIZE);
 	const [imageSizes, setImageSizes] = useState([]);
@@ -51,24 +54,20 @@ export const ImageSelectorSize = ({
 		(state) => state.selectedViewportSize
 	);
 
-	const globalContext = useGlobalContext();
-
 	useEffect(() => {
 		if (fieldValue.fileEntryId) {
 			setFileEntryId(fieldValue.fileEntryId);
 		}
-		else if (isMappedToInfoItem(fieldValue)) {
-			InfoItemService.getInfoItemFieldValue({
-				...fieldValue,
-				languageId,
-				onNetworkStatus: () => {},
-			}).then((response) => {
-				if (isMounted()) {
-					setFileEntryId(response?.fieldValue?.fileEntryId || '');
+		else if (isMapped(fieldValue)) {
+			resolveEditableValue(fieldValue, languageId, getFieldValue).then(
+				(value) => {
+					if (isMounted()) {
+						setFileEntryId(value?.fileEntryId || '');
+					}
 				}
-			});
+			);
 		}
-	}, [fieldValue, isMounted, languageId]);
+	}, [fieldValue, getFieldValue, isMounted, languageId]);
 
 	useEffect(() => {
 		const computedImageSize =
@@ -207,6 +206,9 @@ ImageSelectorSize.propTypes = {
 			classNameId: PropTypes.string.isRequired,
 			classPK: PropTypes.string.isRequired,
 			fieldId: PropTypes.string.isRequired,
+		}),
+		PropTypes.shape({
+			collectionFieldId: PropTypes.string.isRequired,
 		}),
 	]).isRequired,
 	imageSizeId: PropTypes.string,

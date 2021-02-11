@@ -291,11 +291,11 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			{
 				dialog: {
 					cssClass: 'ddm-form-settings-modal modal-full-screen',
-					height: 700,
+					height: 600,
 					resizable: false,
 					'toolbars.footer': [
 						{
-							cssClass: 'btn-link',
+							cssClass: 'btn-secondary mr-3',
 							label: '<liferay-ui:message key="cancel" />',
 							on: {
 								click: function () {
@@ -317,11 +317,11 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							},
 						},
 					],
-					width: 720,
+					width: 600,
 				},
 				id: '<portlet:namespace />settingsModal',
 				stack: false,
-				title: '<liferay-ui:message key="form-settings" />',
+				title: '<liferay-ui:message key="settings" />',
 			},
 			function (dialogWindow) {
 				var bodyNode = dialogWindow.bodyNode;

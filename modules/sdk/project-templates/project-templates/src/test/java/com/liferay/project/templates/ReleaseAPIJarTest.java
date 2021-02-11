@@ -31,7 +31,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -208,42 +207,35 @@ public class ReleaseAPIJarTest {
 		return sb.toString();
 	}
 
-	private List<String> _getIgnorePaths(String liferayVersion)
-		throws Exception {
-
-		String ignoredPaths = FileTestUtil.read(
+	private List<String> _getIgnorePaths(String jarName) throws Exception {
+		List<String> ignoredPaths = FileTestUtil.readAllLines(
 			ReleaseAPIJarTest.class.getClassLoader(),
 			"com/liferay/project/templates/dependencies" +
 				"/APIJarExcludedPaths.txt");
 
-		String newIgnoredPaths = null;
-
-		if (liferayVersion.startsWith("7.0")) {
-			newIgnoredPaths = ignoredPaths.concat(
-				FileTestUtil.read(
+		if (jarName.contains("7.0")) {
+			ignoredPaths.addAll(
+				FileTestUtil.readAllLines(
 					ReleaseAPIJarTest.class.getClassLoader(),
 					"com/liferay/project/templates/dependencies" +
 						"/70APIJarExcludedPaths.txt"));
 		}
-		else if (liferayVersion.startsWith("7.1")) {
-			newIgnoredPaths = ignoredPaths.concat(
-				FileTestUtil.read(
+		else if (jarName.contains("7.1")) {
+			ignoredPaths.addAll(
+				FileTestUtil.readAllLines(
 					ReleaseAPIJarTest.class.getClassLoader(),
 					"com/liferay/project/templates/dependencies" +
 						"/71APIJarExcludedPaths.txt"));
 		}
-		else if (liferayVersion.startsWith("7.2")) {
-			newIgnoredPaths = ignoredPaths.concat(
-				FileTestUtil.read(
+		else if (jarName.contains("7.2")) {
+			ignoredPaths.addAll(
+				FileTestUtil.readAllLines(
 					ReleaseAPIJarTest.class.getClassLoader(),
 					"com/liferay/project/templates/dependencies" +
 						"/72APIJarExcludedPaths.txt"));
 		}
-		else {
-			newIgnoredPaths = ignoredPaths;
-		}
 
-		return Arrays.asList(newIgnoredPaths.split("\n"));
+		return ignoredPaths;
 	}
 
 	private Set<String> _getPaths(Path sourcePath, String extension)

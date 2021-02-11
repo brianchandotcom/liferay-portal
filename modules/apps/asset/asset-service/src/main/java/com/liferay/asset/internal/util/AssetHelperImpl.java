@@ -718,16 +718,15 @@ public class AssetHelperImpl implements AssetHelper {
 
 		int sortType = _getDDMFormFieldTypeSortType(ddmFormField);
 
-		Sort sort = SortFactoryUtil.getSort(
-			AssetEntry.class, sortType,
-			_getDDMFormFieldTypeOrderByCol(
-				ddmFormField, sortField,
-				_getDDMFormFieldLocalizable(sortField), sortType, locale),
-			false, orderByType);
+		String orderByCol = _getDDMFormFieldTypeOrderByCol(
+			ddmFormField, sortField,
+			_getDDMFormFieldLocalizable(sortField), sortType, locale);
 
-		FieldSort fieldSort = _sorts.field(sort.getFieldName());
+		FieldSort fieldSort = _sorts.field(orderByCol);
 
-		if (sort.isReverse()) {
+		if (Validator.isNotNull(orderByType) &&
+			!StringUtil.equalsIgnoreCase(orderByType, "asc")) {
+
 			fieldSort.setSortOrder(SortOrder.DESC);
 		}
 

@@ -51,7 +51,7 @@ definition {
 		DMDocument.addCP(
 			dmDocumentTitle = "DM Name",
 			dmDocumentTypeName = "DM Document Type Name",
-			numericField = "7",
+			numericField = "123",
 			textField = "Test Text");
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -64,7 +64,7 @@ definition {
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#NUMERIC",
-			value1 = "7");
+			value1 = "123");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

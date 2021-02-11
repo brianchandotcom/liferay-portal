@@ -66,15 +66,26 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	%>'
 />
 
-<clay:management-toolbar-v2
+<portlet:actionURL name="/announcements/edit_entry" var="deleteEntriesURL" />
+
+<clay:management-toolbar
 	actionDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"deleteEntriesURL", deleteEntriesURL.toString()
+		).put(
+			"inputId", Constants.CMD
+		).put(
+			"inputValue", Constants.DELETE
+		).build()
+	%>'
 	clearResultsURL="<%= announcementsAdminViewManagementToolbarDisplayContext.getClearResultsURL() %>"
-	componentId="announcementsAdminViewManagementToolbar"
 	creationMenu="<%= announcementsAdminViewManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= announcementsAdminViewManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= announcementsAdminViewManagementToolbarDisplayContext.getTotal() %>"
+	propsTransformer="announcements_admin/js/AnnouncementsManagementToolbarPropsTransformer"
 	searchContainerId="announcementsEntries"
 	selectable="<%= true %>"
 	showSearch="<%= false %>"
@@ -152,48 +163,3 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<aui:script>
-	var deleteEntries = function () {
-		if (
-			confirm(
-				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
-			)
-		) {
-			var form = document.getElementById('<portlet:namespace />fm');
-
-			if (form) {
-				form.setAttribute('method', 'post');
-
-				var cmd = form.querySelector(
-					'#<portlet:namespace /><%= Constants.CMD %>'
-				);
-
-				if (cmd) {
-					cmd.setAttribute('value', '<%= Constants.DELETE %>');
-				}
-
-				submitForm(
-					form,
-					'<portlet:actionURL name="/announcements/edit_entry" />'
-				);
-			}
-		}
-	};
-
-	var ACTIONS = {
-		deleteEntries: deleteEntries,
-	};
-
-	Liferay.componentReady('announcementsAdminViewManagementToolbar').then(
-		function (managementToolbar) {
-			managementToolbar.on('actionItemClicked', function (event) {
-				var itemData = event.data.item.data;
-
-				if (itemData && itemData.action && ACTIONS[itemData.action]) {
-					ACTIONS[itemData.action]();
-				}
-			});
-		}
-	);
-</aui:script>

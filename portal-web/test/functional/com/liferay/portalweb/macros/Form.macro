@@ -106,6 +106,16 @@ definition {
 		Button.clickDone();
 	}
 
+	macro configureSubmitLabel {
+		AssertClick(
+			locator1 = "Form#SETTINGS_TAB_PERSONALIZATION",
+			value1 = "Personalization");
+
+		FormFields.editText(
+			fieldName = "submitLabel",
+			fieldValue = "${submitLabel}");
+	}
+
 	macro configureWorkflow {
 		Click(locator1 = "Form#SETTINGS_TAB_WORKFLOW_CONFIGURATION_FIELD");
 

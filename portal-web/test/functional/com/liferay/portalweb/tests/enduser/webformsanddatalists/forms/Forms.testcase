@@ -3517,6 +3517,51 @@ definition {
 			fieldValue = "2BA676");
 	}
 
+	@priority = "2"
+	test SubmitFormWithCustomizedSubmitLabel {
+		property portal.acceptance = "false";
+		property portal.upstream = "true";
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithCustomizedSubmitLabel";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editDescription();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		var textFieldName = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = "Enviar Personalizado");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormPortlet.changeLocale(locale = "português-Brasil");
+
+		FormFields.editText(
+			fieldName = "${textFieldName}",
+			fieldValue = "Campo de Texto");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Enviar Personalizado");
+	}
+
 	@priority = "5"
 	test SubmitFormWithCustomTextContainingValidation {
 		property portal.acceptance = "true";

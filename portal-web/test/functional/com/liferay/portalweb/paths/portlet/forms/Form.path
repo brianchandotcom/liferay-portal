@@ -235,6 +235,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>SETTINGS_TAB_PERSONALIZATION</td>
+    <td>//a[contains(@class,'tab-content') and contains(.,'Personalization')] | //span[contains(text(),'Personalization')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>SETTINGS_TAB_WORKFLOW_CONFIGURATION_FIELD</td>
     <td>//div[contains(@data-field-name,'workflowDefinition')]//div[contains(@class,form-builder-select-field)]</td>
     <td></td>

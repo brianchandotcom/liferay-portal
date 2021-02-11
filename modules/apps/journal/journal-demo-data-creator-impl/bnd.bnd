@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Journal Demo Data Creator Implementation
-Bundle-SymbolicName: com.liferay.journal.demo.data.creator.impl
-Bundle-Version: 4.0.0
--dsannotations-options: inherit

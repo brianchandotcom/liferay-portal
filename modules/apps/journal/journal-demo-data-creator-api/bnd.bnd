@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Journal Demo Data Creator API
-Bundle-SymbolicName: com.liferay.journal.demo.data.creator.api
-Bundle-Version: 4.0.0
-Export-Package: com.liferay.journal.demo.data.creator

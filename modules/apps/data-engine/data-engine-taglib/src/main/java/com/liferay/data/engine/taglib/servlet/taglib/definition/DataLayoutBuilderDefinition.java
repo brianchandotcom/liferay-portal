@@ -77,6 +77,10 @@ public interface DataLayoutBuilderDefinition {
 		};
 	}
 
+	public default String[] getVisibleProperties() {
+		return new String[0];
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */

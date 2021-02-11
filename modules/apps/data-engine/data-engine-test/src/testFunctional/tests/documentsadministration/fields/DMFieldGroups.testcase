@@ -39,15 +39,6 @@ definition {
 	test CheckIfFieldGroupDataPersists {
 		property portal.acceptance = "false";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
@@ -82,15 +73,6 @@ definition {
 		property portal.acceptance = "false";
 
 		var dmDocumentTypeName = "DM Document Type Name";
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "${dmDocumentTypeName}");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
@@ -184,17 +166,6 @@ definition {
 	test DeleteNestedFieldGroupOnStructure {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		NavItem.click(navItem = "Document Types");
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
@@ -227,18 +198,6 @@ definition {
 
 		var formGroupLabel = "Copy of Fields Group";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
@@ -264,18 +223,6 @@ definition {
 	@priority = "5"
 	test DuplicateANestedFieldGroup {
 		property portal.acceptance = "false";
-
-		var fieldGroupLabel = "Fields Group";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
@@ -315,17 +262,6 @@ definition {
 	test EditFieldGroupLabel {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeDescription = " DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Text2",
 			fieldName = "Text",
@@ -349,18 +285,6 @@ definition {
 	test EditFieldOnDuplicatedFieldGroup {
 		var dmDocumentTypeName = "DM Document Type Name";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		AppBuilderAdmin.switchTab(tabName = "Document Types");
-
-		DMDocumentType.add(
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
@@ -370,7 +294,7 @@ definition {
 
 		Button.clickSave();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
 
 		AssertElementPresent(
 			key_fieldFieldLabel = "Copy of Fields Group",
@@ -397,20 +321,6 @@ definition {
 	@priority = "4"
 	test EmptyAFieldGroup {
 		property portal.upstream = "quarantine";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		NavItem.click(navItem = "Document Types");
-
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "Testing");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
@@ -445,17 +355,6 @@ definition {
 
 		var label2 = "Fields Group";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
@@ -488,14 +387,6 @@ definition {
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"
 	@priority = "4"
 	test SetFieldGroupAsCollapsibleAndExecuteOnUpload {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Text1",
@@ -529,16 +420,6 @@ definition {
 		var dmDocumentTitle = "Title";
 		var newLabel = "Image";
 		var webTitle = "WC Title";
-
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Upload",
-			dmDocumentTypeName = "DM Document Type Name");
 
 		DataEngine.editFieldRepeatable(fieldFieldLabel = "Upload");
 

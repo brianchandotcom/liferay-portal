@@ -207,17 +207,8 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@ignore = "true"
 	@priority = "4"
-	test SetRichTextSearchableAsDisabled {
-		property portal.acceptance = "false";
-
-		// TODO LPS-98076 SetRichTextSearchableAsDisabled pending implementation
-	}
-
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
-	@priority = "4"
-	test SetRichTextSearchableByText {
+	test SetRichTextSearchableByTextAndDisable {
 
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Rich Text",
@@ -226,6 +217,10 @@ definition {
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Rich Text",
+			searchableType = "Disable");
 
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Rich Text",

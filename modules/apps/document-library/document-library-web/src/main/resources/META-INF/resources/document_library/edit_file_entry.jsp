@@ -390,7 +390,7 @@ renderResponse.setTitle(headerTitle);
 							<c:if test="<%= fileEntryTypeId > 0 %>">
 
 							<%
-								List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+							List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 							%>
 
 								<div class="mb-3">

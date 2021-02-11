@@ -17,8 +17,15 @@ package com.liferay.layout.content.page.editor.web.internal.segments;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.segments.model.SegmentsExperience;
+
+import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -36,6 +43,10 @@ public class SegmentsExperienceUtilTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
 	}
 
 	@Test
@@ -73,9 +84,20 @@ public class SegmentsExperienceUtilTest {
 			RandomTestUtil.randomLong()
 		);
 
+		Set<Locale> locales = LanguageUtil.getAvailableLocales();
+
+		Stream<Locale> stream = locales.stream();
+
 		Assert.assertEquals(
 			JSONUtil.put(
 				"active", segmentsExperience.isActive()
+			).put(
+				"languageIds",
+				stream.map(
+					LocaleUtil::toLanguageId
+				).toArray(
+					String[]::new
+				)
 			).put(
 				"name", segmentsExperience.getNameCurrentValue()
 			).put(

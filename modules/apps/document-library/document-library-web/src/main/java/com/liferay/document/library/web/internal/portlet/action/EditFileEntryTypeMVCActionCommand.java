@@ -123,7 +123,7 @@ public class EditFileEntryTypeMVCActionCommand
 			   StructureDuplicateElementException | StructureNameException
 				   exception) {
 
-			SessionErrors.add(actionRequest, exception.getClass());
+			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
 		catch (RequiredFileEntryTypeException requiredFileEntryTypeException) {
 			SessionErrors.add(

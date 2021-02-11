@@ -417,6 +417,13 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testGetBlogPostingRenderedContentByDisplayPageDisplayPageKey()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetSiteBlogPostingsPage() throws Exception {
 		Page<BlogPosting> page = blogPostingResource.getSiteBlogPostingsPage(
 			testGetSiteBlogPostingsPage_getSiteId(),
@@ -1177,6 +1184,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("renderedContents", additionalAssertFieldName)) {
+				if (blogPosting.getRenderedContents() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
 
@@ -1564,6 +1579,17 @@ public abstract class BaseBlogPostingResourceTestCase {
 				if (!Objects.deepEquals(
 						blogPosting1.getRelatedContents(),
 						blogPosting2.getRelatedContents())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("renderedContents", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						blogPosting1.getRenderedContents(),
+						blogPosting2.getRenderedContents())) {
 
 					return false;
 				}
@@ -1973,6 +1999,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		if (entityFieldName.equals("relatedContents")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("renderedContents")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

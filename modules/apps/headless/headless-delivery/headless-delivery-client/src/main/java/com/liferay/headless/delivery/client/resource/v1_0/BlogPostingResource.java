@@ -110,6 +110,15 @@ public interface BlogPostingResource {
 			Long blogPostingId, Rating rating)
 		throws Exception;
 
+	public String getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
+			Long blogPostingId, String displayPageKey)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getBlogPostingRenderedContentByDisplayPageDisplayPageKeyHttpResponse(
+				Long blogPostingId, String displayPageKey)
+		throws Exception;
+
 	public Page<BlogPosting> getSiteBlogPostingsPage(
 			Long siteId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
@@ -830,6 +839,74 @@ public interface BlogPostingResource {
 						"/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/my-rating");
 
 			httpInvoker.path("blogPostingId", blogPostingId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public String getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
+				Long blogPostingId, String displayPageKey)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getBlogPostingRenderedContentByDisplayPageDisplayPageKeyHttpResponse(
+					blogPostingId, displayPageKey);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return content;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getBlogPostingRenderedContentByDisplayPageDisplayPageKeyHttpResponse(
+					Long blogPostingId, String displayPageKey)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/rendered-content-by-display-page/{displayPageKey}");
+
+			httpInvoker.path("blogPostingId", blogPostingId);
+			httpInvoker.path("displayPageKey", displayPageKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

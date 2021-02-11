@@ -80,6 +80,10 @@ public interface BlogPostingResource {
 	public Rating putBlogPostingMyRating(Long blogPostingId, Rating rating)
 		throws Exception;
 
+	public String getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
+			Long blogPostingId, String displayPageKey)
+		throws Exception;
+
 	public Page<BlogPosting> getSiteBlogPostingsPage(
 			Long siteId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

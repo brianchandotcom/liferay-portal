@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -554,6 +555,35 @@ public abstract class BaseDocumentResourceImpl
 		throws Exception {
 
 		return new Rating();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/rendered-content-by-display-page/{displayPageKey}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Operation(description = "Retrieves the document's rendered display page")
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "documentId"),
+			@Parameter(in = ParameterIn.PATH, name = "displayPageKey")
+		}
+	)
+	@Path(
+		"/documents/{documentId}/rendered-content-by-display-page/{displayPageKey}"
+	)
+	@Produces("text/html")
+	@Tags(value = {@Tag(name = "Document")})
+	public String getDocumentRenderedContentByDisplayPageDisplayPageKey(
+			@NotNull @Parameter(hidden = true) @PathParam("documentId") Long
+				documentId,
+			@NotNull @Parameter(hidden = true) @PathParam("displayPageKey")
+				String displayPageKey)
+		throws Exception {
+
+		return StringPool.BLANK;
 	}
 
 	/**

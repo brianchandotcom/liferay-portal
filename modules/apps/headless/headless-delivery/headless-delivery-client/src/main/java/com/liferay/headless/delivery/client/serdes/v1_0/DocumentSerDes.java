@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
+import com.liferay.headless.delivery.client.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -332,6 +333,26 @@ public class DocumentSerDes {
 			sb.append("]");
 		}
 
+		if (document.getRenderedContents() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"renderedContents\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < document.getRenderedContents().length; i++) {
+				sb.append(String.valueOf(document.getRenderedContents()[i]));
+
+				if ((i + 1) < document.getRenderedContents().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (document.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -594,6 +615,15 @@ public class DocumentSerDes {
 				String.valueOf(document.getRelatedContents()));
 		}
 
+		if (document.getRenderedContents() == null) {
+			map.put("renderedContents", null);
+		}
+		else {
+			map.put(
+				"renderedContents",
+				String.valueOf(document.getRenderedContents()));
+		}
+
 		if (document.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -784,6 +814,19 @@ public class DocumentSerDes {
 							object -> RelatedContentSerDes.toDTO((String)object)
 						).toArray(
 							size -> new RelatedContent[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "renderedContents")) {
+				if (jsonParserFieldValue != null) {
+					document.setRenderedContents(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RenderedContentSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new RenderedContent[size]
 						));
 				}
 			}

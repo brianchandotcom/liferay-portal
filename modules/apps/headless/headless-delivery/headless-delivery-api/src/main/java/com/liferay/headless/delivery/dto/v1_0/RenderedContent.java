@@ -82,7 +82,7 @@ public class RenderedContent implements Serializable {
 	protected String contentTemplateId;
 
 	@Schema(
-		description = "The name of the template used to render the content."
+		description = "The name of the template or display page used to render the content."
 	)
 	public String getContentTemplateName() {
 		return contentTemplateName;
@@ -108,7 +108,7 @@ public class RenderedContent implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The name of the template used to render the content."
+		description = "The name of the template or display page used to render the content."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentTemplateName;
@@ -145,6 +145,38 @@ public class RenderedContent implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> contentTemplateName_i18n;
+
+	@Schema(
+		description = "Specifies if the template or display page are marked as default to display the content"
+	)
+	public Boolean getMarkedAsDefault() {
+		return markedAsDefault;
+	}
+
+	public void setMarkedAsDefault(Boolean markedAsDefault) {
+		this.markedAsDefault = markedAsDefault;
+	}
+
+	@JsonIgnore
+	public void setMarkedAsDefault(
+		UnsafeSupplier<Boolean, Exception> markedAsDefaultUnsafeSupplier) {
+
+		try {
+			markedAsDefault = markedAsDefaultUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Specifies if the template or display page are marked as default to display the content"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean markedAsDefault;
 
 	@Schema(description = "An absolute URL to the rendered content.")
 	public String getRenderedContentURL() {
@@ -269,6 +301,16 @@ public class RenderedContent implements Serializable {
 			sb.append("\"contentTemplateName_i18n\": ");
 
 			sb.append(_toJSON(contentTemplateName_i18n));
+		}
+
+		if (markedAsDefault != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"markedAsDefault\": ");
+
+			sb.append(markedAsDefault);
 		}
 
 		if (renderedContentURL != null) {

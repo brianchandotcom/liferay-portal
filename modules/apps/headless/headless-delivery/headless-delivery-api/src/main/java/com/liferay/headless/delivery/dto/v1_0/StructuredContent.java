@@ -670,7 +670,7 @@ public class StructuredContent implements Serializable {
 	protected RelatedContent[] relatedContents;
 
 	@Schema(
-		description = "A list of rendered structured content, which results from using a template to process the content and return HTML."
+		description = "A list of rendered content, which results from using a template to process the content and return HTML."
 	)
 	@Valid
 	public RenderedContent[] getRenderedContents() {
@@ -698,7 +698,7 @@ public class StructuredContent implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "A list of rendered structured content, which results from using a template to process the content and return HTML."
+		description = "A list of rendered content, which results from using a template to process the content and return HTML."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RenderedContent[] renderedContents;

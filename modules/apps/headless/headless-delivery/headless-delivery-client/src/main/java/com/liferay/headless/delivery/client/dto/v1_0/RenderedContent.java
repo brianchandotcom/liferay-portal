@@ -102,6 +102,27 @@ public class RenderedContent implements Cloneable, Serializable {
 
 	protected Map<String, String> contentTemplateName_i18n;
 
+	public Boolean getMarkedAsDefault() {
+		return markedAsDefault;
+	}
+
+	public void setMarkedAsDefault(Boolean markedAsDefault) {
+		this.markedAsDefault = markedAsDefault;
+	}
+
+	public void setMarkedAsDefault(
+		UnsafeSupplier<Boolean, Exception> markedAsDefaultUnsafeSupplier) {
+
+		try {
+			markedAsDefault = markedAsDefaultUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean markedAsDefault;
+
 	public String getRenderedContentURL() {
 		return renderedContentURL;
 	}

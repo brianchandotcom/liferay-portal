@@ -93,6 +93,16 @@ public class RenderedContentSerDes {
 			sb.append(_toJSON(renderedContent.getContentTemplateName_i18n()));
 		}
 
+		if (renderedContent.getMarkedAsDefault() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"markedAsDefault\": ");
+
+			sb.append(renderedContent.getMarkedAsDefault());
+		}
+
 		if (renderedContent.getRenderedContentURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -167,6 +177,15 @@ public class RenderedContentSerDes {
 				String.valueOf(renderedContent.getContentTemplateName_i18n()));
 		}
 
+		if (renderedContent.getMarkedAsDefault() == null) {
+			map.put("markedAsDefault", null);
+		}
+		else {
+			map.put(
+				"markedAsDefault",
+				String.valueOf(renderedContent.getMarkedAsDefault()));
+		}
+
 		if (renderedContent.getRenderedContentURL() == null) {
 			map.put("renderedContentURL", null);
 		}
@@ -227,6 +246,12 @@ public class RenderedContentSerDes {
 					renderedContent.setContentTemplateName_i18n(
 						(Map)RenderedContentSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "markedAsDefault")) {
+				if (jsonParserFieldValue != null) {
+					renderedContent.setMarkedAsDefault(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

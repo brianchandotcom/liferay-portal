@@ -299,7 +299,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {blogPosting(blogPostingId: ___){actions, aggregateRating, alternativeHeadline, articleBody, creator, customFields, dateCreated, dateModified, datePublished, description, encodingFormat, friendlyUrlPath, headline, id, image, keywords, numberOfComments, relatedContents, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {blogPosting(blogPostingId: ___){actions, aggregateRating, alternativeHeadline, articleBody, creator, customFields, dateCreated, dateModified, datePublished, description, encodingFormat, friendlyUrlPath, headline, id, image, keywords, numberOfComments, relatedContents, renderedContents, siteId, taxonomyCategoryBriefs, taxonomyCategoryIds, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the blog post.")
 	public BlogPosting blogPosting(
@@ -330,6 +330,28 @@ public class Query {
 			this::_populateResourceContext,
 			blogPostingResource -> blogPostingResource.getBlogPostingMyRating(
 				blogPostingId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {blogPostingRenderedContentByDisplayPageDisplayPageKey(blogPostingId: ___, displayPageKey: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the blog post's rendered display page"
+	)
+	public String blogPostingRenderedContentByDisplayPageDisplayPageKey(
+			@GraphQLName("blogPostingId") Long blogPostingId,
+			@GraphQLName("displayPageKey") String displayPageKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.
+					getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
+						blogPostingId, displayPageKey));
 	}
 
 	/**
@@ -959,7 +981,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {document(documentId: ___){actions, adaptedImages, aggregateRating, assetLibraryKey, contentUrl, contentValue, creator, customFields, dateCreated, dateModified, description, documentFolderId, documentType, encodingFormat, fileExtension, id, keywords, numberOfComments, relatedContents, siteId, sizeInBytes, taxonomyCategoryBriefs, taxonomyCategoryIds, title, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {document(documentId: ___){actions, adaptedImages, aggregateRating, assetLibraryKey, contentUrl, contentValue, creator, customFields, dateCreated, dateModified, description, documentFolderId, documentType, encodingFormat, fileExtension, id, keywords, numberOfComments, relatedContents, renderedContents, siteId, sizeInBytes, taxonomyCategoryBriefs, taxonomyCategoryIds, title, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the document.")
 	public Document document(@GraphQLName("documentId") Long documentId)
@@ -985,6 +1007,28 @@ public class Query {
 			this::_populateResourceContext,
 			documentResource -> documentResource.getDocumentMyRating(
 				documentId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentRenderedContentByDisplayPageDisplayPageKey(displayPageKey: ___, documentId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the document's rendered display page"
+	)
+	public String documentRenderedContentByDisplayPageDisplayPageKey(
+			@GraphQLName("documentId") Long documentId,
+			@GraphQLName("displayPageKey") String displayPageKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_documentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentResource ->
+				documentResource.
+					getDocumentRenderedContentByDisplayPageDisplayPageKey(
+						documentId, displayPageKey));
 	}
 
 	/**
@@ -2301,6 +2345,28 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentRenderedContentByDisplayPageDisplayPageKey(displayPageKey: ___, structuredContentId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the structured content's rendered display page"
+	)
+	public String structuredContentRenderedContentByDisplayPageDisplayPageKey(
+			@GraphQLName("structuredContentId") Long structuredContentId,
+			@GraphQLName("displayPageKey") String displayPageKey)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.
+					getStructuredContentRenderedContentByDisplayPageDisplayPageKey(
+						structuredContentId, displayPageKey));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentRenderedContentTemplate(contentTemplateId: ___, structuredContentId: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -3389,6 +3455,36 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(StructuredContent.class)
+	public class
+		GetStructuredContentRenderedContentByDisplayPageDisplayPageKeyTypeExtension {
+
+		public GetStructuredContentRenderedContentByDisplayPageDisplayPageKeyTypeExtension(
+			StructuredContent structuredContent) {
+
+			_structuredContent = structuredContent;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the structured content's rendered display page"
+		)
+		public String renderedContentByDisplayPageDisplayPageKey(
+				@GraphQLName("displayPageKey") String displayPageKey)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_structuredContentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				structuredContentResource ->
+					structuredContentResource.
+						getStructuredContentRenderedContentByDisplayPageDisplayPageKey(
+							_structuredContent.getId(), displayPageKey));
+		}
+
+		private StructuredContent _structuredContent;
+
+	}
+
 	@GraphQLTypeExtension(MessageBoardMessage.class)
 	public class GetMessageBoardMessageMyRatingTypeExtension {
 
@@ -3580,6 +3676,66 @@ public class Query {
 		}
 
 		private StructuredContent _structuredContent;
+
+	}
+
+	@GraphQLTypeExtension(Document.class)
+	public class
+		GetDocumentRenderedContentByDisplayPageDisplayPageKeyTypeExtension {
+
+		public GetDocumentRenderedContentByDisplayPageDisplayPageKeyTypeExtension(
+			Document document) {
+
+			_document = document;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the document's rendered display page"
+		)
+		public String renderedContentByDisplayPageDisplayPageKey(
+				@GraphQLName("displayPageKey") String displayPageKey)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_documentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				documentResource ->
+					documentResource.
+						getDocumentRenderedContentByDisplayPageDisplayPageKey(
+							_document.getId(), displayPageKey));
+		}
+
+		private Document _document;
+
+	}
+
+	@GraphQLTypeExtension(BlogPosting.class)
+	public class
+		GetBlogPostingRenderedContentByDisplayPageDisplayPageKeyTypeExtension {
+
+		public GetBlogPostingRenderedContentByDisplayPageDisplayPageKeyTypeExtension(
+			BlogPosting blogPosting) {
+
+			_blogPosting = blogPosting;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the blog post's rendered display page"
+		)
+		public String renderedContentByDisplayPageDisplayPageKey(
+				@GraphQLName("displayPageKey") String displayPageKey)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_blogPostingResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				blogPostingResource ->
+					blogPostingResource.
+						getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
+							_blogPosting.getId(), displayPageKey));
+		}
+
+		private BlogPosting _blogPosting;
 
 	}
 

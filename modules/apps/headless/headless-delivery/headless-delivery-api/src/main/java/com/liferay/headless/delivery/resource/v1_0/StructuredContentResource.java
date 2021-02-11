@@ -164,6 +164,11 @@ public interface StructuredContentResource {
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
+	public String
+			getStructuredContentRenderedContentByDisplayPageDisplayPageKey(
+				Long structuredContentId, String displayPageKey)
+		throws Exception;
+
 	public String getStructuredContentRenderedContentTemplate(
 			Long structuredContentId, String contentTemplateId)
 		throws Exception;

@@ -181,6 +181,15 @@ public interface DocumentResource {
 			Long documentId, Rating rating)
 		throws Exception;
 
+	public String getDocumentRenderedContentByDisplayPageDisplayPageKey(
+			Long documentId, String displayPageKey)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getDocumentRenderedContentByDisplayPageDisplayPageKeyHttpResponse(
+				Long documentId, String displayPageKey)
+		throws Exception;
+
 	public Page<Document> getSiteDocumentsPage(
 			Long siteId, Boolean flatten, String search,
 			List<String> aggregations, String filterString,
@@ -1387,6 +1396,74 @@ public interface DocumentResource {
 						"/o/headless-delivery/v1.0/documents/{documentId}/my-rating");
 
 			httpInvoker.path("documentId", documentId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public String getDocumentRenderedContentByDisplayPageDisplayPageKey(
+				Long documentId, String displayPageKey)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getDocumentRenderedContentByDisplayPageDisplayPageKeyHttpResponse(
+					documentId, displayPageKey);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return content;
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getDocumentRenderedContentByDisplayPageDisplayPageKeyHttpResponse(
+					Long documentId, String displayPageKey)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/documents/{documentId}/rendered-content-by-display-page/{displayPageKey}");
+
+			httpInvoker.path("documentId", documentId);
+			httpInvoker.path("displayPageKey", displayPageKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

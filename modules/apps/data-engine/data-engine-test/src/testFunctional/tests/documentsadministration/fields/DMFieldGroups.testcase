@@ -231,26 +231,20 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Fields Group",
-			fieldFieldLabelEdit = "Field 1");
+			fieldFieldLabelEdit = "Fields Group Edit");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
 			targetFieldLabel = "Date");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
-
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Duplicate");
+		DataEngine.duplicate(fieldsGroupLabel = "Fields Group");
 
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		fieldGroupLabel = "Copy of Fields Group";
-
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL");
+		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_NESTED_LABEL", fieldGroupLabel = "Copy of Fields Group");
 
 		AssertTextEquals(
 			locator1 = "DataEngineBuilder#DUPLICATED_FORM_FIELDS_GROUP_LABEL",

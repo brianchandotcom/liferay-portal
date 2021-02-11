@@ -84,8 +84,7 @@ public class Log4JUtil {
 
 			document = saxReader.read(
 				new UnsyncStringReader(
-					StreamUtil.toString(inputStream, StringPool.UTF8)),
-				url.toExternalForm());
+					StreamUtil.toString(inputStream, StringPool.UTF8)));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

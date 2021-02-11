@@ -16,6 +16,7 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.model.CPContentListEntryModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,10 @@ import javax.servlet.jsp.PageContext;
  * @author Gianmarco Brunialti Masera
  */
 public class ProductCardTag extends IncludeTag {
+
+	public CPCatalogEntry getCpCatalogEntry() {
+		return _cpCatalogEntry;
+	}
 
 	public CPContentListEntryModel getCpContentListEntryModel() {
 		return _cpContentListEntryModel;
@@ -39,10 +44,16 @@ public class ProductCardTag extends IncludeTag {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		setNamespacedAttribute(
+			httpServletRequest, "cpCatalogEntry", _cpCatalogEntry);
+		setNamespacedAttribute(
 			httpServletRequest, "cpContentListEntryModel",
 			_cpContentListEntryModel);
 		setNamespacedAttribute(
 			httpServletRequest, "elementClasses", _elementClasses);
+	}
+
+	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
+		_cpCatalogEntry = cpCatalogEntry;
 	}
 
 	public void setCpContentListEntryModel(CPContentListEntryModel model) {
@@ -64,6 +75,7 @@ public class ProductCardTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_cpCatalogEntry = null;
 		_cpContentListEntryModel = null;
 		_elementClasses = null;
 	}
@@ -78,6 +90,7 @@ public class ProductCardTag extends IncludeTag {
 
 	private static final String _PAGE = "/product_card/page.jsp";
 
+	private CPCatalogEntry _cpCatalogEntry;
 	private CPContentListEntryModel _cpContentListEntryModel;
 	private String _elementClasses;
 

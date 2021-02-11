@@ -15,6 +15,7 @@
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.petra.string.StringPool;
@@ -37,7 +38,8 @@ public class AvailabilityLabelTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		try {
 			Map<String, String> availabilityMap =
-				_cpContentHelper.getAvailabilityMap(getRequest());
+				_cpContentHelper.getAvailabilityMap(
+					_cpCatalogEntry, getRequest());
 
 			_label = availabilityMap.getOrDefault(
 				CPContentContributorConstants.AVAILABILITY_NAME,
@@ -57,12 +59,12 @@ public class AvailabilityLabelTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public String getNamespace() {
-		return _namespace;
+	public CPCatalogEntry getCpCatalogEntry() {
+		return _cpCatalogEntry;
 	}
 
-	public boolean isWillUpdate() {
-		return _willUpdate;
+	public String getNamespace() {
+		return _namespace;
 	}
 
 	@Override
@@ -72,7 +74,10 @@ public class AvailabilityLabelTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "label", _label);
 		setNamespacedAttribute(httpServletRequest, "labelType", _labelType);
 		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
-		setNamespacedAttribute(httpServletRequest, "willUpdate", _willUpdate);
+	}
+
+	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
+		_cpCatalogEntry = cpCatalogEntry;
 	}
 
 	public void setNamespace(String namespace) {
@@ -87,19 +92,15 @@ public class AvailabilityLabelTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setWillUpdate(boolean willUpdate) {
-		_willUpdate = willUpdate;
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_cpCatalogEntry = null;
 		_cpContentHelper = null;
 		_label = StringPool.BLANK;
 		_labelType = "default";
 		_namespace = StringPool.BLANK;
-		_willUpdate = false;
 	}
 
 	@Override
@@ -115,10 +116,10 @@ public class AvailabilityLabelTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AvailabilityLabelTag.class);
 
+	private CPCatalogEntry _cpCatalogEntry;
 	private CPContentHelper _cpContentHelper;
 	private String _label = StringPool.BLANK;
 	private String _labelType = "default";
 	private String _namespace = StringPool.BLANK;
-	private boolean _willUpdate;
 
 }

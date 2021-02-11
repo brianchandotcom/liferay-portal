@@ -501,10 +501,12 @@ public class PullRequest {
 				commitsJSONArray.length());
 
 			for (int i = 0; i < commitsJSONArray.length(); i++) {
+				JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
+
 				_gitHubRemoteGitCommits.add(
 					GitCommitFactory.newGitHubRemoteGitCommit(
 						getOwnerUsername(), getGitRepositoryName(),
-						commitsJSONArray.getJSONObject(i)));
+						commitJSONObject.getString("sha")));
 			}
 
 			JSONObject firstCommitJSONObject = commitsJSONArray.getJSONObject(

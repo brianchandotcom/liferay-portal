@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,13 +45,21 @@ public class GitCommitFactory {
 		JSONObject committerJSONObject = commitJSONObject.getJSONObject(
 			"committer");
 
-		JSONArray modifiedJSONArray = jsonObject.getJSONArray("modified");
+		JSONArray filesJSONArray = jsonObject.optJSONArray("files");
 
-		List<String> modifiedFilenamesList = new ArrayList<>(
-			modifiedJSONArray.length());
+		List<String> fileNames = null;
 
-		for (int i = 0; i < modifiedJSONArray.length(); i++) {
-			modifiedFilenamesList.add(modifiedJSONArray.getString(i));
+		if (filesJSONArray == null) {
+			fileNames = Collections.emptyList();
+		}
+		else {
+			fileNames = new ArrayList<>(filesJSONArray.length());
+
+			for (int i = 0; i < filesJSONArray.length(); i++) {
+				JSONObject fileJSONObject = filesJSONArray.getJSONObject(i);
+
+				fileNames.add(fileJSONObject.getString("filename"));
+			}
 		}
 
 		try {
@@ -59,7 +68,7 @@ public class GitCommitFactory {
 
 			GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
 				committerJSONObject.getString("email"), gitHubUsername,
-				gitRepositoryName, message, modifiedFilenamesList,
+				gitRepositoryName, message, fileNames,
 				jsonObject.getString("sha"), _getGitCommitType(message),
 				date.getTime());
 

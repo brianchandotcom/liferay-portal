@@ -71,13 +71,7 @@ public class AggregationFilteringFacetProcessorContext
 
 		String fieldName = facet.getFieldName();
 
-		if (facet instanceof RangeFacet) {
-			for (String value : facet.getSelections()) {
-				queryBuilders.add(
-					rangeQuery(fieldName, RangeParserUtil.parserRange(value)));
-			}
-		}
-		else if (facet instanceof NestedFacet) {
+		if (facet instanceof NestedFacet) {
 			NestedFacet nestedFacet = (NestedFacet)facet;
 
 			BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
@@ -96,6 +90,12 @@ public class AggregationFilteringFacetProcessorContext
 			queryBuilders.add(
 				QueryBuilders.nestedQuery(
 					nestedFacet.getPath(), boolQueryBuilder, ScoreMode.Total));
+		}
+		else if (facet instanceof RangeFacet) {
+			for (String value : facet.getSelections()) {
+				queryBuilders.add(
+					rangeQuery(fieldName, RangeParserUtil.parserRange(value)));
+			}
 		}
 		else {
 			queryBuilders.add(

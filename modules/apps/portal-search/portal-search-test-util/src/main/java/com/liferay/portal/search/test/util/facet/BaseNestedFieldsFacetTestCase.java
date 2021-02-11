@@ -59,11 +59,10 @@ public abstract class BaseNestedFieldsFacetTestCase
 			searchRequestBuilder -> {
 				BooleanQuery booleanQuery = queries.booleanQuery();
 
-				booleanQuery.addMustQueryClauses(
-					queries.term(getFilterFieldName(), getField()));
-
 				booleanQuery.addMustNotQueryClauses(
 					queries.term(getValueFieldName(), presentButUnmatched));
+				booleanQuery.addMustQueryClauses(
+					queries.term(getFilterFieldName(), getField()));
 
 				searchRequestBuilder.addComplexQueryPart(
 					_complexQueryPartBuilderFactory.builder(

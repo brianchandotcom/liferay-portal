@@ -22,7 +22,6 @@ import com.liferay.commerce.model.CommerceGeocoder;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceRegion;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
@@ -68,16 +67,10 @@ public class CommerceShippingOriginLocatorImpl
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
-
-			if (cpInstance == null) {
-				continue;
-			}
-
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				_getClosestCommerceInventoryWarehouse(
 					commerceOrder.getGroupId(), commerceAddress,
-					cpInstance.getSku());
+					commerceOrderItem.getSku());
 
 			List<CommerceOrderItem> commerceInventoryWarehouseOrderItems =
 				commerceInventoryWarehouseOrderItemsMap.get(

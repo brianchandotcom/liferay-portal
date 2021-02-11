@@ -141,18 +141,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			</div>
 		</clay:container-fluid>
 
-		<div class="ddm-form-basic-info">
-			<clay:container-fluid>
-				<h1>
-					<aui:input autoSize="<%= true %>" cssClass="ddm-form-name ddm-placeholder hidden" label="" name="nameEditor" placeholder='<%= LanguageUtil.get(request, "untitled-form") %>' type="textarea" value="<%= HtmlUtil.toInputSafe(ddmFormAdminDisplayContext.getFormName()) %>" />
-				</h1>
-
-				<h5>
-					<aui:input autoSize="<%= true %>" cssClass="ddm-form-description ddm-placeholder hidden" label="" name="descriptionEditor" placeholder='<%= LanguageUtil.get(request, "add-a-short-description-for-this-form") %>' type="textarea" value="<%= HtmlUtil.toInputSafe(ddmFormAdminDisplayContext.getFormDescription()) %>" />
-				</h5>
-			</clay:container-fluid>
-		</div>
-
 		<div id="<portlet:namespace />-container"></div>
 	</aui:form>
 

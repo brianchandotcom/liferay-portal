@@ -17,41 +17,14 @@ import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 class StateSyncronizer extends Component {
-	created() {
-		const {descriptionEditor, nameEditor} = this.props;
-
-		descriptionEditor.addEventListener(
-			'input',
-			this._handleDescriptionEditorChanged.bind(this)
-		);
-
-		nameEditor.addEventListener(
-			'input',
-			this._handleNameEditorChanged.bind(this)
-		);
-	}
-
-	disposed() {
-		const {descriptionEditor, nameEditor} = this.props;
-
-		nameEditor.removeEventListener(
-			'input',
-			this._handleNameEditorChanged.bind(this)
-		);
-		descriptionEditor.removeEventListener(
-			'input',
-			this._handleDescriptionEditorChanged.bind(this)
-		);
-	}
-
 	getState() {
-		const {localizedDescription, localizedName, store} = this.props;
+		const {store} = this.props;
 
 		return {
 			availableLanguageIds: store.current.availableLanguageIds,
 			defaultLanguageId: store.current.defaultLanguageId,
-			description: localizedDescription,
-			name: localizedName,
+			description: store.current.localizedDescription,
+			name: store.current.localizedName,
 			pages: store.current.pages,
 			paginationMode: store.current.paginationMode,
 			rules: store.current.rules,
@@ -159,19 +132,6 @@ class StateSyncronizer extends Component {
 
 			return field;
 		});
-	}
-
-	_handleDescriptionEditorChanged() {
-		const {descriptionEditor, localizedDescription} = this.props;
-
-		localizedDescription[this.getEditingLanguageId()] =
-			descriptionEditor.value;
-	}
-
-	_handleNameEditorChanged() {
-		const {localizedName, nameEditor} = this.props;
-
-		localizedName[this.getEditingLanguageId()] = nameEditor.value;
 	}
 }
 

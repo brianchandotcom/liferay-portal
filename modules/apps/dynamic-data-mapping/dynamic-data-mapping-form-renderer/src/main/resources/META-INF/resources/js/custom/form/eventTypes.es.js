@@ -40,8 +40,15 @@ const SIDEBAR = {
 	EVALUATE: 'sidebar_evaluate',
 };
 
+const FORM_INFO = {
+	DESCRIPTION_CHANGE: 'form_info_description_change',
+	LANGUAGE_DELETE: 'form_info_language_delete',
+	NAME_CHANGE: 'form_info_name_change',
+};
+
 export const EVENT_TYPES = {
 	ELEMENT_SET_ADD: 'element_set_add',
+	FORM_INFO,
 	PAGE,
 	PAGINATION,
 	RULE,

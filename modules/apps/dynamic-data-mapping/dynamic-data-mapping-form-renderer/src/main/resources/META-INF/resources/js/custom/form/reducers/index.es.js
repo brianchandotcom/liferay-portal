@@ -18,3 +18,4 @@ export {default as pageValidationReducer} from './pageValidationReducer.es';
 export {default as paginationReducer} from './paginationReducer.es';
 export {default as rulesReducer} from './rulesReducer.es';
 export {default as sidebarReducer} from './sidebarReducer.es';
+export {default as formInfoReducer} from './formInfoReducer.es';

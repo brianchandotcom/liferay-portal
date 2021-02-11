@@ -24,10 +24,6 @@ import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/Layo
 import RulesSupport from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RulesSupport.es';
 import Sidebar from 'dynamic-data-mapping-form-builder/js/components/Sidebar/Sidebar.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
-import {
-	isKeyInSet,
-	isModifyingKey,
-} from 'dynamic-data-mapping-form-builder/js/util/dom.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
 import {EventHandler, delegate} from 'frontend-js-web';
@@ -54,33 +50,12 @@ const NAV_ITEMS = {
 class Form extends Component {
 	attached() {
 		const {store} = this.refs;
-		const {
-			localizedDescription,
-			localizedName,
-			namespace,
-			published,
-			showPublishAlert,
-		} = this.props;
+		const {namespace, published, showPublishAlert} = this.props;
 
 		const {activeNavItem, paginationMode} = this.state;
 
+
 		this._eventHandler = new EventHandler();
-
-		const nameEditor = document.getElementById(`${namespace}nameEditor`);
-
-		nameEditor.addEventListener('keydown', this._handleNameEditorKeydown);
-		nameEditor.addEventListener(
-			'keyup',
-			this._handleNameEditorCopyAndPaste
-		);
-		nameEditor.addEventListener(
-			'keypress',
-			this._handleNameEditorCopyAndPaste
-		);
-
-		const descriptionEditor = document.getElementById(
-			`${namespace}descriptionEditor`
-		);
 
 		const dependencies = [];
 
@@ -92,16 +67,8 @@ class Form extends Component {
 
 		Promise.all(dependencies).then(
 			([settingsDDMForm]) => {
-				nameEditor.classList.remove('hidden');
-
-				descriptionEditor.classList.remove('hidden');
-
 				this._stateSyncronizer = new StateSyncronizer(
 					{
-						descriptionEditor,
-						localizedDescription,
-						localizedName,
-						nameEditor,
 						namespace,
 						paginationMode,
 						published,
@@ -237,14 +204,6 @@ class Form extends Component {
 		store.on('rulesModified', this._handleRulesModified.bind(this));
 	}
 
-	checkEditorLimit(event, limit) {
-		const charCode = event.which ? event.which : event.keyCode;
-
-		if (this.isForbiddenKey(event, limit) && charCode != 91) {
-			event.preventDefault();
-		}
-	}
-
 	created() {
 		this._handleAddFieldButtonClicked = this._handleAddFieldButtonClicked.bind(
 			this
@@ -264,12 +223,6 @@ class Form extends Component {
 
 		this._createFormURL = this._createFormURL.bind(this);
 		this._handleFormNavClicked = this._handleFormNavClicked.bind(this);
-		this._handleNameEditorCopyAndPaste = this._handleNameEditorCopyAndPaste.bind(
-			this
-		);
-		this._handleNameEditorKeydown = this._handleNameEditorKeydown.bind(
-			this
-		);
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(
 			this
 		);
@@ -331,43 +284,10 @@ class Form extends Component {
 			);
 		}
 
-		const {namespace} = this.props;
-
-		const nameEditor = document.getElementById(`${namespace}nameEditor`);
-
-		nameEditor.removeEventListener(
-			'keydown',
-			this._handleNameEditorKeydown
-		);
-		nameEditor.removeEventListener(
-			'keyup',
-			this._handleNameEditorCopyAndPaste
-		);
-		nameEditor.removeEventListener(
-			'keypress',
-			this._handleNameEditorCopyAndPaste
-		);
-	}
-
 	hideAddButton() {
 		const addButton = document.querySelector('#addFieldButton');
 
 		addButton.classList.add('hide');
-	}
-
-	isForbiddenKey(event, limit) {
-		const charCode = event.which ? event.which : event.keyCode;
-		let forbidden = false;
-
-		if (
-			event.target.innerText.length >= limit &&
-			isModifyingKey(charCode) &&
-			!isKeyInSet(charCode, ['BACKSPACE', 'DELETE', 'ESC', 'ENTER'])
-		) {
-			forbidden = true;
-		}
-
-		return forbidden;
 	}
 
 	isFormBuilderView() {
@@ -391,23 +311,6 @@ class Form extends Component {
 	openSidebar() {
 		if (!this.props.context.dataEngineSidebar) {
 			this.refs.sidebar.open();
-		}
-	}
-
-	preventCopyAndPaste(event, limit) {
-		const {target} = event;
-
-		if (this.isForbiddenKey(event, limit)) {
-			target.innerText = target.innerText.substr(0, limit);
-
-			const range = document.createRange();
-			const sel = window.getSelection();
-
-			range.setStart(target.childNodes[0], target.textContent.length);
-			range.collapse(true);
-
-			sel.removeAllRanges();
-			sel.addRange(range);
 		}
 	}
 
@@ -660,35 +563,6 @@ class Form extends Component {
 		}
 	}
 
-	_createEditor(name) {
-		const {namespace} = this.props;
-
-		const editorName = `${namespace}${name}`;
-
-		const editor = window[editorName];
-
-		let promise;
-
-		if (editor) {
-			editor.create();
-
-			promise = Promise.resolve(CKEDITOR.instances[editorName]);
-		}
-		else {
-			promise = new Promise((resolve) => {
-				Liferay.on('editorAPIReady', (event) => {
-					if (event.editorName === editorName) {
-						event.editor.create();
-
-						resolve(CKEDITOR.instances[editorName]);
-					}
-				});
-			});
-		}
-
-		return promise;
-	}
-
 	_createFormBuilder() {
 		const composeList = [withMultiplePages];
 
@@ -795,14 +669,6 @@ class Form extends Component {
 		});
 
 		this.syncActiveNavItem(this.state.activeNavItem);
-	}
-
-	_handleNameEditorCopyAndPaste(event) {
-		return this.preventCopyAndPaste(event, 120);
-	}
-
-	_handleNameEditorKeydown(event) {
-		return this.checkEditorLimit(event, 120);
 	}
 
 	_handlePaginationModeChanded({newVal}) {

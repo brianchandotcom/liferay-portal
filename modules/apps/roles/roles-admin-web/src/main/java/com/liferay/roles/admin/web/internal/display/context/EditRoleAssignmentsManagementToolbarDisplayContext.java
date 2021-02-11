@@ -389,8 +389,10 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		portletURL.setParameter("roleId", String.valueOf(_role.getRoleId()));
 
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
 
 		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter("backURL", backURL);
 
 		portletURL.setParameter("displayStyle", _displayStyle);
 

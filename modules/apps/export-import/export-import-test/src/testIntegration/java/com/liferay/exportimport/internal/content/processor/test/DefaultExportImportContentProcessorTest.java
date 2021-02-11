@@ -1114,14 +1114,16 @@ public class DefaultExportImportContentProcessorTest {
 		content = StringUtil.replace(
 			content,
 			new String[] {
+				"[$BLOG_ENTRY_DISPLAY_SERVLET_MAPPING$]",
 				"[$CANONICAL_URL_SEPARATOR$]", "[$CONTROL_PANEL_FRIENDLY_URL$]",
 				"[$CONTROL_PANEL_LAYOUT_FRIENDLY_URL$]",
+				"[$DL_ENTRY_DISPLAY_SERVLET_MAPPING$]",
 				"[$EXTERNAL_GROUP_FRIENDLY_URL$]",
 				"[$EXTERNAL_PRIVATE_LAYOUT_FRIENDLY_URL$]",
 				"[$EXTERNAL_PUBLIC_LAYOUT_FRIENDLY_URL$]",
-				"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$IMAGE_ID$]",
-				"[$LIVE_GROUP_FRIENDLY_URL$]", "[$LIVE_GROUP_ID$]",
-				"[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
+				"[$FRIENDLY_URL_SEPARATOR$]", "[$GROUP_FRIENDLY_URL$]",
+				"[$GROUP_ID$]", "[$IMAGE_ID$]", "[$LIVE_GROUP_FRIENDLY_URL$]",
+				"[$LIVE_GROUP_ID$]", "[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 				"[$NON_DEFAULT_LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 				"[$NON_DEFAULT_PRIVATE_LAYOUT_FRIENDLY_URL$]",
 				"[$NON_DEFAULT_PUBLIC_LAYOUT_FRIENDLY_URL$]",
@@ -1130,16 +1132,16 @@ public class DefaultExportImportContentProcessorTest {
 				"[$PATH_FRIENDLY_URL_PUBLIC$]",
 				"[$PRIVATE_LAYOUT_FRIENDLY_URL$]",
 				"[$PUBLIC_LAYOUT_FRIENDLY_URL$]", "[$TITLE$]", "[$UUID$]",
-				"[$WEB_ID$]"
+				"[$WEB_CONTENT_DISPLAY_SERVLET_MAPPING$]", "[$WEB_ID$]"
 			},
 			new String[] {
-				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
+				"/b", VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
 				GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
-				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL,
+				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL, "/d",
 				_externalGroup.getFriendlyURL(),
 				_externalPrivateLayout.getFriendlyURL(),
 				_externalPublicLayout.getFriendlyURL(),
-				_stagingGroup.getFriendlyURL(),
+				Portal.FRIENDLY_URL_SEPARATOR, _stagingGroup.getFriendlyURL(),
 				String.valueOf(fileEntry.getGroupId()),
 				String.valueOf(fileEntry.getFileEntryId()),
 				_liveGroup.getFriendlyURL(),
@@ -1154,7 +1156,7 @@ public class DefaultExportImportContentProcessorTest {
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				_stagingPrivateLayout.getFriendlyURL(),
 				_stagingPublicLayout.getFriendlyURL(), fileEntry.getTitle(),
-				fileEntry.getUuid(), company.getWebId()
+				fileEntry.getUuid(), "/w", company.getWebId()
 			});
 
 		if (!content.contains("[$TIMESTAMP")) {

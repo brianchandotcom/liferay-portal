@@ -478,7 +478,7 @@ definition {
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
-			localization1Name = "Nome da Estrutura WC");
+			localization1Name = "WC Nome da Estrutura");
 
 		DataEngine.editFieldsGroupLabel(
 			fieldsGroupLabel = "Fields Group",
@@ -486,15 +486,15 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Rich Text",
-			fieldFieldLabelEdit = "Rico Texto");
+			fieldFieldLabelEdit = "Texto Rico");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "Numérica");
+			fieldFieldLabelEdit = "Numérico");
 
 		WebContentStructures.addLocalization(
 			locale = "fr-FR",
-			localization1Name = "Nom de la structure WC");
+			localization1Name = "WC Nom de la structure");
 
 		DataEngine.editFieldsGroupLabel(
 			fieldsGroupLabel = "Fields Group",
@@ -539,9 +539,9 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = "5",
-			webContentNumericFieldLabel = "Numérica",
-			webContentRichText = "Este é um campo Rico Texto",
-			webContentRichTextFieldLabel = "Rico Texto",
+			webContentNumericFieldLabel = "Numérico",
+			webContentRichText = "Este é um campo de Texto Rico",
+			webContentRichTextFieldLabel = "Texto Rico",
 			webContentTitle = "Título do conteúdo da web");
 
 		PortletEntry.changeLocale(locale = "fr-FR");
@@ -582,9 +582,9 @@ definition {
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
 			webContentNumeric = "5",
-			webContentNumericFieldLabel = "Numérica",
-			webContentRichText = "Este é um campo Rico Texto",
-			webContentRichTextFieldLabel = "Rico Texto");
+			webContentNumericFieldLabel = "Numérico",
+			webContentRichText = "Este é um campo de Texto Rico",
+			webContentRichTextFieldLabel = "Texto Rico");
 
 		AssertVisible(
 			key_fieldFieldLabel = "Grupo de Campos",

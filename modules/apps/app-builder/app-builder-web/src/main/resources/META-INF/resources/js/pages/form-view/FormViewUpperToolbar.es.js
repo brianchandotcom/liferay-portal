@@ -23,7 +23,10 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
-import {normalizeDataLayout} from '../../utils/normalizers.es';
+import {
+	normalizeDataDefinition,
+	normalizeDataLayout,
+} from '../../utils/normalizers.es';
 import {errorToast, successToast} from '../../utils/toast.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderInstanceContext.es';
 import FormViewContext from './FormViewContext.es';
@@ -130,7 +133,7 @@ export default function FormViewUpperToolbar({newCustomObject, popUpWindow}) {
 		setLoading(true);
 
 		DataDefinitionUtils.saveDataDefinition({
-			dataDefinition,
+			dataDefinition: normalizeDataDefinition(dataDefinition),
 			dataDefinitionId,
 			dataLayout: normalizeDataLayout({
 				dataDefinition,

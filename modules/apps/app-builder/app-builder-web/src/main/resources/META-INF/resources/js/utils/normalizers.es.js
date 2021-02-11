@@ -35,6 +35,22 @@ export const normalizeNames = ({
 	return name;
 };
 
+export const normalizeDataDefinition = (dataDefinition) => {
+	return {
+		...dataDefinition,
+		dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
+			(dataDefinitionField) => ({
+				...dataDefinitionField,
+
+				// Actually showLabel property will be always true
+				// because the same property can be controlled by dataLayoutFields
+
+				showLabel: true,
+			})
+		),
+	};
+};
+
 export const normalizeDataLayout = ({
 	dataDefinition,
 	dataLayout,

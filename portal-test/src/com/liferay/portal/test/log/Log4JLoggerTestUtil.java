@@ -44,7 +44,8 @@ public class Log4JLoggerTestUtil {
 	public static final String WARN = String.valueOf(Level.WARN);
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #configureLog4JLogger(String, String)}
 	 */
 	@Deprecated
 	public static CaptureAppender configureLog4JLogger(

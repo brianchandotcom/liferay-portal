@@ -130,6 +130,10 @@ $product-menu-pages-administration-link-height: 72px;
 				}
 			}
 
+			.table-cell-content {
+				max-width: 175px;
+			}
+
 			.tree-node .tree-node-content {
 				align-items: center;
 				display: flex;

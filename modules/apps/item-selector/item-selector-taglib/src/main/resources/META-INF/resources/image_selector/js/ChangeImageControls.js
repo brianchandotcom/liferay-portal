@@ -19,6 +19,7 @@ import React from 'react';
 const ChangeImageControls = ({handleClickDelete, handleClickPicture}) => (
 	<div className="change-image-controls">
 		<ClayButtonWithIcon
+			className="browse-image"
 			displayType="secondary"
 			monospaced
 			onClick={handleClickPicture}

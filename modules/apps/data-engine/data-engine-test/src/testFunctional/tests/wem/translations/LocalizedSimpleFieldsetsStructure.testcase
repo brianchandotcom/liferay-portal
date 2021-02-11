@@ -230,8 +230,6 @@ definition {
 	test EditFieldset {
 		property portal.acceptance = "false";
 
-		var fieldsetLabel = "My New Fieldset";
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -241,9 +239,9 @@ definition {
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
-			fieldsetName = "${fieldsetLabel}");
+			fieldsetName = "My New Fieldset");
 
-		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "${fieldsetLabel}");
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "My New Fieldset");
 
 		MenuItem.click(menuItem = "Edit");
 

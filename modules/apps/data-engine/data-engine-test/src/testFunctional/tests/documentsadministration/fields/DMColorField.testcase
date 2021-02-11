@@ -65,13 +65,16 @@ definition {
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
+		DataEngine.addField(fieldFieldLabel = "Text",
+			fieldName = "Text");
+
 		DataEngine.delete(fieldFieldLabel = "Color");
 
 		DDLDataDefinition.save();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
-			rowEntry = "DM Document Type Name New");
+			rowEntry = "DM Document Type Name");
 
 		AssertElementNotPresent(
 			key_fieldFieldLabel = "Color",

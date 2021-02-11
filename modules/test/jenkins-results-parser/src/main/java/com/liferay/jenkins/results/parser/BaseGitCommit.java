@@ -48,12 +48,20 @@ public abstract class BaseGitCommit implements GitCommit {
 
 	@Override
 	public Date getCommitDate() {
-		return new Date(_commitTime);
+		if (commitTime == null) {
+			initCommitTime();
+		}
+
+		return new Date(commitTime);
 	}
 
 	@Override
 	public String getEmailAddress() {
-		return _emailAddress;
+		if (emailAddress == null) {
+			initEmailAddress();
+		}
+
+		return emailAddress;
 	}
 
 	@Override
@@ -63,7 +71,11 @@ public abstract class BaseGitCommit implements GitCommit {
 
 	@Override
 	public String getMessage() {
-		return _message;
+		if (message == null) {
+			initMessage();
+		}
+
+		return message;
 	}
 
 	@Override
@@ -87,30 +99,45 @@ public abstract class BaseGitCommit implements GitCommit {
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("commitTime", _commitTime);
-		jsonObject.put("emailAddress", _emailAddress);
-		jsonObject.put("message", _message);
+		jsonObject.put("commitTime", commitTime);
+		jsonObject.put("emailAddress", emailAddress);
+		jsonObject.put("message", message);
 		jsonObject.put("sha", _sha);
 
 		return jsonObject;
 	}
 
 	protected BaseGitCommit(
+		String gitRepositoryName, String sha, GitCommit.Type type) {
+
+		_gitRepositoryName = gitRepositoryName;
+		_sha = sha;
+		_type = type;
+	}
+
+	protected BaseGitCommit(
 		String emailAddress, String gitRepositoryName, String message,
 		String sha, GitCommit.Type type, long commitTime) {
 
-		_emailAddress = emailAddress;
 		_gitRepositoryName = gitRepositoryName;
-		_message = message;
 		_sha = sha;
 		_type = type;
-		_commitTime = commitTime;
+		this.emailAddress = emailAddress;
+		this.message = message;
+		this.commitTime = commitTime;
 	}
 
-	private final long _commitTime;
-	private final String _emailAddress;
+	protected abstract void initCommitTime();
+
+	protected abstract void initEmailAddress();
+
+	protected abstract void initMessage();
+
+	protected Long commitTime;
+	protected String emailAddress;
+	protected String message;
+
 	private final String _gitRepositoryName;
-	private final String _message;
 	private final String _sha;
 	private final GitCommit.Type _type;
 

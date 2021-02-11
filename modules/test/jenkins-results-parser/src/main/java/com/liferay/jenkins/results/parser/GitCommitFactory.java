@@ -20,7 +20,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +34,28 @@ import org.json.JSONObject;
 public class GitCommitFactory {
 
 	public static GitHubRemoteGitCommit newGitHubRemoteGitCommit(
-		String gitHubUsername, String gitRepositoryName,
+		String gitHubUsername, String gitRepositoryName, String sha) {
+
+		String gitHubCommitURL = _getGitHubCommitURL(
+			gitHubUsername, gitRepositoryName, sha);
+
+		if (_gitHubRemoteGitCommits.containsKey(gitHubCommitURL)) {
+			return _gitHubRemoteGitCommits.get(gitHubCommitURL);
+		}
+
+		try {
+			return newGitHubRemoteGitCommit(
+				gitHubUsername, gitRepositoryName, sha,
+				JenkinsResultsParserUtil.toJSONObject(gitHubCommitURL));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get commit details", ioException);
+		}
+	}
+
+	public static GitHubRemoteGitCommit newGitHubRemoteGitCommit(
+		String gitHubUsername, String gitRepositoryName, String sha,
 		JSONObject jsonObject) {
 
 		JSONObject commitJSONObject = jsonObject.getJSONObject("commit");
@@ -49,10 +69,7 @@ public class GitCommitFactory {
 
 		List<String> fileNames = null;
 
-		if (filesJSONArray == null) {
-			fileNames = Collections.emptyList();
-		}
-		else {
+		if (filesJSONArray != null) {
 			fileNames = new ArrayList<>(filesJSONArray.length());
 
 			for (int i = 0; i < filesJSONArray.length(); i++) {
@@ -63,7 +80,10 @@ public class GitCommitFactory {
 		}
 
 		try {
-			Date date = _gitHubDateFormat.parse(
+			SimpleDateFormat gitHubDateFormat =
+				JenkinsResultsParserUtil.getGitHubDateFormat();
+
+			Date date = gitHubDateFormat.parse(
 				committerJSONObject.getString("date"));
 
 			GitHubRemoteGitCommit remoteGitCommit = new GitHubRemoteGitCommit(
@@ -79,27 +99,6 @@ public class GitCommitFactory {
 		}
 		catch (ParseException parseException) {
 			throw new RuntimeException(parseException);
-		}
-	}
-
-	public static GitHubRemoteGitCommit newGitHubRemoteGitCommit(
-		String gitHubUsername, String gitRepositoryName, String sha) {
-
-		String gitHubCommitURL = _getGitHubCommitURL(
-			gitHubUsername, gitRepositoryName, sha);
-
-		if (_gitHubRemoteGitCommits.containsKey(gitHubCommitURL)) {
-			return _gitHubRemoteGitCommits.get(gitHubCommitURL);
-		}
-
-		try {
-			return newGitHubRemoteGitCommit(
-				gitHubUsername, gitRepositoryName,
-				JenkinsResultsParserUtil.toJSONObject(gitHubCommitURL));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get commit details", ioException);
 		}
 	}
 
@@ -127,8 +126,6 @@ public class GitCommitFactory {
 			gitRepositoryName, gitHubUsername, "commits/" + sha);
 	}
 
-	private static final SimpleDateFormat _gitHubDateFormat =
-		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	private static final Map<String, GitHubRemoteGitCommit>
 		_gitHubRemoteGitCommits = new HashMap<>();
 

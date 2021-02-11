@@ -36,6 +36,15 @@ public abstract class BaseLocalGitCommit
 		_gitWorkingDirectory = gitWorkingDirectory;
 	}
 
+	protected void initCommitTime() {
+	}
+
+	protected void initEmailAddress() {
+	}
+
+	protected void initMessage() {
+	}
+
 	private final GitWorkingDirectory _gitWorkingDirectory;
 
 }

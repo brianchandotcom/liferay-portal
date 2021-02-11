@@ -506,7 +506,7 @@ public class PullRequest {
 				_gitHubRemoteGitCommits.add(
 					GitCommitFactory.newGitHubRemoteGitCommit(
 						getOwnerUsername(), getGitRepositoryName(),
-						commitJSONObject.getString("sha")));
+						commitJSONObject.getString("sha"), commitJSONObject));
 			}
 
 			JSONObject firstCommitJSONObject = commitsJSONArray.getJSONObject(

@@ -1262,6 +1262,10 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static SimpleDateFormat getGitHubDateFormat() {
+		return _gitHubDateFormat;
+	}
+
 	public static String[] getGlobsFromProperty(String globProperty) {
 		List<String> curlyBraceExpansionList = new ArrayList<>();
 
@@ -4160,6 +4164,8 @@ public class JenkinsResultsParserUtil {
 	private static String[] _buildPropertiesURLs;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");
+	private static final SimpleDateFormat _gitHubDateFormat =
+		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
 	private static final Pattern _jenkinsMasterPattern = Pattern.compile(

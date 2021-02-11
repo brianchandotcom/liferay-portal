@@ -1037,6 +1037,38 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/rendered-content-by-display-page/{displayPageKey}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Operation(
+		description = "Retrieves the structured content's rendered display page"
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "structuredContentId"),
+			@Parameter(in = ParameterIn.PATH, name = "displayPageKey")
+		}
+	)
+	@Path(
+		"/structured-contents/{structuredContentId}/rendered-content-by-display-page/{displayPageKey}"
+	)
+	@Produces("text/html")
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public String
+			getStructuredContentRenderedContentByDisplayPageDisplayPageKey(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("structuredContentId") Long structuredContentId,
+				@NotNull @Parameter(hidden = true) @PathParam("displayPageKey")
+					String displayPageKey)
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/rendered-content/{contentTemplateId}'  -u 'test@liferay.com:test'
 	 */
 	@Override

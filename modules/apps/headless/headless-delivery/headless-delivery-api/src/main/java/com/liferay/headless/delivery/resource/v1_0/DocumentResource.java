@@ -110,6 +110,10 @@ public interface DocumentResource {
 	public Rating putDocumentMyRating(Long documentId, Rating rating)
 		throws Exception;
 
+	public String getDocumentRenderedContentByDisplayPageDisplayPageKey(
+			Long documentId, String displayPageKey)
+		throws Exception;
+
 	public Page<Document> getSiteDocumentsPage(
 			Long siteId, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

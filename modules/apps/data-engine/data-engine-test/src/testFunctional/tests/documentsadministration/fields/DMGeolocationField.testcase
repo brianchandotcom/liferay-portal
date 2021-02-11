@@ -204,7 +204,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98071. Verify if duplicated geolocation field is correctly loaded"
-	@ignore = "true"
 	@priority = "4"
 	test VerifyDuplicatedGeolocationOnRenderer {
 		property portal.acceptance = "false";

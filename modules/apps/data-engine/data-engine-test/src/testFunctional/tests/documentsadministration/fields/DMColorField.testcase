@@ -8,9 +8,11 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
 		User.firstLoginPG();
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMNavigator.gotoDocumentType();
 
@@ -28,33 +30,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			DMDocument.tearDownCP();
-
-			DMDocumentType.tearDownCP();
-
-			DMMetadataSet.tearDownCP();
-
-			DMDocument.tearDownCP();
-
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content &amp; Data",
-				portlet = "Documents and Media");
-
-			DMNavigator.gotoDocumentType();
-
-			while (IsElementPresent(locator1 = "DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_ACTIONS_1")) {
-				Click(locator1 = "DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_ACTIONS_1");
-
-				MenuItem.clickNoError(menuItem = "Delete");
-
-				AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-				Alert.viewSuccessMessage();
-			}
-
-			DMMetadataSet.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 			User.logoutPG();
 		}

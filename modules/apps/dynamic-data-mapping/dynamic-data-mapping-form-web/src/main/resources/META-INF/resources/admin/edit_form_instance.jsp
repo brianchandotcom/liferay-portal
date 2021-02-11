@@ -63,6 +63,17 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			</div>
 
 			<ul class="navbar-nav toolbar-group-field">
+				<li class="nav-item pr-3">
+					<clay:button
+						borderless="<%= true %>"
+						displayType="secondary"
+						icon="cog"
+						id='<%= liferayPortletResponse.getNamespace() + "ddmFormInstanceSettingsIcon" %>'
+						onClick="javascript:Liferay.DDM.openSettings()"
+						small="<%= true %>"
+						title='<%= LanguageUtil.get(request, "settings") %>'
+					/>
+				</li>
 				<li class="nav-item pr-2">
 					<c:choose>
 						<c:when test="<%= disableCopyButton %>">

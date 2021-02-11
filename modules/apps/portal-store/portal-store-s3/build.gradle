@@ -4,24 +4,41 @@ buildIBMS3Store {
 	doFirst {
 		delete "src/main/java/com/liferay/portal/store/s3/IBMS3store.java"
 	}
+
 	ext {
 		autoClean = false
 	}
+
 	filter {
-		line -> line.replace "S3Store.class", "IBMS3Store.class"
+		String line ->
+
+		line.replace "S3Store.class", "IBMS3Store.class"
 	}
+
 	filter {
-		line -> line.replace "com.amazonaws", "com.ibm.cloud.objectstorage"
+		String line ->
+
+		line.replace "com.amazonaws", "com.ibm.cloud.objectstorage"
 	}
+
 	filter {
-		line -> line.replace "com.liferay.portal.store.s3.S3Store", "com.liferay.portal.store.s3.IBMS3Store"
+		String line ->
+
+		line.replace "com.liferay.portal.store.s3.S3Store", "com.liferay.portal.store.s3.IBMS3Store"
 	}
+
 	filter {
-		line -> line.replace "import org.osgi.service.component.annotations.Activate;", "import javax.annotation.Generated;\n\nimport org.osgi.service.component.annotations.Activate;"
+		String line ->
+
+		line.replace "import org.osgi.service.component.annotations.Activate;", "import javax.annotation.Generated;\n\nimport org.osgi.service.component.annotations.Activate;"
 	}
+
 	filter {
-		line -> line.replace "public class S3Store", "@Generated(\"\")\npublic class IBMS3Store"
+		String line ->
+
+		line.replace "public class S3Store", "@Generated(\"\")\npublic class IBMS3Store"
 	}
+
 	from new File("src/main/java/com/liferay/portal/store/s3/S3Store.java")
 	into "src/main/java/com/liferay/portal/store/s3"
 	rename {

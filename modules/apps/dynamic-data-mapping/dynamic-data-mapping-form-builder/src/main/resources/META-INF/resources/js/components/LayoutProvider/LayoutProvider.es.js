@@ -162,11 +162,10 @@ class LayoutProvider extends Component {
 	getPages() {
 		const {defaultLanguageId, editingLanguageId} = this.props;
 		const {availableLanguageIds = [editingLanguageId]} = this.props;
-		let {pages} = this.state;
 
-		const visitor = new PagesVisitor(pages);
+		const visitor = new PagesVisitor(this.state.pages);
 
-		pages = visitor.mapFields(
+		return visitor.mapFields(
 			(field) => {
 				const {settingsContext} = field;
 
@@ -206,38 +205,6 @@ class LayoutProvider extends Component {
 			true,
 			true
 		);
-
-		visitor.setPages(pages);
-
-		return visitor.mapPages((page) => {
-			let {description, title} = page;
-
-			if (page.localizedDescription[editingLanguageId]) {
-				description = page.localizedDescription[editingLanguageId];
-			}
-			else if (
-				page.localizedDescription[defaultLanguageId] &&
-				page.localizedDescription[editingLanguageId] === undefined
-			) {
-				description = page.localizedDescription[defaultLanguageId];
-			}
-
-			if (page.localizedTitle[editingLanguageId]) {
-				title = page.localizedTitle[editingLanguageId];
-			}
-			else if (
-				page.localizedTitle[defaultLanguageId] &&
-				page.localizedTitle[editingLanguageId] === undefined
-			) {
-				title = page.localizedTitle[defaultLanguageId];
-			}
-
-			return {
-				...page,
-				description,
-				title,
-			};
-		});
 	}
 
 	getPaginationMode() {

@@ -23,7 +23,6 @@ import * as Wizard from '../../../custom/form/renderer/WizardVariant.es';
 import {PagesVisitor} from '../../../util/visitors.es';
 import {PageProvider} from '../../hooks/usePage.es';
 import * as DefaultVariant from './DefaultVariant.es';
-import * as EditablePageHeader from './EditablePageHeader.es';
 import * as EditorVariant from './EditorVariant.es';
 import {Layout} from './Layout.es';
 import * as Tabbed from './TabbedVariant.es';
@@ -47,14 +46,6 @@ const LAYOUT_COMPONENTS_TYPES = {
 	[LAYOUT_TYPES.SUCCESS]: SuccessPage,
 	[LAYOUT_TYPES.TABBED]: Tabbed,
 	[LAYOUT_TYPES.WIZARD]: Wizard,
-};
-
-const PAGE_HEADER_TYPES = {
-	EDITABLE: 'editable',
-};
-
-const PAGE_HEADER_COMPONENT_TYPE = {
-	[PAGE_HEADER_TYPES.EDITABLE]: EditablePageHeader.PageHeader,
 };
 
 const DDM_FORM_PORTLET_NAMESPACE =
@@ -182,10 +173,6 @@ const Page = ({
 		...overrides,
 	};
 
-	const Header =
-		PAGE_HEADER_COMPONENT_TYPE[page.headerRenderer] ||
-		Components.PageHeader;
-
 	let hasFieldRequired = false;
 
 	if (pages?.[activePage]) {
@@ -222,10 +209,7 @@ const Page = ({
 					forceAriaUpdate={forceAriaUpdate}
 					header={
 						variant === LAYOUT_TYPES.SINGLE_PAGE ? null : (
-							<Header
-								description={page.description}
-								title={page.title}
-							/>
+							<Components.PageHeader {...page} />
 						)
 					}
 					invalidFormMessage={invalidFormMessage}

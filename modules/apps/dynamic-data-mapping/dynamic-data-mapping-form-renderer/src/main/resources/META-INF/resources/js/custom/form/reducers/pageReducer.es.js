@@ -137,6 +137,44 @@ export default (state, action, config) => {
 				}),
 			};
 		}
+		case EVENT_TYPES.PAGE.TITLE_CHANGE: {
+			const {pageIndex, value} = action.payload;
+			const {editingLanguageId, pages} = state;
+
+			const {localizedTitle, ...page} = pages[pageIndex];
+
+			pages[pageIndex] = {
+				...page,
+				localizedTitle: {
+					...localizedTitle,
+					[editingLanguageId]: value,
+				},
+				title: value,
+			};
+
+			return {
+				pages: [...pages],
+			};
+		}
+		case EVENT_TYPES.PAGE.DESCRIPTION_CHANGE: {
+			const {pageIndex, value} = action.payload;
+			const {editingLanguageId, pages} = state;
+
+			const {localizedDescription, ...page} = pages[pageIndex];
+
+			pages[pageIndex] = {
+				...page,
+				description: value,
+				localizedDescription: {
+					...localizedDescription,
+					[editingLanguageId]: value,
+				},
+			};
+
+			return {
+				pages: [...pages],
+			};
+		}
 		default:
 			return state;
 	}

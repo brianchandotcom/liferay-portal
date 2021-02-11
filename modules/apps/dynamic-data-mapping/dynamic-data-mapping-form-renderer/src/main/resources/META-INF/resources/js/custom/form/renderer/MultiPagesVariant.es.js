@@ -18,7 +18,8 @@ import ClayLayout from '@clayui/layout';
 import {sub} from 'dynamic-data-mapping-form-field-type/util/strings.es';
 import React from 'react';
 
-import {useForm} from '../../../core/hooks/useForm.es';
+import {useConfig} from '../../../core/hooks/useConfig.es';
+import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {usePage} from '../../../core/hooks/usePage.es';
 import {EVENT_TYPES} from '../eventTypes.es';
 
@@ -192,3 +193,50 @@ export const Container = ({children, empty, pageIndex, pages}) => {
 };
 
 Container.displayName = 'MultiPagesVariant.Container';
+
+export const PageHeader = ({localizedDescription, localizedTitle}) => {
+	const {editingLanguageId} = useFormState();
+	const {pageIndex} = usePage();
+	const {defaultLanguageId} = useConfig();
+
+	const dispatch = useForm();
+
+	return (
+		<div>
+			<input
+				className="form-builder-page-header-title form-control p-0"
+				maxLength="120"
+				onChange={(event) =>
+					dispatch({
+						payload: {pageIndex, value: event.target.value},
+						type: EVENT_TYPES.PAGE.TITLE_CHANGE,
+					})
+				}
+				placeholder={Liferay.Language.get('page-title')}
+				value={
+					localizedTitle[editingLanguageId] ??
+					localizedTitle[defaultLanguageId]
+				}
+			/>
+			<input
+				className="form-builder-page-header-description form-control p-0"
+				maxLength="120"
+				onChange={(event) =>
+					dispatch({
+						payload: {pageIndex, value: event.target.value},
+						type: EVENT_TYPES.PAGE.DESCRIPTION_CHANGE,
+					})
+				}
+				placeholder={Liferay.Language.get(
+					'add-a-short-description-for-this-page'
+				)}
+				value={
+					localizedDescription[editingLanguageId] ??
+					localizedDescription[defaultLanguageId]
+				}
+			/>
+		</div>
+	);
+};
+
+PageHeader.displayName = 'MultiPagesVariant.PageHeader';

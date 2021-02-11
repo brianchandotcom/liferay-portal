@@ -22,8 +22,10 @@ const PAGE = {
 	ADD: 'page_add',
 	CHANGE: 'page_change',
 	DELETE: 'page_delete',
+	DESCRIPTION_CHANGE: 'page_description_change',
 	RESET: 'page_reset',
 	SWAP: 'page_swap',
+	TITLE_CHANGE: 'page_title_change',
 };
 
 const RULE = {

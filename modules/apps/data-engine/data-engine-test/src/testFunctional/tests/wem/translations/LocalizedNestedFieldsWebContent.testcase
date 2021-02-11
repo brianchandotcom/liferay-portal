@@ -33,7 +33,7 @@ definition {
 		
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -64,7 +64,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addCP(webContentTitle = "WC Title");
 
@@ -124,7 +124,7 @@ definition {
 
 		WebContentStructures.addCP(
 			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+			structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -139,7 +139,7 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
@@ -167,10 +167,9 @@ definition {
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "5"
 	test CheckStructureTranslationsOnWebContent {
-
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -195,13 +194,13 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Date",
-			fieldFieldLabelEdit = "Encontro");
+			fieldFieldLabelEdit = "Data");
 
 		WebContentStructures.saveCP();
 
 		Navigator.gotoNavItem(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		for (var label : list "Fields Group,Text,Date") {
 			AssertVisible(
@@ -211,11 +210,65 @@ definition {
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		for (var label : list "Grupo de Campos,Texto,Encontro") {
+		for (var label : list "Grupo de Campos,Texto,Data") {
 			AssertVisible(
 				key_fieldFieldLabel = "${label}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
+	}
+
+	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
+	@priority = "4"
+	test DefaultTitleAndValuesDisplayedForAnotherLocaleAndForNonTranslatedWebContent {
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		Navigator.gotoNavItem(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "8",
+			webContentText = "This is a Text field",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "123",
+			webContentText = "Este é um campo de texto",
+			webContentTitle = "Título do conteúdo da web");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Web Content Title");
+
+		WebContent.viewWithStructureCP(
+			predefinedValue = "true",
+			webContentNumeric = "8",
+			webContentText = "This is a Text field");
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
@@ -226,14 +279,13 @@ definition {
 
 		// TODO LPS-123537 DefaultTitleIsDisplayedUponLocaleChange pending implementation
 	}
-	
+
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
-
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -248,7 +300,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
@@ -290,67 +342,11 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
-	@priority = "4"
-	test DefaultTitleAndValuesDisplayedForAnotherLocaleAndForNonTranslatedWebContent {
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		Navigator.gotoNavItem(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		WebContent.addWithStructureCP(
-			webContentNumeric = "8",
-			webContentText = "This is a Text field",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		WebContent.addWithStructureCP(
-			webContentNumeric = "123",
-			webContentText = "Este é um campo de texto",
-			webContentTitle = "Título do conteúdo da web");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Web Content Title");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Web Content Title");
-
-		WebContent.viewWithStructureCP(
-			predefinedValue = "true",
-			webContentNumeric = "8",
-			webContentText = "This is a Text field");
-	}
-
-	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
 	@priority = "5"
 	test TranslateWebContentFromStructureWithNLevelNestedFieldsAndToNLanguages {
-
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -376,7 +372,7 @@ definition {
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
-			localization1Name = "WC Nome da Estrutura");
+			localization1Name = "WC Título da Estrutura");
 
 		DataEngine.editFieldsGroupLabel(
 			fieldsGroupLabel = "First Level Fields Group",
@@ -400,7 +396,7 @@ definition {
 
 		WebContentStructures.addLocalization(
 			locale = "de-DE",
-			localization1Name = "WC Structure Name German");
+			localization1Name = "WC Structure Title German");
 
 		DataEngine.editFieldsGroupLabel(
 			fieldsGroupLabel = "First Level Fields Group",
@@ -421,10 +417,10 @@ definition {
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Numeric",
 			fieldFieldLabelEdit = "Numeric German");
-		
+
 		WebContentStructures.addLocalization(
 			locale = "ja-JP",
-			localization1Name = "WC Structure Name Japan");
+			localization1Name = "WC Structure Title Japan");
 
 		DataEngine.editFieldsGroupLabel(
 			fieldsGroupLabel = "First Level Fields Group",
@@ -450,7 +446,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(webContentTitle = "WC Title");
 
@@ -470,7 +466,7 @@ definition {
 			webContentText = "Este é um campo de texto",
 			webContentTextFieldLabel = "Texto",
 			webContentTitle = "Título do conteúdo da web");
-		
+
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		WebContent.addWithStructureCP(
@@ -480,8 +476,8 @@ definition {
 			webContentRichTextFieldLabel = "Rich Text German",
 			webContentText = "This is a Text field in German",
 			webContentTextFieldLabel = "Text German",
-			webContentTitle = "WC Structure Name German");
-		
+			webContentTitle = "WC Structure Title German");
+
 		PortletEntry.changeLocale(locale = "ja-JP");
 
 		WebContent.addWithStructureCP(
@@ -491,7 +487,7 @@ definition {
 			webContentRichTextFieldLabel = "Rich Text Japan",
 			webContentText = "This is a Text field in Japan",
 			webContentTextFieldLabel = "Text Japan",
-			webContentTitle = "WC Structure Name Japan");
+			webContentTitle = "WC Structure Title Japan");
 
 		PortletEntry.publish();
 
@@ -532,7 +528,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "WC Structure Name German");
+			value1 = "WC Structure Title German");
 
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
@@ -553,7 +549,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "WC Structure Name Japan");
+			value1 = "WC Structure Title Japan");
 
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
@@ -569,7 +565,6 @@ definition {
 				key_fieldFieldLabel = "${fieldsGroupLabel}",
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
-		
 	}
 
 	@description = "This is a test for LPS-123537. As Content Creator, I want to leverage the structures’ translations with nested field when creating a new Web Content"
@@ -578,7 +573,7 @@ definition {
 	test TranslateWebContentWithAllFieldsNested {
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addFieldGroupWithFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
@@ -586,7 +581,7 @@ definition {
 
 		NavItem.gotoWebContent();
 
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "WC Structure Name");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
 			webContentColor = "FF0D0D",
@@ -633,7 +628,7 @@ definition {
 	test TranslationDoesNotChangeAnother {
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -648,7 +643,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
 			webContentRichText = "English Rich Text",
@@ -704,7 +699,7 @@ definition {
 	test TranslationPersistsAfterEditingAnother {
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -735,7 +730,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
 			webContentNumeric = "123",
@@ -801,7 +796,7 @@ definition {
 
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "First Rich Text",
@@ -816,7 +811,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		WebContent.addWithStructureCP(
 			webContentRichText = "This is the first Rich Text field",
@@ -886,7 +881,7 @@ definition {
 	test VerifyDefaultLanguageIsFirstShown {
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "WC Structure Title");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
@@ -926,7 +921,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
 		PortletEntry.viewLocale(locale = "en-US");
 

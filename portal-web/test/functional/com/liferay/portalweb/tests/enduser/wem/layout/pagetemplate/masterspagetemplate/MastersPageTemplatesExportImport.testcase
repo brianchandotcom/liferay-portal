@@ -206,7 +206,6 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Center",
-				marginBottom = "1",
 				textColor = "Danger");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
@@ -217,7 +216,6 @@ definition {
 				alignment = "center",
 				fragmentName = "heading",
 				headingLevel = "h2",
-				marginBottom = "1",
 				textColor = "danger");
 
 			Button.click(button = "Publish Master");
@@ -254,7 +252,6 @@ definition {
 				alignment = "center",
 				fragmentName = "heading",
 				headingLevel = "h2",
-				marginBottom = "1",
 				textColor = "danger");
 		}
 	}

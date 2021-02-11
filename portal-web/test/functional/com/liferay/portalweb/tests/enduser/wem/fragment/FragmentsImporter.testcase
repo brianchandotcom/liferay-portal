@@ -386,7 +386,6 @@ definition {
 
 		PageEditor.configureFragment(
 			alignment = "Center",
-			marginBottom = "1",
 			textColor = "Danger");
 
 		PageEditor.gotoConfiguration(fragmentName = "Heading");
@@ -442,7 +441,6 @@ definition {
 				alignment = "center",
 				fragmentName = "heading",
 				headingLevel = "H2",
-				marginBottom = "1",
 				textColor = "danger");
 		}
 	}

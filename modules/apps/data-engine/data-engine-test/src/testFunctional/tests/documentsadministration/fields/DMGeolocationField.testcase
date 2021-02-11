@@ -34,48 +34,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98071. Verify if user has the ability to set Searchable Option"
-	@priority = "5"
-	test SetSearchableOfGeolocation {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Geolocation",
-			searchableType = "Disable");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-
-		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "Geolocation",
-			searchableType = "Disable");
-
-		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Geolocation",
-			searchableType = "Keyword");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-
-		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "Geolocation",
-			searchableType = "Keyword");
-
-		DataEngine.editFieldSearchable(
-			fieldFieldLabel = "Geolocation",
-			searchableType = "Text");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
-
-		DataEngine.viewFieldSearchable(
-			fieldFieldLabel = "Geolocation",
-			searchableType = "Text");
-	}
-
 	@description = "This is a test for LPS-98071. Verify if geolocation field can be be duplicated"
 	@priority = "4"
 	test DuplicateGeolocation {
@@ -90,34 +48,6 @@ definition {
 		DataEngine.viewField(
 			fieldFieldLabel = "Copy of Geolocation",
 			fieldName = "Geolocation");
-	}
-
-	@description = "This is a test for LPS-98071. Verify if geolocation field can repeat field (clicking on +) when it is set as repeatable"
-	@priority = "4"
-	test RepeatableGeolocationOnRenderer {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Geolocation");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentsAndMedia();
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
-
-		PortletEntry.inputTitle(title = "Documents and Media Title");
-
-		DataEngine.addRepeatableField(fieldName = "Geolocation");
-
-		PortletEntry.publish();
-
-		LexiconEntry.gotoEntryMenuItem(
-            menuItem = "Edit",
-            rowEntry = "Documents and Media Title");
-
-		DataEngine.assertFieldRepeated(
-			fieldName = "Geolocation",
-			index = "2");
 	}
 
 	@description = "This is a test for LPS-98071. Edit the label and help text of Separator Field"
@@ -175,6 +105,76 @@ definition {
 			fieldFieldLabel = "Geolocation",
 			fieldName = "Geolocation",
 			fieldReference = "GeolocationReferenceValidCharacters");
+	}
+
+	@description = "This is a test for LPS-98071. Verify if geolocation field can repeat field (clicking on +) when it is set as repeatable"
+	@priority = "4"
+	test RepeatableGeolocationOnRenderer {
+		property portal.acceptance = "false";
+
+		DataEngine.editFieldRepeatable(fieldFieldLabel = "Geolocation");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentsAndMedia();
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+
+		PortletEntry.inputTitle(title = "Documents and Media Title");
+
+		DataEngine.addRepeatableField(fieldName = "Geolocation");
+
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Documents and Media Title");
+
+		DataEngine.assertFieldRepeated(
+			fieldName = "Geolocation",
+			index = "2");
+	}
+
+	@description = "This is a test for LPS-98071. Verify if user has the ability to set Searchable Option"
+	@priority = "5"
+	test SetSearchableOfGeolocation {
+		property portal.acceptance = "false";
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Disable");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Disable");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Keyword");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Keyword");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Text");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Text");
 	}
 
 	@description = "This is a test for LPS-98071. Verify if a user can show/hide label"

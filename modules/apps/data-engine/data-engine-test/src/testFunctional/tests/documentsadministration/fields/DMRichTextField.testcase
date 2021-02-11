@@ -156,21 +156,9 @@ definition {
 	test SetFieldReferenceOfRichText {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "DM Document Type");
-
-		var referenceDT = "ReferenceText";
-
 		DataEngine.editFieldReference(
 			assertFieldReference = "ReferenceText",
-			fieldFieldLabel = "Test",
+			fieldFieldLabel = "Rich Text",
 			fieldReference = "ReferenceText");
 
 		DDLDataDefinition.save();
@@ -219,16 +207,6 @@ definition {
 	test SetHelpTextOfRichText {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "DM Document Type");
-
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
 			fieldHelp = "Help Text");
@@ -262,14 +240,6 @@ definition {
 	test SetRichTextAsRepeatable {
 		property portal.acceptance = "false";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Rich Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "Rich Text",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
@@ -281,7 +251,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
 
 		AssertElementPresent(locator1 = "FormFields#FIELD_ADD_DUPLICATE");
 	}
@@ -296,7 +266,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
 
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Rich Text",
@@ -304,7 +274,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "New Document Type");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
 
 		DataEngine.viewFieldSearchable(
 			fieldFieldLabel = "Rich Text",
@@ -368,16 +338,6 @@ definition {
 	test UploadWithRequiredRichText {
 		property portal.acceptance = "false";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		LexiconEntry.gotoAdd();
-
-		PortletEntry.inputName(name = "DM Document Type");
-
 		DDLDataDefinition.save();
 
 		DMDocumentType.edit(
@@ -387,7 +347,7 @@ definition {
 		Navigator.gotoNavItem(navItem = "Documents and Media");
 
 		DMDocument.addCP(
-			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitle = "DM Document Type",
 			dmDocumentTypeName = "DM Document Type Name");
 
 		AssertTextEquals.assertPartialText(
@@ -399,20 +359,6 @@ definition {
 	@priority = "4"
 	test VerifyRequiredPropertyOfRichText {
 		property portal.acceptance = "false";
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTitle = "DM Document Type",
-			dmDocumentTypeFieldNames = "Rich Text",
-			dmDocumentTypeName = "DM Document Type");
-
-		AssertElementNotPresent(locator1 = "FormViewBuilder#FORM_FIELD_REQUIRED_ITEM");
 
 		DDLDataDefinition.save();
 
@@ -434,20 +380,13 @@ definition {
 	test VerifyRichFieldHelpTextOnUpload {
 		property portal.upstream = "quarantine";
 
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Rich Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
 			fieldHelp = "Help Text");
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
 
 		DMDocumentType.gotoEditField(fieldName = "Rich Text");
 
@@ -461,20 +400,6 @@ definition {
 	test VerifyRichTextIsSetAsRequiredOnUploading {
 		property portal.acceptance = "false";
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Rich Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
 		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
 
 		DDLDataDefinition.save();
@@ -483,9 +408,11 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		MenuItem.click(menuItem = "DM Document Type Name");
+		MenuItem.click(menuItem = "DM Document Type");
 
-		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+		AssertElementPresent(
+			fieldLabel = "Rich Text",
+			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
 	}
 
 }

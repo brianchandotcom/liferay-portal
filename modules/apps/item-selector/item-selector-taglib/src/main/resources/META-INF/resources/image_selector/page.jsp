@@ -17,10 +17,11 @@
 <%@ include file="/image_selector/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_image_selector") + StringPool.UNDERLINE;
-
-String draggableImage = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:draggableImage"), "none");
 long fileEntryId = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:fileEntryId"));
+String imageCropDirection = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:imageCropDirection"), "none");
+String imageCropRegion = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:imageCropRegion"));
+String imageURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:imageURL"));
+boolean isDraggable = GetterUtil.getBoolean(request.getAttribute("liferay-ui:image-selector:isDraggable"));
 String itemSelectorEventName = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorEventName"));
 String itemSelectorURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:itemSelectorURL"));
 long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-ui:image-selector:maxFileSize"));
@@ -28,146 +29,122 @@ String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui
 String uploadURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:uploadURL"));
 String validExtensions = GetterUtil.getString((String)request.getAttribute("liferay-ui:image-selector:validExtensions"));
 
-String cropRegion = ParamUtil.getString(request, paramName + "CropRegion");
+String cssClass = "drop-zone taglib-image-selector";
 
-String imageURL = null;
+if (fileEntryId == 0) {
+	cssClass += " drop-enabled";
+}
 
-if (fileEntryId != 0) {
-	FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-
-	imageURL = DLURLHelperUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
+if (isDraggable) {
+	cssClass += " draggable-image " + imageCropDirection;
 }
 %>
 
-<div class="drop-zone <%= (fileEntryId == 0) ? "drop-enabled" : StringPool.BLANK %> <%= !draggableImage.equals("none") ? "draggable-image " + draggableImage : StringPool.BLANK %> taglib-image-selector" id="<%= randomNamespace %>taglibImageSelector">
-	<aui:input name='<%= paramName + "Id" %>' type="hidden" value="<%= fileEntryId %>" />
-	<aui:input name='<%= paramName + "CropRegion" %>' type="hidden" value="<%= cropRegion %>" />
-
-	<div class="image-wrapper">
-		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="current-image <%= Validator.isNull(imageURL) ? "hide" : StringPool.BLANK %>" id="<%= randomNamespace %>image" src="<%= HtmlUtil.escape(Validator.isNotNull(imageURL) ? imageURL : StringPool.BLANK) %>" />
-	</div>
-
-	<liferay-util:buffer
-		var="selectFileLink"
-	>
-		<a class="browse-image btn btn-secondary" href="javascript:;" id="<%= randomNamespace %>browseImage"><liferay-ui:message key="select-file" /></a>
-	</liferay-util:buffer>
-
-	<div class="browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>">
-		<div class="drag-drop-label">
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(itemSelectorEventName) && Validator.isNotNull(itemSelectorURL) %>">
-					<c:choose>
-						<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-							<%= selectFileLink %>
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message arguments="<%= selectFileLink %>" key="drag-and-drop-to-upload-or-x" />
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<%= LanguageUtil.get(resourceBundle, "drag-and-drop-to-upload") %>
-				</c:otherwise>
-			</c:choose>
-		</div>
-
-		<div class="file-validation-info">
-			<c:if test="<%= Validator.isNotNull(validExtensions) %>">
-				<strong><%= validExtensions %></strong>
-			</c:if>
-
-			<c:if test="<%= maxFileSize != 0 %>">
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="maximum-size-x" />
-			</c:if>
-		</div>
-	</div>
-
-	<span class="selection-status">
-		<clay:icon
-			symbol="check"
-		/>
-	</span>
-
-	<liferay-ui:drop-here-info
-		message="drop-files-here"
+<div>
+	<react:component
+		module="image_selector/js/ImageSelector"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"fileEntryId", fileEntryId
+			).put(
+				"imageCropDirection", imageCropDirection
+			).put(
+				"imageCropRegion", imageCropRegion
+			).put(
+				"imageURL", imageURL
+			).put(
+				"isDraggable", isDraggable
+			).put(
+				"itemSelectorEventName", itemSelectorEventName
+			).put(
+				"itemSelectorURL", itemSelectorURL
+			).put(
+				"maxFileSize", maxFileSize
+			).put(
+				"paramName", paramName
+			).put(
+				"uploadURL", uploadURL
+			).put(
+				"validExtensions", validExtensions
+			).build()
+		%>'
 	/>
 
-	<div class="error-wrapper hide">
-		<aui:alert closeable="<%= true %>" id='<%= randomNamespace + "errorAlert" %>' type="danger">
-			<span class="error-message"></span>
+	<div class="<%= cssClass %>">
+		<aui:input name='<%= paramName + "Id" %>' type="hidden" value="<%= fileEntryId %>" />
+		<aui:input name='<%= paramName + "CropRegion" %>' type="hidden" value="<%= imageCropRegion %>" />
 
-			<c:if test="<%= Validator.isNotNull(itemSelectorEventName) && Validator.isNotNull(itemSelectorURL) %>">
-				<%= selectFileLink %>
-			</c:if>
-		</aui:alert>
-	</div>
+		<c:if test="<%= Validator.isNotNull(imageURL) %>">
+			<div class="image-wrapper">
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="current-image <%= Validator.isNull(imageURL) ? "hide" : StringPool.BLANK %>" src="<%= HtmlUtil.escape(Validator.isNotNull(imageURL) ? imageURL : StringPool.BLANK) %>" />
+			</div>
+		</c:if>
 
-	<div class="progress-wrapper">
-		<p class="file-name"></p>
+		<c:if test="<%= fileEntryId == 0 %>">
+			<div class="browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>">
+				<div class="drag-drop-label">
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(itemSelectorEventName) && Validator.isNotNull(itemSelectorURL) %>">
+							<liferay-util:buffer
+								var="selectFileButton"
+							>
+								<button class="btn btn-secondary" disabled><liferay-ui:message key="select-file" /></button>
+							</liferay-util:buffer>
 
-		<div class="progressbar"></div>
+							<c:choose>
+								<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+									<%= selectFileButton %>
+								</c:when>
+								<c:otherwise>
+									<span class="pr-1">
+										<liferay-ui:message arguments="<%= selectFileButton %>" key="drag-and-drop-to-upload-or-x" />
+									</span>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<%= LanguageUtil.get(resourceBundle, "drag-and-drop-to-upload") %>
+						</c:otherwise>
+					</c:choose>
+				</div>
 
-		<p class="progress-data size"></p>
+				<div class="file-validation-info">
+					<c:if test="<%= Validator.isNotNull(validExtensions) %>">
+						<strong><%= validExtensions %></strong>
+					</c:if>
 
-		<aui:button id='<%= randomNamespace + "cancelUpload" %>' primary="<%= true %>" useNamespace="<%= false %>" value="cancel" />
-	</div>
+					<c:if test="<%= maxFileSize != 0 %>">
+						<span class="pl-1">
+							<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(maxFileSize, locale) %>" key="maximum-size-x" />
+						</span>
+					</c:if>
+				</div>
+			</div>
+		</c:if>
 
-	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
-		<clay:button
-			cssClass="browse-image"
-			displayType="secondary"
-			icon="picture"
-			title="change-image"
-		/>
+		<span class="selection-status">
+			<clay:icon
+				symbol="check"
+			/>
+		</span>
 
-		<clay:button
-			displayType="secondary"
-			icon="trash"
-			id='<%= randomNamespace + "removeImage" %>'
-			monospaced="<%= true %>"
-			title="remove-image"
-		/>
+		<c:if test="<%= fileEntryId != 0 %>">
+			<div class="change-image-controls">
+				<clay:button
+					cssClass="browse-image"
+					displayType="secondary"
+					icon="picture"
+					title="change-image"
+				/>
+
+				<clay:button
+					cssClass="ml-1"
+					displayType="secondary"
+					icon="trash"
+					monospaced="<%= true %>"
+					title="remove-image"
+				/>
+			</div>
+		</c:if>
 	</div>
 </div>
-
-<%
-String modules = "liferay-image-selector";
-
-if (!draggableImage.equals("none")) {
-	modules += ",liferay-cover-cropper";
-}
-%>
-
-<aui:script use="<%= modules %>">
-	var imageSelector = new Liferay.ImageSelector({
-		errorNode: '#<%= randomNamespace + "errorAlert" %>',
-		fileEntryImageNode: '#<%= randomNamespace %>image',
-		itemSelectorEventName: '<%= itemSelectorEventName %>',
-		itemSelectorURL: '<%= itemSelectorURL %>',
-		maxFileSize: <%= maxFileSize %>,
-		namespace: '<%= randomNamespace %>',
-		paramName: '<portlet:namespace /><%= paramName %>',
-		rootNode: '#<%= randomNamespace %>taglibImageSelector',
-		uploadURL: '<%= uploadURL %>',
-		validExtensions: '<%= validExtensions %>',
-	});
-
-	<c:if test='<%= !draggableImage.equals("none") %>'>
-		imageSelector.plug(Liferay.CoverCropper, {
-			direction: '<%= draggableImage %>',
-			imageContainerSelector: '.image-wrapper',
-			imageSelector: '#<%= randomNamespace %>image',
-		});
-	</c:if>
-
-	var destroyInstance = function (event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			imageSelector.destroy();
-
-			Liferay.detach('destroyPortlet', destroyInstance);
-		}
-	};
-
-	Liferay.on('destroyPortlet', destroyInstance);
-</aui:script>

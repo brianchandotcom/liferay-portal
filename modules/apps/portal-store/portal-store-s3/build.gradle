@@ -4,6 +4,9 @@ buildIBMS3Store {
 	doFirst {
 		delete "src/main/java/com/liferay/portal/store/s3/IBMS3store.java"
 	}
+	ext {
+		autoClean = false
+	}
 	filter {
 		line -> line.replace "S3Store.class", "IBMS3Store.class"
 	}

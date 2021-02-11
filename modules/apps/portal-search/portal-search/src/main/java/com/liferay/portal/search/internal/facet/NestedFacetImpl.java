@@ -74,18 +74,20 @@ public class NestedFacetImpl extends FacetImpl implements NestedFacet {
 		BooleanFilter booleanFilter = new BooleanFilter();
 
 		if (Validator.isNotNull(_filterField)) {
-			TermsFilter nestedFilter = new TermsFilter(_filterField);
+			TermsFilter nestedTermsFilter = new TermsFilter(_filterField);
 
-			nestedFilter.addValue(_filterValue);
+			nestedTermsFilter.addValue(_filterValue);
 
-			booleanFilter.add(nestedFilter, BooleanClauseOccur.MUST);
+			booleanFilter.add(nestedTermsFilter, BooleanClauseOccur.MUST);
 		}
 
-		TermsFilter nestedAggregationFilter = new TermsFilter(getFieldName());
+		TermsFilter nestedAggregationTermsFilter = new TermsFilter(
+			getFieldName());
 
-		nestedAggregationFilter.addValues(selections);
+		nestedAggregationTermsFilter.addValues(selections);
 
-		booleanFilter.add(nestedAggregationFilter, BooleanClauseOccur.MUST);
+		booleanFilter.add(
+			nestedAggregationTermsFilter, BooleanClauseOccur.MUST);
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 

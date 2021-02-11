@@ -16,6 +16,8 @@ package com.liferay.analytics.reports.test.analytics.reports.info.item;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.test.MockObject;
+import com.liferay.info.type.WebImage;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -36,7 +38,12 @@ public class MockAnalyticsReportsInfoItem
 
 	@Override
 	public String getAuthorName(MockObject mockObject) {
-		return null;
+		return _authorName;
+	}
+
+	@Override
+	public WebImage getAuthorWebImage(MockObject mockObject, Locale locale) {
+		return new WebImage(_authorProfileImage);
 	}
 
 	@Override
@@ -61,9 +68,22 @@ public class MockAnalyticsReportsInfoItem
 
 	public static class Builder {
 
+		public Builder authorName(String authorName) {
+			_authorName = authorName;
+
+			return this;
+		}
+
+		public Builder authorProfileImage(String authorProfileImage) {
+			_authorProfileImage = authorProfileImage;
+
+			return this;
+		}
+
 		public MockAnalyticsReportsInfoItem build() {
 			return new MockAnalyticsReportsInfoItem(
-				_locales, _publishDate, _title);
+				_authorName, _authorProfileImage, _locales, _publishDate,
+				_title);
 		}
 
 		public Builder locales(List<Locale> locales) {
@@ -84,6 +104,8 @@ public class MockAnalyticsReportsInfoItem
 			return this;
 		}
 
+		private String _authorName;
+		private String _authorProfileImage;
 		private List<Locale> _locales;
 		private Date _publishDate;
 		private String _title;
@@ -91,7 +113,22 @@ public class MockAnalyticsReportsInfoItem
 	}
 
 	private MockAnalyticsReportsInfoItem(
-		List<Locale> locales, Date publishDate, String title) {
+		String authorName, String authorProfileImage, List<Locale> locales,
+		Date publishDate, String title) {
+
+		if (authorName == null) {
+			_authorName = StringPool.BLANK;
+		}
+		else {
+			_authorName = authorName;
+		}
+
+		if (authorProfileImage == null) {
+			_authorProfileImage = StringPool.BLANK;
+		}
+		else {
+			_authorProfileImage = authorProfileImage;
+		}
 
 		if (ListUtil.isEmpty(locales)) {
 			_locales = Collections.singletonList(LocaleUtil.getDefault());
@@ -110,6 +147,8 @@ public class MockAnalyticsReportsInfoItem
 		_title = title;
 	}
 
+	private final String _authorName;
+	private final String _authorProfileImage;
 	private final List<Locale> _locales;
 	private final Date _publishDate;
 	private final String _title;

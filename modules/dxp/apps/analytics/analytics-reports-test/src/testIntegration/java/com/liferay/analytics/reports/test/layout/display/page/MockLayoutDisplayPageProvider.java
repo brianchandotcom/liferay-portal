@@ -43,8 +43,7 @@ public class MockLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
-		return new MockLayoutDisplayPageObjectProvider(
-			_classNameLocalService, _title);
+		return new MockLayoutDisplayPageObjectProvider(_classNameLocalService);
 	}
 
 	@Override
@@ -66,43 +65,31 @@ public class MockLayoutDisplayPageProvider
 		}
 
 		public MockLayoutDisplayPageProvider build() {
-			return new MockLayoutDisplayPageProvider(
-				_classNameLocalService, _title);
-		}
-
-		public Builder title(String title) {
-			_title = title;
-
-			return this;
+			return new MockLayoutDisplayPageProvider(_classNameLocalService);
 		}
 
 		private final ClassNameLocalService _classNameLocalService;
-		private String _title;
 
 	}
 
 	private MockLayoutDisplayPageProvider(
-		ClassNameLocalService classNameLocalService, String title) {
+		ClassNameLocalService classNameLocalService) {
 
 		_classNameLocalService = classNameLocalService;
-		_title = title;
 	}
 
 	private final ClassNameLocalService _classNameLocalService;
-	private final String _title;
 
 	private static class MockLayoutDisplayPageObjectProvider
 		implements LayoutDisplayPageObjectProvider<MockObject> {
 
 		public MockLayoutDisplayPageObjectProvider(
-			ClassNameLocalService classNameLocalService, String title) {
+			ClassNameLocalService classNameLocalService) {
 
 			ClassName className = classNameLocalService.getClassName(
 				MockObject.class.getName());
 
 			_classNameId = className.getClassNameId();
-
-			_title = title;
 		}
 
 		@Override
@@ -142,7 +129,7 @@ public class MockLayoutDisplayPageProvider
 
 		@Override
 		public String getTitle(Locale locale) {
-			return _title;
+			return null;
 		}
 
 		@Override
@@ -151,7 +138,6 @@ public class MockLayoutDisplayPageProvider
 		}
 
 		private final long _classNameId;
-		private final String _title;
 
 	}
 

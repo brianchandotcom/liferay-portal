@@ -96,10 +96,10 @@ public abstract class BaseNestedFieldsFacetTestCase
 	protected void select(
 		Facet facet, String value, FacetTestHelper facetTestHelper) {
 
-		com.liferay.portal.search.facet.Facet facet2 =
+		com.liferay.portal.search.facet.Facet osgiFacet =
 			(com.liferay.portal.search.facet.Facet)facet;
 
-		facet2.select(value);
+		osgiFacet.select(value);
 	}
 
 	protected NestedFacetFactory nestedFacetFactory =

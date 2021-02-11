@@ -39,13 +39,6 @@ definition {
 	test ViewCommerceEnabled {
 		property commerce.enabled = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
 		CommerceNavigator.gotoPortlet(

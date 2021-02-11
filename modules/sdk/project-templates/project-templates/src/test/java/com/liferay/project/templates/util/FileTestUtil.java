@@ -33,8 +33,11 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -179,6 +182,27 @@ public class FileTestUtil {
 		}
 
 		return byteArrayOutputStream.toByteArray();
+	}
+
+	public static List<String> readAllLines(
+			ClassLoader classLoader, String resource)
+		throws Exception {
+
+		List<String> allLines = new ArrayList<>();
+
+		try (Scanner scanner = new Scanner(
+				classLoader.getResourceAsStream(resource))) {
+
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+
+				if (line != null) {
+					allLines.add(line);
+				}
+			}
+		}
+
+		return allLines;
 	}
 
 	public static Properties readProperties(File file) throws IOException {

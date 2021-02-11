@@ -346,6 +346,14 @@ public class DDMFormField implements Serializable {
 		return HashUtil.hash(hash, _nestedDDMFormFields);
 	}
 
+	public boolean hasProperty(String property) {
+		if (_properties.containsKey(property)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isLocalizable() {
 		return MapUtil.getBoolean(_properties, "localizable");
 	}
@@ -389,6 +397,10 @@ public class DDMFormField implements Serializable {
 
 	public boolean isVisualProperty() {
 		return MapUtil.getBoolean(_properties, "visualProperty");
+	}
+
+	public void removeProperty(String property) {
+		_properties.remove(property);
 	}
 
 	public void setDataType(String dataType) {

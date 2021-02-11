@@ -15,6 +15,7 @@
 package com.liferay.project.templates;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.ZipUtil;
 
 import java.io.File;
@@ -60,7 +61,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author Simon Jiang
  */
-public class ProjectTemplatesAPIJarTest {
+public class ReleaseAPIJarTest {
 
 	@Test
 	public void testReleaseApiJar() throws Exception {
@@ -84,37 +85,42 @@ public class ProjectTemplatesAPIJarTest {
 
 		ZipUtil.unzip(releaseApiJarSourcesFile, sourcesDir);
 
-		Path classesPath = classesDir.toPath();
+		Path classesDirPath = classesDir.toPath();
 
-		Set<String> classNames = _getPaths(classesPath, ".class");
+		Set<String> classFilePaths = _getPaths(classesDirPath, ".class");
 
-		Assert.assertFalse(classNames.isEmpty());
+		Assert.assertFalse(classFilePaths.isEmpty());
 
-		Set<String> sourceClassNames = _getPaths(sourcesDir.toPath(), ".java");
+		Set<String> javaFilePaths = _getPaths(sourcesDir.toPath(), ".java");
 
-		Assert.assertFalse(sourceClassNames.isEmpty());
+		Assert.assertFalse(javaFilePaths.isEmpty());
 
-		List<String> missingClassNames = new ArrayList<>();
+		List<String> missingClassFilePaths = new ArrayList<>();
 
-		for (String className : classNames) {
-			if (!className.contains("$") &&
-				!_ignoreSourceClassNames.contains(className) &&
-				!sourceClassNames.contains(className)) {
+		List<String> ignoredPaths = _getIgnorePaths(
+			releaseApiJarFile.getName());
 
-				missingClassNames.add(className);
+		for (String classFilePath : classFilePaths) {
+			if (!classFilePath.contains("$") &&
+				!ignoredPaths.contains(classFilePath) &&
+				!javaFilePaths.contains(classFilePath)) {
+
+				missingClassFilePaths.add(classFilePath);
 			}
 		}
 
-		_assertTLDClasses("/taglib/tag/tag-class", classesPath, classNames);
+		_assertTLDClasses(
+			"/taglib/tag/tag-class", classesDirPath, classFilePaths);
 
-		_assertTLDClasses("/taglib/tag/tei-class", classesPath, classNames);
+		_assertTLDClasses(
+			"/taglib/tag/tei-class", classesDirPath, classFilePaths);
 
-		Set<Path> sourceServicesClassNames = _getServicesPaths(
+		Set<Path> serviceClassFilePaths = _getServicesPaths(
 			classesDir.toPath());
 
-		Stream<Path> serviceFilesStream = sourceServicesClassNames.stream();
+		Stream<Path> serviceFilesStream = serviceClassFilePaths.stream();
 
-		List<String> missingServiceClassNames = new ArrayList<>();
+		List<String> missingServiceClassFilePaths = new ArrayList<>();
 
 		serviceFilesStream.map(
 			filePath -> {
@@ -129,22 +135,22 @@ public class ProjectTemplatesAPIJarTest {
 		).flatMap(
 			services -> services.stream()
 		).map(
-			serviceClassName -> serviceClassName.replace(".", "/")
+			serviceClassFilePath -> serviceClassFilePath.replace(".", "/")
 		).forEach(
-			sourceServiceClassName -> {
-				if (!classNames.contains(sourceServiceClassName)) {
-					missingServiceClassNames.add(sourceServiceClassName);
+			serviceClassFilePath -> {
+				if (!classFilePaths.contains(serviceClassFilePath)) {
+					missingServiceClassFilePaths.add(serviceClassFilePath);
 				}
 			}
 		);
 
 		Assert.assertTrue(
-			"Sources jar missing: " + _getClassNames(missingClassNames),
-			missingClassNames.isEmpty());
+			"Sources jar missing: " + _getFileNames(missingClassFilePaths),
+			missingClassFilePaths.isEmpty());
 		Assert.assertTrue(
 			"Sources jar missing service classes: " +
-				_getClassNames(missingServiceClassNames),
-			missingServiceClassNames.isEmpty());
+				_getFileNames(missingServiceClassFilePaths),
+			missingServiceClassFilePaths.isEmpty());
 	}
 
 	@Rule
@@ -189,17 +195,43 @@ public class ProjectTemplatesAPIJarTest {
 			Objects.equals("", sb.toString()));
 	}
 
-	private String _getClassNames(List<String> classNames) throws Exception {
+	private String _getFileNames(List<String> fileNames) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("\n");
 
-		for (String className : classNames) {
-			sb.append(className);
+		for (String fileName : fileNames) {
+			sb.append(fileName);
 			sb.append("\n");
 		}
 
 		return sb.toString();
+	}
+
+	private List<String> _getIgnorePaths(String liferayVersion)
+		throws Exception {
+
+		String ignoredPaths = FileTestUtil.read(
+			"APIJarExcludedSourceFiles.txt");
+		String newIgnoredPaths = null;
+
+		if (liferayVersion.startsWith("7.0")) {
+			newIgnoredPaths = ignoredPaths.concat(
+				FileTestUtil.read("70APIJarExcludedSourceFiles.txt"));
+		}
+		else if (liferayVersion.startsWith("7.1")) {
+			newIgnoredPaths = ignoredPaths.concat(
+				FileTestUtil.read("71APIJarExcludedSourceFiles.txt"));
+		}
+		else if (liferayVersion.startsWith("7.2")) {
+			newIgnoredPaths = ignoredPaths.concat(
+				FileTestUtil.read("72APIJarExcludedSourceFiles.txt"));
+		}
+		else {
+			newIgnoredPaths = ignoredPaths;
+		}
+
+		return Arrays.asList(newIgnoredPaths.split("\n"));
 	}
 
 	private Set<String> _getPaths(Path sourcePath, String extension)
@@ -342,19 +374,5 @@ public class ProjectTemplatesAPIJarTest {
 
 	private static final String _RELEASE_API_JAR_SOURCES_FILE =
 		System.getProperty("releaseApiJarSourcesFile");
-
-	private static final List<String> _ignoreSourceClassNames = Arrays.asList(
-		"com/fasterxml/jackson/databind/deser/std/BaseNodeDeserializer",
-		"javax/servlet/http/NoBodyOutputStream",
-		"javax/servlet/http/NoBodyResponse",
-		"org/osgi/framework/AdaptPermissionCollection",
-		"org/osgi/framework/AdminPermissionCollection",
-		"org/osgi/framework/BundlePermissionCollection",
-		"org/osgi/framework/CapabilityPermissionCollection",
-		"org/osgi/framework/PackagePermissionCollection",
-		"org/osgi/framework/ServicePermissionCollection",
-		"org/osgi/service/cm/ConfigurationPermissionCollection",
-		"org/osgi/service/condpermadmin/BooleanCondition",
-		"org/osgi/service/event/TopicPermissionCollection");
 
 }

@@ -19,13 +19,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.segments.model.SegmentsExperience;
-
-import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -84,20 +80,17 @@ public class SegmentsExperienceUtilTest {
 			RandomTestUtil.randomLong()
 		);
 
-		Set<Locale> locales = LanguageUtil.getAvailableLocales();
-
-		Stream<Locale> stream = locales.stream();
+		Mockito.when(
+			segmentsExperience.getTypeSettingsUnicodeProperties()
+		).thenReturn(
+			new UnicodeProperties(true)
+		);
 
 		Assert.assertEquals(
 			JSONUtil.put(
 				"active", segmentsExperience.isActive()
 			).put(
-				"languageIds",
-				stream.map(
-					LocaleUtil::toLanguageId
-				).toArray(
-					String[]::new
-				)
+				"languageIds", new String[0]
 			).put(
 				"name", segmentsExperience.getNameCurrentValue()
 			).put(

@@ -232,15 +232,11 @@ definition {
 
 		var fieldsetLabel = "My New Fieldset";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		AppBuilderAdmin.switchTab(tabName = "Structures");
+		NavItem.gotoStructures();
 
-		DMDocumentType.addWithoutSave(
-			dmDocumentTypeFieldNames = "Numeric",
-			dmDocumentTypeName = "Structure Name");
+		WebContentStructures.addCP(structureName = "Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
@@ -270,7 +266,7 @@ definition {
 
 		Button.clickSave();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
 		AssertVisible(
 			key_fieldFieldLabel = "Text Edit",

@@ -212,20 +212,32 @@ public class ReleaseAPIJarTest {
 		throws Exception {
 
 		String ignoredPaths = FileTestUtil.read(
-			"APIJarExcludedSourceFiles.txt");
+			ReleaseAPIJarTest.class.getClassLoader(),
+			"com/liferay/project/templates/dependencies" +
+				"/APIJarExcludedPaths.txt");
+
 		String newIgnoredPaths = null;
 
 		if (liferayVersion.startsWith("7.0")) {
 			newIgnoredPaths = ignoredPaths.concat(
-				FileTestUtil.read("70APIJarExcludedSourceFiles.txt"));
+				FileTestUtil.read(
+					ReleaseAPIJarTest.class.getClassLoader(),
+					"com/liferay/project/templates/dependencies" +
+						"/70APIJarExcludedPaths.txt"));
 		}
 		else if (liferayVersion.startsWith("7.1")) {
 			newIgnoredPaths = ignoredPaths.concat(
-				FileTestUtil.read("71APIJarExcludedSourceFiles.txt"));
+				FileTestUtil.read(
+					ReleaseAPIJarTest.class.getClassLoader(),
+					"com/liferay/project/templates/dependencies" +
+						"/71APIJarExcludedPaths.txt"));
 		}
 		else if (liferayVersion.startsWith("7.2")) {
 			newIgnoredPaths = ignoredPaths.concat(
-				FileTestUtil.read("72APIJarExcludedSourceFiles.txt"));
+				FileTestUtil.read(
+					ReleaseAPIJarTest.class.getClassLoader(),
+					"com/liferay/project/templates/dependencies" +
+						"/72APIJarExcludedPaths.txt"));
 		}
 		else {
 			newIgnoredPaths = ignoredPaths;

@@ -12,9 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMNavigator.gotoDocumentType();
 
@@ -34,8 +32,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
+			
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			User.logoutPG();
 		}
 	}
 

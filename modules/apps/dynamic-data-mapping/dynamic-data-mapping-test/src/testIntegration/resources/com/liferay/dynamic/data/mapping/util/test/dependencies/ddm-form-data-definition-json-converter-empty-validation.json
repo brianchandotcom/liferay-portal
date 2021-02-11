@@ -1,0 +1,81 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"displayStyle": "",
+			"fieldNamespace": "",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text13gq",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"validation": {
+			},
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "boolean",
+			"fieldNamespace": "",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Boolean"
+			},
+			"localizable": true,
+			"name": "Boolean4y7l",
+			"predefinedValue": {
+				"en_US": "false"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showAsSwitcher": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "checkbox",
+			"validation": "",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "number",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Number"
+			},
+			"localizable": true,
+			"name": "Number13o1",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-number",
+			"validation": {
+			},
+			"visibilityExpression": ""
+		}
+	]
+}

@@ -85,6 +85,25 @@ public class DMMDataDefinitionConverterTest {
 	}
 
 	@Test
+	public void testConvertDDMFormDataDefinitionEmptyValidation()
+		throws Exception {
+
+		String dataDefinition =
+			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
+				_read(
+					"ddm-form-data-definition-json-converter-empty-" +
+						"validation.json"),
+				0, 0);
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"ddm-form-data-definition-json-converter-empty-" +
+						"validation-expected-result.json")),
+			_objectMapper.readTree(dataDefinition));
+	}
+
+	@Test
 	public void testConvertDDMFormDataDefinitionNestedFields()
 		throws Exception {
 

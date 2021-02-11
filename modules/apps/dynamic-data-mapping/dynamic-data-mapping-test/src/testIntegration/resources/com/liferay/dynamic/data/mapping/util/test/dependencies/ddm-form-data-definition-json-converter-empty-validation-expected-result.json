@@ -1,0 +1,131 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"autocomplete": false,
+			"dataSourceType": "manual",
+			"dataType": "string",
+			"ddmDataProviderInstanceId": "[]",
+			"ddmDataProviderInstanceOutput": "[]",
+			"displayStyle": "singleline",
+			"fieldNamespace": "",
+			"fieldReference": "Text13gq",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text13gq",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"value": "Option"
+				}
+			],
+			"placeholder": {
+				"en_US": ""
+			},
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"tooltip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"validation": {
+				"errorMessage": {
+				},
+				"expression": {
+					"value": ""
+				},
+				"parameter": {
+				}
+			},
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"fieldReference": "Boolean4y7l",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Boolean"
+			},
+			"localizable": true,
+			"name": "Boolean4y7l",
+			"options": [
+				{
+					"label": {
+						"en_US": "Boolean"
+					},
+					"value": "Boolean4y7l"
+				}
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showAsSwitcher": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "checkbox_multiple",
+			"visibilityExpression": ""
+		},
+		{
+			"dataType": "double",
+			"fieldNamespace": "",
+			"fieldReference": "Number13o1",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Number"
+			},
+			"localizable": true,
+			"name": "Number13o1",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "numeric",
+			"validation": {
+				"errorMessage": {
+				},
+				"expression": {
+					"value": ""
+				},
+				"parameter": {
+				}
+			},
+			"visibilityExpression": ""
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

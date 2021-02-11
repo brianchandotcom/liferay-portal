@@ -346,22 +346,20 @@ function ImagePanelSizeSelector({item}) {
 		);
 	};
 
-	return (
-		config.adaptiveMediaEnabled &&
+	return config.adaptiveMediaEnabled &&
 		(editableContent?.fileEntryId ||
-			isMappedToInfoItem(editableContent)) && (
-			<ImageSelectorSize
-				editableElement={editableElement}
-				fieldValue={editableContent}
-				imageSizeId={imageSizeId}
-				onImageSizeIdChanged={
-					item.type === EDITABLE_TYPES.image
-						? handleImageSizeChanged
-						: null
-				}
-			/>
-		)
-	);
+			isMappedToInfoItem(editableContent)) ? (
+		<ImageSelectorSize
+			editableElement={editableElement}
+			fieldValue={editableContent}
+			imageSizeId={imageSizeId}
+			onImageSizeIdChanged={
+				item.type === EDITABLE_TYPES.image
+					? handleImageSizeChanged
+					: null
+			}
+		/>
+	) : null;
 }
 
 ImagePanelSizeSelector.propTypes = {

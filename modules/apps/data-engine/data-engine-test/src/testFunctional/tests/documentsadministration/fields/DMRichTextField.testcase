@@ -320,7 +320,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		Navigator.gotoNavItem(navItem = "Documents and Media");
+		DMNavigator.gotoDocumentsAndMedia();
 
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
 
@@ -364,12 +364,12 @@ definition {
 
 		DDLDataDefinition.save();
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
+		DMNavigator.gotoDocumentsAndMedia();
 
-		DMDocumentType.gotoEditField(fieldName = "Rich Text");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
 
 		AssertTextEquals(
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
+			locator1 = "FormFields#HELP_TEXT",
 			value1 = "Help Text");
 	}
 
@@ -384,9 +384,7 @@ definition {
 
 		DMNavigator.gotoDocumentsAndMedia();
 
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "DM Document Type");
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
 
 		AssertElementPresent(
 			fieldLabel = "Rich Text",

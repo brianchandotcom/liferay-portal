@@ -82,7 +82,7 @@ class Form extends Component {
 			`${namespace}descriptionEditor`
 		);
 
-		const dependencies = [Liferay.componentReady('translationManager')];
+		const dependencies = [];
 
 		if (this.isFormBuilderView()) {
 			dependencies.push(this._getSettingsDDMForm());
@@ -91,43 +91,10 @@ class Form extends Component {
 		}
 
 		Promise.all(dependencies).then(
-			([translationManager, settingsDDMForm]) => {
+			([settingsDDMForm]) => {
 				nameEditor.classList.remove('hidden');
 
 				descriptionEditor.classList.remove('hidden');
-
-				if (translationManager) {
-					this.props.defaultLanguageId = translationManager.get(
-						'defaultLocale'
-					);
-
-					this.props.availableLanguageIds = [
-						this.props.defaultLanguageId,
-					];
-
-					this.props.editingLanguageId = translationManager.get(
-						'editingLocale'
-					);
-
-					this._translationManagerHandles = [
-						translationManager.on('editingLocale', ({newValue}) => {
-							this.props.editingLanguageId = newValue;
-
-							const {availableLanguageIds} = this.props;
-
-							if (!availableLanguageIds.includes(newValue)) {
-								this.props.availableLanguageIds = [
-									...availableLanguageIds,
-									newValue,
-								];
-							}
-						}),
-						translationManager.on(
-							'availableLocales',
-							this.onAvailableLocalesRemoved.bind(this)
-						),
-					];
-				}
 
 				this._stateSyncronizer = new StateSyncronizer(
 					{
@@ -140,7 +107,6 @@ class Form extends Component {
 						published,
 						settingsDDMForm,
 						store,
-						translationManager,
 					},
 					this.element
 				);
@@ -365,12 +331,6 @@ class Form extends Component {
 			);
 		}
 
-		if (this._translationManagerHandles) {
-			this._translationManagerHandles.forEach((handle) =>
-				handle.detach()
-			);
-		}
-
 		const {namespace} = this.props;
 
 		const nameEditor = document.getElementById(`${namespace}nameEditor`);
@@ -426,32 +386,6 @@ class Form extends Component {
 		const {activeNavItem} = this.state;
 
 		return activeNavItem === NAV_ITEMS.REPORT && this.isFormBuilderView();
-	}
-
-	onAvailableLocalesRemoved({newValue, previousValue}) {
-		const {store} = this.refs;
-
-		const removedItems = new Map();
-
-		previousValue.forEach((value, key) => {
-			if (!newValue.has(key)) {
-				removedItems.set(key, value);
-			}
-		});
-
-		if (removedItems.size > 0) {
-			const {availableLanguageIds} = this.props;
-
-			const removedLanguageId = removedItems.keys().next().value;
-
-			this.props.availableLanguageIds = availableLanguageIds.filter(
-				(languageId) => languageId !== removedLanguageId
-			);
-
-			store.emit('languageIdDeleted', {
-				locale: removedLanguageId,
-			});
-		}
 	}
 
 	openSidebar() {
@@ -1246,15 +1180,6 @@ Form.PROPS = {
 	 */
 
 	autocompleteUserURL: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Form
-	 * @type {!array}
-	 */
-
-	availableLanguageIds: Config.array().value([]),
 
 	/**
 	 * The context for rendering a layout that represents a form.

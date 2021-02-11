@@ -75,7 +75,7 @@ export default (state, action, config) => {
 				sourceField.fieldName === targetFieldName
 			) {
 				return state;
-			}		
+			}
 
 			let newPages = deleteField({
 				defaultLanguageId,

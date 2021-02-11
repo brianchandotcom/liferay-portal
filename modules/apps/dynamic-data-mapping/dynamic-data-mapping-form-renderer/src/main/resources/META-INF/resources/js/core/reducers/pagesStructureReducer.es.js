@@ -12,70 +12,10 @@
  * details.
  */
 
-import {PagesVisitor} from '../../util/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 
-export default (state, action, config) => {
+export default (state, action) => {
 	switch (action.type) {
-		case EVENT_TYPES.UPDATE_EDITING_LANGUAGE: {
-			const {defaultLanguageId} = config;
-			const {editingLanguageId, pages} = action.payload;
-
-			const visitor = new PagesVisitor(pages ?? state.pages);
-
-			return {
-				editingLanguageId,
-				pages: visitor.mapFields(
-					({
-						localizable,
-						localizedValue,
-						localizedValueEdited,
-						value,
-					}) => {
-						if (!localizable) {
-							return {value};
-						}
-
-						let _value;
-
-						const defaultValue = localizedValue[defaultLanguageId];
-
-						if (localizedValue) {
-							if (localizedValue[editingLanguageId] != null) {
-								if (
-									Array.isArray(
-										localizedValue[editingLanguageId]
-									) &&
-									!localizedValue[editingLanguageId]
-										?.length &&
-									!localizedValueEdited?.[editingLanguageId]
-								) {
-									_value = defaultValue;
-								}
-								else {
-									_value = localizedValue[editingLanguageId];
-								}
-							}
-							else if (defaultValue) {
-								_value = defaultValue;
-							}
-						}
-
-						try {
-							_value = JSON.parse(_value);
-						}
-						catch (e) {}
-
-						return {
-							value: _value,
-						};
-					},
-					true,
-					true,
-					true
-				),
-			};
-		}
 		case EVENT_TYPES.PAGE.UPDATE:
 			return {
 				pages: action.payload,

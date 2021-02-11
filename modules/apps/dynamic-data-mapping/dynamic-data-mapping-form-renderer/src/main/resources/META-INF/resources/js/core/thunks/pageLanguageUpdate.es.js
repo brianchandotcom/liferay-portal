@@ -130,7 +130,7 @@ export default function pageLanguageUpdate({
 						editingLanguageId: nextEditingLanguageId,
 						pages: newPages,
 					},
-					type: EVENT_TYPES.UPDATE_EDITING_LANGUAGE,
+					type: EVENT_TYPES.LANGUAGE.CHANGE,
 				});
 			});
 	};

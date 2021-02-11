@@ -49,6 +49,12 @@ const FIELD_SET = {
 	ADD: 'fieldset_add',
 };
 
+const LANGUAGE = {
+	ADD: 'language_add',
+	CHANGE: 'language_change',
+	DELETE: 'language_delete',
+};
+
 /**
  * Event mapping for compatibility with events for
  * the LayoutProvider component.
@@ -68,7 +74,7 @@ export const EVENT_TYPES = {
 	DND,
 	FIELD,
 	FIELD_SET,
+	LANGUAGE,
 	PAGE,
 	SECTION,
-	UPDATE_EDITING_LANGUAGE: 'update_editing_language',
 };

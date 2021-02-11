@@ -18,7 +18,7 @@ import {Config} from 'metal-state';
 
 class StateSyncronizer extends Component {
 	created() {
-		const {descriptionEditor, nameEditor, translationManager} = this.props;
+		const {descriptionEditor, nameEditor} = this.props;
 
 		descriptionEditor.addEventListener(
 			'input',
@@ -29,27 +29,6 @@ class StateSyncronizer extends Component {
 			'input',
 			this._handleNameEditorChanged.bind(this)
 		);
-
-		if (translationManager) {
-			this._translationManagerHandles = [
-				translationManager.on(
-					'availableLocales',
-					this.onRemoveAvailableLocales.bind(this)
-				),
-				translationManager.on('editingLocale', ({newValue}) => {
-					this.syncEditors(newValue);
-				}),
-			];
-		}
-	}
-
-	deleteLanguageId(languageId) {
-		const {localizedDescription, localizedName} = this.props;
-
-		delete localizedDescription[languageId];
-		delete localizedName[languageId];
-
-		this.syncEditors();
 	}
 
 	disposed() {
@@ -63,111 +42,27 @@ class StateSyncronizer extends Component {
 			'input',
 			this._handleDescriptionEditorChanged.bind(this)
 		);
-
-		if (this._translationManagerHandles) {
-			this._translationManagerHandles.forEach((handle) =>
-				handle.detach()
-			);
-		}
-	}
-
-	getAvailableLanguageIds() {
-		const {translationManager} = this.props;
-		let availableLanguageIds = [{id: this.getDefaultLanguageId()}];
-
-		if (translationManager) {
-			const availableLocalesMap = translationManager.get(
-				'availableLocales'
-			);
-
-			availableLanguageIds = [...availableLocalesMap.keys()];
-		}
-
-		return availableLanguageIds;
-	}
-
-	getDefaultLanguageId() {
-		const {translationManager} = this.props;
-		let defaultLanguageId = themeDisplay.getDefaultLanguageId();
-
-		if (translationManager) {
-			defaultLanguageId = translationManager.get('defaultLocale');
-		}
-
-		return defaultLanguageId;
-	}
-
-	getEditingLanguageId() {
-		const {translationManager} = this.props;
-		let editingLanguageId = this.getDefaultLanguageId();
-
-		if (translationManager) {
-			editingLanguageId = translationManager.get('editingLocale');
-		}
-
-		return editingLanguageId;
 	}
 
 	getState() {
 		const {localizedDescription, localizedName, store} = this.props;
 
-		const state = {
-			availableLanguageIds: this.getAvailableLanguageIds(),
-			defaultLanguageId: this.getDefaultLanguageId(),
+		return {
+			availableLanguageIds: store.current.availableLanguageIds,
+			defaultLanguageId: store.current.defaultLanguageId,
 			description: localizedDescription,
 			name: localizedName,
-			pages: store.state.pages,
-			paginationMode: store.state.paginationMode,
-			rules: store.getRules(),
-			successPageSettings: store.state.successPageSettings,
+			pages: store.current.pages,
+			paginationMode: store.current.paginationMode,
+			rules: store.current.rules,
+			successPageSettings: store.current.successPageSettings,
 		};
-
-		return state;
 	}
 
 	isEmpty() {
 		const {store} = this.props;
 
-		return FormSupport.isEmpty(store.state.pages);
-	}
-
-	onRemoveAvailableLocales({newValue, previousValue}) {
-		const removedItems = new Map();
-
-		previousValue.forEach((value, key) => {
-			if (!newValue.has(key)) {
-				removedItems.set(key, value);
-			}
-		});
-
-		if (removedItems.length > 0) {
-			this.deleteLanguageId(removedItems.keys().next().value);
-		}
-	}
-
-	syncEditors(editingLanguageId = this.getDefaultLanguageId()) {
-		const {
-			descriptionEditor,
-			localizedDescription,
-			localizedName,
-			nameEditor,
-		} = this.props;
-
-		let description = localizedDescription[editingLanguageId];
-
-		if (!description) {
-			description = localizedDescription[this.getDefaultLanguageId()];
-		}
-
-		descriptionEditor.value = description;
-
-		let name = localizedName[editingLanguageId];
-
-		if (!name) {
-			name = localizedName[this.getDefaultLanguageId()];
-		}
-
-		nameEditor.value = name;
+		return FormSupport.isEmpty(store.current.pages);
 	}
 
 	syncInputs() {
@@ -226,8 +121,8 @@ class StateSyncronizer extends Component {
 					...field,
 					settingsContext: {
 						...field.settingsContext,
-						availableLanguageIds: this.getAvailableLanguageIds(),
-						defaultLanguageId: this.getDefaultLanguageId(),
+						availableLanguageIds: state.availableLanguageIds,
+						defaultLanguageId: state.defaultLanguageId,
 						pages: this._getSerializedSettingsContextPages(
 							field.settingsContext.pages
 						),
@@ -238,7 +133,7 @@ class StateSyncronizer extends Component {
 	}
 
 	_getSerializedSettingsContextPages(pages) {
-		const defaultLanguageId = this.getDefaultLanguageId();
+		const defaultLanguageId = this.props.store.current.defaultLanguageId;
 		const visitor = new PagesVisitor(pages);
 
 		return visitor.mapFields((field) => {

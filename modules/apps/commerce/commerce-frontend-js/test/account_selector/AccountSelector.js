@@ -213,7 +213,7 @@ describe('AccountSelector', () => {
 					}}
 					currentOrder={{
 						orderId: 34234,
-						orderStatusInfo: {
+						workflowStatusInfo: {
 							label_i18n: 'Completed',
 						},
 					}}
@@ -224,7 +224,7 @@ describe('AccountSelector', () => {
 			);
 		});
 
-		it('must displays the current account name, order ID and order status localized label', () => {
+		it('displays the current account name, order ID and order status localized label', () => {
 			const button = renderedComponent.container.querySelector(
 				'.btn-account-selector'
 			);

@@ -290,14 +290,12 @@ public class AccountMemberResourceImpl
 			user.getUserId(),
 			new long[] {commerceAccount.getCommerceAccountGroupId()});
 
-		long[] roleIds = null;
-
 		AccountRole[] accountRoles = accountMember.getAccountRoles();
 
 		if (accountRoles != null) {
 			Stream<AccountRole> accountRoleStream = Arrays.stream(accountRoles);
 
-			roleIds = accountRoleStream.mapToLong(
+			long[] roleIds = accountRoleStream.mapToLong(
 				AccountRole::getRoleId
 			).toArray();
 

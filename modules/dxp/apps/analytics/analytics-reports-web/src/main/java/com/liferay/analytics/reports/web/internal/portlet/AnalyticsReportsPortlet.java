@@ -95,8 +95,9 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT,
 			new AnalyticsReportsDisplayContext(
-				layoutDisplayPageObjectProvider, renderRequest, renderResponse,
-				themeDisplay));
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(), renderRequest,
+				renderResponse, themeDisplay));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

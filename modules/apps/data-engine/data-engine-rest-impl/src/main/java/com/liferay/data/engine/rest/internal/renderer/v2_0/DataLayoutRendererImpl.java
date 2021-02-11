@@ -95,6 +95,7 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 			dataLayoutRendererContext.getHttpServletRequest());
 		ddmFormRenderingContext.setHttpServletResponse(
 			dataLayoutRendererContext.getHttpServletResponse());
+		ddmFormRenderingContext.setEditOnlyInDefaultLanguage(true);
 
 		Locale locale = null;
 

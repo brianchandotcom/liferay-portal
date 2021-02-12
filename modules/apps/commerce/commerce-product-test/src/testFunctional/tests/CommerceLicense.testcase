@@ -70,7 +70,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "ApplicationsMenu#PANEL");
 
-		var key_panel = "Control Panel";
+		var key_panel = "Applications";
 
 		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
 	}

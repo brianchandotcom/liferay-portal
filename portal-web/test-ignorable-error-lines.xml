@@ -232,6 +232,10 @@
 			<contains>IX_EE41CBEB</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-123610">
+			<contains>No default user found for company</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-127275 - temporarily ignore until fixed">
 			<contains>com.liferay.analytics.message.sender.impl</contains>
 			<matches></matches>

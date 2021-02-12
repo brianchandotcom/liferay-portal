@@ -124,7 +124,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			themeDisplay);
+				themeDisplay);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			createDDMFormFieldRenderingContext();
@@ -144,7 +144,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void testGetParametersShouldContainAllowGuestUsers() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			mockThemeDisplay());
+				mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
@@ -162,7 +162,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void testGetParametersShouldContainFileEntryURL() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			mockThemeDisplay());
+				mockThemeDisplay());
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -176,7 +176,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void testGetParametersShouldContainFormsFolderId() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			mockThemeDisplay());
+				mockThemeDisplay());
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -190,7 +190,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void testGetParametersShouldContainGuestUploadURL() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			mockThemeDisplay());
+				mockThemeDisplay());
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -204,7 +204,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			guestUploadURL,
 			CoreMatchers.containsString(
 				"param_javax.portlet.action=/dynamic_data_mapping_form" +
-				"/upload_file_entry"));
+					"/upload_file_entry"));
 		Assert.assertThat(
 			guestUploadURL,
 			CoreMatchers.containsString(
@@ -229,7 +229,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			themeDisplay);
+				themeDisplay);
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -243,7 +243,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void testGetParametersShouldContainMaximumRepetitions() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			mockThemeDisplay());
+				mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
@@ -269,7 +269,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			themeDisplay);
+				themeDisplay);
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -283,7 +283,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void testGetParametersShouldUseExistingGuestUploadURL() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			mockThemeDisplay());
+				mockThemeDisplay());
 
 		DDMFormField ddmFormField = new DDMFormField(
 			"field", "document_library");
@@ -305,7 +305,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void testGetParametersShouldUseFileEntryTitle() {
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			mockThemeDisplay());
+				mockThemeDisplay());
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -335,7 +335,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor = createSpy(
-			themeDisplay);
+				themeDisplay);
 
 		Map<String, Object> parameters =
 			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
@@ -346,7 +346,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	protected DDMFormFieldRenderingContext
-	createDDMFormFieldRenderingContext() {
+		createDDMFormFieldRenderingContext() {
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
@@ -372,8 +372,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 		DocumentLibraryDDMFormFieldTemplateContextContributor
 			documentLibraryDDMFormFieldTemplateContextContributor =
-			PowerMockito.spy(
-				_documentLibraryDDMFormFieldTemplateContextContributor);
+				PowerMockito.spy(
+					_documentLibraryDDMFormFieldTemplateContextContributor);
 
 		PowerMockitoStubber powerMockitoStubber = PowerMockito.doReturn(
 			_resourceBundle);
@@ -441,7 +441,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	protected RequestBackedPortletURLFactory
-	mockRequestBackedPortletURLFactory() {
+		mockRequestBackedPortletURLFactory() {
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory = mock(
 			RequestBackedPortletURLFactory.class);
@@ -718,7 +718,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 
 	private final DocumentLibraryDDMFormFieldTemplateContextContributor
 		_documentLibraryDDMFormFieldTemplateContextContributor =
-		new DocumentLibraryDDMFormFieldTemplateContextContributor();
+			new DocumentLibraryDDMFormFieldTemplateContextContributor();
 
 	@Mock
 	private FileEntry _fileEntry;

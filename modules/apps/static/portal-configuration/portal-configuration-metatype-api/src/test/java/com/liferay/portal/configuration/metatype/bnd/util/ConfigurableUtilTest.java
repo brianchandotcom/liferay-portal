@@ -150,7 +150,7 @@ public class ConfigurableUtilTest {
 		catch (RuntimeException runtimeException) {
 			Assert.assertEquals(
 				"Unable to create snapshot class for " +
-				TestConfiguration.class,
+					TestConfiguration.class,
 				runtimeException.getMessage());
 
 			Throwable throwable = runtimeException.getCause();
@@ -176,7 +176,7 @@ public class ConfigurableUtilTest {
 
 		com.liferay.portal.util.PropsUtil.set(
 			"configuration.override." + TestConfiguration.class.getName() +
-			"_testReqiredString",
+				"_testReqiredString",
 			"\"testReqiredString3\"");
 
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
@@ -211,10 +211,10 @@ public class ConfigurableUtilTest {
 
 		@Around(
 			"execution(private * com.liferay.portal.configuration.metatype." +
-			"bnd.util.ConfigurableUtil._generateSnapshotClassData(..))"
+				"bnd.util.ConfigurableUtil._generateSnapshotClassData(..))"
 		)
 		public Object generateSnapshotClassData(
-			ProceedingJoinPoint proceedingJoinPoint)
+				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
 			_waitingCountDownLatch.countDown();

@@ -1186,6 +1186,18 @@ public class UserLocalServiceWrapper
 		return _userLocalService.encryptUserId(name);
 	}
 
+	/**
+	 * Returns the default user for the company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @return the default user for the company, or <code>null</code> if a user
+	 with the company key could not be found
+	 */
+	@Override
+	public User fetchDefaultUser(long companyId) {
+		return _userLocalService.fetchDefaultUser(companyId);
+	}
+
 	@Override
 	public User fetchUser(long userId) {
 		return _userLocalService.fetchUser(userId);

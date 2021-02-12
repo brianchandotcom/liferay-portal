@@ -896,6 +896,16 @@ public interface UserLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String encryptUserId(String name) throws PortalException;
 
+	/**
+	 * Returns the default user for the company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @return the default user for the company, or <code>null</code> if a user
+	 with the company key could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public User fetchDefaultUser(long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User fetchUser(long userId);
 

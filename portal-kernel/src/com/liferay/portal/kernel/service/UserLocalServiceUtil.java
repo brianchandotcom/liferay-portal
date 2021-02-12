@@ -1163,6 +1163,19 @@ public class UserLocalServiceUtil {
 		return getService().encryptUserId(name);
 	}
 
+	/**
+	 * Returns the default user for the company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @return the default user for the company, or <code>null</code> if a user
+	 with the company key could not be found
+	 */
+	public static com.liferay.portal.kernel.model.User fetchDefaultUser(
+		long companyId) {
+
+		return getService().fetchDefaultUser(companyId);
+	}
+
 	public static com.liferay.portal.kernel.model.User fetchUser(long userId) {
 		return getService().fetchUser(userId);
 	}

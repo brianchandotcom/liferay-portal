@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstant
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -76,16 +78,29 @@ public class GetPublicationStatusMVCResourceCommand
 			return;
 		}
 
-		String status = "published";
+		String displayType = "danger";
+		String label = _language.get(
+			_portal.getHttpServletRequest(resourceRequest), "failed");
+		boolean published = false;
 
-		if (backgroundTask.getStatus() !=
+		if (backgroundTask.getStatus() ==
 				BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 
-			status = "failed";
+			displayType = "success";
+			label = _language.get(
+				_portal.getHttpServletRequest(resourceRequest), "published");
+			published = true;
 		}
 
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, JSONUtil.put("status", status));
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"displayType", displayType
+			).put(
+				"label", label
+			).put(
+				"published", published
+			));
 	}
 
 	@Reference
@@ -96,5 +111,11 @@ public class GetPublicationStatusMVCResourceCommand
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

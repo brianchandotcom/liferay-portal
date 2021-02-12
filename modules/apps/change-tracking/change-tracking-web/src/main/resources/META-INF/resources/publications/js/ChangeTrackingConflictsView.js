@@ -117,7 +117,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 								this.unresolvedConflicts.length +
 								')'
 							}
-							showCollapseIcon={true}
+							showCollapseIcon
 							spritemap={this.spritemap}
 						>
 							<ClayPanel.Body>

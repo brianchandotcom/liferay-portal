@@ -20,10 +20,6 @@
 ViewHistoryDisplayContext viewHistoryDisplayContext = (ViewHistoryDisplayContext)request.getAttribute(CTWebKeys.VIEW_HISTORY_DISPLAY_CONTEXT);
 
 SearchContainer<CTProcess> searchContainer = viewHistoryDisplayContext.getSearchContainer();
-
-ViewHistoryManagementToolbarDisplayContext viewHistoryManagementToolbarDisplayContext = new ViewHistoryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer, viewHistoryDisplayContext);
-
-Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <clay:navigation-bar
@@ -31,159 +27,38 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 />
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= viewHistoryManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= new ViewHistoryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer, viewHistoryDisplayContext) %>"
 />
 
 <clay:container-fluid>
-	<liferay-ui:search-container
-		cssClass="publications-table"
-		searchContainer="<%= searchContainer %>"
-		var="reviewChangesSearchContainer"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.change.tracking.model.CTProcess"
-			escapedModel="<%= true %>"
-			keyProperty="ctProcessId"
-			modelVar="ctProcess"
-		>
+	<div class="container-view">
+		<c:choose>
+			<c:when test="<%= !searchContainer.hasResults() && viewHistoryDisplayContext.isSearch() %>">
+				<liferay-ui:empty-result-message
+					message="no-publication-has-been-published-yet"
+					search="<%= true %>"
+				/>
+			</c:when>
+			<c:when test="<%= !searchContainer.hasResults() %>">
+				<liferay-ui:empty-result-message
+					message="no-publication-has-been-published-yet"
+				/>
+			</c:when>
+			<c:otherwise>
+				<div>
+					<span aria-hidden="true" class="loading-animation"></span>
 
-			<%
-			CTCollection ctCollection = viewHistoryDisplayContext.getCtCollection(ctProcess);
-			int status = viewHistoryDisplayContext.getStatus(ctProcess);
-			%>
-
-			<liferay-portlet:renderURL var="changesURL">
-				<portlet:param name="mvcRenderCommandName" value="/change_tracking/view_changes" />
-				<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-			</liferay-portlet:renderURL>
-
-			<c:choose>
-				<c:when test='<%= Objects.equals(viewHistoryDisplayContext.getDisplayStyle(), "descriptive") %>'>
-					<liferay-ui:search-container-column-text>
-						<span class="lfr-portal-tooltip" title="<%= ctCollection.getUserName() %>">
-							<liferay-ui:user-portrait
-								userId="<%= ctProcess.getUserId() %>"
-							/>
-						</span>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						cssClass="autofit-col-expand"
-					>
-						<c:choose>
-							<c:when test="<%= status == BackgroundTaskConstants.STATUS_SUCCESSFUL %>">
-								<a href="<%= changesURL %>">
-									<%@ include file="/publications/publication_info_escaped.jspf" %>
-								</a>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="/publications/publication_info_escaped.jspf" %>
-							</c:otherwise>
-						</c:choose>
-
-						<div>
-							<clay:label
-								displayType="<%= viewHistoryDisplayContext.getStatusStyle(status) %>"
-								label="<%= viewHistoryDisplayContext.getStatusLabel(status) %>"
-							/>
-						</div>
-					</liferay-ui:search-container-column-text>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand"
-						name="publication"
-					>
-						<c:choose>
-							<c:when test="<%= status == BackgroundTaskConstants.STATUS_SUCCESSFUL %>">
-								<a href="<%= changesURL %>">
-									<%@ include file="/publications/publication_info_escaped.jspf" %>
-								</a>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="/publications/publication_info_escaped.jspf" %>
-							</c:otherwise>
-						</c:choose>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smaller"
-						name="published-date"
-						value="<%= format.format(ctProcess.getCreateDate()) %>"
+					<react:component
+						module="publications/js/PublicationsHistoryView"
+						props="<%= viewHistoryDisplayContext.getReactProps() %>"
 					/>
+				</div>
+			</c:otherwise>
+		</c:choose>
 
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smallest text-center"
-						name="published-by"
-					>
-						<span class="lfr-portal-tooltip" title="<%= ctCollection.getUserName() %>">
-							<liferay-ui:user-portrait
-								userId="<%= ctProcess.getUserId() %>"
-							/>
-						</span>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smaller"
-						name="status"
-					>
-						<c:choose>
-							<c:when test="<%= status == BackgroundTaskConstants.STATUS_IN_PROGRESS %>">
-								<liferay-portlet:resourceURL id="/change_tracking/get_publication_status" var="dataURL">
-									<portlet:param name="ctProcessId" value="<%= String.valueOf(ctProcess.getCtProcessId()) %>" />
-								</liferay-portlet:resourceURL>
-
-								<react:component
-									module="publications/js/ProgressBar"
-									props='<%=
-										HashMapBuilder.<String, Object>put(
-											"dataURL", dataURL
-										).put(
-											"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
-										).build()
-									%>'
-								/>
-							</c:when>
-							<c:otherwise>
-								<clay:label
-									displayType="<%= viewHistoryDisplayContext.getStatusStyle(status) %>"
-									label="<%= viewHistoryDisplayContext.getStatusLabel(status) %>"
-								/>
-							</c:otherwise>
-						</c:choose>
-					</liferay-ui:search-container-column-text>
-				</c:otherwise>
-			</c:choose>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest"
-			>
-				<c:choose>
-					<c:when test="<%= (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) && viewHistoryDisplayContext.isExpired(ctCollection) %>">
-						<a class="btn btn-secondary btn-sm disabled lfr-portal-tooltip" title="<liferay-ui:message key="this-publication-was-created-on-a-previous-liferay-version.-you-cannot-revert-it" />" type="button">
-							<liferay-ui:message key="revert" />
-						</a>
-					</c:when>
-					<c:otherwise>
-						<liferay-portlet:renderURL var="revertURL">
-							<portlet:param name="mvcRenderCommandName" value="/change_tracking/undo_ct_collection" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollection.getCtCollectionId()) %>" />
-							<portlet:param name="revert" value="true" />
-						</liferay-portlet:renderURL>
-
-						<a class="btn btn-secondary btn-sm <%= (status != BackgroundTaskConstants.STATUS_SUCCESSFUL) ? "disabled" : StringPool.BLANK %>" href="<%= revertURL %>" type="button">
-							<liferay-ui:message key="revert" />
-						</a>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			displayStyle="<%= viewHistoryDisplayContext.getDisplayStyle() %>"
+		<liferay-ui:search-paginator
 			markupView="lexicon"
 			searchContainer="<%= searchContainer %>"
 		/>
-	</liferay-ui:search-container>
+	</div>
 </clay:container-fluid>

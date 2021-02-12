@@ -51,7 +51,6 @@ page import="com.liferay.change.tracking.web.internal.display.context.ViewSchedu
 page import="com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

@@ -1854,6 +1854,18 @@ class ChangeTrackingChangesView extends React.Component {
 				</ClayAlert>
 			);
 		}
+		else if (this.changes.length === 0) {
+			return (
+				<div className="container-fluid container-fluid-max-xl">
+					<div className="sheet taglib-empty-result-message">
+						<div className="taglib-empty-result-message-header" />
+						<div className="sheet-text text-center">
+							{Liferay.Language.get('no-changes-were-found')}
+						</div>
+					</div>
+				</div>
+			);
+		}
 		else {
 			content = (
 				<div className="container-fluid container-fluid-max-xl">

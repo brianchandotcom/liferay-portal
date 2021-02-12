@@ -23,6 +23,7 @@ import com.liferay.change.tracking.web.internal.display.context.ViewHistoryDispl
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.RenderRequest;
@@ -53,7 +54,7 @@ public class ViewHistoryMVCRenderCommand implements MVCRenderCommand {
 				_backgroundTaskLocalService, _ctCollectionLocalService,
 				_ctProcessService, _ctSchemaVersionLocalService,
 				_portal.getHttpServletRequest(renderRequest), _language,
-				renderRequest, renderResponse);
+				renderRequest, renderResponse, _userLocalService);
 
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_HISTORY_DISPLAY_CONTEXT, viewHistoryDisplayContext);
@@ -78,5 +79,8 @@ public class ViewHistoryMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

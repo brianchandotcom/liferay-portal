@@ -269,58 +269,6 @@ definition {
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "4"
-	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP();
-
-		WebContentStructures.addLocalization(
-			locale = "pt-BR",
-			localization1Name = "Nome da Estrutura WC");
-
-		WebContentStructures.addLocalization(
-			locale = "en-US",
-			localization1Name = "WC Structure Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Name");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Text,Numeric") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "Nome da Estrutura WC");
-	}
-
-	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@priority = "4"
 	test DuplicateTranslatedField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -616,18 +564,18 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text",
 			fieldHelp = "Text Field Help Text");
 
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Date",
-			fieldName = "Date",
-			targetFieldLabel = "Text");
-
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Date",
-			fieldHelp = "Date Field Help Text");
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Numeric Field Help Text");
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
@@ -642,22 +590,20 @@ definition {
 			fieldFieldLabelEdit = "Texto");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Date",
-			fieldFieldLabelEdit = "Encontro");
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numérica");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Texto",
 			fieldHelp = "Texto de ajuda do campo de texto");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Encontro",
-			fieldHelp = "Texto de ajuda do campo de data");
+			fieldFieldLabel = "Numérica",
+			fieldHelp = "Texto de ajuda do campo numérico");
 
 		PortletEntry.changeLocale(locale = "en-US");
 
 		Button.clickSave();
-
-		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
 		Alert.viewErrorMessage(errorMessage = "Please enter a valid title for the default language: en-US");
 
@@ -675,14 +621,14 @@ definition {
 			key_fieldFieldLabel = "Fields Group",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Text,Date") {
+		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldsGroupLabel = "Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
-		for (var fieldFieldLabel : list "Text,Date") {
+		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertTextEquals(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
@@ -699,22 +645,15 @@ definition {
 			key_fieldFieldLabel = "Grupo de Campos",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Texto,Encontro") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Grupo de Campos",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		DataEngine.viewField(
+			fieldFieldLabel = "Texto",
+			fieldHelp = "Texto de ajuda do campo de texto",
+			fieldName = "Text");
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Texto",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Texto de ajuda do campo de texto");
-
-		AssertTextEquals(
-			key_fieldFieldLabel = "Encontro",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Texto de ajuda do campo de data");
+		DataEngine.viewField(
+			fieldFieldLabel = "Numérica",
+			fieldHelp = "Texto de ajuda do campo numérico",
+			fieldName = "Numeric");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

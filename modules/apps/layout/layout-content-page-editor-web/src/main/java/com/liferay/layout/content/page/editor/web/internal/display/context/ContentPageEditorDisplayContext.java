@@ -1683,6 +1683,7 @@ public class ContentPageEditorDisplayContext {
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
 		layoutItemSelectorCriterion.setMultiSelection(false);
+		layoutItemSelectorCriterion.setShowPrivatePages(true);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),

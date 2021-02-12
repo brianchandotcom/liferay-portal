@@ -130,13 +130,19 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 
 		Set<Label> labels = new HashSet<>();
 
-		int page = 1;
+		for (int pageNumber = 1;
+			 pageNumber <=
+				 JenkinsResultsParserUtil.PAGES_GITHUB_API_PAGES_SIZE_MAX;
+			 pageNumber++) {
 
-		while (page <= _PAGES_LABEL_PAGES_SIZE_MAX) {
 			try {
 				labelsJSONArray = JenkinsResultsParserUtil.toJSONArray(
 					JenkinsResultsParserUtil.combine(
-						labelRequestURL, "?page=", String.valueOf(page)),
+						labelRequestURL, "?per_page=",
+						String.valueOf(
+							JenkinsResultsParserUtil.
+								PER_PAGE_GITHUB_API_PAGES_SIZE_MAX),
+						"&page=", String.valueOf(pageNumber)),
 					false);
 			}
 			catch (IOException ioException) {
@@ -155,7 +161,21 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 				labels.add(new Label((JSONObject)labelsJSONArray.get(i), this));
 			}
 
-			page++;
+			if (labelsJSONArray.length() <
+					JenkinsResultsParserUtil.PAGES_GITHUB_API_PAGES_SIZE_MAX) {
+
+				break;
+			}
+
+			if (pageNumber ==
+					JenkinsResultsParserUtil.PAGES_GITHUB_API_PAGES_SIZE_MAX) {
+
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Too many GitHub labels (>",
+						String.valueOf(labels.size()), ") found for ",
+						"GitHub repository ", getRemoteURL()));
+			}
 		}
 
 		_labelsLists.put(labelRequestURL, Lists.newArrayList(labels));
@@ -320,8 +340,6 @@ public class GitHubRemoteGitRepository extends BaseRemoteGitRepository {
 	protected void setLabelRequestURL(String labelRequestURL) {
 		_labelRequestURL = labelRequestURL;
 	}
-
-	private static final int _PAGES_LABEL_PAGES_SIZE_MAX = 10;
 
 	private static final Map<String, List<Label>> _labelsLists =
 		new ConcurrentHashMap<>();

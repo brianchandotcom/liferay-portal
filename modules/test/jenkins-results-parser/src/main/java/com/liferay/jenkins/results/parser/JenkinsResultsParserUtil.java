@@ -106,6 +106,10 @@ public class JenkinsResultsParserUtil {
 		"liferay-portal"
 	};
 
+	public static final int PAGES_GITHUB_API_PAGES_SIZE_MAX = 10;
+
+	public static final int PER_PAGE_GITHUB_API_PAGES_SIZE_MAX = 100;
+
 	public static final String URL_CACHE = initCacheURL();
 
 	public static final String[] URLS_BUILD_PROPERTIES_DEFAULT = {
@@ -3582,11 +3586,6 @@ public class JenkinsResultsParserUtil {
 		return "http://mirrors-no-cache.lax.liferay.com/github.com/liferay";
 	}
 
-	protected static final String URL_DEPENDENCIES_FILE;
-
-	protected static final String URL_DEPENDENCIES_HTTP =
-		URL_CACHE + "/liferay-jenkins-results-parser-samples-ee/1/";
-
 	static {
 		File dependenciesDir = new File("src/test/resources/dependencies/");
 
@@ -3601,6 +3600,11 @@ public class JenkinsResultsParserUtil {
 			throw new RuntimeException(malformedURLException);
 		}
 	}
+
+	protected static final String URL_DEPENDENCIES_FILE;
+
+	protected static final String URL_DEPENDENCIES_HTTP =
+		URL_CACHE + "/liferay-jenkins-results-parser-samples-ee/1/";
 
 	private static long _appendDurationStringForUnit(
 		long duration, long millisInUnit, boolean round, StringBuilder sb,

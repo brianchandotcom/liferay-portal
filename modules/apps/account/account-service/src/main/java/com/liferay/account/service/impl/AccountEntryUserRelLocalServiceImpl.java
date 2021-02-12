@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -90,10 +91,24 @@ public class AccountEntryUserRelLocalServiceImpl
 			accountEntryLocalService.getAccountEntry(accountEntryId);
 		}
 
-		User user = userLocalService.getUser(accountUserId);
+		User accountUser = userLocalService.getUser(accountUserId);
+
+		long creatorUserId = 0;
+
+		try {
+			creatorUserId = GuestOrUserUtil.getGuestOrUserId();
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException, principalException);
+			}
+
+			creatorUserId = userLocalService.getDefaultUserId(
+				accountUser.getCompanyId());
+		}
 
 		_validateEmailAddress(
-			user.getCompanyId(), accountEntryId, user.getEmailAddress());
+			creatorUserId, accountEntryId, accountUser.getEmailAddress());
 
 		accountEntryUserRel = createAccountEntryUserRel(
 			counterLocalService.increment());
@@ -120,7 +135,7 @@ public class AccountEntryUserRelLocalServiceImpl
 			companyId = accountEntry.getCompanyId();
 		}
 
-		_validateEmailAddress(companyId, accountEntryId, emailAddress);
+		_validateEmailAddress(creatorUserId, accountEntryId, emailAddress);
 
 		boolean autoPassword = true;
 		String password1 = null;
@@ -416,10 +431,10 @@ public class AccountEntryUserRelLocalServiceImpl
 	protected AccountEntryLocalService accountEntryLocalService;
 
 	private void _validateEmailAddress(
-			long companyId, long accountEntryId, String emailAddress)
+			long userId, long accountEntryId, String emailAddress)
 		throws PortalException {
 
-		long userId = GuestOrUserUtil.getGuestOrUserId();
+		User user = userLocalService.getUser(userId);
 
 		List<AccountEntryUserRel> accountEntryUserRels =
 			accountEntryUserRelLocalService.
@@ -442,7 +457,8 @@ public class AccountEntryUserRelLocalServiceImpl
 		AccountEntryEmailDomainsConfiguration
 			accountEntryEmailDomainsConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					AccountEntryEmailDomainsConfiguration.class, companyId);
+					AccountEntryEmailDomainsConfiguration.class,
+					user.getCompanyId());
 
 		String[] blockedDomains = StringUtil.split(
 			accountEntryEmailDomainsConfiguration.blockedEmailDomains(),

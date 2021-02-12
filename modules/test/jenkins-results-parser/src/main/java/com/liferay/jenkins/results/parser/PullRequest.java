@@ -171,7 +171,11 @@ public class PullRequest {
 	}
 
 	public List<Comment> getComments() {
-		List<Comment> comments = new ArrayList<>();
+		if (_comments != null) {
+			return _comments;
+		}
+
+		_comments = new ArrayList<>();
 
 		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
@@ -189,18 +193,20 @@ public class PullRequest {
 				}
 
 				for (int i = 0; i < jsonArray.length(); i++) {
-					comments.add(new Comment(jsonArray.getJSONObject(i)));
+					_comments.add(new Comment(jsonArray.getJSONObject(i)));
 				}
 
 				page++;
 			}
 			catch (IOException ioException) {
+				_comments = null;
+
 				throw new RuntimeException(
 					"Unable to get pull request comments", ioException);
 			}
 		}
 
-		return comments;
+		return _comments;
 	}
 
 	public String getCommonParentSHA() {
@@ -836,6 +842,8 @@ public class PullRequest {
 		}
 	}
 
+	protected List<Comment> comments;
+
 	private static final String _NAME_TEST_SUITE_DEFAULT = "default";
 
 	private static final Pattern _ciMergeSHAPattern = Pattern.compile(
@@ -847,6 +855,7 @@ public class PullRequest {
 
 	private Boolean _autoCloseCommentAvailable;
 	private String _ciMergeSHA = "";
+	private List<Comment> _comments;
 	private String _commonParentSHA;
 	private final List<String> _fileNames = new ArrayList<>();
 	private List<GitHubRemoteGitCommit> _gitHubRemoteGitCommits;

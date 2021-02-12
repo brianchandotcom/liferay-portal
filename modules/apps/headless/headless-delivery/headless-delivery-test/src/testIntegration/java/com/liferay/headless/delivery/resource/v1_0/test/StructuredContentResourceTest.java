@@ -39,9 +39,13 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.StructuredContentSerDes;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -66,8 +70,10 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.jaxrs.context.EntityExtensionContext;
@@ -384,6 +390,35 @@ public class StructuredContentResourceTest
 				postStructuredContent.getId(), RoleConstants.GUEST);
 
 		Assert.assertNotNull(page);
+	}
+
+	@Override
+	@Test
+	public void testGetStructuredContentRenderedContentByDisplayPageDisplayPageKey()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				_ddmStructure.getStructureId(), RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+				false, 0, 0, 0, WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId()));
+
+		String structuredContentRenderedContentByDisplayPageDisplayPageKey =
+			structuredContentResource.
+				getStructuredContentRenderedContentByDisplayPageDisplayPageKey(
+					journalArticle.getResourcePrimKey(),
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+
+		Assert.assertNotNull(
+			structuredContentRenderedContentByDisplayPageDisplayPageKey);
 	}
 
 	@Override
@@ -885,6 +920,13 @@ public class StructuredContentResourceTest
 	private JournalFolder _irrelevantJournalFolder;
 	private JournalFolder _journalFolder;
 	private Layout _layout;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

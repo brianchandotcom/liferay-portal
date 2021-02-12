@@ -226,6 +226,7 @@ describe('MappingSelector', () => {
 			classNameId: 'InfoItemClassNameId',
 			classPK: 'infoItemClassPK',
 			fieldId: 'text-field-1',
+			title: 'Info Item',
 		});
 	});
 
@@ -261,7 +262,7 @@ describe('MappingSelector', () => {
 		});
 	});
 
-	it('calls onMappingSelect with correct params when unmapping', async () => {
+	it('calls onMappingSelect with empty object when unmapping', async () => {
 		const onMappingSelect = jest.fn();
 
 		await act(async () => {
@@ -279,13 +280,7 @@ describe('MappingSelector', () => {
 			});
 		});
 
-		expect(onMappingSelect).toBeCalledWith({
-			className: '',
-			classNameId: '',
-			classPK: '',
-			fieldId: '',
-			mappedField: '',
-		});
+		expect(onMappingSelect).toBeCalledWith({});
 	});
 
 	it('renders correct selects when using Collection context', async () => {

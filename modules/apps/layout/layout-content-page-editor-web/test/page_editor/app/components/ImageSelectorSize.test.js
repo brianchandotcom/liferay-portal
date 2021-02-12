@@ -35,7 +35,7 @@ const renderImageSelectorSize = (
 	render(
 		<StoreAPIContextProvider>
 			<ImageSelectorSize
-				fileEntryId={1234}
+				fieldValue={{fileEntryId: '1234'}}
 				imageSizeId={imageSizeId}
 				onImageSizeIdChanged={onImageSizeIdChanged}
 			/>

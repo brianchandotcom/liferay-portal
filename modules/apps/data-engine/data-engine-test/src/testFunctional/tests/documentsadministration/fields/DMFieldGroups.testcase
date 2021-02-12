@@ -335,35 +335,31 @@ definition {
 	test NestAFieldGroupOnAnotherFieldGroup {
 		property portal.acceptance = "false";
 
-		var label1 = "Field 1";
-
-		var label2 = "Fields Group";
-
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Fields Group",
+			fieldFieldLabelEdit = "Field Group Edit");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
 			targetFieldLabel = "Numeric");
 
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Fields Group",
-			fieldFieldLabelEdit = "Field 1");
-
 		DDLDataDefinition.save();
 
-		LexiconEntry.gotoEntry(rowEntry = "DM Document Type Name");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
 		AssertTextEquals(
-			key_FieldGroupLabel = "${label1}",
+			key_FieldGroupLabel = "Field Group Edit",
 			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR",
-			value1 = "Field 1");
+			value1 = "Field Group Edit");
 
 		AssertTextEquals(
-			key_FieldGroupLabel = "${label2}",
+			key_FieldGroupLabel = "Fields Group",
 			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR",
 			value1 = "Fields Group");
 	}

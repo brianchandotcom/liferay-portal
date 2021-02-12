@@ -131,6 +131,8 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setUuid(RandomTestUtil.randomString());
 
+		newMBMessage.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newMBMessage.setGroupId(RandomTestUtil.nextLong());
 
 		newMBMessage.setCompanyId(RandomTestUtil.nextLong());
@@ -195,6 +197,9 @@ public class MBMessagePersistenceTest {
 			newMBMessage.getCtCollectionId());
 		Assert.assertEquals(
 			existingMBMessage.getUuid(), newMBMessage.getUuid());
+		Assert.assertEquals(
+			existingMBMessage.getExternalReferenceCode(),
+			newMBMessage.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingMBMessage.getMessageId(), newMBMessage.getMessageId());
 		Assert.assertEquals(
@@ -531,6 +536,15 @@ public class MBMessagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_ERC(0L, "null");
+
+		_persistence.countByG_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBMessage newMBMessage = addMBMessage();
 
@@ -562,15 +576,15 @@ public class MBMessagePersistenceTest {
 	protected OrderByComparator<MBMessage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"MBMessage", "mvccVersion", true, "ctCollectionId", true, "uuid",
-			true, "messageId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"categoryId", true, "threadId", true, "rootMessageId", true,
-			"parentMessageId", true, "treePath", true, "subject", true,
-			"urlSubject", true, "format", true, "anonymous", true, "priority",
-			true, "allowPingbacks", true, "answer", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			true, "externalReferenceCode", true, "messageId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "categoryId", true, "threadId", true,
+			"rootMessageId", true, "parentMessageId", true, "treePath", true,
+			"subject", true, "urlSubject", true, "format", true, "anonymous",
+			true, "priority", true, "allowPingbacks", true, "answer", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -851,6 +865,17 @@ public class MBMessagePersistenceTest {
 			ReflectionTestUtil.invoke(
 				mbMessage, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "urlSubject"));
+
+		Assert.assertEquals(
+			Long.valueOf(mbMessage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			mbMessage.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected MBMessage addMBMessage() throws Exception {
@@ -863,6 +888,8 @@ public class MBMessagePersistenceTest {
 		mbMessage.setCtCollectionId(RandomTestUtil.nextLong());
 
 		mbMessage.setUuid(RandomTestUtil.randomString());
+
+		mbMessage.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		mbMessage.setGroupId(RandomTestUtil.nextLong());
 

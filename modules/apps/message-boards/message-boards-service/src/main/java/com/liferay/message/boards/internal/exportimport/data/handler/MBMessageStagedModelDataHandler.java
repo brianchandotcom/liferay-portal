@@ -290,6 +290,9 @@ public class MBMessageStagedModelDataHandler
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(message);
 
+			serviceContext.setAttribute(
+				"externalReferenceCode", message.getExternalReferenceCode());
+
 			MBMessage importedMessage = null;
 
 			if (portletDataContext.isDataStrategyMirror()) {

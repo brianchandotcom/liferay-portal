@@ -1345,6 +1345,11 @@
 		<tag-class>com.liferay.taglib.aui.ScriptTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>load</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description><![CDATA[A position for the script.]]></description>
 			<name>position</name>
 			<required>false</required>

@@ -21,7 +21,6 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
@@ -35,14 +34,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -62,7 +58,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Samuel Trong Tran
  */
-public class PublicationsDisplayContext {
+public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 
 	public PublicationsDisplayContext(
 		CTCollectionService ctCollectionService,
@@ -71,6 +67,8 @@ public class PublicationsDisplayContext {
 		CTPreferencesLocalService ctPreferencesLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		super(httpServletRequest);
 
 		_ctCollectionService = ctCollectionService;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
@@ -105,12 +103,6 @@ public class PublicationsDisplayContext {
 		return _ctDisplayRendererRegistry;
 	}
 
-	public String getDisplayStyle() {
-		return SearchDisplayStyleUtil.getDisplayStyle(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			CTPortletKeys.PUBLICATIONS, "list");
-	}
-
 	public Map<String, Object> getDropdownReactData(
 			CTCollection ctCollection, PermissionChecker permissionChecker)
 		throws Exception {
@@ -143,8 +135,8 @@ public class PublicationsDisplayContext {
 			_language.get(_httpServletRequest, "no-publications-were-found"));
 
 		searchContainer.setId("ongoing");
-		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByType(_getOrderByType());
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByType(getOrderByType());
 
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
@@ -252,6 +244,16 @@ public class PublicationsDisplayContext {
 		}
 
 		return false;
+	}
+
+	@Override
+	protected String getDefaultOrderByCol() {
+		return "modified-date";
+	}
+
+	@Override
+	protected String getPortalPreferencesPrefix() {
+		return "ongoing";
 	}
 
 	private JSONArray _getDropdownItemsJSONArray(
@@ -399,18 +401,6 @@ public class PublicationsDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	private String _getOrderByCol() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"modified-date");
-	}
-
-	private String _getOrderByType() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
-			"desc");
 	}
 
 	private final long _ctCollectionId;

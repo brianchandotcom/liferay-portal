@@ -20,7 +20,6 @@ import com.liferay.change.tracking.model.CTProcessTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
-import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -65,7 +63,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Samuel Trong Tran
  */
-public class ViewHistoryDisplayContext {
+public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 
 	public ViewHistoryDisplayContext(
 		BackgroundTaskLocalService backgroundTaskLocalService,
@@ -75,6 +73,8 @@ public class ViewHistoryDisplayContext {
 		HttpServletRequest httpServletRequest, Language language,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		UserLocalService userLocalService) {
+
+		super(httpServletRequest);
 
 		_backgroundTaskLocalService = backgroundTaskLocalService;
 		_ctCollectionLocalService = ctCollectionLocalService;
@@ -97,11 +97,6 @@ public class ViewHistoryDisplayContext {
 
 		return _ctCollectionLocalService.getCTCollection(
 			ctProcess.getCtCollectionId());
-	}
-
-	public String getDisplayStyle() {
-		return SearchDisplayStyleUtil.getDisplayStyle(
-			_httpServletRequest, CTPortletKeys.PUBLICATIONS, "list");
 	}
 
 	public Map<String, Object> getReactProps() {
@@ -240,8 +235,8 @@ public class ViewHistoryDisplayContext {
 				_httpServletRequest, "no-publication-has-been-published-yet"));
 
 		searchContainer.setId("history");
-		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByType(_getOrderByType());
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByType(getOrderByType());
 
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
@@ -249,7 +244,7 @@ public class ViewHistoryDisplayContext {
 			_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
 			displayTerms.getKeywords(), _getStatus(_getFilterByStatus()),
 			searchContainer.getStart(), searchContainer.getEnd(),
-			_getOrderByComparator(_getOrderByCol(), _getOrderByType()));
+			_getOrderByComparator(getOrderByCol(), getOrderByType()));
 
 		searchContainer.setResults(results);
 
@@ -340,14 +335,18 @@ public class ViewHistoryDisplayContext {
 		return Validator.isNotNull(displayTerms.getKeywords());
 	}
 
-	private String _getFilterByStatus() {
-		return ParamUtil.getString(_renderRequest, "status", "all");
+	@Override
+	protected String getDefaultOrderByCol() {
+		return "published-date";
 	}
 
-	private String _getOrderByCol() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"published-date");
+	@Override
+	protected String getPortalPreferencesPrefix() {
+		return "history";
+	}
+
+	private String _getFilterByStatus() {
+		return ParamUtil.getString(_renderRequest, "status", "all");
 	}
 
 	private OrderByComparator<CTProcess> _getOrderByComparator(
@@ -366,12 +365,6 @@ public class ViewHistoryDisplayContext {
 		}
 
 		return orderByComparator;
-	}
-
-	private String _getOrderByType() {
-		return ParamUtil.getString(
-			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
-			"desc");
 	}
 
 	private int _getStatus(String type) {

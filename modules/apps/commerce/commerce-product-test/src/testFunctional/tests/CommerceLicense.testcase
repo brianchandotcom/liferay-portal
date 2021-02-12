@@ -19,6 +19,35 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test DeployModuleLicenseToLCSPortal {
+		property commerce.enabled = "false";
+		property portal.release = "true";
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		var key_panel = "Applications";
+
+		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		var key_panel = "Commerce";
+
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		// TODO - Require property to commerce.enabled = "true"
+
+		Navigator.openURL();
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		var key_panel = "Commerce";
+
+		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		// TODO - Execute commerce smoke test
+
+	}
+
 	@priority = "3"
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";

@@ -330,7 +330,7 @@ definition {
 		AssertTextPresent(
 			locator1 = "ContentDashboard#EXPIRED_LABEL",
 			value1 = "EXPIRED");
-		
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC Title");

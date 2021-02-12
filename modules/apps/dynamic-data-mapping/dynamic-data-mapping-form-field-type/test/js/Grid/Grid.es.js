@@ -12,7 +12,7 @@
  * details.
  */
 
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
@@ -49,7 +49,6 @@ describe('Grid', () => {
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		jest.useFakeTimers();
 		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
@@ -70,10 +69,6 @@ describe('Grid', () => {
 			/>
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(container).toMatchSnapshot();
 	});
 
@@ -81,10 +76,6 @@ describe('Grid', () => {
 		const {container} = render(
 			<GridWithProvider columns={[]} spritemap={spritemap} />
 		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
 
 		expect(container).toMatchSnapshot();
 	});
@@ -94,10 +85,6 @@ describe('Grid', () => {
 			<GridWithProvider readOnly={true} spritemap={spritemap} />
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(container).toMatchSnapshot();
 	});
 
@@ -105,10 +92,6 @@ describe('Grid', () => {
 		const {container} = render(
 			<GridWithProvider spritemap={spritemap} tip="Type something" />
 		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
 
 		expect(container).toMatchSnapshot();
 	});
@@ -118,10 +101,6 @@ describe('Grid', () => {
 			<GridWithProvider id="Id" spritemap={spritemap} />
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(container).toMatchSnapshot();
 	});
 
@@ -130,10 +109,6 @@ describe('Grid', () => {
 			<GridWithProvider label="label" spritemap={spritemap} />
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(container).toMatchSnapshot();
 	});
 
@@ -141,10 +116,6 @@ describe('Grid', () => {
 		const {container} = render(
 			<GridWithProvider required={false} spritemap={spritemap} />
 		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
 
 		expect(container).toMatchSnapshot();
 	});
@@ -166,10 +137,6 @@ describe('Grid', () => {
 			/>
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(container).toMatchSnapshot();
 	});
 
@@ -178,10 +145,6 @@ describe('Grid', () => {
 			<GridWithProvider rows={[]} spritemap={spritemap} />
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(container).toMatchSnapshot();
 	});
 
@@ -189,10 +152,6 @@ describe('Grid', () => {
 		const {container} = render(
 			<GridWithProvider label="text" showLabel spritemap={spritemap} />
 		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
 
 		expect(container).toMatchSnapshot();
 	});
@@ -235,10 +194,6 @@ describe('Grid', () => {
 
 		fireEvent.blur(radioInputElement);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(handleFieldBlurred).toHaveBeenCalled();
 	});
 
@@ -280,10 +235,6 @@ describe('Grid', () => {
 
 		userEvent.click(radioInputElement);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(handleFieldEdited).toHaveBeenCalled();
 	});
 
@@ -324,10 +275,6 @@ describe('Grid', () => {
 		);
 
 		fireEvent.focus(radioInputElement);
-
-		act(() => {
-			jest.runAllTimers();
-		});
 
 		expect(handleFieldFocused).toHaveBeenCalled();
 	});

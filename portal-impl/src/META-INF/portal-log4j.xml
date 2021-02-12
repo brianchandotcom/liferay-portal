@@ -336,6 +336,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.security.auth.CompanyThreadLocal">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.servlet.PipingServletResponse">
 		<priority value="ERROR" />
 	</category>

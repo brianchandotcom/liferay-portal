@@ -369,15 +369,13 @@ definition {
 	test SetFieldGroupAsCollapsibleAndExecuteOnUpload {
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text1",
-			fieldName = "Text",
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
 		DataEngine.editFieldsGroupCollapsible();
 
 		PortletEntry.save();
-
-		DMNavigator.gotoDocumentType();
 
 		Navigator.gotoNavItem(navItem = "Documents and Media");
 

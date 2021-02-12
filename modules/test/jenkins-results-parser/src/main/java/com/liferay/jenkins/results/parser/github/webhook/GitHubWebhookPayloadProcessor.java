@@ -716,6 +716,10 @@ public class GitHubWebhookPayloadProcessor {
 			return true;
 		}
 
+		if (_validLiferayUsers.contains(gitHubUsername)) {
+			return true;
+		}
+
 		JSONArray jsonArray = new JSONArray(
 			processURL(
 				JenkinsResultsParserUtil.combine(
@@ -730,6 +734,8 @@ public class GitHubWebhookPayloadProcessor {
 				if (_log.isInfoEnabled()) {
 					_log.info("Valid Liferay member: " + gitHubUsername);
 				}
+
+				_validLiferayUsers.add(gitHubUsername);
 
 				return true;
 			}
@@ -2420,5 +2426,6 @@ public class GitHubWebhookPayloadProcessor {
 		new ConcurrentHashMap<>(100);
 	private final Map<String, Long> _testPullRequestURLs =
 		new ConcurrentHashMap<>(100);
+	private final Set<String> _validLiferayUsers = new HashSet<>();
 
 }

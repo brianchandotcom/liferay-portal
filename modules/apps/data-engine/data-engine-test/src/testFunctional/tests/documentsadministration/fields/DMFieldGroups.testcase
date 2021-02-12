@@ -211,10 +211,6 @@ definition {
 			key_fieldFieldLabel = "${formGroupLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
 			value1 = "${formGroupLabel}");
-
-		Button.clickSave();
-
-		DMDocumentType.deletePG(dmDocumentTypeName = "DM Document Type Name");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

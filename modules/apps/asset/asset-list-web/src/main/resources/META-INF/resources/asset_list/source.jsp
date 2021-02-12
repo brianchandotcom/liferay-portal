@@ -296,7 +296,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 			classTypesList.add(
 				HashMapBuilder.<String, Object>put(
-					"className", new String(editAssetListDisplayContext.getClassName(curRendererFactory))
+					"className", editAssetListDisplayContext.getClassName(curRendererFactory)
 				).put(
 					"classNameId", curRendererFactory.getClassNameId()
 				).put(

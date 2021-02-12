@@ -1,5 +1,5 @@
-com/liferay/alloy/taglib/alloy/AioTag
 com/fasterxml/jackson/databind/deser/std/BaseNodeDeserializer
+com/liferay/alloy/taglib/alloy/AioTag
 com/liferay/alloy/taglib/alloy/AutoCompleteTag
 com/liferay/alloy/taglib/alloy/base/BaseAioTag
 com/liferay/alloy/taglib/alloy/base/BaseAutoCompleteTag

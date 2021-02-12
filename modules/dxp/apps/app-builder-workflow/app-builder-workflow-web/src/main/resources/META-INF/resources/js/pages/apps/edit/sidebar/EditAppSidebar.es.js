@@ -341,7 +341,7 @@ export default function EditAppSidebar() {
 												>
 													{sub(
 														Liferay.Language.get(
-															'this-form-view-does-not-contain-all-custom-required-fields-for-the-x-object'
+															'the-form-view-for-this-app-was-modified-and-does-not-contain-all-required-fields-for-the-x-object'
 														),
 														[dataObject.name]
 													)}

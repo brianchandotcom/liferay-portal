@@ -280,14 +280,6 @@ definition {
 
 		DataEngine.duplicate(fieldsGroupLabel = "Fields Group");
 
-		Button.clickSave();
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "Copy of Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
 		for (var fieldName : list "Text,Numeric") {
 			DataEngine.editFieldLabel(
 				fieldFieldLabel = "Copy of ${fieldName}",
@@ -297,6 +289,10 @@ definition {
 		Button.clickSave();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTypeName}");
+
+		AssertElementPresent(
+			key_fieldsGroupLabel= "Copy of Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELDS_GROUP_CONTAINER");
 
 		for (var fieldName : list "Text,Numeric") {
 			DataEngine.viewField(

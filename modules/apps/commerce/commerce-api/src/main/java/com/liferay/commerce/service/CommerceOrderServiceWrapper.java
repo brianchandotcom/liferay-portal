@@ -683,6 +683,19 @@ public class CommerceOrderServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder updateShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String shippingOptionName,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderService.updateShippingMethod(
+			commerceOrderId, commerceShippingMethodId, shippingOptionName,
+			commerceContext, locale);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder updateTransactionId(
 			long commerceOrderId, String transactionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

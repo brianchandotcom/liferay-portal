@@ -12,6 +12,6 @@
  * details.
  */
 
-import {Form} from 'dynamic-data-mapping-form-renderer';
+import {FormView} from 'dynamic-data-mapping-form-renderer';
 
-export default Form;
+export default FormView;

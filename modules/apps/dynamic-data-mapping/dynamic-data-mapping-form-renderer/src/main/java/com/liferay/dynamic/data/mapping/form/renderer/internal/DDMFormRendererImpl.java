@@ -133,7 +133,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	private static final String _MODULE_NAME =
-		"dynamic-data-mapping-form-renderer/js/containers/Form.es";
+		"dynamic-data-mapping-form-renderer/js/custom/form/FormView.es";
 
 	@Reference
 	private DDM _ddm;

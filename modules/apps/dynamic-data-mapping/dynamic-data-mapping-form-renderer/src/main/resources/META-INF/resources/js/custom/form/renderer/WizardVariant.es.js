@@ -19,7 +19,6 @@ import React from 'react';
 import {MultiStep} from '../components/MultiStep.es';
 import {PaginationControls} from '../components/PaginationControls.es';
 
-/* eslint-disable react/jsx-fragments */
 export const Container = ({
 	activePage,
 	children,
@@ -52,7 +51,7 @@ export const Container = ({
 		</div>
 
 		{pageIndex === activePage && (
-			<React.Fragment>
+			<>
 				{pages.length > 0 && (
 					<PaginationControls
 						activePage={activePage}
@@ -73,7 +72,7 @@ export const Container = ({
 						{submitLabel}
 					</ClayButton>
 				)}
-			</React.Fragment>
+			</>
 		)}
 	</div>
 );

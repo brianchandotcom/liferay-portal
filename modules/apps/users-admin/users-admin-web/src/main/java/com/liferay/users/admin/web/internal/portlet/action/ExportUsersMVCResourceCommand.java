@@ -207,10 +207,6 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 
-		if (indexer.isIndexerEnabled() && PropsValues.USERS_SEARCH_WITH_INDEX) {
-			params.put("expandoAttributes", searchTerms.getKeywords());
-		}
-
 		if (searchTerms.isAdvancedSearch()) {
 			return _userLocalService.search(
 				themeDisplay.getCompanyId(), searchTerms.getFirstName(),

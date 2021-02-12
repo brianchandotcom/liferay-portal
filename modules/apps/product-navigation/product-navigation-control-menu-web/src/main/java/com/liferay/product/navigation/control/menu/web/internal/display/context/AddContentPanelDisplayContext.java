@@ -74,6 +74,7 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -477,6 +478,28 @@ public class AddContentPanelDisplayContext {
 				locale -> LanguageUtil.get(locale, "lang.dir")));
 	}
 
+	private Set<String> _getLayoutDecodedPortletNames() {
+		if (_layoutDecodedPortletNames != null) {
+			return _layoutDecodedPortletNames;
+		}
+
+		Set<String> layoutDecodedPortletNames = new HashSet<>();
+
+		LayoutTypePortlet layoutTypePortlet =
+			_themeDisplay.getLayoutTypePortlet();
+
+		for (Portlet layoutPortlet : layoutTypePortlet.getPortlets()) {
+			String decodedPortletName = PortletIdCodec.decodePortletName(
+				layoutPortlet.getPortletId());
+
+			layoutDecodedPortletNames.add(decodedPortletName);
+		}
+
+		_layoutDecodedPortletNames = layoutDecodedPortletNames;
+
+		return _layoutDecodedPortletNames;
+	}
+
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
 		for (String portletId :
 				PortletCategoryUtil.getFirstChildPortletIds(portletCategory)) {
@@ -654,21 +677,13 @@ public class AddContentPanelDisplayContext {
 			return false;
 		}
 
-		LayoutTypePortlet layoutTypePortlet =
-			_themeDisplay.getLayoutTypePortlet();
+		Set<String> layoutDecodedPortletNames = _getLayoutDecodedPortletNames();
 
-		boolean portletUsed = false;
-
-		for (Portlet layoutPortlet : layoutTypePortlet.getPortlets()) {
-			String decodedPortletName = PortletIdCodec.decodePortletName(
-				layoutPortlet.getPortletId());
-
-			if (decodedPortletName.equals(portlet.getPortletId())) {
-				portletUsed = true;
-			}
+		if (layoutDecodedPortletNames.contains(portlet.getPortletId())) {
+			return true;
 		}
 
-		return portletUsed;
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -682,6 +697,7 @@ public class AddContentPanelDisplayContext {
 	private Boolean _hasLayoutUpdatePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
+	private Set<String> _layoutDecodedPortletNames;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

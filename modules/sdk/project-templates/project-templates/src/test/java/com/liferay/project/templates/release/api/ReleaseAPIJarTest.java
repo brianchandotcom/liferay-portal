@@ -28,7 +28,9 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * @author Simon Jiang
@@ -41,25 +43,25 @@ public class ReleaseAPIJarTest implements BaseReleaseAPIJarTestCase {
 
 	public List<String> getIgnorePaths(String jarName) throws Exception {
 		List<String> ignoredPaths = FileTestUtil.readAllLines(
-			"com/liferay/project/templates/dependencies" +
+			"com/liferay/project/templates/release/api/dependencies" +
 				"/api-jar-ignore-paths.txt");
 
 		if (jarName.contains("7.0")) {
 			ignoredPaths.addAll(
 				FileTestUtil.readAllLines(
-					"com/liferay/project/templates/dependencies" +
+					"com/liferay/project/templates/release/api/dependencies" +
 						"/api-jar-ignore-paths_7_0.txt"));
 		}
 		else if (jarName.contains("7.1")) {
 			ignoredPaths.addAll(
 				FileTestUtil.readAllLines(
-					"com/liferay/project/templates/dependencies" +
+					"com/liferay/project/templates/release/api/dependencies" +
 						"/api-jar-ignore-paths_7_1.txt"));
 		}
 		else if (jarName.contains("7.2")) {
 			ignoredPaths.addAll(
 				FileTestUtil.readAllLines(
-					"com/liferay/project/templates/dependencies" +
+					"com/liferay/project/templates/release/api/dependencies" +
 						"/api-jar-ignore-paths_7_2.txt"));
 		}
 
@@ -84,7 +86,7 @@ public class ReleaseAPIJarTest implements BaseReleaseAPIJarTestCase {
 
 		File releaseApiJarFile = new File(RELEASE_API_JAR_FILE);
 
-		Path classesDirPath = getClassesDirPath();
+		Path classesDirPath = getClassesDirPath(temporaryFolder);
 
 		Path sourcesDirPath = getSourcesDirPath();
 
@@ -113,5 +115,8 @@ public class ReleaseAPIJarTest implements BaseReleaseAPIJarTestCase {
 			"Sources jar missing: " + getFileNames(missingClassFilePaths),
 			missingClassFilePaths.isEmpty());
 	}
+
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 }

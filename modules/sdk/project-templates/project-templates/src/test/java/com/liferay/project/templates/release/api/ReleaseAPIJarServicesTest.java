@@ -32,7 +32,9 @@ import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * @author Simon Jiang
@@ -74,7 +76,7 @@ public class ReleaseAPIJarServicesTest implements BaseReleaseAPIJarTestCase {
 	public void testReleaseApiJarService() throws Exception {
 		Assume.assumeNotNull(RELEASE_API_JAR_FILE);
 
-		Path classesDirPath = getClassesDirPath();
+		Path classesDirPath = getClassesDirPath(temporaryFolder);
 
 		Set<String> classFilePaths = getPaths(classesDirPath, ".class");
 
@@ -111,5 +113,8 @@ public class ReleaseAPIJarServicesTest implements BaseReleaseAPIJarTestCase {
 				getFileNames(missingServiceClassFilePaths),
 			missingServiceClassFilePaths.isEmpty());
 	}
+
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 }

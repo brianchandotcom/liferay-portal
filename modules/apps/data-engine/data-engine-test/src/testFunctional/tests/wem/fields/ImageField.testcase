@@ -357,31 +357,40 @@ definition {
 			key_index = "2",
 			locator1 = "FormFields#FIELD_REMOVE");
 	}
-
-	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	
+	@description = "This is a test for LPS-98073. As a Developer, I want to Verify if user can add a field label"
 	@priority = "5"
 	test SetLabelOfImageField {
 		property portal.acceptance = "false";
 
-		var structureTitle = "My Structure";
-		var newLabel = "Changes";
+		var structureTitle = "Image Field Structure";
+		var newFieldLabel = "Text";
+		var fieldLabel = "Image Field";
 
-		WebContentStructures.addCP(
-			structureDescription = "I'm a test",
-			structureName = "${structureTitle}");
+		WebContentStructures.addCP(structureName = "${structureTitle}");
 
-		DataEngine.addFields(fieldNameList = "Image");
-
-		FormViewBuilder.editFieldLabel(
-			fieldLabel = "Image",
-			label = "${newLabel}");
+		DataEngine.addField(
+			fieldFieldLabel = "${fieldLabel}",
+			fieldName = "Image");
 
 		Button.clickSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
 		AssertElementPresent(
-			key_fieldFieldLabel = "${newLabel}",
+			key_fieldFieldLabel = "${fieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "${fieldLabel}",
+			fieldFieldLabelEdit = "${newFieldLabel}");
+
+		Button.clickSave();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "${newFieldLabel}",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 

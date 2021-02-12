@@ -246,8 +246,8 @@ components:
                 type:
                     example: 1
                     format: int32
-                    maximum: 2
-                    minimum: 0
+                    maximum: 3
+                    minimum: 1
                     type: integer
                 zip:
                     example: "91765"

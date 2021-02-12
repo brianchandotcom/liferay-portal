@@ -70,9 +70,6 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			setShowResultsBar(true);
 		}
 
-		setShowCreationMenu(
-			ManagementToolbarDefaults.isShowCreationMenu(getCreationMenu()));
-
 		return super.doStartTag();
 	}
 
@@ -325,10 +322,13 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	}
 
 	public Boolean isShowCreationMenu() {
-		if ((_showCreationMenu == null) &&
-			(_managementToolbarDisplayContext != null)) {
+		if (_showCreationMenu == null) {
+			if (_managementToolbarDisplayContext != null) {
+				return _managementToolbarDisplayContext.isShowCreationMenu();
+			}
 
-			return _managementToolbarDisplayContext.isShowCreationMenu();
+			return ManagementToolbarDefaults.isShowCreationMenu(
+				getCreationMenu());
 		}
 
 		return _showCreationMenu;

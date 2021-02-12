@@ -21,31 +21,10 @@ definition {
 
 	@priority = "4"
 	test DeployModuleLicenseToLCSPortal {
-		property commerce.enabled = "false";
-		property portal.release = "true";
+		property commerce.enabled = "true";
+		property deploy.lcs.token.file = "true";
 
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		var key_panel = "Applications";
-
-		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
-
-		var key_panel = "Commerce";
-
-		AssertElementNotPresent(locator1 = "ApplicationsMenu#PANEL");
-
-		// TODO - Require property to commerce.enabled = "true"
-
-		Navigator.openURL();
-
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		var key_panel = "Commerce";
-
-		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
-
-		// TODO - Execute commerce smoke test
-
+		CommerceLicense.executeSmoke();
 	}
 
 	@priority = "3"
@@ -75,13 +54,7 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		AssertElementPresent(
-			key_panel = "Applications",
-			locator1 = "ApplicationsMenu#PANEL");
-
-		AssertElementPresent(
-			key_panel = "Commerce",
-			locator1 = "ApplicationsMenu#PANEL");
+		CommerceLicense.viewCommerceAvailable();
 
 		Portlet.shutdownServer();
 
@@ -91,49 +64,21 @@ definition {
 
 		User.firstLoginPG();
 
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		AssertElementPresent(
-			key_panel = "Applications",
-			locator1 = "ApplicationsMenu#PANEL");
-
-		AssertElementNotPresent(
-			key_panel = "Commerce",
-			locator1 = "ApplicationsMenu#PANEL");
+		CommerceLicense.viewCommerceMissing();
 	}
 
 	@priority = "5"
 	test ViewCommerceDisabled {
 		property commerce.enabled = "false";
 
-		ApplicationsMenuHelper.openApplicationsMenu();
-
-		AssertElementPresent(
-			key_panel = "Applications",
-			locator1 = "ApplicationsMenu#PANEL");
-
-		AssertElementNotPresent(
-			key_panel = "Commerce",
-			locator1 = "ApplicationsMenu#PANEL");
+		CommerceLicense.viewCommerceMissing();
 	}
 
 	@priority = "5"
 	test ViewCommerceEnabled {
 		property commerce.enabled = "true";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
-
-		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/speedwell");
-
-		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
+		CommerceLicense.executeSmoke();
 	}
 
 }

@@ -65,21 +65,28 @@ public class AccountRoleLocalServiceImpl
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap)
 		throws PortalException {
 
-		AccountRole accountRole = createAccountRole(
-			counterLocalService.increment());
-
-		accountRole.setAccountEntryId(accountEntryId);
-
-		User user = userLocalService.getUser(userId);
-
-		accountRole.setCompanyId(user.getCompanyId());
-
 		Role role = roleLocalService.addRole(
-			userId, AccountRole.class.getName(), accountRole.getAccountRoleId(),
-			name, titleMap, descriptionMap, RoleConstants.TYPE_ACCOUNT, null,
-			null);
+			userId, AccountRole.class.getName(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name, titleMap,
+			descriptionMap, RoleConstants.TYPE_ACCOUNT, null, null);
 
+		AccountRole accountRole = fetchAccountRoleByRoleId(role.getRoleId());
+
+		if (accountRole != null) {
+			accountRole.setAccountEntryId(accountEntryId);
+
+			return updateAccountRole(accountRole);
+		}
+
+		accountRole = createAccountRole(counterLocalService.increment());
+
+		accountRole.setCompanyId(role.getCompanyId());
+		accountRole.setAccountEntryId(accountEntryId);
 		accountRole.setRoleId(role.getRoleId());
+
+		role.setClassPK(accountRole.getAccountRoleId());
+
+		roleLocalService.updateRole(role);
 
 		return addAccountRole(accountRole);
 	}

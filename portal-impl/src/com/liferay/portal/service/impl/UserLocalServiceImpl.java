@@ -2183,6 +2183,28 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the default user for the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @return the default user for the company, or <code>null</code> if a user
+	 * 			with the company key could not be found
+	 */
+	@Override
+	public User fetchDefaultUser(long companyId) {
+		User user = _defaultUsers.get(companyId);
+
+		if (user == null) {
+			user = userPersistence.fetchByC_DU(companyId, true);
+
+			if (user != null) {
+				_defaultUsers.put(companyId, user);
+			}
+		}
+
+		return user;
+	}
+
+	/**
 	 * Returns the user with the contact ID.
 	 *
 	 * @param  contactId the user's contact ID

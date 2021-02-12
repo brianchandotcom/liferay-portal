@@ -186,7 +186,7 @@ public class FileTestUtil {
 
 	public static List<String> readAllLines(
 			ClassLoader classLoader, String resource)
-		throws Exception {
+		throws IOException {
 
 		List<String> allLines = new ArrayList<>();
 
@@ -203,6 +203,12 @@ public class FileTestUtil {
 		}
 
 		return allLines;
+	}
+
+	public static List<String> readAllLines(String resource)
+		throws IOException {
+
+		return readAllLines(FileTestUtil.class.getClassLoader(), resource);
 	}
 
 	public static Properties readProperties(File file) throws IOException {

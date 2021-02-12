@@ -328,23 +328,4 @@ definition {
 			locator1 = "FormFields#HELP_TEXT",
 			value1 = "Help Text");
 	}
-
-	@description = "This is a test for LPS-98076. Verify that a user Can see the '*' when Uploading when the field is set 'Required'"
-	@priority = "4"
-	test VerifyRichTextIsSetAsRequiredOnUploading {
-		property portal.acceptance = "false";
-
-		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentsAndMedia();
-
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type");
-
-		AssertElementPresent(
-			fieldLabel = "Rich Text",
-			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
-	}
-
 }

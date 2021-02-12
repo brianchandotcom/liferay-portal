@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property portal.release = "false";
+	property portal.release = "true";
 	property portal.upstream = "false";
 	property testray.main.component.name = "Commerce";
 
@@ -22,7 +22,6 @@ definition {
 	@priority = "3"
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";
-		property portal.release = "true";
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -44,7 +43,6 @@ definition {
 	@priority = "3"
 	test DeleteModuleLicense {
 		property commerce.enabled = "true";
-		property portal.release = "true";
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -78,7 +76,6 @@ definition {
 	@priority = "5"
 	test ViewCommerceDisabled {
 		property commerce.enabled = "false";
-		property portal.release = "true";
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 

@@ -1353,6 +1353,11 @@
 		<description>Creates a script component in which to write JavaScript that facilitates using AlloyUI modules.</description>
 		<attributes>
 			<attribute>
+				<name>load</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<description>A position for the script.</description>
 				<name>position</name>
 				<inputType>java.lang.String</inputType>

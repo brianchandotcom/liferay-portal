@@ -199,6 +199,12 @@ definition {
 	test SetColorWithPicker {
 		property portal.acceptance = "false";
 
+		DDLDataDefinition.save();
+
+		NavItem.click(navItem = "Documents and Media");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
+
 		PortletEntry.inputTitle(title = "DM Title Test");
 
 		DMDocument.selectColorRGB(

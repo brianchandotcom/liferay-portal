@@ -30,6 +30,10 @@ export default function useBackgroundImageValue(
 	});
 
 	useEffect(() => {
+		if (!backgroundImage) {
+			return;
+		}
+
 		loadBackgroundImage(backgroundImage, getFieldValue)
 			.then(({fileEntryId, url}) =>
 				loadBackgroundImageMediaQueries(elementId, {

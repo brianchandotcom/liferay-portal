@@ -69,7 +69,6 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				<li class="tbar-item tbar-item-expand">
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()) %>" label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "structure") %>' wrapperCssClass="article-content-title mb-0" />
 				</li>
-				<li class="tbar-item tbar-item-expand"></li>
 				<li class="tbar-item">
 					<div class="metadata-type-button-row tbar-section text-right">
 						<aui:button cssClass="btn-secondary btn-sm mr-3" href="<%= redirect %>" type="cancel" />

@@ -513,12 +513,156 @@ definition {
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
-	@ignore = "true"
 	@priority = "5"
 	test TranslateStructureWithAllFieldsNested {
 		property portal.acceptance = "false";
+		
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+		
+		NavItem.click(navItem = "Structures");
+		
+		LexiconEntry.gotoAdd();
+		
+		PortletEntry.inputName(name = "Testing");
+		
+		DataEngine.addFields(fieldNameList = "Web Content,Date,Rich Text,Single Selection,Grid,Select from List");
+		
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Web Content");
 
-		// TODO LPS-123536 TranslateStructureWithAllFieldsNested pending implementation
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Link to Page",
+			fieldName = "Link to Page",
+			targetFieldLabel = "Web Content");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Image",
+			fieldName = "Image",
+			targetFieldLabel = "Date");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Upload",
+			fieldName = "Upload",
+			targetFieldLabel = "Date");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Color",
+			fieldName = "Color",
+			targetFieldLabel = "Rich Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text",
+			fieldName = "Text",
+			targetFieldLabel = "Single Selection");
+
+		DataEngine.addFieldNested(
+		 	fieldFieldLabel = "Multiple Selection",
+		 	fieldName = "Multiple Selection",
+			targetFieldLabel = "Single Selection");
+		
+		var index = "1";
+		for (var optionValue : list "Value 1,Value 2") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "Multiple Selection",
+				index = "${index}",
+				optionValue = "${optionValue}");
+			var index = ${index} + 1;
+		}
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Geolocation",
+			fieldName = "Geolocation",
+			targetFieldLabel = "Grid");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Separator",
+			fieldName = "Separator",
+			targetFieldLabel = "Select from List");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+		
+		WebContentStructures.addName(structureName = "Testando");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Texto");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Link to Page",
+			label = "Link para Página");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Numeric",
+			label = "Numérico");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Web Content",
+			label = "Conteúdo Web");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Separator",
+			label = "Separador");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Select from List",
+			label = "Selecionar da Lista");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Image",
+			label = "Imagem");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Rich Text",
+			label = "Texto Completo");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Geolocation",
+			label = "Localização Terrestre");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Single Selection",
+			label = "Seleção Única");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Grid",
+			label = "Grade");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Multiple Selection",
+			label = "Seleção Múltipla");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Date",
+			label = "Data");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Upload",
+			label = "Enviar");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Color",
+			label = "Cor");
+		
+		WebContentStructures.saveCP(structureName = "Testando");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Testing");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		for (var key_fieldFieldLabel : list "Conteúdo Web,Numérico,Data,Enviar,Imagem,Texto Completo,Cor,Seleção Única,Seleção Múltipla,Texto,Grade,Localização Terrestre,Selecionar da Lista,Separador,Link para Página") {
+			AssertTextEquals(
+				value1 = "${key_fieldFieldLabel}",
+				key_fieldFieldLabel = "${key_fieldFieldLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL"
+			);
+		}
+
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

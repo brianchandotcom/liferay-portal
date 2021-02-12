@@ -1072,12 +1072,15 @@ class Form extends Component {
 	_toggleFormBuilder(show) {
 		const {namespace} = this.props;
 
-		const managementToolbar = document.querySelector(
-			`#${namespace}managementToolbar`
+		const ddmFormInstanceSettingsIcon = document.querySelector(
+			`#${namespace}ddmFormInstanceSettingsIcon`
 		);
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
 		const formBuilderButtons = document.querySelectorAll(
 			'.toolbar-group-field .nav-item .lfr-ddm-button'
+		);
+		const managementToolbar = document.querySelector(
+			`#${namespace}managementToolbar`
 		);
 		const publishIcon = document.querySelector('.publish-icon');
 		const translationManager = document.querySelector(
@@ -1090,12 +1093,17 @@ class Form extends Component {
 				NAV_ITEMS.FORM
 			);
 
-			managementToolbar.classList.remove('hide');
+			if (ddmFormInstanceSettingsIcon) {
+				ddmFormInstanceSettingsIcon.classList.remove('hide');
+			}
+
 			formBasicInfo.classList.remove('hide');
 
 			formBuilderButtons.forEach((formBuilderButton) => {
 				formBuilderButton.classList.remove('hide');
 			});
+
+			managementToolbar.classList.remove('hide');
 
 			if (publishIcon) {
 				publishIcon.classList.remove('hide');
@@ -1108,12 +1116,17 @@ class Form extends Component {
 			this.showAddButton();
 		}
 		else {
-			managementToolbar.classList.add('hide');
+			if (ddmFormInstanceSettingsIcon) {
+				ddmFormInstanceSettingsIcon.classList.add('hide');
+			}
+
 			formBasicInfo.classList.add('hide');
 
 			formBuilderButtons.forEach((formBuilderButton) => {
 				formBuilderButton.classList.add('hide');
 			});
+
+			managementToolbar.classList.add('hide');
 
 			if (publishIcon) {
 				publishIcon.classList.add('hide');

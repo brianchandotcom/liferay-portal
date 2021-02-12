@@ -142,17 +142,15 @@ definition {
 			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
-	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@description = "This is a test for LPS-98073. As a Developer, I want to Verify if label from image field can be translated"
 	@priority = "4"
-	test LocalizationOfImageFieldtPersists {
+	test LocalizationOfImageFieldPersists {
 		property portal.acceptance = "false";
 
 		var structureTitle = "Test";
 		var structureTitlePT = "Teste";
 		var fieldLabelEN = "Text EN";
 		var fieldLabelPT = "Text PT";
-		var fieldHelpEN = "I'm a help text";
-		var fieldHelpPT = "Eu sou um texto de ajuda";
 
 		WebContentStructures.addCP(
 			structureDescription = "I'm a test",
@@ -162,10 +160,6 @@ definition {
 			fieldFieldLabel = "${fieldLabelEN}",
 			fieldName = "Image");
 
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "${fieldLabelEN}",
-			fieldHelp = "${fieldHelpEN}");
-
 		Button.clickSave();
 
 		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
@@ -173,10 +167,6 @@ definition {
 		WebContentStructures.addLocalization(
 			locale = "pt_BR",
 			localization1Name = "${structureTitlePT}");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "${fieldLabelEN}",
-			fieldHelp = "${fieldHelpPT}");
 
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "${fieldLabelEN}",
@@ -191,11 +181,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "${structureTitlePT}");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "${fieldLabelPT}",
-			fieldHelp = "${fieldHelpPT}",
-			fieldName = "Image");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Verify if user is required to define a description for an uploaded image"

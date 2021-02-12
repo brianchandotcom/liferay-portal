@@ -214,10 +214,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 	@Override
 	public void sendMessage(String destinationName, Message message) {
-		if (CompanyThreadLocal.isDeleteInProcess()) {
-			return;
-		}
-
 		MessageBusThreadLocalUtil.populateMessageFromThreadLocals(message);
 
 		for (MessageBusInterceptor messageBusInterceptor :

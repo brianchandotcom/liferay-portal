@@ -56,16 +56,17 @@ public class CompanyThreadLocal {
 		if (companyId > 0) {
 			_companyId.set(companyId);
 
-			try {
-				User defaultUser = UserLocalServiceUtil.getDefaultUser(
-					companyId);
+			User defaultUser = UserLocalServiceUtil.fetchDefaultUser(companyId);
 
+			if (defaultUser == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("No default user found for company " + companyId);
+				}
+			}
+			else {
 				LocaleThreadLocal.setDefaultLocale(defaultUser.getLocale());
 				TimeZoneThreadLocal.setDefaultTimeZone(
 					defaultUser.getTimeZone());
-			}
-			catch (Exception exception) {
-				_log.error(exception, exception);
 			}
 		}
 		else {

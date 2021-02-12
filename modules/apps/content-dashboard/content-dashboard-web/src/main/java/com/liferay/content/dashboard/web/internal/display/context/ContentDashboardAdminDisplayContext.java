@@ -414,8 +414,11 @@ public class ContentDashboardAdminDisplayContext {
 	}
 
 	private Map<String, Object> _getContext() {
-		return Collections.singletonMap(
-			"languageDirection", _languageDirection);
+		return HashMapBuilder.<String, Object>put(
+			"languageDirection", _languageDirection
+		).put(
+			"namespace", _liferayPortletResponse.getNamespace()
+		).build();
 	}
 
 	private Map<String, Object> _getProps() {

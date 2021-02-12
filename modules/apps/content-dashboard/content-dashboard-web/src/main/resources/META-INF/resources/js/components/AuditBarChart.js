@@ -32,7 +32,7 @@ import {
 import {BAR_CHART, COLORS, DEFAULT_COLOR} from '../utils/constants';
 import {shortenNumber} from '../utils/shortenNumber';
 
-export default function AuditBarChart({rtl, vocabularies}) {
+export default function AuditBarChart({namespace, rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
 		const dataKeys = new Set();
 		var maxValue = 0;

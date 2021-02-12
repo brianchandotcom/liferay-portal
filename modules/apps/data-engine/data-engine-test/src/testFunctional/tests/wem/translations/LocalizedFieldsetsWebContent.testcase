@@ -35,8 +35,35 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
-			fieldsetLabel = "Basic Web Content",
-			fieldsetName = "Basic Web Content");
+			createNewFieldset = "true",
+			fieldNameList = "Text",
+			fieldsetLabel = "New Fieldset",
+			fieldsetName = "New Fieldset");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldsetsLabel(
+			fieldsetLabel = "New Fieldset",
+			fieldsetLabelEdit = "Novo Fieldset");
+
+		DataEngine.gotoFieldsetItemEllipsis(fieldsetName = "New Fieldset");
+
+		MenuItem.click(menuItem = "Edit");
+
+		PortletEntry.changeLocale(
+			locale = "pt-BR",
+			modal = "true");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Texto",
+			fieldsetModal = "true");
+
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Click(
+			key_text = "Propagate",
+			locator1 = "Button#ANY");
 
 		WebContentStructures.saveCP();
 
@@ -44,19 +71,15 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "WC Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		WebContent.addCP(
-			webContentContent = "Conteúdo da web",
-			webContentTitle = "Título do conteúdo da web");
+		PortletEntry.inputTitle(title = "WC Titulo");
 
 		PortletEntry.publish();
 
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
+		WebContent.viewTitle(webContentTitle = "WC Title");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

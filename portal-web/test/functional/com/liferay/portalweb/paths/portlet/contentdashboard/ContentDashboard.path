@@ -88,6 +88,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRED_LABEL</td>
+	<td>//*[contains(@class, 'label') and contains(text(),'EXPIRED')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_AND_ORDER_DROPDOWN</td>
 	<td>//*[contains(@class, 'dropdown-toggle btn nav-link btn-unstyled')]</td>
 	<td></td>

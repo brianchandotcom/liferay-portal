@@ -306,6 +306,40 @@ definition {
 			webContentTitle = "WC Title Edited");
 	}
 
+	@description = "Validate if the user can access to the Content Dashboard after s/he has expired a Web Content"
+	@priority = "5"
+	test ContentDashboardExpiredWebContent {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.expireSpecificVersionCP(webContentTitle = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#EXPIRED_LABEL",
+			value1 = "EXPIRED");
+		
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title");
+	}
+
 	@description = "Validate if the user can filter by Author, using different display types"
 	@priority = "5"
 	test ContentDashboardFilterByAuthor {

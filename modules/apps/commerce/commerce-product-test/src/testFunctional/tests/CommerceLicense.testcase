@@ -41,6 +41,40 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
 	}
 
+	@priority = "3"
+	test DeleteModuleLicense {
+		property commerce.enabled = "true";
+		property portal.release = "true";
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		var key_panel = "Applications";
+
+		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		var key_panel = "Commerce";
+
+		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		Portlet.shutdownServer();
+
+		License.deleteLicenseXml(deleteLicenseXml = "portal-commerce-license.xml");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		User.firstLoginPG();
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		var key_panel = "Commerce";
+
+		AssertElementNotPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		var key_panel = "Control Panel";
+
+		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+	}
+
 	@priority = "5"
 	test ViewCommerceDisabled {
 		property commerce.enabled = "false";

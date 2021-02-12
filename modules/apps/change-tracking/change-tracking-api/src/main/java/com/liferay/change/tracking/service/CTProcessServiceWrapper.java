@@ -43,6 +43,14 @@ public class CTProcessServiceWrapper
 			companyId, userId, keywords, status, start, end, orderByComparator);
 	}
 
+	@Override
+	public int getCTProcessesCount(
+		long companyId, long userId, String keywords, int status) {
+
+		return _ctProcessService.getCTProcessesCount(
+			companyId, userId, keywords, status);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

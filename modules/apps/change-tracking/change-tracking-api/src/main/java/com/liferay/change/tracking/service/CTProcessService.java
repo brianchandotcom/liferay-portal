@@ -57,6 +57,10 @@ public interface CTProcessService extends BaseService {
 		long companyId, long userId, String keywords, int status, int start,
 		int end, OrderByComparator<CTProcess> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCTProcessesCount(
+		long companyId, long userId, String keywords, int status);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -311,23 +311,23 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		WebContentStructures.saveCP();
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Testing");
-
 		DataEngine.delete(fieldFieldLabel = "Text");
 
 		DataEngine.delete(fieldFieldLabel = "Numeric");
 
-		WebContentStructures.saveCP();
+		DDLDataDefinition.save();
 
-		LexiconEntry.gotoEntry(rowEntry = "Testing");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
 
-		AssertElementNotPresent(locator1 = "DataEngineBuilder#WEB_CONTENT_TEXT_FIELD");
-
-		AssertElementNotPresent(locator1 = "DataEngineBuilder#WEB_CONTENT_NUMERIC_FIELD");
+		AssertVisible(
+			key_fieldFieldLabel = "Fields Group",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		
+		for (var label : list "Text,Numeric") {
+			AssertElementNotPresent(
+				key_fieldFieldLabel = "${label}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

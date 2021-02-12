@@ -32,7 +32,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 			User.logoutPG();
@@ -104,8 +103,8 @@ definition {
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Texto Rico",
-			fieldName = "Rich Text",
-			fieldHelp = "Texto Ajuda");
+			fieldHelp = "Texto Ajuda",
+			fieldName = "Rich Text");
 	}
 
 	@description = "This is a test for LPS-98076. Verify that a user Can repeat the field when it was set as 'repeatable' (when uploading a Document Type)"
@@ -188,12 +187,12 @@ definition {
 			fieldReference = "Myreference");
 =======
 			fieldReference = "TestValidReference");
-		
+
 		DataEngine.editFieldReferenceWithInvalidCharacters(
 			assertFieldReference = "TestInvalidReference",
 			fieldFieldLabel = "Rich Text",
 			fieldReference = "Test!Invalid@#Reference");
-		
+
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type");
@@ -227,7 +226,6 @@ definition {
 	@description = "This is a test for LPS-98076. Verify that a user can set Searchable as Disabled and as Text"
 	@priority = "4"
 	test SetRichTextSearchableByTextAndDisable {
-
 		DataEngine.editFieldSearchable(
 			fieldFieldLabel = "Rich Text",
 			searchableType = "Disable");
@@ -256,7 +254,6 @@ definition {
 	@description = "This is a test for LPS-98076. Verify that a user can hide/show the field label"
 	@priority = "3"
 	test ShowAndHideRichTextLabel {
-
 		DataEngine.editShowOrHideLabel(
 			fieldFieldLabel = "Rich Text",
 			showLabel = "false");
@@ -286,7 +283,7 @@ definition {
 	@priority = "4"
 	test UploadWithRequiredRichText {
 		property portal.acceptance = "false";
-		
+
 		DataEngine.editFieldRequired(fieldFieldLabel = "Rich Text");
 
 		DDLDataDefinition.save();
@@ -302,7 +299,7 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#WARNING_FEEDBACK",
 			value1 = "This field is required.");
-		
+
 		CKEditor.addContentInWebContent(
 			content = "Hello",
 			fieldLabel = "Rich Text");

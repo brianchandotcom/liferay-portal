@@ -90,8 +90,8 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure FieldSet Test");
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
@@ -113,13 +113,13 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure FieldSet Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
-		PortletEntry.inputTitle(title = "WC Title Test");
+		PortletEntry.inputTitle(title = "WC Title");
 
 		PortletEntry.inputText(
 			fieldLabel = "Text",
-			text = "Text test");
+			text = "This is a Text");
 
 		PortletEntry.changeLocaleSummary(locale = "pt_BR");
 
@@ -127,19 +127,19 @@ definition {
 
 		PortletEntry.inputText(
 			fieldLabel = "Text",
-			text = "Text test BR");
+			text = "Este é um texto");
 
 		PortletEntry.changeLocaleSummary(locale = "en-US");
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
 		AssertAttributeValue(
 			attribute1 = "value",
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "Text test");
+			value1 = "This is a Text");
 
 		PortletEntry.changeLocaleSummary(locale = "pt_BR");
 
@@ -149,7 +149,7 @@ definition {
 			attribute1 = "value",
 			key_fieldFieldLabel = "Text pt-BR",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "Text test BR");
+			value1 = "Este é um texto");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

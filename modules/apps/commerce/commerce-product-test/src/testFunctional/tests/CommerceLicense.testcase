@@ -19,14 +19,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test DeployModuleLicenseToLCSPortal {
-		property commerce.enabled = "true";
-		property deploy.lcs.token.file = "true";
-
-		CommerceLicense.executeSmoke();
-	}
-
 	@priority = "3"
 	test DeleteLiferayDXPLicense {
 		property commerce.enabled = "false";
@@ -65,6 +57,14 @@ definition {
 		User.firstLoginPG();
 
 		CommerceLicense.viewCommerceMissing();
+	}
+
+	@priority = "4"
+	test DeployModuleLicenseToLCSPortal {
+		property commerce.enabled = "true";
+		property deploy.lcs.token.file = "true";
+
+		CommerceLicense.executeSmoke();
 	}
 
 	@priority = "5"

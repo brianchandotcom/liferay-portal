@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ENTRY_COVER_IMAGE_SELECT_FILE</td>
-	<td>//div[contains(@class,'image-selector')]//a[contains(.,'Select File')]</td>
+	<td>//div[contains(@class,'image-selector')]//button[contains(.,'Select File')]</td>
 	<td></td>
 </tr>
 <tr>

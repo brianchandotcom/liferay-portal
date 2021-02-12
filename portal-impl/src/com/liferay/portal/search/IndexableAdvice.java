@@ -14,13 +14,16 @@
 
 package com.liferay.portal.search;
 
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableThreadLocal;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -123,11 +126,16 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 			}
 		}
 
-		if (indexableContext._indexableType == IndexableType.DELETE) {
-			indexer.delete(result);
-		}
-		else {
-			indexer.reindex(result);
+		try (SafeClosable safeCloseable =
+				ProxyModeThreadLocal.setWithSafeClosable(
+					IndexableThreadLocal.isForceSync())) {
+
+			if (indexableContext._indexableType == IndexableType.DELETE) {
+				indexer.delete(result);
+			}
+			else {
+				indexer.reindex(result);
+			}
 		}
 	}
 

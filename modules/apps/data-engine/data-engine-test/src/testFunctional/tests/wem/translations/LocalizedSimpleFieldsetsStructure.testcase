@@ -116,7 +116,6 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "4"
 	test DefaultTitlePersistsUponFirstlyTranslatingForAnotherLocale {
-
 		WebContentStructures.addCP();
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
@@ -192,19 +191,19 @@ definition {
 			createNewFieldset = "true",
 			fieldNameList = "Text,Numeric",
 			fieldsetName = "${fieldsetNameEN}");
-		
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldsetsLabel(
 			fieldsetLabel = "${fieldsetNameEN}",
 			fieldsetLabelEdit = "Fieldset Name pt-BR");
-		
+
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		DataEngine.editFieldsetsLabel(
 			fieldsetLabel = "${fieldsetNameEN}",
 			fieldsetLabelEdit = "Fieldset Name de-DE");
-		
+
 		PortletEntry.changeLocale(locale = "es-ES");
 
 		DataEngine.editFieldsetsLabel(
@@ -215,7 +214,7 @@ definition {
 			fieldNameList = "Text,Numeric",
 			fieldsetName = "${fieldsetNameEN}",
 			localeList = "pt-BR,de-DE,es-ES");
-		
+
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
@@ -482,31 +481,37 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "5"
 	test TranslateFieldsetWithNNestedNTranslation {
+		var fieldsetName = "Fieldset EN";
+		var structureTitle = "Structure name";
+		var richTextField = "Rich Text";
+		var textField = "Text";
+		var dateField = "Date";
+		var numericField = "Numeric";
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		WebContentStructures.addCP(structureName = "${structureTitle}");
 
 		DataEngine.gotoCreateNewFieldset();
 
 		Type(
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "New Fieldset");
+			value1 = "${fieldsetName}");
 
-		DataEngine.addFields(fieldNameList = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text",
-			targetFieldLabel = "Text");
+		DataEngine.addFields(fieldNameList = "${textField}");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Date",
-			fieldName = "Date",
-			targetFieldLabel = "Rich Text");
+			fieldFieldLabel = "${richTextField}",
+			fieldName = "${richTextField}",
+			targetFieldLabel = "${textField}");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Date");
+			fieldFieldLabel = "${dateField}",
+			fieldName = "${dateField}",
+			targetFieldLabel = "${richTextField}");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "${numericField}",
+			fieldName = "${numericField}",
+			targetFieldLabel = "${dateField}");
 
 		for (var prefix : list "First Level,Second Level,Third Level") {
 			DataEngine.editFieldsGroupLabel(
@@ -539,23 +544,23 @@ definition {
 			fieldsGroupLabelEdit = "Grupo de campos de terceiro nível");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
+			fieldFieldLabel = "${textField}",
 			fieldFieldLabelEdit = "Texto",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Rich Text",
+			fieldFieldLabel = "${richTextField}",
 			fieldFieldLabelEdit = "Rico Texto",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Date",
-			fieldFieldLabelEdit = "Encontro",
+			fieldFieldLabel = "${dateField}",
+			fieldFieldLabelEdit = "Data",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "Numérica",
+			fieldFieldLabel = "${numericField}",
+			fieldFieldLabelEdit = "Numérico",
 			fieldsetModal = "true");
 
 		PortletEntry.changeLocale(
@@ -582,22 +587,22 @@ definition {
 			fieldsGroupLabelEdit = "Grupo de campos de tercer nivel");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
+			fieldFieldLabel = "${textField}",
 			fieldFieldLabelEdit = "el texto",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Rich Text",
+			fieldFieldLabel = "${richTextField}",
 			fieldFieldLabelEdit = "Rica Texto",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Date",
+			fieldFieldLabel = "${dateField}",
 			fieldFieldLabelEdit = "Fecha",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
+			fieldFieldLabel = "${numericField}",
 			fieldFieldLabelEdit = "Numérico",
 			fieldsetModal = "true");
 
@@ -625,22 +630,22 @@ definition {
 			fieldsGroupLabelEdit = "Feldgruppe der dritten Ebene");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
+			fieldFieldLabel = "${textField}",
 			fieldFieldLabelEdit = "der Text",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Rich Text",
+			fieldFieldLabel = "${richTextField}",
 			fieldFieldLabelEdit = "Reich der Text",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Date",
+			fieldFieldLabel = "${dateField}",
 			fieldFieldLabelEdit = "Datum",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
+			fieldFieldLabel = "${numericField}",
 			fieldFieldLabelEdit = "Numerisch",
 			fieldsetModal = "true");
 
@@ -648,18 +653,18 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
+		DataEngine.addFieldsets(fieldsetName = "${fieldsetName}");
 
 		WebContentStructures.saveCP();
 
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Name");
+			value1 = "${structureTitle}");
 
 		AssertVisible(
-			key_fieldsetLabel = "New Fieldset",
+			key_fieldsetLabel = "${fieldsetName}",
 			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
 
 		for (var prefix : list "First Level,Second Level,Third Level") {
@@ -669,16 +674,16 @@ definition {
 		}
 
 		AssertVisible(
-			key_fieldFieldLabel = "Text",
+			key_fieldFieldLabel = "${textField}",
 			key_fieldsGroupLabel = "First Level Fields Group",
 			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 
 		AssertVisible(
-			key_fieldFieldLabel = "Rich Text",
+			key_fieldFieldLabel = "${richTextField}",
 			key_fieldsGroupLabel = "Second Level Fields Group",
 			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 
-		for (var fieldFieldLabel : list "Date,Numeric") {
+		for (var fieldFieldLabel : list "${dateField},${numericField}") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldsGroupLabel = "Third Level Fields Group",
@@ -689,7 +694,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Name");
+			value1 = "${structureTitle}");
 
 		AssertVisible(
 			key_fieldsetLabel = "Novo Fieldset",
@@ -717,7 +722,7 @@ definition {
 			key_fieldsGroupLabel = "Grupo de Campos de Segundo Nível",
 			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 
-		for (var fieldFieldLabel : list "Encontro,Numérica") {
+		for (var fieldFieldLabel : list "Data,Numérico") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldsGroupLabel = "Grupo de campos de terceiro nível",
@@ -728,7 +733,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Name");
+			value1 = "${structureTitle}");
 
 		AssertVisible(
 			key_fieldsetLabel = "Nueva Fieldset",
@@ -767,7 +772,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Name");
+			value1 = "${structureTitle}");
 
 		AssertVisible(
 			key_fieldsetLabel = "Neues Feldset",
@@ -1179,7 +1184,6 @@ definition {
 	@description = "This is a test for LPS-123538. As Content Creator, I want to define reusable translations when creating WEM Structures with fieldset"
 	@priority = "4"
 	test VerifyNestedFieldsetEditionOnStructure {
-
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(

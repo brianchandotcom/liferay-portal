@@ -585,14 +585,6 @@ public class AssetHelperImpl implements AssetHelper {
 		return ddmStructure.getDDMFormField(fieldName);
 	}
 
-	private boolean _getDDMFormFieldLocalizable(String sortField)
-		throws Exception {
-
-		DDMFormField ddmFormField = _getDDMFormField(sortField);
-
-		return GetterUtil.getBoolean(ddmFormField.getProperty("localizable"));
-	}
-
 	private String _getDDMFormFieldTypeOrderByCol(
 		String ddmFormField, String ddmFormFieldType, Locale locale) {
 
@@ -682,7 +674,7 @@ public class AssetHelperImpl implements AssetHelper {
 
 		DDMFormField ddmFormField = _getDDMFormField(sortField);
 
-		if (!_getDDMFormFieldLocalizable(sortField)) {
+		if (!GetterUtil.getBoolean(ddmFormField.getProperty("localizable"))) {
 			locale = null;
 		}
 

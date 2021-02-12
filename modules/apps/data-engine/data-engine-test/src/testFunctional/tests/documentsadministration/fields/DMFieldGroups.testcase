@@ -251,21 +251,21 @@ definition {
 		property portal.acceptance = "false";
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text2",
-			fieldName = "Text",
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Fields Group",
-			fieldFieldLabelEdit = "New name");
+			fieldFieldLabelEdit = "Fields Group Edit");
 
 		DDLDataDefinition.save();
 
 		LexiconEntry.gotoEntry(rowEntry = "DM Document Type Name");
 
-		AssertTextEquals(
-			locator1 = "//div[contains(@class, 'ddm-field-types')]//label",
-			value1 = "New name");
+		AssertElementNotPresent(
+			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR",
+			value1 = "Fields Group Edit");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

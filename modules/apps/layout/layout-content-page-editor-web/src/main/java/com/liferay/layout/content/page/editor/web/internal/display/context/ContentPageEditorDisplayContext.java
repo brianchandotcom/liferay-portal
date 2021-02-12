@@ -1683,7 +1683,6 @@ public class ContentPageEditorDisplayContext {
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
 		layoutItemSelectorCriterion.setMultiSelection(false);
-		layoutItemSelectorCriterion.setMultiSelection(false);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),

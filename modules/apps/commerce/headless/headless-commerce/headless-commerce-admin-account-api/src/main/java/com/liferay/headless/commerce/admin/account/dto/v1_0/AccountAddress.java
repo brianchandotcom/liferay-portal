@@ -475,8 +475,8 @@ public class AccountAddress implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String street3;
 
-	@DecimalMax("2")
-	@DecimalMin("0")
+	@DecimalMax("3")
+	@DecimalMin("1")
 	@Schema
 	public Integer getType() {
 		return type;

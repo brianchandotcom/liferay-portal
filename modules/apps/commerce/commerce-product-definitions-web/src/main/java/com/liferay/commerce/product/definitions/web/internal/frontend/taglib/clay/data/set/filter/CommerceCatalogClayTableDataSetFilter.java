@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.frontend;
+package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.clay.data.set.filter;
 
 import com.liferay.commerce.product.definitions.web.internal.frontend.constants.CommerceProductDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.filter.BaseAutocompleteClayDataSetFilter;
@@ -28,18 +28,17 @@ import org.osgi.service.component.annotations.Component;
 	property = "clay.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITIONS,
 	service = ClayDataSetFilter.class
 )
-public class AssetCategoryClayTableDataSetFilter
+public class CommerceCatalogClayTableDataSetFilter
 	extends BaseAutocompleteClayDataSetFilter {
 
 	@Override
 	public String getAPIURL() {
-		return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0" +
-			"/taxonomy-categories?sort=name:asc";
+		return "/o/headless-commerce-admin-catalog/v1.0/catalogs?sort=name:asc";
 	}
 
 	@Override
 	public String getId() {
-		return "categoryIds";
+		return "catalogId";
 	}
 
 	@Override
@@ -54,7 +53,12 @@ public class AssetCategoryClayTableDataSetFilter
 
 	@Override
 	public String getLabel() {
-		return "category";
+		return "catalog";
+	}
+
+	@Override
+	public boolean isMultipleSelection() {
+		return false;
 	}
 
 }

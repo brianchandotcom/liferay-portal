@@ -12,21 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.frontend;
+package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.clay.data.set.filter;
 
 import com.liferay.commerce.product.definitions.web.internal.frontend.constants.CommerceProductDataSetConstants;
-import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
-import com.liferay.frontend.taglib.clay.data.set.filter.BaseRadioClayDataSetFilter;
+import com.liferay.frontend.taglib.clay.data.set.filter.BaseAutocompleteClayDataSetFilter;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
-import com.liferay.frontend.taglib.clay.data.set.filter.RadioClayDataSetFilterItem;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -36,36 +28,33 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITIONS,
 	service = ClayDataSetFilter.class
 )
-public class ProductTypeClayTableDataSetFilter
-	extends BaseRadioClayDataSetFilter {
+public class AssetCategoryClayTableDataSetFilter
+	extends BaseAutocompleteClayDataSetFilter {
+
+	@Override
+	public String getAPIURL() {
+		return "/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0" +
+			"/taxonomy-categories?sort=name:asc";
+	}
 
 	@Override
 	public String getId() {
-		return "productType";
+		return "categoryIds";
+	}
+
+	@Override
+	public String getItemKey() {
+		return "id";
+	}
+
+	@Override
+	public String getItemLabel() {
+		return "name";
 	}
 
 	@Override
 	public String getLabel() {
-		return "product-type";
+		return "category";
 	}
-
-	@Override
-	public List<RadioClayDataSetFilterItem> getRadioClayDataSetFilterItems(
-		Locale locale) {
-
-		List<RadioClayDataSetFilterItem> radioClayDataSetFilterItems =
-			new ArrayList<>();
-
-		for (CPType cpType : _cpTypeServicesTracker.getCPTypes()) {
-			radioClayDataSetFilterItems.add(
-				new RadioClayDataSetFilterItem(
-					cpType.getLabel(locale), cpType.getName()));
-		}
-
-		return radioClayDataSetFilterItems;
-	}
-
-	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 }

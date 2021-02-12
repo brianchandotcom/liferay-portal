@@ -190,9 +190,9 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 	}
 
 	protected void filterUnmatched(
-		FacetTestHelper helper, String presentButUnmatched) {
+		FacetTestHelper facetTestHelper, String presentButUnmatched) {
 
-		helper.setQueryContributor(
+		facetTestHelper.setQueryContributor(
 			QueryContributors.mustNotTerm(getField(), presentButUnmatched));
 	}
 

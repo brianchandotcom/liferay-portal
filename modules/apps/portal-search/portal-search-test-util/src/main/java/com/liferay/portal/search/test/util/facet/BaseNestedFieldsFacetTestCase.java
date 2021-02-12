@@ -53,9 +53,9 @@ public abstract class BaseNestedFieldsFacetTestCase
 
 	@Override
 	protected void filterUnmatched(
-		FacetTestHelper helper, String presentButUnmatched) {
+		FacetTestHelper facetTestHelper, String presentButUnmatched) {
 
-		helper.defineRequest(
+		facetTestHelper.defineRequest(
 			searchRequestBuilder -> {
 				BooleanQuery booleanQuery = queries.booleanQuery();
 

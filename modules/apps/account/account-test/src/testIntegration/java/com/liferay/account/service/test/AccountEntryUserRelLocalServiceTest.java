@@ -17,7 +17,6 @@ package com.liferay.account.service.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.exception.DuplicateAccountEntryIdException;
-import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.exception.NoSuchEntryUserRelException;
 import com.liferay.account.model.AccountEntry;
@@ -101,15 +100,21 @@ public class AccountEntryUserRelLocalServiceTest {
 				accountEntryUserRel.getPrimaryKey()));
 	}
 
-	@Test(expected = DuplicateAccountEntryUserRelException.class)
-	public void testAddAccountEntryUserRel1ThrowsDuplicateAccountEntryUserRelException()
+	@Test
+	public void testAddAccountEntryUserRel1DoesNotAddDuplicate()
 		throws Exception {
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			_accountEntry.getAccountEntryId(), _user.getUserId());
+		AccountEntryUserRel accountEntryUserRel1 =
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), _user.getUserId());
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			_accountEntry.getAccountEntryId(), _user.getUserId());
+		AccountEntryUserRel accountEntryUserRel2 =
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), _user.getUserId());
+
+		Assert.assertEquals(
+			accountEntryUserRel1.getAccountEntryUserRelId(),
+			accountEntryUserRel2.getAccountEntryUserRelId());
 	}
 
 	@Test(expected = NoSuchEntryException.class)

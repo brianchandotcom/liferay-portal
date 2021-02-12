@@ -179,24 +179,43 @@ public class PullRequest {
 
 		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
-			"issues/" + getNumber() + "/comments?page=");
+			"issues/" + getNumber() + "/comments?per_page=100&page=");
 
-		int page = 1;
+		for (int pageNumber = 1;
+			 pageNumber <=
+				 JenkinsResultsParserUtil.PAGES_GITHUB_API_PAGES_SIZE_MAX;
+			 pageNumber++) {
 
-		while (true) {
 			try {
-				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(
-					gitHubApiUrl + page, false);
+				JSONArray commentJSONArray =
+					JenkinsResultsParserUtil.toJSONArray(
+						gitHubApiUrl + pageNumber, false);
 
-				if (jsonArray.length() == 0) {
+				if (commentJSONArray.length() == 0) {
 					break;
 				}
 
-				for (int i = 0; i < jsonArray.length(); i++) {
-					_comments.add(new Comment(jsonArray.getJSONObject(i)));
+				for (int i = 0; i < commentJSONArray.length(); i++) {
+					_comments.add(
+						new Comment(commentJSONArray.getJSONObject(i)));
 				}
 
-				page++;
+				if (commentJSONArray.length() < JenkinsResultsParserUtil.
+						PER_PAGE_GITHUB_API_PAGES_SIZE_MAX) {
+
+					break;
+				}
+
+				if (pageNumber ==
+						JenkinsResultsParserUtil.
+							PAGES_GITHUB_API_PAGES_SIZE_MAX) {
+
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Too many comments (>",
+							String.valueOf(_gitHubRemoteGitCommits.size()),
+							") found for ", "pull request ", getHtmlURL()));
+				}
 			}
 			catch (IOException ioException) {
 				_comments = null;
@@ -838,7 +857,11 @@ public class PullRequest {
 		_gitHubRemoteGitCommits = new ArrayList<>();
 
 		try {
-			for (int pageNumber = 1; pageNumber < 10; pageNumber++) {
+			for (int pageNumber = 1;
+				 pageNumber <=
+					 JenkinsResultsParserUtil.PAGES_GITHUB_API_PAGES_SIZE_MAX;
+				 pageNumber++) {
+
 				JSONArray commitsJSONArray =
 					JenkinsResultsParserUtil.toJSONArray(
 						JenkinsResultsParserUtil.combine(
@@ -873,15 +896,21 @@ public class PullRequest {
 					_commonParentSHA = firstParentJSONObject.getString("sha");
 				}
 
-				if (commitsJSONArray.length() < 100) {
+				if (commitsJSONArray.length() < JenkinsResultsParserUtil.
+						PER_PAGE_GITHUB_API_PAGES_SIZE_MAX) {
+
 					break;
 				}
 
-				if (pageNumber == 10) {
+				if (pageNumber ==
+						JenkinsResultsParserUtil.
+							PAGES_GITHUB_API_PAGES_SIZE_MAX) {
+
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
-							"Too many GitHub remote commits (>1000) found for ",
-							"pull request ", getHtmlURL()));
+							"Too many GitHub remote commits (>",
+							String.valueOf(_gitHubRemoteGitCommits.size()),
+							") found for ", "pull request ", getHtmlURL()));
 				}
 			}
 		}

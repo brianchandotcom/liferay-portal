@@ -311,16 +311,6 @@ public class CPDefinitionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPDefinition
-			updateCPDefinitionExternalReferenceCode(
-				long cpDefinitionId, String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionService.updateCPDefinitionExternalReferenceCode(
-			cpDefinitionId, externalReferenceCode);
-	}
-
-	@Override
 	public void updateCPDisplayLayout(
 			long cpDefinitionId, String layoutUuid,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -328,6 +318,16 @@ public class CPDefinitionServiceWrapper
 
 		_cpDefinitionService.updateCPDisplayLayout(
 			cpDefinitionId, layoutUuid, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition
+			updateExternalReferenceCode(
+				long cpDefinitionId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionService.updateExternalReferenceCode(
+			cpDefinitionId, externalReferenceCode);
 	}
 
 	@Override

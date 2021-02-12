@@ -1654,20 +1654,6 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinitionPersistence.update(cpDefinition);
 	}
 
-	@Override
-	public CPDefinition updateCPDefinitionExternalReferenceCode(
-			long cpDefinitionId, String externalReferenceCode)
-		throws PortalException {
-
-		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
-			cpDefinitionId);
-
-		cProductLocalService.updateCProductExternalReferenceCode(
-			cpDefinition.getCProductId(), externalReferenceCode);
-
-		return cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(

@@ -918,17 +918,6 @@ public class CPDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition
-			updateCPDefinitionExternalReferenceCode(
-				long cpDefinitionId, String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpDefinitionLocalService.
-			updateCPDefinitionExternalReferenceCode(
-				cpDefinitionId, externalReferenceCode);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinition
 			updateCPDefinitionIgnoreSKUCombinations(
 				long cpDefinitionId, boolean ignoreSKUCombinations,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -978,6 +967,16 @@ public class CPDefinitionLocalServiceWrapper
 
 		_cpDefinitionLocalService.updateCPDefinitionsByCPTaxCategoryId(
 			cpTaxCategoryId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition
+			updateExternalReferenceCode(
+				long cpDefinitionId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLocalService.updateExternalReferenceCode(
+			cpDefinitionId, externalReferenceCode);
 	}
 
 	@Override

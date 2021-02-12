@@ -938,17 +938,53 @@ public class CPDefinitionServiceHttp {
 		}
 	}
 
+	public static void updateCPDisplayLayout(
+			HttpPrincipal httpPrincipal, long cpDefinitionId, String layoutUuid,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDefinitionServiceUtil.class, "updateCPDisplayLayout",
+				_updateCPDisplayLayoutParameterTypes19);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpDefinitionId, layoutUuid, serviceContext);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition
-			updateCPDefinitionExternalReferenceCode(
+			updateExternalReferenceCode(
 				HttpPrincipal httpPrincipal, long cpDefinitionId,
 				String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CPDefinitionServiceUtil.class,
-				"updateCPDefinitionExternalReferenceCode",
-				_updateCPDefinitionExternalReferenceCodeParameterTypes19);
+				CPDefinitionServiceUtil.class, "updateExternalReferenceCode",
+				_updateExternalReferenceCodeParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionId, externalReferenceCode);
@@ -971,43 +1007,6 @@ public class CPDefinitionServiceHttp {
 			}
 
 			return (com.liferay.commerce.product.model.CPDefinition)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static void updateCPDisplayLayout(
-			HttpPrincipal httpPrincipal, long cpDefinitionId, String layoutUuid,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CPDefinitionServiceUtil.class, "updateCPDisplayLayout",
-				_updateCPDisplayLayoutParameterTypes20);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDefinitionId, layoutUuid, serviceContext);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -1520,14 +1519,14 @@ public class CPDefinitionServiceHttp {
 		_updateCPDefinitionChannelFilterParameterTypes18 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[]
-		_updateCPDefinitionExternalReferenceCodeParameterTypes19 = new Class[] {
-			long.class, String.class
-		};
-	private static final Class<?>[] _updateCPDisplayLayoutParameterTypes20 =
+	private static final Class<?>[] _updateCPDisplayLayoutParameterTypes19 =
 		new Class[] {
 			long.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[]
+		_updateExternalReferenceCodeParameterTypes20 = new Class[] {
+			long.class, String.class
 		};
 	private static final Class<?>[] _updateShippingInfoParameterTypes21 =
 		new Class[] {

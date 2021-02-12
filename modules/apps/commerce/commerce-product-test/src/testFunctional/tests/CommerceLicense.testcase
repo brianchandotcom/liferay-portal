@@ -19,6 +19,28 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test DeleteLiferayDXPLicense {
+		property commerce.enabled = "false";
+		property portal.release = "true";
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		var key_panel = "Applications";
+
+		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+
+		Portlet.shutdownServer();
+
+		License.deleteLicenseXml(deleteLicenseXml = "license.xml");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openURL();
+
+		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
+	}
+
 	@priority = "5"
 	test ViewCommerceDisabled {
 		property commerce.enabled = "false";

@@ -41,7 +41,8 @@ definition {
 	test DeleteColorFieldOnBuilder {
 		property portal.acceptance = "false";
 
-		DataEngine.addField(fieldFieldLabel = "Text",
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
 		DataEngine.delete(fieldFieldLabel = "Color");
@@ -106,7 +107,7 @@ definition {
 			key_fieldName = "fieldReference",
 			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "ColorTest1");
-		
+
 		DataEngine.editFieldReference(
 			assertFieldReference = "Color_Test",
 			fieldFieldLabel = "Color",

@@ -19,10 +19,10 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageImpl;
-import com.liferay.portal.util.FileImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -32,6 +32,7 @@ import org.hamcrest.core.StringContains;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -40,6 +41,11 @@ import org.junit.rules.ExpectedException;
  * @author Rubén Pulido
  */
 public class FragmentEntryValidatorImplTest {
+
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -59,10 +65,6 @@ public class FragmentEntryValidatorImplTest {
 
 	@Before
 	public void setUp() {
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
 		_fragmentEntryValidatorImpl = new FragmentEntryValidatorImpl();
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();

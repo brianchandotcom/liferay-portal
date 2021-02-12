@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.spring.osgi;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.util.PropsImpl;
 
 import java.io.Serializable;
 
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -34,10 +34,10 @@ import org.junit.Test;
  */
 public class OSGiBeanPropertiesTest {
 
-	@Before
-	public void setUp() {
-		PropsUtil.setProps(new PropsImpl());
-	}
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	@Test
 	public void testAnnotatedClass() {

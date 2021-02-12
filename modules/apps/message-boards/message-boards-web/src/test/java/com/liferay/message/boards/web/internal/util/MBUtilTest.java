@@ -20,13 +20,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.PortletURL;
@@ -36,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -45,6 +45,11 @@ import org.mockito.invocation.InvocationOnMock;
  * @author Adolfo Pérez
  */
 public class MBUtilTest {
+
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -84,8 +89,6 @@ public class MBUtilTest {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(portal);
-
-		PropsUtil.setProps(Mockito.mock(Props.class));
 	}
 
 	@Test

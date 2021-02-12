@@ -14,15 +14,14 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.configuration;
 
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
-import com.liferay.portal.util.PropsImpl;
 
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -30,10 +29,10 @@ import org.junit.Test;
  */
 public class ElasticsearchConfigurationTest {
 
-	@BeforeClass
-	public static void setUpClass() {
-		PropsUtil.setProps(new PropsImpl());
-	}
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	@Test
 	public void testConfigurationsFromBuildTestXmlAntFile() throws Exception {

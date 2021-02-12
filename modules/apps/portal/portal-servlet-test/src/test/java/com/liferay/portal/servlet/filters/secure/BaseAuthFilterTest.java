@@ -20,13 +20,12 @@ import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.security.access.control.AccessControlImpl;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
@@ -42,6 +41,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockFilterChain;
@@ -54,11 +54,14 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public class BaseAuthFilterTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@BeforeClass
 	public static void setUpClass() {
 		_portalUtil.setPortal(_testPortalImpl);
-
-		PropsUtil.setProps(new PropsImpl());
 
 		Registry registry = new BasicRegistryImpl();
 

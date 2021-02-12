@@ -17,16 +17,15 @@ package com.liferay.portal.dao.db;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
-import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.lang.reflect.Method;
 
-import org.junit.AfterClass;
+import java.util.Properties;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -35,18 +34,18 @@ import org.junit.Test;
  */
 public class SybaseDBTest extends BaseDBTestCase {
 
-	@BeforeClass
-	public static void setUpClass() {
-		_props = PropsUtil.getProps();
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			new InitializeKernelUtilClassTestRule() {
 
-		PropsTestUtil.setProps(
-			PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH, "-1");
-	}
+				@Override
+				public void addProperties(Properties properties) {
+					properties.setProperty(
+						PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH, "-1");
+				}
 
-	@AfterClass
-	public static void tearDownClass() {
-		PropsUtil.setProps(_props);
-	}
+			};
 
 	@Test
 	public void testApplyMaxStringIndexLengthLimitation() throws Exception {
@@ -104,7 +103,5 @@ public class SybaseDBTest extends BaseDBTestCase {
 	protected DB getDB() {
 		return new SybaseDB(0, 0);
 	}
-
-	private static Props _props;
 
 }

@@ -15,10 +15,9 @@
 package com.liferay.document.library.document.conversion.internal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.FileImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -27,6 +26,7 @@ import org.apache.commons.io.IOUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,6 +43,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 public class DocumentHTMLProcessorTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@Before
 	public void setUp() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
@@ -50,10 +55,6 @@ public class DocumentHTMLProcessorTest {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			new FastDateFormatFactoryImpl());
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
 
 		PowerMockito.mockStatic(ImageRequestTokenUtil.class);
 

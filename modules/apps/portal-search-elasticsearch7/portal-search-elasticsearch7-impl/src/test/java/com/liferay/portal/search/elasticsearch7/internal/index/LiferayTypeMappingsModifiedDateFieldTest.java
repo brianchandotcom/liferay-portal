@@ -15,9 +15,8 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
-import com.liferay.portal.util.PropsImpl;
 
 import java.util.Collections;
 import java.util.Date;
@@ -27,6 +26,7 @@ import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -37,10 +37,13 @@ import org.junit.rules.TestName;
  */
 public class LiferayTypeMappingsModifiedDateFieldTest {
 
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
+
 	@Before
 	public void setUp() throws Exception {
-		PropsUtil.setProps(new PropsImpl());
-
 		Class<?> clazz = getClass();
 
 		_liferayIndexFixture = new LiferayIndexFixture(

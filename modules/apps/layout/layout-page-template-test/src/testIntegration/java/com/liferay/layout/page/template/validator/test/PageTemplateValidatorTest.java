@@ -16,12 +16,12 @@ package com.liferay.layout.page.template.validator.test;
 
 import com.liferay.layout.page.template.exception.PageTemplateValidatorException;
 import com.liferay.layout.page.template.validator.PageTemplateValidator;
+import com.liferay.portal.kernel.test.rule.InitializeKernelUtilClassTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.util.FileImpl;
 
 import org.hamcrest.core.StringStartsWith;
 
-import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -31,12 +31,10 @@ import org.junit.rules.ExpectedException;
  */
 public class PageTemplateValidatorTest {
 
-	@Before
-	public void setUp() {
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-	}
+	@ClassRule
+	public static InitializeKernelUtilClassTestRule
+		initializeKernelUtilClassTestRule =
+			InitializeKernelUtilClassTestRule.INSTANCE;
 
 	@Test
 	public void testValidatePageTemplateInvalidExtraProperties()

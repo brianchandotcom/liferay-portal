@@ -331,6 +331,22 @@ public class PullRequest {
 	}
 
 	public List<GitHubRemoteGitRepository.Label> getLabels() {
+		if (_labels == null) {
+			_refreshJSONObject();
+
+			JSONArray labelJSONArray = _jsonObject.getJSONArray("labels");
+
+			_labels = new ArrayList<>(labelJSONArray.length());
+
+			for (int i = 0; i < labelJSONArray.length(); i++) {
+				JSONObject labelJSONObject = labelJSONArray.getJSONObject(i);
+
+				_labels.add(
+					new GitHubRemoteGitRepository.Label(
+						labelJSONObject, getGitHubRemoteGitRepository()));
+			}
+		}
+
 		return _labels;
 	}
 
@@ -464,7 +480,7 @@ public class PullRequest {
 	}
 
 	public boolean hasLabel(String labelName) {
-		for (GitHubRemoteGitRepository.Label label : _labels) {
+		for (GitHubRemoteGitRepository.Label label : getLabels()) {
 			if (labelName.equals(label.getName())) {
 				return true;
 			}
@@ -527,29 +543,12 @@ public class PullRequest {
 	}
 
 	public void refresh() {
-		try {
-			_jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				getURL(), false);
+		_comments = null;
+		_commonParentSHA = null;
+		_gitHubRemoteGitCommits = null;
+		_labels = null;
 
-			_comments = null;
-			_commonParentSHA = null;
-			_gitHubRemoteGitCommits = null;
-
-			_labels.clear();
-
-			JSONArray labelJSONArray = _jsonObject.getJSONArray("labels");
-
-			for (int i = 0; i < labelJSONArray.length(); i++) {
-				JSONObject labelJSONObject = labelJSONArray.getJSONObject(i);
-
-				_labels.add(
-					new GitHubRemoteGitRepository.Label(
-						labelJSONObject, getGitHubRemoteGitRepository()));
-			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		getLabels();
 	}
 
 	public void removeComment(Comment comment) {
@@ -589,7 +588,7 @@ public class PullRequest {
 			JenkinsResultsParserUtil.toString(
 				gitHubApiUrl, false, HttpRequestMethod.DELETE);
 
-			refresh();
+			_labels = null;
 		}
 		catch (IOException ioException) {
 			System.out.println("Unable to remove label " + labelName);
@@ -836,7 +835,7 @@ public class PullRequest {
 
 		List<String> labelNames = new ArrayList<>();
 
-		for (GitHubRemoteGitRepository.Label label : _labels) {
+		for (GitHubRemoteGitRepository.Label label : getLabels()) {
 			labelNames.add(label.getName());
 		}
 
@@ -922,6 +921,16 @@ public class PullRequest {
 		}
 	}
 
+	private void _refreshJSONObject() {
+		try {
+			_jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				getURL(), false);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private static final String _NAME_TEST_SUITE_DEFAULT = "default";
 
 	private static final Pattern _ciMergeSHAPattern = Pattern.compile(
@@ -940,8 +949,7 @@ public class PullRequest {
 	private GitHubRemoteGitRepository _gitHubRemoteGitRepository;
 	private final String _gitHubRemoteGitRepositoryName;
 	private JSONObject _jsonObject;
-	private final List<GitHubRemoteGitRepository.Label> _labels =
-		new ArrayList<>();
+	private List<GitHubRemoteGitRepository.Label> _labels;
 	private RemoteGitBranch _liferayRemoteGitBranch;
 	private final Integer _number;
 	private final String _ownerUsername;

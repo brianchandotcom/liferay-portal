@@ -22,6 +22,7 @@ import {
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import AppContext from '../../../AppContext.es';
+import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
 function getSettingsContext(
@@ -98,7 +99,8 @@ export default function ({
 	hasFocusedCustomObjectField,
 }) {
 	const [activePage, setActivePage] = useState(0);
-	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const dataLayoutBuilder = useContext(DataLayoutBuilderContext)
+		?.dataLayoutBuilder;
 	const spritemap = useContext(ClayIconSpriteContext);
 
 	const Column = useMemo(

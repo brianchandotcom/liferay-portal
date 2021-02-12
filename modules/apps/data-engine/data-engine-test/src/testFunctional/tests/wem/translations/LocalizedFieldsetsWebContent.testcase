@@ -93,25 +93,27 @@ definition {
 			structureDescription = "Structure Description Test",
 			structureName = "Structure FieldSet Test");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
 		DataEngine.addFieldsets(
-			fieldsetLabel = "Structure FieldSet Test",
-			fieldsetName = "Structure FieldSet Test");
+			createNewFieldset = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+		
+		DataEngine.addTranslationToFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");		
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldsetsLabel(
+			fieldsetLabel = "New Fieldset",
+			fieldsetLabelEdit = "Novo Fieldset");
+
+		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure FieldSet Test");
 
 		PortletEntry.inputTitle(title = "WC Title Test");
 
@@ -141,9 +143,11 @@ definition {
 
 		PortletEntry.changeLocaleSummary(locale = "pt_BR");
 
+		PortletEntry.viewLocale(locale = "pt-BR");
+
 		AssertAttributeValue(
 			attribute1 = "value",
-			key_fieldFieldLabel = "Text",
+			key_fieldFieldLabel = "Text pt-BR",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "Text test BR");
 	}

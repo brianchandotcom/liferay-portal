@@ -210,25 +210,25 @@ public class ReleaseAPIJarTest {
 	private List<String> _getIgnorePaths(String jarName) throws Exception {
 		List<String> ignoredPaths = FileTestUtil.readAllLines(
 			"com/liferay/project/templates/dependencies" +
-				"/api-jar-excluded-paths.txt");
+				"/api-jar-ignore-paths.txt");
 
 		if (jarName.contains("7.0")) {
 			ignoredPaths.addAll(
 				FileTestUtil.readAllLines(
 					"com/liferay/project/templates/dependencies" +
-						"/api-jar-excluded-paths_7_0.txt"));
+						"/api-jar-ignore-paths_7_0.txt"));
 		}
 		else if (jarName.contains("7.1")) {
 			ignoredPaths.addAll(
 				FileTestUtil.readAllLines(
 					"com/liferay/project/templates/dependencies" +
-						"/api-jar-excluded-paths_7_1.txt"));
+						"/api-jar-ignore-paths_7_1.txt"));
 		}
 		else if (jarName.contains("7.2")) {
 			ignoredPaths.addAll(
 				FileTestUtil.readAllLines(
 					"com/liferay/project/templates/dependencies" +
-						"/api-jar-excluded-paths_7_2.txt"));
+						"/api-jar-ignore-paths_7_2.txt"));
 		}
 
 		return ignoredPaths;

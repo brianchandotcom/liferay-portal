@@ -60,59 +60,43 @@ export const FormsFieldSidebar = ({title}) => {
 		],
 	};
 
-	const hasFocusedCustomObjectField = () => {
-		return false;
-	};
-
-	const hasFocusedField = Object.keys(focusedField).length > 0;
-
-	const fieldTypesSorted = sortFieldTypes(
-		fieldTypes.filter(({group}) => group === 'basic')
-	);
-
-	const dataLayout = {
-		dataLayoutFields: [],
-		dataLayoutPages: [],
-		dataRules: rules,
-		name: '',
-		paginationMode: 'single-page',
-	};
-
 	return (
 		<FieldsSidebar
 			classNames={classNames}
 			config={config}
-			dataLayout={dataLayout}
+			dataLayout={{
+				dataLayoutFields: [],
+				dataLayoutPages: [],
+				dataRules: rules,
+				name: '',
+				paginationMode: 'single-page',
+			}}
 			defaultLanguageId={defaultLanguageId}
 			dispatchEvent={dispatch}
-			displaySettings={hasFocusedField}
+			displaySettings={Object.keys(focusedField).length > 0}
 			editingLanguageId={editingLanguageId}
-			fieldTypes={fieldTypesSorted}
+			fieldTypes={sortFieldTypes(fieldTypes.filter(({group}) => group === 'basic'))}
 			focusedCustomObjectField={focusedCustomObjectField}
 			focusedField={focusedField}
-			hasFocusedCustomObjectField={hasFocusedCustomObjectField}
-			onClick={() => {
-				dispatch('sidebarFieldBlurred');
-			}}
-			onDoubleClick={({name: fieldTypeName}) => {
-				dispatch('fieldAdded', {
-					data: {
-						fieldName: '',
-						parentFieldName: '',
-					},
-					fieldType: {
-						...fieldTypes.find(({name}) => {
-							return name === fieldTypeName;
-						}),
-						editable: true,
-					},
-					indexes: {
-						columnIndex: 0,
-						pageIndex: activePage,
-						rowIndex: pages[activePage].rows.length,
-					},
-				});
-			}}
+			hasFocusedCustomObjectField={() =>  false}
+			onClick={() => dispatch('sidebarFieldBlurred')}
+			onDoubleClick={({name: fieldTypeName}) => dispatch('fieldAdded', {
+				data: {
+					fieldName: '',
+					parentFieldName: '',
+				},
+				fieldType: {
+					...fieldTypes.find(({name}) => {
+						return name === fieldTypeName;
+					}),
+					editable: true,
+				},
+				indexes: {
+					columnIndex: 0,
+					pageIndex: activePage,
+					rowIndex: pages[activePage].rows.length,
+				},
+			})}
 			title={title}
 		/>
 	);

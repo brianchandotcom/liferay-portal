@@ -1,6 +1,9 @@
 {
 	"config": {
 		"imports": {
+			"data-engine-taglib": {
+				"/": ">=3.0.0"
+			},
 			"dynamic-data-mapping-form-field-type": {
 				"/": ">=5.0.0"
 			},

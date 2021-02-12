@@ -35,7 +35,7 @@ const FieldTypeList = ({
 	deleteLabel,
 	emptyState,
 	fieldTypes,
-	getDataDefinitionField,
+	dataDefinition,
 	keywords,
 	onClick,
 	onDelete,
@@ -72,13 +72,13 @@ const FieldTypeList = ({
 		if (nestedDataDefinitionFields.length) {
 			const Header = ({expanded, setExpanded}) => (
 				<FieldTypeWrapper
+					dataDefinition={dataDefinition}
 					deleteLabel={deleteLabel}
 					expanded={expanded}
 					fieldType={{
 						...fieldType,
 						className: `${fieldType.className} field-type-header`,
 					}}
-					getDataDefinitionField={getDataDefinitionField}
 					onClick={(props) => {
 						setExpanded(!expanded);
 
@@ -104,14 +104,12 @@ const FieldTypeList = ({
 							{nestedDataDefinitionFields.map(
 								(nestedFieldType) => (
 									<FieldTypeWrapper
+										dataDefinition={dataDefinition}
 										draggable={false}
 										fieldType={{
 											...nestedFieldType,
 											disabled: fieldType.disabled,
 										}}
-										getDataDefinitionField={
-											getDataDefinitionField
-										}
 										key={`${nestedFieldType.name}_${index}`}
 									/>
 								)
@@ -124,9 +122,9 @@ const FieldTypeList = ({
 
 		return (
 			<FieldTypeWrapper
+				dataDefinition={dataDefinition}
 				deleteLabel={deleteLabel}
 				fieldType={fieldType}
-				getDataDefinitionField={getDataDefinitionField}
 				key={index}
 				onClick={handleOnClick}
 				onDelete={onDelete}

@@ -187,7 +187,7 @@ const FieldCategory = ({categoryName}) => (
 const CustomObjectFieldsList = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [state, dispatch] = useContext(FormViewContext);
-	const {dataDefinition, editingLanguageId, fieldSets, fieldTypes} = state;
+	const {dataDefinition, fieldSets} = state;
 	const {dataDefinitionFields} = dataDefinition;
 	const [customFieldTypes, nativeFieldTypes] = getFieldTypes(state);
 
@@ -273,24 +273,6 @@ const CustomObjectFieldsList = ({keywords}) => {
 		onDoubleClick: handleOnDoubleClick,
 	};
 
-	const getDataDefinitionField = (fieldName) => {
-		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-			(field) => field.name === fieldName
-		);
-
-		const settingsContext = DataConverter.getDDMFormFieldSettingsContext({
-			dataDefinitionField,
-			editingLanguageId,
-			fieldTypes,
-		});
-
-		return {
-			...dataDefinitionField,
-			editingLanguageId,
-			settingsContext,
-		};
-	};
-
 	return (
 		<>
 			{showCategories && (
@@ -302,7 +284,7 @@ const CustomObjectFieldsList = ({keywords}) => {
 			<FieldTypeList
 				{...fieldTypeListProps}
 				fieldTypes={customFieldTypes}
-				getDataDefinitionField={getDataDefinitionField}
+				dataDefinition={dataDefinition}
 				showEmptyState={false}
 			/>
 
@@ -315,7 +297,7 @@ const CustomObjectFieldsList = ({keywords}) => {
 			<FieldTypeList
 				{...fieldTypeListProps}
 				fieldTypes={nativeFieldTypes}
-				getDataDefinitionField={getDataDefinitionField}
+				dataDefinition={dataDefinition}
 				showEmptyState={false}
 			/>
 		</>

@@ -62,11 +62,10 @@ export const Column = ({
 
 	const firstField = column.fields[0];
 	const rootParentField = parentField.root ?? firstField;
-	const isFieldSetOrGroup = firstField?.type === 'fieldset';
+	const isFieldSetOrGroup = firstField.type === 'fieldset';
 	const isFieldSet = hasFieldSet(firstField);
 	const isFieldSelected =
-		firstField?.fieldName === activeId ||
-		firstField?.fieldName === hoveredId;
+		firstField.fieldName === activeId || firstField.fieldName === hoveredId;
 
 	const addr = {
 		'data-ddm-field-column': index,

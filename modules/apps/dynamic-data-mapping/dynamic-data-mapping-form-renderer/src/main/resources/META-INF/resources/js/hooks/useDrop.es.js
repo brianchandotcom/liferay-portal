@@ -19,10 +19,6 @@ import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {useForm} from '../hooks/useForm.es';
 import {usePage} from './usePage.es';
 
-const defaultSpec = {
-	accept: ['dataDefinitionField', 'fieldType', 'fieldset'],
-};
-
 export const DND_ORIGIN_TYPE = {
 	EMPTY: 'empty',
 	FIELD: 'field',
@@ -30,6 +26,7 @@ export const DND_ORIGIN_TYPE = {
 
 export const useDrop = ({
 	columnIndex,
+	dataDefinition,
 	fieldName,
 	origin,
 	pageIndex,
@@ -38,16 +35,13 @@ export const useDrop = ({
 }) => {
 	const {
 		allowInvalidAvailableLocalesForProperty,
-		dnd,
-		editingLanguageId: pageEditingLanguageId,
+		editingLanguageId,
 		fieldTypesMetadata,
 	} = usePage();
 	const dispatch = useForm();
 
-	const spec = dnd ?? defaultSpec;
-
 	const [{canDrop, overTarget}, drop] = useDndDrop({
-		...spec,
+		accept: ['dataDefinitionField', 'fieldType', 'fieldset'],
 		collect: (monitor) => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver(),
@@ -56,15 +50,17 @@ export const useDrop = ({
 			if (monitor.didDrop()) {
 				return;
 			}
-			const {
-				fieldSet,
-				getDataDefinitionField,
-				name,
-				properties,
-				useFieldName,
-			} = data;
-			const {editingLanguageId, fieldType, label, settingsContext} =
-				getDataDefinitionField?.(name) ?? {};
+			const {dataDefinition, fieldSet, name, properties, useFieldName} = data;
+
+			const {fieldType, label, settingsContext} =
+				(dataDefinition &&
+					DataConverter.getDataDefinitionFieldByFieldName({
+						dataDefinition,
+						editingLanguageId,
+						fieldName: name,
+						fieldTypes: fieldTypesMetadata,
+					})) ??
+				{};
 			const {availableLanguageIds, defaultLanguageId} = fieldSet ?? {};
 			switch (type) {
 				case 'fieldType':
@@ -130,7 +126,7 @@ export const useDrop = ({
 								allowInvalidAvailableLocalesForProperty,
 								availableLanguageIds,
 								defaultLanguageId,
-								editingLanguageId: pageEditingLanguageId,
+								editingLanguageId,
 								fieldSet,
 								fieldTypes: fieldTypesMetadata,
 							}),

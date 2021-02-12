@@ -88,6 +88,11 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public LocalizedValue label();
 
+	@DDMFormField(visibilityExpression = "FALSE")
+	public default boolean labelAtStructureLevel() {
+		return true;
+	}
+
 	@DDMFormField(
 		label = "%localizable", predefinedValue = "true",
 		visibilityExpression = "FALSE"

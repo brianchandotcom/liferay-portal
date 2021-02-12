@@ -28,8 +28,8 @@ request.setAttribute(UsersAdminWebKeys.STATUS, viewFlatUsersDisplayContext.getSt
 String displayStyle = viewFlatUsersDisplayContext.getDisplayStyle();
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewFlatUsersDisplayContext.getManagementToolbarDisplayContext() %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= viewFlatUsersDisplayContext.getManagementToolbarDisplayContext() %>"
 />
 
 <aui:form action="<%= currentURLObj.toString() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "search();" %>'>

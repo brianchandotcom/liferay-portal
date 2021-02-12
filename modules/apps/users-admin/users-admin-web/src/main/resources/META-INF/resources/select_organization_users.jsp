@@ -43,7 +43,7 @@ SearchContainer<User> userSearchContainer = selectOrganizationUsersManagementToo
 
 <liferay-ui:membership-policy-error />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= selectOrganizationUsersManagementToolbarDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= selectOrganizationUsersManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= userSearchContainer.getTotal() %>"

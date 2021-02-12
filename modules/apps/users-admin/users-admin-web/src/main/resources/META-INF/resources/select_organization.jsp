@@ -38,7 +38,7 @@ SearchContainer<Organization> searchContainer = selectOrganizationManagementTool
 renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= selectOrganizationManagementToolbarDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= selectOrganizationManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"

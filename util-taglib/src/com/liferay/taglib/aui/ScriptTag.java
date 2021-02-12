@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.servlet.taglib.BodyContentWrapper;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.aui.base.BaseScriptTag;
@@ -114,12 +115,14 @@ public class ScriptTag extends BaseScriptTag {
 
 			StringBundler bodyContentSB = getBodyContentAsStringBundler();
 
+			String load = getLoad();
 			String require = getRequire();
 			String use = getUse();
 
-			if ((require != null) && (use != null)) {
+			if ((use != null) && ((load != null) || (require != null))) {
 				throw new JspException(
-					"Attributes \"require\" and \"use\" are both set");
+					"Attribute \"use\" cannot be used with \"load\" or " +
+						"\"require\"");
 			}
 
 			if (getSandbox() || (require != null) || (use != null)) {
@@ -135,6 +138,38 @@ public class ScriptTag extends BaseScriptTag {
 				if ((require == null) && (use == null)) {
 					sb.append("})();");
 				}
+
+				bodyContentSB = sb;
+			}
+
+			if (load != null) {
+				String[] modulesAndVariables = StringUtil.split(load);
+
+				StringBundler sb = new StringBundler(
+					3 + (8 * modulesAndVariables.length));
+
+				sb.append("(function() {");
+
+				for (String moduleAndVariable : modulesAndVariables) {
+					String[] parts = StringUtil.split(
+						moduleAndVariable, " as ");
+
+					sb.append("window[");
+					sb.append("Symbol.for('__LIFERAY_WEBPACK_GET_MODULE__')");
+					sb.append("]('");
+					sb.append(parts[0]);
+					sb.append("').then((");
+					sb.append(parts[1]);
+					sb.append(") => {");
+				}
+
+				sb.append(bodyContentSB);
+
+				for (int i = 0; i < modulesAndVariables.length; i++) {
+					sb.append("});");
+				}
+
+				sb.append("})();");
 
 				bodyContentSB = sb;
 			}

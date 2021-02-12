@@ -180,7 +180,7 @@ export default function EditAppToolbar({isSaving, onCancel, onSave}) {
 							app.active
 								? onClickUndeploy
 								: config.formView.missingRequiredFields
-										?.customField
+										?.customField && appId
 								? () => setMissingFieldsModalVisible(true)
 								: () => setDeployModalVisible(true)
 						}

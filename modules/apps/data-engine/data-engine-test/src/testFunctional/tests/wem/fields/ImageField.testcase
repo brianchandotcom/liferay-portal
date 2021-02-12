@@ -349,8 +349,10 @@ definition {
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
 	@priority = "3"
 	test SetImageFieldAsRepeatable {
-	
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		
+		var structureTitle = "Image field Structure";
+
+		WebContentStructures.addCP(structureName = "${structureTitle}");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
@@ -360,28 +362,10 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		NavItem.click(navItem = "Web Content");
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
 
-		WebContent.addCP(webContentTitle = "Web Content Title");
-
-		DataEngine.addRepeatableField(fieldName = "Image");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		for (var n : list "1,2") {
-			DataEngine.assertFieldRepeated(
-				fieldName = "Image",
-				index = "${n}");
-		}
-
-		AssertVisible(
-			key_fieldName = "Image",
-			key_index = "2",
-			locator1 = "FormFields#FIELD_REMOVE");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Verify if user can add a field label"

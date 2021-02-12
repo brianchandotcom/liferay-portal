@@ -63,7 +63,6 @@ export const DataEngineFieldsSidebar = ({title}) => {
 			config={config}
 			customFields={customFields}
 			dataLayout={dataLayout}
-			dataLayoutBuilder={dataLayoutBuilder}
 			defaultLanguageId={dataLayoutBuilder.props.defaultLanguageId}
 			dispatchEvent={(type, payload) => {
 				if (
@@ -120,7 +119,6 @@ export const FieldsSidebar = ({
 	fieldTypes,
 	focusedCustomObjectField,
 	focusedField,
-	getFieldSet,
 	hasFocusedCustomObjectField,
 	onClick,
 	onDoubleClick,
@@ -171,7 +169,6 @@ export const FieldsSidebar = ({
 					<FieldsSidebarBody
 						allowFieldSets={config.allowFieldSets}
 						fieldTypes={fieldTypes}
-						getFieldSet={getFieldSet}
 						keywords={keywords}
 						onDoubleClick={onDoubleClick}
 						setKeywords={setKeywords}

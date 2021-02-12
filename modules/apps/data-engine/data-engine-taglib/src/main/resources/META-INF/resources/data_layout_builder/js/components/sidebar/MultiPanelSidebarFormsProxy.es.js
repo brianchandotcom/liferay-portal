@@ -21,21 +21,6 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import DragLayer from '../../drag-and-drop/DragLayer.es';
 import MultiPanelSidebar from './MultiPanelSidebar.es';
 
-const FormsMultiPanelMock = {
-	panels: [['fields']],
-	sidebarPanels: {
-		fields: {
-			icon: 'forms',
-			isLink: false,
-			label: 'Builder',
-			pluginEntryPoint:
-				'data-engine-taglib@3.0.0/data_layout_builder/js/plugins/forms-field-sidebar/index.es',
-			sidebarPanelId: 'fields',
-		},
-	},
-	sidebarVariant: 'light',
-};
-
 const MultiPanelSidebarFormsProxy = React.forwardRef(
 	({
 		activePage,
@@ -50,7 +35,10 @@ const MultiPanelSidebarFormsProxy = React.forwardRef(
 		instance,
 		onChange,
 		pages,
+		panels,
 		rules,
+		sidebarPanels,
+		sidebarVariant,
 		spritemap,
 	}) => {
 		const [{currentPanelId, open}, setStatus] = useState({
@@ -80,7 +68,7 @@ const MultiPanelSidebarFormsProxy = React.forwardRef(
 							rules,
 						}}
 					>
-						<DragLayer></DragLayer>
+						<DragLayer/>
 						<MultiPanelSidebar
 							createPlugin={({
 								panel,
@@ -100,9 +88,9 @@ const MultiPanelSidebarFormsProxy = React.forwardRef(
 								});
 							}}
 							open={open}
-							panels={FormsMultiPanelMock.panels}
-							sidebarPanels={FormsMultiPanelMock.sidebarPanels}
-							variant={FormsMultiPanelMock.sidebarVariant}
+							panels={panels}
+							sidebarPanels={sidebarPanels}
+							variant={sidebarVariant}
 						/>
 					</FormsSidebarPluginContext.Provider>
 				</ClayIconSpriteContext.Provider>

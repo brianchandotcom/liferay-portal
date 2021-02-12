@@ -512,7 +512,7 @@ class Form extends Component {
 		} = this.props;
 		const {pages, saveButtonLabel, sidebarOpen} = this.state;
 
-		const {dataEngineSidebar} = context;
+		const {dataEngineSidebar, sidebarPanels} = context;
 
 		const storeProps = {
 			...this.props,
@@ -583,7 +583,10 @@ class Form extends Component {
 								this.setState({sidebarOpen})
 							}
 							pages={pages}
+							panels={[['fields']]}
 							rules={rules}
+							sidebarPanels={sidebarPanels}
+							sidebarVariant="light"
 						/>
 					) : (
 						<Sidebar

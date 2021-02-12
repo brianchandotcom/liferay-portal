@@ -833,32 +833,57 @@ public class PullRequest {
 	}
 
 	private void _initCommits() {
+		String commitsURL = _jsonObject.getString("commits_url");
+
+		_gitHubRemoteGitCommits = new ArrayList<>();
+
 		try {
-			JSONArray commitsJSONArray = JenkinsResultsParserUtil.toJSONArray(
-				_jsonObject.getString("commits_url"));
+			for (int pageNumber = 1; pageNumber < 10; pageNumber++) {
+				JSONArray commitsJSONArray =
+					JenkinsResultsParserUtil.toJSONArray(
+						JenkinsResultsParserUtil.combine(
+							commitsURL, "?per_page=100&page=",
+							String.valueOf(pageNumber)));
 
-			_gitHubRemoteGitCommits = new ArrayList<>(
-				commitsJSONArray.length());
+				if (commitsJSONArray.length() == 0) {
+					break;
+				}
 
-			for (int i = 0; i < commitsJSONArray.length(); i++) {
-				JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
+				for (int i = 0; i < commitsJSONArray.length(); i++) {
+					JSONObject commitJSONObject =
+						commitsJSONArray.getJSONObject(i);
 
-				_gitHubRemoteGitCommits.add(
-					GitCommitFactory.newGitHubRemoteGitCommit(
-						getOwnerUsername(), getGitRepositoryName(),
-						commitJSONObject.getString("sha"), commitJSONObject));
+					_gitHubRemoteGitCommits.add(
+						GitCommitFactory.newGitHubRemoteGitCommit(
+							getOwnerUsername(), getGitRepositoryName(),
+							commitJSONObject.getString("sha"),
+							commitJSONObject));
+				}
+
+				if (pageNumber == 1) {
+					JSONObject firstCommitJSONObject =
+						commitsJSONArray.getJSONObject(0);
+
+					JSONArray parentsJSONArray =
+						firstCommitJSONObject.getJSONArray("parents");
+
+					JSONObject firstParentJSONObject =
+						parentsJSONArray.getJSONObject(0);
+
+					_commonParentSHA = firstParentJSONObject.getString("sha");
+				}
+
+				if (commitsJSONArray.length() < 100) {
+					break;
+				}
+
+				if (pageNumber == 10) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Too many GitHub remote commits (>1000) found for ",
+							"pull request ", getHtmlURL()));
+				}
 			}
-
-			JSONObject firstCommitJSONObject = commitsJSONArray.getJSONObject(
-				0);
-
-			JSONArray parentsJSONArray = firstCommitJSONObject.getJSONArray(
-				"parents");
-
-			JSONObject firstParentJSONObject = parentsJSONArray.getJSONObject(
-				0);
-
-			_commonParentSHA = firstParentJSONObject.getString("sha");
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(

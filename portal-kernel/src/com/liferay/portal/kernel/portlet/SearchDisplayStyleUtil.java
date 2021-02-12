@@ -48,7 +48,7 @@ public class SearchDisplayStyleUtil {
 				portletName, key, defaultValue);
 		}
 
-		portalPreferences.setValue(portletName, "display-style", displayStyle);
+		portalPreferences.setValue(portletName, key, displayStyle);
 
 		return displayStyle;
 	}

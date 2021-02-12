@@ -41,7 +41,9 @@ import javax.xml.xpath.XPathFactory;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -167,7 +169,7 @@ public class ReleaseAPIJarTLDTest implements BaseReleaseAPIJarTestCase {
 	public void testReleaseApiJarTLD() throws Exception {
 		Assume.assumeNotNull(RELEASE_API_JAR_FILE);
 
-		Path classesDirPath = getClassesDirPath();
+		Path classesDirPath = getClassesDirPath(temporaryFolder);
 
 		Set<String> classFilePaths = getPaths(classesDirPath, ".class");
 
@@ -179,5 +181,8 @@ public class ReleaseAPIJarTLDTest implements BaseReleaseAPIJarTestCase {
 		assertTLDClasses(
 			"/taglib/tag/tei-class", classesDirPath, classFilePaths);
 	}
+
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 }

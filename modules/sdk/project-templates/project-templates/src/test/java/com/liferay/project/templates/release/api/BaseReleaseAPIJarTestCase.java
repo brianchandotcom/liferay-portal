@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
 /**
@@ -45,7 +44,9 @@ public interface BaseReleaseAPIJarTestCase {
 	public static final String RELEASE_API_JAR_FILE = System.getProperty(
 		"releaseApiJarFile");
 
-	public default Path getClassesDirPath() throws IOException {
+	public default Path getClassesDirPath(TemporaryFolder temporaryFolder)
+		throws IOException {
+
 		File releaseApiJarFile = new File(RELEASE_API_JAR_FILE);
 
 		Assert.assertTrue(releaseApiJarFile.exists());
@@ -106,8 +107,5 @@ public interface BaseReleaseAPIJarTestCase {
 
 		return results;
 	}
-
-	@Rule
-	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 }

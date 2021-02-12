@@ -674,7 +674,13 @@ public class AssetHelperImpl implements AssetHelper {
 
 		DDMFormField ddmFormField = _getDDMFormField(sortField);
 
-		if (!GetterUtil.getBoolean(ddmFormField.getProperty("localizable"))) {
+		if (GetterUtil.getBoolean(ddmFormField.getProperty("localizable"))) {
+			if (locale == null) {
+				throw new IllegalArgumentException(
+					"Locale cannot be null if the ddmFormField is localizable");
+			}
+		}
+		else {
 			locale = null;
 		}
 

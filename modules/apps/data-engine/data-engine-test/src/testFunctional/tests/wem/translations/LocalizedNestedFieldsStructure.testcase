@@ -125,28 +125,6 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Name");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Fields Group",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		for (var fieldFieldLabel : list "Text,Numeric") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
-
-		for (var fieldFieldLabel : list "Text,Numeric") {
-			AssertTextEquals(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				locator1 = "DDMEditStructure#SETTINGS_TEXT",
-				value1 = "${fieldFieldLabel} Field Help Text");
-		}
-
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		AssertTextEquals(
@@ -157,22 +135,15 @@ definition {
 			key_fieldFieldLabel = "Grupo de Campos",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Texto,Numérica") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Grupo de Campos",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		DataEngine.viewField(
+			fieldFieldLabel = "Texto",
+			fieldHelp = "Texto de ajuda do campo de texto",
+			fieldName = "Text");
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Texto",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Texto de ajuda do campo de texto");
-
-		AssertTextEquals(
-			key_fieldFieldLabel = "Numérica",
-			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Texto de ajuda do campo numérico");
+		DataEngine.viewField(
+			fieldFieldLabel = "Numérica",
+			fieldHelp = "Texto de ajuda do campo numérico",
+			fieldName = "Numeric");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

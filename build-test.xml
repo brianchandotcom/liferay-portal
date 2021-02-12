@@ -6812,14 +6812,11 @@ go</echo>
 	</target>
 
 	<target name="delete-license-file">
-		<if>
-			<isset property="delete.license.xml" />
-			<then>
-				<delete file="${liferay.home}/osgi/modules/${delete.license.xml}" />
+		<fail message="Please set the property ${license.xml.file}." unless="license.xml.file" />
 
-				<delete dir="${liferay.home}/data/license" />
-			</then>
-		</if>
+		<delete file="${liferay.home}/osgi/modules/${license.xml.file}" />
+
+		<delete dir="${liferay.home}/data/license" />
 	</target>
 
 	<target name="delete-liferay-home">

@@ -31,7 +31,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		License.deleteLicenseXml(deleteLicenseXml = "license.xml");
+		License.deleteLicenseFile(licenseFileName = "license.xml");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -56,7 +56,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		License.deleteLicenseXml(deleteLicenseXml = "portal-commerce-license.xml");
+		License.deleteLicenseFile(licenseFileName = "portal-commerce-license.xml");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 

@@ -1,13 +1,11 @@
 definition {
 
-	macro deleteLicenseXml {
+	macro deleteLicenseFile {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "delete-license-file -Ddelete.license.xml=${deleteLicenseXml} -Dliferay.home=${liferayHome}");
-
-		Pause(locator1 = "10000");
+			value1 = "delete-license-file -Dlicense.xml.file=${licenseFileName} -Dliferay.home=${liferayHome}");
 	}
 
 }

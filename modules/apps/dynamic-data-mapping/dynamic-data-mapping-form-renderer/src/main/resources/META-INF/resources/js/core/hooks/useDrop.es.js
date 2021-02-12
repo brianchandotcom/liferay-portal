@@ -16,8 +16,8 @@ import {DataConverter, DragTypes} from 'data-engine-taglib';
 import {useDrop as useDndDrop} from 'react-dnd';
 
 import {EVENT_TYPES} from '../actions/eventTypes.es';
-import {useForm} from './useForm.es';
-import {usePage} from './usePage.es';
+import {useConfig} from './useConfig.es';
+import {useForm, useFormState} from './useForm.es';
 
 export const DND_ORIGIN_TYPE = {
 	EMPTY: 'empty',
@@ -35,8 +35,9 @@ export const useDrop = ({
 	const {
 		allowInvalidAvailableLocalesForProperty,
 		editingLanguageId,
-		fieldTypesMetadata,
-	} = usePage();
+	} = useFormState();
+	const {fieldTypes} = useConfig();
+
 	const dispatch = useForm();
 
 	const [{canDrop, overTarget}, drop] = useDndDrop({
@@ -69,7 +70,7 @@ export const useDrop = ({
 						dataDefinition,
 						editingLanguageId,
 						fieldName: name,
-						fieldTypes: fieldTypesMetadata,
+						fieldTypes,
 					})) ??
 				{};
 			const {availableLanguageIds, defaultLanguageId} = fieldSet ?? {};
@@ -82,7 +83,7 @@ export const useDrop = ({
 								parentFieldName: parentField?.fieldName,
 							},
 							fieldType: {
-								...fieldTypesMetadata.find(({name}) => {
+								...fieldTypes.find(({name}) => {
 									return name === data.name;
 								}),
 								editable: true,
@@ -119,7 +120,7 @@ export const useDrop = ({
 								parentFieldName: parentField?.fieldName,
 							},
 							fieldType: {
-								...fieldTypesMetadata.find(({name}) => {
+								...fieldTypes.find(({name}) => {
 									return name === fieldType;
 								}),
 								editable: true,
@@ -155,7 +156,7 @@ export const useDrop = ({
 								defaultLanguageId,
 								editingLanguageId,
 								fieldSet,
-								fieldTypes: fieldTypesMetadata,
+								fieldTypes,
 							}),
 						},
 						type: EVENT_TYPES.FIELD_SET.ADD,

@@ -12,8 +12,7 @@
  * details.
  */
 
-import {FormNoop} from 'dynamic-data-mapping-form-renderer/js/containers/FormNoop.es';
-import {getConnectedReactComponentAdapter} from 'dynamic-data-mapping-form-renderer/js/util/ReactComponentAdapter.es';
+import {LegacyFormBuilder} from 'dynamic-data-mapping-form-renderer';
 import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import Component from 'metal-jsx';
@@ -22,8 +21,6 @@ import {Config} from 'metal-state';
 import {pageStructure} from '../../util/config.es';
 import withEditablePageHeader from './withEditablePageHeader.es';
 import withMultiplePages from './withMultiplePages.es';
-
-const FormNoopAdapter = getConnectedReactComponentAdapter(FormNoop);
 
 /**
  * Builder.
@@ -105,7 +102,7 @@ class FormBuilderBase extends Component {
 							: ''
 					}`}
 				>
-					<FormNoopAdapter
+					<LegacyFormBuilder
 						activePage={activePage}
 						allowInvalidAvailableLocalesForProperty={
 							allowInvalidAvailableLocalesForProperty
@@ -115,7 +112,7 @@ class FormBuilderBase extends Component {
 						editable={true}
 						editingLanguageId={editingLanguageId}
 						fieldActions={fieldActions}
-						fieldTypesMetadata={fieldTypes}
+						fieldTypes={fieldTypes}
 						focusedField={focusedField}
 						pages={this.preparePagesForRender(pages)}
 						paginationMode={paginationMode}

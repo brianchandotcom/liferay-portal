@@ -200,11 +200,9 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					JSONObject jsonObject1 = jsonArray.getJSONObject(0);
 
 					Assert.assertEquals("organic", jsonObject1.get("name"));
-
 					Assert.assertEquals(
 						89.2D, Double.valueOf(jsonObject1.getString("share")),
 						0.0);
-
 					Assert.assertEquals(3192, jsonObject1.get("value"));
 
 					JSONArray countryKeywordsJSONArray =
@@ -235,7 +233,6 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					JSONObject jsonObject2 = jsonArray.getJSONObject(1);
 
 					Assert.assertEquals("social", jsonObject2.get("name"));
-
 					Assert.assertEquals(385, jsonObject2.getInt("value"));
 
 					JSONArray referringSocialMediaJSONArray =
@@ -253,19 +250,16 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					JSONObject jsonObject3 = jsonArray.getJSONObject(2);
 
 					Assert.assertEquals("referral", jsonObject3.get("name"));
-
 					Assert.assertEquals(0, jsonObject3.getInt("value"));
 
 					JSONObject jsonObject4 = jsonArray.getJSONObject(3);
 
 					Assert.assertEquals("paid", jsonObject4.get("name"));
-
 					Assert.assertEquals(0, jsonObject4.getInt("value"));
 
 					JSONObject jsonObject5 = jsonArray.getJSONObject(4);
 
 					Assert.assertEquals("direct", jsonObject5.get("name"));
-
 					Assert.assertEquals(0, jsonObject5.getInt("value"));
 				});
 		}

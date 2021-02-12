@@ -66,6 +66,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 				<li class="nav-item pr-3">
 					<clay:button
 						borderless="<%= true %>"
+						cssClass="lfr-ddm-button"
 						displayType="secondary"
 						icon="cog"
 						id='<%= liferayPortletResponse.getNamespace() + "ddmFormInstanceSettingsIcon" %>'

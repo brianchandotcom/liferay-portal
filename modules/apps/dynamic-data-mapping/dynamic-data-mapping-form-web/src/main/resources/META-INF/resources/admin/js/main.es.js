@@ -65,44 +65,33 @@ class Form extends Component {
 			this.syncActiveNavItem(activeNavItem);
 		}
 
-		Promise.all(dependencies).then(
-			([settingsDDMForm]) => {
-				this._stateSyncronizer = new StateSyncronizer(
-					{
-						namespace,
-						paginationMode,
-						published,
-						settingsDDMForm,
-						store,
-					},
-					this.element
-				);
-
-				this._autoSave = new AutoSave(
-					{
-						form: document.querySelector(`#${namespace}editForm`),
-						interval: Liferay.DDM.FormSettings.autosaveInterval,
-						namespace,
-						stateSyncronizer: this._stateSyncronizer,
-						url: Liferay.DDM.FormSettings.autosaveURL,
-					},
-					this.element
-				);
-
-				this._eventHandler.add(
-					this._autoSave.on('autosaved', this._updateAutoSaveMessage)
-				);
-			}
-		);
-
-		const addFieldButton = document.getElementById('addFieldButton');
-
-		if (addFieldButton) {
-			addFieldButton.addEventListener(
-				'click',
-				this._handleAddFieldButtonClicked
+		Promise.all(dependencies).then(([settingsDDMForm]) => {
+			this._stateSyncronizer = new StateSyncronizer(
+				{
+					namespace,
+					paginationMode,
+					published,
+					settingsDDMForm,
+					store: store,
+				},
+				this.element
 			);
-		}
+
+			this._autoSave = new AutoSave(
+				{
+					form: document.querySelector(`#${namespace}editForm`),
+					interval: Liferay.DDM.FormSettings.autosaveInterval,
+					namespace,
+					stateSyncronizer: this._stateSyncronizer,
+					url: Liferay.DDM.FormSettings.autosaveURL,
+				},
+				this.element
+			);
+
+			this._eventHandler.add(
+				this._autoSave.on('autosaved', this._updateAutoSaveMessage)
+			);
+		});
 
 		this._formNavClickEventHandler = delegate(
 			document.body,
@@ -200,14 +189,10 @@ class Form extends Component {
 			'paginationModeChanged',
 			this._handlePaginationModeChanded.bind(this)
 		);
-		store.on('ruleCancelled', this.showAddButton.bind(this));
 		store.on('rulesModified', this._handleRulesModified.bind(this));
 	}
 
 	created() {
-		this._handleAddFieldButtonClicked = this._handleAddFieldButtonClicked.bind(
-			this
-		);
 		this._handlePreviewButtonClicked = this._handlePreviewButtonClicked.bind(
 			this
 		);
@@ -248,15 +233,6 @@ class Form extends Component {
 
 		this._eventHandler.removeAllListeners();
 
-		const addFieldButton = document.getElementById('addFieldButton');
-
-		if (addFieldButton) {
-			addFieldButton.removeEventListener(
-				'click',
-				this._handleAddFieldButtonClicked
-			);
-		}
-
 		const previewButton = document.querySelector('.lfr-ddm-preview-button');
 
 		if (previewButton) {
@@ -283,11 +259,6 @@ class Form extends Component {
 				this._handlePublishButtonClicked
 			);
 		}
-
-	hideAddButton() {
-		const addButton = document.querySelector('#addFieldButton');
-
-		addButton.classList.add('hide');
 	}
 
 	isFormBuilderView() {
@@ -501,12 +472,6 @@ class Form extends Component {
 		);
 	}
 
-	showAddButton() {
-		const addButton = document.querySelector('#addFieldButton');
-
-		addButton.classList.remove('hide');
-	}
-
 	submitForm() {
 		const {namespace} = this.props;
 
@@ -520,17 +485,14 @@ class Form extends Component {
 			case NAV_ITEMS.FORM:
 				this._toggleRulesBuilder(false);
 				this._toggleReport(false);
-				this._toggleFormBuilder(true);
 				break;
 
 			case NAV_ITEMS.RULES:
-				this._toggleFormBuilder(false);
 				this._toggleReport(false);
 				this._toggleRulesBuilder(true);
 				break;
 
 			case NAV_ITEMS.REPORT:
-				this._toggleFormBuilder(false);
 				this._toggleRulesBuilder(false);
 				this._toggleReport(true);
 				break;
@@ -550,17 +512,6 @@ class Form extends Component {
 		const {context} = this.props;
 
 		return context.activeNavItem || NAV_ITEMS.FORM;
-	}
-
-	_handleAddFieldButtonClicked() {
-		if (this.isShowRuleBuilder()) {
-			this.refs.ruleBuilder?.reactComponentRef.current.showRuleCreation();
-
-			this.hideAddButton();
-		}
-		else {
-			this.openSidebar();
-		}
 	}
 
 	_createFormBuilder() {
@@ -707,8 +658,6 @@ class Form extends Component {
 
 	_handleRulesModified() {
 		this._autoSave.save(true);
-
-		this.showAddButton();
 	}
 
 	_handleSaveButtonClicked(event) {
@@ -894,77 +843,6 @@ class Form extends Component {
 		);
 	}
 
-	_toggleFormBuilder(show) {
-		const {namespace} = this.props;
-
-		const ddmFormInstanceSettingsIcon = document.querySelector(
-			`#${namespace}ddmFormInstanceSettingsIcon`
-		);
-		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
-		const formBuilderButtons = document.querySelectorAll(
-			'.toolbar-group-field .nav-item .lfr-ddm-button'
-		);
-		const managementToolbar = document.querySelector(
-			`#${namespace}managementToolbar`
-		);
-		const publishIcon = document.querySelector('.publish-icon');
-		const translationManager = document.querySelector(
-			'.ddm-translation-manager'
-		);
-
-		if (show) {
-			this._setSearchParamsWithoutPageReload(
-				`${namespace}activeNavItem`,
-				NAV_ITEMS.FORM
-			);
-
-			if (ddmFormInstanceSettingsIcon) {
-				ddmFormInstanceSettingsIcon.classList.remove('hide');
-			}
-
-			formBasicInfo.classList.remove('hide');
-
-			formBuilderButtons.forEach((formBuilderButton) => {
-				formBuilderButton.classList.remove('hide');
-			});
-
-			managementToolbar.classList.remove('hide');
-
-			if (publishIcon) {
-				publishIcon.classList.remove('hide');
-			}
-
-			if (translationManager) {
-				translationManager.classList.remove('hide');
-			}
-
-			this.showAddButton();
-		}
-		else {
-			if (ddmFormInstanceSettingsIcon) {
-				ddmFormInstanceSettingsIcon.classList.add('hide');
-			}
-
-			formBasicInfo.classList.add('hide');
-
-			formBuilderButtons.forEach((formBuilderButton) => {
-				formBuilderButton.classList.add('hide');
-			});
-
-			managementToolbar.classList.add('hide');
-
-			if (publishIcon) {
-				publishIcon.classList.add('hide');
-			}
-
-			if (translationManager) {
-				translationManager.classList.add('hide');
-			}
-
-			this.hideAddButton();
-		}
-	}
-
 	_toggleReport(show) {
 		const formReport = document.querySelector(
 			'#container-portlet-ddm-form-report'
@@ -992,27 +870,11 @@ class Form extends Component {
 	_toggleRulesBuilder(show) {
 		const {namespace} = this.props;
 
-		const managementToolbar = document.querySelector(
-			`#${namespace}managementToolbar`
-		);
-
 		if (show) {
 			this._setSearchParamsWithoutPageReload(
 				`${namespace}activeNavItem`,
 				NAV_ITEMS.RULES
 			);
-
-			managementToolbar.classList.remove('hide');
-		}
-		else {
-			managementToolbar.classList.add('hide');
-		}
-
-		if (this.refs.ruleBuilder?.reactComponentRef.current.isViewMode()) {
-			this.showAddButton();
-		}
-		else {
-			this.hideAddButton();
 		}
 	}
 

@@ -22,6 +22,22 @@ export const TranslationManager = () => {
 	const dispatch = useForm();
 
 	useEffect(() => {
+		const translationManager = document.querySelector(
+			'.ddm-translation-manager'
+		);
+
+		if (translationManager) {
+			translationManager.classList.remove('hide');
+		}
+
+		return () => {
+			if (translationManager) {
+				translationManager.classList.add('hide');
+			}
+		};
+	}, []);
+
+	useEffect(() => {
 		let handles = [];
 
 		const getComponent = async () => {

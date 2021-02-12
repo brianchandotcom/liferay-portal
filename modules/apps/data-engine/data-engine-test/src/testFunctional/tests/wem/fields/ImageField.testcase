@@ -198,11 +198,21 @@ definition {
 			fieldName = "Image");
 	}
 
-	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
+	@description = "This is a test for LPS-98073. As a Developer, I want to Verify if user is required to define a description for an uploaded image"
 	@priority = "4"
 	test PublishWebContentWithUploadedImageWithoutDescription {
 
-		WebContentStructures.addCP(structureName = "WC Structure Name");
+		var structureTitle = "Image Field Structure";
+        var webContentName = "Web Content";
+        var fileName = "Document_1.jpg";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "${fileName}");
+
+		WebContentStructures.addCP(structureName = "${structureTitle}");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Image",
@@ -212,18 +222,49 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "${structureTitle}");
 
 		WebContent.addWithStructureCP(
-			navTab = "Web Content Images",
-			webContentImage = "Document_1.jpg",
-			webContentTitle = "Web Content Title");
+			imageFileName = "Document Title",
+			navTab = "Documents and Media",
+			structureName = "${structureTitle}",
+			webContentImage = "Document Title",
+			webContentTitle = "${webContentName}");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
-		WebContent.viewWithStructureCP(
-			webContentImage = "Document_1.jpg",
-			webContentTitle = "Web Content Title");
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "${structureTitle}");
+
+		DataEngine.editFieldRequired(fieldFieldLabel = "Image");
+
+		Button.clickSave();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoEditCP(
+			webContentTitle = "${webContentName}");
+
+		Button.clickPublish();
+				
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#WARNING_FEEDBACK",
+			value1 = "This field is required.");
+		
+		WebContent.setImageDescription(
+			fieldFieldLabel = "Image",
+			webContentImageDescription = "Description");
+
+		Button.clickPublish();
+
+		WebContentNavigator.gotoEditCP(
+			webContentTitle = "${webContentName}");
+		
+		AssertTextEquals(
+			key_fieldFieldLabel = "Image",
+			locator1 = "WCEditWebContent#IMAGE_DESCRPTION",
+			value1 = "Description");
 	}
 
 	@description = "This is a test for LPS-98073. As a Developer, I want to Implement the image field type"
@@ -357,7 +398,7 @@ definition {
 			key_index = "2",
 			locator1 = "FormFields#FIELD_REMOVE");
 	}
-	
+
 	@description = "This is a test for LPS-98073. As a Developer, I want to Verify if user can add a field label"
 	@priority = "5"
 	test SetLabelOfImageField {

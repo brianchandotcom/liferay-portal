@@ -153,7 +153,6 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 				addSegmentEntryURL.setParameter(
 					"redirect",
 					ParamUtil.getString(_httpServletRequest, "redirect"));
-
 				addSegmentEntryURL.setParameter(
 					"backURL",
 					ParamUtil.getString(_httpServletRequest, "backURL"));
@@ -391,13 +390,10 @@ public class EditRoleAssignmentsManagementToolbarDisplayContext {
 		portletURL.setParameter("tabs2", getTabs2());
 		portletURL.setParameter("tabs3", _tabs3);
 		portletURL.setParameter("roleId", String.valueOf(_role.getRoleId()));
-
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
-
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter("backURL", backURL);
-
+		portletURL.setParameter(
+			"redirect", ParamUtil.getString(_httpServletRequest, "redirect"));
+		portletURL.setParameter(
+			"backURL", ParamUtil.getString(_httpServletRequest, "backURL"));
 		portletURL.setParameter("displayStyle", _displayStyle);
 
 		if (Validator.isNotNull(getKeywords())) {

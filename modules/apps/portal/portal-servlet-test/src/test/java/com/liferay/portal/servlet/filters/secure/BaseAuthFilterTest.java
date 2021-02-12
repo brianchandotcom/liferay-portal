@@ -62,10 +62,10 @@ public class BaseAuthFilterTest {
 
 		Registry registry = new BasicRegistryImpl();
 
+		RegistryUtil.setRegistry(registry);
+
 		registry.registerService(
 			AccessControl.class, new TestAccessControlImpl());
-
-		RegistryUtil.setRegistry(registry);
 	}
 
 	@Before

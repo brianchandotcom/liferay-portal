@@ -43,6 +43,7 @@ function ManagementToolbar({
 	onCheckboxChange = () => {},
 	onClearSelectionButtonClick = () => {},
 	onCreateButtonClick = () => {},
+	onCreationMenuItemClick = () => {},
 	onInfoButtonClick = () => {},
 	onSelectAllButtonClick = () => {},
 	onShowMoreButtonClick,
@@ -167,6 +168,9 @@ function ManagementToolbar({
 										{...creationMenu}
 										onCreateButtonClick={
 											onCreateButtonClick
+										}
+										onCreationMenuItemClick={
+											onCreationMenuItemClick
 										}
 										onShowMoreButtonClick={
 											onShowMoreButtonClick

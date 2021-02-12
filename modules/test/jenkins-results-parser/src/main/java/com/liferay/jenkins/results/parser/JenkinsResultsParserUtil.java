@@ -3586,6 +3586,11 @@ public class JenkinsResultsParserUtil {
 		return "http://mirrors-no-cache.lax.liferay.com/github.com/liferay";
 	}
 
+	protected static final String URL_DEPENDENCIES_FILE;
+
+	protected static final String URL_DEPENDENCIES_HTTP =
+		URL_CACHE + "/liferay-jenkins-results-parser-samples-ee/1/";
+
 	static {
 		File dependenciesDir = new File("src/test/resources/dependencies/");
 
@@ -3600,11 +3605,6 @@ public class JenkinsResultsParserUtil {
 			throw new RuntimeException(malformedURLException);
 		}
 	}
-
-	protected static final String URL_DEPENDENCIES_FILE;
-
-	protected static final String URL_DEPENDENCIES_HTTP =
-		URL_CACHE + "/liferay-jenkins-results-parser-samples-ee/1/";
 
 	private static long _appendDurationStringForUnit(
 		long duration, long millisInUnit, boolean round, StringBuilder sb,

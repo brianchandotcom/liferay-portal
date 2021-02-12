@@ -29,7 +29,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
 	@priority = "5"
 	test CheckDefaultWebContentTitleOnWebContentList {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -64,7 +63,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CheckFieldsetSummaryLocalization {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -130,7 +128,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "4"
 	test CheckLanguageSelector {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -177,7 +174,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "5"
 	test CheckStructureTranslationOnWebContent {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -419,7 +415,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "5"
 	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -556,7 +551,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
 	@priority = "5"
 	test TranslationPersistsAfterEditingAnother {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 

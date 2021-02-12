@@ -22,7 +22,7 @@ import {
 	Layout,
 	getRepeatedIndex,
 	useForm,
-	usePage,
+	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
 import moment from 'moment';
 import React, {useMemo} from 'react';
@@ -104,11 +104,9 @@ function FieldBase({
 	valid,
 	visible,
 }) {
-	const {editingLanguageId = themeDisplay.getLanguageId()} = usePage();
-	let fieldDetails = '';
-	const fieldDetailsId = name + '_fieldDetails';
+	const {editingLanguageId} = useFormState();
 	const dispatch = useForm();
-	const hasError = displayErrors && errorMessage && !valid;
+
 	const localizedValueArray = useMemo(() => {
 		const languageValues = [];
 
@@ -128,13 +126,11 @@ function FieldBase({
 		return languageValues;
 	}, [localizedValue, editingLanguageId, name]);
 
-	let parentDivAriaLabelledby;
-	let parentDivTabIndex;
 	const renderLabel =
 		(label && showLabel) || required || tooltip || repeatable;
 
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
-	const requiredText = Liferay.Language.get('required');
+
 	const showLegend =
 		type &&
 		(type === 'checkbox_multiple' ||
@@ -142,12 +138,13 @@ function FieldBase({
 			type === 'paragraph' ||
 			type === 'radio');
 
+	const fieldDetailsId = name + '_fieldDetails';
+	const hasError = displayErrors && errorMessage && !valid;
+
+	let fieldDetails = '';
+
 	if (renderLabel) {
 		fieldDetails += label + '<br>';
-	}
-	else {
-		parentDivTabIndex = 0;
-		parentDivAriaLabelledby = fieldDetailsId;
 	}
 
 	if (tip) {
@@ -162,12 +159,12 @@ function FieldBase({
 		fieldDetails += errorMessage;
 	}
 	else if (required) {
-		fieldDetails += requiredText;
+		fieldDetails += Liferay.Language.get('required');
 	}
 
 	return (
 		<div
-			aria-labelledby={parentDivAriaLabelledby}
+			aria-labelledby={!renderLabel ? fieldDetailsId : null}
 			className={classNames('form-group', {
 				'has-error': hasError,
 				hide: !visible,
@@ -175,7 +172,7 @@ function FieldBase({
 			data-field-name={name}
 			onClick={onClick}
 			style={style}
-			tabIndex={parentDivTabIndex}
+			tabIndex={!renderLabel ? 0 : null}
 		>
 			{repeatable && (
 				<div className="lfr-ddm-form-field-repeatable-toolbar">

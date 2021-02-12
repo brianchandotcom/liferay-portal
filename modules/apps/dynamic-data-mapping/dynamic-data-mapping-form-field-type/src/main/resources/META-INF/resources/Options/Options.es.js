@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
-import {usePage} from 'dynamic-data-mapping-form-renderer';
+import {useFormState} from 'dynamic-data-mapping-form-renderer';
 import {openModal} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
@@ -134,7 +134,7 @@ const Options = ({
 	onChange,
 	value = {},
 }) => {
-	const {builderRules} = usePage();
+	const {builderRules} = useFormState();
 
 	const initialOptionRef = useRef(
 		getInitialOption(generateOptionValueUsingOptionLabel)

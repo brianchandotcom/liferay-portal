@@ -32,10 +32,10 @@ const FieldTypeWrapper = ({expanded, fieldType, showArrows, ...otherProps}) => {
 };
 
 const FieldTypeList = ({
+	dataDefinition,
 	deleteLabel,
 	emptyState,
 	fieldTypes,
-	dataDefinition,
 	keywords,
 	onClick,
 	onDelete,

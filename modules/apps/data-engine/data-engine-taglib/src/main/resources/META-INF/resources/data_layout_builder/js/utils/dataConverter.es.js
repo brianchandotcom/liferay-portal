@@ -239,7 +239,12 @@ export function getDataDefinitionField({nestedFields, settingsContext}) {
 	return fieldConfig;
 }
 
-export function getDataDefinitionFieldByFieldName({dataDefinition, editingLanguageId, fieldName, fieldTypes}){
+export function getDataDefinitionFieldByFieldName({
+	dataDefinition,
+	editingLanguageId,
+	fieldName,
+	fieldTypes,
+}) {
 	const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
 		(field) => field.name === fieldName
 	);
@@ -255,7 +260,7 @@ export function getDataDefinitionFieldByFieldName({dataDefinition, editingLangua
 		editingLanguageId,
 		settingsContext,
 	};
-};
+}
 
 /**
  * Converts a FieldSet from data-engine to form-builder data definition

@@ -12,12 +12,10 @@
  * details.
  */
 
-import {
-	PagesVisitor,
-	compose,
-	getConnectedReactComponentAdapter,
-} from 'dynamic-data-mapping-form-renderer';
 import {FormNoop} from 'dynamic-data-mapping-form-renderer/js/containers/FormNoop.es';
+import {getConnectedReactComponentAdapter} from 'dynamic-data-mapping-form-renderer/js/util/ReactComponentAdapter.es';
+import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 

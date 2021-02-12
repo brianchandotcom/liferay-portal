@@ -14,7 +14,6 @@
 
 import classNames from 'classnames';
 import {
-	DataConverter,
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
 	DragTypes,
@@ -283,8 +282,8 @@ const CustomObjectFieldsList = ({keywords}) => {
 
 			<FieldTypeList
 				{...fieldTypeListProps}
-				fieldTypes={customFieldTypes}
 				dataDefinition={dataDefinition}
+				fieldTypes={customFieldTypes}
 				showEmptyState={false}
 			/>
 
@@ -296,8 +295,8 @@ const CustomObjectFieldsList = ({keywords}) => {
 
 			<FieldTypeList
 				{...fieldTypeListProps}
-				fieldTypes={nativeFieldTypes}
 				dataDefinition={dataDefinition}
+				fieldTypes={nativeFieldTypes}
 				showEmptyState={false}
 			/>
 		</>

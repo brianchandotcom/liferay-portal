@@ -26,7 +26,6 @@ export const DND_ORIGIN_TYPE = {
 
 export const useDrop = ({
 	columnIndex,
-	dataDefinition,
 	fieldName,
 	origin,
 	pageIndex,
@@ -50,7 +49,13 @@ export const useDrop = ({
 			if (monitor.didDrop()) {
 				return;
 			}
-			const {dataDefinition, fieldSet, name, properties, useFieldName} = data;
+			const {
+				dataDefinition,
+				fieldSet,
+				name,
+				properties,
+				useFieldName,
+			} = data;
 
 			const {fieldType, label, settingsContext} =
 				(dataDefinition &&

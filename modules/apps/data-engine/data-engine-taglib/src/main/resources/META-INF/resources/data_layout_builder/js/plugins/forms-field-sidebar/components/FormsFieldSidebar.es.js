@@ -75,28 +75,32 @@ export const FormsFieldSidebar = ({title}) => {
 			dispatchEvent={dispatch}
 			displaySettings={Object.keys(focusedField).length > 0}
 			editingLanguageId={editingLanguageId}
-			fieldTypes={sortFieldTypes(fieldTypes.filter(({group}) => group === 'basic'))}
+			fieldTypes={sortFieldTypes(
+				fieldTypes.filter(({group}) => group === 'basic')
+			)}
 			focusedCustomObjectField={focusedCustomObjectField}
 			focusedField={focusedField}
-			hasFocusedCustomObjectField={() =>  false}
+			hasFocusedCustomObjectField={() => false}
 			onClick={() => dispatch('sidebarFieldBlurred')}
-			onDoubleClick={({name: fieldTypeName}) => dispatch('fieldAdded', {
-				data: {
-					fieldName: '',
-					parentFieldName: '',
-				},
-				fieldType: {
-					...fieldTypes.find(({name}) => {
-						return name === fieldTypeName;
-					}),
-					editable: true,
-				},
-				indexes: {
-					columnIndex: 0,
-					pageIndex: activePage,
-					rowIndex: pages[activePage].rows.length,
-				},
-			})}
+			onDoubleClick={({name: fieldTypeName}) =>
+				dispatch('fieldAdded', {
+					data: {
+						fieldName: '',
+						parentFieldName: '',
+					},
+					fieldType: {
+						...fieldTypes.find(({name}) => {
+							return name === fieldTypeName;
+						}),
+						editable: true,
+					},
+					indexes: {
+						columnIndex: 0,
+						pageIndex: activePage,
+						rowIndex: pages[activePage].rows.length,
+					},
+				})
+			}
 			title={title}
 		/>
 	);

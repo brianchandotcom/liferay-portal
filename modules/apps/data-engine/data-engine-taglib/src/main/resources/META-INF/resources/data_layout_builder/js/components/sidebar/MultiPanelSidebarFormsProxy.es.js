@@ -68,7 +68,7 @@ const MultiPanelSidebarFormsProxy = React.forwardRef(
 							rules,
 						}}
 					>
-						<DragLayer/>
+						<DragLayer />
 						<MultiPanelSidebar
 							createPlugin={({
 								panel,

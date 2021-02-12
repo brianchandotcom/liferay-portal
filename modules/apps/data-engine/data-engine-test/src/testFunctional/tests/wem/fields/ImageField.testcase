@@ -61,7 +61,7 @@ definition {
 			webContentImage = "Document Title",
 			webContentTitle = "${webTitle}");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 
@@ -70,7 +70,7 @@ definition {
 			locator1 = "AppBuilder#CLEAR_SEARCH",
 			value1 = "Clear");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 
@@ -126,7 +126,7 @@ definition {
 
 		DataEngine.addRepeatableField(fieldName = "Image");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -336,7 +336,7 @@ definition {
 			webContentImageDescription = "My description",
 			webContentTitle = "${webTitle}");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 
@@ -473,7 +473,7 @@ definition {
 			webContentImage = "Document Title",
 			webContentTitle = "${webTitle}");
 
-		PortletEntry.publish();
+		Button.clickPublish();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "${webTitle}");
 

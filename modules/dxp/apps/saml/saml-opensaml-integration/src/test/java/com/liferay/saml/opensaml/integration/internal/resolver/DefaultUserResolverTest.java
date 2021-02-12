@@ -72,52 +72,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		MetadataManager metadataManager = mock(MetadataManager.class);
-
-		_defaultUserResolver.setMetadataManager(metadataManager);
-
-		_userLocalService = mock(UserLocalService.class);
-
-		_defaultUserResolver.setUserLocalService(_userLocalService);
-
-		_samlProviderConfigurationHelper = mock(
-			SamlProviderConfigurationHelper.class);
-
-		_defaultUserResolver.setSamlProviderConfigurationHelper(
-			_samlProviderConfigurationHelper);
+		mockStatic(CalendarFactoryUtil.class);
 
 		when(
-			metadataManager.getUserAttributeMappings(Mockito.eq(IDP_ENTITY_ID))
+			CalendarFactoryUtil.getCalendar()
 		).thenReturn(
-			_ATTRIBUTE_MAPPINGS
+			new GregorianCalendar()
 		);
-
-		_samlSpIdpConnection = mock(SamlSpIdpConnection.class);
-
-		when(
-			_samlSpIdpConnection.isUnknownUsersAreStrangers()
-		).thenReturn(
-			true
-		);
-
-		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService = mock(
-			SamlSpIdpConnectionLocalService.class);
-
-		when(
-			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-				Mockito.anyLong(), Mockito.anyString())
-		).thenReturn(
-			_samlSpIdpConnection
-		);
-
-		when(
-			_samlProviderConfigurationHelper.isLDAPImportEnabled()
-		).thenReturn(
-			false
-		);
-
-		_defaultUserResolver.setSamlSpIdpConnectionLocalService(
-			samlSpIdpConnectionLocalService);
 
 		_company = mock(Company.class);
 
@@ -138,13 +99,52 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_defaultUserResolver.setCompanyLocalService(companyLocalService);
 
-		mockStatic(CalendarFactoryUtil.class);
+		MetadataManager metadataManager = mock(MetadataManager.class);
 
 		when(
-			CalendarFactoryUtil.getCalendar()
+			metadataManager.getUserAttributeMappings(Mockito.eq(IDP_ENTITY_ID))
 		).thenReturn(
-			new GregorianCalendar()
+			_ATTRIBUTE_MAPPINGS
 		);
+
+		_defaultUserResolver.setMetadataManager(metadataManager);
+
+		_samlProviderConfigurationHelper = mock(
+			SamlProviderConfigurationHelper.class);
+
+		_defaultUserResolver.setSamlProviderConfigurationHelper(
+			_samlProviderConfigurationHelper);
+
+		when(
+			_samlProviderConfigurationHelper.isLDAPImportEnabled()
+		).thenReturn(
+			false
+		);
+
+		_samlSpIdpConnection = mock(SamlSpIdpConnection.class);
+
+		when(
+			_samlSpIdpConnection.isUnknownUsersAreStrangers()
+		).thenReturn(
+			true
+		);
+
+		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService = mock(
+			SamlSpIdpConnectionLocalService.class);
+
+		when(
+			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			_samlSpIdpConnection
+		);
+
+		_defaultUserResolver.setSamlSpIdpConnectionLocalService(
+			samlSpIdpConnectionLocalService);
+
+		_userLocalService = mock(UserLocalService.class);
+
+		_defaultUserResolver.setUserLocalService(_userLocalService);
 
 		_initMessageContext(true);
 		_initUnknownUserHandling();
@@ -304,8 +304,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	}
 
 	private void _initMatchingUserHandling() throws Exception {
-		User existingUser = mock(User.class);
-
 		Contact contactUser = mock(Contact.class);
 
 		when(
@@ -314,26 +312,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			new Date()
 		);
 
+		User existingUser = mock(User.class);
+
 		when(
 			existingUser.getContact()
 		).thenReturn(
 			contactUser
-		);
-
-		when(
-			_userLocalService.getUserByScreenName(
-				Mockito.anyLong(),
-				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))
-		).thenReturn(
-			existingUser
-		);
-
-		when(
-			_userLocalService.getUserByEmailAddress(
-				Mockito.anyLong(),
-				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS))
-		).thenReturn(
-			existingUser
 		);
 
 		when(
@@ -350,6 +334,22 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.anyBoolean(), Mockito.any(ServiceContext.class))
 		).thenReturn(
 			null
+		);
+
+		when(
+			_userLocalService.getUserByEmailAddress(
+				Mockito.anyLong(),
+				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS))
+		).thenReturn(
+			existingUser
+		);
+
+		when(
+			_userLocalService.getUserByScreenName(
+				Mockito.anyLong(),
+				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))
+		).thenReturn(
+			existingUser
 		);
 
 		when(

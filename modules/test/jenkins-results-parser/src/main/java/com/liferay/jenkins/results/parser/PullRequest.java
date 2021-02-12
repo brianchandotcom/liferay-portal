@@ -210,6 +210,10 @@ public class PullRequest {
 	}
 
 	public String getCommonParentSHA() {
+		if (_commonParentSHA == null) {
+			_initCommits();
+		}
+
 		return _commonParentSHA;
 	}
 
@@ -260,10 +264,18 @@ public class PullRequest {
 	}
 
 	public List<GitHubRemoteGitCommit> getGitHubRemoteCommits() {
+		if (_gitHubRemoteGitCommits == null) {
+			_initCommits();
+		}
+
 		return _gitHubRemoteGitCommits;
 	}
 
 	public GitHubRemoteGitCommit getGitHubRemoteGitCommit() {
+		if (_gitHubRemoteGitCommits == null) {
+			_initCommits();
+		}
+
 		return _gitHubRemoteGitCommits.get(_gitHubRemoteGitCommits.size() - 1);
 	}
 
@@ -500,31 +512,9 @@ public class PullRequest {
 			_jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				getURL(), false);
 
-			JSONArray commitsJSONArray = JenkinsResultsParserUtil.toJSONArray(
-				_jsonObject.getString("commits_url"));
-
-			_gitHubRemoteGitCommits = new ArrayList<>(
-				commitsJSONArray.length());
-
-			for (int i = 0; i < commitsJSONArray.length(); i++) {
-				JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
-
-				_gitHubRemoteGitCommits.add(
-					GitCommitFactory.newGitHubRemoteGitCommit(
-						getOwnerUsername(), getGitRepositoryName(),
-						commitJSONObject.getString("sha"), commitJSONObject));
-			}
-
-			JSONObject firstCommitJSONObject = commitsJSONArray.getJSONObject(
-				0);
-
-			JSONArray parentsJSONArray = firstCommitJSONObject.getJSONArray(
-				"parents");
-
-			JSONObject firstParentJSONObject = parentsJSONArray.getJSONObject(
-				0);
-
-			_commonParentSHA = firstParentJSONObject.getString("sha");
+			_comments = null;
+			_commonParentSHA = null;
+			_gitHubRemoteGitCommits = null;
 
 			_labels.clear();
 
@@ -842,7 +832,41 @@ public class PullRequest {
 		}
 	}
 
-	protected List<Comment> comments;
+	private void _initCommits() {
+		try {
+			JSONArray commitsJSONArray = JenkinsResultsParserUtil.toJSONArray(
+				_jsonObject.getString("commits_url"));
+
+			_gitHubRemoteGitCommits = new ArrayList<>(
+				commitsJSONArray.length());
+
+			for (int i = 0; i < commitsJSONArray.length(); i++) {
+				JSONObject commitJSONObject = commitsJSONArray.getJSONObject(i);
+
+				_gitHubRemoteGitCommits.add(
+					GitCommitFactory.newGitHubRemoteGitCommit(
+						getOwnerUsername(), getGitRepositoryName(),
+						commitJSONObject.getString("sha"), commitJSONObject));
+			}
+
+			JSONObject firstCommitJSONObject = commitsJSONArray.getJSONObject(
+				0);
+
+			JSONArray parentsJSONArray = firstCommitJSONObject.getJSONArray(
+				"parents");
+
+			JSONObject firstParentJSONObject = parentsJSONArray.getJSONObject(
+				0);
+
+			_commonParentSHA = firstParentJSONObject.getString("sha");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get GitHub remote commits for pull request " +
+					getHtmlURL(),
+				ioException);
+		}
+	}
 
 	private static final String _NAME_TEST_SUITE_DEFAULT = "default";
 

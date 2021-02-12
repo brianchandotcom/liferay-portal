@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.math.BigDecimal;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -389,6 +390,12 @@ public interface CommerceOrderService extends BaseService {
 			String street1, String street2, String street3, String city,
 			String zip, long commerceRegionId, long commerceCountryId,
 			String phoneNumber, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceOrder updateShippingMethod(
+			long commerceOrderId, long commerceShippingMethodId,
+			String shippingOptionName, CommerceContext commerceContext,
+			Locale locale)
 		throws PortalException;
 
 	public CommerceOrder updateTransactionId(

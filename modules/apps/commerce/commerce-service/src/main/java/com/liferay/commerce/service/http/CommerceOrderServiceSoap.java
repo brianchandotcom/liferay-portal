@@ -17,6 +17,7 @@ package com.liferay.commerce.service.http;
 import com.liferay.commerce.service.CommerceOrderServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.rmi.RemoteException;
 
@@ -1239,6 +1240,31 @@ public class CommerceOrderServiceSoap {
 					commerceOrderId, name, description, street1, street2,
 					street3, city, zip, commerceRegionId, commerceCountryId,
 					phoneNumber, serviceContext);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap
+			updateShippingMethod(
+				long commerceOrderId, long commerceShippingMethodId,
+				String shippingOptionName,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				String locale)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue =
+				CommerceOrderServiceUtil.updateShippingMethod(
+					commerceOrderId, commerceShippingMethodId,
+					shippingOptionName, commerceContext,
+					LocaleUtil.fromLanguageId(locale));
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
 				returnValue);

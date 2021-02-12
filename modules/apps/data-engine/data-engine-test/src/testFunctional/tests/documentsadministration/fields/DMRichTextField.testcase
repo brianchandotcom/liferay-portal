@@ -39,7 +39,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify if the user can write a text on the Rich Text Field (when uploading a Document Type)"
 	@priority = "5"
 	test InsertTextOnRichTextOnUpload {
 		property portal.acceptance = "false";
@@ -71,7 +71,7 @@ definition {
 			value1 = "Inserting a new Text");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify that a user Can localize the field data"
 	@priority = "4"
 	test LocalizationOfRichTextPersists {
 		property portal.acceptance = "false";
@@ -108,7 +108,7 @@ definition {
 			fieldHelp = "Texto Ajuda");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify that a user Can repeat the field when it was set as 'repeatable' (when uploading a Document Type)"
 	@priority = "5"
 	test RepeatRichTextOnUpload {
 		property portal.acceptance = "false";
@@ -136,7 +136,7 @@ definition {
 			index = "2");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify that a user Can set the field name (Field Reference) with valid and invalid characters"
 	@priority = "4"
 	test SetFieldReferenceOfRichTextWithValidAndInvalidCharacters {
 		property portal.acceptance = "false";
@@ -205,7 +205,7 @@ definition {
 >>>>>>> d06f404 (LRQA-64865 Merge SetFieldReferenceOfRichText and SetFieldReferenceOfRichTextWithInvalidCharacters test into SetFieldReferenceOfRichTextWithValidAndInvalidCharacters)
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify that a user Can define a Field Label and a Tip (Help Text)"
 	@priority = "5"
 	test SetLabelTextOfRichTextAndHelpText {
 		property portal.acceptance = "false";
@@ -224,7 +224,7 @@ definition {
 			fieldName = "Rich Text");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify that a user can set Searchable as Disabled and as Text"
 	@priority = "4"
 	test SetRichTextSearchableByTextAndDisable {
 
@@ -253,7 +253,7 @@ definition {
 			searchableType = "Text");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify that a user can hide/show the field label"
 	@priority = "3"
 	test ShowAndHideRichTextLabel {
 
@@ -282,7 +282,7 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify the Field set as 'Required' and that a user can upload a Document Type with rich text as a required field"
 	@priority = "4"
 	test UploadWithRequiredRichText {
 		property portal.acceptance = "false";
@@ -312,7 +312,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify that a user can see the Help Text on the Upload"
 	@priority = "4"
 	test VerifyRichFieldHelpTextOnUpload {
 		property portal.upstream = "quarantine";
@@ -332,7 +332,7 @@ definition {
 			value1 = "Help Text");
 	}
 
-	@description = "This is a test for LPS-98076. As a Developer, I want to Implement the HTML field type"
+	@description = "This is a test for LPS-98076. Verify that a user Can see the '*' when Uploading when the field is set 'Required'"
 	@priority = "4"
 	test VerifyRichTextIsSetAsRequiredOnUploading {
 		property portal.acceptance = "false";

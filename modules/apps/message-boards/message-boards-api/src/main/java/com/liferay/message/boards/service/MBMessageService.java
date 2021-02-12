@@ -95,6 +95,14 @@ public interface MBMessageService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public MBMessage addMessage(
+			String externalReferenceCode, long parentMessageId, String subject,
+			String body, String format,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			boolean anonymous, double priority, boolean allowPingbacks,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void addMessageAttachment(
 			long messageId, String fileName, File file, String mimeType)
 		throws PortalException;

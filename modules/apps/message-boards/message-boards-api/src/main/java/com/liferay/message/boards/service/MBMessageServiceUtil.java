@@ -100,6 +100,22 @@ public class MBMessageServiceUtil {
 			priority, allowPingbacks, serviceContext);
 	}
 
+	public static com.liferay.message.boards.model.MBMessage addMessage(
+			String externalReferenceCode, long parentMessageId, String subject,
+			String body, String format,
+			java.util.List
+				<com.liferay.portal.kernel.util.ObjectValuePair
+					<String, java.io.InputStream>> inputStreamOVPs,
+			boolean anonymous, double priority, boolean allowPingbacks,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addMessage(
+			externalReferenceCode, parentMessageId, subject, body, format,
+			inputStreamOVPs, anonymous, priority, allowPingbacks,
+			serviceContext);
+	}
+
 	public static void addMessageAttachment(
 			long messageId, String fileName, java.io.File file, String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {

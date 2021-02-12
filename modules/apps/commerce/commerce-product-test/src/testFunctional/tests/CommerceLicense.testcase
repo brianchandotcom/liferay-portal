@@ -26,9 +26,9 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		var key_panel = "Applications";
-
-		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+		AssertElementPresent(
+			key_panel = "Applications",
+			locator1 = "ApplicationsMenu#PANEL");
 
 		Portlet.shutdownServer();
 
@@ -48,13 +48,13 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		var key_panel = "Applications";
+		AssertElementPresent(
+			key_panel = "Applications",
+			locator1 = "ApplicationsMenu#PANEL");
 
-		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
-
-		var key_panel = "Commerce";
-
-		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+		AssertElementPresent(
+			key_panel = "Commerce",
+			locator1 = "ApplicationsMenu#PANEL");
 
 		Portlet.shutdownServer();
 
@@ -66,13 +66,13 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		var key_panel = "Commerce";
+		AssertElementPresent(
+			key_panel = "Applications",
+			locator1 = "ApplicationsMenu#PANEL");
 
-		AssertElementNotPresent(locator1 = "ApplicationsMenu#PANEL");
-
-		var key_panel = "Applications";
-
-		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
+		AssertElementNotPresent(
+			key_panel = "Commerce",
+			locator1 = "ApplicationsMenu#PANEL");
 	}
 
 	@priority = "5"
@@ -82,13 +82,13 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		var key_panel = "Applications";
+		AssertElementPresent(
+			key_panel = "Applications",
+			locator1 = "ApplicationsMenu#PANEL");
 
-		AssertElementPresent(locator1 = "ApplicationsMenu#PANEL");
-
-		var key_panel = "Commerce";
-
-		AssertElementNotPresent(locator1 = "ApplicationsMenu#PANEL");
+		AssertElementNotPresent(
+			key_panel = "Commerce",
+			locator1 = "ApplicationsMenu#PANEL");
 	}
 
 	@priority = "5"

@@ -112,8 +112,7 @@ public class ServiceAccessPolicyCommerceHealthHttpStatus
 
 		for (SAPEntry sapEntry : companySAPEntries) {
 			if (Objects.equals(
-					sapEntry.getName(),
-					CommerceSAPConstants.COMMERCE_SAP_ENTRY_NAME)) {
+					sapEntry.getName(), CommerceSAPConstants.SAP_ENTRY_NAME)) {
 
 				String[] sapEntryObjectArray =
 					CommerceSAPConstants.SAP_ENTRY_OBJECT_ARRAYS[0];
@@ -186,8 +185,7 @@ public class ServiceAccessPolicyCommerceHealthHttpStatus
 
 		for (SAPEntry sapEntry : companySAPEntries) {
 			if (Objects.equals(
-					sapEntry.getName(),
-					CommerceSAPConstants.COMMERCE_SAP_ENTRY_NAME)) {
+					sapEntry.getName(), CommerceSAPConstants.SAP_ENTRY_NAME)) {
 
 				_sapEntryLocalService.deleteSAPEntry(sapEntry);
 			}

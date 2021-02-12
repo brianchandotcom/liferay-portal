@@ -40,11 +40,11 @@ public class CommerceSAPConstants {
 	public static final String CLASS_NAME_COMMERCE_SEARCH_RESOURCE =
 		"com.liferay.commerce.frontend.internal.search.CommerceSearchResource";
 
-	public static final String COMMERCE_SAP_ENTRY_NAME = "COMMERCE_DEFAULT";
+	public static final String SAP_ENTRY_NAME = "COMMERCE_DEFAULT";
 
 	public static final String[][] SAP_ENTRY_OBJECT_ARRAYS = {
 		{
-			COMMERCE_SAP_ENTRY_NAME,
+			SAP_ENTRY_NAME,
 			StringBundler.concat(
 				CommerceAccountService.class.getName(), "#getCommerceAccount\n",
 				CommerceCountryService.class.getName(),

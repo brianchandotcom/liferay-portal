@@ -333,8 +333,8 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Date",
-			fieldName = "Date",
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
 		DataEngine.editFieldTip(
@@ -342,8 +342,8 @@ definition {
 			fieldHelp = "Text Field Help Text");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Date",
-			fieldHelp = "Date Field Help Text");
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Numeric Field Help Text");
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",
@@ -358,16 +358,16 @@ definition {
 			fieldFieldLabelEdit = "Texto");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Date",
-			fieldFieldLabelEdit = "Encontro");
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numérica");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Texto",
 			fieldHelp = "Texto de ajuda do campo de texto");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Encontro",
-			fieldHelp = "Texto de ajuda do campo de data");
+			fieldFieldLabel = "Numérica",
+			fieldHelp = "Texto de ajuda do campo numérico");
 
 		DataEngine.duplicate(fieldsGroupLabel = "Grupo de Campos");
 
@@ -383,7 +383,7 @@ definition {
 			key_fieldFieldLabel = "Fields Group",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Text,Date") {
+		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldsGroupLabel = "Fields Group",
@@ -394,21 +394,21 @@ definition {
 			key_fieldFieldLabel = "Copy of Fields Group",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Copy of Text,Copy of Date") {
+		for (var fieldFieldLabel : list "Copy of Text,Copy of Numeric") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldsGroupLabel = "Copy of Fields Group",
 				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
 		}
 
-		for (var fieldFieldLabel : list "Text,Date") {
+		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertTextEquals(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
 				value1 = "${fieldFieldLabel} Field Help Text");
 		}
 
-		for (var fieldFieldLabel : list "Text,Date") {
+		for (var fieldFieldLabel : list "Text,Numeric") {
 			AssertTextEquals(
 				key_fieldFieldLabel = "Copy of ${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
@@ -425,7 +425,7 @@ definition {
 			key_fieldFieldLabel = "Grupo de Campos",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Texto,Encontro") {
+		for (var fieldFieldLabel : list "Texto,Numérica") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldsGroupLabel = "Grupo de Campos",
@@ -436,7 +436,7 @@ definition {
 			key_fieldFieldLabel = "Copy of Grupo de Campos",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Copy of Texto,Copy of Encontro") {
+		for (var fieldFieldLabel : list "Copy of Texto,Copy of Numérica") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldsGroupLabel = "Copy of Grupo de Campos",
@@ -450,11 +450,11 @@ definition {
 				value1 = "Texto de ajuda do campo de texto");
 		}
 
-		for (var fieldFieldLabel : list "Encontro,Copy of Encontro") {
+		for (var fieldFieldLabel : list "Numérica,Copy of Numérica") {
 			AssertTextEquals(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
-				value1 = "Texto de ajuda do campo de data");
+				value1 = "Texto de ajuda do campo numérico");
 		}
 	}
 

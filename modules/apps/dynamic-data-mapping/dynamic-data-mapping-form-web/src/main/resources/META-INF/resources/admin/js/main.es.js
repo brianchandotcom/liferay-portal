@@ -36,12 +36,6 @@ import FormURL from './util/FormURL.es';
 import Notifications from './util/Notifications.es';
 import StateSyncronizer from './util/StateSyncronizer.es';
 
-const NAV_ITEMS = {
-	FORM: 0,
-	REPORT: 2,
-	RULES: 1,
-};
-
 /**
  * Form.
  * @extends Component
@@ -52,7 +46,7 @@ class Form extends Component {
 		const {store} = this.refs;
 		const {namespace, published, showPublishAlert} = this.props;
 
-		const {activeNavItem, paginationMode} = this.state;
+		const {paginationMode} = this.state;
 
 
 		this._eventHandler = new EventHandler();
@@ -61,8 +55,6 @@ class Form extends Component {
 
 		if (this.isFormBuilderView()) {
 			dependencies.push(this._getSettingsDDMForm());
-
-			this.syncActiveNavItem(activeNavItem);
 		}
 
 		Promise.all(dependencies).then(([settingsDDMForm]) => {
@@ -92,13 +84,6 @@ class Form extends Component {
 				this._autoSave.on('autosaved', this._updateAutoSaveMessage)
 			);
 		});
-
-		this._formNavClickEventHandler = delegate(
-			document.body,
-			'click',
-			'.forms-navigation-bar li',
-			this._handleFormNavClicked
-		);
 
 		const previewButton = document.querySelector('.lfr-ddm-preview-button');
 
@@ -143,13 +128,6 @@ class Form extends Component {
 			else {
 				this._showUnpublishedAlert();
 			}
-		}
-
-		if (
-			activeNavItem === NAV_ITEMS.FORM &&
-			!this._pageHasFields(store.getPages(), store.state.activePage)
-		) {
-			this.openSidebar();
 		}
 
 		store.on('fieldDuplicated', () => this.openSidebar());
@@ -207,7 +185,6 @@ class Form extends Component {
 		);
 
 		this._createFormURL = this._createFormURL.bind(this);
-		this._handleFormNavClicked = this._handleFormNavClicked.bind(this);
 		this._handlePaginationModeChanded = this._handlePaginationModeChanded.bind(
 			this
 		);
@@ -229,7 +206,6 @@ class Form extends Component {
 		Notifications.closeAlert();
 
 		this._backButtonClickEventHandler.dispose();
-		this._formNavClickEventHandler.dispose();
 
 		this._eventHandler.removeAllListeners();
 
@@ -265,18 +241,6 @@ class Form extends Component {
 		const {view} = this.props;
 
 		return view !== 'fieldSets';
-	}
-
-	isShowRuleBuilder() {
-		const {activeNavItem} = this.state;
-
-		return activeNavItem === NAV_ITEMS.RULES && this.isFormBuilderView();
-	}
-
-	isShowReport() {
-		const {activeNavItem} = this.state;
-
-		return activeNavItem === NAV_ITEMS.REPORT && this.isFormBuilderView();
 	}
 
 	openSidebar() {
@@ -480,38 +444,10 @@ class Form extends Component {
 		submitForm(document.querySelector(`#${namespace}editForm`));
 	}
 
-	syncActiveNavItem(activeNavItem) {
-		switch (activeNavItem) {
-			case NAV_ITEMS.FORM:
-				this._toggleRulesBuilder(false);
-				this._toggleReport(false);
-				break;
-
-			case NAV_ITEMS.RULES:
-				this._toggleReport(false);
-				this._toggleRulesBuilder(true);
-				break;
-
-			case NAV_ITEMS.REPORT:
-				this._toggleRulesBuilder(false);
-				this._toggleReport(true);
-				break;
-
-			default:
-				break;
-		}
-	}
-
 	unpublish(event) {
 		this.props.published = false;
 
 		return this._savePublished(event, false);
-	}
-
-	_activeNavItemValueFn() {
-		const {context} = this.props;
-
-		return context.activeNavItem || NAV_ITEMS.FORM;
 	}
 
 	_createFormBuilder() {
@@ -602,24 +538,6 @@ class Form extends Component {
 		event.stopPropagation();
 
 		window.location.href = href;
-	}
-
-	_handleFormNavClicked(event) {
-		const {delegateTarget} = event;
-		const navItem = delegateTarget.closest('.nav-item');
-		const navItemIndex = Number(navItem.dataset.navItemIndex);
-		const navLink = navItem.querySelector('.nav-link');
-
-		document
-			.querySelector('.forms-navigation-bar li > .active')
-			.classList.remove('active');
-		navLink.classList.add('active');
-
-		this.setState({
-			activeNavItem: navItemIndex,
-		});
-
-		this.syncActiveNavItem(this.state.activeNavItem);
 	}
 
 	_handlePaginationModeChanded({newVal}) {
@@ -816,14 +734,6 @@ class Form extends Component {
 		};
 	}
 
-	_setSearchParamsWithoutPageReload(name, value) {
-		const url = new URL(location.toString());
-
-		url.searchParams.set(name, value);
-
-		window.history.replaceState({path: url.toString()}, '', url.toString());
-	}
-
 	_showPublishedAlert(publishURL) {
 		const message = Liferay.Language.get(
 			'the-form-was-published-successfully-access-it-with-this-url-x'
@@ -841,41 +751,6 @@ class Form extends Component {
 		Notifications.showAlert(
 			Liferay.Language.get('the-form-was-unpublished-successfully')
 		);
-	}
-
-	_toggleReport(show) {
-		const formReport = document.querySelector(
-			'#container-portlet-ddm-form-report'
-		);
-
-		if (!formReport) {
-			return;
-		}
-
-		if (show) {
-			const {namespace} = this.props;
-
-			this._setSearchParamsWithoutPageReload(
-				`${namespace}activeNavItem`,
-				NAV_ITEMS.REPORT
-			);
-
-			formReport.classList.remove('hide');
-		}
-		else {
-			formReport.classList.add('hide');
-		}
-	}
-
-	_toggleRulesBuilder(show) {
-		const {namespace} = this.props;
-
-		if (show) {
-			this._setSearchParamsWithoutPageReload(
-				`${namespace}activeNavItem`,
-				NAV_ITEMS.RULES
-			);
-		}
 	}
 
 	_updateAutoSaveMessage({modifiedDate, savedAsDraft}) {
@@ -1142,16 +1017,6 @@ Form.PROPS = {
 };
 
 Form.STATE = {
-
-	/**
-	 * Current active tab index.
-	 * @default _activeNavItemValueFn
-	 * @instance
-	 * @memberof Form
-	 * @type {!number}
-	 */
-
-	activeNavItem: Config.number().valueFn('_activeNavItemValueFn'),
 
 	/**
 	 * Internal mirror of the pages state

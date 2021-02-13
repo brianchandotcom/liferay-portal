@@ -64,6 +64,10 @@ definition {
 		property commerce.enabled = "true";
 		property deploy.lcs.token.file = "true";
 
+		Pause(locator1 = "60000");
+
+		AssertConsoleTextNotPresent(value1 = "Processing license.xml");
+
 		CommerceLicense.executeSmoke();
 	}
 

@@ -219,6 +219,28 @@ function EditBlueprintForm({
 		});
 	}, []);
 
+	const _handleFocusElement = (prefixedId) => {
+		const element = document.getElementById(prefixedId);
+
+		if (element) {
+			window.scrollTo({
+				behavior: 'smooth',
+				top:
+					element.getBoundingClientRect().top +
+					window.pageYOffset -
+					55 - // Control menu height
+					104 - // Page toolbar height
+					20, // Additional padding
+			});
+
+			element.classList.remove('focus');
+
+			void element.offsetWidth; // Triggers reflow to restart animation
+
+			element.classList.add('focus');
+		}
+	};
+
 	const _handleFrameworkConfigChange = (value) => {
 		setFrameworkConfig({...frameworkConfig, ...value});
 	};
@@ -368,6 +390,7 @@ function EditBlueprintForm({
 							loading={previewInfo.loading}
 							onClose={() => setShowPreview(false)}
 							onFetchResults={_handleFetchPreviewSearch}
+							onFocusElement={_handleFocusElement}
 							results={previewInfo.results}
 							visible={showPreview}
 						/>
@@ -436,30 +459,20 @@ function EditBlueprintForm({
 						small
 					>
 						{Liferay.Language.get('preview')}
+
+						{previewInfo.results.errors &&
+							!!previewInfo.results.errors.length && (
+								<span className="inline-item inline-item-after">
+									<ClayBadge
+										displayType="danger"
+										label={
+											previewInfo.results.errors.length
+										}
+									/>
+								</span>
+							)}
 					</ClayButton>
 				</ClayToolbar.Item>
-
-				{previewInfo.results.errors &&
-					!!previewInfo.results.errors.length && (
-						<ClayToolbar.Item>
-							<ClayButton
-								displayType="unstyled"
-								onClick={() => {
-									setShowSidebar(false);
-									setShowPreview(!showPreview);
-								}}
-							>
-								<ClayBadge
-									displayType="danger"
-									label={previewInfo.results.errors.length}
-									onClick={() => {
-										setShowSidebar(false);
-										setShowPreview(!showPreview);
-									}}
-								/>
-							</ClayButton>
-						</ClayToolbar.Item>
-					)}
 			</PageToolbar>
 
 			{_renderTabContent()}

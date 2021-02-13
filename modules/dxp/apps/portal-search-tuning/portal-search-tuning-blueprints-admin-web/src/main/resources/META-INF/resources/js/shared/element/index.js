@@ -45,6 +45,7 @@ function Element({
 	initialUIConfigurationValues = {},
 	onDeleteElement,
 	onUpdateElement = () => {},
+	prefixedId,
 	uiConfigurationJSON,
 	uiConfigurationValues,
 }) {
@@ -223,9 +224,10 @@ function Element({
 
 	return (
 		<div
-			className={getCN('configuration-element-sheet', 'sheet', {
+			className={getCN('element', 'sheet', {
 				disabled: !elementTemplateJSON.enabled,
 			})}
+			id={prefixedId}
 		>
 			<ClayList className="configuration-header-list">
 				<ClayList.Item flex>

@@ -56,7 +56,7 @@ function JSONElement({
 	}
 
 	return (
-		<div className="configuration-element-sheet sheet">
+		<div className="element sheet">
 			{useMemo(() => {
 				return (
 					<ClayList className="configuration-header-list">

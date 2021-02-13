@@ -1,4 +1,4 @@
-.configuration-element-sheet {
+.element {
 	margin-bottom: 1rem;
 	padding: 0;
 
@@ -12,6 +12,25 @@
 		.configuration-header-list .sticker {
 			color: $mainLighten52;
 		}
+	}
+
+	@keyframes focusOutline {
+		0% {
+			background-color: $primaryL4;
+			box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primaryL2;
+		}
+		25% {
+			background-color: $primaryL4;
+			box-shadow: 0 0 0 0.125rem $white, 0 0 0 0.25rem $primaryL2;
+		}
+		100% {
+			background-color: $white;
+			box-shadow: 0;
+		}
+	}
+
+	&.focus {
+		animation: focusOutline 3s forwards;
 	}
 
 	&:hover {
@@ -185,6 +204,10 @@
 
 	.json-configuration-editor {
 		margin: 0 24px 24px;
+	}
+
+	.list-group-item {
+		background-color: transparent;
 	}
 
 	.toggle-switch {

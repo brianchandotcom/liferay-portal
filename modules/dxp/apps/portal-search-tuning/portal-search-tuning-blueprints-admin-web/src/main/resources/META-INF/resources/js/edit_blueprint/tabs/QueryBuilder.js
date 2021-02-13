@@ -24,6 +24,7 @@ import React, {useContext, useState} from 'react';
 import JSONElement from '../../shared/JSONElement';
 import ThemeContext from '../../shared/ThemeContext';
 import Element from '../../shared/element/index';
+import {ELEMENT_PREFIX} from '../../utils/constants';
 import {getElementOutput} from '../../utils/utils';
 import SelectAssetTypes from './SelectAssetTypes';
 
@@ -118,6 +119,7 @@ function QueryBuilder({
 							key={element.id}
 							onDeleteElement={onDeleteElement}
 							onUpdateElement={onUpdateElement}
+							prefixedId={`${ELEMENT_PREFIX.QUERY}-${element.id}`}
 							uiConfigurationJSON={element.uiConfigurationJSON}
 							uiConfigurationValues={
 								element.uiConfigurationValues

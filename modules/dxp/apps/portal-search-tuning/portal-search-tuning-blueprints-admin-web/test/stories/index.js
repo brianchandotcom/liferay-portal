@@ -123,9 +123,6 @@ storiesOf('Pages|BlueprintForm', module)
 				}),
 				searchResultsURL:
 					'https://run.mocky.io/v3/95b30f66-4522-418e-ba40-71eb1b5c1a03',
-
-				//https://designer.mocky.io/manage/delete/95b30f66-4522-418e-ba40-71eb1b5c1a03/f8ctzJrC4gglml9Sttuv62PA6Xjx33x3Faa3
-
 			}}
 		/>
 	))
@@ -148,12 +145,19 @@ storiesOf('Pages|BlueprintForm', module)
 			props={{
 				...BLUEPRINT_FORM_PROPS,
 				initialSelectedElementsString: JSON.stringify({
-					query_configuration: [],
+					query_configuration: [
+						SELECTED_ELEMENTS[3],
+						SELECTED_ELEMENTS[4],
+						SELECTED_ELEMENTS[5],
+						SELECTED_ELEMENTS[0],
+						SELECTED_ELEMENTS[1],
+						SELECTED_ELEMENTS[2],
+					],
 				}),
 				searchResultsURL:
-					'https://run.mocky.io/v3/5db6f9e6-2d66-4b74-8105-01a70b3a0b3c',
+					'https://run.mocky.io/v3/177e9f6b-d921-4b92-9f64-c7eb684b8300',
 
-				// https://designer.mocky.io/manage/delete/5db6f9e6-2d66-4b74-8105-01a70b3a0b3c/Sv0oPKexG9Yy1N7G5dj4Ou7Kw8bgcAGU40k8
+				// { "errors": [ { "className": "com.liferay.portal.search.tuning.blueprints.engine.internal.condition.visitor.InRangeVisitor", "elementId": "queryElement-0", "localizationKey": "core.error.clause-condition-date-parsing-error", "msg": "Illegal pattern character 'x'", "rootObject": { "evaluation_type": "in_range", "date_format": "yyyyMMddx", "parameter_name": "${time.current_date}", "value": [ 20210228, 20210302 ] }, "rootProperty": null, "rootValue": "[20210228,20210302]", "severity": "ERROR", "throwable": { "cause": null, "localizedMessage": "Illegal pattern character 'x'", "message": "Illegal pattern character 'x'" } } ] }
 
 			}}
 		/>
@@ -328,8 +332,61 @@ storiesOf('Components|Preview', module)
 			results={{
 				errors: [
 					{
-						msg: 'The JSON is invalid',
+						className:
+							'com.liferay.portal.search.tuning.blueprints.engine.internal.searchrequest.QuerySearchRequestBodyContributor',
+						localizationKey: 'core.error.unknown-occur-value',
+						msg:
+							'No enum constant com.liferay.portal.search.tuning.blueprints.constants.json.values.Occur.FILTERED',
+						rootObject: {
+							context: 'query',
+							occur: 'filtered',
+							query: {
+								query: {
+									range: {
+										createDate: {
+											from: '',
+											include_lower: true,
+											include_upper: true,
+											to: '',
+										},
+									},
+								},
+							},
+							type: 'wrapper',
+						},
+						rootProperty: null,
+						rootValue: 'FILTERED',
 						severity: 'ERROR',
+						throwable: {
+							cause: null,
+							localizedMessage:
+								'No enum constant com.liferay.portal.search.tuning.blueprints.constants.json.values.Occur.FILTERED',
+							message:
+								'No enum constant com.liferay.portal.search.tuning.blueprints.constants.json.values.Occur.FILTERED',
+						},
+					},
+					{
+						className:
+							'com.liferay.portal.search.tuning.blueprints.engine.internal.searchrequest.QuerySearchRequestBodyContributor',
+						localizationKey: 'core.error.unknown-clause-context',
+						msg:
+							'No enum constant com.liferay.portal.search.tuning.blueprints.constants.json.values.ClauseContext.QUERYS',
+						rootObject: {
+							context: 'querys',
+							occur: 'filter',
+							query: {},
+							type: 'wrapper',
+						},
+						rootProperty: null,
+						rootValue: 'QUERYS',
+						severity: 'ERROR',
+						throwable: {
+							cause: null,
+							localizedMessage:
+								'No enum constant com.liferay.portal.search.tuning.blueprints.constants.json.values.ClauseContext.QUERYS',
+							message:
+								'No enum constant com.liferay.portal.search.tuning.blueprints.constants.json.values.ClauseContext.QUERYS',
+						},
 					},
 				],
 			}}

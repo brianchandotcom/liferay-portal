@@ -99,17 +99,14 @@ describe('EditBlueprint', () => {
 	it('adds additional query element from sidebar', () => {
 		const {container, getByLabelText} = renderEditBlueprint();
 
-		const elementCountBefore = container.querySelectorAll(
-			'.configuration-element-sheet'
-		).length;
+		const elementCountBefore = container.querySelectorAll('.element')
+			.length;
 
 		fireEvent.mouseOver(container.querySelectorAll('.list-group-title')[1]);
 
 		fireEvent.click(getByLabelText('add'));
 
-		const elementCountAfter = container.querySelectorAll(
-			'.configuration-element-sheet'
-		).length;
+		const elementCountAfter = container.querySelectorAll('.element').length;
 
 		expect(elementCountAfter).toBe(elementCountBefore + 1);
 	});
@@ -129,17 +126,14 @@ describe('EditBlueprint', () => {
 			}),
 		});
 
-		const elementCountBefore = container.querySelectorAll(
-			'.configuration-element-sheet'
-		).length;
+		const elementCountBefore = container.querySelectorAll('.element')
+			.length;
 
 		fireEvent.click(getAllByLabelText('dropdown')[0]);
 
 		fireEvent.click(getAllByText('remove')[0]);
 
-		const elementCountAfter = container.querySelectorAll(
-			'.configuration-element-sheet'
-		).length;
+		const elementCountAfter = container.querySelectorAll('.element').length;
 
 		expect(elementCountAfter).toBe(elementCountBefore - 1);
 	});

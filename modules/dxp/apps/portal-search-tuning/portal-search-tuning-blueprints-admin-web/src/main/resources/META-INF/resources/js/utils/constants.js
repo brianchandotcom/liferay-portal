@@ -10,3 +10,7 @@
  */
 
 export const CONFIG_PREFIX = 'configuration';
+
+export const ELEMENT_PREFIX = {
+	QUERY: 'queryElement',
+};

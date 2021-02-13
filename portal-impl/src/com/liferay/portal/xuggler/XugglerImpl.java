@@ -97,8 +97,7 @@ public class XugglerImpl implements Xuggler {
 
 		Map<String, String> priorities = Log4JUtil.getPriorities();
 
-		String priority = priorities.get(
-			JNILibraryLoader.class.getName());
+		String priority = priorities.get(JNILibraryLoader.class.getName());
 
 		if (Validator.isNull(priority)) {
 			priority = "ALL";

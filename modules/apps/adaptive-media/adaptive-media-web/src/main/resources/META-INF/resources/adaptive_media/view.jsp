@@ -21,6 +21,7 @@ AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMMana
 %>
 
 <clay:management-toolbar
+	clearResultsURL="<%= amManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= amManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= amManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= amManagementToolbarDisplayContext.getFilterDropdownItems() %>"

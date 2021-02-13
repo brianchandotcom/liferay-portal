@@ -51,6 +51,10 @@ public class AMManagementToolbarDisplayContext {
 		_currentURLObj = currentURLObj;
 	}
 
+	public String getClearResultsURL() {
+		return String.valueOf(getPortletURL());
+	}
+
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
@@ -97,6 +101,14 @@ public class AMManagementToolbarDisplayContext {
 					LanguageUtil.get(_httpServletRequest, entriesNavigation));
 			}
 		).build();
+	}
+
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("entriesNavigation", (String)null);
+
+		return portletURL;
 	}
 
 	public List<AMImageConfigurationEntry> getSelectedConfigurationEntries() {

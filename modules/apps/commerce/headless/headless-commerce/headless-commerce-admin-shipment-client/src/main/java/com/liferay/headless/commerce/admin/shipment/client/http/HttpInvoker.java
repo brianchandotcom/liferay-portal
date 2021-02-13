@@ -132,12 +132,14 @@ public class HttpInvoker {
 		return this;
 	}
 
-	public HttpInvoker path(String path, Object... values) {
-		for (int i = 0; (values != null) && (i < values.length); i++) {
-			path = path.replaceFirst("\\{.*?\\}", String.valueOf(values[i]));
-		}
-
+	public HttpInvoker path(String path) {
 		_path = path;
+
+		return this;
+	}
+
+	public HttpInvoker path(String name, Object value) {
+		_path = _path.replaceFirst("\\{" + name + "\\}", String.valueOf(value));
 
 		return this;
 	}

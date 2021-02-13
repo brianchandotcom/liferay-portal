@@ -191,8 +191,9 @@ public interface ShipmentItemResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}",
-				shipmentItemId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}");
+
+			httpInvoker.path("shipmentItemId", shipmentItemId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -310,8 +311,9 @@ public interface ShipmentItemResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}",
-				shipmentItemId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}");
+
+			httpInvoker.path("shipmentItemId", shipmentItemId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -376,8 +378,9 @@ public interface ShipmentItemResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}",
-				shipmentItemId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipment-items/{shipmentItemId}");
+
+			httpInvoker.path("shipmentItemId", shipmentItemId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -447,8 +450,9 @@ public interface ShipmentItemResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items",
-				shipmentId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items");
+
+			httpInvoker.path("shipmentId", shipmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -513,8 +517,9 @@ public interface ShipmentItemResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items",
-				shipmentId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/items");
+
+			httpInvoker.path("shipmentId", shipmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

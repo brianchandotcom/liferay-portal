@@ -418,8 +418,9 @@ public interface ShipmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}",
-				shipmentId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}");
+
+			httpInvoker.path("shipmentId", shipmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -534,8 +535,9 @@ public interface ShipmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}",
-				shipmentId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}");
+
+			httpInvoker.path("shipmentId", shipmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -599,8 +601,9 @@ public interface ShipmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}",
-				shipmentId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}");
+
+			httpInvoker.path("shipmentId", shipmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -664,8 +667,9 @@ public interface ShipmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/status-delivered",
-				shipmentId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/status-delivered");
+
+			httpInvoker.path("shipmentId", shipmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -729,8 +733,9 @@ public interface ShipmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/status-finish-processing",
-				shipmentId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/status-finish-processing");
+
+			httpInvoker.path("shipmentId", shipmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -794,8 +799,9 @@ public interface ShipmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/status-shipped",
-				shipmentId);
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/{shipmentId}/status-shipped");
+
+			httpInvoker.path("shipmentId", shipmentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser;
 import com.google.common.collect.Lists;
 import com.google.common.io.CountingInputStream;
 
-import com.liferay.jenkins.results.parser.spira.SpiraRelease;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -782,19 +780,7 @@ public class JenkinsResultsParserUtil {
 		return new File(buildProperties.getProperty("base.repository.dir"));
 	}
 
-	public static String getBuildID(
-		String topLevelBuildURL, String testSuiteName) {
-
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get build.properties", ioException);
-		}
-
+	public static String getBuildID(String topLevelBuildURL) {
 		Matcher matcher = _topLevelBuildURLPattern.matcher(topLevelBuildURL);
 
 		matcher.find();
@@ -807,10 +793,19 @@ public class JenkinsResultsParserUtil {
 
 		sb.append(String.format("%02d", Integer.parseInt(masterNumber)));
 
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build.properties", ioException);
+		}
+
 		sb.append(
 			buildProperties.getProperty(
-				"spira.release.id[" + matcher.group("jobName") + "][" +
-					testSuiteName + "]"));
+				"job.id[" + matcher.group("jobName") + "]"));
 
 		sb.append("_");
 		sb.append(matcher.group("buildNumber"));
@@ -956,10 +951,33 @@ public class JenkinsResultsParserUtil {
 		sb.append(Integer.parseInt(matcher.group("masterNumber")));
 		sb.append(".liferay.com/job/");
 
-		sb.append(
-			SpiraRelease.getJobNameByID(
-				Integer.parseInt(matcher.group("spiraReleaseID"))));
+		String jobName = null;
 
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build.properties", ioException);
+		}
+
+		for (String propertyName : buildProperties.stringPropertyNames()) {
+			if (propertyName.startsWith("job.id[")) {
+				String propertyValue = buildProperties.getProperty(
+					propertyName);
+
+				if (propertyValue.equals(matcher.group("jobID"))) {
+					jobName = propertyName.substring(
+						7, propertyName.length() - 1);
+
+					break;
+				}
+			}
+		}
+
+		sb.append(jobName);
 		sb.append("/");
 		sb.append(matcher.group("buildNumber"));
 
@@ -4154,7 +4172,7 @@ public class JenkinsResultsParserUtil {
 
 	private static final Pattern _buildIDPattern = Pattern.compile(
 		"(?<cohortNumber>[\\d]{1})(?<masterNumber>[\\d]{2})" +
-			"(?<spiraReleaseID>[\\d]+)_(?<buildNumber>[\\d]+)");
+			"(?<jobID>[\\d]+)_(?<buildNumber>[\\d]+)");
 	private static final Hashtable<Object, Object> _buildProperties =
 		new Hashtable<>();
 	private static String[] _buildPropertiesURLs;

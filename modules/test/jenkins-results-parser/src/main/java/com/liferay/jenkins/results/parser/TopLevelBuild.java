@@ -1424,8 +1424,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 					"General-Commands",
 			"reevaluation");
 
-		String buildID = JenkinsResultsParserUtil.getBuildID(
-			getBuildURL(), getTestSuiteName());
+		String buildID = JenkinsResultsParserUtil.getBuildID(getBuildURL());
 
 		Element preElement = Dom4JUtil.getNewElement(
 			"pre", null, "ci:reevaluate:" + buildID);

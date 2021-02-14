@@ -16,12 +16,8 @@ package com.liferay.dispatch.web.internal.display.context;
 
 import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger;
 import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTriggerHelper;
-import com.liferay.dispatch.web.internal.display.context.util.DispatchRequestHelper;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.TriggerState;
@@ -37,64 +33,23 @@ import java.util.List;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Matija Petanjek
  */
-public class ScheduledTaskDispatchTriggerDisplayContext {
+public class ScheduledTaskDispatchTriggerDisplayContext
+	extends BaseDispatchTriggerDisplayContext {
 
 	public ScheduledTaskDispatchTriggerDisplayContext(
 		RenderRequest renderRequest,
 		ScheduledTaskDispatchTriggerHelper scheduledTaskDispatchTriggerHelper) {
 
-		_dispatchRequestHelper = new DispatchRequestHelper(renderRequest);
+		super(renderRequest);
 
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			_dispatchRequestHelper.getLocale());
+			dispatchRequestHelper.getLocale());
 
 		_scheduledTaskDispatchTriggerHelper =
 			scheduledTaskDispatchTriggerHelper;
-	}
-
-	public List<NavigationItem> getNavigationItems() {
-		HttpServletRequest httpServletRequest =
-			_dispatchRequestHelper.getRequest();
-
-		LiferayPortletResponse liferayPortletResponse =
-			_dispatchRequestHelper.getLiferayPortletResponse();
-
-		String tabs1 = ParamUtil.getString(
-			httpServletRequest, "tabs1", "dispatch-trigger");
-
-		return NavigationItemList.of(
-			() -> {
-				NavigationItem navigationItem = new NavigationItem();
-
-				navigationItem.setActive(tabs1.equals("dispatch-trigger"));
-				navigationItem.setHref(
-					liferayPortletResponse.createRenderURL(), "tabs1",
-					"dispatch-trigger");
-				navigationItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "dispatch-triggers"));
-
-				return navigationItem;
-			},
-			() -> {
-				NavigationItem navigationItem = new NavigationItem();
-
-				navigationItem.setActive(
-					tabs1.equals("liferay-scheduled-task"));
-				navigationItem.setHref(
-					liferayPortletResponse.createRenderURL(), "tabs1",
-					"liferay-scheduled-task", "mvcRenderCommandName",
-					"/dispatch/edit_scheduled_task_dispatch_trigger");
-				navigationItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "liferay-scheduled-tasks"));
-
-				return navigationItem;
-			});
 	}
 
 	public String getNextFireDateString(
@@ -117,31 +72,31 @@ public class ScheduledTaskDispatchTriggerDisplayContext {
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(),
+			dispatchRequestHelper.getRequest(),
 			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "start-date");
 	}
 
 	public String getOrderByType() {
 		return ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(),
+			dispatchRequestHelper.getRequest(),
 			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
 	}
 
 	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
-			_dispatchRequestHelper.getLiferayPortletResponse();
+			dispatchRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		String delta = ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(), "delta");
+			dispatchRequestHelper.getRequest(), "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(), "deltaEntry");
+			dispatchRequestHelper.getRequest(), "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
@@ -154,7 +109,7 @@ public class ScheduledTaskDispatchTriggerDisplayContext {
 		portletURL.setParameter("tabs1", "liferay-scheduled-task");
 
 		String redirect = ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(), "redirect");
+			dispatchRequestHelper.getRequest(), "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
@@ -169,7 +124,7 @@ public class ScheduledTaskDispatchTriggerDisplayContext {
 		}
 
 		_searchContainer = new SearchContainer<>(
-			_dispatchRequestHelper.getLiferayPortletRequest(), getPortletURL(),
+			dispatchRequestHelper.getLiferayPortletRequest(), getPortletURL(),
 			null, "no-items-were-found");
 
 		_searchContainer.setOrderByCol(getOrderByCol());
@@ -203,7 +158,6 @@ public class ScheduledTaskDispatchTriggerDisplayContext {
 	}
 
 	private final Format _dateFormatDateTime;
-	private final DispatchRequestHelper _dispatchRequestHelper;
 	private final ScheduledTaskDispatchTriggerHelper
 		_scheduledTaskDispatchTriggerHelper;
 	private SearchContainer<ScheduledTaskDispatchTrigger> _searchContainer;

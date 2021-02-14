@@ -18,9 +18,6 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
-import com.liferay.dispatch.web.internal.display.context.util.DispatchRequestHelper;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -44,26 +41,25 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author guywandji
  * @author Alessio Antonio Rendina
  */
-public class DispatchTriggerDisplayContext {
+public class DispatchTriggerDisplayContext
+	extends BaseDispatchTriggerDisplayContext {
 
 	public DispatchTriggerDisplayContext(
 		DispatchTaskExecutorRegistry dispatchTaskExecutorRegistry,
 		DispatchTriggerLocalService dispatchTriggerLocalService,
 		RenderRequest renderRequest) {
 
+		super(renderRequest);
+
 		_dispatchTaskExecutorRegistry = dispatchTaskExecutorRegistry;
 		_dispatchTriggerLocalService = dispatchTriggerLocalService;
 
-		_dispatchRequestHelper = new DispatchRequestHelper(renderRequest);
-
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			_dispatchRequestHelper.getLocale());
+			dispatchRequestHelper.getLocale());
 	}
 
 	public String getDispatchTaskExecutorName(
@@ -88,47 +84,7 @@ public class DispatchTriggerDisplayContext {
 	}
 
 	public DispatchTrigger getDispatchTrigger() {
-		return _dispatchRequestHelper.getDispatchTrigger();
-	}
-
-	public List<NavigationItem> getNavigationItems() {
-		HttpServletRequest httpServletRequest =
-			_dispatchRequestHelper.getRequest();
-
-		LiferayPortletResponse liferayPortletResponse =
-			_dispatchRequestHelper.getLiferayPortletResponse();
-
-		String tabs1 = ParamUtil.getString(
-			httpServletRequest, "tabs1", "dispatch-trigger");
-
-		return NavigationItemList.of(
-			() -> {
-				NavigationItem navigationItem = new NavigationItem();
-
-				navigationItem.setActive(tabs1.equals("dispatch-trigger"));
-				navigationItem.setHref(
-					liferayPortletResponse.createRenderURL(), "tabs1",
-					"dispatch-trigger");
-				navigationItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "dispatch-triggers"));
-
-				return navigationItem;
-			},
-			() -> {
-				NavigationItem navigationItem = new NavigationItem();
-
-				navigationItem.setActive(
-					tabs1.equals("liferay-scheduled-task"));
-				navigationItem.setHref(
-					liferayPortletResponse.createRenderURL(), "tabs1",
-					"liferay-scheduled-task", "mvcRenderCommandName",
-					"/dispatch/edit_scheduled_task_dispatch_trigger");
-				navigationItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "liferay-scheduled-tasks"));
-
-				return navigationItem;
-			});
+		return dispatchRequestHelper.getDispatchTrigger();
 	}
 
 	public String getNextFireDateString(long dispatchTriggerId)
@@ -146,31 +102,31 @@ public class DispatchTriggerDisplayContext {
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(),
+			dispatchRequestHelper.getRequest(),
 			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "modified-date");
 	}
 
 	public String getOrderByType() {
 		return ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(),
+			dispatchRequestHelper.getRequest(),
 			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
-			_dispatchRequestHelper.getLiferayPortletResponse();
+			dispatchRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		String delta = ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(), "delta");
+			dispatchRequestHelper.getRequest(), "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			_dispatchRequestHelper.getRequest(), "deltaEntry");
+			dispatchRequestHelper.getRequest(), "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
@@ -182,7 +138,7 @@ public class DispatchTriggerDisplayContext {
 	public RowChecker getRowChecker() {
 		if (_rowChecker == null) {
 			_rowChecker = new EmptyOnClickRowChecker(
-				_dispatchRequestHelper.getLiferayPortletResponse());
+				dispatchRequestHelper.getLiferayPortletResponse());
 		}
 
 		return _rowChecker;
@@ -196,7 +152,7 @@ public class DispatchTriggerDisplayContext {
 		}
 
 		_searchContainer = new SearchContainer<>(
-			_dispatchRequestHelper.getLiferayPortletRequest(), getPortletURL(),
+			dispatchRequestHelper.getLiferayPortletRequest(), getPortletURL(),
 			null, null);
 
 		_searchContainer.setEmptyResultsMessage("no-items-were-found");
@@ -207,13 +163,13 @@ public class DispatchTriggerDisplayContext {
 		_searchContainer.setRowChecker(getRowChecker());
 
 		int total = _dispatchTriggerLocalService.getDispatchTriggersCount(
-			_dispatchRequestHelper.getCompanyId());
+			dispatchRequestHelper.getCompanyId());
 
 		_searchContainer.setTotal(total);
 
 		List<DispatchTrigger> results =
 			_dispatchTriggerLocalService.getDispatchTriggers(
-				_dispatchRequestHelper.getCompanyId(),
+				dispatchRequestHelper.getCompanyId(),
 				_searchContainer.getStart(), _searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
@@ -222,7 +178,6 @@ public class DispatchTriggerDisplayContext {
 	}
 
 	private final Format _dateFormatDateTime;
-	private final DispatchRequestHelper _dispatchRequestHelper;
 	private final DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
 	private RowChecker _rowChecker;

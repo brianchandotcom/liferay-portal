@@ -30,7 +30,7 @@ DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDi
 	<c:when test='<%= tabs1.equals("dispatch-trigger") %>'>
 		<liferay-util:include page="/view_dispatch_trigger.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("liferay-scheduled-task") %>'>
+	<c:when test='<%= tabs1.equals("scheduled-task") %>'>
 		<liferay-util:include page="/view_scheduled_task.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>

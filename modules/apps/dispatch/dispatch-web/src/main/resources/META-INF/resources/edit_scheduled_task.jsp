@@ -22,7 +22,7 @@ ScheduledTaskDispatchTriggerDisplayContext scheduledTaskDispatchTriggerDisplayCo
 PortletURL portletURL = scheduledTaskDispatchTriggerDisplayContext.getPortletURL();
 
 portletURL.setParameter("searchContainerId", "liferayScheduledTasks");
-portletURL.setParameter("tabs1", "liferay-scheduled-task");
+portletURL.setParameter("tabs1", "scheduled-task");
 %>
 
 <clay:navigation-bar

@@ -62,15 +62,13 @@ public abstract class BaseDispatchTriggerDisplayContext {
 			() -> {
 				NavigationItem navigationItem = new NavigationItem();
 
-				navigationItem.setActive(
-					tabs1.equals("liferay-scheduled-task"));
+				navigationItem.setActive(tabs1.equals("scheduled-task"));
 				navigationItem.setHref(
 					liferayPortletResponse.createRenderURL(), "tabs1",
-					"liferay-scheduled-task", "mvcRenderCommandName",
+					"scheduled-task", "mvcRenderCommandName",
 					"/dispatch/edit_scheduled_task_dispatch_trigger");
 				navigationItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "liferay-scheduled-tasks"));
+					LanguageUtil.get(httpServletRequest, "scheduled-tasks"));
 
 				return navigationItem;
 			});

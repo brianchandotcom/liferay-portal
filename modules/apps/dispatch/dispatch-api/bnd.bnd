@@ -4,6 +4,7 @@ Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.dispatch.configuration,\
 	com.liferay.dispatch.constants,\
+	com.liferay.dispatch.core.scheduler,\
 	com.liferay.dispatch.exception,\
 	com.liferay.dispatch.executor,\
 	com.liferay.dispatch.model,\

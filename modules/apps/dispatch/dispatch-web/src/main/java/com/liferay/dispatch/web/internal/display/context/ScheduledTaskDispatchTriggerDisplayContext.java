@@ -14,32 +14,25 @@
 
 package com.liferay.dispatch.web.internal.display.context;
 
-import com.liferay.dispatch.executor.DispatchTaskExecutor;
-import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
-import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger;
+import com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTriggerHelper;
 import com.liferay.dispatch.web.internal.display.context.util.DispatchRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.Format;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -47,48 +40,21 @@ import javax.portlet.RenderRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author guywandji
- * @author Alessio Antonio Rendina
+ * @author Matija Petanjek
  */
-public class DispatchTriggerDisplayContext {
+public class ScheduledTaskDispatchTriggerDisplayContext {
 
-	public DispatchTriggerDisplayContext(
-		DispatchTaskExecutorRegistry dispatchTaskExecutorRegistry,
-		DispatchTriggerLocalService dispatchTriggerLocalService,
-		RenderRequest renderRequest) {
-
-		_dispatchTaskExecutorRegistry = dispatchTaskExecutorRegistry;
-		_dispatchTriggerLocalService = dispatchTriggerLocalService;
+	public ScheduledTaskDispatchTriggerDisplayContext(
+		RenderRequest renderRequest,
+		ScheduledTaskDispatchTriggerHelper scheduledTaskDispatchTriggerHelper) {
 
 		_dispatchRequestHelper = new DispatchRequestHelper(renderRequest);
 
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			_dispatchRequestHelper.getLocale());
-	}
 
-	public String getDispatchTaskExecutorName(
-		String dispatchTaskExecutorType, Locale locale) {
-
-		DispatchTaskExecutor dispatchTaskExecutor =
-			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
-				dispatchTaskExecutorType);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, dispatchTaskExecutor.getClass());
-
-		String name =
-			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutorName(
-				dispatchTaskExecutorType);
-
-		return LanguageUtil.get(resourceBundle, name);
-	}
-
-	public Set<String> getDispatchTaskExecutorTypes() {
-		return _dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
-	}
-
-	public DispatchTrigger getDispatchTrigger() {
-		return _dispatchRequestHelper.getDispatchTrigger();
+		_scheduledTaskDispatchTriggerHelper =
+			scheduledTaskDispatchTriggerHelper;
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -131,14 +97,19 @@ public class DispatchTriggerDisplayContext {
 			});
 	}
 
-	public String getNextFireDateString(long dispatchTriggerId)
-		throws PortalException {
+	public String getNextFireDateString(
+			ScheduledTaskDispatchTrigger scheduledTaskDispatchTrigger)
+		throws SchedulerException {
 
-		Date nextRunDate = _dispatchTriggerLocalService.getNextFireDate(
-			dispatchTriggerId);
+		Date nextFireDate =
+			_scheduledTaskDispatchTriggerHelper.
+				getScheduledTaskDispatchTriggerNextFireDate(
+					scheduledTaskDispatchTrigger.getName(),
+					scheduledTaskDispatchTrigger.getGroupName(),
+					scheduledTaskDispatchTrigger.getStorageType());
 
-		if (nextRunDate != null) {
-			return _dateFormatDateTime.format(nextRunDate);
+		if (nextFireDate != null) {
+			return _dateFormatDateTime.format(nextFireDate);
 		}
 
 		return StringPool.BLANK;
@@ -147,7 +118,7 @@ public class DispatchTriggerDisplayContext {
 	public String getOrderByCol() {
 		return ParamUtil.getString(
 			_dispatchRequestHelper.getRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "modified-date");
+			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "start-date");
 	}
 
 	public String getOrderByType() {
@@ -156,7 +127,7 @@ public class DispatchTriggerDisplayContext {
 			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			_dispatchRequestHelper.getLiferayPortletResponse();
 
@@ -176,56 +147,65 @@ public class DispatchTriggerDisplayContext {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
+		portletURL.setParameter(
+			"mvcRenderCommandName",
+			"/dispatch/edit_scheduled_task_dispatch_trigger");
+
+		portletURL.setParameter("tabs1", "liferay-scheduled-task");
+
+		String redirect = ParamUtil.getString(
+			_dispatchRequestHelper.getRequest(), "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
 		return portletURL;
 	}
 
-	public RowChecker getRowChecker() {
-		if (_rowChecker == null) {
-			_rowChecker = new EmptyOnClickRowChecker(
-				_dispatchRequestHelper.getLiferayPortletResponse());
-		}
-
-		return _rowChecker;
-	}
-
-	public SearchContainer<DispatchTrigger> getSearchContainer()
-		throws PortalException {
-
+	public SearchContainer<ScheduledTaskDispatchTrigger> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
 
 		_searchContainer = new SearchContainer<>(
 			_dispatchRequestHelper.getLiferayPortletRequest(), getPortletURL(),
-			null, null);
-
-		_searchContainer.setEmptyResultsMessage("no-items-were-found");
+			null, "no-items-were-found");
 
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByComparator(null);
 		_searchContainer.setOrderByType(getOrderByType());
-		_searchContainer.setRowChecker(getRowChecker());
 
-		int total = _dispatchTriggerLocalService.getDispatchTriggersCount(
-			_dispatchRequestHelper.getCompanyId());
+		int total =
+			_scheduledTaskDispatchTriggerHelper.
+				getScheduledTaskDispatchTriggerCount();
 
 		_searchContainer.setTotal(total);
 
-		List<DispatchTrigger> results =
-			_dispatchTriggerLocalService.getDispatchTriggers(
-				_dispatchRequestHelper.getCompanyId(),
-				_searchContainer.getStart(), _searchContainer.getEnd());
+		List<ScheduledTaskDispatchTrigger> results =
+			_scheduledTaskDispatchTriggerHelper.
+				getScheduledTaskDispatchTriggers(
+					_searchContainer.getStart(), _searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
 
 		return _searchContainer;
 	}
 
+	public TriggerState getTriggerState(
+			ScheduledTaskDispatchTrigger scheduledTaskDispatchTrigger)
+		throws SchedulerException {
+
+		return _scheduledTaskDispatchTriggerHelper.getTriggerState(
+			scheduledTaskDispatchTrigger.getName(),
+			scheduledTaskDispatchTrigger.getGroupName(),
+			scheduledTaskDispatchTrigger.getStorageType());
+	}
+
 	private final Format _dateFormatDateTime;
 	private final DispatchRequestHelper _dispatchRequestHelper;
-	private final DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
-	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
-	private RowChecker _rowChecker;
-	private SearchContainer<DispatchTrigger> _searchContainer;
+	private final ScheduledTaskDispatchTriggerHelper
+		_scheduledTaskDispatchTriggerHelper;
+	private SearchContainer<ScheduledTaskDispatchTrigger> _searchContainer;
 
 }

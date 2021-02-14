@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.dispatch.constants.DispatchConstants" %><%@
 page import="com.liferay.dispatch.constants.DispatchWebKeys" %><%@
+page import="com.liferay.dispatch.core.scheduler.ScheduledTaskDispatchTrigger" %><%@
 page import="com.liferay.dispatch.exception.NoSuchLogException" %><%@
 page import="com.liferay.dispatch.exception.NoSuchTriggerException" %><%@
 page import="com.liferay.dispatch.executor.DispatchTaskClusterMode" %><%@
@@ -36,11 +37,13 @@ page import="com.liferay.dispatch.model.DispatchLog" %><%@
 page import="com.liferay.dispatch.model.DispatchTrigger" %><%@
 page import="com.liferay.dispatch.web.internal.display.context.DispatchLogDisplayContext" %><%@
 page import="com.liferay.dispatch.web.internal.display.context.DispatchTriggerDisplayContext" %><%@
+page import="com.liferay.dispatch.web.internal.display.context.ScheduledTaskDispatchTriggerDisplayContext" %><%@
 page import="com.liferay.dispatch.web.internal.security.permisison.resource.DispatchTriggerPermission" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.cluster.ClusterExecutorUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.scheduler.TriggerState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

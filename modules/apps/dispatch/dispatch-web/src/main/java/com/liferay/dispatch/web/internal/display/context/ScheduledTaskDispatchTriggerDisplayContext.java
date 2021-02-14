@@ -106,7 +106,7 @@ public class ScheduledTaskDispatchTriggerDisplayContext
 			"mvcRenderCommandName",
 			"/dispatch/edit_scheduled_task_dispatch_trigger");
 
-		portletURL.setParameter("tabs1", "liferay-scheduled-task");
+		portletURL.setParameter("tabs1", "scheduled-task");
 
 		String redirect = ParamUtil.getString(
 			dispatchRequestHelper.getRequest(), "redirect");

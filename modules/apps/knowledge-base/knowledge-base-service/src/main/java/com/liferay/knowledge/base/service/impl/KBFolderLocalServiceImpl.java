@@ -27,6 +27,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
 import java.util.List;
@@ -60,6 +62,16 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		// KB folder
 
 		User user = userLocalService.getUser(userId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_KB_FOLDER_COUNT > 0) &&
+			(kbFolderPersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_KB_FOLDER_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed knowledge base " +
+					"folders");
+		}
+
 		Date now = new Date();
 
 		validateName(groupId, parentResourcePrimKey, name);

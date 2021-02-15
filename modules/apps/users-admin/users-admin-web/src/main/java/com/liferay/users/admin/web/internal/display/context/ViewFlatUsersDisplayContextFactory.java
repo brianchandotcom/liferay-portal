@@ -61,11 +61,16 @@ public class ViewFlatUsersDisplayContextFactory {
 		LiferayPortletRequest liferayPortletRequest =
 			PortalUtil.getLiferayPortletRequest(renderRequest);
 
+		String displayStyle = ParamUtil.getString(
+			liferayPortletRequest, "displayStyle");
+
 		HttpServletRequest httpServletRequest =
 			liferayPortletRequest.getOriginalHttpServletRequest();
 
-		String displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle");
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = ParamUtil.getString(
+				httpServletRequest, "displayStyle");
+		}
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(

@@ -91,6 +91,7 @@
 					(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
 				JournalArticleLocalization ON
+					(1 = ?) AND
 					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
 			WHERE
@@ -432,8 +433,11 @@
 					FROM
 						JournalArticleLocalization
 					WHERE
-						(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-						(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$])
+						(1 = ?) AND
+						(
+							(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$])
+						)
 					GROUP BY
 						JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK, JournalArticleLocalization.title, JournalArticleLocalization.description
 				) JournalArticleLocalization ON

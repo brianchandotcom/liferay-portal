@@ -57,6 +57,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -270,6 +271,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		// Message
 
 		Group group = groupLocalService.getGroup(groupId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_MB_MESSAGE_COUNT > 0) &&
+			(mbMessagePersistence.countByCompanyId(group.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_MB_MESSAGE_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed message board " +
+					"messages");
+		}
 
 		User user = userLocalService.fetchUser(
 			_portal.getValidUserId(group.getCompanyId(), userId));

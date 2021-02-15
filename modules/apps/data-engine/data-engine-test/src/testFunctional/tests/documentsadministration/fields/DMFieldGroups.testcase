@@ -403,12 +403,10 @@ definition {
 		var newLabel = "Image";
 		var webTitle = "WC Title";
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Upload");
-
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Image",
-			fieldName = "Image",
-			targetFieldLabel = "Upload");
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
 
 		DataEngine.editFieldsGroupRepeatable();
 
@@ -419,8 +417,6 @@ definition {
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "DM Document Type Name");
 
 		PortletEntry.inputTitle(title = "${dmDocumentTitle}");
-
-		DataEngine.addRepeatableField(fieldName = "Upload");
 
 		DataEngine.addRepeatableFieldGroups(
 			fieldName = "FieldsGroup",
@@ -433,7 +429,7 @@ definition {
 			rowEntry = "${dmDocumentTitle}");
 
 		WebContent.viewDuplicatedField(
-			fieldName = "Upload",
+			fieldName = "FieldsGroup",
 			totalPortletCount = "2");
 	}
 

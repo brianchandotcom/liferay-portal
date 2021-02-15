@@ -200,7 +200,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		// Data layout with Data Layout Fields (Visual Property)
 
-		randomDataLayout = randomDataLayout(true);
+		randomDataLayout = _randomDataLayout(true);
 
 		postDataLayout = testPostDataDefinitionDataLayout_addDataLayout(
 			randomDataLayout);
@@ -371,7 +371,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	public void testPutDataLayout() throws Exception {
 		super.testPutDataLayout();
 
-		DataLayout randomDataLayout = randomDataLayout(true);
+		DataLayout randomDataLayout = _randomDataLayout(true);
 
 		DataLayout dataLayout = testPutDataLayout_addDataLayout();
 
@@ -405,51 +405,6 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		return DataLayoutTestUtil.createDataLayout(
 			_dataDefinition.getId(), RandomTestUtil.randomString(),
 			testGroup.getGroupId());
-	}
-
-	protected DataLayout randomDataLayout(boolean withVisualProperties) {
-		DataLayout dataLayout = randomDataLayout();
-
-		if (!withVisualProperties) {
-			return dataLayout;
-		}
-
-		String defaultLanguageId = _dataDefinition.getDefaultLanguageId();
-
-		DataDefinitionField dataDefinitionField =
-			_dataDefinition.getDataDefinitionFields()[0];
-
-		dataLayout.setDataLayoutFields(
-			HashMapBuilder.<String, Object>put(
-				dataDefinitionField.getName(),
-				HashMapBuilder.<String, Object>put(
-					"label",
-					HashMapBuilder.<String, Object>put(
-						defaultLanguageId, RandomTestUtil.randomString()
-					).build()
-				).put(
-					"placeholder",
-					HashMapBuilder.<String, Object>put(
-						defaultLanguageId, RandomTestUtil.randomString()
-					).build()
-				).put(
-					"predefinedValue",
-					HashMapBuilder.<String, Object>put(
-						defaultLanguageId, RandomTestUtil.randomString()
-					).build()
-				).put(
-					"required", RandomTestUtil.randomBoolean()
-				).put(
-					"showLabel", RandomTestUtil.randomBoolean()
-				).put(
-					"tip",
-					HashMapBuilder.<String, Object>put(
-						defaultLanguageId, RandomTestUtil.randomString()
-					).build()
-				).build()
-			).build());
-
-		return dataLayout;
 	}
 
 	@Override
@@ -515,6 +470,51 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
 		return dataLayoutResource.postDataDefinitionDataLayout(
 			_dataDefinition.getId(), randomDataLayout());
+	}
+
+	private DataLayout _randomDataLayout(boolean withVisualProperties) {
+		DataLayout dataLayout = randomDataLayout();
+
+		if (!withVisualProperties) {
+			return dataLayout;
+		}
+
+		String defaultLanguageId = _dataDefinition.getDefaultLanguageId();
+
+		DataDefinitionField dataDefinitionField =
+			_dataDefinition.getDataDefinitionFields()[0];
+
+		dataLayout.setDataLayoutFields(
+			HashMapBuilder.<String, Object>put(
+				dataDefinitionField.getName(),
+				HashMapBuilder.<String, Object>put(
+					"label",
+					HashMapBuilder.<String, Object>put(
+						defaultLanguageId, RandomTestUtil.randomString()
+					).build()
+				).put(
+					"placeholder",
+					HashMapBuilder.<String, Object>put(
+						defaultLanguageId, RandomTestUtil.randomString()
+					).build()
+				).put(
+					"predefinedValue",
+					HashMapBuilder.<String, Object>put(
+						defaultLanguageId, RandomTestUtil.randomString()
+					).build()
+				).put(
+					"required", RandomTestUtil.randomBoolean()
+				).put(
+					"showLabel", RandomTestUtil.randomBoolean()
+				).put(
+					"tip",
+					HashMapBuilder.<String, Object>put(
+						defaultLanguageId, RandomTestUtil.randomString()
+					).build()
+				).build()
+			).build());
+
+		return dataLayout;
 	}
 
 	private void _testGetDataDefinitionDataLayoutsPage(

@@ -12,11 +12,11 @@
  * details.
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import React, {useRef, useState} from 'react';
+
+import LinkOrButton from './LinkOrButton';
 
 const CreationMenu = ({
 	maxPrimaryItems,
@@ -117,33 +117,24 @@ const CreationMenu = ({
 							</div>
 
 							<div className="dropdown-section">
-								{viewMoreURL ? (
-									<ClayLink
-										button={{block: true}}
-										displayType="secondary"
-										href={viewMoreURL}
-									>
-										{Liferay.Language.get('more')}
-									</ClayLink>
-								) : (
-									<ClayButton
-										block={true}
-										displayType="secondary"
-										onClick={() => {
-											if (onShowMoreButtonClick) {
-												onShowMoreButtonClick();
+								<LinkOrButton
+									button={{block: true}}
+									displayType="secondary"
+									href={viewMoreURL}
+									onClick={() => {
+										if (onShowMoreButtonClick) {
+											onShowMoreButtonClick();
 
-												return;
-											}
+											return;
+										}
 
-											setVisibleItemsCount(
-												totalItemsCountRef.current
-											);
-										}}
-									>
-										{Liferay.Language.get('more')}
-									</ClayButton>
-								)}
+										setVisibleItemsCount(
+											totalItemsCountRef.current
+										);
+									}}
+								>
+									{Liferay.Language.get('more')}
+								</LinkOrButton>
 							</div>
 						</>
 					) : (
@@ -154,19 +145,12 @@ const CreationMenu = ({
 						/>
 					)}
 				</ClayDropDown>
-			) : primaryItems[0].href ? (
-				<ClayLink
+			) : (
+				<LinkOrButton
 					button={true}
 					className="nav-btn nav-btn-monospaced"
 					displayType="primary"
 					href={primaryItems[0].href}
-				>
-					<ClayIcon symbol="plus" />
-				</ClayLink>
-			) : (
-				<ClayButtonWithIcon
-					className="nav-btn nav-btn-monospaced"
-					displayType="primary"
 					onClick={(event) => {
 						onCreateButtonClick(event, {item: primaryItems[0]});
 					}}

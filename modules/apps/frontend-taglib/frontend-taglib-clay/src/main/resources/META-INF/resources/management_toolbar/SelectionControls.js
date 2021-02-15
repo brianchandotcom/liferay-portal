@@ -12,11 +12,11 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import ClayLink from '@clayui/link';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useEffect, useRef, useState} from 'react';
+
+import LinkOrButton from './LinkOrButton';
 
 const SelectionControls = ({
 	actionDropdownItems,
@@ -167,85 +167,57 @@ const SelectionControls = ({
 					{supportsBulkActions && (
 						<>
 							<ClayManagementToolbar.Item className="nav-item-shrink">
-								{clearSelectionURL ? (
-									<ClayLink
-										className="nav-link"
-										href={clearSelectionURL}
-									>
-										<span className="text-truncate-inline">
-											<span className="text-truncate">
-												{Liferay.Language.get('clear')}
-											</span>
+								<LinkOrButton
+									className="nav-link"
+									displayType="unstyled"
+									href={clearSelectionURL}
+									onClick={(event) => {
+										searchContainerRef.current?.select?.toggleAllRows(
+											false
+										);
+
+										setActive(false);
+
+										setCheckboxStatus('unchecked');
+
+										onClearButtonClick(event);
+									}}
+								>
+									<span className="text-truncate-inline">
+										<span className="text-truncate">
+											{Liferay.Language.get('clear')}
 										</span>
-									</ClayLink>
-								) : (
-									<ClayButton
-										className="nav-link"
-										displayType="unstyled"
-										onClick={(event) => {
-											searchContainerRef.current?.select?.toggleAllRows(
-												false
-											);
-
-											setActive(false);
-
-											setCheckboxStatus('unchecked');
-
-											onClearButtonClick(event);
-										}}
-									>
-										<span className="text-truncate-inline">
-											<span className="text-truncate">
-												{Liferay.Language.get('clear')}
-											</span>
-										</span>
-									</ClayButton>
-								)}
+									</span>
+								</LinkOrButton>
 							</ClayManagementToolbar.Item>
 
 							{selectAllButtonVisible && (
 								<ClayManagementToolbar.Item className="nav-item-shrink">
-									{selectAllURL ? (
-										<ClayLink
-											className="nav-link"
-											href={selectAllURL}
-										>
-											<span className="text-truncate-inline">
-												<span className="text-truncate">
-													{Liferay.Language.get(
-														'select-all'
-													)}
-												</span>
+									<LinkOrButton
+										className="nav-link"
+										displayType="unstyled"
+										href={selectAllURL}
+										onClick={(event) => {
+											searchContainerRef.current?.select?.toggleAllRows(
+												true,
+												true
+											);
+
+											setSelectAllButtonVisible(false);
+
+											setSelectedItems(itemsTotal);
+
+											onSelectAllButtonClick(event);
+										}}
+									>
+										<span className="text-truncate-inline">
+											<span className="text-truncate">
+												{Liferay.Language.get(
+													'select-all'
+												)}
 											</span>
-										</ClayLink>
-									) : (
-										<ClayButton
-											className="nav-link"
-											displayType="unstyled"
-											onClick={(event) => {
-												searchContainerRef.current?.select?.toggleAllRows(
-													true,
-													true
-												);
-
-												setSelectAllButtonVisible(
-													false
-												);
-
-												setSelectedItems(itemsTotal);
-
-												onSelectAllButtonClick(event);
-											}}
-										>
-											<span className="text-truncate-inline">
-												<span className="text-truncate">
-													{Liferay.Language.get(
-														'select-all'
-													)}
-												</span>
-											</span>
-										</ClayButton>
-									)}
+										</span>
+									</LinkOrButton>
 								</ClayManagementToolbar.Item>
 							)}
 						</>

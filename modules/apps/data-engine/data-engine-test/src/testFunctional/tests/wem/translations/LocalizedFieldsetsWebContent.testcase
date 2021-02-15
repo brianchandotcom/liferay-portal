@@ -173,29 +173,11 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		PortletEntry.viewLocale(locale = "en-US");
-
-		AssertVisible(
-			key_fieldsetLabel = "New Fieldset",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Text",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		PortletEntry.viewLocale(locale = "pt-BR");
-
-		AssertVisible(
-			key_fieldsetLabel = "New Fieldset pt-BR",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Text pt-BR",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		AssertElementPresent(
+			locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH"
+		);
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

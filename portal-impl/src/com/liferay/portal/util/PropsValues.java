@@ -679,6 +679,10 @@ public class PropsValues {
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_WIKI_NODE_COUNT));
 
+	public static final long DATA_LIMIT_MAX_WIKI_PAGE_COUNT =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_WIKI_PAGE_COUNT));
+
 	public static final int DATABASE_IN_MAX_PARAMETERS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.DATABASE_IN_MAX_PARAMETERS));
 

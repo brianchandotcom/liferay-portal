@@ -712,6 +712,9 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_WIKI_NODE_COUNT =
 		"data.limit.max.wiki.node.count";
 
+	public static final String DATA_LIMIT_MAX_WIKI_PAGE_COUNT =
+		"data.limit.max.wiki.page.count";
+
 	public static final String DATABASE_IN_MAX_PARAMETERS =
 		"database.in.max.parameters";
 

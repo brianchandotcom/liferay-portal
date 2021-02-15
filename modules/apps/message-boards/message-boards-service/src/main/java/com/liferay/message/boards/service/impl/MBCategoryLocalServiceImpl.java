@@ -29,6 +29,7 @@ import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
@@ -93,6 +95,15 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		// Category
 
 		User user = userLocalService.getUser(userId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_MB_CATEGORY_COUNT > 0) &&
+			(mbCategoryPersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_MB_CATEGORY_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed message board " +
+					"categories");
+		}
 
 		long groupId = serviceContext.getScopeGroupId();
 

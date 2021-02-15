@@ -688,6 +688,9 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_MAIL_MESSAGE_PERIOD =
 		"data.limit.max.mail.message.period";
 
+	public static final String DATA_LIMIT_MAX_MB_CATEGORY_COUNT =
+		"data.limit.max.mb.category.count";
+
 	public static final String DATA_LIMIT_MAX_ORGANIZATION_COUNT =
 		"data.limit.max.organization.count";
 

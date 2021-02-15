@@ -18,8 +18,11 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
 import com.liferay.journal.util.JournalContentCompatibilityLayer;
 import com.liferay.layout.dynamic.data.mapping.form.field.type.constants.LayoutDDMFormFieldTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -50,11 +53,10 @@ public class JournalContentCompatibilityLayerImpl
 
 		rootElement.addAttribute("version", _LATEST_CONTENT_VERSION);
 
-		List<Element> dynamicElementElements = rootElement.elements(
-			"dynamic-element");
+		_convertDDMFields(rootElement);
 
-		for (Element dynamicElementElement : dynamicElementElements) {
-			_convertDDMFields(dynamicElementElement);
+		if (_hasNestedFields(rootElement)) {
+			_convertNestedFields(rootElement);
 		}
 	}
 
@@ -72,19 +74,17 @@ public class JournalContentCompatibilityLayerImpl
 		}
 	}
 
-	private void _convertDDMFields(Element dynamicElementElement) {
-		String newType = _convertDDMFieldType(
-			dynamicElementElement.attributeValue("type"));
+	private void _convertDDMFields(Element element) {
+		String type = element.attributeValue("type");
 
-		dynamicElementElement.addAttribute("type", newType);
+		if (Validator.isNotNull(type)) {
+			element.addAttribute("type", _convertDDMFieldType(type));
+		}
 
-		List<Element> childrenDynamicElementElements =
-			dynamicElementElement.elements("dynamic-element");
+		List<Element> dynamicElements = element.elements("dynamic-element");
 
-		for (Element childrenDynamicElementElement :
-				childrenDynamicElementElements) {
-
-			_convertDDMFields(childrenDynamicElementElement);
+		for (Element dynamicElement : dynamicElements) {
+			_convertDDMFields(dynamicElement);
 		}
 	}
 
@@ -154,6 +154,56 @@ public class JournalContentCompatibilityLayerImpl
 		}
 
 		return ddmFieldType;
+	}
+
+	private void _convertNestedFields(Element element) {
+		for (Element dynamicElement : element.elements("dynamic-element")) {
+			List<Element> nestedFieldsElements = dynamicElement.elements(
+				"dynamic-element");
+
+			if (nestedFieldsElements.isEmpty()) {
+				continue;
+			}
+
+			_convertNestedFields(dynamicElement);
+
+			Element newDynamicElement = dynamicElement.addElement(
+				"dynamic-element");
+
+			for (Attribute attribute : dynamicElement.attributes()) {
+				newDynamicElement.addAttribute(
+					attribute.getName(), attribute.getValue());
+
+				dynamicElement.remove(attribute);
+			}
+
+			for (Element dynamicContent :
+					dynamicElement.elements("dynamic-content")) {
+
+				newDynamicElement.add(dynamicContent.createCopy());
+
+				dynamicElement.remove(dynamicContent);
+			}
+
+			dynamicElement.addAttribute("index-type", StringPool.BLANK);
+			dynamicElement.addAttribute(
+				"instance-id", StringUtil.randomString());
+			dynamicElement.addAttribute(
+				"name", newDynamicElement.attributeValue("name") + "FieldSet");
+		}
+	}
+
+	private boolean _hasNestedFields(Element element) {
+		for (Element dynamicElement : element.elements("dynamic-element")) {
+			List<Element> nestedFieldsElements = dynamicElement.elements(
+				"dynamic-element");
+
+			if (!nestedFieldsElements.isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _LATEST_CONTENT_VERSION = "1.0";

@@ -16,6 +16,7 @@ package com.liferay.portal.crypto.hash.internal;
 
 import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
+import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProvider;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 
@@ -31,7 +32,8 @@ public class CryptoHashGeneratorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_cryptoHashGenerator = new CryptoHashGeneratorImpl();
+		_cryptoHashGenerator = new CryptoHashGeneratorImpl(
+			new MessageDigestCryptoHashProvider());
 	}
 
 	@Test

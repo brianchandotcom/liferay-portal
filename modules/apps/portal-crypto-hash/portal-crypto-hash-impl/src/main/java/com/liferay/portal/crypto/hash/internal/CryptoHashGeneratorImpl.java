@@ -18,7 +18,6 @@ import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,19 +31,20 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = CryptoHashGenerator.class)
 public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
 
-	public CryptoHashGeneratorImpl() throws NoSuchAlgorithmException {
-		_messageDigestCryptoHashProvider =
-			new MessageDigestCryptoHashProvider();
+	public CryptoHashGeneratorImpl(CryptoHashProvider cryptoHashProvider)
+		throws NoSuchAlgorithmException {
+
+		_cryptoHashProvider = cryptoHashProvider;
 	}
 
 	@Override
 	public CryptoHashResponse generate(byte[] input)
 		throws CryptoHashException {
 
-		byte[] salt = _messageDigestCryptoHashProvider.generateSalt();
+		byte[] salt = _cryptoHashProvider.generateSalt();
 
 		return new CryptoHashResponse(
-			_messageDigestCryptoHashProvider.generate(salt, input), salt);
+			_cryptoHashProvider.generate(salt, input), salt);
 	}
 
 	@Override
@@ -52,26 +52,9 @@ public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
 		throws CryptoHashException {
 
 		return MessageDigest.isEqual(
-			_messageDigestCryptoHashProvider.generate(salt, input), hash);
+			_cryptoHashProvider.generate(salt, input), hash);
 	}
 
-	private final CryptoHashProvider _messageDigestCryptoHashProvider;
-
-	private class MessageDigestCryptoHashProvider
-		implements CryptoHashProvider {
-
-		public MessageDigestCryptoHashProvider()
-			throws NoSuchAlgorithmException {
-
-			_messageDigest = MessageDigest.getInstance("SHA-256");
-		}
-
-		public byte[] generate(byte[] salt, byte[] input) {
-			return _messageDigest.digest(ArrayUtil.append(salt, input));
-		}
-
-		private final MessageDigest _messageDigest;
-
-	}
+	private final CryptoHashProvider _cryptoHashProvider;
 
 }

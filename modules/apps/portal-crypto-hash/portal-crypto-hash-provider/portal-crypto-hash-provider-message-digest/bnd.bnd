@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Crypto Hash Provider Message Digest
+Bundle-SymbolicName: com.liferay.portal.crypto.hash.provider.message.digest
+Bundle-Version: 1.0.0

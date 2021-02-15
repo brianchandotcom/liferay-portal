@@ -311,6 +311,10 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Name");
+
 		DataEngine.delete(fieldFieldLabel = "Text");
 
 		DataEngine.delete(fieldFieldLabel = "Numeric");

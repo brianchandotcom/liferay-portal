@@ -1060,7 +1060,8 @@ definition {
 	@description = "Delete fields from the Form View through the Delete options and assert its affect on other Form and Table views"
 	@priority = "5"
 	test DeleteFormViewFieldFromObject {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "AppBuilder#DeleteFormViewFieldFromObject";
 
 		AppBuilderAdmin.addCustomObject(

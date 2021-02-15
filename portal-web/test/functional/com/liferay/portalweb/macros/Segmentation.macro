@@ -123,4 +123,22 @@ definition {
 		AssertElementNotPresent(locator1 = "Segmentation#SEGMENT_LIST");
 	}
 
+	macro viewMembers {
+		var key_memberName = "${memberName}";
+
+		Click(locator1 = "Segmentation#VIEW_MEMBERS_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		AssertTextPresent(
+			locator1 = "Segmentation#MEMBER_NAME_LISTED",
+			value1 = "Test Test");
+		
+		SelectFrame(value1 = "relative=top");
+
+		Click(locator1 = "Segmentation#CLOSE_MODAL");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 }

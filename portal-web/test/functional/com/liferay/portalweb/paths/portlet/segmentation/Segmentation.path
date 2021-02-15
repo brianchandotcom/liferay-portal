@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_MODAL</td>
+	<td>//button[@aria-label='close']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CRITERION_INPUT_OPTION</td>
 	<td>//div[@class='criterion'][1]//select[contains(@class, 'criterion-input')]/option[.='${key_criterionInputOption}']</td>
 	<td></td>
@@ -51,6 +56,16 @@
 <tr>
 	<td>ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX</td>
 	<td>//*[contains(@class, 'custom-control custom-checkbox')]//*[contains(@class, 'custom-control-label') and contains(text(), 'Enable Assign Roles by Segment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBERS_MATCHED</td>
+	<td>//b[contains(@class,'ml-2 text-dark')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEMBER_NAME_LISTED</td>
+	<td>//*[contains(@class,'table-title') and contains(text(),'${key_memberName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,8 +118,12 @@
 	<td>//input[@data-testid='localized-main-input']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEW_MEMBERS_BUTTON</td>
+	<td>//button[contains(@class,'btn-secondary') and contains(text(),'View Members')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>
 </html>
-

@@ -161,4 +161,46 @@ definition {
 			portlet = "Segments");
 	}
 
+	@description = "Validate if the members are assigned correctly depending on the criteria selected"
+	@priority = "5"
+	test SegmentationCheckMembers {
+		property portal.acceptance = "true";
+		
+		JSONUser.addUser(
+			userEmailAddress = "u1@liferay.com",
+			userFirstName = "User",
+			userLastName = "1",
+			userScreenName = "u1");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "Segment View Members");
+
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(PropertyField = "test");
+
+		AssertTextEquals(
+				locator1 = "Segmentation#MEMBERS_MATCHED",
+				value1 = "1 Member");
+
+		Segmentation.viewMembers(memberName = "Test");
+
+		Segmentation.fillProperty(PropertyField = "liferay");
+
+		AssertTextEquals(
+				locator1 = "Segmentation#MEMBERS_MATCHED",
+				value1 = "2 Members");
+
+		Segmentation.viewMembers(memberName = "Test");
+
+		Segmentation.viewMembers(memberName = "User 1");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 }

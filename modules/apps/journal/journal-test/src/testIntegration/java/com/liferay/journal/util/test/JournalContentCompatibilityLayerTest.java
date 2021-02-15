@@ -57,7 +57,9 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document expectedDocument = SAXReaderUtil.read(expectedContent);
 
-		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+		Assert.assertEquals(
+			_getFormattedString(expectedDocument),
+			_getFormattedString(document));
 	}
 
 	@Test
@@ -75,7 +77,9 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document expectedDocument = SAXReaderUtil.read(expectedContent);
 
-		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+		Assert.assertEquals(
+			_getFormattedString(expectedDocument),
+			_getFormattedString(document));
 	}
 
 	@Test
@@ -93,7 +97,9 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document expectedDocument = SAXReaderUtil.read(expectedContent);
 
-		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+		Assert.assertEquals(
+			_getFormattedString(expectedDocument),
+			_getFormattedString(document));
 	}
 
 	@Test
@@ -113,7 +119,9 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document expectedDocument = SAXReaderUtil.read(expectedContent);
 
-		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+		Assert.assertEquals(
+			_getFormattedString(expectedDocument),
+			_getFormattedString(document));
 	}
 
 	@Test
@@ -129,7 +137,9 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document expectedDocument = SAXReaderUtil.read(expectedContent);
 
-		Assert.assertEquals(expectedDocument.asXML(), document.asXML());
+		Assert.assertEquals(
+			_getFormattedString(expectedDocument),
+			_getFormattedString(document));
 	}
 
 	protected String read(String fileName) throws Exception {
@@ -141,6 +151,12 @@ public class JournalContentCompatibilityLayerTest {
 			"com/liferay/journal/dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
+	}
+
+	private String _getFormattedString(Document document) throws Exception {
+		String formattedString = document.formattedString();
+
+		return formattedString.replaceAll("instance-id=\"[a-zA-Z0-9]+\"", "");
 	}
 
 	@Inject

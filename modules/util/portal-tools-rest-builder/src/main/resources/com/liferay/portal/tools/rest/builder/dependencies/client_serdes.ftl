@@ -232,7 +232,9 @@ public class ${schemaName}SerDes {
 
 						<#assign propertyType = properties[propertyName] />
 
-						<#if stringUtil.equals(propertyType, "Date")>
+						<#if stringUtil.equals(propertyType, "BigDecimal")>
+							new BigDecimal((String)jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Date")>
 							toDate((String)jsonParserFieldValue)
 						<#elseif stringUtil.equals(propertyType, "Date[]")>
 							toDates((Object[])jsonParserFieldValue)

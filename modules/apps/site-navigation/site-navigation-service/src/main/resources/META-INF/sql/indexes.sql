@@ -1,3 +1,4 @@
+create index IX_68E2B208 on SiteNavigationMenu (companyId);
 create index IX_1D786176 on SiteNavigationMenu (groupId, auto_);
 create unique index IX_ECBADAC9 on SiteNavigationMenu (groupId, name[$COLUMN_LENGTH:75$]);
 create index IX_1125400B on SiteNavigationMenu (groupId, type_);

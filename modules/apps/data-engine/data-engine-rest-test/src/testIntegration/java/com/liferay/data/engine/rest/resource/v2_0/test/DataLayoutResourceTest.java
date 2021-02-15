@@ -182,14 +182,17 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	public void testPostDataDefinitionDataLayout() throws Exception {
 		super.testPostDataDefinitionDataLayout();
 
+		DataLayout postDataLayout = null;
+
+		DataLayout randomDataLayout = null;
+
 		// Multiple data layouts with the same data definition
 
 		for (int i = 0; i < 3; i++) {
-			DataLayout randomDataLayout = randomDataLayout();
+			randomDataLayout = randomDataLayout();
 
-			DataLayout postDataLayout =
-				testPostDataDefinitionDataLayout_addDataLayout(
-					randomDataLayout);
+			postDataLayout = testPostDataDefinitionDataLayout_addDataLayout(
+				randomDataLayout);
 
 			assertEquals(randomDataLayout, postDataLayout);
 			assertValid(postDataLayout);
@@ -197,10 +200,10 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		// Data layout with Data Layout Fields (Visual Property)
 
-		DataLayout randomDataLayout = randomDataLayout(true);
+		randomDataLayout = randomDataLayout(true);
 
-		DataLayout postDataLayout =
-			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
+		postDataLayout = testPostDataDefinitionDataLayout_addDataLayout(
+			randomDataLayout);
 
 		assertEquals(randomDataLayout, postDataLayout);
 		assertValid(postDataLayout);
@@ -382,15 +385,14 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 				randomDataLayout.getDataLayoutFields(),
 				putDataLayout.getDataLayoutFields()));
 
-		DataLayout getDataLayout = dataLayoutResource.getDataLayout(
-			dataLayout.getId());
+		dataLayout = dataLayoutResource.getDataLayout(dataLayout.getId());
 
-		assertEquals(randomDataLayout, getDataLayout);
-		assertValid(getDataLayout);
+		assertEquals(randomDataLayout, dataLayout);
+		assertValid(dataLayout);
 		Assert.assertTrue(
 			equals(
 				randomDataLayout.getDataLayoutFields(),
-				getDataLayout.getDataLayoutFields()));
+				dataLayout.getDataLayoutFields()));
 	}
 
 	@Override

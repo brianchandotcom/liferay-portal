@@ -769,10 +769,9 @@ definition {
 
 		Button.clickPublish();
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Text",
-			locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
-			value1 = "This field is required.");
+		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
+
+		Alert.viewErrorMessage(errorMessage = "Please enter a valid title for the default language: en-US");
 	}
 
 }

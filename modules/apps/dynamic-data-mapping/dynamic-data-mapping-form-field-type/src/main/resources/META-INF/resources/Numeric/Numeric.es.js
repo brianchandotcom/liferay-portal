@@ -162,34 +162,45 @@ const Main = ({
 	predefinedValue = '',
 	readOnly,
 	symbols,
-	value,
+	value = '',
 	...otherProps
-}) => (
-	<FieldBase
-		{...otherProps}
-		id={id}
-		localizedValue={localizedValue}
-		name={name}
-		readOnly={readOnly}
-	>
-		<Numeric
-			dataType={dataType}
-			defaultLanguageId={defaultLanguageId}
-			disabled={readOnly}
-			editingLanguageId={editingLanguageId}
+}) => {
+	const [edited, setEdited] = useState(false);
+
+	return (
+		<FieldBase
+			{...otherProps}
 			id={id}
-			localizable={localizable}
 			localizedValue={localizedValue}
 			name={name}
-			onBlur={onBlur}
-			onChange={onChange}
-			onFocus={onFocus}
-			placeholder={placeholder}
-			symbols={symbols}
-			value={value ? value : predefinedValue}
-		/>
-	</FieldBase>
-);
+			readOnly={readOnly}
+		>
+			<Numeric
+				dataType={dataType}
+				defaultLanguageId={defaultLanguageId}
+				disabled={readOnly}
+				editingLanguageId={editingLanguageId}
+				id={id}
+				localizable={localizable}
+				localizedValue={localizedValue}
+				name={name}
+				onBlur={onBlur}
+				onChange={(event) => {
+					if (!edited) {
+						setEdited(true);
+					}
+
+					onChange(event);
+				}}
+				onFocus={onFocus}
+				placeholder={placeholder}
+				predefinedValue={predefinedValue}
+				symbols={symbols}
+				value={edited || value ? value : predefinedValue}
+			/>
+		</FieldBase>
+	);
+};
 
 Main.displayName = 'Numeric';
 

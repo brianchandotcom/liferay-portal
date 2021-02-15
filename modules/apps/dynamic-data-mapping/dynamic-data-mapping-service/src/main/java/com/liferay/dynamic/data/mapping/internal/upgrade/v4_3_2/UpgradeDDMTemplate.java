@@ -34,10 +34,6 @@ public class UpgradeDDMTemplate extends UpgradeProcess {
 		_upgradeDDMTemplateVersion();
 	}
 
-	private String _convertScript(String script) throws Exception {
-		return StringUtil.replace(script, "randomizer.", "random.");
-	}
-
 	private void _upgradeDDMTemplate() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select script, templateId FROM DDMTemplate where " +
@@ -51,7 +47,10 @@ public class UpgradeDDMTemplate extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					ps2.setString(1, _convertScript(rs.getString("script")));
+					ps2.setString(
+						1,
+						StringUtil.replace(
+							rs.getString("script"), "randomizer.", "random."));
 
 					ps2.setLong(2, rs.getLong("templateId"));
 
@@ -77,7 +76,10 @@ public class UpgradeDDMTemplate extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					ps2.setString(1, _convertScript(rs.getString("script")));
+					ps2.setString(
+						1,
+						StringUtil.replace(
+							rs.getString("script"), "randomizer.", "random."));
 
 					ps2.setLong(2, rs.getLong("templateVersionId"));
 

@@ -4,6 +4,7 @@ create index IX_23325358 on WikiNode (groupId, status);
 create index IX_E0E6D12C on WikiNode (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_7609B2AE on WikiNode (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_B65BBC83 on WikiPage (companyId);
 create index IX_A2001730 on WikiPage (format[$COLUMN_LENGTH:75$]);
 create index IX_BA72B89A on WikiPage (groupId, nodeId, head, parentTitle[$COLUMN_LENGTH:255$], status);
 create index IX_E0092FF0 on WikiPage (groupId, nodeId, head, status);

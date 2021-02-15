@@ -44,6 +44,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -283,6 +284,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		// Entry
 
 		User user = userLocalService.getUser(userId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_BLOG_ENTRY_COUNT > 0) &&
+			(blogsEntryPersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_BLOG_ENTRY_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed blog entries");
+		}
+
 		long groupId = serviceContext.getScopeGroupId();
 
 		int status = WorkflowConstants.STATUS_DRAFT;

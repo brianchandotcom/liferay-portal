@@ -801,11 +801,14 @@ export default ({
 					return -1;
 				}
 
-				if (a.name < b.name) {
+				const nameA = a.name.toLowerCase();
+				const nameB = b.name.toLowerCase();
+
+				if (nameA < nameB) {
 					return -1;
 				}
 
-				if (a.name > b.name) {
+				if (nameA > nameB) {
 					return 1;
 				}
 
@@ -814,7 +817,10 @@ export default ({
 		}
 		else if (column === COLUMN_NAME) {
 			filteredEntries.sort((a, b) => {
-				if (a.name < b.name) {
+				const nameA = a.name.toLowerCase();
+				const nameB = b.name.toLowerCase();
+
+				if (nameA < nameB) {
 					if (ascending) {
 						return -1;
 					}
@@ -822,7 +828,7 @@ export default ({
 					return 1;
 				}
 
-				if (a.name > b.name) {
+				if (nameA > nameB) {
 					if (ascending) {
 						return 1;
 					}

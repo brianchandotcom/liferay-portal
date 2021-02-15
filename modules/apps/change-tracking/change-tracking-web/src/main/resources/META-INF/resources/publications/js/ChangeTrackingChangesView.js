@@ -194,8 +194,8 @@ class ChangeTrackingChangesView extends React.Component {
 					return -1;
 				}
 
-				const typeNameA = a.typeName.toUpperCase();
-				const typeNameB = b.typeName.toUpperCase();
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
 
 				if (typeNameA < typeNameB) {
 					return -1;
@@ -205,11 +205,14 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (a.title < b.title) {
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
 					return -1;
 				}
 
-				if (a.title > b.title) {
+				if (titleA > titleB) {
 					return 1;
 				}
 
@@ -218,8 +221,11 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 		else if (this._getColumn() === this.COLUMN_SITE) {
 			nodes.sort((a, b) => {
+				const siteNameA = a.siteName.toLowerCase();
+				const siteNameB = b.siteName.toLowerCase();
+
 				if (
-					a.siteName < b.siteName ||
+					siteNameA < siteNameB ||
 					(a.siteName === this.GLOBAL_SITE_NAME &&
 						b.siteName !== this.GLOBAL_SITE_NAME)
 				) {
@@ -231,7 +237,7 @@ class ChangeTrackingChangesView extends React.Component {
 				}
 
 				if (
-					a.siteName > b.siteName ||
+					siteNameA > siteNameB ||
 					(a.siteName !== this.GLOBAL_SITE_NAME &&
 						b.siteName === this.GLOBAL_SITE_NAME)
 				) {
@@ -242,8 +248,8 @@ class ChangeTrackingChangesView extends React.Component {
 					return -1;
 				}
 
-				const typeNameA = a.typeName.toUpperCase();
-				const typeNameB = b.typeName.toUpperCase();
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
 
 				if (typeNameA < typeNameB) {
 					return -1;
@@ -253,11 +259,14 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (a.title < b.title) {
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
 					return -1;
 				}
 
-				if (a.title > b.title) {
+				if (titleA > titleB) {
 					return 1;
 				}
 
@@ -266,8 +275,8 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 		else if (this._getColumn() === this.COLUMN_TITLE) {
 			nodes.sort((a, b) => {
-				const typeNameA = a.typeName.toUpperCase();
-				const typeNameB = b.typeName.toUpperCase();
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
 
 				if (typeNameA < typeNameB) {
 					return -1;
@@ -277,7 +286,10 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (a.title < b.title) {
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
 					if (ascending) {
 						return -1;
 					}
@@ -285,7 +297,7 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (a.title > b.title) {
+				if (titleA > titleB) {
 					if (ascending) {
 						return 1;
 					}
@@ -298,7 +310,10 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 		else if (this._getColumn() === this.COLUMN_USER) {
 			nodes.sort((a, b) => {
-				if (a.userName < b.userName) {
+				const userNameA = a.userName.toLowerCase();
+				const userNameB = b.userName.toLowerCase();
+
+				if (userNameA < userNameB) {
 					if (ascending) {
 						return -1;
 					}
@@ -306,7 +321,7 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (a.userName > b.userName) {
+				if (userNameA > userNameB) {
 					if (ascending) {
 						return 1;
 					}
@@ -314,8 +329,8 @@ class ChangeTrackingChangesView extends React.Component {
 					return -1;
 				}
 
-				const typeNameA = a.typeName.toUpperCase();
-				const typeNameB = b.typeName.toUpperCase();
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
 
 				if (typeNameA < typeNameB) {
 					return -1;
@@ -325,11 +340,14 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (a.title < b.title) {
+				const titleA = a.title.toLowerCase();
+				const titleB = b.title.toLowerCase();
+
+				if (titleA < titleB) {
 					return -1;
 				}
 
-				if (a.title > b.title) {
+				if (titleA > titleB) {
 					return 1;
 				}
 
@@ -367,8 +385,8 @@ class ChangeTrackingChangesView extends React.Component {
 
 		if (this._getColumn() === this.COLUMN_MODIFIED_DATE) {
 			nodes.sort((a, b) => {
-				const typeNameA = a.typeName.toUpperCase();
-				const typeNameB = b.typeName.toUpperCase();
+				const typeNameA = a.typeName.toLowerCase();
+				const typeNameB = b.typeName.toLowerCase();
 
 				if (typeNameA < typeNameB) {
 					return -1;

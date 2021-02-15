@@ -46,10 +46,10 @@ export default ({ctEntriesJSONArray, spritemap, typeNames, userInfo}) => {
 	}
 
 	ctEntries.sort((a, b) => {
-		const titleA = a.title;
-		const titleB = b.title;
-		const typeNameA = a.typeName.toUpperCase();
-		const typeNameB = b.typeName.toUpperCase();
+		const titleA = a.title.toLowerCase();
+		const titleB = b.title.toLowerCase();
+		const typeNameA = a.typeName.toLowerCase();
+		const typeNameB = b.typeName.toLowerCase();
 
 		if (typeNameA < typeNameB) {
 			return -1;

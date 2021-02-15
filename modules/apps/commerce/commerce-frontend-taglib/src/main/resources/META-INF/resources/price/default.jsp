@@ -14,19 +14,19 @@
  */
 --%>
 
-<%@ include file="/availability_label/init.jsp" %>
+<%@ include file="/price/init.jsp" %>
 
-<span class="<%= Validator.isNull(label) ? "hide" + StringPool.SPACE : StringPool.BLANK %>label label-<%= labelType %> m-0 <%= namespace %>availability-label">
-	<span class="label-item label-item-expand"><%= label %></span>
+<%
+String inactivePriceCssClass = StringPool.BLANK;
+
+if (Validator.isNotNull(prices.getPromoPrice()) || displayDiscountLevels) {
+	inactivePriceCssClass = StringPool.SPACE + "price-value-inactive";
+}
+%>
+
+<span class="price-label">
+	<%= LanguageUtil.get(request, "list-price") %>
 </span>
-
-<c:if test="<%= Validator.isNotNull(namespace) %>">
-	<liferay-frontend:component
-		context='<%=
-			HashMapBuilder.<String, Object>put(
-				"namespace", namespace
-			).build()
-		%>'
-		module="availability_label/js/AvailabilityCPInstanceChangeHandler"
-	/>
-</c:if>
+<span class="price-value<%= inactivePriceCssClass %>">
+	<%= prices.getPrice() %>
+</span>

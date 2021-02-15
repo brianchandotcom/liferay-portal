@@ -66,7 +66,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 					<c:when test="<%= cpSku != null %>">
 						<h4 class="sku"><%= HtmlUtil.escape(cpSku.getSku()) %></h4>
 
-						<div class="price"><commerce-ui:price CPDefinitionId="<%= cpDefinitionId %>" CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
+						<div class="price-container w-50"><commerce-ui:price CPCatalogEntry="<%= cpCatalogEntry %>" namespace="<%= liferayPortletResponse.getNamespace() %>" /></div>
 
 						<div class="subscription-info"><commerce-ui:product-subscription-info CPInstanceId="<%= cpSku.getCPInstanceId() %>" /></div>
 
@@ -79,7 +79,7 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 					<c:otherwise>
 						<h4 class="sku" data-text-cp-instance-sku=""></h4>
 
-						<div class="price"><commerce-ui:price CPDefinitionId="<%= cpDefinitionId %>" /></div>
+						<div class="price-container w-50" data-text-cp-instance-price=""></div>
 
 						<div class="subscription-info" data-text-cp-instance-subscription-info="" data-text-cp-instance-subscription-info-show></div>
 

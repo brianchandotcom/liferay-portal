@@ -34,9 +34,7 @@
 	<p class="card-text">
 		<span class="text-truncate-inline">
 			<span class="d-flex flex-row text-truncate">
-				<commerce-ui:price
-					CPDefinitionId='<%= cpCatalogEntry.getCPDefinitionId() %>'
-				/>
+				<commerce-ui:price CPCatalogEntry="<%= cpCatalogEntry %>" compact="<%= true %>" />
 			</span>
 		</span>
 	</p>

@@ -114,11 +114,17 @@ const VisibleSelectInput = forwardRef(
 							);
 
 							return (
-								<LabelOptionListItem
-									key={`${option.value}-${option.label}`}
-									onCloseButtonClicked={onCloseButtonClicked}
-									option={option}
-								/>
+								<>
+									{option && (
+										<LabelOptionListItem
+											key={`${option.value}-${option.label}`}
+											onCloseButtonClicked={
+												onCloseButtonClicked
+											}
+											option={option}
+										/>
+									)}
+								</>
 							);
 						})
 					)}

@@ -263,9 +263,9 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "DM Document Type Name");
 
-		AssertElementNotPresent(
+		AssertElementPresent(
 			locator1 = "DataEngineBuilder#FIELDS_GROUP_LOCATOR",
-			value1 = "Fields Group Edit");
+			key_FieldGroupLabel = "Fields Group Edit");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

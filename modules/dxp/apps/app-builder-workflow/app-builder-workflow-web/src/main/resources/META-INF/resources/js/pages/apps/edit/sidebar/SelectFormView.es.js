@@ -18,7 +18,7 @@ import {OpenButton} from './DataAndViewsTab.es';
 
 const Item = ({
 	id,
-	missingRequiredFields: {customField = false, nativeField} = {},
+	missingRequiredFields: {customField, nativeField} = {},
 	name,
 }) => {
 	const {

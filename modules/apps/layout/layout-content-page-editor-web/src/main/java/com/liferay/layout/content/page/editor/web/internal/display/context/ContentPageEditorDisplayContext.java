@@ -441,6 +441,10 @@ public class ContentPageEditorDisplayContext {
 				getResourceURL(
 					"/layout_content_page_editor/get_info_item_mapping_fields")
 			).put(
+				"getLayoutFriendlyURL",
+				getResourceURL(
+					"/layout_content_page_editor/get_layout_friendly_url")
+			).put(
 				"getPageContentsURL",
 				getResourceURL("/layout_content_page_editor/get_page_content")
 			).put(

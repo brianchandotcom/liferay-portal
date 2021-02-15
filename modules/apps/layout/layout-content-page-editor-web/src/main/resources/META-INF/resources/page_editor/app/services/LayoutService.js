@@ -114,6 +114,26 @@ export default {
 	},
 
 	/**
+	 * @param {string} groupId
+	 * @param {string} layoutId
+	 * @param {boolean} privateLayout
+	 * @returns {Promise<{error: Error, friendlyURL: string}>}
+	 */
+	getLayoutFriendlyURL({groupId, layoutId, privateLayout}) {
+		return layoutServiceFetch(
+			config.getLayoutFriendlyURL,
+			{
+				body: {
+					groupId,
+					layoutId,
+					privateLayout,
+				},
+			},
+			() => {}
+		);
+	},
+
+	/**
 	 * Marks an item for deletion
 	 * @param {object} options
 	 * @param {string} options.itemId id of the item to be updated

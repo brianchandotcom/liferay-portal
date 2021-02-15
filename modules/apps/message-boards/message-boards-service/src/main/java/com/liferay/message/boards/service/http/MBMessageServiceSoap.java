@@ -157,6 +157,33 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.message.boards.model.MBMessageSoap addMessage(
+			String externalReferenceCode, long parentMessageId, String subject,
+			String body, String format,
+			java.util.List
+				<com.liferay.portal.kernel.util.ObjectValuePair
+					<String, java.io.InputStream>> inputStreamOVPs,
+			boolean anonymous, double priority, boolean allowPingbacks,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.message.boards.model.MBMessage returnValue =
+				MBMessageServiceUtil.addMessage(
+					externalReferenceCode, parentMessageId, subject, body,
+					format, inputStreamOVPs, anonymous, priority,
+					allowPingbacks, serviceContext);
+
+			return com.liferay.message.boards.model.MBMessageSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteDiscussionMessage(long messageId)
 		throws RemoteException {
 

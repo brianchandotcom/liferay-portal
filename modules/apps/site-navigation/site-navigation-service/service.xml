@@ -88,6 +88,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="SiteNavigationMenuId" return-type="Collection">
 			<finder-column name="siteNavigationMenuId" />
 		</finder>

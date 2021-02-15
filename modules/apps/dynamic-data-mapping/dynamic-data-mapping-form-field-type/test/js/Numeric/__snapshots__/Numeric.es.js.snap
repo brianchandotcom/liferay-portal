@@ -11,6 +11,7 @@ exports[`Field Numeric has a helptext 1`] = `
     <input
       class="form-control"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value=""
     />
@@ -42,6 +43,7 @@ exports[`Field Numeric has a key 1`] = `
     <input
       class="form-control"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value=""
     />
@@ -66,6 +68,7 @@ exports[`Field Numeric has a label 1`] = `
     <input
       class="form-control"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value=""
     />
@@ -92,6 +95,7 @@ exports[`Field Numeric has a placeholder 1`] = `
       class="form-control"
       name="numericField"
       placeholder="Placeholder"
+      predefinedvalue=""
       type="text"
       value=""
     />
@@ -111,6 +115,7 @@ exports[`Field Numeric has a value 1`] = `
     <input
       class="form-control"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value="123"
     />
@@ -131,6 +136,7 @@ exports[`Field Numeric has an id 1`] = `
       class="form-control"
       id="ID"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value=""
     />
@@ -150,6 +156,7 @@ exports[`Field Numeric is not readOnly 1`] = `
     <input
       class="form-control"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value=""
     />
@@ -169,6 +176,7 @@ exports[`Field Numeric is not required 1`] = `
     <input
       class="form-control"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value=""
     />
@@ -193,6 +201,7 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
     <input
       class="form-control"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value=""
     />
@@ -218,6 +227,7 @@ exports[`Field Numeric renders the default markup 1`] = `
     <input
       class="form-control"
       name="numericField"
+      predefinedvalue=""
       type="text"
       value=""
     />

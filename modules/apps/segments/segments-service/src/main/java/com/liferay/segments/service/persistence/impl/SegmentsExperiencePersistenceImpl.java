@@ -11454,6 +11454,7 @@ public class SegmentsExperiencePersistenceImpl
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("active_");
+		ctStrictColumnNames.add("typeSettings");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

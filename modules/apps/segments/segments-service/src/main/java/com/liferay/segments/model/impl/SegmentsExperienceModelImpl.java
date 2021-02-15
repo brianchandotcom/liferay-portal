@@ -91,7 +91,7 @@ public class SegmentsExperienceModelImpl
 		{"segmentsExperienceKey", Types.VARCHAR}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"priority", Types.INTEGER}, {"active_", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"typeSettings", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -115,11 +115,12 @@ public class SegmentsExperienceModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsExperience (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,segmentsExperienceId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceKey VARCHAR(75) null,classNameId LONG,classPK LONG,name STRING null,priority INTEGER,active_ BOOLEAN,lastPublishDate DATE null,primary key (segmentsExperienceId, ctCollectionId))";
+		"create table SegmentsExperience (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,segmentsExperienceId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceKey VARCHAR(75) null,classNameId LONG,classPK LONG,name STRING null,priority INTEGER,active_ BOOLEAN,typeSettings VARCHAR(75) null,lastPublishDate DATE null,primary key (segmentsExperienceId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsExperience";
 
@@ -235,6 +236,7 @@ public class SegmentsExperienceModelImpl
 		model.setName(soapModel.getName());
 		model.setPriority(soapModel.getPriority());
 		model.setActive(soapModel.isActive());
+		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -490,6 +492,12 @@ public class SegmentsExperienceModelImpl
 			"active",
 			(BiConsumer<SegmentsExperience, Boolean>)
 				SegmentsExperience::setActive);
+		attributeGetterFunctions.put(
+			"typeSettings", SegmentsExperience::getTypeSettings);
+		attributeSetterBiConsumers.put(
+			"typeSettings",
+			(BiConsumer<SegmentsExperience, String>)
+				SegmentsExperience::setTypeSettings);
 		attributeGetterFunctions.put(
 			"lastPublishDate", SegmentsExperience::getLastPublishDate);
 		attributeSetterBiConsumers.put(
@@ -1001,6 +1009,26 @@ public class SegmentsExperienceModelImpl
 
 	@JSON
 	@Override
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
+			return "";
+		}
+		else {
+			return _typeSettings;
+		}
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_typeSettings = typeSettings;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -1162,6 +1190,7 @@ public class SegmentsExperienceModelImpl
 		segmentsExperienceImpl.setName(getName());
 		segmentsExperienceImpl.setPriority(getPriority());
 		segmentsExperienceImpl.setActive(isActive());
+		segmentsExperienceImpl.setTypeSettings(getTypeSettings());
 		segmentsExperienceImpl.setLastPublishDate(getLastPublishDate());
 
 		segmentsExperienceImpl.resetOriginalValues();
@@ -1328,6 +1357,14 @@ public class SegmentsExperienceModelImpl
 
 		segmentsExperienceCacheModel.active = isActive();
 
+		segmentsExperienceCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = segmentsExperienceCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			segmentsExperienceCacheModel.typeSettings = null;
+		}
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1430,6 +1467,7 @@ public class SegmentsExperienceModelImpl
 	private String _nameCurrentLanguageId;
 	private int _priority;
 	private boolean _active;
+	private String _typeSettings;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1480,6 +1518,7 @@ public class SegmentsExperienceModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("typeSettings", _typeSettings);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -1539,7 +1578,9 @@ public class SegmentsExperienceModelImpl
 
 		columnBitmasks.put("active_", 65536L);
 
-		columnBitmasks.put("lastPublishDate", 131072L);
+		columnBitmasks.put("typeSettings", 131072L);
+
+		columnBitmasks.put("lastPublishDate", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

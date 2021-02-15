@@ -68,6 +68,7 @@ create table SegmentsExperience (
 	name STRING null,
 	priority INTEGER,
 	active_ BOOLEAN,
+	typeSettings VARCHAR(75) null,
 	lastPublishDate DATE null,
 	primary key (segmentsExperienceId, ctCollectionId)
 );

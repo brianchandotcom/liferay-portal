@@ -97,6 +97,53 @@ public class SegmentsExperienceServiceHttp {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperience
+			addSegmentsExperience(
+				HttpPrincipal httpPrincipal, long segmentsEntryId,
+				long classNameId, long classPK,
+				java.util.Map<java.util.Locale, String> nameMap, boolean active,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperienceServiceUtil.class, "addSegmentsExperience",
+				_addSegmentsExperienceParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsEntryId, classNameId, classPK, nameMap,
+				active, typeSettingsUnicodeProperties, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperience)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperience
 			appendSegmentsExperience(
 				HttpPrincipal httpPrincipal, long segmentsEntryId,
 				long classNameId, long classPK,
@@ -107,11 +154,58 @@ public class SegmentsExperienceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class, "appendSegmentsExperience",
-				_appendSegmentsExperienceParameterTypes1);
+				_appendSegmentsExperienceParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId, classNameId, classPK, nameMap,
 				active, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperience)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperience
+			appendSegmentsExperience(
+				HttpPrincipal httpPrincipal, long segmentsEntryId,
+				long classNameId, long classPK,
+				java.util.Map<java.util.Locale, String> nameMap, boolean active,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperienceServiceUtil.class, "appendSegmentsExperience",
+				_appendSegmentsExperienceParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsEntryId, classNameId, classPK, nameMap,
+				active, typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 
@@ -149,7 +243,7 @@ public class SegmentsExperienceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class, "deleteSegmentsExperience",
-				_deleteSegmentsExperienceParameterTypes2);
+				_deleteSegmentsExperienceParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperienceId);
@@ -191,7 +285,7 @@ public class SegmentsExperienceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class, "fetchSegmentsExperience",
-				_fetchSegmentsExperienceParameterTypes3);
+				_fetchSegmentsExperienceParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, segmentsExperienceKey);
@@ -232,7 +326,7 @@ public class SegmentsExperienceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class, "getSegmentsExperience",
-				_getSegmentsExperienceParameterTypes4);
+				_getSegmentsExperienceParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperienceId);
@@ -274,7 +368,7 @@ public class SegmentsExperienceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class, "getSegmentsExperiences",
-				_getSegmentsExperiencesParameterTypes5);
+				_getSegmentsExperiencesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, classPK, active);
@@ -320,7 +414,7 @@ public class SegmentsExperienceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class, "getSegmentsExperiences",
-				_getSegmentsExperiencesParameterTypes6);
+				_getSegmentsExperiencesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, classPK, active, start, end,
@@ -364,7 +458,7 @@ public class SegmentsExperienceServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class,
 				"getSegmentsExperiencesCount",
-				_getSegmentsExperiencesCountParameterTypes7);
+				_getSegmentsExperiencesCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, classPK, active);
@@ -407,11 +501,57 @@ public class SegmentsExperienceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class, "updateSegmentsExperience",
-				_updateSegmentsExperienceParameterTypes8);
+				_updateSegmentsExperienceParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperienceId, segmentsEntryId, nameMap,
 				active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperience)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperience
+			updateSegmentsExperience(
+				HttpPrincipal httpPrincipal, long segmentsExperienceId,
+				long segmentsEntryId,
+				java.util.Map<java.util.Locale, String> nameMap, boolean active,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperienceServiceUtil.class, "updateSegmentsExperience",
+				_updateSegmentsExperienceParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsExperienceId, segmentsEntryId, nameMap,
+				active, typeSettingsUnicodeProperties);
 
 			Object returnObj = null;
 
@@ -450,7 +590,7 @@ public class SegmentsExperienceServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperienceServiceUtil.class,
 				"updateSegmentsExperiencePriority",
-				_updateSegmentsExperiencePriorityParameterTypes9);
+				_updateSegmentsExperiencePriorityParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperienceId, newPriority);
@@ -488,35 +628,54 @@ public class SegmentsExperienceServiceHttp {
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _appendSegmentsExperienceParameterTypes1 =
+	private static final Class<?>[] _addSegmentsExperienceParameterTypes1 =
+		new Class[] {
+			long.class, long.class, long.class, java.util.Map.class,
+			boolean.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _appendSegmentsExperienceParameterTypes2 =
 		new Class[] {
 			long.class, long.class, long.class, java.util.Map.class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteSegmentsExperienceParameterTypes2 =
+	private static final Class<?>[] _appendSegmentsExperienceParameterTypes3 =
+		new Class[] {
+			long.class, long.class, long.class, java.util.Map.class,
+			boolean.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteSegmentsExperienceParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _fetchSegmentsExperienceParameterTypes3 =
+	private static final Class<?>[] _fetchSegmentsExperienceParameterTypes5 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getSegmentsExperienceParameterTypes4 =
+	private static final Class<?>[] _getSegmentsExperienceParameterTypes6 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSegmentsExperiencesParameterTypes5 =
+	private static final Class<?>[] _getSegmentsExperiencesParameterTypes7 =
 		new Class[] {long.class, long.class, long.class, boolean.class};
-	private static final Class<?>[] _getSegmentsExperiencesParameterTypes6 =
+	private static final Class<?>[] _getSegmentsExperiencesParameterTypes8 =
 		new Class[] {
 			long.class, long.class, long.class, boolean.class, int.class,
 			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getSegmentsExperiencesCountParameterTypes7 = new Class[] {
+		_getSegmentsExperiencesCountParameterTypes9 = new Class[] {
 			long.class, long.class, long.class, boolean.class
 		};
-	private static final Class<?>[] _updateSegmentsExperienceParameterTypes8 =
+	private static final Class<?>[] _updateSegmentsExperienceParameterTypes10 =
 		new Class[] {
 			long.class, long.class, java.util.Map.class, boolean.class
 		};
+	private static final Class<?>[] _updateSegmentsExperienceParameterTypes11 =
+		new Class[] {
+			long.class, long.class, java.util.Map.class, boolean.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class
+		};
 	private static final Class<?>[]
-		_updateSegmentsExperiencePriorityParameterTypes9 = new Class[] {
+		_updateSegmentsExperiencePriorityParameterTypes12 = new Class[] {
 			long.class, int.class
 		};
 

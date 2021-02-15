@@ -60,6 +60,13 @@ public interface SegmentsExperience
 
 			};
 
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsUnicodeProperties();
+
 	public boolean hasSegmentsExperiment();
+
+	public void setTypeSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsUnicodeProperties);
 
 }

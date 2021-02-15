@@ -59,7 +59,8 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 	@Override
 	public String getCurrentTitle() {
 		if (_googleDocsMetadataHelper != null) {
-			return _googleDocsMetadataHelper.getFieldValue(getTitleFieldName());
+			return _googleDocsMetadataHelper.getFieldValue(
+				getFileNameFieldName());
 		}
 
 		return StringPool.BLANK;

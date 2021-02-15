@@ -18,20 +18,28 @@ import com.liferay.commerce.configuration.CommercePriceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.frontend.model.PriceModel;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.frontend.util.ProductHelper;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -47,53 +55,34 @@ public class PriceTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		try {
-			_commerceContext = (CommerceContext)request.getAttribute(
+		CommerceContext commerceContext =
+			(CommerceContext)getRequest().getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
-			_themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+
+		try {
+			long cpInstanceId = 0;
+
+			List<CPSku> cpSkus = _cpCatalogEntry.getCPSkus();
+
+			if (cpSkus.size() == 1) {
+				CPSku cpSku = cpSkus.get(0);
+
+				cpInstanceId = cpSku.getCPInstanceId();
+			}
 
 			if (_quantity <= 0) {
 				ProductSettingsModel productSettingsModel =
-					productHelper.getProductSettingsModel(_cpInstanceId);
+					_productHelper.getProductSettingsModel(cpInstanceId);
 
 				_quantity = productSettingsModel.getMinQuantity();
 			}
 
-			PriceModel priceModel = null;
-
-			if (_cpInstanceId > 0) {
-				priceModel = productHelper.getPriceModel(
-					_cpInstanceId, _quantity, _commerceContext,
-					StringPool.BLANK, _themeDisplay.getLocale());
-			}
-			else {
-				priceModel = productHelper.getMinPrice(
-					_cpDefinitionId, _commerceContext,
-					_themeDisplay.getLocale());
-			}
-
-			CommercePriceConfiguration commercePriceConfiguration =
-				configurationProvider.getConfiguration(
-					CommercePriceConfiguration.class,
-					new SystemSettingsLocator(
-						CommerceConstants.PRICE_SERVICE_NAME));
-
-			_displayDiscountLevels =
-				commercePriceConfiguration.displayDiscountLevels();
-
-			_prices = priceModel;
+			_displayDiscountLevels = _isDisplayDiscountLevels();
+			_netPrice = _isNetPrice(commerceContext.getCommerceChannelId());
+			_prices = _getPriceModel(commerceContext, cpInstanceId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
-
-			_additionalDiscountClasses = null;
-			_additionalPriceClasses = null;
-			_additionalPromoPriceClasses = null;
-			_commerceContext = null;
-			_commerceDiscountValue = null;
-			_displayDiscountLevels = false;
-			_themeDisplay = null;
 
 			return SKIP_BODY;
 		}
@@ -101,52 +90,32 @@ public class PriceTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public String getAdditionalDiscountClasses() {
-		return _additionalDiscountClasses;
+	public CPCatalogEntry getCPCatalogEntry() {
+		return _cpCatalogEntry;
 	}
 
-	public String getAdditionalPriceClasses() {
-		return _additionalPriceClasses;
-	}
-
-	public String getAdditionalPromoPriceClasses() {
-		return _additionalPromoPriceClasses;
-	}
-
-	public long getCPDefinitionId() {
-		return _cpDefinitionId;
-	}
-
-	public long getCPInstanceId() {
-		return _cpInstanceId;
+	public String getNamespace() {
+		return _namespace;
 	}
 
 	public int getQuantity() {
 		return _quantity;
 	}
 
-	public String setAdditionalDiscountClasses(
-		String additionalDiscountClasses) {
-
-		return _additionalDiscountClasses = additionalDiscountClasses;
+	public boolean isCompact() {
+		return _compact;
 	}
 
-	public String setAdditionalPriceClasses(String additionalPriceClasses) {
-		return _additionalPriceClasses = additionalPriceClasses;
+	public void setCompact(boolean compact) {
+		_compact = compact;
 	}
 
-	public String setAdditionalPromoPriceClasses(
-		String additionalPromoPriceClasses) {
-
-		return _additionalPromoPriceClasses = additionalPromoPriceClasses;
+	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
+		_cpCatalogEntry = cpCatalogEntry;
 	}
 
-	public void setCPDefinitionId(long cpDefinitionId) {
-		_cpDefinitionId = cpDefinitionId;
-	}
-
-	public void setCPInstanceId(long cpInstanceId) {
-		_cpInstanceId = cpInstanceId;
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
 	}
 
 	@Override
@@ -156,7 +125,7 @@ public class PriceTag extends IncludeTag {
 		commerceChannelLocalService =
 			ServletContextUtil.getCommerceChannelLocalService();
 		configurationProvider = ServletContextUtil.getConfigurationProvider();
-		productHelper = ServletContextUtil.getProductHelper();
+		_productHelper = ServletContextUtil.getProductHelper();
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
@@ -168,17 +137,14 @@ public class PriceTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_additionalDiscountClasses = null;
-		_additionalPriceClasses = null;
-		_additionalPromoPriceClasses = null;
-		_commerceContext = null;
-		_commerceDiscountValue = null;
-		_cpDefinitionId = 0;
-		_cpInstanceId = 0;
-		_displayDiscountLevels = true;
+		_compact = false;
+		_cpCatalogEntry = null;
+		_displayDiscountLevels = false;
+		_namespace = StringPool.BLANK;
+		_netPrice = true;
 		_prices = null;
+		_productHelper = null;
 		_quantity = 0;
-		_themeDisplay = null;
 	}
 
 	@Override
@@ -188,42 +154,76 @@ public class PriceTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
-			"commerce-ui:price:additionalDiscountClasses",
-			_additionalDiscountClasses);
-		request.setAttribute(
-			"commerce-ui:price:additionalPriceClasses",
-			_additionalPriceClasses);
-		request.setAttribute(
-			"commerce-ui:price:additionalPromoPriceClasses",
-			_additionalPromoPriceClasses);
-		request.setAttribute(
-			"commerce-ui:price:commerceDiscountValue", _commerceDiscountValue);
-		request.setAttribute(
-			"commerce-ui:price:cpDefinitionId", _cpDefinitionId);
-		request.setAttribute(
+		httpServletRequest.setAttribute("commerce-ui:price:compact", _compact);
+		httpServletRequest.setAttribute(
 			"commerce-ui:price:displayDiscountLevels", _displayDiscountLevels);
-		request.setAttribute("commerce-ui:price:prices", _prices);
+		httpServletRequest.setAttribute(
+			"commerce-ui:price:namespace", _namespace);
+		httpServletRequest.setAttribute(
+			"commerce-ui:price:netPrice", _netPrice);
+		httpServletRequest.setAttribute("commerce-ui:price:prices", _prices);
 	}
 
 	protected CommerceChannelLocalService commerceChannelLocalService;
 	protected ConfigurationProvider configurationProvider;
-	protected ProductHelper productHelper;
+
+	private PriceModel _getPriceModel(
+			CommerceContext commerceContext, long cpInstanceId)
+		throws PortalException {
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (cpInstanceId > 0) {
+			return _productHelper.getPriceModel(
+				cpInstanceId, _quantity, commerceContext, StringPool.BLANK,
+				themeDisplay.getLocale());
+		}
+
+		return _productHelper.getMinPrice(
+			_cpCatalogEntry.getCPDefinitionId(), commerceContext,
+			themeDisplay.getLocale());
+	}
+
+	private boolean _isDisplayDiscountLevels() throws ConfigurationException {
+		CommercePriceConfiguration commercePriceConfiguration =
+			configurationProvider.getConfiguration(
+				CommercePriceConfiguration.class,
+				new SystemSettingsLocator(
+					CommerceConstants.PRICE_SERVICE_NAME));
+
+		return commercePriceConfiguration.displayDiscountLevels();
+	}
+
+	private boolean _isNetPrice(long commerceChannelId) {
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.fetchCommerceChannel(commerceChannelId);
+
+		if ((commerceChannel != null) &&
+			Objects.equals(
+				commerceChannel.getPriceDisplayType(),
+				CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
+
+			return false;
+		}
+
+		return true;
+	}
 
 	private static final String _PAGE = "/price/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(PriceTag.class);
 
-	private String _additionalDiscountClasses;
-	private String _additionalPriceClasses;
-	private String _additionalPromoPriceClasses;
-	private CommerceContext _commerceContext;
-	private CommerceDiscountValue _commerceDiscountValue;
-	private long _cpDefinitionId;
-	private long _cpInstanceId;
-	private boolean _displayDiscountLevels = true;
+	private boolean _compact;
+	private CPCatalogEntry _cpCatalogEntry;
+	private boolean _displayDiscountLevels;
+	private String _namespace = StringPool.BLANK;
+	private boolean _netPrice = true;
 	private PriceModel _prices;
+	private ProductHelper _productHelper;
 	private int _quantity;
-	private ThemeDisplay _themeDisplay;
 
 }

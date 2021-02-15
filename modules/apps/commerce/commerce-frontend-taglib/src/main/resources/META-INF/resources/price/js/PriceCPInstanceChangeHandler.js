@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,21 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/availability_label/init.jsp" %>
+import * as Events from 'commerce-frontend-js/utilities/eventsDefinitions';
 
-<span class="<%= Validator.isNull(label) ? "hide" + StringPool.SPACE : StringPool.BLANK %>label label-<%= labelType %> m-0 <%= namespace %>availability-label">
-	<span class="label-item label-item-expand"><%= label %></span>
-</span>
+function updatePrice(_params) {
 
-<c:if test="<%= Validator.isNotNull(namespace) %>">
-	<liferay-frontend:component
-		context='<%=
-			HashMapBuilder.<String, Object>put(
-				"namespace", namespace
-			).build()
-		%>'
-		module="availability_label/js/AvailabilityCPInstanceChangeHandler"
-	/>
-</c:if>
+	/**
+	 * Due to PTR-2238 this function
+	 * is temporarily not implementable.
+	 */
+}
+
+export default function (context) {
+	Liferay.on(
+		`${context.namespace}${Events.CP_INSTANCE_CHANGED}`,
+		({cpInstance}) => {
+			updatePrice({cpInstance, ...context});
+		}
+	);
+}

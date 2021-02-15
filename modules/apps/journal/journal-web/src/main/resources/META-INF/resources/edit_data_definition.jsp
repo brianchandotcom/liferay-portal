@@ -122,93 +122,15 @@ editDDMStructureURL.setParameter("ddmStructureId", String.valueOf(ddmStructureId
 </aui:form>
 
 <liferay-frontend:component
-	componentId='<%= liferayPortletResponse.getNamespace() + "LocaleChangedHandlerComponent" %>'
-	context="<%= journalEditDDMStructuresDisplayContext.getComponentContext() %>"
-	module="js/LocaleChangedHandler.es"
+	componentId='<%= liferayPortletResponse.getNamespace() + "DataEngineLayoutBuilderHandler" %>'
+	context="<%= journalEditDDMStructuresDisplayContext.getDataEngineLayoutBuilderHandlerContext() %>"
+	module="js/DataEngineLayoutBuilderHandler.es"
 	servletContext="<%= application %>"
 />
 
-<aui:script sandbox="<%= true %>">
-	function <portlet:namespace />getInputLocalizedValues(field) {
-		var inputLocalized = Liferay.component('<portlet:namespace />' + field);
-		var localizedValues = {};
-
-		if (inputLocalized) {
-			var translatedLanguages = inputLocalized
-				.get('translatedLanguages')
-				.values();
-
-			translatedLanguages.forEach(function (languageId) {
-				localizedValues[languageId] = inputLocalized.getValue(languageId);
-			});
-		}
-
-		return localizedValues;
-	}
-
-	function <portlet:namespace />saveDDMStructure() {
-		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
-			function (dataLayoutBuilder) {
-				const nameInput = document.getElementById(
-					'<portlet:namespace />name'
-				);
-
-				var name = <portlet:namespace />getInputLocalizedValues('name');
-
-				if (
-					!nameInput.value ||
-					!name[
-						'<%= journalEditDDMStructuresDisplayContext.getDefaultLanguageId() %>'
-					]
-				) {
-					Liferay.Util.openToast({
-						message:
-							'<liferay-ui:message arguments="<%= LocaleUtil.toW3cLanguageId(journalEditDDMStructuresDisplayContext.getDefaultLanguageId()) %>" key="please-enter-a-valid-title-for-the-default-language-x" />',
-						title: '<liferay-ui:message key="error" />',
-						type: 'danger',
-					});
-
-					nameInput.focus();
-
-					return;
-				}
-
-				var description = <portlet:namespace />getInputLocalizedValues(
-					'description'
-				);
-
-				var formData = dataLayoutBuilder.getFormData();
-
-				var dataDefinition = formData.definition;
-
-				dataDefinition.description = description;
-				dataDefinition.name = name;
-
-				var dataLayout = formData.layout;
-
-				dataLayout.description = description;
-				dataLayout.name = name;
-
-				Liferay.Util.postForm(document.<portlet:namespace />fm, {
-					data: {
-						dataDefinition: JSON.stringify(dataDefinition),
-						dataLayout: JSON.stringify(dataLayout),
-					},
-				});
-			}
-		);
-	}
-
-	const form = document.getElementById('<portlet:namespace />fm');
-
-	if (form) {
-		form.addEventListener('submit', <portlet:namespace />saveDDMStructure);
-
-		Liferay.once('destroyPortlet', function () {
-			form.removeEventListener(
-				'submit',
-				<portlet:namespace />saveDDMStructure
-			);
-		});
-	}
-</aui:script>
+<liferay-frontend:component
+	componentId='<%= liferayPortletResponse.getNamespace() + "LocaleChangedHandlerComponent" %>'
+	context="<%= journalEditDDMStructuresDisplayContext.getLocaleChangedHandlerContext() %>"
+	module="js/LocaleChangedHandler.es"
+	servletContext="<%= application %>"
+/>

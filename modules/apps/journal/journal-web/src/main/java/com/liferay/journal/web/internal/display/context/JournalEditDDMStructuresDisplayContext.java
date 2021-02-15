@@ -95,10 +95,8 @@ public class JournalEditDDMStructuresDisplayContext {
 			).build());
 	}
 
-	public Map<String, Object> getComponentContext() {
+	public Map<String, Object> getDataEngineLayoutBuilderHandlerContext() {
 		return HashMapBuilder.<String, Object>put(
-			"contentTitle", "name"
-		).put(
 			"defaultLanguageId", getDefaultLanguageId()
 		).build();
 	}
@@ -146,6 +144,14 @@ public class JournalEditDDMStructuresDisplayContext {
 		}
 
 		return LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
+	}
+
+	public Map<String, Object> getLocaleChangedHandlerContext() {
+		return HashMapBuilder.<String, Object>put(
+			"contentTitle", "name"
+		).put(
+			"defaultLanguageId", getDefaultLanguageId()
+		).build();
 	}
 
 	public String getScript() throws PortalException {

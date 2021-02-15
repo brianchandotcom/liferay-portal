@@ -49,11 +49,10 @@ public class ReferralTrafficChannelImpl implements TrafficChannel {
 		List<ReferringURL> pageReferringURLs, long trafficAmount,
 		double trafficShare) {
 
-		_trafficAmount = trafficAmount;
-		_trafficShare = trafficShare;
-
 		_domainReferringURLs = domainReferringURLs;
 		_pageReferringURLs = pageReferringURLs;
+		_trafficAmount = trafficAmount;
+		_trafficShare = trafficShare;
 
 		_error = false;
 	}

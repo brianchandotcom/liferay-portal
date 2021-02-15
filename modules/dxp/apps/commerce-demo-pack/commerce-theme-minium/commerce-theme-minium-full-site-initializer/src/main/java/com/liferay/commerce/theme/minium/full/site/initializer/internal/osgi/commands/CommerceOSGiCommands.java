@@ -15,6 +15,7 @@
 package com.liferay.commerce.theme.minium.full.site.initializer.internal.osgi.commands;
 
 import com.liferay.commerce.theme.minium.SiteInitializerDependencyResolver;
+import com.liferay.commerce.theme.minium.full.site.initializer.internal.importer.CommerceMLForecastImporter;
 import com.liferay.commerce.theme.minium.full.site.initializer.internal.importer.CommerceMLRecommendationImporter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -43,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true,
 	property = {
+		"osgi.command.function=importForecasts",
 		"osgi.command.function=importRecommendations",
 		"osgi.command.scope=commerce"
 	},
@@ -50,11 +52,32 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceOSGiCommands {
 
+	public void importForecasts(long siteId) throws Exception {
+		User user = _getImportUserByGroupId(siteId);
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_fullSiteInitializerDependencyResolver.getJSON("forecasts.json"));
+
+		_commerceMLForecastImporter.importCommerceMLForecasts(
+			jsonArray, siteId, user.getUserId());
+	}
+
 	public void importRecommendations(
 			long siteId, String externalReferenceCodePrefix)
 		throws Exception {
 
-		Group group = _groupLocalService.getGroup(siteId);
+		User user = _getImportUserByGroupId(siteId);
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(
+			_fullSiteInitializerDependencyResolver.getJSON(
+				"recommendations.json"));
+
+		_commerceMLRecommendationImporter.importCommerceMLRecommendations(
+			jsonArray, externalReferenceCodePrefix, siteId, user.getUserId());
+	}
+
+	private User _getImportUserByGroupId(long groupId) throws Exception {
+		Group group = _groupLocalService.getGroup(groupId);
 
 		Company company = _companyLocalService.getCompanyById(
 			group.getCompanyId());
@@ -73,13 +96,11 @@ public class CommerceOSGiCommands {
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(
-			_fullSiteInitializerDependencyResolver.getJSON(
-				"recommendations.json"));
-
-		_commerceMLRecommendationImporter.importCommerceMLRecommendations(
-			jsonArray, externalReferenceCodePrefix, siteId, user.getUserId());
+		return user;
 	}
+
+	@Reference
+	private CommerceMLForecastImporter _commerceMLForecastImporter;
 
 	@Reference
 	private CommerceMLRecommendationImporter _commerceMLRecommendationImporter;

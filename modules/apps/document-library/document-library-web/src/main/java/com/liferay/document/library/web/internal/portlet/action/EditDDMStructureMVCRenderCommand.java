@@ -15,8 +15,6 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.web.internal.constants.DLWebKeys;
-import com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -59,15 +57,6 @@ public class EditDDMStructureMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				DLWebKeys.
-					DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT,
-				new DLEditFileEntryTypeDisplayContext(
-					_ddm, _ddmStorageLinkLocalService,
-					_ddmStructureLocalService, _language,
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
-
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
 				_fetchDDMStructure(renderRequest));

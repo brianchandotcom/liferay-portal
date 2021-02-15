@@ -114,7 +114,7 @@ public class GetTrafficSourcesMVCResourceCommand
 				new AnalyticsReportsDataProvider(_http);
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
-					_portal.getHttpServletRequest(resourceRequest),
+					httpServletRequest, _layoutDisplayPageProviderTracker,
 					_layoutSEOLinkManager, _portal);
 
 			JSONObject jsonObject = JSONUtil.put(

@@ -122,7 +122,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 									getClassNameId()));
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
-					httpServletRequest, _layoutSEOLinkManager, _portal);
+					httpServletRequest, _layoutDisplayPageProviderTracker,
+					_layoutSEOLinkManager, _portal);
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);

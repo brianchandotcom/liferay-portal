@@ -106,7 +106,8 @@ public class GetHistoricalViewsMVCResourceCommand
 
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
-					httpServletRequest, _layoutSEOLinkManager, _portal);
+					httpServletRequest, _layoutDisplayPageProviderTracker,
+					_layoutSEOLinkManager, _portal);
 
 			HistoricalMetric historicalMetric =
 				analyticsReportsDataProvider.getHistoricalViewsHistoricalMetric(

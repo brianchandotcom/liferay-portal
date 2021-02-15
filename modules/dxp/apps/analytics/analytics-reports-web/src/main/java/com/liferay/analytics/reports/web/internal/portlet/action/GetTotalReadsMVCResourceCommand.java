@@ -90,7 +90,8 @@ public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 			new AnalyticsReportsDataProvider(_http);
 
 		CanonicalURLProvider canonicalURLProvider = new CanonicalURLProvider(
-			httpServletRequest, _layoutSEOLinkManager, _portal);
+			httpServletRequest, _layoutDisplayPageProviderTracker,
+			_layoutSEOLinkManager, _portal);
 
 		try {
 			JSONObject jsonObject = JSONUtil.put(

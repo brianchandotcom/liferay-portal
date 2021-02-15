@@ -14,6 +14,8 @@
 
 package com.liferay.analytics.reports.web.internal.layout.seo;
 
+import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,9 +36,11 @@ public class CanonicalURLProvider {
 
 	public CanonicalURLProvider(
 		HttpServletRequest httpServletRequest,
+		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
 		LayoutSEOLinkManager layoutSEOLinkManager, Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
+		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_portal = portal;
 
@@ -45,6 +49,9 @@ public class CanonicalURLProvider {
 	}
 
 	public String getCanonicalURL() throws PortalException {
+		LayoutDisplayPageProviderUtil.initLayoutDisplayPageObjectProvider(
+			_httpServletRequest, _layoutDisplayPageProviderTracker, _portal);
+
 		Locale locale = LocaleUtil.fromLanguageId(
 			ParamUtil.getString(
 				_httpServletRequest, "languageId",
@@ -70,6 +77,8 @@ public class CanonicalURLProvider {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final LayoutDisplayPageProviderTracker
+		_layoutDisplayPageProviderTracker;
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;
 	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;

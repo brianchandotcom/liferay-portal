@@ -416,13 +416,17 @@ public class DataDefinitionResourceImpl
 		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
+		DataDefinitionContentType dataDefinitionContentType =
+			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
+				contentType);
+
+		ddmForm.setAllowInvalidAvailableLocalesForProperty(
+			dataDefinitionContentType.
+				allowInvalidAvailableLocalesForProperty());
+
 		ddmForm.setDefinitionSchemaVersion("2.0");
 
-		_validate(
-			dataDefinition,
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
-				contentType),
-			ddmForm);
+		_validate(dataDefinition, dataDefinitionContentType, ddmForm);
 
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
@@ -535,14 +539,18 @@ public class DataDefinitionResourceImpl
 		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
+		DataDefinitionContentType dataDefinitionContentType =
+			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
+				ddmStructure.getClassNameId());
+
+		ddmForm.setAllowInvalidAvailableLocalesForProperty(
+			dataDefinitionContentType.
+				allowInvalidAvailableLocalesForProperty());
+
 		ddmForm.setDefinitionSchemaVersion(
 			definitionJSONObject.getString("definitionSchemaVersion"));
 
-		_validate(
-			dataDefinition,
-			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
-				ddmStructure.getClassNameId()),
-			ddmForm);
+		_validate(dataDefinition, dataDefinitionContentType, ddmForm);
 
 		List<DEDataDefinitionFieldLink> deDataDefinitionFieldLinks =
 			_deDataDefinitionFieldLinkLocalService.

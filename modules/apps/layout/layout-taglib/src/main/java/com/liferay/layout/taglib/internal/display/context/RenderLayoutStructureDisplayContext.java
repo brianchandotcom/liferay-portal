@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -337,6 +338,25 @@ public class RenderLayoutStructureDisplayContext {
 
 			if (Validator.isNotNull(mappedCollectionValue)) {
 				return mappedCollectionValue;
+			}
+		}
+
+		JSONObject layoutJSONObject = linkJSONObject.getJSONObject("layout");
+
+		if (layoutJSONObject != null) {
+			long groupId = layoutJSONObject.getLong("groupId");
+			boolean privateLayout = layoutJSONObject.getBoolean(
+				"privateLayout");
+			long layoutId = layoutJSONObject.getLong("layoutId");
+
+			try {
+				Layout layout = LayoutLocalServiceUtil.getLayout(
+					groupId, privateLayout, layoutId);
+
+				return layout.getFriendlyURL(locale);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException, portalException);
 			}
 		}
 

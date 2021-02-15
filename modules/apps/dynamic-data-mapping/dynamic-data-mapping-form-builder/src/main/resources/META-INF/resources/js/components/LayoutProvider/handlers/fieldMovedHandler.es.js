@@ -47,6 +47,14 @@ export default (props, state, event) => {
 
 	if (
 		parentField &&
+		targetFieldName &&
+		parentField.fieldName === targetFieldName
+	) {
+		return state;
+	}
+
+	if (
+		parentField &&
 		parentField.type === FIELD_TYPE_FIELDSET &&
 		parentField.nestedFields.length === 1
 	) {

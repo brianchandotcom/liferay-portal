@@ -64,11 +64,13 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 				fragmentEntryProcessorContext.getMode());
 		boolean collectionMapped =
 			_fragmentEntryProcessorHelper.isMappedCollection(configJSONObject);
+		boolean layoutMapped = _fragmentEntryProcessorHelper.isMappedLayout(
+			configJSONObject);
 		boolean mapped = _fragmentEntryProcessorHelper.isMapped(
 			configJSONObject);
 
 		if (Validator.isNull(href) && !assetDisplayPage && !collectionMapped &&
-			!mapped) {
+			!layoutMapped && !mapped) {
 
 			return;
 		}
@@ -76,6 +78,11 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		if (collectionMapped) {
 			href = GetterUtil.getString(
 				_fragmentEntryProcessorHelper.getMappedCollectionValue(
+					configJSONObject, fragmentEntryProcessorContext));
+		}
+		else if (layoutMapped) {
+			href = GetterUtil.getString(
+				_fragmentEntryProcessorHelper.getMappedLayoutValue(
 					configJSONObject, fragmentEntryProcessorContext));
 		}
 		else if (mapped) {

@@ -48,6 +48,11 @@ public interface FragmentEntryProcessorHelper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException;
 
+	public Object getMappedLayoutValue(
+			JSONObject jsonObject,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException;
+
 	public Object getMappedValue(
 			JSONObject jsonObject,
 			Map<Long, Map<String, Object>> infoDisplaysFieldValues,
@@ -77,6 +82,8 @@ public interface FragmentEntryProcessorHelper {
 	public boolean isMapped(JSONObject jsonObject);
 
 	public boolean isMappedCollection(JSONObject jsonObject);
+
+	public boolean isMappedLayout(JSONObject jsonObject);
 
 	public String processTemplate(
 			String html,

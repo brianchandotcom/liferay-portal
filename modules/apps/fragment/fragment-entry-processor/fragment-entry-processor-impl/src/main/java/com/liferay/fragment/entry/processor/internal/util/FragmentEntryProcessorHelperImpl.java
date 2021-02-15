@@ -41,7 +41,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -223,6 +225,28 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	@Override
+	public Object getMappedLayoutValue(
+			JSONObject jsonObject,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		if (!isMappedLayout(jsonObject)) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
+
+		long groupId = layoutJSONObject.getLong("groupId");
+		boolean privateLayout = layoutJSONObject.getBoolean("privateLayout");
+		long layoutId = layoutJSONObject.getLong("layoutId");
+
+		Layout layout = _layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		return layout.getFriendlyURL(fragmentEntryProcessorContext.getLocale());
+	}
+
+	@Override
 	public Object getMappedValue(
 			JSONObject jsonObject,
 			Map<Long, Map<String, Object>> infoDisplaysFieldValues,
@@ -392,6 +416,15 @@ public class FragmentEntryProcessorHelperImpl
 	}
 
 	@Override
+	public boolean isMappedLayout(JSONObject jsonObject) {
+		if (jsonObject.has("layout")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public String processTemplate(
 			String html,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
@@ -477,6 +510,9 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

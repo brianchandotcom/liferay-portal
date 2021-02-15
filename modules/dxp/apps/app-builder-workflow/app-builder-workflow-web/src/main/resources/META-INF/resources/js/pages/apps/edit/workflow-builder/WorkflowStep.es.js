@@ -69,7 +69,9 @@ const Card = ({
 	const {
 		appId,
 		config: {dataObject, formView},
+		openFormViewModal,
 		state: {app},
+		updateFormView,
 	} = useContext(EditAppContext);
 	const [active, setActive] = useState(false);
 	const [showPopover, setShowPopover] = useState(false);
@@ -129,7 +131,16 @@ const Card = ({
 						),
 					}}
 					nativeField={nativeField}
-					onClick={() => setShowPopover(false)}
+					onClick={() => {
+						setShowPopover(false);
+
+						openFormViewModal(
+							dataObject.id,
+							dataObject.defaultLanguageId,
+							updateFormView,
+							formView.id
+						);
+					}}
 					setShowPopover={setShowPopover}
 					showPopover={showPopover}
 					triggerClassName="dropdown-button-asset help-cursor"

@@ -41,7 +41,9 @@ export default function EditAppSidebar() {
 			tableView,
 		},
 		dispatchConfig,
+		openFormViewModal,
 		state: {app},
+		updateFormView,
 	} = editAppContext;
 	const [currentTab, setCurrentTab] = useState();
 	const [showPopover, setShowPopover] = useState(false);
@@ -319,9 +321,16 @@ export default function EditAppSidebar() {
 														),
 													}}
 													nativeField={nativeField}
-													onClick={() =>
-														setShowPopover(false)
-													}
+													onClick={() => {
+														setShowPopover(false);
+
+														openFormViewModal(
+															dataObject.id,
+															dataObject.defaultLanguageId,
+															updateFormView,
+															formView.id
+														);
+													}}
 													setShowPopover={
 														setShowPopover
 													}

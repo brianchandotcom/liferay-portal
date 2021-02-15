@@ -365,7 +365,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			return false;
 		}
 
-		return nestedFields.contains("embeddedPageDefinition");
+		return nestedFields.contains("pageDefinition");
 	}
 
 	private String _toHTML(

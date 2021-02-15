@@ -99,11 +99,11 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
 
+		doExecuteTimer(currentKaleoNode, kaleoTimer, executionContext);
+
 		notificationHelper.sendKaleoNotifications(
 			KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId(),
 			ExecutionType.ON_TIMER, executionContext);
-
-		doExecuteTimer(currentKaleoNode, kaleoTimer, executionContext);
 
 		if (!kaleoTimer.isRecurring()) {
 			kaleoTimerInstanceTokenLocalService.completeKaleoTimerInstanceToken(

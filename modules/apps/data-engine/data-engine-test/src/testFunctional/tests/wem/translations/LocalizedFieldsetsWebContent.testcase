@@ -418,11 +418,13 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Text",
-			fieldHelp = "Text Field Help Text");
+			fieldHelp = "Text Field Help");
+			fieldsetModal = "true");
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Rich Text Field Help Text");
+			fieldHelp = "Rich Text Field",
+			fieldsetModal = "true");
 
 		PortletEntry.changeLocale(
 			locale = "pt-BR",
@@ -444,7 +446,7 @@ definition {
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Rich Text",
-			fieldFieldLabelEdit = "Rico Texto",
+			fieldFieldLabelEdit = "Texto Rico",
 			fieldsetModal = "true");
 
 		DataEngine.editFieldTip(
@@ -452,8 +454,9 @@ definition {
 			fieldHelp = "Texto de ajuda do campo de texto");
 
 		DataEngine.editFieldTip(
-			fieldFieldLabel = "Rico Texto",
-			fieldHelp = "Texto de ajuda do campo Rico Texto");
+			fieldFieldLabel = "Texto Rico",
+			fieldHelp = "Texto de ajuda do campo Texto Rico",
+			fieldsetModal = "true");
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
@@ -465,7 +468,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
 
 		WebContent.addCP(webContentTitle = "Web Content Title");
 
@@ -496,7 +499,7 @@ definition {
 			AssertTextEquals(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				locator1 = "DDMEditStructure#SETTINGS_TEXT",
-				value1 = "${fieldFieldLabel} Field Help Text");
+				value1 = "${fieldFieldLabel} Field Help");
 		}
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -513,7 +516,7 @@ definition {
 			key_fieldFieldLabel = "Grupo de Campos",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		for (var fieldFieldLabel : list "Texto,Rico Texto") {
+		for (var fieldFieldLabel : list "Texto,Texto Rico") {
 			AssertVisible(
 				key_fieldFieldLabel = "${fieldFieldLabel}",
 				key_fieldsGroupLabel = "Grupo de Campos",
@@ -526,9 +529,9 @@ definition {
 			value1 = "Texto de ajuda do campo de texto");
 
 		AssertTextEquals(
-			key_fieldFieldLabel = "Rico Texto",
+			key_fieldFieldLabel = "Texto Rico",
 			locator1 = "DDMEditStructure#SETTINGS_TEXT",
-			value1 = "Texto de ajuda do campo Rico Texto");
+			value1 = "Texto de ajuda do campo Texto Rico");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"

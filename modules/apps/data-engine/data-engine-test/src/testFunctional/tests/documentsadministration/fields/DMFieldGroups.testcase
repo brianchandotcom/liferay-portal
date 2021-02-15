@@ -167,26 +167,26 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Fields Group",
+			fieldFieldLabelEdit = "Fields Group Edit");
+
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Color",
 			fieldName = "Color",
 			targetFieldLabel = "Numeric");
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP");
+		DDLDataDefinition.save();
 
-		Click(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_VERTICAL_ELLIPSIS");
+		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
-		Click(locator1 = "DataEngineBuilder#NESTED_FIELD_GROUP_DELETE");
+		DataEngine.delete(fieldsGroupLabel = "Fields Group");
 
 		DDLDataDefinition.save();
 
 		DMNavigator.gotoEditDocumentType(dmDocumentTypeName = "DM Document Type Name");
 
-		for (var label : list "Fields Group,Color,Numeric") {
-			AssertElementNotPresent(
-				key_fieldFieldLabel = "${label}",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
-		}
+		AssertElementNotPresent(locator1 = "DataEngineBuilder#FORM_FIELDS_GROUP_INDEX", key_FieldGroupIndex = "2");
 	}
 
 	@description = "This is a test for LPS-98077. As a Developer, I want to the ability to nest fields"

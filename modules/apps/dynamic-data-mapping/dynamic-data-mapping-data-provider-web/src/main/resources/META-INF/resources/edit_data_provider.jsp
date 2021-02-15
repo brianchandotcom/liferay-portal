@@ -78,11 +78,13 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 			</aui:fieldset>
 
 			<c:if test="<%= ddmDataProviderInstance == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= DDMDataProviderInstance.class.getName() %>"
-					/>
-				</aui:fieldset>
+				<div id="<portlet:namespace />dataProviderPermissions">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<liferay-ui:input-permissions
+							modelName="<%= DDMDataProviderInstance.class.getName() %>"
+						/>
+					</aui:fieldset>
+				</div>
 			</c:if>
 
 			<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">

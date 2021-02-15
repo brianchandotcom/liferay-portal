@@ -425,7 +425,7 @@
 <!--DATA_PROVIDER_PERMISSIONS_PARAMETER-->
 <tr>
     <td>DATA_PROVIDER_PERMISSIONS_PARAMETER_PANEL</td>
-    <td>//div[contains(@id,'permissionsTitle')]//a[contains(@class,'collapse-icon')]</td>
+    <td>//div[contains(@id,'dataProviderPermissions')]//a[contains(@class,'collapse-icon')]</td>
     <td></td>
 </tr>
 <tr>

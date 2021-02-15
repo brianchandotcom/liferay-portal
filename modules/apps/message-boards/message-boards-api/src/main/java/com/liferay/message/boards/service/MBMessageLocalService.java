@@ -134,6 +134,15 @@ public interface MBMessageLocalService
 			boolean allowPingbacks, ServiceContext serviceContext)
 		throws FileNotFoundException, PortalException;
 
+	public MBMessage addMessage(
+			String externalReferenceCode, long userId, String userName,
+			long groupId, long categoryId, long threadId, long parentMessageId,
+			String subject, String body, String format,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			boolean anonymous, double priority, boolean allowPingbacks,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void addMessageAttachment(
 			long userId, long messageId, String fileName, File file,
 			String mimeType)

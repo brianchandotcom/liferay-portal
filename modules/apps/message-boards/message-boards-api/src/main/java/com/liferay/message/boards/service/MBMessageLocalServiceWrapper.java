@@ -137,6 +137,24 @@ public class MBMessageLocalServiceWrapper
 	}
 
 	@Override
+	public MBMessage addMessage(
+			String externalReferenceCode, long userId, String userName,
+			long groupId, long categoryId, long threadId, long parentMessageId,
+			String subject, String body, String format,
+			java.util.List
+				<com.liferay.portal.kernel.util.ObjectValuePair
+					<String, java.io.InputStream>> inputStreamOVPs,
+			boolean anonymous, double priority, boolean allowPingbacks,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageLocalService.addMessage(
+			externalReferenceCode, userId, userName, groupId, categoryId,
+			threadId, parentMessageId, subject, body, format, inputStreamOVPs,
+			anonymous, priority, allowPingbacks, serviceContext);
+	}
+
+	@Override
 	public void addMessageAttachment(
 			long userId, long messageId, String fileName, java.io.File file,
 			String mimeType)

@@ -115,40 +115,37 @@ if (journalContentDisplayContext.isShowArticle()) {
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
 						</div>
 					</c:when>
-					<c:when test="<%= !journalContentDisplayContext.isPreview() && (article.isScheduled() || !article.isApproved()) %>">
+					<c:when test="<%= !journalContentDisplayContext.isPreview() && !article.isApproved() %>">
 
 						<%
 						AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
 						%>
 
-						<c:choose>
-							<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
-								<div class="alert alert-warning">
+						<liferay-util:buffer
+							var="scheduledOrNotApprovedMessage"
+						>
+							<c:choose>
+								<c:when test="<%= article.isScheduled() %>">
+									<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateFormatDateTime.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
+								</c:otherwise>
+							</c:choose>
+						</liferay-util:buffer>
+
+						<div class="alert alert-warning">
+							<c:choose>
+								<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
 									<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.NORMAL, currentURLObj) %>">
-										<c:choose>
-											<c:when test="<%= article.isScheduled() %>">
-												<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateFormatDateTime.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
-											</c:when>
-											<c:when test="<%= !article.isApproved() %>">
-												<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
-											</c:when>
-										</c:choose>
+										<%= scheduledOrNotApprovedMessage %>
 									</a>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<div class="alert alert-warning">
-									<c:choose>
-										<c:when test="<%= article.isScheduled() %>">
-											<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateFormatDateTime.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
-										</c:when>
-										<c:when test="<%= !article.isApproved() %>">
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
-										</c:when>
-									</c:choose>
-								</div>
-							</c:otherwise>
-						</c:choose>
+								</c:when>
+								<c:otherwise>
+									<%= scheduledOrNotApprovedMessage %>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</c:when>
 					<c:when test="<%= articleDisplay != null %>">
 

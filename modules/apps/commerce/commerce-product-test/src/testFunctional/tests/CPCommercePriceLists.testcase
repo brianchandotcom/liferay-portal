@@ -75,6 +75,7 @@ definition {
 
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
 		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -159,8 +160,8 @@ definition {
 	}
 
 	test AssertPriceListCanBeAssociatedWithAccountAndAccountGroup {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListCanBeAssociatedWithAccountAndAccountGroup";
 
 		CommerceNavigator.gotoPortlet(
@@ -234,6 +235,7 @@ definition {
 
 	test AssertPriceListCannotBeMovedToADifferentCatalog {
 		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -276,6 +278,7 @@ definition {
 
 	test AssertPriceListHaveRequiredNameAndCurrency {
 		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -339,8 +342,8 @@ definition {
 	}
 
 	test AssertPriceListIsAppliedToAllAssociatedAccounts {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AssertPriceListIsAppliedToAllAssociatedAccounts";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -428,7 +431,8 @@ definition {
 	}
 
 	test CreateNewPriceList {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#CreateNewPriceList";
 
 		CommerceNavigator.gotoPortlet(
@@ -477,6 +481,7 @@ definition {
 
 	test PriceListExistsOnlyInOneCatalog {
 		property portal.acceptance = "true";
+		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -213,16 +213,17 @@ public class TrafficChannelUtilTest {
 			referralTrafficChannelImpl.getTrafficShare(), 0);
 
 		List<ReferringURL> domainReferringURLs =
-			referralTrafficChannelImpl.getReferringDomains();
+			referralTrafficChannelImpl.getDomainReferringURLs();
 
 		Assert.assertEquals(
 			new ReferringURL(1, "liferay.com"), domainReferringURLs.get(0));
 
 		List<ReferringURL> pageReferralURLs =
-			referralTrafficChannelImpl.getReferringPages();
+			referralTrafficChannelImpl.getPageReferringURLs();
 
 		Assert.assertEquals(
-			new ReferringURL(1, "http://liferay.com/"), pageReferralURLs.get(0));
+			new ReferringURL(1, "http://liferay.com/"),
+			pageReferralURLs.get(0));
 	}
 
 	@Test

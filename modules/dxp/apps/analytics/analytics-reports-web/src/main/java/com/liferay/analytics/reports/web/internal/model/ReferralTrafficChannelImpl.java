@@ -38,20 +38,22 @@ public class ReferralTrafficChannelImpl implements TrafficChannel {
 	public ReferralTrafficChannelImpl(boolean error) {
 		_error = error;
 
-		_referringDomains = Collections.emptyList();
-		_referringPages = Collections.emptyList();
+		_domainReferringURLs = Collections.emptyList();
+		_pageReferringURLs = Collections.emptyList();
 		_trafficAmount = 0;
 		_trafficShare = 0;
 	}
 
 	public ReferralTrafficChannelImpl(
-		List<ReferringURL> referringDomains, List<ReferringURL> referringPages,
-		long trafficAmount, double trafficShare) {
+		List<ReferringURL> domainReferringURL,
+		List<ReferringURL> pageReferringURL, long trafficAmount,
+		double trafficShare) {
 
-		_referringDomains = referringDomains;
-		_referringPages = referringPages;
 		_trafficAmount = trafficAmount;
 		_trafficShare = trafficShare;
+
+		_domainReferringURLs = domainReferringURL;
+		_pageReferringURLs = pageReferringURL;
 
 		_error = false;
 	}
@@ -84,6 +86,10 @@ public class ReferralTrafficChannelImpl implements TrafficChannel {
 		return false;
 	}
 
+	public List<ReferringURL> getDomainReferringURLs() {
+		return _domainReferringURLs;
+	}
+
 	@Override
 	public String getHelpMessageKey() {
 		return "this-is-the-number-of-page-views-generated-by-people-coming-" +
@@ -96,12 +102,8 @@ public class ReferralTrafficChannelImpl implements TrafficChannel {
 		return "referral";
 	}
 
-	public List<ReferringURL> getReferringDomains() {
-		return _referringDomains;
-	}
-
-	public List<ReferringURL> getReferringPages() {
-		return _referringPages;
+	public List<ReferringURL> getPageReferringURLs() {
+		return _pageReferringURLs;
 	}
 
 	@Override
@@ -130,11 +132,11 @@ public class ReferralTrafficChannelImpl implements TrafficChannel {
 			getName(), ResourceBundleUtil.getString(resourceBundle, getName()),
 			_trafficAmount, _trafficShare);
 
-		if (ListUtil.isNotEmpty(_referringDomains)) {
+		if (ListUtil.isNotEmpty(_domainReferringURLs)) {
 			jsonObject.put("referringDomains", _getReferringDomainsJSONArray());
 		}
 
-		if (ListUtil.isNotEmpty(_referringPages)) {
+		if (ListUtil.isNotEmpty(_pageReferringURLs)) {
 			jsonObject.put("referringPages", _getReferringPagesJSONArray());
 		}
 
@@ -150,11 +152,11 @@ public class ReferralTrafficChannelImpl implements TrafficChannel {
 	}
 
 	private JSONArray _getReferringDomainsJSONArray() {
-		if (ListUtil.isEmpty(_referringDomains)) {
+		if (ListUtil.isEmpty(_domainReferringURLs)) {
 			return JSONFactoryUtil.createJSONArray();
 		}
 
-		Stream<ReferringURL> stream = _referringDomains.stream();
+		Stream<ReferringURL> stream = _domainReferringURLs.stream();
 
 		return JSONUtil.putAll(
 			stream.limit(
@@ -167,11 +169,11 @@ public class ReferralTrafficChannelImpl implements TrafficChannel {
 	}
 
 	private JSONArray _getReferringPagesJSONArray() {
-		if (ListUtil.isEmpty(_referringPages)) {
+		if (ListUtil.isEmpty(_pageReferringURLs)) {
 			return JSONFactoryUtil.createJSONArray();
 		}
 
-		Stream<ReferringURL> stream = _referringPages.stream();
+		Stream<ReferringURL> stream = _pageReferringURLs.stream();
 
 		return JSONUtil.putAll(
 			stream.limit(
@@ -190,9 +192,9 @@ public class ReferralTrafficChannelImpl implements TrafficChannel {
 		return comparator.reversed();
 	}
 
+	private final List<ReferringURL> _domainReferringURLs;
 	private final boolean _error;
-	private final List<ReferringURL> _referringDomains;
-	private final List<ReferringURL> _referringPages;
+	private final List<ReferringURL> _pageReferringURLs;
 	private final long _trafficAmount;
 	private final double _trafficShare;
 

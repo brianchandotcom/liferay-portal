@@ -669,6 +669,10 @@ public class PropsValues {
 	public static final long DATA_LIMIT_MAX_SITE_COUNT = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_SITE_COUNT));
 
+	public static final long DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_COUNT =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_COUNT));
+
 	public static final long DATA_LIMIT_MAX_TEAM_COUNT = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_TEAM_COUNT));
 

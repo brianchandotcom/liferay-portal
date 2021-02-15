@@ -14,12 +14,14 @@ import ControlMenu from 'app-builder-web/js/components/control-menu/ControlMenu.
 import {getDataObjects} from 'app-builder-web/js/components/select-objects/SelectObjects.es';
 import EditAppContext, {
 	UPDATE_APP,
+	UPDATE_DATA_LAYOUT_ID,
 	reducer,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
 import {getItem, parseResponse} from 'app-builder-web/js/utils/client.es';
+import {getLocalizedValue} from 'app-builder-web/js/utils/lang.es';
 import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
 import Loading from 'data-engine-js-components-web/js/components/loading/Loading.es';
-import {createResourceURL, fetch} from 'frontend-js-web';
+import {createResourceURL, fetch, openModal} from 'frontend-js-web';
 import React, {useContext, useEffect, useReducer, useState} from 'react';
 
 import '../../../../css/EditApp.scss';
@@ -36,6 +38,7 @@ import {
 } from './actions.es';
 import configReducer, {
 	UPDATE_CONFIG,
+	UPDATE_FORM_VIEW,
 	UPDATE_LIST_ITEMS,
 	getInitialConfig,
 } from './configReducer.es';
@@ -50,9 +53,12 @@ export default ({
 	},
 	scope,
 }) => {
-	const {baseResourceURL, getStandaloneURL, namespace} = useContext(
-		AppContext
-	);
+	const {
+		baseResourceURL,
+		getStandaloneURL,
+		namespace,
+		objectsPortletURL,
+	} = useContext(AppContext);
 
 	const [config, dispatchConfig] = useReducer(
 		configReducer,
@@ -84,6 +90,82 @@ export default ({
 	const [isLoading, setLoading] = useState(false);
 	const [isSaving, setSaving] = useState(false);
 
+	const openFormViewModal = (
+		dataDefinitionId,
+		defaultLanguageId,
+		selectFormView,
+		dataLayoutId
+	) => {
+		const event = window.top?.Liferay.once(
+			'newFormViewCreated',
+			({dataDefinition, newFormView}) => {
+				successToast(
+					Liferay.Language.get('the-form-view-was-saved-successfully')
+				);
+				getFormViews(dataDefinitionId, defaultLanguageId).then(
+					(formViews) => {
+						const checkedFormViews = checkRequiredFields(
+							formViews,
+							dataDefinition
+						);
+
+						dispatchConfig({
+							listItems: {
+								fetching: false,
+								formViews: checkedFormViews,
+							},
+							type: UPDATE_LIST_ITEMS,
+						});
+
+						const currentFormView = checkedFormViews.find(
+							({id}) => id === newFormView.id
+						);
+
+						if (
+							!currentFormView.missingRequiredFields?.nativeField
+						) {
+							selectFormView({
+								...currentFormView,
+								name: getLocalizedValue(
+									defaultLanguageId,
+									newFormView.name
+								),
+							});
+						}
+						else if (newFormView.id === app.dataLayoutId) {
+							selectFormView({});
+						}
+					}
+				);
+			}
+		);
+		openModal({
+			onClose: () => event?.detach(),
+			title: dataLayoutId
+				? Liferay.Language.get('edit-form-view')
+				: Liferay.Language.get('new-form-view'),
+			url: `${Liferay.Util.PortletURL.createRenderURL(objectsPortletURL, {
+				dataDefinitionId,
+				dataLayoutId,
+				mvcRenderCommandName: '/app_builder/edit_form_view',
+				newCustomObject: true,
+				p_p_state: 'pop_up',
+			})}`,
+		});
+	};
+
+	const updateFormView = (formView) => {
+		dispatchConfig({
+			formView,
+			type: UPDATE_FORM_VIEW,
+		});
+
+		dispatch({
+			...formView,
+			type: UPDATE_DATA_LAYOUT_ID,
+		});
+	};
+
 	const editState = {
 		appId,
 		config,
@@ -91,10 +173,12 @@ export default ({
 		dispatchConfig,
 		isAppChangesModalVisible,
 		isDeployModalVisible,
+		openFormViewModal,
 		setAppChangesModalVisible,
 		setDeployModalVisible,
 		setMissingFieldsModalVisible,
 		state: {app},
+		updateFormView,
 	};
 
 	useEffect(() => {

@@ -14,18 +14,17 @@ import React, {useContext, useState} from 'react';
 
 import SelectDropdown from '../../../../components/select-dropdown/SelectDropdown.es';
 import MissingRequiredFieldsPopover from '../MissingRequiredFieldsPopover.es';
-import {DataAndViewsTabContext, OpenButton} from './DataAndViewsTab.es';
+import {OpenButton} from './DataAndViewsTab.es';
 
 const Item = ({
 	id,
 	missingRequiredFields: {customField = false, nativeField} = {},
 	name,
 }) => {
-	const {openFormViewModal, updateFormView} = useContext(
-		DataAndViewsTabContext
-	);
 	const {
 		config: {dataObject},
+		openFormViewModal,
+		updateFormView,
 	} = useContext(EditAppContext);
 	const [showPopover, setShowPopover] = useState(false);
 

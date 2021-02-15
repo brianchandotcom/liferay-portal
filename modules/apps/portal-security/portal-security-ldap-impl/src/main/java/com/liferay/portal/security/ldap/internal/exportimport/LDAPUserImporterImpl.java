@@ -1819,7 +1819,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	private static final String[] _USER_PROPERTY_NAMES = {
 		"comments", "emailAddress", "firstName", "greeting", "jobTitle",
 		"languageId", "lastName", "middleName", "openId", "portraitId",
-		"timeZoneId"
+		"timeZoneId", "status"
 	};
 
 	private static final String _USER_SYNC_STRATEGY_UUID = "uuid";

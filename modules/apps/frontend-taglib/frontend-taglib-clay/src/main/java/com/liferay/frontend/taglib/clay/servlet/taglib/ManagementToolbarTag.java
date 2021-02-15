@@ -768,7 +768,13 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		if (!active && (getFilterDropdownItems() != null)) {
 			jspWriter.write("<li class=\"nav-item\"><div class=\"dropdown\">");
 			jspWriter.write("<button class=\"btn btn-unstyled dropdown-toggle");
-			jspWriter.write(" nav-link\" type=\"button\"><span class=\"");
+			jspWriter.write(" nav-link\"");
+
+			if (disabled) {
+				jspWriter.write(" disabled");
+			}
+
+			jspWriter.write(" type=\"button\"><span class=\"");
 			jspWriter.write("navbar-breakpoint-down-d-none\"><span class=\"");
 			jspWriter.write("navbar-text-truncate\">");
 			jspWriter.write(

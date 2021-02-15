@@ -94,7 +94,6 @@ public class DDMFormFieldValueRendererRegistryImpl
 			new DocumentLibraryDDMFormFieldValueRenderer(),
 			new GeolocationDDMFormFieldValueRenderer(),
 			new IntegerDDMFormFieldValueRenderer(),
-			new JournalArticleDDMFormFieldValueRenderer(),
 			new LinkToPageDDMFormFieldValueRenderer(),
 			new NumberDDMFormFieldValueRenderer(),
 			new RadioDDMFormFieldValueRenderer(),

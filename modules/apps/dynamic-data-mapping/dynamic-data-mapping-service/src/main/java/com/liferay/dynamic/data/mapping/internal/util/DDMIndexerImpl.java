@@ -268,9 +268,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 			Locale locale)
 		throws Exception {
 
+		String indexType = ddmStructure.getFieldProperty(
+			fieldName, "indexType");
+
 		return createFieldValueQueryFilter(
 			encodeName(ddmStructure.getStructureId(), fieldName, locale), value,
-			locale);
+			ddmStructure, fieldName, indexType, locale);
 	}
 
 	@Override
@@ -278,8 +281,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
 			Locale locale)
 		throws Exception {
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		String[] ddmStructureFieldNameParts = StringUtil.split(
 			ddmStructureFieldName, DDM_FIELD_SEPARATOR);
@@ -292,34 +293,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 			StringPool.UNDERLINE.concat(LocaleUtil.toLanguageId(locale)),
 			StringPool.BLANK);
 
-		if (structure.hasField(fieldName)) {
-			ddmStructureFieldValue = _ddm.getIndexedFieldValue(
-				ddmStructureFieldValue, structure.getFieldType(fieldName));
-		}
-
-		if (ddmStructureFieldValue instanceof String[]) {
-			String[] ddmStructureFieldValueArray =
-				(String[])ddmStructureFieldValue;
-
-			for (String ddmStructureFieldValueString :
-					ddmStructureFieldValueArray) {
-
-				addFieldValueRequiredTerm(
-					booleanQuery, ddmStructureFieldName,
-					ddmStructureFieldValueString, locale);
-			}
-		}
-		else {
-			addFieldValueRequiredTerm(
-				booleanQuery, ddmStructureFieldName,
-				String.valueOf(ddmStructureFieldValue), locale);
-		}
-
-		if (isLegacyDDMIndexFieldsEnabled()) {
-			return new QueryFilter(booleanQuery);
-		}
-
-		return new QueryFilter(new NestedQuery(DDM_FIELD_ARRAY, booleanQuery));
+		return createFieldValueQueryFilter(
+			ddmStructureFieldName, ddmStructureFieldValue, structure, fieldName,
+			ddmStructureFieldNameParts[1], locale);
 	}
 
 	@Override
@@ -484,7 +460,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	protected void addFieldValueRequiredTerm(
 		BooleanQuery booleanQuery, String ddmStructureFieldName,
-		String ddmStructureFieldValue, Locale locale) {
+		String ddmStructureFieldValue, String indexType, Locale locale) {
 
 		if (isLegacyDDMIndexFieldsEnabled()) {
 			booleanQuery.addRequiredTerm(
@@ -494,19 +470,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 			return;
 		}
 
-		String[] ddmStructureFieldNameParts = StringUtil.split(
-			ddmStructureFieldName, DDM_FIELD_SEPARATOR);
-
-		String valueFieldName = getValueFieldName(
-			ddmStructureFieldNameParts[1], locale);
-
 		booleanQuery.addRequiredTerm(
 			StringBundler.concat(
 				DDM_FIELD_ARRAY, StringPool.PERIOD, DDM_FIELD_NAME),
 			ddmStructureFieldName);
 		booleanQuery.addRequiredTerm(
 			StringBundler.concat(
-				DDM_FIELD_ARRAY, StringPool.PERIOD, valueFieldName),
+				DDM_FIELD_ARRAY, StringPool.PERIOD,
+				getValueFieldName(indexType, locale)),
 			StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 	}
 
@@ -670,6 +641,44 @@ public class DDMIndexerImpl implements DDMIndexer {
 		sortedFields.forEach(ddmField::addField);
 
 		return ddmField;
+	}
+
+	protected QueryFilter createFieldValueQueryFilter(
+			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
+			DDMStructure structure, String fieldName, String indexType,
+			Locale locale)
+		throws Exception {
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		if (structure.hasField(fieldName)) {
+			ddmStructureFieldValue = _ddm.getIndexedFieldValue(
+				ddmStructureFieldValue, structure.getFieldType(fieldName));
+		}
+
+		if (ddmStructureFieldValue instanceof String[]) {
+			String[] ddmStructureFieldValueArray =
+				(String[])ddmStructureFieldValue;
+
+			for (String ddmStructureFieldValueString :
+					ddmStructureFieldValueArray) {
+
+				addFieldValueRequiredTerm(
+					booleanQuery, ddmStructureFieldName,
+					ddmStructureFieldValueString, indexType, locale);
+			}
+		}
+		else {
+			addFieldValueRequiredTerm(
+				booleanQuery, ddmStructureFieldName,
+				String.valueOf(ddmStructureFieldValue), indexType, locale);
+		}
+
+		if (isLegacyDDMIndexFieldsEnabled()) {
+			return new QueryFilter(booleanQuery);
+		}
+
+		return new QueryFilter(new NestedQuery(DDM_FIELD_ARRAY, booleanQuery));
 	}
 
 	protected String encodeName(

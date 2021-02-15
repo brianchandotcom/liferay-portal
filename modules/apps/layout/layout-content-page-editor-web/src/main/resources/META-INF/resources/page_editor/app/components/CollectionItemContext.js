@@ -17,8 +17,10 @@ import React, {useCallback, useContext, useEffect} from 'react';
 import {updateFragmentEntryLinkContent} from '../actions/index';
 import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
+import LayoutService from '../services/LayoutService';
 import {useDispatch} from '../store/index';
 import isMappedToInfoItem from '../utils/editable-value/isMappedToInfoItem';
+import isMappedToLayout from '../utils/editable-value/isMappedToLayout';
 
 const defaultFromControlsId = (itemId) => itemId;
 const defaultToControlsId = (controlId) => controlId;
@@ -134,6 +136,12 @@ const useGetFieldValue = () => {
 
 				return fieldValue;
 			});
+		}
+
+		if (isMappedToLayout(editable)) {
+			return LayoutService.getLayoutFriendlyURL(editable.layout).then(
+				(response) => response.friendlyURL || ''
+			);
 		}
 
 		return Promise.resolve(editable);

@@ -661,6 +661,9 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_BLOG_ENTRY_COUNT =
 		"data.limit.max.blog.entry.count";
 
+	public static final String DATA_LIMIT_MAX_DL_FOLDER_COUNT =
+		"data.limit.max.dl.folder.count";
+
 	public static final String DATA_LIMIT_MAX_DL_STORAGE_SIZE =
 		"data.limit.max.dl.storage.size";
 

@@ -15,6 +15,10 @@
 export default function ({defaultLanguageId, namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
+	const getDataLayoutBuilder = () => {
+		return Liferay.componentReady(`${namespace}dataLayoutBuilder`);
+	};
+
 	const getInputLocalizedValues = (fieldName) => {
 		const inputLocalized = Liferay.component(`${namespace}${fieldName}`);
 		const localizedValues = {};
@@ -35,58 +39,72 @@ export default function ({defaultLanguageId, namespace}) {
 	};
 
 	const saveDDMStructure = () => {
-		Liferay.componentReady(`${namespace}dataLayoutBuilder`).then(
-			(dataLayoutBuilder) => {
-				const nameInput = document.getElementById(`${namespace}name`);
+		getDataLayoutBuilder().then((dataLayoutBuilder) => {
+			const nameInput = document.getElementById(`${namespace}name`);
 
-				var name = getInputLocalizedValues('name');
+			var name = getInputLocalizedValues('name');
 
-				if (!nameInput.value || !name[defaultLanguageId]) {
-					Liferay.Util.openToast({
-						message: Liferay.Util.sub(
-							Liferay.Language.get(
-								'please-enter-a-valid-title-for-the-default-language-x'
-							),
-							defaultLanguageId.replace('_', '-')
+			if (!nameInput.value || !name[defaultLanguageId]) {
+				Liferay.Util.openToast({
+					message: Liferay.Util.sub(
+						Liferay.Language.get(
+							'please-enter-a-valid-title-for-the-default-language-x'
 						),
-						title: Liferay.Language.get('error'),
-						type: 'danger',
-					});
-
-					nameInput.focus();
-
-					return;
-				}
-
-				const description = getInputLocalizedValues('description');
-
-				const formData = dataLayoutBuilder.getFormData();
-
-				const dataDefinition = formData.definition;
-
-				dataDefinition.description = description;
-				dataDefinition.name = name;
-
-				const dataLayout = formData.layout;
-
-				dataLayout.description = description;
-				dataLayout.name = name;
-
-				Liferay.Util.postForm(form, {
-					data: {
-						dataDefinition: JSON.stringify(dataDefinition),
-						dataLayout: JSON.stringify(dataLayout),
-					},
+						defaultLanguageId.replace('_', '-')
+					),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
 				});
+
+				nameInput.focus();
+
+				return;
 			}
-		);
+
+			const description = getInputLocalizedValues('description');
+
+			const formData = dataLayoutBuilder.getFormData();
+
+			const dataDefinition = formData.definition;
+
+			dataDefinition.description = description;
+			dataDefinition.name = name;
+
+			const dataLayout = formData.layout;
+
+			dataLayout.description = description;
+			dataLayout.name = name;
+
+			Liferay.Util.postForm(form, {
+				data: {
+					dataDefinition: JSON.stringify(dataDefinition),
+					dataLayout: JSON.stringify(dataLayout),
+				},
+			});
+		});
 	};
 
 	form.addEventListener('submit', saveDDMStructure);
 
+	// Deselect field when clicking outside the form builder
+
+	const detectClickOutside = (event) => {
+		if (
+			!event.target.closest('.ddm-form-builder-wrapper') &&
+			!event.target.closest('.multi-panel-sidebar')
+		) {
+			getDataLayoutBuilder().then((dataLayoutBuilder) => {
+				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
+			});
+		}
+	};
+
+	window.addEventListener('click', detectClickOutside, true);
+
 	return {
 		dispose() {
 			form.removeEventListener('submit', saveDDMStructure);
+			window.removeEventListener('click', detectClickOutside, true);
 		},
 	};
 }

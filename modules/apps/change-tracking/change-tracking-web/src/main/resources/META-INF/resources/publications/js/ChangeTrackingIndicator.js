@@ -12,13 +12,699 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
+import ClayManagementToolbar, {
+	ClayResultsBar,
+} from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useState} from 'react';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClayTable from '@clayui/table';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import {fetch} from 'frontend-js-web';
+import React, {useCallback, useEffect, useState} from 'react';
 
-import PublicationsSearchContainer from './PublicationsSearchContainer';
+const PublicationsSearchContainer = ({
+	ascending,
+	column,
+	containerView,
+	fetchDataURL,
+	filterEntries,
+	getListItem,
+	getTableHead,
+	getTableRow,
+	orderByItems,
+	preferencesPrefix,
+	saveDisplayPreferenceURL,
+	setAscending,
+	setColumn,
+	spritemap,
+}) => {
+	const VIEW_TYPE_LIST = 'list';
+	const VIEW_TYPE_TABLE = 'table';
+
+	const [loading, setLoading] = useState(false);
+	const [resultsKeywords, setResultsKeywords] = useState('');
+	const [searchTerms, setSearchTerms] = useState('');
+	const [state, setState] = useState({
+		delta: 20,
+		page: 1,
+	});
+
+	const [viewType, setViewType] = useState(
+		getTableRow ? VIEW_TYPE_TABLE : VIEW_TYPE_LIST
+	);
+
+	const [initialized, setInitialized] = useState(false);
+
+	useEffect(() => {
+		if (initialized) {
+			return;
+		}
+
+		setInitialized(true);
+		setLoading(true);
+
+		fetch(fetchDataURL)
+			.then((response) => response.json())
+			.then((json) => {
+				if (!json.entries) {
+					const fetchData = {
+						errorMessage: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+					};
+
+					setState({
+						delta: state.delta,
+						fetchData,
+						page: state.page,
+					});
+
+					setLoading(false);
+
+					return;
+				}
+
+				const newState = {
+					delta: state.delta,
+					fetchData: json,
+					page: state.page,
+				};
+
+				const lastPage = Math.ceil(
+					json.entries.length / newState.delta
+				);
+
+				if (lastPage < 1) {
+					newState.page = 1;
+				}
+				else if (newState.page > lastPage) {
+					newState.page = lastPage;
+				}
+
+				setState(newState);
+
+				setLoading(false);
+			})
+			.catch(() => {
+				const fetchData = {
+					errorMessage: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+				};
+
+				setState({
+					delta: state.delta,
+					fetchData,
+					page: state.page,
+				});
+
+				setLoading(false);
+			});
+	}, [fetchDataURL, initialized, state]);
+
+	const [showMobile, setShowMobile] = useState(false);
+
+	const saveDisplayPreference = useCallback(
+		(key, value) => {
+			if (!preferencesPrefix || !saveDisplayPreferenceURL) {
+				return;
+			}
+
+			AUI().use('liferay-portlet-url', () => {
+				const portletURL = Liferay.PortletURL.createURL(
+					saveDisplayPreferenceURL
+				);
+
+				portletURL.setParameter('key', preferencesPrefix + '-' + key);
+				portletURL.setParameter('value', value.toString());
+
+				fetch(portletURL.toString());
+			});
+		},
+		[preferencesPrefix, saveDisplayPreferenceURL]
+	);
+
+	useEffect(() => {
+		saveDisplayPreference('order-by-ascending', ascending);
+	}, [ascending, saveDisplayPreference]);
+
+	useEffect(() => {
+		saveDisplayPreference('order-by-column', column);
+	}, [column, saveDisplayPreference]);
+
+	useEffect(() => {
+		saveDisplayPreference('view-type', viewType);
+	}, [viewType, saveDisplayPreference]);
+
+	const onSubmit = useCallback(
+		(keywords, newDelta, newPage) => {
+			setResultsKeywords(keywords);
+
+			AUI().use('liferay-portlet-url', () => {
+				const portletURL = Liferay.PortletURL.createURL(fetchDataURL);
+
+				if (keywords) {
+					portletURL.setParameter('keywords', keywords);
+				}
+				else {
+					portletURL.setParameter('keywords', '');
+				}
+
+				setLoading(true);
+
+				fetch(portletURL.toString())
+					.then((response) => response.json())
+					.then((json) => {
+						if (!json.entries) {
+							const fetchData = {
+								errorMessage: Liferay.Language.get(
+									'an-unexpected-error-occurred'
+								),
+							};
+
+							setState({
+								delta: state.delta,
+								fetchData,
+								page: state.page,
+							});
+
+							setLoading(false);
+
+							return;
+						}
+
+						const newState = {
+							delta: newDelta,
+							fetchData: json,
+							page: newPage,
+						};
+
+						const lastPage = Math.ceil(
+							json.entries.length / newState.delta
+						);
+
+						if (lastPage < 1) {
+							newState.page = 1;
+						}
+						else if (newState.page > lastPage) {
+							newState.page = lastPage;
+						}
+
+						setState(newState);
+
+						setLoading(false);
+					})
+					.catch(() => {
+						const fetchData = {
+							errorMessage: Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						};
+
+						setState({
+							delta: state.delta,
+							fetchData,
+							page: state.page,
+						});
+
+						setLoading(false);
+					});
+			});
+		},
+		[fetchDataURL, state]
+	);
+
+	const format = (key, args) => {
+		const SPLIT_REGEX = /({\d+})/g;
+
+		const keyArray = key
+			.split(SPLIT_REGEX)
+			.filter((val) => val.length !== 0);
+
+		for (let i = 0; i < args.length; i++) {
+			const arg = args[i];
+
+			const indexKey = `{${i}}`;
+
+			let argIndex = keyArray.indexOf(indexKey);
+
+			while (argIndex >= 0) {
+				keyArray.splice(argIndex, 1, arg);
+
+				argIndex = keyArray.indexOf(indexKey);
+			}
+		}
+
+		return keyArray.join('');
+	};
+
+	const onDeltaChange = (value) => {
+		const newState = {
+			delta: value,
+			page: 1,
+		};
+
+		if (state.fetchData) {
+			newState.fetchData = state.fetchData;
+		}
+
+		setState(newState);
+	};
+
+	const onPageChange = (value) => {
+		const newState = {
+			delta: state.delta,
+			page: value,
+		};
+
+		if (state.fetchData) {
+			newState.fetchData = state.fetchData;
+		}
+
+		setState(newState);
+	};
+
+	const renderManagementToolbar = () => {
+		const filterDisabled =
+			!state.fetchData ||
+			!state.fetchData.entries ||
+			state.fetchData.entries.length === 0;
+
+		const searchDisabled =
+			!resultsKeywords &&
+			state.fetchData &&
+			state.fetchData.entries &&
+			state.fetchData.entries.length === 0;
+
+		const items = [];
+
+		for (let i = 0; i < orderByItems.length; i++) {
+			const orderByItem = orderByItems[i];
+
+			items.push({
+				active: column === orderByItem.value,
+				label: orderByItem.label,
+				onClick: () => setColumn(orderByItem.value),
+			});
+		}
+
+		items.sort((a, b) => {
+			if (a.label < b.label) {
+				return -1;
+			}
+
+			return 1;
+		});
+
+		const viewTypeItems = [];
+
+		if (getListItem) {
+			viewTypeItems.push({
+				active: viewType === VIEW_TYPE_LIST,
+				label: Liferay.Language.get('list'),
+				onClick: () => setViewType(VIEW_TYPE_LIST),
+				symbolLeft: 'list',
+			});
+		}
+
+		if (getTableRow) {
+			viewTypeItems.push({
+				active: viewType === VIEW_TYPE_TABLE,
+				label: Liferay.Language.get('table'),
+				onClick: () => setViewType(VIEW_TYPE_TABLE),
+				symbolLeft: 'table',
+			});
+		}
+
+		const activeViewTypeItem = viewTypeItems.find((type) => type.active);
+
+		return (
+			<ClayTooltipProvider>
+				<ClayManagementToolbar>
+					<ClayManagementToolbar.ItemList>
+						<ClayManagementToolbar.Item>
+							<ClayDropDownWithItems
+								items={[
+									{
+										items,
+										label: Liferay.Language.get('order-by'),
+										type: 'group',
+									},
+								]}
+								spritemap={spritemap}
+								trigger={
+									<ClayButton
+										className="nav-link"
+										disabled={filterDisabled}
+										displayType="unstyled"
+									>
+										<span className="navbar-breakpoint-down-d-none">
+											<span className="navbar-text-truncate">
+												{Liferay.Language.get(
+													'filter-and-order'
+												)}
+											</span>
+
+											<ClayIcon
+												className="inline-item inline-item-after"
+												spritemap={spritemap}
+												symbol="caret-bottom"
+											/>
+										</span>
+										<span className="navbar-breakpoint-d-none">
+											<ClayIcon
+												spritemap={spritemap}
+												symbol="filter"
+											/>
+										</span>
+									</ClayButton>
+								}
+							/>
+						</ClayManagementToolbar.Item>
+						<ClayManagementToolbar.Item
+							data-tooltip-align="top"
+							title={Liferay.Language.get(
+								'reverse-sort-direction'
+							)}
+						>
+							<ClayButton
+								className={
+									'nav-link nav-link-monospaced ' +
+									(ascending
+										? 'order-arrow-down-active'
+										: 'order-arrow-up-active')
+								}
+								disabled={filterDisabled}
+								displayType="unstyled"
+								onClick={() => setAscending(!ascending)}
+							>
+								<ClayIcon
+									spritemap={spritemap}
+									symbol="order-arrow"
+								/>
+							</ClayButton>
+						</ClayManagementToolbar.Item>
+					</ClayManagementToolbar.ItemList>
+					<ClayManagementToolbar.Search
+						onSubmit={(event) => {
+							event.preventDefault();
+
+							onSubmit(searchTerms.trim(), state.delta, 1);
+						}}
+						showMobile={showMobile}
+					>
+						<ClayInput.Group>
+							<ClayInput.GroupItem>
+								<ClayInput
+									aria-label={Liferay.Language.get('search')}
+									className="input-group-inset input-group-inset-after"
+									disabled={searchDisabled}
+									onChange={(event) =>
+										setSearchTerms(event.target.value)
+									}
+									placeholder={`${Liferay.Language.get(
+										'search'
+									)}...`}
+									type="text"
+									value={searchTerms}
+								/>
+								<ClayInput.GroupInsetItem after tag="span">
+									<ClayButtonWithIcon
+										className="navbar-breakpoint-d-none"
+										displayType="unstyled"
+										onClick={() => setShowMobile(false)}
+										symbol="times"
+									/>
+									<ClayButtonWithIcon
+										disabled={searchDisabled}
+										displayType="unstyled"
+										symbol="search"
+										type="submit"
+									/>
+								</ClayInput.GroupInsetItem>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</ClayManagementToolbar.Search>
+					<ClayManagementToolbar.ItemList>
+						<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+							<ClayButton
+								className="nav-link nav-link-monospaced"
+								disabled={searchDisabled}
+								displayType="unstyled"
+								onClick={() => setShowMobile(true)}
+							>
+								<ClayIcon symbol="search" />
+							</ClayButton>
+						</ClayManagementToolbar.Item>
+					</ClayManagementToolbar.ItemList>
+
+					{viewTypeItems.length > 1 && (
+						<ClayManagementToolbar.ItemList>
+							<ClayManagementToolbar.Item
+								data-tooltip-align="top"
+								title={Liferay.Language.get('display-style')}
+							>
+								<ClayDropDownWithItems
+									items={viewTypeItems}
+									spritemap={spritemap}
+									trigger={
+										<ClayButton
+											className="nav-link nav-link-monospaced"
+											displayType="unstyled"
+										>
+											<ClayIcon
+												spritemap={spritemap}
+												symbol={
+													activeViewTypeItem
+														? activeViewTypeItem.symbolLeft
+														: ''
+												}
+											/>
+										</ClayButton>
+									}
+								/>
+							</ClayManagementToolbar.Item>
+						</ClayManagementToolbar.ItemList>
+					)}
+				</ClayManagementToolbar>
+			</ClayTooltipProvider>
+		);
+	};
+
+	const renderPagination = () => {
+		if (state.fetchData.entries.length <= 5) {
+			return '';
+		}
+
+		return (
+			<ClayPaginationBarWithBasicItems
+				activeDelta={state.delta}
+				activePage={state.page}
+				deltas={[4, 8, 20, 40, 60].map((size) => ({
+					label: size,
+				}))}
+				ellipsisBuffer={3}
+				onDeltaChange={(value) => onDeltaChange(value)}
+				onPageChange={(value) => onPageChange(value)}
+				totalItems={state.fetchData.entries.length}
+			/>
+		);
+	};
+
+	const renderResultsBar = () => {
+		if (!resultsKeywords) {
+			return '';
+		}
+
+		let count = 0;
+		let key = Liferay.Language.get('x-results-for');
+
+		if (state.fetchData && state.fetchData.entries) {
+			count = state.fetchData.entries.length;
+
+			if (count === 1) {
+				key = Liferay.Language.get('x-result-for');
+			}
+		}
+
+		return (
+			<div className="results-bar">
+				<ClayResultsBar>
+					<ClayResultsBar.Item expand>
+						<span className="component-text text-truncate-inline">
+							<span className="text-truncate">
+								{format(key, [count]) + ' '}
+
+								<strong>{resultsKeywords}</strong>
+							</span>
+						</span>
+					</ClayResultsBar.Item>
+					<ClayResultsBar.Item>
+						<ClayButton
+							className="component-link tbar-link"
+							displayType="unstyled"
+							onClick={() => {
+								onSubmit('', state.delta, 1);
+								setSearchTerms('');
+							}}
+						>
+							{Liferay.Language.get('clear')}
+						</ClayButton>
+					</ClayResultsBar.Item>
+				</ClayResultsBar>
+			</div>
+		);
+	};
+
+	const renderBody = () => {
+		if (!state.fetchData) {
+			return <span aria-hidden="true" className="loading-animation" />;
+		}
+		else if (state.fetchData.errorMessage) {
+			return (
+				<ClayAlert
+					displayType="danger"
+					spritemap={spritemap}
+					title={Liferay.Language.get('error')}
+				>
+					{state.fetchData.errorMessage}
+				</ClayAlert>
+			);
+		}
+		else if (state.fetchData.entries.length === 0) {
+			let className = 'taglib-empty-result-message';
+
+			if (containerView) {
+				className += ' sheet';
+			}
+
+			if (loading) {
+				className += ' publications-loading';
+			}
+
+			return (
+				<div
+					className={
+						containerView
+							? 'container-fluid container-fluid-max-xl'
+							: ''
+					}
+				>
+					<div className={containerView ? 'container-view' : ''}>
+						<div className={className}>
+							<div
+								className={
+									resultsKeywords
+										? 'taglib-empty-search-result-message-header'
+										: 'taglib-empty-result-message-header'
+								}
+							/>
+							<div className="sheet-text text-center">
+								{Liferay.Language.get(
+									'no-publications-were-found'
+								)}
+							</div>
+						</div>
+					</div>
+				</div>
+			);
+		}
+
+		const entries = filterEntries(
+			ascending,
+			column,
+			state.delta,
+			state.fetchData.entries,
+			state.page
+		);
+
+		if (viewType === VIEW_TYPE_LIST) {
+			const items = [];
+
+			for (let i = 0; i < entries.length; i++) {
+				items.push(getListItem(entries[i], state.fetchData));
+			}
+
+			return (
+				<div
+					className={
+						containerView
+							? 'container-fluid container-fluid-max-xl'
+							: ''
+					}
+				>
+					<div className={containerView ? 'container-view' : ''}>
+						<ClayTooltipProvider>
+							<ClayList
+								className={
+									loading
+										? 'publications-loading publications-table'
+										: 'publications-table'
+								}
+							>
+								{items}
+							</ClayList>
+						</ClayTooltipProvider>
+
+						{renderPagination()}
+					</div>
+				</div>
+			);
+		}
+		else if (viewType === VIEW_TYPE_TABLE) {
+			const rows = [];
+
+			for (let i = 0; i < entries.length; i++) {
+				rows.push(getTableRow(entries[i], state.fetchData));
+			}
+
+			return (
+				<div
+					className={
+						containerView
+							? 'container-fluid container-fluid-max-xl'
+							: ''
+					}
+				>
+					<div className={containerView ? 'container-view' : ''}>
+						<ClayTooltipProvider>
+							<ClayTable
+								className={
+									loading
+										? 'publications-loading publications-table'
+										: 'publications-table'
+								}
+								headingNoWrap
+								hover={false}
+							>
+								{getTableHead ? getTableHead() : ''}
+								<ClayTable.Body>{rows}</ClayTable.Body>
+							</ClayTable>
+						</ClayTooltipProvider>
+
+						{renderPagination()}
+					</div>
+				</div>
+			);
+		}
+
+		return '';
+	};
+
+	return (
+		<>
+			{renderManagementToolbar()}
+			{renderResultsBar()}
+			{renderBody()}
+		</>
+	);
+};
 
 export default ({
 	checkoutDropdownItem,
@@ -26,14 +712,38 @@ export default ({
 	getSelectPublicationsURL,
 	iconClass,
 	iconName,
+	orderByAscending,
+	orderByColumn,
+	preferencesPrefix,
 	publishDropdownItem,
 	reviewDropdownItem,
+	saveDisplayPreferenceURL,
 	scheduleDropdownItem,
 	spritemap,
 	title,
 }) => {
-	const SORT_COLUMN_MODIFIED_DATE = 'SORT_COLUMN_MODIFIED_DATE';
-	const SORT_COLUMN_NAME = 'SORT_COLUMN_NAME';
+	const COLUMN_MODIFIED_DATE = 'modifiedDate';
+	const COLUMN_NAME = 'name';
+
+	let initialAscending = false;
+
+	if (orderByAscending === true.toString()) {
+		initialAscending = true;
+	}
+
+	const [ascending, setAscending] = useState(initialAscending);
+
+	let initialColumn = orderByColumn;
+
+	if (
+		!initialColumn ||
+		(initialColumn !== COLUMN_NAME &&
+			initialColumn !== COLUMN_MODIFIED_DATE)
+	) {
+		initialColumn = COLUMN_MODIFIED_DATE;
+	}
+
+	const [column, setColumn] = useState(initialColumn);
 
 	const [showModal, setShowModal] = useState(false);
 
@@ -73,7 +783,7 @@ export default ({
 	const filterEntries = (ascending, column, delta, entries, page) => {
 		const filteredEntries = entries.slice(0);
 
-		if (column === SORT_COLUMN_MODIFIED_DATE) {
+		if (column === COLUMN_MODIFIED_DATE) {
 			filteredEntries.sort((a, b) => {
 				if (a.modifiedDate < b.modifiedDate) {
 					if (ascending) {
@@ -102,7 +812,7 @@ export default ({
 				return 0;
 			});
 		}
-		else if (column === SORT_COLUMN_NAME) {
+		else if (column === COLUMN_NAME) {
 			filteredEntries.sort((a, b) => {
 				if (a.name < b.name) {
 					if (ascending) {
@@ -139,12 +849,17 @@ export default ({
 		return filteredEntries;
 	};
 
-	const getUserName = (entry, fetchData) => {
-		return fetchData.userInfo[entry.userId].userName;
-	};
-
-	const getUserPortraitHTML = (entry, fetchData) => {
-		return {__html: fetchData.userInfo[entry.userId].userPortraitHTML};
+	const renderUserPortrait = (entry, userInfo) => {
+		return (
+			<div
+				className="text-center"
+				dangerouslySetInnerHTML={{
+					__html: userInfo[entry.userId].userPortraitHTML,
+				}}
+				data-tooltip-align="top"
+				title={userInfo[entry.userId].userNam}
+			/>
+		);
 	};
 
 	const getListItem = (entry, fetchData) => {
@@ -152,14 +867,7 @@ export default ({
 			return (
 				<ClayList.Item flex>
 					<ClayList.ItemField>
-						<div
-							dangerouslySetInnerHTML={getUserPortraitHTML(
-								entry,
-								fetchData
-							)}
-							data-tooltip-align="top"
-							title={getUserName(entry, fetchData)}
-						/>
+						{renderUserPortrait(entry, fetchData.userInfo)}
 					</ClayList.ItemField>
 					<ClayList.ItemField>
 						<a
@@ -197,14 +905,7 @@ export default ({
 		return (
 			<ClayList.Item flex>
 				<ClayList.ItemField>
-					<div
-						dangerouslySetInnerHTML={getUserPortraitHTML(
-							entry,
-							fetchData
-						)}
-						data-tooltip-align="top"
-						title={getUserName(entry, fetchData)}
-					/>
+					{renderUserPortrait(entry, fetchData.userInfo)}
 				</ClayList.ItemField>
 				<ClayList.ItemField
 					className="font-italic"
@@ -239,20 +940,25 @@ export default ({
 				</ClayModal.Header>
 				<ClayModal.Body scrollable>
 					<PublicationsSearchContainer
-						defaultColumn={SORT_COLUMN_MODIFIED_DATE}
+						ascending={ascending}
+						column={column}
 						fetchDataURL={getSelectPublicationsURL}
 						filterEntries={filterEntries}
 						getListItem={getListItem}
 						orderByItems={[
 							{
 								label: Liferay.Language.get('modified-date'),
-								value: SORT_COLUMN_MODIFIED_DATE,
+								value: COLUMN_MODIFIED_DATE,
 							},
 							{
 								label: Liferay.Language.get('name'),
-								value: SORT_COLUMN_NAME,
+								value: COLUMN_NAME,
 							},
 						]}
+						preferencesPrefix={preferencesPrefix}
+						saveDisplayPreferenceURL={saveDisplayPreferenceURL}
+						setAscending={setAscending}
+						setColumn={setColumn}
 						spritemap={spritemap}
 					/>
 				</ClayModal.Body>

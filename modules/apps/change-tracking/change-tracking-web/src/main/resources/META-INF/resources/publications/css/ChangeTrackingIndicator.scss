@@ -45,13 +45,14 @@
 	}
 }
 
-.select-publications {
-	.list-group {
-		padding-left: 24px;
-		padding-right: 24px;
-	}
+.publications-loading {
+	opacity: 0.5;
+}
 
-	.management-bar {
+.select-publications {
+	.list-group,
+	.management-bar,
+	.pagination-bar {
 		padding-left: 24px;
 		padding-right: 24px;
 	}
@@ -65,9 +66,5 @@
 
 	.results-bar {
 		margin-bottom: 12px;
-	}
-
-	.select-publications-loading {
-		opacity: 0.5;
 	}
 }

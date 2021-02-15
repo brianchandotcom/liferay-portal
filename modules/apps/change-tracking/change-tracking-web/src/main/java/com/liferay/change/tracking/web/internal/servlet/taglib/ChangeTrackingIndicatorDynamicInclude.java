@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
@@ -197,6 +199,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		checkoutURL.setParameter(
 			"redirect", _portal.getCurrentURL(httpServletRequest));
 
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				httpServletRequest);
+
 		Map<String, Object> data = HashMapBuilder.<String, Object>put(
 			"getSelectPublicationsURL",
 			() -> {
@@ -210,6 +216,30 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"/change_tracking/get_select_publications");
 
 				return getSelectPublicationsURL.toString();
+			}
+		).put(
+			"orderByAscending",
+			portalPreferences.getValue(
+				CTPortletKeys.PUBLICATIONS, "select-order-by-ascending")
+		).put(
+			"orderByColumn",
+			portalPreferences.getValue(
+				CTPortletKeys.PUBLICATIONS, "select-order-by-column")
+		).put(
+			"preferencesPrefix", "select"
+		).put(
+			"saveDisplayPreferenceURL",
+			() -> {
+				ResourceURL saveDisplayPreferenceURL =
+					(ResourceURL)_portal.getControlPanelPortletURL(
+						httpServletRequest, themeDisplay.getScopeGroup(),
+						CTPortletKeys.PUBLICATIONS, 0, 0,
+						PortletRequest.RESOURCE_PHASE);
+
+				saveDisplayPreferenceURL.setResourceID(
+					"/change_tracking/save_display_preference");
+
+				return saveDisplayPreferenceURL.toString();
 			}
 		).put(
 			"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"

@@ -559,9 +559,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 		return (
 			<tr
 				className={
-					loading
-						? className + ' publications-render-view-loading'
-						: className
+					loading ? className + ' publications-loading' : className
 				}
 			>
 				<td className="publications-render-view-divider">{title}</td>
@@ -593,7 +591,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 		}
 
 		return (
-			<tr className={loading ? 'publications-render-view-loading' : ''}>
+			<tr className={loading ? 'publications-loading' : ''}>
 				<td
 					className="publications-render-view-toolbar"
 					colSpan={columns}
@@ -736,7 +734,7 @@ export default ({dataURL, getCache, spritemap, updateCache}) => {
 
 			{renderDividers()}
 
-			<tr className={loading ? 'publications-render-view-loading' : ''}>
+			<tr className={loading ? 'publications-loading' : ''}>
 				{(state.contentSelect === CONTENT_SELECT_LEFT ||
 					state.viewType === VIEW_TYPE_SPLIT) && (
 					<td className="publications-render-view-content">

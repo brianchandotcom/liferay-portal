@@ -91,6 +91,10 @@
 	visibility: hidden;
 }
 
+.publications-loading {
+	opacity: 0.5;
+}
+
 .publications-modal {
 	.modal-description {
 		color: #6b6c7e;
@@ -159,10 +163,6 @@ table.publications-render-view {
 		td.publications-render-view-divider:last-child {
 			padding-left: 24px;
 		}
-	}
-
-	.publications-render-view-loading {
-		opacity: 0.5;
 	}
 
 	.publications-render-view-toolbar {

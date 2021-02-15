@@ -16,17 +16,19 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
+import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderTracker;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
+import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.type.WebImage;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -60,6 +62,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
@@ -93,33 +96,30 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		LayoutDisplayPageObjectProvider<Object>
-			layoutDisplayPageObjectProvider =
-				(LayoutDisplayPageObjectProvider<Object>)
-					LayoutDisplayPageProviderUtil.
-						initLayoutDisplayPageObjectProvider(
-							httpServletRequest,
-							_layoutDisplayPageProviderTracker, _portal);
-
-		if (layoutDisplayPageObjectProvider == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"error",
-					_language.get(
-						httpServletRequest, "an-unexpected-error-occurred")));
-
-			return;
-		}
+		InfoItemClassPKReference infoItemClassPKReference =
+			_getInfoItemClassPKReference(httpServletRequest);
 
 		try {
+			Object analyticsReportsInfoItemObject = Optional.ofNullable(
+				_analyticsReportsInfoItemObjectProviderTracker.
+					getAnalyticsReportsInfoItemObjectProvider(
+						infoItemClassPKReference.getClassName())
+			).map(
+				analyticsReportsInfoItemObjectProvider ->
+					analyticsReportsInfoItemObjectProvider.
+						getAnalyticsReportsInfoItemObject(
+							infoItemClassPKReference)
+			).orElseThrow(
+				() -> new NoSuchModelException(
+					"No Analytics Reports Info Item Object Provider found " +
+						"for " + infoItemClassPKReference)
+			);
+
 			AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
 				(AnalyticsReportsInfoItem<Object>)
 					_analyticsReportsInfoItemTracker.
 						getAnalyticsReportsInfoItem(
-							_portal.getClassName(
-								layoutDisplayPageObjectProvider.
-									getClassNameId()));
+							infoItemClassPKReference.getClassName());
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
 					httpServletRequest, _layoutDisplayPageProviderTracker,
@@ -135,14 +135,15 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					_getJSONObject(
 						analyticsReportsInfoItem,
 						canonicalURLProvider.getCanonicalURL(),
-						layoutDisplayPageObjectProvider.getClassNameId(),
-						layoutDisplayPageObjectProvider.getClassPK(),
+						_portal.getClassNameId(
+							infoItemClassPKReference.getClassName()),
+						infoItemClassPKReference.getClassPK(),
 						themeDisplay.getCompanyId(), themeDisplay.getLayout(),
 						themeDisplay.getLocale(),
 						_getLocale(
 							httpServletRequest, themeDisplay.getLanguageId()),
-						layoutDisplayPageObjectProvider.getDisplayObject(),
-						resourceResponse, _getTimeRange(resourceRequest))));
+						analyticsReportsInfoItemObject, resourceResponse,
+						_getTimeRange(resourceRequest))));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -179,6 +180,37 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"url", authorProfileImage
 		);
+	}
+
+	private String _getClassName(HttpServletRequest httpServletRequest) {
+		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+
+		if (classNameId == 0) {
+			return Layout.class.getName();
+		}
+
+		return _portal.getClassName(classNameId);
+	}
+
+	private long _getClassPK(HttpServletRequest httpServletRequest) {
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+
+		if (classPK == 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return themeDisplay.getPlid();
+		}
+
+		return classPK;
+	}
+
+	private InfoItemClassPKReference _getInfoItemClassPKReference(
+		HttpServletRequest httpServletRequest) {
+
+		return new InfoItemClassPKReference(
+			_getClassName(httpServletRequest), _getClassPK(httpServletRequest));
 	}
 
 	private JSONObject _getJSONObject(
@@ -374,6 +406,14 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetDataMVCResourceCommand.class);
+
+	@Reference
+	private AnalyticsReportsInfoItemObjectProvider
+		_analyticsReportsInfoItemObjectProvider;
+
+	@Reference
+	private AnalyticsReportsInfoItemObjectProviderTracker
+		_analyticsReportsInfoItemObjectProviderTracker;
 
 	@Reference
 	private AnalyticsReportsInfoItemTracker _analyticsReportsInfoItemTracker;

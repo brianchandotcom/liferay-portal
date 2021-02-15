@@ -17,10 +17,9 @@ package com.liferay.analytics.reports.web.internal.portlet;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -84,10 +83,8 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			return;
 		}
 
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			LayoutDisplayPageProviderUtil.initLayoutDisplayPageObjectProvider(
-				httpServletRequest, _layoutDisplayPageProviderTracker, _portal);
-
+		InfoItemClassPKReference infoItemClassPKReference =
+			_getInfoItemClassPKReference(httpServletRequest);
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -95,11 +92,42 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT,
 			new AnalyticsReportsDisplayContext(
-				layoutDisplayPageObjectProvider.getClassNameId(),
-				layoutDisplayPageObjectProvider.getClassPK(), renderRequest,
+				_portal.getClassNameId(infoItemClassPKReference.getClassName()),
+				infoItemClassPKReference.getClassPK(), renderRequest,
 				renderResponse, themeDisplay));
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	private String _getClassName(HttpServletRequest httpServletRequest) {
+		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+
+		if (classNameId == 0) {
+			return Layout.class.getName();
+		}
+
+		return _portal.getClassName(classNameId);
+	}
+
+	private long _getClassPK(HttpServletRequest httpServletRequest) {
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+
+		if (classPK == 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return themeDisplay.getPlid();
+		}
+
+		return classPK;
+	}
+
+	private InfoItemClassPKReference _getInfoItemClassPKReference(
+		HttpServletRequest httpServletRequest) {
+
+		return new InfoItemClassPKReference(
+			_getClassName(httpServletRequest), _getClassPK(httpServletRequest));
 	}
 
 	@Reference
@@ -107,9 +135,6 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private Portal _portal;

@@ -16,10 +16,7 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,8 +37,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,34 +59,12 @@ public class GetTotalViewsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
-		LayoutDisplayPageObjectProvider<Object>
-			layoutDisplayPageObjectProvider =
-				(LayoutDisplayPageObjectProvider<Object>)
-					LayoutDisplayPageProviderUtil.
-						initLayoutDisplayPageObjectProvider(
-							httpServletRequest,
-							_layoutDisplayPageProviderTracker, _portal);
-
-		if (layoutDisplayPageObjectProvider == null) {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"error",
-					_language.get(
-						httpServletRequest, "an-unexpected-error-occurred")));
-
-			return;
-		}
-
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(_http);
 
 		CanonicalURLProvider canonicalURLProvider = new CanonicalURLProvider(
-			httpServletRequest, _layoutDisplayPageProviderTracker,
-			_layoutSEOLinkManager, _portal);
+			_portal.getHttpServletRequest(resourceRequest),
+			_layoutDisplayPageProviderTracker, _layoutSEOLinkManager, _portal);
 
 		try {
 			JSONObject jsonObject = JSONUtil.put(
@@ -126,10 +99,6 @@ public class GetTotalViewsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetTotalViewsMVCResourceCommand.class);
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private Http _http;

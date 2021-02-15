@@ -16,17 +16,13 @@ package com.liferay.analytics.reports.web.internal.portlet.action;
 
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.HistoricalMetric;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -42,8 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,30 +63,7 @@ public class GetHistoricalViewsMVCResourceCommand
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
 		try {
-			LayoutDisplayPageObjectProvider<Object>
-				layoutDisplayPageObjectProvider =
-					(LayoutDisplayPageObjectProvider<Object>)
-						LayoutDisplayPageProviderUtil.
-							initLayoutDisplayPageObjectProvider(
-								httpServletRequest,
-								_layoutDisplayPageProviderTracker, _portal);
-
-			if (layoutDisplayPageObjectProvider == null) {
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse,
-					JSONUtil.put(
-						"error",
-						_language.get(
-							httpServletRequest,
-							"an-unexpected-error-occurred")));
-
-				return;
-			}
-
 			AnalyticsReportsDataProvider analyticsReportsDataProvider =
 				new AnalyticsReportsDataProvider(_http);
 
@@ -106,8 +77,9 @@ public class GetHistoricalViewsMVCResourceCommand
 
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
-					httpServletRequest, _layoutDisplayPageProviderTracker,
-					_layoutSEOLinkManager, _portal);
+					_portal.getHttpServletRequest(resourceRequest),
+					_layoutDisplayPageProviderTracker, _layoutSEOLinkManager,
+					_portal);
 
 			HistoricalMetric historicalMetric =
 				analyticsReportsDataProvider.getHistoricalViewsHistoricalMetric(
@@ -138,10 +110,6 @@ public class GetHistoricalViewsMVCResourceCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetHistoricalViewsMVCResourceCommand.class);
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private Http _http;

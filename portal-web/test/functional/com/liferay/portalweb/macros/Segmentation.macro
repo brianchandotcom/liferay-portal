@@ -133,7 +133,7 @@ definition {
 		AssertTextPresent(
 			locator1 = "Segmentation#MEMBER_NAME_LISTED",
 			value1 = "Test Test");
-		
+
 		SelectFrame(value1 = "relative=top");
 
 		Click(locator1 = "Segmentation#CLOSE_MODAL");

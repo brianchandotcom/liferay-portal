@@ -165,7 +165,7 @@ definition {
 	@priority = "5"
 	test SegmentationCheckMembers {
 		property portal.acceptance = "true";
-		
+
 		JSONUser.addUser(
 			userEmailAddress = "u1@liferay.com",
 			userFirstName = "User",
@@ -183,16 +183,16 @@ definition {
 		Segmentation.fillProperty(PropertyField = "test");
 
 		AssertTextEquals(
-				locator1 = "Segmentation#MEMBERS_MATCHED",
-				value1 = "1 Member");
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "1 Member");
 
 		Segmentation.viewMembers(memberName = "Test");
 
 		Segmentation.fillProperty(PropertyField = "liferay");
 
 		AssertTextEquals(
-				locator1 = "Segmentation#MEMBERS_MATCHED",
-				value1 = "2 Members");
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "2 Members");
 
 		Segmentation.viewMembers(memberName = "Test");
 

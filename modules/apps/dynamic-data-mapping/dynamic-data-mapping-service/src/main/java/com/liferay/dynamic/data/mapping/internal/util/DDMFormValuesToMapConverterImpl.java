@@ -74,7 +74,9 @@ public class DDMFormValuesToMapConverterImpl
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
 
-			_addValues(ddmFormFields, ddmFormFieldValue, values);
+			if (ddmFormFields.containsKey(ddmFormFieldValue.getName())) {
+				_addValues(ddmFormFields, ddmFormFieldValue, values);
+			}
 		}
 
 		return values;

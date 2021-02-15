@@ -34,5 +34,7 @@ CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("liferay-co
 CPContentListEntryModel cpContentListEntryModel = (CPContentListEntryModel)request.getAttribute("liferay-commerce:product-card:cpContentListEntryModel");
 
 String productDetailURL = cpContentListEntryModel.getProductDetailURL();
+
+String sku = (String)request.getAttribute("liferay-commerce:product-card:sku");
 String spritemap = cpContentListEntryModel.getSpritemap();
 %>

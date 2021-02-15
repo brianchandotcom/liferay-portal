@@ -121,11 +121,13 @@ if (cpSku != null) {
 				</c:otherwise>
 			</c:choose>
 
-			<div class="mt-3 price">
-				<commerce-ui:price
-					CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
-					CPInstanceId="<%= (cpSku == null) ? 0 : cpSku.getCPInstanceId() %>"
-				/>
+			<div class="mt-3 price-container row">
+				<div class="col-lg-9 col-sm-12 col-xl-6">
+					<commerce-ui:price
+						CPCatalogEntry="<%= cpCatalogEntry %>"
+						namespace="<%= liferayPortletResponse.getNamespace() %>"
+					/>
+				</div>
 			</div>
 
 			<c:if test="<%= cpSku != null %>">

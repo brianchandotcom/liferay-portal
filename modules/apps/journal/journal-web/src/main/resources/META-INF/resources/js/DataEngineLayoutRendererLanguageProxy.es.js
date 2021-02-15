@@ -12,10 +12,7 @@
  * details.
  */
 
-export default function dataEngineLayoutRendererLanguageProxy({
-	currentLanguageId,
-	namespace,
-}) {
+export default function ({currentLanguageId, namespace}) {
 	let localeChangedHandler = null;
 
 	Liferay.componentReady(`${namespace}dataEngineLayoutRenderer`).then(

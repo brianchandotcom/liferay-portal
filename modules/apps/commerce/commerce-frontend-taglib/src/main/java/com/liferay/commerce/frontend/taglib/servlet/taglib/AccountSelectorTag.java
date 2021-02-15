@@ -18,8 +18,8 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.frontend.taglib.internal.model.CurrentAccountModel;
-import com.liferay.commerce.frontend.taglib.internal.model.CurrentOrderModel;
+import com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceAccountModel;
+import com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceOrderModel;
 import com.liferay.commerce.frontend.taglib.internal.model.WorkflowStatusModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
@@ -114,14 +114,14 @@ public class AccountSelectorTag extends IncludeTag {
 							commerceAccount.getLogoId()));
 				}
 
-				CurrentAccountModel currentAccountModel =
-					new CurrentAccountModel(
+				CurrentCommerceAccountModel currentCommerceAccountModel =
+					new CurrentCommerceAccountModel(
 						commerceAccount.getCommerceAccountId(), thumbnailUrl,
 						commerceAccount.getName());
 
 				httpServletRequest.setAttribute(
 					"liferay-commerce:account-selector:currentAccount",
-					currentAccountModel);
+					currentCommerceAccountModel);
 			}
 
 			CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
@@ -136,12 +136,14 @@ public class AccountSelectorTag extends IncludeTag {
 						LanguageUtil.get(
 							themeDisplay.getLocale(), workflowStatusInfoLabel));
 
-				CurrentOrderModel currentOrderModel = new CurrentOrderModel(
-					commerceOrder.getCommerceOrderId(), workflowStatusModel);
+				CurrentCommerceOrderModel currentCommerceOrderModel =
+					new CurrentCommerceOrderModel(
+						commerceOrder.getCommerceOrderId(),
+						workflowStatusModel);
 
 				httpServletRequest.setAttribute(
 					"liferay-commerce:account-selector:currentOrder",
-					currentOrderModel);
+					currentCommerceOrderModel);
 			}
 
 			httpServletRequest.setAttribute(

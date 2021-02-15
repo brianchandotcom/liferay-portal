@@ -18,9 +18,9 @@ package com.liferay.commerce.frontend.taglib.internal.model;
  * @author Marco Leo
  * @author Luca Pellizzon
  */
-public class CurrentOrderModel {
+public class CurrentCommerceOrderModel {
 
-	public CurrentOrderModel(
+	public CurrentCommerceOrderModel(
 		long orderId, WorkflowStatusModel workflowStatusInfo) {
 
 		_orderId = orderId;

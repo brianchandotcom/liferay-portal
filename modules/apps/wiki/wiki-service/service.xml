@@ -116,6 +116,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="NodeId" return-type="Collection">
 			<finder-column name="nodeId" />
 		</finder>

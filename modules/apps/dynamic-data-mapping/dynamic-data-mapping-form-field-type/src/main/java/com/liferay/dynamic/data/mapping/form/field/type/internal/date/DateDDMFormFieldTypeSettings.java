@@ -79,7 +79,8 @@ public interface DateDDMFormFieldTypeSettings
 	public String dataType();
 
 	@DDMFormField(
-		dataType = "string", label = "%predefined-value", type = "date"
+		dataType = "string", label = "%predefined-value",
+		properties = "visualProperty=true", type = "date"
 	)
 	@Override
 	public LocalizedValue predefinedValue();

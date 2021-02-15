@@ -72,7 +72,8 @@ public interface CheckboxDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%predefined-value",
-		properties = "showAsSwitcher=true", type = "checkbox"
+		properties = {"showAsSwitcher=true", "visualProperty=true"},
+		type = "checkbox"
 	)
 	@Override
 	public LocalizedValue predefinedValue();

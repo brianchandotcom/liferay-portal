@@ -382,8 +382,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			DDMFormRendererConstants.DDM_FORM_FIELD_LANGUAGE_ID_SEPARATOR);
 		sb.append(LocaleUtil.toLanguageId(locale));
 
-		if (Validator.isNull(
-				ParamUtil.getString(httpServletRequest, sb.toString()))) {
+		if (ArrayUtil.isEmpty(
+				ParamUtil.getParameterValues(
+					httpServletRequest, sb.toString()))) {
 
 			sb.setIndex(sb.index() - 1);
 

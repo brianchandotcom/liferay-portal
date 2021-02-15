@@ -426,7 +426,7 @@ public class SitePage implements Serializable {
 	protected String[] keywords;
 
 	@Schema(
-		description = "Retrieves the structure with all elements of the page"
+		description = "Optional field with the structure of all the elements of the page. Can be embedded with nestedFields when retrieving the collection of site pages. When retrieving a single site page, it will automatically be included."
 	)
 	@Valid
 	public PageDefinition getPageDefinition() {
@@ -454,7 +454,7 @@ public class SitePage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Retrieves the structure with all elements of the page"
+		description = "Optional field with the structure of all the elements of the page. Can be embedded with nestedFields when retrieving the collection of site pages. When retrieving a single site page, it will automatically be included."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageDefinition pageDefinition;

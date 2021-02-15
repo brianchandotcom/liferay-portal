@@ -24,8 +24,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDS_GROUP</td>
-	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[2]</td>
+	<td>FORM_FIELDS_GROUP_INDEX</td>
+	<td>xpath=(//div[contains(@class, 'fieldset')]//label[text()='Fields Group'])[${key_FieldGroupIndex}]</td>
 	<td></td>
 </tr>
 <tr>

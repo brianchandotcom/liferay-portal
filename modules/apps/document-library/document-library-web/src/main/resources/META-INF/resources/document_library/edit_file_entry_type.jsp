@@ -45,7 +45,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFileEntryTypeURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveStructure();" %>'>
+<aui:form action="<%= editFileEntryTypeURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
@@ -115,55 +115,17 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	servletContext="<%= application %>"
 />
 
-<aui:script>
-	function <portlet:namespace />getInputLocalizedValues(field) {
-		var inputLocalized = Liferay.component('<portlet:namespace />' + field);
-		var localizedValues = {};
-
-		if (inputLocalized) {
-			var translatedLanguages = inputLocalized
-				.get('translatedLanguages')
-				.values();
-
-			translatedLanguages.forEach((languageId) => {
-				localizedValues[languageId] = inputLocalized.getValue(languageId);
-			});
-		}
-
-		return localizedValues;
-	}
-
-	function <portlet:namespace />saveStructure() {
-		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
-			(dataLayoutBuilder) => {
-				var name = <portlet:namespace />getInputLocalizedValues('name');
-
-				var description = <portlet:namespace />getInputLocalizedValues(
-					'description'
-				);
-
-				var formData = dataLayoutBuilder.getFormData();
-
-				var dataDefinition = formData.definition;
-
-				dataDefinition.description = description;
-				dataDefinition.name = name;
-
-				var dataLayout = formData.layout;
-
-				dataLayout.description = description;
-				dataLayout.name = name;
-
-				Liferay.Util.postForm(document.<portlet:namespace />fm, {
-					data: {
-						dataDefinition: JSON.stringify(dataDefinition),
-						dataLayout: JSON.stringify(dataLayout),
-					},
-				});
-			}
-		);
-	}
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"contentTitle", "name"
+		).put(
+			"defaultLanguageId", defaultLanguageId
+		).build()
+	%>'
+	module="document_library/js/ddm/DataEngineLayoutBuilderHandler.es"
+	servletContext="<%= application %>"
+/>
 
 <%
 if (fileEntryType == null) {

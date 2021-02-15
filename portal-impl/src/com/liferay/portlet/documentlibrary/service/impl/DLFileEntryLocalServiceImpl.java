@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -175,6 +176,15 @@ public class DLFileEntryLocalServiceImpl
 		// File entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_DL_FILE_ENTRY_COUNT > 0) &&
+			(dlFolderPersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_DL_FILE_ENTRY_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed document library " +
+					"documents");
+		}
 
 		folderId = DLFolderLocalServiceImpl.getFolderId(
 			dlFolderPersistence, user.getCompanyId(), folderId);

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutException;
@@ -210,6 +211,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Layout
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_LAYOUT_COUNT > 0) &&
+			(layoutPersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_LAYOUT_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed layouts");
+		}
+
 		long layoutId = getNextLayoutId(groupId, privateLayout);
 		parentLayoutId = layoutLocalServiceHelper.getParentLayoutId(
 			groupId, privateLayout, parentLayoutId);

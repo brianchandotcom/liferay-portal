@@ -682,6 +682,9 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_KB_FOLDER_COUNT =
 		"data.limit.max.kb.folder.count";
 
+	public static final String DATA_LIMIT_MAX_LAYOUT_COUNT =
+		"data.limit.max.layout.count";
+
 	public static final String DATA_LIMIT_MAX_MAIL_MESSAGE_COUNT =
 		"data.limit.max.mail.message.count";
 

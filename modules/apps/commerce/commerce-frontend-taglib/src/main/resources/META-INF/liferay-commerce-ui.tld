@@ -500,27 +500,17 @@
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.PriceTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>additionalDiscountClasses</name>
+			<name>compact</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>additionalPriceClasses</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>additionalPromoPriceClasses</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>CPDefinitionId</name>
+			<name>CPCatalogEntry</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>CPInstanceId</name>
+			<name>namespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

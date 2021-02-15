@@ -19,6 +19,7 @@ import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,6 +52,8 @@ public class ProductCardTag extends IncludeTag {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+
+			return SKIP_BODY;
 		}
 
 		return super.doStartTag();
@@ -111,9 +114,9 @@ public class ProductCardTag extends IncludeTag {
 		_cpCatalogEntry = null;
 		_cpContentHelper = null;
 		_cpContentListEntryModel = null;
-		_elementClasses = null;
-		_productDetailURL = null;
-		_sku = null;
+		_elementClasses = StringPool.BLANK;
+		_productDetailURL = StringPool.BLANK;
+		_sku = StringPool.BLANK;
 	}
 
 	@Override
@@ -131,8 +134,8 @@ public class ProductCardTag extends IncludeTag {
 	private CPCatalogEntry _cpCatalogEntry;
 	private CPContentHelper _cpContentHelper;
 	private CPContentListEntryModel _cpContentListEntryModel;
-	private String _elementClasses;
-	private String _productDetailURL;
-	private String _sku;
+	private String _elementClasses = StringPool.BLANK;
+	private String _productDetailURL = StringPool.BLANK;
+	private String _sku = StringPool.BLANK;
 
 }

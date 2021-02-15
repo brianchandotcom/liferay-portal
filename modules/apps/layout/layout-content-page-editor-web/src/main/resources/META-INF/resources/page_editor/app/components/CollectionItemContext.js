@@ -18,6 +18,7 @@ import {updateFragmentEntryLinkContent} from '../actions/index';
 import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
 import {useDispatch} from '../store/index';
+import isMappedToInfoItem from '../utils/editable-value/isMappedToInfoItem';
 
 const defaultFromControlsId = (itemId) => itemId;
 const defaultToControlsId = (controlId) => controlId;
@@ -119,13 +120,10 @@ const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
 const useGetFieldValue = () => {
 	const {collectionItem} = useContext(CollectionItemContext);
 
-	const getFromServer = useCallback(
-		({classNameId, classPK, fieldId, languageId}) =>
-			InfoItemService.getInfoItemFieldValue({
-				classNameId,
-				classPK,
-				fieldId,
-				languageId,
+	const getFromServer = useCallback((editable) => {
+		if (isMappedToInfoItem(editable)) {
+			return InfoItemService.getInfoItemFieldValue({
+				...editable,
 				onNetworkStatus: () => {},
 			}).then((response) => {
 				if (!response || !Object.keys(response).length) {
@@ -135,9 +133,11 @@ const useGetFieldValue = () => {
 				const {fieldValue = ''} = response;
 
 				return fieldValue;
-			}),
-		[]
-	);
+			});
+		}
+
+		return Promise.resolve(editable);
+	}, []);
 
 	const getFromCollectionItem = useCallback(
 		({collectionFieldId}) =>

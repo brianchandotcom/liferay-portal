@@ -20,12 +20,14 @@ import ClayForm, {
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import {useSelector} from '../../store/index';
 import isMapped from '../../utils/editable-value/isMapped';
+import isMappedToLayout from '../../utils/editable-value/isMappedToLayout';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {useId} from '../../utils/useId';
 import {useGetFieldValue} from '../CollectionItemContext';
@@ -34,6 +36,11 @@ const SOURCE_OPTIONS = {
 	fromContentField: {
 		label: Liferay.Language.get('from-content-field'),
 		value: 'fromContentField',
+	},
+
+	fromLayout: {
+		label: Liferay.Language.get('page'),
+		value: 'fromLayout',
 	},
 
 	manual: {
@@ -65,7 +72,10 @@ export default function LinkField({field, onValueSelect, value}) {
 		setNextHref(value.href);
 		setOpenNewTab(value.target === '_blank');
 
-		if (isMapped(value)) {
+		if (isMappedToLayout(value)) {
+			setSource(SOURCE_OPTIONS.fromLayout.value);
+		}
+		else if (isMapped(value)) {
 			setSource(SOURCE_OPTIONS.fromContentField.value);
 		}
 		else if (value.href) {
@@ -138,6 +148,13 @@ export default function LinkField({field, onValueSelect, value}) {
 						value={nextHref || ''}
 					/>
 				</ClayForm.Group>
+			)}
+
+			{source === SOURCE_OPTIONS.fromLayout.value && (
+				<LayoutSelector
+					mappedLayout={nextValue?.layout}
+					onLayoutSelect={(layout) => handleChange({layout})}
+				/>
 			)}
 
 			{source === SOURCE_OPTIONS.fromContentField.value && (

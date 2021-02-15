@@ -1,7 +1,9 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.jodd", name: "jodd-core", version: "5.0.13"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:portal-crypto-hash:portal-crypto-hash-api")
+	compileOnly project(":apps:portal-crypto-hash:portal-crypto-hash-provider:portal-crypto-hash-provider-bcrypt")
 	compileOnly project(":apps:portal-crypto-hash:portal-crypto-hash-provider:portal-crypto-hash-provider-message-digest")
 	compileOnly project(":apps:portal-crypto-hash:portal-crypto-hash-spi")
 }

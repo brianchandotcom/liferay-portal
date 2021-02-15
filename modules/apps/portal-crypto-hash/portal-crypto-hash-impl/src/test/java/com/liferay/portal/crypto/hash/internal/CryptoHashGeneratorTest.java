@@ -16,9 +16,12 @@ package com.liferay.portal.crypto.hash.internal;
 
 import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
+import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashProvider;
 import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProvider;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.UnicodeFormatter;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,28 +35,26 @@ public class CryptoHashGeneratorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_cryptoHashGenerator = new CryptoHashGeneratorImpl(
-			new MessageDigestCryptoHashProvider());
+		_cryptoHashGenerators = Arrays.asList(
+			new CryptoHashGeneratorImpl(new MessageDigestCryptoHashProvider()),
+			new CryptoHashGeneratorImpl(new BCryptCryptoHashProvider()));
 	}
 
 	@Test
 	public void testGenerate() throws Exception {
-		CryptoHashResponse cryptoHashResponse = _cryptoHashGenerator.generate(
-			_INPUT);
+		for (CryptoHashGenerator cryptoHashGenerator : _cryptoHashGenerators) {
+			CryptoHashResponse cryptoHashResponse =
+				cryptoHashGenerator.generate(_INPUT);
 
-		Assert.assertFalse(
-			_cryptoHashGenerator.verify(
-				_randomBytes(), cryptoHashResponse.getHash(),
-				cryptoHashResponse.getSalt()));
-		Assert.assertTrue(
-			_cryptoHashGenerator.verify(
-				_INPUT, cryptoHashResponse.getHash(),
-				cryptoHashResponse.getSalt()));
-	}
-
-	@Test
-	public void testVerify() throws Exception {
-		_cryptoHashGenerator.verify(_INPUT, _HASH, _SALT);
+			Assert.assertFalse(
+				cryptoHashGenerator.verify(
+					_randomBytes(), cryptoHashResponse.getHash(),
+					cryptoHashResponse.getSalt()));
+			Assert.assertTrue(
+				cryptoHashGenerator.verify(
+					_INPUT, cryptoHashResponse.getHash(),
+					cryptoHashResponse.getSalt()));
+		}
 	}
 
 	private static byte[] _randomBytes() {
@@ -62,13 +63,8 @@ public class CryptoHashGeneratorTest {
 		return string.getBytes();
 	}
 
-	private static final byte[] _HASH = UnicodeFormatter.hexToBytes(
-		RandomTestUtil.randomString(128));
-
 	private static final byte[] _INPUT = _randomBytes();
 
-	private static final byte[] _SALT = _randomBytes();
-
-	private CryptoHashGenerator _cryptoHashGenerator;
+	private List<CryptoHashGenerator> _cryptoHashGenerators;
 
 }

@@ -347,25 +347,23 @@ definition {
 			structureDescription = "Structure Description Test",
 			structureName = "Structure FieldSet Test");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Text Test",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
 		DataEngine.addFieldsets(
-			fieldsetLabel = "Structure FieldSet Test",
-			fieldsetName = "Structure FieldSet Test");
+			createNewFieldset = "true",
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset 5");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		DataEngine.addTranslationToFieldset(
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset 5",
+			localeList = "pt-BR");
+
+		WebContentStructures.saveCP(structureName = "Structure FieldSet Test");
 
 		NavItem.gotoWebContent();
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure FieldSet Test");
 
 		PortletEntry.inputTitle(title = "WC Title Test");
 

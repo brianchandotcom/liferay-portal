@@ -344,46 +344,46 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure FieldSet Test");
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldHelp = "true",
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset 5");
+			fieldsetName = "New Fieldset");
 
 		DataEngine.addTranslationToFieldset(
 			fieldHelp = "true",
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset 5",
+			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
-		WebContentStructures.saveCP(structureName = "Structure FieldSet Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
 		NavItem.gotoWebContent();
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure FieldSet Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
-		PortletEntry.inputTitle(title = "BR Title");
+		PortletEntry.inputTitle(title = "WC Titulo");
 
 		PortletEntry.changeLocale(locale = "en-US");
 
-		PortletEntry.inputTitle(title = "EN Title");
+		PortletEntry.inputTitle(title = "WC Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "EN Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "BR Title");
+			value1 = "WC Titulo");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

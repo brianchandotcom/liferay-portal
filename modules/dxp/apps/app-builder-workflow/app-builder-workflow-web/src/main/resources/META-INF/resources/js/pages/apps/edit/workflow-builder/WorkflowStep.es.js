@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 
 import ButtonInfo from '../../../../components/button-info/ButtonInfo.es';
-import IconWithPopover from '../../../../components/icon-with-popover/IconWithPopover.es';
+import MissingRequiredFieldsPopover from '../MissingRequiredFieldsPopover.es';
 
 const Arrow = ({addStep, selected}) => {
 	return (
@@ -67,27 +67,20 @@ const Card = ({
 	stepInfo,
 }) => {
 	const {
+		appId,
 		config: {dataObject, formView},
+		state: {app},
 	} = useContext(EditAppContext);
 	const [active, setActive] = useState(false);
 	const [showPopover, setShowPopover] = useState(false);
 
 	const duplicatedFields = errors?.formViews?.duplicatedFields || [];
+	const {missingRequiredFields: {customField, nativeField} = {}} = formView;
 
 	const handleOnClick = (event, onClick) => {
 		event.preventDefault();
 		setActive(false);
 		onClick();
-	};
-
-	const {custom} = {
-		custom: {
-			triggerProps: {
-				className: 'help-cursor info tooltip-popover-icon',
-				fontSize: '26px',
-				symbol: 'info-circle',
-			},
-		},
 	};
 
 	return (
@@ -118,28 +111,29 @@ const Card = ({
 				</ClayTooltipProvider>
 			)}
 
-			{initial && formView.missingRequiredFields?.customField && (
-				<IconWithPopover
-					header={<PopoverHeader />}
-					show={showPopover}
-					trigger={
-						<div className="dropdown-button-asset help-cursor">
-							<IconWithPopover.TriggerIcon
-								iconProps={custom.triggerProps}
-								onMouseEnter={() => setShowPopover(true)}
-								onMouseLeave={() => setShowPopover(false)}
-								onMouseOver={() => setShowPopover(true)}
-							/>
-						</div>
-					}
-				>
-					{sub(
-						Liferay.Language.get(
-							'the-form-view-for-this-app-was-modified-and-does-not-contain-all-required-fields-for-the-x-object'
+			{!app.active && appId && initial && (customField || nativeField) && (
+				<MissingRequiredFieldsPopover
+					dataObjectName={dataObject.name}
+					message={{
+						custom: sub(
+							Liferay.Language.get(
+								'the-form-view-for-this-app-was-modified-and-does-not-contain-all-required-fields-for-the-x-object'
+							),
+							[dataObject.name]
 						),
-						[dataObject.name]
-					)}
-				</IconWithPopover>
+						native: sub(
+							Liferay.Language.get(
+								'the-form-view-for-this-app-was-modified-and-does-not-contain-all-native-required-fields-it-cannot-be-used-to-create-new-records-for-the-x-object'
+							),
+							[dataObject.name]
+						),
+					}}
+					nativeField={nativeField}
+					onClick={() => setShowPopover(false)}
+					setShowPopover={setShowPopover}
+					showPopover={showPopover}
+					triggerClassName="dropdown-button-asset help-cursor"
+				/>
 			)}
 
 			<div className="d-flex">
@@ -176,16 +170,6 @@ const Card = ({
 				)}
 			</div>
 		</div>
-	);
-};
-
-const PopoverHeader = () => {
-	return (
-		<>
-			<ClayIcon className="mr-1 text-info" symbol="info-circle" />
-
-			<span>{Liferay.Language.get('missing-required-fields')}</span>
-		</>
 	);
 };
 

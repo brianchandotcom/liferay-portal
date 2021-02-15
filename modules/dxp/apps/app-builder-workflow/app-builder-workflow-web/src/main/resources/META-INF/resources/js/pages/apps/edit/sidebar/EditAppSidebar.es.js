@@ -21,7 +21,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import AutocompleteMultiSelect from '../../../../components/autocomplete/AutocompleteMultiSelect.es';
 import ButtonInfo from '../../../../components/button-info/ButtonInfo.es';
-import IconWithPopover from '../../../../components/icon-with-popover/IconWithPopover.es';
+import MissingRequiredFieldsPopover from '../MissingRequiredFieldsPopover.es';
 import {REMOVE_STEP_EMPTY_FORM_VIEWS, UPDATE_STEP} from '../configReducer.es';
 import ActionsTab from './ActionsTab.es';
 import DataAndViewsTab from './DataAndViewsTab.es';
@@ -30,6 +30,7 @@ export default function EditAppSidebar() {
 	const editAppContext = useContext(EditAppContext);
 
 	const {
+		appId,
 		config: {
 			currentStep,
 			dataObject,
@@ -40,6 +41,7 @@ export default function EditAppSidebar() {
 			tableView,
 		},
 		dispatchConfig,
+		state: {app},
 	} = editAppContext;
 	const [currentTab, setCurrentTab] = useState();
 	const [showPopover, setShowPopover] = useState(false);
@@ -49,6 +51,7 @@ export default function EditAppSidebar() {
 		appWorkflowDataLayoutLinks = [{}],
 	} = currentStep;
 	const actionsInfo = [];
+	const {missingRequiredFields: {customField, nativeField} = {}} = formView;
 
 	if (primaryAction) {
 		actionsInfo.push({
@@ -112,7 +115,10 @@ export default function EditAppSidebar() {
 			},
 			show: stepIndex !== steps.length - 1,
 			showPopoverIcon:
-				stepIndex == 0 && formView.missingRequiredFields?.customField,
+				!app.active &&
+				appId &&
+				stepIndex == 0 &&
+				(customField || nativeField),
 			title: Liferay.Language.get('data-and-views'),
 		},
 		{
@@ -153,26 +159,6 @@ export default function EditAppSidebar() {
 	useEffect(() => {
 		setCurrentTab(null);
 	}, [currentStep]);
-
-	const PopoverHeader = () => {
-		return (
-			<>
-				<ClayIcon className="mr-1 text-info" symbol="info-circle" />
-
-				<span>{Liferay.Language.get('missing-required-fields')}</span>
-			</>
-		);
-	};
-
-	const {custom} = {
-		custom: {
-			triggerProps: {
-				className: 'help-cursor info tooltip-popover-icon',
-				fontSize: '26px',
-				symbol: 'info-circle',
-			},
-		},
-	};
 
 	return (
 		<Sidebar className="app-builder-workflow-app__sidebar">
@@ -277,7 +263,10 @@ export default function EditAppSidebar() {
 									<ClayButton
 										className={classNames(
 											'mb-3 tab-button',
-											error && 'border-error'
+											(error ||
+												(showPopoverIcon &&
+													nativeField)) &&
+												'border-error'
 										)}
 										disabled={disabled}
 										displayType="secondary"
@@ -311,41 +300,33 @@ export default function EditAppSidebar() {
 											)}
 
 											{showPopoverIcon && (
-												<IconWithPopover
-													header={<PopoverHeader />}
-													show={showPopover}
-													trigger={
-														<div className="help-cursor">
-															<IconWithPopover.TriggerIcon
-																iconProps={
-																	custom.triggerProps
-																}
-																onMouseEnter={() =>
-																	setShowPopover(
-																		true
-																	)
-																}
-																onMouseLeave={() =>
-																	setShowPopover(
-																		false
-																	)
-																}
-																onMouseOver={() =>
-																	setShowPopover(
-																		true
-																	)
-																}
-															/>
-														</div>
+												<MissingRequiredFieldsPopover
+													dataObjectName={
+														dataObject.name
 													}
-												>
-													{sub(
-														Liferay.Language.get(
-															'the-form-view-for-this-app-was-modified-and-does-not-contain-all-required-fields-for-the-x-object'
+													message={{
+														custom: sub(
+															Liferay.Language.get(
+																'the-form-view-for-this-app-was-modified-and-does-not-contain-all-required-fields-for-the-x-object'
+															),
+															[dataObject.name]
 														),
-														[dataObject.name]
-													)}
-												</IconWithPopover>
+														native: sub(
+															Liferay.Language.get(
+																'the-form-view-for-this-app-was-modified-and-does-not-contain-all-native-required-fields-it-cannot-be-used-to-create-new-records-for-the-x-object'
+															),
+															[dataObject.name]
+														),
+													}}
+													nativeField={nativeField}
+													onClick={() =>
+														setShowPopover(false)
+													}
+													setShowPopover={
+														setShowPopover
+													}
+													showPopover={showPopover}
+												/>
 											)}
 
 											<ClayIcon

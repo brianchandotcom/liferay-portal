@@ -207,12 +207,18 @@ public class DefaultWorkflowEngineImpl
 
 			nodeExecutor.executeTimer(currentKaleoNode, executionContext);
 
-			kaleoTimerInstanceToken.setWorkflowContext(
-				WorkflowContextUtil.convert(
-					executionContext.getWorkflowContext()));
+			kaleoTimerInstanceToken =
+				kaleoTimerInstanceTokenLocalService.getKaleoTimerInstanceToken(
+					kaleoTimerInstanceTokenId);
 
-			kaleoTimerInstanceTokenLocalService.updateKaleoTimerInstanceToken(
-				kaleoTimerInstanceToken);
+			if (!kaleoTimerInstanceToken.isCompleted()) {
+				kaleoTimerInstanceToken.setWorkflowContext(
+					WorkflowContextUtil.convert(
+						executionContext.getWorkflowContext()));
+
+				kaleoTimerInstanceTokenLocalService.
+					updateKaleoTimerInstanceToken(kaleoTimerInstanceToken);
+			}
 
 			TransactionCommitCallbackUtil.registerCallback(
 				new Callable<Void>() {

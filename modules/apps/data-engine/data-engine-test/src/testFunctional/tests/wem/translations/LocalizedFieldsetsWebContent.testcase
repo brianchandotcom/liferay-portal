@@ -254,8 +254,8 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure FieldSet Test");
+			structureDescription = "Structure Description",
+			structureName = "Structure Name");
 
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
@@ -263,13 +263,13 @@ definition {
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset");
 
-		WebContentStructures.saveCP(structureName = "Structure Name Test");
+		WebContentStructures.saveCP(structureName = "Structure Name");
 
 		NavItem.gotoWebContent();
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure FieldSet Test");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name");
 
-		PortletEntry.inputTitle(title = "WC Title Test");
+		PortletEntry.inputTitle(title = "WC Title");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -277,19 +277,19 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Test");
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "WC Title Test");
+			value1 = "WC Title");
 
 		PortletEntry.changeLocale(locale = "es_ES");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "WC Title Test");
+			value1 = "WC Title");
 	}
 
 	@description = "This is a test for LPS-126217. Check when user translates the title, the default language title persists"

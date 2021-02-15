@@ -16,66 +16,27 @@
 
 <%@ include file="/polls/init.jsp" %>
 
-<clay:management-toolbar-v2
+<portlet:actionURL name="/polls/delete_question" var="deleteQuestionURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<clay:management-toolbar
 	actionDropdownItems="<%= pollsDisplayContext.getActionItemsDropdownItems() %>"
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"deleteQuestionURL", deleteQuestionURL.toString()
+		).build()
+	%>'
 	clearResultsURL="<%= pollsDisplayContext.getClearResultsURL() %>"
-	componentId="pollsManagementToolbar"
 	creationMenu="<%= pollsDisplayContext.getCreationMenu() %>"
 	disabled="<%= pollsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= pollsDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= pollsDisplayContext.getTotalItems() %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	propsTransformer="polls/js/PollsManagementToolbarPropsTransformer"
 	searchActionURL="<%= pollsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= pollsDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"
 	sortingOrder="<%= pollsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= pollsDisplayContext.getSortingURL() %>"
 />
-
-<aui:script>
-	var deleteQuestions = function () {
-		if (
-			confirm(
-				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
-			)
-		) {
-			var searchContainer = document.getElementById(
-				'<portlet:namespace />poll'
-			);
-
-			if (searchContainer) {
-				Liferay.Util.postForm(document.<portlet:namespace />fm, {
-					data: {
-						deleteQuestionIds: Liferay.Util.listCheckedExcept(
-							searchContainer,
-							'<portlet:namespace />allRowIds'
-						),
-					},
-
-					<portlet:actionURL name="/polls/delete_question" var="deleteQuestionURL">
-						<portlet:param name="mvcPath" value="/view.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-					</portlet:actionURL>
-
-					url: '<%= deleteQuestionURL %>',
-				});
-			}
-		}
-	};
-
-	var ACTIONS = {
-		deleteQuestions: deleteQuestions,
-	};
-
-	Liferay.componentReady('pollsManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on(['actionItemClicked'], function (event) {
-			var itemData = event.data.item.data;
-
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
-</aui:script>

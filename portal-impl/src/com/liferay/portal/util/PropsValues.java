@@ -673,6 +673,11 @@ public class PropsValues {
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_COUNT));
 
+	public static final long DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_ITEM_COUNT =
+		GetterUtil.getLong(
+			PropsUtil.get(
+				PropsKeys.DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_ITEM_COUNT));
+
 	public static final long DATA_LIMIT_MAX_TEAM_COUNT = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_TEAM_COUNT));
 

@@ -16,6 +16,7 @@ package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
@@ -74,6 +76,19 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		validateName(name);
 
 		User user = userLocalService.getUser(userId);
+
+		int siteNavigationMenuItemCountByCompany =
+			siteNavigationMenuItemPersistence.countByCompanyId(
+				user.getCompanyId());
+
+		if ((PropsValues.DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_ITEM_COUNT > 0) &&
+			(siteNavigationMenuItemCountByCompany >=
+				PropsValues.DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_ITEM_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed site navigation " +
+					"menu items");
+		}
 
 		long siteNavigationMenuItemId = counterLocalService.increment();
 

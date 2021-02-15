@@ -706,6 +706,9 @@ public interface PropsKeys {
 	public static final String DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_COUNT =
 		"data.limit.max.site.navigation.menu.count";
 
+	public static final String DATA_LIMIT_MAX_SITE_NAVIGATION_MENU_ITEM_COUNT =
+		"data.limit.max.site.navigation.menu.item.count";
+
 	public static final String DATA_LIMIT_MAX_TEAM_COUNT =
 		"data.limit.max.team.count";
 

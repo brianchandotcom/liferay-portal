@@ -31,23 +31,18 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Zsolt Berentey
@@ -82,20 +77,6 @@ public class JournalFolderFinderTest {
 
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
 			TestPropsValues.getUserId(), article);
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_bundleContext = bundle.getBundleContext();
-
-		_serviceReference = _bundleContext.getServiceReference(
-			JournalFolderFinder.class);
-
-		_journalFolderFinder = _bundleContext.getService(_serviceReference);
-	}
-
-	@After
-	public void tearDown() {
-		_bundleContext.ungetService(_serviceReference);
 	}
 
 	@Test
@@ -211,14 +192,13 @@ public class JournalFolderFinderTest {
 		Assert.assertEquals(_folder2.getFolderId(), folder.getFolderId());
 	}
 
-	private BundleContext _bundleContext;
+	@Inject
+	private static JournalFolderFinder _journalFolderFinder;
+
 	private JournalFolder _folder1;
 	private JournalFolder _folder2;
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private JournalFolderFinder _journalFolderFinder;
-	private ServiceReference<JournalFolderFinder> _serviceReference;
 
 }

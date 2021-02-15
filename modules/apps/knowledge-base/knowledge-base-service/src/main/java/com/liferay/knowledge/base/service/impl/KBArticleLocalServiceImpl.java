@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -99,6 +100,7 @@ import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -154,6 +156,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		// KB article
 
 		User user = userLocalService.getUser(userId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_KB_ARTICLE_COUNT > 0) &&
+			(kbArticlePersistence.countByC_L(user.getCompanyId(), true) >=
+				PropsValues.DATA_LIMIT_MAX_KB_ARTICLE_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed knowledge base " +
+					"articles");
+		}
 
 		long groupId = serviceContext.getScopeGroupId();
 		urlTitle = normalizeUrlTitle(urlTitle);

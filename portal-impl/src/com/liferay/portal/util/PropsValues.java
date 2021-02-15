@@ -643,6 +643,10 @@ public class PropsValues {
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT));
 
+	public static final long DATA_LIMIT_MAX_KB_ARTICLE_COUNT =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_KB_ARTICLE_COUNT));
+
 	public static final long DATA_LIMIT_MAX_ORGANIZATION_COUNT =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_ORGANIZATION_COUNT));

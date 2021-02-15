@@ -74,6 +74,10 @@ public class DDMForm implements Serializable {
 		_ddmFormRules.add(ddmFormRule);
 	}
 
+	public boolean allowInvalidAvailableLocalesForProperty() {
+		return _allowInvalidAvailableLocalesForProperty;
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -218,6 +222,13 @@ public class DDMForm implements Serializable {
 		return HashUtil.hash(hash, _definitionSchemaVersion);
 	}
 
+	public void setAllowInvalidAvailableLocalesForProperty(
+		boolean allowInvalidAvailableLocalesForProperty) {
+
+		_allowInvalidAvailableLocalesForProperty =
+			allowInvalidAvailableLocalesForProperty;
+	}
+
 	public void setAvailableLocales(Set<Locale> availableLocales) {
 		_availableLocales = availableLocales;
 	}
@@ -249,6 +260,7 @@ public class DDMForm implements Serializable {
 		_definitionSchemaVersion = definitionSchemaVersion;
 	}
 
+	private boolean _allowInvalidAvailableLocalesForProperty;
 	private Set<Locale> _availableLocales;
 	private List<DDMFormField> _ddmFormFields;
 	private List<DDMFormRule> _ddmFormRules;

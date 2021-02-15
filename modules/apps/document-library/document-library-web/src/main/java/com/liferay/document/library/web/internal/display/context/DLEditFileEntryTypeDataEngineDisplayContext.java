@@ -61,7 +61,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 			).put(
 				"pluginEntryPoint",
 				npmResolvedPackageName +
-					"/document_library/js/ddm/panels/index.es"
+					"/document_library/js/data-engine/panels/index.es"
 			).put(
 				"sidebarPanelId", "details"
 			).put(
@@ -94,7 +94,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 			).put(
 				"pluginEntryPoint",
 				npmResolvedPackageName +
-					"/document_library/js/ddm/panels/index.es"
+					"/document_library/js/data-engine/panels/index.es"
 			).put(
 				"sidebarPanelId", "additionalMetadataFields"
 			).put(
@@ -132,7 +132,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 				).put(
 					"pluginEntryPoint",
 					npmResolvedPackageName +
-						"/document_library/js/ddm/panels/index.es"
+						"/document_library/js/data-engine/panels/index.es"
 				).put(
 					"sidebarPanelId", "permissions"
 				).put(

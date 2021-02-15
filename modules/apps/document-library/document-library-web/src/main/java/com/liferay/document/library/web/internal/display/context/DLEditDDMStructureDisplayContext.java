@@ -64,7 +64,7 @@ public class DLEditDDMStructureDisplayContext {
 			).put(
 				"pluginEntryPoint",
 				npmResolvedPackageName +
-					"/document_library/js/ddm/panels/index.es"
+					"/document_library/js/data-engine/panels/index.es"
 			).put(
 				"sidebarPanelId", "properties"
 			).put(

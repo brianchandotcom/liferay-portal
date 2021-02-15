@@ -123,7 +123,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			"defaultLanguageId", defaultLanguageId
 		).build()
 	%>'
-	module="document_library/js/ddm/DataEngineLayoutBuilderHandler.es"
+	module="document_library/js/data-engine/DataEngineLayoutBuilderHandler.es"
 	servletContext="<%= application %>"
 />
 

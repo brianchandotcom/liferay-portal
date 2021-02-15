@@ -197,19 +197,17 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		// Data layout with Data Layout Fields (Visual Property)
 
-		DataLayout randomDataLayoutWithVisualProps = randomDataLayout(true);
+		DataLayout randomDataLayout = randomDataLayout(true);
 
-		DataLayout postDataLayoutWithVisualProps =
-			testPostDataDefinitionDataLayout_addDataLayout(
-				randomDataLayoutWithVisualProps);
+		DataLayout postDataLayout =
+			testPostDataDefinitionDataLayout_addDataLayout(randomDataLayout);
 
-		assertEquals(
-			randomDataLayoutWithVisualProps, postDataLayoutWithVisualProps);
-		assertValid(postDataLayoutWithVisualProps);
+		assertEquals(randomDataLayout, postDataLayout);
+		assertValid(postDataLayout);
 		Assert.assertTrue(
 			equals(
-				randomDataLayoutWithVisualProps.getDataLayoutFields(),
-				postDataLayoutWithVisualProps.getDataLayoutFields()));
+				randomDataLayout.getDataLayoutFields(),
+				postDataLayout.getDataLayoutFields()));
 
 		// MustNotDuplicateFieldName
 
@@ -370,32 +368,29 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	public void testPutDataLayout() throws Exception {
 		super.testPutDataLayout();
 
-		DataLayout postDataLayout = testPutDataLayout_addDataLayout();
+		DataLayout dataLayout = testPutDataLayout_addDataLayout();
 
-		DataLayout randomDataLayoutWithVisualProps = randomDataLayout(true);
+		DataLayout randomDataLayout = randomDataLayout(true);
 
-		DataLayout putDataLayoutWithVisualProps =
-			dataLayoutResource.putDataLayout(
-				postDataLayout.getId(), randomDataLayoutWithVisualProps);
+		DataLayout putDataLayout = dataLayoutResource.putDataLayout(
+			dataLayout.getId(), randomDataLayout);
 
-		assertEquals(
-			randomDataLayoutWithVisualProps, putDataLayoutWithVisualProps);
-		assertValid(putDataLayoutWithVisualProps);
+		assertEquals(randomDataLayout, putDataLayout);
+		assertValid(putDataLayout);
 		Assert.assertTrue(
 			equals(
-				randomDataLayoutWithVisualProps.getDataLayoutFields(),
-				putDataLayoutWithVisualProps.getDataLayoutFields()));
+				randomDataLayout.getDataLayoutFields(),
+				putDataLayout.getDataLayoutFields()));
 
-		DataLayout getDataLayoutWithVisualProps =
-			dataLayoutResource.getDataLayout(postDataLayout.getId());
+		DataLayout getDataLayout = dataLayoutResource.getDataLayout(
+			dataLayout.getId());
 
-		assertEquals(
-			randomDataLayoutWithVisualProps, getDataLayoutWithVisualProps);
-		assertValid(getDataLayoutWithVisualProps);
+		assertEquals(randomDataLayout, getDataLayout);
+		assertValid(getDataLayout);
 		Assert.assertTrue(
 			equals(
-				randomDataLayoutWithVisualProps.getDataLayoutFields(),
-				getDataLayoutWithVisualProps.getDataLayoutFields()));
+				randomDataLayout.getDataLayoutFields(),
+				getDataLayout.getDataLayoutFields()));
 	}
 
 	@Override

@@ -246,7 +246,8 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 							<ClayTooltipProvider>
 								<ClayInput
 									className={classNames({
-										'input-group-inset input-group-inset-after': selectedTarget,
+										'input-group-inset input-group-inset-after':
+											allowEdit && selectedTarget,
 									})}
 									data-tooltip-align="top"
 									id="clickableElement"
@@ -259,7 +260,7 @@ function ClickGoalPicker({allowEdit = true, onSelectClickGoalTarget, target}) {
 									value={selectorInputValue}
 								/>
 							</ClayTooltipProvider>
-							{selectedTarget && (
+							{allowEdit && selectedTarget && (
 								<ClayInput.GroupInsetItem after>
 									<ClayTooltipProvider>
 										<ClayButtonWithIcon

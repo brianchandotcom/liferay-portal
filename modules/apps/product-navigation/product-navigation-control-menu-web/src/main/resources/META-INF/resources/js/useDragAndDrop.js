@@ -28,7 +28,11 @@ import addPortlet from './addPortlet';
 import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
 import {POSITIONS} from './constants/positions';
 
+const DROP_CLASS = 'yui3-dd-drop';
+
 const DROP_OVER_CLASS = 'yui3-dd-drop-over';
+
+const DROP_ZONE_CLASS = 'portlet-dropzone';
 
 const initialDragDrop = {
 	dragIndicatorPosition: {},
@@ -193,6 +197,13 @@ export const useDropTarget = (targetItem) => {
 			setDropTargetColumn(null);
 
 			if (!monitor.isOver({shallow: true})) {
+				return;
+			}
+
+			if (
+				!targetItem.classList.contains(DROP_CLASS) &&
+				!targetItem.classList.contains(DROP_ZONE_CLASS)
+			) {
 				return;
 			}
 

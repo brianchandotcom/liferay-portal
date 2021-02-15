@@ -9,15 +9,11 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import EditAppContext from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
-import {sub} from 'app-builder-web/js/utils/lang.es';
-import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 
-import IconWithPopover from '../../../../components/icon-with-popover/IconWithPopover.es';
 import SelectDropdown from '../../../../components/select-dropdown/SelectDropdown.es';
+import MissingRequiredFieldsPopover from '../MissingRequiredFieldsPopover.es';
 import {DataAndViewsTabContext, OpenButton} from './DataAndViewsTab.es';
 
 const Item = ({
@@ -33,26 +29,15 @@ const Item = ({
 	} = useContext(EditAppContext);
 	const [showPopover, setShowPopover] = useState(false);
 
-	const {custom, native} = {
-		custom: {
-			triggerProps: {
-				className: 'help-cursor info tooltip-popover-icon',
-				fontSize: '26px',
-				symbol: 'info-circle',
-			},
-		},
-		native: {
-			triggerProps: {
-				className: 'error help-cursor tooltip-popover-icon',
-				fontSize: '26px',
-				symbol: 'exclamation-full',
-			},
-		},
-	};
+	const onClickPopover = () => {
+		setShowPopover(false);
 
-	const popoverProps = {
-		onMouseEnter: () => setShowPopover(true),
-		onMouseLeave: () => setShowPopover(false),
+		openFormViewModal(
+			dataObject.id,
+			dataObject.defaultLanguageId,
+			updateFormView,
+			id
+		);
 	};
 
 	return (
@@ -65,109 +50,15 @@ const Item = ({
 			</span>
 
 			{(customField || nativeField) && (
-				<IconWithPopover
-					className="dropdown-popover-form-view"
-					header={<PopoverHeader nativeField={nativeField} />}
-					popoverProps={popoverProps}
-					show={showPopover}
-					trigger={
-						<div className="dropdown-button-asset help-cursor">
-							<IconWithPopover.TriggerIcon
-								iconProps={
-									nativeField
-										? native.triggerProps
-										: custom.triggerProps
-								}
-								onMouseEnter={() => setShowPopover(true)}
-								onMouseLeave={() => setShowPopover(false)}
-								onMouseOver={() => setShowPopover(true)}
-							/>
-						</div>
-					}
-				>
-					<PopoverContent
-						buttonProps={{
-							onClick: () => {
-								setShowPopover(false);
-
-								openFormViewModal(
-									dataObject.id,
-									dataObject.defaultLanguageId,
-									updateFormView,
-									id
-								);
-							},
-						}}
-						dataObjectName={dataObject.name}
-						nativeField={nativeField}
-					/>
-				</IconWithPopover>
+				<MissingRequiredFieldsPopover
+					dataObjectName={dataObject.name}
+					nativeField={nativeField}
+					onClick={onClickPopover}
+					setShowPopover={setShowPopover}
+					showPopover={showPopover}
+					triggerClassName="dropdown-button-asset help-cursor"
+				/>
 			)}
-		</>
-	);
-};
-
-const PopoverContent = ({
-	buttonProps: {onClick},
-	dataObjectName,
-	nativeField,
-}) => {
-	function getPopoverContent(message) {
-		return (
-			<>
-				{message}
-
-				<ClayButton
-					className="mt-3"
-					displayType="secondary"
-					onClick={onClick}
-				>
-					<span className="text-secondary">
-						{Liferay.Language.get('edit-form-view')}
-					</span>
-				</ClayButton>
-			</>
-		);
-	}
-
-	const {custom, native} = {
-		custom: {
-			content: getPopoverContent(
-				sub(
-					Liferay.Language.get(
-						'this-form-view-does-not-contain-all-custom-required-fields-for-the-x-object'
-					),
-					[dataObjectName]
-				)
-			),
-		},
-		native: {
-			content: getPopoverContent(
-				sub(
-					Liferay.Language.get(
-						'this-form-view-must-include-all-native-required-fields'
-					),
-					[dataObjectName]
-				)
-			),
-		},
-	};
-
-	return nativeField ? native.content : custom.content;
-};
-
-const PopoverHeader = ({nativeField}) => {
-	return (
-		<>
-			<ClayIcon
-				className={classNames(
-					'mr-2',
-					nativeField ? 'text-danger' : 'text-info'
-				)}
-				symbol={nativeField ? 'exclamation-full' : 'info-circle'}
-			/>
-
-			<span>{Liferay.Language.get('missing-required-fields')}</span>
 		</>
 	);
 };

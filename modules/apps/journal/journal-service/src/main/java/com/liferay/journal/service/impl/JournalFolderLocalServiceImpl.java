@@ -100,9 +100,9 @@ public class JournalFolderLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		if ((PropsValues.DATA_LIMIT_MAX_ARTICLE_FOLDER_COUNT > 0) &&
+		if ((PropsValues.DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT > 0) &&
 			(journalFolderPersistence.countByCompanyId(user.getCompanyId()) >=
-				PropsValues.DATA_LIMIT_MAX_ARTICLE_FOLDER_COUNT)) {
+				PropsValues.DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT)) {
 
 			throw new PortalException("Exceed maximum allowed article folders");
 		}

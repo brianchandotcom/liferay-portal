@@ -348,9 +348,9 @@ public class JournalArticleLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		if ((PropsValues.DATA_LIMIT_MAX_ARTICLE_COUNT > 0) &&
+		if ((PropsValues.DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT > 0) &&
 			(journalArticlePersistence.countByCompanyId(user.getCompanyId()) >=
-				PropsValues.DATA_LIMIT_MAX_ARTICLE_COUNT)) {
+				PropsValues.DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT)) {
 
 			throw new PortalException("Exceed maximum allowed articles");
 		}

@@ -213,6 +213,21 @@ public class SegmentsExperienceServiceImpl
 			Map<Locale, String> nameMap, boolean active)
 		throws PortalException {
 
+		SegmentsExperience segmentsExperience = getSegmentsExperience(
+			segmentsExperienceId);
+
+		return updateSegmentsExperience(
+			segmentsExperienceId, segmentsEntryId, nameMap, active,
+			segmentsExperience.getTypeSettingsUnicodeProperties());
+	}
+
+	@Override
+	public SegmentsExperience updateSegmentsExperience(
+			long segmentsExperienceId, long segmentsEntryId,
+			Map<Locale, String> nameMap, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws PortalException {
+
 		_segmentsExperienceResourcePermission.check(
 			getPermissionChecker(),
 			segmentsExperienceLocalService.getSegmentsExperience(
@@ -220,7 +235,8 @@ public class SegmentsExperienceServiceImpl
 			ActionKeys.UPDATE);
 
 		return segmentsExperienceLocalService.updateSegmentsExperience(
-			segmentsExperienceId, segmentsEntryId, nameMap, active);
+			segmentsExperienceId, segmentsEntryId, nameMap, active,
+			typeSettingsUnicodeProperties);
 	}
 
 	@Override

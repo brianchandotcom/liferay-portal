@@ -109,16 +109,39 @@ export default function DataAndViewsTab({
 			) > -1,
 	}));
 
+	const mainFormViews = formViews.map((form) => ({
+		...form,
+		disabled:
+			form.missingRequiredFields?.customField &&
+			form.missingRequiredFields?.nativeField,
+	}));
+
 	const addStepFormView = () => {
 		dispatchConfig({
 			type: ADD_STEP_FORM_VIEW,
 		});
 	};
 
-	const mainFormViews = formViews.map((form) => ({
-		...form,
-		disabled: form.missingRequiredFields?.nativeField,
-	}));
+	const getWarningIcon = (formView) => {
+		const {
+			missingRequiredFields: {customField, nativeField} = {},
+		} = formView;
+
+		let warningIcon;
+
+		if (customField || nativeField) {
+			warningIcon = {
+				className: classNames(
+					'mr-2 tooltip-popover-icon',
+					nativeField ? 'error' : 'info'
+				),
+				fontSize: '26px',
+				symbol: nativeField ? 'exclamation-full' : 'info-circle',
+			};
+		}
+
+		return warningIcon;
+	};
 
 	const removeStepFormView = (index) => {
 		dispatchConfig({
@@ -559,9 +582,7 @@ export default function DataAndViewsTab({
 										),
 								}}
 								selectedValue={formView.name}
-								showWarningIcon={
-									formView.missingRequiredFields?.customField
-								}
+								warningIcon={getWarningIcon(formView)}
 							>
 								{SelectFormView.Item}
 							</SelectFormView>

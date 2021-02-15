@@ -63,7 +63,7 @@ const Item = ({
 	);
 };
 
-function SelectFormView({openButtonProps, showWarningIcon, ...props}) {
+function SelectFormView({openButtonProps, ...props}) {
 	props = {
 		...props,
 		emptyResultMessage: Liferay.Language.get(
@@ -78,13 +78,6 @@ function SelectFormView({openButtonProps, showWarningIcon, ...props}) {
 				label: Liferay.Language.get('retrieving-all-form-views'),
 			},
 		},
-		warningIcon: showWarningIcon
-			? {
-					className: 'info mr-2 tooltip-popover-icon',
-					fontSize: '26px',
-					symbol: 'info-circle',
-			  }
-			: undefined,
 	};
 
 	return (

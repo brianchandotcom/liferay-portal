@@ -14,7 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v3_5_0;
 
-import com.liferay.journal.util.JournalContentCompatibilityLayer;
+import com.liferay.journal.content.compatibility.converter.JournalContentCompatibilityLayer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 

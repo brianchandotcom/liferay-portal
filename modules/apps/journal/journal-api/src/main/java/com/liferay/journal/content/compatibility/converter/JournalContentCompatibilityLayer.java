@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.util;
+package com.liferay.journal.content.compatibility.converter;
 
 import com.liferay.portal.kernel.xml.Document;
 

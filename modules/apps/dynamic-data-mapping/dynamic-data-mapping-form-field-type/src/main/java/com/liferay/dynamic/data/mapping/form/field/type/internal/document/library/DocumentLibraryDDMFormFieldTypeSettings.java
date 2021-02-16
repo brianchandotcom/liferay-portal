@@ -66,7 +66,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 							value = {
 								"name", "fieldReference", "predefinedValue",
 								"visibilityExpression", "validation",
-								"fieldNamespace", "indexType", "localizable",
+								"fieldNamespace", "indexType",
+								"labelAtStructureLevel", "localizable",
 								"readOnly", "dataType", "type", "showLabel",
 								"repeatable"
 							}

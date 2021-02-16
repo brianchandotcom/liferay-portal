@@ -57,8 +57,9 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 								"name", "fieldReference",
 								"visibilityExpression", "predefinedValue",
 								"validation", "fieldNamespace", "indexType",
-								"localizable", "readOnly", "dataType", "type",
-								"showLabel", "repeatable"
+								"labelAtStructureLevel", "localizable",
+								"readOnly", "dataType", "type", "showLabel",
+								"repeatable"
 							}
 						)
 					}

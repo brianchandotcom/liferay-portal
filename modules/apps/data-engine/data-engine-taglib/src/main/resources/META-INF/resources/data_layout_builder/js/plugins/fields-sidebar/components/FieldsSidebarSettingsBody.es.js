@@ -16,7 +16,8 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {
 	EVENT_TYPES,
-	FormProvider,
+	FormFieldSettings,
+	MAPPED_EVENT_TYPES,
 	Pages,
 } from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -132,15 +133,22 @@ export default function ({
 
 	return (
 		<form onSubmit={(event) => event.preventDefault()}>
-			<FormProvider
-				onEvent={(type, payload) => {
+			<FormFieldSettings
+				{...filteredSettingsContext}
+				activePage={activePage}
+				builderRules={dataRules}
+				defaultLanguageId={defaultLanguageId}
+				displayable={true}
+				editable={false}
+				editingLanguageId={editingLanguageId}
+				onAction={({payload, type}) => {
 					switch (type) {
-						case EVENT_TYPES.CHANGE_ACTIVE_PAGE:
-							setActivePage(payload.value);
+						case EVENT_TYPES.PAGE.CHANGE:
+							setActivePage(payload.activePage);
 							break;
-						case EVENT_TYPES.FIELD_BLUR:
-						case EVENT_TYPES.FIELD_CHANGE:
-							dispatchEvent(type, {
+						case EVENT_TYPES.FIELD.BLUR:
+						case EVENT_TYPES.FIELD.CHANGE:
+							dispatchEvent(MAPPED_EVENT_TYPES[type], {
 								editingLanguageId:
 									settingsContext.editingLanguageId,
 								propertyName: payload.fieldInstance.fieldName,
@@ -159,19 +167,13 @@ export default function ({
 							break;
 					}
 				}}
-				value={{
-					...filteredSettingsContext,
-					activePage,
-					builderRules: dataRules,
-					defaultLanguageId,
-					displayable: true,
-					editable: true,
-					editingLanguageId,
-					spritemap,
-				}}
+				spritemap={spritemap}
 			>
-				{(props) => <Pages {...props} overrides={{Column}} />}
-			</FormProvider>
+				<Pages
+					editable={false}
+					overrides={{Column}}
+				/>
+			</FormFieldSettings>
 		</form>
 	);
 }

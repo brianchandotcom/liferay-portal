@@ -18,9 +18,9 @@ import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import ClayModal from 'clay-modal';
 import {
+	FormFieldSettingsAdapter,
 	FormSupport,
 	PagesVisitor,
-	ReactFormAdapter,
 	generateInstanceId,
 	generateName,
 } from 'dynamic-data-mapping-form-renderer';
@@ -1197,17 +1197,17 @@ class Sidebar extends Component {
 		}
 
 		return (
-			<ReactFormAdapter
+			<FormFieldSettingsAdapter
 				activePage={activeTab}
 				builderRules={builderRules}
 				defaultLanguageId={defaultLanguageId}
-				editable={true}
+				editable={false}
 				editingLanguageId={editingLanguageId}
 				events={{
 					attached: this._handleSettingsFormAttached,
-					evaluated: this._handleEvaluatorChanged,
-					fieldBlurred: this._handleSettingsFieldBlurred,
-					fieldEdited: this._handleSettingsFieldEdited,
+					field_blur: this._handleSettingsFieldBlurred,
+					field_change: this._handleSettingsFieldEdited,
+					field_evaluate: this._handleEvaluatorChanged,
 				}}
 				pages={pages}
 				paginationMode="tabbed"

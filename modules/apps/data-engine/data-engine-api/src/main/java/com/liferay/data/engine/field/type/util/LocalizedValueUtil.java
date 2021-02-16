@@ -15,17 +15,18 @@
 package com.liferay.data.engine.field.type.util;
 
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -102,9 +103,24 @@ public class LocalizedValueUtil {
 		LocalizedValue localizedValue = new LocalizedValue();
 
 		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
-			localizedValue.addString(
-				LocaleUtil.fromLanguageId(entry.getKey()),
-				GetterUtil.getString(entry.getValue()));
+			Object value = entry.getValue();
+
+			if (value instanceof ArrayList) {
+				localizedValue.addString(
+					LocaleUtil.fromLanguageId(entry.getKey()),
+					String.valueOf(
+						JSONFactoryUtil.createJSONArray((ArrayList)value)));
+			}
+			else if (value != null) {
+				localizedValue.addString(
+					LocaleUtil.fromLanguageId(entry.getKey()),
+					String.valueOf(value));
+			}
+			else {
+				localizedValue.addString(
+					LocaleUtil.fromLanguageId(entry.getKey()),
+					StringPool.BLANK);
+			}
 
 			if (locale != null) {
 				localizedValue.setDefaultLocale(locale);

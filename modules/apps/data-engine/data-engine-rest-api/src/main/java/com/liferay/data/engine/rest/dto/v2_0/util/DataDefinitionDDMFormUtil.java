@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -211,24 +210,10 @@ public class DataDefinitionDDMFormUtil {
 				dataDefinitionField.getNestedDataDefinitionFields(),
 				ddmFormFieldTypeServicesTracker, languageId));
 
-		Map<String, Object> defaultValue =
-			dataDefinitionField.getDefaultValue();
-
-		if (defaultValue != null) {
-			defaultValue.forEach(
-				(key, value) -> {
-					if (value instanceof ArrayList) {
-						value = String.valueOf(
-							JSONFactoryUtil.createJSONArray((ArrayList)value));
-					}
-
-					defaultValue.put(key, value);
-				});
-		}
-
 		ddmFormField.setPredefinedValue(
 			LocalizedValueUtil.toLocalizedValue(
-				defaultValue, LocaleUtil.fromLanguageId(languageId)));
+				dataDefinitionField.getDefaultValue(),
+				LocaleUtil.fromLanguageId(languageId)));
 
 		ddmFormField.setReadOnly(
 			GetterUtil.getBoolean(dataDefinitionField.getReadOnly()));

@@ -94,9 +94,8 @@ public class S3Store implements Store {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream inputStream)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel, InputStream inputStream) {
 
 		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
 			deleteFile(companyId, repositoryId, fileName, versionLabel);
@@ -625,9 +624,8 @@ public class S3Store implements Store {
 	}
 
 	protected void putObject(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, File file)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel, File file) {
 
 		Upload upload = null;
 
@@ -658,16 +656,6 @@ public class S3Store implements Store {
 
 			thread.interrupt();
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setS3FileCache(S3FileCache s3FileCache) {
-		_s3FileCache = s3FileCache;
-	}
-
-	@Reference(unbind = "-")
-	protected void setS3KeyTransformer(S3KeyTransformer s3KeyTransformer) {
-		_s3KeyTransformer = s3KeyTransformer;
 	}
 
 	protected SystemException transform(
@@ -719,8 +707,13 @@ public class S3Store implements Store {
 	private AmazonS3 _amazonS3;
 	private AWSCredentialsProvider _awsCredentialsProvider;
 	private String _bucketName;
+
+	@Reference
 	private S3FileCache _s3FileCache;
+
+	@Reference
 	private S3KeyTransformer _s3KeyTransformer;
+
 	private StorageClass _storageClass;
 	private TransferManager _transferManager;
 

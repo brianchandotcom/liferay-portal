@@ -27,12 +27,17 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -66,6 +71,21 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "unban-user"));
 
 				dropdownItem.setQuickAction(true);
+			}
+		).build();
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"banUsersURL",
+			() -> {
+				PortletURL banUsersURL =
+					_liferayPortletResponse.createActionURL();
+
+				banUsersURL.setParameter(
+					ActionRequest.ACTION_NAME, "/message_boards/ban_user");
+
+				return banUsersURL.toString();
 			}
 		).build();
 	}

@@ -32,11 +32,13 @@ MBBannedUsersManagementToolbarDisplayContext mbBannedUsersManagementToolbarDispl
 int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 %>
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	actionDropdownItems="<%= mbBannedUsersManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	additionalProps="<%= mbBannedUsersManagementToolbarDisplayContext.getAdditionalProps() %>"
 	componentId="mbBannedUsersManagementToolbar"
 	disabled="<%= totalBannedUsers == 0 %>"
 	itemsTotal="<%= totalBannedUsers %>"
+	propsTransformer="message_boards_admin/js/BanUsersManagementToolbarPropsTransformer"
 	searchContainerId="mbBanUsers"
 	showCreationMenu="<%= false %>"
 	showInfoButton="<%= false %>"
@@ -136,30 +138,3 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextForm
 
 PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
 %>
-
-<aui:script>
-	var unbanUser = function () {
-		Liferay.Util.postForm(document.<portlet:namespace />fm, {
-			data: {
-				<%= Constants.CMD %>: 'unban',
-			},
-			url: '<portlet:actionURL name="/message_boards/ban_user" />',
-		});
-	};
-
-	var ACTIONS = {
-		unbanUser: unbanUser,
-	};
-
-	Liferay.componentReady('mbBannedUsersManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('actionItemClicked', (event) => {
-				var itemData = event.data.item.data;
-
-				if (itemData && itemData.action && ACTIONS[itemData.action]) {
-					ACTIONS[itemData.action]();
-				}
-			});
-		}
-	);
-</aui:script>

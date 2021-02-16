@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,8 +53,10 @@ import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -123,6 +127,39 @@ public class MBEntriesManagementToolbarDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "unlock"));
 				dropdownItem.setQuickAction(true);
 			}
+		).build();
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"deleteEntriesCmd",
+			() -> {
+				if (_trashHelper.isTrashEnabled(
+						_themeDisplay.getScopeGroupId())) {
+
+					return Constants.MOVE_TO_TRASH;
+				}
+
+				return Constants.DELETE;
+			}
+		).put(
+			"editEntryURL",
+			() -> {
+				PortletURL editEntryURL =
+					_liferayPortletResponse.createActionURL();
+
+				editEntryURL.setParameter(
+					ActionRequest.ACTION_NAME, "/message_boards/edit_entry");
+
+				return editEntryURL.toString();
+			}
+		).put(
+			"lockCmd", Constants.LOCK
+		).put(
+			"trashEnabled",
+			() -> _trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())
+		).put(
+			"unlockCmd", Constants.UNLOCK
 		).build();
 	}
 

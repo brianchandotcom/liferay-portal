@@ -145,44 +145,67 @@ export default (state, action, config) => {
 	switch (action.type) {
 		case EVENT_TYPES.LANGUAGE.CHANGE: {
 			const {defaultLanguageId} = config;
-			const {availableLanguageIds} = state;
+			const {availableLanguageIds, focusedField} = state;
 			const {editingLanguageId, pages} = action.payload;
 
 			const visitor = new PagesVisitor(pages ?? state.pages);
 
-			return {
-				editingLanguageId,
-				pages: visitor.mapFields(
-					({
+			let newFocusedField = focusedField;
+
+			const newPages = visitor.mapFields(
+				({
+					localizable,
+					localizedValue,
+					localizedValueEdited,
+					value: previousValue,
+					...field
+				}) => {
+					const value = getLocalizedValue({
+						defaultLanguageId,
+						editingLanguageId,
 						localizable,
 						localizedValue,
 						localizedValueEdited,
-						value,
-						...field
-					}) => {
-						return {
-							...(field.settingsContext
-								? updateFieldLanguage({
-										...field,
-										availableLanguageIds,
-										defaultLanguageId,
-										editingLanguageId,
-								  })
-								: {}),
-							value: getLocalizedValue({
+						value: previousValue,
+					});
+
+					// When languageReducer is used in the context of the
+					// Form Builder, the fields contain settingsContext
+					// which we also need to update but do not exist within
+					// the fields in the settingsContext structure.
+
+					if (field.settingsContext) {
+						const newField = {
+							...field,
+							...updateFieldLanguage({
+								...field,
+								availableLanguageIds,
 								defaultLanguageId,
 								editingLanguageId,
-								localizable,
-								localizedValue,
-								localizedValueEdited,
-								value,
 							}),
+							value: previousValue,
 						};
-					},
-					true,
-					true,
-					true
-				),
+
+						if (field.fieldName === newFocusedField.fieldName) {
+							newFocusedField = newField;
+						}
+
+						return newField;
+					}
+
+					return {
+						value,
+					};
+				},
+				true,
+				true,
+				true
+			);
+
+			return {
+				editingLanguageId,
+				focusedField: newFocusedField,
+				pages: newPages,
 			};
 		}
 		case EVENT_TYPES.LANGUAGE.ADD: {

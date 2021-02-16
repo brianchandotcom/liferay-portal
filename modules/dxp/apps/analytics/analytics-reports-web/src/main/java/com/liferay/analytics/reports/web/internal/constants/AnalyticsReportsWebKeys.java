@@ -22,4 +22,7 @@ public class AnalyticsReportsWebKeys {
 	public static final String ANALYTICS_REPORTS_DISPLAY_CONTEXT =
 		"ANALYTICS_REPORTS_DISPLAY_CONTEXT";
 
+	public static final String INFO_ITEM_CLASS_PK_REFERENCE =
+		"INFO_ITEM_CLASS_PK_REFERENCE";
+
 }

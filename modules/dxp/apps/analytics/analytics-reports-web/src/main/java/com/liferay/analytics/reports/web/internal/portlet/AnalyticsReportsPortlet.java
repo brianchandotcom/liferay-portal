@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Optional;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -126,8 +128,14 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 	private InfoItemClassPKReference _getInfoItemClassPKReference(
 		HttpServletRequest httpServletRequest) {
 
-		return new InfoItemClassPKReference(
-			_getClassName(httpServletRequest), _getClassPK(httpServletRequest));
+		return Optional.ofNullable(
+			(InfoItemClassPKReference)httpServletRequest.getAttribute(
+				AnalyticsReportsWebKeys.INFO_ITEM_CLASS_PK_REFERENCE)
+		).orElseGet(
+			() -> new InfoItemClassPKReference(
+				_getClassName(httpServletRequest),
+				_getClassPK(httpServletRequest))
+		);
 	}
 
 	@Reference

@@ -38,7 +38,7 @@ export default function ({defaultLanguageId, namespace}) {
 		return localizedValues;
 	};
 
-	const saveDDMStructure = () => {
+	const saveDataEngineStructure = () => {
 		getDataLayoutBuilder().then((dataLayoutBuilder) => {
 			const nameInput = document.getElementById(`${namespace}name`);
 
@@ -84,7 +84,7 @@ export default function ({defaultLanguageId, namespace}) {
 		});
 	};
 
-	form.addEventListener('submit', saveDDMStructure);
+	form.addEventListener('submit', saveDataEngineStructure);
 
 	// Deselect field when clicking outside the form builder
 
@@ -104,7 +104,7 @@ export default function ({defaultLanguageId, namespace}) {
 
 	return {
 		dispose() {
-			form.removeEventListener('submit', saveDDMStructure);
+			form.removeEventListener('submit', saveDataEngineStructure);
 			window.removeEventListener('click', detectClickOutside, true);
 		},
 	};

@@ -67,7 +67,7 @@ public class JournalContentCompatibilityLayerImpl
 
 			convert(document);
 
-			return XMLUtil.formatXML(document.asXML());
+			return XMLUtil.formatXML(document);
 		}
 		catch (Exception exception) {
 			return content;

@@ -450,14 +450,7 @@ public class JournalArticleLocalServiceImpl
 		article.setArticleId(articleId);
 		article.setVersion(version);
 		article.setUrlTitle(urlTitleMap.get(LocaleUtil.toLanguageId(locale)));
-
-		content = format(user, groupId, article, content);
-		content = _replaceTempImages(article, content);
-		content = _journalContentCompatibilityLayer.convertDocumentContent(
-			content);
-
-		article.setContent(content);
-
+		article.setContent(_formatContent(article, content, groupId, user));
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -791,14 +784,7 @@ public class JournalArticleLocalServiceImpl
 		article.setClassNameId(classNameId);
 		article.setClassPK(classPK);
 		article.setArticleId(articleId);
-
-		content = format(user, groupId, article, content);
-		content = _replaceTempImages(article, content);
-		content = _journalContentCompatibilityLayer.convertDocumentContent(
-			content);
-
-		article.setContent(content);
-
+		article.setContent(_formatContent(article, content, groupId, user));
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 
@@ -5703,15 +5689,10 @@ public class JournalArticleLocalServiceImpl
 			throw new ArticleFriendlyURLException();
 		}
 
-		content = format(user, groupId, article, content);
-		content = _replaceTempImages(article, content);
-		content = _journalContentCompatibilityLayer.convertDocumentContent(
-			content);
-
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
 		article.setUrlTitle(urlTitle);
-		article.setContent(content);
+		article.setContent(_formatContent(article, content, groupId, user));
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -6185,13 +6166,7 @@ public class JournalArticleLocalServiceImpl
 		_updateArticleLocalizedFields(
 			article.getCompanyId(), article.getId(), titleMap, descriptionMap);
 
-		content = format(user, groupId, article, content);
-		content = _replaceTempImages(article, content);
-		content = _journalContentCompatibilityLayer.convertDocumentContent(
-			content);
-
-		article.setContent(content);
-
+		article.setContent(_formatContent(article, content, groupId, user));
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 
@@ -6377,12 +6352,7 @@ public class JournalArticleLocalServiceImpl
 			article.getCompanyId(), article.getId(), title, description,
 			LocaleUtil.toLanguageId(locale));
 
-		content = format(user, groupId, article, content);
-		content = _replaceTempImages(article, content);
-		content = _journalContentCompatibilityLayer.convertDocumentContent(
-			content);
-
-		article.setContent(content);
+		article.setContent(_formatContent(article, content, groupId, user));
 
 		return journalArticlePersistence.update(article);
 	}
@@ -9003,6 +8973,18 @@ public class JournalArticleLocalServiceImpl
 		finally {
 			serviceContext.setIndexingEnabled(indexingEnabled);
 		}
+	}
+
+	private String _formatContent(
+			JournalArticle article, String content, long groupId, User user)
+		throws PortalException {
+
+		content = format(user, groupId, article, content);
+
+		content = _replaceTempImages(article, content);
+
+		return _journalContentCompatibilityLayer.convertDocumentContent(
+			content);
 	}
 
 	private Map<String, String> _getFriendlyURLMap(

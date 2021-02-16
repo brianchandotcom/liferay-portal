@@ -53,8 +53,18 @@ public interface DDMIndexer {
 		DDMFormValues ddmFormValues);
 
 	public Sort createDDMStructureFieldSort(
-		String ddmStructureFieldName,Locale locale, SortOrder sortOrder)
-	throws PortalException;
+			DDMStructure ddmStructure, String fieldName, Locale locale,
+			SortOrder sortOrder)
+		throws PortalException;
+
+	public Sort createDDMStructureFieldSort(
+			String ddmStructureFieldName, Locale locale, SortOrder sortOrder)
+		throws PortalException;
+
+	public QueryFilter createFieldValueQueryFilter(
+			DDMStructure ddmStructure, String fieldName, Serializable value,
+			Locale locale)
+		throws Exception;
 
 	public QueryFilter createFieldValueQueryFilter(
 			String ddmStructureFieldName, Serializable ddmStructureFieldValue,

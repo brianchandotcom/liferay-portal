@@ -3,12 +3,13 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "false";
+	property test.run.environment = "EE";
 	property testray.main.component.name = "Commerce";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		SignIn.signInTestSetup();
 	}
 
 	tearDown {

@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -76,7 +75,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -93,9 +91,21 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Ivica Cardic
  */
 @Component(enabled = false, immediate = true, service = CPContentHelper.class)
 public class CPContentHelperImpl implements CPContentHelper {
+
+	@Override
+	public JSONObject getAvailabilityContentContributorValue(
+			CPCatalogEntry cpCatalogEntry,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return (JSONObject)getCPContentContributorValue(
+			CPContentContributorConstants.AVAILABILITY_NAME, cpCatalogEntry,
+			httpServletRequest);
+	}
 
 	@Override
 	public String getAvailabilityEstimateLabel(
@@ -130,32 +140,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		return availabilityJSONObject.getString(
 			CPContentContributorConstants.AVAILABILITY_NAME);
-	}
-
-	@Override
-	public Map<String, String> getAvailabilityMap(
-			CPCatalogEntry cpCatalogEntry,
-			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		JSONObject availabilityJSONObject =
-			(JSONObject)getCPContentContributorValue(
-				CPContentContributorConstants.AVAILABILITY_NAME, cpCatalogEntry,
-				httpServletRequest);
-
-		if (availabilityJSONObject == null) {
-			return Collections.emptyMap();
-		}
-
-		return HashMapBuilder.put(
-			CPContentContributorConstants.AVAILABILITY_DISPLAY_TYPE,
-			availabilityJSONObject.getString(
-				CPContentContributorConstants.AVAILABILITY_DISPLAY_TYPE)
-		).put(
-			CPContentContributorConstants.AVAILABILITY_NAME,
-			availabilityJSONObject.getString(
-				CPContentContributorConstants.AVAILABILITY_NAME)
-		).build();
 	}
 
 	@Override

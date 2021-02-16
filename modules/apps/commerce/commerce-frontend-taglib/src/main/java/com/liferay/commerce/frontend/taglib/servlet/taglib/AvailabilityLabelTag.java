@@ -19,11 +19,10 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
-
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -31,20 +30,21 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Gianmarco Brunialti Masera
+ * @author Ivica Cardic
  */
 public class AvailabilityLabelTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			Map<String, String> availabilityMap =
-				_cpContentHelper.getAvailabilityMap(
+			JSONObject availabilityJSONObject =
+				_cpContentHelper.getAvailabilityContentContributorValue(
 					_cpCatalogEntry, getRequest());
 
-			_label = availabilityMap.getOrDefault(
+			_label = availabilityJSONObject.getString(
 				CPContentContributorConstants.AVAILABILITY_NAME,
 				StringPool.BLANK);
-			_labelType = availabilityMap.getOrDefault(
+			_labelType = availabilityJSONObject.getString(
 				CPContentContributorConstants.AVAILABILITY_DISPLAY_TYPE,
 				"default");
 		}

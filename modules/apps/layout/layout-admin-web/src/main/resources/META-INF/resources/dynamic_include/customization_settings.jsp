@@ -84,7 +84,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 							namespace: '<%= portletNamespace %>',
 						});
 
-						Liferay.once('screenLoad', function () {
+						Liferay.once('screenLoad', () => {
 							layoutCustomizationSettings.destroy();
 						});
 					</aui:script>
@@ -165,7 +165,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 					);
 
 					if (closeCustomizationOptions && controlMenu) {
-						closeCustomizationOptions.addEventListener('click', function (event) {
+						closeCustomizationOptions.addEventListener('click', (event) => {
 							controlMenu.classList.toggle('open');
 						});
 					}
@@ -175,7 +175,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 					);
 
 					if (customizationButton && controlMenu) {
-						customizationButton.addEventListener('click', function (event) {
+						customizationButton.addEventListener('click', (event) => {
 							controlMenu.classList.toggle('open');
 						});
 					}

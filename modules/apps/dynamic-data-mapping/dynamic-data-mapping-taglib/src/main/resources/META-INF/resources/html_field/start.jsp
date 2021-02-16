@@ -46,7 +46,7 @@
 		<aui:script use="liferay-ddm-form">
 			Liferay.component(
 				'<portlet:namespace /><%= HtmlUtil.escapeJS(fieldsNamespace) %>ddmForm',
-				function () {
+				() => {
 					return new Liferay.DDM.Form({
 						container: '#<%= randomNamespace %>',
 						ddmFormValuesInput:

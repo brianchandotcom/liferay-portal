@@ -374,7 +374,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		document.querySelector('#<portlet:namespace />articlesContainer'),
 		'click',
 		'.articles',
-		function (event) {
+		(event) => {
 			<c:choose>
 				<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
 					var activeFormCheckCards = document.querySelectorAll(
@@ -384,7 +384,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					var formCheckCard = event.delegateTarget.closest('.form-check-card');
 
 					if (activeFormCheckCards.length) {
-						activeFormCheckCards.forEach(function (card) {
+						activeFormCheckCards.forEach((card) => {
 							card.classList.remove('active');
 						});
 					}
@@ -398,7 +398,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					var articles = event.delegateTarget.closest('.articles');
 
 					if (activeArticles.length) {
-						activeArticles.forEach(function (article) {
+						activeArticles.forEach((article) => {
 							article.classList.remove('active');
 						});
 					}

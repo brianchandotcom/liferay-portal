@@ -85,22 +85,22 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 
 		var searchParams = Liferay.Util.objectToURLSearchParams(data);
 
-		searchParams.forEach(function (value, key) {
+		searchParams.forEach((value, key) => {
 			url.searchParams.append(key, value);
 		});
 
 		Liferay.Util.fetch(url)
-			.then(function (response) {
+			.then((response) => {
 				return response.text();
 			})
-			.then(function (text) {
+			.then((text) => {
 				Liferay.Util.openModal({
 					bodyHTML: text,
 					size: 'full-screen',
 					title: '<%= UnicodeLanguageUtil.get(request, "cas") %>',
 				});
 			})
-			.catch(function (error) {
+			.catch((error) => {
 				Liferay.Util.openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-system-error-occurred'

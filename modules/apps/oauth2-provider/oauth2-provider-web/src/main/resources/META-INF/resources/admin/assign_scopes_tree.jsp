@@ -151,7 +151,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", assignScopesTreeDisplayC
 </clay:container-fluid>
 
 <aui:script sandbox="<%= true %>">
-	AUI().use('node', 'aui-modal', function (A) {
+	AUI().use('node', 'aui-modal', (A) => {
 		A.all('input[name="<portlet:namespace />scopeAliases"]').each(function () {
 			this.on('click', function () {
 				<portlet:namespace />recalculateScopeChildrens(this);

@@ -230,18 +230,15 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 		);
 
 		if (deleteSelectedDeviceFamiliesButton) {
-			deleteSelectedDeviceFamiliesButton.addEventListener(
-				'click',
-				function () {
-					if (
-						confirm(
-							'<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>'
-						)
-					) {
-						submitForm(document.<portlet:namespace />fm);
-					}
+			deleteSelectedDeviceFamiliesButton.addEventListener('click', () => {
+				if (
+					confirm(
+						'<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>'
+					)
+				) {
+					submitForm(document.<portlet:namespace />fm);
 				}
-			);
+			});
 		}
 	})();
 </script>

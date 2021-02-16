@@ -293,7 +293,7 @@ if (portletTitleBasedNavigation) {
 		var titleInput = document.getElementById('<portlet:namespace />title');
 		var urlTitleInput = document.getElementById('<portlet:namespace />urlTitle');
 
-		titleInput.addEventListener('input', function (event) {
+		titleInput.addEventListener('input', (event) => {
 			var customUrl = urlTitleInput.dataset.customUrl;
 
 			if (customUrl === 'false') {
@@ -303,14 +303,14 @@ if (portletTitleBasedNavigation) {
 			}
 		});
 
-		urlTitleInput.addEventListener('input', function (event) {
+		urlTitleInput.addEventListener('input', (event) => {
 			event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
 		});
 	</c:if>
 
 	document
 		.getElementById('<portlet:namespace />publishButton')
-		.addEventListener('click', function () {
+		.addEventListener('click', () => {
 			var workflowActionInput = document.getElementById(
 				'<portlet:namespace />workflowAction'
 			);
@@ -353,7 +353,7 @@ if (portletTitleBasedNavigation) {
 		selectedFileNameContainer.innerHTML = buffer.join('');
 	};
 
-	form.addEventListener('submit', function () {
+	form.addEventListener('submit', () => {
 		document.getElementById(
 			'<portlet:namespace />content'
 		).value = window.<portlet:namespace />contentEditor.getHTML();

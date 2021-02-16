@@ -40,7 +40,7 @@
 
 		Liferay.component(
 			'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder',
-			function () {
+			() => {
 				return new Liferay.DDM.FormBuilder({
 					context: JSON.parse(
 						'<%= HtmlUtil.escapeJS(formBuilderContext) %>'
@@ -56,7 +56,7 @@
 
 		Liferay.component(
 			'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>ruleBuilder',
-			function () {
+			() => {
 				return new Liferay.DDM.FormBuilderRuleBuilder({
 					formBuilder: Liferay.component(
 						'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder'

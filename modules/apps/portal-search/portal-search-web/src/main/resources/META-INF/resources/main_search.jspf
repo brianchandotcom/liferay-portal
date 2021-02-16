@@ -113,7 +113,7 @@ Hits hits = searchDisplayContext.getHits();
 	var delegate = delegateModule.default;
 
 	if (facetNavigation) {
-		delegate(facetNavigation, 'click', '.facet-value a', function (event) {
+		delegate(facetNavigation, 'click', '.facet-value a', (event) => {
 			event.preventDefault();
 
 			var target = event.delegateTarget;
@@ -125,12 +125,12 @@ Hits hits = searchDisplayContext.getHits();
 
 				var facetValueSiblings = Array.prototype.filter.call(
 					target.parentNode.children,
-					function (child) {
+					(child) => {
 						return child !== target;
 					}
 				);
 
-				facetValueSiblings.forEach(function (facet) {
+				facetValueSiblings.forEach((facet) => {
 					facet.classList.remove('active');
 				});
 
@@ -168,14 +168,12 @@ Hits hits = searchDisplayContext.getHits();
 	);
 
 	if (searchResultsContainer) {
-		delegate(searchResultsContainer, 'click', '.expand-details', function (
-			event
-		) {
+		delegate(searchResultsContainer, 'click', '.expand-details', (event) => {
 			var target = event.delegateTarget;
 
 			var targetSiblings = Array.prototype.filter.call(
 				target.parentNode.children,
-				function (child) {
+				(child) => {
 					return (
 						child !== target &&
 						child.classList.contains('table-details')
@@ -183,7 +181,7 @@ Hits hits = searchDisplayContext.getHits();
 				}
 			);
 
-			targetSiblings.forEach(function (sibling) {
+			targetSiblings.forEach((sibling) => {
 				if (sibling.classList.contains('hide')) {
 					sibling.classList.remove('hide');
 				}

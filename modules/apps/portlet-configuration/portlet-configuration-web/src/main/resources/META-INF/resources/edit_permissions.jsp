@@ -179,7 +179,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 	);
 
 	if (<portlet:namespace />saveButton) {
-		<portlet:namespace />saveButton.addEventListener('click', function (event) {
+		<portlet:namespace />saveButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			if (

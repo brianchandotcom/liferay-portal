@@ -50,7 +50,7 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 
 			if (refreshCaptcha && !hasEventAttached) {
 				hasEventAttached = true;
-				refreshCaptcha.addEventListener('click', function () {
+				refreshCaptcha.addEventListener('click', () => {
 					var url = Liferay.Util.addParams(
 						't=' + Date.now(),
 						'<%= HtmlUtil.escapeJS(url) %>'

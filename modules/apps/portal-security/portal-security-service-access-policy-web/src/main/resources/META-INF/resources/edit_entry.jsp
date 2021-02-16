@@ -150,8 +150,8 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 		document.<portlet:namespace />fm,
 		'click',
 		'#<portlet:namespace />advancedMode, #<portlet:namespace />friendlyMode',
-		function (event) {
-			Array.prototype.forEach.call(alternatingElements, function (element) {
+		(event) => {
+			Array.prototype.forEach.call(alternatingElements, (element) => {
 				element.classList.toggle('hide');
 			});
 		}
@@ -196,10 +196,10 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 				);
 
 				Liferay.Util.fetch(getActionMethodNamesURL.toString())
-					.then(function (response) {
+					.then((response) => {
 						return response.json();
 					})
-					.then(function (data) {
+					.then((data) => {
 						methodObj.actionMethodNames = data;
 						callback(actionMethodNames);
 					});
@@ -213,7 +213,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 	var getContextName = function (serviceClassName) {
 		var serviceClassNameToContextName = A.Array.find(
 			serviceClassNamesToContextNames,
-			function (item, index) {
+			(item, index) => {
 				return item.serviceClassName === serviceClassName;
 			}
 		);
@@ -278,7 +278,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 		A.all(
 			'#<portlet:namespace />allowedServiceSignaturesFriendlyContentBox .lfr-form-row:not(.hide)'
-		).each(function (item, index) {
+		).each((item, index) => {
 			var actionMethodName = item.one('.action-method-name').val();
 			var serviceClassName = item.one('.service-class-name').val();
 
@@ -309,7 +309,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 
 		entries = A.Array.dedupe(entries);
 
-		entries.forEach(function (item, index) {
+		entries.forEach((item, index) => {
 			var row = rowTemplate.clone();
 
 			var actionMethodNameInput = row.one('.action-method-name');

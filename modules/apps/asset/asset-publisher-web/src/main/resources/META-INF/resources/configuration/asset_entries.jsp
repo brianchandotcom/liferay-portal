@@ -230,7 +230,7 @@ for (long groupId : groupIds) {
 		var assetClassName = '';
 		var assetEntryIds = [];
 
-		Array.prototype.forEach.call(assetEntryList, function (assetEntry) {
+		Array.prototype.forEach.call(assetEntryList, (assetEntry) => {
 			assetEntryIds.push(assetEntry.entityid);
 
 			assetClassName = assetEntry.assetclassname;
@@ -252,7 +252,7 @@ for (long groupId : groupIds) {
 		document.body,
 		'click',
 		'.asset-selector a',
-		function (event) {
+		(event) => {
 			event.preventDefault();
 
 			var delegateTarget = event.delegateTarget;

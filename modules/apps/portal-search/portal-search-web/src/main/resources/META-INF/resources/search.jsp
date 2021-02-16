@@ -84,7 +84,7 @@ PortalUtil.setPageKeywords(pageKeywords, request);
 	var keywordsInput = document.getElementById('<portlet:namespace />keywords');
 
 	if (keywordsInput) {
-		keywordsInput.addEventListener('keydown', function (event) {
+		keywordsInput.addEventListener('keydown', (event) => {
 			if (event.keyCode === 13) {
 				<portlet:namespace />search();
 			}

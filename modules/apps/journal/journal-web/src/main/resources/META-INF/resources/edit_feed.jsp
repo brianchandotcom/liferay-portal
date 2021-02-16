@@ -424,7 +424,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	);
 
 	if (contentFieldSelector) {
-		contentFieldSelector.addEventListener('change', function () {
+		contentFieldSelector.addEventListener('change', () => {
 			var contentFieldValue = '';
 			var ddmRendererTemplateKeyValue = '';
 

@@ -41,11 +41,11 @@
 				method: 'post',
 			}
 		)
-			.then(function (response) {
+			.then((response) => {
 				return response.json();
 			})
-			.then(function (response) {
-				var images = response.map(function (image) {
+			.then((response) => {
+				var images = response.map((image) => {
 					return {
 						thumbnailUrl: image.url,
 						url: image.url,
@@ -199,22 +199,22 @@
 		updateProductFields(cpInstance);
 	}
 
-	Liferay.componentReady('ProductOptions' + cpDefinitionId).then(function (
-		DDMFormInstance
-	) {
-		if (DDMFormInstance) {
-			var FormHandler = DDMFormHandler.default;
+	Liferay.componentReady('ProductOptions' + cpDefinitionId).then(
+		(DDMFormInstance) => {
+			if (DDMFormInstance) {
+				var FormHandler = DDMFormHandler.default;
 
-			var FormHandlerConfiguration = {
-				actionURL: '<%= checkCPInstanceURL %>',
-				cpDefinitionId: '<%= cpDefinitionId %>',
-				DDMFormInstance: DDMFormInstance,
-				portletId: CP_CONTENT_WEB_PORTLET_KEY,
-			};
+				var FormHandlerConfiguration = {
+					actionURL: '<%= checkCPInstanceURL %>',
+					cpDefinitionId: '<%= cpDefinitionId %>',
+					DDMFormInstance: DDMFormInstance,
+					portletId: CP_CONTENT_WEB_PORTLET_KEY,
+				};
 
-			new FormHandler(FormHandlerConfiguration);
+				new FormHandler(FormHandlerConfiguration);
 
-			Liferay.on(eventsDefinitions.CP_INSTANCE_CHANGED, updateView);
+				Liferay.on(eventsDefinitions.CP_INSTANCE_CHANGED, updateView);
+			}
 		}
-	});
+	);
 </aui:script>

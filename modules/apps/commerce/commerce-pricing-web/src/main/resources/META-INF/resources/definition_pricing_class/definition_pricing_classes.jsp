@@ -49,9 +49,9 @@ CProduct cProduct = cpDefinition.getCProduct();
 						headers: headers,
 						method: 'POST',
 					}
-				).then(function (response) {
+				).then((response) => {
 					if (!response.ok) {
-						return response.json().then(function (data) {
+						return response.json().then((data) => {
 							return Promise.reject(data.errorDescription);
 						});
 					}
@@ -82,12 +82,12 @@ CProduct cProduct = cpDefinition.getCProduct();
 						method: 'POST',
 					}
 				)
-					.then(function (response) {
+					.then((response) => {
 						if (response.ok) {
 							return response.json();
 						}
 
-						return response.json().then(function (data) {
+						return response.json().then((data) => {
 							return Promise.reject(data.message);
 						});
 					})

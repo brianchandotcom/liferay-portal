@@ -108,7 +108,7 @@ String displayStyle = userItemSelectorViewDisplayContext.getDisplayStyle();
 		'<portlet:namespace /><%= HtmlUtil.escape(userItemSelectorViewDisplayContext.getSearchContainerId()) %>'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var allSelectedElements = event.elements.allSelectedElements;
 		var selectedData = [];
 

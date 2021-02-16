@@ -130,14 +130,14 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			searchContainerContentBox
 				.all('.modify-link')
 				.getData()
-				.map(function (data) {
+				.map((data) => {
 					return data.groupid + '-' + data.rowid;
 				})
 		);
 
 		searchContainerContentBox.delegate(
 			'click',
-			function (event) {
+			(event) => {
 				var link = event.currentTarget;
 				var tr = link.ancestor('tr');
 
@@ -209,9 +209,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			);
 		}
 
-		A.one('#<portlet:namespace />selectDepotRoleLink').on('click', function (
-			event
-		) {
+		A.one('#<portlet:namespace />selectDepotRoleLink').on('click', (event) => {
 			Util.openSelectionModal({
 				onSelect: function (event) {
 					var A = AUI();

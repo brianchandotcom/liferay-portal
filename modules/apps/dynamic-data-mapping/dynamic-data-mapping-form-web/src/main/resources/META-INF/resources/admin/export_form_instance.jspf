@@ -65,7 +65,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 	Liferay.provide(
 		window,
 		'<portlet:namespace />exportFormInstance',
-		function (url) {
+		(url) => {
 			var A = AUI();
 
 			var form = A.Node.create('<form />');

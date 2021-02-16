@@ -30,7 +30,7 @@
 			'<portlet:namespace />selectLayoutButton'
 		);
 
-		selectLayoutButton.addEventListener('click', function (event) {
+		selectLayoutButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			Liferay.Util.openSelectionModal({

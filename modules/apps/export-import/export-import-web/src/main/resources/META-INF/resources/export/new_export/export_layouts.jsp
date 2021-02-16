@@ -215,7 +215,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 
 	var form = liferayForm.formNode;
 
-	form.on('submit', function (event) {
+	form.on('submit', (event) => {
 		event.halt();
 
 		var exportImport = Liferay.component(

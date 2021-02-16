@@ -68,7 +68,7 @@ if (organizationId > 0) {
 
 					<portlet:namespace />selectOrganizationButton.addEventListener(
 						'click',
-						function (event) {
+						(event) => {
 							Liferay.Util.openSelectionModal({
 								onSelect: function (event) {
 									var form = document.getElementById('<portlet:namespace />fm');
@@ -129,7 +129,7 @@ if (organizationId > 0) {
 					);
 
 					if (selectionMethodElement) {
-						selectionMethodElement.addEventListener('change', function (event) {
+						selectionMethodElement.addEventListener('change', (event) => {
 							var usersSelectionOptions = document.getElementById(
 								'<portlet:namespace />usersSelectionOptions'
 							);

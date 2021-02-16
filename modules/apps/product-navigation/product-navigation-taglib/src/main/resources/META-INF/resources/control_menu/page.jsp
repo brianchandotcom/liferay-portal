@@ -120,13 +120,13 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 			'#<portlet:namespace />ControlMenu [data-toggle="liferay-sidenav"]'
 		);
 
-		var sidenavInstances = Array.from(sidenavToggles).map(function (toggle) {
+		var sidenavInstances = Array.from(sidenavToggles).map((toggle) => {
 			return Liferay.SideNavigation.instance(toggle);
 		});
 
-		sidenavInstances.forEach(function (instance) {
-			instance.on('openStart.lexicon.sidenav', function (event, source) {
-				sidenavInstances.forEach(function (sidenav) {
+		sidenavInstances.forEach((instance) => {
+			instance.on('openStart.lexicon.sidenav', (event, source) => {
+				sidenavInstances.forEach((sidenav) => {
 					if (sidenav !== source) {
 						sidenav.hide();
 					}

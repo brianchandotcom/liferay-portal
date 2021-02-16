@@ -152,7 +152,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 			{
 				countryId: countryId,
 			},
-			function (response, err) {
+			(response, err) => {
 				if (err) {
 					console.error(err);
 				}

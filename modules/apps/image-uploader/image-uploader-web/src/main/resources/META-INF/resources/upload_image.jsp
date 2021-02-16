@@ -131,7 +131,7 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 				);
 
 				if (uploadImageButton) {
-					uploadImageButton.addEventListener('keydown', function (event) {
+					uploadImageButton.addEventListener('keydown', (event) => {
 						event.preventDefault();
 
 						if (event.key == 'Enter' || event.key == ' ') {

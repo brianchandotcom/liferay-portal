@@ -239,15 +239,15 @@ if (organization != null) {
 		selectUsers: selectUsers,
 	};
 
-	Liferay.componentReady('viewTreeManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('creationMenuItemClicked', function (event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('viewTreeManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationMenuItemClicked', (event) => {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action](itemData.organizationId);
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action](itemData.organizationId);
+				}
+			});
+		}
+	);
 </aui:script>

@@ -83,7 +83,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 
 		var hiddenFields = document.querySelectorAll('.hidden-field');
 
-		Array.prototype.forEach.call(hiddenFields, function (field) {
+		Array.prototype.forEach.call(hiddenFields, (field) => {
 			var fieldContainer = field.closest('.form-group');
 
 			if (fieldContainer) {

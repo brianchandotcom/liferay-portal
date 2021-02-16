@@ -80,7 +80,7 @@ if (dispatchTrigger != null) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectType',
-		function () {
+		() => {
 			var A = AUI();
 
 			var processType = A.one(<portlet:namespace />type).val();
@@ -122,7 +122,7 @@ if (dispatchTrigger != null) {
 
 	contentEditor.set(STR_VALUE, content);
 
-	Liferay.on('<portlet:namespace />saveTrigger', function (event) {
+	Liferay.on('<portlet:namespace />saveTrigger', (event) => {
 		var form = window.document['<portlet:namespace />fm'];
 
 		form['<portlet:namespace />dispatchTaskSettings'].value = contentEditor.get(

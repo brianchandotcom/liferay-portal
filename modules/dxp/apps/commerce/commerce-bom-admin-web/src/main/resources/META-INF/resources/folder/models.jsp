@@ -146,7 +146,7 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 	<aui:script use="liferay-item-selector-dialog">
 		window.document
 			.querySelector('#<portlet:namespace />addCommerceBOMFolderApplicationRel')
-			.addEventListener('click', function (event) {
+			.addEventListener('click', (event) => {
 				event.preventDefault();
 
 				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -158,15 +158,14 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 							var selectedItems = event.newVal;
 
 							if (selectedItems) {
-								A.Array.each(selectedItems, function (
-									item,
-									index,
-									selectedItems
-								) {
-									<portlet:namespace />addCommerceApplicationModelIds.push(
-										item.commerceApplicationModelId
-									);
-								});
+								A.Array.each(
+									selectedItems,
+									(item, index, selectedItems) => {
+										<portlet:namespace />addCommerceApplicationModelIds.push(
+											item.commerceApplicationModelId
+										);
+									}
+								);
 
 								window.document.querySelector(
 									'#<portlet:namespace />commerceApplicationModelIds'

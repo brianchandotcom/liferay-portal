@@ -203,15 +203,15 @@
 		deleteLayoutSetPrototypes: deleteLayoutSetPrototypes,
 	};
 
-	Liferay.componentReady('layoutSetPrototypeWebManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('layoutSetPrototypeWebManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('actionItemClicked', (event) => {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		}
+	);
 </aui:script>

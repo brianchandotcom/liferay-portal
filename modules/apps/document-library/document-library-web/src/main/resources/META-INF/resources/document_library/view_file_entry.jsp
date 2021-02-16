@@ -207,7 +207,7 @@ if (portletTitleBasedNavigation) {
 		);
 
 		if (openContextualSidebarButton) {
-			openContextualSidebarButton.addEventListener('click', function (event) {
+			openContextualSidebarButton.addEventListener('click', (event) => {
 				event.currentTarget.classList.toggle('active');
 
 				document

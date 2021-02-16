@@ -109,15 +109,15 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 		deleteKBComments: deleteKBComments,
 	};
 
-	Liferay.componentReady('kbSuggestionListManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('kbSuggestionListManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('actionItemClicked', (event) => {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		}
+	);
 </script>

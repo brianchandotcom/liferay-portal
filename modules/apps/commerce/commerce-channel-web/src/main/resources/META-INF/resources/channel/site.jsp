@@ -116,7 +116,7 @@ if (commerceChannel != null) {
 	);
 
 	if (selectSiteButton) {
-		selectSiteButton.addEventListener('click', function (event) {
+		selectSiteButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			Liferay.Util.selectEntity({
@@ -142,7 +142,7 @@ if (commerceChannel != null) {
 
 	searchContainerContentBox.delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');
@@ -156,7 +156,7 @@ if (commerceChannel != null) {
 		'.modify-link'
 	);
 
-	var sitesSelectItemHandle = Liferay.on('sitesSelectItem', function (event) {
+	var sitesSelectItemHandle = Liferay.on('sitesSelectItem', (event) => {
 		var item = event.data;
 
 		if (item) {
@@ -191,7 +191,7 @@ if (commerceChannel != null) {
 		}
 	});
 
-	Liferay.on('beforeNavigate', function (event) {
+	Liferay.on('beforeNavigate', (event) => {
 		sitesSelectItemHandle.detach();
 	});
 </aui:script>

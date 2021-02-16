@@ -65,7 +65,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_commerce_
 	Liferay.provide(
 		window,
 		'<%= portletNamespace + randomNamespace %>updateQuantity',
-		function () {
+		() => {
 			var A = AUI();
 
 			var form = A.one('#<%= portletNamespace + randomNamespace %>Fm');
@@ -88,7 +88,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_commerce_
 
 		form.delegate(
 			'change',
-			function () {
+			() => {
 				<%= portletNamespace + randomNamespace %>updateQuantity();
 			},
 			'select'

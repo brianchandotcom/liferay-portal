@@ -120,7 +120,7 @@ PortletURL portletURL = commercePriceListItemSelectorViewDisplayContext.getPortl
 		'<portlet:namespace />commercePriceLists'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{

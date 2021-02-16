@@ -111,7 +111,7 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 	var currentAssetTypes = Liferay.Util.getFormElement(form, 'currentAssetTypes');
 
 	if (currentAssetTypes) {
-		form.addEventListener('submit', function (event) {
+		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 
 			var data = {};

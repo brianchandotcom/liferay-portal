@@ -63,7 +63,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 	);
 
 	if (selectFileButton) {
-		selectFileButton.addEventListener('click', function (event) {
+		selectFileButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -111,7 +111,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 	);
 
 	if (deleteFileButton) {
-		deleteFileButton.addEventListener('click', function (event) {
+		deleteFileButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			window.document.querySelector(

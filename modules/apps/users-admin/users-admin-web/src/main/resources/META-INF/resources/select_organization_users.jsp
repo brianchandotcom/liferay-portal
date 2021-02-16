@@ -125,7 +125,7 @@ SearchContainer<User> userSearchContainer = selectOrganizationUsersManagementToo
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var selectedItems = event.elements.allSelectedElements;
 
 		var result = {};

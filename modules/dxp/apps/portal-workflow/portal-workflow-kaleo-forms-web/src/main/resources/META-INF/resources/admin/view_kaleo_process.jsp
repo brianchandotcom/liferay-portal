@@ -164,7 +164,7 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 	Liferay.provide(
 		window,
 		'<portlet:namespace />openPreviewDialog',
-		function (content) {
+		(content) => {
 			var Util = Liferay.Util;
 
 			var dialog = Util.getWindow('<portlet:namespace />previewDialog');
@@ -227,17 +227,17 @@ portletURL.setParameter("kaleoProcessId", String.valueOf(kaleoProcess.getKaleoPr
 		deleteRecords: deleteRecords,
 	};
 
-	Liferay.componentReady('kaleoFormsRecordsManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on(['actionItemClicked'], function (event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('kaleoFormsRecordsManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on(['actionItemClicked'], (event) => {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		}
+	);
 </aui:script>
 
 <%

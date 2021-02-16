@@ -57,7 +57,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 		'<portlet:namespace />organizations'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var result = {};
 
 		var data = event.elements.allSelectedElements.getDOMNodes();

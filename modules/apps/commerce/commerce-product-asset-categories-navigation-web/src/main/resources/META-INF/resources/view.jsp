@@ -60,7 +60,7 @@ if (assetVocabulary != null) {
 			'#<portlet:namespace />taglibAssetCategoriesNavigationPanel .lfr-asset-category-list-container'
 		);
 
-		treeViews.each(function (item, index, collection) {
+		treeViews.each((item, index, collection) => {
 			var assetCategoryList = item.one('.lfr-asset-category-list');
 
 			var treeView = new A.TreeView({
@@ -76,7 +76,7 @@ if (assetVocabulary != null) {
 
 				selectedChild.expand();
 
-				selectedChild.eachParent(function (node) {
+				selectedChild.eachParent((node) => {
 					if (node instanceof A.TreeNode) {
 						node.expand();
 					}

@@ -173,7 +173,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 		);
 
 		if (deleteActionsButton) {
-			deleteActionsButton.addEventListener('click', function () {
+			deleteActionsButton.addEventListener('click', () => {
 				if (
 					confirm(
 						'<%= UnicodeLanguageUtil.get(resourceBundle, "are-you-sure-you-want-to-delete-this") %>'

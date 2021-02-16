@@ -53,7 +53,7 @@ WikiPage wikiPage = BaseWikiEngine.getWikiPage(request);
 				'#<%= liferayPortletResponse.getNamespace() + "toggle_id_wiki_editor_help" %>'
 			);
 
-			helpPageLink.on('click', function (event) {
+			helpPageLink.on('click', (event) => {
 				event.preventDefault();
 
 				var helpPageDialog = Liferay.Util.Window.getWindow({

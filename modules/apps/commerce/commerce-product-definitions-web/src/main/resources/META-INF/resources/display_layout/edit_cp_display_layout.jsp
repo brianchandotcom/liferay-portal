@@ -138,7 +138,7 @@ if (cpDisplayLayout != null) {
 <aui:script use="aui-base,liferay-item-selector-dialog">
 	window.document
 		.querySelector('#<portlet:namespace />selectProduct')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			Liferay.Util.selectEntity({
@@ -163,7 +163,7 @@ if (cpDisplayLayout != null) {
 
 	searchContainerContentBox.delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');
@@ -177,7 +177,7 @@ if (cpDisplayLayout != null) {
 		'.modify-link'
 	);
 
-	Liferay.on('productDefinitionsSelectItem', function (event) {
+	Liferay.on('productDefinitionsSelectItem', (event) => {
 		var item = event.data;
 
 		if (item) {
@@ -229,7 +229,7 @@ if (cpDisplayLayout != null) {
 
 	window.document
 		.querySelector('#<portlet:namespace />chooseDisplayPage')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: 'selectDisplayPage',
 				on: {
@@ -254,7 +254,7 @@ if (cpDisplayLayout != null) {
 			itemSelectorDialog.open();
 		});
 
-	displayPageItemRemove.addEventListener('click', function (event) {
+	displayPageItemRemove.addEventListener('click', (event) => {
 		displayPageNameInput.innerHTML = '<liferay-ui:message key="none" />';
 
 		pagesContainerInput.value = '';

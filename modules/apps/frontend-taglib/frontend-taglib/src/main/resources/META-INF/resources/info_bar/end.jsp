@@ -53,7 +53,7 @@
 
 		document.addEventListener('scroll', checkPosition);
 
-		Liferay.once('destroyPortlet', function () {
+		Liferay.once('destroyPortlet', () => {
 			document.removeEventListener('scroll', checkPosition);
 		});
 	</aui:script>

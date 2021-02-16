@@ -339,7 +339,7 @@ else {
 		selectSiteNavigationMenuTypeSelect &&
 		siteNavigationMenuIdInput
 	) {
-		chooseRootMenuItemButton.addEventListener('click', function (event) {
+		chooseRootMenuItemButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var uri =
@@ -394,7 +394,7 @@ else {
 		rootMenuItemNameSpan &&
 		siteNavigationMenuIdInput
 	) {
-		chooseSiteNavigationMenuButton.addEventListener('click', function (event) {
+		chooseSiteNavigationMenuButton.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				id: '<portlet:namespace />selectSiteNavigationMenu',
 				onSelect: function (selectedItem) {
@@ -430,7 +430,7 @@ else {
 		rootMenuItemNameSpan &&
 		siteNavigationMenuIdInput
 	) {
-		removeSiteNavigationMenuButton.addEventListener('click', function (event) {
+		removeSiteNavigationMenuButton.addEventListener('click', (event) => {
 			navigationMenuName.innerText = '';
 			rootMenuItemIdInput.value = '0';
 			rootMenuItemNameSpan.innerText = '';
@@ -450,7 +450,7 @@ else {
 
 	Liferay.Util.toggleSelectBox(
 		'<portlet:namespace />rootMenuItemType',
-		function (currentValue, value) {
+		(currentValue, value) => {
 			return currentValue === 'absolute' || currentValue === 'relative';
 		},
 		'<portlet:namespace />rootMenuItemLevel'
@@ -465,7 +465,7 @@ else {
 		selectSiteNavigationMenuTypeSelect &&
 		siteNavigationMenuType
 	) {
-		selectSiteNavigationMenuTypeSelect.addEventListener('change', function () {
+		selectSiteNavigationMenuTypeSelect.addEventListener('change', () => {
 			var selectedSelectSiteNavigationMenuType = document.querySelector(
 				'#<portlet:namespace />selectSiteNavigationMenuType option:checked'
 			);
@@ -496,7 +496,7 @@ else {
 			document.<portlet:namespace />fm,
 			'change',
 			'.select-navigation',
-			function () {
+			() => {
 				var siteNavigationDisabled =
 					selectSiteNavigationMenuTypeSelect.disabled;
 

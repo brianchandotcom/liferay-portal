@@ -52,13 +52,13 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 						id,
 						productData
 					)
-						.then(function () {
+						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
 									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
 							});
 						})
-						.catch(function (error) {
+						.catch((error) => {
 							return Promise.reject(error);
 						});
 				}

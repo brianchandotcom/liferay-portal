@@ -108,7 +108,7 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 		'<portlet:namespace />organizations'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var allSelectedElements = event.elements.allSelectedElements;
 
 		var arr = [];

@@ -70,9 +70,7 @@ if (commerceOrder != null) {
 			</div>
 
 			<aui:script use="aui-base">
-				A.one('#<portlet:namespace />couponCodeIconRemove').on('click', function (
-					event
-				) {
+				A.one('#<portlet:namespace />couponCodeIconRemove').on('click', (event) => {
 					event.preventDefault();
 
 					submitForm(document.<portlet:namespace />fm);

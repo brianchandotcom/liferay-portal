@@ -59,7 +59,7 @@ if (Validator.isNotNull(assetPublisherViewContentDisplayContext.getReturnToFullP
 </c:choose>
 
 <aui:script>
-	Liferay.once('allPortletsReady', function () {
+	Liferay.once('allPortletsReady', () => {
 		document
 			.getElementById('p_p_id_<%= portletDisplay.getId() %>_')
 			.scrollIntoView();

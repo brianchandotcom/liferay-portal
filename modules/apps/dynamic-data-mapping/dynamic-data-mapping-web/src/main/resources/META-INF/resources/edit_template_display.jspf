@@ -188,7 +188,7 @@ if (Validator.isNotNull(scriptContent)) {
 			var getItems = function () {
 				var results = [];
 
-				paletteItems.each(function (item, index) {
+				paletteItems.each((item, index) => {
 					results.push({
 						data: item.text().trim(),
 						node: item.ancestor(),
@@ -222,18 +222,18 @@ if (Validator.isNotNull(scriptContent)) {
 				source: getItems(),
 			});
 
-			paletteSearch.on('results', function (event) {
-				paletteItems.each(function (item, index) {
+			paletteSearch.on('results', (event) => {
+				paletteItems.each((item, index) => {
 					item.ancestor().addClass('hide');
 				});
 
-				event.results.forEach(function (item, index) {
+				event.results.forEach((item, index) => {
 					item.raw.node.removeClass('hide');
 				});
 
 				var foundVisibleSection;
 
-				paletteSectionsNode.each(function (item, index) {
+				paletteSectionsNode.each((item, index) => {
 					var visibleItem = item.one('.palette-item-container:not(.hide)');
 
 					if (visibleItem) {
@@ -270,7 +270,7 @@ if (Validator.isNotNull(scriptContent)) {
 			var cursorPos;
 			var processed;
 
-			AObject.each(fragments, function (item, index) {
+			AObject.each(fragments, (item, index) => {
 				if (processed) {
 					cursorPos = editor.getCursorPosition();
 				}
@@ -363,7 +363,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 	A.on(
 		'domready',
-		function (event) {
+		(event) => {
 			richEditor = new A.AceEditor({
 				boundingBox: editorNode,
 				height: 400,
@@ -383,11 +383,11 @@ if (Validator.isNotNull(scriptContent)) {
 				setEditorContent(editorContentElement.val());
 			}
 
-			Liferay.on('<portlet:namespace />saveTemplate', function (event) {
+			Liferay.on('<portlet:namespace />saveTemplate', (event) => {
 				editorContentElement.val(getEditorContent());
 			});
 
-			selectLanguageNode.on('change', function (event) {
+			selectLanguageNode.on('change', (event) => {
 				Liferay.fire('<portlet:namespace />refreshEditor');
 			});
 
@@ -426,7 +426,7 @@ if (Validator.isNotNull(scriptContent)) {
 		'#<portlet:namespace />richEditor'
 	);
 
-	Liferay.on('<portlet:namespace />refreshEditor', function (event) {
+	Liferay.on('<portlet:namespace />refreshEditor', (event) => {
 		var form = A.one('#<portlet:namespace />fm');
 
 		<portlet:renderURL var="refreshTemplateURL">

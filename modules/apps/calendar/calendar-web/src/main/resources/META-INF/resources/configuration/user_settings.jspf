@@ -52,7 +52,7 @@
 	);
 
 	if (usePortalTimeZoneCheckbox) {
-		usePortalTimeZoneCheckbox.on('change', function (event) {
+		usePortalTimeZoneCheckbox.on('change', (event) => {
 			document.<portlet:namespace />fm.<portlet:namespace />timeZoneId.disabled = usePortalTimeZoneCheckbox.attr(
 				'checked'
 			);

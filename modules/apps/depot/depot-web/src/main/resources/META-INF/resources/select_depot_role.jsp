@@ -73,7 +73,7 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 
 				var delegate = delegateModule.default;
 
-				delegate(form, 'click', '.group-selector-button', function (event) {
+				delegate(form, 'click', '.group-selector-button', (event) => {
 					Liferay.Util.postForm(form, {
 						data: {
 							groupId: event.delegateTarget.dataset.groupid,

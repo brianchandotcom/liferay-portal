@@ -49,13 +49,13 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 						id,
 						productData
 					)
-						.then(function () {
+						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
 									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRODUCT_DEFINITIONS %>',
 							});
 						})
-						.catch(function (error) {
+						.catch((error) => {
 							return Promise.reject(error);
 						});
 				}

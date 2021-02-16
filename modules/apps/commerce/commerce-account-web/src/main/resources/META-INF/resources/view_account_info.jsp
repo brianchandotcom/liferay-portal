@@ -56,14 +56,14 @@ CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommer
 		Liferay.provide(
 			window,
 			'<portlet:namespace />openAddOrganizationsModal',
-			function (evt) {
+			(evt) => {
 				var addOrganizationsModal = Liferay.component('addOrganizationsModal');
 
 				addOrganizationsModal.open();
 			}
 		);
 
-		Liferay.provide(window, 'deleteCommerceAccountOrganization', function (id) {
+		Liferay.provide(window, 'deleteCommerceAccountOrganization', (id) => {
 			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
 				'<%= Constants.REMOVE %>';
 			document.querySelector('#<portlet:namespace />organizationId').value = id;
@@ -71,26 +71,26 @@ CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommer
 			submitForm(document.<portlet:namespace />commerceAccountOrganizationRelFm);
 		});
 
-		Liferay.componentReady('addOrganizationsModal').then(function (
-			addOrganizationsModal
-		) {
-			addOrganizationsModal.on('addOrganization', function (event) {
-				var orgIds = event
-					.map(function (org) {
-						return org.id;
-					})
-					.join(',');
+		Liferay.componentReady('addOrganizationsModal').then(
+			(addOrganizationsModal) => {
+				addOrganizationsModal.on('addOrganization', (event) => {
+					var orgIds = event
+						.map((org) => {
+							return org.id;
+						})
+						.join(',');
 
-				document.querySelector(
-					'#<portlet:namespace />addOrganizationIds'
-				).value = orgIds;
+					document.querySelector(
+						'#<portlet:namespace />addOrganizationIds'
+					).value = orgIds;
 
-				addOrganizationsModal.close();
+					addOrganizationsModal.close();
 
-				submitForm(
-					document.<portlet:namespace />commerceAccountOrganizationRelFm
-				);
-			});
-		});
+					submitForm(
+						document.<portlet:namespace />commerceAccountOrganizationRelFm
+					);
+				});
+			}
+		);
 	</aui:script>
 </c:if>

@@ -284,42 +284,43 @@ if (portletTitleBasedNavigation) {
 	);
 
 	if (<portlet:namespace />selectFolderButton) {
-		<portlet:namespace />selectFolderButton.addEventListener('click', function (
-			event
-		) {
-			var folderName = document.getElementById(
-				'<portlet:namespace />folderName'
-			);
+		<portlet:namespace />selectFolderButton.addEventListener(
+			'click',
+			(event) => {
+				var folderName = document.getElementById(
+					'<portlet:namespace />folderName'
+				);
 
-			if (folderName) {
-				Liferay.Util.openSelectionModal({
-					onSelect: function (event) {
-						var folderData = {
-							idString: 'newFolderId',
-							idValue: event.entityid,
-							nameString: 'folderName',
-							nameValue: event.entityname,
-						};
+				if (folderName) {
+					Liferay.Util.openSelectionModal({
+						onSelect: function (event) {
+							var folderData = {
+								idString: 'newFolderId',
+								idValue: event.entityid,
+								nameString: 'folderName',
+								nameValue: event.entityname,
+							};
 
-						Liferay.Util.selectFolder(
-							folderData,
-							'<portlet:namespace />'
-						);
-					},
-					selectedData: [folderName.value],
-					selectEventName: '<portlet:namespace />selectFolder',
-					title:
-						'<liferay-ui:message arguments="folder" key="select-x" />',
+							Liferay.Util.selectFolder(
+								folderData,
+								'<portlet:namespace />'
+							);
+						},
+						selectedData: [folderName.value],
+						selectEventName: '<portlet:namespace />selectFolder',
+						title:
+							'<liferay-ui:message arguments="folder" key="select-x" />',
 
-					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" />
-						<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
-					</portlet:renderURL>
+						<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" />
+							<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
+						</portlet:renderURL>
 
-					url: '<%= selectFolderURL.toString() %>',
-				});
+						url: '<%= selectFolderURL.toString() %>',
+					});
+				}
 			}
-		});
+		);
 	}
 </aui:script>
 

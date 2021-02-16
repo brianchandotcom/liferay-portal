@@ -166,17 +166,17 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 		}
 	}
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		return <portlet:namespace />handleSubmitButton(
 			event.elements.allSelectedElements
 		);
 	});
 
-	Liferay.componentReady('<portlet:namespace />selectGroups').then(function (
-		searchContainer
-	) {
-		return <portlet:namespace />handleSubmitButton(
-			searchContainer.select.getAllSelectedElements()
-		);
-	});
+	Liferay.componentReady('<portlet:namespace />selectGroups').then(
+		(searchContainer) => {
+			return <portlet:namespace />handleSubmitButton(
+				searchContainer.select.getAllSelectedElements()
+			);
+		}
+	);
 </aui:script>

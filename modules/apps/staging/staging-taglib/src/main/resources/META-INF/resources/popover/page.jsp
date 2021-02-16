@@ -36,7 +36,7 @@
 	</span>
 
 	<aui:script use="aui-base">
-		A.ready('aui-base', function (A) {
+		A.ready('aui-base', (A) => {
 			var popoverNode = A.one('#<%= domId %>');
 
 			var popover = popoverNode.one('.popover');

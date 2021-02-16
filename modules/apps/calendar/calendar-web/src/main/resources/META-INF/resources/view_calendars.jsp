@@ -127,7 +127,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 	Liferay.provide(
 		window,
 		'<portlet:namespace />importCalendar',
-		function (url) {
+		(url) => {
 			var A = AUI();
 
 			if (!<portlet:namespace />importDialog) {
@@ -148,10 +148,10 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 									body: new FormData(form),
 									method: 'POST',
 								})
-									.then(function (response) {
+									.then((response) => {
 										return response.text();
 									})
-									.then(function (data) {
+									.then((data) => {
 										var responseData = {};
 
 										try {

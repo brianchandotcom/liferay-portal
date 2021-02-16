@@ -116,7 +116,7 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 </aui:form>
 
 <aui:script>
-	Liferay.componentReady('ddmTemplateManagementToolbar').then(function () {
+	Liferay.componentReady('ddmTemplateManagementToolbar').then(() => {
 		Liferay.Util.focusFormField(
 			document.<portlet:namespace />searchForm.<portlet:namespace />keywords
 		);

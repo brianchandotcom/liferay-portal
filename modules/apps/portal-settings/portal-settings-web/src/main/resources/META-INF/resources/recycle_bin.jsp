@@ -31,7 +31,7 @@
 		if (trashEnabledCheckbox) {
 			var trashEnabledDefault = trashEnabledCheckbox.checked;
 
-			trashEnabledCheckbox.addEventListener('change', function (event) {
+			trashEnabledCheckbox.addEventListener('change', (event) => {
 				if (!trashEnabledCheckbox.checked && trashEnabledDefault) {
 					if (
 						!confirm(

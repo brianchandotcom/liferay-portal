@@ -146,7 +146,7 @@
 	function populatePrecisionType(precisionTypeElement, numberSize) {
 		var numberSizeOptions = '';
 
-		numberSize.forEach(function (bit) {
+		numberSize.forEach((bit) => {
 			numberSizeOptions += '<option value="' + bit + '">' + bit + '</option>';
 		});
 

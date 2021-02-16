@@ -159,7 +159,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 		document.querySelector('#<portlet:namespace />fm'),
 		'click',
 		'.icon-shortcut',
-		function (event) {
+		(event) => {
 			var delegateTarget = event.delegateTarget;
 
 			var destinationURL = delegateTarget.dataset.href;

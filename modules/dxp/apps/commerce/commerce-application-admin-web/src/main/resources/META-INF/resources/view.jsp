@@ -149,7 +149,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "applications"));
 			document.body,
 			'click',
 			'#<portlet:namespace />addApplicationBrandButton',
-			function (event) {
+			(event) => {
 				modalCommands.openSimpleInputModal({
 					dialogTitle: '<liferay-ui:message key="add-brand" />',
 					formSubmitURL: '<%= editCommerceApplicationBrandActionURL %>',

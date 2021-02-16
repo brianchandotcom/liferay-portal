@@ -57,7 +57,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 				'<%= commerceDiscountRule.getCommerceDiscountRuleId() %>',
 				ruleData
 			)
-				.then(function (payload) {
+				.then((payload) => {
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
 							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
@@ -71,7 +71,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 						'<portlet:namespace />typeSettings'
 					).value = typeSettings;
 				})
-				.catch(function (error) {
+				.catch((error) => {
 					return Promise.reject(error);
 				});
 		}

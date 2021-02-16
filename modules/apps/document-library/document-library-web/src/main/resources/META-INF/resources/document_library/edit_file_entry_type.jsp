@@ -125,7 +125,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				.get('translatedLanguages')
 				.values();
 
-			translatedLanguages.forEach(function (languageId) {
+			translatedLanguages.forEach((languageId) => {
 				localizedValues[languageId] = inputLocalized.getValue(languageId);
 			});
 		}
@@ -135,7 +135,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 	function <portlet:namespace />saveStructure() {
 		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
-			function (dataLayoutBuilder) {
+			(dataLayoutBuilder) => {
 				var name = <portlet:namespace />getInputLocalizedValues('name');
 
 				var description = <portlet:namespace />getInputLocalizedValues(

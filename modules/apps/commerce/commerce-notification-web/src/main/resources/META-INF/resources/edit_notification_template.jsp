@@ -215,7 +215,7 @@ if (commerceNotificationTemplate != null) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectType',
-		function () {
+		() => {
 			var A = AUI();
 
 			var name = A.one('#<portlet:namespace />name').val();

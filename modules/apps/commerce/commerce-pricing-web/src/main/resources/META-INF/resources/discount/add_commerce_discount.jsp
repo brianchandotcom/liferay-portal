@@ -66,7 +66,7 @@ PortletURL editDiscountPortletURL = commerceDiscountDisplayContext.getEditCommer
 			Liferay.provide(
 				window,
 				'<portlet:namespace />apiSubmit',
-				function (form) {
+				(form) => {
 					var commerceDiscountTarget = form.querySelector(
 						'#commerceDiscountTarget'
 					).value;
@@ -86,7 +86,7 @@ PortletURL editDiscountPortletURL = commerceDiscountDisplayContext.getEditCommer
 					};
 
 					return CommerceDiscountResource.addDiscount(discountData)
-						.then(function (payload) {
+						.then((payload) => {
 							var redirectURL = new Liferay.PortletURL.createURL(
 								'<%= editDiscountPortletURL.toString() %>'
 							);
@@ -107,7 +107,7 @@ PortletURL editDiscountPortletURL = commerceDiscountDisplayContext.getEditCommer
 								},
 							});
 						})
-						.catch(function (error) {
+						.catch((error) => {
 							return Promise.reject(error);
 						});
 				},

@@ -78,7 +78,7 @@ if (commerceDataIntegrationProcess != null) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectType',
-		function () {
+		() => {
 			var A = AUI();
 
 			var processType = A.one(<portlet:namespace />type).val();
@@ -116,7 +116,7 @@ if (commerceDataIntegrationProcess != null) {
 
 	contentEditor.set(STR_VALUE, content);
 
-	Liferay.on('<portlet:namespace />saveProcess', function (event) {
+	Liferay.on('<portlet:namespace />saveProcess', (event) => {
 		var form = window.document.querySelector('#<portlet:namespace />fm');
 
 		form['<portlet:namespace />typeSettings'].value = contentEditor.get(

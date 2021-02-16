@@ -53,17 +53,17 @@ if (commerceOrder != null) {
 
 			couponCodeIconRemove.addEventListener(
 				'click',
-				function (event) {
+				(event) => {
 					var actionURL =
 						'<%= PortalUtil.getPortalURL(request) + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code" %>';
 
 					Liferay.Util.fetch(actionURL, {
 						method: 'post',
 					})
-						.then(function (res) {
+						.then((res) => {
 							return res.json();
 						})
-						.then(function (payload) {
+						.then((payload) => {
 							if (payload.success) {
 								window.location.reload();
 							}
@@ -102,7 +102,7 @@ if (commerceOrder != null) {
 
 			applyCouponCodeButton.addEventListener(
 				'click',
-				function (event) {
+				(event) => {
 					var actionURL =
 						'<%= PortalUtil.getPortalURL(request) + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code/" %>';
 
@@ -114,10 +114,10 @@ if (commerceOrder != null) {
 					Liferay.Util.fetch(actionURL, {
 						method: 'post',
 					})
-						.then(function (res) {
+						.then((res) => {
 							return res.json();
 						})
-						.then(function (payload) {
+						.then((payload) => {
 							if (payload.success) {
 								window.location.reload();
 							}

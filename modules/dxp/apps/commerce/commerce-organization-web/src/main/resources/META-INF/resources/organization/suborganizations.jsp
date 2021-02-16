@@ -93,7 +93,7 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 	</aui:script>
 
 	<aui:script>
-		Liferay.provide(window, 'deleteCommerceOrganization', function (id) {
+		Liferay.provide(window, 'deleteCommerceOrganization', (id) => {
 			document.querySelector('#<portlet:namespace />organizationId').value = id;
 
 			submitForm(document.<portlet:namespace />organizationFm);

@@ -152,7 +152,7 @@
 			monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>,
 		});
 
-		iframe.on('load', function () {
+		iframe.on('load', () => {
 			var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
 			if (height == null) {

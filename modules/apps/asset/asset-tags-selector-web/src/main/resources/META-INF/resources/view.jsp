@@ -52,11 +52,11 @@
 
 	var selectedTagNames = <%= JSONFactoryUtil.serialize(assetTagsSelectorDisplayContext.getSelectedTagNames()) %>;
 
-	selectedTagNames = selectedTagNames.filter(function (tag) {
+	selectedTagNames = selectedTagNames.filter((tag) => {
 		return searchContainerData.indexOf(tag) === -1;
 	});
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var items = '';
 
 		var selectedItems = event.elements.allSelectedElements;

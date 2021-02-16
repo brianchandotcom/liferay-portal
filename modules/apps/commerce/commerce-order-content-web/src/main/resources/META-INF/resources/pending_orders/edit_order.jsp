@@ -396,7 +396,7 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 	if (orderTransition) {
 		orderTransition.delegate(
 			'click',
-			function (event) {
+			(event) => {
 				<portlet:namespace />transition(event);
 			},
 			'.transition-link'

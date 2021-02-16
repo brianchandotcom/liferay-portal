@@ -214,7 +214,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 <script>
 	var saveDraftBtn = document.getElementById('<portlet:namespace />saveDraftBtn');
 
-	saveDraftBtn.addEventListener('click', function () {
+	saveDraftBtn.addEventListener('click', () => {
 		var workflowActionInput = document.getElementById(
 			'<portlet:namespace />workflowAction'
 		);

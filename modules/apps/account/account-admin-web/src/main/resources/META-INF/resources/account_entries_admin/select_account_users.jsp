@@ -107,7 +107,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		'<portlet:namespace />accountUsers'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var selectedItems = event.elements.allSelectedElements;
 
 		var result = {};

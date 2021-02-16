@@ -86,13 +86,13 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 											body: data,
 											method: 'POST',
 										})
-											.then(function (response) {
+											.then((response) => {
 												return response.text();
 											})
-											.then(function (data) {
+											.then((data) => {
 												location.href = '<%= HtmlUtil.escape(redirect) %>';
 											})
-											.catch(function () {
+											.catch(() => {
 												Liferay.component('contactsCenter').showMessage(false);
 											});
 									}

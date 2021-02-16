@@ -145,7 +145,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectFormInstance',
-		function (formInstanceId, formInstanceName) {
+		(formInstanceId, formInstanceName) => {
 			var A = AUI();
 
 			document.<portlet:namespace />fm.<portlet:namespace />formInstanceId.value = formInstanceId;

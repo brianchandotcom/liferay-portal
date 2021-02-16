@@ -152,7 +152,7 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 			.querySelector(
 				'#<portlet:namespace />addCommerceAccountGroupCommerceAccountRel'
 			)
-			.addEventListener('click', function (event) {
+			.addEventListener('click', (event) => {
 				event.preventDefault();
 
 				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -164,15 +164,14 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 							var selectedItems = event.newVal;
 
 							if (selectedItems) {
-								A.Array.each(selectedItems, function (
-									item,
-									index,
-									selectedItems
-								) {
-									<portlet:namespace />addCommerceAccountIds.push(
-										item.commerceAccountId
-									);
-								});
+								A.Array.each(
+									selectedItems,
+									(item, index, selectedItems) => {
+										<portlet:namespace />addCommerceAccountIds.push(
+											item.commerceAccountId
+										);
+									}
+								);
 
 								window.document.querySelector(
 									'#<portlet:namespace />commerceAccountIds'

@@ -138,7 +138,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 
 	window.document
 		.querySelector('#<portlet:namespace />selectFile')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -181,7 +181,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 
 	window.document
 		.querySelector('#<portlet:namespace />fileEntryRemove')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			window.document.querySelector(

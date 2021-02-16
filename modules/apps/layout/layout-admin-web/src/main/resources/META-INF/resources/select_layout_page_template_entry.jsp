@@ -173,7 +173,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		layoutPageTemplateEntries,
 		'click',
 		'.add-layout-action-option',
-		function (event) {
+		(event) => {
 			Liferay.Util.openModal({
 				height: '60vh',
 				id: '<portlet:namespace />addLayoutDialog',
@@ -188,7 +188,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		layoutPageTemplateEntries,
 		'keydown',
 		'.add-layout-action-option',
-		function (event) {
+		(event) => {
 			if (event.code === 'Space' || event.code === 'Enter') {
 				event.preventDefault();
 				event.delegateTarget.click();

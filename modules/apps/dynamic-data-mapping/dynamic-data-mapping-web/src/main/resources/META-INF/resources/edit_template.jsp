@@ -366,7 +366,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 			container.delegate(
 				'change',
-				function (event) {
+				(event) => {
 					var index = types.indexOf(event.currentTarget);
 
 					selectSmallImageType(index);
@@ -390,7 +390,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
 
 						if (expanded) {
-							types.each(function (item, index) {
+							types.each((item, index) => {
 								if (item.get('checked')) {
 									values.item(index).attr('disabled', false);
 								}
@@ -425,7 +425,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 						showAncestorScopes: true,
 						title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
 					},
-					function (event) {
+					(event) => {
 						if (
 							document.<portlet:namespace />fm.<portlet:namespace />classPK
 								.value != event.ddmstructureid
@@ -443,7 +443,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 	<aui:button-row>
 		<aui:script>
-			Liferay.after('<portlet:namespace />saveTemplate', function () {
+			Liferay.after('<portlet:namespace />saveTemplate', () => {
 				submitForm(document.<portlet:namespace />fm);
 			});
 

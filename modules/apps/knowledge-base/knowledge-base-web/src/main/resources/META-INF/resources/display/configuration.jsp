@@ -136,7 +136,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 	if (<portlet:namespace />form) {
 		document
 			.getElementById('<portlet:namespace />selectKBObjectButton')
-			.addEventListener('click', function (event) {
+			.addEventListener('click', (event) => {
 				Liferay.Util.openSelectionModal({
 					onSelect: function (event) {
 						document.getElementById(

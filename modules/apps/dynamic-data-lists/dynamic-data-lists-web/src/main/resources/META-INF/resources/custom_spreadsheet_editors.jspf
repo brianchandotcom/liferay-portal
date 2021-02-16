@@ -25,7 +25,7 @@
 		var activeColumn = spreadSheet.getColumn(activeCell);
 		var activeRecord = spreadSheet.getRecord(activeCell);
 
-		return !window.<portlet:namespace />structure.some(function (item, index) {
+		return !window.<portlet:namespace />structure.some((item, index) => {
 			var fieldName = item.name;
 			var fieldValue = activeRecord.get(fieldName);
 

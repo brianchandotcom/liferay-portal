@@ -113,7 +113,7 @@ boolean nodeInGroup = false;
 					if (nodeIdSelect) {
 						var nodeId = nodeIdSelect.value;
 
-						nodeIdSelect.addEventListener('change', function () {
+						nodeIdSelect.addEventListener('change', () => {
 							if (pageSelectorContainer) {
 								if (nodeIdSelect.value === nodeId) {
 									pageSelectorContainer.classList.remove('hide');

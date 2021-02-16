@@ -68,7 +68,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 		collections,
 		'click',
 		'.select-collection-action-option',
-		function (event) {
+		(event) => {
 			Liferay.Util.navigate(
 				event.delegateTarget.dataset.selectLayoutMasterLayoutUrl
 			);

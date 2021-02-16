@@ -152,7 +152,7 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 		);
 
 		if (slideShow) {
-			slideShow.on('click', function (event) {
+			slideShow.on('click', (event) => {
 				var slideShowWindow = window.open(
 					'<%= folderActionDisplayContext.getViewSlideShowURL() %>',
 					'slideShow',

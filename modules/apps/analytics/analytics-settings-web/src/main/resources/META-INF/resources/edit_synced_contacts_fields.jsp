@@ -204,7 +204,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	Liferay.provide(
 		window,
 		'<portlet:namespace />showConfirmationModal',
-		function (event) {
+		(event) => {
 			var dialog = Liferay.Util.Window.getWindow({
 				dialog: {
 					bodyContent:

@@ -161,7 +161,7 @@ else {
 
 				var delegate = delegateModule.default;
 
-				delegate(form, 'click', '.organization-selector-button', function (event) {
+				delegate(form, 'click', '.organization-selector-button', (event) => {
 					Liferay.Util.postForm(form, {
 						data: {
 							organizationId: event.delegateTarget.dataset.organizationid,

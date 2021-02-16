@@ -52,7 +52,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 	);
 
 	if (selectAssetListButton) {
-		selectAssetListButton.addEventListener('click', function () {
+		selectAssetListButton.addEventListener('click', () => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
 					if (selectedItem) {
@@ -77,7 +77,7 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 	);
 
 	if (clearAssetListButton) {
-		clearAssetListButton.addEventListener('click', function (event) {
+		clearAssetListButton.addEventListener('click', (event) => {
 			assetListTitle.innerHTML = '<liferay-ui:message key="none" />';
 
 			assetListEntryId.value = '';

@@ -366,7 +366,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					body: formData,
 					method: 'POST',
 				})
-					.then(function (response) {
+					.then((response) => {
 						var promise;
 
 						var contentType = response.headers.get('content-type');
@@ -380,13 +380,13 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 						return promise;
 					})
-					.then(function (response) {
+					.then((response) => {
 						var exception = response.exception;
 
 						if (!exception) {
 							Liferay.onceAfter(
 								'<%= portletDisplay.getId() %>:messagePosted',
-								function (event) {
+								(event) => {
 									<%= randomNamespace %>onMessagePosted(
 										response,
 										refreshPage
@@ -433,7 +433,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 						Util.toggleDisabled(commentButtons, false);
 					})
-					.catch(function () {
+					.catch(() => {
 						<%= randomNamespace %>showStatusMessage({
 							id: '<%= randomNamespace %>',
 							message:
@@ -470,10 +470,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						body: Util.objectToFormData(Util.ns('<%= namespace %>', options)),
 						method: 'POST',
 					})
-						.then(function (response) {
+						.then((response) => {
 							return response.text();
 						})
-						.then(function (response) {
+						.then((response) => {
 							var editorWrapper = document.querySelector(
 								'#' + formId + ' .editor-wrapper'
 							);
@@ -491,7 +491,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 							<%= randomNamespace %>showEl(formId);
 						})
-						.catch(function () {
+						.catch(() => {
 							<%= randomNamespace %>showStatusMessage({
 								id: '<%= randomNamespace %>',
 								message:
@@ -524,7 +524,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 			window.<%= randomNamespace %>showStatusMessage = Liferay.lazyLoad(
 				'frontend-js-web/liferay/toast/commands/OpenToast.es',
-				function (toastCommands, data) {
+				(toastCommands, data) => {
 					toastCommands.openToast(data);
 				}
 			);
@@ -608,7 +608,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			var rootIndexPageElement = Util.getFormElement(form, 'rootIndexPage');
 
 			if (moreCommentsTrigger && indexElement && rootIndexPageElement) {
-				moreCommentsTrigger.addEventListener('click', function (event) {
+				moreCommentsTrigger.addEventListener('click', (event) => {
 					var data = Util.ns('<%= namespace %>', {
 						className: '<%= discussionTaglibHelper.getClassName() %>',
 						classPK: '<%= discussionTaglibHelper.getClassPK() %>',
@@ -630,10 +630,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						body: Util.objectToFormData(data),
 						method: 'POST',
 					})
-						.then(function (response) {
+						.then((response) => {
 							return response.text();
 						})
-						.then(function (response) {
+						.then((response) => {
 							var moreCommentsContainer = document.getElementById(
 								'<%= namespace %>moreCommentsContainer'
 							);
@@ -651,7 +651,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 								runScriptsInElement.default(newCommentsContainer);
 							}
 						})
-						.catch(function () {
+						.catch(() => {
 							<%= randomNamespace %>showStatusMessage({
 								id: '<%= randomNamespace %>',
 								message:
@@ -670,37 +670,37 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			) {
 				Liferay.onceAfter(
 					'<%= portletDisplay.getId() %>:portletRefreshed',
-					function (event) {
+					(event) => {
 						var randomNamespaceNodes = document.querySelectorAll(
 							'input[id^="<%= namespace %>"][id$="randomNamespace"]'
 						);
 
-						Array.prototype.forEach.call(randomNamespaceNodes, function (
-							node,
-							index
-						) {
-							var randomId = node.value;
+						Array.prototype.forEach.call(
+							randomNamespaceNodes,
+							(node, index) => {
+								var randomId = node.value;
 
-							if (index === 0) {
-								<%= randomNamespace %>showStatusMessage({
-									id: randomId,
-									message:
-										'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
-									type: 'success',
-								});
+								if (index === 0) {
+									<%= randomNamespace %>showStatusMessage({
+										id: randomId,
+										message:
+											'<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-completed-successfully") %>',
+										type: 'success',
+									});
+								}
+
+								var currentMessageSelector =
+									randomId + 'message_' + response.commentId;
+
+								var targetNode = document.getElementById(
+									currentMessageSelector
+								);
+
+								if (targetNode) {
+									location.hash = '#' + currentMessageSelector;
+								}
 							}
-
-							var currentMessageSelector =
-								randomId + 'message_' + response.commentId;
-
-							var targetNode = document.getElementById(
-								currentMessageSelector
-							);
-
-							if (targetNode) {
-								location.hash = '#' + currentMessageSelector;
-							}
-						});
+						);
 					}
 				);
 
@@ -758,7 +758,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 			discussionContainer.delegate(
 				'click',
-				function (event) {
+				(event) => {
 					event.preventDefault();
 					event.stopPropagation();
 

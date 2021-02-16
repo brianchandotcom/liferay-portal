@@ -136,7 +136,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 						<aui:script use="liferay-util-window">
 							var viewMoreAddMenuElements = A.one('#<%= namespace %>viewMoreButton');
 
-							viewMoreAddMenuElements.on('click', function (event) {
+							viewMoreAddMenuElements.on('click', (event) => {
 								Liferay.Util.Session.set(
 									'com.liferay.addmenu_customizeAddMenuAdviceMessage',
 									true

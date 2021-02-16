@@ -340,7 +340,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										var kaleoDesigner = <portlet:namespace />kaleoDesigner;
 
 										if (tabContentNode === kaleoDesigner.viewNode && kaleoDesigner.editor) {
-											setTimeout(function () {
+											setTimeout(() => {
 												kaleoDesigner.set('definition', kaleoDesigner.editor.get('value'));
 											}, 0);
 										}
@@ -493,12 +493,12 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										}).render();
 
 										<c:if test='<%= kaleoDesignerDisplayContext.isDefinitionInputDisabled(Objects.equals(state, WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE) || Objects.equals(state, "view"), kaleoDefinitionVersion, permissionChecker) %>'>
-											<portlet:namespace />kaleoDesigner.after('render', function () {
+											<portlet:namespace />kaleoDesigner.after('render', () => {
 												var diagramBuilderControlElements = document.querySelectorAll(
 													'#<portlet:namespace />propertyBuilder .diagram-builder-controls'
 												);
 
-												diagramBuilderControlElements.forEach(function (element) {
+												diagramBuilderControlElements.forEach((element) => {
 													element.parentElement.removeChild(element);
 												});
 
@@ -512,7 +512,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 										var previousContent = '';
 
-										uploadFile.addEventListener('change', function (evt) {
+										uploadFile.addEventListener('change', (evt) => {
 											var files = evt.target.files;
 
 											if (files) {
@@ -538,7 +538,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											}
 										});
 
-										Liferay.on('<portlet:namespace />undoDefinition', function (event) {
+										Liferay.on('<portlet:namespace />undoDefinition', (event) => {
 											<portlet:namespace />kaleoDesigner.setEditorContent(previousContent);
 
 											Liferay.KaleoDesignerDialogs.showActionUndoneSuccessMessage();
@@ -631,13 +631,13 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 										A.getDoc().delegate(
 											'focus',
-											function (event) {
+											(event) => {
 												var inputNode = event.currentTarget;
 
 												var inputName = inputNode.attr('name');
 
 												if (inputName == 'roleName' || inputName == 'roleNameAC') {
-													createRoleAutocomplete(inputNode, null, function (event) {
+													createRoleAutocomplete(inputNode, null, (event) => {
 														var data = event.result.raw;
 														var roleId = inputNode.next('[name=roleId]');
 
@@ -647,10 +647,10 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 													});
 												}
 												else if (inputName == 'fullName') {
-													createUserAutocomplete(inputNode, inputName, function (event) {
+													createUserAutocomplete(inputNode, inputName, (event) => {
 														var data = event.result.raw;
 
-														A.each(data, function (item, index, collection) {
+														A.each(data, (item, index, collection) => {
 															var input = inputNode
 																.siblings('[name=' + index + ']')
 																.first();
@@ -671,7 +671,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									var inModal = window !== opener;
 
 									if (inModal && opener.document.querySelector('.loading-animation')) {
-										opener.Liferay.on('modalIframeLoaded', function () {
+										opener.Liferay.on('modalIframeLoaded', () => {
 											initializeKaleoDesigner();
 										});
 									}
@@ -686,7 +686,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											var titlePlaceholderInput = titleComponent.get('inputPlaceholder');
 
 											if (titlePlaceholderInput) {
-												titlePlaceholderInput.after('change', function (event) {
+												titlePlaceholderInput.after('change', (event) => {
 													<portlet:namespace />kaleoDesigner.set(
 														'definitionName',
 														titleComponent.getValue()

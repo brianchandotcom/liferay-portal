@@ -98,7 +98,7 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 		'<portlet:namespace />commerceInventoryWarehouses'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{

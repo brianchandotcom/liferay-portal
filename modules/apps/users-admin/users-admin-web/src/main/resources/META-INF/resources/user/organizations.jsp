@@ -156,7 +156,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		searchContainerContentBox.delegate(
 			'click',
-			function (event) {
+			(event) => {
 				var link = event.currentTarget;
 
 				var rowId = link.attr('data-rowId');
@@ -196,7 +196,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		);
 
 		if (selectOrganizationLink) {
-			selectOrganizationLink.on('click', function (event) {
+			selectOrganizationLink.on('click', (event) => {
 				Util.selectEntity(
 					{
 						dialog: {
@@ -210,7 +210,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						uri:
 							'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>',
 					},
-					function (event) {
+					(event) => {
 						var entityId = event.entityid;
 
 						var rowColumns = [];

@@ -43,7 +43,7 @@
 		Liferay.provide(
 			window,
 			'<portlet:namespace />apiSubmit',
-			function () {
+			() => {
 				ModalUtils.isSubmitting();
 
 				var formattedData = Object.assign(
@@ -60,7 +60,7 @@
 				] = document.getElementById('<portlet:namespace />name').value;
 
 				AdminCatalogResource.createProduct(formattedData)
-					.then(function (cpDefinition) {
+					.then((cpDefinition) => {
 						var redirectURL = new Liferay.PortletURL.createURL(
 							'<%= editProductDefinitionURL %>'
 						);

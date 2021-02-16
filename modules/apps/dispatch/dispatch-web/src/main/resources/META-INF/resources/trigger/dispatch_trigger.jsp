@@ -166,12 +166,12 @@ if ((dispatchTrigger != null) && (dispatchTrigger.getEndDate() != null)) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />updateEndDateTimeInputsDisabled',
-		function (checked) {
+		(checked) => {
 			document
 				.querySelectorAll(
 					'.end-date-input-selector input, .end-time-input-selector input'
 				)
-				.forEach(function (input) {
+				.forEach((input) => {
 					input.disabled = checked;
 				});
 		}

@@ -226,7 +226,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 								headers: headers,
 								method: 'POST',
 							}
-						).then(function () {
+						).then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
 									'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>',
@@ -255,12 +255,12 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 								method: 'POST',
 							}
 						)
-							.then(function (response) {
+							.then((response) => {
 								if (response.ok) {
 									return response.json();
 								}
 
-								return response.json().then(function (data) {
+								return response.json().then((data) => {
 									return Promise.reject(data.errorDescription);
 								});
 							})
@@ -355,7 +355,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 	<aui:script>
 		document
 			.getElementById('<portlet:namespace />commerceCatalogGroupId')
-			.addEventListener('change', function (event) {
+			.addEventListener('change', (event) => {
 				var languageId = event.target.querySelector(
 					'[value="' + event.target.value + '"]'
 				).dataset.languageid;

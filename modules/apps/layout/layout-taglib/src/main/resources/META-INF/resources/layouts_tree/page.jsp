@@ -116,7 +116,7 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 
 	Liferay.component('<%= namespace + treeId %>', treeview);
 
-	Liferay.once('screenLoad', function () {
+	Liferay.once('screenLoad', () => {
 		treeview.destroy();
 	});
 </aui:script>

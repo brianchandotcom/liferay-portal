@@ -377,7 +377,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 	);
 
 	if (selectDocumentTypeButton) {
-		selectDocumentTypeButton.addEventListener('click', function () {
+		selectDocumentTypeButton.addEventListener('click', () => {
 			var searchContainer = Liferay.SearchContainer.get(
 				'<portlet:namespace />dlFileEntryTypesSearchContainer'
 			);
@@ -414,7 +414,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 
 	searchContainer.get('contentBox').delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var A = AUI();
 
 			var link = event.currentTarget;

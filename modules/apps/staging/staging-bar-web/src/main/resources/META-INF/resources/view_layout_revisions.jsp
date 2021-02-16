@@ -186,7 +186,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 		Liferay.Util.fetch(themeDisplay.getPathMain() + '/portal/update_layout', {
 			body: Liferay.Util.objectToFormData(updateLayoutData),
 			method: 'POST',
-		}).then(function () {
+		}).then(() => {
 			var parentWindow = Liferay.Util.getOpener();
 
 			parentWindow.location = parentWindow.location.href.split('?')[0];
@@ -202,13 +202,13 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 		);
 
 		if (layoutBranchesContainers && variationsSelector) {
-			variationsSelector.addEventListener('change', function () {
+			variationsSelector.addEventListener('change', () => {
 				var variation = variationsSelector.value;
 
 				if (variation === 'all') {
 					Array.prototype.forEach.call(
 						layoutBranchesContainers,
-						function (layoutBranchesContainer) {
+						(layoutBranchesContainer) => {
 							layoutBranchesContainer.classList.remove('hide');
 						}
 					);
@@ -216,7 +216,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 				else {
 					Array.prototype.forEach.call(
 						layoutBranchesContainers,
-						function (layoutBranchesContainer) {
+						(layoutBranchesContainer) => {
 							layoutBranchesContainer.classList.add('hide');
 						}
 					);

@@ -28,7 +28,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 %>
 
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
-	Liferay.component('<portlet:namespace />calendarContainer', function () {
+	Liferay.component('<portlet:namespace />calendarContainer', () => {
 		var calendarContainer = new Liferay.CalendarContainer({
 			groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
 
@@ -54,7 +54,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 		return calendarContainer;
 	});
 
-	Liferay.component('<portlet:namespace />remoteServices', function () {
+	Liferay.component('<portlet:namespace />remoteServices', () => {
 		var remoteServices = new Liferay.CalendarRemoteServices({
 			baseActionURL:
 				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
@@ -345,7 +345,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 	syncCalendarsMap();
 
-	A.each(calendarContainer.get('availableCalendars'), function (item, index) {
+	A.each(calendarContainer.get('availableCalendars'), (item, index) => {
 		item.on({
 			visibleChange: function (event) {
 				var instance = this;
@@ -375,9 +375,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			);
 	};
 
-	<portlet:namespace />scheduler.after(['scheduler-events:load'], function (
-		event
-	) {
+	<portlet:namespace />scheduler.after(['scheduler-events:load'], (event) => {
 		event.currentTarget.eachEvent(
 			<portlet:namespace />refreshSchedulerEventTooltipTitle
 		);

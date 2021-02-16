@@ -58,7 +58,7 @@ LayoutPageTemplateCollectionsDisplayContext layoutPageTemplateCollectionsDisplay
 		'<portlet:namespace />layoutPageTemplateCollections'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(layoutPageTemplateCollectionsDisplayContext.getEventName()) %>',
 			{

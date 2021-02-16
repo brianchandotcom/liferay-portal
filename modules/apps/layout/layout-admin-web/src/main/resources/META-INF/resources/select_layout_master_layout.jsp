@@ -73,7 +73,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 		layoutPageTemplateEntries,
 		'click',
 		'.add-layout-action-option',
-		function (event) {
+		(event) => {
 			Liferay.Util.openModal({
 				height: '60vh',
 				id: '<portlet:namespace />addLayoutDialog',

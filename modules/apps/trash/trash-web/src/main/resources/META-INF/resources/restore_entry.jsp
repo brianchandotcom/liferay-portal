@@ -88,11 +88,11 @@ renderResponse.setTitle(oldName);
 		);
 
 		if (rename && newName) {
-			rename.addEventListener('click', function (event) {
+			rename.addEventListener('click', (event) => {
 				Liferay.Util.focusFormField(newName);
 			});
 
-			newName.addEventListener('focus', function (event) {
+			newName.addEventListener('focus', (event) => {
 				rename.checked = true;
 			});
 		}

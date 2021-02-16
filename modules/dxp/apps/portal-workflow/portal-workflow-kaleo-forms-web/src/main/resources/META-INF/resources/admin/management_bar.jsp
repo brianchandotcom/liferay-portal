@@ -63,15 +63,15 @@
 		deleteKaleoProcess: deleteKaleoProcess,
 	};
 
-	Liferay.componentReady('kaleoFormsManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on(['actionItemClicked'], function (event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('kaleoFormsManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on(['actionItemClicked'], (event) => {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		}
+	);
 </aui:script>

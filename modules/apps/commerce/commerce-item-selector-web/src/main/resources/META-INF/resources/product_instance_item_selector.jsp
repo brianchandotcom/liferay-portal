@@ -108,7 +108,7 @@ PortletURL portletURL = commerceProductInstanceItemSelectorViewDisplayContext.ge
 		'<portlet:namespace />cpInstances'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(commerceProductInstanceItemSelectorViewDisplayContext.getItemSelectedEventName()) %>',
 			{

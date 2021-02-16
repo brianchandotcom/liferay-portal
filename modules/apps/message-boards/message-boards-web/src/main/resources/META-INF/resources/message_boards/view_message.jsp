@@ -95,10 +95,10 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 			addQuickReplyLoadingMask.classList.remove('hide');
 
 			Liferay.Util.fetch(editMessageQuickURL)
-				.then(function (response) {
+				.then((response) => {
 					return response.text();
 				})
-				.then(function (response) {
+				.then((response) => {
 					addQuickReplyContainer.innerHTML = response;
 
 					runScriptsInElement.default(addQuickReplyContainer);
@@ -117,7 +117,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 					var editorName =
 						'<portlet:namespace />replyMessageBody' + messageId;
 
-					Liferay.componentReady(editorName).then(function (editor) {
+					Liferay.componentReady(editorName).then((editor) => {
 						editor.focus();
 					});
 

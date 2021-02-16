@@ -145,7 +145,7 @@ if (portletTitleBasedNavigation) {
 	);
 
 	if (selectCategoryButton) {
-		selectCategoryButton.addEventListener('click', function (event) {
+		selectCategoryButton.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (event) {
 					Liferay.Util.setFormValues(form, {

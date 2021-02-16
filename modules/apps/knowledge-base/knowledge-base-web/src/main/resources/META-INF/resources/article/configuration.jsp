@@ -110,7 +110,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 	if (<portlet:namespace />form) {
 		document
 			.getElementById('<portlet:namespace />selectKBArticleButton')
-			.addEventListener('click', function (event) {
+			.addEventListener('click', (event) => {
 				Liferay.Util.openSelectionModal({
 					onSelect: function (event) {
 						var kbArticleData = {

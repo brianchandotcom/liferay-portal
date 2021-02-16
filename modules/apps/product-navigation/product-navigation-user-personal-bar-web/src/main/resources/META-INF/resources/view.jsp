@@ -100,10 +100,10 @@
 					loading = true;
 
 					Liferay.Util.fetch(modalSignInURL)
-						.then(function (response) {
+						.then((response) => {
 							return response.text();
 						})
-						.then(function (response) {
+						.then((response) => {
 							if (!loading) {
 								return;
 							}
@@ -122,7 +122,7 @@
 								setModalContent(response);
 							}
 						})
-						.catch(function () {
+						.catch(() => {
 							redirect = true;
 						});
 				};
@@ -130,7 +130,7 @@
 				signInLink.addEventListener('mouseover', fetchModalSignIn);
 				signInLink.addEventListener('focus', fetchModalSignIn);
 
-				signInLink.addEventListener('click', function (event) {
+				signInLink.addEventListener('click', (event) => {
 					event.preventDefault();
 
 					if (redirect) {

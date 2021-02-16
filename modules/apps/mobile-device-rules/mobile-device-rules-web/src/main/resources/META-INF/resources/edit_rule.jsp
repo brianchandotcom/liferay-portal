@@ -134,10 +134,10 @@ renderResponse.setTitle(title);
 					'&<portlet:namespace />type=' +
 					<%= ruleId %>
 			)
-				.then(function (response) {
+				.then((response) => {
 					return response.text();
 				})
-				.then(function (response) {
+				.then((response) => {
 					typeSettingsContainer.innerHTML = response;
 				});
 		};

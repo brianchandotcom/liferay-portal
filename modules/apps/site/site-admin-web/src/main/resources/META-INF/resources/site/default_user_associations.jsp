@@ -147,7 +147,7 @@ for (long defaultTeamId : defaultTeamIds) {
 
 		searchContainer.get('contentBox').delegate(
 			'click',
-			function (event) {
+			(event) => {
 				var link = event.currentTarget;
 
 				searchContainer.deleteRow(
@@ -162,7 +162,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	var bindSelectLink = function (config) {
 		var searchContainer = config.searchContainer;
 
-		A.one(config.linkId).on('click', function (event) {
+		A.one(config.linkId).on('click', (event) => {
 			var searchContainerData = searchContainer.getData();
 
 			if (!searchContainerData.length) {

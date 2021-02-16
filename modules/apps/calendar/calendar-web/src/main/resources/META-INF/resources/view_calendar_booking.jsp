@@ -282,21 +282,21 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 			if (<%= calendarBooking.isRecurring() %>) {
 				Liferay.RecurrenceUtil.openConfirmationPanel(
 					'invokeTransition',
-					function () {
+					() => {
 						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value =
 							'true';
 						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value =
 							'false';
 						submitForm(document.<portlet:namespace />fm);
 					},
-					function () {
+					() => {
 						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value =
 							'true';
 						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value =
 							'true';
 						submitForm(document.<portlet:namespace />fm);
 					},
-					function () {
+					() => {
 						submitForm(document.<portlet:namespace />fm);
 					}
 				);

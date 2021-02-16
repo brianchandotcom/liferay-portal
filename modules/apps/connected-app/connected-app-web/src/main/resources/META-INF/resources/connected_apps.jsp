@@ -96,7 +96,7 @@
 		document.getElementById('<portlet:namespace />connectedApp'),
 		'click',
 		'[data-key]',
-		function (event) {
+		(event) => {
 			connectedAppKeyInput.setAttribute('value', event.target.dataset.key);
 		}
 	);

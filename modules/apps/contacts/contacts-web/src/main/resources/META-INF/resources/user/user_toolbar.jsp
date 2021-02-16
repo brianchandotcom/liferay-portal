@@ -161,14 +161,14 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 	if (contactAction) {
 		contactAction.delegate(
 			'click',
-			function (event) {
+			(event) => {
 				event.preventDefault();
 
 				Liferay.Util.fetch(event.currentTarget.getAttribute('href'))
-					.then(function (response) {
+					.then((response) => {
 						return response.text();
 					})
-					.then(function (data) {
+					.then((data) => {
 						var contactProfile = A.one(
 							'.contacts-portlet .contacts-container'
 						);

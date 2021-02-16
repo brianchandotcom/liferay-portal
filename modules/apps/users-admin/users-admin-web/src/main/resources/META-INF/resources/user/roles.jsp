@@ -140,7 +140,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			);
 
 			if (selectRegularRoleLink) {
-				selectRegularRoleLink.addEventListener('click', function (event) {
+				selectRegularRoleLink.addEventListener('click', (event) => {
 					var searchContainerName = '<portlet:namespace />rolesSearchContainer';
 
 					var searchContainer = Liferay.SearchContainer.get(searchContainerName);
@@ -342,7 +342,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				searchContainerContentBox.delegate(
 					'click',
-					function (event) {
+					(event) => {
 						var link = event.currentTarget;
 						var tr = link.ancestor('tr');
 
@@ -385,7 +385,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			);
 
 			if (selectOrganizationRoleLink) {
-				selectOrganizationRoleLink.addEventListener('click', function (event) {
+				selectOrganizationRoleLink.addEventListener('click', (event) => {
 					var searchContainerName =
 						'<portlet:namespace />organizationRolesSearchContainer';
 
@@ -544,7 +544,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				searchContainerContentBox.delegate(
 					'click',
-					function (event) {
+					(event) => {
 						var link = event.currentTarget;
 						var tr = link.ancestor('tr');
 
@@ -577,7 +577,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					'.modify-link'
 				);
 
-				A.one('#<portlet:namespace />selectSiteRoleLink').on('click', function (event) {
+				A.one('#<portlet:namespace />selectSiteRoleLink').on('click', (event) => {
 					var searchContainerName = '<portlet:namespace />siteRolesSearchContainer';
 
 					var searchContainer = Liferay.SearchContainer.get(searchContainerName);
@@ -610,7 +610,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 							uri: '<%= selectSiteRoleURL.toString() %>',
 						},
-						function (event) {
+						(event) => {
 							<portlet:namespace />selectRole(
 								event.entityid,
 								event.entityname,
@@ -740,7 +740,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						.get('contentBox')
 						.all('.modify-link')
 						.getData()
-						.map(function (data) {
+						.map((data) => {
 							return data.groupid + '-' + data.rowid;
 						})
 				);
@@ -851,7 +851,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 			searchContainerContentBox.delegate(
 				'click',
-				function (event) {
+				(event) => {
 					var link = event.currentTarget;
 
 					var rowId = link.attr('data-rowId');

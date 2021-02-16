@@ -100,7 +100,7 @@ PortletURL portletURL = cpOptionItemSelectorViewDisplayContext.getPortletURL();
 		'<portlet:namespace />cpOptions'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{

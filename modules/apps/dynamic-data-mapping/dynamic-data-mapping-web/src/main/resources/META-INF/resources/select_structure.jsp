@@ -107,13 +107,14 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 </aui:form>
 
 <aui:script>
-	Liferay.componentReady('ddmStructureManagementToolbar').then(function (
-		managementToolbar
-	) {
-		Liferay.Util.focusFormField(
-			document.<portlet:namespace />searchForm.<portlet:namespace />keywords
-		);
-	});
+	Liferay.componentReady('ddmStructureManagementToolbar').then(
+		(managementToolbar) => {
+			Liferay.Util.focusFormField(
+				document.<portlet:namespace />searchForm
+					.<portlet:namespace />keywords
+			);
+		}
+	);
 
 	Liferay.Util.selectEntityHandler(
 		'#<portlet:namespace />selectStructureFm',

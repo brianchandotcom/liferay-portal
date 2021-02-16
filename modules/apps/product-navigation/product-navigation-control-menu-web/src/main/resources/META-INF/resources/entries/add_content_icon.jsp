@@ -51,7 +51,7 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 
 <c:if test="<%= (assetRenderer != null) && PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.ADD_TO_PAGE) %>">
 	<aui:script>
-		Liferay.once('updatedLayout', function () {
+		Liferay.once('updatedLayout', () => {
 			Liferay.Util.navigate(
 				'<%= PortalUtil.getLayoutFullURL(layout, themeDisplay) %>'
 			);

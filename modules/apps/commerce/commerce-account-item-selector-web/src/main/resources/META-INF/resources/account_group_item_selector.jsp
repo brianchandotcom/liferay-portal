@@ -103,7 +103,7 @@ PortletURL portletURL = commerceAccountGroupItemSelectorViewDisplayContext.getPo
 		'<portlet:namespace />commerceAccountGroups'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var allSelectedElements = event.elements.allSelectedElements;
 		var arr = [];
 

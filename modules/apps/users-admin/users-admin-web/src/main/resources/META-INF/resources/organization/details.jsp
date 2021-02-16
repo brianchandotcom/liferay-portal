@@ -148,7 +148,7 @@ if (organization != null) {
 		var typeSelect = document.getElementById('<portlet:namespace />type');
 
 		if (typeSelect) {
-			typeSelect.addEventListener('change', function (event) {
+			typeSelect.addEventListener('change', (event) => {
 				var countryDiv = document.getElementById(
 					'<portlet:namespace />countryDiv'
 				);

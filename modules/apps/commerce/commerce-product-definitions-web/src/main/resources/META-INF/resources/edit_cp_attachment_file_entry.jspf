@@ -112,50 +112,46 @@ if (cpAttachmentFileEntry != null) {
 	}
 	catch (_ignore) {}
 
-	Liferay.componentReady('ProductOptions<%= cpDefinitionId %>').then(function (
-		ddmForm
-	) {
-		if (!ddmForm.on) {
-			return;
-		}
+	Liferay.componentReady('ProductOptions<%= cpDefinitionId %>').then(
+		(ddmForm) => {
+			if (!ddmForm.on) {
+				return;
+			}
 
-		if (!fieldValues.length) {
-			fieldValues = FormsHelper.getDefaultFieldsShape(ddmForm);
-		}
+			if (!fieldValues.length) {
+				fieldValues = FormsHelper.getDefaultFieldsShape(ddmForm);
+			}
 
-		ddmForm.on('fieldEdited', function (field) {
-			fieldValues = FormsHelper.updateFields(fieldValues, field);
+			ddmForm.on('fieldEdited', (field) => {
+				fieldValues = FormsHelper.updateFields(fieldValues, field);
 
-			var form = document['<portlet:namespace />fm'];
-			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
-				fieldValues
-			);
-		});
-	});
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveAttachmentFileEntry',
-		function () {
-			var form = window.document['<portlet:namespace />fm'];
-
-			var ddmForm = Liferay.component('ProductOptions<%= cpDefinitionId %>');
-
-			if (ddmForm) {
+				var form = document['<portlet:namespace />fm'];
 				form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
 					fieldValues
 				);
-			}
-
-			submitForm(form);
+			});
 		}
 	);
+
+	Liferay.provide(window, '<portlet:namespace />saveAttachmentFileEntry', () => {
+		var form = window.document['<portlet:namespace />fm'];
+
+		var ddmForm = Liferay.component('ProductOptions<%= cpDefinitionId %>');
+
+		if (ddmForm) {
+			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
+				fieldValues
+			);
+		}
+
+		submitForm(form);
+	});
 </aui:script>
 
 <aui:script use="aui-base,event-input">
 	var publishButton = A.one('#<portlet:namespace />publishButton');
 
-	publishButton.on('click', function () {
+	publishButton.on('click', () => {
 		var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
 
 		if (workflowActionInput) {

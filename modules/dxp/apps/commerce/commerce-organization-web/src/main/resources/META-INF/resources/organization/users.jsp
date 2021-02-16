@@ -59,13 +59,13 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 		Liferay.provide(
 			window,
 			'<portlet:namespace />openUserInvitationModal',
-			function (evt) {
+			(evt) => {
 				var userInvitationModal = Liferay.component('userInvitationModal');
 				userInvitationModal.open();
 			}
 		);
 
-		Liferay.provide(window, 'deleteCommerceOrganizationUser', function (id) {
+		Liferay.provide(window, 'deleteCommerceOrganizationUser', (id) => {
 			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
 				'<%= Constants.REMOVE %>';
 			document.querySelector('#<portlet:namespace />userId').value = id;
@@ -73,24 +73,22 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 			submitForm(document.<portlet:namespace />inviteUserFm);
 		});
 
-		Liferay.componentReady('userInvitationModal').then(function (
-			userInvitationModal
-		) {
-			userInvitationModal.on('inviteUserToAccount', function (users) {
+		Liferay.componentReady('userInvitationModal').then((userInvitationModal) => {
+			userInvitationModal.on('inviteUserToAccount', (users) => {
 				var existingUsersIds = users
-					.filter(function (el) {
+					.filter((el) => {
 						return el.userId;
 					})
-					.map(function (usr) {
+					.map((usr) => {
 						return usr.userId;
 					})
 					.join(',');
 
 				var newUsersEmails = users
-					.filter(function (el) {
+					.filter((el) => {
 						return !el.userId;
 					})
-					.map(function (usr) {
+					.map((usr) => {
 						return usr.email;
 					})
 					.join(',');

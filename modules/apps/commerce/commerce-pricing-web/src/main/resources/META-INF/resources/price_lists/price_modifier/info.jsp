@@ -129,7 +129,7 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectType',
-		function () {
+		() => {
 			var A = AUI();
 
 			var type = A.one('#<portlet:namespace />modifierType').val();

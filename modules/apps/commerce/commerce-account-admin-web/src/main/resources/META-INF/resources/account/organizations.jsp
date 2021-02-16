@@ -152,7 +152,7 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 	<aui:script use="liferay-item-selector-dialog">
 		window.document
 			.querySelector('#<portlet:namespace />addCommerceAccountOrganizationRel')
-			.addEventListener('click', function (event) {
+			.addEventListener('click', (event) => {
 				event.preventDefault();
 
 				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -164,15 +164,14 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 							var selectedItems = event.newVal;
 
 							if (selectedItems) {
-								A.Array.each(selectedItems, function (
-									item,
-									index,
-									selectedItems
-								) {
-									<portlet:namespace />addOrganizationIds.push(
-										item.id
-									);
-								});
+								A.Array.each(
+									selectedItems,
+									(item, index, selectedItems) => {
+										<portlet:namespace />addOrganizationIds.push(
+											item.id
+										);
+									}
+								);
 
 								window.document.querySelector(
 									'#<portlet:namespace />organizationIds'

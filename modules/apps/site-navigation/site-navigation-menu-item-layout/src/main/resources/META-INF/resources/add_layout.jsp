@@ -63,17 +63,16 @@ PortletURL portletURL = currentURLObj;
 	var layoutUuid = document.getElementById('<portlet:namespace />layoutUuid');
 
 	if (layoutUuid) {
-		Liferay.on('<portlet:namespace />selectLayout', function (event) {
+		Liferay.on('<portlet:namespace />selectLayout', (event) => {
 			var selectedItems = event.data;
 
 			if (selectedItems) {
-				var layoutUuids = selectedItems.reduce(function (
-					previousValue,
-					currentValue
-				) {
-					return previousValue.concat([currentValue.id]);
-				},
-				[]);
+				var layoutUuids = selectedItems.reduce(
+					(previousValue, currentValue) => {
+						return previousValue.concat([currentValue.id]);
+					},
+					[]
+				);
 
 				layoutUuid.value = layoutUuids.join();
 			}

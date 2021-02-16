@@ -246,7 +246,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	var submitButton = A.one('#<portlet:namespace />fm_submit');
 
 	if (submitButton) {
-		submitButton.on('click', function (event) {
+		submitButton.on('click', (event) => {
 			if (form) {
 				form.submit();
 			}

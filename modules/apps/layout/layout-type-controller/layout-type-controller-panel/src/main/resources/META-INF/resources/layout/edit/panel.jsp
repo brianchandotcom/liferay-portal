@@ -55,7 +55,7 @@ if (selLayout != null) {
 		formatJSONResults: function (json) {
 			var output = [];
 
-			A.each(json.children.list, function (item, index) {
+			A.each(json.children.list, (item, index) => {
 				var childPortlets = [];
 				var total = 0;
 
@@ -159,7 +159,7 @@ if (selLayout != null) {
 		initPanelSelectPortlets();
 	</c:if>
 
-	Liferay.on('<portlet:namespace />toggleLayoutTypeFields', function (event) {
+	Liferay.on('<portlet:namespace />toggleLayoutTypeFields', (event) => {
 		if (event.type == 'panel') {
 			initPanelSelectPortlets();
 		}

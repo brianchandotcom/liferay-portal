@@ -72,7 +72,7 @@ renderResponse.setTitle(dlEditFileShortcutDisplayContext.getTitle());
 		'<portlet:namespace />selectToFileEntryButton'
 	);
 
-	selectToFileEntryButton.addEventListener('click', function (event) {
+	selectToFileEntryButton.addEventListener('click', (event) => {
 		Liferay.Util.openSelectionModal({
 			onSelect: function (selectedItem) {
 				if (selectedItem) {

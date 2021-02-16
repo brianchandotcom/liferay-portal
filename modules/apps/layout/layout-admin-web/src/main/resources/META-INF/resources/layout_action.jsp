@@ -122,7 +122,7 @@ Layout curLayout = (Layout)row.getObject();
 		document.body,
 		'click',
 		'.<portlet:namespace />copy-layout-action-option',
-		function (event) {
+		(event) => {
 			Liferay.Util.openModal({
 				id: '<portlet:namespace />addLayoutDialog',
 				title: '<liferay-ui:message key="copy-page" />',
@@ -136,7 +136,7 @@ Layout curLayout = (Layout)row.getObject();
 		document.body,
 		'click',
 		'.<portlet:namespace />view-collection-items-action-option',
-		function (event) {
+		(event) => {
 			Liferay.Util.openModal({
 				id: '<portlet:namespace />viewCollectionItemsDialog',
 				title: '<liferay-ui:message key="collection-items" />',

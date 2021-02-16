@@ -202,11 +202,11 @@ renderResponse.setTitle(role.getTitle(locale));
 		});
 	};
 
-	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('creationButtonClicked', addAssignees);
-	});
+	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', addAssignees);
+		}
+	);
 
 	var state = window.sessionStorage.getItem(
 		'<%= RolesAdminWebKeys.MODAL_SEGMENT_STATE %>'

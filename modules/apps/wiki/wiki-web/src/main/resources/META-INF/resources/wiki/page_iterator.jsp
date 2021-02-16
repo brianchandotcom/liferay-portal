@@ -274,7 +274,7 @@ for (int i = 0; i < pages.size(); i++) {
 				'input[name=<portlet:namespace />rowIds]'
 			);
 
-			Array.prototype.forEach.call(rowIdsNodes, function (rowIdsNode, index) {
+			Array.prototype.forEach.call(rowIdsNodes, (rowIdsNode, index) => {
 				if (index > 1) {
 					rowIdsNode.checked = false;
 				}
@@ -305,7 +305,7 @@ for (int i = 0; i < pages.size(); i++) {
 
 			var compareButton = document.getElementById('<portlet:namespace />compare');
 
-			compareButton.addEventListener('click', function (event) {
+			compareButton.addEventListener('click', (event) => {
 				<portlet:renderURL var="compareVersionURL">
 					<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -365,7 +365,7 @@ for (int i = 0; i < pages.size(); i++) {
 				searchContainer,
 				'click',
 				'input[name=<portlet:namespace />rowIds]',
-				function (event) {
+				(event) => {
 					<portlet:namespace />updateRowsChecked(event.delegateTarget);
 				}
 			);

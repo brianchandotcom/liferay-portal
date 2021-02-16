@@ -59,7 +59,7 @@ SearchContainer<Organization> organizationSearchContainer = AssignableAccountOrg
 		'<portlet:namespace />organizations'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var selectedItems = event.elements.allSelectedElements;
 
 		var result = {};

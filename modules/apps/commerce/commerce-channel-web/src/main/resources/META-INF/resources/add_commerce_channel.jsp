@@ -84,7 +84,7 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 		Liferay.provide(
 			window,
 			'<portlet:namespace />apiSubmit',
-			function (form) {
+			(form) => {
 				var API_URL = '/o/headless-commerce-admin-channel/v1.0/channels';
 
 				window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
@@ -92,7 +92,7 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 				});
 
 				FormUtils.apiSubmit(form, API_URL)
-					.then(function (payload) {
+					.then((payload) => {
 						var redirectURL = new Liferay.PortletURL.createURL(
 							'<%= editCommerceChannelRenderURL.toString() %>'
 						);
@@ -109,7 +109,7 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 							},
 						});
 					})
-					.catch(function () {
+					.catch(() => {
 						window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
 							isLoading: false,
 						});

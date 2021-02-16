@@ -132,7 +132,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			'<portlet:namespace />selectDepotGroupLink'
 		);
 
-		selectDepotGroupLink.addEventListener('click', function (event) {
+		selectDepotGroupLink.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
 					if (selectedItem) {
@@ -180,7 +180,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		var handleOnModifyLink = searchContainerContentBox.delegate(
 			'click',
-			function (event) {
+			(event) => {
 				var link = event.currentTarget;
 
 				var rowId = link.attr('data-rowId');

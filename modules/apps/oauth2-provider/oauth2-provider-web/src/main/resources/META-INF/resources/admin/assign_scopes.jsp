@@ -93,7 +93,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 </clay:container-fluid>
 
 <aui:script sandbox="<%= true %>">
-	AUI().use('node', 'aui-modal', function (A) {
+	AUI().use('node', 'aui-modal', (A) => {
 		if (A.all('#<portlet:namespace />navGlobalScopes .panel').size() > 0) {
 			A.one('#<portlet:namespace />navScopeTypes').toggleClass(
 				'hidden',
@@ -112,7 +112,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 
 		appsAccordion.delegate(
 			'click',
-			function (event) {
+			(event) => {
 				event.stopPropagation();
 
 				if (handle) {
@@ -138,7 +138,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 						'<%= UnicodeLanguageUtil.get(request, "choose-one-of-the-following-global-scopes-that-include-this-resource-scope") %>',
 				}).render();
 
-				modal.on('visibleChange', function (event) {
+				modal.on('visibleChange', (event) => {
 					if (event.newVal) {
 						return;
 					}
@@ -147,7 +147,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 						.querySelectorAll(
 							'#<portlet:namespace />globalAccordion .panel'
 						)
-						.forEach(function (globalAccordionPanel) {
+						.forEach((globalAccordionPanel) => {
 							globalAccordionPanel.classList.remove('hide');
 						});
 
@@ -181,7 +181,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 					.querySelectorAll(
 						'#<portlet:namespace />globalAccordion .panel'
 					)
-					.forEach(function (globalAccordionPanel) {
+					.forEach((globalAccordionPanel) => {
 						globalAccordionPanel.classList.add('hide');
 					});
 
@@ -190,7 +190,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 						.querySelectorAll(
 							'#<portlet:namespace />globalAccordion .panel[data-master]'
 						)
-						.forEach(function (globalAccordionPanel) {
+						.forEach((globalAccordionPanel) => {
 							var masterScopeAliases = globalAccordionPanel.getAttribute(
 								'data-master'
 							);
@@ -340,7 +340,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 
 		<portlet:namespace />recalculateAll();
 
-		A.one('#<portlet:namespace />save').on('click', function (event) {
+		A.one('#<portlet:namespace />save').on('click', (event) => {
 			event.preventDefault();
 
 			var scopeAliases = [];

@@ -103,7 +103,7 @@ SearchContainer<User> searchContainer = editUserGroupAssignmentsManagementToolba
 		'<portlet:namespace />selectUsers'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var selectedItems = event.elements.allSelectedElements;
 
 		var data = [];

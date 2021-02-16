@@ -106,7 +106,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 
 	var delegate = delegateModule.default;
 
-	delegate(addMenuItemFm, 'click', '.selector-button', function (event) {
+	delegate(addMenuItemFm, 'click', '.selector-button', (event) => {
 		Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(journalViewMoreMenuItemsDisplayContext.getEventName()) %>',
 			{

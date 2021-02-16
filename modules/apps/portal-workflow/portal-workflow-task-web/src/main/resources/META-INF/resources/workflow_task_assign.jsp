@@ -77,7 +77,7 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 	var done = A.one('#<portlet:namespace />done');
 
 	if (done) {
-		done.on('click', function (event) {
+		done.on('click', (event) => {
 			var data = new FormData(
 				document.querySelector('#<portlet:namespace />assignFm')
 			);
@@ -85,7 +85,7 @@ boolean hasAssignableUsers = workflowTaskDisplayContext.hasAssignableUsers(workf
 			Liferay.Util.fetch('<%= assignURL.toString() %>', {
 				body: data,
 				method: 'POST',
-			}).then(function () {
+			}).then(() => {
 				Liferay.Util.getOpener().<portlet:namespace />refreshPortlet(
 					'<%= PortalUtil.escapeRedirect(redirect.toString()) %>'
 				);

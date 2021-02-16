@@ -115,7 +115,7 @@ if (portletTitleBasedNavigation) {
 	);
 
 	if (selectKBObjectButton) {
-		selectKBObjectButton.addEventListener('click', function (event) {
+		selectKBObjectButton.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (event) {
 					Liferay.Util.setFormValues(document.<portlet:namespace />fm, {

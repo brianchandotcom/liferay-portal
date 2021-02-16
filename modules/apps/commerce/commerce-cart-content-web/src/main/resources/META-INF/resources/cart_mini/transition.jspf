@@ -33,7 +33,7 @@
 	Liferay.provide(
 		window,
 		'<portlet:namespace />transition',
-		function (event) {
+		(event) => {
 			var A = AUI();
 
 			var link = event.currentTarget;

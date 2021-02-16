@@ -67,7 +67,7 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 
 			Liferay.on(
 				'<portlet:namespace />addCommerceProductDefinitionLink<%= type %>',
-				function () {
+				() => {
 					var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 						eventName: 'productDefinitionsSelectItem',
 						on: {

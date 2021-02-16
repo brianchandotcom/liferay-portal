@@ -115,7 +115,7 @@ if (assetVocabulary != null) {
 </aui:form>
 
 <aui:script use="aui-base,event-input">
-	A.one('#<portlet:namespace />submitButton').on('click', function () {
+	A.one('#<portlet:namespace />submitButton').on('click', () => {
 		if (
 			A.one('#<portlet:namespace />preferencesUseRootCategory').attr(
 				'checked'

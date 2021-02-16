@@ -53,7 +53,7 @@ SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = (Sel
 		collections,
 		'click',
 		'.select-collection-action-option',
-		function (event) {}
+		(event) => {}
 	);
 
 	function handleDestroyPortlet() {

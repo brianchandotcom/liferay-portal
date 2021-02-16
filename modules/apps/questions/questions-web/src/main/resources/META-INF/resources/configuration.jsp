@@ -86,7 +86,7 @@ catch (Exception exception) {
 	);
 
 	if (selectRootTopicButton) {
-		selectRootTopicButton.addEventListener('click', function (event) {
+		selectRootTopicButton.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (event) {
 					var form = document.<portlet:namespace />fm;

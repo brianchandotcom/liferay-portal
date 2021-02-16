@@ -148,7 +148,7 @@ itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.get
 	);
 
 	if (scopeSelect) {
-		scopeSelect.addEventListener('click', function (event) {
+		scopeSelect.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var searchContainer = Liferay.SearchContainer.get(

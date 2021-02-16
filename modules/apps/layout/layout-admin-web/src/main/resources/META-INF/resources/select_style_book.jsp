@@ -69,11 +69,11 @@ List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayCont
 		document.body,
 		'click',
 		'.select-master-layout-option',
-		function (event) {
+		(event) => {
 			var activeCards = document.querySelectorAll('.form-check-card.active');
 
 			if (activeCards.length) {
-				activeCards.forEach(function (card) {
+				activeCards.forEach((card) => {
 					card.classList.remove('active');
 				});
 			}

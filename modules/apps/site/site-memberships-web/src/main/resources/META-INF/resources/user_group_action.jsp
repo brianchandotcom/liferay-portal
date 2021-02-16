@@ -92,7 +92,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	);
 
 	if (assignRolesLink) {
-		assignRolesLink.addEventListener('click', function (event) {
+		assignRolesLink.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var target = event.target;
@@ -113,12 +113,12 @@ UserGroup userGroup = (UserGroup)row.getObject();
 				multiple: true,
 				onSelect: function (selectedItems) {
 					if (selectedItems) {
-						Array.prototype.forEach.call(selectedItems, function (
-							selectedItem,
-							index
-						) {
-							addUserGroupGroupRoleFm.append(selectedItem);
-						});
+						Array.prototype.forEach.call(
+							selectedItems,
+							(selectedItem, index) => {
+								addUserGroupGroupRoleFm.append(selectedItem);
+							}
+						);
 
 						submitForm(addUserGroupGroupRoleFm);
 					}
@@ -135,7 +135,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	);
 
 	if (unassignRolesLink) {
-		unassignRolesLink.addEventListener('click', function (event) {
+		unassignRolesLink.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var target = event.target;
@@ -156,12 +156,12 @@ UserGroup userGroup = (UserGroup)row.getObject();
 				multiple: true,
 				onSelect: function (selectedItems) {
 					if (selectedItems) {
-						Array.prototype.forEach.call(selectedItems, function (
-							selectedItem,
-							index
-						) {
-							unassignUserGroupGroupRoleFm.append(selectedItem);
-						});
+						Array.prototype.forEach.call(
+							selectedItems,
+							(selectedItem, index) => {
+								unassignUserGroupGroupRoleFm.append(selectedItem);
+							}
+						);
 
 						submitForm(unassignUserGroupGroupRoleFm);
 					}

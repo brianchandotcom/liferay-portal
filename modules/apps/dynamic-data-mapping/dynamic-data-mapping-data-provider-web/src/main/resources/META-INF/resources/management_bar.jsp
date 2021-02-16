@@ -75,15 +75,15 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 		deleteDataProviderInstances: deleteDataProviderInstances,
 	};
 
-	Liferay.componentReady('ddmDataProviderManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on(['actionItemClicked'], function (event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('ddmDataProviderManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on(['actionItemClicked'], (event) => {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		}
+	);
 </aui:script>

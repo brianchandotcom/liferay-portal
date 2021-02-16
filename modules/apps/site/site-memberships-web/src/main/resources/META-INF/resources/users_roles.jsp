@@ -56,7 +56,7 @@ UserRolesDisplayContext userRolesDisplayContext = new UserRolesDisplayContext(re
 		'<portlet:namespace />userGroupRoleRole'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(userRolesDisplayContext.getEventName()) %>',
 			{

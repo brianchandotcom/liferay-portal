@@ -68,11 +68,11 @@ if (Validator.isNotNull(tempFileName)) {
 					'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/update_certificate"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></liferay-portlet:resourceURL>',
 			});
 
-			liferayUpload._uploader.on('alluploadscomplete', function (event) {
+			liferayUpload._uploader.on('alluploadscomplete', (event) => {
 				toggleContinueButton();
 			});
 
-			Liferay.on('tempFileRemoved', function (event) {
+			Liferay.on('tempFileRemoved', (event) => {
 				toggleContinueButton();
 			});
 
@@ -206,7 +206,7 @@ if (Validator.isNotNull(tempFileName)) {
 				'input[name="<portlet:namespace />selectKeyStoreAlias"]'
 			);
 
-			keyStoreEntryRadios.on('click', function (event) {
+			keyStoreEntryRadios.on('click', (event) => {
 				var keyStoreEntryAlias = event.currentTarget.val();
 
 				A.all('.certificate-preview div[data-keyStoreEntryAlias]').hide();

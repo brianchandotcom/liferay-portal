@@ -129,15 +129,15 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 			'<portlet:namespace />pagesTreeSidenavToggleId'
 		);
 
-		pagesTreeToggle.addEventListener('click', function (event) {
+		pagesTreeToggle.addEventListener('click', (event) => {
 			Liferay.Portlet.destroy('#p_p_id<portlet:namespace />', true);
 
 			Liferay.Util.Session.set(
 				'com.liferay.product.navigation.product.menu.web_pagesTreeState',
 				'open'
-			).then(function () {
+			).then(() => {
 				Liferay.Util.fetch('<%= portletURL.toString() %>')
-					.then(function (response) {
+					.then((response) => {
 						if (!response.ok) {
 							throw new Error(
 								'<liferay-ui:message key="an-unexpected-error-occurred" />'
@@ -146,7 +146,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 
 						return response.text();
 					})
-					.then(function (response) {
+					.then((response) => {
 						var sidebar = document.querySelector(
 							'.lfr-product-menu-sidebar .sidebar-body'
 						);

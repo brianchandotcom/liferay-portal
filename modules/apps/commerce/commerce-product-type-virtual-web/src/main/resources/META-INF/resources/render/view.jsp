@@ -274,11 +274,11 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 </div>
 
 <aui:script>
-	window.document.addEventListener('DOMContentLoaded', function () {
+	window.document.addEventListener('DOMContentLoaded', () => {
 		var thumbElements = window.document.querySelectorAll('.thumb');
 
-		Array.from(thumbElements).forEach(function (thumbElement) {
-			thumbElement.addEventListener('click', function (event) {
+		Array.from(thumbElements).forEach((thumbElement) => {
+			thumbElement.addEventListener('click', (event) => {
 				window.document
 					.querySelector('#<portlet:namespace />full-image')
 					.setAttribute(

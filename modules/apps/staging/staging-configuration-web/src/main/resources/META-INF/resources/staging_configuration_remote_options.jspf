@@ -82,7 +82,7 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 		'<portlet:namespace />remoteSiteURLContainer'
 	);
 
-	overrideRemoteSiteURLCheckbox.addEventListener('click', function () {
+	overrideRemoteSiteURLCheckbox.addEventListener('click', () => {
 		var checked = overrideRemoteSiteURLCheckbox.checked;
 
 		if (checked) {

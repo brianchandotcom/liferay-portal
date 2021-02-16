@@ -171,7 +171,7 @@
 
 	Liferay.component(
 		'<portlet:namespace /><%= formNavigatorStepsDisplayContext.getFormName() %>Tabview',
-		function () {
+		() => {
 			return new A.TabView({
 				boundingBox: '#<portlet:namespace />tabsBoundingBox',
 				srcNode: '#<portlet:namespace />tabs',
@@ -269,12 +269,12 @@
 
 	var history = new A.HistoryHash();
 
-	tabview.after('selectionChange', function (event) {
+	tabview.after('selectionChange', (event) => {
 		var tab = event.newVal;
 
 		var tabIndex = tabview.indexOf(tab);
 
-		tabview.each(function (item, index) {
+		tabview.each((item, index) => {
 			var node = tabview.item(index).get('boundingBox');
 
 			if (tabview.indexOf(item) < tabIndex) {
@@ -302,7 +302,7 @@
 		history.addValue('<portlet:namespace />tab', sectionId);
 	});
 
-	A.on('history:change', function (event) {
+	A.on('history:change', (event) => {
 		var state = event.newVal;
 
 		var changed = event.changed.<portlet:namespace />tab;
@@ -398,7 +398,7 @@
 			if (form.formNode.compareTo(formNode)) {
 				var validator = form.formValidator;
 
-				validator.on('submitError', function () {
+				validator.on('submitError', () => {
 					var errorClass = validator.get('errorClass');
 
 					var errorField = formNode.one('.' + errorClass);

@@ -94,7 +94,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 	Liferay.provide(
 		window,
 		'<portlet:namespace />apiSubmit',
-		function () {
+		() => {
 			var form = document.getElementById('<portlet:namespace />fm');
 			var name = form.querySelector('#<portlet:namespace />name').value;
 
@@ -112,7 +112,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 				'<%= commerceDiscountRule.getCommerceDiscountRuleId() %>',
 				discountRuleData
 			)
-				.then(function () {
+				.then(() => {
 					NotificationUtils.showNotification(
 						'<liferay-ui:message key="your-request-completed-successfully" />'
 					);
@@ -124,7 +124,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 
 					return;
 				})
-				.catch(function () {
+				.catch(() => {
 					alert(
 						'<liferay-ui:message key="your-request-failed-to-complete" />'
 					);

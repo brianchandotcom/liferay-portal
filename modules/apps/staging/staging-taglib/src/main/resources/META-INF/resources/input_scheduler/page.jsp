@@ -463,13 +463,13 @@
 				);
 
 				if (recurrenceTypeSelect) {
-					recurrenceTypeSelect.addEventListener('change', function (event) {
+					recurrenceTypeSelect.addEventListener('change', (event) => {
 						var selectedTableId =
 							'<portlet:namespace />' +
 							recurrenceTypeSelect[recurrenceTypeSelect.selectedIndex].id +
 							'Table';
 
-						Array.prototype.forEach.call(tables, function (table) {
+						Array.prototype.forEach.call(tables, (table) => {
 							if (table.id !== selectedTableId) {
 								table.classList.add('hide');
 							}

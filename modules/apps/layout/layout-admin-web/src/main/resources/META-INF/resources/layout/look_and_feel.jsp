@@ -239,13 +239,13 @@ else {
 			'<portlet:namespace />styleBookWarning'
 		);
 
-		regularInheritLookAndFeel.addEventListener('change', function (event) {
+		regularInheritLookAndFeel.addEventListener('change', (event) => {
 			if (event.target.checked) {
 				styleBookWarning.classList.add('hide');
 			}
 		});
 
-		regularUniqueLookAndFeelCheckbox.addEventListener('change', function (event) {
+		regularUniqueLookAndFeelCheckbox.addEventListener('change', (event) => {
 			if (event.target.checked) {
 				styleBookWarning.classList.remove('hide');
 			}

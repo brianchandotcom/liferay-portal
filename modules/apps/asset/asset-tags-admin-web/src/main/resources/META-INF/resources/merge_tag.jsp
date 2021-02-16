@@ -123,12 +123,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 	);
 
 	if (form && mergeTagNamesInputs && targetTagNameSelect) {
-		form.addEventListener('submit', function (event) {
-			var mergeTagNames = Array.from(mergeTagNamesInputs).map(function (
-				mergeTagNamesInput
-			) {
-				return mergeTagNamesInput.value;
-			});
+		form.addEventListener('submit', (event) => {
+			var mergeTagNames = Array.from(mergeTagNamesInputs).map(
+				(mergeTagNamesInput) => {
+					return mergeTagNamesInput.value;
+				}
+			);
 
 			if (mergeTagNames.length < 2) {
 				alert(

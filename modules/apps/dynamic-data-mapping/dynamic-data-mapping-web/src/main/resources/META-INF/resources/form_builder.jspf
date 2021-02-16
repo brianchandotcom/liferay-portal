@@ -296,7 +296,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 			var propertyList = formBuilder.propertyList;
 
 			if (propertyList) {
-				propertyList.get('data').each(function (model) {
+				propertyList.get('data').each((model) => {
 					var editor = model.get('editor');
 
 					if (editor) {
@@ -319,7 +319,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		'<%= HtmlUtil.escapeJS(portletResourceNamespace) %>getContentValue'
 	] = getContentValue;
 
-	Liferay.on('<portlet:namespace />saveTemplate', function (event) {
+	Liferay.on('<portlet:namespace />saveTemplate', (event) => {
 		A.one('#<portlet:namespace />scriptContent').val(getContentValue());
 	});
 

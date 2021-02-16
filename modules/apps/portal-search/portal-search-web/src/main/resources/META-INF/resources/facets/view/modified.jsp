@@ -393,9 +393,7 @@ int index = 0;
 	customRangeFrom.on('selectionChange', onRangeSelectionChange);
 	customRangeTo.on('selectionChange', onRangeSelectionChange);
 
-	A.one('.<%= randomNamespace %>custom-range-toggle').on('click', function (
-		event
-	) {
+	A.one('.<%= randomNamespace %>custom-range-toggle').on('click', (event) => {
 		event.halt();
 
 		A.one('#<%= randomNamespace + "customRange" %>').toggle();

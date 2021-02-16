@@ -125,7 +125,7 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 		'#<portlet:namespace />fm .facet-term'
 	);
 
-	facetTerms.forEach(function (term) {
+	facetTerms.forEach((term) => {
 		Liferay.Util.toggleDisabled(term, false);
 	});
 </aui:script>

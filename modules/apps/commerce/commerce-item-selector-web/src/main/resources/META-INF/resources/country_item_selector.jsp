@@ -113,7 +113,7 @@ PortletURL portletURL = commerceCountryItemSelectorViewDisplayContext.getPortlet
 		'<portlet:namespace />commerceCountries'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{

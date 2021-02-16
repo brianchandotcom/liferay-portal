@@ -42,7 +42,7 @@
 					anchor.search
 						.substr(1)
 						.split('&')
-						.forEach(function (item) {
+						.forEach((item) => {
 							var tmp = item.split('=');
 
 							if (tmp[0] === parameterName) {
@@ -64,11 +64,11 @@
 		}
 	}
 
-	Liferay.once('destroyPortlet', function () {
+	Liferay.once('destroyPortlet', () => {
 		document.body.removeEventListener('click', handleDownloadClick);
 	});
 
-	Liferay.once('portletReady', function () {
+	Liferay.once('portletReady', () => {
 		document.body.addEventListener('click', handleDownloadClick);
 	});
 </aui:script>

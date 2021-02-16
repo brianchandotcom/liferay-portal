@@ -29,7 +29,7 @@
 
 	<c:if test="<%= persistState %>">
 		<aui:script position="auto">
-			Liferay.on('liferay.collapse.hidden', function (event) {
+			Liferay.on('liferay.collapse.hidden', (event) => {
 				var panelId = event.panel.getAttribute('id');
 
 				if (panelId === '<%= id %>') {
@@ -40,7 +40,7 @@
 				}
 			});
 
-			Liferay.on('liferay.collapse.shown', function (event) {
+			Liferay.on('liferay.collapse.shown', (event) => {
 				var panelId = event.panel.getAttribute('id');
 
 				if (panelId === '<%= id %>') {

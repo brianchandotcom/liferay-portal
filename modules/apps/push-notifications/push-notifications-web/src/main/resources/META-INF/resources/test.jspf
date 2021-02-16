@@ -71,7 +71,7 @@
 	var form = document.getElementById('<portlet:namespace />fm');
 
 	if (form) {
-		form.addEventListener('submit', function (event) {
+		form.addEventListener('submit', (event) => {
 			event.preventDefault();
 
 			var message = form.querySelector('#<portlet:namespace />message');

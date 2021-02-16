@@ -91,7 +91,7 @@
 		'<portlet:namespace />specificDisplayPageNameInput'
 	);
 
-	chooseSpecificDisplayPage.addEventListener('click', function (event) {
+	chooseSpecificDisplayPage.addEventListener('click', (event) => {
 		Liferay.Util.openSelectionModal({
 			onSelect: function (selectedItem) {
 				assetDisplayPageIdInput.value = '';
@@ -126,7 +126,7 @@
 	);
 
 	if (previewDefaultDisplayPageButton) {
-		previewDefaultDisplayPageButton.addEventListener('click', function (event) {
+		previewDefaultDisplayPageButton.addEventListener('click', (event) => {
 			Liferay.Util.openModal({
 				title: '<liferay-ui:message key="preview" />',
 				url:
@@ -136,9 +136,7 @@
 	}
 
 	if (previewSpecificDisplayPageButton) {
-		previewSpecificDisplayPageButton.addEventListener('click', function (
-			event
-		) {
+		previewSpecificDisplayPageButton.addEventListener('click', (event) => {
 			Liferay.Util.openModal({
 				title: '<liferay-ui:message key="preview" />',
 				url:

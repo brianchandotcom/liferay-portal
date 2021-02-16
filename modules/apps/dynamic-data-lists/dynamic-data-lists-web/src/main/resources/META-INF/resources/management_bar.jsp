@@ -81,10 +81,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		deleteRecordSets: deleteRecordSets,
 	};
 
-	Liferay.componentReady('ddlManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
+	Liferay.componentReady('ddlManagementToolbar').then((managementToolbar) => {
+		managementToolbar.on('actionItemClicked', (event) => {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

@@ -160,17 +160,17 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 		markNotificationsAsUnread: markNotificationsAsUnread,
 	};
 
-	Liferay.componentReady('notificationsManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('notificationsManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('actionItemClicked', (event) => {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		}
+	);
 </aui:script>
 
 <aui:script use="aui-base">
@@ -178,7 +178,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 	form.delegate(
 		'click',
-		function (event) {
+		(event) => {
 			event.preventDefault();
 
 			var currentTarget = event.currentTarget;
@@ -186,10 +186,10 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 			Liferay.Util.fetch(currentTarget.attr('href'), {
 				method: 'POST',
 			})
-				.then(function (response) {
+				.then((response) => {
 					return response.json();
 				})
-				.then(function (response) {
+				.then((response) => {
 					if (response.success) {
 						var notificationContainer = currentTarget.ancestor(
 							'li.list-group-item'

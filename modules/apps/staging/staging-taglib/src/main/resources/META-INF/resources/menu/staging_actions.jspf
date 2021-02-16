@@ -28,7 +28,7 @@
 			);
 
 			if (publishGlobalLink) {
-				publishGlobalLink.addEventListener('click', function (event) {
+				publishGlobalLink.addEventListener('click', (event) => {
 					event.preventDefault();
 
 					Liferay.Util.openWindow({
@@ -221,7 +221,7 @@
 				);
 
 				if (publishLink) {
-					publishLink.addEventListener('click', function (event) {
+					publishLink.addEventListener('click', (event) => {
 						event.preventDefault();
 
 						Liferay.Util.openWindow({
@@ -249,7 +249,7 @@
 				);
 
 				if (publishToLiveLink) {
-					publishToLiveLink.addEventListener('click', function (event) {
+					publishToLiveLink.addEventListener('click', (event) => {
 						event.preventDefault();
 
 						Liferay.Util.openWindow({
@@ -306,7 +306,7 @@
 				);
 
 				if (layoutSetBranchesLink) {
-					layoutSetBranchesLink.addEventListener('click', function (event) {
+					layoutSetBranchesLink.addEventListener('click', (event) => {
 						event.preventDefault();
 
 						Liferay.Util.openWindow({

@@ -294,7 +294,7 @@ if (recurrence != null) {
 
 		editEventFormNode.once(
 			'key',
-			function (event) {
+			(event) => {
 				if (window.<portlet:namespace />recurrenceDialog.get('visible')) {
 					event.stopPropagation();
 				}
@@ -367,7 +367,7 @@ if (recurrence != null) {
 		Liferay.on('destroyPortlet', destroyRecurrenceDialog);
 	};
 
-	repeatCheckboxNode.on('change', function (event) {
+	repeatCheckboxNode.on('change', (event) => {
 		var checked = event.currentTarget.get('checked');
 
 		if (!checked) {
@@ -380,13 +380,13 @@ if (recurrence != null) {
 		<portlet:namespace />openRecurrenceDialog(checked);
 	});
 
-	summaryNode.on('click', function (event) {
+	summaryNode.on('click', (event) => {
 		<portlet:namespace />openRecurrenceDialog(true);
 
 		event.halt();
 	});
 
-	recurrenceDialogController.on('recurrenceChange', function (event) {
+	recurrenceDialogController.on('recurrenceChange', (event) => {
 		window.<portlet:namespace />updateSummaries();
 	});
 

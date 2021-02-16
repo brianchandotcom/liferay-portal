@@ -44,7 +44,7 @@ List<MenuItem> menuItems = MenuItem.fromWikiNode(selNodeId, depth, viewURL);
 
 				selectedChild.expand();
 
-				selectedChild.eachParent(function (node) {
+				selectedChild.eachParent((node) => {
 					if (node instanceof A.TreeNode) {
 						node.expand();
 					}

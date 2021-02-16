@@ -361,7 +361,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 				showManageTemplates: false,
 				title: '<%= HtmlUtil.escapeJS(scopeTitle) %>',
 			},
-			function (event) {
+			(event) => {
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(form, {

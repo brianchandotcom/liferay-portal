@@ -27,7 +27,7 @@
 	Liferay.provide(
 		window,
 		'<portlet:namespace />exportKaleoProcess',
-		function (url) {
+		(url) => {
 			var A = AUI();
 
 			var form = A.Node.create('<form method="post" />');

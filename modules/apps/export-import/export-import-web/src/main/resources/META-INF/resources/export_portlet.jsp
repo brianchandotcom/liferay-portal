@@ -472,7 +472,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 			var form = liferayForm.formNode;
 
-			form.on('submit', function (event) {
+			form.on('submit', (event) => {
 				event.halt();
 
 				var exportImport = Liferay.component(
@@ -565,7 +565,7 @@ portletURL.setParameter("portletResource", portletResource);
 
 	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
 
-	Liferay.once('destroyPortlet', function () {
+	Liferay.once('destroyPortlet', () => {
 		exportImport.destroy();
 	});
 </aui:script>

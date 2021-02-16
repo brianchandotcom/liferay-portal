@@ -125,15 +125,15 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 							method: 'POST',
 						}
 					)
-						.then(function (response) {
+						.then((response) => {
 							return response.text();
 						})
-						.then(function (response) {
+						.then((response) => {
 							templatePreview.plug(A.Plugin.ParseContent);
 
 							templatePreview.setContent(response);
 						})
-						.catch(function () {
+						.catch(() => {
 							templatePreview.html(
 								'<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>'
 							);
@@ -156,14 +156,14 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 
 	A.one('#<%= refererPortletName + "ddmTemplateTypeDefault" %>').on(
 		'click',
-		function (event) {
+		(event) => {
 			templateKeyInput.setAttribute('value', '');
 		}
 	);
 
 	A.one('#<%= refererPortletName + "clearddmTemplateButton" %>').on(
 		'click',
-		function (event) {
+		(event) => {
 			templateKeyInput.setAttribute('value', '');
 
 			templatePreview.html(

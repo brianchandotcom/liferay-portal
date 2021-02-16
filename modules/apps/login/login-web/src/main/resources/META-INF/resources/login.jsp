@@ -194,7 +194,7 @@
 			var form = document.getElementById('<portlet:namespace /><%= formName %>');
 
 			if (form) {
-				form.addEventListener('submit', function (event) {
+				form.addEventListener('submit', (event) => {
 					<c:if test="<%= Validator.isNotNull(redirect) %>">
 						var redirect = form.querySelector('#<portlet:namespace />redirect');
 
@@ -211,7 +211,7 @@
 				var password = form.querySelector('#<portlet:namespace />password');
 
 				if (password) {
-					password.addEventListener('keypress', function (event) {
+					password.addEventListener('keypress', (event) => {
 						Liferay.Util.showCapsLock(
 							event,
 							'<portlet:namespace />passwordCapsLockSpan'

@@ -75,7 +75,7 @@ List<CommerceCurrency> commerceCurrencies = commerceCatalogDisplayContext.getCom
 			Liferay.provide(
 				window,
 				'<portlet:namespace />apiSubmit',
-				function (form) {
+				(form) => {
 					var API_URL = '/o/headless-commerce-admin-catalog/v1.0/catalogs';
 
 					window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
@@ -83,7 +83,7 @@ List<CommerceCurrency> commerceCurrencies = commerceCatalogDisplayContext.getCom
 					});
 
 					FormUtils.apiSubmit(form, API_URL)
-						.then(function (payload) {
+						.then((payload) => {
 							var redirectURL = new Liferay.PortletURL.createURL(
 								'<%= editCatalogPortletURL.toString() %>'
 							);
@@ -100,7 +100,7 @@ List<CommerceCurrency> commerceCurrencies = commerceCatalogDisplayContext.getCom
 								},
 							});
 						})
-						.catch(function () {
+						.catch(() => {
 							window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
 								isLoading: false,
 							});

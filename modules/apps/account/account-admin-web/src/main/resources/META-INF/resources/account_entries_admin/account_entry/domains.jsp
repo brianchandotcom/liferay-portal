@@ -112,7 +112,7 @@ List<String> domains = accountEntryDisplay.getDomains();
 
 	searchContainerContentBox.delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');
@@ -131,7 +131,7 @@ List<String> domains = accountEntryDisplay.getDomains();
 	var addDomainsIcon = document.getElementById('<portlet:namespace />addDomains');
 
 	if (addDomainsIcon) {
-		addDomainsIcon.addEventListener('click', function (event) {
+		addDomainsIcon.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			Liferay.Util.openModal({
@@ -142,7 +142,7 @@ List<String> domains = accountEntryDisplay.getDomains();
 						onEvent: function (event) {
 							var newDomains = event.data.split(',');
 
-							newDomains.forEach(function (domain) {
+							newDomains.forEach((domain) => {
 								domain = domain.trim();
 
 								if (!domains.includes(domain)) {

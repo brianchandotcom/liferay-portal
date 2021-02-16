@@ -321,7 +321,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									init: function () {
 										Liferay.MapBase.get(
 											'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + mapDisplayName + "--" %>',
-											function (map) {
+											(map) => {
 												map.on(
 													'positionChange',
 													geolocationField.onPositionChange,
@@ -833,8 +833,8 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 						<aui:script require="map-common/js/MapBase.es as MapBase">
 							Liferay.MapBase.get(
 								'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + mapDisplayName + "--" %>',
-								function (map) {
-									map.once('positionChange', function (event) {
+								(map) => {
+									map.once('positionChange', (event) => {
 										var inputName =
 											'<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + HtmlUtil.escapeJS(name) + "--" %>';
 

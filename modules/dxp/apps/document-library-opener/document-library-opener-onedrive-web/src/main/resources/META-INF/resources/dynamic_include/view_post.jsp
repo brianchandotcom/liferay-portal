@@ -27,7 +27,7 @@
 		dialogTitle
 	) {
 		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
-			function (openerOnedrive) {
+			(openerOnedrive) => {
 				openerOnedrive.createWithName({
 					dialogTitle: dialogTitle,
 					formSubmitURL: formSubmitURL,
@@ -41,7 +41,7 @@
 		dialogTitle
 	) {
 		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
-			function (openerOnedrive) {
+			(openerOnedrive) => {
 				openerOnedrive.edit({
 					formSubmitURL: formSubmitURL,
 				});
@@ -56,7 +56,7 @@
 
 	<c:if test="<%= oneDriveBackgroundTaskStatusURL != null %>">
 		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
-			function (openerOnedrive) {
+			(openerOnedrive) => {
 				openerOnedrive.open({
 					dialogMessage: '<%= dialogMessage %>',
 					statusURL: '<%= oneDriveBackgroundTaskStatusURL %>',

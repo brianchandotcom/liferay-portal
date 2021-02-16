@@ -217,7 +217,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 	</div>
 
 	<aui:script>
-		Liferay.after('current-order-updated', function (event) {
+		Liferay.after('current-order-updated', (event) => {
 			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 		});
 	</aui:script>

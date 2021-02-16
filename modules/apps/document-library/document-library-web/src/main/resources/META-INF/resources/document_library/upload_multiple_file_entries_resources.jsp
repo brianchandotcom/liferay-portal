@@ -217,14 +217,14 @@ else {
 						if (documentTypeMenuList) {
 							var delegate = delegateModule.default;
 
-							delegate(documentTypeMenuList, 'click', 'li a', function (event) {
+							delegate(documentTypeMenuList, 'click', 'li a', (event) => {
 								event.preventDefault();
 
 								Liferay.Util.fetch(event.delegateTarget.getAttribute('href'))
-									.then(function (response) {
+									.then((response) => {
 										return response.text();
 									})
-									.then(function (response) {
+									.then((response) => {
 										var commonFileMetadataContainer = document.getElementById(
 											'<portlet:namespace />commonFileMetadataContainer'
 										);
@@ -241,7 +241,7 @@ else {
 
 										var selectedFileNodes = Array.prototype.filter.call(
 											fileNodes,
-											function (fileNode) {
+											(fileNode) => {
 												return fileNode.checked;
 											}
 										);

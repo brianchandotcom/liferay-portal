@@ -149,8 +149,8 @@ if (Validator.isNotNull(backURL)) {
 			'input[id^=' + quantityPrefix + ']'
 		);
 
-		Array.from(quantityInputElements).forEach(function (quantityInputElement) {
-			quantityInputElement.addEventListener('keypress', function (event) {
+		Array.from(quantityInputElements).forEach((quantityInputElement) => {
+			quantityInputElement.addEventListener('keypress', (event) => {
 				if (event.keyCode == enterKeyCode) {
 					event.preventDefault();
 

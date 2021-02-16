@@ -36,13 +36,13 @@ String fieldsJSONArrayString = String.valueOf(_getFormTemplateFieldsJSONArray(st
 		var modeInput = document.getElementById('<portlet:namespace />mode');
 
 		if (modeInput) {
-			modeInput.addEventListener('change', function (event) {
+			modeInput.addEventListener('change', (event) => {
 				<portlet:namespace />toggleMode(formBuilder, event.target.value);
 			});
 		}
 	}
 
-	Liferay.on('<portlet:namespace />formBuilderLoaded', function (event) {
+	Liferay.on('<portlet:namespace />formBuilderLoaded', (event) => {
 		var formBuilder = event.formBuilder;
 
 		<portlet:namespace />attachValueChange(formBuilder);
@@ -65,8 +65,8 @@ String fieldsJSONArrayString = String.valueOf(_getFormTemplateFieldsJSONArray(st
 		var without = function (array) {
 			var elems = Array.from(arguments).slice(1);
 
-			elems.forEach(function (value) {
-				array = array.filter(function (elem) {
+			elems.forEach((value) => {
+				array = array.filter((elem) => {
 					return elem != value;
 				});
 			});
@@ -115,7 +115,7 @@ String fieldsJSONArrayString = String.valueOf(_getFormTemplateFieldsJSONArray(st
 
 		var availableFields = <%= structureJSONArray.toString() %>;
 
-		availableFields.forEach(function (item, index) {
+		availableFields.forEach((item, index) => {
 			item.iconClass = FormBuilder.DEFAULT_ICON_CLASS;
 		});
 

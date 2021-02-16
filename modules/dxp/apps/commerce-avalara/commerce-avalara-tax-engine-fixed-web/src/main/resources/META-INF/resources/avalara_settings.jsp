@@ -40,9 +40,7 @@ CommerceAvalaraConnectorConfiguration commerceAvalaraConnectorConfiguration = (C
 </aui:form>
 
 <aui:script>
-	Liferay.provide(window, '<portlet:namespace />verifyConnection', function (
-		evt
-	) {
+	Liferay.provide(window, '<portlet:namespace />verifyConnection', (evt) => {
 		const inputCmd = document.querySelector(
 			'#<portlet:namespace /><%= Constants.CMD %>'
 		);

@@ -145,7 +145,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		var handleOnSelect = A.one('#<portlet:namespace />selectSiteLink').on(
 			'click',
-			function (event) {
+			(event) => {
 				var searchContainerData = searchContainer.getData();
 
 				if (!searchContainerData.length) {
@@ -183,7 +183,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 						uri: '<%= groupSelectorURL.toString() %>',
 					},
-					function (event) {
+					(event) => {
 						var entityId = event.entityid;
 
 						var rowColumns = [];
@@ -217,7 +217,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		var handleOnModifyLink = searchContainerContentBox.delegate(
 			'click',
-			function (event) {
+			(event) => {
 				var link = event.currentTarget;
 
 				var rowId = link.attr('data-rowId');
@@ -251,8 +251,8 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		var handleEnableRemoveSite = Liferay.on(
 			'<portlet:namespace />enableRemovedSites',
-			function (event) {
-				event.selectors.each(function (item, index, collection) {
+			(event) => {
+				event.selectors.each((item, index, collection) => {
 					var groupId = item.attr('data-entityid');
 
 					if (deleteGroupIds.indexOf(groupId) != -1) {

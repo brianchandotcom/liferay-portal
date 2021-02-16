@@ -40,13 +40,13 @@
 						id,
 						accountData
 					)
-						.then(function () {
+						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
 									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNTS %>',
 							});
 						})
-						.catch(function (error) {
+						.catch((error) => {
 							return Promise.reject(error);
 						});
 				}

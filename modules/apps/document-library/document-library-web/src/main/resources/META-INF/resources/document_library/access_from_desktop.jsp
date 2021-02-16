@@ -55,7 +55,7 @@ DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAcce
 		);
 
 		if (webdavActionLink) {
-			webdavActionLink.addEventListener('click', function (event) {
+			webdavActionLink.addEventListener('click', (event) => {
 				event.preventDefault();
 
 				if (webdavContentContainer) {

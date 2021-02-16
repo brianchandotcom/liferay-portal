@@ -106,7 +106,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 								<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events">
 									document
 										.querySelector('#erc-edit-modal-opener')
-										.addEventListener('click', function (e) {
+										.addEventListener('click', (e) => {
 											e.preventDefault();
 											Liferay.fire(events.OPEN_MODAL, {id: 'erc-edit-modal'});
 										});
@@ -176,7 +176,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 								<aui:script>
 									document
 										.querySelector('#<portlet:namespace />assign-to-me-modal-opener')
-										.addEventListener('click', function (e) {
+										.addEventListener('click', (e) => {
 											Liferay.Util.openWindow({
 												dialog: {
 													destroyOnHide: true,
@@ -212,7 +212,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							<aui:script>
 								document
 									.querySelector('#<portlet:namespace />assign-to-modal-opener')
-									.addEventListener('click', function (e) {
+									.addEventListener('click', (e) => {
 										Liferay.Util.openWindow({
 											dialog: {
 												destroyOnHide: true,
@@ -233,7 +233,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									window.location.reload();
 								}
 
-								Liferay.provide(window, '<portlet:namespace />toggleDropdown', function () {
+								Liferay.provide(window, '<portlet:namespace />toggleDropdown', () => {
 									var dropdownElement = window.document.querySelector(
 										'#<portlet:namespace />commerce-dropdown-assigned-to'
 									);
@@ -280,18 +280,16 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 							<c:if test="<%= submitCheck && Validator.isNotNull(action.getFormId()) %>">
 								<aui:script>
-									document
-										.getElementById('<%= actionId %>')
-										.addEventListener('click', function (e) {
-											e.preventDefault();
-											var form = document.getElementById('<%= action.getFormId() %>');
-											if (!form) {
-												throw new Error(
-													'Form with id: ' + <%= action.getFormId() %> + ' not found!'
-												);
-											}
-											submitForm(form);
-										});
+									document.getElementById('<%= actionId %>').addEventListener('click', (e) => {
+										e.preventDefault();
+										var form = document.getElementById('<%= action.getFormId() %>');
+										if (!form) {
+											throw new Error(
+												'Form with id: ' + <%= action.getFormId() %> + ' not found!'
+											);
+										}
+										submitForm(form);
+									});
 								</aui:script>
 							</c:if>
 
@@ -353,7 +351,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 		updateMenuDistanceFromTop();
 		window.addEventListener('resize', debouncedUpdateMenuDistanceFromTop);
 
-		Liferay.once('beforeNavigate', function () {
+		Liferay.once('beforeNavigate', () => {
 			window.removeEventListener(
 				'resize',
 				debouncedUpdateMenuDistanceFromTop

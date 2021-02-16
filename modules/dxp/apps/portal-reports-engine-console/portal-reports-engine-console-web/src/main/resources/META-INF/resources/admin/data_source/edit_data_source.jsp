@@ -113,17 +113,17 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 
 			var url = new URL(baseUrl);
 
-			searchParams.forEach(function (value, key) {
+			searchParams.forEach((value, key) => {
 				url.searchParams.append(key, value);
 			});
 
 			var id = '<portlet:namespace />databaseConnectionModal';
 
 			Liferay.Util.fetch(url)
-				.then(function (response) {
+				.then((response) => {
 					return response.text();
 				})
-				.then(function (text) {
+				.then((text) => {
 					Liferay.Util.openModal({
 						bodyHTML: text,
 						buttons: [
@@ -143,7 +143,7 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 						title: '<liferay-ui:message key="source" />',
 					});
 				})
-				.catch(function (error) {
+				.catch((error) => {
 					Liferay.Util.openToast({
 						message: Liferay.Language.get(
 							'an-unexpected-system-error-occurred'

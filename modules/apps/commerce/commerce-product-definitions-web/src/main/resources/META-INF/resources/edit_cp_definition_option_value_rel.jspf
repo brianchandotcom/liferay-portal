@@ -128,7 +128,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				},
 			});
 
-			Liferay.provide(window, '<portlet:namespace />removeSku', function () {
+			Liferay.provide(window, '<portlet:namespace />removeSku', () => {
 				var url = new URL(
 					'<%= cpDefinitionOptionValueRelDisplayContext.getRemoveSkuUrl(currentURL) %>'
 				);

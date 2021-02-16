@@ -54,7 +54,7 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 	var <%= namespace %>empty = document.getElementById('<%= namespace %>empty');
 
 	if (<%= namespace %>empty) {
-		<%= namespace %>empty.addEventListener('click', function (event) {
+		<%= namespace %>empty.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			if (

@@ -102,7 +102,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move"),
 	);
 
 	if (selectCategoryButton) {
-		selectCategoryButton.addEventListener('click', function (event) {
+		selectCategoryButton.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (event) {
 					var form = document.<portlet:namespace />fm;

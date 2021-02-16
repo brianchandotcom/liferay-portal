@@ -98,7 +98,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace />ordering').delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var currentTarget = event.currentTarget;
 
 			var orderByTypeContainer = currentTarget.ancestor(

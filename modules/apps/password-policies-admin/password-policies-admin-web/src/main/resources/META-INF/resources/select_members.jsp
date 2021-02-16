@@ -87,7 +87,7 @@ SearchContainer<?> searchContainer = editPasswordPolicyAssignmentsManagementTool
 		'<portlet:namespace />' + 'passwordPolicyMembers'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var selectedItems = event.elements.allSelectedElements;
 
 		var result = {};

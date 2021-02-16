@@ -124,7 +124,7 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 		Liferay.provide(
 			window,
 			'handleAddOrganizationButtonClick',
-			function (event) {
+			(event) => {
 				event.preventDefault();
 
 				var organizationId =
@@ -176,7 +176,7 @@ request.setAttribute("view.jsp-filterPerOrganization", false);
 	</aui:script>
 
 	<aui:script>
-		Liferay.provide(window, 'deleteCommerceOrganization', function (id) {
+		Liferay.provide(window, 'deleteCommerceOrganization', (id) => {
 			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
 				'<%= Constants.DELETE %>';
 			document.querySelector('#<portlet:namespace />organizationId').value = id;

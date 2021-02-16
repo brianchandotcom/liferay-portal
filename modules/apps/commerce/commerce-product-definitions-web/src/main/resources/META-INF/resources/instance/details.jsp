@@ -219,23 +219,23 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 	Liferay.componentReady(
 		'ProductOptions<%= cpDefinition.getCPDefinitionId() %>'
-	).then(function (ddmForm) {
+	).then((ddmForm) => {
 		if (!ddmForm.on) {
 			return;
 		}
-		ddmForm.on('fieldEdited', function (e) {
+		ddmForm.on('fieldEdited', (e) => {
 			var key = e.fieldInstance.fieldName;
 			var updatedItem = {
 				key: e.fieldInstance.fieldName,
 				value: e.value,
 			};
 
-			var itemFound = fieldValues.find(function (item) {
+			var itemFound = fieldValues.find((item) => {
 				return item.key === key;
 			});
 
 			if (itemFound) {
-				fieldValues = fieldValues.reduce(function (acc, item) {
+				fieldValues = fieldValues.reduce((acc, item) => {
 					return acc.concat(item.key === key ? updatedItem : item);
 				}, []);
 			}
@@ -262,7 +262,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 			var fieldValues = [];
 
-			fields.forEach(function (field) {
+			fields.forEach((field) => {
 				var fieldValue = {};
 
 				fieldValue.key = field.get('fieldName');
@@ -297,7 +297,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 	var publishButton = form.one('#<portlet:namespace />publishButton');
 
-	publishButton.on('click', function () {
+	publishButton.on('click', () => {
 		var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
 
 		if (workflowActionInput) {

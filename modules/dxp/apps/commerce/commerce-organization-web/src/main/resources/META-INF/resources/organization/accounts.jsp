@@ -43,7 +43,7 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 	</aui:form>
 
 	<aui:script>
-		Liferay.provide(window, 'deleteCommerceOrganizationAccount', function (id) {
+		Liferay.provide(window, 'deleteCommerceOrganizationAccount', (id) => {
 			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
 				'<%= Constants.REMOVE %>';
 			document.querySelector('#<portlet:namespace />organizationId').value = id;

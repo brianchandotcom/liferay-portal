@@ -40,13 +40,13 @@
 						id,
 						categoryData
 					)
-						.then(function () {
+						.then(() => {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
 									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_CATEGORIES %>',
 							});
 						})
-						.catch(function (error) {
+						.catch((error) => {
 							return Promise.reject(error);
 						});
 				}

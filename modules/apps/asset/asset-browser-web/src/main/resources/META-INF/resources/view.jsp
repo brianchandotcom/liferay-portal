@@ -230,7 +230,7 @@
 				'<portlet:namespace />selectAssetEntries'
 			);
 
-			searchContainer.on('rowToggled', function (event) {
+			searchContainer.on('rowToggled', (event) => {
 				var selectedItems = event.elements.allSelectedElements;
 
 				var arr = [];
@@ -274,7 +274,7 @@
 				document.querySelector('#<portlet:namespace />selectAssetFm'),
 				'click',
 				'.selector-button',
-				function (event) {
+				(event) => {
 					event.preventDefault();
 
 					Liferay.Util.getOpener().Liferay.fire(

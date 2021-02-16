@@ -46,7 +46,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 			Liferay.provide(
 				window,
 				'<portlet:namespace />apiSubmit',
-				function (form) {
+				(form) => {
 					var description = form.querySelector('#description').value;
 					var title = form.querySelector('#title').value;
 
@@ -56,7 +56,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 					};
 
 					return CommerceProductGroupsResource.addProductGroup(productGroupData)
-						.then(function (payload) {
+						.then((payload) => {
 							var redirectURL = new Liferay.PortletURL.createURL(
 								'<%= editPricingClassPortletURL.toString() %>'
 							);
@@ -73,7 +73,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 								},
 							});
 						})
-						.catch(function (error) {
+						.catch((error) => {
 							return Promise.reject(error);
 						});
 				},

@@ -75,7 +75,7 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 						},
 					];
 
-					list.forEach(function (listElement) {
+					list.forEach((listElement) => {
 						callbackList.push(listElement);
 					});
 
@@ -111,7 +111,7 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 						},
 					];
 
-					list.forEach(function (listElement) {
+					list.forEach((listElement) => {
 						callbackList.push(listElement);
 					});
 

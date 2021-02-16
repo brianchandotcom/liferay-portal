@@ -116,13 +116,13 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 </aui:form>
 
 <aui:script>
-	Liferay.after('<portlet:namespace />saveAndContinue', function () {
+	Liferay.after('<portlet:namespace />saveAndContinue', () => {
 		document.<portlet:namespace />fm.<portlet:namespace />saveAndContinue.value = true;
 
 		Liferay.fire('<portlet:namespace />saveTemplate');
 	});
 
-	Liferay.after('<portlet:namespace />saveTemplate', function () {
+	Liferay.after('<portlet:namespace />saveTemplate', () => {
 		submitForm(document.<portlet:namespace />fm);
 	});
 
@@ -141,7 +141,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	}
 
 	if (contextualSidebarButton) {
-		contextualSidebarButton.addEventListener('click', function (event) {
+		contextualSidebarButton.addEventListener('click', (event) => {
 			if (
 				contextualSidebarContainer.classList.contains(
 					'contextual-sidebar-visible'

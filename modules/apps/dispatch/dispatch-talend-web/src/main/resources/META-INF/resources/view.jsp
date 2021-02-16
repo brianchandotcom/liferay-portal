@@ -60,10 +60,8 @@ String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_ENTRY_N
 </div>
 
 <aui:script>
-	AUI().ready(function (A) {
-		A.one('#<portlet:namespace />fileEntryRemove').on('click', function (
-			event
-		) {
+	AUI().ready((A) => {
+		A.one('#<portlet:namespace />fileEntryRemove').on('click', (event) => {
 			event.preventDefault();
 
 			A.one('#<portlet:namespace />fileEntry').removeClass('hide');

@@ -20,7 +20,7 @@
 	if (iframe) {
 		iframe.plug(A.Plugin.AutosizeIframe);
 
-		iframe.on('load', function () {
+		iframe.on('load', () => {
 			var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
 			if (height == null) {

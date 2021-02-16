@@ -159,7 +159,7 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 
 	searchContainerContentBox.delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var selectedItem = event.currentTarget;
 
 			var linkItem = selectedItem.one('.wiki-page');

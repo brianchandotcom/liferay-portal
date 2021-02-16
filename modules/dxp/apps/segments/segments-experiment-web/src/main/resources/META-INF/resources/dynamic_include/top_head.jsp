@@ -27,7 +27,7 @@ SegmentsExperiment segmentsExperiment = (SegmentsExperiment)request.getAttribute
 		);
 
 		if (element) {
-			element.addEventListener('click', function (event) {
+			element.addEventListener('click', (event) => {
 				if (window.Analytics) {
 					Analytics.send('ctaClicked', 'Page', {elementId: event.target.id});
 				}

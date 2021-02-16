@@ -290,7 +290,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 	function <portlet:namespace />mapValues(fields, fieldValues) {
 		var form = document.<portlet:namespace />fm;
 
-		return fields.reduce(function (prev, item, index) {
+		return fields.reduce((prev, item, index) => {
 			var mappingElement = Liferay.Util.getFormElement(
 				form,
 				fieldValues[index]
@@ -621,22 +621,22 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 
 			var searchParams = Liferay.Util.objectToURLSearchParams(data);
 
-			searchParams.forEach(function (value, key) {
+			searchParams.forEach((value, key) => {
 				url.searchParams.append(key, value);
 			});
 
 			Liferay.Util.fetch(url)
-				.then(function (response) {
+				.then((response) => {
 					return response.text();
 				})
-				.then(function (text) {
+				.then((text) => {
 					Liferay.Util.openModal({
 						bodyHTML: text,
 						size: 'full-screen',
 						title: '<%= UnicodeLanguageUtil.get(request, "ldap") %>',
 					});
 				})
-				.catch(function (error) {
+				.catch((error) => {
 					Liferay.Util.openToast({
 						message: Liferay.Language.get(
 							'an-unexpected-system-error-occurred'

@@ -208,7 +208,7 @@ else {
 </aui:form>
 
 <script type="text/javascript">
-	AUI().ready(function (A) {
+	AUI().ready((A) => {
 		Liferay.Report.initialize({
 			namespace: '<portlet:namespace />',
 			parameters:

@@ -96,7 +96,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 					'#<portlet:namespace />fm .lfr-ddm-form-container .ddm-field'
 				);
 
-				Array.prototype.forEach.call(ddmFieldWrappers, function (ddmFieldWrapper) {
+				Array.prototype.forEach.call(ddmFieldWrappers, (ddmFieldWrapper) => {
 					var fieldName = ddmFieldWrapper.dataset.fieldName;
 
 					var input = ddmFieldWrapper.querySelector('input');
@@ -112,11 +112,9 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 			var customizedFileButton = document.getElementById('<portlet:namespace />file');
 
 			if (customizedFileButton) {
-				var filePicker = new <%= dlFilePicker.getJavaScriptModuleName() %>(
-					function () {
-						Liferay.Util.toggleDisabled(customizedFileButton, false);
-					}
-				);
+				var filePicker = new <%= dlFilePicker.getJavaScriptModuleName() %>(() => {
+					Liferay.Util.toggleDisabled(customizedFileButton, false);
+				});
 
 				customizedFileButton.addEventListener(
 					'click',

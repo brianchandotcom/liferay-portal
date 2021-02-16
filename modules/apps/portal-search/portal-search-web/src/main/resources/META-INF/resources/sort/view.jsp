@@ -88,8 +88,8 @@ SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayC
 </c:choose>
 
 <aui:script use="liferay-search-sort-util">
-	AUI().ready('aui-base', 'node', 'event', function (A) {
-		A.one('#<portlet:namespace />sortSelection').on('change', function () {
+	AUI().ready('aui-base', 'node', 'event', (A) => {
+		A.one('#<portlet:namespace />sortSelection').on('change', () => {
 			var selections = [];
 
 			var sortSelect = A.one('#<portlet:namespace />sortSelection').get(

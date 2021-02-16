@@ -53,7 +53,7 @@ List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDispl
 			Liferay.provide(
 				window,
 				'<portlet:namespace />apiSubmit',
-				function (form) {
+				(form) => {
 					var name = form.querySelector('#name').value;
 
 					var commerceDiscountRuleType = form.querySelector('#type').value;
@@ -67,7 +67,7 @@ List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDispl
 						'<%= commerceDiscountId %>',
 						discountRuleData
 					)
-						.then(function (payload) {
+						.then((payload) => {
 							window.parent.Liferay.fire(events.CLOSE_MODAL, {
 								successNotification: {
 									message:
@@ -76,7 +76,7 @@ List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDispl
 								},
 							});
 						})
-						.catch(function (error) {
+						.catch((error) => {
 							return Promise.reject(error);
 						});
 				},

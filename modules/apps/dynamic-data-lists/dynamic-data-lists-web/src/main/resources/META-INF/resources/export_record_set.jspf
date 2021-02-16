@@ -105,7 +105,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 						);
 
 						Liferay.Util.fetch(url, {body: formData, method: 'POST'})
-							.then(function (response) {
+							.then((response) => {
 								var filenamePattern = /filename=\"(.*)\"/;
 								var match = filenamePattern.exec(
 									response.headers.get('content-disposition')
@@ -115,7 +115,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 								}
 								return response.blob();
 							})
-							.then(function (blob) {
+							.then((blob) => {
 								var link = document.createElement('a');
 								link.setAttribute(
 									'href',
@@ -128,7 +128,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 
 								Liferay.fire('closeModal');
 							})
-							.catch(function (error) {
+							.catch((error) => {
 								Liferay.Util.openToast({
 									message: Liferay.Language.get(
 										'an-unexpected-system-error-occurred'

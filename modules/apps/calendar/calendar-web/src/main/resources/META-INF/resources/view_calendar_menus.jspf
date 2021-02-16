@@ -41,7 +41,7 @@
 									destroy: function (event) {
 										remoteServices.getResourceCalendars(
 											calendarResourceId,
-											function (calendars) {
+											(calendars) => {
 												var calendarList =
 													window
 														.<portlet:namespace />calendarLists[
@@ -228,14 +228,14 @@
 								destroy: function (event) {
 									remoteServices.getCalendar(
 										activeCalendar.get('calendarId'),
-										function (calendar) {
+										(calendar) => {
 											var activeCalendarId = activeCalendar.get(
 												'calendarId'
 											);
 
 											var calendars = calendarList
 												.get('calendars')
-												.map(function (item) {
+												.map((item) => {
 													if (
 														activeCalendarId ===
 														item.get('calendarId')
@@ -350,10 +350,10 @@
 
 						remoteServices.deleteCalendar(
 							activeCalendar.get('calendarId'),
-							function () {
+							() => {
 								remoteServices.getResourceCalendars(
 									activeCalendar.get('calendarResourceId'),
-									function (calendars) {
+									(calendars) => {
 										calendarList.set('calendars', calendars);
 
 										<portlet:namespace />syncCalendarsMap();
@@ -496,7 +496,7 @@
 
 	A.one('#<portlet:namespace />calendarListContainer').delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var currentTarget = event.currentTarget;
 
 			window.<portlet:namespace />calendarListsMenu.calendarResourceId = currentTarget.getAttribute(
@@ -529,7 +529,7 @@
 		calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
 			addOtherCalendarInput,
-			function (event) {
+			(event) => {
 				window.<portlet:namespace />otherCalendarList.add(event.result.raw);
 
 				<portlet:namespace />refreshVisibleCalendarRenderingRules();
@@ -539,7 +539,7 @@
 		);
 	</c:if>
 
-	A.one('#<portlet:namespace />columnToggler').on('click', function (event) {
+	A.one('#<portlet:namespace />columnToggler').on('click', (event) => {
 		var columnTogglerIconId = '<portlet:namespace />columnTogglerIcon';
 		var columnGrid = A.one('#<portlet:namespace />columnGrid');
 		var columnOptions = A.one('#<portlet:namespace />columnOptions');
@@ -630,7 +630,7 @@
 			Liferay.CalendarUtil.toUTC(miniCalendarStartDate),
 			Liferay.CalendarUtil.toUTC(miniCalendarEndDate),
 			'busy',
-			function (rulesDefinition) {
+			(rulesDefinition) => {
 				var selectedDates = <portlet:namespace />miniCalendar._getSelectedDatesList();
 
 				window.<portlet:namespace />miniCalendar.set('customRenderer', {

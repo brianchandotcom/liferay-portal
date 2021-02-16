@@ -37,8 +37,8 @@
 
 	document
 		.querySelectorAll('.side-panel-iframe-close, .btn-cancel')
-		.forEach(function (trigger) {
-			trigger.addEventListener('click', function (e) {
+		.forEach((trigger) => {
+			trigger.addEventListener('click', (e) => {
 				e.preventDefault();
 				window.parent.Liferay.fire(events.CLOSE_SIDE_PANEL);
 			});

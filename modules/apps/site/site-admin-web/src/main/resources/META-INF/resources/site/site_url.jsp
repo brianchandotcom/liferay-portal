@@ -358,14 +358,14 @@ if (privateVirtualHostnames.isEmpty()) {
 	);
 
 	if (friendlyURL) {
-		friendlyURL.addEventListener('change', function (event) {
+		friendlyURL.addEventListener('change', (event) => {
 			var value = friendlyURL.value.trim();
 
 			if (value == '/') {
 				value = '';
 			}
 			else {
-				value = value.replace(/^[^\/]|\/$/g, function (match, index) {
+				value = value.replace(/^[^\/]|\/$/g, (match, index) => {
 					var str = '';
 
 					if (index == 0) {

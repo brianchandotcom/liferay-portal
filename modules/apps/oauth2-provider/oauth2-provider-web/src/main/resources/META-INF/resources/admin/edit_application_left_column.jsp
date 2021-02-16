@@ -131,9 +131,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 								);
 
 								if (allowedAuthorizationTypeCheckbox) {
-									allowedAuthorizationTypeCheckbox.addEventListener('click', function (
-										event
-									) {
+									allowedAuthorizationTypeCheckbox.addEventListener('click', (event) => {
 										<portlet:namespace />requiredRedirectURIs();
 									});
 								}
@@ -182,7 +180,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 					);
 
 					if (useSignedInUserButton) {
-						useSignedInUserButton.addEventListener('click', function (event) {
+						useSignedInUserButton.addEventListener('click', (event) => {
 							A.one('#<portlet:namespace />clientCredentialUserId').val(
 								'<%= user.getUserId() %>'
 							);
@@ -197,7 +195,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 					);
 
 					if (selectUserButton) {
-						selectUserButton.addEventListener('click', function (event) {
+						selectUserButton.addEventListener('click', (event) => {
 							Liferay.Util.openSelectionModal({
 								onSelect: function (event) {
 									A.one('#<portlet:namespace />clientCredentialUserId').val(

@@ -52,16 +52,16 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 						method: 'POST',
 					}
 				)
-					.then(function (response) {
+					.then((response) => {
 						if (response.ok) {
 							return response.json();
 						}
 
-						return response.json().then(function (data) {
+						return response.json().then((data) => {
 							return Promise.reject(data.errorDescription);
 						});
 					})
-					.then(function (e) {
+					.then((e) => {
 						Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 							id:
 								'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>',
@@ -91,12 +91,12 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 						method: 'POST',
 					}
 				)
-					.then(function (response) {
+					.then((response) => {
 						if (response.ok) {
 							return response.json();
 						}
 
-						return response.json().then(function (data) {
+						return response.json().then((data) => {
 							return Promise.reject(data.errorDescription);
 						});
 					})

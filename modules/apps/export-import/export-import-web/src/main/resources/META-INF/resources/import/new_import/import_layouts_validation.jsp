@@ -90,11 +90,11 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 		var continueButton = A.one('#<portlet:namespace />continueButton');
 
-		liferayUpload._uploader.on('alluploadscomplete', function (event) {
+		liferayUpload._uploader.on('alluploadscomplete', (event) => {
 			toggleContinueButton();
 		});
 
-		Liferay.on('tempFileRemoved', function (event) {
+		Liferay.on('tempFileRemoved', (event) => {
 			toggleContinueButton();
 		});
 
@@ -116,7 +116,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 <aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated,io">
 	var form = A.one('#<portlet:namespace />fm1');
 
-	form.on('submit', function (event) {
+	form.on('submit', (event) => {
 		event.halt();
 
 		var exportImportOptions = A.one(

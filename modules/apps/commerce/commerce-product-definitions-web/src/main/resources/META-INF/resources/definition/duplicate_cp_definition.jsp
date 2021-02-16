@@ -49,13 +49,13 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 		Liferay.provide(
 			window,
 			'<portlet:namespace />apiSubmit',
-			function (form) {
+			(form) => {
 				var API_URL =
 					'/o/headless-commerce-admin-catalog/v1.0/products/<%= cpDefinition.getCProductId() %>/clone?catalogId=' +
 					<portlet:namespace />product.catalogId;
 
 				FormUtils.apiSubmit(form, API_URL)
-					.then(function (payload) {
+					.then((payload) => {
 						var headers = new Headers({
 							Accept: 'application/json',
 							'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 								headers: headers,
 								method: 'patch',
 							}
-						).then(function () {
+						).then(() => {
 							var redirectURL = new Liferay.PortletURL.createURL(
 								'<%= editProductDefinitionURL %>'
 							);
@@ -101,7 +101,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 							});
 						});
 					})
-					.catch(function () {
+					.catch(() => {
 						window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
 							isLoading: false,
 						});

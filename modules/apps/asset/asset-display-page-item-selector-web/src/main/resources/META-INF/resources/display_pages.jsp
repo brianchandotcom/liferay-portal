@@ -57,11 +57,11 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 		document.querySelector('#<portlet:namespace />fm'),
 		'click',
 		'.layout-page-template-entry',
-		function (event) {
+		(event) => {
 			var activeCards = document.querySelectorAll('.form-check-card.active');
 
 			if (activeCards.length) {
-				activeCards.forEach(function (card) {
+				activeCards.forEach((card) => {
 					card.classList.remove('active');
 				});
 			}

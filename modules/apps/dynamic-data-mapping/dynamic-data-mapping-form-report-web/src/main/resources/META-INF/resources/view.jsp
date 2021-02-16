@@ -84,7 +84,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 		document.querySelector('.portlet-ddm-form-report-tabs'),
 		'click',
 		'li',
-		function (event) {
+		(event) => {
 			var navItem = event.delegateTarget.closest('.nav-item');
 			var navItemIndex = Number(navItem.dataset.navItemIndex);
 			var navLink = navItem.querySelector('.nav-link');

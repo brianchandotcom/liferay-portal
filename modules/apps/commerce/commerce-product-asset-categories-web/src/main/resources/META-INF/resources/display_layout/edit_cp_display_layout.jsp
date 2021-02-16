@@ -115,7 +115,7 @@ if (cpDisplayLayout != null) {
 
 	window.document
 		.querySelector('#<portlet:namespace />chooseDisplayPage')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: 'selectDisplayPage',
 				on: {
@@ -140,7 +140,7 @@ if (cpDisplayLayout != null) {
 			itemSelectorDialog.open();
 		});
 
-	displayPageItemRemove.addEventListener('click', function () {
+	displayPageItemRemove.addEventListener('click', () => {
 		displayPageNameInput.innerHTML = '<liferay-ui:message key="none" />';
 
 		pagesContainerInput.value = '';
@@ -225,7 +225,7 @@ if (cpDisplayLayout != null) {
 
 	window.document
 		.querySelector('#<portlet:namespace />selectCategories')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			var itemSelectorDialog = new ItemSelectorDialog.default({
 				eventName: '<portlet:namespace />selectCategory',
 				'strings.add': '<liferay-ui:message key="done" />',
@@ -236,11 +236,11 @@ if (cpDisplayLayout != null) {
 
 			itemSelectorDialog.open();
 
-			itemSelectorDialog.on('selectedItemChange', function (event) {
+			itemSelectorDialog.on('selectedItemChange', (event) => {
 				if (event.selectedItem) {
 					var selectedItem = event.selectedItem;
 
-					Object.keys(selectedItem).forEach(function (key) {
+					Object.keys(selectedItem).forEach((key) => {
 						var item = selectedItem[key];
 
 						if (!item.unchecked) {

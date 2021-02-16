@@ -42,7 +42,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 
 			showStatusMessage = Liferay.lazyLoad(
 				'frontend-js-web/liferay/toast/commands/OpenToast.es',
-				function (toastCommands, data) {
+				(toastCommands, data) => {
 					toastCommands.openToast(data);
 				}
 			);
@@ -57,14 +57,14 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 				Liferay.Util.fetch('<%= googleDriveBackgroundTaskStatusURL %>', {
 					method: 'POST',
 				})
-					.then(function (response) {
+					.then((response) => {
 						if (!response.ok) {
 							throw defaultError;
 						}
 
 						return response.json();
 					})
-					.then(function (response) {
+					.then((response) => {
 						if (response.complete) {
 							url = response.googleDocsEditURL;
 
@@ -77,7 +77,7 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 							setTimeout(polling, TIME_POLLING);
 						}
 					})
-					.catch(function (error) {
+					.catch((error) => {
 						showError(error);
 
 						Liferay.Util.getWindow(dialogId).hide();
@@ -115,10 +115,10 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 						width: 320,
 					},
 				},
-				function () {
+				() => {
 					setTimeout(polling, TIME_POLLING);
 
-					setTimeout(function () {
+					setTimeout(() => {
 						isTimeConsumed = true;
 
 						navigate();

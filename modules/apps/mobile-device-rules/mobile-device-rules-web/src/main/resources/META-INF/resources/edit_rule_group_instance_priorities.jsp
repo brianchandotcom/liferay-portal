@@ -91,15 +91,14 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 				ruleGroupInstanceNodes
 			);
 
-			var ruleGroupInstances = ruleGroupInstanceNodesArray.map(function (
-				item,
-				index
-			) {
-				return {
-					priority: index,
-					ruleGroupInstanceId: item.dataset.ruleGroupInstanceId,
-				};
-			});
+			var ruleGroupInstances = ruleGroupInstanceNodesArray.map(
+				(item, index) => {
+					return {
+						priority: index,
+						ruleGroupInstanceId: item.dataset.ruleGroupInstanceId,
+					};
+				}
+			);
 
 			ruleGroupsInstancesJSONElement.value = JSON.stringify(
 				ruleGroupInstances
@@ -151,7 +150,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 
 				var nodes = container.all('.list-group-item');
 
-				nodes.each(function (item, index, collection) {
+				nodes.each((item, index, collection) => {
 					var priorityNode = item.one(
 						'.rule-group-instance-priority-value'
 					);

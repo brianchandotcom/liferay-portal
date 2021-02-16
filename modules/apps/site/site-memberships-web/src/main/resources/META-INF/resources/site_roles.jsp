@@ -53,7 +53,7 @@ RolesDisplayContext rolesDisplayContext = new RolesDisplayContext(request, rende
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />roles');
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(rolesDisplayContext.getEventName()) %>',
 			{

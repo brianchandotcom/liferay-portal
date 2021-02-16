@@ -132,7 +132,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 				Liferay.provide(
 					window,
 					'<portlet:namespace />closePopup',
-					function (dialogId) {
+					(dialogId) => {
 						var dialog = Liferay.Util.Window.getById(dialogId);
 
 						dialog.destroy();
@@ -143,7 +143,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 				Liferay.provide(
 					window,
 					'<portlet:namespace />downloadCommerceVirtualOrderItem',
-					function (dialogId, commerceVirtualOrderItemId) {
+					(dialogId, commerceVirtualOrderItemId) => {
 						<portlet:namespace />closePopup(dialogId);
 
 						var formName =

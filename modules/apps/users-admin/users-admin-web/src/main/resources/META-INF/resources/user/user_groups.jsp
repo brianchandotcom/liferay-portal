@@ -121,7 +121,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		searchContainerContentBox.delegate(
 			'click',
-			function (event) {
+			(event) => {
 				var link = event.currentTarget;
 
 				var rowId = link.attr('data-rowId');
@@ -156,7 +156,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			'.modify-link'
 		);
 
-		A.one('#<portlet:namespace />openUserGroupsLink').on('click', function (event) {
+		A.one('#<portlet:namespace />openUserGroupsLink').on('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
 					var A = AUI();

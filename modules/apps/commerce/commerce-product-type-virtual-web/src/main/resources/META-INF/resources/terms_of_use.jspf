@@ -86,7 +86,7 @@
 
 	window.document
 		.querySelector('#<portlet:namespace />selectArticle')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			Liferay.Util.selectEntity(
@@ -102,7 +102,7 @@
 					uri:
 						'<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>',
 				},
-				function (event) {
+				(event) => {
 					window.document.querySelector(
 						'#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
 					).value = event.assetclasspk;
@@ -116,7 +116,7 @@
 
 	window.document
 		.querySelector('#<portlet:namespace />journalArticleRemove')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			window.document.querySelector(

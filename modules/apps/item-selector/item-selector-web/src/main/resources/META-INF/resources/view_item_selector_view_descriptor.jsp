@@ -192,7 +192,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 				'<portlet:namespace />entries'
 			);
 
-			searchContainer.on('rowToggled', function (event) {
+			searchContainer.on('rowToggled', (event) => {
 				var searchContainerItems = event.elements.allSelectedElements;
 
 				var arr = [];
@@ -232,11 +232,11 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 				document.querySelector('#<portlet:namespace />entriesContainer'),
 				'click',
 				'.entry',
-				function (event) {
+				(event) => {
 					var activeCards = document.querySelectorAll('.form-check-card.active');
 
 					if (activeCards.length) {
-						activeCards.forEach(function (card) {
+						activeCards.forEach((card) => {
 							card.classList.remove('active');
 						});
 					}

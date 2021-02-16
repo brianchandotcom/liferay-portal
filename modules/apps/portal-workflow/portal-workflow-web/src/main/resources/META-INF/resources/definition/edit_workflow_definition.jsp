@@ -348,7 +348,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	var previousContent = '';
 
 	if (uploadFile) {
-		uploadFile.addEventListener('change', function (evt) {
+		uploadFile.addEventListener('change', (evt) => {
 			var files = evt.target.files;
 
 			if (files) {
@@ -376,7 +376,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	var uploadLink = document.getElementById('<portlet:namespace />uploadLink');
 
 	if (uploadLink) {
-		uploadLink.addEventListener('click', function (event) {
+		uploadLink.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			uploadFile.click();
@@ -389,7 +389,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	var form = document.<portlet:namespace />fm;
 
-	Liferay.on('<portlet:namespace />publishDefinition', function (event) {
+	Liferay.on('<portlet:namespace />publishDefinition', (event) => {
 		var titleElement = Liferay.Util.getFormElement(
 			form,
 			'title_' + defaultLanguageId
@@ -410,7 +410,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		});
 	});
 
-	Liferay.on('<portlet:namespace />saveDefinition', function (event) {
+	Liferay.on('<portlet:namespace />saveDefinition', (event) => {
 		var titleElement = Liferay.Util.getFormElement(
 			form,
 			'title_' + defaultLanguageId
@@ -431,7 +431,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		});
 	});
 
-	Liferay.on('<portlet:namespace />undoDefinition', function (event) {
+	Liferay.on('<portlet:namespace />undoDefinition', (event) => {
 		if (contentEditor) {
 			contentEditor.set(STR_VALUE, previousContent);
 
@@ -454,7 +454,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	var title = document.getElementById('<portlet:namespace />title');
 
 	if (title) {
-		title.addEventListener('keypress', function (event) {
+		title.addEventListener('keypress', (event) => {
 			var keycode = event.keyCode ? event.keyCode : event.which;
 
 			if (keycode == '13') {

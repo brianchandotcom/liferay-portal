@@ -339,10 +339,8 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		deleteEntries: deleteEntries,
 	};
 
-	Liferay.componentReady('kbAdminManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
+	Liferay.componentReady('kbAdminManagementToolbar').then((managementToolbar) => {
+		managementToolbar.on('actionItemClicked', (event) => {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

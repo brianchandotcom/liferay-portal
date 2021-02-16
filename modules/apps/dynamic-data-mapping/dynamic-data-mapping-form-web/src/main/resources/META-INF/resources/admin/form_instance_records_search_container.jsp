@@ -183,8 +183,8 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 	};
 
 	Liferay.componentReady('ddmFormInstanceRecordsManagementToolbar').then(
-		function (managementToolbar) {
-			managementToolbar.on(['actionItemClicked'], function (event) {
+		(managementToolbar) => {
+			managementToolbar.on(['actionItemClicked'], (event) => {
 				var itemData = event.data.item.data;
 
 				if (itemData && itemData.action && ACTIONS[itemData.action]) {

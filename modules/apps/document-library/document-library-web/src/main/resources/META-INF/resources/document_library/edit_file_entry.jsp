@@ -289,7 +289,7 @@ renderResponse.setTitle(headerTitle);
 								);
 
 								if (selectFolderButton) {
-									selectFolderButton.addEventListener('click', function (event) {
+									selectFolderButton.addEventListener('click', (event) => {
 										Liferay.Util.openSelectionModal({
 											id: '<portlet:namespace />selectFolder',
 											onSelect: function (selectedItem) {
@@ -658,8 +658,8 @@ renderResponse.setTitle(headerTitle);
 	function <portlet:namespace />showVersionDetailsDialog() {
 		Liferay.componentReady(
 			'<portlet:namespace />DocumentLibraryCheckinModal'
-		).then(function (documentLibraryCheckinModal) {
-			documentLibraryCheckinModal.open(function (versionIncrease, changeLog) {
+		).then((documentLibraryCheckinModal) => {
+			documentLibraryCheckinModal.open((versionIncrease, changeLog) => {
 				Liferay.Util.postForm(form, {
 					data: {
 						changeLog: changeLog,
@@ -706,7 +706,7 @@ renderResponse.setTitle(headerTitle);
 		);
 
 		if (updateVersionDetailsElement && versionDetailsElement) {
-			updateVersionDetailsElement.addEventListener('click', function (event) {
+			updateVersionDetailsElement.addEventListener('click', (event) => {
 				versionDetailsElement.classList.toggle('hide');
 			});
 		}

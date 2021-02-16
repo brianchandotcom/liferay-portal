@@ -85,7 +85,7 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 			),
 			'click',
 			'.preview-layout-classed-model-usage',
-			function (event) {
+			(event) => {
 				Liferay.Util.openModal({
 					iframeBodyCssClass: 'article-preview',
 					title: '<liferay-ui:message key="preview" />',

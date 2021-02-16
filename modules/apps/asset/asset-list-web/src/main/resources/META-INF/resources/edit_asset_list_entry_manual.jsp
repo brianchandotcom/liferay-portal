@@ -224,7 +224,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 		document.body,
 		'click',
 		'.asset-selector a',
-		function (event) {
+		(event) => {
 			event.preventDefault();
 
 			var delegateTarget = event.delegateTarget;
@@ -236,11 +236,12 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 					if (selectedItems) {
 						var assetEntryIds = [];
 
-						Array.prototype.forEach.call(selectedItems, function (
-							assetEntry
-						) {
-							assetEntryIds.push(assetEntry.entityid);
-						});
+						Array.prototype.forEach.call(
+							selectedItems,
+							(assetEntry) => {
+								assetEntryIds.push(assetEntry.entityid);
+							}
+						);
 
 						Liferay.Util.postForm(document.<portlet:namespace />fm, {
 							data: {

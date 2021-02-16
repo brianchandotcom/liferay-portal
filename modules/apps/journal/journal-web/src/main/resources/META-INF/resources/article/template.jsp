@@ -78,7 +78,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		);
 
 		if (previewWithTemplate) {
-			previewWithTemplate.addEventListener('click', function (event) {
+			previewWithTemplate.addEventListener('click', (event) => {
 				var url = '<%= previewArticleContentTemplateURL %>';
 
 				<%
@@ -184,7 +184,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	);
 
 	if (clearDDMTemplateButton) {
-		clearDDMTemplateButton.addEventListener('click', function (event) {
+		clearDDMTemplateButton.addEventListener('click', (event) => {
 			changeDDMTemplate();
 		});
 	}
@@ -194,7 +194,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	);
 
 	if (selectDDMTemplateButton) {
-		selectDDMTemplateButton.addEventListener('click', function (event) {
+		selectDDMTemplateButton.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
 					changeDDMTemplate(selectedItem);
@@ -212,7 +212,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 	);
 
 	if (editDDMTemplateLink) {
-		editDDMTemplateLink.addEventListener('click', function (event) {
+		editDDMTemplateLink.addEventListener('click', (event) => {
 			if (
 				confirm(
 					'<%= UnicodeLanguageUtil.get(request, "editing-the-current-template-deletes-all-unsaved-content") %>'

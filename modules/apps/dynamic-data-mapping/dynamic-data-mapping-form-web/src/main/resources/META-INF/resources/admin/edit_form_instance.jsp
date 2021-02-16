@@ -211,7 +211,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		start: function (initialPages) {
 			Liferay.Loader.require(
 				'<%= mainRequire %>',
-				function (packageName) {
+				(packageName) => {
 					var context = <%= serializedFormBuilderContext %>;
 
 					if (context.pages.length === 0 && initialPages) {
@@ -254,7 +254,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						'#<portlet:namespace />-container'
 					);
 				},
-				function (error) {
+				(error) => {
 					throw error;
 				}
 			);
@@ -269,7 +269,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 				'<portlet:namespace />translationManager'
 			);
 
-			Liferay.destroyComponents(function (component) {
+			Liferay.destroyComponents((component) => {
 				var destroy = false;
 
 				if (component === translationManager) {
@@ -334,7 +334,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 				stack: false,
 				title: '<liferay-ui:message key="settings" />',
 			},
-			function (dialogWindow) {
+			(dialogWindow) => {
 				var bodyNode = dialogWindow.bodyNode;
 
 				var settingsNode = A.one('#<portlet:namespace />settings');

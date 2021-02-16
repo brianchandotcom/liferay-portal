@@ -239,7 +239,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectSubscriptionType',
-		function () {
+		() => {
 			var A = AUI();
 
 			var overrideSubscriptionInfo = A.one(
@@ -286,7 +286,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectDeliverySubscriptionType',
-		function () {
+		() => {
 			var A = AUI();
 
 			var overrideSubscriptionInfo = A.one(
@@ -341,14 +341,14 @@ if (deliveryMaxSubscriptionCycles > 0) {
 </aui:script>
 
 <aui:script use="liferay-form">
-	A.one('#<portlet:namespace />neverEnds').on('change', function (event) {
+	A.one('#<portlet:namespace />neverEnds').on('change', (event) => {
 		var formValidator = Liferay.Form.get('<portlet:namespace />fm')
 			.formValidator;
 
 		formValidator.validateField('<portlet:namespace />maxSubscriptionCycles');
 	});
 
-	A.one('#<portlet:namespace />deliveryNeverEnds').on('change', function (event) {
+	A.one('#<portlet:namespace />deliveryNeverEnds').on('change', (event) => {
 		var formValidator = Liferay.Form.get('<portlet:namespace />fm')
 			.formValidator;
 

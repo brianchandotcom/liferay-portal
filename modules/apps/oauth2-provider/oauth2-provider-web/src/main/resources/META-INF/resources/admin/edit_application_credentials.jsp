@@ -245,10 +245,10 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 				method: 'POST',
 			}
 		)
-			.then(function (response) {
+			.then((response) => {
 				return response.text();
 			})
-			.then(function (response) {
+			.then((response) => {
 				var newClientSecretField = A.one(
 					'#<portlet:namespace />newClientSecret'
 				);
@@ -393,7 +393,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 			plugins: [Liferay.WidgetZIndex],
 		}).render();
 
-		modal.on('render', function (event) {
+		modal.on('render', (event) => {
 			<portlet:namespace />updateComponent(applyField, populateField.val());
 		});
 
@@ -507,7 +507,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 
 	clientProfile.delegate(
 		'change',
-		function (event) {
+		(event) => {
 			var newClientProfileValue = event.currentTarget.val();
 			<portlet:namespace />updateAllowedGrantTypes(newClientProfileValue);
 		},

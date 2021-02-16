@@ -120,7 +120,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 	var form = document.<portlet:namespace />fm;
 
-	form.addEventListener('submit', function (event) {
+	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 		event.stopPropagation();
 
@@ -142,7 +142,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 		Array.prototype.slice
 			.call(form.querySelectorAll('input'))
-			.forEach(function (input) {
+			.forEach((input) => {
 				if (input.type == 'checkbox' && !input.checked) {
 					return;
 				}
@@ -156,10 +156,10 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 			body: formData,
 			method: 'POST',
 		})
-			.then(function (response) {
+			.then((response) => {
 				return response.json();
 			})
-			.then(function (response) {
+			.then((response) => {
 				if (response.redirectURL) {
 					var redirectURL = new URL(
 						response.redirectURL,

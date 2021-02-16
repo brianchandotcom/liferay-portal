@@ -199,7 +199,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		layoutsTree,
 		'click',
 		'.view-collection-items-action-option.collection',
-		function (event) {
+		(event) => {
 			Liferay.Util.openModal({
 				id: '<portlet:namespace />viewCollectionItemsDialog',
 				title: '<liferay-ui:message key="collection-items" />',

@@ -112,7 +112,7 @@
 	var languageSelectInput = A.one('#<portlet:namespace />languageId');
 
 	if (languageSelectInput) {
-		languageSelectInput.on('change', function () {
+		languageSelectInput.on('change', () => {
 			new A.Alert({
 				bodyContent:
 					'<liferay-ui:message key="this-change-will-only-affect-the-newly-created-localized-content" />',

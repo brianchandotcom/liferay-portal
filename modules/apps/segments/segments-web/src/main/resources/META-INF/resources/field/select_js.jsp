@@ -27,7 +27,7 @@ String selectEventName = ParamUtil.getString(request, "selectEventName");
 		'<portlet:namespace /><%= HtmlUtil.escape(searchContainerId) %>'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var allSelectedElements = event.elements.allSelectedElements;
 
 		var selectedData = [];

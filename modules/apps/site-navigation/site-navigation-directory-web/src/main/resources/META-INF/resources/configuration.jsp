@@ -97,11 +97,11 @@
 	var sitesSelect = Liferay.Util.getFormElement(form, 'sites');
 
 	if (displayStyleSelect && sitesSelect) {
-		form.addEventListener('change', function () {
+		form.addEventListener('change', () => {
 			refreshPreview(displayStyleSelect.value, sitesSelect.value);
 		});
 
-		form.addEventListener('select', function () {
+		form.addEventListener('select', () => {
 			refreshPreview(displayStyleSelect.value, sitesSelect.value);
 		});
 	}

@@ -220,7 +220,7 @@ if (user2 != null) {
 
 	buttonColumn.delegate(
 		'click',
-		function (event) {
+		(event) => {
 			editToolbar.toggleClass('hide-more-buttons', false);
 
 			viewMoreButton.hide();
@@ -273,16 +273,16 @@ if (user2 != null) {
 			body: data,
 			method: 'POST',
 		})
-			.then(function (response) {
+			.then((response) => {
 				return response.json();
 			})
-			.then(function (data) {
+			.then((data) => {
 				Liferay.component('contactsCenter').renderSelectedContacts(
 					data,
 					lastNameAnchor
 				);
 			})
-			.catch(function () {
+			.catch(() => {
 				Liferay.component('contactsCenter').showMessage(false);
 			});
 	}

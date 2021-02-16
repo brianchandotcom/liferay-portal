@@ -85,13 +85,13 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 				}),
 				method: 'POST',
 			})
-				.then(function (response) {
+				.then((response) => {
 					return response.ok ? response.json() : Promise.reject();
 				})
-				.then(function (data) {
+				.then((data) => {
 					return !data.exception ? data.userStatus : Promise.reject();
 				})
-				.then(function (userStatus) {
+				.then((userStatus) => {
 					var message = '';
 
 					if (userStatus == 'user_added') {

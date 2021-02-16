@@ -66,7 +66,7 @@ ContentDashboardItemTypeItemSelectorViewDisplayContext contentDashboardItemTypeI
 		'<portlet:namespace />contentDashboardItemTypes'
 	);
 
-	searchContainer.on('rowToggled', function (event) {
+	searchContainer.on('rowToggled', (event) => {
 		var allSelectedElements = event.elements.allSelectedElements;
 		var arr = [];
 

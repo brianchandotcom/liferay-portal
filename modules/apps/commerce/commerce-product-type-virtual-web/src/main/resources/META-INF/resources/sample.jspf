@@ -71,7 +71,7 @@
 
 	window.document
 		.querySelector('#<portlet:namespace />selectSampleFile')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -114,7 +114,7 @@
 
 	window.document
 		.querySelector('#<portlet:namespace />sampleFileEntryRemove')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var useSampleCheckbox = A.one('#<portlet:namespace />useSample');
@@ -141,10 +141,10 @@
 </aui:script>
 
 <aui:script>
-	AUI().ready('node', 'event', function (A) {
+	AUI().ready('node', 'event', (A) => {
 		selectSampleFileType(A);
 
-		A.one('#<portlet:namespace />useSample').on('click', function (b) {
+		A.one('#<portlet:namespace />useSample').on('click', (b) => {
 			selectSampleFileType(A);
 		});
 	});

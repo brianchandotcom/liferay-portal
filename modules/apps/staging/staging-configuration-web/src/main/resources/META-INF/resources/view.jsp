@@ -122,7 +122,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 							) {
 								var delegate = delegateModule.default;
 
-								delegate(stagingTypes, 'click', 'input', function (event) {
+								delegate(stagingTypes, 'click', 'input', (event) => {
 									var value = event.target.closest('input').value;
 
 									if (value != '<%= StagingConstants.TYPE_LOCAL_STAGING %>') {
@@ -240,8 +240,8 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		);
 
 		if (selectAllCheckbox) {
-			selectAllCheckbox.addEventListener('change', function () {
-				Array.prototype.forEach.call(allCheckboxes, function (checkbox) {
+			selectAllCheckbox.addEventListener('change', () => {
+				Array.prototype.forEach.call(allCheckboxes, (checkbox) => {
 					checkbox.checked = selectAllCheckbox.checked;
 				});
 			});

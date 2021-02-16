@@ -151,7 +151,7 @@ portletDisplay.setURLBack(backURL);
 
 	searchContainerContentBox.delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');
@@ -189,7 +189,7 @@ portletDisplay.setURLBack(backURL);
 	var selectAccountLink = A.one('#<portlet:namespace />selectAccountLink');
 
 	if (selectAccountLink) {
-		selectAccountLink.on('click', function (event) {
+		selectAccountLink.on('click', (event) => {
 			var searchContainerData = searchContainer.getData();
 
 			if (!searchContainerData.length) {

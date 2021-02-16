@@ -168,7 +168,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	}
 
 	Liferay.componentReady('editUserGroupAssignmentsManagementToolbar').then(
-		function (managementToolbar) {
+		(managementToolbar) => {
 			managementToolbar.on(
 				'actionItemClicked',
 				<portlet:namespace />removeUsers

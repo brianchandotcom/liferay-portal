@@ -192,7 +192,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 				title:
 					'<%= UnicodeLanguageUtil.get(request, "data-definitions") %>',
 			},
-			function (event) {
+			(event) => {
 				Liferay.Util.setFormValues(form, {
 					ddmStructureId: event.ddmstructureid,
 					ddmStructureNameDisplay: Liferay.Util.unescape(event.name),

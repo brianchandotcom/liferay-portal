@@ -75,20 +75,20 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				method: 'POST',
 			}
 		)
-			.then(function (response) {
+			.then((response) => {
 				if (!response.ok) {
 					throw new Error();
 				}
 
 				return response.text();
 			})
-			.then(function (response) {
+			.then((response) => {
 				var openingLiferay = Liferay.Util.getOpener().Liferay;
 
 				openingLiferay.fire('<%= HtmlUtil.escapeJS(eventName) %>');
 				openingLiferay.fire('closeModal');
 			})
-			.catch(function (error) {
+			.catch((error) => {
 				var verificationAlert = document.getElementById(
 					'<portlet:namespace />verificationAlert'
 				);

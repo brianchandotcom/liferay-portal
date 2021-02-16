@@ -112,7 +112,7 @@ if (portletTitleBasedNavigation) {
 						%>
 
 						<aui:script use="aui-base,aui-loading-mask-deprecated,node-load">
-							Liferay.on('tempFileRemoved', function () {
+							Liferay.on('tempFileRemoved', () => {
 								Liferay.Util.openToast({
 									message:
 										'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
@@ -157,10 +157,10 @@ if (portletTitleBasedNavigation) {
 									body: new FormData(document.<portlet:namespace />fm2),
 									method: 'POST',
 								})
-									.then(function (response) {
+									.then((response) => {
 										return response.json();
 									})
-									.then(function (response) {
+									.then((response) => {
 										var itemFailed = false;
 
 										for (var i = 0; i < response.length; i++) {
@@ -240,7 +240,7 @@ if (portletTitleBasedNavigation) {
 											location.href = '<%= HtmlUtil.escapeJS(redirect) %>';
 										}
 									})
-									.catch(function (error) {
+									.catch((error) => {
 										var selectedItems = A.all(
 											'#<portlet:namespace />fileUpload li.selected'
 										);

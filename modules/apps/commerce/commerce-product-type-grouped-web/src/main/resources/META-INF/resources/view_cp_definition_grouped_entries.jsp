@@ -209,7 +209,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 <aui:script use="liferay-item-selector-dialog">
 	window.document
 		.querySelector('#<portlet:namespace />addDefinitionGroupedEntry')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({

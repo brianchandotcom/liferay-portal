@@ -175,7 +175,7 @@
 </clay:container-fluid>
 
 <aui:script>
-	Liferay.componentReady('polling-interval-line-chart').then(function (chart) {
+	Liferay.componentReady('polling-interval-line-chart').then((chart) => {
 		chart.data = function () {
 			return Promise.resolve([
 				{
@@ -198,10 +198,10 @@
 		};
 	});
 
-	Liferay.componentReady('predictive-chart').then(function (chart) {
+	Liferay.componentReady('predictive-chart').then((chart) => {
 		var oldData = chart.data.slice();
 
-		setTimeout(function () {
+		setTimeout(() => {
 			var newData = {
 				data: [
 					[230, 230, 230],
@@ -220,7 +220,7 @@
 				id: 'data3',
 			};
 
-			chart.data = new Promise(function (resolve, reject) {
+			chart.data = new Promise((resolve, reject) => {
 				oldData.push(newData);
 				resolve(oldData);
 			});

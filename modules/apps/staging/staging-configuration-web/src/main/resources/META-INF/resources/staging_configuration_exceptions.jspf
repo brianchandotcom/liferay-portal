@@ -65,7 +65,7 @@
 			);
 
 			if (publishProcessesLink) {
-				publishProcessesLink.addEventListener('click', function (event) {
+				publishProcessesLink.addEventListener('click', (event) => {
 					Liferay.Util.openWindow({
 						id: 'publishProcesses',
 						title: '<liferay-ui:message key="initial-publish-process" />',

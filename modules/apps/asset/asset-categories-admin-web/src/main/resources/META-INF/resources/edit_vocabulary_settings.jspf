@@ -152,7 +152,7 @@ if (vocabulary != null) {
 
 	form.delegate(
 		'change',
-		function (event) {
+		(event) => {
 			var target = event.currentTarget;
 
 			var row = target.ancestor('.lfr-form-row');

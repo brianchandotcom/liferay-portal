@@ -114,7 +114,7 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 				'<portlet:namespace />accountEntries'
 			);
 
-			searchContainer.on('rowToggled', function (event) {
+			searchContainer.on('rowToggled', (event) => {
 				var selectedItems = event.elements.allSelectedElements;
 
 				var result = {};

@@ -61,7 +61,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			document.body,
 			'click',
 			'.add-site-action-button',
-			function (event) {
+			(event) => {
 				var data = event.delegateTarget.querySelector('.add-site-action-card')
 					.dataset;
 

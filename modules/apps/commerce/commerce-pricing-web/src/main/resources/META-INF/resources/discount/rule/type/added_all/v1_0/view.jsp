@@ -69,7 +69,7 @@ List<CPDefinition> cpDefinitions = addedAllCommerceDiscountRuleDisplayContext.ge
 <aui:script use="liferay-item-selector-dialog">
 	window.document
 		.querySelector('#<portlet:namespace />selectCommerceDiscountCPDefinition')
-		.addEventListener('click', function (event) {
+		.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -138,7 +138,7 @@ List<CPDefinition> cpDefinitions = addedAllCommerceDiscountRuleDisplayContext.ge
 
 	searchContainerContentBox.delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');

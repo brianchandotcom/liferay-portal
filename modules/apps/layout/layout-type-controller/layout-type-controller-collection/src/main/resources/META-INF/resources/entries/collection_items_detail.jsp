@@ -31,7 +31,7 @@ CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (Colle
 		'<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItems'
 	);
 
-	viewCollectionItems.addEventListener('click', function (event) {
+	viewCollectionItems.addEventListener('click', (event) => {
 		Liferay.Util.openModal({
 			id:
 				'<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItemsDialog',

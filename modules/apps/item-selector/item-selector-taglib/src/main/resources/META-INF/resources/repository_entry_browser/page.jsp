@@ -617,7 +617,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 		</c:if>
 	});
 
-	itemSelector.on('selectedItem', function (event) {
+	itemSelector.on('selectedItem', (event) => {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= itemSelectedEventName %>',
 			event

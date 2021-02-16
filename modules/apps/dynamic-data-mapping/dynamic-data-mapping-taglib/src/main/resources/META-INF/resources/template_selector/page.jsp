@@ -104,7 +104,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	);
 
 	if (selectDDMTemplateLink) {
-		selectDDMTemplateLink.addEventListener('click', function (event) {
+		selectDDMTemplateLink.addEventListener('click', (event) => {
 			Liferay.Util.openDDMPortlet(
 				{
 					basePortletURL: '<%= basePortletURL %>',
@@ -121,7 +121,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 					title:
 						'<%= UnicodeLanguageUtil.get(request, "widget-templates") %>',
 				},
-				function (event) {
+				(event) => {
 					if (!event.newVal) {
 						submitForm(
 							document.<portlet:namespace />fm,
@@ -139,7 +139,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	);
 
 	if (displayStyle && displayStyleGroupIdInput) {
-		displayStyle.addEventListener('change', function (event) {
+		displayStyle.addEventListener('change', (event) => {
 			var selectedDisplayStyle = displayStyle.querySelector('option:checked');
 
 			if (selectedDisplayStyle) {

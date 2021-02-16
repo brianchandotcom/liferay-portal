@@ -207,9 +207,7 @@ else {
 	</div>
 
 	<aui:script use="liferay-search-container">
-		A.one('#<portlet:namespace />selectParentSiteLink').on('click', function (
-			event
-		) {
+		A.one('#<portlet:namespace />selectParentSiteLink').on('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (event) {
 					var searchContainer = Liferay.SearchContainer.get(
@@ -260,7 +258,7 @@ else {
 
 		searchContainer.get('contentBox').delegate(
 			'click',
-			function (event) {
+			(event) => {
 				var link = event.currentTarget;
 
 				var tr = link.ancestor('tr');

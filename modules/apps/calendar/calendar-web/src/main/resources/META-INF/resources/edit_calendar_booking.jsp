@@ -194,7 +194,7 @@ while (manageableCalendarsIterator.hasNext()) {
 %>
 
 <aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
-	Liferay.component('<portlet:namespace />calendarContainer', function () {
+	Liferay.component('<portlet:namespace />calendarContainer', () => {
 		var calendarContainer = new Liferay.CalendarContainer({
 			groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
 
@@ -219,7 +219,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		return calendarContainer;
 	});
 
-	Liferay.component('<portlet:namespace />remoteServices', function () {
+	Liferay.component('<portlet:namespace />remoteServices', () => {
 		var remoteServices = new Liferay.CalendarRemoteServices({
 			baseActionURL:
 				'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
@@ -563,7 +563,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />updateCalendarBooking',
-		function () {
+		() => {
 			var A = AUI();
 
 			<c:if test="<%= invitable %>">
@@ -627,13 +627,13 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	var scheduler = window.<portlet:namespace />scheduler;
 
-	A.one('#<portlet:namespace />saveButton').on('click', function () {
+	A.one('#<portlet:namespace />saveButton').on('click', () => {
 		A.one('#<portlet:namespace />workflowAction').val(
 			'<%= WorkflowConstants.ACTION_SAVE_DRAFT %>'
 		);
 	});
 
-	A.one('#<portlet:namespace />publishButton').on('click', function () {
+	A.one('#<portlet:namespace />publishButton').on('click', () => {
 		A.one('#<portlet:namespace />workflowAction').val(
 			'<%= WorkflowConstants.ACTION_PUBLISH %>'
 		);
@@ -651,7 +651,7 @@ while (manageableCalendarsIterator.hasNext()) {
 			window.<portlet:namespace />calendarListPending,
 		]);
 
-		A.each(calendarContainer.get('availableCalendars'), function (item, index) {
+		A.each(calendarContainer.get('availableCalendars'), (item, index) => {
 			item.set('disabled', true);
 		});
 	};
@@ -836,7 +836,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		schedulerEvent: placeholderSchedulerEvent,
 	});
 
-	scheduler.after('*:load', function (event) {
+	scheduler.after('*:load', (event) => {
 		scheduler.addEvents(placeholderSchedulerEvent);
 
 		scheduler.syncEventsUI();
@@ -846,12 +846,12 @@ while (manageableCalendarsIterator.hasNext()) {
 		var manageableCalendars = {};
 
 		<%= CalendarUtil.toCalendarsJSONArray(themeDisplay, manageableCalendars) %>.forEach(
-			function (item, index) {
+			(item, index) => {
 				manageableCalendars[item.calendarId] = item;
 			}
 		);
 
-		A.one('#<portlet:namespace />calendarId').on('valueChange', function (event) {
+		A.one('#<portlet:namespace />calendarId').on('valueChange', (event) => {
 			var calendarId = parseInt(event.target.val(), 10);
 
 			var calendar = manageableCalendars[calendarId];
@@ -865,7 +865,7 @@ while (manageableCalendarsIterator.hasNext()) {
 				</c:if>
 
 				<portlet:namespace />calendarListPending,
-			].forEach(function (calendarList) {
+			].forEach((calendarList) => {
 				calendarList.remove(calendarList.getCalendar(calendarId));
 				calendarList.remove(calendarList.getCalendar(defaultCalendarId));
 			});
@@ -901,7 +901,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
 			inviteResourcesInput,
-			function (event) {
+			(event) => {
 				var calendar = event.result.raw;
 
 				calendar.disabled = true;
@@ -925,7 +925,7 @@ while (manageableCalendarsIterator.hasNext()) {
 					calendar.calendarId,
 					placeholderSchedulerEvent.get('startDate'),
 					placeholderSchedulerEvent.get('endDate'),
-					function (result) {
+					(result) => {
 						if (result) {
 							<portlet:namespace />calendarListDeclined.add(calendar);
 						}
@@ -969,7 +969,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	A.one('#<portlet:namespace />endTime').set('maxLength', maxLength);
 	A.one('#<portlet:namespace />startTime').set('maxLength', maxLength);
 
-	allDayCheckbox.after('click', function () {
+	allDayCheckbox.after('click', () => {
 		var endDateContainer = A.one('#<portlet:namespace />endDateContainer');
 		var startDateContainer = A.one('#<portlet:namespace />startDateContainer');
 

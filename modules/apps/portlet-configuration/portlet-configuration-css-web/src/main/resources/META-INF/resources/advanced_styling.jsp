@@ -64,7 +64,7 @@
 	);
 
 	if (<portlet:namespace />addId) {
-		<portlet:namespace />addId.addEventListener('click', function () {
+		<portlet:namespace />addId.addEventListener('click', () => {
 			<portlet:namespace />insertCustomCSSValue(
 				'#portlet_<%= HtmlUtil.escapeJS(portletConfigurationCSSPortletDisplayContext.getPortletResource()) %>'
 			);
@@ -76,7 +76,7 @@
 	);
 
 	if (<portlet:namespace />addClass) {
-		<portlet:namespace />addClass.addEventListener('click', function () {
+		<portlet:namespace />addClass.addEventListener('click', () => {
 			<portlet:namespace />insertCustomCSSValue(portletClasses);
 		});
 	}
@@ -107,17 +107,16 @@
 
 			portletContent
 				.getAttribute('class')
-				.replace(/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g, function (
-					match,
-					subMatch1,
-					subMatch2
-				) {
-					var regexIgnoredClasses = /boundary|draggable/;
+				.replace(
+					/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g,
+					(match, subMatch1, subMatch2) => {
+						var regexIgnoredClasses = /boundary|draggable/;
 
-					if (!regexIgnoredClasses.test(subMatch2)) {
-						boundaryClasses.push(match);
+						if (!regexIgnoredClasses.test(subMatch2)) {
+							boundaryClasses.push(match);
+						}
 					}
-				});
+				);
 
 			portletClasses = '.' + boundaryClasses.join('.') + portletClasses;
 

@@ -182,11 +182,12 @@ boolean ldapAuthEnabled = ldapAuthConfiguration.enabled();
 			'.ldap-servers .table-data tr'
 		);
 
-		var ldapServerIds = Array.prototype.map.call(ldapServerIdsNodes, function (
-			ldapServerIdsNode
-		) {
-			return ldapServerIdsNode.dataset.ldapserverid;
-		});
+		var ldapServerIds = Array.prototype.map.call(
+			ldapServerIdsNodes,
+			(ldapServerIdsNode) => {
+				return ldapServerIdsNode.dataset.ldapserverid;
+			}
+		);
 
 		Liferay.Util.setFormValues(document.<portlet:namespace />fm, {
 			'ldap--<%= LDAPConstants.AUTH_SERVER_PRIORITY %>--': ldapServerIds.join(

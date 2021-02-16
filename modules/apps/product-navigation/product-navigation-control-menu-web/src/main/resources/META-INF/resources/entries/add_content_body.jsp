@@ -45,7 +45,7 @@
 
 		Liferay.SideNavigation.initialize(addToggle);
 
-		Liferay.once('screenLoad', function () {
+		Liferay.once('screenLoad', () => {
 			Liferay.SideNavigation.destroy(addToggle);
 		});
 	</aui:script>

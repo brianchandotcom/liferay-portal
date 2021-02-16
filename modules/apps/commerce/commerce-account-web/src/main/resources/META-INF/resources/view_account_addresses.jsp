@@ -71,21 +71,19 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 	</aui:form>
 
 	<aui:script>
-		Liferay.provide(window, '<portlet:namespace />openAddressModal', function (
-			evt
-		) {
+		Liferay.provide(window, '<portlet:namespace />openAddressModal', (evt) => {
 			var addressModal = Liferay.component('addressModal');
 			addressModal.resetForm();
 			addressModal.open();
 		});
 
-		Liferay.provide(window, 'editCommerceAddress', function (id) {
+		Liferay.provide(window, 'editCommerceAddress', (id) => {
 			var addressModal = Liferay.component('addressModal');
 			addressModal.fetchExistingAddress(id);
 			addressModal.open();
 		});
 
-		Liferay.provide(window, 'deleteCommerceAddress', function (id) {
+		Liferay.provide(window, 'deleteCommerceAddress', (id) => {
 			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
 				'<%= Constants.DELETE %>';
 			document.querySelector(
@@ -95,8 +93,8 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 			submitForm(document.<portlet:namespace />addressFm);
 		});
 
-		Liferay.componentReady('addressModal').then(function (addressModal) {
-			addressModal.on('addressModalSave', function (formData) {
+		Liferay.componentReady('addressModal').then((addressModal) => {
+			addressModal.on('addressModalSave', (formData) => {
 				document.querySelector('#<portlet:namespace />name').value =
 					formData.referent;
 				document.querySelector('#<portlet:namespace />street1').value =

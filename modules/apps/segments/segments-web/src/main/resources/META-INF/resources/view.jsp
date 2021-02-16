@@ -149,17 +149,17 @@ request.setAttribute("view.jsp-eventName", eventName);
 		deleteSegmentsEntries: deleteSegmentsEntries,
 	};
 
-	Liferay.componentReady('segmentsEntriesManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on('actionItemClicked', function (event) {
-			var itemData = event.data.item.data;
+	Liferay.componentReady('segmentsEntriesManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('actionItemClicked', (event) => {
+				var itemData = event.data.item.data;
 
-			if (itemData && itemData.action && ACTIONS[itemData.action]) {
-				ACTIONS[itemData.action]();
-			}
-		});
-	});
+				if (itemData && itemData.action && ACTIONS[itemData.action]) {
+					ACTIONS[itemData.action]();
+				}
+			});
+		}
+	);
 </aui:script>
 
 <portlet:actionURL name="/segments/update_segments_entry_site_roles" var="updateSegmentsEntrySiteRolesURL">
@@ -178,7 +178,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 
 	var delegate = delegateModule.default;
 
-	delegate(document, 'click', '.assign-site-roles-link', function (event) {
+	delegate(document, 'click', '.assign-site-roles-link', (event) => {
 		var link = event.target.closest('.assign-site-roles-link');
 
 		var itemSelectorURL = link.dataset.itemselectorurl;

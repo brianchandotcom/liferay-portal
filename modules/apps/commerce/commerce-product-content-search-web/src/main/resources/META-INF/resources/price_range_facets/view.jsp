@@ -135,7 +135,7 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 					</div>
 
 					<aui:script>
-						Liferay.provide(window, '<portlet:namespace />submitPriceRange', function () {
+						Liferay.provide(window, '<portlet:namespace />submitPriceRange', () => {
 							var max = document.getElementById('<portlet:namespace />maximum').value;
 
 							if (max == '') {

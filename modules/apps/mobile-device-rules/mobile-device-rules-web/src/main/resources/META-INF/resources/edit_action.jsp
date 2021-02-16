@@ -117,10 +117,10 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 				method: 'POST',
 			}
 		)
-			.then(function (response) {
+			.then((response) => {
 				return response.text();
 			})
-			.then(function (response) {
+			.then((response) => {
 				var layouts = document.getElementById(
 					'<portlet:namespace />layouts'
 				);
@@ -152,10 +152,10 @@ MDRRuleGroupInstance ruleGroupInstance = (MDRRuleGroupInstance)renderRequest.get
 			body: formData,
 			method: 'POST',
 		})
-			.then(function (response) {
+			.then((response) => {
 				return response.text();
 			})
-			.then(function (response) {
+			.then((response) => {
 				var typeSettings = document.getElementById(
 					'<portlet:namespace />typeSettings'
 				);

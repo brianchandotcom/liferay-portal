@@ -117,7 +117,7 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 
 	searchContainer.get('contentBox').delegate(
 		'click',
-		function (event) {
+		(event) => {
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');
@@ -136,7 +136,7 @@ List<Group> selectedGroups = editAssetListDisplayContext.getSelectedGroups();
 	);
 
 	if (selectManageableGroupIcon) {
-		selectManageableGroupIcon.addEventListener('click', function (event) {
+		selectManageableGroupIcon.addEventListener('click', (event) => {
 			event.preventDefault();
 
 			Liferay.Util.openSelectionModal({

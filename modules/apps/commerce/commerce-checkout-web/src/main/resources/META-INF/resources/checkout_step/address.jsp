@@ -383,7 +383,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 							},
 						];
 
-						list.forEach(function (listElement) {
+						list.forEach((listElement) => {
 							callbackList.push(listElement);
 						});
 
@@ -420,7 +420,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 							},
 						];
 
-						list.forEach(function (listElement) {
+						list.forEach((listElement) => {
 							callbackList.push(listElement);
 						});
 

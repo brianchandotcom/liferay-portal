@@ -122,7 +122,7 @@ renderResponse.setTitle(title);
 				.get('translatedLanguages')
 				.values();
 
-			translatedLanguages.forEach(function (languageId) {
+			translatedLanguages.forEach((languageId) => {
 				localizedValues[languageId] = inputLocalized.getValue(languageId);
 			});
 		}
@@ -132,7 +132,7 @@ renderResponse.setTitle(title);
 
 	function <portlet:namespace />saveDDMStructure() {
 		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
-			function (dataLayoutBuilder) {
+			(dataLayoutBuilder) => {
 				var name = <portlet:namespace />getInputLocalizedValues('name');
 
 				var description = <portlet:namespace />getInputLocalizedValues(

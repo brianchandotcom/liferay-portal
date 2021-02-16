@@ -137,7 +137,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				);
 
 				if (selectFolderButton) {
-					selectFolderButton.addEventListener('click', function (event) {
+					selectFolderButton.addEventListener('click', (event) => {
 						Liferay.Util.getOpener().Liferay.Util.openSelectionModal({
 							id:
 								'_<%= HtmlUtil.escapeJS(dlRequestHelper.getPortletResource()) %>_selectFolder',
@@ -172,7 +172,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				);
 
 				if (showActionsInput) {
-					showActionsInput.addEventListener('change', function (event) {
+					showActionsInput.addEventListener('change', (event) => {
 						var currentColumnsElement = document.getElementById(
 							'<portlet:namespace />currentEntryColumns'
 						);
@@ -192,7 +192,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 									'#<portlet:namespace />currentEntryColumns option[value="action"], #<portlet:namespace />availableEntryColumns option[value="action"]'
 								);
 
-								Array.prototype.forEach.call(options, function (option) {
+								Array.prototype.forEach.call(options, (option) => {
 									option.remove();
 								});
 							}

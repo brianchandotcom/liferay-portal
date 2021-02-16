@@ -59,7 +59,7 @@ SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsD
 				<aui:script>
 					document
 						.querySelector('#<%= liferayPortletResponse.getNamespace() + sortOption %>')
-						.addEventListener('click', function (e) {
+						.addEventListener('click', (e) => {
 							e.preventDefault();
 							<%= liferayPortletResponse.getNamespace() + "changeOrderBy('" + sortOption + "');" %>;
 						});
@@ -77,7 +77,7 @@ SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsD
 	Liferay.provide(
 		window,
 		'<portlet:namespace />changeOrderBy',
-		function (orderBy) {
+		(orderBy) => {
 			var portletURL = new Liferay.PortletURL.createURL(
 				'<%= themeDisplay.getURLCurrent() %>'
 			);
@@ -90,7 +90,7 @@ SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsD
 		['liferay-portlet-url']
 	);
 
-	Liferay.provide(window, '<portlet:namespace />toggleDropdown', function () {
+	Liferay.provide(window, '<portlet:namespace />toggleDropdown', () => {
 		var dropdownElement = window.document.querySelector(
 			'#<portlet:namespace />commerce-dropdown-order-by'
 		);

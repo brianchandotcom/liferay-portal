@@ -106,10 +106,8 @@
 		deleteStructures: deleteStructures,
 	};
 
-	Liferay.componentReady('ddmFormManagementToolbar').then(function (
-		managementToolbar
-	) {
-		managementToolbar.on(['actionItemClicked'], function (event) {
+	Liferay.componentReady('ddmFormManagementToolbar').then((managementToolbar) => {
+		managementToolbar.on(['actionItemClicked'], (event) => {
 			var itemData = event.data.item.data;
 
 			if (itemData && itemData.action && ACTIONS[itemData.action]) {

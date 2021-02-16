@@ -30,7 +30,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 					var link = document.getElementById('<%= linkId %>');
 
 					if (link) {
-						link.addEventListener('click', function (e) {
+						link.addEventListener('click', (e) => {
 							e.preventDefault();
 							Liferay.fire(eventsDefinitions.OPEN_MODAL, {
 								id: '<%= actionTargetId %>',
@@ -71,8 +71,8 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 								'<%= randomNamespace %>collapse'
 							);
 
-							[toggleSwitch, toggleLabel].forEach(function (el) {
-								el.addEventListener('click', function (e) {
+							[toggleSwitch, toggleLabel].forEach((el) => {
+								el.addEventListener('click', (e) => {
 									e.preventDefault();
 
 									if (collapseClickable) {
@@ -85,7 +85,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 
 									collapseClickable = false;
 
-									setTimeout(function () {
+									setTimeout(() => {
 										collapseClickable = true;
 									}, 400);
 								});

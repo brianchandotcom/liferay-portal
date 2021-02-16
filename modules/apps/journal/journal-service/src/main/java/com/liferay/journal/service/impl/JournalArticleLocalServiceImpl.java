@@ -8982,11 +8982,11 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle article, String content, long groupId, User user)
 		throws PortalException {
 
+		content = _journalContentCompatibilityLayer.convert(content);
+
 		content = format(user, groupId, article, content);
 
-		content = _replaceTempImages(article, content);
-
-		return _journalContentCompatibilityLayer.convert(content);
+		return _replaceTempImages(article, content);
 	}
 
 	private Map<String, String> _getFriendlyURLMap(

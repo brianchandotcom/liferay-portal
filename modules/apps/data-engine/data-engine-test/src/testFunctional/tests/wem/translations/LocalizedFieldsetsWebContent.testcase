@@ -29,7 +29,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
 	@priority = "5"
 	test CheckDefaultWebContentTitleOnWebContentList {
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
@@ -86,7 +85,6 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CheckLanguageSelectorAndFieldsetSummaryLocalization {
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(
@@ -97,11 +95,11 @@ definition {
 			createNewFieldset = "true",
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset");
-		
+
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset",
-			localeList = "pt-BR");		
+			localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -111,9 +109,7 @@ definition {
 
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		AssertElementPresent(
-			locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH"
-		);
+		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH");
 
 		WebContentStructures.saveCP();
 
@@ -136,12 +132,10 @@ definition {
 			text = "Este é um texto");
 
 		PortletEntry.changeLocaleSummary(locale = "en-US");
-		
+
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
-		AssertElementPresent(
-			locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH"
-		);
+		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_TRANSLATION_SPAN_LANGUAGE_ENGLISH");
 
 		PortletEntry.publish();
 
@@ -167,7 +161,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "5"
 	test CheckStructureTranslationOnWebContent {
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
@@ -398,7 +391,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"
 	@priority = "5"
 	test TranslateWebContentFromStructureWithFieldsetWithFieldGroup {
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
@@ -537,7 +529,6 @@ definition {
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
 	@priority = "5"
 	test TranslationPersistsAfterEditingAnother {
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
@@ -561,30 +552,24 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
 
 		WebContent.addWithStructureCP(
-            webContentText = "This is a text",
-            webContentTitle = "WC Title");
+			webContentText = "This is a text",
+			webContentTitle = "WC Title");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		WebContent.addWithStructureCP(
-            webContentTitle = "Título do conteúdo da web"
-		);
+		WebContent.addWithStructureCP(webContentTitle = "Título do conteúdo da web");
 
 		PortletEntry.inputText(
 			fieldLabel = "Text pt-BR",
-			text = "Este é um campo de texto"
-		);
+			text = "Este é um campo de texto");
 
 		PortletEntry.changeLocale(locale = "es_ES");
 
-		WebContent.addWithStructureCP(
-            webContentTitle = "WC Title ES"
-		);
+		WebContent.addWithStructureCP(webContentTitle = "WC Title ES");
 
 		PortletEntry.inputText(
 			fieldLabel = "Text",
-			text = "This is a text in ES"
-		);
+			text = "This is a text in ES");
 
 		PortletEntry.publish();
 
@@ -592,40 +577,34 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "WC Title"
-		);
+			value1 = "WC Title");
 
 		AssertTextEquals(
 			key_fieldLabel = "Text",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "This is a text"
-		);
+			value1 = "This is a text");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "Título do conteúdo da web"
-		);
+			value1 = "Título do conteúdo da web");
 
 		AssertTextEquals(
 			key_fieldLabel = "Text pt-BR",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Este é um campo de texto"
-		);
+			value1 = "Este é um campo de texto");
 
 		PortletEntry.changeLocale(locale = "es_ES");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
-			value1 = "WC Title ES"
-		);
+			value1 = "WC Title ES");
 
 		AssertTextEquals(
 			key_fieldLabel = "Text",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "This is a text in ES"
-		);
+			value1 = "This is a text in ES");
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

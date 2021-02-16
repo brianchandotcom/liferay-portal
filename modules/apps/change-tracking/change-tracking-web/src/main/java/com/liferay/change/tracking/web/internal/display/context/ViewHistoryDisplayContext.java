@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionTable;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.model.CTProcessTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -24,12 +25,12 @@ import com.liferay.change.tracking.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -92,26 +93,41 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 		_userLocalService = userLocalService;
 	}
 
-	public CTCollection getCtCollection(CTProcess ctProcess)
-		throws PortalException {
-
-		return _ctCollectionLocalService.getCTCollection(
-			ctProcess.getCtCollectionId());
-	}
-
 	public Map<String, Object> getReactProps() {
-		Map<Long, CTCollection> ctCollectionMap = new HashMap<>();
-		Set<Long> ctProcessIds = new HashSet<>();
-		JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();
+		Set<Long> ctCollectionIds = new HashSet<>();
 
 		SearchContainer<CTProcess> searchContainer = getSearchContainer();
 
-		List<CTProcess> ctProcesses = searchContainer.getResults();
+		for (CTProcess ctProcess : searchContainer.getResults()) {
+			ctCollectionIds.add(ctProcess.getCtCollectionId());
+		}
 
-		for (CTProcess ctProcess : ctProcesses) {
-			CTCollection ctCollection = ctCollectionMap.computeIfAbsent(
-				ctProcess.getCtCollectionId(),
-				_ctCollectionLocalService::fetchCTCollection);
+		Map<Long, CTCollection> ctCollectionMap = new HashMap<>();
+
+		if (!ctCollectionIds.isEmpty()) {
+			List<CTCollection> ctCollections =
+				_ctCollectionLocalService.dslQuery(
+					DSLQueryFactoryUtil.selectDistinct(
+						CTCollectionTable.INSTANCE
+					).from(
+						CTCollectionTable.INSTANCE
+					).where(
+						CTCollectionTable.INSTANCE.ctCollectionId.in(
+							ctCollectionIds.toArray(new Long[0]))
+					));
+
+			for (CTCollection ctCollection : ctCollections) {
+				ctCollectionMap.put(
+					ctCollection.getCtCollectionId(), ctCollection);
+			}
+		}
+
+		Set<Long> ctProcessIds = new HashSet<>();
+		JSONArray entriesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (CTProcess ctProcess : searchContainer.getResults()) {
+			CTCollection ctCollection = ctCollectionMap.get(
+				ctProcess.getCtCollectionId());
 
 			if (ctCollection == null) {
 				continue;
@@ -259,37 +275,6 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 		return _searchContainer;
 	}
 
-	public int getStatus(CTProcess ctProcess) {
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.fetchBackgroundTask(
-				ctProcess.getBackgroundTaskId());
-
-		if (backgroundTask == null) {
-			return -1;
-		}
-
-		return backgroundTask.getStatus();
-	}
-
-	public String getStatusLabel(int status) {
-		if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
-			return "published";
-		}
-
-		return BackgroundTaskConstants.getStatusLabel(status);
-	}
-
-	public String getStatusStyle(int status) {
-		if (status == BackgroundTaskConstants.STATUS_IN_PROGRESS) {
-			return "warning";
-		}
-		else if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
-			return "success";
-		}
-
-		return "danger";
-	}
-
 	public List<NavigationItem> getViewNavigationItems() {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
@@ -304,8 +289,7 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 				navigationItem.setActive(false);
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/change_tracking/view_scheduled", "displayStyle",
-					getDisplayStyle());
+					"/change_tracking/view_scheduled");
 				navigationItem.setLabel(
 					_language.get(_httpServletRequest, "scheduled"));
 			}
@@ -314,17 +298,11 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 				navigationItem.setActive(true);
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/change_tracking/view_history", "displayStyle",
-					getDisplayStyle());
+					"/change_tracking/view_history");
 				navigationItem.setLabel(
 					_language.get(_httpServletRequest, "history"));
 			}
 		).build();
-	}
-
-	public boolean isExpired(CTCollection ctCollection) {
-		return !_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
-			ctCollection.getSchemaVersionId());
 	}
 
 	public boolean isSearch() {

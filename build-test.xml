@@ -5654,6 +5654,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<equals arg1="${commerce.enabled}" arg2="false" />
 					</not>
 					<or>
+						<equals arg1="${commerce.enabled}" arg2="true" />
 						<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-fixpack-release" />
 						<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-hotfix-release" />
 						<equals arg1="${env.CI_TEST_SUITE}" arg2="portal-release" />

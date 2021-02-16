@@ -16,15 +16,12 @@ package com.liferay.portal.crypto.hash;
 
 import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
- * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-@ProviderType
-public interface CryptoHashGenerator {
+public interface CryptoHashVerifier {
 
-	public CryptoHashResponse generate(byte[] input) throws CryptoHashException;
+	public boolean verify(byte[] input, byte[] hash, byte[] salt)
+		throws CryptoHashException;
 
 }

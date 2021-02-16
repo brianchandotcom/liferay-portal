@@ -14,7 +14,6 @@
 
 package com.liferay.portal.crypto.hash.internal;
 
-import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashProvider;
 import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProvider;
@@ -42,16 +41,18 @@ public class CryptoHashGeneratorTest {
 
 	@Test
 	public void testGenerate() throws Exception {
-		for (CryptoHashGenerator cryptoHashGenerator : _cryptoHashGenerators) {
+		for (CryptoHashGeneratorImpl cryptoHashGeneratorImpl :
+				_cryptoHashGenerators) {
+
 			CryptoHashResponse cryptoHashResponse =
-				cryptoHashGenerator.generate(_INPUT);
+				cryptoHashGeneratorImpl.generate(_INPUT);
 
 			Assert.assertFalse(
-				cryptoHashGenerator.verify(
+				cryptoHashGeneratorImpl.verify(
 					_randomBytes(), cryptoHashResponse.getHash(),
 					cryptoHashResponse.getSalt()));
 			Assert.assertTrue(
-				cryptoHashGenerator.verify(
+				cryptoHashGeneratorImpl.verify(
 					_INPUT, cryptoHashResponse.getHash(),
 					cryptoHashResponse.getSalt()));
 		}
@@ -65,6 +66,6 @@ public class CryptoHashGeneratorTest {
 
 	private static final byte[] _INPUT = _randomBytes();
 
-	private List<CryptoHashGenerator> _cryptoHashGenerators;
+	private List<CryptoHashGeneratorImpl> _cryptoHashGenerators;
 
 }

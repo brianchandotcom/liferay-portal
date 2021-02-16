@@ -18,6 +18,7 @@ import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
+import com.liferay.portal.crypto.hash.CryptoHashVerifier;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(service = CryptoHashGenerator.class)
-public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
+public class CryptoHashGeneratorImpl
+	implements CryptoHashGenerator, CryptoHashVerifier {
 
 	public CryptoHashGeneratorImpl(CryptoHashProvider cryptoHashProvider)
 		throws NoSuchAlgorithmException {

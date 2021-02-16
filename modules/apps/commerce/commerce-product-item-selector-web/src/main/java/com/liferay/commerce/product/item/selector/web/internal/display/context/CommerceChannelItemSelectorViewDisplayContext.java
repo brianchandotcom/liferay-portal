@@ -97,8 +97,8 @@ public class CommerceChannelItemSelectorViewDisplayContext
 		_searchContainer.setOrderByType(getOrderByType());
 
 		RowChecker rowChecker = new CommerceChannelItemSelectorChecker(
-			cpRequestHelper.getRenderResponse(), getClassName(), getClassPK(),
-			_commerceChannelRelService);
+			cpRequestHelper.getRenderResponse(),
+			getCheckedCommerceChannelIds());
 
 		_searchContainer.setRowChecker(rowChecker);
 

@@ -15,15 +15,10 @@
 package com.liferay.commerce.product.item.selector.web.internal.search;
 
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.model.CommerceChannelRel;
-import com.liferay.commerce.product.service.CommerceChannelRelService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.portlet.RenderResponse;
 
@@ -33,22 +28,12 @@ import javax.portlet.RenderResponse;
 public class CommerceChannelItemSelectorChecker extends EmptyOnClickRowChecker {
 
 	public CommerceChannelItemSelectorChecker(
-		RenderResponse renderResponse, String className, long classPK,
-		CommerceChannelRelService commerceChannelRelService) {
+		RenderResponse renderResponse, long[] checkedCommerceChannelIds) {
 
 		super(renderResponse);
 
-		List<CommerceChannelRel> commerceChannelRels =
-			commerceChannelRelService.getCommerceChannelRels(
-				className, classPK, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Stream<CommerceChannelRel> stream = commerceChannelRels.stream();
-
-		long[] commerceChannelRelIds = stream.mapToLong(
-			CommerceChannelRel::getCommerceChannelId
-		).toArray();
-
-		_checkedCommerceChannelIds = SetUtil.fromArray(commerceChannelRelIds);
+		_checkedCommerceChannelIds = SetUtil.fromArray(
+			checkedCommerceChannelIds);
 	}
 
 	@Override

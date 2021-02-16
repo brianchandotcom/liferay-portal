@@ -4,12 +4,12 @@
 	<sql id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupFinder.findAccountUserIdsFromAccountGroupIds">
 		<![CDATA[
 			SELECT
-				CommerceAccountUserRel.commerceAccountUserId
+				AccountEntryUserRel.accountUserId
 			FROM
-				CommerceAccountUserRel
+				AccountEntryUserRel
 			INNER JOIN
 				CAccountGroupCAccountRel ON
-					CAccountGroupCAccountRel.commerceAccountId = CommerceAccountUserRel.commerceAccountId
+					CAccountGroupCAccountRel.commerceAccountId = AccountEntryUserRel.accountEntryId
 			WHERE
 				CAccountGroupCAccountRel.commerceAccountGroupId IN ([$ACCOUNT_GROUP_IDS$])
 		]]>

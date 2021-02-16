@@ -89,19 +89,7 @@ public class LocalizedValueUtil {
 	public static LocalizedValue toLocalizedValue(
 		Map<String, Object> localizedValues) {
 
-		if (localizedValues == null) {
-			return null;
-		}
-
-		LocalizedValue localizedValue = new LocalizedValue();
-
-		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
-			localizedValue.addString(
-				LocaleUtil.fromLanguageId(entry.getKey()),
-				GetterUtil.getString(entry.getValue()));
-		}
-
-		return localizedValue;
+		return toLocalizedValue(localizedValues, null);
 	}
 
 	public static LocalizedValue toLocalizedValue(
@@ -118,7 +106,9 @@ public class LocalizedValueUtil {
 				LocaleUtil.fromLanguageId(entry.getKey()),
 				GetterUtil.getString(entry.getValue()));
 
-			localizedValue.setDefaultLocale(locale);
+			if (locale != null) {
+				localizedValue.setDefaultLocale(locale);
+			}
 		}
 
 		return localizedValue;

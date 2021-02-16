@@ -15,9 +15,7 @@
 
 							<#if entry.isThumbnailVisible()>
 								<img alt="${languageUtil.get(locale, "thumbnail")}" class="rounded search-result-thumbnail-img" src="${entry.getThumbnailURLString()}" />
-							</#if>
-
-							<#if entry.isIconVisible()>
+							<#elseif entry.isIconVisible()>
 								<span class="search-asset-type-sticker sticker sticker-rounded sticker-secondary sticker-static">
 									<@clay.icon symbol="${entry.getIconId()}" />
 								</span>

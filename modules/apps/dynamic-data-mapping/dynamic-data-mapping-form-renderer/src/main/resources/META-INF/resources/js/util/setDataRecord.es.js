@@ -38,6 +38,10 @@ export default (
 
 	let _value = value;
 
+	if (typeof value !== 'string') {
+		_value = JSON.stringify(value);
+	}
+
 	if (!visible) {
 		_value = '';
 	}

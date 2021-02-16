@@ -96,17 +96,17 @@ definition {
 		DataEngine.addFieldsets(
 			createNewFieldset = "true",
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset 2");
+			fieldsetName = "New Fieldset");
 		
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset 2",
+			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");		
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldsetsLabel(
-			fieldsetLabel = "New Fieldset 2",
+			fieldsetLabel = "New Fieldset",
 			fieldsetLabelEdit = "Novo Fieldset");
 
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");

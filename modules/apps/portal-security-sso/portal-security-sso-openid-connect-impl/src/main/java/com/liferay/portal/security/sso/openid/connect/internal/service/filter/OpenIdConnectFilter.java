@@ -27,8 +27,8 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandle
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
+import com.liferay.portal.security.sso.openid.connect.helper.OpenIdConnectSessionHelper;
 import com.liferay.portal.security.sso.openid.connect.internal.exception.StrangersNotAllowedException;
-import com.liferay.portal.security.sso.openid.connect.util.OpenIdConnectSessionHelper;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.internal.util;
+package com.liferay.portal.security.sso.openid.connect.internal.helper;
 
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
-import com.liferay.portal.security.sso.openid.connect.util.OpenIdConnectSessionHelper;
+import com.liferay.portal.security.sso.openid.connect.helper.OpenIdConnectSessionHelper;
 
 import java.io.Serializable;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.util;
+package com.liferay.portal.security.sso.openid.connect.helper;
 
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 

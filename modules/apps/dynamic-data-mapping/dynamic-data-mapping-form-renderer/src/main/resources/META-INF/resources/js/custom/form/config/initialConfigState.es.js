@@ -12,7 +12,32 @@
  * details.
  */
 
+import {FieldUtil} from 'dynamic-data-mapping-form-builder';
+
+/**
+ * This is a literary copy of the logic of the old LayoutProvider,
+ * check the documentation for more details.
+ */
+const getFieldNameGenerator = (pages, generateFieldNameUsingFieldLabel) => (
+	preferredName,
+	currentName,
+	blacklist = []
+) =>
+	FieldUtil.generateFieldName(
+		pages,
+		preferredName,
+		currentName,
+		blacklist,
+		generateFieldNameUsingFieldLabel
+	);
+
 export const COMMON_INITIAL_CONFIG_STATE = {
 	cache: {},
 	defaultLanguageId: themeDisplay.getLanguageId(),
+};
+
+export const BUILDER_INITIAL_CONFIG_STATE = {
+	...COMMON_INITIAL_CONFIG_STATE,
+	generateFieldNameUsingFieldLabel: false,
+	getFieldNameGenerator,
 };

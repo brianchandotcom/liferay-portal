@@ -13,15 +13,9 @@
  */
 
 import ClayModal from 'clay-modal';
-import {FormsRuleBuilder} from 'data-engine-taglib';
-import {FormBuilderBase} from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
-import withEditablePageHeader from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withEditablePageHeader.es';
-import withMultiplePages from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMultiplePages.es';
-import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
-import RulesSupport from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RulesSupport.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
-import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
+import {FormApp, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import {EventHandler, delegate} from 'frontend-js-web';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
@@ -39,11 +33,11 @@ import StateSyncronizer from './util/StateSyncronizer.es';
 
 class Form extends Component {
 	attached() {
-		const {store} = this.refs;
 		const {namespace, published, showPublishAlert} = this.props;
 
 		const {paginationMode} = this.state;
 
+		this.store = this.refs.app.reactComponentRef;
 
 		this._eventHandler = new EventHandler();
 
@@ -60,7 +54,7 @@ class Form extends Component {
 					paginationMode,
 					published,
 					settingsDDMForm,
-					store: store,
+					store: this.store,
 				},
 				this.element
 			);
@@ -125,12 +119,6 @@ class Form extends Component {
 				this._showUnpublishedAlert();
 			}
 		}
-
-		store.on(
-			'paginationModeChanged',
-			this._handlePaginationModeChanded.bind(this)
-		);
-		store.on('rulesModified', this._handleRulesModified.bind(this));
 	}
 
 	created() {
@@ -153,7 +141,6 @@ class Form extends Component {
 		);
 		this._resolvePreviewURL = this._resolvePreviewURL.bind(this);
 		this._updateAutoSaveMessage = this._updateAutoSaveMessage.bind(this);
-		this.ComposedFormBuilder = this._createFormBuilder();
 		this.submitForm = this.submitForm.bind(this);
 	}
 
@@ -213,111 +200,29 @@ class Form extends Component {
 	}
 
 	render() {
-		const {ComposedFormBuilder} = this;
 		const {
 			autocompleteUserURL,
 			context,
-			dataProviderInstanceParameterSettingsURL,
-			dataProviderInstancesURL,
-			defaultLanguageId,
-			editingLanguageId,
-			fieldSetDefinitionURL,
-			fieldSets,
-			fieldTypes,
-			functionsMetadata,
-			functionsURL,
-			groupId,
-			localizedName,
 			namespace,
 			published,
-			redirectURL,
-			rolesURL,
-			rules,
 			shareFormInstanceURL,
 			spritemap,
-			view,
+			...otherProps
 		} = this.props;
-		const {pages, saveButtonLabel} = this.state;
 
-		const {dataEngineSidebar, sidebarPanels} = context;
-
-		const storeProps = {
-			...this.props,
-			defaultLanguageId,
-			editingLanguageId,
-			initialPages: context.pages,
-			initialPaginationMode: context.paginationMode,
-			initialSuccessPageSettings: context.successPageSettings,
-			ref: 'store',
-		};
-
-		const state = this._stateSyncronizer?.getState();
-
-		const formattedRules = state
-			? RulesSupport.formatRules(state.pages, rules)
-			: rules;
-
-		const LayoutProviderTag = LayoutProvider;
+		const App = FormApp;
 
 		return (
-			<div class="ddm-form-builder">
-				<LayoutProviderTag {...storeProps}>
-					{this.isFormBuilderView() && (
-						<FormsRuleBuilder
-							dataProviderInstanceParameterSettingsURL={
-								dataProviderInstanceParameterSettingsURL
-							}
-							dataProviderInstancesURL={dataProviderInstancesURL}
-							fieldTypes={fieldTypes}
-							functionsMetadata={functionsMetadata}
-							functionsURL={functionsURL}
-							groupId={groupId}
-							portletNamespace={namespace}
-							ref="ruleBuilder"
-							rolesURL={rolesURL}
-							rules={formattedRules}
-							spritemap={spritemap}
-							visible={this.isShowRuleBuilder()}
-						/>
-					)}
-
-					<ComposedFormBuilder
-						dataEngineSidebar={dataEngineSidebar}
-						fieldSets={fieldSets}
-						fieldTypes={fieldTypes}
-						groupId={groupId}
-						portletNamespace={namespace}
-						ref="formBuilder"
-						rules={formattedRules}
-						spritemap={spritemap}
-						view={view}
-						visible={
-							!this.isShowRuleBuilder() && !this.isShowReport()
-						}
-					/>
-				</LayoutProviderTag>
+			<div>
+				<App
+					{...otherProps}
+					{...context}
+					namespace={namespace}
+					ref="app"
+					spritemap={spritemap}
+				/>
 
 				<div class="container container-fluid-1280">
-					{!this.isFormBuilderView() && (
-						<div class="button-holder ddm-form-builder-buttons">
-							<button
-								class="btn btn-primary ddm-button"
-								data-onclick="_handleSaveButtonClicked"
-								ref="saveFieldSetButton"
-							>
-								{saveButtonLabel}
-							</button>
-							<a
-								class="btn btn-cancel btn-link"
-								data-onclick="_handleCancelButtonClicked"
-								href={redirectURL}
-								ref="cancelFieldSetButton"
-							>
-								{Liferay.Language.get('cancel')}
-							</a>
-						</div>
-					)}
-
 					<ClayModal
 						body={Liferay.Language.get(
 							'any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave'
@@ -344,7 +249,7 @@ class Form extends Component {
 					{published && (
 						<ShareFormModal
 							autocompleteUserURL={autocompleteUserURL}
-							localizedName={localizedName}
+							localizedName={this.store.current.localizedName}
 							portletNamespace={namespace}
 							shareFormInstanceURL={shareFormInstanceURL}
 							spritemap={spritemap}
@@ -368,16 +273,6 @@ class Form extends Component {
 		this.props.published = false;
 
 		return this._savePublished(event, false);
-	}
-
-	_createFormBuilder() {
-		const composeList = [withMultiplePages];
-
-		if (this.isFormBuilderView()) {
-			composeList.push(withEditablePageHeader);
-		}
-
-		return compose(...composeList)(FormBuilderBase);
 	}
 
 	_createFormURL() {
@@ -508,18 +403,6 @@ class Form extends Component {
 		this.submitForm();
 	}
 
-	_pageHasFields(pages, pageIndex) {
-		const visitor = new PagesVisitor([pages[pageIndex]]);
-
-		let hasFields = false;
-
-		visitor.mapFields(() => {
-			hasFields = true;
-		});
-
-		return hasFields;
-	}
-
 	_pagesValueFn() {
 		const {context} = this.props;
 
@@ -564,31 +447,6 @@ class Form extends Component {
 	}
 
 	_setContext(context) {
-		let {successPageSettings} = context;
-		const {defaultLanguageId} = this.props;
-		const {successPage} = context;
-
-		if (!successPageSettings && this.isFormBuilderView()) {
-			successPageSettings = successPage;
-			successPageSettings.enabled = true;
-		}
-
-		if (
-			successPageSettings &&
-			typeof successPageSettings.title === 'string'
-		) {
-			successPageSettings.title = {};
-			successPageSettings.title[defaultLanguageId] = '';
-		}
-
-		if (
-			successPageSettings &&
-			typeof successPageSettings.body === 'string'
-		) {
-			successPageSettings.body = {};
-			successPageSettings.body[defaultLanguageId] = '';
-		}
-
 		const emptyLocalizableValue = {
 			[themeDisplay.getLanguageId()]: '',
 		};
@@ -614,8 +472,6 @@ class Form extends Component {
 						title: '',
 					},
 				],
-				paginationMode: 'wizard',
-				successPageSettings,
 			};
 		}
 

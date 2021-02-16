@@ -12,7 +12,101 @@
  * details.
  */
 
+import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
+import {getUid} from '../../../util/formId.es';
+
 export const COMMON_INITIAL_STATE = {
 	activePage: 0,
 	pages: [],
+};
+
+export const BUILDER_INITIAL_STATE = {
+	...COMMON_INITIAL_STATE,
+	availableLanguageIds: [themeDisplay.getLanguageId()],
+	fieldActions: [
+		{
+			label: Liferay.Language.get('duplicate'),
+			type: CORE_EVENT_TYPES.FIELD.DUPLICATE,
+		},
+		{
+			label: Liferay.Language.get('delete'),
+			type: CORE_EVENT_TYPES.FIELD.DELETE,
+		},
+	],
+	focusedField: {},
+	initialSuccessPageSettings: {
+		body: {
+			[themeDisplay.getDefaultLanguageId()]: Liferay.Language.get(
+				'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
+			),
+		},
+		title: {
+			[themeDisplay.getDefaultLanguageId()]: Liferay.Language.get(
+				'thank-you'
+			),
+		},
+	},
+	paginationMode: 'multi_pages',
+};
+
+export const initState = ({
+	initialSuccessPageSettings,
+	pages,
+	paginationMode,
+	successPage: initialSuccessPage,
+	...otherProps
+}) => {
+	const successPageSettings = {
+		body:
+			initialSuccessPage?.body === 'string'
+				? {
+						[themeDisplay.getDefaultLanguageId()]: initialSuccessPage.body,
+				  }
+				: initialSuccessPageSettings.body,
+		enabled: true,
+		title:
+			initialSuccessPage?.title === 'string'
+				? {
+						[themeDisplay.getDefaultLanguageId()]: initialSuccessPage.title,
+				  }
+				: initialSuccessPageSettings.title,
+	};
+
+	return {
+		pages: [
+
+			// Adds new properties to pages for rendering and provides
+			// a unique uid that will avoid `key` problems when rendering
+			// pages.
+
+			...pages.map((page, pageIndex) => ({
+				...page,
+				id: getUid(),
+
+				// Deprecated property: The components that use this
+				// information can consume the usePage which can keep
+				// the index in context when iterating pages.
+
+				pageIndex,
+
+				// Deprecated property: Components that need this information can
+				// directly consume `pages.length`.
+
+				total: pages.length,
+			})),
+
+			// Adds the success page enabled by default.
+
+			{
+				contentRenderer: 'success',
+				id: getUid(),
+				paginationItemRenderer: `${paginationMode}_success`,
+				rows: [],
+				successPageSettings,
+			},
+		],
+		paginationMode,
+		successPageSettings,
+		...otherProps,
+	};
 };

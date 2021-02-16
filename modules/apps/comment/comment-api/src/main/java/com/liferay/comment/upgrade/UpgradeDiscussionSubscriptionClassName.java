@@ -135,6 +135,7 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 				_subscriptionLocalService.addSubscription(
 					subscription.getUserId(), subscription.getGroupId(),
 					newSubscriptionClassName, subscription.getClassPK()));
+
 		actionableDynamicQuery.performActions();
 	}
 

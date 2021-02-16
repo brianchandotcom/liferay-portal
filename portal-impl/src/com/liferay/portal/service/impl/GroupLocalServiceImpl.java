@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.DuplicateGroupException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
@@ -258,7 +259,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			(groupPersistence.countByC_S(user.getCompanyId(), site) >=
 				PropsValues.DATA_LIMIT_MAX_SITE_COUNT)) {
 
-			throw new PortalException(
+			throw new DataLimitException(
 				"Unable to exceed maximum number of allowed sites");
 		}
 

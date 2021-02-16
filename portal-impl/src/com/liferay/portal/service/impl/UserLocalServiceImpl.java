@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.DuplicateGoogleUserIdException;
 import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -1009,7 +1010,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			(userPersistence.countByCompanyId(companyId) >=
 				PropsValues.DATA_LIMIT_MAX_USER_COUNT)) {
 
-			throw new PortalException(
+			throw new DataLimitException(
 				"Unable to exceed maximum number of allowed users");
 		}
 

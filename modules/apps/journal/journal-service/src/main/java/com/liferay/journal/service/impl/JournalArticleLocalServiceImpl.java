@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -352,7 +353,7 @@ public class JournalArticleLocalServiceImpl
 			(journalArticlePersistence.countByCompanyId(user.getCompanyId()) >=
 				PropsValues.DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT)) {
 
-			throw new PortalException("Exceed maximum allowed articles");
+			throw new DataLimitException("Exceed maximum allowed articles");
 		}
 
 		articleId = StringUtil.toUpperCase(StringUtil.trim(articleId));

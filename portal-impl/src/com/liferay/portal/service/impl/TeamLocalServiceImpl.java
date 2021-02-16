@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.DuplicateTeamException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.TeamNameException;
@@ -57,7 +58,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 			(teamPersistence.countByCompanyId(user.getCompanyId()) >=
 				PropsValues.DATA_LIMIT_MAX_TEAM_COUNT)) {
 
-			throw new PortalException(
+			throw new DataLimitException(
 				"Unable to exceed maximum number of allowed teams");
 		}
 

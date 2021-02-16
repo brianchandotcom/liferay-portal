@@ -24,8 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface JournalContentCompatibilityLayer {
 
-	public void convertDocumentContent(Document document);
+	public void convert(Document document);
 
-	public String convertDocumentContent(String content);
+	public String convert(String content);
 
 }

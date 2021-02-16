@@ -49,7 +49,7 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document document = SAXReaderUtil.read(content);
 
-		_journalContentCompatibilityLayer.convertDocumentContent(document);
+		_journalContentCompatibilityLayer.convert(document);
 
 		String expectedContent = read(
 			"test-journal-content-all-fields-compatibility-expected-" +
@@ -69,7 +69,7 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document document = SAXReaderUtil.read(content);
 
-		_journalContentCompatibilityLayer.convertDocumentContent(document);
+		_journalContentCompatibilityLayer.convert(document);
 
 		String expectedContent = read(
 			"test-journal-content-complex-nested-fields-compatibility-" +
@@ -89,7 +89,7 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document document = SAXReaderUtil.read(content);
 
-		_journalContentCompatibilityLayer.convertDocumentContent(document);
+		_journalContentCompatibilityLayer.convert(document);
 
 		String expectedContent = read(
 			"test-journal-content-nested-fields-compatibility-expected-" +
@@ -111,7 +111,7 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document document = SAXReaderUtil.read(content);
 
-		_journalContentCompatibilityLayer.convertDocumentContent(document);
+		_journalContentCompatibilityLayer.convert(document);
 
 		String expectedContent = read(
 			"test-journal-content-repeatable-nested-fields-compatibility-" +
@@ -130,7 +130,7 @@ public class JournalContentCompatibilityLayerTest {
 
 		Document document = SAXReaderUtil.read(content);
 
-		_journalContentCompatibilityLayer.convertDocumentContent(document);
+		_journalContentCompatibilityLayer.convert(document);
 
 		String expectedContent = read(
 			"test-journal-content-version-compatibility-expected-results.xml");

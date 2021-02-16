@@ -44,9 +44,7 @@ public class UpgradeJournalArticleContent extends UpgradeProcess {
 
 				String content = rs1.getString("content");
 
-				content =
-					_journalContentCompatibilityLayer.convertDocumentContent(
-						content);
+				content = _journalContentCompatibilityLayer.convert(content);
 
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(

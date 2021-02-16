@@ -40,7 +40,7 @@ public class JournalContentCompatibilityLayerImpl
 	implements JournalContentCompatibilityLayer {
 
 	@Override
-	public void convertDocumentContent(Document document) {
+	public void convert(Document document) {
 		Element rootElement = document.getRootElement();
 
 		String version = rootElement.attributeValue("version");
@@ -61,11 +61,11 @@ public class JournalContentCompatibilityLayerImpl
 	}
 
 	@Override
-	public String convertDocumentContent(String content) {
+	public String convert(String content) {
 		try {
 			Document document = SAXReaderUtil.read(content);
 
-			convertDocumentContent(document);
+			convert(document);
 
 			return XMLUtil.formatXML(document.asXML());
 		}

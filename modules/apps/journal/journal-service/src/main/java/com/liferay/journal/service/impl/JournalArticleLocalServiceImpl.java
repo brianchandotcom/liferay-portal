@@ -8986,8 +8986,7 @@ public class JournalArticleLocalServiceImpl
 
 		content = _replaceTempImages(article, content);
 
-		return _journalContentCompatibilityLayer.convertDocumentContent(
-			content);
+		return _journalContentCompatibilityLayer.convert(content);
 	}
 
 	private Map<String, String> _getFriendlyURLMap(

@@ -17,8 +17,6 @@ import './PageRenderer.soy';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useRef} from 'react';
-import {DndProvider} from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {useFieldTypesResource} from '../hooks/useResource.es';
 import {ActionsProvider} from './Actions.es';
@@ -109,11 +107,9 @@ const Pages = React.forwardRef(
 Pages.displayName = 'Pages';
 
 const PagesWithProviders = React.forwardRef((props, ref) => (
-	<DndProvider backend={HTML5Backend} context={window}>
-		<ClayIconSpriteContext.Provider value={props.spritemap}>
-			<Pages {...props} ref={ref} />
-		</ClayIconSpriteContext.Provider>
-	</DndProvider>
+	<ClayIconSpriteContext.Provider value={props.spritemap}>
+		<Pages {...props} ref={ref} />
+	</ClayIconSpriteContext.Provider>
 ));
 
 PagesWithProviders.displayName = 'PagesWithProviders';

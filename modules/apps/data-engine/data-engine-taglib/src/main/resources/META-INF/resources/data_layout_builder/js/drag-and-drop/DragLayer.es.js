@@ -42,7 +42,7 @@ function getItemStyles(initialOffset, currentOffset) {
 	};
 }
 
-export default () => {
+const DragLayer = () => {
 	const {currentOffset, initialOffset, isDragging, item} = useDragLayer(
 		(monitor) => ({
 			currentOffset: monitor.getSourceClientOffset(),
@@ -69,3 +69,5 @@ export default () => {
 		</div>
 	);
 };
+
+export default DragLayer;

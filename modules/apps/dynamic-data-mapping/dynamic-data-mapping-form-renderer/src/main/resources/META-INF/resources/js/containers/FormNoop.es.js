@@ -12,7 +12,10 @@
  * details.
  */
 
+import {DragLayer} from 'data-engine-taglib';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import Pages from '../components/Pages.es';
 import {FormNoopProvider} from '../hooks/useForm.es';
@@ -25,7 +28,10 @@ export const FormNoop = React.forwardRef(({instance, ...otherProps}, ref) => (
 	<FormNoopProvider
 		onEvent={(type, payload) => instance?.context.dispatch(type, payload)}
 	>
-		<Pages {...otherProps} ref={ref} />
+		<DndProvider backend={HTML5Backend} context={window}>
+			<DragLayer />
+			<Pages {...otherProps} ref={ref} />
+		</DndProvider>
 	</FormNoopProvider>
 ));
 

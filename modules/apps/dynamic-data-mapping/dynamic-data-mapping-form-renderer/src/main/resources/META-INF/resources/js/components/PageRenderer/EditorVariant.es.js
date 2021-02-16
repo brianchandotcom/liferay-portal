@@ -16,10 +16,17 @@ import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {DragTypes} from 'data-engine-taglib';
 import {useEventListener} from 'frontend-js-react-web';
-import React, {forwardRef, useContext, useRef, useState} from 'react';
+import React, {
+	forwardRef,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
+import {useDrag} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {EVENT_TYPES} from '../../actions/eventTypes.es';
-import {useDrag} from '../../hooks/useDrag.es';
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
 import {useForm} from '../../hooks/useForm.es';
 import {hasFieldSet} from '../../util/fields.es';
@@ -34,6 +41,45 @@ const DIRECTIONS = {
 };
 
 const MAX_COLUMNS = 12;
+
+const FieldDragPreview = ({containerRef}) => {
+	const ref = useRef(null);
+
+	/**
+	 * This hack was needed to capture the field snapshot.
+	 * Currently the Field is loaded lazily and the preview
+	 * will look like a loading state field.
+	 */
+	useEffect(() => {
+		/**
+		 * It copies the width of the field and clone the DOM element
+		 * to replace the ref inner FieldDragPreview
+		 */
+		const {width} = getComputedStyle(containerRef.current);
+		const element = containerRef.current.cloneNode(true);
+
+		ref.current.parentElement.style.width = width;
+
+		ref.current.appendChild(element);
+
+		return () => {
+			ref.current.remove();
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [containerRef.current]);
+
+	return (
+		<DraggableField className="dragging">
+			<div ref={ref} />
+		</DraggableField>
+	);
+};
+
+const DraggableField = forwardRef(({children, className}, ref) => (
+	<div className={classNames('ddm-drag', className)} ref={ref}>
+		{children}
+	</div>
+));
 
 export const Column = ({
 	activePage,
@@ -73,11 +119,18 @@ export const Column = ({
 		? DragTypes.DRAG_FIELDSET_MOVE
 		: DragTypes.DRAG_FIELD_TYPE_MOVE;
 
-	const {drag} = useDrag({
-		item: firstField ?? undefined,
-		pageIndex,
-		type: dragType,
+	const [{isDragging}, drag, preview] = useDrag({
+		item: {
+			data: firstField ?? undefined,
+			pageIndex,
+			preview: () => <FieldDragPreview containerRef={resizeRef} />,
+			type: dragType,
+		},
 	});
+
+	useEffect(() => {
+		preview(getEmptyImage(), {captureDraggingState: true});
+	}, [preview]);
 
 	if (editable && column.fields.length === 0 && activePage === pageIndex) {
 		return (
@@ -114,7 +167,7 @@ export const Column = ({
 						isFieldSetOrGroup &&
 						overTarget &&
 						!rootParentField.ddmStructureId,
-					dragging: resizing,
+					dragging: resizing || isDragging,
 					hovered: editable && firstField.fieldName === hoveredId,
 					selected: editable && firstField.fieldName === activeId,
 					'target-droppable': canDrop,
@@ -213,7 +266,10 @@ const ResizableColumn = forwardRef(
 		};
 
 		const handleMouseMove = (event) => {
-			if (resizeInfoRef.current && resizeInfoRef.current.instanceId === instanceId) {
+			if (
+				resizeInfoRef.current &&
+				resizeInfoRef.current.instanceId === instanceId
+			) {
 				let column = Math.floor(
 					((event.clientX -
 						rowRef.current?.getBoundingClientRect().left) *
@@ -274,18 +330,18 @@ const ResizableColumn = forwardRef(
 					}
 				/>
 
-				<div
-					className={classNames('ddm-drag', {
+				<DraggableField
+					className={classNames({
 						'py-0': isFieldSetOrGroup,
 					})}
 					ref={
 						allowNestedFields && !rootParentField.ddmStructureId
 							? drag(drop(ref))
-							: drag
+							: drag(ref)
 					}
 				>
 					{children}
-				</div>
+				</DraggableField>
 
 				<div
 					className={classNames(

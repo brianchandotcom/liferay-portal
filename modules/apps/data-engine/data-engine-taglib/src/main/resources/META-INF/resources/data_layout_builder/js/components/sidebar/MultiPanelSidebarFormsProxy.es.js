@@ -18,7 +18,6 @@ import React, {useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import DragLayer from '../../drag-and-drop/DragLayer.es';
 import MultiPanelSidebar from './MultiPanelSidebar.es';
 
 const MultiPanelSidebarFormsProxy = React.forwardRef(
@@ -71,7 +70,6 @@ const MultiPanelSidebarFormsProxy = React.forwardRef(
 							rules,
 						}}
 					>
-						<DragLayer />
 						<MultiPanelSidebar
 							createPlugin={({
 								panel,

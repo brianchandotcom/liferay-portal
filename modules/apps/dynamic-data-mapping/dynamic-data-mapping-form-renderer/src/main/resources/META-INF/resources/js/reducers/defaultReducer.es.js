@@ -69,6 +69,11 @@ export default (state, action) => {
 								}
 							}
 
+							try {
+								_value = JSON.parse(_value);
+							}
+							catch (e) {}
+
 							return {
 								value: _value,
 							};

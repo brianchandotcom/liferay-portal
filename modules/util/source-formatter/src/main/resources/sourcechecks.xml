@@ -1402,6 +1402,7 @@
 		<check name="XMLDTDVersionCheck">
 			<category name="Styling" />
 			<description name="Checks the DTD version in `*.xml` file." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="XMLFriendlyURLRoutesFileCheck">
 			<category name="Styling" />

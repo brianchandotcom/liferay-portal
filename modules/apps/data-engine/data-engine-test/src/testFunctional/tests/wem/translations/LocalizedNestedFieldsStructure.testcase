@@ -679,14 +679,26 @@ definition {
 			fieldName = "Text");
 
 		DataEngine.addFieldNested(
-			fieldFieldLabel = "Rich Text",
-			fieldName = "Rich Text",
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			targetFieldLabel = "Rich Text");
+			targetFieldLabel = "Numeric");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Text Field Help Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Numeric Field Help Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Date",
+			fieldHelp = "Date Field Help Text");
 
 		DataEngine.editFieldsGroupLabel(
 			fieldsGroupLabel = "Fields Group",
@@ -713,12 +725,24 @@ definition {
 			fieldFieldLabelEdit = "Texto");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Rich Text",
-			fieldFieldLabelEdit = "Rico Texto");
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numérica");
 
 		DataEngine.editFieldLabel(
 			fieldFieldLabel = "Date",
 			fieldFieldLabelEdit = "Encontro");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Texto",
+			fieldHelp = "Texto de ajuda do campo texto");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numérica",
+			fieldHelp = "Texto de ajuda do campo numérico");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Encontro",
+			fieldHelp = "Texto de ajuda do campo encontro");
 
 		WebContentStructures.saveCP();
 
@@ -734,17 +758,20 @@ definition {
 				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
 
-		AssertVisible(
-			key_fieldFieldLabel = "Text",
-			key_fieldsGroupLabel = "First Level Fields Group",
-			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Text Field Help Text",
+			fieldName = "Text");
 
-		for (var fieldFieldLabel : list "Rich Text,Date") {
-			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Second Level Fields Group",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-		}
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Numeric Field Help Text",
+			fieldName = "Numeric");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Date",
+			fieldHelp = "Date Field Help Text",
+			fieldName = "Date");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -752,17 +779,26 @@ definition {
 			locator1 = "TextInput#NAME",
 			value1 = "Nome da Estrutura WC");
 
-		AssertVisible(
-			key_fieldFieldLabel = "Texto",
-			key_fieldsGroupLabel = "Grupo de campos de primeiro nível",
-			locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
-
-		for (var fieldFieldLabel : list "Rico Texto,Encontro") {
+		for (var fieldsGroupLabel : list "Grupo de campos de primeiro nível,Grupo de Campos de Segundo Nível") {
 			AssertVisible(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				key_fieldsGroupLabel = "Grupo de Campos de Segundo Nível",
-				locator1 = "DataEngineBuilder#FORM_FIELD_NESTED");
+				key_fieldFieldLabel = "${fieldsGroupLabel}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 		}
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Texto",
+			fieldHelp = "Texto de ajuda do campo texto",
+			fieldName = "Text");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numérica",
+			fieldHelp = "Texto de ajuda do campo numérico",
+			fieldName = "Numeric");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Encontro",
+			fieldHelp = "Texto de ajuda do campo encontro",
+			fieldName = "Date");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

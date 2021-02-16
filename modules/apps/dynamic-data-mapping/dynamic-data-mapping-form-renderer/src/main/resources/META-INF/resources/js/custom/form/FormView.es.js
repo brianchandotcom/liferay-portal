@@ -37,7 +37,7 @@ import {getFormId, getFormNode} from '../../util/formId.es';
 import {COMMON_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
 import {COMMON_INITIAL_STATE} from './config/initialState.es';
 import {pageValidationReducer, paginationReducer} from './reducers/index.es';
-import {getConfig} from './util/getConfig.es';
+import {parseProps} from './util/parseProps.es';
 
 /**
  * This is a copy of the old implementation made in Metal.js, deals with
@@ -282,7 +282,7 @@ Form.displayName = 'Form';
  * for the user.
  */
 export const FormView = React.forwardRef((props, ref) => {
-	const {config, state} = getConfig(props);
+	const {config, state} = parseProps(props);
 
 	// The application in User View will always expose the public
 	// APIs through the registration of Liferay.Component regardless

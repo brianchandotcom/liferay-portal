@@ -26,7 +26,7 @@ import {Form} from './FormView.es';
 import {COMMON_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
 import {COMMON_INITIAL_STATE} from './config/initialState.es';
 import {pageValidationReducer, paginationReducer} from './reducers/index.es';
-import {getConfig} from './util/getConfig.es';
+import {parseProps} from './util/parseProps.es';
 
 /**
  * Updates the state of the FieldSettings when any value coming
@@ -72,7 +72,7 @@ const StateSync = ({activePage, editingLanguageId, focusedField, pages}) => {
  * the reducers of a Field's settingsContext structure.
  */
 export const FormFieldSettings = ({children, onAction, ...otherProps}) => {
-	const {config, state} = getConfig(otherProps);
+	const {config, state} = parseProps(otherProps);
 
 	return (
 		<ConfigProvider

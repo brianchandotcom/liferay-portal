@@ -25,7 +25,7 @@ import {FormNoopProvider} from '../../core/hooks/useForm.es';
 import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
 import {COMMON_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
 import {COMMON_INITIAL_STATE} from './config/initialState.es';
-import {getConfig} from './util/getConfig.es';
+import {parseProps} from './util/parseProps.es';
 
 /**
  * Render a form just for preview without actions/reducer just with FormNoopProvider,
@@ -33,7 +33,7 @@ import {getConfig} from './util/getConfig.es';
  */
 const LegacyFormBuilder = React.forwardRef(
 	({instance, spritemap, ...otherProps}, ref) => {
-		const {config, state} = getConfig({spritemap, ...otherProps});
+		const {config, state} = parseProps({spritemap, ...otherProps});
 
 		return (
 			<ClayIconSpriteContext.Provider value={spritemap}>

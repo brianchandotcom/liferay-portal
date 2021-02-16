@@ -39,7 +39,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerRepository;
 
 /**
@@ -152,9 +151,7 @@ public class Log4JUtil {
 	}
 
 	public static void setLevel(String name, String priority, boolean custom) {
-		Logger logger = Logger.getLogger(name);
-
-		logger.setLevel(Level.toLevel(priority));
+		Log4jConfigUtil.setLevel(name, priority);
 
 		java.util.logging.Logger jdkLogger = java.util.logging.Logger.getLogger(
 			name);

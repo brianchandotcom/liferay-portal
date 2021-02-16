@@ -99,6 +99,12 @@ public class Log4jConfigUtil {
 		return priorities;
 	}
 
+	public static void setLevel(String name, String priority) {
+		Logger logger = Logger.getLogger(name);
+
+		logger.setLevel(Level.toLevel(priority));
+	}
+
 	private static void _removeAppender(
 		Element rootElement, Element element, String appenderName) {
 

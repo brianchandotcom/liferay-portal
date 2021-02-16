@@ -25,13 +25,13 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -42,20 +42,21 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Ivica Cardic
  */
 @ProviderType
 public interface CPContentHelper {
+
+	public JSONObject getAvailabilityContentContributorValue(
+			CPCatalogEntry cpCatalogEntry,
+			HttpServletRequest httpServletRequest)
+		throws Exception;
 
 	public String getAvailabilityEstimateLabel(
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 
 	public String getAvailabilityLabel(HttpServletRequest httpServletRequest)
-		throws Exception;
-
-	public Map<String, String> getAvailabilityMap(
-			CPCatalogEntry cpCatalogEntry,
-			HttpServletRequest httpServletRequest)
 		throws Exception;
 
 	public List<CPDefinitionSpecificationOptionValue>

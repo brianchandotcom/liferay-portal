@@ -19,8 +19,8 @@ import {
 } from '../actions.es';
 import {
 	DRAG_DATA_DEFINITION_FIELD_ADD,
-	DRAG_FIELD_TYPE_ADD,
 	DRAG_FIELDSET_ADD,
+	DRAG_FIELD_TYPE_ADD,
 } from './dragTypes.es';
 
 export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {

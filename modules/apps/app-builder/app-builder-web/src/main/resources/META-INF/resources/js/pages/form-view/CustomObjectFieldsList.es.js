@@ -262,7 +262,7 @@ const CustomObjectFieldsList = ({keywords}) => {
 	);
 	const showCategories =
 		!!customFieldTypes.length && !!nativeFieldTypes.length;
-	
+
 	const getDataDefinitionField = (fieldName) => {
 		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
 			(field) => field.name === fieldName

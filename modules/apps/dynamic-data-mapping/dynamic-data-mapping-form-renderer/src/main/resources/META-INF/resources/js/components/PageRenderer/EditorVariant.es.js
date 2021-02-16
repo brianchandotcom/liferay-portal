@@ -51,6 +51,7 @@ const FieldDragPreview = ({containerRef}) => {
 	 * will look like a loading state field.
 	 */
 	useEffect(() => {
+
 		/**
 		 * It copies the width of the field and clone the DOM element
 		 * to replace the ref inner FieldDragPreview

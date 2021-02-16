@@ -37,11 +37,146 @@ definition {
 		}
 	}
 
+	@description = "Assert Web Content created From Structure is published Via SAP"
+	@priority = "4"
+	test AssertWebContentFromStructureNotBeDeletedOnLiveViaSAP {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		task ("Add a web content structure with all fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+					structureDescription = "WC Structure Description",
+					structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content template with all fields") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+					structureName = "WC Structure Name",
+					templateDescription = "WC Template Description",
+					templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
+					templateName = "WC Template Name");
+		}
+
+		task ("Add first web content based on new structure and template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+					column = "1",
+					dmNavTab = "User Personal Folder",
+					navTab = "Web Content Images",
+					row = "1",
+					structureName = "WC Structure Name",
+					templateName = "WC Template Name",
+					webContentColor = "FF0D0D",
+					webContentDate = "10/10/2020",
+					webContentGrid = "true",
+					webContentImage = "Document_3.png",
+					webContentLinkToPage = "Staging Test Page",
+					webContentMultipleSelection = "Option 1",
+					webContentNumeric = "9",
+					webContentRichText = "This is a Rich Text field",
+					webContentSelectFromList = "Option 2",
+					webContentSingleSelection = "Option 3",
+					webContentText = "This is a Text field",
+					webContentTitle = "WC WebContent Title 1",
+					webContentUpload = "Document_1.doc",
+					webContentWebContent = "WC 1");
+
+			PortletEntry.publish();
+
+			WebContent.viewTitle(webContentTitle = "WC WebContent Title 1");
+		}
+
+		task ("Publish first web content via SAP") {
+			Staging.publishViaSAP(
+					confirmMessage =
+							"Are you sure you want to publish the selected web content?",
+					entry = "WC WebContent Title 1");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContent.viewTitle(
+					onLive = "true",
+					webContentTitle = "WC WebContent Title 1");
+
+		}
+		task ("Delete first web content via SAP") {
+
+			WebContentNavigator.openWebContentAdmin(
+					siteURLKey = "site-name-staging");
+
+			WebContent.deleteStagedCP(
+					pageName = "Staging Test Page",
+					siteName = "Site Name",
+					webContentTitle = "WC WebContent Title 1");
+		}
+
+		task ("Add second web content based on new structure and template") {
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+					column = "2",
+					dmNavTab = "User Personal Folder",
+					navTab = "Web Content Images",
+					row = "2",
+					structureName = "WC Structure Name",
+					templateName = "WC Template Name",
+					webContentColor = "FF0D0D",
+					webContentDate = "10/10/2020",
+					webContentGrid = "true",
+					webContentImage = "Document_2.png",
+					webContentLinkToPage = "Staging Test Page",
+					webContentMultipleSelection = "Option 1",
+					webContentNumeric = "9",
+					webContentRichText = "This is a Rich Text field 2",
+					webContentSelectFromList = "Option 2",
+					webContentSingleSelection = "Option 3",
+					webContentText = "This is a Text field 2",
+					webContentTitle = "WC WebContent Title 2",
+					webContentUpload = "Document_3.doc",
+					webContentWebContent = "WC 1");
+
+			PortletEntry.publish();
+
+			WebContent.viewTitle(webContentTitle = "WC WebContent Title 2");
+		}
+
+		task ("Publish first web content via SAP") {
+			Staging.publishViaSAP(
+					confirmMessage =
+							"Are you sure you want to publish the selected web content?",
+					entry = "WC WebContent Title 2");
+
+		}
+
+		task ("Verify both Web Content exist") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContent.viewTitle(
+					onLive = "true",
+					webContentTitle = "WC WebContent Title 1");
+
+			WebContent.viewTitle(
+					onLive = "true",
+					webContentTitle = "WC WebContent Title 2");
+		}
+	}
+
 	@description = "Publish in Staging a Web Content From Structure"
 	@priority = "5"
 	test PublishInStagingWebContentFromStructure {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
+		property portal.acceptance = "false";
 
 		task ("Add a web content structure with all fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");

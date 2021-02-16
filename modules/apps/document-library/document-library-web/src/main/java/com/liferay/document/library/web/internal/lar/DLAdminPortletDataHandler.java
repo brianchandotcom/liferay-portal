@@ -340,6 +340,20 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "metadata")) {
+			Element ddmStructuresElement =
+				portletDataContext.getImportDataGroupElement(
+					DDMStructure.class);
+
+			List<Element> ddmStructureElements =
+				ddmStructuresElement.elements();
+
+			for (Element ddmStructureElement : ddmStructureElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, ddmStructureElement);
+			}
+		}
+
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "repositories")) {
 			Element repositoriesElement =
 				portletDataContext.getImportDataGroupElement(Repository.class);

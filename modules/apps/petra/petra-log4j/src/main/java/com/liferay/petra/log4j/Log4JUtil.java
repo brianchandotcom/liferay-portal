@@ -15,9 +15,9 @@
 package com.liferay.petra.log4j;
 
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.log4j.internal.Log4jConfigUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,18 +35,12 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerRepository;
-import org.apache.log4j.xml.DOMConfigurator;
-
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -91,45 +85,15 @@ public class Log4JUtil {
 		urlContent = StringUtil.replace(
 			urlContent, "@liferay.home@", _getLiferayHome());
 
-		Document document = null;
+		Map<String, String> priorities = null;
 
-		try {
-			SAXReader saxReader = new SAXReader();
-
-			document = saxReader.read(new UnsyncStringReader(urlContent));
+		if (ServerDetector.getServerId() != null) {
+			priorities = Log4jConfigUtil.configureLog4J(urlContent);
 		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return;
+		else {
+			priorities = Log4jConfigUtil.configureLog4J(
+				urlContent, "TEXT_FILE", "XML_FILE");
 		}
-
-		Map<String, String> priorities = new HashMap<>();
-
-		Element rootElement = document.getRootElement();
-
-		for (Element element : rootElement.elements()) {
-			if (ServerDetector.getServerId() == null) {
-				_removeAppender(rootElement, element, "TEXT_FILE");
-				_removeAppender(rootElement, element, "XML_FILE");
-			}
-
-			if (Objects.equals("category", element.getName())) {
-				Element priorityElement = element.element("priority");
-
-				priorities.put(
-					element.attributeValue("name"),
-					priorityElement.attributeValue("value"));
-			}
-		}
-
-		// See LPS-6029, LPS-8865, and LPS-24280
-
-		DOMConfigurator domConfigurator = new DOMConfigurator();
-
-		domConfigurator.doConfigure(
-			new UnsyncStringReader(document.asXML()),
-			LogManager.getLoggerRepository());
 
 		for (Map.Entry<String, String> entry : priorities.entrySet()) {
 			java.util.logging.Logger jdkLogger =
@@ -255,25 +219,6 @@ public class Log4JUtil {
 		}
 
 		return _liferayHome;
-	}
-
-	private static void _removeAppender(
-		Element rootElement, Element element, String appenderName) {
-
-		if (Objects.equals("appender", element.getName()) &&
-			Objects.equals(appenderName, element.attributeValue("name"))) {
-
-			rootElement.remove(element);
-		}
-
-		for (Element childElement : element.elements()) {
-			if (Objects.equals("appender-ref", childElement.getName()) &&
-				Objects.equals(
-					appenderName, childElement.attributeValue("ref"))) {
-
-				element.remove(childElement);
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(Log4JUtil.class);

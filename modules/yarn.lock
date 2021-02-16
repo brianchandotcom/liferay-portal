@@ -1538,10 +1538,10 @@
   resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-4.3.1.tgz#35cde6128f6e2795b7e45378e8f115f596b6cdda"
   integrity sha512-95i+LRK3gPTiBc75lJsr9OwRNFdzaamSe3B5x+kHLHYr78qS/4WD5mkDJ+WYv3CY0jFFnROTNLl3x6zCRuDMxw==
 
-"@liferay/eslint-config@21.2.1":
-  version "21.2.1"
-  resolved "https://registry.yarnpkg.com/@liferay/eslint-config/-/eslint-config-21.2.1.tgz#cd29c21140098a49d566c37082467d5787aeb90b"
-  integrity sha512-fPnX6Un8zypPeAQ+GHSp67JnooBq56S39oCAQvP6fubgxOCD9vzeGG1lkeEhgMwpvo3D2zn2hNc0zlKJhtnOcA==
+"@liferay/eslint-config@21.3.0":
+  version "21.3.0"
+  resolved "https://registry.yarnpkg.com/@liferay/eslint-config/-/eslint-config-21.3.0.tgz#f7de96adb23c85d8243e2b3f8172977d2d2e40b3"
+  integrity sha512-036dX4ClIdW/IbPpsEfWHXM2XSjcpqLDuE7HiXWyng4aKbG12mAnL6w214uWvr001m3m49HEaK0mk/v3MFVqkA==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.3.0"
     "@typescript-eslint/parser" "4.3.0"
@@ -1622,10 +1622,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@36.11.0":
-  version "36.11.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-36.11.0.tgz#866418b1bd89adf612342608a37dd059a8b5889c"
-  integrity sha512-sgxfrrUbPk0+vP9ILIpm/fj3M0xHfIFI3jgS9pTKri2RC6pDMUSn/q44tqzgAD6a8Xo6wF/uRqkgkxKLb670Mw==
+"@liferay/npm-scripts@37.0.0":
+  version "37.0.0"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-37.0.0.tgz#e564e4a17bd87aa45e2b185441049d6e674d22e1"
+  integrity sha512-8xPjo7fFWjQrPujb9XhQ1qJpgKTB1sI3MxUWzHpbBbL9P5EH7WpYZf+r/ZdA96d/P8AhmtNMTNjdaW9ox1R6LQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1637,7 +1637,7 @@
     "@babel/preset-env" "^7.4.2"
     "@babel/preset-react" "^7.8.3"
     "@babel/preset-typescript" "^7.10.4"
-    "@liferay/eslint-config" "21.2.1"
+    "@liferay/eslint-config" "21.3.0"
     "@liferay/jest-junit-reporter" "1.2.0"
     "@liferay/js-toolkit-core" "3.0.1-pre.1"
     "@liferay/npm-bundler-preset-liferay-dev" "4.6.5"

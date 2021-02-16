@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -138,17 +139,25 @@ public class BackgroundImageFragmentEntryProcessor
 				value = _getImageURL(fieldValues.get(mappedField));
 			}
 
+			Object fieldValue = null;
+
 			if (_fragmentEntryProcessorHelper.isMapped(
 					editableValueJSONObject)) {
 
-				Object fieldValue =
-					_fragmentEntryProcessorHelper.getMappedValue(
-						editableValueJSONObject, infoDisplaysFieldValues,
-						fragmentEntryProcessorContext);
+				fieldValue = _fragmentEntryProcessorHelper.getMappedValue(
+					editableValueJSONObject, infoDisplaysFieldValues,
+					fragmentEntryProcessorContext);
+			}
+			else if (_fragmentEntryProcessorHelper.isMappedCollection(
+						editableValueJSONObject)) {
 
-				if (fieldValue != null) {
-					value = _getImageURL(fieldValue);
-				}
+				fieldValue =
+					_fragmentEntryProcessorHelper.getMappedCollectionValue(
+						editableValueJSONObject, fragmentEntryProcessorContext);
+			}
+
+			if (fieldValue != null) {
+				value = _getImageURL(fieldValue);
 			}
 
 			if (Validator.isNull(value)) {
@@ -179,6 +188,16 @@ public class BackgroundImageFragmentEntryProcessor
 						editableValueJSONObject.getLong("classNameId"),
 						editableValueJSONObject.getLong("classPK"),
 						editableValueJSONObject.getString("fieldId"),
+						fragmentEntryProcessorContext.getLocale());
+				}
+
+				Optional<Object> displayObjectOptional =
+					fragmentEntryProcessorContext.getDisplayObjectOptional();
+
+				if ((fileEntryId == 0) && displayObjectOptional.isPresent()) {
+					fileEntryId = _getMappedCollectionFileEntryId(
+						displayObjectOptional.get(),
+						editableValueJSONObject.getString("collectionFieldId"),
 						fragmentEntryProcessorContext.getLocale());
 				}
 
@@ -343,6 +362,23 @@ public class BackgroundImageFragmentEntryProcessor
 		}
 
 		return String.valueOf(fieldValue);
+	}
+
+	private long _getMappedCollectionFileEntryId(
+		Object displayObject, String fieldId, Locale locale) {
+
+		if (Validator.isNull(fieldId)) {
+			return 0;
+		}
+
+		if (!(displayObject instanceof ClassedModel)) {
+			return 0;
+		}
+
+		ClassedModel classedModel = (ClassedModel)displayObject;
+
+		return _getFileEntryId(
+			classedModel.getModelClassName(), displayObject, fieldId, locale);
 	}
 
 	@Reference

@@ -222,7 +222,6 @@ public class GetDataMVCResourceCommandTest {
 
 				Assert.assertEquals(
 					Boolean.TRUE, viewURLJSONObject.getBoolean("default"));
-
 				Assert.assertEquals(
 					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					viewURLJSONObject.getString("languageId"));
@@ -270,7 +269,6 @@ public class GetDataMVCResourceCommandTest {
 
 				Assert.assertEquals(
 					Boolean.TRUE, viewURLJSONObject.getBoolean("default"));
-
 				Assert.assertEquals(
 					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
 					viewURLJSONObject.getString("languageId"));

@@ -13,16 +13,12 @@
  */
 
 import ClayModal from 'clay-modal';
-import {
-	FormsRuleBuilder,
-	ReactMultiPanelSidebarAdapter,
-} from 'data-engine-taglib';
+import {FormsRuleBuilder} from 'data-engine-taglib';
 import {FormBuilderBase} from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/FormBuilder.es';
 import withEditablePageHeader from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withEditablePageHeader.es';
 import withMultiplePages from 'dynamic-data-mapping-form-builder/js/components/FormBuilder/withMultiplePages.es';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
 import RulesSupport from 'dynamic-data-mapping-form-builder/js/components/RuleBuilder/RulesSupport.es';
-import Sidebar from 'dynamic-data-mapping-form-builder/js/components/Sidebar/Sidebar.es';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
 import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
@@ -130,39 +126,6 @@ class Form extends Component {
 			}
 		}
 
-		store.on('fieldDuplicated', () => this.openSidebar());
-
-		store.on('focusedFieldChanged', ({newVal}) => {
-			if (newVal && Object.keys(newVal).length > 0) {
-				this.openSidebar();
-			}
-		});
-
-		store.on('activePageChanged', () => {
-			const {activePage, pages} = store.state;
-
-			if (
-				activePage > -1 &&
-				pages[activePage] &&
-				!pages[activePage].successPageSettings
-			) {
-				if (!this._pageHasFields(pages, activePage)) {
-					this.openSidebar();
-				}
-			}
-		});
-
-		store.on('pagesChanged', ({newVal, prevVal}) => {
-			if (
-				newVal &&
-				prevVal &&
-				newVal.length !== prevVal.length &&
-				!this._pageHasFields(newVal, store.state.activePage)
-			) {
-				this.openSidebar();
-			}
-		});
-
 		store.on(
 			'paginationModeChanged',
 			this._handlePaginationModeChanded.bind(this)
@@ -243,12 +206,6 @@ class Form extends Component {
 		return view !== 'fieldSets';
 	}
 
-	openSidebar() {
-		if (!this.props.context.dataEngineSidebar) {
-			this.refs.sidebar.open();
-		}
-	}
-
 	publish(event) {
 		this.props.published = true;
 
@@ -280,7 +237,7 @@ class Form extends Component {
 			spritemap,
 			view,
 		} = this.props;
-		const {pages, saveButtonLabel, sidebarOpen} = this.state;
+		const {pages, saveButtonLabel} = this.state;
 
 		const {dataEngineSidebar, sidebarPanels} = context;
 
@@ -332,49 +289,12 @@ class Form extends Component {
 						portletNamespace={namespace}
 						ref="formBuilder"
 						rules={formattedRules}
-						sidebarOpen={sidebarOpen}
 						spritemap={spritemap}
 						view={view}
 						visible={
 							!this.isShowRuleBuilder() && !this.isShowReport()
 						}
 					/>
-					{dataEngineSidebar ? (
-						<ReactMultiPanelSidebarAdapter
-							dataProviderInstanceParameterSettingsURL={
-								dataProviderInstanceParameterSettingsURL
-							}
-							dataProviderInstancesURL={dataProviderInstancesURL}
-							defaultLanguageId={defaultLanguageId}
-							editingLanguageId={editingLanguageId}
-							fieldTypes={fieldTypes}
-							functionsMetadata={functionsMetadata}
-							functionsURL={functionsURL}
-							onChange={(sidebarOpen) =>
-								this.setState({sidebarOpen})
-							}
-							pages={pages}
-							panels={[['fields']]}
-							rules={rules}
-							sidebarPanels={sidebarPanels}
-							sidebarVariant="light"
-						/>
-					) : (
-						<Sidebar
-							defaultLanguageId={defaultLanguageId}
-							editingLanguageId={editingLanguageId}
-							fieldSetDefinitionURL={fieldSetDefinitionURL}
-							fieldSets={fieldSets}
-							fieldTypes={fieldTypes}
-							portletNamespace={namespace}
-							ref="sidebar"
-							spritemap={spritemap}
-							visible={
-								!this.isShowRuleBuilder() &&
-								!this.isShowReport()
-							}
-						/>
-					)}
 				</LayoutProviderTag>
 
 				<div class="container container-fluid-1280">
@@ -1046,15 +966,6 @@ Form.STATE = {
 	 */
 
 	saveButtonLabel: Config.string().valueFn('_saveButtonLabelValueFn'),
-
-	/**
-	 * @default true
-	 * @instance
-	 * @memberof Form
-	 * @type {!bool}
-	 */
-
-	sidebarOpen: Config.bool().value(true),
 };
 
 export default Form;

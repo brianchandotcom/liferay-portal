@@ -16,7 +16,6 @@ import classnames from 'classnames';
 import ClayButton from 'clay-button';
 import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
-import ClayModal from 'clay-modal';
 import {
 	FormFieldSettingsAdapter,
 	FormSupport,
@@ -57,11 +56,11 @@ class Sidebar extends Component {
 	changeFieldType(type) {
 		const {
 			defaultLanguageId,
+			dispatch,
 			editingLanguageId,
 			fieldTypes,
 			focusedField,
 		} = this.props;
-		const {dispatch} = this.context;
 		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
 			...newFieldType.settingsContext,
@@ -82,7 +81,7 @@ class Sidebar extends Component {
 			);
 		}
 
-		dispatch('focusedFieldEvaluationEnded', {
+		dispatch('sidebar_evaluate', {
 			...focusedField,
 			...newFieldType,
 			...getFieldProperties(
@@ -312,59 +311,17 @@ class Sidebar extends Component {
 						</div>
 					</div>
 				</div>
-
-				<ClayModal
-					body={Liferay.Language.get(
-						'are-you-sure-you-want-to-cancel'
-					)}
-					events={{
-						clickButton: this._handleCancelChangesModalButtonClicked.bind(
-							this
-						),
-					}}
-					footerButtons={[
-						{
-							alignment: 'right',
-							label: Liferay.Language.get('dismiss'),
-							style: 'primary',
-							type: 'close',
-						},
-						{
-							alignment: 'right',
-							label: Liferay.Language.get('yes-cancel'),
-							style: 'primary',
-							type: 'button',
-						},
-					]}
-					ref="cancelChangesModal"
-					size="sm"
-					spritemap={spritemap}
-					title={Liferay.Language.get(
-						'cancel-field-changes-question'
-					)}
-				/>
 			</div>
 		);
 	}
 
 	syncEditingLanguageId() {
-		const {dispatch} = this.context;
 		const {evaluableForm} = this.refs;
-		const {editingLanguageId, focusedField} = this.props;
+		const {dispatch, editingLanguageId} = this.props;
 
 		if (evaluableForm && evaluableForm.reactComponentRef.current) {
 			evaluableForm.reactComponentRef.current
 				.evaluate(editingLanguageId)
-				.then((pages) => {
-					dispatch('focusedFieldEvaluationEnded', {
-						...focusedField,
-						changedEditingLanguage: true,
-						settingsContext: {
-							...focusedField.settingsContext,
-							pages,
-						},
-					});
-				})
 				.catch((error) => dispatch('evaluationError', error));
 		}
 	}
@@ -399,22 +356,36 @@ class Sidebar extends Component {
 	}
 
 	_cancelFieldChanges() {
-		const {cancelChangesModal} = this.refs;
+		const {dispatch, modalDispatch, revertFieldChanges} = this.props;
 
-		cancelChangesModal.show();
+		modalDispatch(
+			revertFieldChanges({
+				onClick: (event, onClose) => {
+					event.stopPropagation();
+
+					if (this._isOutsideModal(event.target)) {
+						this.close();
+					}
+
+					onClose();
+					dispatch('sidebar_changes_cancel');
+				},
+				type: 1,
+			})
+		);
 	}
 
 	_deleteField(fieldName) {
-		const {dispatch} = this.context;
+		const {dispatch} = this.props;
 
-		dispatch('fieldDeleted', {fieldName});
+		dispatch('field_delete', {fieldName});
 	}
 
 	dispatchFieldBlurred() {
-		const {dispatch} = this.context;
+		const {dispatch} = this.props;
 
 		if (!this.isDisposed()) {
-			dispatch('sidebarFieldBlurred');
+			dispatch('sidebar_blur');
 		}
 	}
 
@@ -434,9 +405,9 @@ class Sidebar extends Component {
 	}
 
 	_duplicateField(fieldName) {
-		const {dispatch} = this.context;
+		const {dispatch} = this.props;
 
-		dispatch('fieldDuplicated', {fieldName});
+		dispatch('field_duplicate', {fieldName});
 	}
 
 	_fetchElementSet(fieldSetId) {
@@ -516,24 +487,6 @@ class Sidebar extends Component {
 		});
 
 		return eventName;
-	}
-
-	_handleCancelChangesModalButtonClicked(event) {
-		const {dispatch} = this.context;
-		const {target} = event;
-		const {cancelChangesModal} = this.refs;
-
-		event.stopPropagation();
-
-		if (this._isOutsideModal(target)) {
-			this.close();
-		}
-
-		cancelChangesModal.emit('hide');
-
-		if (!event.target.classList.contains('close-modal')) {
-			dispatch('fieldChangesCanceled', {});
-		}
 	}
 
 	_handleChangeFieldTypeItemClicked({data}) {
@@ -620,8 +573,6 @@ class Sidebar extends Component {
 	}
 
 	_handleDragEnded(data, event) {
-		const {dispatch} = this.context;
-
 		event.preventDefault();
 
 		if (!data.target) {
@@ -630,14 +581,14 @@ class Sidebar extends Component {
 
 		this._handleDragTargetLeave(data);
 
-		const {fieldTypes} = this.props;
+		const {dispatch, fieldTypes} = this.props;
 		const {fieldSetId} = data.source.dataset;
 		const columnNode = data.target.closest('.col-ddm');
 		const indexes = FormSupport.getIndexes(columnNode);
 
 		if (fieldSetId) {
 			this._fetchElementSet(fieldSetId).then((pages) => {
-				dispatch('elementSetAdded', {
+				dispatch('element_set_add', {
 					data,
 					fieldSetId,
 					fieldSetPages: pages,
@@ -674,13 +625,13 @@ class Sidebar extends Component {
 			if (data.target && data.target.closest('.col-empty')) {
 				const addedToPlaceholder = data.target.closest('.placeholder');
 
-				dispatch('fieldAdded', {
+				dispatch('field_add', {
 					...payload,
 					addedToPlaceholder,
 				});
 			}
 			else {
-				dispatch('sectionAdded', payload);
+				dispatch('section_add', payload);
 			}
 		}
 	}
@@ -712,10 +663,9 @@ class Sidebar extends Component {
 	}
 
 	_handleEvaluatorChanged(pages) {
-		const {dispatch} = this.context;
-		const {focusedField} = this.props;
+		const {dispatch, focusedField} = this.props;
 
-		dispatch('focusedFieldEvaluationEnded', {
+		dispatch('sidebar_evaluate', {
 			...focusedField,
 			settingsContext: {
 				...focusedField.settingsContext,
@@ -779,25 +729,18 @@ class Sidebar extends Component {
 		);
 	}
 
-	_handleSettingsFieldBlurred({fieldInstance, value}) {
-		const {dispatch} = this.context;
-		const {editingLanguageId} = this.props;
-		const {fieldName} = fieldInstance;
+	_handleSettingsFieldBlurred(event) {
+		const {dispatch} = this.props;
 
-		dispatch('fieldBlurred', {
-			editingLanguageId,
-			propertyName: fieldName,
-			propertyValue: value,
-		});
+		dispatch('field_blur', event);
 	}
 
 	_handleSettingsFieldEdited({fieldInstance, value}) {
 		if (fieldInstance && !fieldInstance.isDisposed() && this.state.open) {
-			const {editingLanguageId} = this.props;
+			const {dispatch, editingLanguageId} = this.props;
 			const {fieldName} = fieldInstance;
-			const {dispatch} = this.context;
 
-			dispatch('fieldEdited', {
+			dispatch('field_change', {
 				editingLanguageId,
 				propertyName: fieldName,
 				propertyValue: value,
@@ -1356,7 +1299,7 @@ Sidebar.STATE = {
 	 * @type {?bool}
 	 */
 
-	open: Config.bool().internal().value(false),
+	open: Config.bool().internal().value(true),
 
 	/**
 	 * @default object

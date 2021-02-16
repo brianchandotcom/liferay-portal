@@ -4,6 +4,7 @@ Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.journal.configuration,\
 	com.liferay.journal.constants,\
+	com.liferay.journal.content.compatibility.converter,\
 	com.liferay.journal.exception,\
 	com.liferay.journal.model,\
 	com.liferay.journal.service,\

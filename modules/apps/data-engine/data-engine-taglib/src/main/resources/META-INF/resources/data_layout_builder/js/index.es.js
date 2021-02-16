@@ -18,7 +18,8 @@ import DataLayoutBuilderContextProvider from './AppContextProvider.es';
 import * as DataLayoutBuilderActions from './actions.es';
 import FieldType from './components/field-types/FieldType.es';
 import FieldTypeList from './components/field-types/FieldTypeList.es';
-import FormsRuleBuilder from './components/rule-builder/FormsRuleBuilder.es';
+import {FormsRuleEditor} from './components/rule-builder/FormsRuleEditor.es';
+import {FormsRuleList} from './components/rule-builder/FormsRuleList.es';
 import SearchInput, {
 	SearchInputWithForm,
 } from './components/search-input/SearchInput.es';
@@ -39,13 +40,14 @@ export {
 	DataLayoutBuilder,
 	DataLayoutBuilderActions,
 	DataLayoutBuilderContext,
-	FormsRuleBuilder,
 	DataLayoutBuilderContextProvider,
 	DataLayoutVisitor,
 	DragLayer,
 	DragTypes,
 	FieldType,
 	FieldTypeList,
+	FormsRuleEditor,
+	FormsRuleList,
 	ReactMultiPanelSidebarAdapter,
 	SearchInput,
 	SearchInputWithForm,

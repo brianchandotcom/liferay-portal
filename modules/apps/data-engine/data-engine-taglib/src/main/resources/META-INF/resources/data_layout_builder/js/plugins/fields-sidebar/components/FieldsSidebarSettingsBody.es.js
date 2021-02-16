@@ -169,10 +169,7 @@ export default function ({
 				}}
 				spritemap={spritemap}
 			>
-				<Pages
-					editable={false}
-					overrides={{Column}}
-				/>
+				<Pages editable={false} overrides={{Column}} />
 			</FormFieldSettings>
 		</form>
 	);

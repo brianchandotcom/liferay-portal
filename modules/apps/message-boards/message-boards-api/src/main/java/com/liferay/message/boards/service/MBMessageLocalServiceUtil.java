@@ -76,6 +76,13 @@ public class MBMessageLocalServiceUtil {
 		return getService().addMBMessage(mbMessage);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			long threadId, long parentMessageId, String subject, String body,
@@ -93,6 +100,13 @@ public class MBMessageLocalServiceUtil {
 			allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			String subject, String body,
@@ -104,6 +118,13 @@ public class MBMessageLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			String subject, String body, String format,
@@ -120,6 +141,13 @@ public class MBMessageLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			String subject, String body, String format, String fileName,

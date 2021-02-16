@@ -73,6 +73,13 @@ public class MBMessageLocalServiceWrapper
 		return _mbMessageLocalService.addMBMessage(mbMessage);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
@@ -91,6 +98,13 @@ public class MBMessageLocalServiceWrapper
 			allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
@@ -103,6 +117,13 @@ public class MBMessageLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
@@ -120,6 +141,13 @@ public class MBMessageLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,

@@ -105,6 +105,13 @@ public interface MBMessageLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public MBMessage addMBMessage(MBMessage mbMessage);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			long threadId, long parentMessageId, String subject, String body,
@@ -114,11 +121,25 @@ public interface MBMessageLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			String subject, String body, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			String subject, String body, String format,
@@ -127,6 +148,13 @@ public interface MBMessageLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addMessage(String, long, String, long, long, long, long,
+	 String, String, String, List, boolean, double, boolean,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
 			String subject, String body, String format, String fileName,

@@ -1,5 +1,9 @@
 {
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
 	"name": "portal-workflow-kaleo-forms-web",
+	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

@@ -1,5 +1,6 @@
 {
     "ignore": [
-        "**/*"
+        "**/components.js",
+        "**/main.js"
     ]
 }

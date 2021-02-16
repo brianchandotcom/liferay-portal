@@ -353,7 +353,8 @@ public class JournalArticleLocalServiceImpl
 			(journalArticlePersistence.countByCompanyId(user.getCompanyId()) >=
 				PropsValues.DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT)) {
 
-			throw new DataLimitException("Exceed maximum allowed articles");
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed journal articles");
 		}
 
 		articleId = StringUtil.toUpperCase(StringUtil.trim(articleId));

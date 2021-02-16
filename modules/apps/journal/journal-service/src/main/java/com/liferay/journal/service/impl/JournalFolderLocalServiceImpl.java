@@ -106,7 +106,7 @@ public class JournalFolderLocalServiceImpl
 				PropsValues.DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT)) {
 
 			throw new DataLimitException(
-				"Exceed maximum allowed article folders");
+				"Unable to exceed maximum number of allowed journal folders");
 		}
 
 		parentFolderId = getParentFolderId(groupId, parentFolderId);

@@ -74,10 +74,4 @@ public class ViewAccountGroupAccountEntriesManagementToolbarDisplayContext
 		).build();
 	}
 
-	@Override
-	public String getDefaultEventHandler() {
-		return "ACCOUNT_GROUP_ACCOUNT_ENTRIES_MANAGEMENT_TOOLBAR_" +
-			"DEFAULT_EVENT_HANDLER";
-	}
-
 }

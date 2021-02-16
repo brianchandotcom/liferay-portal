@@ -18,12 +18,11 @@
 
 <%
 SearchContainer<AccountGroupDisplay> accountGroupDisplaySearchContainer = AccountGroupDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
-
-ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementToolbarDisplayContext = new ViewAccountGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountGroupDisplaySearchContainer);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewAccountGroupsManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new ViewAccountGroupsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountGroupDisplaySearchContainer) %>"
+	propsTransformer="account_groups_admin/js/AccountGroupsManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>
@@ -77,8 +76,3 @@ ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementTool
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= viewAccountGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="account_groups_admin/js/AccountGroupsManagementToolbarDefaultEventHandler.es"
-/>

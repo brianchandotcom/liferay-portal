@@ -31,8 +31,38 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(accountGroupDisplay.getName());
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewAccountGroupAccountEntriesManagementToolbarDisplayContext %>"
+<portlet:actionURL name="/account_admin/assign_account_group_account_entries" var="assignAccountGroupAccountEntriesURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<portlet:actionURL name="/account_admin/remove_account_group_account_entries" var="removeAccountGroupAccountEntriesURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+</portlet:actionURL>
+
+<portlet:renderURL var="selectAccountGroupAccountEntriesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+	<portlet:param name="openModalOnRedirect" value="<%= Boolean.TRUE.toString() %>" />
+	<portlet:param name="showCreateButton" value="<%= Boolean.TRUE.toString() %>" />
+	<portlet:param name="singleSelect" value="<%= Boolean.FALSE.toString() %>" />
+</portlet:renderURL>
+
+<clay:management-toolbar
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"accountGroupName", accountGroupDisplay.getName()
+		).put(
+			"assignAccountGroupAccountEntriesURL", assignAccountGroupAccountEntriesURL
+		).put(
+			"removeAccountGroupAccountEntriesURL", removeAccountGroupAccountEntriesURL
+		).put(
+			"selectAccountGroupAccountEntriesURL", selectAccountGroupAccountEntriesURL
+		).build()
+	%>'
+	managementToolbarDisplayContext="<%= viewAccountGroupAccountEntriesManagementToolbarDisplayContext %>"
+	propsTransformer="account_groups_admin/js/AccountGroupAccountEntriesManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>
@@ -100,37 +130,3 @@ renderResponse.setTitle(accountGroupDisplay.getName());
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<portlet:actionURL name="/account_admin/assign_account_group_account_entries" var="assignAccountGroupAccountEntriesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<portlet:actionURL name="/account_admin/remove_account_group_account_entries" var="removeAccountGroupAccountEntriesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
-</portlet:actionURL>
-
-<portlet:renderURL var="selectAccountGroupAccountEntriesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="accountGroupId" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
-	<portlet:param name="openModalOnRedirect" value="<%= Boolean.TRUE.toString() %>" />
-	<portlet:param name="showCreateButton" value="<%= Boolean.TRUE.toString() %>" />
-	<portlet:param name="singleSelect" value="<%= Boolean.FALSE.toString() %>" />
-</portlet:renderURL>
-
-<liferay-frontend:component
-	componentId="<%= viewAccountGroupAccountEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"accountGroupName", accountGroupDisplay.getName()
-		).put(
-			"assignAccountGroupAccountEntriesURL", assignAccountGroupAccountEntriesURL
-		).put(
-			"removeAccountGroupAccountEntriesURL", removeAccountGroupAccountEntriesURL
-		).put(
-			"selectAccountGroupAccountEntriesURL", selectAccountGroupAccountEntriesURL
-		).build()
-	%>'
-	module="account_groups_admin/js/AccountGroupAccountEntriesManagementToolbarDefaultEventHandler.es"
-/>

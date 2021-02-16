@@ -41,9 +41,7 @@ definition {
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"
 	@priority = "4"
 	test CheckLanguageSelector {
-		WebContentStructures.addCP(
-			structureDescription = "Test",
-			structureName = "Test Structure");
+		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
@@ -56,19 +54,13 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		LexiconEntry.gotoEntry(rowEntry = "Test Structure");
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		AssertElementPresent(
 			key_locale = "en_US",
-			locator1 = "Translation#LOCALIZATION_NAME",
-			value1 = "lexicon-icon-en-us");
-
-		AssertElementPresent(
-			key_locale = "en_US",
-			locator1 = "Translation#LOCALIZATION_NAME",
-			value1 = "Default");
+			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
 	@description = "This is a test for LPS-123536. As Content Creator, I want to define reusable translations when creating WEM Structures with nested field"

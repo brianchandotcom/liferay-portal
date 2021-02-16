@@ -16,10 +16,12 @@ package com.liferay.document.library.web.internal.lar;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -143,6 +145,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				getNamespace(), "document-types", true, false, null,
 				DLFileEntryType.class.getName()),
+			new PortletDataHandlerBoolean(
+				getNamespace(), "metadata", true, false, null,
+				DDMStructure.class.getName(),
+				DLFileEntryMetadata.class.getName()),
 			new PortletDataHandlerBoolean(
 				getNamespace(), "shortcuts", true, false, null,
 				DLFileShortcutConstants.getClassName()));

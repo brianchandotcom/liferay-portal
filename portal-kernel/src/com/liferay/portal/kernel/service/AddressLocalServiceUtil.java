@@ -53,7 +53,10 @@ public class AddressLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addAddress(String, long, String, long, String, String,
+	 String, String, String, String, String, long, long, long,
+	 boolean, boolean, String, ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.model.Address addAddress(

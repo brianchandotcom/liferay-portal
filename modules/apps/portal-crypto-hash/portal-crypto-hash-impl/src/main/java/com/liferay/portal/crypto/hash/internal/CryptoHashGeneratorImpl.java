@@ -23,13 +23,10 @@ import com.liferay.portal.crypto.hash.CryptoHashVerifier;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-@Component(service = CryptoHashGenerator.class)
 public class CryptoHashGeneratorImpl
 	implements CryptoHashGenerator, CryptoHashVerifier {
 

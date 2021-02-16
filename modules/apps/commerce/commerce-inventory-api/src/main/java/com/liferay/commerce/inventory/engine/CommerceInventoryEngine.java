@@ -22,6 +22,7 @@ import java.util.Map;
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
+ * @author Ivica Cardic
  */
 public interface CommerceInventoryEngine {
 
@@ -34,6 +35,9 @@ public interface CommerceInventoryEngine {
 			long userId, long commerceInventoryWarehouseId, String sku,
 			int quantity)
 		throws PortalException;
+
+	public String getAvailabilityStatus(
+		long companyId, long channelGroupId, int minStockQuantity, String sku);
 
 	public Map<String, Integer> getStockQuantities(
 			long companyId, long channelGroupId, List<String> skus)

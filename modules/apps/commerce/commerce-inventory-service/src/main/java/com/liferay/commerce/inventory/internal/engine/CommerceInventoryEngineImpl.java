@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.inventory.internal.engine;
 
+import com.liferay.commerce.inventory.constants.CommerceInventoryAvailabilityConstants;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.exception.MVCCException;
@@ -39,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
+ * @author Ivica Cardic
  */
 @Component(
 	enabled = false, immediate = true, service = CommerceInventoryEngine.class
@@ -92,6 +94,14 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 					getCommerceInventoryWarehouseItemId(),
 				commerceInventoryWarehouseItem.getQuantity() - quantity,
 				commerceInventoryWarehouseItem.getMvccVersion());
+	}
+
+	@Override
+	public String getAvailabilityStatus(
+		long companyId, long channelGroupId, int minStockQuantity, String sku) {
+
+		return _getAvailabilityStatus(
+			minStockQuantity, getStockQuantity(companyId, channelGroupId, sku));
 	}
 
 	@Override
@@ -183,6 +193,26 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, sku, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(null), quantity);
+	}
+
+	private String _getAvailabilityStatus(
+		int minStockQuantity, int stockQuantity) {
+
+		String availabilityStatus =
+			CommerceInventoryAvailabilityConstants.UNAVAILABLE;
+
+		boolean available = false;
+
+		if (stockQuantity > minStockQuantity) {
+			available = true;
+		}
+
+		if (available) {
+			availabilityStatus =
+				CommerceInventoryAvailabilityConstants.AVAILABLE;
+		}
+
+		return availabilityStatus;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

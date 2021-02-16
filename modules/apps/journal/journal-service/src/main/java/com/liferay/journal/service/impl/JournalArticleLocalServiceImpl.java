@@ -7469,9 +7469,7 @@ public class JournalArticleLocalServiceImpl
 			else if (elType.equals("image")) {
 				addImageFileEntries(article, element);
 			}
-			else if (elType.equals("text_area") || elType.equals("text") ||
-					 elType.equals("text_box")) {
-
+			else if (elType.equals("rich_text") || elType.equals("text")) {
 				List<Element> dynamicContentElements = element.elements(
 					"dynamic-content");
 
@@ -7481,7 +7479,7 @@ public class JournalArticleLocalServiceImpl
 					if (Validator.isNotNull(dynamicContent)) {
 						String contentType = ContentTypes.TEXT_PLAIN;
 
-						if (elType.equals("text_area")) {
+						if (elType.equals("rich_text")) {
 							contentType = ContentTypes.TEXT_HTML;
 						}
 

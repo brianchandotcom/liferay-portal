@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.item.selector.web.internal.display.context;
 
+import com.liferay.commerce.country.CommerceCountryManager;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.item.selector.web.internal.search.CommerceInventoryWarehouseChecker;
-import com.liferay.commerce.util.CommerceCountryHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -50,14 +50,14 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 		<CommerceInventoryWarehouse> {
 
 	public CommerceInventoryWarehouseItemSelectorViewDisplayContext(
-		CommerceCountryHelper commerceCountryHelper,
+		CommerceCountryManager commerceCountryManager,
 		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
 		CountryService countryService, HttpServletRequest httpServletRequest,
 		PortletURL portletURL, String itemSelectedEventName, boolean search) {
 
 		super(httpServletRequest, portletURL, itemSelectedEventName);
 
-		_commerceCountryHelper = commerceCountryHelper;
+		_commerceCountryManager = commerceCountryManager;
 		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
 		_countryService = countryService;
 		_search = search;
@@ -71,7 +71,7 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 	public List<ManagementBarFilterItem> getManagementBarFilterItems()
 		throws PortalException, PortletException {
 
-		List<Country> countries = _commerceCountryHelper.getWarehouseCountries(
+		List<Country> countries = _commerceCountryManager.getWarehouseCountries(
 			cpRequestHelper.getCompanyId(), false);
 
 		List<ManagementBarFilterItem> managementBarFilterItems =
@@ -226,7 +226,7 @@ public class CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			portletURL.toString());
 	}
 
-	private final CommerceCountryHelper _commerceCountryHelper;
+	private final CommerceCountryManager _commerceCountryManager;
 	private final CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
 	private final CountryService _countryService;

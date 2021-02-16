@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.internal.util;
+package com.liferay.commerce.internal.country;
 
+import com.liferay.commerce.country.CommerceCountryManager;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseTable;
 import com.liferay.commerce.product.model.CommerceChannelRelTable;
-import com.liferay.commerce.util.CommerceCountryHelper;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -37,9 +37,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pei-Jung Lan
  */
 @Component(
-	enabled = false, immediate = true, service = CommerceCountryHelper.class
+	enabled = false, immediate = true, service = CommerceCountryManager.class
 )
-public class CommerceCountryHelperImpl implements CommerceCountryHelper {
+public class CommerceCountryManagerImpl implements CommerceCountryManager {
 
 	public List<Country> getBillingCountriesByChannelId(
 		long channelId, int start, int end) {

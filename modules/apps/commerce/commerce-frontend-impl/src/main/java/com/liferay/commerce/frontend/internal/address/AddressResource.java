@@ -20,11 +20,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.country.CommerceCountryManager;
 import com.liferay.commerce.frontend.internal.address.model.CountryModel;
 import com.liferay.commerce.frontend.internal.address.model.RegionModel;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.util.CommerceCountryHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -150,7 +150,7 @@ public class AddressResource {
 		@Context ThemeDisplay themeDisplay) {
 
 		List<Country> countries =
-			_commerceCountryHelper.getShippingCountriesByChannelId(
+			_commerceCountryManager.getShippingCountriesByChannelId(
 				channelId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return _getCountries(countries, themeDisplay.getLanguageId());
@@ -199,7 +199,7 @@ public class AddressResource {
 	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
-	private CommerceCountryHelper _commerceCountryHelper;
+	private CommerceCountryManager _commerceCountryManager;
 
 	@Reference
 	private CountryService _countryService;

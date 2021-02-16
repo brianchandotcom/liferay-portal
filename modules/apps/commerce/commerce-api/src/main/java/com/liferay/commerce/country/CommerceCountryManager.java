@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.util;
+package com.liferay.commerce.country;
 
 import com.liferay.portal.kernel.model.Country;
 
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Pei-Jung Lan
  */
-public interface CommerceCountryHelper {
+public interface CommerceCountryManager {
 
 	public List<Country> getBillingCountriesByChannelId(
 		long channelId, int start, int end);

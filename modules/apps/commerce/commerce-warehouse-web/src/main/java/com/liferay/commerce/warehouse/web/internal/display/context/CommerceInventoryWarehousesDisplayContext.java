@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.warehouse.web.internal.display.context;
 
+import com.liferay.commerce.country.CommerceCountryManager;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
@@ -21,7 +22,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
-import com.liferay.commerce.util.CommerceCountryHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.petra.string.StringPool;
@@ -56,14 +56,14 @@ public class CommerceInventoryWarehousesDisplayContext {
 	public CommerceInventoryWarehousesDisplayContext(
 		CommerceChannelRelService commerceChannelRelService,
 		CommerceChannelService commerceChannelService,
-		CommerceCountryHelper commerceCountryHelper,
+		CommerceCountryManager commerceCountryManager,
 		CountryService countryService,
 		CommerceInventoryWarehouseService commerceInventoryWarehouseService,
 		HttpServletRequest httpServletRequest) {
 
 		_commerceChannelRelService = commerceChannelRelService;
 		_commerceChannelService = commerceChannelService;
-		_commerceCountryHelper = commerceCountryHelper;
+		_commerceCountryManager = commerceCountryManager;
 		_countryService = countryService;
 		_commerceInventoryWarehouseService = commerceInventoryWarehouseService;
 
@@ -138,7 +138,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 	public List<ManagementBarFilterItem> getManagementBarFilterItems()
 		throws PortalException, PortletException {
 
-		List<Country> countries = _commerceCountryHelper.getWarehouseCountries(
+		List<Country> countries = _commerceCountryManager.getWarehouseCountries(
 			_cpRequestHelper.getCompanyId(), true);
 
 		countries = ListUtil.unique(countries);
@@ -331,7 +331,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 
 	private final CommerceChannelRelService _commerceChannelRelService;
 	private final CommerceChannelService _commerceChannelService;
-	private final CommerceCountryHelper _commerceCountryHelper;
+	private final CommerceCountryManager _commerceCountryManager;
 	private CommerceInventoryWarehouse _commerceInventoryWarehouse;
 	private final CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;

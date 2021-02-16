@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.item.selector.web.internal;
 
+import com.liferay.commerce.country.CommerceCountryManager;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.item.selector.criterion.CommerceInventoryWarehouseItemSelectorCriterion;
 import com.liferay.commerce.item.selector.web.internal.display.context.CommerceInventoryWarehouseItemSelectorViewDisplayContext;
-import com.liferay.commerce.util.CommerceCountryHelper;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -88,7 +88,7 @@ public class CommerceInventoryWarehouseItemSelectorView
 		CommerceInventoryWarehouseItemSelectorViewDisplayContext
 			commerceInventoryWarehouseItemSelectorViewDisplayContext =
 				new CommerceInventoryWarehouseItemSelectorViewDisplayContext(
-					_commerceCountryHelper, _commerceInventoryWarehouseService,
+					_commerceCountryManager, _commerceInventoryWarehouseService,
 					_countryService, httpServletRequest, portletURL,
 					itemSelectedEventName, search);
 
@@ -109,7 +109,7 @@ public class CommerceInventoryWarehouseItemSelectorView
 			ListUtil.fromArray(new UUIDItemSelectorReturnType()));
 
 	@Reference
-	private CommerceCountryHelper _commerceCountryHelper;
+	private CommerceCountryManager _commerceCountryManager;
 
 	@Reference
 	private CommerceInventoryWarehouseService

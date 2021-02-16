@@ -350,6 +350,9 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 				new StagedModelType[] {
 					new StagedModelType(DLFileEntry.class.getName()),
 					new StagedModelType(DLFileEntryType.class.getName()),
+					new StagedModelType(
+						DDMStructure.class.getName(),
+						DLFileEntryMetadata.class.getName()),
 					new StagedModelType(DLFileShortcut.class.getName()),
 					new StagedModelType(DLFolder.class.getName()),
 					new StagedModelType(Repository.class.getName())

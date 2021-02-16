@@ -1,4 +1,6 @@
 .portlet-ddm-form-report {
+	margin-top: -20px;
+
 	#container {
 		overflow: hidden;
 	}
@@ -287,6 +289,8 @@
 
 			ul {
 				list-style-type: none;
+				max-height: calc(100vh - 92px);
+				overflow-y: auto;
 				padding: 0;
 				width: 240px;
 

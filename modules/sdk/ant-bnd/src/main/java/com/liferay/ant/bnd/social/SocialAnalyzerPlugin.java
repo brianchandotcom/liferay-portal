@@ -150,6 +150,15 @@ public class SocialAnalyzerPlugin implements AnalyzerPlugin {
 				put(
 					"-//Liferay//DTD Social 7.1.0//EN",
 					"com/liferay/portal/definitions/liferay-social_7_1_0.dtd");
+				put(
+					"-//Liferay//DTD Social 7.2.0//EN",
+					"com/liferay/portal/definitions/liferay-social_7_2_0.dtd");
+				put(
+					"-//Liferay//DTD Social 7.3.0//EN",
+					"com/liferay/portal/definitions/liferay-social_7_3_0.dtd");
+				put(
+					"-//Liferay//DTD Social 7.4.0//EN",
+					"com/liferay/portal/definitions/liferay-social_7_4_0.dtd");
 			}
 		};
 

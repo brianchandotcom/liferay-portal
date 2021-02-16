@@ -20,6 +20,7 @@ import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashP
 import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProvider;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,9 +36,25 @@ public class CryptoHashGeneratorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_cryptoHashVerifierImpl = new CryptoHashVerifierImpl();
+
+		BCryptCryptoHashProvider bCryptCryptoHashProvider =
+			new BCryptCryptoHashProvider();
+
+		_cryptoHashVerifierImpl.register(
+			BCryptCryptoHashProvider.CRYPTO_HASH_PROVIDER_NAME,
+			bCryptCryptoHashProvider);
+
+		MessageDigestCryptoHashProvider messageDigestCryptoHashProvider =
+			new MessageDigestCryptoHashProvider();
+
+		_cryptoHashVerifierImpl.register(
+			MessageDigestCryptoHashProvider.CRYPTO_HASH_PROVIDER_NAME,
+			messageDigestCryptoHashProvider);
+
 		_cryptoHashGenerators = Arrays.asList(
-			new CryptoHashGeneratorImpl(new MessageDigestCryptoHashProvider()),
-			new CryptoHashGeneratorImpl(new BCryptCryptoHashProvider()));
+			new CryptoHashGeneratorImpl(bCryptCryptoHashProvider),
+			new CryptoHashGeneratorImpl(messageDigestCryptoHashProvider));
 	}
 
 	@Test
@@ -48,18 +65,44 @@ public class CryptoHashGeneratorTest {
 			CryptoHashResponse cryptoHashResponse =
 				cryptoHashGeneratorImpl.generate(_INPUT);
 
-			CryptoHashVerificationContext cryptoHashVerificationContext =
-				cryptoHashResponse.getCryptoHashVerificationContext();
-
 			Assert.assertFalse(
-				cryptoHashGeneratorImpl.verify(
+				_cryptoHashVerifierImpl.verify(
 					_randomBytes(), cryptoHashResponse.getHash(),
-					cryptoHashVerificationContext.getSalt()));
+					cryptoHashResponse.getCryptoHashVerificationContext()));
 			Assert.assertTrue(
-				cryptoHashGeneratorImpl.verify(
+				_cryptoHashVerifierImpl.verify(
 					_INPUT, cryptoHashResponse.getHash(),
-					cryptoHashVerificationContext.getSalt()));
+					cryptoHashResponse.getCryptoHashVerificationContext()));
 		}
+	}
+
+	@Test
+	public void testGenerateWithMultipleAlgorithms() throws Exception {
+		byte[] hash = _INPUT;
+		ArrayList<CryptoHashVerificationContext>
+			cryptoHashVerificationContexts = new ArrayList<>();
+
+		for (CryptoHashGeneratorImpl cryptoHashGeneratorImpl :
+				_cryptoHashGenerators) {
+
+			CryptoHashResponse cryptoHashResponse =
+				cryptoHashGeneratorImpl.generate(hash);
+
+			hash = cryptoHashResponse.getHash();
+			cryptoHashVerificationContexts.add(
+				cryptoHashResponse.getCryptoHashVerificationContext());
+		}
+
+		Assert.assertFalse(
+			_cryptoHashVerifierImpl.verify(
+				_randomBytes(), hash,
+				cryptoHashVerificationContexts.toArray(
+					new CryptoHashVerificationContext[0])));
+		Assert.assertTrue(
+			_cryptoHashVerifierImpl.verify(
+				_INPUT, hash,
+				cryptoHashVerificationContexts.toArray(
+					new CryptoHashVerificationContext[0])));
 	}
 
 	private static byte[] _randomBytes() {
@@ -71,5 +114,6 @@ public class CryptoHashGeneratorTest {
 	private static final byte[] _INPUT = _randomBytes();
 
 	private List<CryptoHashGeneratorImpl> _cryptoHashGenerators;
+	private CryptoHashVerifierImpl _cryptoHashVerifierImpl;
 
 }

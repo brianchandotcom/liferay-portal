@@ -17,20 +17,17 @@ package com.liferay.portal.crypto.hash.internal;
 import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
-import com.liferay.portal.crypto.hash.CryptoHashVerifier;
 import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
  * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-public class CryptoHashGeneratorImpl
-	implements CryptoHashGenerator, CryptoHashVerifier {
+public class CryptoHashGeneratorImpl implements CryptoHashGenerator {
 
 	public CryptoHashGeneratorImpl(CryptoHashProvider cryptoHashProvider)
 		throws NoSuchAlgorithmException {
@@ -51,17 +48,6 @@ public class CryptoHashGeneratorImpl
 			cryptoHashProviderResponse.getHash(),
 			new CryptoHashVerificationContext(
 				cryptoHashProviderResponse.getCryptoHashProviderName(), salt));
-	}
-
-	@Override
-	public boolean verify(byte[] input, byte[] hash, byte[] salt)
-		throws CryptoHashException {
-
-		CryptoHashProviderResponse cryptoHashProviderResponse =
-			_cryptoHashProvider.generate(salt, input);
-
-		return MessageDigest.isEqual(
-			cryptoHashProviderResponse.getHash(), hash);
 	}
 
 	private final CryptoHashProvider _cryptoHashProvider;

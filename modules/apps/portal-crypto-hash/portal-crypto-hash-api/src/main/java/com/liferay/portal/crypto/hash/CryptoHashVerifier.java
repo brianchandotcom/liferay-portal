@@ -21,7 +21,9 @@ import com.liferay.portal.crypto.hash.exception.CryptoHashException;
  */
 public interface CryptoHashVerifier {
 
-	public boolean verify(byte[] input, byte[] hash, byte[] salt)
+	public boolean verify(
+			byte[] input, byte[] hash,
+			CryptoHashVerificationContext... cryptoHashVerificationContexts)
 		throws CryptoHashException;
 
 }

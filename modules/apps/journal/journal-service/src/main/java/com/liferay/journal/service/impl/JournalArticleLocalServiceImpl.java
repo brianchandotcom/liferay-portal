@@ -25,6 +25,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
@@ -7463,13 +7464,15 @@ public class JournalArticleLocalServiceImpl
 		for (Element element : root.elements()) {
 			String elType = element.attributeValue("type", StringPool.BLANK);
 
-			if (elType.equals("document_library")) {
+			if (elType.equals(DDMFormFieldTypeConstants.DOCUMENT_LIBRARY)) {
 				addDocumentLibraryFileEntries(element);
 			}
-			else if (elType.equals("image")) {
+			else if (elType.equals(DDMFormFieldTypeConstants.IMAGE)) {
 				addImageFileEntries(article, element);
 			}
-			else if (elType.equals("rich_text") || elType.equals("text")) {
+			else if (elType.equals(DDMFormFieldTypeConstants.RICH_TEXT) ||
+					 elType.equals(DDMFormFieldTypeConstants.TEXT)) {
+
 				List<Element> dynamicContentElements = element.elements(
 					"dynamic-content");
 
@@ -7479,7 +7482,9 @@ public class JournalArticleLocalServiceImpl
 					if (Validator.isNotNull(dynamicContent)) {
 						String contentType = ContentTypes.TEXT_PLAIN;
 
-						if (elType.equals("rich_text")) {
+						if (elType.equals(
+								DDMFormFieldTypeConstants.RICH_TEXT)) {
+
 							contentType = ContentTypes.TEXT_HTML;
 						}
 

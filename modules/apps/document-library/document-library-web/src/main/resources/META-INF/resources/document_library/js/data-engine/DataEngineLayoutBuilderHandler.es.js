@@ -90,8 +90,9 @@ export default function ({defaultLanguageId, namespace}) {
 
 	const detectClickOutside = (event) => {
 		if (
-			!event.target.closest('.ddm-form-builder-wrapper') &&
-			!event.target.closest('.multi-panel-sidebar')
+			!event.target.closest(
+				'.ddm-form-builder-wrapper, .multi-panel-sidebar'
+			)
 		) {
 			getDataLayoutBuilder().then((dataLayoutBuilder) => {
 				dataLayoutBuilder.dispatch('sidebarFieldBlurred');

@@ -124,6 +124,8 @@ public class BackgroundImageFragmentEntryProcessor
 
 			String value = StringPool.BLANK;
 
+			Object fieldValue = null;
+
 			if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
 					fragmentEntryProcessorContext.getMode())) {
 
@@ -136,13 +138,10 @@ public class BackgroundImageFragmentEntryProcessor
 				Map<String, Object> fieldValues = fieldValuesOptional.orElse(
 					new HashMap<>());
 
-				value = _getImageURL(fieldValues.get(mappedField));
+				fieldValue = fieldValues.get(mappedField);
 			}
-
-			Object fieldValue = null;
-
-			if (_fragmentEntryProcessorHelper.isMapped(
-					editableValueJSONObject)) {
+			else if (_fragmentEntryProcessorHelper.isMapped(
+						editableValueJSONObject)) {
 
 				fieldValue = _fragmentEntryProcessorHelper.getMappedValue(
 					editableValueJSONObject, infoDisplaysFieldValues,
@@ -174,6 +173,13 @@ public class BackgroundImageFragmentEntryProcessor
 						JSONFactoryUtil.createJSONObject(value);
 
 					fileEntryId = valueJSONObject.getLong("fileEntryId");
+
+					if (fileEntryId == 0) {
+						fileEntryId = _getFileEntryId(
+							valueJSONObject.getString("className"),
+							valueJSONObject.getLong("classPK"));
+					}
+
 					value = valueJSONObject.getString("url", value);
 				}
 
@@ -198,6 +204,13 @@ public class BackgroundImageFragmentEntryProcessor
 					fileEntryId = _getMappedCollectionFileEntryId(
 						displayObjectOptional.get(),
 						editableValueJSONObject.getString("collectionFieldId"),
+						fragmentEntryProcessorContext.getLocale());
+				}
+
+				if ((fileEntryId == 0) && displayObjectOptional.isPresent()) {
+					fileEntryId = _getMappedCollectionFileEntryId(
+						displayObjectOptional.get(),
+						editableValueJSONObject.getString("mappedField"),
 						fragmentEntryProcessorContext.getLocale());
 				}
 
@@ -296,6 +309,14 @@ public class BackgroundImageFragmentEntryProcessor
 
 		return _getFileEntryId(
 			_portal.getClassName(classNameId), object, fieldId, locale);
+	}
+
+	private long _getFileEntryId(String className, long classPK) {
+		if (!Objects.equals(className, FileEntry.class.getName())) {
+			return 0;
+		}
+
+		return classPK;
 	}
 
 	private long _getFileEntryId(

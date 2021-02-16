@@ -543,50 +543,89 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.addFieldsets(
-			fieldsetLabel = "Basic Web Content",
-			fieldsetName = "Basic Web Content");
+			createNewFieldset = "true",
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+		DataEngine.addTranslationToFieldset(
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");
 
 		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
 
-		WebContent.addCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+		WebContent.addWithStructureCP(
+            webContentText = "This is a text",
+            webContentTitle = "WC Title");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		WebContent.addCP(
-			webContentContent = "Conteúdo da web",
-			webContentTitle = "Título do conteúdo da web");
+		WebContent.addWithStructureCP(
+            webContentTitle = "Título do conteúdo da web"
+		);
+
+		PortletEntry.inputText(
+			fieldLabel = "Text pt-BR",
+			text = "Este é um campo de texto"
+		);
 
 		PortletEntry.changeLocale(locale = "es_ES");
 
-		WebContent.addCP(
-			webContentContent = "Contenido de contenido web",
-			webContentTitle = "Título del contenido web");
+		WebContent.addWithStructureCP(
+            webContentTitle = "WC Title ES"
+		);
+
+		PortletEntry.inputText(
+			fieldLabel = "Text",
+			text = "This is a text in ES"
+		);
 
 		PortletEntry.publish();
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
-		WebContent.viewCP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC Title"
+		);
+
+		AssertTextEquals(
+			key_fieldLabel = "Text",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "This is a text"
+		);
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 
-		WebContent.viewCP(
-			webContentContent = "Conteúdo da web",
-			webContentTitle = "Título do conteúdo da web");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Título do conteúdo da web"
+		);
+
+		AssertTextEquals(
+			key_fieldLabel = "Text pt-BR",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Este é um campo de texto"
+		);
 
 		PortletEntry.changeLocale(locale = "es_ES");
 
-		WebContent.viewCP(
-			webContentContent = "Contenido de contenido web",
-			webContentTitle = "Título del contenido web");
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "WC Title ES"
+		);
+
+		AssertTextEquals(
+			key_fieldLabel = "Text",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "This is a text in ES"
+		);
 	}
 
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fildset when creating a new Web Content"

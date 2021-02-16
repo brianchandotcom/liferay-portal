@@ -77,14 +77,26 @@ public class Log4JUtil {
 			return;
 		}
 
-		Document document = null;
+		String urlContent = null;
 
 		try (InputStream inputStream = url.openStream()) {
+			urlContent = StreamUtil.toString(inputStream, StringPool.UTF8);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return;
+		}
+
+		urlContent = StringUtil.replace(
+			urlContent, "@liferay.home@", _getLiferayHome());
+
+		Document document = null;
+
+		try {
 			SAXReader saxReader = new SAXReader();
 
-			document = saxReader.read(
-				new UnsyncStringReader(
-					StreamUtil.toString(inputStream, StringPool.UTF8)));
+			document = saxReader.read(new UnsyncStringReader(urlContent));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -116,9 +128,7 @@ public class Log4JUtil {
 		DOMConfigurator domConfigurator = new DOMConfigurator();
 
 		domConfigurator.doConfigure(
-			new UnsyncStringReader(
-				StringUtil.replace(
-					document.asXML(), "@liferay.home@", _getLiferayHome())),
+			new UnsyncStringReader(document.asXML()),
 			LogManager.getLoggerRepository());
 
 		for (Map.Entry<String, String> entry : priorities.entrySet()) {

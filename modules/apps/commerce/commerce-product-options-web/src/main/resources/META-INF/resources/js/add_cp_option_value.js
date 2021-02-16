@@ -27,6 +27,7 @@ export default function ({
 	const form = document.getElementById(namespace + 'fm');
 	const keyInput = form.querySelector('#' + namespace + 'key');
 	const nameInput = form.querySelector('#' + namespace + 'name');
+	const priorityInput = form.querySelector('#' + namespace + 'priority');
 	const handleOnNameInput = () => {
 		keyInput.value = slugify(nameInput.value);
 	};
@@ -43,11 +44,13 @@ export default function ({
 				id: '',
 				key: '',
 				name: {},
+				priority: 0,
 			};
 
 			formattedData.key = keyInput.value;
 			formattedData.name[defaultLanguageId] = nameInput.value;
 			formattedData.id = cpOptionId;
+			formattedData.priority = priorityInput.value;
 
 			AdminCatalogResource.createOptionValue(cpOptionId, formattedData)
 				.then(() => {

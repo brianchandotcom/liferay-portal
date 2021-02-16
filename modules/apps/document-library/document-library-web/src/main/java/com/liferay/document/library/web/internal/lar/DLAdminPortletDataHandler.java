@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -39,8 +40,12 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.RepositoryEntry;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
@@ -232,6 +237,34 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 			fileEntryTypeActionableDynamicQuery.performActions();
 		}
 
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "metadata")) {
+			ExportActionableDynamicQuery exportActionableDynamicQuery =
+				_ddmStructureLocalService.getExportActionableDynamicQuery(
+					portletDataContext);
+
+			ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+				exportActionableDynamicQuery.getAddCriteriaMethod();
+
+			exportActionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					addCriteriaMethod.addCriteria(dynamicQuery);
+
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					dynamicQuery.add(
+						classNameIdProperty.eq(
+							_portal.getClassNameId(DLFileEntryMetadata.class)));
+				});
+
+			exportActionableDynamicQuery.setStagedModelType(
+				new StagedModelType(
+					DDMStructure.class.getName(),
+					DLFileEntryMetadata.class.getName()));
+
+			exportActionableDynamicQuery.performActions();
+		}
+
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "repositories")) {
 			StagedModelRepository<?> stagedModelRepository =
 				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
@@ -413,10 +446,16 @@ public class DLAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Staging _staging;

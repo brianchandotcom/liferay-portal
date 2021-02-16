@@ -660,15 +660,20 @@ public class RenderLayoutStructureDisplayContext {
 			fileEntryId = _getFileEntryId(
 				backgroundImageJSONObject.getLong("classNameId"),
 				backgroundImageJSONObject.getLong("classPK"),
-				backgroundImageJSONObject.getString("fieldId"));
+				backgroundImageJSONObject.getString("fieldId"),
+				LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
 		}
 		else if (backgroundImageJSONObject.has("collectionFieldId")) {
 			fileEntryId = _getMappedCollectionFileEntryId(
-				backgroundImageJSONObject.getString("collectionFieldId"));
+				_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT),
+				backgroundImageJSONObject.getString("collectionFieldId"),
+				LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
 		}
 		else if (backgroundImageJSONObject.has("mappedField")) {
 			fileEntryId = _getFileEntryId(
-				backgroundImageJSONObject.getString("mappedField"));
+				backgroundImageJSONObject.getString("mappedField"),
+				LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
 		}
 
 		if (fileEntryId != 0) {
@@ -992,7 +997,8 @@ public class RenderLayoutStructureDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private long _getFileEntryId(long classNameId, long classPK, String fieldId)
+	private long _getFileEntryId(
+			long classNameId, long classPK, String fieldId, Locale locale)
 		throws Exception {
 
 		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
@@ -1015,10 +1021,12 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return _getFileEntryId(
-			PortalUtil.getClassName(classNameId), object, fieldId);
+			PortalUtil.getClassName(classNameId), object, fieldId, locale);
 	}
 
-	private long _getFileEntryId(String fieldId) throws Exception {
+	private long _getFileEntryId(String fieldId, Locale locale)
+		throws Exception {
+
 		InfoItemDetails infoItemDetails =
 			(InfoItemDetails)_httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
@@ -1046,11 +1054,11 @@ public class RenderLayoutStructureDisplayContext {
 
 		return _getFileEntryId(
 			PortalUtil.getClassNameId(infoItemReference.getClassName()),
-			classPKInfoItemIdentifier.getClassPK(), fieldId);
+			classPKInfoItemIdentifier.getClassPK(), fieldId, locale);
 	}
 
 	private long _getFileEntryId(
-		String className, Object displayObject, String fieldId) {
+		String className, Object displayObject, String fieldId, Locale locale) {
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
@@ -1067,8 +1075,7 @@ public class RenderLayoutStructureDisplayContext {
 		Object value = StringPool.BLANK;
 
 		if (infoFieldValue != null) {
-			value = infoFieldValue.getValue(
-				LocaleUtil.fromLanguageId(_themeDisplay.getLanguageId()));
+			value = infoFieldValue.getValue(locale);
 		}
 
 		if (!(value instanceof WebImage)) {
@@ -1240,9 +1247,8 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructure.getMainItemId();
 	}
 
-	private long _getMappedCollectionFileEntryId(String fieldId) {
-		Object displayObject = _httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
+	private long _getMappedCollectionFileEntryId(
+		Object displayObject, String fieldId, Locale locale) {
 
 		if (!(displayObject instanceof ClassedModel)) {
 			return 0;
@@ -1251,7 +1257,7 @@ public class RenderLayoutStructureDisplayContext {
 		ClassedModel classedModel = (ClassedModel)displayObject;
 
 		return _getFileEntryId(
-			classedModel.getModelClassName(), displayObject, fieldId);
+			classedModel.getModelClassName(), displayObject, fieldId, locale);
 	}
 
 	private String _getMappedCollectionValue(

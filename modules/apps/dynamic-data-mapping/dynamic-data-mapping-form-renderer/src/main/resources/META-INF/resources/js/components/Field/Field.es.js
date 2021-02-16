@@ -165,21 +165,23 @@ const FieldLazy = ({
 	);
 };
 
-const getRootParentField = (field, {root}) => {
+const getRootParentField = (field, currentLoc, {loc, root}) => {
 	if (root) {
 		return {
 			...field,
+			loc: [currentLoc, ...loc],
 			root,
 		};
 	}
 
 	return {
 		...field,
+		loc: [currentLoc],
 		root: field,
 	};
 };
 
-export const Field = ({field, ...otherProps}) => {
+export const Field = ({field, loc, ...otherProps}) => {
 	const parentField = useContext(ParentFieldContext);
 	const {defaultLanguageId, editingLanguageId, fieldTypes} = usePage();
 	const [hasError, setHasError] = useState();
@@ -235,7 +237,7 @@ export const Field = ({field, ...otherProps}) => {
 				<div className="ddm-field" data-field-name={field.fieldName}>
 					<Suspense fallback={<ClayLoadingIndicator />}>
 						<ParentFieldContext.Provider
-							value={getRootParentField(field, parentField)}
+							value={getRootParentField(field, loc, parentField)}
 						>
 							<FieldLazy
 								field={{

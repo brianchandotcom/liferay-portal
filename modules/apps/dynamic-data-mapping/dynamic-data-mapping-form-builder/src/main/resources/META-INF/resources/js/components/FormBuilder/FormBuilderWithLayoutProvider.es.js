@@ -20,7 +20,6 @@ import LayoutProvider from '../LayoutProvider/LayoutProvider.es';
 import {FormBuilderBase} from './FormBuilder.es';
 import withEditablePageHeader from './withEditablePageHeader.es';
 import withMultiplePages from './withMultiplePages.es';
-import withResizeableColumns from './withResizeableColumns.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -34,14 +33,11 @@ class FormBuilderWithLayoutProvider extends Component {
 
 		const LProvider = LayoutProvider;
 
-		const composeList = [withResizeableColumns];
-
-		if (layoutProviderProps.allowMultiplePages) {
-			composeList.push(withMultiplePages);
-			composeList.push(withEditablePageHeader);
-		}
-
-		const FBuilder = compose(...composeList)(FormBuilderBase);
+		const FBuilder = layoutProviderProps.allowMultiplePages
+			? compose([withMultiplePages, withEditablePageHeader])(
+					FormBuilderBase
+			  )
+			: FormBuilderBase;
 
 		return (
 			<LProvider {...layoutProviderProps}>

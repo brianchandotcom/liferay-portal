@@ -22,7 +22,6 @@ import {Config} from 'metal-state';
 import {pageStructure} from '../../util/config.es';
 import withEditablePageHeader from './withEditablePageHeader.es';
 import withMultiplePages from './withMultiplePages.es';
-import withResizeableColumns from './withResizeableColumns.es';
 
 const FormNoopAdapter = getConnectedReactComponentAdapter(FormNoop);
 
@@ -228,8 +227,7 @@ FormBuilderBase.PROPS = {
 
 export default compose(
 	withEditablePageHeader,
-	withMultiplePages,
-	withResizeableColumns
+	withMultiplePages
 )(FormBuilderBase);
 
 export {FormBuilderBase};

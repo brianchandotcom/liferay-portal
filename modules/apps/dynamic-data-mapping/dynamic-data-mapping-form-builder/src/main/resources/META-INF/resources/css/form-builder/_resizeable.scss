@@ -34,7 +34,7 @@ $c: '.ddm-form-builder';
 		}
 	}
 
-	.resizeable .ddm-field-container {
+	.ddm-field-container {
 		&.dragging,
 		&.expanded,
 		&.hovered,
@@ -48,7 +48,7 @@ $c: '.ddm-form-builder';
 		}
 	}
 
-	.resizeable .ddm-field-container {
+	.ddm-field-container {
 		&.ddm-fieldset {
 			&.hovered,
 			&.selected {

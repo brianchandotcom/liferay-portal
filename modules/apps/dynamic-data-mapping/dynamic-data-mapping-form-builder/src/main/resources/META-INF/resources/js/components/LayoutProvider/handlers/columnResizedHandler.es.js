@@ -79,13 +79,7 @@ const getColumnPosition = (context, indexes) => {
 	);
 };
 
-export const handleResizeRight = (
-	props,
-	state,
-	source,
-	indexes,
-	columnTarget
-) => {
+export const handleResizeRight = (props, state, indexes, columnTarget) => {
 	const {pages} = state;
 
 	const {columnIndex, pageIndex, rowIndex} = indexes[indexes.length - 1];
@@ -216,7 +210,7 @@ export const handleResizeRight = (
 	return pages;
 };
 
-const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
+const handleResizeLeft = (props, state, indexes, columnTarget) => {
 	const {pages} = state;
 
 	const {columnIndex, pageIndex, rowIndex} = indexes[indexes.length - 1];
@@ -265,8 +259,6 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 				size: currentColumn.size - columnTarget,
 			}
 		);
-
-		source.dataset.ddmFieldColumn = columnIndex + 1;
 	}
 	else if (
 		previousColumn &&
@@ -280,8 +272,6 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 			rowIndex,
 			columnIndex - 1
 		);
-
-		source.dataset.ddmFieldColumn = columnIndex - 1;
 
 		newContext = FormSupport.updateColumn(
 			newContext,
@@ -343,33 +333,19 @@ const handleResizeLeft = (props, state, source, indexes, columnTarget) => {
 	return pages;
 };
 
-export default (props, state, source, container, column, direction) => {
+export default ({column, direction, loc, props, state}) => {
 	const {pages} = state;
 
 	let newPages = [...pages];
 
-	const sourceIndexes = FormSupport.getNestedIndexes(container);
-
-	const currentColumn = getColumn(pages, sourceIndexes);
+	const currentColumn = getColumn(pages, loc);
 
 	if (currentColumn) {
 		if (direction === 'left') {
-			newPages = handleResizeLeft(
-				props,
-				state,
-				source,
-				sourceIndexes,
-				column
-			);
+			newPages = handleResizeLeft(props, state, loc, column);
 		}
 		else {
-			newPages = handleResizeRight(
-				props,
-				state,
-				source,
-				sourceIndexes,
-				column + 1
-			);
+			newPages = handleResizeRight(props, state, loc, column + 1);
 		}
 	}
 

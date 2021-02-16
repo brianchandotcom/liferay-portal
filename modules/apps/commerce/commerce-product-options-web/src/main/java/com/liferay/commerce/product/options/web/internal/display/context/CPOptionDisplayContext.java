@@ -166,7 +166,7 @@ public class CPOptionDisplayContext {
 
 		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
 			"btn-primary", renderResponse.getNamespace() + "fm", null, null,
-			"publish");
+			"save");
 
 		headerActionModels.add(publishHeaderActionModel);
 

@@ -43,8 +43,6 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 			).put(
 				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
 			).put(
-				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
-			).put(
 				"editOptionURL", editOptionURL
 			).put(
 				"windowState", LiferayWindowState.MAXIMIZED.toString()

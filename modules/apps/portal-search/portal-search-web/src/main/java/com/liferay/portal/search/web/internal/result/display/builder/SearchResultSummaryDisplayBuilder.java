@@ -362,6 +362,8 @@ public class SearchResultSummaryDisplayBuilder {
 			summary.getTitle());
 		searchResultSummaryDisplayContext.setPortletURL(
 			_portletURLFactory.getPortletURL());
+		searchResultSummaryDisplayContext.setTitle(
+			assetRenderer.getTitle(summary.getLocale()));
 
 		if (_abridged) {
 			return searchResultSummaryDisplayContext;

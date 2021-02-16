@@ -92,6 +92,12 @@ function ManagementToolbar({
 							selectAllURL={selectAllURL}
 							setActionDropdownItems={setActionDropdownItems}
 							setActive={setActive}
+							showCheckBoxLabel={
+								!active &&
+								!filterDropdownItems &&
+								!sortingURL &&
+								!showSearch
+							}
 							supportsBulkActions={supportsBulkActions}
 						/>
 					)}

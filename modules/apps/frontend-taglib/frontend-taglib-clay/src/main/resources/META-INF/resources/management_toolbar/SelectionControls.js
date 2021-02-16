@@ -34,6 +34,7 @@ const SelectionControls = ({
 	selectAllURL,
 	setActionDropdownItems,
 	setActive,
+	showCheckBoxLabel,
 	supportsBulkActions,
 }) => {
 	const [selectedItems, setSelectedItems] = useState(initialSelectedItems);
@@ -133,6 +134,11 @@ const SelectionControls = ({
 					checked={checkboxStatus !== 'unchecked'}
 					disabled={disabled}
 					indeterminate={checkboxStatus === 'indeterminate'}
+					label={
+						showCheckBoxLabel
+							? Liferay.Language.get('select-items')
+							: ''
+					}
 					onChange={(event) => {
 						onCheckboxChange(event);
 

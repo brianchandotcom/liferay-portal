@@ -5,4 +5,4 @@ Export-Package:\
 	com.liferay.portal.security.sso.openid.connect,\
 	com.liferay.portal.security.sso.openid.connect.configuration,\
 	com.liferay.portal.security.sso.openid.connect.constants,\
-	com.liferay.portal.security.sso.openid.connect.util
+	com.liferay.portal.security.sso.openid.connect.provider

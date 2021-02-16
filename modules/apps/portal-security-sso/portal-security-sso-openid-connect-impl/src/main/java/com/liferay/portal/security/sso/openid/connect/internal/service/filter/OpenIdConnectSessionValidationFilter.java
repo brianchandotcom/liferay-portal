@@ -23,7 +23,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectFlowState;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceHandler;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
-import com.liferay.portal.security.sso.openid.connect.util.OpenIdConnectSessionHelper;
+import com.liferay.portal.security.sso.openid.connect.provider.OpenIdConnectSessionProvider;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -63,7 +63,7 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 		boolean endSession = false;
 
 		OpenIdConnectSession openIdConnectSession =
-			_openIdConnectSessionHelper.getOpenIdConnectSession(httpSession);
+			_openIdConnectSessionProvider.getOpenIdConnectSession(httpSession);
 
 		if (openIdConnectSession == null) {
 			return endSession;
@@ -136,7 +136,7 @@ public class OpenIdConnectSessionValidationFilter extends BaseFilter {
 	private OpenIdConnectServiceHandler _openIdConnectServiceHandler;
 
 	@Reference
-	private OpenIdConnectSessionHelper _openIdConnectSessionHelper;
+	private OpenIdConnectSessionProvider _openIdConnectSessionProvider;
 
 	@Reference
 	private Portal _portal;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.internal.util;
+package com.liferay.portal.security.sso.openid.connect.internal.provider;
 
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
-import com.liferay.portal.security.sso.openid.connect.util.OpenIdConnectSessionHelper;
+import com.liferay.portal.security.sso.openid.connect.provider.OpenIdConnectSessionProvider;
 
 import java.io.Serializable;
 
@@ -35,11 +35,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	service = {
-		OpenIdConnectSessionHelper.class, OpenIdConnectSessionHelperImpl.class
+		OpenIdConnectSessionProvider.class,
+		OpenIdConnectSessionProviderImpl.class
 	}
 )
-public class OpenIdConnectSessionHelperImpl
-	implements OpenIdConnectSessionHelper {
+public class OpenIdConnectSessionProviderImpl
+	implements OpenIdConnectSessionProvider {
 
 	public static void setOpenIdConnectSession(
 		HttpSession httpSession, OpenIdConnectSession openIdConnectSession) {
@@ -86,6 +87,6 @@ public class OpenIdConnectSessionHelperImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectSessionHelperImpl.class);
+		OpenIdConnectSessionProviderImpl.class);
 
 }

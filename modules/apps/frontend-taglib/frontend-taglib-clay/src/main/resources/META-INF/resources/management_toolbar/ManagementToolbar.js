@@ -73,27 +73,28 @@ function ManagementToolbar({
 		<>
 			<ClayManagementToolbar active={active}>
 				<ClayManagementToolbar.ItemList>
-					<SelectionControls
-						actionDropdownItems={actionDropdownItems}
-						active={active}
-						clearSelectionURL={clearSelectionURL}
-						disabled={disabled}
-						initialCheckboxStatus={initialCheckboxStatus}
-						initialSelectAllButtonVisible={
-							initialSelectAllButtonVisible
-						}
-						initialSelectedItems={initialSelectedItems}
-						itemsTotal={itemsTotal}
-						onCheckboxChange={onCheckboxChange}
-						onClearButtonClick={onClearSelectionButtonClick}
-						onSelectAllButtonClick={onSelectAllButtonClick}
-						searchContainerId={searchContainerId}
-						selectAllURL={selectAllURL}
-						selectable={selectable}
-						setActionDropdownItems={setActionDropdownItems}
-						setActive={setActive}
-						supportsBulkActions={supportsBulkActions}
-					/>
+					{selectable && (
+						<SelectionControls
+							actionDropdownItems={actionDropdownItems}
+							active={active}
+							clearSelectionURL={clearSelectionURL}
+							disabled={disabled}
+							initialCheckboxStatus={initialCheckboxStatus}
+							initialSelectAllButtonVisible={
+								initialSelectAllButtonVisible
+							}
+							initialSelectedItems={initialSelectedItems}
+							itemsTotal={itemsTotal}
+							onCheckboxChange={onCheckboxChange}
+							onClearButtonClick={onClearSelectionButtonClick}
+							onSelectAllButtonClick={onSelectAllButtonClick}
+							searchContainerId={searchContainerId}
+							selectAllURL={selectAllURL}
+							setActionDropdownItems={setActionDropdownItems}
+							setActive={setActive}
+							supportsBulkActions={supportsBulkActions}
+						/>
+					)}
 
 					{!active && (
 						<FilterOrderControls

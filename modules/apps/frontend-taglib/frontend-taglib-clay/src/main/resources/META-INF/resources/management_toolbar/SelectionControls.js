@@ -32,7 +32,6 @@ const SelectionControls = ({
 	onSelectAllButtonClick,
 	searchContainerId,
 	selectAllURL,
-	selectable,
 	setActionDropdownItems,
 	setActive,
 	supportsBulkActions,
@@ -85,6 +84,10 @@ const SelectionControls = ({
 
 			const select = searchContainer.select;
 
+			if (!select) {
+				return;
+			}
+
 			const bulkSelection =
 				supportsBulkActions && select.get('bulkSelection');
 
@@ -125,30 +128,26 @@ const SelectionControls = ({
 
 	return (
 		<>
-			{selectable && (
-				<ClayManagementToolbar.Item>
-					<ClayCheckbox
-						checked={checkboxStatus !== 'unchecked'}
-						disabled={disabled}
-						indeterminate={checkboxStatus === 'indeterminate'}
-						onChange={(event) => {
-							onCheckboxChange(event);
+			<ClayManagementToolbar.Item>
+				<ClayCheckbox
+					checked={checkboxStatus !== 'unchecked'}
+					disabled={disabled}
+					indeterminate={checkboxStatus === 'indeterminate'}
+					onChange={(event) => {
+						onCheckboxChange(event);
 
-							const checked = event.target.checked;
+						const checked = event.target.checked;
 
-							setActive(checked);
+						setActive(checked);
 
-							setCheckboxStatus(
-								checked ? 'checked' : 'unchecked'
-							);
+						setCheckboxStatus(checked ? 'checked' : 'unchecked');
 
-							searchContainerRef.current?.select?.toggleAllRows(
-								checked
-							);
-						}}
-					/>
-				</ClayManagementToolbar.Item>
-			)}
+						searchContainerRef.current?.select?.toggleAllRows(
+							checked
+						);
+					}}
+				/>
+			</ClayManagementToolbar.Item>
 
 			{active && (
 				<>

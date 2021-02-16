@@ -96,31 +96,29 @@ export function populateConfigData([
 		};
 	});
 
+	const dataObject = dataObjects.find(({id}) => id === app.dataDefinitionId);
+
+	const checkedFormViews = checkRequiredFields(formViews, dataObject);
+
 	const {appWorkflowStates = [], appWorkflowTasks = []} = appWorkflow;
+
 	const initialState = appWorkflowStates.find(({initial}) => initial);
 	const finalState = appWorkflowStates.find(({initial}) => !initial);
 
 	const config = {
 		currentStep: initialState,
-		dataObject: dataObjects.find(({id}) => id === app.dataDefinitionId),
-		formView: formViews.find(({id}) => id === app.dataLayoutId),
+		dataObject,
+		formView: checkedFormViews.find(({id}) => id === app.dataLayoutId),
 		listItems: {
 			assigneeRoles,
 			dataObjects,
 			fetching: false,
-			formViews,
+			formViews: checkedFormViews,
 			tableViews,
 		},
 		steps: [initialState, ...appWorkflowTasks, finalState],
 		tableView: tableViews.find(({id}) => id === app.dataListViewId),
 	};
-
-	if (!app.active) {
-		config.formView = checkRequiredFields(
-			[config.formView],
-			config.dataObject
-		)[0];
-	}
 
 	return [app, config];
 }

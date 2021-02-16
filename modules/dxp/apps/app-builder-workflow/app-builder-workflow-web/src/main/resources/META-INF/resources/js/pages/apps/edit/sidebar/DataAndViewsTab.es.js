@@ -38,7 +38,6 @@ import {
 	UPDATE_STEP_FORM_VIEW_READONLY,
 	UPDATE_TABLE_VIEW,
 } from '../configReducer.es';
-import {checkRequiredFields} from '../utils.es';
 import SelectFormView from './SelectFormView.es';
 import SelectTableView from './SelectTableView.es';
 
@@ -85,12 +84,7 @@ export default function DataAndViewsTab({
 	dispatchConfig,
 }) {
 	const {objectsPortletURL} = useContext(AppContext);
-	const {
-		config,
-		openFormViewModal,
-		state: {app},
-		updateFormView,
-	} = useContext(EditAppContext);
+	const {openFormViewModal, updateFormView} = useContext(EditAppContext);
 	const {
 		appWorkflowDataLayoutLinks: stepFormViews = [],
 		errors: {
@@ -481,14 +475,7 @@ export default function DataAndViewsTab({
 								addButton={addFormViewButton(updateFormView)}
 								ariaLabelId="form-view-label"
 								isLoading={fetching}
-								items={
-									app.active
-										? mainFormViews
-										: checkRequiredFields(
-												mainFormViews,
-												config.dataObject
-										  )
-								}
+								items={mainFormViews}
 								onSelect={updateFormView}
 								openButtonProps={{
 									disabled: !formView.name,

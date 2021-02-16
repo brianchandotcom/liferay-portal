@@ -16,6 +16,7 @@ package com.liferay.commerce.internal.product.content.contributor;
 
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
+import com.liferay.commerce.inventory.constants.CommerceInventoryAvailabilityConstants;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
@@ -29,11 +30,10 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Ivica Cardic
  */
 @Component(
 	enabled = false, immediate = true,
@@ -88,49 +89,25 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 			cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance);
 
 		if (displayAvailability) {
-			boolean available = false;
-			int stockQuantity;
-
-			Map<String, Integer> stockQuantities =
-				(Map<String, Integer>)httpServletRequest.getAttribute(
-					"stockQuantities");
-
-			if (MapUtil.isEmpty(stockQuantities)) {
-				stockQuantity = _commerceInventoryEngine.getStockQuantity(
+			String availabilityStatus =
+				_commerceInventoryEngine.getAvailabilityStatus(
 					cpInstance.getCompanyId(), commerceChannel.getGroupId(),
+					cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance),
 					cpInstance.getSku());
-			}
-			else {
-				stockQuantity = MapUtil.getInteger(
-					stockQuantities, cpInstance.getSku());
-			}
-
-			int minStockQuantity =
-				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance);
-
-			if (stockQuantity > minStockQuantity) {
-				available = true;
-			}
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			jsonObject.put(
+				CPContentContributorConstants.AVAILABILITY_NAME,
+				LanguageUtil.get(themeDisplay.getLocale(), availabilityStatus));
+
 			String availabilityDisplayType = "success";
 
-			if (available) {
-				jsonObject.put(
-					CPContentContributorConstants.AVAILABILITY_NAME,
-					LanguageUtil.get(
-						themeDisplay.getLocale(),
-						CPContentContributorConstants.AVAILABLE));
-			}
-			else {
-				jsonObject.put(
-					CPContentContributorConstants.AVAILABILITY_NAME,
-					LanguageUtil.get(
-						themeDisplay.getLocale(),
-						CPContentContributorConstants.UNAVAILABLE));
+			if (!Objects.equals(
+					availabilityStatus,
+					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
 
 				availabilityDisplayType = "danger";
 			}

@@ -108,11 +108,6 @@ public class ViewAccountRolesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "ACCOUNT_ROLES_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
-	}
-
-	@Override
 	public PortletURL getPortletURL() {
 		try {
 			return PortletURLUtil.clone(currentURLObj, liferayPortletResponse);

@@ -29,8 +29,9 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 renderResponse.setTitle(accountEntryDisplay.getName());
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewAccountEntryAddressesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= viewAccountEntryAddressesManagementToolbarDisplayContext %>"
+	propsTransformer="account_entries_admin/js/AccountEntryAddressesManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>
@@ -105,8 +106,3 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= viewAccountEntryAddressesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="account_entries_admin/js/AccountEntryAddressesManagementToolbarDefaultEventHandler.es"
-/>

@@ -157,11 +157,6 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "ACCOUNT_ORGANIZATIONS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
-	}
-
-	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
 

@@ -33,12 +33,10 @@ else if (Objects.equals("shipping", type)) {
 SearchContainer<AddressDisplay> accountEntryAddressDisplaySearchContainer = AccountEntryAddressDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
 
 accountEntryAddressDisplaySearchContainer.setRowChecker(null);
-
-SelectAccountEntryAddressManagementToolbarDisplayContext selectAccountEntryAddressManagementToolbarDisplayContext = new SelectAccountEntryAddressManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryAddressDisplaySearchContainer);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= selectAccountEntryAddressManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new SelectAccountEntryAddressManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryAddressDisplaySearchContainer) %>"
 />
 
 <clay:container-fluid
@@ -113,8 +111,3 @@ SelectAccountEntryAddressManagementToolbarDisplayContext selectAccountEntryAddre
 		'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "selectDefaultAddress") %>'
 	);
 </script>
-
-<liferay-frontend:component
-	componentId="<%= selectAccountEntryAddressManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="account_entries_admin/js/AccountEntryAddressesManagementToolbarDefaultEventHandler.es"
-/>

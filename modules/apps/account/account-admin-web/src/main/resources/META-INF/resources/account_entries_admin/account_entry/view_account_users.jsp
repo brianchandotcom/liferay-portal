@@ -29,8 +29,30 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 renderResponse.setTitle(accountEntryDisplay.getName());
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewAccountUsersManagementToolbarDisplayContext %>"
+<portlet:actionURL name="/account_admin/assign_account_users" var="assignAccountUsersURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<portlet:renderURL var="selectAccountUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+	<portlet:param name="openModalOnRedirect" value="<%= Boolean.TRUE.toString() %>" />
+	<portlet:param name="showCreateButton" value="<%= Boolean.TRUE.toString() %>" />
+</portlet:renderURL>
+
+<clay:management-toolbar
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"accountEntryName", accountEntryDisplay.getName()
+		).put(
+			"assignAccountUsersURL", assignAccountUsersURL
+		).put(
+			"selectAccountUsersURL", selectAccountUsersURL
+		).build()
+	%>'
+	managementToolbarDisplayContext="<%= viewAccountUsersManagementToolbarDisplayContext %>"
+	propsTransformer="account_entries_admin/js/AccountUsersManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>
@@ -83,29 +105,3 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<portlet:actionURL name="/account_admin/assign_account_users" var="assignAccountUsersURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<portlet:renderURL var="selectAccountUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
-	<portlet:param name="openModalOnRedirect" value="<%= Boolean.TRUE.toString() %>" />
-	<portlet:param name="showCreateButton" value="<%= Boolean.TRUE.toString() %>" />
-</portlet:renderURL>
-
-<liferay-frontend:component
-	componentId="<%= viewAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"accountEntryName", accountEntryDisplay.getName()
-		).put(
-			"assignAccountUsersURL", assignAccountUsersURL
-		).put(
-			"selectAccountUsersURL", selectAccountUsersURL
-		).build()
-	%>'
-	module="account_entries_admin/js/AccountUsersManagementToolbarDefaultEventHandler.es"
-/>

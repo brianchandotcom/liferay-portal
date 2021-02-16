@@ -115,12 +115,6 @@ public class ViewAccountEntryAddressesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "ACCOUNT_ENTRY_ADDRESSES_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_" +
-			"HANDLER";
-	}
-
-	@Override
 	public PortletURL getPortletURL() {
 		try {
 			return PortletURLUtil.clone(currentURLObj, liferayPortletResponse);

@@ -118,11 +118,6 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "ACCOUNT_USERS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
-	}
-
-	@Override
 	public List<LabelItem> getFilterLabelItems() {
 		return LabelItemListBuilder.add(
 			() -> !Objects.equals(getNavigation(), "active"),

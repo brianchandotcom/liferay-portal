@@ -12,30 +12,23 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {MODAL_STATE_ACCOUNT_USERS} from './SessionStorageKeys.es';
 
-class AccountRolesManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	deleteAccountRoles(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'are-you-sure-you-want-to-delete-the-selected-roles'
-				)
-			)
-		) {
-			const form = this.one('#fm');
+export default function propsTransformer({
+	additionalProps: {addAccountEntryUserURL, openModalOnRedirect},
+	...otherProps
+}) {
+	return {
+		...otherProps,
+		onCreateButtonClick: () => {
+			if (openModalOnRedirect) {
+				window.sessionStorage.setItem(
+					MODAL_STATE_ACCOUNT_USERS,
+					'open'
+				);
+			}
 
-			Liferay.Util.postForm(form, {
-				data: {
-					accountRoleIds: Liferay.Util.listCheckedExcept(
-						form,
-						this.ns('allRowIds')
-					),
-				},
-				url: itemData.deleteAccountRolesURL,
-			});
-		}
-	}
+			Liferay.Util.getTop().location.href = addAccountEntryUserURL;
+		},
+	};
 }
-
-export default AccountRolesManagementToolbarDefaultEventHandler;

@@ -30,12 +30,30 @@ if (accountRole != null) {
 }
 
 SearchContainer<AccountUserDisplay> accountRoleUserDisplaySearchContainer = AccountUserDisplaySearchContainerFactory.create(accountEntryId, role.getRoleId(), liferayPortletRequest, liferayPortletResponse);
-
-ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssigneesManagementToolbarDisplayContext = new ViewAccountRoleAssigneesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleUserDisplaySearchContainer);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewAccountRoleAssigneesManagementToolbarDisplayContext %>"
+<portlet:actionURL name="/account_admin/assign_account_role_users" var="assignAccountUsersURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<portlet:renderURL var="selectAccountUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
+	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
+	<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRoleId) %>" />
+</portlet:renderURL>
+
+<clay:management-toolbar
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"accountEntryName", role.getTitle(locale)
+		).put(
+			"assignAccountUsersURL", assignAccountUsersURL
+		).put(
+			"selectAccountUsersURL", selectAccountUsersURL
+		).build()
+	%>'
+	managementToolbarDisplayContext="<%= new ViewAccountRoleAssigneesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountRoleUserDisplaySearchContainer) %>"
+	propsTransformer="account_entries_admin/js/AccountUsersManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>
@@ -77,27 +95,3 @@ ViewAccountRoleAssigneesManagementToolbarDisplayContext viewAccountRoleAssignees
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<portlet:actionURL name="/account_admin/assign_account_role_users" var="assignAccountUsersURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<portlet:renderURL var="selectAccountUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
-	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
-	<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRoleId) %>" />
-</portlet:renderURL>
-
-<liferay-frontend:component
-	componentId="<%= viewAccountRoleAssigneesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"accountEntryName", role.getTitle(locale)
-		).put(
-			"assignAccountUsersURL", assignAccountUsersURL
-		).put(
-			"selectAccountUsersURL", selectAccountUsersURL
-		).build()
-	%>'
-	module="account_entries_admin/js/AccountUsersManagementToolbarDefaultEventHandler.es"
-/>

@@ -22,8 +22,9 @@ SearchContainer<AccountEntryDisplay> accountEntryDisplaySearchContainer = Accoun
 ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementToolbarDisplayContext = new ViewAccountEntriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountEntryDisplaySearchContainer);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= viewAccountEntriesManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= viewAccountEntriesManagementToolbarDisplayContext %>"
+	propsTransformer="account_entries_admin/js/AccountEntriesManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>
@@ -101,8 +102,3 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<liferay-frontend:component
-	componentId="<%= viewAccountEntriesManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-	module="account_entries_admin/js/AccountEntriesManagementToolbarDefaultEventHandler.es"
-/>

@@ -30,8 +30,24 @@ if (selectAccountUsersManagementToolbarDisplayContext.isSingleSelect()) {
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "assignAccountUsers");
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>"
+<liferay-portlet:renderURL portletName="<%= AccountPortletKeys.ACCOUNT_USERS_ADMIN %>" var="addAccountEntryUserURL">
+	<portlet:param name="mvcRenderCommandName" value="/account_admin/add_account_user" />
+	<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect") %>' />
+	<portlet:param name="backURL" value='<%= ParamUtil.getString(request, "redirect") %>' />
+	<portlet:param name="accountEntryId" value='<%= ParamUtil.getString(request, "accountEntryId") %>' />
+</liferay-portlet:renderURL>
+
+<clay:management-toolbar
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"addAccountEntryUserURL", addAccountEntryUserURL.toString()
+		).put(
+			"openModalOnRedirect", selectAccountUsersManagementToolbarDisplayContext.isOpenModalOnRedirect()
+		).build()
+	%>'
+	managementToolbarDisplayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>"
+	propsTransformer="account_entries_admin/js/SelectAccountUsersManagementToolbarPropsTransformer"
+	showCreationMenu="<%= selectAccountUsersManagementToolbarDisplayContext.isShowCreateButton() %>"
 />
 
 <clay:container-fluid
@@ -131,24 +147,3 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		'<%= HtmlUtil.escapeJS(eventName) %>'
 	);
 </aui:script>
-
-<c:if test="<%= selectAccountUsersManagementToolbarDisplayContext.isShowCreateButton() %>">
-	<liferay-portlet:renderURL portletName="<%= AccountPortletKeys.ACCOUNT_USERS_ADMIN %>" var="addAccountEntryUserURL">
-		<portlet:param name="mvcRenderCommandName" value="/account_admin/add_account_user" />
-		<portlet:param name="redirect" value='<%= ParamUtil.getString(request, "redirect") %>' />
-		<portlet:param name="backURL" value='<%= ParamUtil.getString(request, "redirect") %>' />
-		<portlet:param name="accountEntryId" value='<%= ParamUtil.getString(request, "accountEntryId") %>' />
-	</liferay-portlet:renderURL>
-
-	<liferay-frontend:component
-		componentId="<%= selectAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
-		context='<%=
-			HashMapBuilder.<String, Object>put(
-				"addAccountEntryUserURL", addAccountEntryUserURL.toString()
-			).put(
-				"openModalOnRedirect", selectAccountUsersManagementToolbarDisplayContext.isOpenModalOnRedirect()
-			).build()
-		%>'
-		module="account_entries_admin/js/SelectAccountUsersManagementToolbarDefaultEventHandler.es"
-	/>
-</c:if>

@@ -22,8 +22,8 @@ long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
 SearchContainer<Organization> organizationSearchContainer = AssignableAccountOrganizationSearchContainerFactory.create(accountEntryId, liferayPortletRequest, liferayPortletResponse);
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new SelectAccountOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationSearchContainer) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new SelectAccountOrganizationsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, organizationSearchContainer) %>"
 />
 
 <clay:container-fluid>

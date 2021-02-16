@@ -221,11 +221,6 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 	}
 
 	@Override
-	public String getDefaultEventHandler() {
-		return "ACCOUNT_ENTRIES_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
-	}
-
-	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		List<DropdownItem> filterDropdownItems = super.getFilterDropdownItems();
 

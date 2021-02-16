@@ -94,8 +94,8 @@ public class S3Store implements Store {
 
 	@Override
 	public void addFile(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel, InputStream inputStream) {
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		InputStream inputStream) {
 
 		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
 			deleteFile(companyId, repositoryId, fileName, versionLabel);
@@ -624,8 +624,8 @@ public class S3Store implements Store {
 	}
 
 	protected void putObject(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel, File file) {
+		long companyId, long repositoryId, String fileName, String versionLabel,
+		File file) {
 
 		Upload upload = null;
 

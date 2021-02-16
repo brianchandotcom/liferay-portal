@@ -622,6 +622,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>search-bar</name>
+		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.SearchBarTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>search-results</name>
+		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.SearchResultsTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>side-panel-content</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.SidePanelContentTag</tag-class>
 		<body-content>JSP</body-content>

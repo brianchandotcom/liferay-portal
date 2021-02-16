@@ -15,6 +15,7 @@
 package com.liferay.portal.crypto.hash.internal;
 
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
+import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashProvider;
 import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProvider;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -47,14 +48,17 @@ public class CryptoHashGeneratorTest {
 			CryptoHashResponse cryptoHashResponse =
 				cryptoHashGeneratorImpl.generate(_INPUT);
 
+			CryptoHashVerificationContext cryptoHashVerificationContext =
+				cryptoHashResponse.getCryptoHashVerificationContext();
+
 			Assert.assertFalse(
 				cryptoHashGeneratorImpl.verify(
 					_randomBytes(), cryptoHashResponse.getHash(),
-					cryptoHashResponse.getSalt()));
+					cryptoHashVerificationContext.getSalt()));
 			Assert.assertTrue(
 				cryptoHashGeneratorImpl.verify(
 					_INPUT, cryptoHashResponse.getHash(),
-					cryptoHashResponse.getSalt()));
+					cryptoHashVerificationContext.getSalt()));
 		}
 	}
 

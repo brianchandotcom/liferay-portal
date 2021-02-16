@@ -12,30 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.crypto.hash;
+package com.liferay.portal.crypto.hash.spi;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public final class CryptoHashResponse {
+public final class CryptoHashProviderResponse {
 
-	public CryptoHashResponse(
-		byte[] hash,
-		CryptoHashVerificationContext cryptoHashVerificationContext) {
+	public CryptoHashProviderResponse(
+		String cryptoHashProviderName, byte[] hash) {
 
+		_cryptoHashProviderName = cryptoHashProviderName;
 		_hash = hash;
-		_cryptoHashVerificationContext = cryptoHashVerificationContext;
 	}
 
-	public CryptoHashVerificationContext getCryptoHashVerificationContext() {
-		return _cryptoHashVerificationContext;
+	public String getCryptoHashProviderName() {
+		return _cryptoHashProviderName;
 	}
 
 	public byte[] getHash() {
 		return _hash;
 	}
 
-	private final CryptoHashVerificationContext _cryptoHashVerificationContext;
+	private final String _cryptoHashProviderName;
 	private final byte[] _hash;
 
 }

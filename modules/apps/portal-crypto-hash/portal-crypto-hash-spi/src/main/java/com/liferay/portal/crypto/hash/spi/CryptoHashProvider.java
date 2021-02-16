@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.SecureRandomUtil;
  */
 public interface CryptoHashProvider {
 
-	public byte[] generate(byte[] salt, byte[] input)
+	public CryptoHashProviderResponse generate(byte[] salt, byte[] input)
 		throws CryptoHashException;
 
 	public default byte[] generateSalt() {

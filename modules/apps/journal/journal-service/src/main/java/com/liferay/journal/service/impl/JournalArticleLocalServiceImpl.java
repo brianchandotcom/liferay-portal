@@ -6784,48 +6784,6 @@ public class JournalArticleLocalServiceImpl
 			workflowContext);
 	}
 
-	protected void addDocumentLibraryFileEntries(Element dynamicElementElement)
-		throws PortalException {
-
-		if (ExportImportThreadLocal.isImportInProcess()) {
-			return;
-		}
-
-		for (Element dynamicContentElement :
-				dynamicElementElement.elements("dynamic-content")) {
-
-			String value = dynamicContentElement.getText();
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
-
-			boolean tempFile = jsonObject.getBoolean("tempFile");
-
-			if (!tempFile) {
-				continue;
-			}
-
-			String uuid = jsonObject.getString("uuid");
-			long groupId = jsonObject.getLong("groupId");
-
-			FileEntry fileEntry =
-				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
-
-			String fileEntryName = DLUtil.getUniqueFileName(
-				fileEntry.getGroupId(), fileEntry.getFolderId(),
-				fileEntry.getFileName());
-
-			dlAppLocalService.addFileEntry(
-				fileEntry.getUserId(), fileEntry.getGroupId(), 0, fileEntryName,
-				fileEntry.getMimeType(), fileEntryName, StringPool.BLANK,
-				StringPool.BLANK, fileEntry.getContentStream(),
-				fileEntry.getSize(), new ServiceContext());
-		}
-	}
-
 	protected void addImageFileEntries(
 			JournalArticle article, Element dynamicElementElement)
 		throws PortalException {
@@ -7464,10 +7422,7 @@ public class JournalArticleLocalServiceImpl
 		for (Element element : root.elements()) {
 			String elType = element.attributeValue("type", StringPool.BLANK);
 
-			if (elType.equals(DDMFormFieldTypeConstants.DOCUMENT_LIBRARY)) {
-				addDocumentLibraryFileEntries(element);
-			}
-			else if (elType.equals(DDMFormFieldTypeConstants.IMAGE)) {
+			if (elType.equals(DDMFormFieldTypeConstants.IMAGE)) {
 				addImageFileEntries(article, element);
 			}
 			else if (elType.equals(DDMFormFieldTypeConstants.RICH_TEXT) ||

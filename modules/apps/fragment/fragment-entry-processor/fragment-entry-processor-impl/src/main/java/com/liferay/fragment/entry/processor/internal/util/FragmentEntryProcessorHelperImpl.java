@@ -27,6 +27,7 @@ import com.liferay.info.formatter.InfoTextFormatter;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -148,6 +149,82 @@ public class FragmentEntryProcessorHelperImpl
 		JSONObject jsonObject, Locale locale, long[] segmentsExperienceIds) {
 
 		return _getEditableValueByLocale(jsonObject, locale);
+	}
+
+	public long getFileEntryId(
+			long classNameId, long classPK, String fieldId, Locale locale)
+		throws PortalException {
+
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			classPK);
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, _portal.getClassName(classNameId),
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		if (infoItemObjectProvider == null) {
+			return 0;
+		}
+
+		Object object = infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+
+		if (object == null) {
+			return 0;
+		}
+
+		return _getFileEntryId(
+			_portal.getClassName(classNameId), object, fieldId, locale);
+	}
+
+	public long getFileEntryId(
+		Object displayObject, String fieldId, Locale locale) {
+
+		if (Validator.isNull(fieldId)) {
+			return 0;
+		}
+
+		if (!(displayObject instanceof ClassedModel)) {
+			return 0;
+		}
+
+		ClassedModel classedModel = (ClassedModel)displayObject;
+
+		return _getFileEntryId(
+			classedModel.getModelClassName(), displayObject, fieldId, locale);
+	}
+
+	public long getFileEntryId(String className, long classPK) {
+		if (!Objects.equals(className, FileEntry.class.getName())) {
+			return 0;
+		}
+
+		return classPK;
+	}
+
+	public long getFileEntryId(WebImage webImage) {
+		InfoItemReference infoItemReference = webImage.getInfoItemReference();
+
+		if ((infoItemReference == null) ||
+			!Objects.equals(
+				infoItemReference.getClassName(), FileEntry.class.getName())) {
+
+			return 0;
+		}
+
+		InfoItemIdentifier fileEntryInfoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(fileEntryInfoItemIdentifier instanceof
+				ClassPKInfoItemIdentifier)) {
+
+			return 0;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
+
+		return classPKInfoItemIdentifier.getClassPK();
 	}
 
 	@Override
@@ -477,6 +554,36 @@ public class FragmentEntryProcessorHelperImpl
 		}
 
 		return value;
+	}
+
+	private long _getFileEntryId(
+		String className, Object displayObject, String fieldId, Locale locale) {
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		if (infoItemFieldValuesProvider == null) {
+			return 0;
+		}
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValuesProvider.getInfoItemFieldValue(
+				displayObject, fieldId);
+
+		Object value = StringPool.BLANK;
+
+		if (infoFieldValue != null) {
+			value = infoFieldValue.getValue(locale);
+		}
+
+		if (!(value instanceof WebImage)) {
+			return 0;
+		}
+
+		WebImage webImage = (WebImage)value;
+
+		return getFileEntryId(webImage);
 	}
 
 	private InfoCollectionTextFormatter<Object> _getInfoCollectionTextFormatter(

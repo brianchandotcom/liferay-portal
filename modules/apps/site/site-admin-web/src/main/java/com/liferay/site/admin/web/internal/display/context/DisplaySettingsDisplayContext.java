@@ -14,6 +14,7 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -29,10 +30,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -138,17 +143,27 @@ public class DisplaySettingsDisplayContext {
 			PropsKeys.LOCALES);
 
 		if (groupLanguageIds != null) {
+			List<String> instanceCurrentLanguageIds = Arrays.asList(
+				PrefsPropsUtil.getStringArray(
+					_themeDisplay.getCompanyId(), PropsKeys.LOCALES,
+					StringPool.COMMA, PropsValues.LOCALES_ENABLED));
+
 			for (Locale currentLocale :
 					LocaleUtil.fromLanguageIds(
 						StringUtil.split(groupLanguageIds))) {
 
-				currentLanguagesJSONArray.put(
-					JSONUtil.put(
-						"label",
-						currentLocale.getDisplayName(_themeDisplay.getLocale())
-					).put(
-						"value", LanguageUtil.getLanguageId(currentLocale)
-					));
+				if (instanceCurrentLanguageIds.contains(
+						LanguageUtil.getLanguageId(currentLocale))) {
+
+					currentLanguagesJSONArray.put(
+						JSONUtil.put(
+							"label",
+							currentLocale.getDisplayName(
+								_themeDisplay.getLocale())
+						).put(
+							"value", LanguageUtil.getLanguageId(currentLocale)
+						));
+				}
 			}
 		}
 		else {

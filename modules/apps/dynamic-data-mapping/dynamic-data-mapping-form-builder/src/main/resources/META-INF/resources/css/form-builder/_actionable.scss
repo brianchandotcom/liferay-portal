@@ -4,6 +4,7 @@
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 	color: #fff;
+	display: flex;
 	font-weight: 600;
 	height: 28px;
 	justify-content: space-between;
@@ -11,6 +12,7 @@
 	padding: 0 0 2px 8px;
 	position: absolute;
 	top: -30px;
+	white-space: nowrap;
 	width: auto;
 	z-index: 50;
 

@@ -619,6 +619,10 @@ public class PropsValues {
 	public static final String CUSTOM_SQL_FUNCTION_ISNULL = PropsUtil.get(
 		PropsKeys.CUSTOM_SQL_FUNCTION_ISNULL);
 
+	public static final long DATA_LIMIT_MAX_ASSET_CATEGORY_COUNT =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_ASSET_CATEGORY_COUNT));
+
 	public static final long DATA_LIMIT_MAX_ASSET_TAG_COUNT =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_ASSET_TAG_COUNT));

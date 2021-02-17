@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
+import com.liferay.portal.kernel.exception.DataLimitException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
@@ -87,6 +89,14 @@ public class AssetCategoryLocalServiceImpl
 		// Category
 
 		User user = userLocalService.getUser(userId);
+
+		if ((PropsValues.DATA_LIMIT_MAX_ASSET_CATEGORY_COUNT > 0) &&
+			(assetCategoryPersistence.countByCompanyId(user.getCompanyId()) >=
+				PropsValues.DATA_LIMIT_MAX_ASSET_CATEGORY_COUNT)) {
+
+			throw new DataLimitException(
+				"Unable to exceed maximum number of allowed asset categories");
+		}
 
 		String name = titleMap.get(LocaleUtil.getSiteDefault());
 

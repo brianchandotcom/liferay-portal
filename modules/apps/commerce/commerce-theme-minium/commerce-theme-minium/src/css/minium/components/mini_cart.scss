@@ -63,20 +63,13 @@
 		&-errors,
 		.price-value-discount,
 		.price-value-final,
+		.price-value-percentages,
 		.price-value-promo {
 			color: $color-mood-bad;
 		}
 
-		.price-value {
-			font-size: 0.9rem;
-
-			&-percentages::after {
-				color: $color-mood-bad;
-			}
-		}
-
 		&-delete {
-			font-size: 0.9rem;
+			font-size: 1rem;
 			margin: 25px 0;
 		}
 

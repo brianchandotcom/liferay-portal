@@ -53,6 +53,7 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.internal.util.SearchUtil;
+import com.liferay.portal.search.web.search.result.SearchResultImage;
 import com.liferay.portal.search.web.search.result.SearchResultImageContributor;
 
 import java.text.DateFormat;
@@ -610,6 +611,39 @@ public class SearchResultSummaryDisplayBuilder {
 		}
 		catch (Exception exception) {
 		}
+
+		SearchResultImage searchResultImage = new SearchResultImage() {
+
+			@Override
+			public String getClassName() {
+				return assetRenderer.getClassName();
+			}
+
+			@Override
+			public long getClassPK() {
+				return assetRenderer.getClassPK();
+			}
+
+			@Override
+			public void setIcon(String iconName) {
+				searchResultSummaryDisplayContext.setIconId(iconName);
+				searchResultSummaryDisplayContext.setIconVisible(true);
+				searchResultSummaryDisplayContext.setPathThemeImages(
+					_themeDisplay.getPathThemeImages());
+			}
+
+			@Override
+			public void setThumbnail(String thumbnailURLString) {
+				searchResultSummaryDisplayContext.setThumbnailURLString(
+					thumbnailURLString);
+				searchResultSummaryDisplayContext.setThumbnailVisible(true);
+			}
+
+		};
+
+		_searchResultImageContributorsStream.forEach(
+			searchResultImageContributor ->
+				searchResultImageContributor.contribute(searchResultImage));
 	}
 
 	protected void buildLocaleReminder(

@@ -16,6 +16,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import {usePage} from 'dynamic-data-mapping-form-renderer';
+import {usePrevious} from 'frontend-js-react-web';
 import {openModal} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
@@ -198,45 +199,51 @@ const Options = ({
 		);
 	});
 
+	const prevEditingLanguageId = usePrevious(editingLanguageId);
+
 	useEffect(() => {
-		const availableLanguageIds = Object.getOwnPropertyNames(value);
+		if (prevEditingLanguageId !== editingLanguageId) {
+			const availableLanguageIds = Object.getOwnPropertyNames(value);
 
-		availableLanguageIds.forEach((languageId) => {
-			normalizedValue[languageId] = normalizeFields(
-				value[languageId].map((option) => {
-					if (option.edited) {
-						return option;
-					}
+			availableLanguageIds.forEach((languageId) => {
+				normalizedValue[languageId] = normalizeFields(
+					value[languageId].map((option) => {
+						if (option.edited) {
+							return option;
+						}
 
-					const {label} = value[defaultLanguageId].find(
-						(defaultOption) => defaultOption.value === option.value
-					);
+						const {label} = value[defaultLanguageId].find(
+							(defaultOption) =>
+								defaultOption.value === option.value
+						);
 
-					return {
-						...option,
-						label,
-					};
-				}),
-				generateOptionValueUsingOptionLabel
+						return {
+							...option,
+							label,
+						};
+					}),
+					generateOptionValueUsingOptionLabel
+				);
+			});
+
+			const options = normalizedValue[editingLanguageId] || [];
+
+			setFields(
+				refreshFields(
+					defaultLanguageId,
+					editingLanguageId,
+					generateOptionValueUsingOptionLabel,
+					initialOptionRef.current,
+					options
+				)
 			);
-		});
-
-		const options = normalizedValue[editingLanguageId] || [];
-
-		setFields(
-			refreshFields(
-				defaultLanguageId,
-				editingLanguageId,
-				generateOptionValueUsingOptionLabel,
-				initialOptionRef.current,
-				options
-			)
-		);
+		}
 	}, [
 		defaultLanguageId,
 		editingLanguageId,
 		generateOptionValueUsingOptionLabel,
 		normalizedValue,
+		prevEditingLanguageId,
 		value,
 	]);
 

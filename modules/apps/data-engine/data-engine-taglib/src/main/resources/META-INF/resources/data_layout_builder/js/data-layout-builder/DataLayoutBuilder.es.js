@@ -27,7 +27,6 @@ import {
 	getDDMFormField,
 	getDDMFormFieldSettingsContext,
 	getDataDefinitionField,
-	getDefaultDataLayout,
 	getFieldSetDDMForm,
 } from '../utils/dataConverter.es';
 import generateDataDefinitionFieldName from '../utils/generateDataDefinitionFieldName.es';
@@ -224,10 +223,6 @@ class DataLayoutBuilder extends React.Component {
 		};
 	}
 
-	getDataDefinitionField(field) {
-		return getDataDefinitionField(field);
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by DataConverter.getDDMFormFieldSettingsContext()
 	 */
@@ -258,13 +253,6 @@ class DataLayoutBuilder extends React.Component {
 			fieldName,
 			fieldTypes,
 		});
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by DataConverter.getDefaultDataLayout()
-	 */
-	getDefaultDataLayout(dataDefinition) {
-		return getDefaultDataLayout(dataDefinition);
 	}
 
 	/**
@@ -472,17 +460,6 @@ class DataLayoutBuilder extends React.Component {
 			definition: JSON.stringify(definition),
 			layout: JSON.stringify(layout),
 		};
-	}
-
-	_fromDataDefinitionToDDMFormPropertyName(propertyName) {
-		const map = {
-			defaultValue: 'predefinedValue',
-			fieldType: 'type',
-			name: 'fieldName',
-			nestedDataDefinitionFields: 'nestedFields',
-		};
-
-		return map[propertyName] || propertyName;
 	}
 
 	_onLocaleChange(event) {

@@ -35,6 +35,7 @@ const {getDataLayoutBuilderProps} = FORM_VIEW;
 const defaultState = {
 	appProps: {
 		config: {},
+		contentTypeConfig: {},
 		dataDefinitionId: 1,
 		dataLayoutId: 1,
 		fieldTypesModules: '',
@@ -74,16 +75,6 @@ export const FieldSetWrapper = ({
 describe('FieldSets', () => {
 	beforeEach(() => {
 		dataLayoutBuilderProps = getDataLayoutBuilderProps();
-
-		dataLayoutBuilderProps = {
-			...dataLayoutBuilderProps,
-			props: {
-				...dataLayoutBuilderProps.props,
-				contentTypeConfig: {
-					allowInvalidAvailableLocalesForProperty: false,
-				},
-			},
-		};
 
 		ddmFormSpy = jest
 			.spyOn(DDMForm, 'default')

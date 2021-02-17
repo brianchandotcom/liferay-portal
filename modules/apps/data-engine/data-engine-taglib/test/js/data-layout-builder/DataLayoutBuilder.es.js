@@ -37,6 +37,7 @@ const props = {
 			'visibilityExpression',
 		],
 	},
+	contentTypeConfig: {allowInvalidAvailableLocalesForProperty: false},
 	context: {},
 	dataLayoutBuilderId:
 		'_com_liferay_journal_web_portlet_JournalPortlet_dataLayoutBuilder',
@@ -60,14 +61,6 @@ describe('DataLayoutBuilder', () => {
 		else if (component && component.componentWillUnmount) {
 			component.componentWillUnmount();
 		}
-	});
-
-	it('is component custom property', () => {
-		component = new DataLayoutBuilder(props);
-		component.componentDidMount();
-
-		expect(component._isCustomProperty('defaultValue')).toBe(false);
-		expect(component._isCustomProperty('otherProperty')).toBe(true);
 	});
 
 	it('is rendering', () => {
@@ -120,54 +113,6 @@ describe('DataLayoutBuilder', () => {
 		expect(props.appContext[0].action).toBe(action);
 	});
 
-	it('is getting data definition field', () => {
-		component = new DataLayoutBuilder(props);
-		component.componentDidMount();
-
-		expect(
-			component.getDataDefinitionField(
-				{
-					nestedFields: [],
-					settingsContext: {
-						pages: [],
-					},
-				},
-				[],
-				'en_US'
-			)
-		).toMatchObject({
-			customProperties: {},
-			nestedDataDefinitionFields: [],
-		});
-	});
-
-	it('is getting data definition field formatted value', () => {
-		component = new DataLayoutBuilder(props);
-		component.componentDidMount();
-
-		expect(
-			component.getDataDefinitionFieldFormattedValue('json', {
-				test: 'test',
-			})
-		).toBe('{"test":"test"}');
-
-		expect(component.getDataDefinitionFieldFormattedValue('', 'test')).toBe(
-			'test'
-		);
-	});
-
-	it('is getting defaultDataLayout', () => {
-		component = new DataLayoutBuilder(props);
-		component.componentDidMount();
-		const dataDefinition = {
-			dataDefinitionFields: [],
-		};
-
-		expect(component.getDefaultDataLayout(dataDefinition)).toMatchObject({
-			dataLayoutPages: [{dataLayoutRows: []}],
-		});
-	});
-
 	it('is getting fieldTypes', () => {
 		component = new DataLayoutBuilder(props);
 
@@ -195,24 +140,6 @@ describe('DataLayoutBuilder', () => {
 		component.componentDidMount();
 
 		expect(component.getStore()).toMatchObject({});
-	});
-
-	it('is getting component form data property', () => {
-		component = new DataLayoutBuilder(props);
-		component.componentDidMount();
-
-		expect(component._fromDataDefinitionToDDMFormPropertyName('name')).toBe(
-			'fieldName'
-		);
-		expect(
-			component._fromDataDefinitionToDDMFormPropertyName('otherProperty')
-		).toBe('otherProperty');
-		expect(
-			component._fromDDMFormToDataDefinitionPropertyName('fieldName')
-		).toBe('name');
-		expect(
-			component._fromDDMFormToDataDefinitionPropertyName('otherProperty')
-		).toBe('otherProperty');
 	});
 
 	it('is removing listener after dispatching event', () => {

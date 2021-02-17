@@ -99,8 +99,7 @@ export default function ({
 	hasFocusedCustomObjectField,
 }) {
 	const [activePage, setActivePage] = useState(0);
-	const dataLayoutBuilder = useContext(DataLayoutBuilderContext)
-		?.dataLayoutBuilder;
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext) ?? [];
 	const spritemap = useContext(ClayIconSpriteContext);
 
 	const Column = useMemo(

@@ -13,6 +13,7 @@
  */
 
 import {
+	DataConverter,
 	DataDefinitionUtils,
 	DataLayoutBuilderActions,
 } from 'data-engine-taglib';
@@ -33,7 +34,7 @@ function getNewFields(dataLayoutBuilder) {
 	const fields = [];
 
 	visitor.mapFields((field) => {
-		const definitionField = dataLayoutBuilder.getDataDefinitionField(field);
+		const definitionField = DataConverter.getDataDefinitionField(field);
 
 		fields.push(definitionField);
 	});

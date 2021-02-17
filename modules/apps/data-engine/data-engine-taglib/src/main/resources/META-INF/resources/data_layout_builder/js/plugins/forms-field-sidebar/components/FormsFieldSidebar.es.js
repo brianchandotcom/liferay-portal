@@ -39,7 +39,7 @@ export const FormsFieldSidebar = ({title}) => {
 	} = useContext(FormsSidebarPluginContext);
 
 	const config = {
-		allowFieldSets: true,
+		allowFieldSets: false,
 		allowMultiplePages: false,
 		allowNestedFields: false,
 		allowRules: true,
@@ -58,6 +58,7 @@ export const FormsFieldSidebar = ({title}) => {
 			'readOnly',
 			'visibilityExpression',
 		],
+		visibleProperties: [],
 	};
 
 	return (

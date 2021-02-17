@@ -202,7 +202,13 @@ const Options = ({
 	const prevEditingLanguageId = usePrevious(editingLanguageId);
 
 	useEffect(() => {
-		if (prevEditingLanguageId !== editingLanguageId) {
+		const hasOwnProperty = Object.prototype.hasOwnProperty;
+
+		if (
+			prevEditingLanguageId !== editingLanguageId ||
+			(!hasOwnProperty.call(normalizedValue, editingLanguageId) &&
+				hasOwnProperty.call(value, editingLanguageId))
+		) {
 			const availableLanguageIds = Object.getOwnPropertyNames(value);
 
 			availableLanguageIds.forEach((languageId) => {

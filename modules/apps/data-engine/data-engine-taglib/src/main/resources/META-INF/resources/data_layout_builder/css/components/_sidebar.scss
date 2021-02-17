@@ -1,28 +1,4 @@
 .data-layout-builder-sidebar {
-	&.main {
-		transform: translateX(0%);
-		transition: transform 0.3s $animation, opacity 0.3s $animation;
-		width: $sidebarMainWidth;
-		z-index: 50;
-
-		&.closed {
-			opacity: 0;
-			transform: translateX($sidebarMainWidth - $sidebarMiniWidth);
-		}
-	}
-
-	&.mini {
-		padding: 16px;
-		transform: translateX(0%);
-		transition: transform 0.3s $animation;
-		width: $sidebarMiniWidth;
-		z-index: 60;
-
-		&.closed {
-			transform: translateX($sidebarMiniWidth);
-		}
-	}
-
 	.sidebar {
 		box-shadow: none;
 

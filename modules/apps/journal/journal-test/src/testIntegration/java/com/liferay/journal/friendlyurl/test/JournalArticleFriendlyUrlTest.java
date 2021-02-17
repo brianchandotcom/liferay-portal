@@ -93,13 +93,12 @@ public class JournalArticleFriendlyUrlTest {
 		String frTitle = RandomTestUtil.randomString();
 		String usTitle = RandomTestUtil.randomString();
 
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.FRANCE, frTitle
-		).put(
-			LocaleUtil.US, usTitle
-		).build();
-
-		JournalArticle article = _addJournalArticleWithTitleMap(titleMap);
+		JournalArticle article = _addJournalArticleWithTitleMap(
+			HashMapBuilder.put(
+				LocaleUtil.FRANCE, frTitle
+			).put(
+				LocaleUtil.US, usTitle
+			).build());
 
 		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
 

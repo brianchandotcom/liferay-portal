@@ -247,7 +247,7 @@ public class ActionUtil {
 				).path(
 					clazz.getSuperclass(), methodName
 				).resolveTemplates(
-					_getParameterMap(clazz, id, methodName, uriInfo)
+					_getParameterMap(clazz, id, methodName, siteId, uriInfo)
 				).toTemplate();
 			}
 		).put(
@@ -319,7 +319,8 @@ public class ActionUtil {
 	}
 
 	private static Map<String, Object> _getParameterMap(
-		Class<?> clazz, Long id, String methodName, UriInfo uriInfo) {
+		Class<?> clazz, Long id, String methodName, long siteId,
+		UriInfo uriInfo) {
 
 		MultivaluedMap<String, String> pathParameters =
 			uriInfo.getPathParameters();
@@ -341,7 +342,14 @@ public class ActionUtil {
 		String firstParameterName = _getFirstParameterNameFromPath(
 			clazz.getSuperclass(), methodName);
 
-		if (Validator.isNotNull(firstParameterName)) {
+		if (Validator.isNull(firstParameterName)) {
+			return parameterMap;
+		}
+
+		if (Objects.equals(firstParameterName, "siteId")) {
+			parameterMap.put(firstParameterName, siteId);
+		}
+		else {
 			parameterMap.put(firstParameterName, id);
 		}
 

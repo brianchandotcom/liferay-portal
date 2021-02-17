@@ -75,7 +75,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 			ps.setString(6, languageId);
 			ps.setString(7, uniqueURLTitle);
 			ps.setLong(8, groupId);
-			ps.setLong(9, _classNameIdJournalArticle);
+			ps.setLong(9, _CLASS_NAME_ID);
 			ps.setLong(10, classPK);
 
 			ps.executeUpdate();
@@ -118,7 +118,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 				sb2.append("FriendlyURLEntryLocalization where classPK = ");
 				sb2.append(resourcePrimKey);
 				sb2.append(" and classNameId = ");
-				sb2.append(_classNameIdJournalArticle);
+				sb2.append(_CLASS_NAME_ID);
 				sb2.append(") FURLEL on JAL.languageId = FURLEL.languageId ");
 				sb2.append("where FURLEL.friendlyURLEntryLocalizationId is ");
 				sb2.append("null");
@@ -201,7 +201,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 
 		sb.append("select friendlyURLEntryId from FriendlyURLEntryMapping ");
 		sb.append("where classnameId = ");
-		sb.append(_classNameIdJournalArticle);
+		sb.append(_CLASS_NAME_ID);
 		sb.append(" and classPK = ");
 		sb.append(resourcePrimKey);
 
@@ -232,7 +232,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		sb.append("' and groupId = ");
 		sb.append(groupId);
 		sb.append(" and classNameId = ");
-		sb.append(_classNameIdJournalArticle);
+		sb.append(_CLASS_NAME_ID);
 
 		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
 			ResultSet rs = ps.executeQuery()) {
@@ -320,10 +320,10 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		return sortedUrlTitleMap;
 	}
 
+	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
+		"com.liferay.journal.model.JournalArticle");
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeFriendlyURLEntryLocalizations.class);
-
-	private static final long _classNameIdJournalArticle =
-		PortalUtil.getClassNameId("com.liferay.journal.model.JournalArticle");
 
 }

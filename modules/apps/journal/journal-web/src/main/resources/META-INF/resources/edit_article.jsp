@@ -268,13 +268,13 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 />
 
 <%
-String friendlyURLChanged = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChanged"));
+String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "friendlyURLChanged"));
 %>
 
-<c:if test="<%= Validator.isNotNull(friendlyURLChanged) %>">
+<c:if test="<%= Validator.isNotNull(friendlyURLChangedMessage) %>">
 	<aui:script>
 		Liferay.Util.openToast({
-			message: '<%= friendlyURLChanged %>',
+			message: '<%= friendlyURLChangedMessage %>',
 			toastProps: {
 				autoClose: 20000,
 			},

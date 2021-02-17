@@ -278,10 +278,14 @@ const Options = ({
 					return {
 						...existingValue,
 						label: field.label,
+						reference: field.reference,
 					};
 				}
 
-				return existingValue;
+				return {
+					...existingValue,
+					reference: field.reference,
+				};
 			}
 
 			let copyFrom = editingLanguageId;

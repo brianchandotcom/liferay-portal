@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -191,8 +192,7 @@ public class DDMFormDisplayContext {
 
 		boolean maximumSubmissionLimitReached =
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
-				ddmFormInstance,
-				PortalUtil.getHttpServletRequest(_renderRequest),
+				ddmFormInstance, _getHttpServletRequest(),
 				_ddmFormWebConfiguration.
 					maximumSubmissionsForGuestUploadFields());
 
@@ -282,8 +282,7 @@ public class DDMFormDisplayContext {
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		if (!availableLocales.contains(locale)) {
-			locale = getLocale(
-				PortalUtil.getHttpServletRequest(_renderRequest), ddmForm);
+			locale = getLocale(_getHttpServletRequest(), ddmForm);
 		}
 
 		return LanguageUtil.getLanguageId(locale);
@@ -382,9 +381,7 @@ public class DDMFormDisplayContext {
 		}
 
 		ResourceBundle resourceBundle = getResourceBundle(
-			getLocale(
-				PortalUtil.getHttpServletRequest(_renderRequest),
-				getDDMForm()));
+			getLocale(_getHttpServletRequest(), getDDMForm()));
 
 		if (hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
 			DDMFormInstanceRecord ddmFormInstanceRecord =
@@ -564,8 +561,7 @@ public class DDMFormDisplayContext {
 
 	public boolean isRememberMe() {
 		String rememberMe = CookieKeys.getCookie(
-			PortalUtil.getHttpServletRequest(_renderRequest),
-			CookieKeys.REMEMBER_ME);
+			_getHttpServletRequest(), CookieKeys.REMEMBER_ME);
 
 		if ((rememberMe != null) && rememberMe.equals("true")) {
 			return true;
@@ -603,7 +599,13 @@ public class DDMFormDisplayContext {
 			return _showConfigurationIcon;
 		}
 
-		if (isPreview() || (isSharedURL() && isFormShared())) {
+		String layoutMode = ParamUtil.getString(
+			PortalUtil.getOriginalServletRequest(_getHttpServletRequest()),
+			"p_l_mode", Constants.VIEW);
+
+		if (isPreview() || (isSharedURL() && isFormShared()) ||
+			layoutMode.equals(Constants.EDIT)) {
+
 			_showConfigurationIcon = false;
 
 			return _showConfigurationIcon;
@@ -669,8 +671,7 @@ public class DDMFormDisplayContext {
 		ddmFormRenderingContext.setDDMFormValues(
 			_ddmFormValuesFactory.create(_renderRequest, ddmForm));
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(_renderRequest);
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		ddmFormRenderingContext.setHttpServletRequest(httpServletRequest);
 
@@ -930,6 +931,10 @@ public class DDMFormDisplayContext {
 		String urlCurrent = themeDisplay.getURLCurrent();
 
 		return urlCurrent.contains("/shared");
+	}
+
+	private HttpServletRequest _getHttpServletRequest() {
+		return PortalUtil.getHttpServletRequest(_renderRequest);
 	}
 
 	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";

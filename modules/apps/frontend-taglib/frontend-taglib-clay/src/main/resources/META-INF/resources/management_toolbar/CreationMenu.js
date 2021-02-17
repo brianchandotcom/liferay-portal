@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 
 import LinkOrButton from './LinkOrButton';
@@ -102,7 +103,13 @@ const CreationMenu = ({
 		let currentItemCount = 0;
 
 		return (
-			<ClayDropDown.ItemList>
+			<ClayDropDown.ItemList
+				className={classNames({
+					'dropdown-menu-indicator-start': primaryItems.some(
+						(item) => item.icon
+					),
+				})}
+			>
 				{primaryItems?.map((item, index) => {
 					currentItemCount++;
 

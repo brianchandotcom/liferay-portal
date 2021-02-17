@@ -24,8 +24,8 @@ DLViewFileEntryMetadataSetsManagementToolbarDisplayContext dlViewFileEntryMetada
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-<clay:management-toolbar-v2
-	displayContext="<%= dlViewFileEntryMetadataSetsManagementToolbarDisplayContext %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= dlViewFileEntryMetadataSetsManagementToolbarDisplayContext %>"
 />
 
 <portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/document_library/delete_data_definition" var="deleteDataDefinitionURL">

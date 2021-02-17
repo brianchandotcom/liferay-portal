@@ -137,7 +137,6 @@ function ManagementToolbar({
 					)}
 					{showInfoButton && (
 						<InfoPanelControl
-							disabled={disabled}
 							infoPanelId={infoPanelId}
 							onInfoButtonClick={onInfoButtonClick}
 						/>
@@ -159,7 +158,6 @@ function ManagementToolbar({
 										trigger={
 											<ClayButtonWithIcon
 												className="nav-link nav-link-monospaced"
-												disabled={disabled}
 												displayType="unstyled"
 												symbol={
 													viewTypeItems.find(

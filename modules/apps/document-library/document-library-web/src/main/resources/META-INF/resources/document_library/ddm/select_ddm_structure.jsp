@@ -22,8 +22,8 @@ DLSelectDDMStructureDisplayContext dlSelectDDMStructureDisplayContext = new DLSe
 SearchContainer<com.liferay.dynamic.data.mapping.model.DDMStructure> ddmStructureSearch = dlSelectDDMStructureDisplayContext.getDDMStructureSearch();
 %>
 
-<clay:management-toolbar-v2
-	displayContext="<%= new DLSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dlSelectDDMStructureDisplayContext) %>"
+<clay:management-toolbar
+	managementToolbarDisplayContext="<%= new DLSelectDDMStructureManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, dlSelectDDMStructureDisplayContext) %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="selectDDMStructureFm">

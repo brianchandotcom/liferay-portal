@@ -16,7 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import React, {useEffect, useRef} from 'react';
 
-const InfoPanelControl = ({disabled, infoPanelId, onInfoButtonClick}) => {
+const InfoPanelControl = ({infoPanelId, onInfoButtonClick}) => {
 	const infoButtonRef = useRef();
 
 	useEffect(() => {
@@ -45,7 +45,6 @@ const InfoPanelControl = ({disabled, infoPanelId, onInfoButtonClick}) => {
 		<ClayManagementToolbar.Item>
 			<ClayButtonWithIcon
 				className="nav-link nav-link-monospaced"
-				disabled={disabled}
 				displayType="unstyled"
 				id={infoPanelId && `${infoPanelId}_trigger`}
 				onClick={onInfoButtonClick}

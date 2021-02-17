@@ -46,8 +46,40 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 
 		<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-		<clay:management-toolbar-v2
-			displayContext="<%= (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName()) %>"
+		<clay:management-toolbar
+			additionalProps='<%=
+				HashMapBuilder.<String, Object>put(
+					"downloadEntryURL", dlViewDisplayContext.getDownloadEntryURL()
+				).put(
+					"editEntryURL", dlViewDisplayContext.getEditEntryURL()
+				).put(
+					"folderConfiguration",
+					HashMapBuilder.<String, Object>put(
+						"defaultParentFolderId", dlViewDisplayContext.getFolderId()
+					).put(
+						"dimensions",
+						HashMapBuilder.<String, Object>put(
+							"height", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT)
+						).put(
+							"width", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH)
+						).build()
+					).build()
+				).put(
+					"openViewMoreFileEntryTypesURL", dlViewDisplayContext.getViewMoreFileEntryTypesURL()
+				).put(
+					"selectFileEntryTypeURL", dlViewDisplayContext.getSelectFileEntryTypeURL()
+				).put(
+					"selectFolderURL", dlViewDisplayContext.getSelectFolderURL()
+				).put(
+					"trashEnabled", dlTrashHelper.isTrashEnabled(scopeGroupId, dlViewDisplayContext.getRepositoryId())
+				).put(
+					"viewFileEntryTypeURL", dlViewDisplayContext.getViewFileEntryTypeURL()
+				).put(
+					"viewFileEntryURL", dlViewDisplayContext.getViewFileEntryURL()
+				).build()
+			%>'
+			managementToolbarDisplayContext="<%= (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName()) %>"
+			propsTransformer="document_library/js/DLManagementToolbarPropsTransformer"
 		/>
 
 		<%

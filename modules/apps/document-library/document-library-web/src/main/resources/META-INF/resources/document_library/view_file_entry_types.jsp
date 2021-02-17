@@ -22,7 +22,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-<clay:management-toolbar-v2
+<clay:management-toolbar
 	clearResultsURL="<%= dlViewFileEntryTypesDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlViewFileEntryTypesDisplayContext.getCreationMenu() %>"
 	disabled="<%= dlViewFileEntryTypesDisplayContext.getTotalItems() == 0 %>"

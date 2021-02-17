@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -202,8 +203,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"get",
 			addAction(
-				"VIEW", "getSiteSitePage",
-				"com.liferay.portal.kernel.model.Group", layout.getGroupId())
+				"VIEW", layout.getPlid(), "getSiteSitePage", null,
+				Layout.class.getName(), layout.getGroupId())
 		).put(
 			"get-experiences",
 			() -> {
@@ -213,14 +214,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 				return addAction(
 					"VIEW", "getSiteSitePageFriendlyUrlPathExperiencesPage",
-					"com.liferay.portal.kernel.model.Group",
-					layout.getGroupId());
+					Group.class.getName(), layout.getGroupId());
 			}
 		).put(
 			"get-rendered-page",
 			addAction(
-				"VIEW", "getSiteSitePageRenderedPage",
-				"com.liferay.portal.kernel.model.Group", layout.getGroupId())
+				"VIEW", layout.getPlid(), "getSiteSitePageRenderedPage", null,
+				Layout.class.getName(), layout.getGroupId())
 		).build();
 	}
 
@@ -246,12 +246,12 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			"get",
 			addAction(
 				"VIEW", "getSiteSitePageExperienceExperienceKey",
-				"com.liferay.portal.kernel.model.Group", layout.getGroupId())
+				Group.class.getName(), layout.getGroupId())
 		).put(
 			"get-rendered-page",
 			addAction(
 				"VIEW", "getSiteSitePageExperienceExperienceKeyRenderedPage",
-				"com.liferay.portal.kernel.model.Group", layout.getGroupId())
+				Group.class.getName(), layout.getGroupId())
 		).build();
 	}
 
@@ -293,7 +293,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		throws Exception {
 
 		List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
-			_segmentsExperienceService.getSegmentsExperiences(
+			_segmentsExperienceLocalService.getSegmentsExperiences(
 				layout.getGroupId(),
 				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid(), true));

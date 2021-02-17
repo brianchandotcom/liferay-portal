@@ -9,6 +9,7 @@
 	}
 
 	&.ddm-form-builder {
+		padding-right: $sidebarMiniWidth;
 		transition: padding ease 0.5s;
 
 		&--sidebar-open {
@@ -126,6 +127,7 @@
 }
 
 .data-engine-form-builder-messages {
+	padding-right: $sidebarMiniWidth;
 	transition: padding ease 0.5s;
 
 	&--collapsed {

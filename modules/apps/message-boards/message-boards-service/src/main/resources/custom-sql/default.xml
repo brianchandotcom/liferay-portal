@@ -59,29 +59,38 @@
 			SELECT
 				{MBCategory.*}
 			FROM
-				MBCategory
+				(
+					SELECT
+						MBCategory.categoryId, MBCategory.ctCollectionId, MAX(MBMessage.modifiedDate) AS lastPostDate
+					FROM
+						MBCategory
+					INNER JOIN
+						Subscription ON
+							(Subscription.companyId = MBCategory.companyId) AND
+							(Subscription.classNameId = ?) AND
+							(Subscription.classPK = MBCategory.categoryId)
+					LEFT JOIN
+						MBMessage ON
+							MBMessage.categoryId = MBCategory.categoryId
+					WHERE
+						(MBCategory.groupId = ?) AND
+						(MBCategory.parentCategoryId = ?) AND
+						(Subscription.userId = ?)
+					GROUP BY
+						MBCategory.ctCollectionId, MBCategory.categoryId
+				) TEMP_TABLE
 			INNER JOIN
-				Subscription ON
-					(Subscription.companyId = MBCategory.companyId) AND
-					(Subscription.classNameId = ?) AND
-					(Subscription.classPK = MBCategory.categoryId)
-			LEFT JOIN
-				MBMessage ON
-					MBMessage.categoryId = MBCategory.categoryId
-			WHERE
-				(MBCategory.groupId = ?) AND
-				(MBCategory.parentCategoryId = ?) AND
-				(Subscription.userId = ?)
-			GROUP BY
-				MBCategory.ctCollectionId, MBCategory.categoryId
+				MBCategory ON
+					(TEMP_TABLE.categoryId = MBCategory.categoryId) AND
+					(TEMP_TABLE.ctCollectionId = MBCategory.ctCollectionId)
 			ORDER BY
 				(
 					CASE WHEN
-						MAX(MBMessage.modifiedDate) IS NULL
+						TEMP_TABLE.lastPostDate IS NULL
 					THEN
 						MBCategory.modifiedDate
 					ELSE
-						MAX(MBMessage.modifiedDate)
+						TEMP_TABLE.lastPostDate
 					END
 				) DESC
 		]]>

@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 
-	protected void addMissingFriendlyURLEntryLocalizations() {
+	protected void addMissingFriendlyURLEntryLocalizations() throws Exception {
 		StringBundler sb1 = new StringBundler(8);
 
 		sb1.append("select JournalArticle.id_, ");
@@ -123,9 +123,6 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 					}
 				}
 			}
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
 		}
 	}
 

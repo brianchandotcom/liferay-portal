@@ -3,8 +3,10 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "@com.liferay.portal.vulcan.api.version@"
+	compileOnly group: "com.liferay", name: "javax.xml.bind"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
+	compileOnly group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"
 #if (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 #end

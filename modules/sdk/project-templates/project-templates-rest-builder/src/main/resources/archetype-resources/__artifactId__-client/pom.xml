@@ -13,4 +13,17 @@
 		<artifactId>${artifactId}</artifactId>
 		<version>${version}</version>
 	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>javax.xml.bind</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>

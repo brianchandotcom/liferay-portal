@@ -40,6 +40,11 @@ portletURL.setParameter("tabs1", "scheduled-task");
 				keyProperty="dispatchTriggerId"
 				modelVar="scheduledTaskDispatchTrigger"
 			>
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/scheduled_task_action.jsp"
+				/>
+
 				<liferay-ui:search-container-column-text
 					cssClass="important table-cell-expand"
 					name="name"
@@ -60,6 +65,7 @@ portletURL.setParameter("tabs1", "scheduled-task");
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="important table-cell-ws-nowrap"
 					name="status"
 				>
 
@@ -73,13 +79,8 @@ portletURL.setParameter("tabs1", "scheduled-task");
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="table-cell-expand"
+					cssClass="table-cell-ws-nowrap"
 					path="/scheduled_task_buttons.jsp"
-				/>
-
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					path="/scheduled_task_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

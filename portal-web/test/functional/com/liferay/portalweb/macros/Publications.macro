@@ -275,9 +275,11 @@ definition {
 	}
 
 	macro revertPublication {
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		var key_publicationsName = "${publicationsName}";
 
-		Click(locator1 = "Publications#REVERT_BUTTON");
+		Click(locator1 = "Publications#LIST_REVERT_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "Publications#PUBLICATION_NAME",

@@ -2816,6 +2816,20 @@ public class JenkinsResultsParserUtil {
 						buildProperties.getProperty("jenkins.admin.user.name"));
 				}
 
+				if (((httpAuthorizationHeader == null) &&
+					 url.matches("https://testray.liferay.com/?.+")) ||
+					url.matches(
+						"https://webserver-testray-dev.lfr.cloud/?.+")) {
+
+					Properties buildProperties = getBuildProperties();
+
+					httpAuthorizationHeader = new BasicHTTPAuthorization(
+						getProperty(
+							buildProperties, "testray.admin.user.password"),
+						getProperty(
+							buildProperties, "testray.admin.user.name"));
+				}
+
 				URL urlObject = new URL(url);
 
 				URLConnection urlConnection = urlObject.openConnection();

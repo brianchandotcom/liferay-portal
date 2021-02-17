@@ -103,11 +103,11 @@ public class TestrayProject {
 					String.valueOf(testrayServer.getURL()),
 					"/home/-/testray/routines.json?cur=",
 					String.valueOf(current), "&delta=", String.valueOf(_DELTA),
-					"&orderByCol=testrayProjectId&testrayProjectId=",
+					"&orderByCol=testrayRoutineId&testrayProjectId=",
 					String.valueOf(getID()));
 
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					projectAPIURL, null, testrayServer.getHTTPAuthorization());
+					projectAPIURL, true);
 
 				JSONArray dataJSONArray = jsonObject.getJSONArray("data");
 

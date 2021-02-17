@@ -228,8 +228,6 @@ public class TestrayImporter {
 			job.getJobProperties(), "testray.routine.name", job.getJobName(),
 			_topLevelBuild.getTestSuiteName());
 
-		System.out.println("testrayRoutineName=" + testrayRoutineName);
-
 		if ((testrayRoutine == null) &&
 			!JenkinsResultsParserUtil.isNullOrEmpty(testrayRoutineName)) {
 

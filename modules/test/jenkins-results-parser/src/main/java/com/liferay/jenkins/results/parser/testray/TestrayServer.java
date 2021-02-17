@@ -75,19 +75,6 @@ public class TestrayServer {
 		_adminUserPassword = adminUserPassword;
 	}
 
-	protected JenkinsResultsParserUtil.HTTPAuthorization
-		getHTTPAuthorization() {
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(_adminUserPassword) ||
-			JenkinsResultsParserUtil.isNullOrEmpty(_adminUserName)) {
-
-			return null;
-		}
-
-		return new JenkinsResultsParserUtil.BasicHTTPAuthorization(
-			_adminUserPassword, _adminUserName);
-	}
-
 	private synchronized void _initTestrayProjects() {
 		if ((_testrayProjectsByID != null) &&
 			(_testrayProjectsByName != null)) {
@@ -109,7 +96,7 @@ public class TestrayServer {
 					"&orderByCol=testrayProjectId");
 
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					projectAPIURL, null, getHTTPAuthorization());
+					projectAPIURL, true);
 
 				JSONArray dataJSONArray = jsonObject.getJSONArray("data");
 

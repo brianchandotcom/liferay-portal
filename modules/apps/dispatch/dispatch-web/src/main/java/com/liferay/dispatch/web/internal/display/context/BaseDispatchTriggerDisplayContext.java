@@ -53,7 +53,8 @@ public abstract class BaseDispatchTriggerDisplayContext {
 				navigationItem.setActive(tabs1.equals("dispatch-trigger"));
 				navigationItem.setHref(
 					liferayPortletResponse.createRenderURL(), "tabs1",
-					"dispatch-trigger");
+					"dispatch-trigger", "mvcRenderCommandName",
+					"/dispatch/view_dispatch_trigger");
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "dispatch-triggers"));
 

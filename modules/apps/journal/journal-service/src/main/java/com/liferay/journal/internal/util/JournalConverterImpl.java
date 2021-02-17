@@ -97,6 +97,8 @@ public class JournalConverterImpl implements JournalConverter {
 		rootElement.addAttribute(
 			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
 
+		rootElement.addAttribute("version", "1.0");
+
 		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
 
 		for (String fieldName : ddmStructure.getRootFieldNames()) {

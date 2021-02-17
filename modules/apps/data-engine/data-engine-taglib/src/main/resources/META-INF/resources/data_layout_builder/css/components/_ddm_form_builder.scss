@@ -9,12 +9,13 @@
 	}
 
 	&.ddm-form-builder {
-		padding-right: $sidebarMiniWidth;
+		padding-right: $multiPanelSidebarButtonWidth;
 		transition: padding ease 0.5s;
 
 		&--sidebar-open {
 			padding-left: 0;
-			padding-right: $sidebarMainWidth + $sidebarMiniWidth;
+			padding-right: $multiPanelSidebarContentWidth +
+				$multiPanelSidebarButtonWidth;
 		}
 
 		.col-ddm {
@@ -127,11 +128,12 @@
 }
 
 .data-engine-form-builder-messages {
-	padding-right: $sidebarMiniWidth;
+	padding-right: $multiPanelSidebarButtonWidth;
 	transition: padding ease 0.5s;
 
 	&--collapsed {
-		padding-right: $sidebarMainWidth + $sidebarMiniWidth;
+		padding-right: $multiPanelSidebarContentWidth +
+			$multiPanelSidebarButtonWidth;
 	}
 
 	.alert {

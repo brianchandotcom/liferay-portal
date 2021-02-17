@@ -211,6 +211,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						{
 							autocompleteUserURL:
 								'<%= ddmFormAdminDisplayContext.getAutocompleteUserURL() %>',
+							autosaveInterval: <%= ddmFormAdminDisplayContext.getAutosaveInterval() %>,
+							autosaveURL: '<%= autoSaveFormInstanceURL.toString() %>',
 							context: context,
 							dataProviderInstanceParameterSettingsURL:
 								'<%= dataProviderInstanceParameterSettingsURL %>',

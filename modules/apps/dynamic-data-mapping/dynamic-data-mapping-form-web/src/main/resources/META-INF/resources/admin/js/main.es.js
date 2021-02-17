@@ -14,17 +14,14 @@
 
 import ClayModal from 'clay-modal';
 import {pageStructure} from 'dynamic-data-mapping-form-builder/js/util/config.es';
-import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 import {FormApp, PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import {EventHandler, delegate} from 'frontend-js-web';
+import {delegate} from 'frontend-js-web';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
 import ShareFormModal from './components/ShareFormModal/ShareFormModal.es';
-import AutoSave from './util/AutoSave.es';
 import FormURL from './util/FormURL.es';
 import Notifications from './util/Notifications.es';
-import StateSyncronizer from './util/StateSyncronizer.es';
 
 /**
  * Form.
@@ -35,45 +32,7 @@ class Form extends Component {
 	attached() {
 		const {namespace, published, showPublishAlert} = this.props;
 
-		const {paginationMode} = this.state;
-
 		this.store = this.refs.app.reactComponentRef;
-
-		this._eventHandler = new EventHandler();
-
-		const dependencies = [];
-
-		if (this.isFormBuilderView()) {
-			dependencies.push(this._getSettingsDDMForm());
-		}
-
-		Promise.all(dependencies).then(([settingsDDMForm]) => {
-			this._stateSyncronizer = new StateSyncronizer(
-				{
-					namespace,
-					paginationMode,
-					published,
-					settingsDDMForm,
-					store: this.store,
-				},
-				this.element
-			);
-
-			this._autoSave = new AutoSave(
-				{
-					form: document.querySelector(`#${namespace}editForm`),
-					interval: Liferay.DDM.FormSettings.autosaveInterval,
-					namespace,
-					stateSyncronizer: this._stateSyncronizer,
-					url: Liferay.DDM.FormSettings.autosaveURL,
-				},
-				this.element
-			);
-
-			this._eventHandler.add(
-				this._autoSave.on('autosaved', this._updateAutoSaveMessage)
-			);
-		});
 
 		const previewButton = document.querySelector('.lfr-ddm-preview-button');
 
@@ -145,19 +104,9 @@ class Form extends Component {
 	}
 
 	disposed() {
-		if (this._autoSave) {
-			this._autoSave.dispose();
-		}
-
-		if (this._stateSyncronizer) {
-			this._stateSyncronizer.dispose();
-		}
-
 		Notifications.closeAlert();
 
 		this._backButtonClickEventHandler.dispose();
-
-		this._eventHandler.removeAllListeners();
 
 		const previewButton = document.querySelector('.lfr-ddm-preview-button');
 
@@ -389,9 +338,6 @@ class Form extends Component {
 		return promise;
 	}
 
-	_handleRulesModified() {
-		this._autoSave.save(true);
-	}
 
 	_handleSaveButtonClicked(event) {
 		event.preventDefault();
@@ -527,25 +473,6 @@ class Form extends Component {
 		Notifications.showAlert(
 			Liferay.Language.get('the-form-was-unpublished-successfully')
 		);
-	}
-
-	_updateAutoSaveMessage({modifiedDate, savedAsDraft}) {
-		const {namespace} = this.props;
-
-		let message = '';
-
-		if (savedAsDraft) {
-			message = Liferay.Language.get('draft-x');
-		}
-		else {
-			message = Liferay.Language.get('saved-x');
-		}
-
-		const autoSaveMessageNode = document.querySelector(
-			`#${namespace}autosaveMessage`
-		);
-
-		autoSaveMessageNode.innerHTML = sub(message, [modifiedDate]);
 	}
 }
 

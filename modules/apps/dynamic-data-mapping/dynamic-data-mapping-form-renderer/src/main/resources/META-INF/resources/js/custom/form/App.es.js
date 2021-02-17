@@ -32,6 +32,7 @@ import {RuleBuilder} from './RuleBuilder.es';
 import {NavigationBar} from './components/NavigationBar.es';
 import {BUILDER_INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
 import {BUILDER_INITIAL_STATE, initState} from './config/initialState.es';
+import {AutoSaveProvider} from './hooks/useAutoSave.es';
 import {
 	elementSetReducer,
 	formInfoReducer,
@@ -61,58 +62,71 @@ ProviderCompatibilityLayer.displayName = 'ProviderCompatibilityLayer';
  * Exporting default application to Forms Admin. Only Providers and
  * routing must be defined.
  */
-export const App = React.forwardRef(({spritemap, ...otherProps}, ref) => {
-	const {config, state} = parseProps({spritemap, ...otherProps});
+export const App = React.forwardRef(
+	({autosaveInterval, autosaveURL, spritemap, ...otherProps}, ref) => {
+		const {config, state} = parseProps({spritemap, ...otherProps});
 
-	return (
-		<ClayIconSpriteContext.Provider value={spritemap}>
-			<DndProvider backend={HTML5Backend} context={window}>
-				<ConfigProvider
-					config={config}
-					initialConfig={BUILDER_INITIAL_CONFIG_STATE}
-				>
-					<ClayModalProvider spritemap={spritemap}>
-						<FormProvider
-							init={initState}
-							initialState={BUILDER_INITIAL_STATE}
-							reducers={[
-								dragAndDropReducer,
-								elementSetReducer,
-								fieldEditableReducer,
-								formInfoReducer,
-								languageReducer,
-								pageReducer,
-								pagesStructureReducer,
-								rulesReducer,
-								sidebarReducer,
-							]}
-							value={state}
-						>
-							<ProviderCompatibilityLayer ref={ref} />
-							<Router>
-								<Switch>
-									<Route component={NavigationBar} path="/" />
-								</Switch>
-								<Switch>
-									<Route
-										component={FormBuilder}
-										exact
-										path="/"
-									/>
-									<Route
-										component={RuleBuilder}
-										path="/rules"
-									/>
-									<Route component={Report} path="/report" />
-								</Switch>
-							</Router>
-						</FormProvider>
-					</ClayModalProvider>
-				</ConfigProvider>
-			</DndProvider>
-		</ClayIconSpriteContext.Provider>
-	);
-});
+		return (
+			<ClayIconSpriteContext.Provider value={spritemap}>
+				<DndProvider backend={HTML5Backend} context={window}>
+					<ConfigProvider
+						config={config}
+						initialConfig={BUILDER_INITIAL_CONFIG_STATE}
+					>
+						<ClayModalProvider spritemap={spritemap}>
+							<FormProvider
+								init={initState}
+								initialState={BUILDER_INITIAL_STATE}
+								reducers={[
+									dragAndDropReducer,
+									elementSetReducer,
+									fieldEditableReducer,
+									formInfoReducer,
+									languageReducer,
+									pageReducer,
+									pagesStructureReducer,
+									rulesReducer,
+									sidebarReducer,
+								]}
+								value={state}
+							>
+								<AutoSaveProvider
+									interval={autosaveInterval}
+									url={autosaveURL}
+								>
+									<ProviderCompatibilityLayer ref={ref} />
+									<Router>
+										<Switch>
+											<Route
+												component={NavigationBar}
+												path="/"
+											/>
+										</Switch>
+										<Switch>
+											<Route
+												component={FormBuilder}
+												exact
+												path="/"
+											/>
+											<Route
+												component={RuleBuilder}
+												path="/rules"
+											/>
+											<Route
+												component={Report}
+												path="/report"
+											/>
+										</Switch>
+									</Router>
+								</AutoSaveProvider>
+							</FormProvider>
+						</ClayModalProvider>
+					</ConfigProvider>
+				</DndProvider>
+			</ClayIconSpriteContext.Provider>
+		);
+	}
+);
 
 App.displayName = 'App';
 

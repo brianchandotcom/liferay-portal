@@ -60,7 +60,12 @@ export default function ColorPalette({
 			</div>
 
 			{onClear && (
-				<ClayButton displayType="secondary" onClick={onClear} small>
+				<ClayButton
+					disabled={!selectedColor}
+					displayType="secondary"
+					onClick={onClear}
+					small
+				>
 					{Liferay.Language.get('clear')}
 				</ClayButton>
 			)}

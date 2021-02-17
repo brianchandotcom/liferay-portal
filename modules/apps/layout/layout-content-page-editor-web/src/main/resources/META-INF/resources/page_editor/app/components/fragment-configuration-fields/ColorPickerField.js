@@ -78,6 +78,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 
 			<ClayButton
 				className="mt-2"
+				disabled={!color}
 				displayType="secondary"
 				onClick={() => {
 					setColor('');

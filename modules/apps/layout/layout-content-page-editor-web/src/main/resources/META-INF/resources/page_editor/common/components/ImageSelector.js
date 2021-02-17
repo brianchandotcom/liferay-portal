@@ -22,8 +22,10 @@ import {useSelector} from '../../app/store/index';
 import {useId} from '../../app/utils/useId';
 import {openImageSelector} from '../../core/openImageSelector';
 
+const DEFAULT_IMAGE_TITLE = Liferay.Language.get('none');
+
 export function ImageSelector({
-	imageTitle = Liferay.Language.get('none'),
+	imageTitle = DEFAULT_IMAGE_TITLE,
 	label,
 	onClearButtonPressed,
 	onImageSelected,
@@ -69,6 +71,9 @@ export function ImageSelector({
 				<div className="btn-group-item">
 					<ClayButton
 						borderless
+						disabled={
+							!imageTitle || imageTitle === DEFAULT_IMAGE_TITLE
+						}
 						displayType="secondary"
 						onClick={onClearButtonPressed}
 						small

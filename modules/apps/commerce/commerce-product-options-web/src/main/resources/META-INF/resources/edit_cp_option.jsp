@@ -22,6 +22,17 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 CPOption cpOption = cpOptionDisplayContext.getCPOption();
 
 long cpOptionId = cpOptionDisplayContext.getCPOptionId();
+
+portletDisplay.setShowBackIcon(true);
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
+}
+else {
+	portletDisplay.setURLBack(redirect);
+}
 %>
 
 <portlet:actionURL name="/cp_options/edit_cp_option" var="editOptionActionURL" />

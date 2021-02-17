@@ -40,6 +40,54 @@ import java.util.Map;
  */
 public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 
+	@Override
+	protected void doUpgrade() throws Exception {
+		_addMissingFriendlyURLEntryLocalizations();
+	}
+
+	private void _addMissingFriendlyURLEntryLocalization(
+			long ctCollectionId, long companyId, long friendlyURLEntryId,
+			String languageId, String urlTitle, long groupId, long classPK)
+		throws Exception {
+
+		long friendlyURLEntryLocalizationId = increment(
+			FriendlyURLEntryLocalization.class.getName());
+
+		String uniqueURLTitle = _getUniqueURLTitle(
+			ctCollectionId, urlTitle, groupId);
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("insert into FriendlyURLEntryLocalization (mvccVersion, ");
+		sb.append("ctCollectionId, friendlyURLEntryLocalizationId, ");
+		sb.append("companyId, friendlyURLEntryId, languageId, urlTitle, ");
+		sb.append("groupId, classNameId, classPK) values (?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?)");
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
+
+			ps.setLong(1, 0);
+			ps.setLong(2, ctCollectionId);
+			ps.setLong(3, friendlyURLEntryLocalizationId);
+			ps.setLong(4, companyId);
+			ps.setLong(5, friendlyURLEntryId);
+			ps.setString(6, languageId);
+			ps.setString(7, uniqueURLTitle);
+			ps.setLong(8, groupId);
+			ps.setLong(9, _classNameIdJournalArticle);
+			ps.setLong(10, classPK);
+
+			ps.executeUpdate();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to add friendly url entry localization", exception);
+			}
+		}
+	}
+
 	private void _addMissingFriendlyURLEntryLocalizations() throws Exception {
 		StringBundler sb1 = new StringBundler(8);
 
@@ -126,83 +174,6 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		}
 	}
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		_addMissingFriendlyURLEntryLocalizations();
-	}
-
-	private void _addMissingFriendlyURLEntryLocalization(
-			long ctCollectionId, long companyId, long friendlyURLEntryId,
-			String languageId, String urlTitle, long groupId, long classPK)
-		throws Exception {
-
-		long friendlyURLEntryLocalizationId = increment(
-			FriendlyURLEntryLocalization.class.getName());
-
-		String uniqueURLTitle = _getUniqueURLTitle(
-			ctCollectionId, urlTitle, groupId);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("insert into FriendlyURLEntryLocalization (mvccVersion, ");
-		sb.append("ctCollectionId, friendlyURLEntryLocalizationId, ");
-		sb.append("companyId, friendlyURLEntryId, languageId, urlTitle, ");
-		sb.append("groupId, classNameId, classPK) values (?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?)");
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				sb.toString())) {
-
-			ps.setLong(1, 0);
-			ps.setLong(2, ctCollectionId);
-			ps.setLong(3, friendlyURLEntryLocalizationId);
-			ps.setLong(4, companyId);
-			ps.setLong(5, friendlyURLEntryId);
-			ps.setString(6, languageId);
-			ps.setString(7, uniqueURLTitle);
-			ps.setLong(8, groupId);
-			ps.setLong(9, _classNameIdJournalArticle);
-			ps.setLong(10, classPK);
-
-			ps.executeUpdate();
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to add friendly url entry localization", exception);
-			}
-		}
-	}
-
-	private int _getFriendlyURLEntryLocalizationsCount(
-			long ctCollectionId, String urlTitle, long groupId)
-		throws Exception {
-
-		int count = 0;
-
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("select count(*) from FriendlyURLEntryLocalization where ");
-		sb.append("ctCollectionId = ");
-		sb.append(ctCollectionId);
-		sb.append(" and urlTitle = '");
-		sb.append(urlTitle);
-		sb.append("' and groupId = ");
-		sb.append(groupId);
-		sb.append(" and classNameId = ");
-		sb.append(_classNameIdJournalArticle);
-
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
-			ResultSet rs = ps.executeQuery()) {
-
-			if (rs.next()) {
-				count = rs.getInt(1);
-			}
-		}
-
-		return count;
-	}
-
 	private long _getFriendlyURLEntryCTCollectionId(long friendlyURLEntryId)
 		throws SQLException {
 
@@ -243,6 +214,35 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		}
 
 		return -1;
+	}
+
+	private int _getFriendlyURLEntryLocalizationsCount(
+			long ctCollectionId, String urlTitle, long groupId)
+		throws Exception {
+
+		int count = 0;
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("select count(*) from FriendlyURLEntryLocalization where ");
+		sb.append("ctCollectionId = ");
+		sb.append(ctCollectionId);
+		sb.append(" and urlTitle = '");
+		sb.append(urlTitle);
+		sb.append("' and groupId = ");
+		sb.append(groupId);
+		sb.append(" and classNameId = ");
+		sb.append(_classNameIdJournalArticle);
+
+		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
+
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		}
+
+		return count;
 	}
 
 	private String _getUniqueURLTitle(
@@ -323,7 +323,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeFriendlyURLEntryLocalizations.class);
 
-	private final long _classNameIdJournalArticle = PortalUtil.getClassNameId(
-		"com.liferay.journal.model.JournalArticle");
+	private static final long _classNameIdJournalArticle =
+		PortalUtil.getClassNameId("com.liferay.journal.model.JournalArticle");
 
 }

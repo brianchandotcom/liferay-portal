@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,8 +109,6 @@ public class RenderedPageUtil {
 			return null;
 		}
 
-		String methodName = "getSiteSitePageRenderedPage";
-
 		List<Object> arguments = new ArrayList<>();
 
 		arguments.add(layout.getGroupId());
@@ -122,22 +118,26 @@ public class RenderedPageUtil {
 
 		arguments.add(friendlyURL.substring(1));
 
-		long segmentsExperienceId = GetterUtil.getLong(
-			dtoConverterContext.getAttribute("segmentsExperienceId"));
+		boolean showSegmentsExperience = GetterUtil.getBoolean(
+			dtoConverterContext.getAttribute("showExperience"));
 
-		if (segmentsExperienceId != SegmentsEntryConstants.ID_DEFAULT) {
-			methodName = "getSiteSitePageExperienceExperienceKeyRenderedPage";
-
-			SegmentsExperience segmentsExperience =
-				SegmentsExperienceLocalServiceUtil.getSegmentsExperience(
-					segmentsExperienceId);
-
-			arguments.add(segmentsExperience.getSegmentsExperienceKey());
+		if (!showSegmentsExperience) {
+			return JaxRsLinkUtil.getJaxRsLink(
+				"headless-delivery", BaseSitePageResourceImpl.class,
+				"getSiteSitePageRenderedPage", uriInfo,
+				arguments.toArray(new Object[0]));
 		}
 
+		SegmentsExperience segmentsExperience =
+			(SegmentsExperience)dtoConverterContext.getAttribute(
+				"segmentsExperience");
+
+		arguments.add(segmentsExperience.getSegmentsExperienceKey());
+
 		return JaxRsLinkUtil.getJaxRsLink(
-			"headless-delivery", BaseSitePageResourceImpl.class, methodName,
-			uriInfo, arguments.toArray(new Object[0]));
+			"headless-delivery", BaseSitePageResourceImpl.class,
+			"getSiteSitePageExperienceExperienceKeyRenderedPage", uriInfo,
+			arguments.toArray(new Object[0]));
 	}
 
 	private static LayoutPageTemplateEntry _getLayoutPageTemplateEntry(

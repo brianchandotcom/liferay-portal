@@ -188,7 +188,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				/>
 			</liferay-expando:custom-attributes-available>
 
-			<aui:button-row>
+			<div class="sheet-footer">
 
 				<%
 				String publishButtonLabel = "publish";
@@ -205,7 +205,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				%>
 
 				<aui:button onClick="<%= taglibCancelReply %>" type="cancel" />
-			</aui:button-row>
+			</div>
 		</aui:form>
 
 		<portlet:renderURL var="advancedReplyURL">

@@ -66,7 +66,7 @@ if (cpOptionValue != null) {
 
 				<aui:input id="name" name="name" wrapperCssClass="commerce-product-option-value-title" />
 
-				<aui:input name="priority" />
+				<aui:input label="position" name="priority" />
 			</aui:fieldset>
 
 			<c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), CPOptionValue.class.getName(), cpOptionValueId, null) %>">

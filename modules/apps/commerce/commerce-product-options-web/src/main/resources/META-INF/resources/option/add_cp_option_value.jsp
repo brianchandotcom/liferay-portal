@@ -28,7 +28,7 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 
 		<aui:input helpMessage="key-help" name="key" required="<%= true %>" />
 
-		<aui:input name="priority" />
+		<aui:input label="position" name="priority" />
 	</aui:form>
 
 	<portlet:renderURL var="editOptionURL">

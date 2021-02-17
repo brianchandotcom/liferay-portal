@@ -49,7 +49,7 @@ public class CommerceOptionValuesClayTableDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField("key", "key");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("priority", "priority");
+		clayTableSchemaBuilder.addClayTableSchemaField("priority", "position");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -144,7 +144,7 @@ const useGetFieldValue = () => {
 			);
 		}
 
-		return Promise.resolve(editable);
+		return Promise.resolve(editable?.defaultValue || editable);
 	}, []);
 
 	const getFromCollectionItem = useCallback(

@@ -62,25 +62,21 @@ portletURL.setParameter("tabs1", "dispatch-trigger");
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand"
 							name="task-executor-type"
 							property="dispatchTaskExecutorType"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand"
 							name="system"
 							value='<%= dispatchTrigger.isSystem() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
 						/>
 
 						<liferay-ui:search-container-column-date
-							cssClass="table-cell-expand"
 							name="create-date"
 							property="createDate"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand"
 							name="next-fire-date"
 							value="<%= dispatchTriggerDisplayContext.getNextFireDateString(dispatchTrigger.getDispatchTriggerId()) %>"
 						/>

@@ -174,7 +174,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		}
 	}
 
-	private int _countLocalizations(
+	private int _getFriendlyURLEntryLocalizationsCount(
 			long ctCollectionId, String urlTitle, long groupId)
 		throws Exception {
 
@@ -260,7 +260,7 @@ public class UpgradeFriendlyURLEntryLocalizations extends UpgradeProcess {
 		String prefix = curUrlTitle;
 
 		for (int i = 1;; i++) {
-			int count = _countLocalizations(
+			int count = _getFriendlyURLEntryLocalizationsCount(
 				ctCollectionId, curUrlTitle, groupId);
 
 			if (count == 0) {

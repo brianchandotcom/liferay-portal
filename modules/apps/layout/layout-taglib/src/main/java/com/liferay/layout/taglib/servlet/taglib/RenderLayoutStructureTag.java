@@ -37,6 +37,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			RenderLayoutStructureDisplayContext.class.getName(),
 			new RenderLayoutStructureDisplayContext(
 				getFieldValues(),
+				ServletContextUtil.getFragmentEntryProcessorHelper(),
 				ServletContextUtil.getFrontendTokenDefinitionRegistry(),
 				request,
 				PipingServletResponse.createPipingServletResponse(pageContext),

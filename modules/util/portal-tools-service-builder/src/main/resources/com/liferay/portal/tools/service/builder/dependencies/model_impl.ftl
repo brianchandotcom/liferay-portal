@@ -899,20 +899,26 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				if (_columnOriginalValues == Collections.EMPTY_MAP) {
 					_setColumnOriginalValues();
 				}
-			<#elseif entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name))>
-				<#if columnBitmaskEnabled>
-					_columnBitmask |= ${entityColumn.name?upper_case}_COLUMN_BITMASK;
+			<#else>
+				<#if entityColumn.isOrderColumn() && columnBitmaskEnabled>
+					_columnBitmask = -1L;
 				</#if>
 
-				<#if entityColumn.isPrimitiveType()>
-					if (!_setOriginal${entityColumn.methodName}) {
+				<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name))>
+					<#if !entityColumn.isOrderColumn() && columnBitmaskEnabled>
+						_columnBitmask |= ${entityColumn.name?upper_case}_COLUMN_BITMASK;
+					</#if>
+
+					<#if entityColumn.isPrimitiveType()>
+						if (!_setOriginal${entityColumn.methodName}) {
 						_setOriginal${entityColumn.methodName} = true;
-				<#else>
-					if (_original${entityColumn.methodName} == null) {
-				</#if>
+					<#else>
+						if (_original${entityColumn.methodName} == null) {
+					</#if>
 
 					_original${entityColumn.methodName} = _${entityColumn.name};
-				}
+					}
+				</#if>
 			</#if>
 
 			<#if entity.versionEntity?? && stringUtil.equals(entityColumn.name, "headId")>

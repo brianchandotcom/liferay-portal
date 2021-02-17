@@ -4498,7 +4498,7 @@ public class JournalArticleLocalServiceImpl
 	 * @return the range of matching web content articles ordered by the
 	 *         comparator
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, Date, Date, int, Date, int, int, OrderByComparator)}
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, Date, Date, Locale, int, Date, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -4512,7 +4512,7 @@ public class JournalArticleLocalServiceImpl
 		return search(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-			status, reviewDate, LocaleUtil.getMostRelevantLocale(), start, end,
+			LocaleUtil.getMostRelevantLocale(), status, reviewDate, start, end,
 			orderByComparator);
 	}
 
@@ -4521,7 +4521,7 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		int status, Date reviewDate, Locale locale, int start, int end,
+		Locale locale, int status, Date reviewDate, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		String[] articleIds = null;
@@ -4621,7 +4621,7 @@ public class JournalArticleLocalServiceImpl
 	 * @return the range of matching web content articles ordered by the
 	 *         comparator
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, int, Date, Locale, boolean, int, int, OrderByComparator)}
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, Locale, int, Date, boolean, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -4636,9 +4636,8 @@ public class JournalArticleLocalServiceImpl
 		return search(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate,
-			LocaleUtil.getMostRelevantLocale(), andOperator, start, end,
-			orderByComparator);
+			displayDateGT, displayDateLT, LocaleUtil.getMostRelevantLocale(),
+			status, reviewDate, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
@@ -4646,8 +4645,8 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String ddmStructureKey, String ddmTemplateKey,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
-		Locale locale, boolean andOperator, int start, int end,
+		Date displayDateGT, Date displayDateLT, Locale locale, int status,
+		Date reviewDate, boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
@@ -4656,7 +4655,7 @@ public class JournalArticleLocalServiceImpl
 		return search(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, status, reviewDate, locale,
+			displayDateGT, displayDateLT, locale, status, reviewDate,
 			andOperator, start, end, orderByComparator);
 	}
 
@@ -4725,7 +4724,7 @@ public class JournalArticleLocalServiceImpl
 	 * @return the range of matching web content articles ordered by the
 	 *         comparator
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, int, Date, Locale, boolean, int, int, OrderByComparator)}
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #search(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, Locale, int, Date, boolean, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -4740,9 +4739,8 @@ public class JournalArticleLocalServiceImpl
 		return search(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, status, reviewDate,
-			LocaleUtil.getMostRelevantLocale(), andOperator, start, end,
-			orderByComparator);
+			displayDateGT, displayDateLT, LocaleUtil.getMostRelevantLocale(),
+			status, reviewDate, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
@@ -4750,8 +4748,8 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
-		Locale locale, boolean andOperator, int start, int end,
+		Date displayDateGT, Date displayDateLT, Locale locale, int status,
+		Date reviewDate, boolean andOperator, int start, int end,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		String[] articleIds = _customSQL.keywords(articleId, false);
@@ -5049,7 +5047,7 @@ public class JournalArticleLocalServiceImpl
 	 *         (optionally <code>null</code>)
 	 * @return the number of matching web content articles
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, Date, Date, int, Date, Locale)}
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, Date, Date, Locale, int, Date)}
 	 */
 	@Deprecated
 	@Override
@@ -5062,7 +5060,7 @@ public class JournalArticleLocalServiceImpl
 		return searchCount(
 			companyId, groupId, folderIds, classNameId, keywords, version,
 			ddmStructureKey, ddmTemplateKey, displayDateGT, displayDateLT,
-			status, reviewDate, LocaleUtil.getMostRelevantLocale());
+			LocaleUtil.getMostRelevantLocale(), status, reviewDate);
 	}
 
 	@Override
@@ -5070,7 +5068,7 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String keywords, Double version, String ddmStructureKey,
 		String ddmTemplateKey, Date displayDateGT, Date displayDateLT,
-		int status, Date reviewDate, Locale locale) {
+		Locale locale, int status, Date reviewDate) {
 
 		String[] articleIds = null;
 		String[] titles = null;
@@ -5149,7 +5147,7 @@ public class JournalArticleLocalServiceImpl
 	 *         and status must all match their values.
 	 * @return the number of matching web content articles
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, int, Date, Locale, boolean)}
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String, String, Date, Date, Locale, int, Date, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -5163,8 +5161,8 @@ public class JournalArticleLocalServiceImpl
 		return searchCount(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate,
-			LocaleUtil.getMostRelevantLocale(), andOperator);
+			displayDateGT, displayDateLT, LocaleUtil.getMostRelevantLocale(),
+			status, reviewDate, andOperator);
 	}
 
 	@Override
@@ -5172,8 +5170,8 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String ddmStructureKey, String ddmTemplateKey,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
-		Locale locale, boolean andOperator) {
+		Date displayDateGT, Date displayDateLT, Locale locale, int status,
+		Date reviewDate, boolean andOperator) {
 
 		String[] ddmStructureKeys = _customSQL.keywords(ddmStructureKey, false);
 		String[] ddmTemplateKeys = _customSQL.keywords(ddmTemplateKey, false);
@@ -5181,7 +5179,7 @@ public class JournalArticleLocalServiceImpl
 		return searchCount(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, status, reviewDate, locale,
+			displayDateGT, displayDateLT, locale, status, reviewDate,
 			andOperator);
 	}
 
@@ -5233,7 +5231,7 @@ public class JournalArticleLocalServiceImpl
 	 *         and status must all match their values.
 	 * @return the number of matching web content articles
 	 *
-	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, int, Date, Locale, boolean)}
+	 * @deprecated As of Cavanaugh (7.4.x), replace by {@link #searchCount(long, long, List, long, String, Double, String, String, String, String[], String[], Date, Date, Locale, int, Date, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -5247,8 +5245,8 @@ public class JournalArticleLocalServiceImpl
 		return searchCount(
 			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, status, reviewDate,
-			LocaleUtil.getMostRelevantLocale(), andOperator);
+			displayDateGT, displayDateLT, LocaleUtil.getMostRelevantLocale(),
+			status, reviewDate, andOperator);
 	}
 
 	@Override
@@ -5256,8 +5254,8 @@ public class JournalArticleLocalServiceImpl
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String articleId, Double version, String title, String description,
 		String content, String[] ddmStructureKeys, String[] ddmTemplateKeys,
-		Date displayDateGT, Date displayDateLT, int status, Date reviewDate,
-		Locale locale, boolean andOperator) {
+		Date displayDateGT, Date displayDateLT, Locale locale, int status,
+		Date reviewDate, boolean andOperator) {
 
 		String[] articleIds = _customSQL.keywords(articleId, false);
 		String[] titles = _customSQL.keywords(title);

@@ -157,13 +157,6 @@ public class CPOptionDisplayContext {
 
 		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
 
-		RenderURL cancelURL = renderResponse.createRenderURL();
-
-		HeaderActionModel cancelHeaderActionModel = new HeaderActionModel(
-			null, cancelURL.toString(), null, "cancel");
-
-		headerActionModels.add(cancelHeaderActionModel);
-
 		HeaderActionModel publishHeaderActionModel = new HeaderActionModel(
 			"btn-primary", renderResponse.getNamespace() + "fm", null, null,
 			"publish");

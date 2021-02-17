@@ -401,8 +401,19 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
 
-		if (Validator.isNotNull(portletResource) &&
-			(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
+		if (workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT) {
+			String referringPortletResource = ParamUtil.getString(
+				actionRequest, "referringPortletResource");
+
+			if (Validator.isNotNull(referringPortletResource)) {
+				MultiSessionMessages.add(
+					actionRequest,
+					referringPortletResource + "requestProcessed");
+			}
+			else if (Validator.isNotNull(portletResource)) {
+				MultiSessionMessages.add(
+					actionRequest, portletResource + "requestProcessed");
+			}
 
 			MultiSessionMessages.add(
 				actionRequest, portletResource + "requestProcessed");

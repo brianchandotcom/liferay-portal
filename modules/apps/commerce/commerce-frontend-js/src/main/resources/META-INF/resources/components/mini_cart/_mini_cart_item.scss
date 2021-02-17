@@ -107,16 +107,12 @@
 		text-align: right;
 
 		.price {
-			grid-template-columns: unset;
-
-			&-label {
-				display: none;
-			}
+			grid-template-areas: unset;
 
 			&-value {
 				display: block;
-				font-size: 0.9rem;
-				margin: 0;
+				font-size: 0.9rem !important;
+				margin: 0 !important;
 			}
 		}
 	}

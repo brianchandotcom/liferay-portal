@@ -34,7 +34,7 @@ function ItemPriceView({displayDiscountLevels, price}) {
 		hasDiscount = isNonnull(discountPercentage, ...discountLevels);
 
 	return (
-		<div className={'price'}>
+		<div className={'compact price'}>
 			<span className="price-label">
 				{Liferay.Language.get('catalog-price')}
 			</span>

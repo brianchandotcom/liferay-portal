@@ -16,6 +16,7 @@ package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
@@ -102,6 +103,7 @@ public class RenderLayoutStructureDisplayContext {
 
 	public RenderLayoutStructureDisplayContext(
 		Map<String, Object> fieldValues,
+		FragmentEntryProcessorHelper fragmentEntryProcessorHelper,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
@@ -114,6 +116,7 @@ public class RenderLayoutStructureDisplayContext {
 		String mainItemId, String mode, boolean showPreview) {
 
 		_fieldValues = fieldValues;
+		_fragmentEntryProcessorHelper = fragmentEntryProcessorHelper;
 		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
@@ -1404,6 +1407,7 @@ public class RenderLayoutStructureDisplayContext {
 
 	private long[][] _assetCategoryIds;
 	private final Map<String, Object> _fieldValues;
+	private final FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private JSONObject _frontendTokensJSONObject;

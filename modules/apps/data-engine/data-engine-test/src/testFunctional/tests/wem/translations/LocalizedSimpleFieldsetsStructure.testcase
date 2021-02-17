@@ -291,25 +291,25 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		FormViewBuilder.editFieldLabel(
-				fieldLabel = "New Fieldset",
-				label = "New Fieldset pt-BR");
+			fieldLabel = "New Fieldset",
+			label = "New Fieldset pt-BR");
 
 		PortletEntry.changeLocale(locale = "de-DE");
 
 		FormViewBuilder.editFieldLabel(
-				fieldLabel = "New Fieldset",
-				label = "New Fieldset de-DE");
+			fieldLabel = "New Fieldset",
+			label = "New Fieldset de-DE");
 
 		PortletEntry.changeLocale(locale = "es-ES");
 
 		FormViewBuilder.editFieldLabel(
-				fieldLabel = "New Fieldset",
-				label = "New Fieldset es-ES");
+			fieldLabel = "New Fieldset",
+			label = "New Fieldset es-ES");
 
 		DataEngine.addTranslationToFieldset(
-				fieldNameList = "Text,Numeric",
-				fieldsetName = "Fieldset Name",
-				localeList = "pt-BR,de-DE,es-ES");
+			fieldNameList = "Text,Numeric",
+			fieldsetName = "Fieldset Name",
+			localeList = "pt-BR,de-DE,es-ES");
 
 		DataEngine.viewFieldsetTranslation(
 			fieldNameList = "Text,Numeric",

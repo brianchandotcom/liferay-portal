@@ -54,7 +54,7 @@ public class EditScheduledTaskDispatchTriggerMVCRenderCommand
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			scheduledTaskDispatchTriggerDisplayContext);
 
-		return "/edit_scheduled_task.jsp";
+		return "/view_scheduled_task.jsp";
 	}
 
 	@Reference

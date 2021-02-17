@@ -58,6 +58,11 @@ portletURL.setParameter("tabs1", "dispatch-trigger");
 					rowURL.setParameter("dispatchTriggerId", String.valueOf(dispatchTrigger.getDispatchTriggerId()));
 					%>
 
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
+						path="/dispatch_trigger_action.jsp"
+					/>
+
 					<liferay-ui:search-container-column-text
 						cssClass="important table-cell-expand"
 						href="<%= rowURL %>"
@@ -84,14 +89,23 @@ portletURL.setParameter("tabs1", "dispatch-trigger");
 						value="<%= dispatchTriggerDisplayContext.getNextFireDateString(dispatchTrigger.getDispatchTriggerId()) %>"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						cssClass="table-cell-expand"
-						path="/trigger/buttons.jsp"
-					/>
+					<liferay-ui:search-container-column-text
+						cssClass="important table-cell-ws-nowrap"
+						name="status"
+					>
+
+						<%
+						DispatchTaskStatus dispatchTaskStatus = dispatchTrigger.getDispatchTaskStatus();
+						%>
+
+						<h6 class="background-task-status-row background-task-status-<%= dispatchTaskStatus.getLabel() %> <%= dispatchTaskStatus.getCssClass() %>">
+							<liferay-ui:message key="<%= dispatchTaskStatus.getLabel() %>" />
+						</h6>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
-						path="/dispatch_trigger_action.jsp"
+						cssClass="table-cell-ws-nowrap"
+						path="/trigger/buttons.jsp"
 					/>
 				</liferay-ui:search-container-row>
 

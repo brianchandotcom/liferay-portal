@@ -48,6 +48,14 @@ public abstract class PortalGitRepositoryJob
 
 		super(jobName, buildProfile);
 
+		GitWorkingDirectory jenkinsGitWorkingDirectory =
+			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
+
+		jobPropertiesFiles.add(
+			new File(
+				jenkinsGitWorkingDirectory.getWorkingDirectory(),
+				"commands/build.properties"));
+
 		gitWorkingDirectory = getNewGitWorkingDirectory();
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());

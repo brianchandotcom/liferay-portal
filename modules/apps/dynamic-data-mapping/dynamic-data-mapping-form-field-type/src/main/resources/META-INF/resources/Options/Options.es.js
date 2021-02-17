@@ -209,7 +209,10 @@ const Options = ({
 				normalizedValue[languageId] = normalizeFields(
 					value[languageId].map((option) => {
 						if (option.edited) {
-							return option;
+							return {
+								id: random(),
+								...option,
+							};
 						}
 
 						const {label} = value[defaultLanguageId].find(
@@ -218,6 +221,7 @@ const Options = ({
 						);
 
 						return {
+							id: random(),
 							...option,
 							label,
 						};

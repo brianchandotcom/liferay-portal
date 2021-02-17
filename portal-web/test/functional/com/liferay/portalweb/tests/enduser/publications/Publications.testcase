@@ -506,10 +506,6 @@ definition {
 
 		Publications.publishPublication(publicationsName = "Publication Name");
 
-		Publications.viewPublishedPublicationDetails(
-			publicationPublishedBy = "Test Test",
-			publicationsName = "Publication Name");
-
 		AssertTextPresent(
 			key_publicationsName = "Production",
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",

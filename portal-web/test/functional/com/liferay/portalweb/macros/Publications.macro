@@ -519,18 +519,6 @@ definition {
 		}
 	}
 
-	macro viewPublishedPublicationDetails {
-		var key_publicationsName = "${publicationsName}";
-
-		AssertTextEquals(
-			locator1 = "Publications#PUBLISHED_PUBLICATIONS_NAME",
-			value1 = "${publicationsName}");
-
-		AssertElementPresent(
-			key_publicationPublishedBy = "${publicationPublishedBy}",
-			locator1 = "Publications#PUBLICATIONS_PUBLISHED_BY");
-	}
-
 	macro workOnProduction {
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 

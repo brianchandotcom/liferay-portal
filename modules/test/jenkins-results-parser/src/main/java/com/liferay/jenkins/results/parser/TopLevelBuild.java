@@ -57,6 +57,7 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -201,6 +202,37 @@ public abstract class TopLevelBuild extends BaseBuild {
 		String tempMapName = "git." + gitRepositoryType + ".properties";
 
 		return getTempMap(tempMapName);
+	}
+
+	public JSONObject getBuildResultsJSONObject(
+		String[] buildResults, String[] testStatuses, String[] dataTypes) {
+
+		JSONObject buildResultsJSONObject = new JSONObject();
+
+		JSONArray downstreamBuildJSONArray = new JSONArray();
+
+		List<String> buildResultsList = Collections.emptyList();
+
+		if (buildResults != null) {
+			buildResultsList = Arrays.asList(buildResults);
+		}
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if (buildResultsList.isEmpty() ||
+				buildResultsList.contains(downstreamBuild.getResult())) {
+
+				downstreamBuildJSONArray.put(
+					downstreamBuild.getBuildResultsJSONObject(
+						buildResults, testStatuses, dataTypes));
+			}
+		}
+
+		buildResultsJSONObject.put("batchResults", downstreamBuildJSONArray);
+		buildResultsJSONObject.put("buildNumber", getBuildNumber());
+		buildResultsJSONObject.put("jobURL", getJobURL());
+		buildResultsJSONObject.put("upstreamBranchSHA", getUpstreamBranchSHA());
+
+		return buildResultsJSONObject;
 	}
 
 	public String getCompanionBranchName() {

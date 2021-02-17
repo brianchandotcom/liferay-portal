@@ -109,6 +109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_REVERT_DISABLED</td>
+	<td>//div[contains(.,'${key_publicationsName}')]//following-sibling::div/a[contains(@class, 'btn-sm disabled') and contains(.,'Revert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANGE_PUBLICATIONS_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>
@@ -186,11 +191,6 @@
 <tr>
 	<td>REVERT_BUTTON</td>
 	<td>//td[contains(.,'${key_publicationsName}')]//following-sibling::td[contains(.,'Revert')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REVERT_DISABLED</td>
-	<td>//td[contains(.,'${key_publicationsName}')]//following-sibling::td//a[contains(@class, 'btn-sm disabled') and contains(.,'Revert')]</td>
 	<td></td>
 </tr>
 <tr>

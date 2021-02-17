@@ -2732,7 +2732,7 @@ definition {
 
 		AssertVisible(
 			key_publicationsName = "Publication 1 Name",
-			locator1 = "Publications#REVERT_DISABLED");
+			locator1 = "Publications#LIST_REVERT_DISABLED");
 	}
 
 	macro viewPolls {

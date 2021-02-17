@@ -41,7 +41,7 @@ export default ({
 	onDoubleClick,
 	showEmptyState = true,
 }) => {
-	const regex = new RegExp(keywords, 'ig');
+	const regex = new RegExp(keywords, 'i');
 
 	const filteredFieldTypes = fieldTypes
 		.filter(({system}) => !system)

@@ -53,6 +53,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.SegmentsEntryRetriever;
@@ -151,11 +152,16 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		throws Exception {
 
 		return SearchUtil.search(
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Map<String, String>>put(
 				"get",
-				addAction(
-					"VIEW", "getSiteSitePagesPage",
-					"com.liferay.portal.kernel.model.Group", siteId)
+				HashMapBuilder.put(
+					"href",
+					JaxRsLinkUtil.getJaxRsLink(
+						"headless-delivery", BaseSitePageResourceImpl.class,
+						"getSiteSitePagesPage", contextUriInfo, siteId)
+				).put(
+					"method", "GET"
+				).build()
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =

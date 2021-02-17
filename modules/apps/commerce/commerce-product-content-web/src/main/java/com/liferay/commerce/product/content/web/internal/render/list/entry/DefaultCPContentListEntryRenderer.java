@@ -127,7 +127,6 @@ public class DefaultCPContentListEntryRenderer
 		boolean compareDeleteButtonVisible = false;
 		JSONObject compareStateJSONObject = _jsonFactory.createJSONObject();
 		boolean inCart = false;
-		boolean lowStock = false;
 		long orderId = 0;
 		PriceModel prices = null;
 		ProductSettingsModel productSettingsModel = null;
@@ -209,10 +208,6 @@ public class DefaultCPContentListEntryRenderer
 				stockQuantity = MapUtil.getInteger(
 					stockQuantities, cpSku.getSku());
 			}
-
-			lowStock =
-				(stockQuantity > 0) &&
-				(stockQuantity <= productSettingsModel.getLowStockQuantity());
 		}
 		else if (hasChildCPDefinitions) {
 			prices = _productHelper.getMinPrice(
@@ -240,7 +235,7 @@ public class DefaultCPContentListEntryRenderer
 				cpCatalogEntry.getShortDescription(), inCart,
 				cpContentHelper.isInWishList(
 					cpSku, cpCatalogEntry, themeDisplay),
-				lowStock, cpCatalogEntry.getName(), orderId, prices,
+				cpCatalogEntry.getName(), orderId, prices,
 				cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay),
 				cpCatalogEntry.getDefaultImageFileUrl(), productSettingsModel,
 				sku, skuId, spritemap, stockQuantity);

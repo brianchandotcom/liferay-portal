@@ -19,7 +19,6 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.frontend.model.CPContentModel;
-import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CommerceOrder;
@@ -119,7 +118,6 @@ public class DefaultCPContentRenderer implements CPContentRenderer {
 		long commerceOrderId = 0;
 		boolean inCart = false;
 		int stockQuantity = 0;
-		boolean lowStock = false;
 
 		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
@@ -130,15 +128,8 @@ public class DefaultCPContentRenderer implements CPContentRenderer {
 		}
 
 		if (cpSku != null) {
-			ProductSettingsModel productSettingsModel =
-				_productHelper.getProductSettingsModel(cpSku.getCPInstanceId());
-
 			stockQuantity = _commerceInventoryEngine.getStockQuantity(
 				_portal.getCompanyId(httpServletRequest), cpSku.getSku());
-
-			lowStock =
-				(stockQuantity > 0) &&
-				(stockQuantity <= productSettingsModel.getLowStockQuantity());
 		}
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
@@ -165,7 +156,7 @@ public class DefaultCPContentRenderer implements CPContentRenderer {
 			cpCatalogEntry.getCPDefinitionId(), commerceCurrency.getCode(),
 			inCart,
 			cpContentHelper.isInWishList(cpSku, cpCatalogEntry, themeDisplay),
-			lowStock, commerceOrderId, spritemap, stockQuantity);
+			commerceOrderId, spritemap, stockQuantity);
 	}
 
 	private boolean _isInCart(CPSku cpSku, long commerceOrderId) {

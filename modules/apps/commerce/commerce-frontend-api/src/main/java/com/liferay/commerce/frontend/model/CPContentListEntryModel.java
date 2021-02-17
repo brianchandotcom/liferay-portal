@@ -25,14 +25,14 @@ public class CPContentListEntryModel extends CPContentModel {
 		long accountId, long channelId, boolean compareCheckboxVisible,
 		boolean compareDeleteButtonVisible, JSONObject compareStateJSONObject,
 		long cpDefinitionId, String currencyCode, String description,
-		boolean inCart, boolean inWishList, boolean lowStock, String name,
-		long orderId, PriceModel prices, String productDetailURL,
-		String productImageURL, ProductSettingsModel settings, String sku,
-		long skuId, String spritemap, int stockQuantity) {
+		boolean inCart, boolean inWishList, String name, long orderId,
+		PriceModel prices, String productDetailURL, String productImageURL,
+		ProductSettingsModel settings, String sku, long skuId, String spritemap,
+		int stockQuantity) {
 
 		super(
 			accountId, channelId, cpDefinitionId, currencyCode, inCart,
-			inWishList, lowStock, orderId, spritemap, stockQuantity);
+			inWishList, orderId, spritemap, stockQuantity);
 
 		_compareCheckboxVisible = compareCheckboxVisible;
 		_compareDeleteButtonVisible = compareDeleteButtonVisible;

@@ -21,8 +21,8 @@ public class CPContentModel {
 
 	public CPContentModel(
 		long accountId, long channelId, long cpDefinitionId,
-		String currencyCode, boolean inCart, boolean inWishList,
-		boolean lowStock, long orderId, String spritemap, int stockQuantity) {
+		String currencyCode, boolean inCart, boolean inWishList, long orderId,
+		String spritemap, int stockQuantity) {
 
 		_accountId = accountId;
 		_channelId = channelId;
@@ -30,7 +30,6 @@ public class CPContentModel {
 		_currencyCode = currencyCode;
 		_inCart = inCart;
 		_inWishList = inWishList;
-		_lowStock = lowStock;
 		_orderId = orderId;
 		_spritemap = spritemap;
 		_stockQuantity = stockQuantity;
@@ -72,17 +71,12 @@ public class CPContentModel {
 		return _inWishList;
 	}
 
-	public boolean isLowStock() {
-		return _lowStock;
-	}
-
 	private final long _accountId;
 	private final long _channelId;
 	private final long _cpDefinitionId;
 	private final String _currencyCode;
 	private final boolean _inCart;
 	private final boolean _inWishList;
-	private final boolean _lowStock;
 	private final long _orderId;
 	private final String _spritemap;
 	private final int _stockQuantity;

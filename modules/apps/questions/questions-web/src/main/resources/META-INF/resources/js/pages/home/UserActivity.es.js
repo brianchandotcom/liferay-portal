@@ -36,6 +36,15 @@ export default withRouter(
 		const siteKey = context.siteKey;
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
+		const [userInfo, setUserInfo] = useState({
+			id: creatorId,
+			image: null,
+			name: decodeURI(
+				JSON.parse(`"${Liferay.ThemeDisplay.getUserName()}"`)
+			),
+			postsNumber: 0,
+			rank: context.defaultRank,
+		});
 
 		useEffect(() => {
 			const pageNumber = queryParams.get('page') || 1;
@@ -47,6 +56,19 @@ export default withRouter(
 		}, [queryParams]);
 
 		const {data, loading} = useQuery(getUserActivityQuery, {
+			onCompleted(data) {
+				const {
+					creator,
+					creatorStatistics,
+				} = data.messageBoardMessages.items[0];
+				setUserInfo({
+					id: creator.id,
+					image: creator.image,
+					name: creator.name,
+					postsNumber: creatorStatistics.postsNumber,
+					rank: creatorStatistics.rank,
+				});
+			},
 			variables: {
 				filter: `creatorId eq ${creatorId}`,
 				page,
@@ -54,35 +76,6 @@ export default withRouter(
 				siteKey,
 			},
 		});
-
-		let creatorInfo = {
-			id: creatorId,
-			image: null,
-			name: decodeURI(
-				JSON.parse(`"${Liferay.ThemeDisplay.getUserName()}"`)
-			),
-			postsNumber: 0,
-			rank: context.defaultRank,
-		};
-
-		if (
-			data &&
-			data.messageBoardThreads.items &&
-			data.messageBoardThreads.items.length
-		) {
-			const {
-				creator,
-				creatorStatistics,
-			} = data.messageBoardThreads.items[0];
-
-			creatorInfo = {
-				id: creatorId,
-				image: creator.image,
-				name: creator.name,
-				postsNumber: creatorStatistics.postsNumber,
-				rank: creatorStatistics.rank,
-			};
-		}
 
 		const hrefConstructor = (page) =>
 			`${
@@ -96,26 +89,26 @@ export default withRouter(
 						<div className="d-flex flex-row">
 							<div className="c-mt-3">
 								<UserIcon
-									fullName={creatorInfo.name}
-									portraitURL={creatorInfo.image}
+									fullName={userInfo.name}
+									portraitURL={userInfo.image}
 									size="xl"
-									userId={String(creatorInfo.id)}
+									userId={String(userInfo.id)}
 								/>
 							</div>
 							<div className="c-ml-4 flex-column">
 								<div>
 									<span className="small">
-										Rank: {creatorInfo.rank}
+										Rank: {userInfo.rank}
 									</span>
 								</div>
 								<div>
 									<strong className="h2">
-										{creatorInfo.name}
+										{userInfo.name}
 									</strong>
 								</div>
 								<div>
 									<span className="small">
-										Posts: {creatorInfo.postsNumber}
+										Posts: {userInfo.postsNumber}
 									</span>
 								</div>
 							</div>
@@ -129,7 +122,7 @@ export default withRouter(
 							activeDelta={pageSize}
 							activePage={page}
 							changeDelta={setPageSize}
-							data={data && data.messageBoardThreads}
+							data={data && data.messageBoardMessages}
 							hrefConstructor={hrefConstructor}
 							loading={loading}
 						>
@@ -137,10 +130,14 @@ export default withRouter(
 								<QuestionRow
 									currentSection={
 										context.useTopicNamesInURL
-											? question.messageBoardSection &&
-											  question.messageBoardSection.title
-											: (question.messageBoardSection &&
-													question.messageBoardSection
+											? question.messageBoardThread
+													.messageBoardSection &&
+											  question.messageBoardThread
+													.messageBoardSection.title
+											: (question.messageBoardThread
+													.messageBoardSection &&
+													question.messageBoardThread
+														.messageBoardSection
 														.id) ||
 											  context.rootTopicId
 									}

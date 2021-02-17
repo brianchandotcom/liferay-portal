@@ -953,13 +953,13 @@ export const getSectionQuery = gql`
 `;
 
 export const getUserActivityQuery = gql`
-	query messageBoardThreads(
+	query messageBoardMessages(
 		$filter: String
 		$page: Int!
 		$pageSize: Int!
 		$siteKey: String!
 	) {
-		messageBoardThreads(
+		messageBoardMessages(
 			filter: $filter
 			flatten: true
 			page: $page
@@ -985,22 +985,16 @@ export const getUserActivityQuery = gql`
 				}
 				dateModified
 				friendlyUrlPath
-				hasValidAnswer
 				headline
 				id
 				keywords
-				messageBoardSection {
-					id
-					numberOfMessageBoardSections
-					parentMessageBoardSectionId
-					title
+				messageBoardThread {
+					messageBoardSection {
+						id
+						title
+					}
 				}
 				numberOfMessageBoardMessages
-				taxonomyCategoryBriefs {
-					taxonomyCategoryId
-					taxonomyCategoryName
-				}
-				viewCount
 			}
 			page
 			pageSize

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ENTRY_COVER_IMAGE_UNPUBLISHED</td>
-	<td>//div[@class='image-wrapper']//img[contains(@src,'${key_coverImageName}')]</td>
+	<td>//div[contains(@class,'image-wrapper')]//img[contains(@src,'${key_coverImageName}')]</td>
 	<td></td>
 </tr>
 <tr>

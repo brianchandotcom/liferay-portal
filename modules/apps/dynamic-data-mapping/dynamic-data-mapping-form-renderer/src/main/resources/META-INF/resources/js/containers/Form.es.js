@@ -160,6 +160,7 @@ const Form = React.forwardRef(
 				dispatch(
 					pageLanguageUpdate({
 						ddmStructureLayoutId,
+						defaultLanguageId,
 						nextEditingLanguageId,
 						pages,
 						portletNamespace,

@@ -60,6 +60,7 @@ const getFieldProperties = (fieldName, pages) => {
 
 export default function pageLanguageUpdate({
 	ddmStructureLayoutId,
+	defaultLanguageId,
 	nextEditingLanguageId,
 	pages,
 	portletNamespace,
@@ -108,9 +109,16 @@ export default function pageLanguageUpdate({
 							];
 
 						if (fieldRecordValue) {
-							field.localizedValue = {
-								...fieldRecordValue,
-							};
+							if (field.localizable) {
+								field.localizedValue = {
+									...fieldRecordValue,
+								};
+							}
+							else {
+								field.localizedValue = {
+									[defaultLanguageId]: fieldRecordValue,
+								};
+							}
 						}
 
 						return {

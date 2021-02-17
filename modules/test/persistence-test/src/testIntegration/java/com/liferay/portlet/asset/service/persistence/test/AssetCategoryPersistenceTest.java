@@ -249,6 +249,13 @@ public class AssetCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByParentCategoryId() throws Exception {
 		_persistence.countByParentCategoryId(RandomTestUtil.nextLong());
 

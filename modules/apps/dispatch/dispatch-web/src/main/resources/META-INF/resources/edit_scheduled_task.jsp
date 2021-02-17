@@ -54,13 +54,11 @@ portletURL.setParameter("tabs1", "scheduled-task");
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
 				name="next-fire-date"
 				value="<%= scheduledTaskDispatchTriggerDisplayContext.getNextFireDateString(scheduledTaskDispatchTrigger) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
 				name="status"
 			>
 

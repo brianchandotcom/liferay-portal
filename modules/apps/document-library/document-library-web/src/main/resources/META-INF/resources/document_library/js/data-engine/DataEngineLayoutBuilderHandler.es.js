@@ -24,7 +24,7 @@ export default function ({defaultLanguageId, namespace}) {
 		const localizedValues = {};
 
 		if (inputLocalized) {
-			var translatedLanguages = inputLocalized
+			const translatedLanguages = inputLocalized
 				.get('translatedLanguages')
 				.values();
 
@@ -42,7 +42,7 @@ export default function ({defaultLanguageId, namespace}) {
 		getDataLayoutBuilder().then((dataLayoutBuilder) => {
 			const nameInput = document.getElementById(`${namespace}name`);
 
-			var name = getInputLocalizedValues('name');
+			const name = getInputLocalizedValues('name');
 
 			if (!nameInput.value || !name[defaultLanguageId]) {
 				Liferay.Util.openToast({
@@ -61,11 +61,11 @@ export default function ({defaultLanguageId, namespace}) {
 				return;
 			}
 
-			const description = getInputLocalizedValues('description');
-
 			const formData = dataLayoutBuilder.getFormData();
 
 			const dataDefinition = formData.definition;
+
+			const description = getInputLocalizedValues('description');
 
 			dataDefinition.description = description;
 			dataDefinition.name = name;
@@ -85,8 +85,6 @@ export default function ({defaultLanguageId, namespace}) {
 	};
 
 	form.addEventListener('submit', saveDataEngineStructure);
-
-	// Deselect field when clicking outside the form builder
 
 	const detectClickOutside = (event) => {
 		if (

@@ -59,11 +59,11 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 		}
 
 		_commerceCurrency = _commerceCurrencyLocalService.getCommerceCurrency(
-			_companyId, "EUR");
+			_companyId, "USD");
 
 		if (_commerceCurrency == null) {
 			_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-				_companyId, "EUR");
+				_companyId, "USD");
 		}
 
 		return _commerceCurrency;

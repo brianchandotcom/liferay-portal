@@ -26,11 +26,20 @@
 		],
 		"testPathIgnorePatterns": [
 			"Evaluator",
+			"fieldSupport",
 			"FormBuilder",
 			"FormRenderer",
+			"LayoutProvider/handlers/columnResizedHandler",
+			"LayoutProvider/handlers/fieldBlurredHandler",
+			"LayoutProvider/handlers/fieldDeletedHandler",
+			"LayoutProvider/handlers/fieldEditedHandler",
 			"LayoutProvider/handlers/fieldSetAddedHandler",
+			"LayoutProvider/handlers/focusedFieldEvaluationEndedHandler",
+			"LayoutProvider/LayoutProvider",
 			"LayoutProvider/util",
-			"PageRenderer"
+			"PageRenderer",
+			"RuleBuilder/RulesSupport.",
+			"Sidebar/Sidebar"
 		]
 	},
 	"main": "js/index.es.js",

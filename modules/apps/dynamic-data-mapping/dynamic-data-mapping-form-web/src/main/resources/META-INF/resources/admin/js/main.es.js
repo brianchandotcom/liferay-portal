@@ -555,6 +555,7 @@ class Form extends Component {
 					)}
 
 					<ComposedFormBuilder
+						dataEngineSidebar={dataEngineSidebar}
 						fieldSets={fieldSets}
 						fieldTypes={fieldTypes}
 						groupId={groupId}

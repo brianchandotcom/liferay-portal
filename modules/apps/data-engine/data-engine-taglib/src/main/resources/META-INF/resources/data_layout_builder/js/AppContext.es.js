@@ -43,6 +43,7 @@ import {
 	UPDATE_IDS,
 	UPDATE_PAGES,
 } from './actions.es';
+import {getDataDefinitionField as convertFieldToDataDefinition} from './utils/dataConverter.es';
 import {getDataDefinitionField} from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';
 import {normalizeRule} from './utils/normalizers.es';
@@ -89,15 +90,9 @@ const initialState = {
 	spritemap: `${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`,
 };
 
-const addCustomObjectField = ({
-	dataLayoutBuilder,
-	fieldTypeName,
-	fieldTypes,
-}) => {
+const addCustomObjectField = ({fieldTypeName, fieldTypes}) => {
 	const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
-	const dataDefinitionField = dataLayoutBuilder.getDataDefinitionField(
-		fieldType
-	);
+	const dataDefinitionField = convertFieldToDataDefinition(fieldType);
 
 	return {
 		...dataDefinitionField,
@@ -140,14 +135,16 @@ const editFocusedCustomObjectField = (
 		dataDefinition: {defaultLanguageId},
 		editingLanguageId,
 		focusedCustomObjectField,
-	},
-	dataLayoutBuilder
+	}
 ) => {
 	let localizedValue;
-	const {settingsContext} = focusedCustomObjectField;
-	const visitor = new PagesVisitor(settingsContext.pages);
-	const newSettingsContext = {
-		...settingsContext,
+	const {
+		nestedFields,
+		settingsContext: oldSettingsContext,
+	} = focusedCustomObjectField;
+	const visitor = new PagesVisitor(oldSettingsContext.pages);
+	const settingsContext = {
+		...oldSettingsContext,
 		pages: visitor.mapFields((field) => {
 			const {fieldName} = field;
 
@@ -168,13 +165,14 @@ const editFocusedCustomObjectField = (
 		}),
 	};
 
-	const newFocusedCustomObjectField = dataLayoutBuilder.getDataDefinitionField(
-		{...focusedCustomObjectField, settingsContext: newSettingsContext}
-	);
+	const dataDefinition = convertFieldToDataDefinition({
+		nestedFields,
+		settingsContext,
+	});
 
 	return {
-		...newFocusedCustomObjectField,
-		settingsContext: newSettingsContext,
+		...dataDefinition,
+		settingsContext,
 	};
 };
 
@@ -185,15 +183,6 @@ const editFocusedCustomObjectField = (
  */
 const getUnformattedDefinitionField = (dataDefinition, {fieldName}) => {
 	return getDataDefinitionField(dataDefinition, fieldName);
-};
-
-/**
- * Get formatted definition field
- * @param {object} dataLayoutBuilder
- * @param {object} ddmfield
- */
-const getFormattedDefinitionField = (dataLayoutBuilder, field) => {
-	return dataLayoutBuilder.getDataDefinitionField(field);
 };
 
 const setDataDefinitionFields = (
@@ -210,10 +199,7 @@ const setDataDefinitionFields = (
 	const newFields = [];
 
 	visitor.mapFields((field) => {
-		const formattedDefinitionField = getFormattedDefinitionField(
-			dataLayoutBuilder,
-			field
-		);
+		const formattedDefinitionField = convertFieldToDataDefinition(field);
 
 		if (dataLayoutBuilder.props.contentType === 'app-builder') {
 			newFields.push({
@@ -249,8 +235,7 @@ const setDataLayout = (dataLayout, dataLayoutBuilder) => {
 		const fields = [];
 
 		visitor.mapFields((field) => {
-			const formattedDefinitionField = getFormattedDefinitionField(
-				dataLayoutBuilder,
+			const formattedDefinitionField = convertFieldToDataDefinition(
 				field
 			);
 
@@ -282,7 +267,6 @@ const createReducer = (dataLayoutBuilder) => {
 				const {dataDefinition, fieldSets, fieldTypes} = state;
 				const newCustomObjectField = addCustomObjectField({
 					dataDefinition,
-					dataLayoutBuilder,
 					fieldSets,
 					fieldTypeName,
 					fieldTypes,
@@ -368,8 +352,7 @@ const createReducer = (dataLayoutBuilder) => {
 
 				const focusedDataDefinitionField = editFocusedCustomObjectField(
 					action.payload,
-					state,
-					dataLayoutBuilder
+					state
 				);
 
 				return {

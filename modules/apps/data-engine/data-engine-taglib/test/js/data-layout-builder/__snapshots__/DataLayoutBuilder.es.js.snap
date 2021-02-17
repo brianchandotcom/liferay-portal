@@ -33,6 +33,9 @@ DataLayoutBuilder {
         "visibilityExpression",
       ],
     },
+    "contentTypeConfig": Object {
+      "allowInvalidAvailableLocalesForProperty": false,
+    },
     "context": Object {},
     "dataLayoutBuilderId": "_com_liferay_journal_web_portlet_JournalPortlet_dataLayoutBuilder",
     "fieldTypes": Array [],
@@ -82,6 +85,9 @@ DataLayoutBuilder {
         "validation",
         "visibilityExpression",
       ],
+    },
+    "contentTypeConfig": Object {
+      "allowInvalidAvailableLocalesForProperty": false,
     },
     "context": Object {},
     "dataLayoutBuilderId": "_com_liferay_journal_web_portlet_JournalPortlet_dataLayoutBuilder",

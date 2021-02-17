@@ -193,17 +193,26 @@ export function getDefaultDataLayout(dataDefinition) {
 	};
 }
 
-export function getDataDefinitionField({nestedFields, settingsContext}) {
-	const nestedDataDefinitionFields =
-		nestedFields?.map((field) => getDataDefinitionField(field)) ?? [];
-	const fieldConfig = {
+/**
+ * Gets a data definition from a field
+ *
+ * @param {object} field - The field
+ * @param {Object[]} field.nestedFields - The array containing all nested fields.
+ * 										  It may be undefined
+ * @param {object} field.settingsContext - The settings context of a field
+ */
+export function getDataDefinitionField({nestedFields = [], settingsContext}) {
+	const nestedDataDefinitionFields = nestedFields.map((field) =>
+		getDataDefinitionField(field)
+	);
+	const dataDefinition = {
 		customProperties: {},
 		nestedDataDefinitionFields,
 	};
 	const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
 
 	settingsContextVisitor.mapFields(
-		({dataType, fieldName, localizable, localizedValue = {}, value}) => {
+		({dataType, fieldName, localizable, localizedValue, value}) => {
 			if (fieldName === 'predefinedValue') {
 				fieldName = 'defaultValue';
 			}
@@ -211,32 +220,23 @@ export function getDataDefinitionField({nestedFields, settingsContext}) {
 				fieldName = 'fieldType';
 			}
 
+			const updatableHash = _isCustomProperty(fieldName)
+				? dataDefinition.customProperties
+				: dataDefinition;
+
 			if (localizable) {
-				if (_isCustomProperty(fieldName)) {
-					fieldConfig.customProperties[fieldName] = localizedValue;
-				}
-				else {
-					fieldConfig[fieldName] = localizedValue;
-				}
+				updatableHash[fieldName] = localizedValue ?? {};
 			}
 			else {
-				const formattedValue = _getDataDefinitionFieldFormattedValue(
-					dataType,
-					value
-				);
-
-				if (_isCustomProperty(fieldName)) {
-					fieldConfig.customProperties[fieldName] = formattedValue;
-				}
-				else {
-					fieldConfig[fieldName] = formattedValue;
-				}
+				updatableHash[
+					fieldName
+				] = _getDataDefinitionFieldFormattedValue(dataType, value);
 			}
 		},
 		false
 	);
 
-	return fieldConfig;
+	return dataDefinition;
 }
 
 export function getDataDefinitionFieldByFieldName({
@@ -391,3 +391,11 @@ function _isCustomProperty(name) {
 		'tip',
 	].includes(name);
 }
+
+// For test purpose only
+
+export default {
+	_fromDDMFormToDataDefinitionPropertyName,
+	_getDataDefinitionFieldFormattedValue,
+	_isCustomProperty,
+};
